@@ -4,7 +4,7 @@
 	icon_state = "yellow"
 	density = 1
 	var/health = 100.0
-	flags = FPRINT | CONDUCT
+	flags = CONDUCT
 
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
@@ -88,9 +88,9 @@ update_flag
 		src.overlays = 0
 		src.icon_state = text("[]-1", src.canister_color)
 
-	if(icon_state != "[canister_color]") 
+	if(icon_state != "[canister_color]")
 		icon_state = "[canister_color]"
-	
+
 	if(check_change()) //Returns 1 if no change needed to icons.
 		return
 
@@ -195,18 +195,18 @@ update_flag
 	healthcheck()
 	return
 
-/obj/machinery/portable_atmospherics/canister/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj)
 	if(Proj.damage)
 		src.health -= round(Proj.damage / 2)
 		healthcheck()
 	..()
 
-/obj/machinery/portable_atmospherics/canister/meteorhit(var/obj/O as obj)
+/obj/machinery/portable_atmospherics/canister/meteorhit(obj/O)
 	src.health = 0
 	healthcheck()
 	return
 
-/obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
 	if(!istype(W, /obj/item/weapon/wrench) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
 		visible_message("\red [user] hits the [src] with a [W]!")
 		src.health -= W.force
@@ -223,25 +223,25 @@ update_flag
 			transfer_moles = pressure_delta*thejetpack.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)//Actually transfer the gas
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 			thejetpack.merge(removed)
-			user << "You pulse-pressurize your jetpack from the tank."
+			to_chat(user, "You pulse-pressurize your jetpack from the tank.")
 		return
 
 	..()
-	
+
 	nanomanager.update_uis(src) // Update all NanoUIs attached to src
-	
-	
 
-/obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
+
+
+/obj/machinery/portable_atmospherics/canister/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/canister/attack_paw(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attack_hand(mob/user)
 	return src.ui_interact(user)
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if (src.destroyed)
 		return
 
@@ -255,8 +255,8 @@ update_flag
 	data["minReleasePressure"] = round(ONE_ATMOSPHERE/10)
 	data["maxReleasePressure"] = round(10*ONE_ATMOSPHERE)
 	data["valveOpen"] = valve_open ? 1 : 0
-	
-	data["hasHoldingTank"] = holding ? 1 : 0	
+
+	data["hasHoldingTank"] = holding ? 1 : 0
 	if (holding)
 		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure()))
 

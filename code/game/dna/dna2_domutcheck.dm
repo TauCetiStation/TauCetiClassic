@@ -5,7 +5,7 @@
 // connected: Machine we're in, type unchecked so I doubt it's used beyond monkeying
 // flags: See below, bitfield.
 #define MUTCHK_FORCED        1
-/proc/domutcheck(var/mob/living/M, var/connected=null, var/flags=0, var/forced=1)
+/proc/domutcheck(mob/living/M, connected=null, flags=0, forced=1)
 	for(var/datum/dna/gene/gene in dna_genes)
 		if(!M || !M.dna)
 			return
@@ -49,7 +49,7 @@
 		*/
 
 // Use this to force a mut check on a single gene!
-/proc/genemutcheck(var/mob/living/M, var/block, var/connected=null, var/flags=0)
+/proc/genemutcheck(mob/living/M, block, connected=null, flags=0)
 	if(!M)
 		return
 	if(block < 0)
@@ -59,7 +59,7 @@
 	domutation(gene, M, connected, flags)
 
 
-/proc/domutation(var/datum/dna/gene/gene, var/mob/living/M, var/connected=null, var/flags=0, var/forced=1)
+/proc/domutation(datum/dna/gene/gene, mob/living/M, connected=null, flags=0, forced=1)
 	if(!gene || !istype(gene))
 		return 0
 

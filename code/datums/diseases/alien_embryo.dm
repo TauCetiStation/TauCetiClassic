@@ -23,7 +23,7 @@
 		if (affected_mob)
 			AddInfectionImages(affected_mob)
 
-/datum/disease/alien_embryo/cure(var/resistance=1)
+/datum/disease/alien_embryo/cure(resistance=1)
 	..()
 	spawn(0)
 		if (affected_mob)
@@ -53,25 +53,25 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				to_chat(affected_mob, "\red Your throat feels sore.")
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				to_chat(affected_mob, "\red Mucous runs down the back of your throat.")
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(2))
-				affected_mob << "\red Your muscles ache."
+				to_chat(affected_mob, "\red Your muscles ache.")
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(2))
-				affected_mob << "\red Your stomach hurts."
+				to_chat(affected_mob, "\red Your stomach hurts.")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 		if(5)
-			affected_mob << "\red You feel something tearing its way out of your stomach..."
+			to_chat(affected_mob, "\red You feel something tearing its way out of your stomach...")
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(50))
@@ -128,7 +128,7 @@ Des: Removes all infection images from aliens and places an infection image on a
 Proc: AddInfectionImages(C)
 Des: Checks if the passed mob (C) is infected with the alien egg, then gives each alien client an infected image at C.
 ----------------------------------------*/
-/datum/disease/alien_embryo/proc/AddInfectionImages(var/mob/living/carbon/C)
+/datum/disease/alien_embryo/proc/AddInfectionImages(mob/living/carbon/C)
 	if (C)
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
@@ -142,7 +142,7 @@ Proc: RemoveInfectionImage(C)
 Des: Removes the alien infection image from all aliens in the world located in passed mob (C).
 ----------------------------------------*/
 
-/datum/disease/alien_embryo/proc/RemoveInfectionImages(var/mob/living/carbon/C)
+/datum/disease/alien_embryo/proc/RemoveInfectionImages(mob/living/carbon/C)
 	if (C)
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)

@@ -14,32 +14,33 @@
 			active = 1
 			target = mutiny.captains_key
 			workobj()
-			usr << "\blue You calibrate \the [src] to locate the Captain's Authentication Key."
+			to_chat(usr, "\blue You calibrate \the [src] to locate the Captain's Authentication Key.")
 		if (1)
 			mode = 2
 			target = mutiny.secondary_key
-			usr << "\blue You calibrate \the [src] to locate the Emergency Secondary Authentication Key."
+			to_chat(usr, "\blue You calibrate \the [src] to locate the Emergency Secondary Authentication Key.")
 		else
 			mode = 0
 			active = 0
 			icon_state = "pinoff"
-			usr << "\blue You switch \the [src] off."
+			to_chat(usr, "\blue You switch \the [src] off.")
 
-/obj/item/weapon/pinpointer/advpinpointer/auth_key/examine()
+/obj/item/weapon/pinpointer/advpinpointer/auth_key/examine(mob/user)
+	..()
 	switch(mode)
 		if (1)
-			usr << "Is is calibrated for the Captain's Authentication Key."
+			to_chat(user, "Is is calibrated for the Captain's Authentication Key.")
 		if (2)
-			usr << "It is calibrated for the Emergency Secondary Authentication Key."
+			to_chat(user, "It is calibrated for the Emergency Secondary Authentication Key.")
 		else
-			usr << "It is switched off."
+			to_chat(user, "It is switched off.")
 
-/datum/supply_packs/key_pinpointer
+/datum/supply_pack/key_pinpointer
 	name = "Authentication Key Pinpointer crate"
 	contains = list(/obj/item/weapon/pinpointer/advpinpointer/auth_key)
-	cost = 250
-	containertype = /obj/structure/closet/crate
-	containername = "Authentication Key Pinpointer crate"
+	cost = 25000
+	crate_type = /obj/structure/closet/crate
+	crate_name = "Authentication Key Pinpointer crate"
 	access = access_heads
 	group = "Operations"
 

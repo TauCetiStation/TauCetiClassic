@@ -6,7 +6,8 @@
 #define MUTE_PRAY		4
 #define MUTE_ADMINHELP	8
 #define MUTE_DEADCHAT	16
-#define MUTE_ALL		31
+#define MUTE_MENTORHELP	32
+#define MUTE_ALL		63
 
 //Number of identical messages required to get the spam-prevention automute thing to trigger warnings and automutes
 #define SPAM_TRIGGER_WARNING  5
@@ -35,9 +36,12 @@
 #define R_VAREDIT		1024
 #define R_SOUNDS		2048
 #define R_SPAWN			4096
-#define R_MOD			8192
-#define R_MENTOR		16384
 
-#define R_MAXPERMISSION 16384 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
+
+#define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
 #define R_HOST			65535
+
+#define ADMIN_QUE(user) "(<a href='?_src_=holder;adminmoreinfo=\ref[user]'>?</a>)"
+#define ADMIN_FLW(target) "(<a href='?_src_=holder;adminplayerobservefollow=\ref[target]'>FLW</a>)"
+#define ADMIN_JMP(target) "(<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>)"

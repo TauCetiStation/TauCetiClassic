@@ -36,7 +36,6 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|ARMS
 
 
@@ -45,7 +44,6 @@
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	item_state = "hgpirate"
-	flags = FPRINT | TABLEPASS
 	flags_inv = HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
@@ -55,7 +53,7 @@
 	desc = "Suit for a cyborg costume."
 	icon_state = "death"
 	item_state = "death"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	fire_resist = T0C+5200
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -65,17 +63,13 @@
 	desc = "A Nazi great coat."
 	icon_state = "nazi"
 	item_state = "nazi"
-	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/suit/johnny_coat
 	name = "johnny~~ coat"
 	desc = "Johnny~~"
-	icon = 'tauceti/items/clothing/suits/suits.dmi'
-	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
 	icon_state = "johnny"
 	item_state = "johnny"
-	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/suit/justice
@@ -83,7 +77,6 @@
 	desc = "This pretty much looks ridiculous."
 	icon_state = "justice"
 	item_state = "justice"
-	flags = FPRINT | TABLEPASS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|HANDS|LEGS|FEET
 
@@ -93,7 +86,6 @@
 	desc = "This robe commands authority."
 	icon_state = "judge"
 	item_state = "judge"
-	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/spacecash)
 	flags_inv = HIDEJUMPSUIT
@@ -122,7 +114,6 @@
 	item_state = "space_suit_syndicate"
 	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = 3
-	flags = FPRINT | TABLEPASS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|HANDS|LEGS|FEET
@@ -151,7 +142,7 @@
 	icon_state = "chickensuit"
 	item_state = "chickensuit"
 	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET
-	flags_inv = HIDESHOES|HIDEJUMPSUIT|ONESIZEFITSALL
+	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 
 
@@ -257,13 +248,13 @@
 	if(src.icon_state == "suitjacket_blue_open")
 		src.icon_state = "suitjacket_blue"
 		src.item_state = "suitjacket_blue"
-		usr << "You button up the suit jacket."
+		to_chat(usr, "You button up the suit jacket.")
 	else if(src.icon_state == "suitjacket_blue")
 		src.icon_state = "suitjacket_blue_open"
 		src.item_state = "suitjacket_blue_open"
-		usr << "You unbutton the suit jacket."
+		to_chat(usr, "You unbutton the suit jacket.")
 	else
-		usr << "You button-up some imaginary buttons on your [src]."
+		to_chat(usr, "You button-up some imaginary buttons on your [src].")
 		return
 	usr.update_inv_wear_suit()
 
@@ -291,21 +282,19 @@
 	desc = "A flowing, black coat."
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
-	flags = FPRINT | TABLEPASS */
+	*/
 
 /obj/item/clothing/suit/browncoat
 	name = "brown leather coat"
 	desc = "A long, brown leather coat."
 	icon_state = "browncoat"
 	item_state = "browncoat"
-	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/suit/neocoat
 	name = "black coat"
 	desc = "A flowing, black coat."
 	icon_state = "neocoat"
 	item_state = "neocoat"
-	flags = FPRINT | TABLEPASS
 
 //stripper
 /obj/item/clothing/under/stripper
@@ -428,16 +417,16 @@
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return 0
 	if(!can_button_up)
-		usr << "You attempt to button-up the velcro on your [src], before promptly realising how silly you are."
+		to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how silly you are.")
 		return 0
 
 	if(!src.is_button_up)
 		src.icon_state = initial(icon_state)
-		usr << "You button up your jacket."
+		to_chat(usr, "You button up your jacket.")
 		src.is_button_up = 1
 	else
 		src.icon_state += "_open"
-		usr << "You unbutton your jacket."
+		to_chat(usr, "You unbutton your jacket.")
 		src.is_button_up = 0
 	usr.update_inv_wear_suit()	//so our overlays update
 
@@ -452,3 +441,113 @@
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Like a navy seal,"
 	icon_state = "miljacket_navy"
 	item_state = "miljacket_navy"
+
+/obj/item/clothing/suit/leathercoat
+	name = "leather coat"
+	desc = "A flowing, black coat."
+	icon_state = "leathercoat"
+	item_state = "leathercoat"
+
+/obj/item/clothing/suit/poncho
+	name = "poncho"
+	desc = "Your classic, non-racist poncho."
+	icon_state = "classicponcho"
+	item_state = "classicponcho"
+
+/obj/item/clothing/suit/poncho/green
+	name = "green poncho"
+	desc = "Your classic, non-racist poncho. This one is green."
+	icon_state = "greenponcho"
+	item_state = "greenponcho"
+
+/obj/item/clothing/suit/poncho/rainbow
+	name = "green poncho"
+	desc = "Your classic, non-racist poncho. This one is rainbow."
+	icon_state = "rainbowponcho"
+	item_state = "rainbowponcho"
+
+/obj/item/clothing/suit/poncho/red
+	name = "red poncho"
+	desc = "Your classic, non-racist poncho. This one is red."
+	icon_state = "redponcho"
+	item_state = "redponcho"
+
+/obj/item/clothing/suit/poncho/ponchoshame
+	name = "poncho of shame"
+	desc = "Forced to live on your shameful acting as a fake mexican, you and your poncho have grown inseperable. Literally."
+	icon_state = "ponchoshame"
+	item_state = "ponchoshame"
+
+//Mafia
+/obj/item/clothing/suit/browntrenchcoat
+	name = "brown trench coat"
+	desc = "It makes you stand out. Just the opposite of why it's typically worn. Nice try trying to blend in while wearing it."
+	icon_state = "trenchcoat_brown"
+	item_state = "trenchcoat_brown"
+
+/obj/item/clothing/suit/blacktrenchcoat
+	name = "black trench coat"
+	desc = "That shade of black just makes you look a bit more evil. Good for those mafia types."
+	icon_state = "trenchcoat_black"
+	item_state = "trenchcoat_black"
+
+/obj/item/clothing/suit/storage/det_suit/max_payne
+	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
+	icon_state = "maxcoat"
+
+/obj/item/clothing/suit/necromancer_hoodie
+	name = "necromancer hoodie"
+	desc = "This suit says to you 'hush'!"
+	icon_state = "necromancer"
+	item_state = "necromancer"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/chaplain_hoodie/brown
+	name = "brown robe"
+	icon_state = "brown_robe"
+	item_state = "brown_robe"
+
+/obj/item/clothing/suit/chaplain_hoodie/green
+	name = "green robe"
+	icon_state = "green_robe"
+	item_state = "green_robe"
+
+/obj/item/clothing/suit/chaplain_hoodie/black
+	name = "black robe"
+	icon_state = "black_robe"
+
+/obj/item/clothing/suit/armor/vest/cuirass
+	name = "cuirass"
+	desc = "A metal armor, which cover torso."
+	icon_state = "cuirass"
+	item_state = "cuirass"
+	blood_overlay_type = "armor"
+	flags = THICKMATERIAL
+	armor = list(melee = 50, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/goodman_jacket
+	name = "Brown jacket"
+	desc = "A good jacket for good men."
+	icon_state = "gmjacket"
+
+/obj/item/clothing/suit/goodman_jacket/verb/toggle()
+	set name = "Toggle Jacket Buttons"
+	set category = "Object"
+	set src in usr
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return 0
+
+	if(src.icon_state == "gmjacket_open")
+		src.icon_state = "gmjacket"
+		src.item_state = "gmjacket"
+		to_chat(usr, "You button up the suit jacket.")
+	else if(src.icon_state == "gmjacket")
+		src.icon_state = "gmjacket_open"
+		src.item_state = "gmjacket_open"
+		to_chat(usr, "You unbutton the suit jacket.")
+	else
+		to_chat(usr, "You button-up some imaginary buttons on your [src].")
+		return
+	usr.update_inv_wear_suit()
+

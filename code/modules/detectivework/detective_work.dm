@@ -159,7 +159,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					M.drop_item()
 					I.loc = src
 			else
-				usr << "Invalid Object Rejected."
+				to_chat(usr, "Invalid Object Rejected.")
 		if("card")  //Processing a fingerprint card.
 			var/mob/M = usr
 			var/obj/item/I = M.get_active_hand()
@@ -170,7 +170,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				if(!card.fingerprints)
 					card.fingerprints = list()
 				if(card.amount > 1 || !card.fingerprints.len)
-					usr << "\red ERROR: No prints/too many cards."
+					to_chat(usr, "\red ERROR: No prints/too many cards.")
 					if(card.loc == src)
 						card.loc = src.loc
 					card = null
@@ -179,7 +179,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				I.loc = src
 				process_card()
 			else
-				usr << "\red Invalid Object Rejected."
+				to_chat(usr, "\red Invalid Object Rejected.")
 		if("database") //Viewing all records in each database
 			canclear = 1
 			if(href_list["delete_record"])
@@ -213,7 +213,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					if(new_title)
 						dossier[2] = new_title
 					else
-						usr << "Illegal or blank name."
+						to_chat(usr, "Illegal or blank name.")
 				temp = {"<b>Criminal Evidence Database</b><br><br>
 				Consolidated data points: [dossier[2]]<br>"}
 				var/print_string = "Fingerprints: Print not complete!<br>"
@@ -295,7 +295,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 						for(var/named in blood)
 							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
 			else
-				usr << "ERROR.  Database not found!<br>"
+				to_chat(usr, "ERROR.  Database not found!<br>")
 		if("auxiliary") //Viewing a record from the "misc" database.
 			canclear = 0
 			if(misc)
@@ -362,7 +362,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					for(var/named in blood)
 						P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
 			else
-				usr << "ERROR.  Database not found!<br>"
+				to_chat(usr, "ERROR.  Database not found!<br>")
 		if("scan")
 			if(istype(scanning,/obj/item/weapon/f_card))
 				card = scanning
@@ -455,7 +455,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	return
 
 
-/obj/machinery/computer/forensic_scanning/proc/add_data_scanner(var/obj/item/device/W)
+/obj/machinery/computer/forensic_scanning/proc/add_data_scanner(obj/item/device/W)
 	if(istype(W, /obj/item/device/detective_scanner))
 		var/obj/item/device/detective_scanner/D = W
 		if(D.stored)
@@ -471,7 +471,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 		W:cartridge.stored_data = list()
 	return
 
-/obj/machinery/computer/forensic_scanning/proc/add_data(var/atom/scanned_atom)
+/obj/machinery/computer/forensic_scanning/proc/add_data(atom/scanned_atom)
 	return add_data_master("\ref [scanned_atom]", scanned_atom.fingerprints,\
 	scanned_atom.suit_fibers, scanned_atom.blood_DNA, "[scanned_atom.name] (Direct Scan)")
 
@@ -480,7 +480,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 /********************************
 *****DO NOT DIRECTLY CALL ME*****
 ********************************/
-/obj/machinery/computer/forensic_scanning/proc/add_data_master(var/atom_reference, var/list/atom_fingerprints, var/list/atom_suit_fibers, var/list/atom_blood_DNA, var/atom_name)
+/obj/machinery/computer/forensic_scanning/proc/add_data_master(atom_reference, list/atom_fingerprints, list/atom_suit_fibers, list/atom_blood_DNA, atom_name)
 //What follows is massive.  It cross references all stored data in the scanner with the other stored data,
 //and what is already in the computer.  Not sure how bad the lag may/may not be.
 
@@ -580,7 +580,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 ***END DO NOT DIRECTLY CALL ME***
 ********************************/
 
-/obj/machinery/computer/forensic_scanning/proc/update_fingerprints(var/ref_print, var/new_print)
+/obj/machinery/computer/forensic_scanning/proc/update_fingerprints(ref_print, new_print)
 	var/list/master = files[ref_print]
 	if(master)
 		master[1] = stringmerge(master[1],new_print)
@@ -590,7 +590,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 
 /obj/machinery/computer/forensic_scanning/proc/process_card()	//Same as above, but for fingerprint cards
 	if(card.fingerprints && !(card.amount > 1) && islist(card.fingerprints) && files && files.len)
-		usr << "You insert the card, and it is destroyed by the machinery in the process of comparing prints."
+		to_chat(usr, "You insert the card, and it is destroyed by the machinery in the process of comparing prints.")
 		var/found = 0
 		for(var/master_print in card.fingerprints)
 			var/list/data_entry = files[master_print]
@@ -598,24 +598,24 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				found = 1
 				data_entry[1] = master_print
 		if(found)
-			usr << "The machinery finds it can complete a match."
+			to_chat(usr, "The machinery finds it can complete a match.")
 		else
-			usr << "No match found."
+			to_chat(usr, "No match found.")
 		qdel(card)
 	else
-		usr << "\red ERROR: No prints/too many cards."
+		to_chat(usr, "\red ERROR: No prints/too many cards.")
 		if(card.loc == src)
 			card.loc = src.loc
 		card = null
 		return
 	return
 
-/obj/machinery/computer/forensic_scanning/proc/delete_record(var/atom_ref)	//Deletes an entry in the misc database at the given location
+/obj/machinery/computer/forensic_scanning/proc/delete_record(atom_ref)	//Deletes an entry in the misc database at the given location
 	if(misc && misc.len)
 		misc.Remove(atom_ref)
 	return
 
-/obj/machinery/computer/forensic_scanning/proc/delete_dossier(var/print)	//Deletes a Dossier at a given location.
+/obj/machinery/computer/forensic_scanning/proc/delete_dossier(print)	//Deletes a Dossier at a given location.
 	if(files && files.len)
 		files.Remove(print)
 	return

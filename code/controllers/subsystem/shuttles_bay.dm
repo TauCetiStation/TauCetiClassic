@@ -9,12 +9,6 @@ var/datum/subsystem/shuttle/SSshuttle
 #define SUPPLY_STATION_AREATYPE /area/supply/station //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE /area/supply/dock	//Type of the supply shuttle area for dock
 
-/datum/supply_order
-	var/ordernum
-	var/datum/supply_packs/object = null
-	var/orderedby = null
-	var/comment = null
-
 /datum/subsystem/shuttle
 	name = "Shuttles"
 	wait = 10
@@ -34,13 +28,11 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/departed = 0
 
 		//supply shuttle stuff
-	var/points = 50
-	var/points_per_decisecond = 0.005	//points gained every decisecond
-	var/points_per_slip = 2
-	var/points_per_crate = 5
-	var/points_per_platinum = 10
-	var/points_per_phoron = 3
-	var/points_per_scrap = 3
+	var/points = 5000
+	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
+	var/contraband = FALSE
+	var/hacked = FALSE
+	var/centcom_message = ""
 		//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -63,14 +55,13 @@ var/datum/subsystem/shuttle/SSshuttle
 		return ..()
 	ordernum = rand(1, 9000)
 
-	for(var/typepath in subtypesof(/datum/supply_packs))
-		var/datum/supply_packs/P = new typepath()
+	for(var/typepath in subtypesof(/datum/supply_pack))
+		var/datum/supply_pack/P = new typepath()
 		supply_packs[P.name] = P
 
 	..()
 
 /datum/subsystem/shuttle/fire()
-	points += points_per_decisecond * wait
 	if(moving == 1)
 		var/ticksleft = (eta_timeofday - world.timeofday)
 		if(ticksleft > 0)
@@ -89,7 +80,18 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(0)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
 			if(direction == 2)
-				if(timeleft>0)
+				if(timeleft < PARALLAX_LOOP_TIME / 10)
+					var/area/stop_parallax = locate(/area/shuttle/escape/transit)
+					stop_parallax.parallax_slowdown()
+					stop_parallax = locate(/area/shuttle/escape_pod1/transit)
+					stop_parallax.parallax_slowdown()
+					stop_parallax = locate(/area/shuttle/escape_pod2/transit)
+					stop_parallax.parallax_slowdown()
+					stop_parallax = locate(/area/shuttle/escape_pod3/transit)
+					stop_parallax.parallax_slowdown()
+					stop_parallax = locate(/area/shuttle/escape_pod5/transit)
+					stop_parallax.parallax_slowdown()
+				if(timeleft > 0)
 					return 0
 
 				/* --- Shuttle has arrived at Centrcal Command --- */
@@ -305,7 +307,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				//main shuttle
 				var/area/start_location = locate(/area/shuttle/escape/station)
 				var/area/end_location = locate(/area/shuttle/escape/transit)
-
+				end_location.parallax_movedir = WEST
 				settimeleft(SHUTTLETRANSITTIME)
 				start_location.move_contents_to(end_location, null, NORTH)
 
@@ -332,6 +334,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod1/station)
 					end_location = locate(/area/shuttle/escape_pod1/transit)
+					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					for(var/obj/machinery/door/D in end_location)
 						D.close()
@@ -350,6 +353,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod2/station)
 					end_location = locate(/area/shuttle/escape_pod2/transit)
+					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					for(var/obj/machinery/door/D in end_location)
 						D.close()
@@ -368,6 +372,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod3/station)
 					end_location = locate(/area/shuttle/escape_pod3/transit)
+					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					for(var/obj/machinery/door/D in end_location)
 						D.close()
@@ -448,7 +453,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return 1
 
-//To stop things being sent to centcomm which should not be sent to centcomm. Recursively checks for these types.
+//To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
 /datum/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
 	if(istype(A,/mob/living))
 		return 1
@@ -467,73 +472,63 @@ var/datum/subsystem/shuttle/SSshuttle
 	//Sellin
 /datum/subsystem/shuttle/proc/sell()
 	var/shuttle_at
-	if(at_station)	shuttle_at = SUPPLY_STATION_AREATYPE
-	else			shuttle_at = SUPPLY_DOCK_AREATYPE
+	if(at_station)
+		shuttle_at = SUPPLY_STATION_AREATYPE
+	else
+		shuttle_at = SUPPLY_DOCK_AREATYPE
 
 	var/area/shuttle = locate(shuttle_at)
-	if(!shuttle)	return
+	if(!shuttle)
+		return
 
-	var/phoron_count = 0
-	var/plat_count = 0
-	var/scrap_count = 0
-	for(var/atom/movable/MA in shuttle)
-		if(MA.anchored)	continue
+	if(!exports_list.len) // No exports list? Generate it!
+		setupExports()
 
-		// Must be in a crate (or a critter crate)!
-		if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
-			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-			if(mode)
-				mode.deliver_materials(MA, shuttle)
+	var/msg = ""
+	var/sold_atoms = ""
 
-			points += points_per_crate
-			var/find_slip = 1
+	for(var/atom/movable/AM in shuttle)
+		if(AM.anchored)
+			continue
+		sold_atoms += export_item_and_contents(AM, contraband, hacked, dry_run = FALSE)
 
-			for(var/atom in MA)
-				// Sell manifests
-				var/atom/A = atom
-				if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
-					var/obj/item/weapon/paper/slip = A
-					if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
-						points += points_per_slip
-						find_slip = 0
-					continue
+	if(sold_atoms)
+		sold_atoms += "."
 
-				// Sell phoron
-				if(istype(A, /obj/item/stack/sheet/mineral/phoron))
-					var/obj/item/stack/sheet/mineral/phoron/P = A
-					phoron_count += P.amount
+	for(var/a in exports_list)
+		var/datum/export/E = a
+		var/export_text = E.total_printout()
+		if(!export_text)
+			continue
 
-				// Sell platinum
-				if(istype(A, /obj/item/stack/sheet/mineral/platinum))
-					var/obj/item/stack/sheet/mineral/platinum/P = A
-					plat_count += P.amount
-				// Sell scrap
-				if(istype(A, /obj/item/stack/sheet/refined_scrap))
-					var/obj/item/stack/sheet/refined_scrap/P = A
-					scrap_count += P.amount
+		msg += export_text + "\n"
+		SSshuttle.points += E.total_cost
+		E.export_end()
 
-		qdel(MA)
-		CHECK_TICK
+	centcom_message = msg
+	//investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
 
-	points += phoron_count * points_per_phoron
-	points += plat_count * points_per_platinum
-	points += scrap_count * points_per_scrap
 
 //Buyin
 /datum/subsystem/shuttle/proc/buy()
-	if(!shoppinglist.len) return
+	if(!shoppinglist.len)
+		return
 
 	var/shuttle_at
-	if(at_station)	shuttle_at = SUPPLY_STATION_AREATYPE
-	else			shuttle_at = SUPPLY_DOCK_AREATYPE
+	if(at_station)
+		shuttle_at = SUPPLY_STATION_AREATYPE
+	else
+		shuttle_at = SUPPLY_DOCK_AREATYPE
 
 	var/area/shuttle = locate(shuttle_at)
-	if(!shuttle)	return
+	if(!shuttle)
+		return
 
 	var/list/clear_turfs = list()
 
 	for(var/turf/T in shuttle)
-		if(T.density)	continue
+		if(T.density)
+			continue
 		var/contcount
 		for(var/atom/A in T.contents)
 			if(istype(A,/atom/movable/lighting_overlay))
@@ -541,56 +536,24 @@ var/datum/subsystem/shuttle/SSshuttle
 			if(istype(A,/obj/machinery/light))
 				continue
 			contcount++
-		if(contcount)	continue
+		if(contcount)
+			continue
 		clear_turfs += T
 		CHECK_TICK
 
 	for(var/S in shoppinglist)
-		if(!clear_turfs.len)	break
+		if(!clear_turfs.len)
+			break
 		var/i = rand(1,clear_turfs.len)
 		var/turf/pickedloc = clear_turfs[i]
 		clear_turfs.Cut(i,i+1)
 
 		var/datum/supply_order/SO = S
-		var/datum/supply_packs/SP = SO.object
 
-		var/atom/A = new SP.containertype(pickedloc)
-		A.name = "[SP.containername] [SO.comment ? "([SO.comment])":"" ]"
+		SO.generate(pickedloc)
+		if(SO.object.dangerous)
+			message_admins("[SO.object.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 
-		//supply manifest generation begin
-
-		var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest(A)
-		slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
-		slip.info +="Order #[SO.ordernum]<br>"
-		slip.info +="Destination: [station_name]<br>"
-		slip.info +="[SSshuttle.shoppinglist.len] PACKAGES IN THIS SHIPMENT<br>"
-		slip.info +="CONTENTS:<br><ul>"
-
-		//spawn the stuff, finish generating the manifest while you're at it
-		if(SP.access)
-			A:req_access = list()
-			A:req_access += text2num(SP.access)
-
-		var/list/contains
-		if(istype(SP,/datum/supply_packs/randomised))
-			var/datum/supply_packs/randomised/SPR = SP
-			contains = list()
-			if(SPR.contains.len)
-				for(var/j=1,j<=SPR.num_contained,j++)
-					contains += pick(SPR.contains)
-		else
-			contains = SP.contains
-
-		for(var/typepath in contains)
-			if(!typepath)	continue
-			var/atom/B2 = new typepath(A)
-			if(SP.amount && B2:amount) B2:amount = SP.amount
-			slip.info += "<li>[B2.name]</li>" //add the item to the manifest
-
-		//manifest finalisation
-		slip.info += "</ul><br>"
-		slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
-		if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
 		score["stuffshipped"]++
 		CHECK_TICK
 
@@ -609,11 +572,6 @@ var/datum/subsystem/shuttle/SSshuttle
 		online = 1
 		if(always_fake_recall)
 			fake_recall = rand(300,500)		//turning on the red lights in hallways
-	/*if(alert == 0)
-		red_alert_evac = 1
-		for(var/area/A in world)
-			if(istype(A, /area/hallway))
-				A.readyalert()*/
 
 /datum/subsystem/shuttle/proc/get_shuttle_arrive_time()
 	// During mutiny rounds, the shuttle takes twice as long.
@@ -622,7 +580,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return SHUTTLEARRIVETIME
 
-/datum/subsystem/shuttle/proc/shuttlealert(var/X)
+/datum/subsystem/shuttle/proc/shuttlealert(X)
 	alert = X
 
 /datum/subsystem/shuttle/proc/recall()
@@ -635,10 +593,6 @@ var/datum/subsystem/shuttle/SSshuttle
 			world << sound('sound/AI/shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
-			/*red_alert_evac = 0
-			for(var/area/A in world)
-				if(istype(A, /area/hallway))
-					A.readyreset()*/
 			return
 		else //makes it possible to send shuttle back.
 			captain_announce("The shuttle has been recalled.")
@@ -660,13 +614,13 @@ var/datum/subsystem/shuttle/SSshuttle
 		return get_shuttle_arrive_time()
 
 	// sets the time left to a given delay (in seconds)
-/datum/subsystem/shuttle/proc/settimeleft(var/delay)
+/datum/subsystem/shuttle/proc/settimeleft(delay)
 	endtime = world.timeofday + delay * 10
 	timelimit = delay
 
 	// sets the shuttle direction
 	// 1 = towards SS13, -1 = back to centcom
-/datum/subsystem/shuttle/proc/setdirection(var/dirn)
+/datum/subsystem/shuttle/proc/setdirection(dirn)
 	if(direction == dirn)
 		return
 	direction = dirn

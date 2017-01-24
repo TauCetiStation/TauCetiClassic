@@ -5,7 +5,7 @@
 	icon_state = "flashlight"
 	item_state = "flashlight"
 	w_class = 2
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	m_amt = 50
 	g_amt = 20
@@ -22,7 +22,7 @@
 		icon_state = initial(icon_state)
 		set_light(0)
 
-/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
@@ -32,7 +32,7 @@
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]." //To prevent some lighting anomalities.
+		to_chat(user, "You cannot turn the light on while in this [user.loc].")//To prevent some lighting anomalities.
 		return 0
 	on = !on
 	update_brightness(user)
@@ -45,7 +45,7 @@
 	return ..()
 
 
-/obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/flashlight/attack(mob/living/M, mob/living/user)
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == "eyes")
 
@@ -53,12 +53,12 @@
 			return ..()	//just hit them in the head
 
 		if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")	//don't have dexterity
-			user << "<span class='notice'>You don't have the dexterity to do this!</span>"
+			to_chat(user, "<span class='notice'>You don't have the dexterity to do this!</span>")
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
 		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-			user << "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>"
+			to_chat(user, "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
 			return
 
 		if(M == user)	//they're using it on themselves
@@ -76,14 +76,14 @@
 
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
 			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind
-				user << "<span class='notice'>[M] pupils does not react to the light!</span>"
+				to_chat(user, "<span class='notice'>[M] pupils does not react to the light!</span>")
 			else if(XRAY in M.mutations)	//mob has X-RAY vision
 				M.flash_eyes() //Yes, you can still get flashed wit X-Ray.
-				user << "<span class='notice'>[M] pupils give an eerie glow!</span>"
+				to_chat(user, "<span class='notice'>[M] pupils give an eerie glow!</span>")
 			else	//they're okay!
 				if(!M.blinded)
 					M.flash_eyes()	//flash the affected mob
-					user << "<span class='notice'>[M]'s pupils narrow.</span>"
+					to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
 	else
 		return ..()
 
@@ -92,7 +92,7 @@
 	desc = "A pen-sized light, used by medical staff."
 	icon_state = "penlight"
 	item_state = ""
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	brightness_on = 2
 	w_class = 1
 
@@ -101,7 +101,7 @@
 	desc = "A miniature lamp, that might be used by small robots."
 	icon_state = "penlight"
 	item_state = ""
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	brightness_on = 2
 	w_class = 1
 
@@ -114,7 +114,7 @@
 	item_state = "lamp"
 	brightness_on = 4
 	w_class = 4
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	m_amt = 0
 	g_amt = 0
 	on = 1
@@ -183,7 +183,7 @@
 
 	// Usual checks
 	if(!fuel)
-		user << "<span class='notice'>It's out of fuel.</span>"
+		to_chat(user, "<span class='notice'>It's out of fuel.</span>")
 		return
 	if(on)
 		return
@@ -217,3 +217,52 @@
 
 /obj/item/device/flashlight/slime/attack_self(mob/user)
 	return //Bio-luminescence does not toggle.
+
+/obj/item/device/flashlight/emp
+	origin_tech = "magnets=3;syndicate=´1"
+	var/emp_max_charges = 4
+	var/emp_cur_charges = 4
+	var/charge_tick = 0
+
+
+/obj/item/device/flashlight/emp/New()
+	..()
+	SSobj.processing |= src
+
+/obj/item/device/flashlight/emp/Destroy()
+	SSobj.processing.Remove(src)
+	return ..()
+
+/obj/item/device/flashlight/emp/process()
+	charge_tick++
+	if(charge_tick < 10)
+		return 0
+	charge_tick = 0
+	emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
+	return 1
+
+/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
+	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
+		..()
+	return
+
+/obj/item/device/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
+	if(!proximity)
+		return
+
+	if(emp_cur_charges)
+		emp_cur_charges -= 1
+
+		if(ismob(A))
+			var/mob/M = A
+			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
+			M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been attacked with Emp-light by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked with Emp-light [M.name]'s ([M.ckey])</font>")
+			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [A]</span>")
+		else
+			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>")
+		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.</span>")
+		A.emp_act(1)
+	else
+		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
+	return

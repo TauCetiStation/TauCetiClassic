@@ -1,19 +1,13 @@
 // At minimum every mob has a hear_say proc.
 
-/mob/proc/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null, var/sound/speech_sound, var/sound_vol)
+/mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
 	if(!client)
 		return
 
-	if(speaker && !speaker.client && istype(src,/mob/dead/observer) && client.prefs.chat_toggles & CHAT_GHOSTEARS && !speaker in view(src))
-			//Does the speaker have a client?  It's either random stuff that observers won't care about (Experiment 97B says, 'EHEHEHEHEHEHEHE')
-			//Or someone snoring.  So we make it where they won't hear it.
-		return
 
 	if(sleeping || stat == 1)
 		hear_sleep(message)
 		return
-
-	var/style = "body"
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
@@ -23,15 +17,12 @@
 	if(!say_understands(speaker,language))
 		if(istype(speaker,/mob/living/simple_animal))
 			var/mob/living/simple_animal/S = speaker
-			if(islist(S.speak) && S.speak.len)
-				message = pick(S.speak)
-			else
-				message = S.speak
+			message = pick(S.speak)
 		else
-			message = stars(message)
-
-	if(language)
-		style = language.colour
+			if(language)
+				message = language.scramble(message)
+			else
+				message = stars(message)
 
 	var/speaker_name = speaker.name
 	if(istype(speaker, /mob/living/carbon/human))
@@ -43,27 +34,31 @@
 
 	var/track = null
 	if(istype(src, /mob/dead/observer))
-		if(italics && client.prefs.chat_toggles & CHAT_GHOSTRADIO)
+		if(speaker && !speaker.client && !(client.prefs.chat_toggles & CHAT_GHOSTNPC) && !(speaker in view(src)))
+			return
+		if(used_radio && (client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
 		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> "
-		if(client.prefs.chat_toggles & CHAT_GHOSTEARS && speaker in view(src))
+		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && speaker in view(src))
 			message = "<b>[message]</b>"
 
 	if(sdisabilities & DEAF || ear_deaf)
 		if(speaker == src)
-			src << "<span class='warning'>You cannot hear yourself speak!</span>"
+			to_chat(src, "<span class='warning'>You cannot hear yourself speak!</span>")
 		else
-			src << "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear \him."
+			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear \him.")
 	else
-		src << "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='[style]'>\"[sanitize_plus_chat(message)]\"</span></span></span>"
+		if(language)
+			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
+		else
+			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='body'>\"[sanitize_plus_chat(message)]\"</span></span></span>")
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			src.playsound_local(source, speech_sound, sound_vol, 1)
 
-
-/mob/proc/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0, var/vname ="")
+/mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0, vname ="")
 
 	if(!client)
 		return
@@ -74,8 +69,6 @@
 
 	var/track = null
 
-	var/style = "body"
-
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
@@ -84,23 +77,17 @@
 	if(!say_understands(speaker,language))
 		if(istype(speaker,/mob/living/simple_animal))
 			var/mob/living/simple_animal/S = speaker
-			if(islist(S.speak) && S.speak.len)
-				message = pick(S.speak)
-			else
-				message = S.speak
+			message = pick(S.speak)
 		else
-			message = stars(message)
-
-	if(language)
-		verb = language.speech_verb
-		style = language.colour
-
-
+			if(language)
+				message = language.scramble(message)
+			else
+				message = stars(message)
 
 	if(hard_to_hear)
 		message = stars(message)
 
-	var/speaker_name = speaker.name
+	var/speaker_name = speaker ? speaker.name : ""
 
 	if(vname)
 		speaker_name = vname
@@ -162,15 +149,21 @@
 			speaker = S.eyeobj
 		track = "[speaker_name] <a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a>"
 
+	var/formatted
+	if(language)
+		formatted = language.format_message_radio(message, verb)
+	else
+		formatted = "[verb], <span class=\"body\">\"[sanitize_plus_chat(message)]\"</span>"
+
 	if(sdisabilities & DEAF || ear_deaf)
 		if(prob(20))
-			src << "<span class='warning'>You feel your headset vibrate but can hear nothing from it!</span>"
+			to_chat(src, "<span class='warning'>You feel your headset vibrate but can hear nothing from it!</span>")
 	else if(track)
-		src << "[part_a][track][part_b][verb], <span class=\"[style]\">\"[sanitize_plus_chat(message)]\"</span></span></span>"
+		to_chat(src, "[part_a][track][part_b][formatted]</span></span>")
 	else
-		src << "[part_a][speaker_name][part_b][verb], <span class=\"[style]\">\"[sanitize_plus_chat(message)]\"</span></span></span>"
+		to_chat(src, "[part_a][speaker_name][part_b][formatted]</span></span>")
 
-/mob/proc/hear_signlang(var/message, var/verb = "gestures", var/datum/language/language, var/mob/speaker = null)
+/mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
 	if(!client)
 		return
 
@@ -186,7 +179,7 @@
 			M.show_message(message)
 	src.show_message(message)
 
-/mob/proc/hear_sleep(var/message)
+/mob/proc/hear_sleep(message)
 	var/heard = ""
 	if(prob(15))
 		var/list/punctuation = list(",", "!", ".", ";", "?")
@@ -202,4 +195,4 @@
 	else
 		heard = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
 
-	src << heard
+	to_chat(src, heard)

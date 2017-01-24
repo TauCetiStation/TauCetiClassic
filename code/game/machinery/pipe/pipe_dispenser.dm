@@ -7,10 +7,10 @@
 	var/unwrenched = 0
 	var/wait = 0
 
-/obj/machinery/pipedispenser/attack_paw(user as mob)
+/obj/machinery/pipedispenser/attack_paw(user)
 	return src.attack_hand(user)
 
-/obj/machinery/pipedispenser/attack_hand(user as mob)
+/obj/machinery/pipedispenser/attack_hand(user)
 	if(..())
 		return
 ///// Z-Level stuff
@@ -84,17 +84,17 @@
 			spawn(15)
 				wait = 0
 
-/obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/pipedispenser/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(usr)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		usr << "\blue You put [W] back to [src]."
+		to_chat(usr, "\blue You put [W] back to [src].")
 		user.drop_item()
 		qdel(W)
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (unwrenched==0)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to unfasten \the [src] from the floor..."
+			to_chat(user, "\blue You begin to unfasten \the [src] from the floor...")
 			if (do_after(user, 40, target = src))
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
@@ -107,7 +107,7 @@
 					usr << browse(null, "window=pipedispenser")
 		else /*if (unwrenched==1)*/
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to fasten \the [src] to the floor..."
+			to_chat(user, "\blue You begin to fasten \the [src] to the floor...")
 			if (do_after(user, 20, target = src))
 				user.visible_message( \
 					"[user] fastens \the [src].", \
@@ -137,7 +137,7 @@ Nah
 */
 
 //Allow you to drag-drop disposal pipes into it
-/obj/machinery/pipedispenser/disposal/MouseDrop_T(var/obj/structure/disposalconstruct/pipe as obj, mob/usr as mob)
+/obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/disposalconstruct/pipe, mob/usr)
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
@@ -149,7 +149,7 @@ Nah
 
 	qdel(pipe)
 
-/obj/machinery/pipedispenser/disposal/attack_hand(user as mob)
+/obj/machinery/pipedispenser/disposal/attack_hand(user)
 	if(..())
 		return
 

@@ -1,20 +1,42 @@
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "electronic"
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = 2
 	origin_tech = "syndicate=4;magnets=4"
-	var/can_use = 1
+	var/can_use = TRUE
+	var/toggled = FALSE
 	var/obj/effect/dummy/chameleon/active_dummy = null
-	var/saved_item = /obj/item/weapon/cigbutt
-	var/saved_icon = 'icons/obj/clothing/masks.dmi'
-	var/saved_icon_state = "cigbutt"
-	var/saved_overlays
+
+/obj/item/device/chameleon/New()
+	active_dummy = new
+	active_dummy.master = src
+	init_disguise()
+
+/obj/item/device/chameleon/Destroy()
+	if(active_dummy)
+		active_dummy.master = null
+		qdel(active_dummy)
+		active_dummy = null
+	return ..()
+
+/obj/item/device/chameleon/proc/init_disguise()
+	var/list/possible_disguise = list(
+		/obj/item/weapon/cigbutt,
+		/obj/item/trash/chips,
+		/obj/item/trash/candy,
+		/obj/item/trash/popcorn,
+		/obj/item/weapon/caution/cone
+		)
+	var/random_type = pick(possible_disguise)
+	var/obj/O = new random_type(src)
+	copy_item(O)
+	qdel(O)
 
 /obj/item/device/chameleon/dropped()
 	disrupt()
@@ -25,121 +47,128 @@
 /obj/item/device/chameleon/attack_self()
 	toggle()
 
-/obj/item/device/chameleon/afterattack(atom/target, mob/user , proximity)
-	if(!proximity) return
+/obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity)
+	if(!proximity)
+		return
 	if(!active_dummy)
+		active_dummy = new
+	if(active_dummy.current_type != target.type)
 		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
-			user << "\blue Scanned [target]."
-			saved_item = target.type
-			saved_icon = target.icon
-			saved_icon_state = target.icon_state
-			saved_overlays = target.overlays
+			to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
+			copy_item(target)
+	else
+		to_chat(user, "<span class='notice'>\The [target] already scanned.</span>")
+
+/obj/item/device/chameleon/proc/copy_item(obj/O)
+	var/obj/effect/dummy/chameleon/C = active_dummy
+	C.name = O.name
+	C.desc = O.desc
+	C.appearance = O.appearance
+	C.dir = O.dir
+	C.current_type = O.type
+	C.layer = initial(O.layer) // scanning things in your inventory
+	C.plane = initial(O.plane) 
 
 /obj/item/device/chameleon/proc/toggle()
-	if(!can_use || !saved_item) return
-	if(active_dummy)
-		eject_all()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
-		qdel(active_dummy)
-		active_dummy = null
-		usr << "\blue You deactivate the [src]."
-		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
-		T.icon = 'icons/effects/effects.dmi'
-		flick("emppulse",T)
-		spawn(8) qdel(T)
-	else
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
-		var/obj/O = new saved_item(src)
-		if(!O) return
-		var/obj/effect/dummy/chameleon/C = PoolOrNew(/obj/effect/dummy/chameleon, usr.loc)
-		C.activate(O, usr, saved_icon, saved_icon_state, saved_overlays, src)
-		qdel(O)
-		usr << "\blue You activate the [src]."
-		var/obj/effect/overlay/T = PoolOrNew(/obj/effect/overlay, get_turf(src))
-		T.icon = 'icons/effects/effects.dmi'
-		flick("emppulse",T)
-		spawn(8) qdel(T)
+	if(!can_use || !active_dummy)
+		return
 
-/obj/item/device/chameleon/proc/disrupt(var/delete_dummy = 1)
-	if(active_dummy)
+	if(toggled)
+		deactivate()
+	else
+		activate(usr)
+
+	play_transform_effect()
+	to_chat(usr, "<span class='notice'>You [toggled ? "activate" : "deactivate"] the [src].</span>")
+
+/obj/item/device/chameleon/proc/play_transform_effect()
+	playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+	var/obj/effect/overlay/T = PoolOrNew(/obj/effect/overlay, get_turf(src))
+	T.icon = 'icons/effects/effects.dmi'
+	flick("emppulse",T)
+	spawn(8)
+		qdel(T)
+
+/obj/item/device/chameleon/proc/activate(mob/M)
+	var/obj/effect/dummy/chameleon/C = active_dummy
+	C.loc = M.loc
+	M.forceMove(C)
+	toggled = TRUE
+
+/obj/item/device/chameleon/proc/deactivate()
+	var/obj/effect/dummy/chameleon/C = active_dummy
+	for(var/atom/movable/A in C)
+		A.loc = C.loc
+		if(ismob(A))
+			var/mob/M = A
+			M.reset_view(null)
+	C.loc = master
+	toggled = FALSE
+
+/obj/item/device/chameleon/proc/disrupt()
+	if(toggled)
+		for(var/mob/M in active_dummy)
+			to_chat(M, "<span class='danger'>Your chameleon-projector deactivates.</span>")
+		deactivate()
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
 		spark_system.start()
-		eject_all()
-		if(delete_dummy)
-			qdel(active_dummy)
-		active_dummy = null
-		can_use = 0
-		spawn(50) can_use = 1
+		can_use = FALSE
+		spawn(50)
+			can_use = TRUE
 
-/obj/item/device/chameleon/proc/eject_all()
-	for(var/atom/movable/A in active_dummy)
-		A.loc = active_dummy.loc
-		if(ismob(A))
-			var/mob/M = A
-			M.reset_view(null)
 
 /obj/effect/dummy/chameleon
 	name = ""
 	desc = ""
-	density = 0
-	anchored = 1
-	var/can_move = 1
+	density = FALSE
+	anchored = TRUE
+	var/can_move = TRUE
+	var/current_type = null
 	var/obj/item/device/chameleon/master = null
 
-/obj/effect/dummy/chameleon/proc/activate(var/obj/O, var/mob/M, new_icon, new_iconstate, new_overlays, var/obj/item/device/chameleon/C)
-	name = O.name
-	desc = O.desc
-	icon = new_icon
-	icon_state = new_iconstate
-	overlays = new_overlays
-	dir = O.dir
-	M.loc = src
-	master = C
-	master.active_dummy = src
+/obj/effect/dummy/chameleon/Destroy()
+	if(master)
+		master.disrupt()
+		master.active_dummy = null
+		master = null
+	return ..()
 
 /obj/effect/dummy/chameleon/attackby()
-	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/attack_hand()
-	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/ex_act()
-	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
+	master.disrupt()
+
+/obj/effect/dummy/chameleon/emp_act()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
-	for(var/mob/M in src)
-		M << "\red Your chameleon-projector deactivates."
-	..()
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/relaymove(var/mob/user, direction)
-	if(istype(loc, /turf/space)) return //No magical space movement!
+/obj/effect/dummy/chameleon/relaymove(mob/user, direction)
+
+	// We can't move when we are in space or inside of an object.
+	if(istype(loc, /turf/space) || !isturf(loc))
+		return
 
 	if(can_move)
-		can_move = 0
+		can_move = FALSE
 		switch(user.bodytemperature)
 			if(300 to INFINITY)
-				spawn(10) can_move = 1
+				spawn(10) can_move = TRUE
 			if(295 to 300)
-				spawn(13) can_move = 1
+				spawn(13) can_move = TRUE
 			if(280 to 295)
-				spawn(16) can_move = 1
+				spawn(16) can_move = TRUE
 			if(260 to 280)
-				spawn(20) can_move = 1
+				spawn(20) can_move = TRUE
 			else
-				spawn(25) can_move = 1
+				spawn(25) can_move = TRUE
 		step(src, direction)
 	return
-
-/obj/effect/dummy/chameleon/Destroy()
-	master.disrupt(0)
-	..()

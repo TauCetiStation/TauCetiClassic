@@ -29,7 +29,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
 	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
 		return
 	on = !on
 	icon_state = "rig[on]-[item_color]"
@@ -124,7 +124,7 @@
 	if(!istype(src.loc,/mob/living)) return
 
 	if(!helmet)
-		usr << "There is no helmet installed."
+		to_chat(usr, "There is no helmet installed.")
 		return
 
 	var/mob/living/carbon/human/H = usr
@@ -137,16 +137,16 @@
 		helmet.canremove = 1
 		H.drop_from_inventory(helmet)
 		helmet.loc = src
-		H << "\blue You retract your hardsuit helmet."
+		to_chat(H, "\blue You retract your hardsuit helmet.")
 	else
 		if(H.head)
-			H << "\red You cannot deploy your helmet while wearing another helmet."
+			to_chat(H, "\red You cannot deploy your helmet while wearing another helmet.")
 			return
 		//TODO: Species check, skull damage for forcing an unfitting helmet on?
 		helmet.loc = H
 		H.equip_to_slot(helmet, slot_head)
 		helmet.canremove = 0
-		H << "\blue You deploy your hardsuit helmet, sealing you off from the world."
+		to_chat(H, "\blue You deploy your hardsuit helmet, sealing you off from the world.")
 
 /obj/item/clothing/suit/space/rig/verb/toggle_magboots()
 
@@ -157,7 +157,7 @@
 	if(!istype(src.loc,/mob/living)) return
 
 	if(!boots)
-		usr << "\The [src] does not have any boots installed."
+		to_chat(usr, "\The [src] does not have any boots installed.")
 		return
 
 	var/mob/living/carbon/human/H = usr
@@ -170,21 +170,21 @@
 		flags &= ~NOSLIP
 		src.slowdown = initial(slowdown)
 		magpulse = 0
-		H << "You disable \the [src] the mag-pulse traction system."
+		to_chat(H, "You disable \the [src] the mag-pulse traction system.")
 	else
 		flags |= NOSLIP
 		src.slowdown += boots.slowdown_off
 		magpulse = 1
-		H << "You enable the mag-pulse traction system."
+		to_chat(H, "You enable the mag-pulse traction system.")
 
-/obj/item/clothing/suit/space/rig/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/clothing/suit/space/rig/attackby(obj/item/W, mob/user)
 
 	if(!istype(user,/mob/living)) return
 
 	if(user.a_intent == "help")
 
 		if(istype(src.loc,/mob/living) && !istype(W, /obj/item/weapon/patcher))
-			user << "How do you propose to modify a hardsuit while it is being worn?"
+			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
 
 		var/target_zone = user.zone_sel.selecting
@@ -193,22 +193,22 @@
 
 			//Installing a component into or modifying the contents of the helmet.
 			if(!attached_helmet)
-				user << "\The [src] does not have a helmet mount."
+				to_chat(user, "\The [src] does not have a helmet mount.")
 				return
 
 			if(istype(W,/obj/item/weapon/screwdriver))
 				if(!helmet)
-					user << "\The [src] does not have a helmet installed."
+					to_chat(user, "\The [src] does not have a helmet installed.")
 				else
-					user << "You detatch \the [helmet] from \the [src]'s helmet mount."
+					to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")
 					helmet.loc = get_turf(src)
 					src.helmet = null
 				return
 			else if(istype(W,/obj/item/clothing/head/helmet/space))
 				if(helmet)
-					user << "\The [src] already has a helmet installed."
+					to_chat(user, "\The [src] already has a helmet installed.")
 				else
-					user << "You attach \the [W] to \the [src]'s helmet mount."
+					to_chat(user, "You attach \the [W] to \the [src]'s helmet mount.")
 					user.drop_item()
 					W.loc = src
 					src.helmet = W
@@ -220,22 +220,22 @@
 
 			//Installing a component into or modifying the contents of the feet.
 			if(!attached_boots)
-				user << "\The [src] does not have boot mounts."
+				to_chat(user, "\The [src] does not have boot mounts.")
 				return
 
 			if(istype(W,/obj/item/weapon/screwdriver))
 				if(!boots)
-					user << "\The [src] does not have any boots installed."
+					to_chat(user, "\The [src] does not have any boots installed.")
 				else
-					user << "You detatch \the [boots] from \the [src]'s boot mounts."
+					to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")
 					boots.loc = get_turf(src)
 					boots = null
 				return
 			else if(istype(W,/obj/item/clothing/shoes/magboots))
 				if(boots)
-					user << "\The [src] already has magboots installed."
+					to_chat(user, "\The [src] already has magboots installed.")
 				else
-					user << "You attach \the [W] to \the [src]'s boot mounts."
+					to_chat(user, "You attach \the [W] to \the [src]'s boot mounts.")
 					user.drop_item()
 					W.loc = src
 					boots = W
@@ -247,10 +247,9 @@
 
 	..()
 
-/obj/item/clothing/suit/space/rig/examine()
-	set src in view()
+/obj/item/clothing/suit/space/rig/examine(mob/user)
 	..()
-	usr << "Its mag-pulse traction system appears to be [!magpulse ? "disabled" : "enabled"]."
+	to_chat(user, "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"].")
 
 //Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
@@ -275,24 +274,24 @@
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
 	name = "advanced hardsuit helmet"
 	desc = "An advanced helmet designed for work in a hazardous, low pressure environment. Shines with a high polish."
-	icon_state = "rig0-white"
+	icon_state = "rig0-chief"
 	item_state = "ce_helm"
-	item_color = "white"
+	item_color = "chief"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
+	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/helmet.dmi')
+	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi')
 
 /obj/item/clothing/suit/space/rig/engineering/chief
-	icon_state = "rig-white"
+	icon_state = "rig-chief"
 	name = "advanced hardsuit"
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
 	slowdown = 1
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
+	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/suit.dmi')
+	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi')
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -331,12 +330,12 @@
 		camera.replace_networks(list("NUKE"))
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
-		user << "\blue User scanned as [camera.c_tag]. Camera activated."
+		to_chat(user, "\blue User scanned as [camera.c_tag]. Camera activated.")
 
-/obj/item/clothing/head/helmet/space/rig/syndi/examine()
+/obj/item/clothing/head/helmet/space/rig/syndi/examine(mob/user)
 	..()
-	if(get_dist(usr,src) <= 1)
-		usr << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
+	if(src in view(1, user))
+		to_chat(user, "This helmet has a built-in camera. It's [camera ? "" : "in"]active.")
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndie"
@@ -344,7 +343,6 @@
 	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
 	item_state = "syndie_hardsuit"
 	slowdown = 1.4
-	w_class = 3
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
@@ -358,9 +356,7 @@
 	item_state = "wiz_helm"
 	item_color = "wiz"
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
-	armor = list(melee = 66, bullet = 66, laser = 66,energy = 66, bomb = 66, bio = 100, rad = 60)
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
+	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
 
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
@@ -368,11 +364,8 @@
 	desc = "A bizarre gem-encrusted suit that radiates magical energies."
 	item_state = "wiz_hardsuit"
 	slowdown = 1
-	w_class = 3
 	unacidable = 1
-	armor = list(melee = 40, bullet = 66, laser = 66,energy = 66, bomb = 66, bio = 100, rad = 60)
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
+	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
 
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical

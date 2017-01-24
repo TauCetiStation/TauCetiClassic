@@ -113,7 +113,7 @@
 
 	return
 
-/obj/machinery/vending/proc/build_inventory(var/list/productlist,hidden=0,req_coin=0)
+/obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
 		var/price = prices[typepath]
@@ -149,7 +149,7 @@
 	if(to_restock <= refill.charges)
 		for(var/datum/data/vending_product/machine_content in machine)
 			if(machine_content.amount != machine_content.max_amount)
-				usr << "<span class='notice'>[machine_content.max_amount - machine_content.amount] of [machine_content.product_name]</span>"
+				to_chat(usr, "<span class='notice'>[machine_content.max_amount - machine_content.amount] of [machine_content.product_name]</span>")
 				machine_content.amount = machine_content.max_amount
 		refill.charges -= to_restock
 		total = to_restock
@@ -163,7 +163,7 @@
 			refill.charges -= restock
 			total += restock
 			if(restock)
-				usr << "<span class='notice'>[restock] of [machine_content.product_name]</span>"
+				to_chat(usr, "<span class='notice'>[restock] of [machine_content.product_name]</span>")
 			if(refill.charges == 0) //due to rounding, we ran out of refill charges, exit.
 				break
 	return total
@@ -178,35 +178,39 @@
 
 	if (istype(W, /obj/item/weapon/card/emag))
 		src.emagged = 1
-		user << "You short out the product lock on [src]"
+		to_chat(user, "You short out the product lock on [src]")
 		return
+
 	else if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		src.panel_open = !src.panel_open
-		user << "You [src.panel_open ? "open" : "close"] the maintenance panel."
+		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		src.overlays.Cut()
 		if(src.panel_open)
 			src.overlays += image(src.icon, "[initial(icon_state)]-panel")
 		src.updateUsrDialog()
+
 		return
 	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(src.panel_open)
 			attack_hand(user)
 		return
+
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
 		user.drop_item()
 		W.loc = src
 		coin = W
-		user << "\blue You insert the [W] into the [src]"
+		to_chat(user, "\blue You insert the [W] into the [src]")
 		return
+
 	else if(istype(W, /obj/item/weapon/wrench))	//unwrenching vendomats
 		var/turf/T = user.loc
-		user << "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>"
+		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40, target = src))
 			if( !istype(src, /obj/machinery/vending) || !user || !W || !T )	return
 			if( user.loc == T && user.get_active_hand() == W )
 				anchored = !anchored
-				user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+				to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 				if (!(src.anchored & powered()))
 					src.icon_state = "[initial(icon_state)]-off"
 					stat |= NOPOWER
@@ -215,36 +219,40 @@
 					icon_state = initial(icon_state)
 					stat &= ~NOPOWER
 					set_light(light_range_on, light_power_on)
-	else if(istype(W, /obj/item/weapon/card) && currently_vending)
+
+	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID()) //ѕда с картой
+		var/obj/item/weapon/card/I = W.GetID()
+		scan_card(I)
+
+	else if(currently_vending && istype(W, /obj/item/weapon/card))
 		var/obj/item/weapon/card/I = W
 		scan_card(I)
 
 	else if(istype(W, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
-			user << "<span class='notice'>It does nothing.</span>"
+			to_chat(user, "<span class='notice'>It does nothing.</span>")
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
 			var/obj/item/weapon/vending_refill/canister = W
 			if(canister.charges == 0)
-				user << "<span class='notice'>This [canister.name] is empty!</span>"
+				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
 			else
 				var/transfered = refill_inventory(canister,product_records,user)
 				if(transfered)
-					user << "<span class='notice'>You loaded [transfered] items in \the [name].</span>"
+					to_chat(user, "<span class='notice'>You loaded [transfered] items in \the [name].</span>")
 				else
-					user << "<span class='notice'>The [name] is fully stocked.</span>"
+					to_chat(user, "<span class='notice'>The [name] is fully stocked.</span>")
 			return;
 		else
-			user << "<span class='notice'>You should probably unscrew the service panel first.</span>"
+			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
 	else if (istype(W, /obj/item/weapon/spacecash/ewallet))
 		user.drop_item()
 		W.loc = src
 		ewallet = W
-		user << "\blue You insert the [W] into the [src]"
+		to_chat(user, "\blue You insert the [W] into the [src]")
 
 	else if(src.panel_open)
-
 		for(var/datum/data/vending_product/R in product_records)
 			if(istype(W, R.product_path))
 				stock(R, user)
@@ -252,7 +260,7 @@
 	else
 		..()
 
-/obj/machinery/vending/default_deconstruction_crowbar(var/obj/item/O)
+/obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
 	var/list/all_products = product_records + hidden_records + coin_records
 	for(var/datum/data/vending_product/machine_content in all_products)
 		while(machine_content.amount !=0)
@@ -270,7 +278,7 @@
 				break
 	..()
 
-/obj/machinery/vending/proc/scan_card(var/obj/item/weapon/card/I)
+/obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
 	if(!currently_vending) return
 	if (istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
@@ -317,25 +325,25 @@
 						src.vend(src.currently_vending, usr)
 						currently_vending = null
 					else
-						usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
+						to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 				else
-					usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
+					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 			else
-				usr << "\icon[src]<span class='warning'>Unable to access account. Check security settings and try again.</span>"
+				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access account. Check security settings and try again.</span>")
 		else
 			//Just Vend it.
 			src.vend(src.currently_vending, usr)
 			currently_vending = null
 	else
-		usr << "\icon[src]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>"
+		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
 
-/obj/machinery/vending/attack_paw(mob/user as mob)
+/obj/machinery/vending/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/vending/attack_ai(mob/user as mob)
+/obj/machinery/vending/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/vending/attack_hand(mob/user as mob)
+/obj/machinery/vending/attack_hand(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	user.set_machine(src)
@@ -431,23 +439,23 @@
 
 	if(href_list["remove_coin"] && !istype(usr,/mob/living/silicon))
 		if(!coin)
-			usr << "There is no coin in this machine."
+			to_chat(usr, "There is no coin in this machine.")
 			return FALSE
 
 		coin.loc = src.loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
-		usr << "\blue You remove the [coin] from the [src]"
+		to_chat(usr, "\blue You remove the [coin] from the [src]")
 		coin = null
 
 	else if(href_list["remove_ewallet"] && !istype(usr,/mob/living/silicon))
 		if (!ewallet)
-			usr << "There is no charge card in this machine."
+			to_chat(usr, "There is no charge card in this machine.")
 			return
 		ewallet.loc = src.loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(ewallet)
-		usr << "\blue You remove the [ewallet] from the [src]"
+		to_chat(usr, "\blue You remove the [ewallet] from the [src]")
 		ewallet = null
 
 	else if ((href_list["vend"]) && (src.vend_ready) && (!currently_vending))
@@ -456,14 +464,14 @@
 			if(istype(usr,/mob/living/silicon/robot))
 				var/mob/living/silicon/robot/R = usr
 				if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-					usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
+					to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
 					return FALSE
 			else
-				usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
+				to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
 				return FALSE
 
 		if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-			usr << "\red Access denied." //Unless emagged of course
+			to_chat(usr, "\red Access denied.")//Unless emagged of course
 			flick(src.icon_deny,src)
 			return FALSE
 
@@ -479,7 +487,7 @@
 					ewallet.worth -= R.price
 					src.vend(R, usr)
 				else
-					usr << "\red The ewallet doesn't have enough money to pay for that."
+					to_chat(usr, "\red The ewallet doesn't have enough money to pay for that.")
 					src.currently_vending = R
 					src.updateUsrDialog()
 			else
@@ -495,7 +503,7 @@
 	else if ((href_list["cutwire"]) && (src.panel_open))
 		var/twire = text2num(href_list["cutwire"])
 		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-			usr << "You need wirecutters!"
+			to_chat(usr, "You need wirecutters!")
 			return FALSE
 		if (src.isWireColorCut(twire))
 			src.mend(twire)
@@ -505,10 +513,10 @@
 	else if ((href_list["pulsewire"]) && (src.panel_open))
 		var/twire = text2num(href_list["pulsewire"])
 		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			usr << "You need a multitool!"
+			to_chat(usr, "You need a multitool!")
 			return FALSE
 		if (src.isWireColorCut(twire))
-			usr << "You can't pulse a cut wire."
+			to_chat(usr, "You can't pulse a cut wire.")
 			return FALSE
 		else
 			src.pulse(twire)
@@ -520,20 +528,20 @@
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
 	if ((!src.allowed(user)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-		user << "\red Access denied." //Unless emagged of course
+		to_chat(user, "\red Access denied.")//Unless emagged of course
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
 
 	if (R in coin_records)
 		if(!coin)
-			user << "\blue You need to insert a coin to get this item."
+			to_chat(user, "\blue You need to insert a coin to get this item.")
 			return
 		if(coin.string_attached)
 			if(prob(50))
-				user << "\blue You successfully pull the coin out before the [src] could swallow it."
+				to_chat(user, "\blue You successfully pull the coin out before the [src] could swallow it.")
 			else
-				user << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
+				to_chat(user, "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all.")
 				qdel(coin)
 				coin = null
 		else
@@ -552,15 +560,15 @@
 		flick(src.icon_vend,src)
 	spawn(src.vend_delay)
 		new R.product_path(get_turf(src))
-		playsound(src, 'tauceti/sounds/items/vending.ogg', 50, 1, 1)
+		playsound(src, 'sound/items/vending.ogg', 50, 1, 1)
 		src.vend_ready = 1
 		return
 
 	src.updateUsrDialog()
 
-/obj/machinery/vending/proc/stock(var/datum/data/vending_product/R, var/mob/user)
+/obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
 	if(src.panel_open)
-		user << "\blue You stock the [src] with \a [R.product_name]"
+		to_chat(user, "\blue You stock the [src] with \a [R.product_name]")
 		R.amount++
 
 	src.updateUsrDialog()
@@ -586,7 +594,7 @@
 
 	return
 
-/obj/machinery/vending/proc/speak(var/message)
+/obj/machinery/vending/proc/speak(message)
 	if(stat & NOPOWER)
 		return
 
@@ -654,15 +662,15 @@
 	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
 	return 1
 
-/obj/machinery/vending/proc/isWireColorCut(var/wireColor)
+/obj/machinery/vending/proc/isWireColorCut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	return ((src.wires & wireFlag) == 0)
 
-/obj/machinery/vending/proc/isWireCut(var/wireIndex)
+/obj/machinery/vending/proc/isWireCut(wireIndex)
 	var/wireFlag = APCIndexToFlag[wireIndex]
 	return ((src.wires & wireFlag) == 0)
 
-/obj/machinery/vending/proc/cut(var/wireColor)
+/obj/machinery/vending/proc/cut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	src.wires &= ~wireFlag
@@ -676,7 +684,7 @@
 				src.shoot_inventory = 1
 
 
-/obj/machinery/vending/proc/mend(var/wireColor)
+/obj/machinery/vending/proc/mend(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
 	src.wires |= wireFlag
@@ -687,7 +695,7 @@
 		if (WIRE_SHOOTINV)
 			src.shoot_inventory = 0
 
-/obj/machinery/vending/proc/pulse(var/wireColor)
+/obj/machinery/vending/proc/pulse(wireColor)
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	switch(wireIndex)
 		if(WIRE_EXTEND)
@@ -751,8 +759,8 @@
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/wine = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac = 5,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 5,/obj/item/weapon/reagent_containers/food/drinks/cans/beer = 6,
-					/obj/item/weapon/reagent_containers/food/drinks/cans/ale = 6,/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice = 4,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/beer = 6,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/ale = 6,/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice = 4,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 4,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 4,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,/obj/item/weapon/reagent_containers/food/drinks/cans/tonic = 8,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 8, /obj/item/weapon/reagent_containers/food/drinks/cans/sodawater = 15,
@@ -951,7 +959,7 @@
 	vend_delay = 15
 	vend_reply = "Have an enchanted evening!"
 	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
-	products = list(/obj/item/clothing/head/wizard = 1,/obj/item/clothing/suit/wizrobe = 1,/obj/item/clothing/head/wizard/red = 1,/obj/item/clothing/suit/wizrobe/red = 1,/obj/item/clothing/shoes/sandal = 1,/obj/item/weapon/staff = 2)
+	products = list(/obj/item/clothing/head/wizard = 1,/obj/item/clothing/suit/wizrobe = 1,/obj/item/clothing/head/wizard/red = 1,/obj/item/clothing/suit/wizrobe/red = 1,/obj/item/clothing/shoes/sandal = 1,/obj/item/weapon/staff = 2, /obj/item/device/modkit/wizard/skrell = 1, /obj/item/device/modkit/wizard/unathi = 1, /obj/item/device/modkit/wizard/tajaran = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
 
 /obj/machinery/vending/dinnerware
@@ -959,7 +967,21 @@
 	desc = "A kitchen and restaurant equipment vendor."
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
-	products = list(/obj/item/weapon/tray = 8,/obj/item/weapon/kitchen/utensil/fork = 6,/obj/item/weapon/kitchenknife = 3,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/chef/classic = 2)
+	products = list(
+		/obj/item/weapon/tray = 8,
+		/obj/item/weapon/kitchen/utensil/fork = 6,
+		/obj/item/weapon/kitchenknife = 3,
+		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,
+		/obj/item/clothing/suit/chef/classic = 2,
+		/obj/item/weapon/kitchen/mould/bear = 1,
+		/obj/item/weapon/kitchen/mould/worm = 1,
+		/obj/item/weapon/kitchen/mould/bean = 1,
+		/obj/item/weapon/kitchen/mould/ball = 1,
+		/obj/item/weapon/kitchen/mould/cane = 1,
+		/obj/item/weapon/kitchen/mould/cash = 1,
+		/obj/item/weapon/kitchen/mould/coin = 1,
+		/obj/item/weapon/kitchen/mould/loli = 1
+	)
 	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/utensil/knife = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/butch = 2)
 
 /obj/machinery/vending/sovietsoda
@@ -1001,8 +1023,8 @@
 	icon_state = "engi"
 	icon_deny = "engi-deny"
 	req_access_txt = "11"
-	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/shoes/orange = 4,/obj/item/clothing/head/hardhat = 4,
-					/obj/item/weapon/storage/belt/utility = 4,/obj/item/clothing/glasses/meson = 4,/obj/item/clothing/gloves/yellow = 4, /obj/item/weapon/screwdriver = 12,
+	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/shoes/workboots = 4,/obj/item/clothing/head/hardhat/yellow = 4,
+					/obj/item/clothing/head/hardhat/yellow/visor = 1,/obj/item/weapon/storage/belt/utility = 4,/obj/item/clothing/glasses/meson = 4,/obj/item/clothing/gloves/yellow = 4, /obj/item/weapon/screwdriver = 12,
 					/obj/item/weapon/crowbar = 12,/obj/item/weapon/wirecutters = 12,/obj/item/device/multitool = 12,/obj/item/weapon/wrench = 12,/obj/item/device/t_scanner = 12,
 					/obj/item/weapon/cable_coil/heavyduty = 8, /obj/item/weapon/stock_parts/cell = 8, /obj/item/weapon/weldingtool = 8,/obj/item/clothing/head/welding = 8,
 					/obj/item/weapon/light/tube = 10,/obj/item/clothing/suit/fire = 4, /obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,
@@ -1072,7 +1094,6 @@
 /obj/machinery/vending/blood
 	name = "Blood'O'Matic"
 	desc = "Human blood dispenser. With internal freezer. Brought to you by EmpireV corp."
-	icon = 'tauceti/items/vendomats/vendings.dmi'
 	icon_state = "blood2"
 	light_color = "#ffc0c0"
 	icon_deny = "blood2deny"
@@ -1082,3 +1103,72 @@
 					/obj/item/weapon/reagent_containers/blood/BPlus = 4, /obj/item/weapon/reagent_containers/blood/BMinus = 2,
 					/obj/item/weapon/reagent_containers/blood/OPlus = 7, /obj/item/weapon/reagent_containers/blood/OMinus = 4)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/stox = 10, /obj/item/weapon/reagent_containers/blood/empty = 10)
+
+//from old nanotrasen
+/obj/machinery/vending/holy
+	name = "HolyVend"
+	desc = "Special items to prayers, sacrifices, rites and other methods to tell your God: I remember you!"
+	icon_state = "holy"
+	product_slogans = "HolyVend: Select your Religion today"
+	product_ads = "Pray now!;Atheists are heretic;Everything 100% Holy;Thirsty? Wanna pray? Why without candles?"
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 10, /obj/item/weapon/storage/fancy/candle_box = 25)
+	contraband = list(/obj/item/weapon/nullrod = 2)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 30, /obj/item/weapon/storage/fancy/candle_box = 50, /obj/item/weapon/nullrod = 100)
+
+/obj/machinery/vending/eva
+	name = "Hardsuit Kits"
+	desc = "Conversion kits for your alien hardsuit needs."
+	products = list(/obj/item/device/modkit/engineering/tajaran = 5, /obj/item/device/modkit/engineering/unathi = 5, /obj/item/device/modkit/engineering/skrell = 5, /obj/item/device/modkit/engineering/chief/skrell = 1, /obj/item/device/modkit/atmos/tajaran = 5, /obj/item/device/modkit/atmos/unathi = 5, /obj/item/device/modkit/atmos/skrell = 5, /obj/item/device/modkit/med/tajaran = 5, /obj/item/device/modkit/med/unathi = 5, /obj/item/device/modkit/med/skrell = 5, /obj/item/device/modkit/sec/tajaran = 5, /obj/item/device/modkit/sec/unathi = 5, /obj/item/device/modkit/sec/skrell = 5, /obj/item/device/modkit/mining/tajaran = 5, /obj/item/device/modkit/mining/unathi = 5, /obj/item/device/modkit/mining/skrell = 5, /obj/item/device/modkit = 10)
+
+//from old nanotrasen
+//i deleted all drugs here, now it's just a joke
+/obj/machinery/vending/omskvend
+	name = "Omsk-o-mat"
+	desc = "Drug dispenser."
+	icon_state = "omskvend"
+	product_ads = "NORKOMAN SUKA SHTOLE?;STOP NARTCOTICS!; so i heard u liek mudkipz; METRO ZATOPEELO"
+	products = list(/obj/item/device/healthanalyzer = 5)
+	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 4)
+
+/obj/item/weapon/reagent_containers/pill/LSD
+	name = "LSD"
+	desc = "Ahaha oh wow."
+	icon_state = "pill9"
+	New()
+		..()
+		reagents.add_reagent("mindbreaker", 0)
+
+/obj/item/weapon/reagent_containers/glass/beaker/LSD
+	name = "LSD IV"
+	desc = "Ahaha oh wow."
+	New()
+		..()
+		reagents.add_reagent("mindbreaker", 0)
+		update_icon()
+
+/obj/machinery/vending/sustenance
+	name = "\improper Sustenance Vendor"
+	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement."
+	product_slogans = "Enjoy your meal.;Enough calories to support strenuous labor."
+	product_ads = "Sufficiently healthy.;Efficiently produced tofu!;Mmm! So good!;Have a meal.;You need food to live!;Have some more candy corn!;Try our new ice cups!"
+	icon_state = "sustenance"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/tofu = 20,
+					/obj/item/weapon/reagent_containers/food/drinks/ice = 12,
+					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6,
+					/obj/item/weapon/reagent_containers/food/snacks/cracker = 20,
+					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle = 12)
+	contraband = list(/obj/item/weapon/kitchen/utensil/knife = 6)
+
+//from old nanotrasen
+/obj/machinery/vending/theater
+	name = "Theater-o-mat"
+	desc = "Special costume pack to add randomness in boring life."
+	icon_state = "Theater"
+	products = list(/obj/item/clothing/head/xenos = 5, /obj/item/clothing/suit/xenos = 5, /obj/item/clothing/suit/monkeysuit = 5, /obj/item/clothing/suit/syndicatefake = 5, /obj/item/clothing/head/syndicatefake = 5,
+					/obj/item/clothing/head/collectable/slime = 5, /obj/item/clothing/head/collectable/xenom = 5, /obj/item/clothing/head/collectable/petehat = 5, /obj/item/clothing/head/kitty = 5,
+					/obj/item/clothing/head/pumpkinhead = 5, /obj/item/clothing/head/ushanka = 5, /obj/item/clothing/head/cardborg = 5, /obj/item/clothing/suit/cardborg = 5, /obj/item/clothing/head/bearpelt = 5,
+					/obj/item/clothing/suit/space/santa = 5, /obj/item/clothing/head/helmet/space/santahat = 5, /obj/item/weapon/storage/backpack/santabag = 5, /obj/item/clothing/mask/fakemoustache = 5,
+					/obj/item/clothing/mask/gas/sexyclown = 5, /obj/item/clothing/mask/gas/sexymime = 5, /obj/item/clothing/mask/horsehead = 5, /obj/item/clothing/suit/apron = 5, /obj/item/clothing/suit/apron/overalls = 5,
+					/obj/item/clothing/suit/chickensuit = 5, /obj/item/clothing/head/chicken = 5, /obj/item/clothing/under/fluff/tian_dress = 5, /obj/item/clothing/under/fluff/wyatt_1 = 5,
+					/obj/item/clothing/under/fluff/olddressuniform = 5, /obj/item/clothing/under/fluff/jumpsuitdown = 5, /obj/item/clothing/under/fluff/jane_sidsuit = 5, /obj/item/clothing/under/sundress = 5)
+	prices = list(/obj/item/clothing/head/xenos = 100, /obj/item/clothing/suit/xenos = 200, /obj/item/clothing/suit/monkeysuit = 200)

@@ -1,4 +1,4 @@
-#define SYNDICATE_SHUTTLE_MOVE_TIME 240
+#define SYNDICATE_SHUTTLE_MOVE_TIME 215
 #define SYNDICATE_SHUTTLE_COOLDOWN 200
 
 /obj/machinery/computer/syndicate_station
@@ -16,7 +16,7 @@
 	curr_location= locate(/area/syndicate_station/start)
 
 
-/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination as area)
+/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
 	if(moving)	return
 	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)	return
 	var/area/dest_location = locate(destination)
@@ -30,15 +30,17 @@
 		curr_location.move_contents_to(transit_location)
 		curr_location = transit_location
 		sleep(SYNDICATE_SHUTTLE_MOVE_TIME)
+		curr_location.parallax_slowdown()
+		sleep(PARALLAX_LOOP_TIME)
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
 	moving = 0
 	return 1
 
-/obj/machinery/computer/syndicate_station/attack_hand(mob/user as mob)
+/obj/machinery/computer/syndicate_station/attack_hand(mob/user)
 	if(!allowed(user))
-		user << "\red Access Denied"
+		to_chat(user, "\red Access Denied")
 		return
 
 	user.set_machine(src)

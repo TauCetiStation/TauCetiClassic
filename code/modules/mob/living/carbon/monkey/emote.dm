@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/emote(var/act,var/m_type=1,var/message = null)
+/mob/living/carbon/monkey/emote(act,m_type=1,message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -17,7 +17,7 @@
 				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					src << "\red You cannot send IC messages (muted)."
+					to_chat(src, "\red You cannot send IC messages (muted).")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -118,14 +118,21 @@
 		if("deathgasp")
 			message = "<b>The [src.name]</b> lets out a faint chimper as it collapses and stops moving..."
 			m_type = 1
+		if("cough")
+			if(istype(src,/mob/living/carbon/monkey/diona))
+				message = "<B>The [src.name]</B> shrinks and twitches slightly"
+				m_type = 1
+			else
+				message = "<B>The [src.name]</B> coughs!"
+				m_type = 2
 		if("help")
 			var/text = "choke, "
 			if(istype(src,/mob/living/carbon/monkey/diona))
 				text += "chirp, "
-			text += "collapse, dance, deathgasp, drool, gasp, shiver, gnarl, jump, paw, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
-			src << text
+			text += "collapse, cough, dance, deathgasp, drool, gasp, shiver, gnarl, jump, paw, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
+			to_chat(src, text)
 		else
-			src << text("Invalid Emote: []", act)
+			to_chat(src, text("Invalid Emote: []", act))
 	if ((message && src.stat == CONSCIOUS))
 		if(src.client)
 			log_emote("[name]/[key] : [message]")

@@ -65,7 +65,7 @@ for reference:
 	var/health = 100.0
 	var/maxhealth = 100.0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/stack/sheet/wood))
 			if (src.health < src.maxhealth)
 				visible_message("\red [user] begins to repair \the [src]!")
@@ -157,7 +157,7 @@ for reference:
 
 		src.icon_state = "barrier[src.locked]"
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 		if (istype(W, /obj/item/weapon/card/id/))
 			if (src.allowed(user))
 				if	(src.emagged < 2.0)
@@ -165,10 +165,10 @@ for reference:
 					src.anchored = !src.anchored
 					src.icon_state = "barrier[src.locked]"
 					if ((src.locked == 1.0) && (src.emagged < 2.0))
-						user << "Barrier lock toggled on."
+						to_chat(user, "Barrier lock toggled on.")
 						return
 					else if ((src.locked == 0.0) && (src.emagged < 2.0))
-						user << "Barrier lock toggled off."
+						to_chat(user, "Barrier lock toggled off.")
 						return
 				else
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -181,7 +181,7 @@ for reference:
 			if (src.emagged == 0)
 				src.emagged = 1
 				src.req_access = null
-				user << "You break the ID authentication lock on \the [src]."
+				to_chat(user, "You break the ID authentication lock on \the [src].")
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
@@ -189,7 +189,7 @@ for reference:
 				return
 			else if (src.emagged == 1)
 				src.emagged = 2
-				user << "You short out the anchoring mechanism on \the [src]."
+				to_chat(user, "You short out the anchoring mechanism on \the [src].")
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()

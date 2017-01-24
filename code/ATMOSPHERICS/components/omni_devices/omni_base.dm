@@ -69,7 +69,7 @@
 	if(old_stat != stat)
 		update_icon()
 
-/obj/machinery/atmospherics/omni/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/omni/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/pipe_painter))	//for updating the color of connected pipe ends
 		for(var/datum/omni_port/P in ports)
 			P.update = 1
@@ -84,10 +84,10 @@
 		int_pressure += P.air.return_pressure()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_pressure - env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "<span class='warning'>You cannot unwrench [src], it is too exerted due to internal pressure.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], it is too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
-	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	if(do_after(user, 40, target = src))
 		user.visible_message( \
@@ -97,7 +97,7 @@
 		new /obj/item/pipe(loc, make_from=src)
 		qdel(src)
 
-/obj/machinery/atmospherics/omni/attack_hand(user as mob)
+/obj/machinery/atmospherics/omni/attack_hand(user)
 	if(..())
 		return
 
@@ -158,7 +158,7 @@
 
 	update_icon()
 
-/obj/machinery/atmospherics/omni/proc/select_port_icons(var/datum/omni_port/P)
+/obj/machinery/atmospherics/omni/proc/select_port_icons(datum/omni_port/P)
 	if(!istype(P))
 		return
 

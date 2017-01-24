@@ -3,7 +3,7 @@
 	desc = "Should anything ever go wrong..."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 3.0
 	throwforce = 2.0
 	throw_speed = 1
@@ -22,7 +22,6 @@
 	anchored = 0.0
 	var/matter = 0
 	var/mode = 1
-	flags = TABLEPASS
 	w_class = 3.0
 
 /obj/item/weapon/bananapeel
@@ -101,7 +100,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
 	item_state = "stick"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
@@ -137,7 +136,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	throwforce = 0
 	w_class = 3.0
 	origin_tech = "materials=1"
@@ -152,15 +151,15 @@
 	var/armed = 0
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS)
 
-/obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)
+/obj/item/weapon/legcuffs/beartrap/attack_self(mob/user)
 	..()
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
 		icon_state = "beartrap[armed]"
-		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>"
+		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>")
 
 /obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed)
@@ -172,7 +171,7 @@
 					H.legcuffed = src
 					src.loc = H
 					H.update_inv_legcuffed()
-					H << "<span class='danger'>You step on \the [src]!</span>"
+					to_chat(H, "<span class='danger'>You step on \the [src]!</span>")
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 					for(var/mob/O in viewers(H, null))
 						if(O == H)
@@ -186,6 +185,39 @@
 		icon_state = "beartrap[armed]"
 	..()
 
+/obj/item/weapon/legcuffs/bola
+	name = "bola"
+	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
+	icon_state = "bola"
+	breakouttime = 35 //easy to apply, easy to break out of
+	origin_tech = "engineering=3;combat=1"
+	var/weaken = 2
+
+/obj/item/weapon/legcuffs/bola/throw_at(atom/target, mob/thrower)
+	if(!..())
+		return
+	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
+
+/obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom)
+	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
+		return
+	var/mob/living/carbon/C = hit_atom
+	if(!C.legcuffed)
+		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
+		C.legcuffed = src
+		src.loc = C
+		C.update_inv_legcuffed()
+		feedback_add_details("handcuffs","B")
+		to_chat(C,"<span class='userdanger'>\The [src] ensnares you!</span>")
+		C.Weaken(weaken)
+
+/obj/item/weapon/legcuffs/bola/tactical//traitor variant
+	name = "reinforced bola"
+	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
+	icon_state = "bola_r"
+	breakouttime = 70
+	origin_tech = "engineering=4;combat=3"
+	weaken = 6
 
 
 /obj/item/weapon/caution
@@ -198,7 +230,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
 	attack_verb = list("warned", "cautioned", "smashed")
 
 /obj/item/weapon/caution/cone
@@ -211,7 +242,7 @@
 	desc = "Parts of a rack."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rack_parts"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	m_amt = 3750
 
 /obj/item/weapon/shard
@@ -229,15 +260,15 @@
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>")
+		to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
 		return (BRUTELOSS)
 
-/obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/shard/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
-/obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
+/obj/item/weapon/shard/afterattack(atom/A, mob/user, proximity)
 	if(!proximity || !(src in user))
 		return
 	if(isturf(A))
@@ -248,13 +279,13 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves && !(H.dna && H.dna.mutantrace == "adamantine")) //specflags please..
-			H << "<span class='warning'>[src] cuts into your hand!</span>"
+			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/organ = (H.hand ? "l_" : "r_") + "hand"
 			var/datum/organ/external/affecting = H.get_organ(organ)
 			affecting.take_damage(force / 2)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
-		M << "<span class='warning'>[src] cuts into your hand!</span>"
+		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 		M.adjustBruteLoss(force / 2)
 
 /*/obj/item/weapon/syndicate_uplink
@@ -268,7 +299,7 @@
 	var/traitor_frequency = 0.0
 	var/mob/currentUser = null
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = CONDUCT | ONBELT
 	w_class = 2.0
 	item_state = "radio"
 	throw_speed = 4
@@ -308,7 +339,7 @@
 	var/selfdestruct = 0.0
 	var/traitor_frequency = 0.0
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "radio"
 	throwforce = 5
@@ -328,7 +359,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
 /obj/item/weapon/staff/broom
@@ -355,7 +386,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = NOSHIELD
 
 /obj/item/weapon/table_parts
 	name = "table parts"
@@ -364,7 +395,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "table_parts"
 	m_amt = 3750
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/table_parts/reinforced
@@ -373,7 +404,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "reinf_tableparts"
 	m_amt = 7500
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
@@ -399,7 +430,7 @@
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (OXYLOSS)
 
 /obj/item/weapon/module
@@ -407,7 +438,7 @@
 	icon_state = "std_module"
 	w_class = 2.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS|CONDUCT
+	flags = CONDUCT
 	var/mtype = 1						// 1=electronic 2=hardware
 
 /obj/item/weapon/module/card_reader
@@ -437,48 +468,12 @@
 	icon_state = "power_mod"
 	desc = "Charging circuits for power cells."
 
-
-/obj/item/device/camera_bug
-	name = "camera bug"
-	icon = 'icons/obj/device.dmi'
-	icon_state = "flash"
-	w_class = 1.0
-	item_state = "electronic"
-	throw_speed = 4
-	throw_range = 20
-
-/obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
-	var/list/cameras = new/list()
-	for (var/obj/machinery/camera/C in cameranet.cameras)
-		if (C.bugged && C.status)
-			cameras.Add(C)
-	if (length(cameras) == 0)
-		usr << "<span class='red'>No bugged functioning cameras found.</span>"
-		return
-
-	var/list/friendly_cameras = new/list()
-
-	for (var/obj/machinery/camera/C in cameras)
-		friendly_cameras.Add(C.c_tag)
-
-	var/target = input("Select the camera to observe", null) as null|anything in friendly_cameras
-	if (!target)
-		return
-	for (var/obj/machinery/camera/C in cameras)
-		if (C.c_tag == target)
-			target = C
-			break
-	if (usr.stat == DEAD) return
-
-	usr.client.eye = target
-
-
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"
 	desc = "Meat that appears...strange..."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "meat"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	w_class = 2.0
 	origin_tech = "biotech=2"
 
@@ -487,7 +482,7 @@
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 12.0
 	sharp = 1
 	edge = 1
@@ -499,7 +494,7 @@
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 
-/obj/item/weapon/hatchet/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
@@ -521,12 +516,12 @@
 	throw_speed = 1
 	throw_range = 3
 	w_class = 4.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = NOSHIELD
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
-/obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob, proximity)
+/obj/item/weapon/scythe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if(istype(A, /obj/effect/spacevine))
 		for(var/obj/effect/spacevine/B in orange(A,1))
@@ -544,7 +539,7 @@
 	w_class = 1
 	throwforce = 2
 	var/cigarcount = 6
-	flags = ONBELT | TABLEPASS */
+	flags = ONBELT */
 
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
@@ -561,7 +556,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
-	flags = FPRINT | TABLEPASS | NOBLUDGEON
+	flags = NOBLUDGEON
 	w_class = 2.0
 	origin_tech = "syndicate=2"
 	var/timer = 10
@@ -588,7 +583,7 @@
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/weapon/storage/part_replacer/afterattack(obj/machinery/T as obj, mob/living/carbon/human/user as mob, flag)
+/obj/item/weapon/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag)
 	if(flag)
 		return
 	else
@@ -621,7 +616,7 @@
 
 //Sorts stock parts inside an RPED by their rating.
 //Only use /obj/item/weapon/stock_parts/ with this sort proc!
-/proc/cmp_rped_sort(var/obj/item/weapon/stock_parts/A, var/obj/item/weapon/stock_parts/B)
+/proc/cmp_rped_sort(obj/item/weapon/stock_parts/A, obj/item/weapon/stock_parts/B)
 	return B.rating - A.rating
 
 /obj/item/weapon/stock_parts

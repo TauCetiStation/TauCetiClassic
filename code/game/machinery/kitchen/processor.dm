@@ -32,7 +32,7 @@
 	var/output
 	var/time = 40
 
-/datum/food_processor_process/proc/process_food(loc, what, var/obj/machinery/processor/processor)
+/datum/food_processor_process/proc/process_food(loc, what, obj/machinery/processor/processor)
 	if (src.output && loc && processor)
 		for(var/i = 0, i < processor.rating_amount, i++)
 			new src.output(loc)
@@ -62,17 +62,17 @@
 
 /datum/food_processor_process/wheat
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
-	output = /obj/item/weapon/reagent_containers/food/snacks/flour
+	output = /obj/item/weapon/reagent_containers/food/condiment/flour
 
 /datum/food_processor_process/spaghetti
-	input = /obj/item/weapon/reagent_containers/food/snacks/flour
+	input = /obj/item/weapon/reagent_containers/food/snacks/dough
 	output = /obj/item/weapon/reagent_containers/food/snacks/spagetti
 
 	/* mobs */
 /datum/food_processor_process/mob/process_food(loc, what, processor)
 	..()
 
-//datum/food_processor_process/mob/slime/process_food(loc, what, var/obj/machinery/processor/processor)
+//datum/food_processor_process/mob/slime/process_food(loc, what, obj/machinery/processor/processor)
 //	var/mob/living/simple_animal/slime/S = what
 //	var/C = S.cores
 //	if(S.stat != DEAD)
@@ -122,7 +122,7 @@
 
 
 
-/obj/machinery/processor/proc/select_recipe(var/X)
+/obj/machinery/processor/proc/select_recipe(X)
 	for (var/Type in typesof(/datum/food_processor_process) - /datum/food_processor_process - /datum/food_processor_process/mob)
 		var/datum/food_processor_process/P = new Type()
 		if (!istype(X, P.input))
@@ -130,9 +130,9 @@
 		return P
 	return 0
 
-/obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/processor/attackby(obj/item/O, mob/user)
 	if(src.processing)
-		user << "\red The processor is in the process of processing."
+		to_chat(user, "\red The processor is in the process of processing.")
 		return 1
 	if(default_deconstruction_screwdriver(user, "processor1", "processor", O))
 		return
@@ -149,7 +149,7 @@
 	default_deconstruction_crowbar(O)
 
 	if(src.contents.len > 0) //TODO: several items at once? several different items?
-		user << "\red Something is already in the processing chamber."
+		to_chat(user, "\red Something is already in the processing chamber.")
 		return 1
 	var/what = O
 	if (istype(O, /obj/item/weapon/grab))
@@ -158,7 +158,7 @@
 
 	var/datum/food_processor_process/P = select_recipe(what)
 	if (!P)
-		user << "\red That probably won't blend."
+		to_chat(user, "\red That probably won't blend.")
 		return 1
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
@@ -166,14 +166,14 @@
 	what:loc = src
 	return
 
-/obj/machinery/processor/attack_hand(var/mob/user as mob)
+/obj/machinery/processor/attack_hand(mob/user)
 	if (src.stat != CONSCIOUS) //NOPOWER etc
 		return
 	if(src.processing)
-		user << "\red The processor is in the process of processing."
+		to_chat(user, "\red The processor is in the process of processing.")
 		return 1
 	if(src.contents.len == 0)
-		user << "\red The processor is empty."
+		to_chat(user, "\red The processor is empty.")
 		return 1
 	src.processing = 1
 	user.visible_message("[user] turns on [src].", \

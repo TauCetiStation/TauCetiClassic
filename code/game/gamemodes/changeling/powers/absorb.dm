@@ -6,27 +6,27 @@
 	req_human = 1
 	max_genetic_damage = 100
 
-/obj/effect/proc_holder/changeling/absorbDNA/can_sting(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 
 	var/datum/changeling/changeling = user.mind.changeling
 	if(changeling.isabsorbing)
-		user << "<span class='warning'>We are already absorbing!</span>"
+		to_chat(user, "<span class='warning'>We are already absorbing!</span>")
 		return
 
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	if(!istype(G))
-		user << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>"
+		to_chat(user, "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>")
 		return
 	if(G.state <= GRAB_NECK)
-		user << "<span class='warning'>We must have a tighter grip to absorb this creature.</span>"
+		to_chat(user, "<span class='warning'>We must have a tighter grip to absorb this creature.</span>")
 		return
 
 	var/mob/living/carbon/target = G.affecting
 	return changeling.can_absorb_dna(user,target)
 
-/obj/effect/proc_holder/changeling/absorbDNA/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
@@ -34,27 +34,27 @@
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
 			if(1)
-				user << "<span class='notice'>This creature is compatible. We must hold still...</span>"
+				to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
 			if(2)
-				user << "<span class='notice'>We extend a proboscis.</span>"
+				to_chat(user, "<span class='notice'>We extend a proboscis.</span>")
 				user.visible_message("<span class='warning'>[user] extends a proboscis!</span>")
 			if(3)
-				user << "<span class='notice'>We stab [target] with the proboscis.</span>"
+				to_chat(user, "<span class='notice'>We stab [target] with the proboscis.</span>")
 				user.visible_message("<span class='danger'>[user] stabs [target] with the proboscis!</span>")
-				target << "<span class='danger'>You feel a sharp stabbing pain!</span>"
+				to_chat(target, "<span class='danger'>You feel a sharp stabbing pain!</span>")
 				var/datum/organ/external/affecting = target.get_organ(user.zone_sel.selecting)
 				if(affecting.take_damage(39,0,1,0,"large organic needle"))
 					continue
 
 		feedback_add_details("changeling_powers","A[stage]")
 		if(!do_mob(user, target, 150))
-			user << "<span class='warning'>Our absorption of [target] has been interrupted!</span>"
+			to_chat(user, "<span class='warning'>Our absorption of [target] has been interrupted!</span>")
 			changeling.isabsorbing = 0
 			return
 
-	user << "<span class='notice'>We have absorbed [target]!</span>"
+	to_chat(user, "<span class='notice'>We have absorbed [target]!</span>")
 	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>")
-	target << "<span class='danger'>You have been absorbed by the changeling!</span>"
+	to_chat(target, "<span class='danger'>You have been absorbed by the changeling!</span>")
 
 	changeling.absorb_dna(target)
 
@@ -108,19 +108,19 @@
 /datum/changeling/proc/can_absorb_dna(mob/living/carbon/U, mob/living/carbon/T)
 	if(T)
 		if(!ishuman(T))
-			U << "<span class='warning'>[T] is too simple for absorption.</span>"
+			to_chat(U, "<span class='warning'>[T] is too simple for absorption.</span>")
 			return 0
 
 		if(NOCLONE in T.mutations || HUSK in T.mutations)
-			U << "<span class='warning'>DNA of [T] is ruined beyond usability!</span>"
+			to_chat(U, "<span class='warning'>DNA of [T] is ruined beyond usability!</span>")
 			return 0
 
-		if(T:species.flags & IS_SYNTHETIC || T:species.flags & IS_PLANT)
-			U << "<span class='warning'>[T] is not compatible with our biology.</span>"
+		if(T:species.flags[IS_SYNTHETIC] || T:species.flags[IS_PLANT])
+			to_chat(U, "<span class='warning'>[T] is not compatible with our biology.</span>")
 			return 0
 
-		if(T:species.flags & NO_SCAN)
-			src << "<span class='warning'>We do not know how to parse this creature's DNA!</span>"
+		if(T:species.flags[NO_SCAN])
+			to_chat(src, "<span class='warning'>We do not know how to parse this creature's DNA!</span>")
 			return 0
 
 		for(var/datum/dna/D in absorbed_dna)
@@ -128,56 +128,56 @@
 				if(T.dna.struc_enzymes == D.struc_enzymes)
 					if(T.dna.real_name == D.real_name)
 						if(T.dna.mutantrace == D.mutantrace)
-							U << "<span class='warning'>We already have that DNA in storage.</span>"
+							to_chat(U, "<span class='warning'>We already have that DNA in storage.</span>")
 							return 0
 	return 1
 /*
-/obj/effect/proc_holder/changeling/absorbDNA/can_sting(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 
 	var/datum/changeling/changeling = user.mind.changeling
 	if(changeling.isabsorbing)
-		user << "<span class='warning'>We are already absorbing!</span>"
+		to_chat(user, "<span class='warning'>We are already absorbing!</span>")
 		return
 
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	if(!istype(G))
-		user << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>"
+		to_chat(user, "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>")
 		return
 	if(!G.state == GRAB_KILL)
-		user << "<span class='warning'>We must have a tighter grip to absorb this creature.</span>"
+		to_chat(user, "<span class='warning'>We must have a tighter grip to absorb this creature.</span>")
 		return
 
 	var/mob/living/carbon/target = G.affecting
 	return changeling.can_absorb_dna(user,target)
 
-/obj/effect/proc_holder/changeling/absorbDNA/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
 			if(1)
-				user << "<span class='notice'>This creature is compatible. We must hold still...</span>"
+				to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
 			if(2)
-				user << "<span class='notice'>We extend a proboscis.</span>"
+				to_chat(user, "<span class='notice'>We extend a proboscis.</span>")
 				user.visible_message("<span class='warning'>[user] extends a proboscis!</span>")
 			if(3)
-				user << "<span class='notice'>We stab [target] with the proboscis.</span>"
+				to_chat(user, "<span class='notice'>We stab [target] with the proboscis.</span>")
 				user.visible_message("<span class='danger'>[user] stabs [target] with the proboscis!</span>")
-				target << "<span class='danger'>You feel a sharp stabbing pain!</span>"
+				to_chat(target, "<span class='danger'>You feel a sharp stabbing pain!</span>")
 				target.take_overall_damage(40)
 
 		feedback_add_details("changeling_powers","A[stage]")
 		if(!do_mob(user, target, 150))
-			user << "<span class='warning'>Our absorption of [target] has been interrupted!</span>"
+			to_chat(user, "<span class='warning'>Our absorption of [target] has been interrupted!</span>")
 			changeling.isabsorbing = 0
 			return
 
-	user << "<span class='notice'>We have absorbed [target]!</span>"
+	to_chat(user, "<span class='notice'>We have absorbed [target]!</span>")
 	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>")
-	target << "<span class='danger'>You have been absorbed by the changeling!</span>"
+	to_chat(target, "<span class='danger'>You have been absorbed by the changeling!</span>")
 
 //	changeling.absorb_dna(target)
 	target.dna.real_name = target.real_name //Set this again, just to be sure that it's properly set.

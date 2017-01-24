@@ -69,7 +69,7 @@ proc/move_research_shuttle()
 	var/hacked = 0
 	var/location = 0 //0 = station, 1 = research base
 
-/obj/machinery/computer/research_shuttle/attack_hand(user as mob)
+/obj/machinery/computer/research_shuttle/attack_hand(user)
 	src.add_fingerprint(usr)
 	var/dat = "<center>Research shuttle: <b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
 
@@ -81,7 +81,7 @@ proc/move_research_shuttle()
 		return
 
 	if(!src.allowed(usr) && !emagged)
-		usr << "\red You do not have the required access level"
+		to_chat(usr, "\red You do not have the required access level")
 		return FALSE
 
 	if(href_list["move"])
@@ -91,14 +91,14 @@ proc/move_research_shuttle()
 		//		return
 
 		if (!research_shuttle_moving)
-			usr << "\blue Shuttle recieved message and will be sent shortly."
+			to_chat(usr, "\blue Shuttle recieved message and will be sent shortly.")
 			move_research_shuttle()
 		else
-			usr << "\blue Shuttle is already moving."
+			to_chat(usr, "\blue Shuttle is already moving.")
 
 	updateUsrDialog()
 
-/obj/machinery/computer/research_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/computer/research_shuttle/attackby(obj/item/weapon/W, mob/user)
 
 	if (istype(W, /obj/item/weapon/card/emag))
 		var/obj/item/weapon/card/emag/E = W
@@ -108,7 +108,7 @@ proc/move_research_shuttle()
 			return
 		src.req_access = list()
 		hacked = 1
-		usr << "You fried the consoles ID checking system. It's now available to everyone!"
+		to_chat(usr, "You fried the consoles ID checking system. It's now available to everyone!")
 
 	else
 		..()

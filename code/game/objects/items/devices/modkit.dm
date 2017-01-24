@@ -3,7 +3,7 @@
 #define MODKIT_FULL 3
 
 /obj/item/device/modkit
-	name = "hardsuit modification kit"
+	name = "Human hardsuit modification kit"
 	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user."
 	icon_state = "modkit"
 	var/parts = MODKIT_FULL
@@ -14,19 +14,16 @@
 		/obj/item/clothing/suit/space/rig
 		)
 
-	var/list/forbidden_type = list(
-		/obj/item/clothing/head/helmet/space/rig/engineering/chief,
-		/obj/item/clothing/suit/space/rig/engineering/chief
-	)
+	var/list/forbidden_type = list()
 
-/obj/item/device/modkit/afterattack(obj/O, mob/user as mob)
+/obj/item/device/modkit/afterattack(obj/O, mob/user)
 	if(get_dist(src,O)>1)
 		return
 	if (!target_species)
 		return	//it shouldn't be null, okay?
 
 	if(!parts)
-		user << "<span class='warning'>This kit has no parts for this modification left.</span>"
+		to_chat(user, "<span class='warning'>This kit has no parts for this modification left.</span>")
 		user.drop_from_inventory(src)
 		qdel(src)
 		return
@@ -38,21 +35,21 @@
 
 	var/obj/item/clothing/I = O
 	if (!istype(I) || !allowed)
-		user << "<span class='notice'>[src] is unable to modify that.</span>"
+		to_chat(user, "<span class='notice'>[src] is unable to modify that.</span>")
 		return
 
 	var/excluding = ("exclude" in I.species_restricted)
 	var/in_list = (target_species in I.species_restricted)
 	if (excluding ^ in_list)
-		user << "<span class='notice'>[I] is already modified.</span>"
+		to_chat(user, "<span class='notice'>[I] is already modified.</span>")
 
 	if(!isturf(O.loc))
-		user << "<span class='warning'>[O] must be safely placed on the ground for modification.</span>"
+		to_chat(user, "<span class='warning'>[O] must be safely placed on the ground for modification.</span>")
 		return
 
 	playsound(user.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 
-	user.visible_message("\red [user] opens \the [src] and modifies \the [O].","\red You open \the [src] and modify \the [O].")
+	user.visible_message("<span class='red'>[user] opens \the [src] and modifies \the [O].</span>","<span class='red'> You open \the [src] and modify \the [O].</span>")
 
 	I.refit_for_species(target_species)
 
@@ -65,161 +62,179 @@
 		user.drop_from_inventory(src)
 		qdel(src)
 
-/obj/item/device/modkit/examine()
+
+/obj/item/device/modkit/examine(mob/user)
 	..()
-	usr << "It looks as though it modifies hardsuits to fit [target_species] users."
+	to_chat(user, "It looks as though it modifies hardsuits to fit [target_species] users.")
+
 
 /obj/item/device/modkit/tajaran
-	name = "tajaran hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Tajaran."
+	name = "Tajaran hardsuit modification kit"
 	target_species = "Tajaran"
 
 /obj/item/device/modkit/unathi
-	name = "unathi hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Unathi."
+	name = "Unathi hardsuit modification kit"
 	target_species = "Unathi"
 
 /obj/item/device/modkit/skrell
-	name = "skrellian hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Skrell."
+	name = "Skrellian hardsuit modification kit"
 	target_species = "Skrell"
 
-/obj/item/device/modkit/tajaran/engineering
-	name = "tajaran engineering hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Tajaran."
-	target_species = "Tajaran"
+
+/obj/item/device/modkit/engineering
+	name = "Engineering hardsuit modification kit"
 	permitted_types = list(
 		/obj/item/clothing/head/helmet/space/rig/engineering,
 		/obj/item/clothing/suit/space/rig/engineering
 		)
+	forbidden_type = list(
+		/obj/item/clothing/head/helmet/space/rig/engineering/chief,
+		/obj/item/clothing/suit/space/rig/engineering/chief
+	)
 
-/obj/item/device/modkit/tajaran/atmos
-	name = "tajaran atmospherics hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Tajaran."
+/obj/item/device/modkit/engineering/tajaran
+	name = "Tajaran engineering hardsuit modification kit"
 	target_species = "Tajaran"
+
+/obj/item/device/modkit/engineering/unathi
+	name = "Unathi engineering hardsuit modification kit"
+	target_species = "Unathi"
+
+/obj/item/device/modkit/engineering/skrell
+	name = "Skrellian engineering hardsuit modification kit"
+	target_species = "Skrell"
+
+
+/obj/item/device/modkit/engineering/chief
+	name = "Chief-engineers hardsuit modification kit"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/engineering,
+		/obj/item/clothing/suit/space/rig/engineering,
+		/obj/item/clothing/head/helmet/space/rig/atmos,
+		/obj/item/clothing/suit/space/rig/atmos
+		)
+	forbidden_type = list()
+
+/obj/item/device/modkit/engineering/chief/skrell
+	name = "Skrellian chief-engineers hardsuit modification kit"
+	target_species = "Skrell"
+
+
+/obj/item/device/modkit/atmos
+	name = "Atmospherics hardsuit modification kit"
 	permitted_types = list(
 		/obj/item/clothing/head/helmet/space/rig/atmos,
 		/obj/item/clothing/suit/space/rig/atmos
 		)
 
-/obj/item/device/modkit/tajaran/med
-	name = "tajaran medical hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Tajaran."
+/obj/item/device/modkit/atmos/tajaran
+	name = "Tajaran atmospherics hardsuit modification kit"
 	target_species = "Tajaran"
+
+/obj/item/device/modkit/atmos/unathi
+	name = "Unathi atmospherics hardsuit modification kit"
+	target_species = "Unathi"
+
+/obj/item/device/modkit/atmos/skrell
+	name = "Skrellian atmospherics hardsuit modification kit"
+	target_species = "Skrell"
+
+
+/obj/item/device/modkit/med
+	name = "Medical hardsuit modification kit"
 	permitted_types = list(
 		/obj/item/clothing/head/helmet/space/rig/medical,
 		/obj/item/clothing/suit/space/rig/medical
 		)
 
-/obj/item/device/modkit/tajaran/sec
-	name = "tajaran security hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Tajaran."
+/obj/item/device/modkit/med/tajaran
+	name = "Tajaran medical hardsuit modification kit"
 	target_species = "Tajaran"
+
+/obj/item/device/modkit/med/unathi
+	name = "Unathi medical hardsuit modification kit"
+	target_species = "Unathi"
+
+/obj/item/device/modkit/med/skrell
+	name = "Skrellian medical hardsuit modification kit"
+	target_species = "Skrell"
+
+
+/obj/item/device/modkit/sec
+	name = "Security hardsuit modification kit"
 	permitted_types = list(
 		/obj/item/clothing/head/helmet/space/rig/security,
 		/obj/item/clothing/suit/space/rig/security
 		)
 
-/obj/item/device/modkit/tajaran/mining
-	name = "tajaran mining hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Tajaran."
+/obj/item/device/modkit/sec/tajaran
+	name = "Tajaran security hardsuit modification kit"
 	target_species = "Tajaran"
+
+/obj/item/device/modkit/sec/unathi
+	name = "Unathi security hardsuit modification kit"
+	target_species = "Unathi"
+
+/obj/item/device/modkit/sec/skrell
+	name = "Skrellian security hardsuit modification kit"
+	target_species = "Skrell"
+
+
+/obj/item/device/modkit/mining
+	name = "Mining hardsuit modification kit"
 	permitted_types = list(
 		/obj/item/clothing/head/helmet/space/rig/mining,
 		/obj/item/clothing/suit/space/rig/mining
 		)
 
-/obj/item/device/modkit/unathi/engineering
-	name = "unathi engineering hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Unathi."
+/obj/item/device/modkit/mining/tajaran
+	name = "Tajaran mining hardsuit modification kit"
+	target_species = "Tajaran"
+
+/obj/item/device/modkit/mining/unathi
+	name = "Unathi mining hardsuit modification kit"
 	target_species = "Unathi"
+
+/obj/item/device/modkit/mining/skrell
+	name = "Skrellian mining hardsuit modification kit"
+	target_species = "Skrell"
+
+
+/obj/item/device/modkit/syndie
+	name = "Gorlex hardsuit modification kit"
 	permitted_types = list(
-		/obj/item/clothing/head/helmet/space/rig/engineering,
-		/obj/item/clothing/suit/space/rig/engineering
+		/obj/item/clothing/head/helmet/space/rig/syndi,
+		/obj/item/clothing/suit/space/rig/syndi
 		)
 
-/obj/item/device/modkit/unathi/atmos
-	name = "unathi atmospherics hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Unathi."
+/obj/item/device/modkit/syndie/tajaran
+	name = "Tajaran gorlex hardsuit modification kit"
+	target_species = "Tajaran"
+
+/obj/item/device/modkit/syndie/unathi
+	name = "Unathi gorlex hardsuit modification kit"
 	target_species = "Unathi"
+
+/obj/item/device/modkit/syndie/skrell
+	name = "Skrellian gorlex hardsuit modification kit"
+	target_species = "Skrell"
+
+
+/obj/item/device/modkit/wizard
+	name = "Magical hardsuit modification kit"
 	permitted_types = list(
-		/obj/item/clothing/head/helmet/space/rig/atmos,
-		/obj/item/clothing/suit/space/rig/atmos
+		/obj/item/clothing/head/helmet/space/rig/wizard,
+		/obj/item/clothing/suit/space/rig/wizard
 		)
 
-/obj/item/device/modkit/unathi/med
-	name = "unathi medical hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Unathi."
+/obj/item/device/modkit/wizard/tajaran
+	name = "Tajaran magical hardsuit modification kit"
+	target_species = "Tajaran"
+
+/obj/item/device/modkit/wizard/unathi
+	name = "Unathi magical hardsuit modification kit"
 	target_species = "Unathi"
-	permitted_types = list(
-		/obj/item/clothing/head/helmet/space/rig/medical,
-		/obj/item/clothing/suit/space/rig/medical
-		)
 
-/obj/item/device/modkit/unathi/sec
-	name = "unathi security hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Unathi."
-	target_species = "Unathi"
-	permitted_types = list(
-		/obj/item/clothing/head/helmet/space/rig/security,
-		/obj/item/clothing/suit/space/rig/security
-		)
-
-/obj/item/device/modkit/unathi/mining
-	name = "unathi mining hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Unathi."
-	target_species = "Unathi"
-	permitted_types = list(
-		/obj/item/clothing/head/helmet/space/rig/mining,
-		/obj/item/clothing/suit/space/rig/mining
-		)
-
-/obj/item/device/modkit/skrell/engineering
-	name = "skrellian engineering hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Skrell."
+/obj/item/device/modkit/wizard/skrell
+	name = "Skrellian magical hardsuit modification kit"
 	target_species = "Skrell"
-	permitted_types = list(
-		/obj/item/clothing/head/helmet/space/rig/engineering,
-		/obj/item/clothing/suit/space/rig/engineering
-		)
-
-/obj/item/device/modkit/skrell/atmos
-	name = "skrellian atmospherics hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Skrell."
-	target_species = "Skrell"
-	permitted_types = list(
-		/obj/item/clothing/head/helmet/space/rig/atmos,
-		/obj/item/clothing/suit/space/rig/atmos
-		)
-
-/obj/item/device/modkit/skrell/med
-	name = "skrellian medical hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Skrell."
-	target_species = "Skrell"
-	permitted_types = list(
-		/obj/item/clothing/head/helmet/space/rig/medical,
-		/obj/item/clothing/suit/space/rig/medical
-		)
-
-/obj/item/device/modkit/skrell/sec
-	name = "skrellian security hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Skrell."
-	target_species = "Skrell"
-	permitted_types = list(
-		/obj/item/clothing/head/helmet/space/rig/security,
-		/obj/item/clothing/suit/space/rig/security
-		)
-
-/obj/item/device/modkit/skrell/mining
-	name = "skrellian mining hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Skrell."
-	target_species = "Skrell"
-	permitted_types = list(
-		/obj/item/clothing/head/helmet/space/rig/mining,
-		/obj/item/clothing/suit/space/rig/mining
-		)
-
-/obj/item/device/modkit/human
-	name = "human hardsuit modification kit"
-	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Human."
-	target_species = "Human"

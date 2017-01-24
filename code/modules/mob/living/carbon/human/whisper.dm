@@ -3,21 +3,21 @@
 	var/alt_name = ""
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
 	log_whisper("[src.name]/[src.key] : [message]")
 
 	if(src.client)
 		if (src.client.prefs.muted & MUTE_IC)
-			src << "\red You cannot whisper (muted)."
+			to_chat(src, "\red You cannot whisper (muted).")
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	if(!speech_allowed && usr == src)
-		usr << "\red You can't speak."
+		to_chat(usr, "\red You can't speak.")
 		return
 
 	if (src.stat == DEAD)
@@ -36,7 +36,7 @@
 	//parse the language code and consume it
 	var/datum/language/speaking = parse_language(message)
 	if(speaking)
-		message = copytext(message,3)
+		message = copytext(message,2+length(speaking.key))
 
 	whisper_say(message, speaking, alt_name)
 
@@ -106,10 +106,6 @@
 
 	//Pass whispers on to anything inside the immediate listeners.
 	for(var/mob/L in listening)
-		if(istype(L, /mob/living/simple_animal/smart_animal))
-			var/mob/living/simple_animal/smart_animal/D = L
-			spawn(0)
-				D.listen_talks(message, src)
 		for(var/mob/C in L.contents)
 			if(istype(C,/mob/living))
 				listening += C
@@ -118,7 +114,7 @@
 	for(var/obj/O in view(message_range, src))
 		spawn (0)
 			if (O)
-				O.hear_talk(src, message)	//O.hear_talk(src, message, verb, speaking)
+				O.hear_talk(src, message, verb, speaking)
 
 	var/list/eavesdropping = hearers(eavesdropping_range, src)
 	eavesdropping -= src

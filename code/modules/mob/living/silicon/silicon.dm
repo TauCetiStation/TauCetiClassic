@@ -34,17 +34,17 @@
 			src.take_organ_damage(10)
 			Stun(rand(1,5))
 	flash_eyes(affect_silicon = 1)
-	src << "\red <B>*BZZZT*</B>"
-	src << "\red Warning: Electromagnetic pulse detected."
+	to_chat(src, "\red <B>*BZZZT*</B>")
+	to_chat(src, "\red Warning: Electromagnetic pulse detected.")
 	..()
 
-/mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
+/mob/living/silicon/proc/damage_mob(brute = 0, fire = 0, tox = 0)
 	return
 
 /mob/living/silicon/IsAdvancedToolUser()
 	return 1
 
-/mob/living/silicon/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/silicon/bullet_act(obj/item/projectile/Proj)
 
 
 	if(!Proj.nodamage)
@@ -58,7 +58,7 @@
 
 	return 2
 
-/mob/living/silicon/apply_effect(var/effect = 0,var/effecttype = STUN, var/blocked = 0)
+/mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
 /*
 	if(!effect || (blocked >= 2))	return 0
@@ -80,7 +80,7 @@
 	updatehealth()
 	return 1*/
 
-/proc/islinked(var/mob/living/silicon/robot/bot, var/mob/living/silicon/ai/ai)
+/proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
 		return 0
 	if (bot.connected_ai == ai)
@@ -134,9 +134,9 @@
 	onclose(src, "airoster")
 
 //can't inject synths
-/mob/living/silicon/can_inject(var/mob/user, var/error_msg)
+/mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
-		user << "<span class='alert'>The armoured plating is too tough.</span>"
+		to_chat(user, "<span class='alert'>The armoured plating is too tough.</span>")
 	return 0
 
 
@@ -145,11 +145,11 @@
 /mob/living/silicon/can_speak(datum/language/speaking)
 	return universal_speak || (speaking in src.speech_synthesizer_langs)	//need speech synthesizer support to vocalize a language
 
-/mob/living/silicon/add_language(var/language, var/can_speak=1)
+/mob/living/silicon/add_language(language, can_speak=1)
 	if (..(language) && can_speak)
 		speech_synthesizer_langs.Add(all_languages[language])
 
-/mob/living/silicon/remove_language(var/rem_language)
+/mob/living/silicon/remove_language(rem_language)
 	..(rem_language)
 
 	for (var/datum/language/L in speech_synthesizer_langs)
@@ -176,13 +176,13 @@
 	switch(sensor_type)
 		if ("Security")
 			sensor_mode = SEC_HUD
-			src << "<span class='notice'>Security records overlay enabled.</span>"
+			to_chat(src, "<span class='notice'>Security records overlay enabled.</span>")
 		if ("Medical")
 			sensor_mode = MED_HUD
-			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
+			to_chat(src, "<span class='notice'>Life signs monitor overlay enabled.</span>")
 		if ("Disable")
 			sensor_mode = 0
-			src << "Sensor augmentations disabled."
+			to_chat(src, "Sensor augmentations disabled.")
 
 /mob/living/silicon/proc/write_laws()
 	if(laws)

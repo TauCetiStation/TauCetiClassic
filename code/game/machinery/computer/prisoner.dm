@@ -15,7 +15,7 @@
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 	light_color = "#B40000"
 
-/obj/machinery/computer/prisoner/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/prisoner/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -84,7 +84,7 @@
 		if(src.allowed(usr))
 			screen = !screen
 		else
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 
 	else if(href_list["warn"])
 		var/warning = sanitize(copytext(input(usr,"Message:","Enter your message here!",""),1,MAX_MESSAGE_LEN))
@@ -92,6 +92,6 @@
 		var/obj/item/weapon/implant/I = locate(href_list["warn"])
 		if((I)&&(I.imp_in))
 			var/mob/living/carbon/R = I.imp_in
-			R << "\green You hear a voice in your head saying: '[warning]'"
+			to_chat(R, "\green You hear a voice in your head saying: '[warning]'")
 
 	src.updateUsrDialog()

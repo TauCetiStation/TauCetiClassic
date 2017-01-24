@@ -14,11 +14,11 @@
 	var/foodsupply = 0
 	var/toxins = 0
 
-/obj/machinery/disease2/incubator/attackby(var/obj/O as obj, var/mob/user as mob)
+/obj/machinery/disease2/incubator/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/syringe))
 
 		if(beaker)
-			user << "\The [src] is already loaded."
+			to_chat(user, "\The [src] is already loaded.")
 			return
 
 		beaker = O
@@ -34,7 +34,7 @@
 	if(istype(O, /obj/item/weapon/virusdish))
 
 		if(dish)
-			user << "The dish tray is aleady full!"
+			to_chat(user, "The dish tray is aleady full!")
 			return
 
 		dish = O
@@ -46,11 +46,11 @@
 
 		src.attack_hand(user)
 
-/obj/machinery/disease2/incubator/attack_hand(mob/user as mob)
+/obj/machinery/disease2/incubator/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN)) return
 	ui_interact(user)
 
-/obj/machinery/disease2/incubator/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/disease2/incubator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	user.set_machine(src)
 
 	var/data[0]

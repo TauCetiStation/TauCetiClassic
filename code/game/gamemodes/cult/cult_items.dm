@@ -3,28 +3,27 @@
 	desc = "An arcane weapon wielded by the followers of Nar-Sie."
 	icon_state = "cultblade"
 	item_state = "cultblade"
-	flags = FPRINT | TABLEPASS
 	w_class = 4
 	force = 30
 	throwforce = 10
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 
-/obj/item/weapon/melee/cultblade/attack(mob/living/target as mob, mob/living/carbon/human/user as mob)
+/obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(iscultist(user))
 		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 		return ..()
 	else
 		user.Paralyse(5)
-		user << "\red An unexplicable force powerfully repels the sword from [target]!"
+		to_chat(user, "\red An unexplicable force powerfully repels the sword from [target]!")
 		var/organ = ((user.hand ? "l_":"r_") + "arm")
 		var/datum/organ/external/affecting = user.get_organ(organ)
 		affecting.take_damage(rand(force/2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
 	return
 
-/obj/item/weapon/melee/cultblade/pickup(mob/living/user as mob)
+/obj/item/weapon/melee/cultblade/pickup(mob/living/user)
 	if(!iscultist(user))
-		user << "\red An overwhelming feeling of dread comes over you as you pick up the cultist's sword. It would be wise to be rid of this blade quickly."
+		to_chat(user, "\red An overwhelming feeling of dread comes over you as you pick up the cultist's sword. It would be wise to be rid of this blade quickly.")
 		user.make_dizzy(120)
 
 
@@ -33,7 +32,7 @@
 	icon_state = "culthood"
 	desc = "A hood worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	flags = HEADCOVERSEYES
 	body_parts_covered = HEAD|EYES
 	armor = list(melee = 30, bullet = 10, laser = 5,energy = 5, bomb = 0, bio = 0, rad = 0)
 	cold_protection = HEAD
@@ -54,7 +53,6 @@
 	desc = "A set of armored robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
-	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/book/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 15, laser = 15,energy = 20, bomb = 25, bio = 10, rad = 0)
@@ -67,7 +65,7 @@
 	item_state = "magus"
 	desc = "A helm worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	armor = list(melee = 30, bullet = 15, laser = 15,energy = 20, bomb = 0, bio = 0, rad = 0)
 	body_parts_covered = HEAD|FACE|EYES
 	siemens_coefficient = 0
@@ -77,7 +75,6 @@
 	desc = "A set of armored robes worn by the followers of Nar-Sie."
 	icon_state = "magusred"
 	item_state = "magusred"
-	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/weapon/book/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 15, laser = 25,energy = 20, bomb = 25, bio = 10, rad = 0)

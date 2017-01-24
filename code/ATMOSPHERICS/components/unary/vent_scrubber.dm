@@ -164,17 +164,8 @@
 	if(signal.data["power_toggle"] != null)
 		on = !on
 
-	if(signal.data["panic_siphon"]) //must be before if("scrubbing" thing
-		panic = text2num(signal.data["panic_siphon"] != null)
-		if(panic)
-			on = 1
-			scrubbing = 0
-			volume_rate = 2000
-		else
-			scrubbing = 1
-			volume_rate = initial(volume_rate)
-	if(signal.data["toggle_panic_siphon"] != null)
-		panic = !panic
+	if(signal.data["panic_siphon"] != null) //must be before if("scrubbing" thing
+		panic = text2num(signal.data["panic_siphon"])
 		if(panic)
 			on = 1
 			scrubbing = 0
@@ -185,23 +176,15 @@
 
 	if(signal.data["scrubbing"] != null)
 		scrubbing = text2num(signal.data["scrubbing"])
-	if(signal.data["toggle_scrubbing"])
-		scrubbing = !scrubbing
 
 	if(signal.data["co2_scrub"] != null)
 		scrub_CO2 = text2num(signal.data["co2_scrub"])
-	if(signal.data["toggle_co2_scrub"])
-		scrub_CO2 = !scrub_CO2
 
 	if(signal.data["tox_scrub"] != null)
 		scrub_Toxins = text2num(signal.data["tox_scrub"])
-	if(signal.data["toggle_tox_scrub"])
-		scrub_Toxins = !scrub_Toxins
 
 	if(signal.data["n2o_scrub"] != null)
 		scrub_N2O = text2num(signal.data["n2o_scrub"])
-	if(signal.data["toggle_n2o_scrub"])
-		scrub_N2O = !scrub_N2O
 
 	if(signal.data["init"] != null)
 		name = signal.data["init"]
@@ -225,24 +208,24 @@
 		stat |= NOPOWER
 	update_icon()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>")
 		return 1
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		user << "<span class='warning'>You must remove the plating first.</span>"
+		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \

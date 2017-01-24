@@ -4,7 +4,7 @@ var/list/whitelist = list()
 	whitelist = file2list("config/whitelist.txt")
 	if(!whitelist.len)	whitelist = null
 
-/proc/check_whitelist(mob/M /*, var/rank*/)
+/proc/check_whitelist(mob/M /*, rank*/)
 //	if(!whitelist)
 //		return 0
 //	return ("[M.ckey]" in whitelist)
@@ -23,7 +23,7 @@ var/list/whitelist = list()
 		alien_whitelist = splittext(text, "\n")
 
 //todo: admin aliens
-/proc/is_alien_whitelisted(mob/M, var/species)
+/proc/is_alien_whitelisted(mob/M, species)
 	if(!config.usealienwhitelist)
 		return 1
 	if(species == "human" || species == "Human")
@@ -53,13 +53,14 @@ var/list/whitelist = list()
 client/proc/get_alienwhitelist()
 	set category = "Server"
 	set name = "Whitelist(Alien): Check"
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
 	var/path = "config/alienwhitelist.txt"
-	if( fexists(path) )
-		src << run( file(path) )
+	if(fexists(path))
+		src << run(file(path))
 	else
-		src << "<font color='red'>Error: get_alienwhitelist(): File not found/Invalid path([path]).</font>"
+		to_chat(src, "<font color='red'>Error: get_alienwhitelist(): File not found/Invalid path([path]).</font>")
 		return
 	return
 
@@ -80,7 +81,7 @@ client/proc/get_alienwhitelist()
 		text2file(player,path)
 		load_alienwhitelist()
 	else
-		src << "<font color='red'>Error: get_alienwhitelist(): File not found/Invalid path([path]).</font>"
+		to_chat(src, "<font color='red'>Error: get_alienwhitelist(): File not found/Invalid path([path]).</font>")
 	log_admin("[log_text]")
 	message_admins("[log_text]", 1)
 	return
@@ -88,13 +89,14 @@ client/proc/get_alienwhitelist()
 client/proc/get_whitelist()
 	set category = "Server"
 	set name = "Whitelist: Check"
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
 	var/path = "config/whitelist.txt"
-	if( fexists(path) )
-		src << run( file(path) )
+	if(fexists(path))
+		src << run(file(path))
 	else
-		src << "<font color='red'>Error: get_whitelist(): File not found/Invalid path([path]).</font>"
+		to_chat(src, "<font color='red'>Error: get_whitelist(): File not found/Invalid path([path]).</font>")
 		return
 	feedback_add_details("admin_verb","GWL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -114,7 +116,7 @@ client/proc/get_whitelist()
 		text2file(player,path)
 		load_whitelist()
 	else
-		src << "<font color='red'>Error: get_whitelist(): File not found/Invalid path([path]).</font>"
+		to_chat(src, "<font color='red'>Error: get_whitelist(): File not found/Invalid path([path]).</font>")
 	log_admin("Whitelist: [player]")
 	message_admins("Whitelist: [player]", 1)
 	return

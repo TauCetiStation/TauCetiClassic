@@ -1,2 +1,4 @@
 /mob/living/carbon/brain/Login()
-	return ..()
+	..()
+	update_hud()
+	return

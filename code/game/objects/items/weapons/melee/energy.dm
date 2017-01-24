@@ -1,11 +1,11 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
-	flags = FPRINT | TABLEPASS | NOBLOODY
+	flags = NOBLOODY
 	can_embed = 0
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
-							"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
+		to_chat(viewers(user), pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
+							"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>"))
 		return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/axe
@@ -17,14 +17,14 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS | NOBLOODY
+	flags = CONDUCT | NOSHIELD | NOBLOODY
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	sharp = 1
 	edge = 1
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b>"
+		to_chat(viewers(user), "\red <b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b>")
 		return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
@@ -37,11 +37,23 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD | NOBLOODY
+	flags = NOSHIELD | NOBLOODY
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = 1
 	edge = 1
+
+/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user, params)
+	if(istype(W, /obj/item/weapon/melee/energy/sword))
+		to_chat(user, "<span class='notice'>You attach the ends of the two \
+			energy swords, making a single double-bladed weapon! \
+			You're cool.</span>")
+		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
+		user.unEquip(W)
+		user.unEquip(src)
+		qdel(W)
+		qdel(src)
+		user.put_in_hands(newSaber)
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"
@@ -59,6 +71,6 @@
 	throw_speed = 1
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
-	flags = FPRINT | TABLEPASS | NOSHIELD | NOBLOODY
+	flags = NOSHIELD | NOBLOODY
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system

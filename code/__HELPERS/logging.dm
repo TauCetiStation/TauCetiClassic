@@ -33,7 +33,7 @@
 
 	for(var/client/C in admins)
 		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
-			C << "DEBUG: [text]"
+			to_chat(C, "DEBUG: [text]")
 
 
 /proc/log_game(text)
@@ -84,7 +84,7 @@
 	diary << "\[[time_stamp()]]MISC: [text][log_end]"
 
 //pretty print a direction bitflag, can be useful for debugging.
-/proc/print_dir(var/dir)
+/proc/print_dir(dir)
 	var/list/comps = list()
 	if(dir & NORTH) comps += "NORTH"
 	if(dir & SOUTH) comps += "SOUTH"

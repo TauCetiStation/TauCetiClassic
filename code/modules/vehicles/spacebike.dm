@@ -30,9 +30,9 @@
 	w_class = 1
 	var/id = 0
 
-/obj/item/weapon/key/spacebike/examine()
+/obj/item/weapon/key/spacebike/examine(mob/user)
 	..()
-	usr << "There is a small tag reading [id]."
+	to_chat(user, "There is a small tag reading [id].")
 
 /obj/vehicle/space/spacebike/New()
 	..()
@@ -45,23 +45,23 @@
 	overlays += image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1)
 	icon_state = "[bike_icon]_off"
 
-/obj/vehicle/space/spacebike/examine()
+/obj/vehicle/space/spacebike/examine(mob/user)
 	..()
-	usr << "It has number [id]."
+	to_chat(user, "It has number [id].")
 
-/obj/vehicle/space/spacebike/load(var/atom/movable/C)
+/obj/vehicle/space/spacebike/load(atom/movable/C)
 	var/mob/living/M = C
 	if(!istype(C)) return 0
 	if(M.buckled || M.restrained() || !Adjacent(M) || !M.Adjacent(src))
 		return 0
 	return ..(M)
 
-/obj/vehicle/space/spacebike/MouseDrop_T(var/atom/movable/C, mob/user as mob)
+/obj/vehicle/space/spacebike/MouseDrop_T(atom/movable/C, mob/user)
 	if(!load(C))
-		user << "<span class='warning'>You were unable to load \the [C] onto \the [src].</span>"
+		to_chat(user, "<span class='warning'>You were unable to load \the [C] onto \the [src].</span>")
 		return
 
-/obj/vehicle/space/spacebike/attack_hand(var/mob/user as mob)
+/obj/vehicle/space/spacebike/attack_hand(mob/user)
 	if(!load)
 		return
 	if(load != user)
@@ -77,18 +77,18 @@
 			"<span class='notice'>You hear metal clanking.</span>")
 	unload(load)
 
-/obj/vehicle/space/spacebike/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/vehicle/space/spacebike/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/key/spacebike))
 		var/obj/item/weapon/key/spacebike/K = W
 		if(!key)
 			if(K.id != src.id)
-				user << "<span class='notice'>You can't put the key into the slot.</span>"
+				to_chat(user, "<span class='notice'>You can't put the key into the slot.</span>")
 				return
 			user.drop_item()
 			K.loc = src
 			key = K
 			playsound(loc, 'sound/items/insert_key.ogg', 25, 1)
-			user << "<span class='notice'>You put the key into the slot.</span>"
+			to_chat(user, "<span class='notice'>You put the key into the slot.</span>")
 			verbs += /obj/vehicle/space/spacebike/verb/remove_key
 			verbs += /obj/vehicle/space/spacebike/verb/toggle_engine
 		return
@@ -203,7 +203,7 @@
 	if(!usr.get_active_hand())
 		usr.put_in_hands(key)
 	key = null
-	usr << "<span class='notice'>You get out the key from the slot.</span>"
+	to_chat(usr, "<span class='notice'>You get out the key from the slot.</span>")
 
 	verbs -= /obj/vehicle/space/spacebike/verb/remove_key
 	verbs -= /obj/vehicle/space/spacebike/verb/toggle_engine
@@ -223,7 +223,7 @@
 		src.visible_message("[usr.name] puts up \the [src]'s kickstand.", "<span class='notice'>You put up \the [src]'s kickstand.</span>")
 	else
 		if(istype(src.loc,/turf/space))
-			usr << "<span class='warning'>You don't think kickstands work in space...</span>"
+			to_chat(usr, "<span class='warning'>You don't think kickstands work in space...</span>")
 			return
 		src.visible_message("[usr.name] puts down \the [src]'s kickstand.", "<span class='notice'>You put down \the [src]'s kickstand.</span>")
 		if(pulledby)
@@ -232,7 +232,7 @@
 	kickstand = !kickstand
 	anchored = (kickstand || on)
 
-/obj/vehicle/space/spacebike/bullet_act(var/obj/item/projectile/Proj)
+/obj/vehicle/space/spacebike/bullet_act(obj/item/projectile/Proj)
 	if(isliving(load) && prob(protection_percent))
 		var/mob/living/M = load
 		M.bullet_act(Proj)
@@ -253,5 +253,4 @@
 
 /obj/vehicle/space/spacebike/Destroy()
 	qdel(ion)
-	..()
-
+	return ..()

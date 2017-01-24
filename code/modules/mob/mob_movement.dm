@@ -18,57 +18,49 @@
 
 /client/North()
 	..()
+
 /client/South()
 	..()
+
 /client/West()
 	..()
+
 /client/East()
 	..()
 
-/client/proc/client_dir(input, direction=-1)
-	return turn(input, direction*dir2angle(dir))
-
 /client/Northeast()
-	diagonal_action(NORTHEAST)
-/client/Northwest()
-	diagonal_action(NORTHWEST)
-/client/Southeast()
-	diagonal_action(SOUTHEAST)
-/client/Southwest()
-	diagonal_action(SOUTHWEST)
+	swap_hand()
+	return
 
-/client/proc/diagonal_action(direction)
-	switch(client_dir(direction, 1))
-		if(NORTHEAST)
-			swap_hand()
+/client/Southeast()
+	attack_self()
+	return
+
+/client/Southwest()
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		C.toggle_throw_mode()
+	else
+		to_chat(usr, "\red This mob type cannot throw items.")
+	return
+
+/client/Northwest()
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		if(!C.get_active_hand())
+			to_chat(usr, "\red You have nothing to drop in your hand.")
 			return
-		if(SOUTHEAST)
-			attack_self()
-			return
-		if(SOUTHWEST)
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.toggle_throw_mode()
-			else
-				usr << "<span class='warning'>This mob type cannot throw items.</span>"
-			return
-		if(NORTHWEST)
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				if(!C.get_active_hand())
-					usr << "<span class='warning'>You have nothing to drop in your hand.</span>"
-					return
-				drop_item()
-			else
-				usr << "<span class='warning'>This mob type cannot drop items.</span>"
- 			return
+		drop_item()
+	else
+		to_chat(usr, "\red This mob type cannot drop items.")
+	return
 
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
 	set hidden = 1
 
 	if(!usr.pulling)
-		usr << "\blue You are not pulling anything."
+		to_chat(usr, "\blue You are not pulling anything.")
 		return
 	usr.stop_pulling()
 
@@ -139,12 +131,7 @@
 
 	if(world.time < move_delay)	return
 
-	if(locate(/obj/effect/stop/, mob.loc))
-		for(var/obj/effect/stop/S in mob.loc)
-			if(S.victim == mob)
-				return
-
-	if(mob.stat==2)	return
+	if(mob.stat==DEAD)	return
 
 /*	// handle possible spirit movement
 	if(istype(mob,/mob/spirit))
@@ -200,13 +187,13 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.restrained() && M.stat == CONSCIOUS && M.canmove && mob.Adjacent(M))
-						src << "\blue You're restrained! You can't move!"
+						to_chat(src, "\blue You're restrained! You can't move!")
 						return 0
 					else
 						M.stop_pulling()
 
 		if(mob.pinned.len)
-			src << "\blue You're pinned to a wall by [mob.pinned[1]]!"
+			to_chat(src, "\blue You're pinned to a wall by [mob.pinned[1]]!")
 			return 0
 
 		move_delay = world.time//set move delay
@@ -366,7 +353,7 @@
 ///Called by /client/Move()
 ///For moving in space
 ///Return 1 for movement 0 for none
-/mob/Process_Spacemove(var/movement_dir = 0)
+/mob/Process_Spacemove(movement_dir = 0)
 
 	if(..())
 		return 1
@@ -388,7 +375,7 @@
 
 		else
 			var/atom/movable/AM = A
-			if(AM == buckled) //Kind of unnecessary but let's just be sure
+			if(AM == buckled || AM.type == /obj/effect/portal/tsci_wormhole) //hardcoded type check, since idk if we need such feature for something else at all.
 				continue
 			if(AM.density)
 				if(AM.anchored)
@@ -399,7 +386,7 @@
 
 	if(movement_dir && dense_object_backup)
 		if(dense_object_backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-			src << "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>"
+			to_chat(src, "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>")
 
 		return 1
 	return 0

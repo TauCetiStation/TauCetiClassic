@@ -71,6 +71,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 		new/datum/stack_recipe("multi-tile airlock assembly", /obj/structure/door_assembly/multi_tile, 4, time = 50, one_per_turf = 1, on_floor = 1), \
 		), 4), \
 	null, \
+	new/datum/stack_recipe("meatspike frame", /obj/structure/kitchenspike_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
 	new/datum/stack_recipe("light fixture frame", /obj/item/light_fixture_frame, 2), \
 	new/datum/stack_recipe("small light fixture frame", /obj/item/light_fixture_frame/small, 1), \
@@ -89,7 +90,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	icon_state = "sheet-metal"
 	m_amt = 3750
 	throwforce = 14.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/metal/cyborg
@@ -99,7 +100,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	icon_state = "sheet-metal"
 	m_amt = 0
 	throwforce = 14.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 
 /obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
 	recipes = metal_recipes
@@ -122,7 +123,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	item_state = "sheet-metal"
 	m_amt = 7500
 	throwforce = 15.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
@@ -179,6 +180,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("shotgun shell box", /obj/item/weapon/storage/box/shotgun), \
 	new/datum/stack_recipe("light tubes", /obj/item/weapon/storage/box/lights/tubes), \
 	new/datum/stack_recipe("light bulbs", /obj/item/weapon/storage/box/lights/bulbs), \
+	new/datum/stack_recipe("cardboard tube", /obj/item/weapon/c_tube), \
 	new/datum/stack_recipe("mouse traps", /obj/item/weapon/storage/box/mousetraps), \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
@@ -198,7 +200,6 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"
 	icon_state = "sheet-card"
-	flags = FPRINT | TABLEPASS
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)

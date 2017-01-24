@@ -2,17 +2,17 @@
 /obj/machinery/abductor
 	var/team = 0
 
-/obj/machinery/abductor/proc/IsAbductor(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/proc/IsAbductor(mob/living/carbon/human/H)
 	if(!H.species)
 		return 0
 	return H.species.name == "Abductor"
 
-/obj/machinery/abductor/proc/IsAgent(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
 	if(H.species.name == "Abductor")
 		return H.agent
 	return 0
 
-/obj/machinery/abductor/proc/IsScientist(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/proc/IsScientist(mob/living/carbon/human/H)
 	if(H.species.name == "Abductor")
 		return H.scientist
 	return 0
@@ -40,11 +40,11 @@
 							"agent helmet" 	=1,
 							"radio silencer"=1)
 
-/obj/machinery/abductor/console/attack_hand(var/mob/user as mob)
+/obj/machinery/abductor/console/attack_hand(mob/user)
 	if(..())
 		return
 	if(!IsAbductor(user))
-		user << "<span class='warning'>You start mashing alien buttons at random!</span>"
+		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
 		if(do_after(user,100,target = src))
 			TeleporterSend()
 		return
@@ -190,7 +190,7 @@
 			experiment = e
 			e.console = src
 
-/obj/machinery/abductor/console/proc/AddSnapshot(var/mob/living/carbon/human/target)
+/obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
 	var/datum/icon_snapshot/entry = new
 	entry.name = target.name
 	entry.icon = target.icon
@@ -205,20 +205,20 @@
 	disguises.Add(entry)
 	return
 
-/obj/machinery/abductor/console/attackby(O as obj, user as mob, params)
+/obj/machinery/abductor/console/attackby(O, user, params)
 	if(istype(O, /obj/item/device/abductor/gizmo))
 		var/obj/item/device/abductor/gizmo/G = O
-		user << "<span class='notice'>You link the tool to the console.</span>"
+		to_chat(user, "<span class='notice'>You link the tool to the console.</span>")
 		gizmo = G
 		G.console = src
 	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
 		var/obj/item/clothing/suit/armor/abductor/vest/V = O
-		user << "<span class='notice'>You link the vest to the console.</span>"
+		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
 		vest = V
 	else
 		..()
 
-/obj/machinery/abductor/console/proc/Dispense(var/item,var/cost=1)
+/obj/machinery/abductor/console/proc/Dispense(item,cost=1)
 	if(experiment && experiment.points >= cost)
 		experiment.points-=cost
 		src.visible_message("Incoming supply!")

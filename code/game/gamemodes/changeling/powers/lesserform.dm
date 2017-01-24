@@ -8,15 +8,15 @@
 	req_human = 1
 
 //Transform into a monkey.
-/obj/effect/proc_holder/changeling/lesserform/sting_action(var/mob/living/carbon/human/user)
+/obj/effect/proc_holder/changeling/lesserform/sting_action(mob/living/carbon/human/user)
 	var/datum/changeling/changeling = user.mind.changeling
 
 	if(user.has_brain_worms())
-		user << "<span class='warning'>We cannot perform this ability at the present time!</span>"
+		to_chat(user, "<span class='warning'>We cannot perform this ability at the present time!</span>")
 		return
 
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
-	user << "<span class='warning'>Our genes cry out!</span>"
+	to_chat(user, "<span class='warning'>Our genes cry out!</span>")
 
 	var/list/implants = list() //Try to preserve implants.
 	for(var/obj/item/weapon/implant/W in user)

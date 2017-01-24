@@ -22,9 +22,9 @@
 
 /datum/surgery_step/head/peel
 	allowed_tools = list(
-	/obj/item/weapon/retractor = 100,		\
-	/obj/item/weapon/crowbar = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 50, 		\
+	/obj/item/weapon/retractor = 100,           \
+	/obj/item/weapon/kitchen/utensil/fork = 75, \
+	/obj/item/weapon/screwdriver = 50
 	)
 
 	min_duration = 80
@@ -58,8 +58,8 @@
 /datum/surgery_step/head/shape
 	allowed_tools = list(
 	/obj/item/weapon/FixOVein = 100, 	\
-	/obj/item/weapon/cable_coil = 75,	\
-	/obj/item/device/assembly/mousetrap = 10) //ok chinsky
+	/obj/item/weapon/cable_coil = 75
+	)
 
 	min_duration = 80
 	max_duration = 100
@@ -92,7 +92,9 @@
 /datum/surgery_step/head/suture
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100, 	\
-	/obj/item/weapon/cable_coil = 60,	\
+	/obj/item/weapon/cable_coil = 75,	\
+	/obj/item/weapon/wirecutters = 75,           \
+	/obj/item/weapon/kitchen/utensil/fork = 50,  \
 	/obj/item/weapon/FixOVein = 80)
 
 	min_duration = 80
@@ -127,7 +129,7 @@
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\
 	/obj/item/weapon/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 25
+	/obj/item/weapon/weldingtool = 50
 	)
 
 	min_duration = 60

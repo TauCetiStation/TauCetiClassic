@@ -13,7 +13,7 @@
 	var/edit = 1
 	var/repeat = 0
 
-/obj/item/device/violin/proc/playnote(var/note as text)
+/obj/item/device/violin/proc/playnote(note)
 	//world << "Note: [note]"
 	var/soundfile
 	/*BYOND loads resource files at compile time if they are ''. This means you can't really manipulate them dynamically.
@@ -235,7 +235,7 @@
 	while(repeat > 0)
 	playing = 0
 
-/obj/item/device/violin/attack_self(mob/user as mob)
+/obj/item/device/violin/attack_self(mob/user)
 	if(!isliving(user) || user.stat || user.restrained() || user.lying)	return
 	user.set_machine(src)
 
@@ -373,12 +373,12 @@
 					tempo = 600 / text2num(copytext(lines[1],6))
 					lines.Cut(1,2)
 				if(lines.len > 50)
-					usr << "Too many lines!"
+					to_chat(usr, "Too many lines!")
 					lines.Cut(51)
 				var/linenum = 1
 				for(var/l in lines)
 					if(lentext(l) > 50)
-						usr << "Line [linenum] too long!"
+						to_chat(usr, "Line [linenum] too long!")
 						lines.Remove(l)
 					else
 						linenum++

@@ -3,7 +3,7 @@
 Put (mob/proc)s here that are in dire need of a code cleanup.
 */
 
-/mob/proc/has_disease(var/datum/disease/virus)
+/mob/proc/has_disease(datum/disease/virus)
 	for(var/datum/disease/D in viruses)
 		if(D.IsSame(virus))
 			//error("[D.name]/[D.type] is the same as [virus.name]/[virus.type]")
@@ -11,7 +11,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 	return 0
 
 // This proc has some procs that should be extracted from it. I believe we can develop some helper procs from it - Rockdtben
-/mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1, var/spread_type = -5)
+/mob/proc/contract_disease(datum/disease/virus, skip_this = 0, force_species_check=1, spread_type = -5)
 	//world << "Contract_disease called by [src] with virus [virus]"
 	if(stat >=2)
 		//world << "He's dead jim."
@@ -143,14 +143,14 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 					Cl = H.shoes
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			else
-				src << "Something strange's going on, something's wrong."
+				to_chat(src, "Something strange's going on, something's wrong.")
 
 			/*if("feet")
 				if(H.shoes && istype(H.shoes, /obj/item/clothing/))
 					Cl = H.shoes
 					passed = prob(Cl.permeability_coefficient*100)
 					//
-					world << "Shoes pass [passed]"
+					to_chat(world, "Shoes pass [passed]")
 			*/		//
 	else if(istype(src, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/M = src

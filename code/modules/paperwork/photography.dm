@@ -31,26 +31,34 @@
 	var/scribble	//Scribble on the back.
 	var/icon/tiny
 
-/obj/item/weapon/photo/attack_self(mob/user as mob)
-	examine()
+/obj/item/weapon/photo/Destroy()
+	img = null
+	qdel(tiny)
+	tiny = null
+	return ..()
 
-/obj/item/weapon/photo/attackby(obj/item/weapon/P as obj, mob/user as mob)
+/obj/item/weapon/photo/attack_self(mob/user)
+	user.examinate(src)
+
+/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		var/txt = sanitize_alt(copytext(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text, 1, 128))
 		//txt = copytext(txt, 1, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
+	else if(istype(P, /obj/item/weapon/lighter))
+		burnpaper(P, user)
 	..()
 
 /obj/item/weapon/photo/examine()
 	set src in oview(1)
 	if(in_range(usr, src))
 		show(usr)
-		usr << desc
+		to_chat(usr, desc)
 	else
-		usr << "<span class='notice'>It is too far away.</span>"
+		to_chat(usr, "<span class='notice'>It is too far away.</span>")
 
-/obj/item/weapon/photo/proc/show(mob/user as mob)
+/obj/item/weapon/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
 	user << browse("<html><head><title>[sanitize_popup(name)]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
@@ -124,7 +132,7 @@
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = 2.0
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	m_amt = 2000
 	var/pictures_max = 10
@@ -133,30 +141,31 @@
 	var/icon_on = "camera"
 	var/icon_off = "camera_off"
 	var/see_ghosts = 0 //for the spoop of it
+	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
 
 /obj/item/device/camera/spooky
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
 
-/obj/item/device/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/device/camera/attack_self(mob/user as mob)
+/obj/item/device/camera/attack_self(mob/user)
 	on = !on
 	if(on)
 		src.icon_state = icon_on
 	else
 		src.icon_state = icon_off
-	user << "You switch the camera [on ? "on" : "off"]."
+	to_chat(user, "You switch the camera [on ? "on" : "off"].")
 	return
 
-/obj/item/device/camera/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/device/camera/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/camera_film))
 		if(pictures_left)
-			user << "<span class='notice'>[src] still has some film in it!</span>"
+			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
 			return
-		user << "<span class='notice'>You insert [I] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		user.drop_item()
 		qdel(I)
 		pictures_left = pictures_max
@@ -190,15 +199,15 @@
 				break
 		sorted.Insert(j+1, c)
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	var/icon/res = get_base_photo_icon()
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
 		if(istype(A, /mob/living) && A:lying)
 			img.Turn(A:lying_current)
 
-		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
-		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		var/offX = 1 + (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
+		var/offY = 1 + (photo_size-1)*16 + (A.y - center.y) * 32 + A.pixel_y
 		if(istype(A, /atom/movable))
 			offX += A:step_x
 			offY += A:step_y
@@ -245,15 +254,16 @@
 
 	return mob_detail
 
-/obj/item/device/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-	if(!on || !pictures_left || ismob(target.loc)) return
+/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
+	if(!on || !pictures_left || ismob(target.loc))
+		return
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
 	pictures_left--
 	desc = "A polaroid camera. It has [pictures_left] photos left."
-	user << "<span class='notice'>[pictures_left] photos left.</span>"
+	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
 	on = 0
 	spawn(64)
@@ -273,7 +283,7 @@
 		seen = hear(world.view, target)
 
 	var/list/turfs = list()
-	for(var/turf/T in range(1, target))
+	for(var/turf/T in range(round(photo_size * 0.5), target))
 		if(T in seen)
 			if(isAi && !cameranet.checkTurfVis(T))
 				continue
@@ -281,7 +291,7 @@
 				turfs += T
 				mobs += camera_get_mobs(T)
 
-	var/icon/temp = icon('icons/effects/96x96.dmi',"")
+	var/icon/temp = get_base_photo_icon()
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
@@ -309,14 +319,59 @@
 
 	return P
 
-/obj/item/device/camera/proc/printpicture(mob/user, var/datum/picture/P)
+/obj/item/device/camera/proc/printpicture(mob/user, datum/picture/P)
 	var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
 	Photo.loc = user.loc
 	if(!user.get_inactive_hand())
 		user.put_in_inactive_hand(Photo)
 	Photo.construct(P)
 
-/obj/item/weapon/photo/proc/construct(var/datum/picture/P)
+/obj/item/device/camera/proc/get_base_photo_icon()
+	var/icon/res
+	switch(photo_size)
+		if(1)
+			res = icon('icons/effects/32x32.dmi', "")
+		if(3)
+			res = icon('icons/effects/96x96.dmi', "")
+		if(5)
+			res = icon('icons/effects/160x160.dmi', "")
+		if(7)
+			res = icon('icons/effects/224x224.dmi', "")
+		else
+			res = icon('icons/effects/32x32.dmi', "")
+
+	return res
+
+/obj/item/device/camera/verb/set_zoom()
+	set name = "Set Camera Zoom"
+	set category = "Object"
+
+	if(usr.incapacitated())
+		return
+
+	if(photo_size == 3)
+		photo_size = 1
+		to_chat(usr, "<span class='info'>You zoom the camera in.</span>")
+	else
+		photo_size = 3
+		to_chat(usr, "<span class='info'>You zoom the camera out.</span>")
+
+/obj/item/device/camera/AltClick()
+	set_zoom()
+
+/obj/item/device/camera/big_photos
+	photo_size = 5
+
+/obj/item/device/camera/big_photos/set_zoom()
+	return
+
+/obj/item/device/camera/huge_photos
+	photo_size = 7
+
+/obj/item/device/camera/huge_photos/set_zoom()
+	return
+
+/obj/item/weapon/photo/proc/construct(datum/picture/P)
 	icon = P.fields["icon"]
 	tiny = P.fields["tiny"]
 	img = P.fields["img"]

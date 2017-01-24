@@ -3,20 +3,20 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 
 //VENTCRAWLING
 
-/mob/living/proc/handle_ventcrawl(var/atom/A)
+/mob/living/proc/handle_ventcrawl(atom/A)
 	if(!ventcrawler || !Adjacent(A))
 		return
 	if(stat)
-		src << "You must be conscious to do this!"
+		to_chat(src, "You must be conscious to do this!")
 		return
 	if(lying)
-		src << "You can't vent crawl while you're stunned!"
+		to_chat(src, "You can't vent crawl while you're stunned!")
 		return
 	if(restrained())
-		src << "You can't vent crawl while you're restrained!"
+		to_chat(src, "You can't vent crawl while you're restrained!")
 		return
 	if(buckled_mob)
-		src << "You can't vent crawl with [buckled_mob] on you!"
+		to_chat(src, "You can't vent crawl with [buckled_mob] on you!")
 		return
 
 	var/obj/machinery/atmospherics/unary/vent_found
@@ -59,14 +59,14 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 						failed++
 
 					if(failed)
-						src << "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>"
+						to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
 						return
 
 			visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
 			loc = vent_found
 			add_ventcrawl(vent_found)
 	else
-		src << "<span class='warning'>This ventilation duct is not connected to anything!</span>"
+		to_chat(src, "<span class='warning'>This ventilation duct is not connected to anything!</span>")
 
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/unary/starting_machine)
@@ -86,7 +86,8 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 	var/list/totalMembers = starting_machine.node:parent.members + starting_machine.network.normal_members
 	//var/list/totalMembers = temp1 + starting_machine.network.normal_members
 	for(var/atom/A in totalMembers)
-		var/image/new_image = image(A, A.loc, dir = A.dir, layer = 20)
+		var/image/new_image = image(A, A.loc, dir = A.dir, layer = ABOVE_HUD_PLANE)
+		new_image.plane = ABOVE_HUD_PLANE
 		pipes_shown += new_image
 		if(client)
 			client.images += new_image

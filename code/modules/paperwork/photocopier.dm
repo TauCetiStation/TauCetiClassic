@@ -15,13 +15,13 @@
 	var/toner = 30 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
-/obj/machinery/photocopier/attack_ai(mob/user as mob)
+/obj/machinery/photocopier/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/photocopier/attack_paw(mob/user as mob)
+/obj/machinery/photocopier/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/photocopier/attack_hand(mob/user as mob)
+/obj/machinery/photocopier/attack_hand(mob/user)
 	user.set_machine(src)
 
 	var/dat = "Photocopier<BR><BR>"
@@ -75,7 +75,7 @@
 				var/j = 0
 				for(var/obj/item/weapon/W in bundle)
 					if(toner <= 0)
-						usr << "<span class='notice'>The photocopier couldn't finish the printjob.</span>"
+						to_chat(usr, "<span class='notice'>The photocopier couldn't finish the printjob.</span>")
 						break
 					else if(istype(W, /obj/item/weapon/paper))
 						W = copy(W)
@@ -96,17 +96,17 @@
 		if(copy)
 			copy.loc = usr.loc
 			usr.put_in_hands(copy)
-			usr << "<span class='notice'>You take the paper out of \the [src].</span>"
+			to_chat(usr, "<span class='notice'>You take the paper out of \the [src].</span>")
 			copy = null
 		else if(photocopy)
 			photocopy.loc = usr.loc
 			usr.put_in_hands(photocopy)
-			usr << "<span class='notice'>You take the photo out of \the [src].</span>"
+			to_chat(usr, "<span class='notice'>You take the photo out of \the [src].</span>")
 			photocopy = null
 		else if(bundle)
 			bundle.loc = usr.loc
 			usr.put_in_hands(bundle)
-			usr << "<span class='notice'>You take the paper bundle out of \the [src].</span>"
+			to_chat(usr, "<span class='notice'>You take the paper bundle out of \the [src].</span>")
 			bundle = null
 	else if(href_list["min"])
 		if(copies > 1)
@@ -137,33 +137,33 @@
 
 	updateUsrDialog()
 
-/obj/machinery/photocopier/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/photocopier/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
 		if(!copy && !photocopy && !bundle)
 			user.drop_item()
 			copy = O
 			O.loc = src
-			user << "<span class='notice'>You insert the paper into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
 			flick("bigscanner1", src)
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>There is already something in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 	else if(istype(O, /obj/item/weapon/photo))
 		if(!copy && !photocopy && !bundle)
 			user.drop_item()
 			photocopy = O
 			O.loc = src
-			user << "<span class='notice'>You insert the photo into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You insert the photo into \the [src].</span>")
 			flick("bigscanner1", src)
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>There is already something in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 	else if(istype(O, /obj/item/weapon/paper_bundle))
 		if(!copy && !photocopy && !bundle)
 			user.drop_item()
 			bundle = O
 			O.loc = src
-			user << "<span class='notice'>You insert the bundle into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You insert the bundle into \the [src].</span>")
 			flick("bigscanner1", src)
 			updateUsrDialog()
 	else if(istype(O, /obj/item/device/toner))
@@ -171,14 +171,14 @@
 			user.drop_item()
 			qdel(O)
 			toner = 30
-			user << "<span class='notice'>You insert the toner cartridge into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You insert the toner cartridge into \the [src].</span>")
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
+			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 	else if(istype(O, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	return
 
 /obj/machinery/photocopier/ex_act(severity)
@@ -209,7 +209,7 @@
 	return
 
 
-/obj/machinery/photocopier/proc/copy(var/obj/item/weapon/paper/copy)
+/obj/machinery/photocopier/proc/copy(obj/item/weapon/paper/copy)
 	var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
 	if(toner > 10)	//lots of toner, make it dark
 		c.info = "<font color = #101010>"
@@ -244,7 +244,7 @@
 	return c
 
 
-/obj/machinery/photocopier/proc/photocopy(var/obj/item/weapon/photo/photocopy)
+/obj/machinery/photocopier/proc/photocopy(obj/item/weapon/photo/photocopy)
 	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (src.loc)
 	var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 	var/icon/img = icon(photocopy.img)

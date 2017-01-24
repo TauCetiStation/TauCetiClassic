@@ -9,7 +9,7 @@
 	item_state = "atoxinbottle"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30)
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = OPENCONTAINER
 	volume = 30
 
 	New()
@@ -314,3 +314,39 @@
 	New()
 		..()
 		reagents.add_reagent("frostoil", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/chefspecial
+	name = "Chef's Special bottle"
+	desc = "A small bottle of Chef's Special. How fragrantly!"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
+	New()
+		..()
+		reagents.add_reagent("chefspecial", 5)
+
+/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin
+	name = "alphaamanitin bottle"
+	desc = "A small bottle of alpha-amanitin. Did you like mushrooms?"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle12"
+	New()
+		..()
+		reagents.add_reagent("alphaamanitin", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/carpotoxin
+	name = "carpotoxin bottle"
+	desc = "A small bottle of carpotoxin. Upon receipt of substance no carp was not injured."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle12"
+	New()
+		..()
+		reagents.add_reagent("carpotoxin", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/zombiepowder
+	name = "zombiepowder bottle"
+	desc = "A small bottle of zombiepowder. We are not responsible for the uprising of dead."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	New()
+		..()
+		reagents.add_reagent("zombiepowder", 30)

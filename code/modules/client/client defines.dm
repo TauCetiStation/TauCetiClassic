@@ -5,6 +5,7 @@
 	var/datum/admins/holder = null
 	var/datum/admins/deadmin_holder = null
 	var/buildmode		= 0
+	var/AI_Interact		= 0
 
 	var/jobbancache = null //Used to cache this client's jobbans to save on DB queries
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
@@ -59,4 +60,9 @@
 
 	var/datum/geoip_data/geoip = null
 
-	var/last_dir = null
+	var/datum/tooltip/tooltips
+
+
+	// Their chat window, sort of important.
+	// See /goon/code/datums/browserOutput.dm
+	var/datum/chatOutput/chatOutput

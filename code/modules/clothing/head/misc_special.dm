@@ -15,7 +15,7 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags = (FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH)
+	flags = (HEADCOVERSEYES | HEADCOVERSMOUTH)
 	item_state = "welding"
 	m_amt = 3000
 	g_amt = 1000
@@ -42,13 +42,13 @@
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = initial(icon_state)
-			usr << "You flip the [src] down to protect your eyes."
+			to_chat(usr, "You flip the [src] down to protect your eyes.")
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push the [src] up out of your face."
+			to_chat(usr, "You push the [src] up out of your face.")
 		usr.update_inv_head()	//so our mob-overlays update
 
 
@@ -59,7 +59,7 @@
 	name = "cake-hat"
 	desc = "It's tasty looking!"
 	icon_state = "cake0"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	flags = HEADCOVERSEYES
 	var/onfire = 0.0
 	var/status = 0
 	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
@@ -80,7 +80,7 @@
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 1)
 
-/obj/item/clothing/head/cakehat/attack_self(mob/user as mob)
+/obj/item/clothing/head/cakehat/attack_self(mob/user)
 	if(status > 1)	return
 	src.onfire = !( src.onfire )
 	if (src.onfire)
@@ -105,15 +105,15 @@
 	item_state = "ushankadown"
 	flags_inv = HIDEEARS
 
-/obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
+/obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(src.icon_state == "ushankadown")
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
-		user << "You raise the ear flaps on the ushanka."
+		to_chat(user, "You raise the ear flaps on the ushanka.")
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
-		user << "You lower the ear flaps on the ushanka."
+		to_chat(user, "You lower the ear flaps on the ushanka.")
 
 /*
  * Pumpkin head
@@ -124,7 +124,7 @@
 	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
 	item_state = "hardhat0_pumpkin"
 	item_color = "pumpkin"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|EYES
 	var/brightness_on = 2 //luminosity when on
@@ -133,7 +133,7 @@
 
 	attack_self(mob/user)
 		if(!isturf(user.loc))
-			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+			to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
 			return
 		on = !on
 		icon_state = "hardhat[on]_[item_color]"
@@ -149,13 +149,12 @@
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
-	flags = FPRINT | TABLEPASS
 	body_parts_covered = 0
 	var/icon/mob
 	var/icon/mob2
 	siemens_coefficient = 1.5
 
-	update_icon(var/mob/living/carbon/human/user)
+	update_icon(mob/living/carbon/human/user)
 		if(!istype(user)) return
 		mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
 		mob2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty2")

@@ -35,7 +35,7 @@
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
-/mob/proc/ClickOn( var/atom/A, var/params )
+/mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
@@ -45,6 +45,11 @@
 		return
 
 	var/list/modifiers = params2list(params)
+
+	if(client.cob.in_building_mode)
+		cob_click(client, modifiers)
+		return
+
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
@@ -151,7 +156,7 @@
 	return
 
 // Default behavior: ignore double clicks, consider them normal clicks instead
-/mob/proc/DblClickOn(var/atom/A, var/params)
+/mob/proc/DblClickOn(atom/A, params)
 	ClickOn(A,params)
 
 
@@ -165,7 +170,7 @@
 	proximity_flag is not currently passed to attack_hand, and is instead used
 	in human click code to allow glove touches only at melee range.
 */
-/mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
+/mob/proc/UnarmedAttack(atom/A, proximity_flag)
 	return
 
 /*
@@ -176,7 +181,7 @@
 	for things like ranged glove touches, spitting alien acid/neurotoxin,
 	animals lunging, etc.
 */
-/mob/proc/RangedAttack(var/atom/A, var/params)
+/mob/proc/RangedAttack(atom/A, params)
 	if(!mutations.len) return
 	if((LASER in mutations) && a_intent == "hurt")
 		LaserEyes(A) // moved into a proc below
@@ -199,21 +204,21 @@
 	Used when you are handcuffed and click things.
 	Not currently used by anything but could easily be.
 */
-/mob/proc/RestrainedClickOn(var/atom/A)
+/mob/proc/RestrainedClickOn(atom/A)
 	return
 
 /*
 	Middle click
 	Only used for swapping hands
 */
-/mob/proc/MiddleClickOn(var/atom/A)
+/mob/proc/MiddleClickOn(atom/A)
 	return
-/mob/living/carbon/MiddleClickOn(var/atom/A)
+/mob/living/carbon/MiddleClickOn(atom/A)
 	swap_hand()
 
 // In case of use break glass
 /*
-/atom/proc/MiddleClick(var/mob/M as mob)
+/atom/proc/MiddleClick(mob/M)
 	return
 */
 
@@ -222,26 +227,25 @@
 	For most mobs, examine.
 	This is overridden in ai.dm
 */
-/mob/proc/ShiftClickOn(var/atom/A)
+/mob/proc/ShiftClickOn(atom/A)
 	A.ShiftClick(src)
 	return
-/atom/proc/ShiftClick(var/mob/user)
+/atom/proc/ShiftClick(mob/user)
 	if(user.client && user.client.eye == user)
-		examine()
-		user.face_atom(src)
+		user.examinate(src)
 	return
 
 /*
 	Ctrl click
 	For most objects, pull
 */
-/mob/proc/CtrlClickOn(var/atom/A)
+/mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
-/atom/proc/CtrlClick(var/mob/user)
+/atom/proc/CtrlClick(mob/user)
 	return
 
-/atom/movable/CtrlClick(var/mob/user)
+/atom/movable/CtrlClick(mob/user)
 	if(Adjacent(user))
 		user.start_pulling(src)
 
@@ -249,11 +253,11 @@
 	Alt click
 	Unused except for AI
 */
-/mob/proc/AltClickOn(var/atom/A)
+/mob/proc/AltClickOn(atom/A)
 	A.AltClick(src)
 	return
 
-/atom/proc/AltClick(var/mob/user)
+/atom/proc/AltClick(mob/user)
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
@@ -263,18 +267,18 @@
 			user.client.statpanel = T.name
 	return
 
-/mob/proc/TurfAdjacent(var/turf/T)
+/mob/proc/TurfAdjacent(turf/T)
 	return T.AdjacentQuick(src)
 
 /*
 	Control+Shift click
 	Unused except for AI
 */
-/mob/proc/CtrlShiftClickOn(var/atom/A)
+/mob/proc/CtrlShiftClickOn(atom/A)
 	A.CtrlShiftClick(src)
 	return
 
-/atom/proc/CtrlShiftClick(var/mob/user)
+/atom/proc/CtrlShiftClick(mob/user)
 	return
 
 /*
@@ -282,6 +286,7 @@
 
 	Laser Eyes: as the name implies, handles this since nothing else does currently
 	face_atom: turns the mob towards what you clicked on
+	cob_click: handles hotkeys for "craft or build"
 */
 /mob/proc/LaserEyes(atom/A)
 	return
@@ -310,10 +315,10 @@
 		nutrition = max(nutrition - rand(1,10),0)
 		handle_regular_hud_updates()
 	else
-		src << "\red You're out of energy!  You need food!"
+		to_chat(src, "\red You're out of energy!  You need food!")
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
-/mob/proc/face_atom(var/atom/A)
+/mob/proc/face_atom(atom/A)
 	if( stat || buckled || !A || !x || !y || !A.x || !A.y ) return
 	var/dx = A.x - x
 	var/dy = A.y - y
@@ -326,6 +331,17 @@
 		if(dx > 0)	usr.dir = EAST
 		else		usr.dir = WEST
 
+// Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
+/mob/proc/cob_click(client/C, list/modifiers)
+	if(C.cob.busy)
+		//do nothing
+	else if(modifiers["left"])
+		if(modifiers["alt"])
+			C.cob.rotate_object()
+		else
+			C.cob.try_to_build(src)
+	else if(modifiers["right"])
+		C.cob.remove_build_overlay(C)
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen1_full.dmi'

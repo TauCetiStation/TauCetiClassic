@@ -17,4 +17,4 @@ install:
   - cd ..
 
 script:
-  - DreamMaker baystation12.dme
+  - DreamMaker taucetistation.dme

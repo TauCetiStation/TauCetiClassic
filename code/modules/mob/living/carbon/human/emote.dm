@@ -1,4 +1,4 @@
-/mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null, var/auto)
+/mob/living/carbon/human/emote(act,m_type=1,message = null, auto)
 	var/param = null
 
 	if (findtext(act, "-", 1, null))
@@ -72,7 +72,7 @@
 
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					src << "\red You cannot send IC messages (muted)."
+					to_chat(src, "\red You cannot send IC messages (muted).")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -553,10 +553,10 @@
 					m_type = 2
 
 		if ("help")
-			src << "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn"
+			to_chat(src, "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn")
 
 		else
-			src << "\blue Unusable emote '[act]'. Say *help for a list."
+			to_chat(src, "\blue Unusable emote '[act]'. Say *help for a list.")
 
 
 

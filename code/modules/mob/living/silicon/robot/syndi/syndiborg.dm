@@ -1,5 +1,4 @@
 /mob/living/silicon/robot/syndicate
-	icon = 'tauceti/icons/mob/robot.dmi'
 	icon_state = "syndie_bloodhound"
 	lawupdate = 0
 	scrambledcodes = 1
@@ -30,12 +29,12 @@
 /obj/item/weapon/melee/energy/sword/cyborg
 	var/hitcost = 500
 
-/obj/item/weapon/melee/energy/sword/cyborg/attack(mob/M, var/mob/living/silicon/robot/R)
+/obj/item/weapon/melee/energy/sword/cyborg/attack(mob/M, mob/living/silicon/robot/R)
 	if(R.cell)
 		var/obj/item/weapon/stock_parts/cell/C = R.cell
 		if(active && !(C.use(hitcost)))
 			attack_self(R)
-			R << "<span class='notice'>It's out of charge!</span>"
+			to_chat(R, "<span class='notice'>It's out of charge!</span>")
 			return
 		..()
 	return

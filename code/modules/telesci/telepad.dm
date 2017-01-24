@@ -35,7 +35,7 @@
 		if(istype(I, /obj/item/device/multitool))
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
-			user << "<span class='notice'>You save the data in the [I.name]'s buffer.</span>"
+			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
 
 	if(exchange_parts(user, I))
 		return
@@ -47,35 +47,35 @@
 /obj/machinery/telepad_cargo
 	name = "cargo telepad"
 	desc = "A telepad used by the Rapid Crate Sender."
-	icon = 'tauceti/icons/obj/telescience.dmi'
+	icon = 'icons/obj/telescience.dmi'
 	icon_state = "pad-idle"
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 500
 	var/stage = 0
-/obj/machinery/telepad_cargo/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/telepad_cargo/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = 0
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(anchored)
 			anchored = 0
-			user << "<span class='notice'>The [src] can now be moved.</span>"
+			to_chat(user, "<span class='notice'>The [src] can now be moved.</span>")
 		else if(!anchored)
 			anchored = 1
-			user << "<span class='notice'>The [src] is now secured.</span>"
+			to_chat(user, "<span class='notice'>The [src] is now secured.</span>")
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You unscrew the telepad's tracking beacon.</span>"
+			to_chat(user, "<span class='notice'>You unscrew the telepad's tracking beacon.</span>")
 			stage = 1
 		else if(stage == 1)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You screw in the telepad's tracking beacon.</span>"
+			to_chat(user, "<span class='notice'>You screw in the telepad's tracking beacon.</span>")
 			stage = 0
 	if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
 		playsound(src, 'sound/items/Welder.ogg', 50, 1)
-		user << "<span class='notice'>You disassemble the telepad.</span>"
+		to_chat(user, "<span class='notice'>You disassemble the telepad.</span>")
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		new /obj/item/stack/sheet/glass(get_turf(src))
 		qdel(src)
@@ -89,9 +89,9 @@
 	item_state = "signaler"
 	origin_tech = "bluespace=3"
 
-/obj/item/device/telepad_beacon/attack_self(mob/user as mob)
+/obj/item/device/telepad_beacon/attack_self(mob/user)
 	if(user)
-		user << "<span class='notice'>Locked In.</span>"
+		to_chat(user, "<span class='notice'>Locked In.</span>")
 		new /obj/machinery/telepad_cargo(user.loc)
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		qdel(src)
@@ -103,7 +103,7 @@
 	desc = "Use this to send crates and closets to cargo telepads."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "rcs"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -121,13 +121,14 @@
 	..()
 	SSobj.processing |= src
 
-/obj/item/weapon/rcs/examine()
-	desc = "Use this to send crates and closets to cargo telepads. There are [rcharges] charges left."
+/obj/item/weapon/rcs/examine(mob/user)
 	..()
+	to_chat(user, "There are [rcharges] charges left.")
 
 /obj/item/weapon/rcs/Destroy()
 	SSobj.processing.Remove(src)
 	return ..()
+
 /obj/item/weapon/rcs/process()
 	if(rcharges > 10)
 		rcharges = 10
@@ -142,11 +143,11 @@
 		if(mode == 0)
 			mode = 1
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-			user << "<span class='notice'>The telepad locator has become uncalibrated.</span>"
+			to_chat(user, "<span class='notice'>The telepad locator has become uncalibrated.</span>")
 		else
 			mode = 0
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-			user << "<span class='notice'>You calibrate the telepad locator.</span>"
+			to_chat(user, "<span class='notice'>You calibrate the telepad locator.</span>")
 
 /obj/item/weapon/rcs/attackby(obj/item/W, mob/user)
 	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
@@ -154,5 +155,5 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		user << "<span class='notice'>You emag the RCS. Click on it to toggle between modes.</span>"
+		to_chat(user, "<span class='notice'>You emag the RCS. Click on it to toggle between modes.</span>")
 		return

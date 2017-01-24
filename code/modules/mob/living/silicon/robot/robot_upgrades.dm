@@ -20,7 +20,7 @@
 	icon_state = "cyborg_upgrade1"
 	require_module = 1
 
-/obj/item/borg/upgrade/reset/action(var/mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/reset/action(mob/living/silicon/robot/R)
 	R.uneq_all()
 	qdel(R.module)
 	R.module = null
@@ -49,7 +49,7 @@
 /obj/item/borg/upgrade/flashproof/New()   // Why the fuck does the fabricator make a new instance of all the items?
 	//desc = "Sunglasses with duct tape." // Why?  D:
 
-/obj/item/borg/upgrade/flashproof/action(var/mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/flashproof/action(mob/living/silicon/robot/R)
 	if(R.module)
 		R.module += src
 
@@ -61,14 +61,14 @@
 	icon_state = "cyborg_upgrade1"
 
 
-/obj/item/borg/upgrade/restart/action(var/mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)
 	if(!R.key)
 		for(var/mob/dead/observer/ghost in world)
 			if(ghost.corpse == R && ghost.client)
 				ghost.client.mob = ghost.corpse
 
 	if(R.health < 0)
-		usr << "You have to repair the borg before using this module!"
+		to_chat(usr, "You have to repair the borg before using this module!")
 		return 0
 
 	R.stat = CONSCIOUS
@@ -81,7 +81,7 @@
 	icon_state = "cyborg_upgrade2"
 	require_module = 1
 
-/obj/item/borg/upgrade/vtec/action(var/mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R)
 	if(R.speed == -1)
 		return 0
 
@@ -96,10 +96,10 @@
 	require_module = 1
 
 
-/obj/item/borg/upgrade/tasercooler/action(var/mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/tasercooler/action(mob/living/silicon/robot/R)
 	if(!istype(R.module, /obj/item/weapon/robot_module/security))
-		R << "Upgrade mounting error!  No suitable hardpoint detected!"
-		usr << "There's no mounting point for the module!"
+		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
+		to_chat(usr, "There's no mounting point for the module!")
 		return 0
 
 	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in R.module
@@ -108,12 +108,12 @@
 	if(!T)
 		T = locate() in R.module.modules
 	if(!T)
-		usr << "This cyborg has had its taser removed!"
+		to_chat(usr, "This cyborg has had its taser removed!")
 		return 0
 
 	if(T.recharge_time <= 2)
-		R << "Maximum cooling achieved for this hardpoint!"
-		usr << "There's no room for another cooling unit!"
+		to_chat(R, "Maximum cooling achieved for this hardpoint!")
+		to_chat(usr, "There's no room for another cooling unit!")
 		return 0
 
 	else
@@ -127,10 +127,10 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
-/obj/item/borg/upgrade/jetpack/action(var/mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/jetpack/action(mob/living/silicon/robot/R)
 	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
-		R << "Upgrade mounting error!  No suitable hardpoint detected!"
-		usr << "There's no mounting point for the module!"
+		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
+		to_chat(usr, "There's no mounting point for the module!")
 		return 0
 	else
 		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide

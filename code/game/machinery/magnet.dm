@@ -42,7 +42,7 @@
 		magnetic_process()
 
 	// update the invisibility and icon
-/obj/machinery/magnetic_module/hide(var/intact)
+/obj/machinery/magnetic_module/hide(intact)
 	invisibility = intact ? 101 : 0
 	updateicon()
 
@@ -67,7 +67,7 @@
 		Cmd(command, modifier)
 
 
-/obj/machinery/magnetic_module/proc/Cmd(var/command, var/modifier)
+/obj/machinery/magnetic_module/proc/Cmd(command, modifier)
 	if(command)
 		switch(command)
 			if("set-electriclevel")
@@ -219,7 +219,7 @@
 	..()
 
 	if(autolink)
-		for(var/obj/machinery/magnetic_module/M in world)
+		for(var/obj/machinery/magnetic_module/M in machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
@@ -235,15 +235,15 @@
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)
-		for(var/obj/machinery/magnetic_module/M in world)
+		for(var/obj/machinery/magnetic_module/M in machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
 
-/obj/machinery/magnetic_controller/attack_ai(mob/user as mob)
+/obj/machinery/magnetic_controller/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/magnetic_controller/attack_hand(mob/user as mob)
+/obj/machinery/magnetic_controller/attack_hand(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	user.set_machine(src)

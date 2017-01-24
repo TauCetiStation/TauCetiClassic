@@ -47,7 +47,7 @@
 	icon_state = "lightreplacer0"
 	item_state = "electronic"
 
-	flags = FPRINT | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	origin_tech = "magnets=3;materials=2"
 
@@ -66,10 +66,10 @@
 	failmsg = "The [name]'s refill light blinks red."
 	..()
 
-/obj/item/device/lightreplacer/examine()
-	set src in view(2)
+/obj/item/device/lightreplacer/examine(mob/user)
 	..()
-	usr << "It has [uses] lights remaining."
+	if(src in view(1, user))
+		to_chat(user, "It has [uses] lights remaining.")
 
 /obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
 	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
@@ -81,14 +81,14 @@
 		if(G.amount - decrement >= 0 && uses < max_uses)
 			var/remaining = max(G.amount - decrement, 0)
 			if(!remaining && !(G.amount - decrement) == 0)
-				user << "There isn't enough glass."
+				to_chat(user, "There isn't enough glass.")
 				return
 			G.amount = remaining
 			if(!G.amount)
 				user.drop_item()
 				qdel(G)
 			AddUses(increment)
-			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
+			to_chat(user, "You insert a piece of glass into the [src.name]. You have [uses] lights remaining.")
 			return
 
 	if(istype(W, /obj/item/weapon/light))
@@ -96,12 +96,12 @@
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
 				AddUses(1)
-				user << "You insert the [L.name] into the [src.name]. You have [uses] lights remaining."
+				to_chat(user, "You insert the [L.name] into the [src.name]. You have [uses] lights remaining.")
 				user.drop_item()
 				qdel(L)
 				return
 		else
-			user << "You need a working light."
+			to_chat(user, "You need a working light.")
 			return
 
 
@@ -111,37 +111,37 @@
 		var/mob/living/silicon/robot/R = user
 		if(R.emagged)
 			src.Emag()
-			usr << "You shortcircuit the [src]."
+			to_chat(usr, "You shortcircuit the [src].")
 			return
 	*/
-	usr << "It has [uses] lights remaining."
+	to_chat(usr, "It has [uses] lights remaining.")
 
 /obj/item/device/lightreplacer/update_icon()
 	icon_state = "lightreplacer[emagged]"
 
 
-/obj/item/device/lightreplacer/proc/Use(var/mob/user)
+/obj/item/device/lightreplacer/proc/Use(mob/user)
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	AddUses(-1)
 	return 1
 
 // Negative numbers will subtract
-/obj/item/device/lightreplacer/proc/AddUses(var/amount = 1)
+/obj/item/device/lightreplacer/proc/AddUses(amount = 1)
 	uses = min(max(uses + amount, 0), max_uses)
 
-/obj/item/device/lightreplacer/proc/Charge(var/mob/user)
+/obj/item/device/lightreplacer/proc/Charge(mob/user)
 	charge += 1
 	if(charge > 7)
 		AddUses(1)
 		charge = 1
 
-/obj/item/device/lightreplacer/proc/ReplaceLight(var/obj/machinery/light/target, var/mob/living/U)
+/obj/item/device/lightreplacer/proc/ReplaceLight(obj/machinery/light/target, mob/living/U)
 
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
 			if(!Use(U)) return
-			U << "<span class='notice'>You replace the [target.fitting] with the [src].</span>"
+			to_chat(U, "<span class='notice'>You replace the [target.fitting] with the [src].</span>")
 
 			if(target.status != LIGHT_EMPTY)
 
@@ -175,10 +175,10 @@
 			return
 
 		else
-			U << failmsg
+			to_chat(U, failmsg)
 			return
 	else
-		U << "There is a working [target.fitting] already inserted."
+		to_chat(U, "There is a working [target.fitting] already inserted.")
 		return
 
 /obj/item/device/lightreplacer/proc/Emag()
@@ -192,7 +192,7 @@
 
 //Can you use it?
 
-/obj/item/device/lightreplacer/proc/CanUse(var/mob/living/user)
+/obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
 	src.add_fingerprint(user)
 	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)

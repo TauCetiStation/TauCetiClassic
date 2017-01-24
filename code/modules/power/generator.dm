@@ -113,10 +113,10 @@
 	if(stat & (BROKEN|NOPOWER)) return
 	interact(user)
 
-/obj/machinery/power/generator/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/power/generator/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = !anchored
-		user << "\blue You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor."
+		to_chat(user, "\blue You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.")
 		use_power = anchored
 		reconnect()
 	else

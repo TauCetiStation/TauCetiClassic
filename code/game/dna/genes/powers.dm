@@ -22,11 +22,11 @@
 	New()
 		block=REMOTEVIEWBLOCK
 
-	activate(var/mob/M, var/connected, var/flags)
+	activate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.verbs += /mob/living/carbon/human/proc/remoteobserve
 
-	deactivate(var/mob/M, var/connected, var/flags)
+	deactivate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.verbs -= /mob/living/carbon/human/proc/remoteobserve
 
@@ -39,12 +39,12 @@
 	New()
 		block=REGENERATEBLOCK
 
-	can_activate(var/mob/M,var/flags)
+	can_activate(mob/M,flags)
 		if((SMALLSIZE in M.mutations))
 			return 0
 		return ..(M,flags)
 
-	OnMobLife(var/mob/living/carbon/human/M)
+	OnMobLife(mob/living/carbon/human/M)
 		if(!istype(M)) return
 		var/datum/organ/external/head/H = M.organs_by_name["head"]
 
@@ -89,11 +89,11 @@
 	New()
 		block=REMOTETALKBLOCK
 
-	activate(var/mob/M, var/connected, var/flags)
+	activate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.verbs += /mob/living/carbon/human/proc/remotesay
 
-	deactivate(var/mob/M, var/connected, var/flags)
+	deactivate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.verbs -= /mob/living/carbon/human/proc/remotesay
 
@@ -106,11 +106,11 @@
 	New()
 		block=MORPHBLOCK
 
-	activate(var/mob/M)
+	activate(mob/M)
 		..(M)
 		M.verbs += /mob/living/carbon/human/proc/morph
 
-	deactivate(var/mob/M)
+	deactivate(mob/M)
 		..(M)
 		M.verbs -= /mob/living/carbon/human/proc/morph
 
@@ -123,12 +123,12 @@
 	New()
 		block=COLDBLOCK
 
-	can_activate(var/mob/M,var/flags)
+	can_activate(mob/M,flags)
 		if(COLD_RESISTANCE in M.mutations)
 			return 0
 		return ..(M,flags)
 
-	OnDrawUnderlays(var/mob/M,var/g,var/fat)
+	OnDrawUnderlays(mob/M,g,fat)
 		return "fire[fat]_s"
 
 /datum/dna/gene/basic/cold_resist
@@ -140,12 +140,12 @@
 	New()
 		block=FIREBLOCK
 
-	can_activate(var/mob/M,var/flags)
+	can_activate(mob/M,flags)
 		if(RESIST_HEAT in M.mutations)
 			return 0
 		return ..(M,flags)
 
-	OnDrawUnderlays(var/mob/M,var/g,var/fat)
+	OnDrawUnderlays(mob/M,g,fat)
 		return "fire[fat]_s"
 
 /datum/dna/gene/basic/noprints
@@ -175,26 +175,26 @@
 	New()
 		block=SMALLSIZEBLOCK
 
-	can_activate(var/mob/M,var/flags)
+	can_activate(mob/M,flags)
 		// Can't be big, small and regenerate.
 		if( (REGEN in M.mutations)) //#Z2
 			return 0
 		return ..(M,flags)
 
-	activate(var/mob/M, var/connected, var/flags)
+	activate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.pass_flags |= 1
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.ventcrawler = 1
-			H << "\blue \b Ventcrawling allowed"
+			to_chat(H, "\blue \b Ventcrawling allowed")
 
 		var/matrix/Mx = matrix()
 		Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
 		Mx.Translate(0,-2)
 		M.transform = Mx
 
-	deactivate(var/mob/M, var/connected, var/flags)
+	deactivate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.pass_flags &= ~1
 		if(ishuman(M))
@@ -215,7 +215,7 @@
 /datum/dna/gene/basic/hulk/New()
 	block=HULKBLOCK
 
-	/*can_activate(var/mob/M,var/flags)
+	/*can_activate(mob/M,flags)
 		// Can't be big, small and regenerate.
 		if( (SMALLSIZE in M.mutations) || (REGEN in M.mutations)) //#Z2
 			return 0
@@ -286,5 +286,5 @@
 	New()
 		block=TELEBLOCK
 
-	OnDrawUnderlays(var/mob/M,var/g,var/fat)
+	OnDrawUnderlays(mob/M,g,fat)
 		return "telekinesishead[fat]_s"

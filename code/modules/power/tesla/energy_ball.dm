@@ -70,13 +70,13 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 	return
 
-/obj/singularity/energy_ball/examine()
+/obj/singularity/energy_ball/examine(mob/user)
 	..()
 	if(orbiting_balls.len)
-		usr << "The amount of orbiting mini-balls is [orbiting_balls.len]."
+		to_chat(user, "The amount of orbiting mini-balls is [orbiting_balls.len].")
 
 
-/obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
+/obj/singularity/energy_ball/proc/move_the_basket_ball(move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/first_move = dir
 	for(var/i in 0 to move_amount)
@@ -144,7 +144,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		C.dust()
 	return
 
-/proc/tesla_zap(var/atom/source, zap_range = 3, power)
+/proc/tesla_zap(atom/source, zap_range = 3, power)
 	. = source.dir
 	if(power < 1000)
 		return

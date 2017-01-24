@@ -1,4 +1,4 @@
-#define VOX_SHUTTLE_MOVE_TIME 400
+#define VOX_SHUTTLE_MOVE_TIME 375
 #define VOX_SHUTTLE_COOLDOWN 1200
 
 //Copied from Syndicate shuttle.
@@ -11,25 +11,25 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	icon_state = "syndishuttle"
 	req_access = list(access_syndicate)
 
-/obj/machinery/computer/vox_stealth/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/vox_stealth/attackby(obj/item/I, mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/vox_stealth/attack_ai(mob/user as mob)
+/obj/machinery/computer/vox_stealth/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/vox_stealth/attack_paw(mob/user as mob)
+/obj/machinery/computer/vox_stealth/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/vox_stealth/attack_hand(mob/user as mob)
+/obj/machinery/computer/vox_stealth/attack_hand(mob/user)
 	if(!allowed(user))
-		user << "\red Access Denied"
+		to_chat(user, "\red Access Denied")
 		return
 
 	if(announce_vox_departure)
-		user << "\red Shuttle stealth systems have been activated. The Exodus will not be warned of our arrival."
+		to_chat(user, "\red Shuttle stealth systems have been activated. The Exodus will not be warned of our arrival.")
 		announce_vox_departure = 0
 	else
-		user << "\red Shuttle stealth systems have been deactivated. The Exodus will be warned of our arrival."
+		to_chat(user, "\red Shuttle stealth systems have been deactivated. The Exodus will be warned of our arrival.")
 		announce_vox_departure = 1
 
 
@@ -47,7 +47,7 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	curr_location= locate(/area/shuttle/vox/station)
 
 
-/obj/machinery/computer/vox_station/proc/vox_move_to(area/destination as area)
+/obj/machinery/computer/vox_station/proc/vox_move_to(area/destination)
 	if(moving)	return
 	if(lastMove + VOX_SHUTTLE_COOLDOWN > world.time)	return
 	var/area/dest_location = locate(destination)
@@ -67,6 +67,8 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 		curr_location.move_contents_to(transit_location)
 		curr_location = transit_location
 		sleep(VOX_SHUTTLE_MOVE_TIME)
+		curr_location.parallax_slowdown()
+		sleep(PARALLAX_LOOP_TIME)
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
@@ -77,19 +79,19 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	return 1
 
 
-/obj/machinery/computer/vox_station/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/vox_station/attackby(obj/item/I, mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/vox_station/attack_ai(mob/user as mob)
-	user << "<span class='red'><b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..</span>" //Totally not stolen from ninja.
+/obj/machinery/computer/vox_station/attack_ai(mob/user)
+	to_chat(user, "<span class='red'><b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..</span>")//Totally not stolen from ninja.
 	return
 
-/obj/machinery/computer/vox_station/attack_paw(mob/user as mob)
+/obj/machinery/computer/vox_station/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/vox_station/attack_hand(mob/user as mob)
+/obj/machinery/computer/vox_station/attack_hand(mob/user)
 	if(!allowed(user))
-		user << "<span class='red'>Access Denied.</span>"
+		to_chat(user, "<span class='red'>Access Denied.</span>")
 		return
 
 	user.set_machine(src)
@@ -118,7 +120,7 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	if(href_list["start"])
 		if(ticker && (istype(ticker.mode,/datum/game_mode/heist)))
 			if(!warning)
-				usr << "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>"
+				to_chat(usr, "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>")
 				warning = 1
 				return
 		vox_move_to(/area/shuttle/vox/station)
@@ -135,5 +137,5 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 
 	updateUsrDialog()
 
-/obj/machinery/computer/vox_station/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/computer/vox_station/bullet_act(obj/item/projectile/Proj)
 	visible_message("[Proj] ricochets off [src]!")

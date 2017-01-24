@@ -15,7 +15,7 @@ datum/objective
 
 	Destroy()
 		all_objectives -= src
-		..()
+		return ..()
 
 	proc/check_completion()
 		return completed
@@ -212,7 +212,7 @@ datum/objective/anti_revolution/demote
 
 			if(!istype(I)) return 1
 
-			if(I.assignment == "Assistant")
+			if(I.assignment == "Test Subject")
 				return 1
 			else
 				return 0
@@ -579,7 +579,7 @@ datum/objective/steal
 				for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) //Let an AI downloaded into a space ninja suit count
 					if(S.AI && S.AI.stat != DEAD)
 						return 1
-				for(var/mob/living/silicon/ai/ai in world)
+				for(var/mob/living/silicon/ai/ai in living_mob_list)
 					if(istype(ai.loc, /turf))
 						var/area/check_area = get_area(ai)
 						if(istype(check_area, /area/shuttle/escape/centcom))
@@ -667,7 +667,7 @@ datum/objective/capture
 
 
 datum/objective/absorb
-	proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
+	proc/gen_amount_goal(lowbound = 4, highbound = 6)
 		target_amount = rand (lowbound,highbound)
 		if (ticker)
 			var/n_p = 1 //autowin
@@ -750,7 +750,7 @@ datum/objective/absorb
 */
 //Meme objectives
 datum/objective/meme_attune
-	proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
+	proc/gen_amount_goal(lowbound = 4, highbound = 6)
 		target_amount = rand (lowbound,highbound)
 		explanation_text = "Attune [target_amount] humanoid brains."
 		return target_amount

@@ -41,7 +41,7 @@
 			return
 
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
+	attackby(obj/item/O, mob/user)  //Marker -Agouri
 		if(istype(O, /obj/item/device/soulstone))
 			O.transfer_soul("SHADE", src, user)
 		else
@@ -54,7 +54,7 @@
 					if ((M.client && !( M.blinded )))
 						M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
 			else
-				usr << "\red This weapon is ineffective, it does no damage."
+				to_chat(usr, "\red This weapon is ineffective, it does no damage.")
 				for(var/mob/M in viewers(src, null))
 					if ((M.client && !( M.blinded )))
 						M.show_message("\red [user] gently taps [src] with the [O]. ")

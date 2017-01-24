@@ -106,7 +106,7 @@
 	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/attack_hand(mob/user as mob)
+/obj/machinery/computer/arcade/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -203,7 +203,7 @@
 				feedback_inc("arcade_win_emagged")
 				new /obj/effect/spawner/newbomb/timer/syndicate(src.loc)
 				new /obj/item/clothing/head/collectable/petehat(src.loc)
-				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 				log_game("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				src.New()
 				emagged = 0
@@ -267,7 +267,7 @@
 	return
 
 
-/obj/machinery/computer/arcade/attackby(I as obj, user as mob)
+/obj/machinery/computer/arcade/attackby(I, user)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 		temp = "If you die in the game, you die for real!"
 		player_hp = 30

@@ -43,17 +43,17 @@
 			qdel(target)
 	return ..()
 
-/obj/multiz/ladder/attack_paw(var/mob/M)
+/obj/multiz/ladder/attack_paw(mob/M)
 	return attack_hand(M)
 
-/obj/multiz/ladder/attackby(obj/item/C as obj, mob/user as mob)
+/obj/multiz/ladder/attackby(obj/item/C, mob/user)
 	(..)
 	src.attack_hand(user)
 	return
 
-/obj/multiz/ladder/attack_hand(var/mob/M)
+/obj/multiz/ladder/attack_hand(mob/M)
 	if(!target || !istype(target.loc, /turf))
-		M << "The ladder is incomplete and can't be climbed."
+		to_chat(M, "The ladder is incomplete and can't be climbed.")
 	else
 		var/turf/T = target.loc
 		var/blocked = 0
@@ -62,7 +62,7 @@
 				blocked = 1
 				break
 		if(blocked || istype(T, /turf/simulated/wall))
-			M << "Something is blocking the ladder."
+			to_chat(M, "Something is blocking the ladder.")
 		else
 			M.visible_message("\blue \The [M] climbs [src.icon_state == "ladderup" ? "up" : "down"] \the [src]!", "You climb [src.icon_state == "ladderup"  ? "up" : "down"] \the [src]!", "You hear some grunting, and clanging of a metal ladder being used.")
 			M.Move(target.loc)
@@ -104,7 +104,7 @@
 			if(target)
 				break
 
-/obj/multiz/stairs/Bumped(var/atom/movable/M)
+/obj/multiz/stairs/Bumped(atom/movable/M)
 	if(connected && target && istype(src, /obj/multiz/stairs) && locate(/obj/multiz/stairs) in M.loc)
 		var/obj/multiz/stairs/Con = locate(/obj/multiz/stairs) in M.loc
 		if(Con == src.connected) //make sure the atom enters from the approriate lower stairs tile

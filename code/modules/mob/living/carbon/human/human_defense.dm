@@ -1,4 +1,4 @@
-/mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
+/mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
 	if(P.impact_force)
 		for(var/i=1, i<=P.impact_force, i++)
 			step_to(src, get_step(loc, P.dir))
@@ -42,7 +42,7 @@
 				drop_item()
 		P.on_hit(src)
 		flash_pain()
-		src <<"\red You have been shot!"
+		to_chat(src, "\red You have been shot!")
 		qdel(P)
 		return
 
@@ -65,7 +65,7 @@
 		apply_damage(P.damage, P.damage_type, organ, armorblock, P, 0, 0)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		flash_pain()
-		src <<"\red You have been shot!"
+		to_chat(src, "\red You have been shot!")
 		qdel(P)
 		return
 
@@ -115,7 +115,14 @@
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/getarmor(var/def_zone, var/type)
+/mob/living/carbon/human/proc/is_in_space_suit(only_helmet = FALSE) //Wearing human full space suit (or only space helmet)?
+	if(!head || !(only_helmet || wear_suit))
+		return FALSE
+	if(istype(head, /obj/item/clothing/head/helmet/space) && (only_helmet || istype(wear_suit, /obj/item/clothing/suit/space)))
+		return TRUE
+	return FALSE
+
+/mob/living/carbon/human/getarmor(def_zone, type)
 	var/armorval = 0
 	var/organnum = 0
 
@@ -133,7 +140,7 @@
 	return (armorval/max(organnum, 1))
 
 //this proc returns the Siemens coefficient of electrical resistivity for a particular external organ.
-/mob/living/carbon/human/proc/get_siemens_coefficient_organ(var/datum/organ/external/def_zone)
+/mob/living/carbon/human/proc/get_siemens_coefficient_organ(datum/organ/external/def_zone)
 	if (!def_zone)
 		return 1.0
 
@@ -155,7 +162,7 @@
 	return siemens_coefficient
 
 //this proc returns the armour value for a particular external organ.
-/mob/living/carbon/human/proc/getarmor_organ(var/datum/organ/external/def_zone, var/type)
+/mob/living/carbon/human/proc/getarmor_organ(datum/organ/external/def_zone, type)
 	if(!type || !def_zone) return 0
 	var/protection = 0
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
@@ -177,7 +184,7 @@
 				return 1
 	return 0
 
-/mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
+/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack")
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
@@ -219,7 +226,7 @@
 	..()
 
 
-/mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+/mob/living/carbon/human/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(!I || !user)	return 0
 
 	var/target_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.zone_sel.selecting, src)
@@ -234,7 +241,7 @@
 	if (!affecting)
 		return 0
 	if(affecting.status & ORGAN_DESTROYED)
-		user << "What [affecting.display_name]?"
+		to_chat(user, "What [affecting.display_name]?")
 		return 0
 	var/hit_area = affecting.display_name
 
@@ -245,12 +252,12 @@
 
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(!(affecting.status & ORGAN_ROBOT))
-			user << "\red That limb isn't robotic."
+			to_chat(user, "\red That limb isn't robotic.")
 			return
 		if(affecting.sabotaged)
-			user << "\red [src]'s [affecting.display_name] is already sabotaged!"
+			to_chat(user, "\red [src]'s [affecting.display_name] is already sabotaged!")
 		else
-			user << "\red You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties."
+			to_chat(user, "\red You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties.")
 			var/obj/item/weapon/card/emag/emag = I
 			emag.uses--
 			affecting.sabotaged = 1
@@ -320,7 +327,7 @@
 	return 1
 
 //this proc handles being hit by a thrown atom
-/mob/living/carbon/human/hitby(atom/movable/AM as mob|obj)
+/mob/living/carbon/human/hitby(atom/movable/AM)
 	if(istype(AM,/obj/))
 		var/obj/O = AM
 		var/dtype = BRUTE
@@ -391,7 +398,7 @@
 					src.pinned += O
 		AM.fly_speed = 0
 
-/mob/living/carbon/human/proc/bloody_hands(var/mob/living/source, var/amount = 2)
+/mob/living/carbon/human/proc/bloody_hands(mob/living/source, amount = 2)
 	if (gloves)
 		gloves.add_blood(source)
 		gloves:transfer_blood = amount
@@ -402,7 +409,7 @@
 		bloody_hands_mob = source
 	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
-/mob/living/carbon/human/proc/bloody_body(var/mob/living/source)
+/mob/living/carbon/human/proc/bloody_body(mob/living/source)
 	if(wear_suit)
 		wear_suit.add_blood(source)
 		update_inv_wear_suit()
@@ -410,7 +417,7 @@
 		w_uniform.add_blood(source)
 		update_inv_w_uniform()
 
-/mob/living/carbon/human/proc/check_thickmaterial(var/datum/organ/external/def_zone, var/type)
+/mob/living/carbon/human/proc/check_thickmaterial(datum/organ/external/def_zone, type)
 //	if(!type)	return 0
 	var/thickmaterial = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes, glasses, l_ear, r_ear)
@@ -423,7 +430,7 @@
 					thickmaterial = 1
 	return thickmaterial
 
-/mob/living/carbon/human/proc/handle_suit_punctures(var/damtype, var/damage)
+/mob/living/carbon/human/proc/handle_suit_punctures(damtype, damage)
 
 	if(!wear_suit) return
 	if(!istype(wear_suit,/obj/item/clothing/suit/space)) return

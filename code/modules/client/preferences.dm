@@ -10,6 +10,7 @@ var/const/MAX_SAVE_SLOTS = 10
 #define RETURN_TO_LOBBY 2
 
 /datum/preferences
+	var/client/parent
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
@@ -115,8 +116,10 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/randomslot = 0
 	// jukebox volume
 	var/volume = 100
+	var/parallax = PARALLAX_HIGH
 
 /datum/preferences/New(client/C)
+	parent = C
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -156,7 +159,6 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "Please create an account to save your preferences."
 
 	dat += "</center><hr width='535'>"
-
 	switch(menu_type)
 		if("general")
 			dat += ShowGeneral(user)
@@ -173,15 +175,17 @@ var/const/MAX_SAVE_SLOTS = 10
 	user << browse(dat, "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
-	if(!user)	return
+	if(!user)
+		return
 
-	if(!istype(user, /mob/new_player))	return
+	if(href_list["preference"] == "close")
+		user << browse(null, "window=preferences")
+		return
+
+	if(!istype(user, /mob/new_player))
+		return
 
 	switch(href_list["preference"])
-		if("close")
-			user << browse(null, "window=preferences")
-			return
-
 		if("save")
 			save_preferences()
 			save_character()
@@ -208,7 +212,6 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
-
 	switch(menu_type)
 		if("general")
 			process_link_general(user, href_list)
@@ -310,6 +313,10 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.disabilities|=TOURETTES
 	if(disabilities & DISABILITY_NERVOUS)
 		character.disabilities|=NERVOUS
+	if(disabilities & DISABILITY_FATNESS)
+		character.mutations += FAT
+		character.nutrition = 1000
+		character.overeatduration = 2000
 
 	// Wheelchair necessary?
 	var/datum/organ/external/l_foot = character.get_organ("l_foot")

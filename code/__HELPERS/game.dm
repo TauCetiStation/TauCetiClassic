@@ -14,7 +14,7 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/is_on_same_plane_or_station(var/z1, var/z2)
+/proc/is_on_same_plane_or_station(z1, z2)
 	if(z1 == z2)
 		return 1
 	if((z1 in config.station_levels) &&	(z2 in config.station_levels))
@@ -36,7 +36,7 @@
 		.= res
 
 /proc/get_area_name(N) //get area by its name
-	for(var/area/A in world)
+	for(var/area/A in all_areas)
 		if(A.name == N)
 			return A
 	return 0
@@ -49,7 +49,7 @@
 
 // Like view but bypasses luminosity check
 
-/proc/hear(var/range, var/atom/source)
+/proc/hear(range, atom/source)
 
 	var/lum = source.luminosity
 	source.luminosity = 6
@@ -59,19 +59,19 @@
 
 	return heard
 
-/proc/isStationLevel(var/level)
+/proc/isStationLevel(level)
 	return level in config.station_levels
 
-/proc/isNotStationLevel(var/level)
+/proc/isNotStationLevel(level)
 	return !isStationLevel(level)
 
-/proc/isPlayerLevel(var/level)
+/proc/isPlayerLevel(level)
 	return level in config.player_levels
 
-/proc/isAdminLevel(var/level)
+/proc/isAdminLevel(level)
 	return level in config.admin_levels
 
-/proc/isNotAdminLevel(var/level)
+/proc/isNotAdminLevel(level)
 	return !isAdminLevel(level)
 
 /proc/circlerange(center=usr,radius=3)
@@ -104,7 +104,7 @@
 	//turfs += centerturf
 	return atoms
 
-/proc/get_dist_euclidian(atom/Loc1 as turf|mob|obj,atom/Loc2 as turf|mob|obj)
+/proc/get_dist_euclidian(atom/Loc1,atom/Loc2)
 	var/dx = Loc1.x - Loc2.x
 	var/dy = Loc1.y - Loc2.y
 
@@ -146,7 +146,7 @@
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
 // being unable to hear people due to being in a box within a bag.
 
-/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
+/proc/recursive_mob_check(atom/O,  list/L = list(), recursion_limit = 3, client_check = 1, sight_check = 1, include_radio = 1)
 
 	//debug_mob += O.contents.len
 	if(!recursion_limit)
@@ -175,7 +175,7 @@
 // The old system would loop through lists for a total of 5000 per function call, in an empty server.
 // This new system will loop at around 1000 in an empty server.
 
-/proc/get_mobs_in_view(var/R, var/atom/source)
+/proc/get_mobs_in_view(R, atom/source)
 	// Returns a list of mobs in range of R from source. Used in radio and say code.
 
 	var/turf/T = get_turf(source)
@@ -201,7 +201,7 @@
 	return hear
 
 
-/proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
+/proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
 
 	//set background = 1
 
@@ -271,7 +271,7 @@ proc
 		return 1
 #undef SIGN
 
-proc/isInSight(var/atom/A, var/atom/B)
+proc/isInSight(atom/A, atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
 
@@ -284,7 +284,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 	else
 		return 0
 
-/proc/mobs_in_area(var/area/the_area, var/client_needed=0, var/moblist=mob_list)
+/proc/mobs_in_area(area/the_area, client_needed=0, moblist=mob_list)
 	var/list/mobs_found[0]
 	var/area/our_area = get_area_master(the_area)
 	for(var/mob/M in moblist)
@@ -316,7 +316,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 		if(AM.Move(get_step(T, direction)))
 			break
 
-/proc/get_mob_by_key(var/key)
+/proc/get_mob_by_key(key)
 	for(var/mob/M in mob_list)
 		if(M.ckey == lowertext(key))
 			return M
@@ -324,7 +324,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 
 
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
-/proc/get_active_candidates(var/buffer = 1)
+/proc/get_active_candidates(buffer = 1)
 
 	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
 	var/i = 0
@@ -380,7 +380,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 			for(var/client/C in group)
 				C.screen -= O
 
-datum/projectile_data
+/datum/projectile_data
 	var/src_x
 	var/src_y
 	var/time
@@ -401,7 +401,7 @@ datum/projectile_data
 	src.dest_x = dest_x
 	src.dest_y = dest_y
 
-/proc/projectile_trajectory(var/src_x, var/src_y, var/rotation, var/angle, var/power)
+/proc/projectile_trajectory(src_x, src_y, rotation, angle, power)
 
 	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
 	// rotated at [rotation] and with the power of [power]
@@ -451,6 +451,21 @@ datum/projectile_data
 	var/b = mixOneColor(weights, blues)
 	return rgb(r,g,b)
 
+/proc/random_color()
+	var/list/rand = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
+	return "#" + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand)
+
+/proc/noob_notify(mob/M)
+	//todo: check db before
+	if(!M.client)
+		return
+	if(M.client.holder)
+		return
+	if(M.client.player_age == 0)
+		var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
+		var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
+
+		message_admins("<b>New player notify:</b> [M.ckey] join to the game as [M.mind.name][player_assigned_role] - <a href='[player_byond_profile]'>Byond Profile</a>, [M.ckey] ip: [M.lastKnownIP] [ADMIN_FLW(M)]")
 
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)
@@ -489,13 +504,13 @@ datum/projectile_data
 
 
 //============Bay12 atmos=============
-/proc/convert_k2c(var/temp)
+/proc/convert_k2c(temp)
 	return ((temp - T0C))
 
-/proc/convert_c2k(var/temp)
+/proc/convert_c2k(temp)
 	return ((temp + T0C))
 
-/proc/getCardinalAirInfo(var/turf/loc, var/list/stats=list("temperature"))
+/proc/getCardinalAirInfo(turf/loc, list/stats=list("temperature"))
 	var/list/temps = new/list(4)
 	for(var/dir in cardinal)
 		var/direction

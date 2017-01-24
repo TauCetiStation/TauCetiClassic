@@ -3,7 +3,6 @@
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
@@ -16,7 +15,7 @@
 	origin_tech = "combat=2"
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>"
+		to_chat(viewers(user), "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>")
 		return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/update_icon()
@@ -25,9 +24,9 @@
 	else
 		icon_state = "stunbaton"
 
-/obj/item/weapon/melee/baton/attack_self(mob/user as mob)
+/obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
-		user << "\red You grab the [src] on the wrong side."
+		to_chat(user, "\red You grab the [src] on the wrong side.")
 		user.Weaken(30)
 		charges--
 		if(charges < 1)
@@ -36,26 +35,23 @@
 		return
 	if(charges > 0)
 		status = !status
-		user << "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>"
+		to_chat(user, "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>")
 		playsound(src.loc, "sparks", 75, 1, -1)
 		update_icon()
 	else
 		status = 0
-		user << "<span class='warning'>\The [src] is out of charge.</span>"
+		to_chat(user, "<span class='warning'>\The [src] is out of charge.</span>")
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/baton/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/melee/baton/attack(mob/M, mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
-		user << "<span class='danger'>You accidentally hit yourself with the [src]!</span>"
+		to_chat(user, "<span class='danger'>You accidentally hit yourself with the [src]!</span>")
 		user.Weaken(30)
 		charges--
 		if(charges < 1)
 			status = 0
 			update_icon()
 		return
-
-	for(var/mob/living/simple_animal/smart_animal/SA in view(7))
-		SA.fight(user, M)
 
 	var/mob/living/carbon/human/H = M
 	if(isrobot(M))

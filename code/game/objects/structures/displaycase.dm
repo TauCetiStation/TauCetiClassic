@@ -28,7 +28,7 @@
 				src.healthcheck()
 
 
-/obj/structure/displaycase/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/displaycase/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	src.healthcheck()
@@ -44,7 +44,7 @@
 		qdel(src)
 
 
-/obj/structure/displaycase/meteorhit(obj/O as obj)
+/obj/structure/displaycase/meteorhit(obj/O)
 		new /obj/item/weapon/shard( src.loc )
 		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
 		qdel(src)
@@ -70,28 +70,28 @@
 	return
 
 
-/obj/structure/displaycase/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user)
 	src.health -= W.force
 	src.healthcheck()
 	..()
 	return
 
-/obj/structure/displaycase/attack_paw(mob/user as mob)
+/obj/structure/displaycase/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/displaycase/attack_hand(mob/user as mob)
+/obj/structure/displaycase/attack_hand(mob/user)
 	if (src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
-		user << "\b You deactivate the hover field built into the case."
+		to_chat(user, "\b You deactivate the hover field built into the case.")
 		src.occupied = 0
 		src.add_fingerprint(user)
 		update_icon()
 		return
 	else
-		usr << text("\blue You kick the display case.")
+		to_chat(usr, text("\blue You kick the display case."))
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] kicks the display case.", usr)
+				to_chat(O, text("\red [] kicks the display case.", usr))
 		src.health -= 2
 		healthcheck()
 		return

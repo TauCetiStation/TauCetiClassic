@@ -94,7 +94,7 @@
 	corpseshoes = /obj/item/clothing/shoes/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas
+	corpsemask = /obj/item/clothing/mask/gas/coloured
 	corpsehelmet = /obj/item/clothing/head/helmet/swat
 	corpseback = /obj/item/weapon/storage/backpack
 	corpseid = 1
@@ -155,7 +155,7 @@
 	corpseshoes = /obj/item/clothing/shoes/orange
 	corpsebelt = /obj/item/weapon/storage/belt/utility/full
 	corpsegloves = /obj/item/clothing/gloves/yellow
-	corpsehelmet = /obj/item/clothing/head/hardhat
+	corpsehelmet = /obj/item/clothing/head/hardhat/yellow
 	corpseid = 1
 	corpseidjob = "Station Engineer"
 	corpseidaccess = "Station Engineer"

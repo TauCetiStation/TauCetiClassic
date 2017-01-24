@@ -3,11 +3,11 @@
 /obj/structure/stool/bed/nest
 	name = "alien nest"
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
-	icon = 'tauceti/icons/mob/alien.dmi'
+	icon = 'icons/mob/alien.dmi'
 	icon_state = "nest"
 	var/health = 100
 
-/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user as mob)
+/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			if(buckled_mob != user)
@@ -29,7 +29,7 @@
 			src.add_fingerprint(user)
 	return
 
-/obj/structure/stool/bed/nest/user_buckle_mob(mob/M as mob, mob/user as mob)
+/obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || usr.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
@@ -49,7 +49,7 @@
 		M.pixel_y = 2
 	return
 
-/obj/structure/stool/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/nest/attackby(obj/item/weapon/W, mob/user)
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)

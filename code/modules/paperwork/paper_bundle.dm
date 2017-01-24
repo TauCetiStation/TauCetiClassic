@@ -16,25 +16,25 @@
 	var/screen = 0
 
 
-/obj/item/weapon/paper_bundle/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/paper_bundle/attackby(obj/item/weapon/W, mob/user)
 	..()
 	var/obj/item/weapon/paper/P
 	if(istype(W, /obj/item/weapon/paper))
 		P = W
 		if(P.crumpled>0)
-			usr << "Paper to crumpled for bundle."
+			to_chat(usr, "Paper to crumpled for bundle.")
 			return
 		if (istype(P, /obj/item/weapon/paper/carbon))
 			var/obj/item/weapon/paper/carbon/C = P
 			if (!C.iscopy && !C.copied)
-				user << "<span class='notice'>Take off the carbon copy first.</span>"
+				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				add_fingerprint(user)
 				return
 
 		amount++
 		if(screen == 2)
 			screen = 1
-		user << "<span class='notice'>You add [(P.name == "paper") ? "the paper" : P.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>"
+		to_chat(user, "<span class='notice'>You add [(P.name == "paper") ? "the paper" : P.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
 		user.drop_from_inventory(P)
 		P.loc = src
 		if(istype(user,/mob/living/carbon/human))
@@ -44,7 +44,7 @@
 		amount++
 		if(screen == 2)
 			screen = 1
-		user << "<span class='notice'>You add [(W.name == "photo") ? "the photo" : W.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>"
+		to_chat(user, "<span class='notice'>You add [(W.name == "photo") ? "the photo" : W.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
 		user.drop_from_inventory(W)
 		W.loc = src
 	else if(istype(W, /obj/item/weapon/lighter))
@@ -57,7 +57,7 @@
 			src.amount++
 			if(screen == 2)
 				screen = 1
-		user << "<span class='notice'>You add \the [W.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>"
+		to_chat(user, "<span class='notice'>You add \the [W.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
 		qdel(W)
 	else
 		if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
@@ -72,43 +72,18 @@
 	return
 
 
-/obj/item/weapon/paper_bundle/proc/burnpaper(obj/item/weapon/lighter/P, mob/user)
-	var/class = "<span class='warning'>"
-
-	if(P.lit && !user.restrained())
-		if(istype(P, /obj/item/weapon/lighter/zippo))
-			class = "<span class='rose'>"
-
-		user.visible_message("[class][user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!", \
-		"[class]You hold \the [P] up to \the [src], burning it slowly.")
-
-		spawn(20)
-			if(get_dist(src, user) < 2 && user.get_active_hand() == P && P.lit)
-				user.visible_message("[class][user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.", \
-				"[class]You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.")
-
-				if(user.get_inactive_hand() == src)
-					user.drop_from_inventory(src)
-
-				new /obj/effect/decal/cleanable/ash(src.loc)
-				qdel(src)
-
-			else
-				user << "\red You must hold \the [P] steady to burn \the [src]."
-
-
 /obj/item/weapon/paper_bundle/examine()
 	set src in oview(1)
 
-	usr << desc
+	to_chat(usr, desc)
 	if(in_range(usr, src))
 		src.attack_self(usr)
 	else
-		usr << "<span class='notice'>It is too far away.</span>"
+		to_chat(usr, "<span class='notice'>It is too far away.</span>")
 	return
 
 
-/obj/item/weapon/paper_bundle/attack_self(mob/user as mob)
+/obj/item/weapon/paper_bundle/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/dat
@@ -173,7 +148,7 @@
 		if(href_list["remove"])
 			var/obj/item/weapon/W = src[page]
 			usr.put_in_hands(W)
-			usr << "<span class='notice'>You remove the [W.name] from the bundle.</span>"
+			to_chat(usr, "<span class='notice'>You remove the [W.name] from the bundle.</span>")
 			if(amount == 1)
 				var/obj/item/weapon/paper/P = src[1]
 				usr.drop_from_inventory(src)
@@ -187,7 +162,7 @@
 			amount--
 			update_icon()
 	else
-		usr << "<span class='notice'>You need to hold it in hands!</span>"
+		to_chat(usr, "<span class='notice'>You need to hold it in hands!</span>")
 	if (istype(src.loc, /mob))
 		src.attack_self(src.loc)
 		updateUsrDialog()
@@ -211,10 +186,11 @@
 	set category = "Object"
 	set src in usr
 
-	usr << "<span class='notice'>You loosen the bundle.</span>"
+	to_chat(usr, "<span class='notice'>You loosen the bundle.</span>")
 	for(var/obj/O in src)
 		O.loc = usr.loc
 		O.layer = initial(O.layer)
+		O.plane = initial(O.plane)
 		O.add_fingerprint(usr)
 	usr.drop_from_inventory(src)
 	qdel(src)

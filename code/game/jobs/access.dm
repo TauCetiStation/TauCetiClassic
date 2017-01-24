@@ -101,6 +101,9 @@
 		var/mob/living/silicon/S = M
 		if(src.check_access(S))
 			return TRUE
+	if(IsAdminGhost(M))
+		//Access can't stop the abuse
+		return TRUE
 	else if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
@@ -168,7 +171,7 @@
 		return FALSE
 	return TRUE
 
-/obj/proc/check_access_list(var/list/L)
+/obj/proc/check_access_list(list/L)
 	if(!src.req_access  && !src.req_one_access)	return 1
 	if(!istype(src.req_access, /list))	return 1
 	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))	return 1
@@ -224,7 +227,7 @@
 /proc/get_all_syndicate_access()
 	return list(access_syndicate)
 
-/proc/get_region_accesses(var/code)
+/proc/get_region_accesses(code)
 	switch(code)
 		if(0)
 			return get_all_accesses()
@@ -243,7 +246,7 @@
 		if(7) //supply
 			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_recycler, access_qm)
 
-/proc/get_region_accesses_name(var/code)
+/proc/get_region_accesses_name(code)
 	switch(code)
 		if(0)
 			return "All"
@@ -489,7 +492,7 @@
 
 	return "Unknown"
 
-proc/FindNameFromID(var/mob/living/carbon/human/H)
+proc/FindNameFromID(mob/living/carbon/human/H)
 	ASSERT(istype(H))
 	var/obj/item/weapon/card/id/C = H.get_active_hand()
 	if( istype(C) || istype(C, /obj/item/device/pda) )

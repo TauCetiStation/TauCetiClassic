@@ -20,12 +20,11 @@
 	desc = "A small satchel made for organizing seeds."
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 500; //the number of seeds it can carry.
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	w_class = 1
 	var/list/item_quants = list()
 
-/obj/item/weapon/seedbag/attack_self(mob/user as mob)
+/obj/item/weapon/seedbag/attack_self(mob/user)
 	user.machine = src
 	interact(user)
 
@@ -36,11 +35,11 @@
 	mode = !mode
 	switch (mode)
 		if(1)
-			usr << "The bag now picks up all seeds in a tile at once."
+			to_chat(usr, "The bag now picks up all seeds in a tile at once.")
 		if(0)
-			usr << "The bag now picks up one seed pouch at a time."
+			to_chat(usr, "The bag now picks up one seed pouch at a time.")
 
-/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/seeds/attackby(obj/item/O, mob/user)
 	..()
 	if (istype(O, /obj/item/weapon/seedbag))
 		var/obj/item/weapon/seedbag/S = O
@@ -53,10 +52,10 @@
 					else
 						S.item_quants[G.name] = 1
 				else
-					user << "\blue The seed bag is full."
+					to_chat(user, "\blue The seed bag is full.")
 					S.updateUsrDialog()
 					return
-			user << "\blue You pick up all the seeds."
+			to_chat(user, "\blue You pick up all the seeds.")
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
@@ -65,11 +64,11 @@
 				else
 					S.item_quants[name] = 1
 			else
-				user << "\blue The seed bag is full."
+				to_chat(user, "\blue The seed bag is full.")
 		S.updateUsrDialog()
 	return
 
-/obj/item/weapon/seedbag/interact(mob/user as mob)
+/obj/item/weapon/seedbag/interact(mob/user)
 
 	var/dat = "<TT><b>Select an item:</b><br>"
 
@@ -126,17 +125,17 @@
  * Sunflower
  */
 
-/obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
-	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
-	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
+/obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
+	to_chat(M, "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
+	to_chat(user, "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>")
 
 
 /*
  * Nettle
  */
-/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
+/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user)
 	if(!user.gloves)
-		user << "\red The nettle burns your bare hand!"
+		to_chat(user, "\red The nettle burns your bare hand!")
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/organ/external/affecting = user.get_organ(organ)
@@ -144,13 +143,13 @@
 		else
 			user.take_organ_damage(0,force)
 
-/obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
+/obj/item/weapon/grown/nettle/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if(force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	else
-		usr << "All the leaves have fallen off the nettle from violent whacking."
+		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
 		qdel(src)
 
 /obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
@@ -161,7 +160,7 @@
  * Deathnettle
  */
 
-/obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
+/obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user)
 	if(!user.gloves)
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
@@ -171,12 +170,12 @@
 			user.take_organ_damage(0,force)
 		if(prob(50))
 			user.Paralyse(5)
-			user << "\red You are stunned by the Deathnettle when you try picking it up!"
+			to_chat(user, "\red You are stunned by the Deathnettle when you try picking it up!")
 
-/obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
 	if(istype(M, /mob/living))
-		M << "\red You are stunned by the powerful acid of the Deathnettle!"
+		to_chat(M, "\red You are stunned by the powerful acid of the Deathnettle!")
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
@@ -190,13 +189,13 @@
 			M.Weaken(force/15)
 		M.drop_item()
 
-/obj/item/weapon/grown/deathnettle/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
+/obj/item/weapon/grown/deathnettle/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if (force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 
 	else
-		usr << "All the leaves have fallen off the deathnettle from violent whacking."
+		to_chat(usr, "All the leaves have fallen off the deathnettle from violent whacking.")
 		qdel(src)
 
 /obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
@@ -207,10 +206,10 @@
 /*
  * Corncob
  */
-/obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/corncob/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/kitchenknife/ritual))
-		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
+		to_chat(user, "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>")
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		qdel(src)
 		return

@@ -40,7 +40,7 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/abductor/experiment/proc/dissection_icon(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/preview_icon = null
 
 	var/g = "m"
@@ -64,20 +64,20 @@
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	//Tail
-	if(H.species.tail && H.species.flags & HAS_TAIL)
+	if(H.species.tail && H.species.flags[HAS_TAIL])
 		temp = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[H.species.tail]_s")
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone
-	if(H.species.flags & HAS_SKIN_TONE)
+	if(H.species.flags[HAS_SKIN_TONE])
 		if (H.s_tone >= 0)
 			preview_icon.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
 		else
 			preview_icon.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
 
 	// Skin color
-	if(H.species.flags & HAS_SKIN_TONE)
-		if(!H.species || H.species.flags & HAS_SKIN_COLOR)
+	if(H.species.flags[HAS_SKIN_TONE])
+		if(!H.species || H.species.flags[HAS_SKIN_COLOR])
 			preview_icon.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
 	var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = H.species ? H.species.eyes : "eyes_s")
@@ -152,7 +152,7 @@
 			flash = Experiment(occupant,href_list["experiment"])
 	updateUsrDialog()
 
-/obj/machinery/abductor/experiment/proc/Experiment(var/mob/occupant,var/type)
+/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
 	var/mob/living/carbon/human/H = occupant
 	var/point_reward = 0
 	if(H in history)
@@ -170,21 +170,21 @@
 		sleep(5)
 		switch(text2num(type))
 			if(1)
-				H << "<span class='warning'>You feel violated.</span>"
+				to_chat(H, "<span class='warning'>You feel violated.</span>")
 			if(2)
-				H << "<span class='warning'>You feel yourself being sliced apart and put back together.</span>"
+				to_chat(H, "<span class='warning'>You feel yourself being sliced apart and put back together.</span>")
 			if(3)
-				H << "<span class='warning'>You feel intensely watched.</span>"
+				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
-		H << "<span class='warning'><b>Your mind snaps!</b></span>"
+		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 		var/objtype = pick(typesof(/datum/objective/abductee/) - /datum/objective/abductee/)
 		var/datum/objective/abductee/O = new objtype()
 		ticker.mode.abductees += H.mind
 		H.mind.objectives += O
 		var/obj_count = 1
-		H << "<span class='notice'>Your current objectives:</span>"
+		to_chat(H, "<span class='notice'>Your current objectives:</span>")
 		for(var/datum/objective/objective in H.mind.objectives)
-			H << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			to_chat(H, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 		for(var/obj/item/gland/G in H)
 			G.Start()
@@ -205,7 +205,7 @@
 		return "<span class='bad'>Specimen braindead - disposed</span>"
 	return "<span class='bad'>ERROR</span>"
 
-/obj/machinery/abductor/experiment/proc/SendBack(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
 	H.Sleeping(8)
 	var/area/A
 	if(console && console.pad && console.pad.teleport_target)

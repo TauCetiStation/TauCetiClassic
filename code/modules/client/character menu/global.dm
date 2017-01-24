@@ -43,6 +43,10 @@
 	. += 					"<td width='45%'>Ghost ears:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=ghost_ears'><b>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</b></a></td>"
 	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Ghost hear NPCs:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=npc_ghost_ears'><b>[(chat_toggles & CHAT_GHOSTNPC) ? "All Speech" : "Nearest Creatures"]</b></a></td>"
+	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost sight:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a></td>"
@@ -58,6 +62,22 @@
 	. += 				"<tr>"
 	. += 					"<td width='45%'>LOOC:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_looc'><b>[(chat_toggles & CHAT_LOOC) ? "Shown" : "Hidden"]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
+	. += 					"<td width='45%'>Parallax (Fancy Space)</td>"
+	. += 					"<td><b><a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
+	switch (parallax)
+		if (PARALLAX_LOW)
+			. += "Low"
+		if (PARALLAX_MED)
+			. += "Medium"
+		if (PARALLAX_INSANE)
+			. += "Insane"
+		if (PARALLAX_DISABLE)
+			. += "Disabled"
+		else
+			. += "High"
+	. += 					"</a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Melee Animations:</td>"
@@ -115,6 +135,16 @@
 				else
 					UI_style = "White"
 
+		if("parallaxup")
+			parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+			if (parent && parent.mob && parent.mob.hud_used)
+				parent.mob.hud_used.update_parallax_pref()
+
+		if("parallaxdown")
+			parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+			if (parent && parent.mob && parent.mob.hud_used)
+				parent.mob.hud_used.update_parallax_pref()
+
 		if("hear_midis")
 			toggles ^= SOUND_MIDI
 
@@ -130,6 +160,9 @@
 
 		if("ghost_ears")
 			chat_toggles ^= CHAT_GHOSTEARS
+
+		if("npc_ghost_ears")
+			chat_toggles ^= CHAT_GHOSTNPC
 
 		if("ghost_sight")
 			chat_toggles ^= CHAT_GHOSTSIGHT

@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate/
 	New()
 		..()
-		var/tagname = pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1))
+		var/tagname = pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "poisons" = 1))
 		switch (tagname)
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
@@ -9,7 +9,6 @@
 				new /obj/item/weapon/card/id/syndicate(src)
 				new /obj/item/clothing/shoes/syndigaloshes(src)
 
-			if ("stealth")
 			if("stealth")
 				new /obj/item/weapon/gun/energy/crossbow(src)
 				new /obj/item/weapon/pen/paralysis(src)
@@ -59,6 +58,15 @@
 				new /obj/item/bodybag(src)
 				new /obj/item/clothing/under/suit_jacket(src)
 				new /obj/item/clothing/shoes/laceup(src)
+
+			if("poisons")
+				new /obj/item/weapon/reagent_containers/glass/bottle/carpotoxin(src)
+				new /obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin(src)
+				new /obj/item/weapon/reagent_containers/glass/bottle/chefspecial(src)
+				new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
+				new /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate(src)
+				new /obj/item/weapon/reagent_containers/syringe(src)
+
 		tag = tagname
 
 
@@ -128,3 +136,22 @@
 	new /obj/item/clothing/glasses/chameleon(src)
 	new /obj/item/weapon/gun/projectile/chameleon(src)
 	new /obj/item/ammo_box/magazine/chameleon(src)
+
+/obj/item/weapon/storage/box/syndie_kit/throwing_weapon
+	name = "box (F)"
+
+/obj/item/weapon/storage/box/syndie_kit/throwing_weapon/New()
+	..()
+	new /obj/item/weapon/legcuffs/bola/tactical(src)
+	new /obj/item/weapon/legcuffs/bola/tactical(src)
+	for(var/i = 1 to 5)
+		new /obj/item/weapon/throwing_star(src)
+
+/obj/item/weapon/storage/box/syndie_kit/cutouts
+	name = "box (G)"
+
+/obj/item/weapon/storage/box/syndie_kit/cutouts/New()
+	..()
+	for(var/i = 1 to 3)
+		new /obj/item/cardboard_cutout(src)
+	new /obj/item/toy/crayon/rainbow (src)

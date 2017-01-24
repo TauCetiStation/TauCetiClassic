@@ -1,7 +1,8 @@
 /obj/effect/projectile
 	icon = 'icons/effects/projectiles.dmi'
 	icon_state = "bolt"
-	layer = 20
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
 
 /obj/effect/projectile/New(var/turf/location)
 	if(istype(location))
@@ -9,7 +10,7 @@
 	if(light_color)
 		set_light(light_range,light_power,light_color)
 
-/obj/effect/projectile/proc/set_transform(var/matrix/M)
+/obj/effect/projectile/proc/set_transform(matrix/M)
 	if(istype(M))
 		transform = M
 

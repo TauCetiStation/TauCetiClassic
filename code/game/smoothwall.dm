@@ -94,14 +94,11 @@
 	relativewall_neighbours()
 	..()
 
-/*/turf/simulated/shuttle/wall/New()
-
-	spawn(20) //testing if this will make /obj/machinery/shuttle and /door count - It does, it stays.
-		if(src.icon_state in list("wall1", "wall", "diagonalWall", "wall_floor", "wall_space")) //so wizard den, syndie shuttle etc will remain black
-			for(var/turf/simulated/shuttle/wall/W in range(src,1))
-				W.relativewall()
-
-	..()*/
+/turf/simulated/shuttle/wall/New()
+	var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
+	I.plane = PLANE_SPACE
+	underlays += I
+	..()
 
 /turf/simulated/wall/Destroy()
 
@@ -120,7 +117,7 @@
 				shroom.pixel_x = 0
 				shroom.pixel_y = 0
 
-	..()
+	return ..()
 
 /turf/simulated/wall/relativewall()
 	if(istype(src,/turf/simulated/wall/vault)) //HACK!!!

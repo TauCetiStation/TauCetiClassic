@@ -4,7 +4,6 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
 	density = 1
-	flags = FPRINT
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
@@ -114,9 +113,9 @@
 	density = 1
 	return 1
 
-/obj/structure/closet/proc/toggle(mob/user as mob)
+/obj/structure/closet/proc/toggle(mob/user)
 	if(!(src.opened ? src.close() : src.open()))
-		user << "<span class='notice'>It won't budge!</span>"
+		to_chat(user, "<span class='notice'>It won't budge!</span>")
 	return
 
 // this should probably use dump_contents()
@@ -140,7 +139,7 @@
 					A.ex_act(severity++)
 				qdel(src)
 
-/obj/structure/closet/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/closet/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	if(health <= 0)
@@ -150,7 +149,7 @@
 
 	return
 
-/obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
+/obj/structure/closet/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		user.do_attack_animation(src)
@@ -166,14 +165,14 @@
 			A.forceMove(src.loc)
 		qdel(src)
 
-/obj/structure/closet/meteorhit(obj/O as obj)
+/obj/structure/closet/meteorhit(obj/O)
 	if(O.icon_state == "flaming")
 		for(var/mob/M in src)
 			M.meteorhit(O)
 		src.dump_contents()
 		qdel(src)
 
-/obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
 	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
@@ -182,7 +181,7 @@
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(!WT.remove_fuel(0,user))
-				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 			new /obj/item/stack/sheet/metal(src.loc)
 			for(var/mob/M in viewers(src))
@@ -196,12 +195,12 @@
 		usr.drop_item()
 		if(W)
 			W.forceMove(src.loc)
-	else if(istype(W, /obj/item/weapon/packageWrap))
+	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
 		return
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.remove_fuel(0,user))
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		src.welded = !src.welded
 		src.update_icon()
@@ -211,7 +210,7 @@
 		src.attack_hand(user)
 	return
 
-/obj/structure/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+/obj/structure/closet/MouseDrop_T(atom/movable/O, mob/user)
 	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
 		return
 	if(O.loc == user)
@@ -234,32 +233,36 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/structure/closet/relaymove(mob/user as mob)
+/obj/structure/closet/attack_ai(mob/user)
+	if(isrobot(user) && Adjacent(user)) //Robots can open/close it, but not the AI
+		attack_hand(user)
+
+/obj/structure/closet/relaymove(mob/user)
 	if(user.stat || !isturf(src.loc))
 		return
 
 	if(!src.open())
-		user << "<span class='notice'>It won't budge!</span>"
+		to_chat(user, "<span class='notice'>It won't budge!</span>")
 		if(!lastbang)
 			lastbang = 1
 			for (var/mob/M in hearers(src, null))
-				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
+				to_chat(M, text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M))))
 			spawn(30)
 				lastbang = 0
 
 
-/obj/structure/closet/attack_paw(mob/user as mob)
+/obj/structure/closet/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/closet/attack_hand(mob/user as mob)
+/obj/structure/closet/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	src.toggle(user)
 
 // tk grab then use on self
-/obj/structure/closet/attack_self_tk(mob/user as mob)
+/obj/structure/closet/attack_self_tk(mob/user)
 	src.add_fingerprint(user)
 	if(!src.toggle())
-		usr << "<span class='notice'>It won't budge!</span>"
+		to_chat(usr, "<span class='notice'>It won't budge!</span>")
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)
@@ -273,7 +276,7 @@
 		src.add_fingerprint(usr)
 		src.toggle(usr)
 	else
-		usr << "<span class='warning'>This mob type can't use this verb.</span>"
+		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
 /obj/structure/closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
 	overlays.Cut()
@@ -284,11 +287,11 @@
 	else
 		icon_state = icon_opened
 
-/obj/structure/closet/hear_talk(mob/M as mob, text)
+/obj/structure/closet/hear_talk(mob/M, text, verb, datum/language/speaking)
 	for (var/atom/A in src)
 		if(istype(A,/obj/))
 			var/obj/O = A
-			O.hear_talk(M, text)
+			O.hear_talk(M, text, verb, speaking)
 
 /obj/structure/closet/container_resist()
 	var/mob/living/user = usr
@@ -302,9 +305,9 @@
 	//okay, so the closet is either welded or locked... resist!!!
 	user.next_move = world.time + 100
 	user.last_special = world.time + 100
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
 	for(var/mob/O in viewers(src))
-		O << "<span class='warning'>[src] begins to shake violently!</span>"
+		to_chat(O, "<span class='warning'>[src] begins to shake violently!</span>")
 
 	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded))
@@ -315,5 +318,5 @@
 		locked = 0 //applies to critter crates and secure lockers only
 		broken = 1 //applies to secure lockers only
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()

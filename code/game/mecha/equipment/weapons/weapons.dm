@@ -11,7 +11,7 @@
 	var/fire_volume = 50 //How loud it is played.
 	var/auto_rearm = 0 //Does the weapon reload itself after each shot?
 
-/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(var/obj/mecha/combat/M as obj)
+/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(!istype(M))
 		return 0
 	return ..()
@@ -128,7 +128,7 @@
 	equip_cooldown = 150
 	range = MELEE|RANGED
 
-	can_attach(obj/mecha/combat/honker/M as obj)
+	can_attach(obj/mecha/combat/honker/M)
 		if(!istype(M))
 			return 0
 		return ..()
@@ -148,7 +148,7 @@
 				var/mob/living/carbon/human/H = M
 				if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
 					continue
-			M << "<font color='red' size='7'>HONK</font>"
+			to_chat(M, "<font color='red' size='7'>HONK</font>")
 			M.sleeping = 0
 			M.stuttering += 20
 			M.ear_deaf += 30
@@ -285,7 +285,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang//Because I am a heartless bastard -Sieve
 	name = "SOP-6 Grenade Launcher"
-	projectile = /obj/item/weapon/grenade/flashbang/clusterbang
+	projectile = /obj/item/weapon/grenade/clusterbuster
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited/get_equip_info()//Limited version of the clusterbang launcher that can't reload
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[chassis.selected==src?"<b>":"<a href='?src=\ref[chassis];select_equip=\ref[src]'>"][src.name][chassis.selected==src?"</b>":"</a>"]\[[src.projectiles]\]"
@@ -303,7 +303,7 @@
 	projectile_energy_cost = 100
 	equip_cooldown = 20
 
-	can_attach(obj/mecha/combat/honker/M as obj)
+	can_attach(obj/mecha/combat/honker/M)
 		if(!istype(M))
 			return 0
 		return ..()

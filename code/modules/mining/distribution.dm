@@ -111,7 +111,7 @@ Deep minerals:
 		world.log << line
 		line = ""
 
-/datum/ore_distribution/proc/generate_distribution_map(var/x,var/y,var/input_size)
+/datum/ore_distribution/proc/generate_distribution_map(x,y,input_size)
 
 	var/size = input_size
 

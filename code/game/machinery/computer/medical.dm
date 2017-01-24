@@ -17,15 +17,15 @@
 	var/temp = null
 	var/printing = null
 
-/obj/machinery/computer/med_data/attackby(obj/item/O as obj, user as mob)
+/obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_item()
 		O.loc = src
 		scan = O
-		user << "You insert [O]."
+		to_chat(user, "You insert [O].")
 	..()
 
-/obj/machinery/computer/med_data/attack_hand(mob/user as mob)
+/obj/machinery/computer/med_data/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat
@@ -56,8 +56,8 @@
 				if(3.0)
 					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[];u_load=1'>Upload From disk</A><BR>\n<A href='?src=\ref[];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];screen=1'>Back</A>", src, src, src, src)
 				if(4.0)
-					var/icon/front = new(active1.fields["photo"], dir = SOUTH)
-					var/icon/side = new(active1.fields["photo"], dir = WEST)
+					var/icon/front = active1.fields["photo_f"]
+					var/icon/side = active1.fields["photo_s"]
 					user << browse_rsc(front, "front.png")
 					user << browse_rsc(side, "side.png")
 					dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
@@ -105,7 +105,7 @@
 					dat += "<a href='?src=\ref[src];screen=1'>Back</a>"
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
-					for(var/obj/machinery/bot/medbot/M in world)
+					for(var/obj/machinery/bot/medbot/M in machines)
 
 						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
@@ -343,6 +343,8 @@
 						src.active1.fields["p_stat"] = "Physically Unfit"
 					if("disabled")
 						src.active1.fields["p_stat"] = "Disabled"
+				if(PDA_Manifest.len)
+					PDA_Manifest.Cut()
 
 		if (href_list["m_stat"])
 			if (src.active1)

@@ -12,7 +12,7 @@
 	var/animated = 0
 
 /*
-/obj/mecha/combat/range_action(target as obj|mob|turf)
+/obj/mecha/combat/range_action(target)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = pick(view(3,target))
 	if(selected_weapon)
@@ -20,7 +20,7 @@
 	return
 */
 
-/obj/mecha/combat/melee_action(target as obj|mob|turf)
+/obj/mecha/combat/melee_action(target)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = safepick(oview(1,src))
 	if(!melee_can_hit || !istype(target, /atom)) return
@@ -135,7 +135,7 @@
 	return 0
 */
 /*
-/obj/mecha/combat/hear_talk(mob/M as mob, text)
+/obj/mecha/combat/hear_talk(mob/M, text)
 	..()
 	if(am && M==occupant)
 		if(findtext(text,""))
@@ -235,7 +235,7 @@
 		onclose(occupant, "sam", src)
 	return
 */
-/obj/mecha/combat/moved_inside(var/mob/living/carbon/human/H as mob)
+/obj/mecha/combat/moved_inside(mob/living/carbon/human/H)
 	if(..())
 		if(H.client)
 			H.client.mouse_pointer_icon = file("icons/mecha/mecha_mouse.dmi")
@@ -243,7 +243,7 @@
 	else
 		return 0
 
-/obj/mecha/combat/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+/obj/mecha/combat/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(..())
 		if(occupant.client)
 			occupant.client.mouse_pointer_icon = file("icons/mecha/mecha_mouse.dmi")

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "detective"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	m_amt = 2000
 	w_class = 3.0
@@ -47,12 +47,12 @@
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver.
 	return 1
 
-/obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	user << "<span class='warning'>*click*</span>"
+/obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
+	to_chat(user, "<span class='warning'>*click*</span>")
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	return
 
-/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj)
+/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
 	if(recoil)
 		spawn()
 			shake_camera(user, recoil + 1, recoil)
@@ -72,7 +72,7 @@
 	chambered = null
 	return ..()
 
-/obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/gun/afterattack(atom/A, mob/living/user, flag, params)
 	if(flag)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
@@ -80,44 +80,43 @@
 	else
 		Fire(A,user,params) //Otherwise, fire normally.
 
-/obj/item/weapon/gun/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)//TODO: go over this
+/obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
-	if (!user.IsAdvancedToolUser())
-		user << "<span class='red'>You don't have the dexterity to do this!</span>"
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
-	if(istype(user, /mob/living))
+	if(isliving(user))
 		var/mob/living/M = user
 		if (HULK in M.mutations)
-			M << "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>"
+			to_chat(M, "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>")
 			return
-		if(istype(user, /mob/living/carbon/human/))
+		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.species.name == "Shadowling")
-				H << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
+				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
 				return
-	if(ishuman(user))
-		if(user.dna && user.dna.mutantrace == "adamantine")
-			user << "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>"
-			return
-		var/mob/living/carbon/human/H = user
-		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-				if(V.stealth_active)
-					V.DeactivateStealth()
 
-		if(clumsy_check) //it should be AFTER hulk or monkey check.
-			var/going_to_explode = 0
-			if ((CLUMSY in H.mutations) && prob(50))
-				going_to_explode = 1
-			if(chambered && chambered.crit_fail && prob(10))
-				going_to_explode = 1
-			if(going_to_explode)
-				explosion(user.loc, 0, 0, 1, 1)
-				H << "<span class='danger'>[src] blows up in your face.</span>"
-				H.take_organ_damage(0,20)
-				H.drop_item()
-				qdel(src)
+			if(user.dna && user.dna.mutantrace == "adamantine")
+				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 				return
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
+					if(V.stealth_active)
+						V.DeactivateStealth()
+
+			if(clumsy_check) //it should be AFTER hulk or monkey check.
+				var/going_to_explode = 0
+				if ((CLUMSY in H.mutations) && prob(50))
+					going_to_explode = 1
+				if(chambered && chambered.crit_fail && prob(10))
+					going_to_explode = 1
+				if(going_to_explode)
+					explosion(user.loc, 0, 0, 1, 1)
+					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
+					H.take_organ_damage(0,20)
+					H.drop_item()
+					qdel(src)
+					return
 
 	add_fingerprint(user)
 
@@ -126,7 +125,7 @@
 
 	if (!ready_to_fire())
 		if (world.time % 3) //to prevent spam
-			user << "<span class='warning'>[src] is not ready to fire again!</span>"
+			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
 	if(chambered)
 		if(!chambered.fire(target, user, params, , silenced))
@@ -148,7 +147,7 @@
 /obj/item/weapon/gun/proc/can_fire()
 	return
 
-/obj/item/weapon/gun/proc/can_hit(var/mob/living/target as mob, var/mob/living/user as mob)
+/obj/item/weapon/gun/proc/can_hit(mob/living/target, mob/living/user)
 	return chambered.BB.check_fire(target,user)
 
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
@@ -162,7 +161,7 @@
 /obj/item/weapon/gun/proc/isHandgun()
 	return 1
 
-/obj/item/weapon/gun/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
 		mouthshoot = 1
@@ -194,7 +193,7 @@
 				user.apply_damage(chambered.BB.damage*2.5, chambered.BB.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [chambered.BB]", sharp=1)
 				user.death()
 			else
-				user << "<span class = 'notice'>Ow...</span>"
+				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)
 			chambered.BB = null
 			chambered.update_icon()

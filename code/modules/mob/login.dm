@@ -17,10 +17,10 @@
 					spawn() alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 				if(matches)
 					if(M.client)
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as <A href='?src=\ref[usr];priv_msg=\ref[M]'>[key_name_admin(M)]</A>.</font>", 1)
+						message_admins("<font color='red'><B>Notice: </B><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as <A href='?src=\ref[usr];priv_msg=\ref[M]'>[key_name_admin(M)]</A>.</font>")
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)].")
 					else
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as [key_name_admin(M)] (no longer logged in). </font>", 1)
+						message_admins("<font color='red'><B>Notice: </B><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as [key_name_admin(M)] (no longer logged in). </font>")
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
 /mob/Login()
@@ -56,7 +56,8 @@
 	blocker.blend_mode = BLEND_MULTIPLY
 	blocker.color = list(1,1,1,0,1,1,1,0,1,1,1,0,0,0,0,1,0,0,0,1)
 	blocker.alpha = 255
-	blocker.layer = 20
+	blocker.layer = ABOVE_HUD_LAYER
+	blocker.plane = ABOVE_HUD_PLANE
 	blocker.mouse_opacity = 0
 
 	client.screen += blocker

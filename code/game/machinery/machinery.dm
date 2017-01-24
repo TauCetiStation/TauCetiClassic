@@ -207,7 +207,7 @@ Class Procs:
 		qdel(src)
 
 //sets the use_power var and then forces an area power update @ 7e65984ae2ec4e7eaaecc8da0bfa75642c3489c7 bay12
-/obj/machinery/proc/update_use_power(var/new_use_power, var/force_update = 0)
+/obj/machinery/proc/update_use_power(new_use_power, force_update = 0)
 	if ((new_use_power == use_power) && !force_update)
 		return	//don't need to do anything
 
@@ -249,7 +249,7 @@ Class Procs:
 			H.visible_message("<span class='warning'>[H] stares cluelessly at [src] and drools.</span>")
 			return FALSE
 		else if(prob(H.getBrainLoss()))
-			H << "<span class='warning'>You momentarily forget how to use [src].</span>"
+			to_chat(H, "<span class='warning'>You momentarily forget how to use [src].</span>")
 			return FALSE
 
 	usr.set_machine(src)
@@ -271,7 +271,7 @@ Class Procs:
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 
-/obj/machinery/attack_ai(mob/user as mob)
+/obj/machinery/attack_ai(mob/user)
 	if(isrobot(user))
 		// For some reason attack_robot doesn't work
 		// This is to stop robots from using cameras to remotely control machines.
@@ -280,18 +280,18 @@ Class Procs:
 	else
 		return src.attack_hand(user)
 
-/obj/machinery/attack_paw(mob/user as mob)
+/obj/machinery/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
+/obj/machinery/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
-	if(user.lying || user.stat)
+	if((user.lying || user.stat) && !IsAdminGhost(user))
 		return 1
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey)) )
-		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		to_chat(usr, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick
@@ -304,7 +304,7 @@ Class Procs:
 			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
+			to_chat(user, "<span class='danger'>You momentarily forget how to use [src].</span>")
 			return 1
 
 	var/area/A = get_area(src)
@@ -350,11 +350,11 @@ Class Procs:
 		if(!panel_open)
 			panel_open = 1
 			icon_state = icon_state_open
-			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
+			to_chat(user, "<span class='notice'>You open the maintenance hatch of [src].</span>")
 		else
 			panel_open = 0
 			icon_state = icon_state_closed
-			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
+			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
 		return 1
 	return 0
 
@@ -362,16 +362,16 @@ Class Procs:
 	if(panel_open && istype(W))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		dir = turn(dir,-90)
-		user << "<span class='notice'>You rotate [src].</span>"
+		to_chat(user, "<span class='notice'>You rotate [src].</span>")
 		return 1
 	return 0
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
-		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
+		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, time/W.toolspeed, target = src))
-			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		return 1
@@ -384,9 +384,9 @@ Class Procs:
 			var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
 			var/P
 			if(W.works_from_distance)
-				user << "<span class='notice'>Following parts detected in the machine:</span>"
+				to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
 				for(var/var/obj/item/C in component_parts)
-					user << "<span class='notice'>    [C.name]</span>"
+					to_chat(user, "<span class='notice'>    [C.name]</span>")
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
@@ -400,23 +400,23 @@ Class Procs:
 							component_parts -= A
 							component_parts += B
 							B.loc = null
-							user << "<span class='notice'>[A.name] replaced with [B.name].</span>"
+							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break
 			RefreshParts()
 		else
-			user << "<span class='notice'>Following parts detected in the machine:</span>"
+			to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
 			for(var/var/obj/item/C in component_parts)
-				user << "<span class='notice'>    [C.name]</span>"
+				to_chat(user, "<span class='notice'>    [C.name]</span>")
 		if(shouldplaysound)
 			W.play_rped_sound()
 		return 1
 	return 0
 
 /obj/machinery/proc/display_parts(mob/user)
-	user << "<span class='notice'>Following parts detected in the machine:</span>"
+	to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
 	for(var/obj/item/C in component_parts)
-		user << "<span class='notice'>\icon[C] [C.name]</span>"
+		to_chat(user, "<span class='notice'>[bicon(C)] [C.name]</span>")
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/construction()
@@ -426,9 +426,9 @@ Class Procs:
 /obj/machinery/proc/deconstruction()
 	return
 
-/obj/machinery/proc/state(var/msg)
+/obj/machinery/proc/state(msg)
 	for(var/mob/O in hearers(src, null))
-		O.show_message("\icon[src] <span class = 'notice'>[msg]</span>", 2)
+		O.show_message("[bicon(src)] <span class = 'notice'>[msg]</span>", 2)
 
 /obj/machinery/proc/ping(text=null)
 	if (!text)
@@ -437,7 +437,7 @@ Class Procs:
 	state(text, "blue")
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 
-/obj/machinery/tesla_act(var/power)
+/obj/machinery/tesla_act(power)
 	..()
 	if(prob(85))
 		emp_act(2)

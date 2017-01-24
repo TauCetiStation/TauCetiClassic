@@ -28,18 +28,18 @@
 	max_w_class = 2
 	max_combined_w_class = 14
 
-	examine()
-		set src in oview(1)
+	examine(mob/user)
 		..()
-		usr << text("The service panel is [src.open ? "open" : "closed"].")
+		if(src in oview(1, user))
+			to_chat(user, "The service panel is [src.open ? "open" : "closed"].")
 
-	attack_alien(mob/user as mob)
+	attack_alien(mob/user)
 		return attack_hand(user)
 
-	attack_paw(mob/user as mob)
+	attack_paw(mob/user)
 		return attack_hand(user)
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 		if(locked)
 			if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (!src.emagged))
 				emagged = 1
@@ -54,9 +54,9 @@
 					spark_system.start()
 					playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 					playsound(src.loc, "sparks", 50, 1)
-					user << "You slice through the lock on [src]."
+					to_chat(user, "You slice through the lock on [src].")
 				else
-					user << "You short out the lock on [src]."
+					to_chat(user, "You short out the lock on [src].")
 				return
 
 			if (istype(W, /obj/item/weapon/screwdriver))
@@ -95,7 +95,7 @@
 		..()
 
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		user.set_machine(src)
 		var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (src.locked ? "LOCKED" : "UNLOCKED"))
 		var/message = "Code"
@@ -153,7 +153,6 @@
 	icon_state = "secure"
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
-	flags = FPRINT | TABLEPASS
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
@@ -164,9 +163,9 @@
 		new /obj/item/weapon/paper(src)
 		new /obj/item/weapon/pen(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((src.loc == user) && (src.locked == 1))
-			usr << "\red [src] is locked and cannot be opened!"
+			to_chat(usr, "\red [src] is locked and cannot be opened!")
 		else if ((src.loc == user) && (!src.locked))
 			src.open(usr)
 		else
@@ -178,9 +177,9 @@
 		return
 
 	//I consider this worthless but it isn't my code so whatever.  Remove or uncomment.
-	/*attack(mob/M as mob, mob/living/user as mob)
+	/*attack(mob/M, mob/living/user)
 		if ((CLUMSY in user.mutations) && prob(50))
-			user << "\red The [src] slips out of your hand and hits your head."
+			to_chat(user, "\red The [src] slips out of your hand and hits your head.")
 			user.take_organ_damage(10)
 			user.Paralyse(2)
 			return
@@ -197,7 +196,7 @@
 				if (H.stat < 2 && H.health < 50 && prob(90))
 				// ******* Check
 					if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-						H << "\red The helmet protects you from being hit hard in the head!"
+						to_chat(H, "\red The helmet protects you from being hit hard in the head!")
 						return
 					var/time = rand(2, 6)
 					if (prob(75))
@@ -208,7 +207,7 @@
 					for(var/mob/O in viewers(H, null))
 						O.show_message(text("\red <B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.", 2)
 				else
-					H << text("\red [] tried to knock you unconcious!",user)
+					to_chat(H, text("\red [] tried to knock you unconcious!",user))
 					H.eye_blurry += 3
 
 		return*/
@@ -234,7 +233,6 @@
 	icon_opened = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
-	flags = FPRINT | TABLEPASS
 	force = 8.0
 	w_class = 8.0
 	max_w_class = 8
@@ -247,7 +245,7 @@
 		new /obj/item/weapon/paper(src)
 		new /obj/item/weapon/pen(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return attack_self(user)
 
 /obj/item/weapon/storage/secure/safe/HoS/New()

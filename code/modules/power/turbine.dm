@@ -86,9 +86,9 @@
 		inturf = get_step(src, dir)
 		turbine = locate() in get_step(src, get_dir(inturf, src))
 		if(turbine)
-			user << "<span class='notice'>Turbine connected.</span>"
+			to_chat(user, "<span class='notice'>Turbine connected.</span>")
 		else
-			user << "<span class='alert'>Turbine not connected.</span>"
+			to_chat(user, "<span class='alert'>Turbine not connected.</span>")
 		return
 
 	if(exchange_parts(user, I))
@@ -210,9 +210,9 @@
 		outturf = get_step(src, dir)
 		compressor = locate() in get_step(src, get_dir(outturf, src))
 		if(compressor)
-			user << "<span class='notice'>Compressor connected.</span>"
+			to_chat(user, "<span class='notice'>Compressor connected.</span>")
 		else
-			user << "<span class='alert'>Compressor not connected.</span>"
+			to_chat(user, "<span class='alert'>Compressor not connected.</span>")
 		return
 
 	if(exchange_parts(user, I))
@@ -279,7 +279,7 @@
 /obj/machinery/computer/turbine_computer/proc/search_turbine()
 	compressor = locate(/obj/machinery/compressor) in range(5)
 
-/obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/turbine_computer/attack_hand(mob/user)
 	if(..())
 		return
 

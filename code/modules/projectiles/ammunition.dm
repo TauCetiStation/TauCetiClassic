@@ -2,9 +2,9 @@
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
-	icon = 'tauceti/icons/obj/ammo.dmi'
+	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 1
 	w_class = 1.0
@@ -33,25 +33,25 @@
 		BB = new projectile_type(src)
 	return
 
-/obj/item/ammo_casing/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/ammo_casing/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(BB)
 			if(initial(BB.name) == "bullet")
 				var/tmp_label = ""
 				var/label_text = sanitize(copytext(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription",tmp_label), 1, MAX_NAME_LEN))
 				if(length(label_text) > 20)
-					user << "\red The inscription can be at most 20 characters long."
+					to_chat(user, "\red The inscription can be at most 20 characters long.")
 				else
 					if(label_text == "")
-						user << "\blue You scratch the inscription off of [initial(BB)]."
+						to_chat(user, "\blue You scratch the inscription off of [initial(BB)].")
 						BB.name = initial(BB.name)
 					else
-						user << "\blue You inscribe \"[label_text]\" into \the [initial(BB.name)]."
+						to_chat(user, "\blue You inscribe \"[label_text]\" into \the [initial(BB.name)].")
 						BB.name = "[initial(BB.name)] \"[label_text]\""
 			else
-				user << "\blue You can only inscribe a metal bullet."	//because inscribing beanbags is silly
+				to_chat(user, "\blue You can only inscribe a metal bullet.")//because inscribing beanbags is silly
 		else
-			user << "\blue There is no bullet in the casing to inscribe anything into."
+			to_chat(user, "\blue There is no bullet in the casing to inscribe anything into.")
 
 //Boxes of ammo
 /obj/item/ammo_box
@@ -59,7 +59,7 @@
 	desc = "A box of ammo"
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
 	m_amt = 50000
@@ -79,7 +79,7 @@
 		stored_ammo += new ammo_type(src)
 	update_icon()
 
-/obj/item/ammo_box/proc/get_round(var/keep = 0)
+/obj/item/ammo_box/proc/get_round(keep = 0)
 	if (!stored_ammo.len)
 		return null
 	else
@@ -89,7 +89,7 @@
 			stored_ammo.Insert(1,b)
 		return b
 
-/obj/item/ammo_box/proc/give_round(var/obj/item/ammo_casing/r)
+/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/r)
 	var/obj/item/ammo_casing/rb = r
 	if (rb)
 		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
@@ -98,7 +98,7 @@
 			return 1
 	return 0
 
-/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0)
+/obj/item/ammo_box/attackby(obj/item/A, mob/user, silent = 0)
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
@@ -117,18 +117,18 @@
 			num_loaded++
 	if(num_loaded)
 		if (!silent)
-			user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		A.update_icon()
 		update_icon()
 		return num_loaded
 	return 0
 
-/obj/item/ammo_box/attack_self(mob/user as mob)
+/obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
 		A.loc = get_turf(src.loc)
 		user.put_in_hands(A)
-		user << "<span class='notice'>You remove a shell from \the [src]!</span>"
+		to_chat(user, "<span class='notice'>You remove a shell from \the [src]!</span>")
 		update_icon()
 
 /obj/item/ammo_box/update_icon()

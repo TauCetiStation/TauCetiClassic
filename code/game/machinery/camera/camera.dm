@@ -11,10 +11,10 @@
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
-	var/status = 1.0
-	anchored = 1.0
+	var/status = 1
+	anchored = 1
 	var/invuln = null
-	var/bugged = 0
+	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
 	var/hidden = 0	//Hidden cameras will be unreachable for AI
 
@@ -35,6 +35,11 @@
 	var/busy = 0
 
 /obj/machinery/camera/New()
+	..()
+	cameranet.cameras += src //Camera must be added to global list of all cameras no matter what...
+	var/list/open_networks = difflist(network,RESTRICTED_CAMERA_NETWORKS) //...but if all of camera's networks are restricted, it only works for specific camera consoles.
+	if(open_networks.len) //If there is at least one open network, chunk is available for AI usage.
+		cameranet.addCamera(src)
 	WireColorToFlag = randomCameraWires()
 	assembly = new(src)
 	assembly.state = 4
@@ -51,32 +56,44 @@
 			error("[src.name] in [get_area(src)]has errored. [src.network?"Empty network list":"Null network list"]")
 		ASSERT(src.network)
 		ASSERT(src.network.len > 0)
-	..()
+
+/obj/machinery/camera/Destroy()
+	disconnect_viewers()
+	if(assembly)
+		qdel(assembly)
+		assembly = null
+	if(bug)
+		bug.bugged_cameras -= c_tag
+		if(bug.current == src)
+			bug.current = null
+		bug = null
+	cameranet.cameras -= src
+	var/list/open_networks = difflist(network, RESTRICTED_CAMERA_NETWORKS)
+	if(open_networks.len)
+		cameranet.removeCamera(src)
+	return ..()
+
+/obj/machinery/camera/update_icon()
+	if(!status)
+		icon_state = "[initial(icon_state)]1"
+	else if(stat & EMPED)
+		icon_state = "[initial(icon_state)]emp"
+	else
+		icon_state = "[initial(icon_state)]"
 
 /obj/machinery/camera/emp_act(severity)
-	if(!isEmpProof())
+	if(!isEmpProof() && status)
 		if(prob(100/severity))
-			icon_state = "[initial(icon_state)]emp"
 			var/list/previous_network = network
 			network = list()
-			cameranet.removeCamera(src)
 			stat |= EMPED
-			set_light(0)
+			toggle_cam(TRUE)
 			triggerCameraAlarm()
 			spawn(900)
 				network = previous_network
-				icon_state = initial(icon_state)
 				stat &= ~EMPED
 				cancelCameraAlarm()
-				if(can_use())
-					cameranet.addCamera(src)
-			for(var/mob/O in mob_list)
-				if (istype(O.machine, /obj/machinery/computer/security))
-					var/obj/machinery/computer/security/S = O.machine
-					if (S.current == src)
-						O.unset_machine()
-						O.reset_view(null)
-						O << "The screen bursts into static."
+				toggle_cam(TRUE)
 			..()
 
 
@@ -90,27 +107,25 @@
 /obj/machinery/camera/blob_act()
 	return
 
-/obj/machinery/camera/proc/setViewRange(var/num = 7)
+/obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
 	cameranet.updateVisibility(src, 0)
 
-/obj/machinery/camera/proc/shock(var/mob/living/user)
+/obj/machinery/camera/proc/shock(mob/living/user)
 	if(!istype(user))
 		return
 	user.electrocute_act(10, src)
 
-/obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
+/obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user)
 	if(!istype(user))
 		return
-	user.do_attack_animation(src)
-	status = 0
-	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	icon_state = "[initial(icon_state)]1"
-	add_hiddenprint(user)
-	deactivate(user,0)
+	if(status)
+		user.do_attack_animation(src)
+		visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
+		playsound(src, 'sound/weapons/slash.ogg', 100, 1)
+		toggle_cam(FALSE, user)
 
-/obj/machinery/camera/attackby(W as obj, mob/living/user as mob)
+/obj/machinery/camera/attackby(W, mob/living/user)
 	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
 	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
 
@@ -128,32 +143,30 @@
 
 	else if(iswelder(W) && canDeconstruct())
 		if(weld(W, user))
-			if(assembly)
-				assembly.loc = src.loc
-				assembly.state = 1
+			drop_assembly(1)
 			qdel(src)
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
 			upgradeXRay()
 			qdel(W)
-			user << "[msg]"
+			to_chat(user, "[msg]")
 		else
-			user << "[msg2]"
+			to_chat(user, "[msg2]")
 
 	else if(istype(W, /obj/item/stack/sheet/mineral/phoron) && panel_open)
 		if(!isEmpProof())
 			upgradeEmpProof()
-			user << "[msg]"
+			to_chat(user, "[msg]")
 			qdel(W)
 		else
-			user << "[msg2]"
+			to_chat(user, "[msg2]")
 	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
 		if(!isMotion())
 			upgradeMotion()
-			user << "[msg]"
+			to_chat(user, "[msg]")
 			qdel(W)
 		else
-			user << "[msg2]"
+			to_chat(user, "[msg2]")
 
 	// OTHER
 	else if ((istype(W, /obj/item/weapon/paper) && !(W:crumpled==1) || istype(W, /obj/item/device/pda)) && isliving(user))
@@ -171,72 +184,86 @@
 			P = W
 			itemname = P.name
 			info = P.notehtml
-		U << "You hold \a [itemname] up to the camera ..."
+		to_chat(U, "You hold \the [itemname] up to the camera ...")
 		for(var/mob/living/silicon/ai/O in living_mob_list)
-			if(!O.client) continue
-			if(U.name == "Unknown") O << "<b>[U]</b> holds \a [itemname] up to one of your cameras ..."
-			else O << "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds \a [itemname] up to one of your cameras ..."
+			if(!O.client)
+				continue
+			if(U.name == "Unknown")
+				to_chat(O, "<b>[U]</b> holds \a [itemname] up to one of your cameras ...")
+			else
+				to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds \a [itemname] up to one of your cameras ...")
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		for(var/mob/O in player_list)
-			if (istype(O.machine, /obj/machinery/computer/security))
-				var/obj/machinery/computer/security/S = O.machine
-				if (S.current == src)
-					O << "[U] holds \a [itemname] up to one of the cameras ..."
-					O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
-	else if (istype(W, /obj/item/weapon/camera_bug))
-		if (!src.can_use())
-			user << "\blue Camera non-functional"
+			if (O.client && O.client.eye == src)
+				to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
+				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
+	else if (istype(W, /obj/item/device/camera_bug))
+		if(!src.can_use())
+			to_chat(user, "<span class='notice'>Camera non-functional</span>")
 			return
-		if (src.bugged)
-			user << "\blue Camera bug removed."
-			src.bugged = 0
+		if(bug)
+			to_chat(user, "<span class='notice'>Camera bug removed.</span>")
+			src.bug.bugged_cameras -= src.c_tag
+			src.bug = null
 		else
-			user << "\blue Camera bugged."
-			src.bugged = 1
-	else if(istype(W, /obj/item/weapon/melee/energy))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
+			to_chat(user, "<span class='notice'>Camera bugged.</span>")
+			src.bug = W
+			src.bug.bugged_cameras[src.c_tag] = src
+	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/twohanded/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
 		if(W:force > 3)
 			user.do_attack_animation(src)
-			deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			disconnect_viewers()
+			var/datum/effect/effect/system/spark_spread/spark_system = new()
 			spark_system.set_up(5, 0, loc)
 			spark_system.start()
 			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(loc, "sparks", 50, 1)
-			visible_message("\blue The camera has been sliced apart by [user] with [W]!")
-			new /obj/item/weapon/camera_assembly(src.loc)
-			pick(new /obj/item/weapon/cable_coil(src.loc),
-				 new /obj/item/weapon/cable_coil/cut(src.loc))
+			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
+			drop_assembly()
+			pick(new /obj/item/weapon/cable_coil(loc),
+                 new /obj/item/weapon/cable_coil/cut(loc))
 			qdel(src)
-		else
-			..()
-
 	else
 		..()
 	return
 
-/obj/machinery/camera/proc/deactivate(user as mob, var/choice = 1)
-	if(choice==1)
-		status = !( src.status )
-		if (!(src.status))
-			visible_message("\red [user] has deactivated [src]!")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			icon_state = "[initial(icon_state)]1"
-			add_hiddenprint(user)
+/obj/machinery/camera/proc/drop_assembly(state = 0)
+	if(assembly)
+		assembly.state = state
+		assembly.loc = loc
+		assembly = null
+
+/obj/machinery/camera/proc/toggle_cam(show_message, mob/living/user = null)
+	status = !status
+
+	if(can_use())
+		cameranet.addCamera(src)
+	else
+		set_light(0)
+		cameranet.removeCamera(src)
+
+	if(user)
+		add_hiddenprint(user)
+
+	if(show_message)
+		var/status_message = (status ? "reactivates" : "deactivates")
+		if(user)
+			visible_message("<span class='danger'>[user] [status_message] [src]!</span>")
 		else
-			visible_message("\red [user] has reactivated [src]!")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			icon_state = initial(icon_state)
-			add_hiddenprint(user)
-	// now disconnect anyone using the camera
-	//Apparently, this will disconnect anyone even if the camera was re-activated.
-	//I guess that doesn't matter since they can't use it anyway?
+			visible_message("<span class='danger'>\The [src] [status_message]!</span>")
+		playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
+
+	update_icon()
+
+	if(!status)
+		disconnect_viewers()
+
+/obj/machinery/camera/proc/disconnect_viewers()
 	for(var/mob/O in player_list)
-		if (istype(O.machine, /obj/machinery/computer/security))
-			var/obj/machinery/computer/security/S = O.machine
-			if (S.current == src)
-				O.unset_machine()
-				O.reset_view(null)
-				O << "The screen bursts into static."
+		if(O.client && O.client.eye == src)
+			O.unset_machine()
+			O.reset_view(null)
+			to_chat(O, "The screen bursts into static.")
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
@@ -285,14 +312,14 @@
 
 //Return a working camera that can see a given mob
 //or null if none
-/proc/seen_by_camera(var/mob/M)
+/proc/seen_by_camera(mob/M)
 	for(var/obj/machinery/camera/C in oview(4, M))
 		if(C.can_use())	// check if camera disabled
 			return C
 			break
 	return null
 
-/proc/near_range_camera(var/mob/M)
+/proc/near_range_camera(mob/M)
 
 	for(var/obj/machinery/camera/C in range(4, M))
 		if(C.can_use())	// check if camera disabled
@@ -301,7 +328,7 @@
 
 	return null
 
-/obj/machinery/camera/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/user)
+/obj/machinery/camera/proc/weld(obj/item/weapon/weldingtool/WT, mob/user)
 
 	if(busy)
 		return 0
@@ -309,7 +336,7 @@
 		return 0
 
 	// Do after stuff here
-	user << "<span class='notice'>You start to weld the [src]..</span>"
+	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
@@ -321,13 +348,13 @@
 	busy = 0
 	return 0
 
-/obj/machinery/camera/proc/add_network(var/network_name)
+/obj/machinery/camera/proc/add_network(network_name)
 	add_networks(list(network_name))
 
-/obj/machinery/camera/proc/remove_network(var/network_name)
+/obj/machinery/camera/proc/remove_network(network_name)
 	remove_networks(list(network_name))
 
-/obj/machinery/camera/proc/add_networks(var/list/networks)
+/obj/machinery/camera/proc/add_networks(list/networks)
 	var/network_added
 	network_added = 0
 	for(var/network_name in networks)
@@ -338,7 +365,7 @@
 	if(network_added)
 		invalidateCameraCache()
 
-/obj/machinery/camera/proc/remove_networks(var/list/networks)
+/obj/machinery/camera/proc/remove_networks(list/networks)
 	var/network_removed
 	network_removed = 0
 	for(var/network_name in networks)
@@ -349,7 +376,7 @@
 	if(network_removed)
 		invalidateCameraCache()
 
-/obj/machinery/camera/proc/replace_networks(var/list/networks)
+/obj/machinery/camera/proc/replace_networks(list/networks)
 	if(networks.len != network.len)
 		network = networks
 		invalidateCameraCache()

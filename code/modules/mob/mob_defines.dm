@@ -83,7 +83,7 @@
 	var/lying = 0
 	var/lying_prev = 0
 	var/lying_current = 0
-	var/crawling = 0 //Для ползанья
+	var/crawling = 0 //For crawling
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0
@@ -202,6 +202,8 @@
 	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
+
+	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 
 	var/list/radar_blips = list() // list of screen objects, radar blips
 	var/radar_open = 0 	// nonzero is radar is open

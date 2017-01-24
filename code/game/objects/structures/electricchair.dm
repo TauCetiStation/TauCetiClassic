@@ -11,7 +11,7 @@
 	overlays += image('icons/obj/objects.dmi', src, "echair_over", MOB_LAYER + 1, dir)
 	return
 
-/obj/structure/stool/bed/chair/e_chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/chair/e_chair/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		var/obj/structure/stool/bed/chair/C = new /obj/structure/stool/bed/chair(loc)
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -34,7 +34,7 @@
 	else
 		on = 1
 		icon_state = "echair1"
-	usr << "<span class='notice'>You switch [on ? "on" : "off"] [src].</span>"
+	to_chat(usr, "<span class='notice'>You switch [on ? "on" : "off"] [src].</span>")
 	return
 
 /obj/structure/stool/bed/chair/e_chair/rotate()
@@ -66,7 +66,7 @@
 	s.start()
 	if(buckled_mob)
 		buckled_mob.burn_skin(85)
-		buckled_mob << "<span class='danger'>You feel a deep shock course through your body!</span>"
+		to_chat(buckled_mob, "<span class='danger'>You feel a deep shock course through your body!</span>")
 		sleep(1)
 		buckled_mob.burn_skin(85)
 		buckled_mob.Stun(600)

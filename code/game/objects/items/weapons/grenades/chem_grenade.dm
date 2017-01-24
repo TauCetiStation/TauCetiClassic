@@ -18,7 +18,7 @@
 	reagents = R
 	R.my_atom = src
 
-/obj/item/weapon/grenade/chem_grenade/attack_self(mob/user as mob)
+/obj/item/weapon/grenade/chem_grenade/attack_self(mob/user)
 	if(!stage || stage==1)
 		if(detonator)
 //				detonator.loc=src.loc
@@ -34,7 +34,7 @@
 					user.put_in_hands(B)
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 	if(stage > 1 && !active && clown_check(user))
-		user << "<span class='warning'>You prime \the [name]!</span>"
+		to_chat(user, "<span class='warning'>You prime \the [name]!</span>")
 
 		msg_admin_attack("[user.name] ([user.ckey]) primed \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
@@ -44,18 +44,18 @@
 			var/mob/living/carbon/C = user
 			C.throw_mode_on()
 
-/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 		var/obj/item/device/assembly_holder/det = W
 		if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
-			user << "<span class='red'>Assembly must contain one igniter.</span>"
+			to_chat(user, "<span class='red'>Assembly must contain one igniter.</span>")
 			return
 		if(!det.secured)
-			user << "<span class='red'>Assembly must be secured with screwdriver.</span>"
+			to_chat(user, "<span class='red'>Assembly must be secured with screwdriver.</span>")
 			return
 		path = 1
-		user << "<span class='notice'>You add [W] to the metal casing.</span>"
+		to_chat(user, "<span class='notice'>You add [W] to the metal casing.</span>")
 		playsound(src.loc, 'sound/items/Screwdriver2.ogg', 25, -3)
 		user.remove_from_mob(det)
 		det.loc = src
@@ -67,22 +67,22 @@
 		if(stage == 1)
 			path = 1
 			if(beakers.len)
-				user << "<span class='notice'>You lock the assembly.</span>"
+				to_chat(user, "<span class='notice'>You lock the assembly.</span>")
 				name = "grenade"
 			else
 //					user << "\red You need to add at least one beaker before locking the assembly."
-				user << "<span class='notice'>You lock the empty assembly.</span>"
+				to_chat(user, "<span class='notice'>You lock the empty assembly.</span>")
 				name = "fake grenade"
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
 			icon_state = initial(icon_state) +"_locked"
 			stage = 2
 		else if(stage == 2)
 			if(active && prob(95))
-				user << "<span class='red'>You trigger the assembly!</span>"
+				to_chat(user, "<span class='red'>You trigger the assembly!</span>")
 				prime()
 				return
 			else
-				user << "<span class='notice'>You unlock the assembly.</span>"
+				to_chat(user, "<span class='notice'>You unlock the assembly.</span>")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				icon_state = initial(icon_state) + (detonator?"_ass":"")
@@ -91,26 +91,25 @@
 	else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
 		path = 1
 		if(beakers.len == 2)
-			user << "<span class='red'>The grenade can not hold more containers.</span>"
+			to_chat(user, "<span class='red'>The grenade can not hold more containers.</span>")
 			return
 		else
 			if(W.reagents.total_volume)
-				user << "<span class='notice'>You add \the [W] to the assembly.</span>"
+				to_chat(user, "<span class='notice'>You add \the [W] to the assembly.</span>")
 				user.drop_item()
 				W.loc = src
 				beakers += W
 				stage = 1
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
-				user << "<span class='red'>\the [W] is empty.</span>"
+				to_chat(user, "<span class='red'>\the [W] is empty.</span>")
 
-/obj/item/weapon/grenade/chem_grenade/examine()
-	set src in usr
-	usr << desc
-	if(detonator)
-		usr << "With attached [detonator.name]"
+/obj/item/weapon/grenade/chem_grenade/examine(mob/user)
+	..()
+	if(src in user && detonator)
+		to_chat(user, "With attached [detonator.name]")
 
-/obj/item/weapon/grenade/chem_grenade/activate(mob/user as mob)
+/obj/item/weapon/grenade/chem_grenade/activate(mob/user)
 	if(active) return
 
 	if(detonator)
@@ -128,7 +127,7 @@
 
 	return
 
-/obj/item/weapon/grenade/chem_grenade/proc/primed(var/primed = 1)
+/obj/item/weapon/grenade/chem_grenade/proc/primed(primed = 1)
 	if(active)
 		icon_state = initial(icon_state) + (primed?"_primed":"_active")
 
@@ -174,7 +173,11 @@
 	if (detonator)
 		detonator.Crossed(AM)
 
-/obj/item/weapon/grenade/chem_grenade/on_found(mob/finder as mob)
+/obj/item/weapon/grenade/chem_grenade/hear_talk(mob/living/M, msg)
+	if (detonator)
+		detonator.hear_talk(M,msg)
+
+/obj/item/weapon/grenade/chem_grenade/on_found(mob/finder)
 	if(detonator)
 		detonator.on_found(finder)
 

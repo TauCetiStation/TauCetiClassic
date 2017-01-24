@@ -16,7 +16,7 @@
 
 	var/damtype = "brute"
 	var/force = 0
-	var/tc_custom = null //Default Bay12 sprite or not
+	var/icon_custom = null //Default Bay12 sprite or not
 
 	var/being_shocked = 0
 
@@ -82,7 +82,7 @@
 			if ((M.client && M.machine == src))
 				is_in_use = 1
 				src.attack_hand(M)
-		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
+		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || IsAdminGhost(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = 1
@@ -127,7 +127,7 @@
 	else
 		src.machine = null
 
-/mob/proc/set_machine(var/obj/O)
+/mob/proc/set_machine(obj/O)
 	if(src.machine)
 		unset_machine(src.machine)
 	src.machine = O
@@ -147,7 +147,7 @@
 	return
 
 
-/obj/proc/hear_talk(mob/M as mob, text)
+/obj/proc/hear_talk(mob/M, text, verb, datum/language/speaking)
 	if(talking_atom)
 		talking_atom.catchMessage(text, M)
 /*
@@ -158,7 +158,7 @@
 		*/
 	return
 
-/obj/proc/tesla_act(var/power)
+/obj/proc/tesla_act(power)
 	being_shocked = 1
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
@@ -167,3 +167,28 @@
 
 /obj/proc/reset_shocked()
 	being_shocked = 0
+
+//mob - who is being feed
+//user - who is feeding
+//food - whai is feeded
+//eatverb - take/drink/eat method
+/proc/CanEat(user, mob, food, eatverb = "consume")
+	if(ishuman(mob))
+		var/mob/living/carbon/human/Feeded = mob
+		if(Feeded.head)
+			var/obj/item/Head = Feeded.head
+			if(Head.flags & HEADCOVERSMOUTH)
+				if (Feeded == user)
+					to_chat(user, "You can't [eatverb] [food] through [Head]")
+				else
+					to_chat(user, "You can't feed [Feeded] with [food] through [Head]")
+				return 0
+		if(Feeded.wear_mask)
+			var/obj/item/Mask = Feeded.wear_mask
+			if(Mask.flags & MASKCOVERSMOUTH)
+				if (Feeded == user)
+					to_chat(user, "You can't [eatverb] [food] through [Mask]")
+				else
+					to_chat(user, "You can't feed [Feeded] with [food] through [Mask]")
+				return 0
+		return 1

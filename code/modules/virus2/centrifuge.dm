@@ -9,13 +9,13 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/vial/sample = null
 	var/datum/disease2/disease/virus2 = null
 
-/obj/machinery/computer/centrifuge/attackby(var/obj/O as obj, var/mob/user as mob)
+/obj/machinery/computer/centrifuge/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/screwdriver))
 		return ..(O,user)
 
 	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))
 		if(sample)
-			user << "\The [src] is already loaded."
+			to_chat(user, "\The [src] is already loaded.")
 			return
 
 		sample = O
@@ -32,11 +32,11 @@
 	if(! (stat & (BROKEN|NOPOWER)) && (isolating || curing))
 		icon_state = "centrifuge_moving"
 
-/obj/machinery/computer/centrifuge/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/centrifuge/attack_hand(mob/user)
 	if(..()) return
 	ui_interact(user)
 
-/obj/machinery/computer/centrifuge/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/computer/centrifuge/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	user.set_machine(src)
 
 	var/data[0]
@@ -170,7 +170,7 @@
 	update_icon()
 	ping("\The [src] pings, \"Pathogen isolated.\"")
 
-/obj/machinery/computer/centrifuge/proc/print(var/mob/user)
+/obj/machinery/computer/centrifuge/proc/print(mob/user)
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)
 	P.name = "paper - Pathology Report"
 	P.info = {"

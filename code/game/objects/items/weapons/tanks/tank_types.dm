@@ -24,12 +24,10 @@
 		return
 
 
-	examine()
-		set src in usr
+	examine(mob/user)
 		..()
-		if(air_contents.oxygen < 10)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			//playsound(usr, 'sound/effects/alert.ogg', 50, 1)
+		if((src in range(0, user)) && (air_contents.oxygen < 10))
+			to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 
 
 /obj/item/weapon/tank/oxygen/yellow
@@ -73,12 +71,10 @@
 	icon_state = "oxygen"
 
 
-	examine()
-		set src in usr
+	examine(mob/user)
 		..()
-		if(air_contents.oxygen < 1 && loc==usr)
-			usr << "\red <B>The meter on the [src.name] indicates you are almost out of air!</B>"
-			usr << sound('sound/effects/alert.ogg')
+		if((src in range(0, user)) && (air_contents.oxygen < 1))
+			to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 
 /obj/item/weapon/tank/air/New()
 	..()
@@ -99,7 +95,7 @@
 	desc = "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
 	icon_state = "phoron"
 	item_state = "plasma"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = null	//they have no straps!
 
 
@@ -111,7 +107,7 @@
 	src.air_contents.update_values()
 	return
 
-/obj/item/weapon/tank/phoron/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/tank/phoron/attackby(obj/item/weapon/W, mob/user)
 	..()
 
 	if (istype(W, /obj/item/weapon/flamethrower))
@@ -130,7 +126,7 @@
 	name = "emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
 	icon_state = "emergency"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = 2.0
 	force = 4.0
@@ -147,12 +143,10 @@
 		return
 
 
-	examine()
-		set src in usr
+	examine(mob/user)
 		..()
-		if(air_contents.oxygen < 0.2 && loc==usr)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			usr << sound('sound/effects/alert.ogg')
+		if((src in range(0, user)) && (air_contents.oxygen < 0.2))
+			to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 
 /obj/item/weapon/tank/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"
@@ -182,9 +176,7 @@
 	src.air_contents.update_values()
 	return
 
-/obj/item/weapon/tank/nitrogen/examine()
-	set src in usr
+/obj/item/weapon/tank/nitrogen/examine(mob/user)
 	..()
-	if(air_contents.nitrogen < 10)
-		usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-		//playsound(usr, 'sound/effects/alert.ogg', 50, 1)
+	if((src in range(0, user)) && (air_contents.nitrogen < 10))
+		to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")

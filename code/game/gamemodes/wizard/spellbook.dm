@@ -6,7 +6,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
 	var/uses = 5
 	var/temp = null
 	var/max_uses = 5
@@ -15,7 +14,7 @@
 	action_button_name = "Use Spell Book"
 
 
-/obj/item/weapon/spellbook/attack_self(mob/user as mob)
+/obj/item/weapon/spellbook/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat
 	if(temp)

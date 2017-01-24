@@ -26,7 +26,7 @@
 
 		for(var/obj/structure/falserwall/W in range(temploc,1))
 			W.relativewall()
-	..()
+	return ..()
 
 
 /obj/structure/falsewall/relativewall()
@@ -52,7 +52,7 @@
 	icon_state = "[mineral][junction]"
 	return
 
-/obj/structure/falsewall/attack_hand(mob/user as mob)
+/obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
 		return
 
@@ -82,15 +82,15 @@
 	else
 		icon_state = "[mineral]fwall_open"
 
-/obj/structure/falsewall/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
 	if(opening)
-		user << "\red You must wait until the door has stopped moving."
+		to_chat(user, "\red You must wait until the door has stopped moving.")
 		return
 
 	if(density)
 		var/turf/T = get_turf(src)
 		if(T.density)
-			user << "\red The wall is blocked!"
+			to_chat(user, "\red The wall is blocked!")
 			return
 		if(istype(W, /obj/item/weapon/screwdriver))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
@@ -112,7 +112,7 @@
 					T.attackby(W,user)
 				qdel(src)
 	else
-		user << "\blue You can't reach, close it first!"
+		to_chat(user, "\blue You can't reach, close it first!")
 
 	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)
@@ -175,7 +175,7 @@
 	..()
 
 
-/obj/structure/falserwall/attack_hand(mob/user as mob)
+/obj/structure/falserwall/attack_hand(mob/user)
 	if(opening)
 		return
 
@@ -223,9 +223,9 @@
 
 
 
-/obj/structure/falserwall/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/falserwall/attackby(obj/item/weapon/W, mob/user)
 	if(opening)
-		user << "\red You must wait until the door has stopped moving."
+		to_chat(user, "\red You must wait until the door has stopped moving.")
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -278,11 +278,11 @@
 	var/active = null
 	var/last_event = 0
 
-/obj/structure/falsewall/uranium/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user)
 	radiate()
 	..()
 
-/obj/structure/falsewall/uranium/attack_hand(mob/user as mob)
+/obj/structure/falsewall/uranium/attack_hand(mob/user)
 	radiate()
 	..()
 

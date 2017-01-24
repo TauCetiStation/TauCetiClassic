@@ -35,7 +35,7 @@
 	return to_return
 
 // called by datum/sun/calc_position() as sun's angle changes
-/obj/machinery/power/tracker/proc/set_angle(var/angle)
+/obj/machinery/power/tracker/proc/set_angle(angle)
 	sun_angle = angle
 
 	//set icon dir to show sun illumination
@@ -55,7 +55,7 @@
 					C.tracker_update(angle)
 
 
-/obj/machinery/power/tracker/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/machinery/power/tracker/attackby(obj/item/weapon/W, mob/user)
 
 	if(iscrowbar(W))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -88,6 +88,6 @@
 /obj/item/weapon/tracker_electronics
 
 	name = "tracker electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	w_class = 2.0

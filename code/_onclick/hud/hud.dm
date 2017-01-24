@@ -38,10 +38,13 @@
 
 	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
-
+	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
 
 /datum/hud/New(mob/owner)
 	mymob = owner
+	for(var/mytype in subtypesof(/obj/screen/plane_master))
+		var/obj/screen/plane_master/instance = new mytype()
+		plane_masters["[instance.plane]"] = instance
 	instantiate()
 	..()
 
@@ -62,6 +65,10 @@
 	hotkeybuttons = null
 	hide_actions_toggle = null
 	mymob = null
+	if(plane_masters.len)
+		for(var/thing in plane_masters)
+			qdel(plane_masters[thing])
+			plane_masters.Cut()
 	return ..()
 
 /datum/hud/proc/hidden_inventory_update()
@@ -150,8 +157,13 @@
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
 
+	if(plane_masters.len)
+		for(var/thing in plane_masters)
+			mymob.client.screen += plane_masters[thing]
+	create_parallax()
+
 //Version denotes which style should be displayed. blank or 0 means "next version"
-/datum/hud/proc/show_hud(var/version = 0)
+/datum/hud/proc/show_hud(version = 0)
 	if(!ismob(mymob))
 		return 0
 	if(!mymob.client)
@@ -231,8 +243,11 @@
 			persistant_inventory_update()
 			mymob.update_action_buttons()
 			reorganize_alerts()
+	if(plane_masters.len)
+		for(var/thing in plane_masters)
+			mymob.client.screen += plane_masters[thing]
 	hud_version = display_hud_version
-
+	create_parallax()
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12(var/full = 0 as null)
 	set name = "F12"
@@ -241,8 +256,8 @@
 	if(hud_used && client)
 		if(ishuman(src))
 			hud_used.show_hud() //Shows the next hud preset
-			usr << "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>"
+			to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 		else
-			usr << "<span class ='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>"
+			to_chat(usr, "<span class ='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>")
 	else
-		usr << "<span class ='warning'>This mob type does not use a HUD.</span>"
+		to_chat(usr, "<span class ='warning'>This mob type does not use a HUD.</span>")

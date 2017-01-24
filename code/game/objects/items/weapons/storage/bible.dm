@@ -5,7 +5,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
@@ -22,16 +21,16 @@
 	new /obj/item/weapon/spacecash(src)
 	new /obj/item/weapon/spacecash(src)
 
-/obj/item/weapon/storage/bible/afterattack(atom/A, mob/user as mob, proximity)
+/obj/item/weapon/storage/bible/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
-			user << "\blue You bless [A]."
+			to_chat(user, "\blue You bless [A].")
 			var/water2holy = A.reagents.get_reagent_amount("water")
 			A.reagents.del_reagent("water")
 			A.reagents.add_reagent("holywater",water2holy)
 
-/obj/item/weapon/storage/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/bible/attackby(obj/item/weapon/W, mob/user)
 	if (src.use_sound)
 		playsound(src.loc, src.use_sound, 50, 1, -5)
 	..()

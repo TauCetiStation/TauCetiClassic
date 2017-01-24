@@ -6,7 +6,7 @@
 	desc = "Yummy!"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
@@ -15,15 +15,15 @@
 		if (gulp_size < 5) gulp_size = 5
 		else gulp_size = max(round(reagents.total_volume / 5), 5)
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		var/datum/reagents/R = src.reagents
 		var/fillevel = gulp_size
 
 		if(!R.total_volume || !R)
-			user << "\red None of [src] left, oh no!"
+			to_chat(user, "\red None of [src] left, oh no!")
 			return 0
 
 		if(!CanEat(user, M, src, "drink")) return
@@ -32,11 +32,11 @@
 
 			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(H.species.flags & IS_SYNTHETIC)
-					H << "\red You have a monitor for a head, where do you think you're going to put that?"
+				if(H.species.flags[IS_SYNTHETIC])
+					to_chat(H, "\red You have a monitor for a head, where do you think you're going to put that?")
 					return
 
-			M << "\blue You swallow a gulp of [src]."
+			to_chat(M, "\blue You swallow a gulp of [src].")
 			if(reagents.total_volume)
 				reagents.trans_to_ingest(M, gulp_size)
 
@@ -45,8 +45,8 @@
 		else if( istype(M, /mob/living/carbon/human) )
 
 			var/mob/living/carbon/human/H = M
-			if(H.species.flags & IS_SYNTHETIC)
-				H << "\red They have a monitor for a head, where do you think you're going to put that?"
+			if(H.species.flags[IS_SYNTHETIC])
+				to_chat(H, "\red They have a monitor for a head, where do you think you're going to put that?")
 				return
 
 			for(var/mob/O in viewers(world.view, user))
@@ -81,23 +81,23 @@
 		if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 			if(!target.reagents.total_volume)
-				user << "\red [target] is empty."
+				to_chat(user, "\red [target] is empty.")
 				return
 
 			if(reagents.total_volume >= reagents.maximum_volume)
-				user << "\red [src] is full."
+				to_chat(user, "\red [src] is full.")
 				return
 
 			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			user << "\blue You fill [src] with [trans] units of the contents of [target]."
+			to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
 
 		else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
 			if(!reagents.total_volume)
-				user << "\red [src] is empty."
+				to_chat(user, "\red [src] is empty.")
 				return
 
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "\red [target] is full."
+				to_chat(user, "\red [target] is full.")
 				return
 
 
@@ -109,35 +109,34 @@
 				refillName = reagents.get_master_reagent_name()
 
 			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			user << "\blue You transfer [trans] units of the solution to [target]."
+			to_chat(user, "\blue You transfer [trans] units of the solution to [target].")
 
 			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 				var/mob/living/silicon/robot/bro = user
 				var/chargeAmount = max(30,4*trans)
 				bro.cell.use(chargeAmount)
-				user << "Now synthesizing [trans] units of [refillName]..."
+				to_chat(user, "Now synthesizing [trans] units of [refillName]...")
 
 
 				spawn(300)
 					reagents.add_reagent(refill, trans)
-					user << "Cyborg [src] refilled."
+					to_chat(user, "Cyborg [src] refilled.")
 
 		return
 
-	examine()
-		set src in view()
+	examine(mob/user)
 		..()
-		if (!(usr in range(0)) && usr!=src.loc) return
-		if(!reagents || reagents.total_volume==0)
-			usr << "\blue \The [src] is empty!"
-		else if (reagents.total_volume<=src.volume/4)
-			usr << "\blue \The [src] is almost empty!"
-		else if (reagents.total_volume<=src.volume*0.66)
-			usr << "\blue \The [src] is half full!"
-		else if (reagents.total_volume<=src.volume*0.90)
-			usr << "\blue \The [src] is almost full!"
-		else
-			usr << "\blue \The [src] is full!"
+		if(src in user)
+			if(!reagents || reagents.total_volume==0)
+				to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
+			else if (reagents.total_volume<=src.volume/4)
+				to_chat(user, "<span class='notice'>\The [src] is almost empty!</span>")
+			else if (reagents.total_volume<=src.volume*0.66)
+				to_chat(user, "<span class='notice'>\The [src] is half full!</span>")
+			else if (reagents.total_volume<=src.volume*0.90)
+				to_chat(user, "<span class='notice'>\The [src] is almost full!</span>")
+			else
+				to_chat(user, "<span class='notice'>\The [src] is full!</span>")
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
@@ -154,7 +153,7 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = null
 	volume = 150
-	flags = FPRINT | CONDUCT | TABLEPASS | OPENCONTAINER
+	flags = CONDUCT | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/food/drinks/golden_cup/tournament_26_06_2011
 	desc = "A golden cup. It will be presented to a winner of tournament 26 june and name of the winner will be graved on it."

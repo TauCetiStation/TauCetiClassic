@@ -1,9 +1,8 @@
 /obj/structure/noticeboard
 	name = "notice board"
 	desc = "A board for pinning important notices upon."
-	icon = 'tauceti/icons/obj/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "nboard00"
-	flags = FPRINT
 	density = 0
 	anchored = 1
 	var/notices = 0
@@ -17,7 +16,7 @@
 	icon_state = "nboard0[notices]"
 
 //attaching papers!!
-/obj/structure/noticeboard/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+/obj/structure/noticeboard/attackby(obj/item/weapon/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
 		if(notices < 5)
 			O.add_fingerprint(user)
@@ -26,11 +25,11 @@
 			O.loc = src
 			notices++
 			icon_state = "nboard0[notices]"	//update sprite
-			user << "<span class='notice'>You pin the paper to the noticeboard.</span>"
+			to_chat(user, "<span class='notice'>You pin the paper to the noticeboard.</span>")
 		else
-			user << "<span class='notice'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>"
+			to_chat(user, "<span class='notice'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>")
 
-/obj/structure/noticeboard/attack_hand(user as mob)
+/obj/structure/noticeboard/attack_hand(user)
 	var/dat = "<B>Noticeboard</B><BR>"
 	for(var/obj/item/weapon/paper/P in src)
 		dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
@@ -66,7 +65,7 @@
 					add_fingerprint(usr)
 					P.attackby(usr.l_hand, usr)
 				else
-					usr << "<span class='notice'>You'll need something to write with!</span>"
+					to_chat(usr, "<span class='notice'>You'll need something to write with!</span>")
 
 	if(href_list["read"])
 		var/obj/item/weapon/paper/P = locate(href_list["read"])

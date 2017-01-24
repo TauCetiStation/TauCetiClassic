@@ -1,13 +1,13 @@
 /*----------------------------------------
 This is what happens, when we attack aliens.
 ----------------------------------------*/
-/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	..()
@@ -29,7 +29,7 @@ This is what happens, when we attack aliens.
 							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall.", 2)
 					return
 				else
-					M << "\red Not enough charge! "
+					to_chat(M, "\red Not enough charge! ")
 					return
 
 	switch(M.a_intent)
@@ -104,15 +104,15 @@ This is what happens, when we attack aliens.
 								O.show_message(text("\red <B>[] has attempted to disarm []!</B>", M, src), 1)
 	return
 
-/mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
 	if(!ismonkey(M))	return//Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 	..()
 
@@ -132,7 +132,7 @@ This is what happens, when we attack aliens.
 				updatehealth()
 	return
 
-/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -144,13 +144,13 @@ This is what happens, when we attack aliens.
 		adjustBruteLoss(damage)
 		updatehealth()
 
-/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M as mob)
+/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	..()
@@ -177,12 +177,12 @@ This is what happens, when we attack aliens.
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				M << "\green <B>[name] is too injured for that.</B>"
+				to_chat(M, "\green <B>[name] is too injured for that.</B>")
 	return
 
-/mob/living/carbon/alien/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/carbon/alien/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(M.Victim) return // can't attack while eating!

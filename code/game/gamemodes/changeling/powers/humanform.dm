@@ -6,7 +6,7 @@
 //	req_dna = 1
 	max_genetic_damage = 20
 
-/obj/effect/proc_holder/changeling/humanform/sting_action(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/humanform/sting_action(mob/living/carbon/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
 	for(var/datum/dna/DNA in changeling.absorbed_dna)
@@ -39,14 +39,6 @@
 	sleep(48)
 	qdel(animation)
 
-	/*for(var/obj/item/W in src)
-		user.u_equip(W)
-		if (user.client)
-			user.client.screen -= W
-		if (W)
-			W.loc = user.loc
-			W.dropped(user)
-			W.layer = initial(W.layer)*/
 	for(var/obj/item/W in user)
 		user.drop_from_inventory(W)
 	for(var/obj/T in user)

@@ -5,7 +5,8 @@
 	opacity = 0
 	density = 0
 	anchored = 1
-	layer = 20 //DEBUG
+	layer = ABOVE_HUD_LAYER //DEBUG
+	plane = ABOVE_HUD_PLANE
 	var/health = 10
 	var/stage = 1
 	var/obj/effect/rift/originalRift = null //the originating rift of that biomass
@@ -63,7 +64,7 @@
 		sleep(spreadDelay)
 		Spread()
 
-/obj/effect/biomass/proc/Spread(var/direction = dir)
+/obj/effect/biomass/proc/Spread(direction = dir)
 	//set background = 1
 	var/possibleDirsInt = 0
 

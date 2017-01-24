@@ -60,6 +60,7 @@
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
+	var/datum/global_iterator/pr_mecha_light // processing mecha lights
 
 
 	var/wreckage
@@ -93,8 +94,7 @@
 	go_out()
 	poi_list.Remove(src)
 	mechas_list -= src //global mech list
-	..()
-	return
+	return ..()
 
 ////////////////////////
 ////// Helpers /////////
@@ -110,7 +110,7 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
-/obj/mecha/proc/add_cell(var/obj/item/weapon/stock_parts/cell/C=null)
+/obj/mecha/proc/add_cell(obj/item/weapon/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -138,14 +138,15 @@
 	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
 	pr_give_air = new /datum/global_iterator/mecha_tank_give_air(list(src))
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
+	pr_mecha_light = new /datum/global_iterator/mecha_light(list(src))
 
-/obj/mecha/proc/do_after(delay as num)
+/obj/mecha/proc/do_after(delay)
 	sleep(delay)
 	if(src)
 		return 1
 	return 0
 
-/obj/mecha/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
+/obj/mecha/proc/enter_after(delay, mob/user, numticks = 5)
 	var/delayfraction = delay/numticks
 
 	var/turf/T = user.loc
@@ -157,32 +158,29 @@
 
 	return 1
 
-/obj/mecha/examine()
-	set src in view()
+/obj/mecha/examine(mob/user)
 	..()
 	var/integrity = health/initial(health)*100
 	switch(integrity)
 		if(85 to 100)
-			usr << "It's fully intact."
+			to_chat(user, "It's fully intact.")
 		if(65 to 85)
-			usr << "It's slightly damaged."
+			to_chat(user, "It's slightly damaged.")
 		if(45 to 65)
-			usr << "It's badly damaged."
+			to_chat(user, "It's badly damaged.")
 		if(25 to 45)
-			usr << "It's heavily damaged."
+			to_chat(user, "It's heavily damaged.")
 		else
-			usr << "It's falling apart."
+			to_chat(user, "It's falling apart.")
 	if(equipment && equipment.len)
-		usr << "It's equipped with:"
+		to_chat(user, "It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
-			usr << "\icon[ME] [ME]"
-	return
-
+			to_chat(user, "[bicon(ME)] [ME]")
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/hear_talk(mob/M as mob, text)
+/obj/mecha/hear_talk(mob/M, text)
 	if(M==occupant && radio.broadcasting)
 		radio.talk_into(M, text)
 	return
@@ -254,7 +252,7 @@
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
 
-/obj/mecha/Process_Spacemove(var/movement_dir = 0)
+/obj/mecha/Process_Spacemove(movement_dir = 0)
 	if(occupant)
 		return occupant.Process_Spacemove(movement_dir) //We'll just say you used the clamp to grab the wall
 	return ..()
@@ -262,7 +260,7 @@
 /obj/mecha/relaymove(mob/user,direction)
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
-		user << "You climb out from [src]"
+		to_chat(user, "You climb out from [src]")
 		return 0
 	if(connected_port)
 		if(world.time - last_message > 20)
@@ -300,6 +298,7 @@
 
 /obj/mecha/proc/mechturn(direction)
 	dir = direction
+	use_power(step_energy_drain)
 	playsound(src,'sound/mecha/mechturn.ogg',40,1)
 	return 1
 
@@ -307,6 +306,7 @@
 	var/result = step(src,direction)
 	if(result)
 		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+		use_power(step_energy_drain)
 	return result
 
 
@@ -314,6 +314,7 @@
 	var/result = step_rand(src)
 	if(result)
 		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+		use_power(step_energy_drain)
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle, yes)
@@ -335,7 +336,7 @@
 ////////  Internal damage  ////////
 ///////////////////////////////////
 
-/obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
+/obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
 	if(prob(20))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
@@ -402,7 +403,7 @@
 		src.destroy()
 	return
 
-/obj/mecha/attack_hand(mob/user as mob)
+/obj/mecha/attack_hand(mob/user)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 	user.do_attack_animation(src)
 
@@ -415,29 +416,29 @@
 		src.log_append_to_last("Armor saved.")
 	return
 
-/obj/mecha/attack_paw(mob/user as mob)
+/obj/mecha/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/mecha/attack_alien(mob/user as mob)
+/obj/mecha/attack_alien(mob/user)
 	src.log_message("Attack by alien. Attacker - [user].",1)
 	user.do_attack_animation(src)
 	if(!prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
-		user << "\red You slash at the armored suit!"
+		to_chat(user, "\red You slash at the armored suit!")
 		visible_message("\red The [user] slashes at [src.name]'s armor!")
 	else
 		src.log_append_to_last("Armor saved.")
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
-		user << "\green Your claws had no effect!"
+		to_chat(user, "\green Your claws had no effect!")
 		src.occupant_message("\blue The [user]'s claws are stopped by the armor.")
 		visible_message("\blue The [user] rebounds off [src.name]'s armor!")
 	return
 
 
-/obj/mecha/attack_animal(mob/living/simple_animal/user as mob)
+/obj/mecha/attack_animal(mob/living/simple_animal/user)
 	src.log_message("Attack by simple animal. Attacker - [user].",1)
 	if(user.melee_damage_upper == 0)
 		user.emote("[user.friendly] [src]")
@@ -457,7 +458,7 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	return
 
-/obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
+/obj/mecha/hitby(atom/movable/A) //wrapper
 	..()
 	src.log_message("Hit by [A].",1)
 	call((proc_res["dynhitby"]||src), "dynhitby")(A)
@@ -483,13 +484,13 @@
 	return
 
 
-/obj/mecha/bullet_act(var/obj/item/projectile/Proj) //wrapper
+/obj/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
 	src.log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).",1)
 	call((proc_res["dynbulletdamage"]||src), "dynbulletdamage")(Proj) //calls equipment
 	..()
 	return
 
-/obj/mecha/proc/dynbulletdamage(var/obj/item/projectile/Proj)
+/obj/mecha/proc/dynbulletdamage(obj/item/projectile/Proj)
 	if(prob(src.deflect_chance))
 		src.occupant_message("\blue The armor deflects incoming projectile.")
 		src.visible_message("The [src.name] armor deflects the projectile")
@@ -581,14 +582,14 @@
 		src.take_damage(6)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1, -1)
-		user << "\red You smash at the armored suit!"
+		to_chat(user, "\red You smash at the armored suit!")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
 				V.show_message("\red The [user] smashes against [src.name]'s armor!", 1)
 	else
 		src.log_append_to_last("Armor saved.")
 		playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1, -1)
-		user << "\green Your attack had no effect!"
+		to_chat(user, "\green Your attack had no effect!")
 		src.occupant_message("\blue The [user]'s attack is stopped by the armor.")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
@@ -620,11 +621,11 @@
 		src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
 	return
 
-/obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/mecha/proc/dynattackby(obj/item/weapon/W, mob/user)
 	user.do_attack_animation(src)
 	src.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(src.deflect_chance))
-		user << "\red \The [W] bounces off [src.name]."
+		to_chat(user, "\red \The [W] bounces off [src.name].")
 		src.log_append_to_last("Armor saved.")
 /*
 		for (var/mob/V in viewers(src))
@@ -642,14 +643,14 @@
 ////// AttackBy //////
 //////////////////////
 
-/obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/mecha/attackby(obj/item/weapon/W, mob/user)
 
 
 	if(istype(W, /obj/item/device/mmi) || istype(W, /obj/item/device/mmi/posibrain))
 		if(mmi_move_inside(W,user))
-			user << "[src]-MMI interface initialized successfuly"
+			to_chat(user, "[src]-MMI interface initialized successfuly")
 		else
-			user << "[src]-MMI interface initialization failed."
+			to_chat(user, "[src]-MMI interface initialization failed.")
 		return
 
 	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
@@ -660,7 +661,7 @@
 				E.attach(src)
 				user.visible_message("[user] attaches [W] to [src]", "You attach [W] to [src]")
 			else
-				user << "You were unable to attach [W] to [src]"
+				to_chat(user, "You were unable to attach [W] to [src]")
 		return
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(add_req_access || maint_access)
@@ -674,24 +675,24 @@
 				output_maintenance_dialog(id_card, user)
 				return
 			else
-				user << "\red Invalid ID: Access denied."
+				to_chat(user, "\red Invalid ID: Access denied.")
 		else
-			user << "\red Maintenance protocols disabled by operator."
+			to_chat(user, "\red Maintenance protocols disabled by operator.")
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(state==1)
 			state = 2
-			user << "You undo the securing bolts."
+			to_chat(user, "You undo the securing bolts.")
 		else if(state==2)
 			state = 1
-			user << "You tighten the securing bolts."
+			to_chat(user, "You tighten the securing bolts.")
 		return
 	else if(istype(W, /obj/item/weapon/crowbar))
 		if(state==2)
 			state = 3
-			user << "You open the hatch to the power unit"
+			to_chat(user, "You open the hatch to the power unit")
 		else if(state==3)
 			state=2
-			user << "You close the hatch to the power unit"
+			to_chat(user, "You close the hatch to the power unit")
 		return
 	else if(istype(W, /obj/item/weapon/cable_coil))
 		if(state == 3 && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
@@ -699,35 +700,35 @@
 			if(CC.amount > 1)
 				CC.use(2)
 				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
-				user << "You replace the fused wires."
+				to_chat(user, "You replace the fused wires.")
 			else
-				user << "There's not enough wire to finish the task."
+				to_chat(user, "There's not enough wire to finish the task.")
 		return
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
-			user << "You repair the damaged temperature controller."
+			to_chat(user, "You repair the damaged temperature controller.")
 		else if(state==3 && src.cell)
 			src.cell.forceMove(src.loc)
 			src.cell = null
 			state = 4
-			user << "You unscrew and pry out the powercell."
+			to_chat(user, "You unscrew and pry out the powercell.")
 			src.log_message("Powercell removed")
 		else if(state==4 && src.cell)
 			state=3
-			user << "You screw the cell in place"
+			to_chat(user, "You screw the cell in place")
 		return
 
 	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
 			if(!src.cell)
-				user << "You install the powercell"
+				to_chat(user, "You install the powercell")
 				user.drop_item()
 				W.forceMove(src)
 				src.cell = W
 				src.log_message("Powercell installed")
 			else
-				user << "There's already a powercell installed."
+				to_chat(user, "There's already a powercell installed.")
 		return
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "hurt")
@@ -735,14 +736,14 @@
 		if (WT.remove_fuel(0,user))
 			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
 				clearInternalDamage(MECHA_INT_TANK_BREACH)
-				user << "\blue You repair the damaged gas tank."
+				to_chat(user, "\blue You repair the damaged gas tank.")
 		else
 			return
 		if(src.health<initial(src.health))
-			user << "\blue You repair some damage to [src.name]."
+			to_chat(user, "\blue You repair some damage to [src.name].")
 			src.health += min(10, initial(src.health)-src.health)
 		else
-			user << "The [src.name] is at full integrity"
+			to_chat(user, "The [src.name] is at full integrity")
 		return
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
@@ -754,7 +755,7 @@
 	else if(istype(W, /obj/item/weapon/paintkit))
 
 		if(occupant)
-			user << "You can't customize a mech while someone is piloting it - that would be unsafe!"
+			to_chat(user, "You can't customize a mech while someone is piloting it - that would be unsafe!")
 			return
 
 		var/obj/item/weapon/paintkit/P = W
@@ -766,7 +767,7 @@
 				break
 
 		if(!found)
-			user << "That kit isn't meant for use on this class of exosuit."
+			to_chat(user, "That kit isn't meant for use on this class of exosuit.")
 			return
 
 		user.visible_message("[user] opens [P] and spends some quality time customising [src].")
@@ -784,7 +785,7 @@
 /*
 		src.log_message("Attacked by [W]. Attacker - [user]")
 		if(prob(src.deflect_chance))
-			user << "\red The [W] bounces off [src.name] armor."
+			to_chat(user, "\red The [W] bounces off [src.name] armor.")
 			src.log_append_to_last("Armor saved.")
 /*
 			for (var/mob/V in viewers(src))
@@ -802,7 +803,7 @@
 
 
 /*
-/obj/mecha/attack_ai(var/mob/living/silicon/ai/user as mob)
+/obj/mecha/attack_ai(mob/living/silicon/ai/user)
 	if(!istype(user, /mob/living/silicon/ai))
 		return
 	var/output = {"<b>Assume direct control over [src]?</b>
@@ -939,7 +940,10 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=occupant)	return
+	if(usr!=occupant)
+		return
+	if(!has_charge(lights_power))
+		return
 	lights = !lights
 	if(lights)	set_light(light_range + lights_power)
 	else		set_light(light_range - lights_power)
@@ -972,15 +976,15 @@
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(C.handcuffed)
-			usr << "\red Kinda hard to climb in while handcuffed don't you think?"
+			to_chat(usr, "\red Kinda hard to climb in while handcuffed don't you think?")
 			return
 	if (src.occupant)
-		usr << "\blue <B>The [src.name] is already occupied!</B>"
+		to_chat(usr, "\blue <B>The [src.name] is already occupied!</B>")
 		src.log_append_to_last("Permission denied.")
 		return
 /*
 	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
+		to_chat(usr, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
 */
 	var/passed
@@ -990,12 +994,12 @@
 	else if(src.operation_allowed(usr))
 		passed = 1
 	if(!passed)
-		usr << "\red Access denied"
+		to_chat(usr, "\red Access denied")
 		src.log_append_to_last("Permission denied.")
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
-			usr << "You're too busy getting your life sucked out of you."
+			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
 //	usr << "You start climbing into [src.name]"
 
@@ -1005,12 +1009,12 @@
 		if(!src.occupant)
 			moved_inside(usr)
 		else if(src.occupant!=usr)
-			usr << "[src.occupant] was faster. Try better next time, loser."
+			to_chat(usr, "[src.occupant] was faster. Try better next time, loser.")
 	else
-		usr << "You stop entering the exosuit."
+		to_chat(usr, "You stop entering the exosuit.")
 	return
 
-/obj/mecha/proc/moved_inside(var/mob/living/carbon/human/H as mob)
+/obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
 	if(H && H.client && H in range(1))
 		H.reset_view(src)
 		/*
@@ -1037,18 +1041,18 @@
 	else
 		return 0
 
-/obj/mecha/proc/mmi_move_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+/obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
-		user << "Consciousness matrix not detected."
+		to_chat(user, "Consciousness matrix not detected.")
 		return 0
 	else if(mmi_as_oc.brainmob.stat)
-		user << "Beta-rhythm below acceptable level."
+		to_chat(user, "Beta-rhythm below acceptable level.")
 		return 0
 	else if(occupant)
-		user << "Occupant detected."
+		to_chat(user, "Occupant detected.")
 		return 0
 	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
-		user << "Stop it!"
+		to_chat(user, "Stop it!")
 		return 0
 	//Added a message here since people assume their first click failed or something./N
 //	user << "Installing MMI, please stand by."
@@ -1059,18 +1063,18 @@
 		if(!occupant)
 			return mmi_moved_inside(mmi_as_oc,user)
 		else
-			user << "Occupant detected."
+			to_chat(user, "Occupant detected.")
 	else
-		user << "You stop inserting the MMI."
+		to_chat(user, "You stop inserting the MMI.")
 	return 0
 
-/obj/mecha/proc/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+/obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(mmi_as_oc && user in range(1))
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
-			user << "Consciousness matrix not detected."
+			to_chat(user, "Consciousness matrix not detected.")
 			return 0
 		else if(mmi_as_oc.brainmob.stat)
-			user << "Beta-rhythm below acceptable level."
+			to_chat(user, "Beta-rhythm below acceptable level.")
 			return 0
 		user.drop_from_inventory(mmi_as_oc)
 		var/mob/brainmob = mmi_as_oc.brainmob
@@ -1161,7 +1165,7 @@
 
 			occupant.SetStunned(5)
 			occupant.SetWeakened(5)
-			occupant << "You were blown out of the mech!"
+			to_chat(occupant, "You were blown out of the mech!")
 	*/
 		src.log_message("[mob_container] moved out.")
 		log_admin("[key_name(mob_container)] has moved out of [src.type] with name [src.name]")
@@ -1439,18 +1443,18 @@
 /////// Messages and Log ///////
 ////////////////////////////////
 
-/obj/mecha/proc/occupant_message(message as text)
+/obj/mecha/proc/occupant_message(message)
 	if(message)
 		if(src.occupant && src.occupant.client)
-			src.occupant << "\icon[src] [message]"
+			to_chat(src.occupant, "[bicon(src)] [message]")
 	return
 
-/obj/mecha/proc/log_message(message as text,red=null)
+/obj/mecha/proc/log_message(message,red=null)
 	log.len++
 	log[log.len] = list("time"=world.timeofday,"message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len
 
-/obj/mecha/proc/log_append_to_last(message as text,red=null)
+/obj/mecha/proc/log_append_to_last(message,red=null)
 	var/list/last_entry = src.log[src.log.len]
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
@@ -1554,10 +1558,10 @@
 		if(user)
 			if(state==0)
 				state = 1
-				user << "The securing bolts are now exposed."
+				to_chat(user, "The securing bolts are now exposed.")
 			else if(state==1)
 				state = 0
-				user << "The securing bolts are now hidden."
+				to_chat(user, "The securing bolts are now hidden.")
 			output_maintenance_dialog(filter.getObj("id_card"),user)
 		return
 	if(href_list["set_internal_tank_valve"] && state >=1)
@@ -1567,7 +1571,7 @@
 			var/new_pressure = input(user,"Input new output pressure","Pressure setting",internal_tank_valve) as num
 			if(new_pressure)
 				internal_tank_valve = new_pressure
-				user << "The internal pressure valve has been set to [internal_tank_valve]kPa."
+				to_chat(user, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
 	if(href_list["add_req_access"] && add_req_access && filter.getObj("id_card"))
 		if(!in_range(src, usr))	return
 		operation_req_access += filter.getNum("add_req_access")
@@ -1788,6 +1792,17 @@
 				mecha.cell.maxcharge -= min(20,mecha.cell.maxcharge)
 		return
 
+/datum/global_iterator/mecha_light
+
+	process(var/obj/mecha/mecha)
+		if(!mecha.lights)
+			return
+		if(mecha.has_charge(mecha.lights_power))
+			mecha.use_power(mecha.lights_power)
+		else
+			mecha.lights = 0
+			mecha.set_light(mecha.light_range - mecha.lights_power)
+		return
 
 /////////////
 

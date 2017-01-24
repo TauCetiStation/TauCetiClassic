@@ -26,7 +26,7 @@ var/list/datum/puddle/puddles = list()
 	puddles -= src
 	for(var/obj/O in liquid_objects)
 		qdel(O)
-	..()
+	return ..()
 
 /client/proc/splash()
 	var/volume = input("Volume?","Volume?", 0 ) as num
@@ -36,7 +36,7 @@ var/list/datum/puddle/puddles = list()
 	if(!isturf(T)) return
 	trigger_splash(T, volume)
 
-/proc/trigger_splash(turf/epicenter as turf, volume as num)
+/proc/trigger_splash(turf/epicenter, volume)
 	if(!epicenter)
 		return
 	if(volume <= 0)
@@ -133,7 +133,7 @@ var/list/datum/puddle/puddles = list()
 
 /obj/effect/liquid/Destroy()
 	src.controller.liquid_objects.Remove(src)
-	..()
+	return ..()
 
 /obj/effect/liquid/proc/update_icon2()
 	//icon_state = num2text( max(1,min(7,(floor(volume),10)/10)) )

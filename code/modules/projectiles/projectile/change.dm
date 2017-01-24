@@ -9,10 +9,10 @@
 	nodamage = 1
 	flag = "energy"
 
-	on_hit(var/atom/change)
+	on_hit(atom/change)
 		wabbajack(change)
 
-/obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
+/obj/item/projectile/change/proc/wabbajack (mob/M in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)	return
 		M.monkeyizing = 1
@@ -30,6 +30,7 @@
 					qdel(W)
 					continue
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 				W.loc = M.loc
 				W.dropped(M)
 
@@ -85,7 +86,7 @@
 		else
 			new_mob.key = M.key
 
-		new_mob << "<B>Your form morphs into that of a [randomize].</B>"
+		to_chat(new_mob, "<B>Your form morphs into that of a [randomize].</B>")
 
 		qdel(M)
 		return new_mob

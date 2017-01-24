@@ -28,7 +28,7 @@ var/datum/subsystem/job/SSjob
 	occupations = list()
 	var/list/all_jobs = typesof(/datum/job)
 	if(!all_jobs.len)
-		world << "<span class='boldannounce'>Error setting up jobs, no job datums found</span>"
+		to_chat(world, "<span class='boldannounce'>Error setting up jobs, no job datums found</span>")
 		return 0
 
 	for(var/J in all_jobs)
@@ -84,7 +84,7 @@ var/datum/subsystem/job/SSjob
 	Debug("AR has failed, Player: [player], Rank: [rank]")
 	return 0
 
-/datum/subsystem/job/proc/FreeRole(var/rank)	//making additional slot on the fly
+/datum/subsystem/job/proc/FreeRole(rank)	//making additional slot on the fly
 	var/datum/job/job = GetJob(rank)
 	if(job && job.current_positions >= job.total_positions && job.total_positions != -1)
 		job.total_positions++
@@ -116,7 +116,7 @@ var/datum/subsystem/job/SSjob
 		if(!job)
 			continue
 
-		if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
+		if(istype(job, GetJob("Test Subject"))) // We don't want to give him assistant, that's boring!
 			continue
 
 		if(job.title in command_positions) //If you want a command position, select it!
@@ -248,7 +248,7 @@ var/datum/subsystem/job/SSjob
 	Debug("AC1, Candidates: [assistant_candidates.len]")
 	for(var/mob/new_player/player in assistant_candidates)
 		Debug("AC1 pass, Player: [player]")
-		AssignRole(player, "Assistant")
+		AssignRole(player, "Test Subject")
 		assistant_candidates -= player
 	Debug("DO, AC1 end")
 
@@ -316,7 +316,7 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == BE_ASSISTANT)
 			Debug("AC2 Assistant located, Player: [player]")
-			AssignRole(player, "Assistant")
+			AssignRole(player, "Test Subject")
 
 	//For ones returning to lobby
 	for(var/mob/new_player/player in unassigned)
@@ -333,7 +333,7 @@ var/datum/subsystem/job/SSjob
 		job.equip(H)
 		job.apply_fingerprints(H)
 	else
-		H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
+		to_chat(H, "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator.")
 
 	H.job = rank
 
@@ -381,7 +381,7 @@ var/datum/subsystem/job/SSjob
 		H.mind.store_memory(remembered_info)
 
 	spawn(0)
-		H << "\blue<b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b>"
+		to_chat(H, "\blue<b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b>")
 
 	var/alt_title = null
 	if(H.mind)
@@ -426,10 +426,10 @@ var/datum/subsystem/job/SSjob
 				H.internal = H.l_hand
 			H.internals.icon_state = "internal1"
 
-	H << "<B>You are the [alt_title ? alt_title : rank].</B>"
-	H << "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+	to_chat(H, "<B>You are the [alt_title ? alt_title : rank].</B>")
+	to_chat(H, "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
 	if(job.req_admin_notify)
-		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		to_chat(H, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 
 	spawnId(H, rank, alt_title)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_l_ear)
@@ -439,6 +439,7 @@ var/datum/subsystem/job/SSjob
 		var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
 		if(equipped != 1)
 			var/obj/item/clothing/glasses/G = H.glasses
+			G.name = "prescription " + G.name
 			G.prescription = 1
 //		H.update_icons()
 

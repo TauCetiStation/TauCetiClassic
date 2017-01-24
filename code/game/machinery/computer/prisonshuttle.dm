@@ -23,19 +23,19 @@ var/prison_shuttle_timeleft = 0
 	var/prison_break = 0
 
 
-/obj/machinery/computer/prison_shuttle/attackby(I as obj, user as mob)
+/obj/machinery/computer/prison_shuttle/attackby(I, user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/computer/prison_shuttle/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/prison_shuttle/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/computer/prison_shuttle/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/prison_shuttle/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/computer/prison_shuttle/attackby(I as obj, user as mob)
+/obj/machinery/computer/prison_shuttle/attackby(I, user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
@@ -47,29 +47,29 @@ var/prison_shuttle_timeleft = 0
 			A.anchored = 1
 
 			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
+				to_chat(user, "\blue The broken glass falls out.")
 				new /obj/item/weapon/shard( src.loc )
 				A.state = 3
 				A.icon_state = "3"
 			else
-				user << "\blue You disconnect the monitor."
+				to_chat(user, "\blue You disconnect the monitor.")
 				A.state = 4
 				A.icon_state = "4"
 
 			qdel(src)
 	else if(istype(I,/obj/item/weapon/card/emag) && (!hacked))
 		hacked = 1
-		user << "\blue You disable the lock."
+		to_chat(user, "\blue You disable the lock.")
 	else
 		return src.attack_hand(user)
 
 
-/obj/machinery/computer/prison_shuttle/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/prison_shuttle/attack_hand(mob/user)
 	if(!src.allowed(user) && (!hacked))
-		user << "\red Access Denied."
+		to_chat(user, "\red Access Denied.")
 		return
 	if(prison_break)
-		user << "\red Unable to locate shuttle."
+		to_chat(user, "\red Unable to locate shuttle.")
 		return
 	if(..())
 		return
@@ -96,12 +96,12 @@ var/prison_shuttle_timeleft = 0
 
 	if (href_list["sendtodock"])
 		if (!prison_can_move())
-			usr << "\red The prison shuttle is unable to leave."
+			to_chat(usr, "\red The prison shuttle is unable to leave.")
 			return FALSE
 		if(!prison_shuttle_at_station|| prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison)
 			return FALSE
 		post_signal("prison")
-		usr << "\blue The prison shuttle has been called and will arrive in [(PRISON_MOVETIME/10)] seconds."
+		to_chat(usr, "\blue The prison shuttle has been called and will arrive in [(PRISON_MOVETIME/10)] seconds.")
 		src.temp += "Shuttle sent.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		src.updateUsrDialog()
 		prison_shuttle_moving_to_prison = 1
@@ -111,12 +111,12 @@ var/prison_shuttle_timeleft = 0
 
 	else if (href_list["sendtostation"])
 		if (!prison_can_move())
-			usr << "\red The prison shuttle is unable to leave."
+			to_chat(usr, "\red The prison shuttle is unable to leave.")
 			return
 		if(prison_shuttle_at_station || prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison)
 			return
 		post_signal("prison")
-		usr << "\blue The prison shuttle has been called and will arrive in [(PRISON_MOVETIME/10)] seconds."
+		to_chat(usr, "\blue The prison shuttle has been called and will arrive in [(PRISON_MOVETIME/10)] seconds.")
 		src.temp += "Shuttle sent.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		src.updateUsrDialog()
 		prison_shuttle_moving_to_station = 1
@@ -154,7 +154,7 @@ var/prison_shuttle_timeleft = 0
 			prison_break = 0
 
 
-/obj/machinery/computer/prison_shuttle/proc/post_signal(var/command)
+/obj/machinery/computer/prison_shuttle/proc/post_signal(command)
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1311)
 	if(!frequency)
 		return
@@ -186,7 +186,7 @@ var/prison_shuttle_timeleft = 0
 				return
 
 			if (!prison_can_move())
-				usr << "\red The prison shuttle is unable to leave."
+				to_chat(usr, "\red The prison shuttle is unable to leave.")
 				return
 
 			var/area/start_location = locate(/area/shuttle/prison/prison)
@@ -215,7 +215,7 @@ var/prison_shuttle_timeleft = 0
 			if (prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison) return
 
 			if (!prison_can_move())
-				usr << "\red The prison shuttle is unable to leave."
+				to_chat(usr, "\red The prison shuttle is unable to leave.")
 				return
 
 			var/area/start_location = locate(/area/shuttle/prison/station)

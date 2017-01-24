@@ -18,7 +18,7 @@
 		pinned_target = null
 		density = 1
 
-/obj/structure/target_stake/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/target_stake/attackby(obj/item/W, mob/user)
 	// Putting objects on the stake. Most importantly, targets
 	if(pinned_target)
 		return // get rid of that pinned target first!
@@ -30,10 +30,10 @@
 		W.loc = loc
 		W.layer = 3.1
 		pinned_target = W
-		user << "<span class='notice'>You slide the target into the stake.</span>"
+		to_chat(user, "<span class='notice'>You slide the target into the stake.</span>")
 	return
 
-/obj/structure/target_stake/attack_hand(mob/user as mob)
+/obj/structure/target_stake/attack_hand(mob/user)
 	// taking pinned targets off!
 	if(pinned_target)
 		density = 1
@@ -44,9 +44,9 @@
 		if(ishuman(user))
 			if(!user.get_active_hand())
 				user.put_in_hands(pinned_target)
-				user << "<span class='notice'>You take the target out of the stake.</span>"
+				to_chat(user, "<span class='notice'>You take the target out of the stake.</span>")
 		else
 			pinned_target.loc = get_turf_loc(user)
-			user << "<span class='notice'>You take the target out of the stake.</span>"
+			to_chat(user, "<span class='notice'>You take the target out of the stake.</span>")
 
 		pinned_target = null

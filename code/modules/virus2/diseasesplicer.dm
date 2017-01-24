@@ -11,14 +11,14 @@
 	var/splicing = 0
 	var/scanning = 0
 
-/obj/machinery/computer/diseasesplicer/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		return ..(I,user)
 
 	if(istype(I,/obj/item/weapon/virusdish))
 		var/mob/living/carbon/c = user
 		if (dish)
-			user << "\The [src] is already loaded."
+			to_chat(user, "\The [src] is already loaded.")
 			return
 
 		dish = I
@@ -26,24 +26,24 @@
 		I.loc = src
 
 	if(istype(I,/obj/item/weapon/diseasedisk))
-		user << "You upload the contents of the disk onto the buffer."
+		to_chat(user, "You upload the contents of the disk onto the buffer.")
 		memorybank = I:effect
 		species_buffer = I:species
 		analysed = I:analysed
 
 	src.attack_hand(user)
 
-/obj/machinery/computer/diseasesplicer/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/diseasesplicer/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/computer/diseasesplicer/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/diseasesplicer/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/computer/diseasesplicer/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/diseasesplicer/attack_hand(mob/user)
 	if(..()) return
 	ui_interact(user)
 
-/obj/machinery/computer/diseasesplicer/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/computer/diseasesplicer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	user.set_machine(src)
 
 	var/data[0]

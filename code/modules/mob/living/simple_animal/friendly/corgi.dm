@@ -27,7 +27,7 @@
 	..()
 	regenerate_icons()
 
-/mob/living/simple_animal/corgi/show_inv(mob/user as mob)
+/mob/living/simple_animal/corgi/show_inv(mob/user)
 	user.set_machine(src)
 	if(user.stat) return
 
@@ -66,16 +66,16 @@
 	onclose(user, "mob[type]")
 	return
 
-/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/corgi/attackby(obj/item/O, mob/user)
 	if(inventory_head && inventory_back)
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				usr << "\red This animal is wearing too much armor. You can't cause /him any damage."
+				to_chat(usr, "\red This animal is wearing too much armor. You can't cause /him any damage.")
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red \b [user] hits [src] with the [O], however [src] is too armored.")
 			else
-				usr << "\red This animal is wearing too much armor. You can't reach its skin."
+				to_chat(usr, "\red This animal is wearing too much armor. You can't reach its skin.")
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
 			if(prob(15))
@@ -84,7 +84,7 @@
 			return
 	..()
 
-/mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M)
 	if(inventory_head && inventory_back)
 		if(health > 0)
 			if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
@@ -99,7 +99,7 @@
 						return
 	..()
 
-/mob/living/simple_animal/corgi/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/corgi/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)	return
 	if(inventory_head && inventory_back)
 		if(health > 0)
@@ -118,7 +118,7 @@
 					return
 	..()
 
-/mob/living/simple_animal/corgi/hitby(atom/movable/AM as mob|obj)
+/mob/living/simple_animal/corgi/hitby(atom/movable/AM)
 	if(inventory_head && inventory_back)
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			for (var/mob/M in viewers(src, null))
@@ -152,7 +152,7 @@
 					inventory_head = null
 					regenerate_icons()
 				else
-					usr << "\red There is nothing to remove from its [remove_from]."
+					to_chat(usr, "\red There is nothing to remove from its [remove_from].")
 					return
 			if("back")
 				if(inventory_back)
@@ -160,7 +160,7 @@
 					inventory_back = null
 					regenerate_icons()
 				else
-					usr << "\red There is nothing to remove from its [remove_from]."
+					to_chat(usr, "\red There is nothing to remove from its [remove_from].")
 					return
 
 		show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
@@ -171,12 +171,12 @@
 			return
 		var/add_to = href_list["add_inv"]
 		if(!usr.get_active_hand())
-			usr << "\red You have nothing in your hand to put on its [add_to]."
+			to_chat(usr, "\red You have nothing in your hand to put on its [add_to].")
 			return
 		switch(add_to)
 			if("head")
 				if(inventory_head)
-					usr << "\red It's is already wearing something."
+					to_chat(usr, "\red It's is already wearing something.")
 					return
 				else
 					//Corgis are supposed to be simpler, so only a select few objects can actually be put
@@ -206,7 +206,7 @@
 						/obj/item/clothing/head/wizard/fake,
 						/obj/item/clothing/head/wizard,
 						/obj/item/clothing/head/collectable/wizard,
-						/obj/item/clothing/head/hardhat,
+						/obj/item/clothing/head/hardhat/yellow,
 						/obj/item/clothing/head/collectable/hardhat,
 						/obj/item/clothing/head/hardhat/white,
 						/obj/item/weapon/bedsheet,
@@ -219,7 +219,7 @@
 					if(!item_to_add)
 						return
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "\red It doesn't seem too keen on wearing that item."
+						to_chat(usr, "\red It doesn't seem too keen on wearing that item.")
 						return
 					//place_on_head(usr.get_active_hand())
 					usr.drop_item()
@@ -227,7 +227,7 @@
 
 			if("back")
 				if(inventory_back)
-					usr << "\red It's already wearing something."
+					to_chat(usr, "\red It's already wearing something.")
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
@@ -244,7 +244,7 @@
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "\red This object won't fit."
+						to_chat(usr, "\red This object won't fit.")
 						return
 
 					usr.drop_item()
@@ -395,7 +395,7 @@
 
 //PC stuff-Sieve
 
-/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
+/mob/living/simple_animal/corgi/attackby(obj/item/O, mob/user)  //Marker -Agouri
 	if(istype(O, /obj/item/weapon/newspaper))
 		if(!stat)
 			for(var/mob/M in viewers(user, null))
@@ -449,7 +449,7 @@
 //pupplies cannot wear anything.
 /mob/living/simple_animal/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "\red You can't fit this on [src]"
+		to_chat(usr, "\red You can't fit this on [src]")
 		return
 	..()
 
@@ -472,7 +472,7 @@
 //Lisa already has a cute bow!
 /mob/living/simple_animal/corgi/Lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "\red [src] already has a cute bow!"
+		to_chat(usr, "\red [src] already has a cute bow!")
 		return
 	..()
 
@@ -520,13 +520,13 @@
 	meat_type = null
 	var/emagged = 0
 
-/mob/living/simple_animal/corgi/Ian/borgi/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/mob/living/simple_animal/corgi/Ian/borgi/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
 		Emag(user)
 	else
 		..()
 
-/mob/living/simple_animal/corgi/Ian/borgi/proc/Emag(user as mob)
+/mob/living/simple_animal/corgi/Ian/borgi/proc/Emag(user)
 	if(!emagged)
 		emagged = 1
 		visible_message("<span class='warning'>[user] swipes a card through [src].</span>", "<span class='notice'>You overload [src]s internal reactor.</span>")
@@ -541,7 +541,7 @@
 	explosion(get_turf(src), 0, 1, 4, 7)
 	Die()
 
-/mob/living/simple_animal/corgi/Ian/borgi/proc/shootAt(var/atom/movable/target)
+/mob/living/simple_animal/corgi/Ian/borgi/proc/shootAt(atom/movable/target)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
 	if (!T || !U)

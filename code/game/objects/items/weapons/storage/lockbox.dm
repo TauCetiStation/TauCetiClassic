@@ -17,23 +17,23 @@
 	var/icon_broken = "lockbox+b"
 
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 		if (istype(W, /obj/item/weapon/card/id))
 			if(src.broken)
-				user << "\red It appears to be broken."
+				to_chat(user, "\red It appears to be broken.")
 				return
 			if(src.allowed(user))
 				src.locked = !( src.locked )
 				if(src.locked)
 					src.icon_state = src.icon_locked
-					user << "\red You lock the [src.name]!"
+					to_chat(user, "\red You lock the [src.name]!")
 					return
 				else
 					src.icon_state = src.icon_closed
-					user << "\red You unlock the [src.name]!"
+					to_chat(user, "\red You unlock the [src.name]!")
 					return
 			else
-				user << "\red Access Denied"
+				to_chat(user, "\red Access Denied")
 		else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
 			broken = 1
 			locked = 0
@@ -54,13 +54,13 @@
 		if(!locked)
 			..()
 		else
-			user << "\red Its locked!"
+			to_chat(user, "\red Its locked!")
 		return
 
 
-	show_to(mob/user as mob)
+	show_to(mob/user)
 		if(locked)
-			user << "\red Its locked!"
+			to_chat(user, "\red Its locked!")
 		else
 			..()
 		return
@@ -85,4 +85,4 @@
 
 	New()
 		..()
-		new /obj/item/weapon/grenade/flashbang/clusterbang(src)
+		new /obj/item/weapon/grenade/clusterbuster(src)

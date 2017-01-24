@@ -1,5 +1,5 @@
 /datum/job/assistant
-	title = "Assistant"
+	title = "Test Subject"
 	flag = ASSISTANT
 	department_flag = CIVILIAN
 	faction = "Station"
@@ -9,13 +9,14 @@
 	selection_color = "#dddddd"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
-	alt_titles = list("Technical Assistant","Medical Intern","Research Assistant","Security Cadet", "Lawyer","Mecha Operator","Private Eye","Reporter","Security Cadet","Test Subject","Waiter","Vice Officer","Paranormal Investigator")
+	alt_titles = list("Technical Assistant","Medical Intern","Research Assistant","Security Cadet", "Lawyer","Mecha Operator","Private Eye","Reporter","Security Cadet","Waiter","Vice Officer","Paranormal Investigator")
 
-/datum/job/assistant/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+/datum/job/assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)
+		return 0
 
 	if(visualsOnly)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		return
 
@@ -71,9 +72,6 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/indiana(H), slot_head)
 				H.equip_to_slot_or_del(new /obj/item/device/occult_scanner(H), slot_l_store)
 				H.equip_to_slot_or_del(new /obj/item/weapon/occult_pinpointer(H), slot_r_store)
-			if("Assistant")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)

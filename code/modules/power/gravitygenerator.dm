@@ -64,13 +64,13 @@
 	return foundgenerator
 
 
-/obj/machinery/computer/gravity_control_computer/attack_paw(mob/user as mob)
+/obj/machinery/computer/gravity_control_computer/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/gravity_control_computer/attack_ai(mob/user as mob)
+/obj/machinery/computer/gravity_control_computer/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/gravity_control_computer/attack_hand(mob/user as mob)
+/obj/machinery/computer/gravity_control_computer/attack_hand(mob/user)
 	user.set_machine(src)
 	add_fingerprint(user)
 
