@@ -152,6 +152,7 @@
 				/obj/random/cloth/shittysuit,\
 				/obj/random/cloth/hazmatsuit,\
 				/obj/random/cloth/storagesuit,\
+				/obj/random/cloth/spacesuit,\
 				/obj/random/cloth/armor\
 			)
 
