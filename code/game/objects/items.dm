@@ -54,7 +54,7 @@
 //		/obj/machinery/r_n_d/experimentor,
 		/obj/machinery/autolathe
 	)
-
+	var/uncleanable = 0
 	var/toolspeed = 1
 
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
@@ -658,6 +658,8 @@
 
 /obj/item/clean_blood()
 	. = ..()
+	if(uncleanable)
+		return
 	if(blood_overlay)
 		overlays.Remove(blood_overlay)
 	if(istype(src, /obj/item/clothing/gloves))

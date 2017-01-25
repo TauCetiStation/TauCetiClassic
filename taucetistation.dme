@@ -751,6 +751,7 @@
 #include "code\game\objects\items\weapons\tanks\watertank.dm"
 #include "code\game\objects\random\random.dm"
 #include "code\game\objects\random\random_all.dm"
+#include "code\game\objects\random\random_cloth.dm"
 #include "code\game\objects\random\random_foods.dm"
 #include "code\game\objects\random\random_guns.dm"
 #include "code\game\objects\random\random_materials.dm"

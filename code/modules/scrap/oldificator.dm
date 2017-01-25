@@ -77,6 +77,40 @@
 		qdel(src)
 	..()
 
+/obj/item/clothing/suit/space/make_old()
+	if(prob(75))
+		var/datum/breach/B = new()
+		breaches += B
+		B.class = pick(25,50,75)
+		B.damtype = pick(BRUTE, BURN)
+		B.update_descriptor()
+		B.holder = src
+	..()
+
+/obj/item/clothing/make_old()
+	if(prob(75))
+		slowdown += pick(0.5, 1, 2)
+	if(prob(75))
+		armor["melee"] = armor["melee"] / 2
+		armor["bullet"] = armor["bullet"] / 2
+		armor["laser"] = armor["laser"] / 2
+		armor["energy"] = armor["energy"] / 2
+		armor["bomb"] = armor["bomb"] / 2
+		armor["bio"] = armor["bio"] / 2
+		armor["rad"] = armor["rad"] / 2
+	if(prob(50))
+		contaminate()
+	if(prob(75))
+		generate_blood_overlay()
+		blood_overlay.color = pick("#030303", "#aa0000")
+		blood_color = blood_overlay.color
+		overlays += blood_overlay
+		blood_DNA = list()
+		uncleanable = 1
+	..()
+
+
+
 /obj/item/weapon/aiModule/broken // -- TLE
 	name = "\improper broken core AI module"
 	desc = "broken Core AI Module: 'Reconfigures the AI's core laws.'"
@@ -96,3 +130,4 @@
 	explosion(sender.loc, 1, 1, 1, 3)
 	sender.drop_from_inventory(src)
 	qdel(src)
+
