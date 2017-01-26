@@ -223,31 +223,34 @@ var/list/turret_icons
 
 	ui_interact(user)
 
-/obj/machinery/porta_turret/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-	var/data[0]
-	data["access"] = !isLocked(user)
-	data["locked"] = locked
-	data["enabled"] = enabled
-	data["lethal"] = lethal
+/obj/machinery/porta_turret/ui_interact(mob/user)
+	. = ..()
+	if(.)
+		return
 
-	if(data["access"])
-		var/settings[0]
-		settings[++settings.len] = list("category" = "Neutralize All Non-Synthetics", "setting" = "check_n_synth", "value" = check_n_synth)
-		if(special_control && isAI(user))
-			settings[++settings.len] = list("category" = "Neutralize All Cyborgs", "setting" = "shot_synth", "value" = shot_synth)
-		settings[++settings.len] = list("category" = "Check Weapon Authorization", "setting" = "check_weapons", "value" = check_weapons)
-		settings[++settings.len] = list("category" = "Check Security Records", "setting" = "check_records", "value" = check_records)
-		settings[++settings.len] = list("category" = "Check Arrest Status", "setting" = "check_arrest", "value" = check_arrest)
-		settings[++settings.len] = list("category" = "Check Access Authorization", "setting" = "check_access", "value" = check_access)
-		settings[++settings.len] = list("category" = "Check misc. Lifeforms", "setting" = "check_anomalies", "value" = check_anomalies)
-		data["settings"] = settings
+	var/dat = text({"
+<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
+Status: []<BR>
+<BR>
+Neutralize All Non-Synthetics: []<BR>
+Neutralize All Cyborgs: []<BR>
+Check Weapon Authorization: []<BR>
+Check Security Records: []<BR>
+Check Arrest Status: []<BR>
+Check Access Authorization: []<BR>
+Check misc. Lifeforms: []<BR>"},
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "turret_control.tmpl", "Turret Controls", 500, 300)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
+"<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
+"<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
+"[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
+"<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
+
+	user << browse("<HEAD><TITLE>Automatic Portable Turret Installation</TITLE></HEAD>[dat]", "window=autosec")
+	onclose(user, "autosec")
 
 /obj/machinery/porta_turret/proc/HasController()
 	var/area/A = get_area(src)
@@ -261,28 +264,28 @@ var/list/turret_icons
 	if(!.)
 		return
 
-	if(href_list["command"] && href_list["value"])
-		var/value = text2num(href_list["value"])
-		if(href_list["command"] == "enable")
-			enabled = value
-		else if(href_list["command"] == "lethal")
-			lethal = value
-		else if(href_list["command"] == "check_n_synth")
-			check_n_synth = value
-		else if(href_list["command"] == "shot_synth")
-			shot_synth = value
-		else if(href_list["command"] == "check_weapons")
-			check_weapons = value
-		else if(href_list["command"] == "check_records")
-			check_records = value
-		else if(href_list["command"] == "check_arrest")
-			check_arrest = value
-		else if(href_list["command"] == "check_access")
-			check_access = value
-		else if(href_list["command"] == "check_anomalies")
-			check_anomalies = value
+	if(href_list["command"])
+		switch(href_list["command"])
+			if("enable")
+				enabled = !enabled
+			if("lethal")
+				lethal = !lethal
+			if("check_n_synth")
+				check_n_synth = !check_n_synth
+			if("shot_synth")
+				shot_synth = !shot_synth
+			if("check_weapons")
+				check_weapons = !check_weapons
+			if("check_records")
+				check_records = !check_records
+			if("check_arrest")
+				check_arrest = !check_arrest
+			if("check_access")
+				check_access = !check_access
+			if("check_anomalies")
+				check_anomalies = !check_anomalies
 
-		return 1
+	updateUsrDialog()
 
 /obj/machinery/porta_turret/power_change()
 	if(powered())
