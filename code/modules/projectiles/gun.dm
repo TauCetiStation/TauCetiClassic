@@ -4,7 +4,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "detective"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	m_amt = 2000
 	w_class = 3.0
@@ -82,42 +82,41 @@
 
 /obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
-	if (!user.IsAdvancedToolUser())
+	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
-	if(istype(user, /mob/living))
+	if(isliving(user))
 		var/mob/living/M = user
 		if (HULK in M.mutations)
 			to_chat(M, "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>")
 			return
-		if(istype(user, /mob/living/carbon/human/))
+		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.species.name == "Shadowling")
 				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
 				return
-	if(ishuman(user))
-		if(user.dna && user.dna.mutantrace == "adamantine")
-			to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
-			return
-		var/mob/living/carbon/human/H = user
-		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-				if(V.stealth_active)
-					V.DeactivateStealth()
 
-		if(clumsy_check) //it should be AFTER hulk or monkey check.
-			var/going_to_explode = 0
-			if ((CLUMSY in H.mutations) && prob(50))
-				going_to_explode = 1
-			if(chambered && chambered.crit_fail && prob(10))
-				going_to_explode = 1
-			if(going_to_explode)
-				explosion(user.loc, 0, 0, 1, 1)
-				to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
-				H.take_organ_damage(0,20)
-				H.drop_item()
-				qdel(src)
+			if(user.dna && user.dna.mutantrace == "adamantine")
+				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 				return
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
+					if(V.stealth_active)
+						V.DeactivateStealth()
+
+			if(clumsy_check) //it should be AFTER hulk or monkey check.
+				var/going_to_explode = 0
+				if ((CLUMSY in H.mutations) && prob(50))
+					going_to_explode = 1
+				if(chambered && chambered.crit_fail && prob(10))
+					going_to_explode = 1
+				if(going_to_explode)
+					explosion(user.loc, 0, 0, 1, 1)
+					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
+					H.take_organ_damage(0,20)
+					H.drop_item()
+					qdel(src)
+					return
 
 	add_fingerprint(user)
 

@@ -3,7 +3,6 @@
 	name = "tape roll"
 	icon = 'icons/policetape.dmi'
 	icon_state = "rollstart"
-	flags = FPRINT
 	w_class = 2.0
 	var/turf/start
 	var/turf/end
@@ -118,7 +117,7 @@
 	if(!density) return 1
 	if(air_group || (height==0)) return 1
 
-	if ((mover.flags & 2 || istype(mover, /obj/effect/meteor) || mover.throwing == 1) )
+	if ((mover.pass_flags & PASSTABLE || istype(mover, /obj/effect/meteor) || mover.throwing == 1) )
 		return 1
 	else
 		return 0

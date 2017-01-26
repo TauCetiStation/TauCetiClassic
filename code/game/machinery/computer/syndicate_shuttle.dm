@@ -1,4 +1,4 @@
-#define SYNDICATE_SHUTTLE_MOVE_TIME 240
+#define SYNDICATE_SHUTTLE_MOVE_TIME 215
 #define SYNDICATE_SHUTTLE_COOLDOWN 200
 
 /obj/machinery/computer/syndicate_station
@@ -30,6 +30,8 @@
 		curr_location.move_contents_to(transit_location)
 		curr_location = transit_location
 		sleep(SYNDICATE_SHUTTLE_MOVE_TIME)
+		curr_location.parallax_slowdown()
+		sleep(PARALLAX_LOOP_TIME)
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location

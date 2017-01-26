@@ -274,24 +274,24 @@
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
 	name = "advanced hardsuit helmet"
 	desc = "An advanced helmet designed for work in a hazardous, low pressure environment. Shines with a high polish."
-	icon_state = "rig0-white"
+	icon_state = "rig0-chief"
 	item_state = "ce_helm"
-	item_color = "white"
+	item_color = "chief"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
+	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/helmet.dmi')
+	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi')
 
 /obj/item/clothing/suit/space/rig/engineering/chief
-	icon_state = "rig-white"
+	icon_state = "rig-chief"
 	name = "advanced hardsuit"
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
 	slowdown = 1
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
+	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/suit.dmi')
+	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi')
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -357,8 +357,6 @@
 	item_color = "wiz"
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
 
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
@@ -368,8 +366,6 @@
 	slowdown = 1
 	unacidable = 1
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
 
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical

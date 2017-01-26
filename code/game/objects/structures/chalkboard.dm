@@ -8,7 +8,6 @@
 	desc = "Don't eat the chalk. Just write something on it."
 	icon = 'icons/obj/structures/chalkboard.dmi'
 	icon_state = "board_clean"
-	flags = FPRINT
 	density = 0
 	anchored = 1
 	var/status = CB_CLEAN

@@ -462,3 +462,13 @@
 		reagents.add_reagent("anti_toxin", 8)
 		mode = SYRINGE_INJECT
 		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/mulligan
+	name = "Mulligan"
+	desc = "A syringe used to completely change the users identity."
+	amount_per_transfer_from_this = 1
+	New()
+		..()
+		reagents.add_reagent("mulligan", 1)
+		mode = SYRINGE_INJECT
+		update_icon()

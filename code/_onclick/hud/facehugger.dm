@@ -12,7 +12,8 @@
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
-	using.layer = 20
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	move_intent = using
 
@@ -21,7 +22,8 @@
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "act_drop"
 	using.screen_loc = ui_drop_throw
-	using.layer = 19
+	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	src.adding += using
 
 	inv_box = new /obj/screen/inventory()
@@ -30,7 +32,8 @@
 	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
 	inv_box.icon_state = "hand_tail_active"
 	inv_box.screen_loc = ui_rhand
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.slot_id = slot_r_hand
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box

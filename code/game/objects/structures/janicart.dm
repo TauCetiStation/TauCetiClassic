@@ -81,6 +81,8 @@
 	else if(mybag)
 		mybag.attackby(I, user)
 
+/obj/structure/janitorialcart/on_reagent_change()
+	update_icon()
 
 /obj/structure/janitorialcart/attack_hand(mob/user)
 	user.set_machine(src)
@@ -153,6 +155,8 @@
 		overlays += "cart_replacer"
 	if(signs)
 		overlays += "cart_sign[signs]"
+	if(reagents.total_volume > 1)
+		overlays += "cart_water"
 
 
 //old style retardo-cart

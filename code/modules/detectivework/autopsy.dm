@@ -7,7 +7,7 @@
 	desc = "Extracts information on wounds."
 	icon = 'icons/obj/autopsy_scanner.dmi'
 	icon_state = ""
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	w_class = 2.0
 	origin_tech = "materials=1;biotech=1"
 	var/list/datum/autopsy_data_scanner/wdata = list()
@@ -164,11 +164,13 @@
 		if(!usr.r_hand)
 			P.loc = usr
 			usr.r_hand = P
-			P.layer = 20
+			P.layer = ABOVE_HUD_LAYER
+			P.plane = ABOVE_HUD_PLANE
 		else if(!usr.l_hand)
 			P.loc = usr
 			usr.l_hand = P
-			P.layer = 20
+			P.layer = ABOVE_HUD_LAYER
+			P.plane = ABOVE_HUD_PLANE
 
 	if(istype(usr,/mob/living/carbon/human))
 		usr:update_inv_l_hand()

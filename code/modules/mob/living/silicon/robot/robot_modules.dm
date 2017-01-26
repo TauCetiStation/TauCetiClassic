@@ -4,7 +4,7 @@
 	icon_state = "std_module"
 	w_class = 100.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS | CONDUCT
+	flags = CONDUCT
 	var/channels = list()
 	var/list/modules = list()
 	var/obj/item/emag = null
@@ -40,12 +40,13 @@
 
 /obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R)
 	var/obj/item/device/flash/F = locate() in src.modules
-	if(F.broken)
-		F.broken = 0
-		F.times_used = 0
-		F.icon_state = "flash"
-	else if(F.times_used)
-		F.times_used--
+	if(F)
+		if(F.broken)
+			F.broken = 0
+			F.times_used = 0
+			F.icon_state = "flash"
+		else if(F.times_used)
+			F.times_used--
 
 	if(!stacktypes || !stacktypes.len) return
 

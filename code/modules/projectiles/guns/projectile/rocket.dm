@@ -5,7 +5,7 @@
 	item_state = "rocket"
 	w_class = 4.0
 	force = 5
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  CONDUCT | USEDELAY
 	origin_tech = "combat=8;materials=5"
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rocket

@@ -2,7 +2,7 @@
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteless yellow color."
 	icon_state = "cargosoft"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	flags = HEADCOVERSEYES
 	item_state = "helmet"
 	item_color = "cargo"
 	var/flipped = 0
@@ -99,3 +99,9 @@
 	desc = "It's baseball hat."
 	icon_state = "trashsoft"
 	item_color = "trash"
+
+/obj/item/clothing/head/soft/janitor
+	name = "janitor cap"
+	desc = "It's janitor hat."
+	icon_state = "janitorsoft"
+	item_color = "janitor"

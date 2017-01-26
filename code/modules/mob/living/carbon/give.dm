@@ -51,7 +51,8 @@
 					else
 						src.l_hand = I
 				I.loc = src
-				I.layer = 20
+				I.layer = ABOVE_HUD_LAYER
+				I.plane = ABOVE_HUD_PLANE
 				I.add_fingerprint(src)
 				src.update_inv_l_hand()
 				src.update_inv_r_hand()

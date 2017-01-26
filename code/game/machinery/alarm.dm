@@ -1219,7 +1219,7 @@ Code shamelessly copied from apc_frame
 	desc = "Used for building Air Alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm_bitem"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -1409,7 +1409,7 @@ FIRE ALARM
 			update_icon()
 
 /obj/machinery/firealarm/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	if (buildstage != 2)
@@ -1540,7 +1540,7 @@ Code shamelessly copied from apc_frame
 	desc = "Used for building Fire Alarms."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
@@ -1594,7 +1594,7 @@ Code shamelessly copied from apc_frame
 	return attack_hand(user)
 
 /obj/machinery/partyalarm/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	user.machine = src

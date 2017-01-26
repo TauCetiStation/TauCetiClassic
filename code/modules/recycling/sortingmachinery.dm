@@ -6,7 +6,7 @@
 	var/obj/wrapped = null
 	density = 1
 	var/sortTag = ""
-	flags = FPRINT | NOBLUDGEON
+	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/structure/bigDelivery/Destroy()
@@ -55,8 +55,6 @@
 	icon_state = "deliverycrateSmall"
 	var/obj/item/wrapped = null
 	var/sortTag = ""
-	flags = FPRINT
-
 
 /obj/item/smallDelivery/attack_self(mob/user)
 	if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
@@ -181,7 +179,7 @@
 
 	w_class = 2
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 
 /obj/item/device/destTagger/proc/openwindow(mob/user)

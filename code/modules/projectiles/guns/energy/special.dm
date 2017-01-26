@@ -5,7 +5,7 @@
 	item_state = "ionrifle"
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
@@ -323,6 +323,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(!possible_targets.len)
 		return
 	var/mob/living/next = pick(possible_targets)
+	msg_admin_attack("[origin.name] ([origin.ckey]) shot [target.name] ([target.ckey]) with a tesla bolt [ADMIN_JMP(origin)] [ADMIN_FLW(origin)]")
 	if(next && jumps > 0)
 		Bolt(target, next, user, --jumps)
 

@@ -1,4 +1,4 @@
-
+#define ALLOWED_ID_OVERLAYS list("id","gold","silver","centcom","ert","ert-leader","syndicate","syndicate-command")//List of overlays in pda.dmi
 //The advanced pea-green monochrome lcd of tomorrow.
 
 var/global/list/obj/item/device/pda/PDAs = list()
@@ -10,7 +10,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda"
 	item_state = "electronic"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_ID | SLOT_BELT
 
 	//Main variables
@@ -54,6 +53,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/ownrank = null // this one is rank, never alt title
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
+
 
 /obj/item/device/pda/examine(mob/user)
 	..()
@@ -738,7 +738,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		if("Toggle Door")
 			if(cartridge && cartridge.access_remote_door)
-				for(var/obj/machinery/door/poddoor/M in world)
+				for(var/obj/machinery/door/poddoor/M in machines)
 					if(M.id == cartridge.remote_door_id)
 						if(M.density)
 							M.open()
@@ -849,6 +849,17 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	overlays.Cut()
 	if(newmessage)
 		overlays += image('icons/obj/pda.dmi', "pda-r")
+	if(id)
+		var/id_overlay = get_id_overlay(id)
+		if(id_overlay)
+			overlays += image('icons/obj/pda.dmi', id_overlay)
+
+/obj/item/device/pda/proc/get_id_overlay(obj/item/weapon/card/id/I)
+	if(!I)
+		return
+	if(I.icon_state in ALLOWED_ID_OVERLAYS)
+		return I.icon_state
+	return "id"
 
 /obj/item/device/pda/proc/detonate_act(obj/item/device/pda/P)
 	//TODO: sometimes these attacks show up on the message server
@@ -1051,6 +1062,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if ( can_use(usr) )
 		if(id)
 			remove_id()
+			update_icon()
 		else
 			to_chat(usr, "<span class='notice'>This PDA does not have an ID in it.</span>")
 	else
@@ -1100,6 +1112,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			I.loc = src
 			id = I
 			user.put_in_hands(old_id)
+	update_icon()
 	return
 
 // access to status display signals

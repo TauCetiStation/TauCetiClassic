@@ -1,4 +1,5 @@
 // see _DEFINES/is_helpers.dm for mob type checks
+#define SAFE_PERP -50
 
 /proc/hasorgans(A)
 	return ishuman(A)
@@ -340,7 +341,6 @@ var/list/intents = list("help","disarm","grab","hurt")
 	for(var/mob/dead/observer/G in player_list) //Ghosts? Why not.
 		G.show_message("<span class='info'>[bicon(icon)] [message]</span>", 1)
 
-#define SAFE_PERP -50
 /mob/living/proc/assess_perp(obj/access_obj, check_access, auth_weapons, check_records, check_arrest)
 	if(stat == DEAD)
 		return SAFE_PERP
@@ -404,5 +404,11 @@ var/list/intents = list("help","disarm","grab","hurt")
 	if(!istype(src, /mob/living/simple_animal/hostile/retaliate/goat))
 		threatcount += 4
 	return threatcount
+
+/proc/IsAdminGhost(var/mob/user)
+	if(check_rights(R_ADMIN, 0) && istype(user, /mob/dead/observer) && user.client.AI_Interact)
+		return 1
+	else
+		return 0
 
 #undef SAFE_PERP

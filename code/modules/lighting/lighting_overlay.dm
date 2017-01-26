@@ -6,6 +6,7 @@
 
 	mouse_opacity    = 0
 	layer            = LIGHTING_LAYER
+	plane            = LIGHTING_PLANE
 	invisibility     = INVISIBILITY_LIGHTING
 
 	simulated = 0

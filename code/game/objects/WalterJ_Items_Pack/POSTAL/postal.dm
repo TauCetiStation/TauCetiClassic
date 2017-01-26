@@ -14,4 +14,3 @@
 	icon_state = "dude_shirt"
 	item_state = "dude_shirt"
 	item_color = "dude_shirt"
-	flags = FPRINT | TABLEPASS

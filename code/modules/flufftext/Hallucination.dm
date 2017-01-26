@@ -47,7 +47,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(!H.r_store) slots_free += ui_storage2
 					if(slots_free.len)
 						halitem.screen_loc = pick(slots_free)
-						halitem.layer = 50
+						halitem.layer = ABOVE_HUD_LAYER
+						halitem.plane = ABOVE_HUD_PLANE
 						switch(rand(1,6))
 							if(1) //revolver
 								halitem.icon = 'icons/obj/gun.dmi'

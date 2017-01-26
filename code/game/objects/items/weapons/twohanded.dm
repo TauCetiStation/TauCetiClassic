@@ -163,19 +163,29 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
+	item_color = "green"
 	force_unwielded = 3
-	force_wielded = 30
+	force_wielded = 45
+	var/hacked
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = 1
 	edge = 1
+	can_embed = 0
+
+/obj/item/weapon/twohanded/dualsaber/New()
+	reflect_chance = rand(50,85)
+	item_color = pick("red", "blue", "green", "purple")
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
-	icon_state = "dualsaber[wielded]"
-	return
+	if(wielded)
+		icon_state = "dualsaber[item_color][wielded]"
+	else
+		icon_state = "dualsaber0"
+	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 
 /obj/item/weapon/twohanded/dualsaber/attack(target, mob/living/user)
 	..()
@@ -206,3 +216,15 @@
 		else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
 			return TRUE
 	return FALSE
+
+/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/device/multitool))
+		if(!hacked)
+			hacked = 1
+			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
+			item_color = "rainbow"
+			update_icon()
+		else
+			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+	else
+		return ..()

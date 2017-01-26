@@ -116,7 +116,7 @@ var/datum/subsystem/job/SSjob
 		if(!job)
 			continue
 
-		if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
+		if(istype(job, GetJob("Test Subject"))) // We don't want to give him assistant, that's boring!
 			continue
 
 		if(job.title in command_positions) //If you want a command position, select it!
@@ -248,7 +248,7 @@ var/datum/subsystem/job/SSjob
 	Debug("AC1, Candidates: [assistant_candidates.len]")
 	for(var/mob/new_player/player in assistant_candidates)
 		Debug("AC1 pass, Player: [player]")
-		AssignRole(player, "Assistant")
+		AssignRole(player, "Test Subject")
 		assistant_candidates -= player
 	Debug("DO, AC1 end")
 
@@ -316,7 +316,7 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == BE_ASSISTANT)
 			Debug("AC2 Assistant located, Player: [player]")
-			AssignRole(player, "Assistant")
+			AssignRole(player, "Test Subject")
 
 	//For ones returning to lobby
 	for(var/mob/new_player/player in unassigned)

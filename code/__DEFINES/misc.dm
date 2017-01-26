@@ -117,8 +117,6 @@
 #define ZONE_ACTIVE 	1
 #define ZONE_SLEEPING 	0
 
-#define LIGHTING_LAYER 10
-
 #define FOR_DVIEW(type, range, center, invis_flags) \
 	dview_mob.loc = center; \
 	dview_mob.see_invisible = invis_flags; \

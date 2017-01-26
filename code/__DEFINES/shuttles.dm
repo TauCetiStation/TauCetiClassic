@@ -1,0 +1,1 @@
+#define PARALLAX_LOOP_TIME 25 

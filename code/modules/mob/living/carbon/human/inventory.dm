@@ -272,7 +272,8 @@
 				var/obj/item/clothing/ears/offear/O = new(W)
 				O.loc = src
 				src.r_ear = O
-				O.layer = 20
+				O.layer = ABOVE_HUD_LAYER
+				O.plane = ABOVE_HUD_LAYER
 				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 			update_inv_ears()
@@ -282,7 +283,8 @@
 				var/obj/item/clothing/ears/offear/O = new(W)
 				O.loc = src
 				src.l_ear = O
-				O.layer = 20
+				O.layer = ABOVE_HUD_LAYER
+				O.plane = ABOVE_HUD_LAYER
 				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 			update_inv_ears()
@@ -336,7 +338,8 @@
 			to_chat(src, "<span class='warning'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return
 
-	W.layer = 20
+	W.layer = ABOVE_HUD_LAYER
+	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
 
 	return
@@ -617,9 +620,14 @@
 					to_chat(source, "The controls are locked.")
 					return
 				message = "<span class='danger'>[source] is trying to set [target]'s suit sensors!</span>"
-
-		for(var/mob/M in viewers(target, null))
-			M.show_message(message, 1)
+		var/obj/item/clothing/gloves/Strip = null
+		if(ishuman(source))
+			var/mob/living/carbon/human/Striper = source
+			Strip = Striper.gloves
+		if(istype(Strip, /obj/item/clothing/gloves/black/strip))
+			to_chat(source, message)
+		else
+			source.visible_message(message)
 	spawn( HUMAN_STRIP_DELAY )
 		done()
 		return
@@ -779,13 +787,11 @@ It can still be worn/put on as normal.
 					O.show_message("<span class='warning'>[source] injects [target] with the DNA Injector!</span>", 1)
 				S.inuse = 0
 		if("pockets")
-			if (!item || (target.l_store && target.r_store))	// Only empty pockets when hand is empty or both pockets are full
-				slot_to_process = slot_l_store
-				strip_item = target.l_store		//We'll do both
-			else if (target.l_store)
-				slot_to_process = slot_r_store
-			else
-				slot_to_process = slot_l_store
+			slot_to_process = slot_l_store
+			if (target.l_store)
+				strip_item = target.l_store
+			else if (target.r_store)
+				strip_item = target.r_store
 		if("sensor")
 			var/obj/item/clothing/under/suit = target.w_uniform
 			if (suit)
@@ -815,14 +821,22 @@ It can still be worn/put on as normal.
 						target.internal.add_fingerprint(source)
 						if (target.internals)
 							target.internals.icon_state = "internal1"
+
 	if(slot_to_process)
 		if(strip_item) //Stripping an item from the mob
 			var/obj/item/W = strip_item
+			var/obj/item/clothing/gloves/Strip = null
 			target.remove_from_mob(W)
+			if(ishuman(source))
+				var/mob/living/carbon/human/Striper = source
+				Strip = Striper.gloves
+			if(istype(Strip, /obj/item/clothing/gloves/black/strip) && (!source.l_hand || !source.r_hand))
+				source.put_in_hands(W)
+			else
+				if(slot_to_process == slot_l_store) //pockets! Needs to process the other one too. Snowflake code, wooo! It's not like anyone will rewrite this anytime soon. If I'm wrong then... CONGRATULATIONS! ;)
+					if(target.r_store)
+						target.remove_from_mob(target.r_store) //At this stage l_store is already processed by the code above, we only need to process r_store.
 			W.add_fingerprint(source)
-			if(slot_to_process == slot_l_store) //pockets! Needs to process the other one too. Snowflake code, wooo! It's not like anyone will rewrite this anytime soon. If I'm wrong then... CONGRATULATIONS! ;)
-				if(target.r_store)
-					target.remove_from_mob(target.r_store) //At this stage l_store is already processed by the code above, we only need to process r_store.
 		else
 			if(item && target.has_organ_for_slot(slot_to_process)) //Placing an item on the mob
 				if(item.mob_can_equip(target, slot_to_process, 0))

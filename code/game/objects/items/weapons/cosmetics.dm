@@ -4,7 +4,6 @@
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
-	flags = FPRINT | TABLEPASS
 	w_class = 1.0
 	var/colour = "red"
 	var/open = 0
@@ -180,7 +179,6 @@
 	name = "purple comb"
 	desc = "A pristine purple comb made from flexible plastic."
 	w_class = 1.0
-	slot_flags = FPRINT | TABLEPASS
 	icon = 'icons/obj/items.dmi'
 	icon_state = "purplecomb"
 	item_state = "purplecomb"

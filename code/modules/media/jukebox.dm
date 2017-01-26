@@ -293,6 +293,7 @@ var/global/loopModeNames=list(
 		"govnar" = "Soviet Radio",
 		"classic" = "Classical Music",
 		"ussr_disco" = "Disco USSR-89s",
+		"topreptilian" = "Top Reptillian",
 	)
 
 // Relaxing elevator music~
@@ -314,6 +315,7 @@ var/global/loopModeNames=list(
 		"govnar" = "Soviet Radio",
 		"classic" = "Classical Music",
 		"ussr_disco" = "Disco USSR-89s",
+		"topreptilian" = "Top Reptillian",
 	)
 
 /obj/machinery/media/jukebox/techno

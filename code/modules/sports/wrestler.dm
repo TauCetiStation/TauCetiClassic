@@ -6,7 +6,6 @@
 	icon_state = "robust-black"
 	item_state = "robust-black"
 	item_color = "robust-black"
-	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/shoes/boxing
 	name = "Black fighting boots"
@@ -25,7 +24,6 @@
 	icon_state = "robust-green"
 	item_state = "robust-green"
 	item_color = "robust-green"
-	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/shoes/boxing/gray
 	name = "Gray fighting boots"
@@ -52,7 +50,6 @@
 	icon_state = "robust-red"
 	item_state = "robust-red"
 	item_color = "robust-red"
-	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/shoes/boxing/red
 	name = "Red fighting boots"
@@ -71,7 +68,6 @@
 	icon_state = "robust-white"
 	item_state = "robust-white"
 	item_color = "robust-white"
-	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/shoes/boxing/white
 	name = "White fighting boots"
@@ -98,7 +94,6 @@
 	icon_state = "robust-pink"
 	item_state = "robust-pink"
 	item_color = "robust-pink"
-	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/shoes/boxing/pink
 	name = "Pink fighting boots"

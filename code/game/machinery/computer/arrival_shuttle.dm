@@ -1,5 +1,6 @@
-#define ARRIVAL_SHUTTLE_MOVE_TIME 200
+#define ARRIVAL_SHUTTLE_MOVE_TIME 175
 #define ARRIVAL_SHUTTLE_COOLDOWN 650
+
 
 var/location = 0 // 0 - Start 2 - NSS Exodus 1 - transit
 var/moving = 0
@@ -49,6 +50,7 @@ var/lastMove = 0
 
 		toArea = locate(/area/shuttle/arrival/transit)
 		curr_location = fromArea
+		toArea.parallax_movedir = WEST
 
 		fromArea.move_contents_to(toArea, null, WEST)
 		shake_mobs(toArea)
@@ -56,7 +58,9 @@ var/lastMove = 0
 		location = 1
 		curr_location = locate(/area/shuttle/arrival/transit)
 		sleep(ARRIVAL_SHUTTLE_MOVE_TIME)
-
+		curr_location.parallax_slowdown()
+		sleep(PARALLAX_LOOP_TIME)
+		
 		fromArea = locate(/area/shuttle/arrival/transit)
 		toArea = locate(/area/shuttle/arrival/station)
 
@@ -94,6 +98,7 @@ var/lastMove = 0
 		sleep(50)
 
 		toArea = locate(/area/shuttle/arrival/transit)
+		toArea.parallax_movedir = EAST
 		radio.autosay(department_note, "Arrivals Alert System")
 		curr_location = fromArea
 
@@ -104,6 +109,8 @@ var/lastMove = 0
 		location = 1
 		curr_location = locate(/area/shuttle/arrival/transit)
 		sleep(ARRIVAL_SHUTTLE_MOVE_TIME)
+		curr_location.parallax_slowdown()
+		sleep(PARALLAX_LOOP_TIME)
 
 		fromArea = locate(/area/shuttle/arrival/transit)
 		toArea = locate(/area/shuttle/arrival/pre_game)

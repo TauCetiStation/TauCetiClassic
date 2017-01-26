@@ -4,7 +4,7 @@
 	icon_state = "megaphone"
 	item_state = "radio"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 
 	action_button_name = "Toggle Megaphone"
 

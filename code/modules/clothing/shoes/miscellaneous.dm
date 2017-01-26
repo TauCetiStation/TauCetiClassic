@@ -54,6 +54,14 @@
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = null
 
+/obj/item/clothing/shoes/tourist
+	name = "flip-flops"
+	desc = "These cheap sandals don't look very comfortable."
+	icon_state = "tourist"
+	permeability_coefficient = 1
+	species_restricted = null
+	w_class = 2
+
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
 	name = "sandals"

@@ -4,7 +4,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 5
 	w_class = 2.0
@@ -57,7 +57,7 @@
 			feedback_add_details("handcuffs","H")
 			O.process()
 		return
-	
+
 	if (ismonkey(target))
 		var/mob/living/carbon/monkey/M = target
 		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
@@ -140,4 +140,4 @@ var/last_chew = 0
 			if(!C)	return
 			if(p_loc == user.loc && p_loc_m == C.loc)
 				C.handcuffed = new /obj/item/weapon/handcuffs(C)
-				C.update_inv_handcuffed() 
+				C.update_inv_handcuffed()
