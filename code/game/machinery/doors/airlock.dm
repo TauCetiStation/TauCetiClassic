@@ -591,6 +591,7 @@ About the new airlock wires panel:
 	if(lights_overlay != old_lights_overlay)
 		if(lights_overlay)
 			lights_overlay.layer = LIGHTING_LAYER + 1
+			lights_overlay.plane = LIGHTING_PLANE + 1
 		overlays -= old_lights_overlay
 		overlays += lights_overlay
 		old_lights_overlay = lights_overlay
@@ -605,6 +606,7 @@ About the new airlock wires panel:
 	if(sparks_overlay != old_sparks_overlay)
 		if(sparks_overlay)
 			sparks_overlay.layer = LIGHTING_LAYER + 1
+			sparks_overlay.plane = LIGHTING_PLANE + 1
 		overlays -= old_sparks_overlay
 		overlays += sparks_overlay
 		old_sparks_overlay = sparks_overlay
