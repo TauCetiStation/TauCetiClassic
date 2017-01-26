@@ -150,7 +150,7 @@
 	return pick(\
 				prob(12);/obj/random/cloth/hazmatsuit,\
 				prob(16);/obj/random/cloth/shittysuit,\
-				prob(12);/obj/random/cloth/storagesuit,\
+				prob(16);/obj/random/cloth/storagesuit,\
 				prob(4);/obj/random/cloth/spacesuit,\
 				prob(8);/obj/random/cloth/armor\
 			)
@@ -164,10 +164,10 @@
 	return pick(\
 					prob(12);/obj/random/cloth/randomsuit,\
 					prob(12);/obj/random/cloth/randomhead,\
-					prob(25);/obj/random/cloth/under,\
+					prob(12);/obj/random/cloth/under,\
 					prob(8);/obj/random/cloth/tie,\
 					prob(8);/obj/random/cloth/shoes,\
-					prob(6);/obj/random/cloth/glasses,\
+					prob(4);/obj/random/cloth/glasses,\
 					prob(12);/obj/random/cloth/gloves,\
 					prob(10);/obj/random/cloth/masks\
 				)
