@@ -632,9 +632,9 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += glasses				//Either way, add the item to the HUD
 		var/image/standing
 		if(!glasses:icon_custom || glasses.icon_override || species.sprite_sheets["eyes"])
-			standing = overlays_standing[GLASSES_LAYER] = image("icon"=((glasses.icon_override) ? glasses.icon_override : (species.sprite_sheets["eyes"] ? species.sprite_sheets["eyes"] : 'icons/mob/eyes.dmi')), "icon_state"="[glasses.icon_state]", "layer"=-GLASSES_LAYER)
+			standing = image("icon"=((glasses.icon_override) ? glasses.icon_override : (species.sprite_sheets["eyes"] ? species.sprite_sheets["eyes"] : 'icons/mob/eyes.dmi')), "icon_state"="[glasses.icon_state]", "layer"=-GLASSES_LAYER)
 		else
-			standing = overlays_standing[GLASSES_LAYER] = image("icon"=glasses:icon_custom, "icon_state"="[glasses.icon_state]_mob", "layer"=-GLASSES_LAYER)
+			standing = image("icon"=glasses:icon_custom, "icon_state"="[glasses.icon_state]_mob", "layer"=-GLASSES_LAYER)
 		standing.color = glasses.color
 		overlays_standing[GLASSES_LAYER] = standing
 
