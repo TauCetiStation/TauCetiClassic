@@ -111,7 +111,7 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	icon_state = "material"
 /obj/random/cloth/glasses/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/glasses))
+	return pick(subtypesof(/obj/item/clothing/glasses) - subtypesof(/obj/item/clothing/glasses/thermal))
 
 /obj/random/cloth/shoes
 	name = "random shoes"
@@ -136,9 +136,9 @@
 	icon_state = "santa"
 /obj/random/cloth/randomhead/item_to_spawn()
 	return pick(\
-				/obj/random/cloth/head,\
-				/obj/random/cloth/helmet,\
-				/obj/random/cloth/spacehelmet\
+				prob(6);/obj/random/cloth/head,\
+				prob(3);/obj/random/cloth/helmet,\
+				prob(1);/obj/random/cloth/spacehelmet\
 			)
 
 /obj/random/cloth/randomsuit
@@ -148,12 +148,11 @@
 	icon_state = "coatwinter"
 /obj/random/cloth/randomsuit/item_to_spawn()
 	return pick(\
-				/obj/random/cloth/hazmatsuit,\
-				/obj/random/cloth/shittysuit,\
-				/obj/random/cloth/hazmatsuit,\
-				/obj/random/cloth/storagesuit,\
-				/obj/random/cloth/spacesuit,\
-				/obj/random/cloth/armor\
+				prob(12);/obj/random/cloth/hazmatsuit,\
+				prob(16);/obj/random/cloth/shittysuit,\
+				prob(12);/obj/random/cloth/storagesuit,\
+				prob(4);/obj/random/cloth/spacesuit,\
+				prob(8);/obj/random/cloth/armor\
 			)
 
 /obj/random/cloth/random_cloth
@@ -165,10 +164,10 @@
 	return pick(\
 					prob(12);/obj/random/cloth/randomsuit,\
 					prob(12);/obj/random/cloth/randomhead,\
-					prob(20);/obj/random/cloth/under,\
+					prob(25);/obj/random/cloth/under,\
 					prob(8);/obj/random/cloth/tie,\
 					prob(8);/obj/random/cloth/shoes,\
-					prob(8);/obj/random/cloth/glasses,\
-					prob(10);/obj/random/cloth/gloves,\
+					prob(6);/obj/random/cloth/glasses,\
+					prob(12);/obj/random/cloth/gloves,\
 					prob(10);/obj/random/cloth/masks\
 				)
