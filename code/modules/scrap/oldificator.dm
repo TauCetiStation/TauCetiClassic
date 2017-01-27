@@ -88,8 +88,8 @@
 	..()
 
 /obj/item/clothing/make_old()
-	if(prob(75))
-		slowdown += pick(0.5, 1, 2)
+	if(prob(50))
+		slowdown += pick(0.5, 0.5, 1, 1.5)
 	if(prob(75))
 		armor["melee"] = armor["melee"] / 2
 		armor["bullet"] = armor["bullet"] / 2
@@ -99,6 +99,14 @@
 		armor["bio"] = armor["bio"] / 2
 		armor["rad"] = armor["rad"] / 2
 	if(prob(50))
+		uncleanable = 1 
+	if(prob(25))
+		flags_pressure = 0
+	if(prob(25))
+		heat_protection = 0
+	if(prob(25))
+		cold_protection = 0
+	if(prob(35))
 		contaminate()
 	if(prob(75))
 		generate_blood_overlay()
@@ -106,7 +114,6 @@
 		blood_color = blood_overlay.color
 		overlays += blood_overlay
 		blood_DNA = list()
-		uncleanable = 1
 	..()
 
 

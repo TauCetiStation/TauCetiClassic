@@ -5,7 +5,7 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "weldingmask"
 /obj/random/cloth/masks/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/mask/) - subtypesof(/obj/item/clothing/mask/cigarette) - list(/obj/item/clothing/mask/gas/death_commando, /obj/item/clothing/mask/facehugger/toy, /obj/item/clothing/mask/facehugger, /obj/item/clothing/mask/gas/shadowling ))
+	return pick(subtypesof(/obj/item/clothing/mask/) - subtypesof(/obj/item/clothing/mask/cigarette) - list(/obj/item/clothing/mask/gas/death_commando, /obj/item/clothing/mask/facehugger/toy, /obj/item/clothing/mask/facehugger, /obj/item/clothing/mask/gas/shadowling, /obj/item/clothing/mask/fluff/electriccig ))
 
 /obj/random/cloth/armor
 	name = "random armor"
@@ -71,7 +71,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "tourist"
 /obj/random/cloth/under/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/under) - list(/obj/item/clothing/under/stripper/stripper_green, /obj/item/clothing/under/lawyer, /obj/item/clothing/under/color, /obj/item/clothing/under/shorts, /obj/item/clothing/under/swimsuit, /obj/item/clothing/under/fluff, /obj/item/clothing/under/rank))
+	return pick(subtypesof(/obj/item/clothing/under) - list(/obj/item/clothing/under/stripper/stripper_green, /obj/item/clothing/under/lawyer, /obj/item/clothing/under/color, /obj/item/clothing/under/shorts, /obj/item/clothing/under/swimsuit, /obj/item/clothing/under/shadowling, /obj/item/clothing/under/fluff, /obj/item/clothing/under/rank, /obj/item/clothing/under/pj ))
 
 /obj/random/cloth/spacehelmet
 	name = "random spacehelmet"
@@ -129,6 +129,31 @@
 /obj/random/cloth/tie/item_to_spawn()
 	return pick(subtypesof(/obj/item/clothing/tie) - /obj/item/clothing/mask/ninjascarf )
 
+/obj/random/cloth/storage
+	name = "random storage"
+	desc = "This is a random storage."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "medicalbelt"
+/obj/random/cloth/storage/item_to_spawn()
+	return pick(\
+			prob(2);/obj/item/weapon/storage/belt/security/German, \
+			prob(8);/obj/item/weapon/storage/belt/security, \
+			prob(8);/obj/item/weapon/storage/belt/medical, \
+			prob(8);/obj/item/weapon/storage/belt/utility, \
+			prob(2);/obj/item/weapon/storage/belt/champion/alt, \
+			prob(8);/obj/item/weapon/storage/belt/archaeology,\
+			prob(4);/obj/item/weapon/storage/backpack/medbag,\
+			prob(10);/obj/item/weapon/storage/backpack/alt,\
+			prob(10);/obj/item/weapon/storage/backpack/cultpack,\
+			prob(10);/obj/item/weapon/storage/backpack/clown,\
+			prob(10);/obj/item/weapon/storage/backpack/mime,\
+			prob(1);/obj/item/weapon/storage/backpack/dufflebag,\
+			prob(10);/obj/item/weapon/storage/backpack/medic,\
+			prob(10);/obj/item/weapon/storage/backpack/industrial,\
+			prob(8);/obj/item/weapon/storage/backpack/security\
+			)
+
+
 /obj/random/cloth/randomhead
 	name = "random head"
 	desc = "This is a random head."
@@ -169,5 +194,6 @@
 					prob(8);/obj/random/cloth/shoes,\
 					prob(4);/obj/random/cloth/glasses,\
 					prob(12);/obj/random/cloth/gloves,\
-					prob(10);/obj/random/cloth/masks\
+					prob(10);/obj/random/cloth/masks,\
+					prob(4);/obj/random/cloth/storage\
 				)
