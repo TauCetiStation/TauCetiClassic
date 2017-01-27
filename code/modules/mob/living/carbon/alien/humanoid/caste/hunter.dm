@@ -110,6 +110,7 @@
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
+		stop_pulling()
 		leaping = 1
 		update_icons()
 		throw_at(A,MAX_ALIEN_LEAP_DIST,1)
