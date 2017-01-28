@@ -329,3 +329,10 @@
 /obj/structure/mineral_door/resin/CheckHealth()
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	..()
+
+/obj/structure/mineral_door/resin/bullet_act(obj/item/projectile/Proj)
+	health -= Proj.damage
+	..()
+	CheckHealth()
+	return
+

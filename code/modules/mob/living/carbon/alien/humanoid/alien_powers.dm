@@ -199,10 +199,28 @@ Doesn't work on other aliens/AI.*/
 		//var/curloc = user.loc
 		//var/targloc = get_turf(target)
 		adjustToxLoss(-50)
+
+		/*
 		var/obj/item/ammo_casing/magic/neurotoxin/A = new /obj/item/ammo_casing/magic/neurotoxin(usr.loc)
 		A.ready_proj(target, src)
 		A.throw_proj(target, U, src)
 		qdel(A)
+		*/
+		var/obj/item/projectile/neurotoxin/BB = new /obj/item/projectile/neurotoxin(usr.loc)
+
+		//prepare "bullet"
+		BB.original = target
+		BB.firer = src
+		BB.def_zone = src.zone_sel.selecting
+		//shoot
+		BB.loc = T
+		BB.starting = T
+		BB.current = loc
+		BB.yo = U.y - loc.y
+		BB.xo = U.x - loc.x
+
+		if(BB)
+			BB.process()
 
 		last_neurotoxin = world.time
 	return
