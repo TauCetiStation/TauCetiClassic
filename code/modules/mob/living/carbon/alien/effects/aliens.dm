@@ -34,7 +34,7 @@
 	density = 1
 	opacity = 1
 	anchored = 1
-	var/health = 500
+	var/health = 250
 	var/resintype = null
 	//var/mob/living/affecting = null
 
@@ -49,7 +49,7 @@
 		desc = "Purple slime just thin enough to let light pass through."
 		icon_state = "membrane0"
 		opacity = 0
-		health = 320
+		health = 160
 		resintype = "membrane"
 
 /obj/effect/alien/resin/wall/shadowling
