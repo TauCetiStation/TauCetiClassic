@@ -345,7 +345,7 @@
 		return //cannot shoot yourself
 	if(istype(A, /obj/item/projectile))
 		return
-	if(istype(A, /mob/living))
+	if(is_type_in_list(A, list(/mob/living, /obj/mecha, /obj/machinery/bot/mulebot)))
 		result = 2 //We hit someone, return 1!
 		return
 	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
