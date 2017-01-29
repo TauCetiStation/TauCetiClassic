@@ -32,9 +32,8 @@
 	icon_state = "firstaid"
 /obj/random/meds/syringe/item_to_spawn()
 		return pick(\
-						
 						prob(2);/obj/item/weapon/gun/syringe,\
-						prob(1);/obj/item/weapon/reagent_containers/syringe/ld50_syringe/choral,\
+						prob(1);/obj/item/weapon/reagent_containers/ld50_syringe/choral,\
 						prob(4);/obj/item/weapon/storage/box/syringes,\
 						prob(8);/obj/item/weapon/reagent_containers/syringe/inaprovaline,\
 						prob(8);/obj/item/weapon/reagent_containers/syringe/antitoxin,\
