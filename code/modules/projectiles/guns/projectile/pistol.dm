@@ -177,7 +177,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][silenced ? "-silencer" : ""][chambered ? "" : "-e"]"
+	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][silenced ? "-silencer" : ""][chambered ? "" : "-e"]"
 	return
 
 /obj/item/weapon/gun/projectile/automatic/colt1911
