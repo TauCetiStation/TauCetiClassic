@@ -119,19 +119,37 @@
 /obj/machinery/turretid/interact(mob/user)
 	user.set_machine(src)
 
-	var/dat
-	dat += text({"
-<TT><B>Turret Installation Controller</B></TT><BR><BR>
-Status: []<BR>
-<BR>
-Lethal Mode: []<BR>
-Neutralize All Non-Synthetics: []<BR>
-Neutralize All Cyborgs: []<BR>
-Check Weapon Authorization: []<BR>
-Check Security Records: []<BR>
-Check Arrest Status: []<BR>
-Check Access Authorization: []<BR>
-Check misc. Lifeforms: []<BR>"},
+	var/dat = text({"
+<table width="100%" cellspacing="0" cellpadding="4">
+	<tr>
+		<td>Status: </td><td>[]</td>
+	</tr>
+	<tr></tr>
+	<tr>
+		<td>Lethal Mode: </td><td>[]</td>
+	</tr>
+	<tr>
+		<td>Neutralize All Non-Synthetics: </td><td>[]</td>
+	</tr>
+	<tr>
+		<td>Neutralize All Cyborgs: </td><td>[]</td>
+	</tr>
+	<tr>
+		<td>Check Weapon Authorization: </td><td>[]</td>
+	</tr>
+	<tr>
+		<td>Check Security Records: </td><td>[]</td>
+	</tr>
+	<tr>
+		<td>Check Arrest Status: </td><td>[]</td>
+	</tr>
+	<tr>
+		<td>Check Access Authorization: </td><td>[]</td>
+	</tr>
+	<tr>
+		<td>Check misc. Lifeforms: </td><td>[]</td>
+	</tr>
+</table>"},
 
 "<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
 "<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
@@ -141,9 +159,9 @@ Check misc. Lifeforms: []<BR>"},
 "<A href='?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>" )
+"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
 
-	var/datum/browser/popup = new(user, "window=autoseccontrol", "Turret Installation Controller", 400, 300)
+	var/datum/browser/popup = new(user, "window=autoseccontrol", "Turret Installation Controller", 400, 320)
 	popup.set_content(dat)
 	popup.open()
 
