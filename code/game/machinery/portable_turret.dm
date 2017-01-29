@@ -66,8 +66,10 @@
 	var/wrenching = 0
 	var/last_target			//last target fired at, prevents turrets from erratically firing at all valid targets in range
 
+/obj/machinery/porta_turret/station_default
+	check_n_synth = 1
+
 /obj/machinery/porta_turret/crescent
-	enabled = 0
 	ailock = 1
 	check_access = 1
 	check_arrest = 1

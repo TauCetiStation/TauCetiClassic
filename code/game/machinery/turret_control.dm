@@ -32,6 +32,7 @@
 
 /obj/machinery/turretid/stun
 	enabled = 1
+	check_n_synth = 1
 	icon_state = "control_stun"
 
 /obj/machinery/turretid/stun/AI_special
@@ -40,6 +41,7 @@
 /obj/machinery/turretid/lethal
 	enabled = 1
 	lethal = 1
+	check_n_synth = 1
 	icon_state = "control_kill"
 
 /obj/machinery/turretid/Destroy()
