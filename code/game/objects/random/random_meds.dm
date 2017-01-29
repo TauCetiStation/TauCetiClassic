@@ -14,6 +14,9 @@
 	icon_state = "firstaid"
 /obj/random/meds/medkit/item_to_spawn()
 		return pick(\
+						prob(5);/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,\
+						prob(3);/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,\
+						prob(3);/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,\
 						prob(5);/obj/item/weapon/storage/firstaid/regular,\
 						prob(3);/obj/item/weapon/storage/firstaid/fire,\
 						prob(3);/obj/item/weapon/storage/firstaid/toxin,\
@@ -29,10 +32,14 @@
 	icon_state = "firstaid"
 /obj/random/meds/syringe/item_to_spawn()
 		return pick(\
-						prob(2);/obj/item/weapon/reagent_containers/syringe/inaprovaline,\
-						prob(2);/obj/item/weapon/reagent_containers/syringe/antitoxin,\
-						prob(2);/obj/item/weapon/reagent_containers/syringe/antiviral,\
-						prob(10);/obj/item/weapon/reagent_containers/syringe\
+
+						prob(2);/obj/item/weapon/gun/syringe,\
+						prob(1);/obj/item/weapon/reagent_containers/syringe/ld50_syringe/choral,\
+						prob(4);/obj/item/weapon/storage/box/syringes
+						prob(8);/obj/item/weapon/reagent_containers/syringe/inaprovaline,\
+						prob(8);/obj/item/weapon/reagent_containers/syringe/antitoxin,\
+						prob(8);/obj/item/weapon/reagent_containers/syringe/antiviral,\
+						prob(20);/obj/item/weapon/reagent_containers/syringe\
 					)
 
 /obj/random/meds/medical_tool
@@ -99,10 +106,10 @@
 /obj/random/meds/medical_supply/item_to_spawn()
 		return pick(\
 						prob(20);/obj/random/meds/medical_single_item,\
-						prob(15);/obj/random/meds/syringe,\
+						prob(12);/obj/random/meds/syringe,\
 						prob(10);/obj/random/meds/chemical_bottle,\
-						prob(8);/obj/random/meds/medkit,\
-						prob(8);/obj/random/meds/medical_tool,\
+						prob(10);/obj/random/meds/medkit,\
+						prob(9);/obj/random/meds/medical_tool,\
 						prob(6);/obj/random/meds/pills,\
-						prob(1);/obj/random/meds/dna_injector\
+						prob(3);/obj/random/meds/dna_injector\
 					)
