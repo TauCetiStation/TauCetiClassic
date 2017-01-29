@@ -202,7 +202,7 @@
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)
-		//ticker.station_explosion_cinematic(0,null)
+		ticker.station_explosion_cinematic(0,null)
 		if(malf_turf)
 			sleep(20)
 			explosion(malf_turf, 15, 70, 200)
