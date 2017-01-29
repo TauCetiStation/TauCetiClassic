@@ -106,24 +106,23 @@
 	if(isLocked(user))
 		return
 
-	ui_interact(user)
+	interact(user)
 
 /obj/machinery/turretid/attack_hand(mob/user as mob)
 	if(isLocked(user))
 		return
 
-	ui_interact(user)
+	interact(user)
 
-/obj/machinery/turretid/ui_interact(mob/user)
-	. = ..()
-	if (.)
-		return
+/obj/machinery/turretid/interact(mob/user)
+	user.set_machine(src)
 
 	var/dat
 	dat += text({"
 <TT><B>Turret Installation Controller</B></TT><BR><BR>
 Status: []<BR>
 <BR>
+Lethal Mode: []<BR>
 Neutralize All Non-Synthetics: []<BR>
 Neutralize All Cyborgs: []<BR>
 Check Weapon Authorization: []<BR>
@@ -133,6 +132,7 @@ Check Access Authorization: []<BR>
 Check misc. Lifeforms: []<BR>"},
 
 "<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
+"<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
 "<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
 "[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
 "<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
@@ -141,8 +141,9 @@ Check misc. Lifeforms: []<BR>"},
 "<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>" )
 
-	user << browse("<HEAD><TITLE>Turret Installation Controller</TITLE></HEAD>[dat]", "window=autoseccontrol")
-	onclose(user, "autoseccontrol")
+	var/datum/browser/popup = new(user, "window=autoseccontrol", "Turret Installation Controller", 400, 300)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/turretid/Topic(href, href_list)
 	. = ..()
@@ -176,7 +177,7 @@ Check misc. Lifeforms: []<BR>"},
 
 		if(!isnull(log_action))
 			log_admin("[key_name(usr)] has [log_action]")
-			message_admins("[key_name_admin(usr)] has [log_action]", 1)
+			message_admins("[key_name_admin(usr)] has [log_action]")
 
 		updateTurrets()
 	updateUsrDialog()

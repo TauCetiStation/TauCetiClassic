@@ -215,23 +215,22 @@ var/list/turret_icons
 	if(isLocked(user))
 		return
 
-	ui_interact(user)
+	interact(user)
 
 /obj/machinery/porta_turret/attack_hand(mob/user)
 	if(isLocked(user))
 		return
 
-	ui_interact(user)
+	interact(user)
 
-/obj/machinery/porta_turret/ui_interact(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/porta_turret/interact(mob/user)
+	user.set_machine(src)
 
 	var/dat = text({"
 <TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
 Status: []<BR>
 <BR>
+Lethal Mode: []<BR>
 Neutralize All Non-Synthetics: []<BR>
 Neutralize All Cyborgs: []<BR>
 Check Weapon Authorization: []<BR>
@@ -241,6 +240,7 @@ Check Access Authorization: []<BR>
 Check misc. Lifeforms: []<BR>"},
 
 "<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
+"<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
 "<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
 "[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
 "<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
@@ -249,8 +249,9 @@ Check misc. Lifeforms: []<BR>"},
 "<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
 
-	user << browse("<HEAD><TITLE>Automatic Portable Turret Installation</TITLE></HEAD>[dat]", "window=autosec")
-	onclose(user, "autosec")
+	var/datum/browser/popup = new(user, "window=autosec", "Automatic Portable Turret Installation", 400, 300)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/porta_turret/proc/HasController()
 	var/area/A = get_area(src)
@@ -343,7 +344,7 @@ Check misc. Lifeforms: []<BR>"},
 				anchored = 1
 				update_icon()
 				to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
-			else if(anchored)
+			else
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				anchored = 0
 				to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
@@ -640,12 +641,12 @@ Check misc. Lifeforms: []<BR>"},
 	// Emagged turrets again use twice as much power due to higher firing rates
 	use_power(reqpower * (2 * (emagged || lethal)) * (2 * emagged))
 
-	A.original = target.loc
+	A.original = target
 	A.current = T
 	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn(1)
+	spawn(0)
 		A.process()
 
 	if(emagged || lethal)
