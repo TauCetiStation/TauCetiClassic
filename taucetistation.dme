@@ -455,7 +455,7 @@
 #include "code\game\machinery\syndicatebeacon.dm"
 #include "code\game\machinery\syndie_big_bomb.dm"
 #include "code\game\machinery\teleporter.dm"
-#include "code\game\machinery\turrets.dm"
+#include "code\game\machinery\turret_control.dm"
 #include "code\game\machinery\vending.dm"
 #include "code\game\machinery\washing_machine.dm"
 #include "code\game\machinery\wishgranter.dm"
