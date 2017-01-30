@@ -508,6 +508,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Become mouse"
 	set category = "Ghost"
 
+	if(jobban_isbanned(src, "Mouse"))
+		to_chat(src, "<span class='warning'>You have been banned from being mouse.</span>")
+		return
+
 	if(config.disable_player_mice)
 		to_chat(src, "<span class='warning'>Spawning as a mouse is currently disabled.</span>")
 		return
@@ -525,7 +529,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	var/response = alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?","Squeek!","Nope!")
-	if(response != "Squeek!") return  //Hit the wrong key...again.
+	if(response != "Squeek!")
+		return  //Hit the wrong key...again.
 
 	mousize()
 

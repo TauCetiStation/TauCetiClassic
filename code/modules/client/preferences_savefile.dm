@@ -66,7 +66,6 @@
 
 	//Antag preferences
 	S["be_role"]			>> be_role
-
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
 	UI_style		= sanitize_inlist(UI_style, list("White", "Midnight","Orange","old"), initial(UI_style))
@@ -163,6 +162,7 @@
 	S["disabilities"]		>> disabilities
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
+	S["gear"]				>> gear
 
 	S["nanotrasen_relation"] >> nanotrasen_relation
 	S["home_system"] 		>> home_system
@@ -182,6 +182,7 @@
 	if(isnull(language)) language = "None"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
 	if(!real_name) real_name = random_name(gender)
+	if(!gear) gear = list()
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
@@ -317,6 +318,7 @@
 	S["be_role"]			<< be_role
 	S["disabilities"]		<< disabilities
 	S["organ_data"]			<< organ_data
+	S["gear"]				<< gear
 
 	S["nanotrasen_relation"] << nanotrasen_relation
 	S["home_system"] 		<< home_system

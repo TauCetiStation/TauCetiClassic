@@ -238,10 +238,15 @@
 	desc = "Pile of refuse from research department."
 	parts_icon = 'icons/obj/structures/scrap/science.dmi'
 	loot_list = list(
-		/obj/random/science/science_supply,
-		/obj/random/science/science_supply,
-		/obj/random/science/science_supply,
-		/obj/random/science/science_supply,
+		/obj/random/science/science_supply
+	)
+
+/obj/structure/scrap/cloth
+	name = "cloth pile"
+	desc = "Pile of second hand clothing for charity."
+	parts_icon = 'icons/obj/structures/scrap/cloth.dmi'
+	loot_list = list(
+		/obj/random/cloth/random_cloth
 	)
 
 /obj/structure/scrap/poor
@@ -318,6 +323,18 @@
 
 /obj/structure/scrap/science/large
 	name = "large scientific trash pile"
+	opacity = 1
+	density = 1
+	icon_state = "big"
+	loot_min = 10
+	loot_max = 20
+	dig_amount = 15
+	base_min = 9
+	base_max = 14
+	base_spread = 16
+
+/obj/structure/scrap/cloth/large
+	name = "large cloth pile"
 	opacity = 1
 	density = 1
 	icon_state = "big"

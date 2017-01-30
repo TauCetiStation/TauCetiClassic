@@ -1,5 +1,3 @@
-#define NUKESCALINGMODIFIER 0.5
-
 var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
 
 
@@ -151,10 +149,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	var/danger
 	danger = player_list.len
 	while(!IsMultiple(++danger,10))//Just round up to the nearest multiple of ten.
-	scaleTC(danger)
-
-/obj/machinery/computer/telecrystals/boss/proc/scaleTC(amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
-	storedcrystals += amt * NUKESCALINGMODIFIER
+	storedcrystals += danger
 
 /////////
 
@@ -218,5 +213,3 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		logTransfer("[src] evenly distributed telecrystals.")
 
 	src.updateUsrDialog()
-
-#undef NUKESCALINGMODIFIER

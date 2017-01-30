@@ -16,6 +16,9 @@
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
+	var/neurotoxin_on_click = 0
+	var/neurotoxin_delay = 15
+	var/last_neurotoxin = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 5)
 
 

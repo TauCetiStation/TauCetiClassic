@@ -24,7 +24,7 @@
 		to_chat(user,"<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>")
 
 
-/obj/item/weapon/melee/powerfist/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/melee/powerfist/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/tank))
 		if(!tank)
 			var/obj/item/weapon/tank/IT = W
@@ -76,7 +76,7 @@
 		to_chat(user,"<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
 		return
-	target.apply_damage(force * fisto_setting, BRUTE)
+	target.apply_damage(force * fisto_setting, BRUTE, user.zone_sel.selecting)
 	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>", \
 		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
 	PoolOrNew(/obj/item/effect/kinetic_blast, target.loc)

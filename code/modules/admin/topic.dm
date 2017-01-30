@@ -701,12 +701,18 @@
 
 		//Other races  (BLUE, because I have no idea what other color to make this)
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ccccff'><th colspan='1'>Other Races</th></tr><tr align='center'>"
+		jobs += "<tr bgcolor='ccccff'><th colspan='2'>Other Races</th></tr><tr align='center'>"
 
 		if(jobban_isbanned(M, ROLE_PLANT))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'><font color=red>[ROLE_PLANT]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'>[ROLE_PLANT]</a></td>"
+
+		if(jobban_isbanned(M, "Mouse"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'><font color=red>Mouse</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'>Mouse</a></td>"
+
 
 		jobs += "</tr></table>"
 
@@ -718,7 +724,8 @@
 
 	//JOBBAN'S INNARDS
 	else if(href_list["jobban3"])
-		if(!check_rights(R_ADMIN))  return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/mob/M = locate(href_list["jobban4"])
 		if(!ismob(M))
@@ -739,7 +746,8 @@
 		switch(href_list["jobban3"])
 			if("commanddept")
 				for(var/jobPos in command_positions)
-					if(!jobPos)	continue
+					if(!jobPos)
+						continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
@@ -829,7 +837,8 @@
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					if(!check_rights(R_BAN))  return
+					if(!check_rights(R_BAN))
+						return
 					var/reason = sanitize_simple(input(usr,"Reason?","Please State Reason","") as text|null)
 					if(reason)
 						var/msg
@@ -859,7 +868,8 @@
 			var/msg
 			for(var/job in joblist)
 				var/reason = jobban_isbanned(M, job)
-				if(!reason) continue //skip if it isn't jobbanned anyway
+				if(!reason)
+					continue //skip if it isn't jobbanned anyway
 				switch(alert("Job: '[job]' Reason: '[reason]' Un-jobban?","Please Confirm","Yes","No"))
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")

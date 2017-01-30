@@ -32,7 +32,7 @@
 	votable = 0
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
-	uplink_uses = 10
+	uplink_uses = 20
 
 	var/datum/mind/sacrifice_target = null
 	var/finished = 0

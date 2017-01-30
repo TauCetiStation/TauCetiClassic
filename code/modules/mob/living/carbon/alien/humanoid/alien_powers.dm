@@ -111,7 +111,7 @@ Doesn't work on other aliens/AI.*/
 			to_chat(src, "\green Target is too far away.")
 	return
 
-
+/*
 /mob/living/carbon/alien/humanoid/proc/neurotoxin(mob/target in oview())
 	set name = "Spit Neurotoxin (50)"
 	set desc = "Spits neurotoxin at someone, paralyzing them for a short time if they are not wearing protective gear."
@@ -147,6 +147,82 @@ Doesn't work on other aliens/AI.*/
 		A.yo = U.y - T.y
 		A.xo = U.x - T.x
 		A.process()
+	return
+*/
+/mob/living/carbon/alien/humanoid/proc/toggle_neurotoxin(message = 1)
+	neurotoxin_on_click = !neurotoxin_on_click
+	//neurotoxin_icon.icon_state = "neurotoxin_[neurotoxin_on_click ? "on":"off"]"
+	update_icons()
+	if(message)
+		to_chat(src, "<span class='noticealien'>You will now [neurotoxin_on_click ? "ready":"not ready"] to fire in enemies!</span>")
+	else
+		return
+
+/mob/living/carbon/alien/humanoid/proc/neurotoxin()
+	set name = "Spit Neurotoxin"
+	set desc = "Spits neurotoxin at someone, paralyzing them for a short time if they are not wearing protective gear."
+	set category = "Alien"
+	toggle_neurotoxin(1)
+	return
+
+/mob/living/carbon/alien/humanoid/ClickOn(atom/A, params)
+	face_atom(A)
+	if(neurotoxin_on_click)
+		split_neurotoxin(A)
+	else
+		..()
+
+/mob/living/carbon/alien/humanoid/proc/split_neurotoxin(atom/target)
+	if(last_neurotoxin + neurotoxin_delay > world.time)
+		to_chat(src, "You are not ready.")
+		return
+	if(powerc(50))
+		to_chat(src, "\green You spit neurotoxin at [target].")
+		for(var/mob/O in oviewers())
+			if ((O.client && !( O.blinded )))
+				to_chat(O, "\red [src] spits neurotoxin at [target]!")
+		//I'm not motivated enough to revise this. Prjectile code in general needs update.
+		var/turf/T = loc
+		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+
+		if(!U || !T)
+			return
+		while(U && !istype(U,/turf))
+			U = U.loc
+		if(!istype(T, /turf))
+			return
+		if (U == T)
+			return
+		if(!istype(U, /turf))
+			return
+
+		//var/curloc = user.loc
+		//var/targloc = get_turf(target)
+		adjustToxLoss(-50)
+
+		/*
+		var/obj/item/ammo_casing/magic/neurotoxin/A = new /obj/item/ammo_casing/magic/neurotoxin(usr.loc)
+		A.ready_proj(target, src)
+		A.throw_proj(target, U, src)
+		qdel(A)
+		*/
+		var/obj/item/projectile/neurotoxin/BB = new /obj/item/projectile/neurotoxin(usr.loc)
+
+		//prepare "bullet"
+		BB.original = target
+		BB.firer = src
+		BB.def_zone = src.zone_sel.selecting
+		//shoot
+		BB.loc = T
+		BB.starting = T
+		BB.current = loc
+		BB.yo = U.y - loc.y
+		BB.xo = U.x - loc.x
+
+		if(BB)
+			BB.process()
+
+		last_neurotoxin = world.time
 	return
 
 /mob/living/carbon/alien/humanoid/proc/resin() // -- TLE

@@ -323,6 +323,8 @@
 		return 1
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 		return 1
+	if (istype(buckled, /obj/structure/stool/bed/nest))
+		return 1
 	return 0
 
 

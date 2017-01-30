@@ -762,6 +762,9 @@
 	if(L.buckled && (L.last_special <= world.time) )
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
+			if (istype(C.buckled,/obj/structure/stool/bed/nest))
+				C.buckled.user_unbuckle_mob(C)
+				return
 			if( C.handcuffed )
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100

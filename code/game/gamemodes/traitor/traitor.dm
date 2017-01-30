@@ -17,7 +17,7 @@
 
 
 	uplink_welcome = "AntagCorp Portable Teleportation Relay:"
-	uplink_uses = 10
+	uplink_uses = 20
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/const/traitor_scaling_coeff = 7.0 //how much does the amount of players get divided by to determine traitors

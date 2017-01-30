@@ -54,6 +54,8 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		overlays += contamination_overlay
 
 /obj/item/proc/decontaminate()
+	if(uncleanable)
+		return
 	contaminated = 0
 	overlays -= contamination_overlay
 

@@ -38,3 +38,13 @@
 
 /obj/effect/overlay/singularity_pull()
 	return
+
+/obj/effect/overlay/slice
+	name = "Slice"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "Slice"
+	light_color = "#cc0000"
+	light_power = 2
+	light_range = 3
+	layer = 21
+	anchored = 1
