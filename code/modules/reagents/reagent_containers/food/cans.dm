@@ -138,16 +138,6 @@
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
-/obj/item/weapon/reagent_containers/food/drinks/cans/beer
-	name = "Space Beer"
-	desc = "Contains only water, malt and hops."
-	icon_state = "beercan"
-	New()
-		..()
-		reagents.add_reagent("beer", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
-
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind
 	name = "Space Mountain Wind"
 	desc = "Blows right through you like a space wind."
