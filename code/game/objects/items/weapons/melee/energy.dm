@@ -43,7 +43,7 @@
 	sharp = 1
 	edge = 1
 
-/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user, params)
+/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user)
 	if(istype(W, /obj/item/weapon/melee/energy/sword))
 		to_chat(user, "<span class='notice'>You attach the ends of the two \
 			energy swords, making a single double-bladed weapon! \

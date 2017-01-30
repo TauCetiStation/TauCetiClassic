@@ -13,7 +13,7 @@
 	votable = 0
 
 	uplink_welcome = "Crazy AI Uplink Console:"
-	uplink_uses = 10
+	uplink_uses = 20
 
 	var/AI_win_timeleft = 1800 //started at 1800, in case I change this for testing round end.
 	var/malf_mode_declared = 0

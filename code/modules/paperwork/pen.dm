@@ -108,6 +108,7 @@
 		on = 0
 		force = initial(force)
 		w_class = initial(w_class)
+		edge = initial(edge)
 		name = initial(name)
 		hitsound = initial(hitsound)
 		throwforce = initial(throwforce)
@@ -117,6 +118,7 @@
 		on = 1
 		force = 18
 		w_class = 3
+		edge = 1
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
 		throwforce = 35
@@ -129,6 +131,7 @@
 		icon_state = "edagger"
 		item_state = "edagger"
 	else
+		clean_blood()
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
 
