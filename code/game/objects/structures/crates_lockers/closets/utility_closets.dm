@@ -22,6 +22,8 @@
 /obj/structure/closet/emcloset/New()
 	..()
 
+	new /obj/item/clothing/head/helmet/space/sk(src)
+	new /obj/item/clothing/suit/space/sk(src)
 	switch (pickweight(list("small" = 55, "aid" = 25, "tank" = 10, "both" = 10, "nothing" = 0, "delete" = 0)))
 		if ("small")
 			new /obj/item/weapon/tank/emergency_oxygen(src)
