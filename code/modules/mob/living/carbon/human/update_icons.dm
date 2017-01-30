@@ -452,8 +452,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			if("golem","shadow","adamantine")
 				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_s", "layer"=-MUTANTRACE_LAYER)
 			if("shadowling")
-				standing	+= image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_s", "layer"=-MUTANTRACE_LAYER)
-				standing	+= image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_ms_s", "layer"=GLASSES_LAYER)
+				var/image/eyes = image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_ms_s", "layer"=GLASSES_LAYER)
+				var/image/body = image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_s", "layer"=-MUTANTRACE_LAYER)
+				eyes.plane = LIGHTING_PLANE + 1
+				standing	+= eyes
+				standing	+= body
 
 	if(!dna || !(dna.mutantrace == "golem"))
 		update_body()

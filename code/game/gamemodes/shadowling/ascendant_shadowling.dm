@@ -40,7 +40,9 @@
 
 /mob/living/simple_animal/ascendant_shadowling/New()
 	..()
-	overlays += image("icon" = 'icons/mob/shadowling.dmi', "icon_state" = "shadowling_ascended_ms", "layer" = 11)
+	var/image/ascend = image("icon" = 'icons/mob/shadowling.dmi', "icon_state" = "shadowling_ascended_ms", "layer" = LIGHTING_LAYER + 1)
+	ascend.plane = LIGHTING_PLANE + 1
+	overlays += ascend
 
 /mob/living/simple_animal/ascendant_shadowling/Life()
 	..()
