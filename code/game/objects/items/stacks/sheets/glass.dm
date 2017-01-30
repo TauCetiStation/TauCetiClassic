@@ -17,7 +17,7 @@
 	icon_state = "sheet-glass"
 	g_amt = 3750
 	origin_tech = "materials=1"
-	var/created_window = /obj/structure/window/basic
+	var/created_window = /obj/structure/window
 
 /obj/item/stack/sheet/glass/cyborg
 	name = "glass"
@@ -25,7 +25,7 @@
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
 	g_amt = 0
-	created_window = /obj/structure/window/basic
+	created_window = /obj/structure/window
 
 /obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
@@ -355,7 +355,7 @@
 	icon_state = "sheet-phoronglass"
 	g_amt = 7500
 	origin_tech = "materials=3;phorontech=2"
-	created_window = /obj/structure/window/phoronbasic
+	created_window = /obj/structure/window/phoron
 
 /obj/item/stack/sheet/glass/phoronglass/attack_self(mob/user)
 	construct_window(user)
@@ -388,7 +388,7 @@
 	g_amt = 7500
 	m_amt = 1875
 	origin_tech = "materials=4;phorontech=2"
-	created_window = /obj/structure/window/phoronreinforced
+	created_window = /obj/structure/window/phoron/reinforced
 
 /obj/item/stack/sheet/glass/phoronrglass/attack_self(mob/user)
 	construct_window(user)

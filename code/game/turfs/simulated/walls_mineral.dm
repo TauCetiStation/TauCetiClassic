@@ -9,7 +9,6 @@
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
 	icon_state = "gold0"
-	walltype = "gold"
 	mineral = "gold"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	//var/electro = 1
@@ -19,7 +18,6 @@
 	name = "silver wall"
 	desc = "A wall with silver plating. Shiny!"
 	icon_state = "silver0"
-	walltype = "silver"
 	mineral = "silver"
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	//var/electro = 0.75
@@ -29,7 +27,6 @@
 	name = "diamond wall"
 	desc = "A wall with diamond plating. You monster."
 	icon_state = "diamond0"
-	walltype = "diamond"
 	mineral = "diamond"
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 
@@ -37,7 +34,6 @@
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	icon_state = "clown0"
-	walltype = "clown"
 	mineral = "clown"
 //	sheet_type = /obj/item/stack/sheet/mineral/bananium
 
@@ -45,7 +41,6 @@
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating."
 	icon_state = "sandstone0"
-	walltype = "sandstone"
 	mineral = "sandstone"
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 
@@ -53,7 +48,6 @@
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
 	icon_state = "uranium0"
-	walltype = "uranium"
 	mineral = "uranium"
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 
@@ -86,7 +80,6 @@
 	name = "phoron wall"
 	desc = "A wall with phoron plating. This is definately a bad idea."
 	icon_state = "phoron0"
-	walltype = "phoron"
 	mineral = "phoron"
 	sheet_type = /obj/item/stack/sheet/mineral/phoron
 
@@ -109,10 +102,10 @@
 		napalm.temperature = 400+T0C
 		target_tile.assume_air(napalm)
 		spawn (0) target_tile.hotspot_expose(temperature, 400)
-	for(var/obj/structure/falsewall/phoron/F in range(3,src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
+	/*for(var/obj/structure/falsewall/phoron/F in range(3,src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
 		T.ChangeTurf(/turf/simulated/wall/mineral/phoron/)
-		qdel(F)
+		qdel(F)*/
 	for(var/turf/simulated/wall/mineral/phoron/W in range(3,src))
 		W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame
 	for(var/obj/machinery/door/airlock/phoron/D in range(3,src))

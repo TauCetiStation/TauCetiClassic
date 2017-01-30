@@ -5,6 +5,8 @@
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 
+	var/turf/baseturf = /turf/space
+
 	//Properties for open tiles (/floor)
 	var/oxygen = 0
 	var/carbon_dioxide = 0
@@ -245,6 +247,8 @@
 			lighting_build_overlay()
 		else
 			lighting_clear_overlay()
+
+	queue_smooth_neighbors(src)
 
 
 //Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.

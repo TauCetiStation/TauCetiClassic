@@ -684,7 +684,7 @@ obj/item/projectile/kinetic/New()
 	name = "pod window"
 	icon = 'icons/obj/survwindows.dmi'
 	icon_state = "window"
-	basestate = "window"
+	var/basestate = "window"
 
 //Door
 /obj/structure/inflatable/door/survival_pod
