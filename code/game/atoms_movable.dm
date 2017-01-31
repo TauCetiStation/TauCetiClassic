@@ -15,6 +15,7 @@
 	var/mob/pulledby = null
 	var/inertia_dir = 0
 	var/list/client_mobs_in_contents
+	appearance_flags = TILE_BOUND
 
 /atom/movable/New()
 	. = ..()
