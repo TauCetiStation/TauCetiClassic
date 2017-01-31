@@ -1731,7 +1731,7 @@
 		var/obj_name = sanitize(href_list["object_name"])
 		var/atom/target //Where the object will be spawned
 		var/where = href_list["object_where"]
-		if (!( where in list("onfloor","inhand","inmarked") ))
+		if (!( where in list("onfloor","inhand","inmarked","dropped") ))
 			where = "onfloor"
 
 
@@ -1746,8 +1746,7 @@
 						to_chat(R, "Cyborg doesn't has module, you can't do that.")
 						return
 				target = usr
-
-			if("onfloor")
+			if("onfloor", "dropped")
 				switch(href_list["offset_type"])
 					if ("absolute")
 						target = locate(0 + X,0 + Y,0 + Z)
@@ -1763,10 +1762,13 @@
 				else
 					target = marked_datum
 
+
 		if(target)
 			for (var/path in paths)
 				for (var/i = 0; i < number; i++)
-					if(path in typesof(/turf))
+					if(where == "dropped")
+						new /obj/effect/falling_effect(target, path)
+					else if(path in typesof(/turf))
 						var/turf/O = target
 						var/turf/N = O.ChangeTurf(path)
 						if(N && obj_name)
