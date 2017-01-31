@@ -746,7 +746,7 @@
 			return 1	//godmode
 
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-		if(bodytemperature > species.heat_level_1)
+		if(bodytemperature > species.heat_level_0)
 			//Body temperature is too hot.
 			if(bodytemperature > species.heat_level_3)
 				throw_alert("temp","hot",3)
@@ -758,10 +758,13 @@
 				else
 					throw_alert("temp","hot",2)
 					take_overall_damage(burn=HEAT_DAMAGE_LEVEL_2, used_weapon = "High Body Temperature")
-			else
+			else if(bodytemperature > species.heat_level_1)
 				throw_alert("temp","hot",1)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
-		else if(bodytemperature < species.cold_level_1)
+			else
+				if(prob(5))
+					src << "\red You feel warm."
+		else if(bodytemperature < species.cold_level_0)
 			if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				if(bodytemperature < species.cold_level_3)
 					throw_alert("temp","cold",3)
@@ -769,9 +772,12 @@
 				else if(bodytemperature < species.cold_level_2)
 					throw_alert("temp","cold",2)
 					take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
-				else
+				else if(bodytemperature < species.cold_level_1)
 					throw_alert("temp","cold",1)
 					take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
+				else
+					if(prob(5))
+						src << "\red You feel cold."
 			else
 				clear_alert("temp")
 		else
