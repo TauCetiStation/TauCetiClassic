@@ -276,7 +276,13 @@ var/list/turret_icons
 
 /obj/machinery/porta_turret/proc/HasController()
 	var/area/A = get_area(src)
-	return A && A.turret_controls.len > 0
+	if(A.turret_controls.len == 0)
+		return FALSE
+	else
+		for(var/obj/machinery/turretid/controller in A.turret_controls)
+			if(controller.is_operational())
+				return TRUE
+	return FALSE
 
 /obj/machinery/porta_turret/is_operational_topic()
 	return !((stat & (NOPOWER|BROKEN)) || HasController()) && anchored
