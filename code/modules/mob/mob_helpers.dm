@@ -325,29 +325,20 @@ var/list/intents = list("help","disarm","grab","hurt")
 			else
 				hud_used.action_intent.icon_state = "help"
 
-var/list/cached_bicon_hud
 /proc/broadcast_security_hud_message(message, broadcast_source)
-	if(!cached_bicon_hud["sechud"])
-		var/obj/item/clothing/glasses/hud/security/sechud = new
-		cached_bicon_hud["sechud"] = bicon(sechud)
-		qdel(sechud)
-	broadcast_hud_message(message, broadcast_source, sec_hud_users, cached_bicon_hud["sechud"])
+	broadcast_hud_message(message, broadcast_source, sec_hud_users)
 
 /proc/broadcast_medical_hud_message(message, broadcast_source)
-	if(!cached_bicon_hud["medhud"])
-		var/obj/item/clothing/glasses/hud/health/medhud = new
-		cached_bicon_hud["medhud"] = bicon(medhud)
-		qdel(medhud)
-	broadcast_hud_message(message, broadcast_source, med_hud_users, cached_bicon_hud["medhud"])
+	broadcast_hud_message(message, broadcast_source, med_hud_users)
 
-/proc/broadcast_hud_message(message, broadcast_source, list/targets, b_icon)
+/proc/broadcast_hud_message(message, broadcast_source, list/targets)
 	var/turf/sourceturf = get_turf(broadcast_source)
 	for(var/mob/M in targets)
 		var/turf/targetturf = get_turf(M)
 		if((targetturf.z == sourceturf.z))
-			M.show_message("<span class='info'>[b_icon] [message]</span>", 1)
+			M.show_message("<span class='info'>[bicon(broadcast_source)] [message]</span>", 1)
 	for(var/mob/dead/observer/G in player_list) //Ghosts? Why not.
-		G.show_message("<span class='info'>[b_icon] [message]</span>", 1)
+		G.show_message("<span class='info'>[bicon(broadcast_source)] [message]</span>", 1)
 
 /mob/living/proc/assess_perp(obj/access_obj, check_access, auth_weapons, check_records, check_arrest)
 	if(stat == DEAD)
