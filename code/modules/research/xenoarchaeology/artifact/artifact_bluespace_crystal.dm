@@ -23,14 +23,14 @@
 	icon_num = 12
 	set_light(4)
 
-/obj/machinery/artifact/bluespace_crystal/tesla_act(var/power)
+/obj/machinery/artifact/bluespace_crystal/tesla_act(power)
 	tesla_zap(src, 1, power/2)
 	return
 
 /obj/machinery/artifact/bluespace_crystal/Destroy()
 	var/turf/mainloc = get_turf(src)
-	var/count_cristall = rand(1,5)
-	for(var/i = 0;i<count_cristall;i++)
+	var/count_crystal = rand(1,5)
+	for(var/i = 0 to count_crystal - 1)
 		new /obj/item/bluespace_crystal(mainloc)
 	if(prob(80))
 		var/obj/item/device/assembly/signaler/anomaly/anom = new /obj/item/device/assembly/signaler/anomaly(src)
@@ -50,9 +50,9 @@
 	tesla_zap(src,7,2500000)
 	if(prob(50))
 		teleport()
-	..()
+	return ..()
 
-/obj/machinery/artifact/bluespace_crystal/proc/get_damage(var/damage)
+/obj/machinery/artifact/bluespace_crystal/proc/get_damage(damage)
 	if(damage < 0)
 		damage =0
 	health = health - damage
@@ -61,12 +61,12 @@
 	if(health < 0)
 		Destroy()
 
-/obj/machinery/artifact/bluespace_crystal/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/artifact/bluespace_crystal/bullet_act(obj/item/projectile/Proj)
 	if(prob(Proj.damage))
 		get_damage(Proj.damage)
 	..()
 
-/obj/machinery/artifact/bluespace_crystal/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/machinery/artifact/bluespace_crystal/attackby(obj/item/weapon/W, var/mob/user)
 
 	get_damage(W.force)
 	..()
@@ -81,23 +81,21 @@
 	var/ty = T.y - radius
 
 	var/turf/simulated/curret
-	for(var/iy = 0,iy < (1 + (radius * 2)), iy++)
-		for(var/ix = 0, ix < (1 + (radius * 2)), ix++)
+	for(var/iy = 0 to (1 + (radius * 2)) - 1)
+		for(var/ix = 0 to (1 + (radius * 2)) - 1)
 			curret = locate(tx + ix, ty + iy, T.z)
 			if(curret)
 				Next += curret
 
 
 	for (var/mob/living/M in range(7,T))
-		M << "\red You are displaced by a strange force!"
+		to_chat(M, "<span class='red'>You are displaced by a strange force!</span>")
 		if(M.buckled)
 			M.buckled.unbuckle_mob()
 
 		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 		sparks.set_up(3, 0, get_turf(M))
 		sparks.start()
-				//
-		//var/turf/N = pick(orange(T, 50))
 		var/turf/N = pick(Next)
 		do_teleport(M, N, 4)
 		sparks = new /datum/effect/effect/system/spark_spread()
