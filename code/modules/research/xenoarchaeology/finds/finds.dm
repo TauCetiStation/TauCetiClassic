@@ -37,9 +37,8 @@
 
 	//method = rand(0,2)
 	if(inside_item_type)
-		inside = new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
-		if(!inside)
-			inside = locate() in contents
+		new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
+		inside = locate() in contents
 
 /*/obj/item/weapon/ore/strangerock/ex_act(var/severity)
 	if(severity && prob(30))
@@ -94,14 +93,13 @@
 	icon_state = "unknown[rand(1,4)]"
 	var/additional_desc = ""
 	var/obj/item/weapon/new_item
-	var/source_material = ""
+	var/source_material = pick("cordite","quadrinium","steel","titanium","aluminium","ferritic-alloy","plasteel","duranium")
 	var/apply_material_decorations = 1
 	var/apply_image_decorations = 0
 	var/material_descriptor = ""
 	var/apply_prefix = 1
 	if(prob(40))
 		material_descriptor = pick("rusted ","dusty ","archaic ","fragile ")
-	source_material = pick("cordite","quadrinium","steel","titanium","aluminium","ferritic-alloy","plasteel","duranium")
 
 	var/talkative = 0
 	if(prob(5))
