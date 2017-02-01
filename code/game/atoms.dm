@@ -127,10 +127,16 @@
 			f_name = "some "
 		else
 			f_name = "a "
-		if(src.blood_color == "#030303")	//TODO: Define blood colors or make oil != blood
-			f_name += "<span class='warning'>oil-stained</span> [name]!"
+		if(!src.blood_color) //Oil and blood puddles got 'blood_color = NULL', however they got 'color' instead
+			if(src.color == "#030303")
+				f_name += "<span class='warning'>[name]</span>!"
+			else
+				f_name += "<span class='danger'>[name]</span>!"
 		else
-			f_name += "<span class='danger'>blood-stained</span> [name]!"
+			if(src.blood_color == "#030303")	//TODO: Define blood colors or make oil != blood
+				f_name += "<span class='warning'>oil-stained</span> [name]!"
+			else
+				f_name += "<span class='danger'>blood-stained</span> [name]!"
 
 	to_chat(user, "[bicon(src)] That's [f_name]")
 
