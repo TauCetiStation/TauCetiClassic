@@ -15,3 +15,15 @@
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	slowdown = 4
 	siemens_coefficient = 0.65
+
+/obj/item/clothing/suit/space/sk/equipped()
+	..()
+	SSobj.processing |= src
+
+/obj/item/clothing/suit/space/sk/dropped()
+	..()
+	SSobj.processing.Remove(src)
+
+/obj/item/clothing/suit/space/sk/process()
+	if(istype(get_turf(src), /turf/space))
+		create_breaches(BRUTE,2.3)
