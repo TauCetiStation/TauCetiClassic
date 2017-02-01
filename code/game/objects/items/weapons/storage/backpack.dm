@@ -10,8 +10,17 @@
 	item_state = "backpack"
 	w_class = 4.0
 	slot_flags = SLOT_BACK	//ERROOOOO
+	action_button_name = "Open [name]"
 	max_w_class = 3
 	max_combined_w_class = 21
+	var/opened = 0
+
+/obj/item/weapon/storage/backpack/ui_action_click()
+	if(!opened)
+		open(loc)
+	else
+		close(loc)
+	opened = !opened
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
 	if (src.use_sound)

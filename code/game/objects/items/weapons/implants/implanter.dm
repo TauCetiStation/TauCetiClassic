@@ -129,3 +129,11 @@
 			S.remove_from_storage(A)
 		A.loc.contents.Remove(A)
 		update()
+
+/obj/item/weapon/implanter/storage
+	name = "implanter (storage)"
+	icon_state = "cimplanter1"
+
+/obj/item/weapon/implanter/storage/New()
+	imp = new /obj/item/weapon/implant/storage(src)
+	..()
