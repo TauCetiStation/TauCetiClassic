@@ -231,15 +231,15 @@
 		return ..()
 
 /obj/item/weapon/twohanded/dualsaber/afterattack(obj/O, mob/user, proximity)
-	if(!istype(O,/obj/machinery/door/airlock))
+	if(!istype(O,/obj/machinery/door/airlock) || src.slicing)
 		return
-	if(O.density && src.wielded && proximity)
+	if(O.density && src.wielded && proximity && in_range(user, O))
 		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
 		playsound(user.loc, 'sound/items/Welder2.ogg', 100, 1, -1)
 		src.slicing = 1
 		var/obj/machinery/door/airlock/D = O
 		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
-		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1))
+		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1) && in_range(user, O))
 			sleep(6)
 			var/obj/structure/door_scrap/S = new /obj/structure/door_scrap(D.loc)
 			var/iconpath = D.icon
