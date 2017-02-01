@@ -10,7 +10,7 @@
 	item_state = "backpack"
 	w_class = 4.0
 	slot_flags = SLOT_BACK	//ERROOOOO
-	action_button_name = "Open [name]"
+	action_button_name = "Storage"
 	max_w_class = 3
 	max_combined_w_class = 21
 	var/opened = 0
