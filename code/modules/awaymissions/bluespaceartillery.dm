@@ -26,7 +26,7 @@
 	var/dat = "<B>Bluespace Artillery Control:</B><BR>"
 	dat += "Locked on<BR>"
 	dat += "<B>Charge progress: [reload]/180:</B><BR>"
-	dat += "The Bluespace Artillery in mode : <a href='?src=\ref[src];toggle=1'>[intensity ? "<font color=red>Destroy</font>" : "<font color=green>Offend</font>"]</a><br>"
+	dat += "The Bluespace Artillery in mode : <a href='?src=\ref[src];toggle=1'>[intensity ? "<font color=red>Destroy</font>" : "<font color=green>Hurt</font>"]</a><br>"
 	dat += "<A href='byond://?src=\ref[src];fire=1'>Open Fire</A><BR>"
 	dat += "Deployment of weapon authorized by <br>Nanotrasen Naval Command<br><br>Remember, friendly fire is grounds for termination of your contract and life.<HR>"
 	user << browse(dat, "window=scroll")
@@ -46,10 +46,10 @@
 		A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
 		var/area/thearea = teleportlocs[A]
 		command_alert("Bluespace artillery fire detected in [thearea.name]. Brace for impact.")
-		message_admins("[key_name_admin(usr)] has launched an artillery strike.")
+		message_admins("[key_name_admin(usr)] has launched an artillery strike at [thearea.name].")
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
-			if(!istype(T,/turf/simulated/wall) || !istype(T, /turf/simulated/wall/r_wall))
+			if(!istype(T,/turf/simulated/wall) && !istype(T, /turf/simulated/wall/r_wall) && !istype(T, /turf/space))
 				L+=T
 		var/loc = pick(L)
 		if(intensity)
