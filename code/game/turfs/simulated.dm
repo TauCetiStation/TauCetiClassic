@@ -52,6 +52,9 @@
 
 				var/footstepsound = "footsteps"
 
+				if(istype(H:shoes, /obj/item/clothing/shoes) && H:shoes.flags&NOSOUND)
+					footstepsound = 0
+
 				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
 					if(prob(25))
 						footstepsound = "clownstep"
