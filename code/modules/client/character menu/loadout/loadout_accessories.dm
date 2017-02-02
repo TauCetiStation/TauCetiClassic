@@ -15,6 +15,22 @@
 	scarfs["green"] = /obj/item/clothing/mask/greenscarf
 	gear_tweaks += new/datum/gear_tweak/path(scarfs)
 
+/datum/gear/accessory/headwear
+	display_name = "Skrell headwear selection"
+	path = /obj/item/clothing/head/skrell_headwear
+
+/datum/gear/accessory/headwear/New()
+	..()
+	var/headwear = list()
+	headwear["yellow"] = /obj/item/clothing/head/skrell_headwear
+	headwear["red"] = /obj/item/clothing/head/skrell_headwear/red
+	headwear["blue"] = /obj/item/clothing/head/skrell_headwear/blue
+	gear_tweaks += new/datum/gear_tweak/path(headwear)
+
+
+/datum/gear/accessory/headscarf
+	display_name = "Zhan Headscarf"
+	path = /obj/item/clothing/head/headscarf
 
 /datum/gear/accessory/bandana
 	display_name = "Bandana"
@@ -36,3 +52,10 @@
 
 	gear_tweaks += new/datum/gear_tweak/path(lstiks)
 
+/datum/gear/accessory/fingerless
+	display_name = "Fingerless gloves"
+	path = /obj/item/clothing/gloves/fingerless
+
+/datum/gear/accessory/left_black_glove
+	display_name = "Left Black Glove"
+	path = /obj/item/clothing/gloves/fluff/chal_appara_1

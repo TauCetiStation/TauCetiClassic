@@ -221,6 +221,38 @@
 	flags = BLOCKHAIR
 	siemens_coefficient = 2.0
 
+/obj/item/clothing/head/headscarf
+	name = "zhan headscarf"
+	icon_state = "zhan_scarf"
+	item_state = "zhan_scarf"
+	desc = "White headscarf"
+	body_parts_covered = 0
+	species_restricted = list("Unathi","Tajara","Human","Diona","Machine")
+
+/obj/item/clothing/head/skrell_headwear
+	name = "skrell yellow headwear"
+	icon_state = "skrell_yellow"
+	item_state = "skrell_yellow"
+	desc = "Just two pieces of yellow cloth"
+	body_parts_covered = 0
+	species_restricted = list("Skrell")
+
+/obj/item/clothing/head/skrell_headwear/red
+	name = "skrell red headwear"
+	icon_state = "skrell_red"
+	item_state = "skrell_red"
+	desc = "Just two pieces of red cloth"
+	body_parts_covered = 0
+	species_restricted = list("Skrell")
+
+/obj/item/clothing/head/skrell_headwear/blue
+	name = "skrell blue headwear"
+	icon_state = "skrell_blue"
+	item_state = "skrell_blue"
+	desc = "Just two pieces of blue cloth"
+	body_parts_covered = 0
+	species_restricted = list("Skrell")
+
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
 	icon_state = "xenos"
