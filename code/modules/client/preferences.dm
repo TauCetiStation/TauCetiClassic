@@ -20,6 +20,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	//non-preference stuff
 	var/warns = 0
 	var/warnbans = 0
+	var/permamuted = 0
 	var/muted = 0
 	var/last_ip
 	var/last_id
