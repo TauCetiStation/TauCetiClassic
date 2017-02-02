@@ -66,7 +66,7 @@
 		get_damage(Proj.damage)
 	..()
 
-/obj/machinery/artifact/bluespace_crystal/attackby(obj/item/weapon/W, var/mob/user)
+/obj/machinery/artifact/bluespace_crystal/attackby(obj/item/weapon/W, mob/user)
 
 	get_damage(W.force)
 	..()
