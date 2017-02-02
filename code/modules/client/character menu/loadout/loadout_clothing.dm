@@ -23,6 +23,16 @@
 	path = /obj/item/clothing/suit/poncho
 	cost = 1
 
+/datum/gear/suit/ian_shirt
+	display_name = "Ian Shirt"
+	path = /obj/item/clothing/suit/ianshirt
+	cost = 1
+
+/datum/gear/suit/nerd_shirt
+	display_name = "Nerd Shirt"
+	path = /obj/item/clothing/suit/nerdshirt
+	cost = 1
+
 /datum/gear/suit/unathi_robe
 	display_name = "Roughspun robe"
 	path = /obj/item/clothing/suit/unathi/robe

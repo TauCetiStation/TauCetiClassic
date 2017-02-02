@@ -35,3 +35,7 @@ datum/gear/zippo
 /datum/gear/briefcase
 	display_name = "Briefcase"
 	path = /obj/item/weapon/storage/briefcase
+
+/datum/gear/electriccig
+	display_name = "Electronic cigarette"
+	path = /obj/item/clothing/mask/fluff/electriccig
