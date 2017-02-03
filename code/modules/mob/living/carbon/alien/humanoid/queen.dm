@@ -10,7 +10,6 @@
 	heal_rate = 5
 	plasma_rate = 20
 	ventcrawler = 0
-	has_fine_manipulation = 1
 
 
 /mob/living/carbon/alien/humanoid/queen/New()
