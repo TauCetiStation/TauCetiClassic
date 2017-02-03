@@ -126,6 +126,7 @@
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
+	item_state = "satchel"
 
 /obj/item/weapon/storage/backpack/satchel/withwallet
 	New()
