@@ -6,6 +6,7 @@
 /area
 	var/global/global_uid = 0
 	var/uid
+	var/parallax_movedir = 0
 
 /area/New()
 	icon_state = ""

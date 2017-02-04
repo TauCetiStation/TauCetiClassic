@@ -1,7 +1,7 @@
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "electronic"
 	throwforce = 5
@@ -67,6 +67,8 @@
 	C.appearance = O.appearance
 	C.dir = O.dir
 	C.current_type = O.type
+	C.layer = initial(O.layer) // scanning things in your inventory
+	C.plane = initial(O.plane) 
 
 /obj/item/device/chameleon/proc/toggle()
 	if(!can_use || !active_dummy)

@@ -14,7 +14,6 @@
 	var/wet = 0
 	var/w_class = 3.0
 	var/can_embed = 1
-	flags = FPRINT | TABLEPASS
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 5
@@ -55,7 +54,7 @@
 //		/obj/machinery/r_n_d/experimentor,
 		/obj/machinery/autolathe
 	)
-
+	var/uncleanable = 0
 	var/toolspeed = 1
 
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
@@ -659,6 +658,8 @@
 
 /obj/item/clean_blood()
 	. = ..()
+	if(uncleanable)
+		return
 	if(blood_overlay)
 		overlays.Remove(blood_overlay)
 	if(istype(src, /obj/item/clothing/gloves))

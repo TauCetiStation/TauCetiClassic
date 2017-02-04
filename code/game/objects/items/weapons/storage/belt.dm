@@ -4,7 +4,6 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 
@@ -130,7 +129,7 @@
 		"/obj/item/device/flash",
 		"/obj/item/clothing/glasses",
 		"/obj/item/ammo_casing/shotgun",
-		"/obj/item/ammo_magazine",
+		"/obj/item/ammo_box/magazine",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/normal",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly",
 		"/obj/item/weapon/melee/baton",
@@ -191,7 +190,7 @@
 		"/obj/item/device/flash",
 		"/obj/item/clothing/glasses",
 		"/obj/item/ammo_casing/shotgun",
-		"/obj/item/ammo_magazine",
+		"/obj/item/ammo_box/magazine",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/normal",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly",
 		"/obj/item/weapon/melee/baton",

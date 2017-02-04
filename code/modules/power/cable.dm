@@ -422,7 +422,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
-	flags = TABLEPASS | FPRINT | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "coil"
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")

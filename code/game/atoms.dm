@@ -1,7 +1,8 @@
 /atom
-	layer = 2
+	layer = TURF_LAYER
+	plane = GAME_PLANE
 	var/level = 2
-	var/flags = FPRINT
+	var/flags = 0
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
@@ -126,10 +127,16 @@
 			f_name = "some "
 		else
 			f_name = "a "
-		if(src.blood_color == "#030303")	//TODO: Define blood colors or make oil != blood
-			f_name += "<span class='warning'>oil-stained</span> [name]!"
+		if(!src.blood_color) //Oil and blood puddles got 'blood_color = NULL', however they got 'color' instead
+			if(src.color == "#030303")
+				f_name += "<span class='warning'>[name]</span>!"
+			else
+				f_name += "<span class='danger'>[name]</span>!"
 		else
-			f_name += "<span class='danger'>blood-stained</span> [name]!"
+			if(src.blood_color == "#030303")	//TODO: Define blood colors or make oil != blood
+				f_name += "<span class='warning'>oil-stained</span> [name]!"
+			else
+				f_name += "<span class='danger'>blood-stained</span> [name]!"
 
 	to_chat(user, "[bicon(src)] That's [f_name]")
 
@@ -181,8 +188,6 @@
 /atom/proc/add_hiddenprint(mob/living/M)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if (!( src.flags ) & FPRINT)
-		return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
@@ -207,8 +212,6 @@
 	if(isnull(M)) return
 	if(isAI(M)) return
 	if(isnull(M.key)) return
-	if (!( src.flags ) & FPRINT)
-		return
 	if (ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
@@ -340,8 +343,6 @@
 		M.dna = new /datum/dna(null)
 		M.dna.real_name = M.real_name
 	M.check_dna()
-	if (!( src.flags ) & FPRINT)
-		return 0
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
 	blood_color = "#A10808"

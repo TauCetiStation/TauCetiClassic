@@ -9,7 +9,7 @@
 	name = "debugger"
 	icon_state = "hacktool-g"
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	force = 5.0
 	w_class = 2.0
 	throwforce = 5.0

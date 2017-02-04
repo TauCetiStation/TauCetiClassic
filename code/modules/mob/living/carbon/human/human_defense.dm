@@ -101,6 +101,14 @@
 			(SP.desc) = "[SP.desc] It looks like it was fired from [P.shot_from]."
 			(SP.loc) = organ
 			organ.embed(SP)
+	if(istype(P, /obj/item/projectile/neurotoxin))
+		var/obj/item/projectile/neurotoxin/B = P
+
+		var/datum/organ/external/organ = get_organ(check_zone(def_zone))
+		var/armor = getarmor_organ(organ, "bio")
+		if (armor < 100)
+			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
+			to_chat(src, "\red You have been shot!")
 
 	return (..(P , def_zone))
 

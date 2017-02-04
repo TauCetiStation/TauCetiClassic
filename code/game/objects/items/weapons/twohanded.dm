@@ -163,19 +163,30 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
+	item_color = "green"
 	force_unwielded = 3
-	force_wielded = 30
+	force_wielded = 45
+	var/hacked
+	var/slicing
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = 1
 	edge = 1
+	can_embed = 0
+
+/obj/item/weapon/twohanded/dualsaber/New()
+	reflect_chance = rand(50,85)
+	item_color = pick("red", "blue", "green", "purple")
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
-	icon_state = "dualsaber[wielded]"
-	return
+	if(wielded)
+		icon_state = "dualsaber[item_color][wielded]"
+	else
+		icon_state = "dualsaber0"
+	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 
 /obj/item/weapon/twohanded/dualsaber/attack(target, mob/living/user)
 	..()
@@ -206,3 +217,49 @@
 		else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
 			return TRUE
 	return FALSE
+
+/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/device/multitool))
+		if(!hacked)
+			hacked = 1
+			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
+			item_color = "rainbow"
+			update_icon()
+		else
+			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+	else
+		return ..()
+
+/obj/item/weapon/twohanded/dualsaber/afterattack(obj/O, mob/user, proximity)
+	if(!istype(O,/obj/machinery/door/airlock))
+		return
+	if(O.density && src.wielded && proximity)
+		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
+		playsound(user.loc, 'sound/items/Welder2.ogg', 100, 1, -1)
+		src.slicing = 1
+		var/obj/machinery/door/airlock/D = O
+		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
+		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1))
+			sleep(6)
+			var/obj/structure/door_scrap/S = new /obj/structure/door_scrap(D.loc)
+			var/iconpath = D.icon
+			var/icon/IC = new(iconpath, "closed")
+			IC.Blend(S.door, ICON_OVERLAY, 1, 1)
+			IC.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+			S.icon = IC
+			qdel(D)
+			qdel(IC)
+			playsound(user.loc, 'sound/weapons/blade1.ogg', 100, 1, -1)
+		src.slicing = 0
+		qdel(I)
+
+
+/obj/item/weapon/twohanded/dualsaber/dropped(mob/user)
+ 	..()
+ 	src.slicing = 0
+
+/obj/item/weapon/twohanded/dualsaber/attack_self(mob/user)
+	if(src.slicing)
+		return
+	else
+		..()

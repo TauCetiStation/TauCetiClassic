@@ -87,7 +87,8 @@
 				if (istype(item, /obj/item/clothing/mask))
 					source.drop_item()
 					loc = target
-					item.layer = 20
+					item.layer = ABOVE_HUD_LAYER
+					item.plane = ABOVE_HUD_PLANE
 					item.appearance_flags = APPEARANCE_UI
 					target.wear_mask = item
 					item.loc = target
@@ -100,7 +101,8 @@
 				if (istype(item, /obj/item))
 					source.drop_item()
 					loc = target
-					item.layer = 20
+					item.layer = ABOVE_HUD_LAYER
+					item.plane = ABOVE_HUD_PLANE
 					item.appearance_flags = APPEARANCE_UI
 					target.l_hand = item
 					item.loc = target
@@ -115,7 +117,8 @@
 				if (istype(item, /obj/item))
 					source.drop_item()
 					loc = target
-					item.layer = 20
+					item.layer = ABOVE_HUD_LAYER
+					item.plane = ABOVE_HUD_PLANE
 					item.appearance_flags = APPEARANCE_UI
 					target.r_hand = item
 					item.loc = target
@@ -130,7 +133,8 @@
 				if ((istype(item, /obj/item) && item.slot_flags & SLOT_BACK ))
 					source.drop_item()
 					loc = target
-					item.layer = 20
+					item.layer = ABOVE_HUD_LAYER
+					item.plane = ABOVE_HUD_PLANE
 					item.appearance_flags = APPEARANCE_UI
 					target.back = item
 					item.loc = target
@@ -206,7 +210,8 @@
 			to_chat(usr, "<span class='red'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return
 
-	W.layer = 20
+	W.layer = ABOVE_HUD_LAYER
+	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
 
 	return

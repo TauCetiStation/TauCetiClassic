@@ -136,3 +136,22 @@
 	new /obj/item/clothing/glasses/chameleon(src)
 	new /obj/item/weapon/gun/projectile/chameleon(src)
 	new /obj/item/ammo_box/magazine/chameleon(src)
+
+/obj/item/weapon/storage/box/syndie_kit/throwing_weapon
+	name = "box (F)"
+
+/obj/item/weapon/storage/box/syndie_kit/throwing_weapon/New()
+	..()
+	new /obj/item/weapon/legcuffs/bola/tactical(src)
+	new /obj/item/weapon/legcuffs/bola/tactical(src)
+	for(var/i = 1 to 5)
+		new /obj/item/weapon/throwing_star(src)
+
+/obj/item/weapon/storage/box/syndie_kit/cutouts
+	name = "box (G)"
+
+/obj/item/weapon/storage/box/syndie_kit/cutouts/New()
+	..()
+	for(var/i = 1 to 3)
+		new /obj/item/cardboard_cutout(src)
+	new /obj/item/toy/crayon/rainbow (src)

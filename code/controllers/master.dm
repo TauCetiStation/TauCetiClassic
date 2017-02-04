@@ -85,7 +85,8 @@ var/global/datum/controller/master/Master = new()
 
 	//load templates
 	preloadTemplates()
-
+	//custom loadout
+	populate_gear_list()
 	// Set up Z-level transistions.
 	//setup_map_transitions()
 

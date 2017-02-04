@@ -7,7 +7,7 @@
 
 	for(var/obj/machinery/camera/cam in range(severity_range,C))
 		if(is_valid_camera(cam))
-			cam.deactivate()
+			cam.toggle_cam(TRUE)
 			if(prob(5))
 				cam.triggerCameraAlarm()
 

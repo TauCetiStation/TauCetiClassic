@@ -15,7 +15,7 @@
 	votable = 0
 
 	uplink_welcome = "Corporate Backed Uplink Console:"
-	uplink_uses = 10
+	uplink_uses = 20
 
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 
@@ -264,11 +264,11 @@
 		var/race = synd_mob.species.name
 
 		if(race == "Unathi")
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie_unathi(synd_mob), slot_in_backpack)
+			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/unathi(synd_mob), slot_in_backpack)
 		else if(race == "Tajaran")
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie_tajaran(synd_mob), slot_in_backpack)
+			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/tajaran(synd_mob), slot_in_backpack)
 		else if(race == "Skrell")
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie_skrell(synd_mob), slot_in_backpack)
+			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), slot_in_backpack)
 	//	else
 	//		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/syndi/human(synd_mob), slot_wear_suit)
 	//		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/syndi/human(synd_mob), slot_head)

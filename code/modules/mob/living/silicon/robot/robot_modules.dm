@@ -4,7 +4,7 @@
 	icon_state = "std_module"
 	w_class = 100.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS | CONDUCT
+	flags = CONDUCT
 	var/channels = list()
 	var/list/modules = list()
 	var/obj/item/emag = null
@@ -270,7 +270,7 @@
 
 	New()
 		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/cans/beer(src)
+		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 
 		var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
@@ -288,7 +288,7 @@
 		src.modules += new /obj/item/weapon/pen/robopen(src)
 		src.modules += new /obj/item/weapon/razor(src)
 
-		src.emag = new /obj/item/weapon/reagent_containers/food/drinks/cans/beer(src)
+		src.emag = new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
 
 		var/datum/reagents/R = new/datum/reagents(50)
 		src.emag.reagents = R
@@ -313,7 +313,7 @@
 	var/obj/item/weapon/reagent_containers/food/condiment/enzyme/E = locate() in src.modules
 	E.reagents.add_reagent("enzyme", 2)
 	if(src.emag)
-		var/obj/item/weapon/reagent_containers/food/drinks/cans/beer/B = src.emag
+		var/obj/item/weapon/reagent_containers/food/drinks/bottle/beer/B = src.emag
 		B.reagents.add_reagent("beer2", 2)
 
 /obj/item/weapon/robot_module/miner

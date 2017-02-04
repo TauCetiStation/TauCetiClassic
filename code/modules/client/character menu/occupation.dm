@@ -50,7 +50,7 @@
 				var/available_in_days = job.available_in_days(user.client)
 				. += "<del>[rank]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
 			continue
-		if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
+		if((job_civilian_low & ASSISTANT) && (rank != "Test Subject"))
 			. += "<font color=orange>[rank]</font></td><td></td></tr>"
 			continue
 		if((rank in command_positions) || (rank == "AI"))//Bold head jobs
@@ -62,7 +62,7 @@
 
 		. += "<a class='white' href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
 
-		if(rank == "Assistant")//Assistant is special
+		if(rank == "Test Subject")//Assistant is special
 			if(job_civilian_low & ASSISTANT)
 				. += " <font color=green size=2>Yes</font>"
 			else
@@ -130,7 +130,7 @@
 	if(!job)
 		return
 
-	if(role == "Assistant")
+	if(role == "Test Subject")
 		if(job_civilian_low & job.flag)
 			job_civilian_low &= ~job.flag
 		else

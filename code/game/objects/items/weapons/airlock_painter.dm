@@ -12,7 +12,7 @@
 	var/list/modes = list("grey","red","blue","cyan","green","yellow","purple")
 	var/mode = "grey"
 
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 
 	var/obj/item/device/toner/ink = null

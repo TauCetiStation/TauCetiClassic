@@ -28,3 +28,9 @@
 	name = "syringe gun spring"
 	desc = "A high-power spring that throws syringes."
 	projectile_type = null
+
+
+/obj/item/ammo_casing/magic/neurotoxin
+	name = "neurotoxin"
+	desc = "Hi-s-s-s-s"
+	projectile_type = /obj/item/projectile/neurotoxin

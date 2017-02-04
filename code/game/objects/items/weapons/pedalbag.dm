@@ -4,7 +4,6 @@
 	icon_state = "backpack"
 	item_state = "backpack"
 	w_class = 4.0
-	flags = FPRINT|TABLEPASS
 	slot_flags = SLOT_BACK
 
 /obj/item/weapon/pedalbag/verb/quick_empty()

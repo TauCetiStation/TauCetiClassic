@@ -6,7 +6,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "blank"
-	layer = 4
+	layer = MOB_LAYER // on tg it is FLOAT LAYER
+	plane = FLOAT_PLANE
 	stat = DEAD
 	density = 0
 	canmove = 0
@@ -231,7 +232,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.Crossed(src)
-
+		update_parallax_contents()
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
@@ -349,6 +350,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "<span class='warning'>No area available.</span>")
 
 	usr.forceMoveOld(pick(L))
+	update_parallax_contents()
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -422,6 +424,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
 				A.forceMoveOld(T)
+				A.update_parallax_contents()
 			else
 				to_chat(A, "This mob is not located in the game world.")
 
@@ -505,6 +508,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Become mouse"
 	set category = "Ghost"
 
+	if(jobban_isbanned(src, "Mouse"))
+		to_chat(src, "<span class='warning'>You have been banned from being mouse.</span>")
+		return
+
 	if(config.disable_player_mice)
 		to_chat(src, "<span class='warning'>Spawning as a mouse is currently disabled.</span>")
 		return
@@ -522,7 +529,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	var/response = alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?","Squeek!","Nope!")
-	if(response != "Squeek!") return  //Hit the wrong key...again.
+	if(response != "Squeek!")
+		return  //Hit the wrong key...again.
 
 	mousize()
 

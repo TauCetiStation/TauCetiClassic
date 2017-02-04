@@ -16,7 +16,6 @@
 	density = 1
 	unacidable = 1
 	anchored = 1 //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
-//	flags = FPRINT | TABLEPASS
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
@@ -94,6 +93,22 @@
 	qdel(in_chamber) //No need for it anymore
 	return output //Send it back to the gun!
 
+/proc/check_trajectory(atom/target, atom/firer, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = null) //Spherical test in vacuum
+	if(!istype(target) || !istype(firer))
+		return 0
+
+	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
+
+	//Set the flags and pass flags to that of the real projectile...
+	if(!isnull(flags))
+		trace.flags = flags
+	trace.target = target
+	trace.pass_flags = pass_flags
+
+	var/output = trace.process() //Test it!
+	qdel(trace) //No need for it anymore
+	return output //Send it back to the gun!
+
 //Used to change the direction of the projectile in flight.
 /obj/item/projectile/proc/redirect(new_x, new_y, atom/starting_loc, mob/new_firer=null)
 	original = locate(new_x, new_y, src.z)
@@ -155,11 +170,11 @@
 				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 				if(!fake)
-					msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+					msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
 			else
 				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 				if(!fake)
-					msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+					msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
 
 //	if(istype(src, /obj/item/projectile/beam))
 
@@ -212,7 +227,7 @@
 //				invisibility = 101
 //				qdel(src)
 //				return 0
-//		return 1	//с ТГ, работает лучше
+//		return 1
 
 
 
@@ -330,8 +345,12 @@
 		return //cannot shoot yourself
 	if(istype(A, /obj/item/projectile))
 		return
-	if(istype(A, /mob/living))
+	if(is_type_in_list(A, list(/mob/living, /obj/mecha, /obj/machinery/bot/mulebot)))
 		result = 2 //We hit someone, return 1!
+		return
+	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
+		return
+	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
 		return
 	result = 1
 	return

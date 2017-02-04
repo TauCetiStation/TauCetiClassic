@@ -5,7 +5,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
@@ -16,8 +15,8 @@
 
 /obj/item/weapon/storage/bible/booze/New()
 	..()
-	new /obj/item/weapon/reagent_containers/food/drinks/cans/beer(src)
-	new /obj/item/weapon/reagent_containers/food/drinks/cans/beer(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
 	new /obj/item/weapon/spacecash(src)
 	new /obj/item/weapon/spacecash(src)
 	new /obj/item/weapon/spacecash(src)

@@ -1,7 +1,8 @@
 /obj/effect/projectile
 	icon = 'icons/effects/projectiles.dmi'
 	icon_state = "bolt"
-	layer = 20
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
 
 /obj/effect/projectile/New(var/turf/location)
 	if(istype(location))

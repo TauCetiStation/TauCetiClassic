@@ -23,7 +23,6 @@ var/bomb_set
 	var/timing_wire
 	var/removal_stage = 0 // 0 is no removal, 1 is covers removed, 2 is covers open,
 	                      // 3 is sealant open, 4 is unwrenched, 5 is removed from bolts.
-	flags = FPRINT
 	use_power = 0
 	var/detonated = 0 //used for scoreboard.
 	var/lastentered = ""
@@ -502,7 +501,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 			if(syndie_location)
 				ticker.mode:syndies_didnt_escape = (syndie_location.z > ZLEVEL_STATION ? 0 : 1)	//muskets will make me change this, but it will do for now
 			ticker.mode:nuke_off_station = off_station
-		//ticker.station_explosion_cinematic(off_station,null)
+		ticker.station_explosion_cinematic(off_station,null)
 		if(ticker.mode)
 			ticker.mode.explosion_in_progress = 0
 			if(ticker.mode.name == "nuclear emergency")

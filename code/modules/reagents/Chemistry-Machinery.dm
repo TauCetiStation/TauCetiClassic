@@ -1,7 +1,8 @@
 #define SOLID 1
 #define LIQUID 2
 #define GAS 3
-
+#define MAX_PILL_SPRITE 20
+#define MAX_BOTTLE_SPRITE 20
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	density = 1
@@ -353,12 +354,12 @@
 	idle_power_usage = 20
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
-	var/mode = 0
+	var/mode = 1
 	var/condi = 0
 	var/useramount = 30 // Last used amount
 	var/pillamount = 10
-	var/bottlesprite = "1" //yes, strings
-	var/pillsprite = "1"
+	var/bottlesprite = 1
+	var/pillsprite = 1
 	var/client/has_sprites = list()
 	var/max_pill_count = 20
 
@@ -427,7 +428,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	if(href_list["ejectp"])
 		if(loaded_pill_bottle)
 			loaded_pill_bottle.loc = src.loc
@@ -448,12 +448,63 @@
 				return FALSE
 			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			P.name = trim("[name] bottle")
+			P.icon_state = "bottle[bottlesprite]"
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
 			reagents.trans_to(P, 30)
 		else
 			var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 			reagents.trans_to(P, 50)
+
+	else if(href_list["changepill"])
+		var/dat = "<B>Choose pill colour</B><BR>"
+
+		dat += "<TABLE><TR>"
+		for(var/i = 1 to MAX_PILL_SPRITE)
+			if(!((i-1)%9)) //New row every 9 icons
+				dat +="</TR><TR>"
+			dat += "<TD><A href='?src=\ref[src];set=1;value=[i] '><IMG src=pill[i].png></A></TD>"
+		dat += "</TR></TABLE>"
+
+		dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
+
+		var/datum/browser/popup = new(usr, "chem_master", name)
+		popup.set_content(dat)
+		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open(1)
+		return
+
+	else if(href_list["changebottle"])
+		var/dat = "<B>Choose bottle colour</B><BR>"
+
+		dat += "<TABLE><TR>"
+		for(var/i = 1 to MAX_BOTTLE_SPRITE)
+			if(!((i-1)%9)) //New row every 9 icons
+				dat += "</TR><TR>"
+			dat += "<TD><A href='?src=\ref[src];set=2;value=[i] '><IMG src=bottle[i].png></A></TD>"
+
+		dat += "</TR></TABLE>"
+
+		dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
+
+		var/datum/browser/popup = new(usr, "chem_master", name)
+		popup.set_content(dat)
+		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open(1)
+		return
+
+	else if(href_list["set"])
+		if(href_list["value"])
+			if(href_list["set"] == "1")
+				src.pillsprite = text2num(href_list["value"])
+			else
+				src.bottlesprite = text2num(href_list["value"])
+		attack_hand(usr)
+		return
+
+	else if(href_list["main"]) // Used to exit the analyze screen.
+		attack_hand(usr)
+		return
 
 	if(beaker)
 		if(href_list["analyze"])
@@ -493,9 +544,6 @@
 					popup.open(1)
 					return
 
-		else if(href_list["main"]) // Used to exit the analyze screen.
-			attack_hand(usr)
-			return
 
 		else if(href_list["add"])
 			if(href_list["amount"])
@@ -571,6 +619,7 @@
 					else
 						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 					P.name = trim("[name] pill")
+					P.icon_state = "pill[pillsprite]"
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
 					reagents.trans_to(P,vol_each)
@@ -586,8 +635,16 @@
 /obj/machinery/chem_master/attack_hand(mob/user)
 	if(stat & BROKEN)
 		return
-
 	user.set_machine(src)
+	if(!(user.client in has_sprites))
+		spawn()
+			has_sprites += user.client
+			for(var/i = 1 to MAX_PILL_SPRITE)
+				usr << browse_rsc(icon('icons/obj/chemical.dmi', "pill[i]"), "pill[i].png")
+			for(var/i = 1 to MAX_BOTTLE_SPRITE)
+				usr << browse_rsc(icon('icons/obj/chemical.dmi', "bottle[i]"), "bottle[i].png")
+			src.updateUsrDialog()
+
 	var/dat = ""
 	if(beaker)
 		dat += "Beaker \[[beaker.reagents.total_volume]/[beaker.volume]\] <A href='?src=\ref[src];eject=1'>Eject and Clear Buffer</A><BR>"
@@ -624,6 +681,12 @@
 		dat += "<LI>Buffer is empty."
 	dat += "</UL><HR>"
 
+
+	dat += "<A href='?src=\ref[src];changepill=1'><img src='pill[src.pillsprite].png'></A>"
+	dat += "<A href='?src=\ref[src];changebottle=1'><img src='bottle[src.bottlesprite].png'></A>"
+
+
+	dat += "<HR>"
 	if(!condi)
 		if(src.loaded_pill_bottle)
 			dat += "Pill Bottle \[[loaded_pill_bottle.contents.len]/[loaded_pill_bottle.storage_slots]\] <A href='?src=\ref[src];ejectp=1'>Eject</A>"

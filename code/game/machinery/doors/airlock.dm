@@ -591,6 +591,7 @@ About the new airlock wires panel:
 	if(lights_overlay != old_lights_overlay)
 		if(lights_overlay)
 			lights_overlay.layer = LIGHTING_LAYER + 1
+			lights_overlay.plane = LIGHTING_PLANE + 1
 		overlays -= old_lights_overlay
 		overlays += lights_overlay
 		old_lights_overlay = lights_overlay
@@ -605,6 +606,7 @@ About the new airlock wires panel:
 	if(sparks_overlay != old_sparks_overlay)
 		if(sparks_overlay)
 			sparks_overlay.layer = LIGHTING_LAYER + 1
+			sparks_overlay.plane = LIGHTING_PLANE + 1
 		overlays -= old_sparks_overlay
 		overlays += sparks_overlay
 		old_sparks_overlay = sparks_overlay
@@ -635,7 +637,7 @@ About the new airlock wires panel:
 		to_chat(user, "Airlock AI control wire is cut. Please call the engineer or engiborg to fix this problem.")
 		return
 //##Z1
-	if(!src.canAIControl())
+	if(!(src.canAIControl()) || IsAdminGhost(usr))
 		if(src.canAIHack())
 			src.hack(user)
 			return
@@ -893,7 +895,7 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attack_hand(mob/user)
-	if(!istype(usr, /mob/living/silicon))
+	if(!(istype(user, /mob/living/silicon) || IsAdminGhost(user)))
 		if(src.isElectrified())
 			if(src.shock(user, 100))
 				return
@@ -1029,7 +1031,7 @@ About the new airlock wires panel:
 			R.airlock_wire = null
 			signalers[wirenum] = null
 
-	if(issilicon(usr) && canAIControl())
+	if((istype(usr, /mob/living/silicon) && src.canAIControl()) || IsAdminGhost(usr))
 		//AI
 		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed, 11 lift access override
 		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed, 11 lift access override
@@ -1226,7 +1228,7 @@ About the new airlock wires panel:
 		updateUsrDialog()
 
 /obj/machinery/door/airlock/attackby(C, mob/user)
-	if(!istype(usr, /mob/living/silicon))
+	if(!(istype(usr, /mob/living/silicon) || IsAdminGhost(user)))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
 				return
@@ -1468,3 +1470,15 @@ About the new airlock wires panel:
 			icon          = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	update_icon()
+
+/obj/structure/door_scrap
+	name = "Door Scrap"
+	desc = "Just a bunch of garbage."
+	var/icon/door = icon('icons/effects/effects.dmi',"Sliced")
+	attackby(obj/O, mob/user)
+		if(istype(O,/obj/item/weapon/wrench))
+			playsound(user.loc, 'sound/items/Ratchet.ogg', 50)
+			user.visible_message("[user] has disassemble these scrap...")
+			new /obj/item/stack/sheet/metal(src.loc)
+			new /obj/item/stack/sheet/metal(src.loc)
+			qdel(src)

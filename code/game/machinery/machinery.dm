@@ -286,11 +286,12 @@ Class Procs:
 /obj/machinery/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
-	if(user.lying || user.stat)
+	if((user.lying || user.stat) && !IsAdminGhost(user))
 		return 1
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey)) )
+			istype(usr, /mob/living/carbon/monkey) || \
+			istype(user, /mob/living/carbon/alien/humanoid/queen) ))
 		to_chat(usr, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return 1
 /*

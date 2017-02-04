@@ -37,7 +37,7 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 	var/uplink_welcome = "Syndicate Uplink Console:"
-	var/uplink_uses = 10
+	var/uplink_uses = 20
 	var/uplink_items = {"Highly Visible and Dangerous Weapons;
 /obj/item/weapon/gun/projectile/revolver/syndie:6:Revolver;
 /obj/item/ammo_box/a357:2:Ammo-357;
@@ -252,7 +252,7 @@ Implants;
 			// If they're a traitor or likewise, give them extra TC in exchange.
 			var/obj/item/device/uplink/hidden/suplink = man.mind.find_syndicate_uplink()
 			if(suplink)
-				var/extra = 4
+				var/extra = 8
 				suplink.uses += extra
 				if(man.mind) man.mind.total_TC += extra
 				to_chat(man, "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.")

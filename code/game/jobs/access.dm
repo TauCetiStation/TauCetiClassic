@@ -101,6 +101,9 @@
 		var/mob/living/silicon/S = M
 		if(src.check_access(S))
 			return TRUE
+	if(IsAdminGhost(M))
+		//Access can't stop the abuse
+		return TRUE
 	else if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works

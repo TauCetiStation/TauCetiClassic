@@ -38,6 +38,7 @@
 					qdel(W)
 					continue
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 				W.loc = M.loc
 				W.dropped(M)
 

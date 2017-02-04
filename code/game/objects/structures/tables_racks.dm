@@ -385,9 +385,9 @@
 	if(isrobot(user))
 		return
 
-	if(istype(W, /obj/item/weapon/melee/energy))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W:active && user.a_intent == "hurt"))
-			if(istype(src, /obj/structure/table/reinforced) && W:active)	//У обычных энергомечей нету 70 force как у ниндзи, поэтому не стоит
+	if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
+		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W.force > 3 && user.a_intent == "hurt"))
+			if(istype(src, /obj/structure/table/reinforced) && W:active)
 				..()
 				to_chat(user, "<span class='notice'>You tried to slice through [src] but [W] is too weak.</span>")
 				return
@@ -402,7 +402,7 @@
 			destroy()
 			return
 
-	if(!(W.flags & ABSTRACT)) //Чтобы не класли на столы всякие тентакли и прочие абстрактные объекты
+	if(!(W.flags & ABSTRACT))
 		if(user.drop_item())
 			W.Move(loc)
 			var/list/click_params = params2list(params)
@@ -512,6 +512,7 @@
 	verbs +=/obj/structure/table/verb/do_flip
 
 	layer = initial(layer)
+	plane = initial(plane)
 	flipped = 0
 	flags &= ~ON_BORDER
 	for(var/D in list(turn(dir, 90), turn(dir, -90)))
@@ -607,7 +608,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	density = 1
-	flags = FPRINT
 	anchored = 1.0
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts

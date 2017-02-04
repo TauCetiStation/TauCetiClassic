@@ -10,6 +10,12 @@
 /*
  * effect/alien
  */
+
+#define WEED_NORTH_EDGING "north"
+#define WEED_SOUTH_EDGING "south"
+#define WEED_EAST_EDGING "east"
+#define WEED_WEST_EDGING "west"
+
 /obj/effect/alien
 	name = "alien thing"
 	desc = "theres something alien about this."
@@ -28,22 +34,23 @@
 	density = 1
 	opacity = 1
 	anchored = 1
-	var/health = 500
+	layer = 3.14
+	var/health = 250
 	var/resintype = null
 	//var/mob/living/affecting = null
 
-	wall
+/obj/effect/alien/resin/wall
 		name = "resin wall"
 		desc = "Purple slime solidified into a wall."
 		icon_state = "wall0" //same as resin, but consistency ho!
 		resintype = "wall"
 
-	membrane
+/obj/effect/alien/resin/membrane
 		name = "resin membrane"
 		desc = "Purple slime just thin enough to let light pass through."
 		icon_state = "membrane0"
 		opacity = 0
-		health = 320
+		health = 160
 		resintype = "membrane"
 
 /obj/effect/alien/resin/wall/shadowling
@@ -65,7 +72,10 @@
 /obj/effect/alien/resin/proc/healthcheck()
 	if(health <=0)
 		density = 0
+		var/turf/T = loc
 		qdel(src)
+		for (var/obj/effect/alien/weeds/W in range(1,T))
+			W.updateWeedOverlays()
 	return
 
 /obj/effect/alien/resin/bullet_act(obj/item/projectile/Proj)
@@ -198,47 +208,85 @@
 	layer = 2
 	var/health = 15
 	var/obj/effect/alien/weeds/node/linked_node = null
+	var/static/list/weedImageCache
 
 /obj/effect/alien/weeds/node
 	icon_state = "weednode"
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
-	layer = 3
+	layer = 2.5
 	light_range = 0
 	var/node_range = NODERANGE
+	light_color = "#24C1FF"
 
 /obj/effect/alien/weeds/node/New()
 	..(src.loc, src)
-
+	for (var/obj/effect/alien/weeds/W in loc)
+		if (W != src)
+			qdel(W)
+	set_light(2)
 
 /obj/effect/alien/weeds/New(pos, node)
 	..()
 	if(istype(loc, /turf/space))
 		qdel(src)
 		return
+
 	linked_node = node
 	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
+	fullUpdateWeedOverlays()
 	spawn(rand(150, 200))
 		if(src)
 			Life()
 	return
 
+/obj/effect/alien/weeds/node/Destroy()
+	var/turf/T = loc
+	loc = null
+	for (var/obj/effect/alien/weeds/W in range(1,T))
+		W.updateWeedOverlays()
+	linked_node = null
+	..()
+
+/obj/effect/alien/weeds/proc/updateWeedOverlays()
+
+	overlays.Cut()
+
+	if(!weedImageCache || !weedImageCache.len)
+		weedImageCache = list()
+		weedImageCache.len = 4
+		weedImageCache[WEED_NORTH_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
+		weedImageCache[WEED_SOUTH_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
+		weedImageCache[WEED_EAST_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
+		weedImageCache[WEED_WEST_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
+
+	var/turf/N = get_step(src, NORTH)
+	var/turf/S = get_step(src, SOUTH)
+	var/turf/E = get_step(src, EAST)
+	var/turf/W = get_step(src, WEST)
+
+	if(!locate(/obj/effect/alien) in N.contents)
+		if(istype(N, /turf/simulated/floor))
+			overlays += weedImageCache[WEED_SOUTH_EDGING]
+	if(!locate(/obj/effect/alien) in S.contents)
+		if(istype(S, /turf/simulated/floor))
+			overlays += weedImageCache[WEED_NORTH_EDGING]
+	if(!locate(/obj/effect/alien) in E.contents)
+		if(istype(E, /turf/simulated/floor))
+			overlays += weedImageCache[WEED_WEST_EDGING]
+	if(!locate(/obj/effect/alien) in W.contents)
+		if(istype(W, /turf/simulated/floor))
+			overlays += weedImageCache[WEED_EAST_EDGING]
+
+
+/obj/effect/alien/weeds/proc/fullUpdateWeedOverlays()
+	for (var/obj/effect/alien/weeds/W in range(1,src))
+		W.updateWeedOverlays()
+
 /obj/effect/alien/weeds/proc/Life()
 	//set background = 1
 	var/turf/U = get_turf(src)
-/*
-	if (locate(/obj/movable, U))
-		U = locate(/obj/movable, U)
-		if(U.density == 1)
-			qdel(src)
-			return
 
-Alien plants should do something if theres a lot of poison
-	if(U.poison> 200000)
-		health -= round(U.poison/200000)
-		update()
-		return
-*/
 	if (istype(U, /turf/space))
 		qdel(src)
 		return
@@ -246,24 +294,28 @@ Alien plants should do something if theres a lot of poison
 	if(!linked_node || (get_dist(linked_node, src) > linked_node.node_range) )
 		return
 
-	direction_loop:
-		for(var/dirn in cardinal)
-			var/turf/T = get_step(src, dirn)
+	for(var/dirn in cardinal)
+		var/turf/T = get_step(src, dirn)
 
-			if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
+		if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
+			continue
+
+		var/obj/structure/window/W = locate(/obj/structure/window) in T
+		var/obj/machinery/door/D = locate(/obj/machinery/door) in T
+
+		if(D)
+			if(D.density)
 				continue
 
-	//		if (locate(/obj/movable, T)) // don't propogate into movables
-	//			continue
+		if(W)
+			if(W.density)
+				continue
 
-			for(var/obj/O in T)
-				if(O.density)
-					continue direction_loop
-
-			PoolOrNew(/obj/effect/alien/weeds, T, linked_node)
+		new /obj/effect/alien/weeds(T, linked_node)
 
 
 /obj/effect/alien/weeds/ex_act(severity)
+	var/turf/T = loc
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -273,6 +325,8 @@ Alien plants should do something if theres a lot of poison
 		if(3.0)
 			if (prob(5))
 				qdel(src)
+	for (var/obj/effect/alien/weeds/W in range(1,T))
+		W.updateWeedOverlays()
 	return
 
 /obj/effect/alien/weeds/attackby(obj/item/weapon/W, mob/user)
@@ -301,8 +355,10 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/weeds/proc/healthcheck()
 	if(health <= 0)
+		var/turf/T = loc
 		qdel(src)
-
+		for (var/obj/effect/alien/weeds/W in range(1,T))
+			W.updateWeedOverlays()
 
 /obj/effect/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)

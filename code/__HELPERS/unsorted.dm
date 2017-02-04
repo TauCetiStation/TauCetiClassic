@@ -851,6 +851,7 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 
 						// Take on the icon of a neighboring scrolling space icon
 						X.icon = nextturf.icon
+						X.plane = nextturf.plane
 						X.icon_state = nextturf.icon_state
 
 
@@ -859,15 +860,19 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 						// Reset the shuttle corners
 						if(O.tag == "delete me")
 							X.icon = 'icons/turf/shuttle.dmi'
+							X.plane = initial(X.plane)
 							X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
 							X.name = "wall"
 							qdel(O) // prevents multiple shuttle corners from stacking
 							continue
 						if(!istype(O,/obj)) continue
 						O.loc = X
+						if (length(O.client_mobs_in_contents))
+							O.update_parallax_contents()
 					for(var/mob/M in T)
 						if(!istype(M,/mob) || istype(M, /mob/aiEye) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
 						M.loc = X
+						M.update_parallax_contents()
 
 //					var/area/AR = X.loc
 
@@ -1309,15 +1314,30 @@ var/list/WALLITEMS = list(
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
 
-/proc/screen_loc2turf(scr_loc, turf/origin)
+/proc/params2turf(scr_loc, turf/origin)
+	if(!scr_loc)
+		return null
 	var/tX = splittext(scr_loc, ",")
 	var/tY = splittext(tX[2], ":")
 	var/tZ = origin.z
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
-	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
+	tX = Clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
+	tY = Clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
+	return locate(tX, tY, tZ)
+
+/proc/screen_loc2turf(text, turf/origin)
+	if(!text)
+		return null
+	var/tZ = splittext(text, ",")
+	var/tX = splittext(tZ[1], "-")
+	var/tY = text2num(tX[2])
+	tX = splittext(tZ[2], "-")
+	tX = text2num(tX[2])
+	tZ = origin.z
+	tX = Clamp(origin.x + 7 - tX, 1, world.maxx)
+	tY = Clamp(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/iscatwalk(atom/A)
@@ -1450,6 +1470,10 @@ var/mob/dview/dview_mob = new
 		M.Turn(pre_rot)
 		transform = M
 
+	if(istype(A, /atom/movable))
+		var/atom/movable/mov = A
+		mov.update_parallax_contents() //does it really necessery
+
 	var/matrix/shift = matrix(transform)
 	shift.Translate(0,radius)
 	transform = shift
@@ -1469,7 +1493,6 @@ var/mob/dview/dview_mob = new
 	if(orbiting == A) //make sure we haven't started orbiting something else.
 		orbiting = null
 		SpinAnimation(0,0)
-
 
 
 /atom/movable/proc/stop_orbit()

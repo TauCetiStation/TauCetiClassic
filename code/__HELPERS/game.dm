@@ -237,6 +237,28 @@
 					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
 	return .
 
+/atom/movable/proc/get_mob()
+	return
+
+/obj/machinery/bot/mulebot/get_mob()
+	if(load && istype(load, /mob/living))
+		return load
+
+/obj/mecha/get_mob()
+	return occupant
+
+/mob/get_mob()
+	return src
+
+/proc/mobs_in_view(range, source)
+	var/list/mobs = list()
+	for(var/atom/movable/AM in view(range, source))
+		var/M = AM.get_mob()
+		if(M)
+			mobs += M
+
+	return mobs
+
 #define SIGN(X) ((X<0)?-1:1)
 
 proc
@@ -391,7 +413,7 @@ proc/isInSight(atom/A, atom/B)
 	var/dest_y
 
 /datum/projectile_data/New(var/src_x, var/src_y, var/time, var/distance, \
-						   var/power_x, var/power_y, var/dest_x, var/dest_y)
+							 var/power_x, var/power_y, var/dest_x, var/dest_y)
 	src.src_x = src_x
 	src.src_y = src_y
 	src.time = time
@@ -462,12 +484,10 @@ proc/isInSight(atom/A, atom/B)
 	if(M.client.holder)
 		return
 	if(M.client.player_age == 0)
-		for(var/client/C in clients)
-			if(C.holder)
-				to_chat(C, "<span class=\"admin\"><span class=\"prefix\">New player notify:</span> <span class=\"message\">[M.ckey] join to the game as [M.mind.name] [M.mind.assigned_role ? "([M.mind.assigned_role])" : ""] - <a href='http://www.byond.com/members/[M.ckey]'>Byond Profile</a> (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span></span>")
+		var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
+		var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
 
-				if(R_ADMIN & C.holder.rights)
-					to_chat(C, "<span class=\"admin\"><span class=\"prefix\">New player notify:</span> <span class=\"message\">[M.ckey] ip: [M.lastKnownIP]</span></span>")
+		message_admins("<b>New player notify:</b> [M.ckey] join to the game as [M.mind.name][player_assigned_role] - <a href='[player_byond_profile]'>Byond Profile</a>, [M.ckey] ip: [M.lastKnownIP] [ADMIN_FLW(M)]")
 
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)

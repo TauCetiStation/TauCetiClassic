@@ -2,7 +2,7 @@
 	icon = 'icons/obj/items.dmi'
 	name = COIN_STANDARD
 	icon_state = "coin"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	force = 0.0
 	throwforce = 0.0
 	w_class = 1.0

@@ -78,6 +78,31 @@ var/list/slot_equipment_priority = list( \
 
 	return 0
 
+// Convinience proc.  Collects crap that fails to equip either onto the mob's back, or drops it.
+// Used in job equipping so shit doesn't pile up at the start loc.
+/mob/living/carbon/human/proc/equip_or_collect(obj/item/W, slot)
+	if(W.mob_can_equip(src, slot, 1))
+		//Mob can equip.  Equip it.
+		equip_to_slot_or_del(W, slot)
+	else
+		//Mob can't equip it.  Put it in a bag B.
+		// Do I have a backpack?
+		var/obj/item/weapon/storage/B
+		if(istype(back,/obj/item/weapon/storage))
+			//Mob is wearing backpack
+			B = back
+		else
+			//not wearing backpack.  Check if player holding plastic bag
+			B=is_in_hands(/obj/item/weapon/storage/bag/plasticbag)
+			if(!B) //If not holding plastic bag, give plastic bag
+				B=new /obj/item/weapon/storage/bag/plasticbag(null) // Null in case of failed equip.
+				if(!put_in_hands(B))
+					return // Bag could not be placed in players hands.  I don't know what to do here...
+		//Now, B represents a container we can insert W into.
+		B.handle_item_insertion(W,1)
+		return B
+
+
 //These procs handle putting s tuff in your hand. It's probably best to use these rather than setting l_hand = ...etc
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
@@ -94,6 +119,14 @@ var/list/slot_equipment_priority = list( \
 	if(hand)	return r_hand
 	else		return l_hand
 
+//Checks if thing in mob's hands
+/mob/living/carbon/human/proc/is_in_hands(typepath)
+	if(istype(l_hand,typepath))
+		return l_hand
+	if(istype(r_hand,typepath))
+		return r_hand
+	return 0
+
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))	return 0
@@ -102,7 +135,8 @@ var/list/slot_equipment_priority = list( \
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
-		W.layer = 20	//TODO: move to equipped?
+		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
+		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 //		l_hand.screen_loc = ui_lhand
 		W.equipped(src,slot_l_hand)
@@ -122,7 +156,8 @@ var/list/slot_equipment_priority = list( \
 	if(!r_hand)
 		W.loc = src
 		r_hand = W
-		W.layer = 20
+		W.layer = ABOVE_HUD_LAYER
+		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 //		r_hand.screen_loc = ui_rhand
 		W.equipped(src,slot_r_hand)
@@ -160,6 +195,7 @@ var/list/slot_equipment_priority = list( \
 	else
 		W.forceMove(get_turf(src))
 		W.layer = initial(W.layer)
+		W.plane = initial(W.plane)
 		W.appearance_flags = 0
 		W.dropped()
 		return 0
@@ -231,6 +267,7 @@ var/list/slot_equipment_priority = list( \
 	if (src.client)
 		src.client.screen -= O
 	O.layer = initial(O.layer)
+	O.plane = initial(O.plane)
 	O.appearance_flags = 0
 	O.screen_loc = null
 	if(istype(O, /obj/item))

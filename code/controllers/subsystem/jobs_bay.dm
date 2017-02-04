@@ -116,7 +116,7 @@ var/datum/subsystem/job/SSjob
 		if(!job)
 			continue
 
-		if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
+		if(istype(job, GetJob("Test Subject"))) // We don't want to give him assistant, that's boring!
 			continue
 
 		if(job.title in command_positions) //If you want a command position, select it!
@@ -248,7 +248,7 @@ var/datum/subsystem/job/SSjob
 	Debug("AC1, Candidates: [assistant_candidates.len]")
 	for(var/mob/new_player/player in assistant_candidates)
 		Debug("AC1 pass, Player: [player]")
-		AssignRole(player, "Assistant")
+		AssignRole(player, "Test Subject")
 		assistant_candidates -= player
 	Debug("DO, AC1 end")
 
@@ -316,7 +316,7 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == BE_ASSISTANT)
 			Debug("AC2 Assistant located, Player: [player]")
-			AssignRole(player, "Assistant")
+			AssignRole(player, "Test Subject")
 
 	//For ones returning to lobby
 	for(var/mob/new_player/player in unassigned)
@@ -329,9 +329,61 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/EquipRank(mob/living/carbon/human/H, rank, joined_late=0)
 	if(!H)	return 0
 	var/datum/job/job = GetJob(rank)
+	var/list/spawn_in_storage = list()
+
 	if(job)
+
+		//Equip custom gear loadout.
+		var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
+		var/list/custom_equip_leftovers = list()
+		var/metadata
+		if(H.client.prefs.gear && H.client.prefs.gear.len && job.title != "Cyborg" && job.title != "AI")
+			for(var/thing in H.client.prefs.gear)
+				var/datum/gear/G = gear_datums[thing]
+				if(G)
+					var/permitted
+					if(G.allowed_roles)
+						for(var/job_name in G.allowed_roles)
+							if(job.title == job_name)
+								permitted = 1
+					else
+						permitted = 1
+
+					if(G.whitelisted && (G.whitelisted != H.species.name || !is_alien_whitelisted(H, G.whitelisted)))
+						permitted = 0
+
+					if(!permitted)
+						to_chat(H, "<span class='warning'>Your current job or whitelist status does not permit you to spawn with [thing]!</span>")
+						continue
+
+					if(G.slot && !(G.slot in custom_equip_slots))
+						// This is a miserable way to fix the loadout overwrite bug, but the alternative requires
+						// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
+						metadata = H.client.prefs.gear[G.display_name]
+						if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
+							custom_equip_leftovers += thing
+						else if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
+							to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
+							custom_equip_slots.Add(G.slot)
+						else
+							custom_equip_leftovers.Add(thing)
+					else
+						spawn_in_storage += thing
 		job.equip(H)
 		job.apply_fingerprints(H)
+
+		for(var/thing in custom_equip_leftovers)
+			var/datum/gear/G = gear_datums[thing]
+			if(G.slot in custom_equip_slots)
+				spawn_in_storage += thing
+			else
+				metadata = H.client.prefs.gear[G.display_name]
+				if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
+					to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
+					custom_equip_slots.Add(G.slot)
+				else
+					spawn_in_storage += thing
+
 	else
 		to_chat(H, "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator.")
 
@@ -425,6 +477,25 @@ var/datum/subsystem/job/SSjob
 				H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_l_hand)
 				H.internal = H.l_hand
 			H.internals.icon_state = "internal1"
+
+	//Deferred item spawning.
+	for(var/thing in spawn_in_storage)
+		var/datum/gear/G = gear_datums[thing]
+		var/metadata = H.client.prefs.gear[G.display_name]
+		var/item = G.spawn_item(null, metadata)
+
+		var/atom/placed_in = H.equip_or_collect(item)
+		if(placed_in)
+			to_chat(H, "<span class='notice'>Placing \the [item] in your [placed_in.name]!</span>")
+			continue
+		if(H.equip_to_appropriate_slot(item))
+			to_chat(H, "<span class='notice'>Placing \the [item] in your inventory!</span>")
+			continue
+		if(H.put_in_hands(item))
+			to_chat(H, "<span class='notice'>Placing \the [item] in your hands!</span>")
+			continue
+		to_chat(H, "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>")
+		qdel(item)
 
 	to_chat(H, "<B>You are the [alt_title ? alt_title : rank].</B>")
 	to_chat(H, "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")

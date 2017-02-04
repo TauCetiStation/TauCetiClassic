@@ -84,7 +84,7 @@ var/datum/cameranet/cameranet = new()
 // Removes a camera from a chunk.
 
 /datum/cameranet/proc/removeCamera(obj/machinery/camera/c)
-	if(c.can_use())
+	if(!c.can_use())
 		majorChunkChange(c, 0)
 
 // Add a camera to a chunk.

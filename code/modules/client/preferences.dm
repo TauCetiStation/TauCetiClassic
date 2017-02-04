@@ -9,7 +9,9 @@ var/const/MAX_SAVE_SLOTS = 10
 #define BE_ASSISTANT 1
 #define RETURN_TO_LOBBY 2
 
+#define MAX_GEAR_COST 5
 /datum/preferences
+	var/client/parent
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
@@ -18,6 +20,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	//non-preference stuff
 	var/warns = 0
 	var/warnbans = 0
+	var/permamuted = 0
 	var/muted = 0
 	var/last_ip
 	var/last_id
@@ -115,8 +118,14 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/randomslot = 0
 	// jukebox volume
 	var/volume = 100
+	var/parallax = PARALLAX_HIGH
+
+	//custom loadout
+	var/list/gear = list()
+	var/gear_tab = "General"
 
 /datum/preferences/New(client/C)
+	parent = C
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -149,14 +158,14 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
 		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
 		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
-		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"]"
+		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
+		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"]"
 		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
 		dat += "Please create an account to save your preferences."
 
 	dat += "</center><hr width='535'>"
-
 	switch(menu_type)
 		if("general")
 			dat += ShowGeneral(user)
@@ -168,7 +177,8 @@ var/const/MAX_SAVE_SLOTS = 10
 			dat += ShowGlobal(user)
 		if("load_slot")
 			dat += ShowLoadSlot(user)
-
+		if("loadout")
+			dat += ShowCustomLoadout(user)
 	dat += "</body></html>"
 	user << browse(dat, "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
 
@@ -207,10 +217,12 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("glob")
 			menu_type = "glob"
 
+		if("loadout")
+			menu_type = "loadout"
+
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
-
 	switch(menu_type)
 		if("general")
 			process_link_general(user, href_list)
@@ -223,6 +235,9 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if("glob")
 			process_link_glob(user, href_list)
+
+		if("loadout")
+			process_link_loadout(user, href_list)
 
 	ShowChoices(user)
 	return 1
@@ -312,6 +327,10 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.disabilities|=TOURETTES
 	if(disabilities & DISABILITY_NERVOUS)
 		character.disabilities|=NERVOUS
+	if(disabilities & DISABILITY_FATNESS)
+		character.mutations += FAT
+		character.nutrition = 1000
+		character.overeatduration = 2000
 
 	// Wheelchair necessary?
 	var/datum/organ/external/l_foot = character.get_organ("l_foot")
@@ -345,3 +364,4 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(icon_updates)
 		character.update_body()
 		character.update_hair()
+

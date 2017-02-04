@@ -6,7 +6,7 @@
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR
+	flags = HEADCOVERSEYES | BLOCKHAIR
 	body_parts_covered = HEAD
 
 /obj/item/clothing/suit/santa
@@ -14,7 +14,6 @@
 	desc = "Festive!"
 	icon_state = "santa"
 	item_state = "santa"
-	flags = FPRINT | TABLEPASS
 	allowed = list(/obj/item) //for stuffing exta special presents
 
 
@@ -53,7 +52,6 @@
 	desc = "A heavy jacket made from 'synthetic' animal furs."
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
-	flags = FPRINT|TABLEPASS
 	icon_state = "coatwinter"
 	item_state = "coatwinter"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -129,7 +127,6 @@
 /obj/item/clothing/suit/storage/labcoat/winterlabcoat
 	name = "winter labcoat"
 	desc = "A heavy jacket made from 'synthetic' animal furs."
-	flags = FPRINT | TABLEPASS
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "labcoat_emt"

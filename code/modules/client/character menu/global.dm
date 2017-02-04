@@ -64,6 +64,22 @@
 	. += 					"<td><a href='?_src_=prefs;preference=see_looc'><b>[(chat_toggles & CHAT_LOOC) ? "Shown" : "Hidden"]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
+	. += 					"<td width='45%'>Parallax (Fancy Space)</td>"
+	. += 					"<td><b><a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
+	switch (parallax)
+		if (PARALLAX_LOW)
+			. += "Low"
+		if (PARALLAX_MED)
+			. += "Medium"
+		if (PARALLAX_INSANE)
+			. += "Insane"
+		if (PARALLAX_DISABLE)
+			. += "Disabled"
+		else
+			. += "High"
+	. += 					"</a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
 	. += 					"<td width='45%'>Melee Animations:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_animations'><b>[(toggles & SHOW_ANIMATIONS) ? "Yes" : "No"]</b></a></td>"
 	. += 				"</tr>"
@@ -118,6 +134,16 @@
 					UI_style = "White"
 				else
 					UI_style = "White"
+
+		if("parallaxup")
+			parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+			if (parent && parent.mob && parent.mob.hud_used)
+				parent.mob.hud_used.update_parallax_pref()
+
+		if("parallaxdown")
+			parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+			if (parent && parent.mob && parent.mob.hud_used)
+				parent.mob.hud_used.update_parallax_pref()
 
 		if("hear_midis")
 			toggles ^= SOUND_MIDI

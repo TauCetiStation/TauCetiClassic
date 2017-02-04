@@ -187,3 +187,13 @@
 /obj/item/projectile/missile/emp/on_hit(atom/target, blocked = 0)
 	empulse(target, 4, 10)
 	return 1
+
+
+/obj/item/projectile/neurotoxin
+	name = "neurotoxin"
+	icon_state = "energy2"
+	damage = 5
+	stun = 15
+	damage_type = TOX
+	flag = "bullet"
+

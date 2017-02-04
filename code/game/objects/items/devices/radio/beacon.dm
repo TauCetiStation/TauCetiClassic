@@ -64,7 +64,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "medicon"
 	item_state = "signaler"
-	flags = FPRINT | TABLEPASS | NOBLUDGEON
+	flags = NOBLUDGEON
 	origin_tech = "bluespace=1"
 	var/timer = 10
 	var/atom/target = null
@@ -105,21 +105,30 @@
 		H.attack_log += "\[[time_stamp()]\]<font color='blue'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 		playsound(H.loc, 'sound/items/timer.ogg', 5, 0)
 		user.visible_message("\red [user.name] finished planting an [name] on [H.name]!")
-
-		H.overlays += image('icons/obj/device.dmi', "medicon")
+		var/I = image('icons/obj/device.dmi', "medicon")
+		H.overlays += I
 		to_chat(user, "Device has been planted. Timer counting down from [timer].")
-		spawn(timer*10)
-			if(H)
-				if(target_beacon)
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-					var/datum/effect/effect/system/spark_spread/s2 = new /datum/effect/effect/system/spark_spread
-					s.set_up(3, 1, H)
-					s2.set_up(3, 1, target_beacon)
-					s.start()
-					s2.start()
-					H.loc = get_turf(target_beacon)
-				if (src)
-					qdel(src)
+		addtimer(src,"teleport",timer*10,FALSE, H, target_beacon, I)
 
 /obj/item/weapon/medical/teleporter/attack(mob/M, mob/user, def_zone)
 	return
+
+/obj/item/weapon/medical/teleporter/proc/teleport(mob/H, obj/beacon, I)
+	if(H)
+		if(beacon)
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect/effect/system/spark_spread/s2 = new /datum/effect/effect/system/spark_spread
+			s.set_up(3, 1, H)
+			s2.set_up(3, 1, beacon)
+			s.start()
+			s2.start()
+			H.loc = get_turf(beacon)
+		if (src)
+			qdel(src)
+		H.overlays -= I
+		qdel(I)
+
+
+
+
+

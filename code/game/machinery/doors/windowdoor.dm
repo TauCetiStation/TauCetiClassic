@@ -327,11 +327,6 @@
 						WA.update_icon()
 						WA.created_name = src.name
 
-						if(emagged)
-							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
-							qdel(src)
-							return
-
 						to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 
 						var/obj/item/weapon/airlock_electronics/ae
@@ -349,6 +344,11 @@
 							ae = electronics
 							electronics = null
 							ae.loc = src.loc
+
+						if(operating == -1)
+							ae.icon_state = "door_electronics_smoked"
+							ae.broken = TRUE
+							operating = 0
 
 						qdel(src)
 				return

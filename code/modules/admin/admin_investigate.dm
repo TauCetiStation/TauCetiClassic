@@ -18,14 +18,16 @@
 /atom/proc/investigate_log(message, subject)
 	if(!message)	return
 	var/F = investigate_subject2file(subject)
-	if(!F)	return
-	to_chat(F, "<small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>")
+	if(!F)
+		return
+	F << "<small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
 
 //ADMINVERBS
 /client/proc/investigate_show( subject in list("hrefs","notes","singulo","telesci","atmos") )
 	set name = "Investigate"
 	set category = "Admin"
-	if(!holder)	return
+	if(!holder)
+		return
 	switch(subject)
 		if("singulo", "telesci", "atmos")			//general one-round-only stuff
 			var/F = investigate_subject2file(subject)

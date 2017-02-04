@@ -144,8 +144,8 @@ datum/supply_pack/New()
 	name = "Armor crate"
 	contains = list(/obj/item/clothing/head/helmet,
 					/obj/item/clothing/head/helmet,
-					/obj/item/clothing/suit/armor/vest,
-					/obj/item/clothing/suit/armor/vest)
+					/obj/item/clothing/suit/storage/flak,
+					/obj/item/clothing/suit/storage/flak)
 	cost = 1500
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Armor crate"
@@ -365,12 +365,12 @@ datum/supply_pack/New()
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager,
 					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 					/obj/item/weapon/lipstick/random,
-					/obj/item/weapon/reagent_containers/food/drinks/cans/ale,
-					/obj/item/weapon/reagent_containers/food/drinks/cans/ale,
-					/obj/item/weapon/reagent_containers/food/drinks/cans/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/cans/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/cans/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/cans/beer)
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer)
 	cost = 2000
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Party equipment"

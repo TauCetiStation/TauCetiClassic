@@ -39,14 +39,6 @@
 	sleep(48)
 	qdel(animation)
 
-	/*for(var/obj/item/W in src)
-		user.u_equip(W)
-		if (user.client)
-			user.client.screen -= W
-		if (W)
-			W.loc = user.loc
-			W.dropped(user)
-			W.layer = initial(W.layer)*/
 	for(var/obj/item/W in user)
 		user.drop_from_inventory(W)
 	for(var/obj/T in user)

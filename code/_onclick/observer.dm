@@ -26,6 +26,7 @@
 	// Otherwise jump
 	else
 		loc = get_turf(A)
+		update_parallax_contents()
 
 /mob/dead/observer/ClickOn(atom/A, params)
 	if(client.buildmode)
@@ -39,8 +40,11 @@
 
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
 /atom/proc/attack_ghost(mob/dead/observer/user)
-	if(user.client && user.client.inquisitive_ghost)
-		user.examinate(src)
+	if(user.client)
+		if(check_rights(R_ADMIN, 0) && user.client.AI_Interact)
+			attack_ai(user)
+		if(user.client.inquisitive_ghost)
+			user.examinate(src)
 	return
 
 // ---------------------------------------

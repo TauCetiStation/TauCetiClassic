@@ -126,6 +126,7 @@
 			. += ShowDisabilityState(user,DISABILITY_EPILEPTIC,"Seizures")
 			. += ShowDisabilityState(user,DISABILITY_TOURETTES,"Twitching")
 			. += ShowDisabilityState(user,DISABILITY_NERVOUS,"Nervousness")
+			. += ShowDisabilityState(user,DISABILITY_FATNESS,"Fatness")
 
 		//Gear
 		if("gear")
