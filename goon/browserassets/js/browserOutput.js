@@ -96,6 +96,13 @@ function linkify(text) {
 		}
 	});
 }
+//da
+function emojify(text) {
+	var rex = /:[^(\s|:)]+:/g; 
+	return text.replace(rex, function ($0) {
+		return '<i class="em em-'+$0.substring(1, $0.length-1)+'"></i>';
+	});
+}
 
 // Colorizes the highlight spans
 function setHighlightColor(match) {
@@ -214,7 +221,7 @@ function output(message, flag) {
 	if (message.length && flag != 'preventLink') {
 		message = linkify(message);
 	}
-
+	message = emojify(message);
 	opts.messageCount++;
 
 	//Actually append the message
