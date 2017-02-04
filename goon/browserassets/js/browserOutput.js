@@ -219,9 +219,9 @@ function output(message, flag) {
 
 	//Url stuff
 	if (message.length && flag != 'preventLink') {
+		message = emojify(message);
 		message = linkify(message);
 	}
-	message = emojify(message);
 	opts.messageCount++;
 
 	//Actually append the message
