@@ -100,7 +100,7 @@ function linkify(text) {
 function emojify(text) {
 	var rex = /:[^(\s|:)]+:/g; 
 	return text.replace(rex, function ($0) {
-		return '<i class="em em-'+$0.substring(1, $0.length-1)+'"></i>';
+		return '<i class="em em-'+$0.substring(1, $0.length-1)+'">'+$0+'</i>';
 	});
 }
 
