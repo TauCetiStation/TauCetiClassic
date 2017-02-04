@@ -1476,9 +1476,8 @@ About the new airlock wires panel:
 	desc = "Just a bunch of garbage."
 	var/ticker = 0
 	var/icon/door = icon('icons/effects/effects.dmi',"Sliced")
-	var/icon/fire_overlay
-	light_power = 1
-	light_color = "#cc0000"
+	//light_power = 1
+	//light_color = "#cc0000"
 
 
 /obj/structure/door_scrap/attackby(obj/O, mob/user)
@@ -1499,15 +1498,14 @@ About the new airlock wires panel:
 
 
 /obj/structure/door_scrap/New()
-	fire_overlay = icon('icons/effects/effects.dmi',"s_fire")
+	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (LIGHTING_LAYER + 1))
+	fire_overlay.plane = LIGHTING_PLANE + 1
 	overlays += fire_overlay
-	src.set_light(2)
 	SSobj.processing |= src
 
 /obj/structure/door_scrap/process()
 	if(ticker >= 300)
-		overlays -= fire_overlay
-		src.set_light(-2)
+		overlays.Cut()
 		SSobj.processing.Remove(src)
 		return
 	ticker++

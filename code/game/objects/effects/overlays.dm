@@ -46,8 +46,6 @@
 	name = "Slice"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "Slice"
-	light_color = "#cc0000"
-	light_power = 2
-	light_range = 3
-	layer = 21
+	layer = LIGHTING_LAYER + 1
+	plane = LIGHTING_PLANE + 1
 	anchored = 1
