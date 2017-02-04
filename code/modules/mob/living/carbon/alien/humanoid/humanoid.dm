@@ -15,7 +15,7 @@
 	var/alt_icon = 'icons/mob/xenoleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
-	var/pounce_cooldown_time = 30
+	var/pounce_cooldown_time = 50
 	var/neurotoxin_on_click = 0
 	var/neurotoxin_delay = 15
 	var/last_neurotoxin = 0

@@ -152,6 +152,9 @@
 	"<span class='danger'>You hear a clicking sound.</span>")
 
 /obj/machinery/computer/attack_alien(mob/user)
+	if(istype(user, /mob/living/carbon/alien/humanoid/queen))
+		attack_hand(user)
+		return
 	if(circuit)
 		if(prob(80))
 			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his claws.</span>",\
