@@ -208,7 +208,7 @@
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword
-	cost = 8
+	cost = 7
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades"
@@ -424,7 +424,7 @@
 	name = "Strip gloves"
 	desc = "A pair of black gloves which allow to stealthy strip off items from the victim."
 	item = /obj/item/clothing/gloves/black/strip
-	cost = 5
+	cost = 3
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -524,7 +524,7 @@
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
 			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
 	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapon
-	cost = 5
+	cost = 6
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
@@ -536,7 +536,7 @@
 	name = "Slipocalypse Clusterbang"
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/weapon/grenade/clusterbuster/soap
-	cost = 5
+	cost = 3
 
 // DEVICE AND TOOLS
 
@@ -601,7 +601,7 @@
 	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity \
 			and appearance."
 	item = /obj/item/weapon/reagent_containers/syringe/mulligan
-	cost = 5
+	cost = 4
 
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
@@ -728,8 +728,8 @@
 /datum/uplink_item/implants/storage
 	name = "Compressed Implant"
 	desc = "An implant, that can compress items and later activated at the user's will."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_compress
-	cost = 6
+	item = /obj/item/weapon/implanter/storage
+	cost = 7
 
 /*
 /datum/uplink_item/implants/adrenal
