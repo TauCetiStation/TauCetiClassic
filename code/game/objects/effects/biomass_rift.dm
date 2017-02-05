@@ -5,7 +5,8 @@
 	opacity = 0
 	density = 0
 	anchored = 1
-	layer = 20 //DEBUG
+	layer = ABOVE_HUD_LAYER //DEBUG
+	plane = ABOVE_HUD_PLANE
 	var/health = 10
 	var/stage = 1
 	var/obj/effect/rift/originalRift = null //the originating rift of that biomass

@@ -179,7 +179,7 @@
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = 1
-	var/printing = 0
+	var/latestprint = 0
 	var/storedinfo = null
 
 
@@ -417,11 +417,10 @@
 	if(!.)
 		return
 	if (href_list["print"])
-		if (!src.printing)
-			src.printing = 1
-			to_chat(usr, "\red Printing... Please wait.")
-			spawn(50)
-				src.printing = 0
+		if (src.latestprint + 100 < world.time) //10sec cooldown
+			src.latestprint = world.time
+			to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
+			spawn(10)
 				var/obj/item/weapon/paper/P = new(loc)
 				var/mob/living/carbon/human/occupant = src.connected.occupant
 				var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
@@ -436,3 +435,5 @@
 				t1 += storedinfo
 				P.info = t1
 				P.name = "[occupant.name]'s scanner report"
+		else
+			to_chat(usr, "<span class='notice'>The console can't print that fast!</span>")

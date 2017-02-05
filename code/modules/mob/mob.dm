@@ -1014,6 +1014,7 @@ mob/proc/yank_out_object()
 			M.layer = layer + 0.1
 	else //post unbuckling
 		M.layer = initial(M.layer)
+		M.plane = initial(M.plane)
 		M.pixel_y = initial(M.pixel_y)
 
 /mob/proc/can_unbuckle(mob/user)

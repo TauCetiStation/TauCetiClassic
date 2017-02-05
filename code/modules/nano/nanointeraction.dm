@@ -127,6 +127,11 @@
 		if(. == STATUS_UPDATE && (TK in mutations))	// If we have telekinesis and remain close enough, allow interaction.
 			return STATUS_INTERACTIVE
 
+/mob/living/carbon/alien/humanoid/can_use_topic(src_object, datum/topic_state/custom_state)
+	. = shared_living_nano_interaction(src_object)
+	if(. == STATUS_INTERACTIVE && !(custom_state && (custom_state.flags & NANO_IGNORE_DISTANCE)))
+		. = shared_living_nano_distance(src_object)
+
 /var/global/datum/topic_state/default_state = new()
 
 /datum/topic_state

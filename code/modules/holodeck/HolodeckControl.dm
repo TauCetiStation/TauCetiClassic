@@ -200,7 +200,6 @@
 		use_power(item_power_usage * (holographic_objs.len + holographic_mobs.len))
 
 		if(!checkInteg(linkedholodeck))
-			to_chat(world, "/blue Integrity fail")
 			damaged = 1
 			loadIdProgram()
 			active = 0

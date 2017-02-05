@@ -3,7 +3,9 @@ var/list/forbidden_varedit_object_types = list(
 		/datum/configuration,
 		/obj/machinery/blackbox_recorder,  //Prevents people messing with feedback gathering
 		/datum/feedback_variable,          //Prevents people messing with feedback gathering
-		/datum/timedevent                  //Nope.avi
+		/datum/timedevent,                 //Nope.avi
+		/datum/craft_or_build,
+		/datum/stack_recipe
 	)
 
 /client/proc/cmd_modify_ticker_variables()

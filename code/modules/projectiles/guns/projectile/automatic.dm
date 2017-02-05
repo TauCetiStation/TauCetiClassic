@@ -28,6 +28,12 @@
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 
+/obj/item/weapon/gun/projectile/automatic/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	return
+
+
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
 	desc = "A lightweight, compact bullpup SMG. Uses .45 ACP rounds in medium-capacity magazines and has a threaded barrel for silencers. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."

@@ -107,7 +107,7 @@
 //Medical rig
 /datum/design/space_suit_medical
 	name = "medical hardsuit"
-	id = "space_suit_atmospherics"
+	id = "space_suit_medical"
 	build_type = MINEFAB
 	req_tech = list("biotech"=3, "materials" = 4, "engineering" = 3)
 	build_path = /obj/item/clothing/suit/space/rig/medical
@@ -136,7 +136,7 @@
 	construction_time = 1800
 	category = list("Spacesuit")
 
-/datum/design/space_suit_hlemet_mining_rigl
+/datum/design/space_suit_hlemet_mining_rig
 	name = "mining hardsuit helmet"
 	id = "space_suit_hlemet_mining_rig"
 	build_type = MINEFAB
@@ -292,7 +292,7 @@
 
 /datum/design/stimpack_adv
 	name = "Advanced stimpack"
-	id = "stimpack"
+	id = "stimpack_adv"
 	build_type = MINEFAB
 	req_tech = list("biotech"=4,"phorontech" = 3)
 	build_path = /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv
@@ -316,7 +316,7 @@
 	req_tech = list("biotech"=4)
 	build_path = /obj/item/weapon/lazarus_injector
 	materials = list(MAT_METAL=2000,MAT_GLASS=250,MAT_PLASTIC=1000,MAT_PHORON=3000,MAT_URANIUM=500)
-	construction_time = 1800
+	construction_time = 1200
 	category = list("Support")
 
 /datum/design/jaunter

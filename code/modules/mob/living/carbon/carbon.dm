@@ -529,6 +529,7 @@
 			W.dropped(src)
 			if(W)
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 	if(legcuffed)
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
@@ -540,6 +541,7 @@
 			W.dropped(src)
 			if(W)
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 
 //-TG- port for smooth lying/standing animations
 /mob/living/carbon/get_standard_pixel_y_offset(lying_current = 0)

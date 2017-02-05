@@ -701,12 +701,18 @@
 
 		//Other races  (BLUE, because I have no idea what other color to make this)
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ccccff'><th colspan='1'>Other Races</th></tr><tr align='center'>"
+		jobs += "<tr bgcolor='ccccff'><th colspan='2'>Other Races</th></tr><tr align='center'>"
 
 		if(jobban_isbanned(M, ROLE_PLANT))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'><font color=red>[ROLE_PLANT]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'>[ROLE_PLANT]</a></td>"
+
+		if(jobban_isbanned(M, "Mouse"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'><font color=red>Mouse</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'>Mouse</a></td>"
+
 
 		jobs += "</tr></table>"
 
@@ -718,7 +724,8 @@
 
 	//JOBBAN'S INNARDS
 	else if(href_list["jobban3"])
-		if(!check_rights(R_ADMIN))  return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/mob/M = locate(href_list["jobban4"])
 		if(!ismob(M))
@@ -739,7 +746,8 @@
 		switch(href_list["jobban3"])
 			if("commanddept")
 				for(var/jobPos in command_positions)
-					if(!jobPos)	continue
+					if(!jobPos)
+						continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
@@ -829,7 +837,8 @@
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					if(!check_rights(R_BAN))  return
+					if(!check_rights(R_BAN))
+						return
 					var/reason = sanitize_simple(input(usr,"Reason?","Please State Reason","") as text|null)
 					if(reason)
 						var/msg
@@ -859,7 +868,8 @@
 			var/msg
 			for(var/job in joblist)
 				var/reason = jobban_isbanned(M, job)
-				if(!reason) continue //skip if it isn't jobbanned anyway
+				if(!reason)
+					continue //skip if it isn't jobbanned anyway
 				switch(alert("Job: '[job]' Reason: '[reason]' Un-jobban?","Please Confirm","Yes","No"))
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
@@ -1721,7 +1731,7 @@
 		var/obj_name = sanitize(href_list["object_name"])
 		var/atom/target //Where the object will be spawned
 		var/where = href_list["object_where"]
-		if (!( where in list("onfloor","inhand","inmarked") ))
+		if (!( where in list("onfloor","inhand","inmarked","dropped") ))
 			where = "onfloor"
 
 
@@ -1736,8 +1746,7 @@
 						to_chat(R, "Cyborg doesn't has module, you can't do that.")
 						return
 				target = usr
-
-			if("onfloor")
+			if("onfloor", "dropped")
 				switch(href_list["offset_type"])
 					if ("absolute")
 						target = locate(0 + X,0 + Y,0 + Z)
@@ -1753,10 +1762,13 @@
 				else
 					target = marked_datum
 
+
 		if(target)
 			for (var/path in paths)
 				for (var/i = 0; i < number; i++)
-					if(path in typesof(/turf))
+					if(where == "dropped")
+						new /obj/effect/falling_effect(target, path)
+					else if(path in typesof(/turf))
 						var/turf/O = target
 						var/turf/N = O.ChangeTurf(path)
 						if(N && obj_name)
@@ -2382,7 +2394,22 @@
 							var/obj/effect/decal/cleanable/mucus/N = O
 							if(N.virus2.len)
 								N.virus2.Cut()
-
+			if("restore_air")
+				var/turf/simulated/T = get_turf(usr)
+				if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor))
+					T.zone.air.carbon_dioxide = 0
+					T.zone.air.phoron = 0
+					if(T.zone.air.trace_gases.len>0)
+						for(var/datum/gas/trace_gas in T.zone.air.trace_gases)
+							if(istype(trace_gas, /datum/gas/sleeping_agent))
+								T.zone.air.trace_gases -= trace_gas
+					T.zone.air.temperature = 293
+					T.zone.air.nitrogen = 80
+					T.zone.air.oxygen = 21
+					T.zone.air.total_moles = 101
+					message_admins("[key_name_admin(usr)] has restored air in [T.x] [T.y] [T.z] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
+				else
+					to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 			if("list_bombers")
 				var/dat = "<B>Bombing List<HR>"
 				for(var/l in bombers)

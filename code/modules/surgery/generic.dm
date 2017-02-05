@@ -172,7 +172,6 @@
 		user.visible_message("\blue [user] clamps bleeders in [target]'s [affected.display_name] with \the [tool].",	\
 		"\blue You clamp bleeders in [target]'s [affected.display_name] with \the [tool].")
 		affected.clamp()
-		spread_germs_to_organ(affected, user)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -263,7 +262,6 @@
 		user.visible_message("\blue [user] cauterizes the incision on [target]'s [affected.display_name] with \the [tool].", \
 		"\blue You cauterize the incision on [target]'s [affected.display_name] with \the [tool].")
 		affected.open = 0
-		affected.germ_level = 0
 		affected.status &= ~ORGAN_BLEEDING
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

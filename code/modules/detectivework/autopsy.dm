@@ -164,11 +164,13 @@
 		if(!usr.r_hand)
 			P.loc = usr
 			usr.r_hand = P
-			P.layer = 20
+			P.layer = ABOVE_HUD_LAYER
+			P.plane = ABOVE_HUD_PLANE
 		else if(!usr.l_hand)
 			P.loc = usr
 			usr.l_hand = P
-			P.layer = 20
+			P.layer = ABOVE_HUD_LAYER
+			P.plane = ABOVE_HUD_PLANE
 
 	if(istype(usr,/mob/living/carbon/human))
 		usr:update_inv_l_hand()

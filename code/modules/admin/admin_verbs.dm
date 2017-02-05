@@ -112,7 +112,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/epileptic_anomaly,
 //	/client/proc/Noir_anomaly,
 	/client/proc/epileptic_anomaly_cancel,
-	/client/proc/achievement
+	/client/proc/achievement,
+	/client/proc/toggle_AI_interact /*toggle admin ability to interact with machines as an AI*/
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -312,7 +313,7 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/count_objects_all,
 		/client/proc/cmd_assume_direct_control,
 		/client/proc/startSinglo,
-		/client/proc/fps,
+		/client/proc/set_fps,
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/splash,
 		/client/proc/cmd_admin_areatest
@@ -970,3 +971,12 @@ var/list/admin_verbs_hideable = list(
 			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
 
 	log_ooc("Antag-OOC: [key] : [msg]")
+
+/client/proc/toggle_AI_interact()
+	set name = "Toggle Admin AI Interact"
+	set category = "Fun"
+	set desc = "Allows you to interact with most machines as an AI would as a ghost"
+
+	AI_Interact = !AI_Interact
+	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
+	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")

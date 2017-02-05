@@ -12,7 +12,8 @@
 	using.icon = ui_style
 	using.icon_state = "intent_"+mymob.a_intent
 	using.screen_loc = ui_acti
-	using.layer = 20
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	action_intent = using
 
@@ -26,7 +27,8 @@
 	using.name = "help"
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = 21
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	help_intent = using
 
@@ -37,7 +39,8 @@
 	using.name = "disarm"
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = 21
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	disarm_intent = using
 
@@ -48,7 +51,8 @@
 	using.name = "grab"
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = 21
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	grab_intent = using
 
@@ -59,7 +63,8 @@
 	using.name = "harm"
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = 21
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	hurt_intent = using
 
@@ -70,7 +75,8 @@
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
-	using.layer = 20
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.adding += using
@@ -81,7 +87,8 @@
 	using.icon = ui_style
 	using.icon_state = "act_drop"
 	using.screen_loc = ui_drop_throw
-	using.layer = 19
+	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.hotkeybuttons += using
@@ -92,7 +99,8 @@
 	inv_box.slot_id = slot_w_uniform
 	inv_box.icon_state = "center"
 	inv_box.screen_loc = ui_iclothing
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
@@ -103,7 +111,8 @@
 	inv_box.slot_id = slot_wear_suit
 	inv_box.icon_state = "suit"
 	inv_box.screen_loc = ui_oclothing
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
@@ -116,7 +125,8 @@
 		inv_box.icon_state = "hand_r_active"
 	inv_box.screen_loc = ui_rhand
 	inv_box.slot_id = slot_r_hand
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 
@@ -131,7 +141,8 @@
 		inv_box.icon_state = "hand_l_active"
 	inv_box.screen_loc = ui_lhand
 	inv_box.slot_id = slot_l_hand
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.l_hand_hud_object = inv_box
@@ -142,7 +153,8 @@
 	using.icon = ui_style
 	using.icon_state = "hand1"
 	using.screen_loc = ui_swaphand1
-	using.layer = 19
+	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.adding += using
@@ -152,7 +164,8 @@
 	using.icon = ui_style
 	using.icon_state = "hand2"
 	using.screen_loc = ui_swaphand2
-	using.layer = 19
+	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.adding += using
@@ -163,7 +176,8 @@
 	inv_box.icon_state = "id"
 	inv_box.screen_loc = ui_id
 	inv_box.slot_id = slot_wear_id
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
@@ -174,7 +188,8 @@
 	inv_box.icon_state = "mask"
 	inv_box.screen_loc = ui_mask
 	inv_box.slot_id = slot_wear_mask
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
@@ -185,7 +200,8 @@
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_back
 	inv_box.slot_id = slot_back
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
@@ -196,7 +212,8 @@
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage1
 	inv_box.slot_id = slot_l_store
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
@@ -207,7 +224,8 @@
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage2
 	inv_box.slot_id = slot_r_store
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
@@ -218,7 +236,8 @@
 	inv_box.icon_state = "suitstorage"
 	inv_box.screen_loc = ui_sstore1
 	inv_box.slot_id = slot_s_store
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
@@ -228,7 +247,8 @@
 	using.icon = ui_style
 	using.icon_state = "act_resist"
 	using.screen_loc = ui_pull_resist
-	using.layer = 19
+	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.hotkeybuttons += using
@@ -238,7 +258,8 @@
 	using.icon = ui_style
 	using.icon_state = "other"
 	using.screen_loc = ui_inventory
-	using.layer = 20
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.adding += using
@@ -248,7 +269,8 @@
 	using.icon = ui_style
 	using.icon_state = "act_equip"
 	using.screen_loc = ui_equip
-	using.layer = 20
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.adding += using
@@ -259,7 +281,8 @@
 	inv_box.icon_state = "gloves"
 	inv_box.screen_loc = ui_gloves
 	inv_box.slot_id = slot_gloves
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
@@ -270,7 +293,8 @@
 	inv_box.icon_state = "glasses"
 	inv_box.screen_loc = ui_glasses
 	inv_box.slot_id = slot_glasses
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
@@ -281,7 +305,8 @@
 	inv_box.icon_state = "ears"
 	inv_box.screen_loc = ui_l_ear
 	inv_box.slot_id = slot_l_ear
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
@@ -292,7 +317,8 @@
 	inv_box.icon_state = "ears"
 	inv_box.screen_loc = ui_r_ear
 	inv_box.slot_id = slot_r_ear
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
@@ -303,7 +329,8 @@
 	inv_box.icon_state = "hair"
 	inv_box.screen_loc = ui_head
 	inv_box.slot_id = slot_head
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
@@ -314,7 +341,8 @@
 	inv_box.icon_state = "shoes"
 	inv_box.screen_loc = ui_shoes
 	inv_box.slot_id = slot_shoes
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
@@ -325,7 +353,8 @@
 	inv_box.icon_state = "belt"
 	inv_box.screen_loc = ui_belt
 	inv_box.slot_id = slot_belt
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
@@ -367,14 +396,16 @@
 	lingchemdisplay.name = "chemical storage"
 	lingchemdisplay.icon_state = "power_display"
 	lingchemdisplay.screen_loc = ui_lingchemdisplay
-	lingchemdisplay.layer = 20
+	lingchemdisplay.layer = ABOVE_HUD_LAYER
+	lingchemdisplay.plane = ABOVE_HUD_PLANE
 	lingchemdisplay.invisibility = 101
 
 	lingstingdisplay = new /obj/screen()
 	lingstingdisplay.icon = 'icons/mob/screen_gen.dmi'
 	lingstingdisplay.name = "current sting"
 	lingstingdisplay.screen_loc = ui_lingstingdisplay
-	lingstingdisplay.layer = 20
+	lingstingdisplay.layer = ABOVE_HUD_LAYER
+	lingstingdisplay.plane = ABOVE_HUD_PLANE
 	lingstingdisplay.invisibility = 101
 
 	mymob.pain = new /obj/screen( null )

@@ -43,10 +43,25 @@
 	sharp = 1
 	edge = 1
 
+/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user)
+	if(istype(W, /obj/item/weapon/melee/energy/sword) && !istype(W, /obj/item/weapon/melee/energy/sword/pirate))
+		to_chat(user, "<span class='notice'>You attach the ends of the two \
+			energy swords, making a single double-bladed weapon! \
+			You're cool.</span>")
+		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
+		user.unEquip(W)
+		user.unEquip(src)
+		qdel(W)
+		qdel(src)
+		user.put_in_hands(newSaber)
+
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"
 	desc = "Arrrr matey."
 	icon_state = "cutlass0"
+
+/obj/item/weapon/melee/energy/sword/pirate/attackby()
+	return
 
 /obj/item/weapon/melee/energy/blade
 	name = "energy blade"

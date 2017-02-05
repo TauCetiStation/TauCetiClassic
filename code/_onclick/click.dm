@@ -45,6 +45,11 @@
 		return
 
 	var/list/modifiers = params2list(params)
+
+	if(client.cob.in_building_mode)
+		cob_click(client, modifiers)
+		return
+
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
@@ -281,6 +286,7 @@
 
 	Laser Eyes: as the name implies, handles this since nothing else does currently
 	face_atom: turns the mob towards what you clicked on
+	cob_click: handles hotkeys for "craft or build"
 */
 /mob/proc/LaserEyes(atom/A)
 	return
@@ -325,13 +331,28 @@
 		if(dx > 0)	usr.dir = EAST
 		else		usr.dir = WEST
 
+// Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
+/mob/proc/cob_click(client/C, list/modifiers)
+	if(C.cob.busy)
+		//do nothing
+	else if(modifiers["left"])
+		if(modifiers["alt"])
+			C.cob.rotate_object()
+		else
+			C.cob.try_to_build(src)
+	else if(modifiers["right"])
+		C.cob.remove_build_overlay(C)
 
 /obj/screen/click_catcher
-	icon = 'icons/mob/screen1_full.dmi'
-	icon_state = "passage0"
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
-	screen_loc = "CENTER-7,CENTER-7"
+	screen_loc = "CENTER"
+
+/obj/screen/click_catcher/New()
+	..()
+	transform = matrix(200, 0, 0, 0, 200, 0)
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -339,6 +360,7 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
-		T.Click(location, control, params)
-	return 1
+		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		if(T)
+			T.Click(location, control, params)
+	. = 1

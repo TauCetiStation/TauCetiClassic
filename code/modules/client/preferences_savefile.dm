@@ -32,10 +32,13 @@
 	savefile_version = SAVEFILE_VERSION_MAX
 
 /datum/preferences/proc/load_preferences()
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)
+		return 0
+	if(!fexists(path))
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
 
 	S["version"] >> savefile_version
@@ -63,10 +66,11 @@
 	S["randomslot"]			>> randomslot
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
+	S["permamuted"]			>> permamuted
+	S["permamuted"]			>> muted
 
 	//Antag preferences
 	S["be_role"]			>> be_role
-
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
 	UI_style		= sanitize_inlist(UI_style, list("White", "Midnight","Orange","old"), initial(UI_style))
@@ -83,9 +87,11 @@
 	return 1
 
 /datum/preferences/proc/save_preferences()
-	if(!path)				return 0
+	if(!path)
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
 
 	S["version"] << savefile_version
@@ -105,11 +111,13 @@
 	S["warns"]				<< warns
 	S["warnbans"]			<< warnbans
 	S["randomslot"]			<< randomslot
+	S["permamuted"]			<< permamuted
 	return 1
 
 /datum/preferences/proc/load_save(dir)
 	var/savefile/S = new /savefile(path)
-	if(!S) return 0
+	if(!S)
+		return 0
 	S.cd = dir
 
 	//Character
@@ -163,17 +171,18 @@
 	S["disabilities"]		>> disabilities
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
+	S["gear"]				>> gear
 
 	S["nanotrasen_relation"] >> nanotrasen_relation
 	S["home_system"] 		>> home_system
 	S["citizenship"] 		>> citizenship
 	S["faction"] 			>> faction
 	S["religion"] 			>> religion
-
+	S["parallax"]			>> parallax
 	S["uplinklocation"] 	>> uplinklocation
 
-	S["UI_style_color"]		<< UI_style_color
-	S["UI_style_alpha"]		<< UI_style_alpha
+	S["UI_style_color"]		>> UI_style_color
+	S["UI_style_alpha"]		>> UI_style_alpha
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
@@ -182,6 +191,7 @@
 	if(isnull(language)) language = "None"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
 	if(!real_name) real_name = random_name(gender)
+	if(!gear) gear = list()
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
@@ -204,7 +214,7 @@
 	undershirt		= sanitize_integer(undershirt, 1, undershirt_t.len, initial(undershirt))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
-
+	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
 	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
@@ -227,16 +237,20 @@
 	if(!religion)    religion =    "None"
 
 /datum/preferences/proc/random_character()
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)
+		return 0
+	if(!fexists(path))
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	var/list/saves = list()
 	var/name
 	for(var/i=1, i<=MAX_SAVE_SLOTS, i++)
 		S.cd = "/character[i]"
 		S["real_name"] >> name
-		if(!name) continue
+		if(!name)
+			continue
 		saves.Add(S.cd)
 
 	if(!saves.len)
@@ -247,10 +261,13 @@
 	return 1
 
 /datum/preferences/proc/load_character(slot)
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)
+		return 0
+	if(!fexists(path))
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
 	if(!slot)	slot = default_slot
 	slot = sanitize_integer(slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
@@ -263,9 +280,11 @@
 	return 1
 
 /datum/preferences/proc/save_character()
-	if(!path)				return 0
+	if(!path)
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/character[default_slot]"
 
 	//Character
@@ -317,13 +336,14 @@
 	S["be_role"]			<< be_role
 	S["disabilities"]		<< disabilities
 	S["organ_data"]			<< organ_data
+	S["gear"]				<< gear
 
 	S["nanotrasen_relation"] << nanotrasen_relation
 	S["home_system"] 		<< home_system
 	S["citizenship"] 		<< citizenship
 	S["faction"] 			<< faction
 	S["religion"] 			<< religion
-
+	S["parallax"]			<< parallax
 	S["uplinklocation"] << uplinklocation
 
 	S["UI_style_color"]		<< UI_style_color

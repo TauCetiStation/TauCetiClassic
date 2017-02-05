@@ -11,6 +11,7 @@
 						/obj/structure/scrap/vehicle/large,\
 						/obj/structure/scrap/food/large,\
 						/obj/structure/scrap/guns/large,\
+						/obj/structure/scrap/cloth/large,\
 						/obj/structure/scrap/science/large\
 					)
 
@@ -26,6 +27,7 @@
 						prob(4);/obj/structure/scrap/medical/large,\
 						prob(4);/obj/structure/scrap/science/large,\
 						prob(6);/obj/structure/scrap/vehicle/large,\
+						prob(8);/obj/structure/scrap/cloth/large,\
 						prob(12);/obj/structure/scrap/food/large,\
 						prob(1);/obj/structure/scrap/guns/large\
 					)
@@ -42,7 +44,8 @@
 						/obj/structure/scrap/vehicle,\
 						/obj/structure/scrap/food,\
 						/obj/structure/scrap/science,\
-						/obj/structure/scrap/guns\
+						/obj/structure/scrap/guns,\
+						/obj/structure/scrap/cloth\
 					)
 
 /obj/random/scrap/sparse_weighted
@@ -57,6 +60,7 @@
 						prob(4);/obj/structure/scrap/medical,\
 						prob(4);/obj/structure/scrap/science,\
 						prob(6);/obj/structure/scrap/vehicle,\
+						prob(8);/obj/structure/scrap/cloth,\
 						prob(12);/obj/structure/scrap/food,\
 						prob(1);/obj/structure/scrap/guns\
 					)

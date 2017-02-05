@@ -106,6 +106,7 @@
 #define COLOR_YELLOW 	"#FFFF00"
 #define COLOR_ORANGE 	"#FF9900"
 #define COLOR_WHITE 	"#FFFFFF"
+#define COLOR_GRAY      "#808080"
 
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
@@ -116,8 +117,6 @@
 //Flags for zone sleeping
 #define ZONE_ACTIVE 	1
 #define ZONE_SLEEPING 	0
-
-#define LIGHTING_LAYER 10
 
 #define FOR_DVIEW(type, range, center, invis_flags) \
 	dview_mob.loc = center; \

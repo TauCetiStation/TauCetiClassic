@@ -185,6 +185,39 @@
 		icon_state = "beartrap[armed]"
 	..()
 
+/obj/item/weapon/legcuffs/bola
+	name = "bola"
+	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
+	icon_state = "bola"
+	breakouttime = 35 //easy to apply, easy to break out of
+	origin_tech = "engineering=3;combat=1"
+	var/weaken = 2
+
+/obj/item/weapon/legcuffs/bola/throw_at(atom/target, mob/thrower)
+	if(!..())
+		return
+	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
+
+/obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom)
+	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
+		return
+	var/mob/living/carbon/C = hit_atom
+	if(!C.legcuffed)
+		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
+		C.legcuffed = src
+		src.loc = C
+		C.update_inv_legcuffed()
+		feedback_add_details("handcuffs","B")
+		to_chat(C,"<span class='userdanger'>\The [src] ensnares you!</span>")
+		C.Weaken(weaken)
+
+/obj/item/weapon/legcuffs/bola/tactical//traitor variant
+	name = "reinforced bola"
+	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
+	icon_state = "bola_r"
+	breakouttime = 70
+	origin_tech = "engineering=4;combat=3"
+	weaken = 6
 
 
 /obj/item/weapon/caution

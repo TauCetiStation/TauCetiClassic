@@ -274,6 +274,7 @@
 	load.pixel_x = initial(load.pixel_x)
 	load.pixel_y = initial(load.pixel_y)
 	load.layer = initial(load.layer)
+	load.plane = initial(load.plane)
 
 	if(ismob(load))
 		unbuckle_mob(load)

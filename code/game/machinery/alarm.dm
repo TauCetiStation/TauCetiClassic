@@ -1409,7 +1409,7 @@ FIRE ALARM
 			update_icon()
 
 /obj/machinery/firealarm/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	if (buildstage != 2)
@@ -1594,7 +1594,7 @@ Code shamelessly copied from apc_frame
 	return attack_hand(user)
 
 /obj/machinery/partyalarm/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
 		return
 
 	user.machine = src

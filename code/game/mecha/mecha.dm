@@ -60,6 +60,7 @@
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
+	var/datum/global_iterator/pr_mecha_light // processing mecha lights
 
 
 	var/wreckage
@@ -137,6 +138,7 @@
 	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
 	pr_give_air = new /datum/global_iterator/mecha_tank_give_air(list(src))
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
+	pr_mecha_light = new /datum/global_iterator/mecha_light(list(src))
 
 /obj/mecha/proc/do_after(delay)
 	sleep(delay)
@@ -296,6 +298,7 @@
 
 /obj/mecha/proc/mechturn(direction)
 	dir = direction
+	use_power(step_energy_drain)
 	playsound(src,'sound/mecha/mechturn.ogg',40,1)
 	return 1
 
@@ -303,6 +306,7 @@
 	var/result = step(src,direction)
 	if(result)
 		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+		use_power(step_energy_drain)
 	return result
 
 
@@ -310,6 +314,7 @@
 	var/result = step_rand(src)
 	if(result)
 		playsound(src,'sound/mecha/mechstep.ogg',40,1)
+		use_power(step_energy_drain)
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle, yes)
@@ -935,7 +940,10 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=occupant)	return
+	if(usr!=occupant)
+		return
+	if(!has_charge(lights_power))
+		return
 	lights = !lights
 	if(lights)	set_light(light_range + lights_power)
 	else		set_light(light_range - lights_power)
@@ -1784,6 +1792,17 @@
 				mecha.cell.maxcharge -= min(20,mecha.cell.maxcharge)
 		return
 
+/datum/global_iterator/mecha_light
+
+	process(var/obj/mecha/mecha)
+		if(!mecha.lights)
+			return
+		if(mecha.has_charge(mecha.lights_power))
+			mecha.use_power(mecha.lights_power)
+		else
+			mecha.lights = 0
+			mecha.set_light(mecha.light_range - mecha.lights_power)
+		return
 
 /////////////
 

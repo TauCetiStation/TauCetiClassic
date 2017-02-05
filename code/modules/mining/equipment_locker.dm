@@ -233,6 +233,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			s.use(s.max_amount)
 		s.loc = loc
 		s.layer = initial(s.layer)
+		s.plane = initial(s.plane)
 
 
 /**********************Mining Equipment Locker**************************/
