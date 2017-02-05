@@ -1,8 +1,10 @@
 #define SYNDICATE_SHUTTLE_MOVE_TIME 215
 #define SYNDICATE_SHUTTLE_COOLDOWN 200
+#define SYNDICATE_CHALLENGE_TIMER 15000 //20 minutes
 
 /obj/machinery/computer/syndicate_station
 	name = "syndicate shuttle terminal"
+	circuit = /obj/item/weapon/circuitboard/computer/syndicate_shuttle
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "syndishuttle"
 	light_color = "#a91515"
@@ -13,6 +15,7 @@
 
 
 /obj/machinery/computer/syndicate_station/New()
+	..()
 	curr_location= locate(/area/syndicate_station/start)
 
 
@@ -67,6 +70,12 @@
 	if(!. || !allowed(usr))
 		return
 
+	var/obj/item/weapon/circuitboard/computer/syndicate_shuttle/board = circuit
+	if(board.challenge && world.time < SYNDICATE_CHALLENGE_TIMER)
+		to_chat(usr, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least [round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] more minutes to allow them to prepare.</span>")
+		return 0
+	board.moved = TRUE
+
 	if(href_list["syndicate"])
 		syndicate_move_to(/area/syndicate_station/start)
 	else if(href_list["station_nw"])
@@ -85,3 +94,19 @@
 		syndicate_move_to(/area/syndicate_station/mining)
 
 	updateUsrDialog()
+
+/obj/item/weapon/circuitboard/computer/syndicate_shuttle
+	name = "Syndicate Shuttle (Computer Board)"
+	build_path = /obj/machinery/computer/syndicate_station
+	var/challenge = FALSE
+	var/moved = FALSE
+
+/obj/item/weapon/circuitboard/computer/syndicate_shuttle/New()
+	syndicate_shuttle_boards += src
+	..()
+
+/obj/item/weapon/circuitboard/computer/syndicate_shuttle/Destroy()
+	syndicate_shuttle_boards -= src
+	return ..()
+
+#undef SYNDICATE_CHALLENGE_TIMER
