@@ -82,8 +82,9 @@
 	name = "incendiary shell"
 	desc = "An incendiary slug."
 	icon_state = "ishell"
-	projectile_type = /obj/item/projectile/bullet/incendiary
-	m_amt = 2500
+	projectile_type = /obj/item/projectile/bullet/ipellet
+	pellets = 3
+	variance = 0.8
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun darts"

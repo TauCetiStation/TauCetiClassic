@@ -28,6 +28,16 @@
 	name = "pellet"
 	damage = 20
 
+/obj/item/projectile/bullet/ipellet
+	name = "pellet"
+	damage = 20
+
+/obj/item/projectile/bullet/ipellet/on_hit(atom/target, blocked = 0)
+	if(istype(target, /mob/living/carbon))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(10)
+		M.IgniteMob()
+
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
 	agony = 95
