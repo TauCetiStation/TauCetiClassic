@@ -193,7 +193,22 @@
 	name = "neurotoxin"
 	icon_state = "energy2"
 	damage = 5
-	stun = 15
+	stun = 10
 	damage_type = TOX
 	flag = "bullet"
 
+/obj/item/projectile/acid_special
+	name = "acid"
+	icon_state = "neurotoxin"
+	damage = 25
+	damage_type = TOX
+	flag = "bullet"
+
+/obj/item/projectile/acid_special/on_hit(atom/target, blocked = 0)
+	if(issilicon(target))
+		var/mob/living/silicon/S = target
+		S.take_organ_damage(damage)//+10=30
+	else if(istype(target,/obj/mecha))
+		var/obj/mecha/M = target
+		M.take_damage(damage)
+..()

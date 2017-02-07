@@ -101,6 +101,7 @@
 			(SP.desc) = "[SP.desc] It looks like it was fired from [P.shot_from]."
 			(SP.loc) = organ
 			organ.embed(SP)
+
 	if(istype(P, /obj/item/projectile/neurotoxin))
 		var/obj/item/projectile/neurotoxin/B = P
 
@@ -108,7 +109,35 @@
 		var/armor = getarmor_organ(organ, "bio")
 		if (armor < 100)
 			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
-			to_chat(src, "\red You have been shot!")
+			to_chat(src, "\red You feel that yor muscles can`t move!")
+
+	if(istype(P, /obj/item/projectile/acid_special))
+		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
+		var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes) // What all are we checking?
+		for(var/bp in body_parts) //Make an unregulated var to pass around.
+			if(!bp)
+				continue //Does this thing we're shooting even exist?
+			if(bp && istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
+				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
+				if(C.body_parts_covered & select_area.body_part) // Is that body part being targeted covered?
+					if(prob(75))
+						C.make_old()
+						C.update_icon()
+						regenerate_icons()
+					visible_message("\red <B>The [P.name] gets absorbed by [src]'s [C.name]!</B>")
+					qdel(P)
+					return
+
+
+		var/datum/organ/external/organ = get_organ(check_zone(def_zone))
+		var/armorblock = run_armor_check(organ, "bio")
+		apply_damage(P.damage, P.damage_type, organ, armorblock, P, 0, 0)
+		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
+		flash_pain()
+		to_chat(src, "\red You have been shot!")
+		qdel(P)
+		return
+
 
 	return (..(P , def_zone))
 

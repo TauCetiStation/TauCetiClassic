@@ -205,7 +205,7 @@
 
 	anchored = 1
 	density = 0
-	layer = 2
+	layer = 2.5
 	var/health = 15
 	var/obj/effect/alien/weeds/node/linked_node = null
 	var/static/list/weedImageCache

@@ -149,14 +149,28 @@ Doesn't work on other aliens/AI.*/
 		A.process()
 	return
 */
+#define ALIEN_NEUROTOXIN 1
+#define ALIEN_ACID 2
 /mob/living/carbon/alien/humanoid/proc/toggle_neurotoxin(message = 1)
-	neurotoxin_on_click = !neurotoxin_on_click
-	//neurotoxin_icon.icon_state = "neurotoxin_[neurotoxin_on_click ? "on":"off"]"
+	switch(neurotoxin_on_click)
+
+		if(0)
+			neurotoxin_on_click = ALIEN_NEUROTOXIN
+			if(message)
+				to_chat(src, "<span class='noticealien'>You will now fire neurotoxin in enemies!</span>")
+
+		if(ALIEN_NEUROTOXIN)
+			neurotoxin_on_click = ALIEN_ACID
+			if(message)
+				to_chat(src, "<span class='noticealien'>You will now fire acid in enemies!</span>")
+
+		if(ALIEN_ACID)
+			neurotoxin_on_click = 0
+			if(message)
+				to_chat(src, "<span class='noticealien'>You will not fire in enemies!</span>")
+	neurotoxin_icon.icon_state = "neurotoxin[neurotoxin_on_click]"
 	update_icons()
-	if(message)
-		to_chat(src, "<span class='noticealien'>You will now [neurotoxin_on_click ? "ready":"not ready"] to fire in enemies!</span>")
-	else
-		return
+	return
 
 /mob/living/carbon/alien/humanoid/proc/neurotoxin()
 	set name = "Spit Neurotoxin"
@@ -173,58 +187,64 @@ Doesn't work on other aliens/AI.*/
 		..()
 
 /mob/living/carbon/alien/humanoid/proc/split_neurotoxin(atom/target)
-	if(last_neurotoxin + neurotoxin_delay > world.time)
+	if(neurotoxin_next_shot > world.time)
 		to_chat(src, "You are not ready.")
 		return
-	if(powerc(50))
-		to_chat(src, "\green You spit neurotoxin at [target].")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				to_chat(O, "\red [src] spits neurotoxin at [target]!")
+
 		//I'm not motivated enough to revise this. Prjectile code in general needs update.
-		var/turf/T = loc
-		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+	var/turf/T = loc
+	var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 
-		if(!U || !T)
-			return
-		while(U && !istype(U,/turf))
-			U = U.loc
-		if(!istype(T, /turf))
-			return
-		if (U == T)
-			return
-		if(!istype(U, /turf))
-			return
+	if(!U || !T)
+		return
+	while(U && !istype(U,/turf))
+		U = U.loc
+	if(!istype(T, /turf))
+		return
+	if (U == T)
+		return
+	if(!istype(U, /turf))
+		return
 
-		//var/curloc = user.loc
-		//var/targloc = get_turf(target)
-		adjustToxLoss(-50)
+	var/obj/item/projectile/BB
 
-		/*
-		var/obj/item/ammo_casing/magic/neurotoxin/A = new /obj/item/ammo_casing/magic/neurotoxin(usr.loc)
-		A.ready_proj(target, src)
-		A.throw_proj(target, U, src)
-		qdel(A)
-		*/
-		var/obj/item/projectile/neurotoxin/BB = new /obj/item/projectile/neurotoxin(usr.loc)
+	switch(neurotoxin_on_click)
+		if(ALIEN_NEUROTOXIN)
+			if(!powerc(50))
+				return
+			BB = new /obj/item/projectile/neurotoxin(usr.loc)
+			adjustToxLoss(-50)
+			neurotoxin_next_shot = world.time  + neurotoxin_delay
+		if(ALIEN_ACID)
+			if(!powerc(150))
+				return
+			BB = new /obj/item/projectile/acid_special(usr.loc)
+			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 6)
+			adjustToxLoss(-150)
 
-		//prepare "bullet"
-		BB.original = target
-		BB.firer = src
-		BB.def_zone = src.zone_sel.selecting
-		//shoot
-		BB.loc = T
-		BB.starting = T
-		BB.current = loc
-		BB.yo = U.y - loc.y
-		BB.xo = U.x - loc.x
+	to_chat(src, "\green You spit [BB.name] at [target].")
+	for(var/mob/O in oviewers())
+		if ((O.client && !( O.blinded )))
+			to_chat(O, "\red [src] spits [BB.name] at [target]!")
 
-		if(BB)
-			BB.process()
+	//prepare "bullet"
+	BB.original = target
+	BB.firer = src
+	BB.def_zone = src.zone_sel.selecting
+	//shoot
+	BB.loc = T
+	BB.starting = T
+	BB.current = loc
+	BB.yo = U.y - loc.y
+	BB.xo = U.x - loc.x
 
-		last_neurotoxin = world.time
+	if(BB)
+		BB.process()
+
+	last_neurotoxin = world.time
 	return
-
+#undef ALIEN_NEUROTOXIN
+#undef ALIEN_ACID
 /mob/living/carbon/alien/humanoid/proc/resin() // -- TLE
 	set name = "Secrete Resin (75)"
 	set desc = "Secrete tough malleable resin."

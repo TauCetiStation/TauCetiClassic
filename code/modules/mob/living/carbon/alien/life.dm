@@ -303,7 +303,7 @@
 
 		if(pullin)
 			if(pulling)
-				pullin.icon_state = "pull"
+				pullin.icon_state = "pull1"
 			else
 				pullin.icon_state = "pull0"
 
