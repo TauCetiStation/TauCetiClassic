@@ -136,6 +136,7 @@
 			else
 				. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
 			. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
+			. += "Socks: <a href='?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
 			. += "Backpack Type: <a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a>"
 
 	. += 								"</td>"
@@ -238,6 +239,8 @@
 					underwear = rand(1,underwear_m.len)
 				if("undershirt")
 					undershirt = rand(1,undershirt_t.len)
+				if("socks")
+					socks = rand(1,socks_t.len)
 				if("eyes")
 					r_eyes = rand(0,255)
 					g_eyes = rand(0,255)
@@ -387,6 +390,12 @@
 					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
 					if (new_undershirt)
 						undershirt = undershirt_options.Find(new_undershirt)
+				if("socks")
+					var/list/socks_options
+					socks_options = socks_t
+					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_options
+					if(new_socks)
+						socks = socks_options.Find(new_socks)
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null

@@ -342,6 +342,9 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!fat)
 			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
 
+	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
+		stand_icon.Blend(new /icon('icons/mob/human_socks.dmi', "socks[socks]_s"), ICON_OVERLAY)
+
 	standing	+= image("icon"=stand_icon, "layer"=-BODY_LAYER)
 
 	if(has_head)
