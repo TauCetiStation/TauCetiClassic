@@ -547,7 +547,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	desc = "A fist-sized mass of biocircuits and chips."
 	icon_state = "implant_evil"
 	///////////////////////////////////////////////////////////
-/obj/item/weapon/storage/internal
+/obj/item/weapon/storage/internal/imp
 	name = "bluespace pocket"
 	max_combined_w_class = 6
 	max_w_class = 3
@@ -560,11 +560,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	icon_state = "implant_evil"
 	origin_tech = "materials=2;magnets=4;bluespace=5;syndicate=4"
 	action_button_name = "Bluespace pocket"
-	var/obj/item/weapon/storage/internal/storage
+	var/obj/item/weapon/storage/internal/imp/storage
 
 /obj/item/weapon/implant/storage/New()
 	..()
-	storage = new /obj/item/weapon/storage/internal(src)
+	storage = new /obj/item/weapon/storage/internal/imp(src)
 
 /obj/item/weapon/implant/storage/ui_action_click()
 	storage.open(imp_in)
