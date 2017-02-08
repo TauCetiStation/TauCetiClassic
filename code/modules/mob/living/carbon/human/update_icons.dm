@@ -105,7 +105,8 @@ Please contact me on #coderbus IRC. ~Carn x
 */
 
 //Human Overlays Indexes/////////
-#define BODY_LAYER				27
+#define BODY_LAYER				28
+#define SOCKS_LAYER				27
 #define MUTANTRACE_LAYER		26
 #define MUTATIONS_LAYER			25
 #define DAMAGE_LAYER			24
@@ -132,7 +133,7 @@ Please contact me on #coderbus IRC. ~Carn x
 #define R_HAND_LAYER			3
 #define TARGETED_LAYER			2		//BS12: Layer for the target overlay from weapon targeting system
 #define FIRE_LAYER				1
-#define TOTAL_LAYERS			27
+#define TOTAL_LAYERS			28
 //////////////////////////////////
 //Human Limb Overlays Indexes/////
 #define LIMB_HEAD_LAYER			11
@@ -162,6 +163,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(overlays_standing[cache_index])
 		overlays -= overlays_standing[cache_index]
 		overlays_standing[cache_index] = null
+		if(cache_index in list(LIMB_L_LEG_LAYER, LIMB_L_FOOT_LAYER, LIMB_R_LEG_LAYER, LIMB_R_FOOT_LAYER))
+			overlays -= overlays_standing[SOCKS_LAYER]
 
 /mob/living/carbon/human/proc/apply_damage_overlay(cache_index)
 	var/image/I = overlays_damage[cache_index]
@@ -341,10 +344,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
 			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
-
-	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
-		stand_icon.Blend(new /icon('icons/mob/human_socks.dmi', "socks[socks]_s"), ICON_OVERLAY)
-
 	standing	+= image("icon"=stand_icon, "layer"=-BODY_LAYER)
 
 	if(has_head)
@@ -360,10 +359,13 @@ Please contact me on #coderbus IRC. ~Carn x
 			standing	+= lips
 
 	update_tail_showing()
-
 	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
 
+	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
+		if(!fat && organs_by_name["r_foot"] && organs_by_name["l_foot"] && organs_by_name["l_leg"] && organs_by_name["r_leg"])
+			overlays_standing[SOCKS_LAYER] = image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-SOCKS_LAYER)
+	apply_overlay(SOCKS_LAYER)
 
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair()
