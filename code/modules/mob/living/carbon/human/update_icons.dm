@@ -105,8 +105,7 @@ Please contact me on #coderbus IRC. ~Carn x
 */
 
 //Human Overlays Indexes/////////
-#define BODY_LAYER				28
-#define SOCKS_LAYER				27
+#define BODY_LAYER				27
 #define MUTANTRACE_LAYER		26
 #define MUTATIONS_LAYER			25
 #define DAMAGE_LAYER			24
@@ -133,7 +132,7 @@ Please contact me on #coderbus IRC. ~Carn x
 #define R_HAND_LAYER			3
 #define TARGETED_LAYER			2		//BS12: Layer for the target overlay from weapon targeting system
 #define FIRE_LAYER				1
-#define TOTAL_LAYERS			28
+#define TOTAL_LAYERS			27
 //////////////////////////////////
 //Human Limb Overlays Indexes/////
 #define LIMB_HEAD_LAYER			11
@@ -163,8 +162,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(overlays_standing[cache_index])
 		overlays -= overlays_standing[cache_index]
 		overlays_standing[cache_index] = null
-		if(cache_index in list(LIMB_L_FOOT_LAYER, LIMB_R_FOOT_LAYER))
-			overlays -= overlays_standing[SOCKS_LAYER]
 
 /mob/living/carbon/human/proc/apply_damage_overlay(cache_index)
 	var/image/I = overlays_damage[cache_index]
@@ -196,7 +193,6 @@ Please contact me on #coderbus IRC. ~Carn x
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
-	remove_overlay(SOCKS_LAYER)
 	var/list/standing	= list()
 
 	var/husk_color_mod = rgb(96,88,80)
@@ -346,6 +342,13 @@ Please contact me on #coderbus IRC. ~Carn x
 			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
 	standing	+= image("icon"=stand_icon, "layer"=-BODY_LAYER)
 
+	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
+		if(!fat && organs_by_name["r_foot"] && organs_by_name["l_foot"]) //shit
+			var/datum/organ/external/rfoot = organs_by_name["r_foot"]
+			var/datum/organ/external/lfoot = organs_by_name["l_foot"]
+			if(!rfoot.amputated && !lfoot.amputated)
+				standing += image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-BODY_LAYER)
+
 	if(has_head)
 		//Eyes
 		var/image/img_eyes_s = image("icon"='icons/mob/human_face.dmi', "icon_state"=species.eyes, "layer"=-BODY_LAYER)
@@ -362,13 +365,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
 
-	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
-		if(!fat && organs_by_name["r_foot"] && organs_by_name["l_foot"]) //shit
-			var/datum/organ/external/rfoot = organs_by_name["r_foot"]
-			var/datum/organ/external/lfoot = organs_by_name["l_foot"]
-			if(!rfoot.amputated && !lfoot.amputated)
-				overlays_standing[SOCKS_LAYER] = image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-SOCKS_LAYER)
-				apply_overlay(SOCKS_LAYER)
+
 
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair()
