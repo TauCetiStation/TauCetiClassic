@@ -104,6 +104,9 @@ var/list/alldepartments = list("Central Command")
 		return
 
 	if(href_list["send"])
+		if(sendcooldown)
+			return
+
 		if(tofax)
 
 			if(dpt == "Central Command")
@@ -190,7 +193,6 @@ var/list/alldepartments = list("Central Command")
 	return
 
 /proc/Centcomm_fax(sent, sentname, mob/Sender)
-
 	var/msg = "\blue <b><font color='orange'>CENTCOMM FAX: </font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<a href='?_src_=holder;CentcommFaxReply=\ref[Sender]'>RPLY</a>)</b>: Receiving '[sentname]' via secure connection ... <a href='?_src_=holder;CentcommFaxView=\ref[sent]'>view message</a>"
 	log_fax("[Sender] sending [sentname] : [sent]")
 	for(var/client/C in admins)
@@ -198,7 +200,7 @@ var/list/alldepartments = list("Central Command")
 	send2slack_custommsg("[key_name(Sender)] sent fax to Centcomm", sent, ":fax:")
 
 
-proc/SendFax(sent, sentname, mob/Sender, dpt, stamp, stamps)
+/proc/SendFax(sent, sentname, mob/Sender, dpt, stamp, stamps)
 
 	log_fax("[Sender] sending [sentname] to [dpt] : [sent]")
 
