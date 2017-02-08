@@ -30,9 +30,8 @@
 	icon_state = "neurotoxin0"
 
 /obj/screen/alien/neurotoxin/Click()
-	if(locate(/mob/living/carbon/alien/humanoid/proc/neurotoxin) in usr.verbs)
-		var/mob/living/carbon/alien/humanoid/AH = usr
-		AH.toggle_neurotoxin()
+	var/mob/living/carbon/alien/humanoid/AH = usr
+	AH.toggle_neurotoxin()
 
 /datum/hud/proc/alien_hud()
 
