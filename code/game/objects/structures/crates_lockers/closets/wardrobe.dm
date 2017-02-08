@@ -493,7 +493,7 @@
 	new /obj/item/clothing/head/helmet/tactical/marinad(src)
 	new /obj/item/clothing/suit/storage/flak/marinad(src)
 	new /obj/item/clothing/under/tactical/marinad(src)
-	new /obj/item/clothing/mask/balaclava/tactical(src)
+	new /obj/item/clothing/mask/balaclava(src)
 	new /obj/item/clothing/glasses/sunglasses/sechud/tactical(src)
 	new /obj/item/weapon/storage/belt/security/tactical(src)
 	new /obj/item/clothing/shoes/jackboots(src)
