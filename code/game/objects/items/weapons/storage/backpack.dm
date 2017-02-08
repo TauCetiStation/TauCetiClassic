@@ -307,6 +307,7 @@
 	origin_tech = "syndicate=1"
 	max_combined_w_class = 30
 	storage_slots = 10
+	slowdown = 1
 
 /obj/item/weapon/storage/backpack/dufflebag/marinad
 	name = "marine dufflebag"
