@@ -163,7 +163,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(overlays_standing[cache_index])
 		overlays -= overlays_standing[cache_index]
 		overlays_standing[cache_index] = null
-		if(cache_index in list(LIMB_L_LEG_LAYER, LIMB_L_FOOT_LAYER, LIMB_R_LEG_LAYER, LIMB_R_FOOT_LAYER))
+		if(cache_index in list(LIMB_L_FOOT_LAYER, LIMB_R_FOOT_LAYER))
 			overlays -= overlays_standing[SOCKS_LAYER]
 
 /mob/living/carbon/human/proc/apply_damage_overlay(cache_index)
@@ -196,7 +196,7 @@ Please contact me on #coderbus IRC. ~Carn x
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
-
+	remove_overlay(SOCKS_LAYER)
 	var/list/standing	= list()
 
 	var/husk_color_mod = rgb(96,88,80)
@@ -363,9 +363,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	apply_overlay(BODY_LAYER)
 
 	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
-		if(!fat && organs_by_name["r_foot"] && organs_by_name["l_foot"] && organs_by_name["l_leg"] && organs_by_name["r_leg"])
-			overlays_standing[SOCKS_LAYER] = image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-SOCKS_LAYER)
-	apply_overlay(SOCKS_LAYER)
+		if(!fat && organs_by_name["r_foot"] && organs_by_name["l_foot"]) //shit
+			var/datum/organ/external/rfoot = organs_by_name["r_foot"]
+			var/datum/organ/external/lfoot = organs_by_name["l_foot"]
+			if(!rfoot.amputated && !lfoot.amputated)
+				overlays_standing[SOCKS_LAYER] = image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-SOCKS_LAYER)
+				apply_overlay(SOCKS_LAYER)
 
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair()
