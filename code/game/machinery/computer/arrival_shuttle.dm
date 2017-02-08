@@ -29,11 +29,16 @@ var/lastMove = 0
 		return
 	arrival_shuttle_move()
 
+/obj/machinery/computer/arrival_shuttle/proc/arrival_shuttle_ready_move()
+	if(lastMove + ARRIVAL_SHUTTLE_COOLDOWN > world.time)
+		return FALSE
+	return TRUE
+
 /obj/machinery/computer/arrival_shuttle/proc/arrival_shuttle_move()
 	set waitfor = 0
 	if(moving)
 		return
-	if(lastMove + ARRIVAL_SHUTTLE_COOLDOWN > world.time)
+	if(!arrival_shuttle_ready_move())
 		return
 	moving = 1
 	lastMove = world.time
@@ -182,7 +187,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/attack_hand(user)
 	src.add_fingerprint(usr)
-	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[max(lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
+	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
 
 	user << browse("[dat]", "window=researchshuttle;size=200x100")
 
@@ -192,7 +197,9 @@ var/lastMove = 0
 		return
 
 	if(href_list["move"])
-		if (!moving && location == 0)
+		if(!arrival_shuttle_ready_move())
+			to_chat(usr, "<span class='notice'>Shuttle is not ready to move yet.</span>")
+		else if(!moving && location == 0)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			arrival_shuttle_move()
 		else
@@ -205,7 +212,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/dock/attack_hand(user)
 	src.add_fingerprint(usr)
-	var/dat1 = "<center>Shuttle location:[curr_location]<br>Ready to move[max(lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
+	var/dat1 = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
 
 	user << browse("[dat1]", "window=researchshuttle;size=200x100")
 
@@ -215,7 +222,9 @@ var/lastMove = 0
 		return
 
 	if(href_list["back"])
-		if (!moving && location == 2)
+		if(!arrival_shuttle_ready_move())
+			to_chat(usr, "<span class='notice'>Shuttle is not ready to move yet.</span>")
+		else if(!moving && location == 2)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			arrival_shuttle_move()
 		else
