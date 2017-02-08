@@ -81,3 +81,9 @@
 	item_state = "fingerless_black"
 	clipped = 1
 	species_restricted = list("exclude","stunglove")
+
+/obj/item/clothing/gloves/security/marinad
+	desc = "These were made to hold a full automatic gun."
+	name = "Marine gloves"
+	icon_state = "marinad"
+	item_state = "marinad"
