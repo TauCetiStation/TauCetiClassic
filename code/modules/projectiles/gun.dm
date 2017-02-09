@@ -165,7 +165,7 @@
 	//Suicide handling.
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
 		if(isrobot(user))
-			to_chat(user, "<span class='notice'>You trying commit suicide, but can't do it.</span>")
+			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it.</span>")
 			return
 		mouthshoot = 1
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
