@@ -313,7 +313,8 @@
 	name = "marine dufflebag"
 	desc = "A large dufflebag for holding extra tactical supplies. Waterproof."
 	icon_state = "marinad"
-	item_state = "marinad"
+	item_state = "marinad_duffle"
+	origin_tech = ""
 
 /obj/item/weapon/storage/backpack/dufflebag/c4/New()
 	..()

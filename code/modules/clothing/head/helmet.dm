@@ -133,7 +133,7 @@
 	name = "marine helmet"
 	desc = "Spectrum alloy helmet. Lightweight and ready for action."
 	icon_state = "marinad"
-	item_state = "helmet"
+	item_state = "marinad_helmet"
 
 
 /obj/item/clothing/head/helmet/helmet_of_justice
