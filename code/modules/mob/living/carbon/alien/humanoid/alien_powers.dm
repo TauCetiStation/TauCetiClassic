@@ -222,10 +222,7 @@ Doesn't work on other aliens/AI.*/
 			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 6)
 			adjustToxLoss(-150)
 
-	to_chat(src, "\green You spit [BB.name] at [target].")
-	for(var/mob/O in oviewers())
-		if ((O.client && !( O.blinded )))
-			to_chat(O, "\red [src] spits [BB.name] at [target]!")
+	visible_message("\red <B> [src] spits [BB.name] at [target]!</B>")
 
 	//prepare "bullet"
 	BB.original = target
