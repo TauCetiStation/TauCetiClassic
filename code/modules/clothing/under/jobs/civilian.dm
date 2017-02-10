@@ -115,6 +115,14 @@
 	item_color = "internalaffairs"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/rank/tezuka
+	desc = "Casual clothes, with small remains of dried paint."
+	name = "Painter clothes"
+	icon_state = "tezuka"
+	item_state = "tezuka"
+	item_color = "tezuka"
+	flags = ONESIZEFITSALL
+
 
 /obj/item/clothing/under/rank/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
