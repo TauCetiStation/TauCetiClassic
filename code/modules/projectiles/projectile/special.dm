@@ -213,7 +213,7 @@
 		var/obj/mecha/M = target
 		M.take_damage(damage)
 
-	if(istype(target, /mob/living/carbon/human)	)
+	if(istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = target
 		var/datum/organ/external/select_area = H.get_organ(def_zone) // We're checking the outside, buddy!
 		var/list/body_parts = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes) // What all are we checking?
