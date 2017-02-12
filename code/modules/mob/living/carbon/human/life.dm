@@ -724,7 +724,7 @@
 		if(istype(loc, /obj/structure/transit_tube_pod))
 			return
 		var/protected = 0
-		if( (head && istype(head, /obj/item/clothing/head/helmet/space)) && (wear_suit && istype(wear_suit, /obj/item/clothing/suit/space)) && !istype(wear_suit, /obj/item/clothing/suit/space/sk) && !istype(head, /obj/item/clothing/head/helmet/space/sk)) // only an exception for "SK" space suit and helm
+		if( (head && istype(head, /obj/item/clothing/head/helmet/space)) && (wear_suit && istype(wear_suit, /obj/item/clothing/suit/space)))
 			protected = 1
 		if(!protected && radiation < 100)
 			apply_effect(5, IRRADIATE)
