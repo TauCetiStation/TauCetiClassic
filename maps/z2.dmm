@@ -435,7 +435,7 @@
 "ais" = (/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/syndicate_elite/mothership)
 "ait" = (/obj/structure/stool/bed/chair/metal{dir = 8},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/syndicate_elite/mothership)
 "aiu" = (/obj/structure/table,/obj/item/device/flashlight/lamp,/turf/unsimulated/floor{icon_state = "grimy"},/area/syndicate_mothership)
-"aiv" = (/obj/structure/table,/obj/item/device/pda/syndicate,/turf/unsimulated/floor{icon_state = "grimy"},/area/syndicate_mothership)
+"aiv" = (/obj/structure/table,/obj/item/device/nuclear_challenge,/obj/item/device/pda/syndicate,/turf/unsimulated/floor{icon_state = "grimy"},/area/syndicate_mothership)
 "aiw" = (/obj/structure/table,/obj/item/weapon/paper_bin,/turf/unsimulated/floor{icon_state = "grimy"},/area/syndicate_mothership)
 "aix" = (/turf/space/transit/north/shuttlespace_ns11,/area/syndicate_station/transit)
 "aiy" = (/turf/space/transit/north/shuttlespace_ns7,/area/syndicate_station/transit)

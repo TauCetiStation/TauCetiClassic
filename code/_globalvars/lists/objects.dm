@@ -10,3 +10,4 @@ var/global/list/joblist = list()            //list of all jobstypes, minus borg 
 
 var/global/list/all_areas = list()
 var/global/list/machines = list()
+var/global/list/syndicate_shuttle_boards = list()	//important to keep track of for managing nukeops war declarations.

@@ -1,3 +1,5 @@
+var/round_start_time = 0
+
 var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
@@ -209,6 +211,7 @@ var/datum/subsystem/ticker/ticker
 		src.mode.announce()
 
 	current_state = GAME_STATE_PLAYING
+	round_start_time = world.time
 
 	//start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
