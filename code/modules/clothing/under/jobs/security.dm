@@ -69,6 +69,15 @@
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/under/tactical/marinad
+	name = "marine jumpsuit"
+	desc = "Boots and Utes"
+	icon_state = "marinad"
+	item_state = "johnny"
+	item_color = "marinad"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 0.9
+
 /*
  * Detective
  */
