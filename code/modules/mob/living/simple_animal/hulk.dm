@@ -228,3 +228,41 @@
 	..()
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
 		health -= P.agony / 10
+
+/mob/living/simple_animal/hulk/proc/attack_hulk(obj/machinery/door/D)
+	if(istype(D,/obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/A = D
+		if(A.welded || A.locked)
+			if(hulk_scream(A, 75))
+				if(istype(A,/obj/machinery/door/airlock/multi_tile/)) //Some kind runtime with multi_tile airlock... So delete for now... #Z2
+					qdel(A)
+				else
+					A.door_rupture(src)
+			return
+	if(istype(D,/obj/machinery/door/firedoor))
+		var/obj/machinery/door/firedoor/F = D
+		if(F.blocked)
+			if(hulk_scream(F))
+				qdel(F)
+				return
+	if(D.density)
+		to_chat(src, "<span class='red'>You force your fingers between the doors and begin to pry them open...</span>")
+		playsound(D, 'sound/machines/electric_door_open.ogg', 30, 1, -4)
+		if (do_after(src,40,target = D))
+			if(!D) return
+			D.open(1)
+
+/mob/living/proc/hulk_scream(obj/target, chance)
+	if(prob(chance))
+		visible_message("\red <B>[src]</B> has punched \the <B>[target]!</B>",\
+		"You punch \the [target]!",\
+		"\red You feel some weird vibration!")
+		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
+		return 0
+	else
+		say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+		visible_message("\red <B>[src]</B> has destroyed some mechanic in \the <B>[target]!</B>",\
+		"You destroy some mechanic in \the [target] door, which holds it in place!",\
+		"\red <B>You feel some weird vibration!</B>")
+		playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+		return 1

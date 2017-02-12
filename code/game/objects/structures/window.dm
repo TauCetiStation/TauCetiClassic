@@ -253,6 +253,12 @@
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Crushes [M.name] against \the [src]([M.ckey])</font>"
 					msg_admin_attack("[key_name(A)] crushes [key_name(M)] against \the [src]")
 			return
+	if(istype(W,/obj/item/weapon/changeling_hammer))
+		var/obj/item/weapon/changeling_hammer/C = W
+		user.do_attack_animation(src)
+		if(C.use_charge(src,user))
+			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			shatter()
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(reinf && state >= 1)
 			state = 3 - state

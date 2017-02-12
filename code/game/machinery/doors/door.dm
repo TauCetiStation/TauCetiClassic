@@ -129,11 +129,12 @@
 		return
 	..()
 
-/obj/machinery/door/attackby(obj/item/I, mob/user)
+
+/obj/machinery/door/attackby(obj/item/I, mob/living/user)
 	if(HULK in user.mutations) //#Z2 Hulk can open any door with his power and break any door with harm intent.
 		if(!src.density) return
 		var/cur_loc = user.loc
-		var/cur_dir
+		var/cur_dir = user.dir
 		var/found = 0
 		for(var/direction in cardinal)
 			var/turf/T = get_step(src,direction)
@@ -148,54 +149,14 @@
 			to_chat(user, "\red You can't force open door with [I] in hand!")
 			return
 		var/obj/machinery/door/airlock/A = src
-		if(istype(A,/obj/machinery/door/airlock/))
+		if(istype(A,/obj/machinery/door/airlock))
 			if(user.a_intent == "hurt")
-				if(prob(90))
-					user.visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>",\
-					"You punch \the [src]!",\
-					"\red You feel some weird vibration!")
-					playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-					return
+				if(!user.hulk_scream(A, 90))
+					if(istype(A,/obj/machinery/door/airlock/multi_tile)) //Some kind runtime with multi_tile airlock... So delete for now... #Z2
+						qdel(A)
 				else
-					user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-					user.visible_message("\red <B>[user]</B> has destroyed some mechanic in \the <B>[src]!</B>",\
-					"You destroy some mechanic in \the [src] door, which holds it in place!",\
-					"\red <B>You feel some weird vibration!</B>")
-					playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
-					if(istype(A,/obj/machinery/door/airlock/multi_tile/)) //Some kind runtime with multi_tile airlock... So delete for now... #Z2
-						qdel(A)
-					else
-						var/obj/structure/door_assembly/da = new A.assembly_type(A.loc)
-						da.anchored = 0
-
-						var/target = da.loc
-						cur_dir = user.dir
-						for(var/i=0, i<4, i++)
-							target = get_turf(get_step(target,cur_dir))
-						da.throw_at(target, 200, 100)
-
-						if(A.mineral)
-							da.change_mineral_airlock_type(A.mineral)
-						if(A.glass && da.can_insert_glass)
-							da.set_glass(TRUE)
-						da.state = ASSEMBLY_WIRED
-						da.created_name = src.name
-						da.update_state()
-
-						var/obj/item/weapon/airlock_electronics/ae
-						ae = new/obj/item/weapon/airlock_electronics( A.loc )
-						if(!A.req_access)
-							A.check_access()
-						if(A.req_access.len)
-							ae.conf_access = A.req_access
-						else if (A.req_one_access.len)
-							ae.conf_access = A.req_one_access
-							ae.one_access = 1
-						ae.loc = da
-						da.electronics = ae
-
-						qdel(A)
-					return
+					A.door_rupture(src)
+				return
 			else if(A.locked && user.a_intent != "hurt")
 				to_chat(user, "\red The door is bolted and you need more aggressive force to get thru!")
 				return

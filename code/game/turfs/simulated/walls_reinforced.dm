@@ -274,7 +274,15 @@
 //vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
 
 	//DRILLING
-	if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
+		var/obj/item/weapon/changeling_hammer/C = W
+		user.do_attack_animation(src)
+		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+		if(C.use_charge(src,user, 4))
+			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			take_damage(pick(10, 20, 30))
+		return
+	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
 

@@ -15,12 +15,13 @@
 		var/mob/living/carbon/human/H = user
 		if(H.handcuffed)
 			qdel(H.handcuffed)
-	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
 	if(istype(user.l_hand, weapon_type)) //Not the nicest way to do it, but eh
+		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
 		qdel(user.l_hand)
 		user.update_inv_l_hand()
 		return
 	if(istype(user.r_hand, weapon_type))
+		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
 		qdel(user.r_hand)
 		user.update_inv_r_hand()
 		return
