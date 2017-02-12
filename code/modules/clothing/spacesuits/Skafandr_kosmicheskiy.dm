@@ -4,6 +4,7 @@
 	icon_state = "sk"
 	item_state = "sk"
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 0)
 	siemens_coefficient = 0.65
 	species_restricted = list("exclude","Diona","Vox")
 
@@ -13,6 +14,7 @@
 	item_state = "sk"
 	desc = "SK-1 Spacesuit. The first spacesuit ever used. Reminds you of Vostok spaceflight and Yuri Gagarin"
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 0)
 	slowdown = 4
 	siemens_coefficient = 0.65
 
@@ -25,5 +27,5 @@
 	SSobj.processing.Remove(src)
 
 /obj/item/clothing/suit/space/sk/process()
-	if(istype(get_turf(src), /turf/space))
+	if(istype(get_turf(src), /turf/space) && !istype(loc.loc, /obj/mecha))
 		create_breaches(BRUTE,2.3)
