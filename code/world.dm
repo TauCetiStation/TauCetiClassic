@@ -31,6 +31,7 @@
 		load_whitelist()
 	if(config.usealienwhitelist)
 		load_alienwhitelist()
+	load_whitelistSQL()
 	LoadBans()
 	investigate_reset()
 
