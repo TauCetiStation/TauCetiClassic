@@ -38,10 +38,10 @@
 // If "chest" was passed in as zone, then on a "miss" will return "head", "l_arm", or "r_arm"
 // Do not use this if someone is intentionally trying to hit a specific body part.
 // Use get_zone_with_miss_chance() for that.
-/proc/ran_zone(zone, probability)
+/proc/ran_zone(zone, probability = 90)
 	zone = check_zone(zone)
-	if(!probability)	probability = 90
-	if(probability == 100)	return zone
+	if(probability == 100)
+		return zone
 
 	if(zone == "chest")
 		if(prob(probability))	return "chest"
@@ -67,38 +67,49 @@
 			if("head")
 				miss_chance = 30
 			if("l_leg")
-				miss_chance = 20
+				miss_chance = 40
 			if("r_leg")
-				miss_chance = 20
+				miss_chance = 40
 			if("l_arm")
-				miss_chance = 20
+				miss_chance = 40
 			if("r_arm")
-				miss_chance = 20
+				miss_chance = 40
 			if("l_hand")
-				miss_chance = 40
+				miss_chance = 60
 			if("r_hand")
-				miss_chance = 40
+				miss_chance = 60
 			if("l_foot")
-				miss_chance = 40
+				miss_chance = 60
 			if("r_foot")
-				miss_chance = 40
-		miss_chance = max(miss_chance + miss_chance_mod, 0)
-		if(prob(miss_chance))
-			if(prob(80))
+				miss_chance = 60
+		if(prob(max(miss_chance + miss_chance_mod, 0)))
+			if(prob(max(20, (miss_chance/2))))
 				return null
 			else
-				var/t = rand(1, 10)
+				var/t = rand(1, 100)
 				switch(t)
-					if(1)	return "head"
-					if(2)	return "l_arm"
-					if(3)	return "r_arm"
-					if(4) 	return "chest"
-					if(5) 	return "l_foot"
-					if(6)	return "r_foot"
-					if(7)	return "l_hand"
-					if(8)	return "r_hand"
-					if(9)	return "l_leg"
-					if(10)	return "r_leg"
+					if(1 to 50)
+						return "chest"
+					if(51 to 61)
+						return "head"
+					if(62 to 66)
+						return "l_arm"
+					if(67 to 71)
+						return "r_arm"
+					if(72 to 76)
+						return "r_leg"
+					if(77 to 81)
+						return "l_leg"
+					if(82 to 87)
+						return "groin"
+					if(88 to 91)
+						return "l_foot"
+					if(92 to 94)
+						return "r_foot"
+					if(95 to 97)
+						return "l_hand"
+					if(98 to 100)
+						return "r_hand"
 
 	return zone
 
