@@ -149,8 +149,7 @@
 		if(damage && (distance > 7))
 			if(damage < 55)
 				damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
-		if(istype(src, /obj/item/projectile/beam/sniper))
-			miss_modifier = - 100 // so sniper rifle beam cannot miss
+				miss_modifier = - 100 // so sniper rifle and PTR-rifle projectiles cannot miss
 		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
 			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
 			if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
