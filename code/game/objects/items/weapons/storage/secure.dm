@@ -45,7 +45,7 @@
 				emagged = 1
 				src.overlays += image('icons/obj/storage.dmi', icon_sparking)
 				sleep(6)
-				src.overlays = null
+				overlays.Cut()
 				overlays += image('icons/obj/storage.dmi', icon_locking)
 				locked = 0
 				if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -151,7 +151,7 @@
 	name = "secure briefcase"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "secure"
-	item_state = "sec-case"
+	item_state = "secure-r"
 	desc = "A large briefcase with a digital locking system."
 	force = 8.0
 	throw_speed = 1
@@ -175,6 +175,25 @@
 					src.close(M)
 		src.add_fingerprint(user)
 		return
+
+/obj/item/weapon/storage/secure/briefcase/attackby(var/obj/item/weapon/W, var/mob/user)
+	..()
+	update_icon()
+
+/obj/item/weapon/storage/secure/briefcase/Topic(href, href_list)
+	..()
+	update_icon()
+
+/obj/item/weapon/storage/secure/briefcase/update_icon()
+	if(!locked || emagged)
+		item_state = "secure-g"
+	else
+		item_state = "secure-r"
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_l_hand()
+		M.update_inv_r_hand()
 
 	//I consider this worthless but it isn't my code so whatever.  Remove or uncomment.
 	/*attack(mob/M, mob/living/user)

@@ -34,17 +34,18 @@
 	density = 1
 	opacity = 1
 	anchored = 1
+	layer = 3.14
 	var/health = 250
 	var/resintype = null
 	//var/mob/living/affecting = null
 
-	wall
+/obj/effect/alien/resin/wall
 		name = "resin wall"
 		desc = "Purple slime solidified into a wall."
 		icon_state = "wall0" //same as resin, but consistency ho!
 		resintype = "wall"
 
-	membrane
+/obj/effect/alien/resin/membrane
 		name = "resin membrane"
 		desc = "Purple slime just thin enough to let light pass through."
 		icon_state = "membrane0"
@@ -71,7 +72,10 @@
 /obj/effect/alien/resin/proc/healthcheck()
 	if(health <=0)
 		density = 0
+		var/turf/T = loc
 		qdel(src)
+		for (var/obj/effect/alien/weeds/W in range(1,T))
+			W.updateWeedOverlays()
 	return
 
 /obj/effect/alien/resin/bullet_act(obj/item/projectile/Proj)
@@ -210,19 +214,24 @@
 	icon_state = "weednode"
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
-	layer = 3
+	layer = 2.5
 	light_range = 0
 	var/node_range = NODERANGE
+	light_color = "#24C1FF"
 
 /obj/effect/alien/weeds/node/New()
 	..(src.loc, src)
-
+	for (var/obj/effect/alien/weeds/W in loc)
+		if (W != src)
+			qdel(W)
+	set_light(2)
 
 /obj/effect/alien/weeds/New(pos, node)
 	..()
 	if(istype(loc, /turf/space))
 		qdel(src)
 		return
+
 	linked_node = node
 	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
 	fullUpdateWeedOverlays()
@@ -277,19 +286,7 @@
 /obj/effect/alien/weeds/proc/Life()
 	//set background = 1
 	var/turf/U = get_turf(src)
-/*
-	if (locate(/obj/movable, U))
-		U = locate(/obj/movable, U)
-		if(U.density == 1)
-			qdel(src)
-			return
 
-Alien plants should do something if theres a lot of poison
-	if(U.poison> 200000)
-		health -= round(U.poison/200000)
-		update()
-		return
-*/
 	if (istype(U, /turf/space))
 		qdel(src)
 		return
@@ -297,21 +294,24 @@ Alien plants should do something if theres a lot of poison
 	if(!linked_node || (get_dist(linked_node, src) > linked_node.node_range) )
 		return
 
-	direction_loop:
-		for(var/dirn in cardinal)
-			var/turf/T = get_step(src, dirn)
+	for(var/dirn in cardinal)
+		var/turf/T = get_step(src, dirn)
 
-			if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
+		if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
+			continue
+
+		var/obj/structure/window/W = locate(/obj/structure/window) in T
+		var/obj/machinery/door/D = locate(/obj/machinery/door) in T
+
+		if(D)
+			if(D.density)
 				continue
 
-	//		if (locate(/obj/movable, T)) // don't propogate into movables
-	//			continue
+		if(W)
+			if(W.density)
+				continue
 
-			for(var/obj/O in T)
-				if(O.density)
-					continue direction_loop
-
-			new /obj/effect/alien/weeds(T, linked_node)
+		new /obj/effect/alien/weeds(T, linked_node)
 
 
 /obj/effect/alien/weeds/ex_act(severity)

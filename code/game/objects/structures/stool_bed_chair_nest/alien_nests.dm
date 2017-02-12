@@ -6,6 +6,7 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "nest"
 	var/health = 100
+	layer = 2.55
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(buckled_mob)

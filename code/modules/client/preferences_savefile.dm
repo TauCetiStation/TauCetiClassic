@@ -32,10 +32,13 @@
 	savefile_version = SAVEFILE_VERSION_MAX
 
 /datum/preferences/proc/load_preferences()
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)
+		return 0
+	if(!fexists(path))
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
 
 	S["version"] >> savefile_version
@@ -63,6 +66,8 @@
 	S["randomslot"]			>> randomslot
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
+	S["permamuted"]			>> permamuted
+	S["permamuted"]			>> muted
 
 	//Antag preferences
 	S["be_role"]			>> be_role
@@ -82,9 +87,11 @@
 	return 1
 
 /datum/preferences/proc/save_preferences()
-	if(!path)				return 0
+	if(!path)
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
 
 	S["version"] << savefile_version
@@ -104,11 +111,13 @@
 	S["warns"]				<< warns
 	S["warnbans"]			<< warnbans
 	S["randomslot"]			<< randomslot
+	S["permamuted"]			<< permamuted
 	return 1
 
 /datum/preferences/proc/load_save(dir)
 	var/savefile/S = new /savefile(path)
-	if(!S) return 0
+	if(!S)
+		return 0
 	S.cd = dir
 
 	//Character
@@ -228,16 +237,20 @@
 	if(!religion)    religion =    "None"
 
 /datum/preferences/proc/random_character()
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)
+		return 0
+	if(!fexists(path))
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	var/list/saves = list()
 	var/name
 	for(var/i=1, i<=MAX_SAVE_SLOTS, i++)
 		S.cd = "/character[i]"
 		S["real_name"] >> name
-		if(!name) continue
+		if(!name)
+			continue
 		saves.Add(S.cd)
 
 	if(!saves.len)
@@ -248,10 +261,13 @@
 	return 1
 
 /datum/preferences/proc/load_character(slot)
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)
+		return 0
+	if(!fexists(path))
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
 	if(!slot)	slot = default_slot
 	slot = sanitize_integer(slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
@@ -264,9 +280,11 @@
 	return 1
 
 /datum/preferences/proc/save_character()
-	if(!path)				return 0
+	if(!path)
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/character[default_slot]"
 
 	//Character

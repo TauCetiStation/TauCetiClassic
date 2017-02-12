@@ -180,6 +180,16 @@
 /obj/item/weapon/twohanded/dualsaber/New()
 	reflect_chance = rand(50,85)
 	item_color = pick("red", "blue", "green", "purple")
+	switch(item_color)
+		if("red")
+			light_color = "#ff0000"
+		if("blue")
+			light_color = "#0000b2"
+		if("green")
+			light_color = "#00ff00"
+		if("purple")
+			light_color = "#551a8b"
+			light_power = 2
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
@@ -224,6 +234,7 @@
 			hacked = 1
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
 			item_color = "rainbow"
+			light_color = ""
 			update_icon()
 		else
 			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
@@ -231,15 +242,15 @@
 		return ..()
 
 /obj/item/weapon/twohanded/dualsaber/afterattack(obj/O, mob/user, proximity)
-	if(!istype(O,/obj/machinery/door/airlock))
+	if(!istype(O,/obj/machinery/door/airlock) || src.slicing)
 		return
-	if(O.density && src.wielded && proximity)
+	if(O.density && src.wielded && proximity && in_range(user, O))
 		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
 		playsound(user.loc, 'sound/items/Welder2.ogg', 100, 1, -1)
 		src.slicing = 1
 		var/obj/machinery/door/airlock/D = O
 		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
-		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1))
+		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1) && in_range(user, O))
 			sleep(6)
 			var/obj/structure/door_scrap/S = new /obj/structure/door_scrap(D.loc)
 			var/iconpath = D.icon
@@ -247,6 +258,8 @@
 			IC.Blend(S.door, ICON_OVERLAY, 1, 1)
 			IC.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 			S.icon = IC
+			S.name = D.name
+			S.name += " remains"
 			qdel(D)
 			qdel(IC)
 			playsound(user.loc, 'sound/weapons/blade1.ogg', 100, 1, -1)
@@ -263,3 +276,11 @@
 		return
 	else
 		..()
+
+/obj/item/weapon/twohanded/dualsaber/unwield()
+	set_light(0)
+	return ..()
+
+/obj/item/weapon/twohanded/dualsaber/wield()
+	set_light(2)
+	return ..()

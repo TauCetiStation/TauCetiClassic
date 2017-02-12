@@ -10,7 +10,7 @@
 	var/impact_speed = 3
 	var/impact_prob = 100
 	var/impact_range = 2
-	var/last_summon = -300
+	var/last_summon = -3000
 	var/active = 0
 
 /obj/structure/scrap_beacon/attack_hand(mob/user)
@@ -19,7 +19,8 @@
 		return
 	last_summon = world.time
 	if(!active)
-		start_scrap_summon()
+		spawn()
+			start_scrap_summon()
 
 /obj/structure/scrap_beacon/update_icon()
 	icon_state = "beacon[active]"
@@ -42,30 +43,7 @@
 		sleep(impact_speed)
 		var/turf/newloc = pick(flooring_near_beacon)
 		flooring_near_beacon -= newloc
-		spawn()
-			summon_scrap_pile(newloc)
+		new /obj/effect/falling_effect(newloc, /obj/random/scrap/moderate_weighted)
 	active = 0
 	update_icon()
 	return
-
-/obj/structure/scrap_beacon/proc/summon_scrap_pile(newloc)
-	new /obj/random/scrap/moderate_weighted(src)
-	var/obj/structure/scrap/dropped = pick(src.contents) //stupid, but allows to get spawn result without efforts
-	dropped.loc = newloc
-	dropped.pixel_x = rand(-400, 400)
-	dropped.pixel_z = 1000
-	dropped.density = 0
-	dropped.opacity = 0
-	animate(dropped, pixel_z = 0, pixel_x = 0 , time = 15)
-	sleep(15)
-	dropped.density = 1
-	for(var/obj/T in newloc)
-		if(!istype(T, /obj/structure/scrap))
-			T.ex_act(1)
-	for(var/mob/living/T in newloc)
-		T.ex_act(1)
-	for(var/mob/living/M in oviewers(6, dropped))
-		shake_camera(M, 4, 3)
-	playsound(dropped.loc, 'sound/effects/meteorimpact.ogg', 50, 1)
-	dropped.density = initial(dropped.density)
-	dropped.opacity = initial(dropped.opacity)

@@ -155,7 +155,8 @@
 
 /proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 	if(automute)
-		if(!config.automute_on)	return
+		if(!config.automute_on)
+			return
 	else
 		if(!usr || !usr.client)
 			return
@@ -164,8 +165,7 @@
 			return
 		if(!M.client)
 			to_chat(usr, "<font color='red'>Error: cmd_admin_mute: This mob doesn't have a client tied to it.</font>")
-		if(!check_rights(R_PERMISSIONS, 0) && M.client.holder && (M.client.holder.rights & R_ADMIN))
-			to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin.</font>")
+		if(M.client.holder && (M.client.holder.rights & R_ADMIN) && !check_rights(R_PERMISSIONS))
 			return
 		if(M.client.holder && (M.client.holder.rights & R_PERMISSIONS))
 			to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin with permissions rights.</font>")
@@ -207,9 +207,17 @@
 	if(M.client.prefs.muted & mute_type)
 		muteunmute = "unmuted"
 		M.client.prefs.muted &= ~mute_type
+		if(M.client.prefs.permamuted & mute_type)
+			M.client.prefs.permamuted &= ~mute_type
+			M.client.prefs.save_preferences()
 	else
 		muteunmute = "muted"
 		M.client.prefs.muted |= mute_type
+		if(alert("Would you like to make it permament?","Permamute?","Yes","No, round only") == "Yes")
+			muteunmute = "permamuted"
+			M.client.prefs.permamuted |= mute_type
+			M.client.prefs.save_preferences()
+
 
 	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
 	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].")

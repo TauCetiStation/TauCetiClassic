@@ -546,3 +546,38 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	name = "cortical stack"
 	desc = "A fist-sized mass of biocircuits and chips."
 	icon_state = "implant_evil"
+	///////////////////////////////////////////////////////////
+/obj/item/weapon/storage/internal/imp
+	name = "bluespace pocket"
+	max_combined_w_class = 6
+	max_w_class = 3
+	storage_slots = 2
+	cant_hold = list(/obj/item/weapon/disk/nuclear)
+
+/obj/item/weapon/implant/storage
+	name = "storage implant"
+	desc = "Stores up to two big items in a bluespace pocket."
+	icon_state = "implant_evil"
+	origin_tech = "materials=2;magnets=4;bluespace=5;syndicate=4"
+	action_button_name = "Bluespace pocket"
+	var/obj/item/weapon/storage/internal/imp/storage
+
+/obj/item/weapon/implant/storage/New()
+	..()
+	storage = new /obj/item/weapon/storage/internal/imp(src)
+
+/obj/item/weapon/implant/storage/ui_action_click()
+	storage.open(imp_in)
+
+/obj/item/weapon/implant/storage/proc/removed()
+	storage.close_all()
+	for(var/obj/item/I in storage)
+		storage.remove_from_storage(I, get_turf(src))
+
+/obj/item/weapon/implant/storage/Destroy()
+	removed()
+	qdel(storage)
+	return ..()
+
+/obj/item/weapon/implant/storage/islegal()
+	return 0

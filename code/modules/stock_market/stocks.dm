@@ -20,7 +20,6 @@
 
 	var/disp_value_change = 0
 	var/optimism = 0
-	var/last_unification = 0
 	var/available_shares = 500000
 
 	var/list/shareholders = list()
@@ -76,10 +75,6 @@
 
 /datum/stock/proc/supplyGrowth(amt)
 	available_shares += amt
-	var/t = amt / available_shares
-	if(abs(t) < 0.0001)
-		return
-	current_value -= NormalDistr(t, t * 0.1) * current_value
 
 /datum/stock/proc/supplyDrop(amt)
 	supplyGrowth(-amt)
@@ -89,6 +84,8 @@
 	current_value += change * performance
 	if(current_value < 5)
 		current_value = 5
+		if(optimism < 0)
+			changeOptimism(0.01)
 
 	if(performance)
 		performance = Clamp(rand(900,1050) * 0.001 * performance, PERFORMANCE_MIN, PERFORMANCE_MAX)
@@ -98,22 +95,6 @@
 	if(values.len >= 50)
 		values.Cut(1,2)
 	values += current_value
-
-	if(current_value < 10)
-		unifyShares()
-
-/datum/stock/proc/unifyShares()
-	for (var/I in shareholders)
-		var/shr = shareholders[I]
-		if (shr % 2)
-			sellShares(I, 1)
-		shr -= 1
-		shareholders[I] /= 2
-		if (!shareholders[I])
-			shareholders -= I
-	available_shares /= 2
-	current_value *= 2
-	last_unification = world.time
 
 /datum/stock/process()
 	if(bankrupt)
