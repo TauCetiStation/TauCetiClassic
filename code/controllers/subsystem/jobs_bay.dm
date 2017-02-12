@@ -429,8 +429,6 @@ var/datum/subsystem/job/SSjob
 			remembered_info += "<b>Your department's account funds are:</b> $[department_account.money]<br>"
 
 		H.mind.store_memory(remembered_info)
-	if(H.mind && job.department_flag & ENGSEC) // if they're assigned to Engi Department, give them info for wires
-		H.mind.store_memory(identify_wire())
 
 	spawn(0)
 		to_chat(H, "\blue<b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b>")
