@@ -8,6 +8,7 @@ var/list/chatResources = list(
 	"goon/browserassets/css/fonts/fontawesome-webfont.ttf",
 	"goon/browserassets/css/fonts/fontawesome-webfont.woff",
 	"goon/browserassets/css/font-awesome.css",
+	"goon/browserassets/css/emojib64.css",
 	"goon/browserassets/css/browserOutput.css"
 )
 
@@ -183,7 +184,6 @@ var/list/chatResources = list(
 	if (isicon(obj))
 		if (!bicon_cache["\ref[obj]"]) // Doesn't exist yet, make it.
 			bicon_cache["\ref[obj]"] = icon2base64(obj)
-
 		return "<img [class] src='data:image/png;base64,[bicon_cache["\ref[obj]"]]'>"
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.

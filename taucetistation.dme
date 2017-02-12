@@ -1615,6 +1615,7 @@
 #include "code\modules\scrap\scrap.dm"
 #include "code\modules\scrap\scrap_beacon.dm"
 #include "code\modules\scrap\scrap_burner.dm"
+#include "code\modules\scrap\scrap_dropholder.dm"
 #include "code\modules\scrap\scrap_loot.dm"
 #include "code\modules\scrap\scrap_pileripper.dm"
 #include "code\modules\scrap\scrap_refine.dm"

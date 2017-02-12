@@ -36,3 +36,7 @@
 /datum/gear/head/fedora
 	display_name = "Fedora"
 	path = /obj/item/clothing/head/fedora
+
+/datum/gear/head/orangebandana
+	display_name = "Orange bandana"
+	path = /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1

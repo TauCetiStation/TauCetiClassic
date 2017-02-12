@@ -217,6 +217,9 @@
 						var/obj/item/weapon/implant/imp = obj
 						imp.imp_in = null
 						imp.implanted = 0
+						if(istype(imp,/obj/item/weapon/implant/storage))
+							var/obj/item/weapon/implant/storage/Simp = imp
+							Simp.removed()
 			else
 				user.visible_message("\blue [user] removes \the [tool] from [target]'s [affected.display_name].", \
 				"\blue There's something inside [target]'s [affected.display_name], but you just missed it this time." )

@@ -1474,11 +1474,41 @@ About the new airlock wires panel:
 /obj/structure/door_scrap
 	name = "Door Scrap"
 	desc = "Just a bunch of garbage."
+	var/ticker = 0
 	var/icon/door = icon('icons/effects/effects.dmi',"Sliced")
-	attackby(obj/O, mob/user)
-		if(istype(O,/obj/item/weapon/wrench))
+	//light_power = 1
+	//light_color = "#cc0000"
+
+
+/obj/structure/door_scrap/attackby(obj/O, mob/user)
+	if(istype(O,/obj/item/weapon/wrench))
+		if(ticker >= 300)
 			playsound(user.loc, 'sound/items/Ratchet.ogg', 50)
 			user.visible_message("[user] has disassemble these scrap...")
 			new /obj/item/stack/sheet/metal(src.loc)
 			new /obj/item/stack/sheet/metal(src.loc)
 			qdel(src)
+		else
+			to_chat(user,"<span=userdanger>This is too hot to dismantle it</span>")
+			if(prob(10))
+				to_chat(user,"<span=userdanger>You accidentally drop your wrench in the flame</span>")
+				qdel(O)
+	else
+		return
+
+
+/obj/structure/door_scrap/New()
+	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (LIGHTING_LAYER + 1))
+	fire_overlay.plane = LIGHTING_PLANE + 1
+	overlays += fire_overlay
+	SSobj.processing |= src
+
+/obj/structure/door_scrap/process()
+	if(ticker >= 300)
+		overlays.Cut()
+		SSobj.processing.Remove(src)
+		return
+	ticker++
+	var/spot = (locate(/obj/effect/decal/cleanable/water) in src.loc)
+	if((spot))
+		ticker +=10
