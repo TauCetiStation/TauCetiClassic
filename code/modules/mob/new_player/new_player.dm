@@ -120,10 +120,7 @@
 			//client.prefs.update_preview_icon()
 			//observer.icon = client.prefs.preview_icon
 			observer.icon = 'icons/mob/mob.dmi'
-			if(client.holder)
-				observer.icon_state = "ghostking"
-			else
-				observer.icon_state = "ghost"
+			observer.icon_state = "ghost"
 			observer.alpha = 127
 
 			if(client.prefs.be_random_name)
