@@ -60,7 +60,6 @@
 					target.drop_l_hand()
 				else
 					target.drop_r_hand()
-
 		target.forceMove(src.loc)
 
 /obj/machinery/abductor/pad/proc/Send()

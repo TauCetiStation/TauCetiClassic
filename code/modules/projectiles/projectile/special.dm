@@ -176,6 +176,7 @@
 	edge = 0
 
 /obj/item/projectile/missile/on_hit(atom/target, blocked = 0)
+	target.ex_act(1)
 	explosion(target, 1,2,4,5)
 	return 1
 

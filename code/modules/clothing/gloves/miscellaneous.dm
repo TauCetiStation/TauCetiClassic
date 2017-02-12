@@ -64,7 +64,7 @@
 
 /obj/item/clothing/gloves/security														//Sec gloves
 	desc = "Heavily padded heavy-duty red security gloves."
-	name = "Security gloves"
+	name = "security gloves"
 	icon_state = "security_red"
 	item_state = "security_red"
 	siemens_coefficient = 0.5
@@ -81,3 +81,9 @@
 	item_state = "fingerless_black"
 	clipped = 1
 	species_restricted = list("exclude","stunglove")
+
+/obj/item/clothing/gloves/security/marinad
+	desc = "These were made to hold a full automatic gun."
+	name = "marine gloves"
+	icon_state = "marinad"
+	item_state = "bgloves"

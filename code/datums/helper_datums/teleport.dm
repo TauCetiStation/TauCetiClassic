@@ -133,6 +133,8 @@
 	playSpecials(curturf,effectin,soundin)
 
 	if(force_teleport)
+		if(teleatom.buckled_mob)
+			teleatom.unbuckle_mob()
 		teleatom.forceMove(destturf)
 		playSpecials(destturf,effectout,soundout)
 	else

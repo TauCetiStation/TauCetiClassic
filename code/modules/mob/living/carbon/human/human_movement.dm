@@ -46,6 +46,9 @@
 		if(shoes)
 			tally += shoes.slowdown
 
+		if(back)
+			tally += back.slowdown
+
 		if(buckled)	//so, if we buckled we have large debuff
 			tally += 5.5
 
