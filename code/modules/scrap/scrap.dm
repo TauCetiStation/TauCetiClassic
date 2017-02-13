@@ -249,6 +249,15 @@
 		/obj/random/cloth/random_cloth
 	)
 
+/obj/structure/scrap/syndie
+	name = "strange pile"
+	desc = "Pile of left magbots, broken teleports broken tanks, jetpacks, random stations blueprints, soap, burned rcds, and... meat with orange fur  ...?"
+	parts_icon = 'icons/obj/structures/scrap/syndie.dmi'
+	loot_list = list(
+		/obj/random/syndie/fullhouse
+	)
+
+
 /obj/structure/scrap/poor
 	name = "mixed rubbish"
 	desc = "Pile of mixed rubbish. Useless and rotten, mostly."
@@ -315,7 +324,7 @@
 	density = 1
 	icon_state = "big"
 	loot_min = 10
-	loot_max = 20
+	loot_max = 15
 	dig_amount = 15
 	base_min = 9
 	base_max = 14
@@ -338,8 +347,20 @@
 	opacity = 1
 	density = 1
 	icon_state = "big"
-	loot_min = 10
-	loot_max = 20
+	loot_min = 8
+	loot_max = 14
+	dig_amount = 15
+	base_min = 9
+	base_max = 14
+	base_spread = 16
+
+/obj/structure/scrap/syndie/large
+	name = "large strange pile"
+	opacity = 1
+	density = 1
+	icon_state = "big"
+	loot_min = 6
+	loot_max = 10
 	dig_amount = 15
 	base_min = 9
 	base_max = 14

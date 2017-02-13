@@ -758,6 +758,7 @@
 #include "code\game\objects\random\random_meds.dm"
 #include "code\game\objects\random\random_science.dm"
 #include "code\game\objects\random\random_scrap.dm"
+#include "code\game\objects\random\random_syndie.dm"
 #include "code\game\objects\random\random_tools.dm"
 #include "code\game\objects\structures\barsign.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
