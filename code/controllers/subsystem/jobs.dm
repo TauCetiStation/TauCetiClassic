@@ -6,7 +6,10 @@ var/datum/subsystem/job/SSjob
 
 /datum/subsystem/job
 	name = "Jobs"
-	priority = 5
+
+	init_order = SS_INIT_JOBS
+
+	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
 	var/list/unassigned = list()		//Players who need jobs
@@ -16,9 +19,7 @@ var/datum/subsystem/job/SSjob
 	NEW_SS_GLOBAL(SSjob)
 
 
-/datum/subsystem/job/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/job/Initialize(timeofday)
 	SetupOccupations()
 	LoadJobs("config/jobs.txt")
 	..()

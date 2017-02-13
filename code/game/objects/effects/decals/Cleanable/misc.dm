@@ -169,13 +169,13 @@
 		qdel(src)
 		return
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 	overlays |= get_water_icon("water")
 	update_icon()
 
 /obj/effect/decal/cleanable/water/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/decal/cleanable/water/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

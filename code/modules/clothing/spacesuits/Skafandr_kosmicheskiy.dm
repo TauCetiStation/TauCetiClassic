@@ -20,11 +20,11 @@
 
 /obj/item/clothing/suit/space/sk/equipped()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/sk/dropped()
 	..()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/sk/process()
 	if(istype(get_turf(src), /turf/space) && !istype(loc.loc, /obj/mecha))

@@ -233,6 +233,8 @@ em						{font-style: normal;	font-weight: bold;}
 .adminobserver			{color: #996600;}
 .admin					{color: #386aff;}
 .adminsay				{color: #006666;}
+.adminnotice			{color: #0000ff;}
+.boldannounce			{color: #ff0000;	font-weight: bold;}
 
 /* Miscellaneous */
 .say					{}

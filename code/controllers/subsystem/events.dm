@@ -5,7 +5,8 @@ var/list/potentialRandomEvents = subtypesof(/datum/event)
 
 /datum/subsystem/events
 	name = "Events"
-	priority = 6
+
+	flags = SS_NO_INIT | SS_KEEP_TIMING
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event
@@ -20,16 +21,17 @@ var/list/potentialRandomEvents = subtypesof(/datum/event)
 	NEW_SS_GLOBAL(SSevent)
 
 /datum/subsystem/events/fire(resumed = 0)
-	if(!resumed)
+	if (!resumed)
 		checkEvent() //only check these if we aren't resuming a paused fire
 		src.currentrun = running.Copy()
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	while(currentrun.len)
-		var/datum/thing = currentrun[1]
-		currentrun.Cut(1, 2)
+	while (currentrun.len)
+		var/datum/thing = currentrun[currentrun.len]
+		currentrun.len--
+
 		if(thing)
 			thing.process()
 		else

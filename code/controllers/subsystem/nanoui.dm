@@ -2,12 +2,14 @@ var/datum/subsystem/nanoui/SSnano
 
 /datum/subsystem/nanoui
 	name = "NanoUI"
-	wait = 10
-	priority = 16
-	display = 6
 
-	can_fire = 1 // This needs to fire before round start.
+	priority      = SS_PRIORITY_NANOUI
+	wait          = SS_WAIT_NANOUI
+	display_order = SS_DISPLAY_NANOUI
 
+	flags = SS_NO_INIT | SS_FIRE_IN_LOBBY
+
+	var/list/currentrun = list()
 	var/list/open_uis = list() // A list of open UIs, grouped by src_object and ui_key.
 	var/list/processing_uis = list() // A list of processing UIs, ungrouped.
 
@@ -17,10 +19,18 @@ var/datum/subsystem/nanoui/SSnano
 /datum/subsystem/nanoui/stat_entry()
 	..("P:[processing_uis.len]")
 
-/datum/subsystem/nanoui/fire()
-	for(var/thing in processing_uis)
-		var/datum/nanoui/ui = thing
+/datum/subsystem/nanoui/fire(resumed = 0)
+	if (!resumed)
+		src.currentrun = processing_uis.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+
+	while(currentrun.len)
+		var/datum/nanoui/ui = currentrun[currentrun.len]
+		currentrun.len--
 		if(ui && ui.user && ui.src_object)
 			ui.process()
-			continue
-		processing_uis.Remove(ui)
+		else
+			processing_uis.Remove(ui)
+		if (MC_TICK_CHECK)
+			return

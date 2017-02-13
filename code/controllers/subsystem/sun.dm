@@ -2,8 +2,11 @@ var/datum/subsystem/sun/SSsun
 
 /datum/subsystem/sun
 	name = "Sun"
-	wait = 600
-	priority = 2
+
+	init_order = SS_INIT_SUN
+	wait       = SS_WAIT_SUN
+
+	flags = SS_POST_FIRE_TIMING | SS_NO_INIT | SS_NO_TICK_CHECK
 
 	var/angle
 	var/dx

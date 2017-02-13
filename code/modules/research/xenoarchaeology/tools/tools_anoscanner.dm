@@ -36,14 +36,13 @@
 	last_scan_time = world.time
 	nearest_artifact_distance = -1
 	var/turf/cur_turf = get_turf(src)
-	if(Master) //Sanity check due to runtimes ~Z
-		for(var/turf/simulated/mineral/T in Master.artifact_spawning_turfs)
-			if(T.artifact_find)
-				if(T.z == cur_turf.z)
-					var/cur_dist = get_dist(cur_turf, T) * 2
-					if( (nearest_artifact_distance < 0 || cur_dist < nearest_artifact_distance) && cur_dist <= T.artifact_find.artifact_detect_range )
-						nearest_artifact_distance = cur_dist + rand() * 2 - 1
-						nearest_artifact_id = T.artifact_find.artifact_id
-			else
-				Master.artifact_spawning_turfs.Remove(T)
+	for(var/turf/simulated/mineral/T in SSxenoarch.turfs_with_artifacts)
+		if(T.artifact_find)
+			if(T.z == cur_turf.z)
+				var/cur_dist = get_dist(cur_turf, T) * 2
+				if( (nearest_artifact_distance < 0 || cur_dist < nearest_artifact_distance) && cur_dist <= T.artifact_find.artifact_detect_range )
+					nearest_artifact_distance = cur_dist + rand() * 2 - 1
+					nearest_artifact_id = T.artifact_find.artifact_id
+		else
+			SSxenoarch.turfs_with_artifacts.Remove(T)
 	cur_turf.visible_message("<span class='info'>[src] clicks.</span>")

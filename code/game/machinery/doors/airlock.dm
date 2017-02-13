@@ -1501,12 +1501,12 @@ About the new airlock wires panel:
 	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (LIGHTING_LAYER + 1))
 	fire_overlay.plane = LIGHTING_PLANE + 1
 	overlays += fire_overlay
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/door_scrap/process()
 	if(ticker >= 300)
 		overlays.Cut()
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	ticker++
 	var/spot = (locate(/obj/effect/decal/cleanable/water) in src.loc)

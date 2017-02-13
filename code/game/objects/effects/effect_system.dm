@@ -487,7 +487,7 @@ steam.start() -- spawns the effect
 		process()
 		checkReagents()
 	spawn(120)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		sleep(30)
 
 		if(metal)

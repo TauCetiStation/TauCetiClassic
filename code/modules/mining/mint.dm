@@ -32,7 +32,7 @@
 		for (var/dir in cardinal)
 			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 			if(src.output) break
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/machinery/mineral/mint/process()
 	if ( src.input)

@@ -8,7 +8,7 @@
 
 /obj/effect/blob/node/New(loc, var/h = 100)
 	blob_nodes += src
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	..(loc, h)
 
 /obj/effect/blob/node/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -16,7 +16,7 @@
 
 /obj/effect/blob/node/Destroy()
 	blob_nodes -= src
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/blob/node/Life()

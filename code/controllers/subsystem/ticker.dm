@@ -4,9 +4,10 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
 	name = "Ticker"
-	priority = 0
 
-	can_fire = 1 // This needs to fire before round start.
+	priority = SS_PRIORITY_TICKER
+	
+	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING
 
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
@@ -63,9 +64,7 @@ var/datum/subsystem/ticker/ticker
 	'sound/lobby/robocop_gb_intro.ogg')
 
 
-/datum/subsystem/ticker/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/ticker/Initialize(timeofday)
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
@@ -516,3 +515,8 @@ var/datum/subsystem/ticker/ticker
 		text += {"<br><img src="logo_[tempstate].png"> [winner]"}
 
 	return text
+
+/world/proc/has_round_started()
+	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+		return TRUE
+	return FALSE

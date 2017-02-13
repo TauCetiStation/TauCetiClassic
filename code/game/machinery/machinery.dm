@@ -119,12 +119,12 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
-	SSmachine.processing += src
+	START_PROCESSING(SSmachine, src)
 	power_change()
 
 /obj/machinery/Destroy()
-	machines.Remove(src)
-	SSmachine.processing -= src
+	machines -= src
+	STOP_PROCESSING(SSmachine, src)
 	dropContents()
 	return ..()
 

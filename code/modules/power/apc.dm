@@ -1401,7 +1401,7 @@
 				for(var/obj/machinery/light/L in A)
 					L.on = 1
 					L.broken(skip_sound_and_sparks)
-					sleep(1)
+					stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))

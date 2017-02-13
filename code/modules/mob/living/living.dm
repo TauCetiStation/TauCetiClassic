@@ -650,12 +650,12 @@
 					TH.basecolor = initial(TH.basecolor)
 					TH.update_icon()
 			if(!TH.amount)
-				SSobj.processing.Remove(TH)
+				STOP_PROCESSING(SSobj, TH)
 				TH.name = initial(TH.name)
 				TH.desc = initial(TH.desc)
 				TH.amount = initial(TH.amount)
 				TH.drytime = world.time + DRYING_TIME * (TH.amount+1)
-				SSobj.processing |= TH
+				START_PROCESSING(SSobj, TH)
 			if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 				TH.existing_dirs += newdir
 				TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))

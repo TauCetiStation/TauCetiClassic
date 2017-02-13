@@ -41,7 +41,7 @@ var/global/list/omni_icons[]
 //--------------------------------------------
 // Omni port datum
 //
-// Used by omni devices to manage connections 
+// Used by omni devices to manage connections
 //  to other atmospheric objects.
 //--------------------------------------------
 /datum/omni_port
@@ -107,10 +107,10 @@ var/global/list/pipe_colors = list("grey" = null, "red" = PIPE_COLOR_RED, "blue"
 			string = "East"
 		if(WEST)
 			string = "West"
-	
+
 	if(!capitalize && string)
 		string = lowertext(string)
-	
+
 	return string
 
 //returns a direction flag based on the string passed to it

@@ -11,8 +11,11 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle
 	name = "Shuttles"
-	wait = 10
-	priority = 3
+
+	init_order = SS_INIT_SHUTTLES
+	wait       = SS_WAIT_SHUTTLES
+
+	flags = SS_KEEP_TIMING | SS_NO_TICK_CHECK
 
 		//emergency shuttle stuff
 	var/alert = 0				//0 = emergency, 1 = crew cycle
@@ -50,9 +53,7 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
 
-/datum/subsystem/shuttle/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 
 	for(var/typepath in subtypesof(/datum/supply_pack))

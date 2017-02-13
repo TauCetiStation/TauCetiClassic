@@ -22,7 +22,7 @@
 		return
 	spawn_cellular_biomass_core(src.loc)
 	spawn_cellular_biomass_piece(src.loc)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/cellular_biomass_controller/proc/remove_biomass(obj/structure/cellular_biomass/removed)
 	if(istype(removed, /obj/structure/cellular_biomass/wall))
@@ -36,7 +36,7 @@
 	growth_queue.Cut()
 	for(var/obj/structure/cellular_biomass/str in growth_queue)
 		str.master = null
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 

@@ -2,17 +2,14 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 /datum/subsystem/garbage_collector
 	name = "Garbage"
-	priority = -1
-	wait = 5
-	dynamic_wait = 1
-	dwait_upper = 50
-	dwait_delta = 10
-	dwait_buffer = 0
-	display = 2
 
-	can_fire = 1 // This needs to fire before round start.
+	priority      = SS_PRIORITY_GARBAGE
+	wait          = SS_WAIT_GARBAGE
+	display_order = SS_DISPLAY_GARBAGE
 
-	var/collection_timeout = 300// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
+	flags = SS_FIRE_IN_LOBBY | SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
+
+	var/collection_timeout = 3000// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
 	var/max_run_time = 1		// how long, in deciseconds, can we run before waiting for the next tick
 	var/delslasttick = 0		// number of del()'s we've done this tick
 	var/gcedlasttick = 0		// number of things that gc'ed last tick
@@ -86,29 +83,29 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			break // Everything else is newer, skip them
 
 		var/datum/A
-		if (!istext(refID))
+		A = locate(refID)
+		if (A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
+			// Something's still referring to the qdel'd object.  Kill it.
+			testing("GC: -- \ref[A] | [A.type] was unable to be GC'd and was deleted --")
+			didntgc["[A.type]"]++
 			del(A)
+			++delslasttick
+			++totaldels
 		else
-			A = locate(refID)
-			if (A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
-				// Something's still referring to the qdel'd object.  Kill it.
-				testing("GC: -- \ref[A] | [A.type] was unable to be GC'd and was deleted --")
-				didntgc["[A.type]"]++
-				del(A)
-				++delslasttick
-				++totaldels
-			else
-				++gcedlasttick
-				++totalgcs
+			++gcedlasttick
+			++totalgcs
 		queue.Cut(1, 2)
 
 /datum/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
 	if (istype(A) && isnull(A.gc_destroyed))
 		tobequeued += A
-		A.gc_destroyed = -1
+		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
 /datum/subsystem/garbage_collector/proc/Queue(datum/A)
 	if (!istype(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
+		return
+	if (A.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
+		del(A)
 		return
 	var/gctime = world.time
 	var/refid = "\ref[A]"
@@ -121,12 +118,15 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	queue[refid] = gctime
 
 /datum/subsystem/garbage_collector/proc/HardQueue(datum/A)
-	if (!istype(A) || !isnull(A.gc_destroyed))
-		return
-	A.gc_destroyed = world.time
-	queue -= A // Removing any previous references that were GC'd so that the current object will be at the end of the list.
-	queue[A] = world.time
+	if (istype(A) && isnull(A.gc_destroyed))
+		tobequeued += A
+		A.gc_destroyed = GC_QUEUED_FOR_HARD_DEL
 
+/datum/subsystem/garbage_collector/Recover()
+	if (istype(SSgarbage.queue))
+		queue |= SSgarbage.queue
+	if (istype(SSgarbage.tobequeued))
+		tobequeued |= SSgarbage.tobequeued
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.

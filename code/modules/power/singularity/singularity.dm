@@ -33,7 +33,7 @@
 		spawn(temp)
 			qdel(src)
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	for(var/obj/machinery/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -42,7 +42,7 @@
 	return
 
 /obj/singularity/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	return ..()
 

@@ -1488,7 +1488,7 @@ var/mob/dview/dview_mob = new
 			break
 		loc = targetloc
 		lastloc = loc
-		sleep(0.6)
+		stoplag()
 
 	if(orbiting == A) //make sure we haven't started orbiting something else.
 		orbiting = null
@@ -1670,17 +1670,18 @@ var/mob/dview/dview_mob = new
 
 	return L
 
+//Increases delay as the server gets more overloaded,
+//as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
+#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
+
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 /proc/stoplag()
-	. = 1
-	sleep(world.tick_lag)
-#if DM_VERSION >= 510
-	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
-		. += 2
-		sleep(world.tick_lag*2)
-		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
-			. += 4
-			sleep(world.tick_lag*4)
-			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
-			//	not worth it.
-#endif
+	. = 0
+	var/i = 1
+	do
+		. += round(i * DELTA_CALC)
+		sleep(i*world.tick_lag * DELTA_CALC)
+		i *= 2
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+
+#undef DELTA_CALC

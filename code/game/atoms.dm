@@ -411,6 +411,7 @@
 /atom/Stat()
 	. = ..()
 	sleep(1)
+	stoplag()
 
 //This will be called after the map and objects are loaded
 /atom/proc/initialize()
