@@ -260,7 +260,7 @@
 		/obj/random/syndie/fullhouse,
 		/obj/random/syndie/fullhouse,
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/corgie,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
 		/obj/item/brain,
 		/obj/item/weapon/tank/phoron
 	)
