@@ -67,9 +67,9 @@
 	var/grabber = 0
 	var/mob/living/carbon/human/host
 
-	muzzle_type = /obj/effect/projectile/laser/muzzle
-	tracer_type = /obj/effect/projectile/laser/tracer
-	impact_type = /obj/effect/projectile/laser/impact
+	muzzle_type = /obj/effect/projectile/laser/muzzle/changeling
+	tracer_type = /obj/effect/projectile/laser/tracer/changeling
+	impact_type = /obj/effect/projectile/laser/impact/changeling
 
 /obj/item/projectile/changeling_whip/on_hit(atom/target, blocked = 0)
 	..()
@@ -87,3 +87,16 @@
 					G.synch()
 				else if(istype(T, /obj/item))
 					host.put_in_inactive_hand(T)
+
+
+/obj/effect/projectile/laser/tracer/changeling
+	icon_state = "changeling"
+	light_range = 0
+	light_power = 0
+	light_color = ""
+
+/obj/effect/projectile/laser/muzzle/changeling
+	icon_state = "muzzle_changeling"
+
+/obj/effect/projectile/laser/impact/changeling
+	icon_state = "impact_changeling"
