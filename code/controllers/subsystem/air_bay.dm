@@ -271,6 +271,15 @@ var/datum/subsystem/air/SSair
 //from /tg/ SSair for templates
 /datum/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	for(var/A in atmos_machines)
+		if(!A)
+			continue
+		var/obj/machinery/atmospherics/AtmoMachine = A
+		AtmoMachine.initialize()
+		var/list/AtmoMachineNodes = AtmoMachine.get_nodes()
+		for(var/obj/machinery/atmospherics/AtmoMachineNode in AtmoMachineNodes)
+			if(!AtmoMachineNode)
+				continue
+			AtmoMachineNode.initialize()
 		if(!istype(A,/obj/machinery/atmospherics/unary))
 			continue
 		if(istype(A, /obj/machinery/atmospherics/unary/vent_pump))

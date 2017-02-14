@@ -1,5 +1,4 @@
 /datum/map_template/shelter
-	var/shelter_id
 	var/description
 	var/blacklisted_turfs
 	var/whitelisted_turfs
@@ -17,12 +16,6 @@
 	banned_areas += typecacheof(/area/vox_station)
 	banned_areas += typecacheof(/area/syndicate_station)
 	banned_areas += typecacheof(/area/supply)
-
-/datum/map_template/shelter/proc/id()
-	if(shelter_id)
-		return shelter_id
-	else
-		return null
 
 /datum/map_template/shelter/proc/check_deploy(turf/deploy_location)
 	var/affected = get_affected_turfs(deploy_location, centered=TRUE)
@@ -43,7 +36,7 @@
 
 /datum/map_template/shelter/alpha
 	name = "Shelter Alpha"
-	shelter_id = "shelter_alpha"
+	id = "shelter_alpha"
 	description = "A cosy self-contained pressurized shelter, with \
 		built-in navigation, entertainment, medical facilities and a \
 		sleeping area! Order now, and we'll throw in a TINY FAN, \

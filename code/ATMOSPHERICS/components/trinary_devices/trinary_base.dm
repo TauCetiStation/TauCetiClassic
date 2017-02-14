@@ -69,6 +69,9 @@ obj/machinery/atmospherics/trinary/Destroy()
 
 	return ..()
 
+/obj/machinery/atmospherics/trinary/get_nodes()
+	return list(node1, node2, node3)
+
 obj/machinery/atmospherics/trinary/initialize()
 	if(node1 && node2 && node3) return
 

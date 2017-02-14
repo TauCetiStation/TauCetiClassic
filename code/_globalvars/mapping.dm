@@ -46,10 +46,6 @@ var/list/accessable_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" =
 //List of preloaded templates
 var/list/datum/map_template/map_templates = list()
 
-//var/list/datum/map_template/ruins_templates = list()
-//var/list/datum/map_template/space_ruins_templates = list()
-//var/list/datum/map_template/lava_ruins_templates = list()
-
-//var/list/datum/map_template/shuttle_templates = list()
 var/list/datum/map_template/shelter_templates = list()
 var/list/datum/map_template/holoscene_templates = list()
+var/list/datum/map_template/engine_templates = list()

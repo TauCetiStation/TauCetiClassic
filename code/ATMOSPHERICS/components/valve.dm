@@ -74,6 +74,9 @@
 
 	return ..()
 
+/obj/machinery/atmospherics/valve/get_nodes()
+	return list(node1, node2)
+
 /obj/machinery/atmospherics/valve/proc/open()
 
 	if(open) return 0

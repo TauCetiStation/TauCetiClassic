@@ -57,6 +57,9 @@
 
 	return ..()
 
+/obj/machinery/atmospherics/binary/get_nodes()
+	return list(node1, node2)
+
 /obj/machinery/atmospherics/binary/initialize()
 	if(node1 && node2) return
 

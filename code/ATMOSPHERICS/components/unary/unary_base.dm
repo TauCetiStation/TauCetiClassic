@@ -37,6 +37,9 @@
 
 	return ..()
 
+/obj/machinery/atmospherics/unary/get_nodes()
+	return list(node)
+
 /obj/machinery/atmospherics/unary/initialize()
 	if(node) return
 

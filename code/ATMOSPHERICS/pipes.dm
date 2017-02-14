@@ -191,6 +191,9 @@
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
 	return list(node1, node2)
 
+/obj/machinery/atmospherics/pipe/simple/get_nodes()
+	return pipeline_expansion()
+
 /obj/machinery/atmospherics/pipe/simple/update_icon()
 	switch(pipe_color)
 		if ("red") color = COLOR_RED
@@ -241,7 +244,6 @@
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
 	update_icon()
-	//update_icon()
 
 /obj/machinery/atmospherics/pipe/simple/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
@@ -361,6 +363,9 @@
 
 /obj/machinery/atmospherics/pipe/manifold/pipeline_expansion()
 	return list(node1, node2, node3)
+
+/obj/machinery/atmospherics/pipe/manifold/get_nodes()
+	return pipeline_expansion()
 
 /obj/machinery/atmospherics/pipe/manifold/process()
 	if(!parent)
@@ -552,6 +557,9 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 /obj/machinery/atmospherics/pipe/manifold4w/pipeline_expansion()
 	return list(node1, node2, node3, node4)
 
+/obj/machinery/atmospherics/pipe/manifold4w/get_nodes()
+	return pipeline_expansion()
+
 /obj/machinery/atmospherics/pipe/manifold4w/process()
 	if(!parent)
 		..()
@@ -737,6 +745,9 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 /obj/machinery/atmospherics/pipe/cap/pipeline_expansion()
 	return list(node)
 
+/obj/machinery/atmospherics/pipe/cap/get_nodes()
+	return pipeline_expansion()
+
 /obj/machinery/atmospherics/pipe/cap/process()
 	if(!parent)
 		..()
@@ -916,6 +927,9 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 /obj/machinery/atmospherics/pipe/tank/pipeline_expansion()
 	return list(node1)
+
+/obj/machinery/atmospherics/pipe/tank/get_nodes()
+	return pipeline_expansion()
 
 /obj/machinery/atmospherics/pipe/tank/update_icon()
 	if(node1)

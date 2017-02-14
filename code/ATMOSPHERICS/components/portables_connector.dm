@@ -74,6 +74,9 @@
 
 	return ..()
 
+/obj/machinery/atmospherics/portables_connector/get_nodes()
+	return list(node)
+
 /obj/machinery/atmospherics/portables_connector/initialize()
 	if(node) return
 

@@ -5,9 +5,11 @@
 	var/mappath = null
 	var/mapfile = null
 	var/loaded = 0 // Times loaded this round
+	var/id = null
 	var/list/loaded_stuff = list()
 
 /datum/map_template/New(path = null, map = null, rename = null)
+	ASSERT(id)
 	if(path)
 		mappath = path
 	if(mappath)
@@ -16,6 +18,9 @@
 		mapfile = map
 	if(rename)
 		name = rename
+
+/datum/map_template/proc/id()
+	return id
 
 /datum/map_template/proc/preload_size(path)
 	loaded_stuff = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
@@ -97,13 +102,14 @@
 
 
 /proc/preloadTemplates(path = "maps/templates/") //see master controller setup
-	var/list/filelist = flist(path)
-	for(var/map in filelist)
-		var/datum/map_template/T = new /datum/map_template(path = "[path][map]", rename = "[map]")
-		map_templates[T.name] = T
+	//var/list/filelist = flist(path)
+	//for(var/map in filelist)
+	//	var/datum/map_template/T = new /datum/map_template(path = "[path][map]", rename = "[map]")
+	//	map_templates[T.name] = T
 
 	preloadShelterTemplates()
 	preloadHolodeckTemplates()
+	preloadEngineTemplates()
 	//preloadRuinTemplates()		//This all can be usefull, but not now
 	//preloadShuttleTemplates()
 
@@ -162,4 +168,14 @@
 			continue
 		var/datum/map_template/shelter/S = new shelter_type()
 		shelter_templates[S.id()] = S
+		map_templates[S.id()] = S
+
+
+/proc/preloadEngineTemplates()
+	for(var/item in subtypesof(/datum/map_template/engine))
+		var/datum/map_template/engine/engine_type = item
+		if(!(initial(engine_type.mappath)))
+			continue
+		var/datum/map_template/engine/S = new engine_type()
+		engine_templates[S.id()] = S
 		map_templates[S.id()] = S
