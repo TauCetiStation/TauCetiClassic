@@ -206,7 +206,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/IsShield()
 	if(wielded)
-		return 1
+		return 70
 	else
 		return 0
 

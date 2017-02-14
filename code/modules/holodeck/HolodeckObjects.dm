@@ -213,7 +213,7 @@ obj/structure/stool/bed/chair/holochair
 
 /obj/item/weapon/holo/esword/IsShield()
 	if(active)
-		return 1
+		return 50
 	return 0
 
 /obj/item/weapon/holo/esword/attack(target, mob/user)

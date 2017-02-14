@@ -15,14 +15,14 @@
 		var/mob/living/carbon/human/H = user
 		if(H.handcuffed)
 			qdel(H.handcuffed)
+	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>",
+	 "<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
+	 "<span class='warning>You hear organic matter ripping and tearing!</span>")
 	if(istype(user.l_hand, weapon_type)) //Not the nicest way to do it, but eh
-		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
 		qdel(user.l_hand)
 		user.update_inv_l_hand()
 		return
 	if(istype(user.r_hand, weapon_type))
-		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
-		qdel(user.r_hand)
 		user.update_inv_r_hand()
 		return
 	..(user, target)
@@ -99,7 +99,7 @@
 	desc = "We reform one of our arms into a deadly blade."
 	helptext = "Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 5
+	genomecost = 4
 	genetic_damage = 10
 	req_human = 1
 	max_genetic_damage = 10
@@ -162,7 +162,7 @@
 /obj/effect/proc_holder/changeling/weapon/shield
 	name = "Organic Shield"
 	desc = "We reform one of our arms into hard shield."
-	helptext = "Organic tissue cannot resist damage forever, the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
+	helptext = "Organic tissue cannot resist damage forever, the shield will break after it is hit too much. Cannot be used while in lesser form."
 	chemical_cost = 20
 	genomecost = 3
 	genetic_damage = 12
@@ -179,19 +179,19 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
 	item_state = "ling_shield"
-	var/remaining_uses = 0//Set by the changeling ability.
+	block_chance = 80
+	var/remaining_uses = 6
 
 /obj/item/weapon/shield/changeling/New()
 //	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
-	remaining_uses = rand(3,6)
 
 /obj/item/weapon/shield/changeling/dropped()
 	qdel(src)
 
 /obj/item/weapon/shield/changeling/IsShield()
-	if(remaining_uses < 1)
+	if(!remaining_uses)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			visible_message("<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
@@ -200,7 +200,7 @@
 		return 0
 	else
 		remaining_uses--
-		return 1
+		return block_chance
 
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
@@ -262,7 +262,7 @@
 	desc = "We turn our skin into tough chitin to protect us from damage."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
 	chemical_cost = 25
-	genomecost = 7
+	genomecost = 4
 	genetic_damage = 10
 	req_human = 1
 	max_genetic_damage = 10
@@ -282,7 +282,7 @@
 	flags = THICKMATERIAL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
-	armor = list(melee = 65, bullet = 35, laser = 35, energy = 35, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 35, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
@@ -303,7 +303,7 @@
 	icon_state = "lingarmorhelmet"
 	flags = HEADCOVERSEYES | BLOCKHAIR | THICKMATERIAL
 	canremove = 0
-	armor = list(melee = 70, bullet = 35, laser = 35,energy = 35, bomb = 25, bio = 2, rad = 0)
+	armor = list(melee = 70, bullet = 45, laser = 45,energy = 35, bomb = 25, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.4
 

@@ -104,7 +104,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	IsShield()
-		return 1
+		return 50
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
@@ -133,7 +133,7 @@
 		return(BRUTELOSS)
 
 /obj/item/weapon/katana/IsShield()
-		return 1
+		return 50
 
 /obj/item/weapon/katana/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)

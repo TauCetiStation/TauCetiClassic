@@ -1205,7 +1205,7 @@ About the new airlock wires panel:
 
 	if( istype(C,/obj/item/weapon/changeling_hammer) && !( src.operating > 0 ) && src.density) // yeah, hammer ignore electrify
 		var/obj/item/weapon/changeling_hammer/W = C
-		visible_message("\red <B>[src]</B> has punched \the <B>[src]!</B>")
+		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if(W.use_charge(src,user) && prob(20))
 			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)

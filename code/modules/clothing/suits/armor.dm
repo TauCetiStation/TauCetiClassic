@@ -176,7 +176,7 @@
 
 /obj/item/clothing/suit/armor/reactive/IsShield()
 	if(active)
-		return 1
+		return 35
 	return 0
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)

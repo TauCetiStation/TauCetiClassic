@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/weapon/whip
 	name = "Organic Whip"
 	desc = "We reform one of our arms into whip."
-	helptext = "...."
+	helptext = "Can snatch, knock down, and damage in range depending on your intent, requires a lot of chemical for each use. Cannot be used while in lesser form."
 	chemical_cost = 20
 	genomecost = 5
 	genetic_damage = 12
@@ -11,28 +11,28 @@
 	weapon_name_simple = "whip"
 
 /obj/item/weapon/changeling_whip
-	name = "whip-like mass"
-	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
+	name = "Organic Whip"
+	desc = "A mass of tough tissue that can be elastic"
 	canremove = 0
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "ling_shield"
-	item_state = "ling_shield"
+	icon_state = "arm_whip"
+	item_state = "arm_whip"
 	var/next_click
 
 /obj/item/weapon/changeling_whip/New()
 	..()
 	if(ismob(loc))
-		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly elastic whip.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 		host = loc
 
 /obj/item/weapon/changeling_whip/dropped(mob/user)
-	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate the blade back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
+	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his whip into an arm!</span>", "<span class='notice'>We assimilate the Whip back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
 	qdel(src)
 
 /obj/item/weapon/changeling_whip/afterattack(atom/A, mob/user)
 	if(next_click > world.time)
 		return
-	if(!use_charge(A,user, 1))
+	if(!use_charge(A,user))
 		return
 	next_click = world.time + 10
 	var/mob/living/carbon/H = user
@@ -41,7 +41,7 @@
 	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(T)
 	if(user.a_intent == "grab")
 		LE.grabber = 1
-	else if(user.a_intent == "disarm" && prob(50))
+	else if(user.a_intent == "disarm" && prob(35))
 		LE.weaken = 5
 	else if(user.a_intent == "hurt")
 		LE.damage = 30
@@ -78,7 +78,7 @@
 		spawn(1)
 			T.throw_at(host, 7 - kill_count, 0.2)
 			sleep(2)
-			if(in_range(T, host) && !host.get_inactive_hand())
+			if(in_range(T, host) && !host.get_inactive_hand() && prob(90))
 				if(istype(T, /mob/living/carbon))
 					var/obj/item/weapon/grab/G = new(host,target)
 					host.put_in_inactive_hand(G)

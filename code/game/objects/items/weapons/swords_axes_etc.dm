@@ -20,7 +20,7 @@
  */
 /obj/item/weapon/melee/energy/sword/IsShield()
 	if(active)
-		return 1
+		return 40
 	return 0
 
 /obj/item/weapon/melee/energy/sword/New()
@@ -233,7 +233,7 @@
  */
 /obj/item/weapon/shield/energy/IsShield()
 	if(active)
-		return 1
+		return block_chance
 	else
 		return 0
 

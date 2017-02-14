@@ -116,7 +116,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	name = "Hallucination Sting"
 	desc = "We evolve the ability to sting a target with a powerful hallunicationary chemical."
 	helptext = "The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
-	genomecost = 3
+	genomecost = 2
 	verbpath = /mob/proc/changeling_lsdsting
 
 /datum/power/changeling/DeathSting
@@ -149,7 +149,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	name = "Rapid Chemical-Synthesis"
 	desc = "We evolve new pathways for producing our necessary chemicals, permitting us to naturally create them faster."
 	helptext = "Doubles the rate at which we naturally recharge chemicals."
-	genomecost = 4
+	genomecost = 2
 	isVerb = 0
 	verbpath = /mob/proc/changeling_fastchemical
 /*
@@ -165,7 +165,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	name = "Engorged Chemical Glands"
 	desc = "Our chemical glands swell, permitting us to store more chemicals inside of them."
 	helptext = "Allows us to store an extra 25 units of chemicals."
-	genomecost = 4
+	genomecost = 2
 	isVerb = 0
 	verbpath = /mob/proc/changeling_engorgedglands
 

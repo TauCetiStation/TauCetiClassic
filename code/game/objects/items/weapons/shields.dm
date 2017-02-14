@@ -1,5 +1,6 @@
 /obj/item/weapon/shield
 	name = "shield"
+	var/block_chance = 65
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
@@ -20,7 +21,7 @@
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
 	IsShield()
-		return 1
+		return block_chance
 
 	attackby(obj/item/weapon/W, mob/user)
 		if(istype(W, /obj/item/weapon/melee/baton))
@@ -42,6 +43,7 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = 2
+	block_chance = 30
 	origin_tech = "materials=4;magnets=3;syndicate=4"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
@@ -70,12 +72,12 @@
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 4
-	w_class = 3
+	block_chance = 50
 	var/active = 0
 
 /obj/item/weapon/shield/riot/tele/IsShield()
 	if(active)
-		return 1
+		return block_chance
 	return 0
 
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
