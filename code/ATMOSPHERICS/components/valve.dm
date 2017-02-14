@@ -17,6 +17,15 @@
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
 
+/obj/machinery/atmospherics/valve/remove_network(datum/pipe_network/old_network)
+	if(old_network == network_node1)
+		network_node1 = null
+
+	if(old_network == network_node2)
+		network_node2 = null
+
+	return ..()
+
 /obj/machinery/atmospherics/valve/open
 	open = 1
 	icon_state = "valve1"

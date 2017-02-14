@@ -9,15 +9,12 @@ Pipes -> Pipelines
 Pipelines + Other Objects -> Pipe network
 
 */
-
 /obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
 	var/nodealert = 0
-	var/global/list/iconsetids = list()
-	var/global/list/pipeimages = list()
 
 /obj/machinery/atmospherics/process()
 	if(qdeleted(src)) //comments on /vg/ imply that GC'd pipes still process
@@ -28,6 +25,9 @@ Pipelines + Other Objects -> Pipe network
 	// Check to see if should be added to network. Add self if so and adjust variables appropriately.
 	// Note don't forget to have neighbors look as well!
 
+	return null
+
+/obj/machinery/atmospherics/proc/remove_network(datum/pipe_network/old_network)
 	return null
 
 /obj/machinery/atmospherics/proc/build_network()
@@ -60,27 +60,6 @@ Pipelines + Other Objects -> Pipe network
 		L.remove_ventcrawl()
 		L.forceMove(get_turf(src))
 	return ..()
-
-/obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
-
-	//Add identifiers for the iconset
-	if(iconsetids[iconset] == null)
-		iconsetids[iconset] = num2text(iconsetids.len + 1)
-
-	//Generate a unique identifier for this image combination
-	var/identifier = iconsetids[iconset] + "_[iconstate]_[direction]_[col]"
-
-	var/image/img
-	if(pipeimages[identifier] == null)
-		img = image(iconset, icon_state=iconstate, dir=direction)
-		img.color = col
-
-		pipeimages[identifier] = img
-
-	else
-		img = pipeimages[identifier]
-
-	return img
 
 #define VENT_SOUND_DELAY 30
 

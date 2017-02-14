@@ -16,6 +16,12 @@
 
 	air_contents.volume = 200
 
+/obj/machinery/atmospherics/unary/remove_network(datum/pipe_network/old_network)
+	if(old_network == network)
+		network = null
+
+	return ..()
+
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/unary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node)
@@ -32,6 +38,8 @@
 	if(node)
 		node.disconnect(src)
 		qdel(network)
+
+	network = null
 
 	node = null
 

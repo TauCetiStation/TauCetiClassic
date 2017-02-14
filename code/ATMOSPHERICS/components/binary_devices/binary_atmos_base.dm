@@ -29,6 +29,15 @@
 	air1.volume = 200
 	air2.volume = 200
 
+/obj/machinery/atmospherics/binary/remove_network(datum/pipe_network/old_network)
+	if(old_network == network1)
+		network1 = null
+
+	if(old_network == network2)
+		network2 = null
+
+	return ..()
+
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/binary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)

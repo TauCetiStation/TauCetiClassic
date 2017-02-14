@@ -23,6 +23,12 @@
 	initialize_directions = dir
 	..()
 
+/obj/machinery/atmospherics/portables_connector/remove_network(datum/pipe_network/old_network)
+	if(old_network == network)
+		network = null
+
+	return ..()
+
 /obj/machinery/atmospherics/portables_connector/update_icon()
 	if(node)
 		icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
@@ -65,10 +71,12 @@
 /obj/machinery/atmospherics/portables_connector/Destroy()
 	if(connected_device)
 		connected_device.disconnect()
+		connected_device = null
 
 	if(node)
 		node.disconnect(src)
 		qdel(network)
+		network = null
 
 	node = null
 

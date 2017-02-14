@@ -55,9 +55,11 @@
 
 /obj/machinery/atmospherics/pipe/Destroy()
 	qdel(parent)
+	parent = null
 	if(air_temporary)
 		loc.assume_air(air_temporary)
 		qdel(air_temporary)
+		air_temporary = null
 	return ..()
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
@@ -183,8 +185,10 @@
 /obj/machinery/atmospherics/pipe/simple/Destroy()
 	if(node1)
 		node1.disconnect(src)
+		node1 = null
 	if(node2)
 		node2.disconnect(src)
+		node2 = null
 
 	return ..()
 
@@ -371,10 +375,13 @@
 /obj/machinery/atmospherics/pipe/manifold/Destroy()
 	if(node1)
 		node1.disconnect(src)
+		node1 = null
 	if(node2)
 		node2.disconnect(src)
+		node2 = null
 	if(node3)
 		node3.disconnect(src)
+		node3 = null
 
 	return ..()
 
@@ -561,12 +568,16 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 /obj/machinery/atmospherics/pipe/manifold4w/Destroy()
 	if(node1)
 		node1.disconnect(src)
+		node1 = null
 	if(node2)
 		node2.disconnect(src)
+		node2 = null
 	if(node3)
 		node3.disconnect(src)
+		node3 = null
 	if(node4)
 		node4.disconnect(src)
+		node4 = null
 
 	return ..()
 
@@ -745,6 +756,7 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 /obj/machinery/atmospherics/pipe/cap/Destroy()
 	if(node)
 		node.disconnect(src)
+		node = null
 
 	return ..()
 
@@ -911,6 +923,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 /obj/machinery/atmospherics/pipe/tank/Destroy()
 	if(node1)
 		node1.disconnect(src)
+		node1 = null
 
 	return ..()
 
@@ -1018,6 +1031,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 /obj/machinery/atmospherics/pipe/vent/Destroy()
 	if(node1)
 		node1.disconnect(src)
+		node1 = null
 
 	return ..()
 

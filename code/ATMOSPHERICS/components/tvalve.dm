@@ -19,6 +19,18 @@
 	var/datum/pipe_network/network_node2
 	var/datum/pipe_network/network_node3
 
+/obj/machinery/atmospherics/tvalve/remove_network(datum/pipe_network/old_network)
+	if(old_network == network_node1)
+		network_node1 = null
+
+	if(old_network == network_node2)
+		network_node2 = null
+
+	if(old_network == network_node3)
+		network_node3 = null
+
+	return ..()
+
 /obj/machinery/atmospherics/tvalve/update_icon(animation)
 	if(animation)
 		flick("tvalve[src.state][!src.state]",src)

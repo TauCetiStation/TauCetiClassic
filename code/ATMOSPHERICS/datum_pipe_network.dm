@@ -15,6 +15,31 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 	..()
 
+/datum/pipe_network/Destroy()
+	if(gases)
+		gases.Cut()
+
+	if(normal_members)
+		for(var/obj/machinery/atmospherics/nm in normal_members)
+			nm.remove_network(src)
+			normal_members -= nm
+		normal_members.Cut()
+
+	if(line_members)
+		for(var/datum/pipeline/lm in line_members)
+			if(lm.network && lm.network == src)
+				lm.network = null
+			line_members -= lm
+		line_members.Cut()
+
+	if(air_transient)
+		qdel(air_transient)
+		air_transient = null
+
+	pipe_networks.Remove(src)
+
+	return ..()
+
 /datum/pipe_network/process()
 	//Equalize gases amongst pipe if called for
 	if(update)
@@ -37,7 +62,8 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	update_network_gases()
 
 	if((normal_members.len>0)||(line_members.len>0))
-		pipe_networks += src
+		if(!pipe_networks.Find(src))
+			pipe_networks += src
 	else
 		qdel(src)
 

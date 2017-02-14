@@ -13,10 +13,22 @@
 /datum/pipeline/Destroy()
 	if(network)
 		qdel(network)
+		network = null
 
 	if(air && air.volume)
 		temporarily_store_air()
 		qdel(air)
+		air = null
+
+	if(members)
+		for(var/obj/machinery/atmospherics/pipe/M in members)
+			if(M.parent && M.parent == src)
+				M.parent = null
+			members -= M
+		members.Cut()
+
+	if(edges)
+		edges.Cut()
 
 	return ..()
 
