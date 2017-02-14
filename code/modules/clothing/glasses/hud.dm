@@ -9,7 +9,6 @@
 	return
 
 
-
 /obj/item/clothing/glasses/hud/health
 	name = "Health Scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
@@ -18,7 +17,7 @@
 
 
 /obj/item/clothing/glasses/hud/health/process_hud(mob/M)
-	process_med_hud(M, 1)
+	process_med_hud(M, 1, crit_fail = crit_fail)
 
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
@@ -36,4 +35,13 @@
 	invisa_view = 3
 
 /obj/item/clothing/glasses/hud/security/process_hud(mob/M)
-	process_sec_hud(M, 1)
+	process_sec_hud(M, 1, crit_fail = crit_fail)
+
+/obj/item/clothing/glasses/hud/broken/process_hud(mob/M)
+	process_broken_hud(M, 1)
+
+/obj/item/clothing/glasses/hud/emp_act(severity)
+	if(!crit_fail)
+		crit_fail = 1
+		spawn(900)
+			crit_fail = 0
