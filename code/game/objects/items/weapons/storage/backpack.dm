@@ -306,6 +306,15 @@
 	item_state = "duffle-syndie"
 	origin_tech = "syndicate=1"
 	max_combined_w_class = 30
+	storage_slots = 10
+	slowdown = 1
+
+/obj/item/weapon/storage/backpack/dufflebag/marinad
+	name = "marine dufflebag"
+	desc = "A large dufflebag for holding extra tactical supplies. Waterproof."
+	icon_state = "marinad"
+	item_state = "marinad_duffle"
+	origin_tech = ""
 
 /obj/item/weapon/storage/backpack/dufflebag/c4/New()
 	..()
@@ -325,6 +334,7 @@
 	icon_state = "duffle-syndiemed"
 	item_state = "duffle-syndiemed"
 	max_combined_w_class = 40
+	storage_slots = 12
 
 /obj/item/weapon/storage/backpack/dufflebag/surgery/New()
 	..()

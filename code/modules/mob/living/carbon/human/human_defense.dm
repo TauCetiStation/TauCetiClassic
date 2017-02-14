@@ -21,6 +21,10 @@
 
 				return -1 // complete projectile permutation
 
+	if(check_shields(P.damage, "the [P.name]"))
+		P.on_hit(src, 100, def_zone)
+		return 2
+
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
 		if(check_thickmaterial(select_area))
@@ -68,10 +72,6 @@
 		to_chat(src, "\red You have been shot!")
 		qdel(P)
 		return
-
-	if(check_shields(P.damage, "the [P.name]"))
-		P.on_hit(src, 100, def_zone)
-		return 2
 
 	if(istype(P, /obj/item/projectile/bullet))
 		var/obj/item/projectile/bullet/B = P

@@ -85,7 +85,9 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 
 			cell.use(C*10)
 			handle_teleport_grab(T, U)
-			U.loc = T
+			if(U.buckled)
+				U.buckled.unbuckle_mob()
+			U.forceMove(T)
 
 			spawn(0)
 				spark_system.start()

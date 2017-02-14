@@ -360,9 +360,9 @@
 		while(index)
 			t = copytext(t, 1, index) + "&#1103;" + copytext(t, index+8)
 			index = findtext(t, LETTER_255)*/
-		
+
 		var last_fields_value = fields
-		
+
 		t = sanitize_alt(t, list("\n"="\[br\]","ÿ"=LETTER_255))
 
 		// check for exploits
@@ -554,3 +554,9 @@
 
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
+
+/obj/item/weapon/paper/wires
+	name = "Wires"
+	icon_state = "paper_words"
+	New()
+		info = identify_wire()

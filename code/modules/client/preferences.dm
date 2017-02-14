@@ -53,6 +53,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/b_type = "A+"					//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
+	var/socks = 1						//socks type
 	var/backbag = 2						//backpack type
 	var/h_style = "Bald"				//Hair type
 	var/r_hair = 0						//Hair color
@@ -350,6 +351,11 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(undershirt > undershirt_t.len || undershirt < 1)
 		undershirt = 0
 	character.undershirt = undershirt
+
+	if(socks > socks_t.len || socks < 1)
+		socks = 0
+
+	character.socks = socks
 
 	if(backbag > 4 || backbag < 1)
 		backbag = 1 //Same as above
