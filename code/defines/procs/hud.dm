@@ -93,26 +93,3 @@ the HUD updates properly! */
 		if(get_dist(H, T) <= 7)
 			viewed += H
 	return viewed
-
-
-/*---
-/mob/living/carbon/alien/proc/AddInfectionImages()
-	if (client)
-		for (var/mob/living/C in mob_list)
-			if(C.status_flags & XENO_HOST)
-				var/obj/item/alien_embryo/A = locate() in C
-				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
-				client.images += I
-	return
-
-
--------------------------------------
-Proc: RemoveInfectionImages()
-Des: Removes all infected images from the alien.
-----------------------------------------
-/mob/living/carbon/alien/proc/RemoveInfectionImages()
-	if (client)
-		for(var/image/I in client.images)
-			if(dd_hasprefix_case(I.icon_state, "infected"))
-				qdel(I)
-	return*/
