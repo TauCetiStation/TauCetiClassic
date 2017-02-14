@@ -24,16 +24,18 @@
 	if(spam_flag)
 		return
 	spam_flag = 1
-	playsound(get_turf(src), "code/modules/musical_instruments/sound/harmonica/fharp[rand(1,8)].ogg", 50, 1, falloff = 5, channel = channel)
+	playsound(src, "code/modules/musical_instruments/sound/harmonica/fharp[rand(1,8)].ogg", 50, 1, falloff = 5, channel = channel)
 	visible_message( pick("[user] plays a bluesy tune with his harmonica!", "[user] plays a warm tune with his harmonica!", \
 		"[user] plays a delightful tune with his harmonica!", "[user] plays a chilling tune with his harmonica!", "[user] plays a upbeat tune with his harmonica!"))
-	spawn(cooldown)
-		spam_flag = 0
+	addtimer(src,"spam",cooldown)
 	return
 
 /obj/item/device/harmonica/dropped(mob/user)
 	var/sound/melody = sound()
 	melody.channel = channel
-	visible_message(melody)
+	hearers(20, get_turf(src)) << melody
 	spam_flag = 0
 	return ..()
+
+/obj/item/device/harmonica/proc/spam()
+	spam_flag = 0

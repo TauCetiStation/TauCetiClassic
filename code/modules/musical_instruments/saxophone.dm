@@ -13,9 +13,8 @@
 	if(spam_flag)
 		return
 	spam_flag = 1
-	playsound(get_turf(src), "code/modules/musical_instruments/sound/saxophone/sax[rand(1,6)].ogg", 50, 1, falloff = 5, channel = channel)
+	playsound(src, "code/modules/musical_instruments/sound/saxophone/sax[rand(1,6)].ogg", 50, 1, falloff = 5, channel = channel)
 	visible_message( pick("[user] plays a bluesy tune with his saxophone!", "[user] plays a sexy tune with his gold thing!", \
 			"[user] plays a delightful tune with his music tube!", "[user] plays a chilling tune with his saxy!", "[user] plays a upbeat tune with his saxophone!"))
-	spawn(cooldown)
-		spam_flag = 0
+	addtimer(src,"spam",cooldown)
 	return
