@@ -20,6 +20,8 @@
 	if (!istype(user, /mob/living/carbon/human))
 		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
+	if(!istype(C))
+		return
 	if ((CLUMSY in usr.mutations) && prob(50))
 		to_chat(user, "\red Uh ... how do those things work?!")
 		place_handcuffs(user, user)

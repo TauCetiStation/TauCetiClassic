@@ -14,7 +14,10 @@
 	if(config.allow_admin_jump)
 		if(src.mob)
 			var/mob/AM = src.mob
-			AM.jumpTo(pick(get_area_turfs(A)))
+			var/list/area_turfs = get_area_turfs(A)
+			if(!area_turfs.len)
+				return
+			AM.jumpTo(pick(area_turfs))
 			log_admin("[key_name(usr)] jumped to [A]")
 			message_admins("[key_name_admin(usr)] jumped to [A]")
 			feedback_add_details("admin_verb","JA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

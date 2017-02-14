@@ -10,7 +10,7 @@
 
 	votable = 0
 
-	var/list/possible_traitors
+	var/list/possible_traitors = null
 	var/num_players = 0
 
 /datum/game_mode/traitor/autotraitor/announce()
@@ -82,18 +82,21 @@
 		//message_admins("Performing AutoTraitor Check")
 		var/playercount = 0
 		var/traitorcount = 0
-		var/possible_traitors[0]
 		for(var/mob/living/player in mob_list)
 
-			if (player.client && player.stat != DEAD)
-				playercount += 1
-			if (player.client && player.mind && player.mind.special_role && player.stat != DEAD)
-				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != DEAD && (player.client && (ROLE_TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR))
-				possible_traitors += player
-		for(var/datum/mind/player in possible_traitors)
+			if (player.client && player.mind && player.stat != DEAD)
+				playercount++
+				if(player.mind.special_role)
+					traitorcount++
+				else if((player.client && (ROLE_TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR))
+					if(!possible_traitors.len || !possible_traitors.Find(player))
+						possible_traitors += player
+		for(var/mob/living/player in possible_traitors)
+			if(!player.mind || !player.client)
+				possible_traitors -= player
+				continue
 			for(var/job in restricted_jobs)
-				if(player.assigned_role == job)
+				if(player.mind.assigned_role == job)
 					possible_traitors -= player
 
 		//message_admins("Live Players: [playercount]")
@@ -167,10 +170,10 @@
 		var/traitorcount = 0
 		for(var/mob/living/player in mob_list)
 
-			if (player.client && player.stat != DEAD)
+			if (player.client && player.mind && player.stat != DEAD)
 				playercount += 1
-			if (player.client && player.mind && player.mind.special_role && player.stat != DEAD)
-				traitorcount += 1
+				if(player.mind.special_role)
+					traitorcount += 1
 		//message_admins("Live Players: [playercount]")
 		//message_admins("Live Traitors: [traitorcount]")
 

@@ -4,26 +4,31 @@
 	var/datum/game_mode/mutiny/mutiny
 
 	New()
-		mutiny = ticker.mode
+		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/mutiny))
+			mutiny = ticker.mode
+		else
+			mutiny = null
 		..()
 
 /obj/item/weapon/pinpointer/advpinpointer/auth_key/attack_self()
+	if(!mutiny)
+		to_chat(usr, "<span class='danger'>[src] buzzes rudely.</span>")
 	switch(mode)
 		if (0)
 			mode = 1
 			active = 1
 			target = mutiny.captains_key
 			workobj()
-			to_chat(usr, "\blue You calibrate \the [src] to locate the Captain's Authentication Key.")
+			to_chat(usr, "<span class='notice'>You calibrate \the [src] to locate the Captain's Authentication Key.</span>")
 		if (1)
 			mode = 2
 			target = mutiny.secondary_key
-			to_chat(usr, "\blue You calibrate \the [src] to locate the Emergency Secondary Authentication Key.")
+			to_chat(usr, "<span class='notice'>You calibrate \the [src] to locate the Emergency Secondary Authentication Key.</span>")
 		else
 			mode = 0
 			active = 0
 			icon_state = "pinoff"
-			to_chat(usr, "\blue You switch \the [src] off.")
+			to_chat(usr, "<span class='notice'>You switch \the [src] off.</span>")
 
 /obj/item/weapon/pinpointer/advpinpointer/auth_key/examine(mob/user)
 	..()

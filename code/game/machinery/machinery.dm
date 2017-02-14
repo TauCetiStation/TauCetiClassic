@@ -158,7 +158,8 @@ Class Procs:
 
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
-	T.contents += contents
+	if(T)
+		T.contents += contents
 	if(occupant)
 		if(occupant.client)
 			occupant.client.eye = occupant

@@ -279,7 +279,8 @@
 	..()
 
 /obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
-	if(!currently_vending) return
+	if(!currently_vending)
+		return
 	if (istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
@@ -287,47 +288,50 @@
 			if(vendor_account)
 				var/datum/money_account/D = get_account(C.associated_account_number)
 				var/attempt_pin = 0
-				if(D.security_level > 0)
-					attempt_pin = input("Enter pin code", "Vendor transaction") as num
-				if(attempt_pin)
-					D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
 				if(D)
-					var/transaction_amount = currently_vending.price
-					if(transaction_amount <= D.money)
+					if(D.security_level > 0)
+						attempt_pin = input("Enter pin code", "Vendor transaction") as num
+					if(attempt_pin)
+						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+					if(D)
+						var/transaction_amount = currently_vending.price
+						if(transaction_amount <= D.money)
 
-						//transfer the money
-						D.money -= transaction_amount
-						vendor_account.money += transaction_amount
+							//transfer the money
+							D.money -= transaction_amount
+							vendor_account.money += transaction_amount
 
-						//create entries in the two account transaction logs
-						var/datum/transaction/T = new()
-						T.target_name = "[vendor_account.owner_name] (via [src.name])"
-						T.purpose = "Purchase of [currently_vending.product_name]"
-						if(transaction_amount > 0)
-							T.amount = "([transaction_amount])"
-						else
+							//create entries in the two account transaction logs
+							var/datum/transaction/T = new()
+							T.target_name = "[vendor_account.owner_name] (via [src.name])"
+							T.purpose = "Purchase of [currently_vending.product_name]"
+							if(transaction_amount > 0)
+								T.amount = "([transaction_amount])"
+							else
+								T.amount = "[transaction_amount]"
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							D.transaction_log.Add(T)
+							//
+							T = new()
+							T.target_name = D.owner_name
+							T.purpose = "Purchase of [currently_vending.product_name]"
 							T.amount = "[transaction_amount]"
-						T.source_terminal = src.name
-						T.date = current_date_string
-						T.time = worldtime2text()
-						D.transaction_log.Add(T)
-						//
-						T = new()
-						T.target_name = D.owner_name
-						T.purpose = "Purchase of [currently_vending.product_name]"
-						T.amount = "[transaction_amount]"
-						T.source_terminal = src.name
-						T.date = current_date_string
-						T.time = worldtime2text()
-						vendor_account.transaction_log.Add(T)
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							vendor_account.transaction_log.Add(T)
 
-						// Vend the item
-						src.vend(src.currently_vending, usr)
-						currently_vending = null
+							// Vend the item
+							src.vend(src.currently_vending, usr)
+							currently_vending = null
+						else
+							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 					else
 						to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 				else
-					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
+					to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
 			else
 				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access account. Check security settings and try again.</span>")
 		else

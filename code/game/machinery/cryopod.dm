@@ -228,21 +228,22 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 								qdel(O)
 
 			//Handle job slot/tater cleanup.
-			var/job = occupant.mind.assigned_role
+			if(occupant && occupant.mind)
+				var/job = occupant.mind.assigned_role
 
-			SSjob.FreeRole(job)
+				SSjob.FreeRole(job)
 
-			/*if(occupant.mind.objectives.len)
-				qdel(occupant.mind.objectives)
-				occupant.mind.special_role = null
-			else
-				if(ticker.mode.name == "AutoTraitor")
+				/*if(occupant.mind.objectives.len)
+					qdel(occupant.mind.objectives)
+					occupant.mind.special_role = null
+				else
+					if(ticker.mode.name == "AutoTraitor")
+						var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
+						current_mode.possible_traitors.Remove(occupant)*/
+				if(!occupant.mind.objectives.len && ticker.mode.name == "AutoTraitor")
 					var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
-					current_mode.possible_traitors.Remove(occupant)*/
-			if(!occupant.mind.objectives.len && ticker.mode.name == "AutoTraitor")
-				var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
-				if(current_mode.possible_traitors && current_mode.possible_traitors.len)
-					current_mode.possible_traitors -= occupant
+					if(current_mode.possible_traitors && current_mode.possible_traitors.len)
+						current_mode.possible_traitors -= occupant
 
 			// Delete them from datacore.
 
