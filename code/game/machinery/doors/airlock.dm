@@ -1203,8 +1203,9 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/attackby(C, mob/user)
 
-	if( istype(C,/obj/item/weapon/changeling_hammer) && !( src.operating > 0 ) && src.density) // yeah, hammer ignore electrify
+	if( istype(C,/obj/item/weapon/changeling_hammer) && !src.operating && src.density) // yeah, hammer ignore electrify
 		var/obj/item/weapon/changeling_hammer/W = C
+		user.do_attack_animation(src)
 		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if(W.use_charge(src,user) && prob(20))
