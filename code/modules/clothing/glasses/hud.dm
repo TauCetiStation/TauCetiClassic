@@ -43,5 +43,5 @@
 /obj/item/clothing/glasses/hud/emp_act(severity)
 	if(!crit_fail)
 		crit_fail = 1
-		spawn(900)
+		spawn(900/severity)
 			crit_fail = 0
