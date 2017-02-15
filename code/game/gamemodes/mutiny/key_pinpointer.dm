@@ -4,7 +4,7 @@
 	var/datum/game_mode/mutiny/mutiny
 
 	New()
-		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/mutiny))
+		if(ticker.mode && istype(ticker.mode, /datum/game_mode/mutiny))
 			mutiny = ticker.mode
 		else
 			mutiny = null

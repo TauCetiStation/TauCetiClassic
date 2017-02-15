@@ -37,7 +37,7 @@ var/global/list/empty_playable_ai_cores = list()
 		qdel(mind.objectives)
 		mind.special_role = null
 	else
-		if(ticker && ticker.mode && ticker.mode.name == "AutoTraitor")
+		if(ticker.mode && ticker.mode.name == "AutoTraitor")
 			var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
 			if(current_mode.possible_traitors.len)
 				current_mode.possible_traitors -= src
