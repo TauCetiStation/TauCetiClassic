@@ -121,6 +121,8 @@
 
 	new_network.line_members += src
 
+	if(network)
+		qdel(network)
 	network = new_network
 
 	for(var/obj/machinery/atmospherics/pipe/edge in edges)

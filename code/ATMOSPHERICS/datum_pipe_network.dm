@@ -81,6 +81,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 		line_member.network = src
 
 	update_network_gases()
+	qdel(giver)
 	return 1
 
 /datum/pipe_network/proc/update_network_gases()

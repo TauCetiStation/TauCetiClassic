@@ -54,18 +54,32 @@
 
 /obj/machinery/atmospherics/tvalve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
+		if(network_node1)
+			qdel(network_node1)
 		network_node1 = new_network
 		if(state)
+			if(network_node2)
+				qdel(network_node2)
 			network_node2 = new_network
 		else
+			if(network_node3)
+				qdel(network_node3)
 			network_node3 = new_network
 	else if(reference == node2)
+		if(network_node2)
+			qdel(network_node2)
 		network_node2 = new_network
 		if(state)
+			if(network_node1)
+				qdel(network_node1)
 			network_node1 = new_network
 	else if(reference == node3)
+		if(network_node3)
+			qdel(network_node3)
 		network_node3 = new_network
 		if(!state)
+			if(network_node1)
+				qdel(network_node1)
 			network_node1 = new_network
 
 	if(new_network.normal_members.Find(src))

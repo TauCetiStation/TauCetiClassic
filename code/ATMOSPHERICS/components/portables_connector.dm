@@ -59,6 +59,8 @@
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/portables_connector/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node)
+		if(network)
+			qdel(network)
 		network = new_network
 
 	if(new_network.normal_members.Find(src))
