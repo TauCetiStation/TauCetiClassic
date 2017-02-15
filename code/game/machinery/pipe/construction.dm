@@ -337,13 +337,13 @@ Buildable meters
 			if (qdeleted(P))
 				to_chat(usr, pipefailtext)
 				return 1
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
+			P.build_network()
 
 		if(PIPE_HE_STRAIGHT, PIPE_HE_BENT)
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/P = new ( src.loc )
@@ -356,13 +356,13 @@ Buildable meters
 			if (qdeleted(P))
 				to_chat(usr, pipefailtext)
 				return 1
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
+			P.build_network()
 
 		if(PIPE_CONNECTOR)		// connector
 			var/obj/machinery/atmospherics/portables_connector/C = new( src.loc )
@@ -373,11 +373,10 @@ Buildable meters
 			var/turf/T = C.loc
 			C.level = T.intact ? 2 : 1
 			C.initialize()
-			C.build_network()
 			if (C.node)
 				C.node.initialize()
-				C.node.build_network()
-
+				//C.node.build_network()
+			C.build_network()
 
 		if(PIPE_MANIFOLD)		//manifold
 			var/obj/machinery/atmospherics/pipe/manifold/M = new( src.loc )
@@ -391,16 +390,16 @@ Buildable meters
 			if (qdeleted(M))
 				to_chat(usr, pipefailtext)
 				return 1
-			M.build_network()
 			if (M.node1)
 				M.node1.initialize()
-				M.node1.build_network()
+				//M.node1.build_network()
 			if (M.node2)
 				M.node2.initialize()
-				M.node2.build_network()
+				//M.node2.build_network()
 			if (M.node3)
 				M.node3.initialize()
-				M.node3.build_network()
+				//M.node3.build_network()
+			M.build_network()
 
 		if(PIPE_MANIFOLD4W)		//4-way manifold
 			var/obj/machinery/atmospherics/pipe/manifold4w/M = new( src.loc )
@@ -414,19 +413,19 @@ Buildable meters
 			if (qdeleted(M))
 				to_chat(usr, pipefailtext)
 				return 1
-			M.build_network()
 			if (M.node1)
 				M.node1.initialize()
-				M.node1.build_network()
+				//M.node1.build_network()
 			if (M.node2)
 				M.node2.initialize()
-				M.node2.build_network()
+				//M.node2.build_network()
 			if (M.node3)
 				M.node3.initialize()
-				M.node3.build_network()
+				//M.node3.build_network()
 			if (M.node4)
 				M.node4.initialize()
-				M.node4.build_network()
+				//M.node4.build_network()
+			M.build_network()
 
 		if(PIPE_JUNCTION)
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/P = new ( src.loc )
@@ -439,13 +438,13 @@ Buildable meters
 			if (qdeleted(P))
 				to_chat(usr, pipefailtext)
 				return 1
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
+			P.build_network()
 
 		if(PIPE_UVENT)		//unary vent
 			var/obj/machinery/atmospherics/unary/vent_pump/V = new( src.loc )
@@ -456,10 +455,10 @@ Buildable meters
 			var/turf/T = V.loc
 			V.level = T.intact ? 2 : 1
 			V.initialize()
-			V.build_network()
 			if (V.node)
 				V.node.initialize()
-				V.node.build_network()
+				//V.node.build_network()
+			V.build_network()
 
 
 		if(PIPE_MVALVE)		//manual valve
@@ -471,15 +470,13 @@ Buildable meters
 			var/turf/T = V.loc
 			V.level = T.intact ? 2 : 1
 			V.initialize()
-			V.build_network()
 			if (V.node1)
-//					world << "[V.node1.name] is connected to valve, forcing it to update its nodes."
 				V.node1.initialize()
-				V.node1.build_network()
+				//V.node1.build_network()
 			if (V.node2)
-//					world << "[V.node2.name] is connected to valve, forcing it to update its nodes."
 				V.node2.initialize()
-				V.node2.build_network()
+				//V.node2.build_network()
+			V.build_network()
 
 		if(PIPE_PUMP)		//gas pump
 			var/obj/machinery/atmospherics/binary/pump/P = new(src.loc)
@@ -490,13 +487,13 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
+			P.build_network()
 
 		if(PIPE_GAS_FILTER)		//gas filter
 			var/obj/machinery/atmospherics/trinary/filter/P = new(src.loc)
@@ -507,16 +504,16 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
 			if (P.node3)
 				P.node3.initialize()
-				P.node3.build_network()
+				//P.node3.build_network()
+			P.build_network()
 
 		if(PIPE_GAS_MIXER)		//gas mixer
 			var/obj/machinery/atmospherics/trinary/mixer/P = new(src.loc)
@@ -527,16 +524,16 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
 			if (P.node3)
 				P.node3.initialize()
-				P.node3.build_network()
+				//P.node3.build_network()
+			P.build_network()
 
 		if(PIPE_GAS_FILTER_M)		//gas filter mirrored
 			var/obj/machinery/atmospherics/trinary/filter/m_filter/P = new(src.loc)
@@ -547,16 +544,16 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
 			if (P.node3)
 				P.node3.initialize()
-				P.node3.build_network()
+				//P.node3.build_network()
+			P.build_network()
 
 		if(PIPE_GAS_MIXER_T)		//gas mixer-t
 			var/obj/machinery/atmospherics/trinary/mixer/t_mixer/P = new(src.loc)
@@ -567,16 +564,16 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
 			if (P.node3)
 				P.node3.initialize()
-				P.node3.build_network()
+				//P.node3.build_network()
+			P.build_network()
 
 		if(PIPE_GAS_MIXER_M)		//gas mixer mirrored
 			var/obj/machinery/atmospherics/trinary/mixer/m_mixer/P = new(src.loc)
@@ -587,16 +584,16 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
 			if (P.node3)
 				P.node3.initialize()
-				P.node3.build_network()
+				//P.node3.build_network()
+			P.build_network()
 
 		if(PIPE_SCRUBBER)		//scrubber
 			var/obj/machinery/atmospherics/unary/vent_scrubber/S = new(src.loc)
@@ -607,10 +604,10 @@ Buildable meters
 			var/turf/T = S.loc
 			S.level = T.intact ? 2 : 1
 			S.initialize()
-			S.build_network()
 			if (S.node)
 				S.node.initialize()
-				S.node.build_network()
+				//S.node.build_network()
+			S.build_network()
 
 		if(PIPE_INSULATED_STRAIGHT, PIPE_INSULATED_BENT)
 			var/obj/machinery/atmospherics/pipe/simple/insulated/P = new( src.loc )
@@ -622,13 +619,13 @@ Buildable meters
 			if (qdeleted(P))
 				to_chat(usr, pipefailtext)
 				return 1
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
+			P.build_network()
 
 		if(PIPE_MTVALVE)		//manual t-valve
 			var/obj/machinery/atmospherics/tvalve/V = new(src.loc)
@@ -639,26 +636,26 @@ Buildable meters
 			var/turf/T = V.loc
 			V.level = T.intact ? 2 : 1
 			V.initialize()
-			V.build_network()
 			if (V.node1)
 				V.node1.initialize()
-				V.node1.build_network()
+				//V.node1.build_network()
 			if (V.node2)
 				V.node2.initialize()
-				V.node2.build_network()
+				//V.node2.build_network()
 			if (V.node3)
 				V.node3.initialize()
-				V.node3.build_network()
+				//V.node3.build_network()
+			V.build_network()
 
 		if(PIPE_CAP)
 			var/obj/machinery/atmospherics/pipe/cap/C = new(src.loc)
 			C.dir = dir
 			C.initialize_directions = pipe_dir
 			C.initialize()
-			C.build_network()
 			if(C.node)
 				C.node.initialize()
-				C.node.build_network()
+				//C.node.build_network()
+			C.build_network()
 
 		if(PIPE_PASSIVE_GATE)		//passive gate
 			var/obj/machinery/atmospherics/binary/passive_gate/P = new(src.loc)
@@ -669,13 +666,13 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
+			P.build_network()
 
 		if(PIPE_VOLUME_PUMP)		//volume pump
 			var/obj/machinery/atmospherics/binary/volume_pump/P = new(src.loc)
@@ -686,13 +683,13 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
+			P.build_network()
 
 		if(PIPE_HEAT_EXCHANGE)		// heat exchanger
 			var/obj/machinery/atmospherics/unary/heat_exchanger/C = new( src.loc )
@@ -703,10 +700,11 @@ Buildable meters
 			var/turf/T = C.loc
 			C.level = T.intact ? 2 : 1
 			C.initialize()
-			C.build_network()
 			if (C.node)
 				C.node.initialize()
-				C.node.build_network()
+				//C.node.build_network()
+			C.build_network()
+
 ///// Z-Level stuff
 		if(PIPE_UP)		//volume pump
 			var/obj/machinery/atmospherics/pipe/zpipe/up/P = new(src.loc)
@@ -717,13 +715,14 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
+			P.build_network()
+
 		if(PIPE_DOWN)		//volume pump
 			var/obj/machinery/atmospherics/pipe/zpipe/down/P = new(src.loc)
 			P.dir = dir
@@ -733,13 +732,13 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			P.build_network()
 			if (P.node1)
 				P.node1.initialize()
-				P.node1.build_network()
+				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				P.node2.build_network()
+				//P.node2.build_network()
+			P.build_network()
 ///// Z-Level stuff
 		if(PIPE_OMNI_MIXER)
 			var/obj/machinery/atmospherics/omni/mixer/P = new(loc)
