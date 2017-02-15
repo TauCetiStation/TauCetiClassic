@@ -62,6 +62,10 @@
 		air_temporary = null
 	return ..()
 
+/obj/machinery/atmospherics/pipe/disconnect(obj/machinery/atmospherics/reference)
+	build_network()
+	..()
+
 /obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
 	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
 		return ..()
@@ -214,8 +218,8 @@
 		//dir = node1_direction|node2_direction
 
 	else
-		if(!node1&&!node2)
-			qdel(src) //TODO: silent deleting looks weird
+		//if(!node1&&!node2)
+		//	qdel(src) //TODO: silent deleting looks weird
 		var/have_node1 = node1?1:0
 		var/have_node2 = node2?1:0
 		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
@@ -260,7 +264,7 @@
 
 	update_icon()
 
-	return null
+	..()
 
 
 /////Visible simple pipe
@@ -433,8 +437,8 @@
 
 		icon_state = "manifold_[connected]_[unconnected]"
 
-		if(!connected)
-			qdel(src)
+		//if(!connected)
+		//	qdel(src)
 
 	return
 
@@ -632,8 +636,8 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 		if(node4)
 			overlays += new/image(con,dir=8)
 
-		if(!node1 && !node2 && !node3 && !node4)
-			qdel(src)
+		//if(!node1 && !node2 && !node3 && !node4)
+		//	qdel(src)
 	return
 
 /obj/machinery/atmospherics/pipe/manifold4w/initialize()
