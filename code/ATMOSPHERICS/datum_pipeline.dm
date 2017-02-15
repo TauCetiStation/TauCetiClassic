@@ -96,6 +96,8 @@
 						possible_expansions += item
 
 						volume += item.volume
+						if(item.parent)
+							qdel(item.parent)
 						item.parent = src
 
 						alert_pressure = min(alert_pressure, item.alert_pressure)
