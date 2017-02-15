@@ -12,7 +12,7 @@ the HUD updates properly! */
 		if(P.Mob.see_invisible < patient.invisibility)
 			continue
 		if(crit_fail)
-			P.Client.images += image('icons/mob/hud.dmi', loc = patient, icon_state = pick("hudbroken6", "hudbroken3"))
+			P.Client.images += image('icons/mob/hud.dmi', loc = patient, icon_state = pick("hudbroken6", "hudbroken7"))
 			continue
 		if(!local_scanner)
 			if(istype(patient.w_uniform, /obj/item/clothing/under))
@@ -35,7 +35,7 @@ the HUD updates properly! */
 		if(P.Mob.see_invisible < perp.invisibility)
 			continue
 		if(crit_fail)
-			P.Client.images += image('icons/mob/hud.dmi', loc = perp, icon_state = pick("hudbroken5", "hudbroken1"))
+			P.Client.images += image('icons/mob/hud.dmi', loc = perp, icon_state = pick("hudbroken4", "hudbroken5"))
 			continue
 		P.Client.images += perp.hud_list[ID_HUD]
 		if(advanced_mode)
@@ -51,7 +51,7 @@ the HUD updates properly! */
 	for(var/mob/living/carbon/human/perp in P.Mob.in_view(P.Turf))
 		if(P.Mob.see_invisible < perp.invisibility)
 			continue
-		P.Client.images += image('icons/mob/hud.dmi', loc = perp, icon_state = "hudbroken[pick(1,2,3,4,5,6)]")
+		P.Client.images += image('icons/mob/hud.dmi', loc = perp, icon_state = "hudbroken[pick(1,2,3,4,5,6,7)]")
 
 /datum/arranged_hud_process
 	var/client/Client
