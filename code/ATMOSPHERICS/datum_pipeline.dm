@@ -140,6 +140,8 @@
 
 /datum/pipeline/proc/mingle_with_turf(turf/simulated/target, mingle_volume)
 	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
+	if(!air_sample)
+		return
 	air_sample.volume = mingle_volume
 
 	if(istype(target) && target.zone && !iscatwalk(target))
