@@ -165,3 +165,8 @@
 		vision_flags = 0
 	if(prob(75))
 		darkness_view = -1
+
+/obj/item/clothing/glasses/sunglasses/sechud/make_old()
+	..()
+	if(hud && prob(75))
+		hud = new /obj/item/clothing/glasses/hud/broken
