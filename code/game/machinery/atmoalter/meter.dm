@@ -15,11 +15,21 @@
 /obj/machinery/meter/New()
 	..()
 	src.target = locate(/obj/machinery/atmospherics/pipe) in loc
+	if(target)
+		target.targeted_by_meter = src
 	return 1
 
 /obj/machinery/meter/initialize()
 	if (!target)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
+		if(target)
+			target.targeted_by_meter = src
+
+/obj/machinery/atmospherics/pipe/Destroy()
+	if(target)
+		target.targeted_by_meter = null
+	target = null
+	return ..()
 
 /obj/machinery/meter/process()
 	if(!target)

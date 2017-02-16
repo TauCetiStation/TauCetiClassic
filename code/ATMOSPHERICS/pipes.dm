@@ -16,6 +16,8 @@
 	buckle_require_restraints = 1
 	buckle_lying = 1
 
+	var/obj/machinery/meter/targeted_by_meter
+
 /obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
 	return null
 
@@ -55,6 +57,9 @@
 
 /obj/machinery/atmospherics/pipe/Destroy()
 	qdel(parent)
+	if(targeted_by_meter)
+		targeted_by_meter.target = null
+		targeted_by_meter = null
 	parent = null
 	if(air_temporary)
 		loc.assume_air(air_temporary)
