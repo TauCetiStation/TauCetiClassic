@@ -1,6 +1,8 @@
 /************-Pipe code-************/
 /obj/machinery/atmospherics/pipe
 
+	icon = 'icons/obj/atmospherics/Atmos_pipes.dmi'
+
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent
 
@@ -110,7 +112,6 @@
 
 /************-Simple pipe-************/
 /obj/machinery/atmospherics/pipe/simple
-	icon = 'icons/obj/pipes.dmi'
 
 	name = "pipe"
 	desc = "A one meter section of regular pipe."
@@ -138,8 +139,10 @@
 	alpha = 255
 	switch(dir)
 		if(SOUTH || NORTH)
+			dir = NORTH
 			initialize_directions = SOUTH|NORTH
 		if(EAST || WEST)
+			dir = EAST
 			initialize_directions = EAST|WEST
 		if(NORTHEAST)
 			initialize_directions = NORTH|EAST
@@ -336,8 +339,6 @@
 
 /************-Maibfold pipe-************/
 /obj/machinery/atmospherics/pipe/manifold
-	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
-
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes."
 
@@ -426,6 +427,8 @@
 			if ("grey") color = null
 		icon_state = "manifold[invisibility ? "-f" : "" ]"
 
+	else if(!node1&&!node2&&!node3)
+		icon_state = "manifold_ex"
 	else
 		var/connected = 0
 		var/unconnected = 0
