@@ -11,9 +11,9 @@
 
 	var/volume_rate = 50
 
-	var/frequency = 0
+
 	var/id = null
-	var/datum/radio_frequency/radio_connection
+
 
 	level = 1
 
@@ -73,7 +73,7 @@
 
 	flick("inject", src)
 
-/obj/machinery/atmospherics/unary/outlet_injector/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/unary/outlet_injector/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
@@ -104,6 +104,11 @@
 	..()
 
 	set_frequency(frequency)
+
+/obj/machinery/atmospherics/unary/outlet_injector/Destroy()
+	if(frequency)
+		set_frequency(null)
+	return ..()
 
 /obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))

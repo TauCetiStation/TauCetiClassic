@@ -34,11 +34,11 @@
 
 	var/welded = 0 // Added for aliens -- TLE
 
-	var/frequency = 1439
-	var/datum/radio_frequency/radio_connection
+	frequency = 1439
 
-	var/radio_filter_out
-	var/radio_filter_in
+
+
+
 
 /obj/machinery/atmospherics/unary/vent_pump/on
 	on = 1
@@ -145,7 +145,7 @@
 
 //Radio remote control
 
-/obj/machinery/atmospherics/unary/vent_pump/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/unary/vent_pump/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
@@ -353,4 +353,6 @@
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag
+	if(frequency)
+		set_frequency(null)
 	return ..()

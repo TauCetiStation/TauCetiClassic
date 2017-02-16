@@ -198,7 +198,7 @@
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 45
-	var/frequency = 1449
+	frequency = 1449
 	var/code = 0
 	var/list/magnets = list()
 	var/title = "Magnetic Control Console"
@@ -212,7 +212,7 @@
 	var/moving = 0 // 1 if scheduled to loop
 	var/looping = 0 // 1 if looping
 
-	var/datum/radio_frequency/radio_connection
+
 
 
 /obj/machinery/magnetic_controller/New()

@@ -22,9 +22,9 @@ Thus, the two variables affect pump operation are set in New():
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE
 
-	var/frequency = 0
+
 	var/id = null
-	var/datum/radio_frequency/radio_connection
+
 
 /obj/machinery/atmospherics/binary/pump/highcap
 	name = "High capacity gas pump"
@@ -81,7 +81,7 @@ Thus, the two variables affect pump operation are set in New():
 
 //Radio remote control
 
-/obj/machinery/atmospherics/binary/pump/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/binary/pump/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)

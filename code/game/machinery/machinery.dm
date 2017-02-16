@@ -116,6 +116,11 @@ Class Procs:
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 
+	var/frequency = 0
+	var/datum/radio_frequency/radio_connection
+	var/radio_filter_out
+	var/radio_filter_in
+
 /obj/machinery/New()
 	..()
 	machines += src
@@ -123,10 +128,18 @@ Class Procs:
 	power_change()
 
 /obj/machinery/Destroy()
+	if(frequency)
+		set_frequency(null)
 	machines.Remove(src)
 	SSmachine.processing -= src
 	dropContents()
 	return ..()
+
+/obj/machinery/proc/set_frequency(new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
 
 /obj/machinery/proc/locate_machinery()
 	return

@@ -250,9 +250,9 @@
 	desc = "A digitally controlled valve."
 	icon = 'icons/obj/atmospherics/digital_valve.dmi'
 
-	var/frequency = 0
+
 	var/id = null
-	var/datum/radio_frequency/radio_connection
+
 
 /obj/machinery/atmospherics/valve/digital/attack_ai(mob/user)
 	return src.attack_hand(user)
@@ -265,7 +265,7 @@
 
 //Radio remote control
 
-/obj/machinery/atmospherics/valve/digital/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/valve/digital/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
