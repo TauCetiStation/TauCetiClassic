@@ -30,8 +30,7 @@
 	if(config.usewhitelist)
 		load_whitelist()
 	if(config.usealienwhitelist)
-		load_alienwhitelist()
-	load_whitelistSQL()
+		load_whitelistSQL()
 	LoadBans()
 	investigate_reset()
 

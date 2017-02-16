@@ -31,8 +31,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
 	/client/proc/get_whitelist, 			//Whitelist
 	/client/proc/add_to_whitelist,
-	/client/proc/get_alienwhitelist,
-	/client/proc/add_to_alienwhitelist,
 	/datum/admins/proc/whitelist_panel,
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
@@ -211,9 +209,8 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
 	/client/proc/get_whitelist, 			//Whitelist
-	/client/proc/get_alienwhitelist,
 	/client/proc/add_to_whitelist,
-	/client/proc/add_to_alienwhitelist,
+	/datum/admins/proc/whitelist_panel,
 	/client/proc/gsw_add,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,

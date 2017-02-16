@@ -84,15 +84,11 @@
 	usr << browse(output,"window=whitelist_user;size=750x500")
 
 /datum/admins/proc/whitelist_add_user()
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_WHITELIST))
 		return
 
-	var/target_ckey = ckey(input(usr,"type in ckey:","Add User", null) as null|text)
+	var/target_ckey = input(usr,"type in ckey:","Add User", null) as null|text
 	if(!target_ckey)
-		return
-
-	if(role_whitelist[target_ckey])
-		to_chat(usr, "<span class='warning'>[target_ckey] already exists in whitelist.</span>")
 		return
 
 	var/role = input(usr, "select role:", "Role") as null|anything in whitelisted_roles
@@ -101,17 +97,12 @@
 
 	var/reason = input(usr, "type in reason:", "Reason") as null|text
 	if(!reason)
-		return
-
-	//Yay! Copycheck! Lets do final check before we touch DB.
-	if(role_whitelist[target_ckey]) //inputs :(, i wish for multi column inputs with drop down menus... so we can input while we input in one go!
-		to_chat(usr, "<span class='warning'>[target_ckey] already exists in whitelist.</span>")
 		return
 
 	whitelist_DB_add(target_ckey, role, reason, usr.ckey)
 
 /datum/admins/proc/whitelist_add_role(target_ckey)
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_WHITELIST))
 		return
 
 	if(!target_ckey)
@@ -121,25 +112,14 @@
 	if(!role)
 		return
 
-	if(role_whitelist[target_ckey][role])
-		to_chat(usr, "<span class='warning'>[role] for [target_ckey] already exists in whitelist.</span>")
-		return
-
 	var/reason = input(usr, "type in reason:", "Reason") as null|text
 	if(!reason)
-		return
-
-	if(!role_whitelist[target_ckey])
-		to_chat(usr, "<span class='warning'>[target_ckey] does not exist in whitelist (?_?).</span>")
-		return
-	if(role_whitelist[target_ckey][role])
-		to_chat(usr, "<span class='warning'>[role] for [target_ckey] already exists in whitelist.</span>")
 		return
 
 	whitelist_DB_add(target_ckey, role, reason, usr.ckey)
 
 /datum/admins/proc/whitelist_edit(target_ckey, role, ban_edit)
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_WHITELIST))
 		return
 
 	if(!target_ckey || !role)
@@ -161,21 +141,34 @@
 	if(!reason)
 		return
 
-	if(!role_whitelist[target_ckey])
-		to_chat(usr, "<span class='warning'>[target_ckey] does not exist in whitelist.</span>")
-		return
-
-	if(!role_whitelist[target_ckey][role])
-		to_chat(usr, "<span class='warning'>[role] for [target_ckey] does not exist in whitelist.</span>")
-		return
-
 	whitelist_DB_edit(target_ckey, role, ban, ban_edit, reason, usr.ckey)
 
-/datum/admins/proc/whitelist_DB_add(target_ckey, role, reason, adm_ckey)
-	if(!check_rights(R_ADMIN))
-		return
+/proc/whitelist_DB_add(target_ckey, role, reason, adm_ckey, added_by_bot = FALSE)
+	if(!config.usealienwhitelist)
+		if(!added_by_bot)
+			to_chat(usr, "<span class='warning'>Whitelist disabled.</span>")
+		return FALSE
 
+	if(!target_ckey || !role || !reason || !adm_ckey)
+		return FALSE
+
+	if(!added_by_bot && !check_rights(R_WHITELIST))
+		return FALSE
+
+	target_ckey = ckey(target_ckey)
+	role = lowertext(role)
 	reason = sql_sanitize_text(reason)
+	adm_ckey = ckey(adm_ckey)
+
+	if(!(role in whitelisted_roles))
+		if(!added_by_bot)
+			to_chat(usr, "<span class='warning'>Role [role] does not exist in whitelisted roles.</span>")
+		return FALSE
+
+	if(role_whitelist[target_ckey] && role_whitelist[target_ckey][role])
+		if(!added_by_bot)
+			to_chat(usr, "<span class='warning'>[role] for [target_ckey] already exists in whitelist.</span>")
+		return FALSE
 
 	var/database/query/insert_query = new("INSERT INTO whitelist VALUES (?, ?, '0', ?, ?, datetime('now'), ?, datetime('now'));", target_ckey, role, reason, adm_ckey, adm_ckey)
 	insert_query.Execute(whitelist_db)
@@ -183,25 +176,52 @@
 	if(fail_msg)
 		world.log << "SQL ERROR (I): [fail_msg]"
 		message_admins("SQL ERROR (I): [fail_msg]")
-		return
+		return FALSE
 
 	if(!role_whitelist[target_ckey])
 		role_whitelist[target_ckey] = list()
 	role_whitelist[target_ckey][role] = list("ban" = 0, "reason" = reason, "addby" = adm_ckey, "addtm" = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss"), "editby" = adm_ckey)
 
 	var/msg = "whitelisted [role] for [target_ckey] with reason: [sanitize(reason)]"
-	message_admins("[key_name_admin(usr)] [msg]")
-	log_admin("[key_name(usr)] [msg]")
-	send2slack_logs(key_name(usr), msg, "(WHITELIST)")
-
-	whitelist_panel()
-	whitelist_view(target_ckey)
+	if(!added_by_bot)
+		message_admins("[key_name_admin(usr)] [msg]")
+		log_admin("[key_name(usr)] [msg]")
+		send2slack_logs(key_name(usr), msg, "(WHITELIST)")
+		usr.client.holder.whitelist_panel()
+		usr.client.holder.whitelist_view(target_ckey)
+	else
+		message_admins("[adm_ckey] [msg]")
+		log_admin("[adm_ckey] [msg]")
+		send2slack_logs(adm_ckey, msg, "(WHITELIST BOT)")
+	return TRUE
 
 /datum/admins/proc/whitelist_DB_edit(target_ckey, role, ban, ban_edit, reason, adm_ckey)
-	if(!check_rights(R_ADMIN))
+	if(!config.usealienwhitelist)
+		to_chat(usr, "<span class='notice'>Whitelist disabled.</span>")
 		return
 
+	if(!target_ckey || !role || !reason || !adm_ckey)
+		return
+
+	if(!check_rights(R_WHITELIST))
+		return
+
+	target_ckey = ckey(target_ckey)
+	role = lowertext(role)
 	reason = sql_sanitize_text(reason)
+	adm_ckey = ckey(adm_ckey)
+
+	if(!(role in whitelisted_roles))
+		to_chat(usr, "<span class='warning'>Role [role] does not exist in whitelisted roles.</span>")
+		return
+
+	if(!role_whitelist[target_ckey])
+		to_chat(usr, "<span class='warning'>[target_ckey] does not exist in whitelist.</span>")
+		return
+
+	if(!role_whitelist[target_ckey][role])
+		to_chat(usr, "<span class='warning'>[role] for [target_ckey] does not exist in whitelist.</span>")
+		return
 
 	var/database/query/update_query
 	if(ban_edit)
@@ -215,10 +235,10 @@
 		message_admins("SQL ERROR (U): [fail_msg]")
 		return
 
-	var/msg = "changed reason from [sanitize(role_whitelist[target_ckey][role]["reason"])] to [sanitize(reason)] for [target_ckey] as [role]."
+	var/msg = "changed reason in whitelist from [sanitize(role_whitelist[target_ckey][role]["reason"])] to [sanitize(reason)] for [target_ckey] as [role]."
 	if(ban_edit)
 		role_whitelist[target_ckey][role]["ban"] = ban
-		msg = "[ban ? "removed" : "unbanned"] [role] for [target_ckey] with reason [sanitize(reason)]."
+		msg = "[ban ? "removed" : "unbanned"] [role] from whitelist for [target_ckey] with reason [sanitize(reason)]."
 
 	role_whitelist[target_ckey][role]["reason"] = reason
 	role_whitelist[target_ckey][role]["editby"] = adm_ckey
@@ -231,6 +251,9 @@
 	whitelist_view(target_ckey)
 
 /proc/load_whitelistSQL()
+	if(!config.usealienwhitelist)
+		return
+
 	if(!whitelist_db)
 
 		// Create or load the DB.
@@ -270,7 +293,9 @@
 				role_whitelist[row["ckey"]] = list(row["role"] = list("ban" = row["ban"], "reason" = row["reason"], "addby" = row["addby"], "addtm" = row["addtm"], "editby" = row["editby"], "edittm" = row["edittm"]))
 	return TRUE
 
-/proc/is_whitelisted(mob/M, role)
+/proc/is_alien_whitelisted(mob/M, role)
+	if(!config.usealienwhitelist)
+		return TRUE
 	if(!M || !role || !role_whitelist || !role_whitelist[M.ckey] || !check_rights(R_ADMIN, FALSE))
 		return FALSE
 

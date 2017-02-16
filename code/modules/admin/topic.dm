@@ -181,8 +181,6 @@
 		if(!task)
 			return
 		var/role = href_list["role"]
-		if(role && !(role in whitelisted_roles)) //Protection
-			return
 
 		switch(task)
 			if("add_user")
