@@ -25,7 +25,7 @@
 		if(target)
 			target.targeted_by_meter = src
 
-/obj/machinery/atmospherics/pipe/Destroy()
+/obj/machinery/meter/Destroy()
 	if(target)
 		target.targeted_by_meter = null
 	target = null
