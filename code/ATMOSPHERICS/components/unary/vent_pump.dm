@@ -279,7 +279,7 @@
 	if(welded)
 		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]weld"
 		return
-	if(on&&node)
+	if(on && node && !(stat & (NOPOWER|BROKEN)))
 		if(pump_direction)
 			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
 		else
