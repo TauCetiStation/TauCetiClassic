@@ -161,6 +161,11 @@
 	if (!master_is_operating())
 		elect_master()
 
+/obj/machinery/alarm/Destroy()
+	if(alarm_area && alarm_area.master_air_alarm == src)
+		alarm_area.master_air_alarm = null
+	alarm_area = null
+	return ..()
 
 /obj/machinery/alarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted || buildstage != 2)
