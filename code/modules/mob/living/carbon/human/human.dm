@@ -328,11 +328,6 @@
 	return 0
 
 
-
-/mob/living/carbon/human/var/co2overloadtime = null
-/mob/living/carbon/human/var/temperature_resistance = T0C+75
-
-
 /mob/living/carbon/human/show_inv(mob/user)
 	var/obj/item/clothing/under/suit = null
 	if (istype(w_uniform, /obj/item/clothing/under))
