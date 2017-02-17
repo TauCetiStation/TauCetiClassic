@@ -393,6 +393,10 @@
 				src.close(M)
 	src.add_fingerprint(user)
 
+//Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
+/obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
+	return attack_hand(user)                  // to unequip - there is drag n drop available for this task - same as humans do.
+
 /obj/item/weapon/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
 	set category = "Object"
