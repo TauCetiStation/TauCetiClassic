@@ -14,7 +14,7 @@
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
 	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
-	var/storage_slots = 7 //The number of storage slots in this container.
+	var/storage_slots = 21 //The number of storage slots in this container.
 	var/obj/screen/storage/boxes = null
 	var/obj/screen/close/closer = null
 	var/use_to_pickup	//Set this to make it possible to use this item in an inverse way, so you can have the item in your hand and click items on the floor to pick them up.
@@ -277,6 +277,7 @@
 		usr.remove_from_mob(W)
 		usr.update_icons()	//update our overlays
 	W.loc = src
+	slowdown += W.count_storage_slowdown()
 	W.on_enter_storage(src)
 	if(usr)
 		if (usr.client && usr.s_active != src)
@@ -332,6 +333,7 @@
 	if(W.maptext)
 		W.maptext = ""
 	W.on_exit_storage(src)
+	slowdown -= W.count_storage_slowdown()
 	update_icon()
 	return 1
 

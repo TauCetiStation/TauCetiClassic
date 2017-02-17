@@ -1,23 +1,20 @@
 /mob/living/carbon/human/movement_delay()
+
+	if(!has_gravity(src))
+		return -1 // It's hard to be slowed down in space by... anything
+
+	if(RUN in src.mutations)
+		return 0
+
 	var/tally = 0
 
 	if(species)
 		tally = species.speed_mod
 
-	if(crawling)
-		tally += 7
-	else if((reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")) && species && !(species.flags[NO_BLOOD]))
-		return -1
-
-	if(istype(l_hand, /obj/item/weapon/gun))
-		if(l_hand.w_class > 3)
-			tally += 0.5
-	if(istype(r_hand, /obj/item/weapon/gun))
-		if(r_hand.w_class > 3)
-			tally += 0.5
-
-	if(!has_gravity(src))
-		return -1 // It's hard to be slowed down in space by... anything
+	if(istype(l_hand, /obj/item/weapon/gun) && l_hand.w_class > 3)
+		tally += 0.5
+	if(istype(r_hand, /obj/item/weapon/gun) && r_hand.w_class > 3)
+		tally += 0.5
 
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
@@ -33,49 +30,81 @@
 	if(wear_suit)
 		tally += wear_suit.slowdown
 
-	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
-		for(var/organ_name in list("l_hand","r_hand","l_arm","r_arm"))
-			var/datum/organ/external/E = get_organ(organ_name)
-			if(!E || (E.status & ORGAN_DESTROYED))
-				tally += 4
-			else if(E.status & ORGAN_SPLINTED)
-				tally += 0.5
-			else if(E.status & ORGAN_BROKEN)
-				tally += 1.5
-	else
+	for(var/organ_name in list("l_hand","r_hand","l_arm","r_arm"))
+		var/datum/organ/external/E = get_organ(organ_name)
+		if(!E || (E.status & ORGAN_DESTROYED))
+			tally += 4
+		else if(E.status & ORGAN_SPLINTED)
+			tally += 0.5
+		else if(E.status & ORGAN_BROKEN)
+			tally += 1.5
+
+	if(!istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
 		if(shoes)
 			tally += shoes.slowdown
 
 		if(back)
 			tally += back.slowdown
-
 		if(buckled)	//so, if we buckled we have large debuff
 			tally += 5.5
 
-		for(var/organ_name in list("l_foot","r_foot","l_leg","r_leg"))
-			var/datum/organ/external/E = get_organ(organ_name)
-			if(!E || (E.status & ORGAN_DESTROYED))
-				tally += 4
-			else if(E.status & ORGAN_SPLINTED)
-				tally += 0.5
-			else if(E.status & ORGAN_BROKEN)
-				tally += 1.5
-
 	if(shock_stage >= 10)
-		tally += 3
+		tally += shock_stage / 10
 
-	if(pull_debuff)
-		tally += pull_debuff
+	if(pulling)
+		tally += count_pull_debuff()
 
 	if(FAT in src.mutations)
 		tally += 1.5
+
 	if (bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
-	if(RUN in src.mutations)
-		tally = 0
+	if(crawling)
+		tally += 7
+	else if((reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")) && species && !(species.flags[NO_BLOOD]))
+		return(max(-1,tally - 4) + config.human_delay)
 
 	return (tally+config.human_delay)
+
+/obj/proc/count_storage_slowdown()
+	var/slowback = 0
+	for(var/O in src)
+		if(istype(O, /obj/item))
+			var/obj/item/I = O
+			if(I.w_class)
+				switch(I.w_class)
+					if(1)
+						slowback += 0.01
+					else if(2)
+						slowback += 0.05
+					else if(3)
+						slowback += 0.1
+					else if(4)
+						slowback += 0.2
+					else
+						slowback += 0.4 // for great shitspawners
+				if(istype(I,/obj/item/weapon/storage))
+					slowback += I.count_storage_slowdown()
+		if(ismob(O))
+			slowback += 0.25
+
+	return slowback
+
+/obj/item/count_storage_slowdown()
+	var/slowback = 0
+	switch(w_class)
+		if(1)
+			slowback += 0.01
+		else if(2)
+			slowback += 0.05
+		else if(3)
+			slowback += 0.1
+		else if(4)
+			slowback += 0.2
+		else
+			slowback += 0.4 // for great shitspawners
+	return (slowback + ..())
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
 
