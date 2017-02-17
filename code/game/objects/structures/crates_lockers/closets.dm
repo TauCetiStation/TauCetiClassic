@@ -15,12 +15,14 @@
 	var/lastbang
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
+	var/slowdown = 0
 
 /obj/structure/closet/initialize()
 	if(!opened)		// if closed, any item at the crate's loc is put in the contents
 		for(var/obj/item/I in src.loc)
 			if(I.density || I.anchored || I == src) continue
 			I.forceMove(src)
+		slowdown += count_storage_slowdown()
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -63,6 +65,7 @@
 
 	src.icon_state = src.icon_opened
 	src.opened = 1
+	slowdown = 0
 	if(istype(src, /obj/structure/closet/body_bag))
 		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
 	else
@@ -103,7 +106,7 @@
 		M.forceMove(src)
 		M.instant_vision_update(1,src)
 		itemcount++
-
+	slowdown += count_storage_slowdown()
 	src.icon_state = src.icon_closed
 	src.opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))

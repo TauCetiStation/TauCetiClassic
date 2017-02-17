@@ -152,7 +152,8 @@
 		if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
 			tally -= 0.5
 		else if(istype(S,/obj/structure/closet))
-			tally += S.count_storage_slowdown()
+			var/obj/structure/closet/CL = S
+			tally += CL.slowdown * 0.5
 
 	else if(istype(AM, /obj/item/weapon/storage))
 		var/obj/O = AM

@@ -7,14 +7,17 @@
 		return 0
 
 	var/tally = 0
-
 	if(species)
 		tally = species.speed_mod
 
 	if(istype(l_hand, /obj/item/weapon/gun) && l_hand.w_class > 3)
 		tally += 0.5
+	else if(istype(l_hand, /obj/item/weapon/storage))
+		tally += l_hand.slowdown
 	if(istype(r_hand, /obj/item/weapon/gun) && r_hand.w_class > 3)
 		tally += 0.5
+	else if(istype(r_hand, /obj/item/weapon/storage))
+		tally += r_hand.slowdown
 
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
@@ -44,12 +47,12 @@
 			tally += shoes.slowdown
 
 		if(back)
-			tally += back.slowdown
+			tally += back.slowdown * 0.6
 		if(buckled)	//so, if we buckled we have large debuff
 			tally += 5.5
 
 	if(shock_stage >= 10)
-		tally += shock_stage / 10
+		tally += min(shock_stage / 30, 3)
 
 	if(pulling)
 		tally += count_pull_debuff()
@@ -69,7 +72,7 @@
 
 /obj/proc/count_storage_slowdown()
 	var/slowback = 0
-	for(var/O in src)
+	for(var/O in contents)
 		if(istype(O, /obj/item))
 			var/obj/item/I = O
 			if(I.w_class)
@@ -83,28 +86,13 @@
 					else if(4)
 						slowback += 0.2
 					else
-						slowback += 0.4 // for great shitspawners
-				if(istype(I,/obj/item/weapon/storage))
-					slowback += I.count_storage_slowdown()
+						slowback += I.w_class / 20 // for great shitspawners
+			if(istype(I,/obj/item/weapon/storage))
+				slowback += I.count_storage_slowdown()
 		if(ismob(O))
 			slowback += 0.25
 
 	return slowback
-
-/obj/item/count_storage_slowdown()
-	var/slowback = 0
-	switch(w_class)
-		if(1)
-			slowback += 0.01
-		else if(2)
-			slowback += 0.05
-		else if(3)
-			slowback += 0.1
-		else if(4)
-			slowback += 0.2
-		else
-			slowback += 0.4 // for great shitspawners
-	return (slowback + ..())
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
 

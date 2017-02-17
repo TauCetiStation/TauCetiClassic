@@ -444,6 +444,9 @@
 	src.closer.layer = ABOVE_HUD_LAYER
 	src.closer.plane = ABOVE_HUD_PLANE
 	orient2hud()
+	spawn(1)
+		slowdown  += count_storage_slowdown()
+
 
 /obj/item/weapon/storage/emp_act(severity)
 	if(!istype(src.loc, /mob/living))
