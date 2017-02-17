@@ -453,6 +453,10 @@
 /obj/machinery/atmospherics/pipe/manifold/initialize()
 	var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
 
+	node1 = null
+	node2 = null
+	node3 = null
+
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
 			for(var/obj/machinery/atmospherics/target in get_step(src,direction))

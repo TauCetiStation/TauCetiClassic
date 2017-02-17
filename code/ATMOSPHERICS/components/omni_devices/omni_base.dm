@@ -221,8 +221,9 @@
 
 /obj/machinery/atmospherics/omni/initialize()
 	for(var/datum/omni_port/P in ports)
-		if(P.node || P.mode == 0)
+		if(P.mode == 0)
 			continue
+		P.node = null
 		for(var/obj/machinery/atmospherics/target in get_step(src, P.dir))
 			if(target.initialize_directions & get_dir(target,src))
 				P.node = target

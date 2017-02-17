@@ -48,7 +48,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/unary/initialize()
-	if(node) return
+	node = null
 
 	var/node_connect = dir
 

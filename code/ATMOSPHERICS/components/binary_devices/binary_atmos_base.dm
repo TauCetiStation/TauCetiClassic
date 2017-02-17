@@ -71,7 +71,8 @@
 	return ..()
 
 /obj/machinery/atmospherics/binary/initialize()
-	if(node1 && node2) return
+	node1 = null
+	node2 = null
 
 	var/node2_connect = dir
 	var/node1_connect = turn(dir, 180)

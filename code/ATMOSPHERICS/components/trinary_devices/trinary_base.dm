@@ -88,7 +88,9 @@ obj/machinery/atmospherics/trinary/Destroy()
 	return ..()
 
 obj/machinery/atmospherics/trinary/initialize()
-	if(node1 && node2 && node3) return
+	node1 = null
+	node2 = null
+	node3 = null
 
 	var/node1_connect = turn(dir, -180)
 	var/node2_connect = turn(dir, -90)
