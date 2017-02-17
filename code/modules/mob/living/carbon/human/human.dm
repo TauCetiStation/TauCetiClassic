@@ -82,6 +82,8 @@
 	if(dna)
 		dna.real_name = real_name
 
+	verbs += /mob/living/carbon/proc/crawl
+
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
@@ -1337,42 +1339,6 @@
 		W.update_icon()
 		W.message = message
 		W.add_fingerprint(src)
-
-/mob/living/carbon/human/var/crawl_getup = 0
-/mob/living/carbon/human/verb/crawl()
-	set name = "Crawl"
-	set category = "IC"
-
-	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
-		return
-	if(crawl_getup)
-		return
-
-	if(crawling)
-		crawl_getup = 1
-		if(do_after(src, 10, target = src))
-			crawl_getup = 0
-			if(!crawl_can_use())
-				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-				var/datum/organ/external/E = get_organ("head")
-				E.take_damage(5, 0, 0, 0, "Table")
-				to_chat(src, "<span class='danger'>Ouch!</span>")
-				return
-			layer = 4.0
-		else
-			crawl_getup = 0
-			return
-	else
-		if(!crawl_can_use())
-			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
-			return
-		layer = 3.9
-
-	pass_flags ^= PASSCRAWL
-	crawling = !crawling
-
-	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
-	update_canmove()
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"
