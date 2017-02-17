@@ -32,7 +32,7 @@
 	return ..()
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
-	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
+	if (ishuman(usr) || ismonkey(usr) || isIAN(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 
 		if(!over_object)
@@ -63,6 +63,10 @@
 					if(!M.unEquip(src))
 						return
 					M.put_in_l_hand(src)
+				if("mouth")
+					if(!M.unEquip(src))
+						return
+					M.put_in_active_hand(src)
 			src.add_fingerprint(usr)
 			return
 	return
