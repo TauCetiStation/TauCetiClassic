@@ -245,6 +245,6 @@
 		H.apply_damage(damage, damage_type, organ, armorblock, src, 0, 0)
 		H.apply_effects(stun,weaken,0,0,stutter,0,0,armorblock)
 		H.flash_pain()
-		to_chat(H, "\red You have been shot!")
+		to_chat(H, "\red You feel the acid on your skin!")
 		return
-..()
+	..()
