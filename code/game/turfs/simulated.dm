@@ -14,7 +14,15 @@
 	..()
 	levelupdate()
 
-/turf/simulated/proc/AddTracks(typepath,bloodDNA,comingdir,goingdir,bloodcolor="#A10808")
+/turf/simulated/proc/AddTracks(mob/M,bloodDNA,comingdir,goingdir,bloodcolor="#A10808")
+	var/typepath
+	if(ishuman(M))
+		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints
+	else if(isalien(M))
+		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/claws
+	else // can shomeone make shlime footprint shprites later pwetty pwease?
+		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/paws
+
 	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
 	if(!tracks)
 		tracks = new typepath(src)
@@ -67,28 +75,28 @@
 				else
 					playsound(src, footstepsound, 20, 1)
 
-			// Tracking blood
-			var/list/bloodDNA = null
-			var/bloodcolor=""
-			if(H.shoes)
-				var/obj/item/clothing/shoes/S = H.shoes
-				if(S.track_blood && S.blood_DNA)
-					bloodDNA = S.blood_DNA
-					bloodcolor=S.blood_color
-					S.track_blood--
-			else
-				if(H.track_blood && H.feet_blood_DNA)
-					bloodDNA = H.feet_blood_DNA
-					bloodcolor=H.feet_blood_color
-					H.track_blood--
+		// Tracking blood
+		var/list/bloodDNA = null
+		var/bloodcolor=""
+		if(M.shoes)
+			var/obj/item/clothing/shoes/S = M.shoes
+			if(S.track_blood && S.blood_DNA)
+				bloodDNA   = S.blood_DNA
+				bloodcolor = S.blood_color
+				S.track_blood--
+		else
+			if(M.track_blood && M.feet_blood_DNA)
+				bloodDNA   = M.feet_blood_DNA
+				bloodcolor = M.feet_blood_color
+				M.track_blood--
 
-			if (bloodDNA)
-				src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0,bloodcolor) // Coming
-				var/turf/simulated/from = get_step(H,reverse_direction(H.dir))
-				if(istype(from) && from)
-					from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir,bloodcolor) // Going
+		if (bloodDNA)
+			src.AddTracks(M,bloodDNA,M.dir,0,bloodcolor) // Coming
+			var/turf/simulated/from = get_step(M,reverse_direction(M.dir))
+			if(istype(from) && from)
+				from.AddTracks(M,bloodDNA,0,M.dir,bloodcolor) // Going
 
-				bloodDNA = null
+			bloodDNA = null
 
 		switch (src.wet)
 			if(1)
