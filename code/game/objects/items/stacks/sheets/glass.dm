@@ -37,20 +37,27 @@
 		if(CC.amount < 5)
 			to_chat(user, "\b There is not enough wire in this coil. You need 5 lengths.")
 			return
-		CC.use(5)
+		if(!src.use(1))
+			return
+		if(!CC.use(5))
+			return
 		to_chat(user, "\blue You attach wire to the [name].")
 		new /obj/item/stack/light_w(user.loc)
-		src.use(1)
 	else if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V  = W
+		if(V.amount < 1)
+			to_chat(user, "\b There is not enough rods.")
+			return
+		if(!src.use(1))
+			return
+		if(!V.use(1))
+			return
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
-		V.use(1)
 		var/obj/item/stack/sheet/glass/G = src
 		src = null
 		var/replace = (user.get_inactive_hand() == G)
-		G.use(1)
 		if (!G && !RG && replace)
 			user.put_in_hands(RG)
 	else
@@ -95,31 +102,36 @@
 				if(!found)
 					dir_to_set = direction
 					break
+
+			if(!src.use(1))
+				to_chat(user, "\red You need more glass to do that.")
+				return 1
+
 			var/obj/structure/window/W
 			W = new created_window(user.loc)
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
-			src.use(1)
 		if("Full Window")
 			if(!src)
 				return 1
 			if(src.loc != user)
-				return 1
-			if(src.amount < 2)
-				to_chat(user, "\red You need more glass to do that.")
 				return 1
 			var/step = get_step(user, user.dir)
 			var/turf/T = get_turf(step)
 			if(T.density || (locate(/obj/structure/window) in step))
 				to_chat(user, "\red There is something in the way.")
 				return 1
+
+			if(!src.use(2))
+				to_chat(user, "\red You need more glass to do that.")
+				return 1
+
 			var/obj/structure/window/W
 			W = new created_window(step)
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0
-			src.use(2)
 	return 0
 
 /obj/item/stack/sheet/glass/throw_at(atom/target, range, speed, mob/user)
@@ -204,26 +216,29 @@
 					dir_to_set = direction
 					break
 
+			if(!src.use(1))
+				to_chat(user, "\red You need more glass to do that.")
+				return 1
+
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(user.loc)
 			W.state = 0
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
-			src.use(1)
 
 		if("Full Window")
 			if(!src)
 				return 1
 			if(src.loc != user)
 				return 1
-			if(src.amount < 2)
-				to_chat(user, "\red You need more glass to do that.")
-				return 1
 			var/step = get_step(user, user.dir)
 			var/turf/T = get_turf(step)
 			if(T.density || (locate(/obj/structure/window) in step))
 				to_chat(user, "\red There is something in the way.")
+				return 1
+			if(!src.use(2))
+				to_chat(user, "\red You need more glass to do that.")
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(step)
@@ -232,7 +247,6 @@
 			W.ini_dir = SOUTHWEST
 			W.state = 0
 			W.anchored = 0
-			src.use(2)
 
 		if("Windoor")
 			if(!src || src.loc != user)
@@ -246,7 +260,7 @@
 				to_chat(user, "\red There is already a windoor in that location.")
 				return 1
 
-			if(src.amount < 5)
+			if(!src.use(5))
 				to_chat(user, "\red You need more glass to do that.")
 				return 1
 
@@ -254,7 +268,6 @@
 			WD = new /obj/structure/windoor_assembly(user.loc)
 			WD.state = "01"
 			WD.anchored = 0
-			src.use(5)
 			switch(user.dir)
 				if(SOUTH)
 					WD.dir = SOUTH
@@ -364,14 +377,18 @@
 	..()
 	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V  = W
+		if(V.amount < 1)
+			return
+		if(!src.use(1))
+			return
+		if(!V.use(1))
+			return
 		var/obj/item/stack/sheet/glass/phoronrglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
-		V.use(1)
 		var/obj/item/stack/sheet/glass/G = src
 		src = null
 		var/replace = (user.get_inactive_hand() == G)
-		G.use(1)
 		if (!G && !RG && replace)
 			user.put_in_hands(RG)
 	else
