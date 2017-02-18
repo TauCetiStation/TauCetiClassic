@@ -1,5 +1,3 @@
-var/global/list/ladders = list()
-
 /obj/structure/ladder
 	name = "ladder"
 	desc = "A sturdy metal ladder."
@@ -9,6 +7,8 @@ var/global/list/ladders = list()
 	var/height = 0							//the 'height' of the ladder. higher numbers are considered physically higher
 	var/obj/structure/ladder/down = null	//the ladder below this one
 	var/obj/structure/ladder/up = null		//the ladder above this one
+
+	var/static/list/ladders = list()
 
 /obj/structure/ladder/New(nid, nheight)
 	ladders += src
@@ -42,15 +42,17 @@ var/global/list/ladders = list()
 	return ..()
 
 /obj/structure/ladder/proc/Connect_down(obj/structure/ladder/Target)
-	down = Target
-	Target.up = src
-	Target.update_icon()
+	if(Target)
+		down = Target
+		Target.up = src
+		Target.update_icon()
 	update_icon()
 
 /obj/structure/ladder/proc/Connect_up(obj/structure/ladder/Target)
-	up = Target
-	Target.down = src
-	Target.update_icon()
+	if(Target)
+		up = Target
+		Target.down = src
+		Target.update_icon()
 	update_icon()
 
 /obj/structure/ladder/proc/Disconnect_All()
@@ -58,14 +60,16 @@ var/global/list/ladders = list()
 	Disconnect_down()
 
 /obj/structure/ladder/proc/Disconnect_down()
-	down.up = null
-	down.update_icon()
+	if(down)
+		down.up = null
+		down.update_icon()
 	down = null
 	update_icon()
 
 /obj/structure/ladder/proc/Disconnect_up()
-	up.down = null
-	up.update_icon()
+	if(up)
+		up.down = null
+		up.update_icon()
 	up = null
 	update_icon()
 

@@ -284,7 +284,7 @@ obj/effect/bmode/buildholder/New()
 						objholder = /obj/structure/closet
 						alert("That path is not allowed for you.")
 			if(3)
-				var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
+				var/list/locked = list("vars", "key", "ckey", "client")
 
 				master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
 				if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
