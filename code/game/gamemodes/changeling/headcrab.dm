@@ -8,6 +8,7 @@
 	genomecost = 1
 	req_human = 1
 	req_stat = DEAD
+	max_genetic_damage = 10
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	var/datum/mind/M = user.mind
@@ -25,7 +26,11 @@
 	M.transfer_to(crab)
 	to_chat(crab,"<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>")
 	feedback_add_details("changeling_powers","LR")
-	user.gib()
+	if(ismob(user))
+		playsound(user, 'sound/effects/blobattack.ogg', 100, 1)
+		user.gib()
+	else
+		qdel(user)
 	return 1
 
 /mob/living/simple_animal/headcrab
@@ -94,5 +99,9 @@
 	if(origin.changeling)
 		origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 		M.changeling_update_languages(origin.changeling.absorbed_languages)
+	if(iscarbon(loc))
+		var/mob/living/carbon/C = loc
+		C.gib()
+		playsound(C, 'sound/effects/blobattack.ogg', 100, 1)
 
 #undef EGG_INCUBATION_TIME

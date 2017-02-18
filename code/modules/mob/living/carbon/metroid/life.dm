@@ -44,7 +44,10 @@
 
 
 
-
+mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M)
+	if(istype(M,/mob/living/simple_animal/headcrab))
+		var/mob/living/simple_animal/headcrab/crab = M
+		crab.Infect(src)
 
 /mob/living/carbon/slime
 	var/AIproc = 0 // determines if the AI loop is activated

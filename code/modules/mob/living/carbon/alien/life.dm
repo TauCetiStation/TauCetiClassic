@@ -366,3 +366,8 @@
 		adjustFireLoss(6)
 		return
 //END FIRE CODE
+
+mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
+	if(istype(M,/mob/living/simple_animal/headcrab))
+		var/mob/living/simple_animal/headcrab/crab = M
+		crab.Infect(src)

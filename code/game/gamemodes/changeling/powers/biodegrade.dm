@@ -8,6 +8,7 @@
 	req_human = 1
 	genetic_damage = 10
 	max_genetic_damage = 0
+	req_stat = UNCONSCIOUS
 
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
