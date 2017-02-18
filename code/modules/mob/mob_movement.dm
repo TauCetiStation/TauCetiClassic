@@ -51,9 +51,6 @@
 			to_chat(usr, "\red You have nothing to drop in your hand.")
 			return
 		drop_item()
-	else if(istype(usr, /mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = usr
-		R.uneq_active()
 	else
 		to_chat(usr, "\red This mob type cannot drop items.")
 	return
