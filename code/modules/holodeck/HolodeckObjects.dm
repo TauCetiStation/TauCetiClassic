@@ -211,7 +211,7 @@ obj/structure/stool/bed/chair/holochair
 	New()
 		item_color = "red"
 
-/obj/item/weapon/holo/esword/IsShield()
+/obj/item/weapon/holo/esword/Get_shield_chance()
 	if(active)
 		return 50
 	return 0

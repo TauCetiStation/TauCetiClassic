@@ -11,10 +11,6 @@
 	var/weapon_name_simple
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.handcuffed)
-			qdel(H.handcuffed)
 	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>",
 	 "<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
 	 "<span class='warning>You hear organic matter ripping and tearing!</span>")
@@ -99,7 +95,7 @@
 	desc = "We reform one of our arms into a deadly blade."
 	helptext = "Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 4
+	genomecost = 2
 	genetic_damage = 10
 	req_human = 1
 	max_genetic_damage = 10
@@ -162,9 +158,9 @@
 /obj/effect/proc_holder/changeling/weapon/shield
 	name = "Organic Shield"
 	desc = "We reform one of our arms into hard shield."
-	helptext = "Organic tissue cannot resist damage forever, the shield will break after it is hit too much. Cannot be used while in lesser form."
+	helptext = "Organic tissue cannot resist damage forever, the shield will break after it is hit too much. The more genomes we absorb, the stronger it is.. Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 3
+	genomecost = 2
 	genetic_damage = 12
 	req_human = 1
 	max_genetic_damage = 10
@@ -186,11 +182,14 @@
 //	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
+		var/mob/M = loc
+		if(M.mind.changeling.absorbedcount)
+			remaining_uses +=  M.mind.changeling.absorbedcount
 
 /obj/item/weapon/shield/changeling/dropped()
 	qdel(src)
 
-/obj/item/weapon/shield/changeling/IsShield()
+/obj/item/weapon/shield/changeling/Get_shield_chance()
 	if(!remaining_uses)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -262,7 +261,7 @@
 	desc = "We turn our skin into tough chitin to protect us from damage."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
 	chemical_cost = 25
-	genomecost = 4
+	genomecost = 2
 	genetic_damage = 10
 	req_human = 1
 	max_genetic_damage = 10
@@ -281,7 +280,7 @@
 	canremove = 0
 	flags = THICKMATERIAL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	slowdown = 2
+	slowdown = 1
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 35, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0

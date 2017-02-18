@@ -88,7 +88,7 @@ obj/effect/proc_holder/changeling/sting/cryo
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
 	sting_icon = "sting_cryo"
 	chemical_cost = 15
-	genomecost = 2
+	genomecost = 1
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
 	if(sting_fail(user,target))
@@ -105,7 +105,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
 	sting_icon = "sting_lsd"
 	chemical_cost = 15
-	genomecost = 3
+	genomecost = 2
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
@@ -167,7 +167,7 @@ obj/effect/proc_holder/changeling/sting/extract_dna
 	helptext = "Will give you the DNA of your target, allowing you to transform into them."
 	sting_icon = "sting_extract"
 	chemical_cost = 25
-	genomecost = 2
+	genomecost = 1
 	ranged = 0
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(mob/user, mob/living/carbon/target)
@@ -199,7 +199,7 @@ obj/effect/proc_holder/changeling/sting/silence
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
 	sting_icon = "sting_mute"
 	chemical_cost = 20
-	genomecost = 4
+	genomecost = 2
 
 /obj/effect/proc_holder/changeling/sting/silence/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
@@ -237,7 +237,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	desc = "We silently sting a human, paralyzing them for a short time."
 	sting_icon = "sting_paralyse"
 	chemical_cost = 30
-	genomecost = 8
+	genomecost = 6
 
 /obj/effect/proc_holder/changeling/sting/paralysis/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
@@ -253,7 +253,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	desc = "We silently sting a human, filling him with potent chemicals. His rapid death is all but assured."
 	sting_icon = "sting_death"
 	chemical_cost = 40
-	genomecost = 10
+	genomecost = 8
 
 /obj/effect/proc_holder/changeling/sting/death/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))

@@ -48,6 +48,11 @@
 						stomach_contents.Remove(A)
 					src.gib()
 
+mob/living/carbon/attack_animal(mob/living/simple_animal/M)
+	if(istype(M,/mob/living/simple_animal/headcrab))
+		var/mob/living/simple_animal/headcrab/crab = M
+		crab.Infect(src)
+
 /mob/living/carbon/gib()
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)

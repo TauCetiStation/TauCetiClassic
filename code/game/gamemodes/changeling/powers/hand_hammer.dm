@@ -3,7 +3,7 @@
 	desc = "We reform one of our arms into hammer."
 	helptext = "Can break walls, airlocks, windows and humans, requires a lot of chemical for each use. Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 5
+	genomecost = 4
 	genetic_damage = 12
 	req_human = 1
 	max_genetic_damage = 10
@@ -29,17 +29,16 @@
 	qdel(src)
 
 
-/obj/item/weapon/proc/use_charge(atom/movable/O, mob/living/carbon/user, req_chem = 3)
-	var/mob/living/carbon/H = loc
-	if(!H.mind || !H.mind.changeling)
+/obj/item/weapon/proc/use_charge(atom/movable/O, mob/living/carbon/human/user, req_chem = 3)
+	if(!user.mind || !user.mind.changeling)
 		return 0
-	if(H.mind.changeling.chem_charges < req_chem)
+	if(user.mind.changeling.chem_charges < req_chem)
 		to_chat(user, "<span class='warning'>We require at least [req_chem] units of chemicals to do that!</span>")
 		return 0
-	H.mind.changeling.chem_charges -= req_chem
+	user.mind.changeling.chem_charges -= req_chem
 	return 1
 
-/obj/item/weapon/changeling_hammer/attack(atom/target, mob/living/carbon/user, proximity)
+/obj/item/weapon/changeling_hammer/attack(atom/target, mob/living/carbon/human/user, proximity)
 	if(user.a_intent == "hurt" && use_charge(target,user, 6))
 		playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 		if(ishuman(target))
@@ -49,4 +48,7 @@
 				H.apply_damage(force/2,BRUTE,Org.name, H.getarmor(Org.name, "melee"))
 			if(O.parent)
 				H.apply_damage(force/2,BRUTE,O.parent.name, H.getarmor(O.parent.name, "melee"))
+		if(istype(target,/obj/mecha))
+			var/obj/mecha/M = target
+			M.dynattackby(force * 3, user)
 		return..(target,user)

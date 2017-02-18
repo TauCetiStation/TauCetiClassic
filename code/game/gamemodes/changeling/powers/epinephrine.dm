@@ -21,6 +21,10 @@
 	user.lying = 0
 	user.update_canmove()
 	user.reagents.add_reagent("synaptizine", 20)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.halloss = 0
+		H.shock_stage = 0
 
 	feedback_add_details("changeling_powers","UNS")
 	return 1

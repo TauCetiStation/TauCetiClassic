@@ -842,7 +842,7 @@ About the new airlock wires panel:
 	da.anchored = 0
 
 	var/target = da.loc
-	for(var/i=0, i<4, i++)
+	for(var/i in 1 to 4)
 		target = get_turf(get_step(target,user.dir))
 	da.throw_at(target, 200, 100)
 
@@ -1203,7 +1203,7 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/attackby(C, mob/user)
 
-	if( istype(C,/obj/item/weapon/changeling_hammer) && !src.operating && src.density) // yeah, hammer ignore electrify
+	if(istype(C,/obj/item/weapon/changeling_hammer) && !src.operating && src.density) // yeah, hammer ignore electrify
 		var/obj/item/weapon/changeling_hammer/W = C
 		user.do_attack_animation(src)
 		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")

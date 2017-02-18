@@ -134,7 +134,7 @@
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	..()
-	if(A &&wielded) //destroys windows and grilles in one hit
+	if(A && wielded) //destroys windows and grilles in one hit
 		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
 			var/obj/structure/window/W = A
 			W.shatter()
@@ -204,7 +204,7 @@
 				user.dir = i
 				sleep(1)
 
-/obj/item/weapon/twohanded/dualsaber/IsShield()
+/obj/item/weapon/twohanded/dualsaber/Get_shield_chance()
 	if(wielded)
 		return 70
 	else

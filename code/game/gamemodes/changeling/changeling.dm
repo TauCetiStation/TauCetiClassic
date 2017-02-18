@@ -266,7 +266,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/list/absorbed_languages = list()
 	var/absorbedcount = 0
 	var/chem_charges = 20
-	var/chem_recharge_rate = 0.5
+	var/chem_recharge_rate = 1
 	var/chem_storage = 50
 	var/chem_recharge_slowdown = 0
 	var/sting_range = 1
@@ -280,6 +280,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 	var/space_suit_active = 0
 	var/instatis = 0
+	var/strained_muscles = 0
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()

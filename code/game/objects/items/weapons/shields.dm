@@ -20,7 +20,7 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-	IsShield()
+	Get_shield_chance()
 		return block_chance
 
 	attackby(obj/item/weapon/W, mob/user)
@@ -75,7 +75,7 @@
 	block_chance = 50
 	var/active = 0
 
-/obj/item/weapon/shield/riot/tele/IsShield()
+/obj/item/weapon/shield/riot/tele/Get_shield_chance()
 	if(active)
 		return block_chance
 	return 0

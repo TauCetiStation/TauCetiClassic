@@ -3,7 +3,7 @@
 	desc = "We reform one of our arms into whip."
 	helptext = "Can snatch, knock down, and damage in range depending on your intent, requires a lot of chemical for each use. Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 5
+	genomecost = 4
 	genetic_damage = 12
 	req_human = 1
 	max_genetic_damage = 10
@@ -23,19 +23,19 @@
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly elastic whip.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
-		host = loc
 
 /obj/item/weapon/changeling_whip/dropped(mob/user)
 	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his whip into an arm!</span>", "<span class='notice'>We assimilate the Whip back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
 	qdel(src)
 
-/obj/item/weapon/changeling_whip/afterattack(atom/A, mob/user)
+/obj/item/weapon/changeling_whip/afterattack(atom/A, mob/living/carbon/human/user)
+	if(!istype(user))
+		return
 	if(next_click > world.time)
 		return
 	if(!use_charge(A,user))
 		return
 	next_click = world.time + 10
-	var/mob/living/carbon/H = user
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(T)
@@ -45,8 +45,8 @@
 		LE.weaken = 5
 	else if(user.a_intent == "hurt")
 		LE.damage = 30
-	LE.host = host
-	LE.def_zone = check_zone(H.zone_sel.selecting)
+	LE.host = user
+	LE.def_zone = check_zone(user.zone_sel.selecting)
 	LE.starting = T
 	LE.original = A
 	LE.current = T
@@ -73,14 +73,19 @@
 
 /obj/item/projectile/changeling_whip/on_hit(atom/target, blocked = 0)
 	..()
+	if(ismob(target))
+		var/mob/M = target
+		M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been whipped by [host.name] ([host.ckey])</font>")
+		host.attack_log += text("\[[time_stamp()]\] <font color='red'>whipped [M.name]'s ([M.ckey])</font>")
+		msg_admin_attack("[host] ([host.ckey]) whipped [M.name] ([M.ckey]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span></span>")
 	var/atom/movable/T = target
 	if(grabber && !T.anchored)
 		spawn(1)
 			T.throw_at(host, 7 - kill_count, 0.2)
 			sleep(2)
 			if(in_range(T, host) && !host.get_inactive_hand() && prob(90))
-				if(istype(T, /mob/living/carbon))
-					var/obj/item/weapon/grab/G = new(host,target)
+				if(iscarbon(T))
+					var/obj/item/weapon/grab/G = new(host,T)
 					host.put_in_inactive_hand(G)
 					G.state = GRAB_AGGRESSIVE
 					G.icon_state = "grabbed1"

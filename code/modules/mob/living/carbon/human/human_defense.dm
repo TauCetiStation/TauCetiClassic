@@ -195,17 +195,17 @@
 /mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack")
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
-		if(prob(I.IsShield() - round(damage / 3)))
+		if(prob(I.Get_shield_chance() - round(damage / 3)))
 			visible_message("\red <B>[src] blocks [attack_text] with the [l_hand.name]!</B>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
-		if(prob(I.IsShield() - round(damage / 3)))
+		if(prob(I.Get_shield_chance() - round(damage / 3)))
 			visible_message("\red <B>[src] blocks [attack_text] with the [r_hand.name]!</B>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
-		if(prob(I.IsShield() - round(damage / 3)))
+		if(prob(I.Get_shield_chance() - round(damage / 3)))
 			visible_message("\red <B>The reactive teleport system flings [src] clear of [attack_text]!</B>")
 			var/list/turfs = new/list()
 			for(var/turf/T in orange(6))
