@@ -11,5 +11,7 @@
 						prob(30);/obj/random/tools/tech_supply/guaranteed,\
 						prob(50);/obj/random/foods/food_without_garbage,\
 						prob(10);/obj/random/science/science_supply,\
-						prob(2);/obj/preset/storage/weapons/random\
+						prob(5);/obj/random/cloth/random_cloth,\
+						prob(2);/obj/preset/storage/weapons/random,\
+						prob(1);/obj/random/syndie/fullhouse\
 					)
