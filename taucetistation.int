@@ -1,9 +1,6 @@
 // BEGIN_INTERNALS
 /*
-DIR: code code\game code\game\objects code\game\objects\structures code\modules code\modules\admin code\modules\admin\verbs 
-AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
-WINDOW: code\modules\admin\verbs\buildmode.dm;code\game\objects\structures\ladders.dm
-FILE: code\game\objects\structures\ladders.dm
+AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS
