@@ -1,6 +1,6 @@
 /obj/item/proc/make_old()
 	color = pick("#996633", "#663300", "#666666")
-	name = pick("old ", "expired ", "dirty ") + name
+	name = pick("old ", "expired ", "dirty ") + initial(name)
 	desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
 	if(prob(75))
 		origin_tech = null
@@ -99,7 +99,7 @@
 		armor["bio"] = armor["bio"] / 2
 		armor["rad"] = armor["rad"] / 2
 	if(prob(50))
-		uncleanable = 1 
+		uncleanable = 1
 	if(prob(25))
 		flags_pressure = 0
 	if(prob(25))
