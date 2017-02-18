@@ -24,7 +24,7 @@
 	if (!istype(loc, /turf/simulated/floor))
 		to_chat(usr, "\red APC cannot be placed on this spot.")
 		return
-	if (A.requires_power == 0 || A.name == "Space")
+	if (A.requires_power == 0 || istype(A,/area/space))
 		to_chat(usr, "\red APC cannot be placed in this area.")
 		return
 	if (A.get_apc())
