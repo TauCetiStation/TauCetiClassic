@@ -180,6 +180,7 @@
 							smell = pick(A.fingerprints)
 
 				if(smell && !nose_memory)
+					nose_memory = smell
 					if(!(smell in nose_database))
 						nose_database[smell] = "Unknown"
 						to_chat(src, "<span class='warning'>My nose picked up an unknown smell.</span>")
