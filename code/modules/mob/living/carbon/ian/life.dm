@@ -100,10 +100,9 @@
 		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
-		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
+		else if(isobj(loc)) //Still give containing object the chance to interact
+			var/obj/location_as_object = loc
+			location_as_object.handle_internal_lifeform(src, 0)
 
 		handle_mutations_and_radiation()
 		handle_chemicals_in_body()
@@ -208,6 +207,7 @@
 			var/breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 			breath = loc.remove_air(breath_moles)
 
+			var/block = FALSE
 			if(istype(wear_mask, /obj/item/clothing/mask/gas))
 				var/obj/item/clothing/mask/gas/G = wear_mask
 				var/datum/gas_mixture/filtered = new
@@ -224,11 +224,7 @@
 					gas.moles *= 1 - G.gas_filter_strength
 				breath.update_values()
 
-			// Handle chem smoke effect  -- Doohl
-			var/block = 0
-			if(wear_mask)
-				if(istype(wear_mask, /obj/item/clothing/mask/gas))
-					block = 1
+				block = TRUE
 
 			if(!block)
 				for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
@@ -242,7 +238,7 @@
 	if(!breath || (breath.total_moles == 0))
 		adjustOxyLoss(7)
 		oxygen_alert = TRUE
-		return 0
+		return FALSE
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
@@ -270,7 +266,7 @@
 		oxygen_alert = TRUE
 	else // We're in safe limits
 		adjustOxyLoss(-5)
-		oxygen_used = breath.oxygen/6
+		oxygen_used = breath.oxygen / 6
 		oxygen_alert = FALSE
 
 	breath.oxygen -= oxygen_used
@@ -305,12 +301,12 @@
 			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 				Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-					sleeping = max(sleeping+2, 10)
+					sleeping = max(sleeping + 2, 10)
 			else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 				if(prob(20))
 					emote(pick("giggle", "laugh"))
 
-	if(breath.temperature > (T0C+66)) // Hot air hurts :(
+	if(breath.temperature > (T0C + 66)) // Hot air hurts :(
 		if(prob(20))
 			to_chat(src, "<span class='warning'>You feel a searing heat in your lungs!</span>")
 		fire_alert = TRUE
@@ -320,7 +316,7 @@
 	if(breath)
 		loc.assume_air(breath)
 
-	return 1
+	return TRUE
 
 /mob/living/carbon/ian/proc/handle_mutations_and_radiation()
 	if(getFireLoss())
@@ -419,12 +415,10 @@
 		if (prob(5) && paralysis <= 1)
 			drop_item()
 			emote("cough")
-			return
 	if (disabilities & TOURETTES)
 		if (prob(10) && paralysis <= 1)
 			Stun(10)
 			emote("twitch")
-			return
 	if (disabilities & NERVOUS)
 		if (prob(10))
 			stuttering = max(10, stuttering)
@@ -468,7 +462,7 @@
 
 			// check if we're immune
 			if(V.antigen & src.antibodies)
-				V.dead = 1
+				V.dead = TRUE
 
 /mob/living/carbon/ian/proc/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
@@ -529,16 +523,16 @@
 
 /mob/living/carbon/ian/proc/handle_regular_status_updates()
 	if(stat == DEAD)
-		blinded = 1
+		blinded = TRUE
 		silent = 0
 	else
 		updatehealth()
 		if(health < config.health_threshold_dead)
 			death()
-			blinded = 1
+			blinded = TRUE
 			stat = DEAD
 			silent = 0
-			return 1
+			return TRUE
 
 		if( (getOxyLoss() > 25) || (config.health_threshold_crit > health) )
 			if( health <= 20 && prob(1) )
@@ -554,7 +548,7 @@
 
 		if(paralysis)
 			AdjustParalysis(-1)
-			blinded = 1
+			blinded = TRUE
 			stat = UNCONSCIOUS
 			if(halloss > 0)
 				adjustHalLoss(-3)
@@ -562,7 +556,7 @@
 			handle_dreams()
 			adjustHalLoss(-3)
 			sleeping = max(sleeping - 1, 0)
-			blinded = 1
+			blinded = TRUE
 			stat = UNCONSCIOUS
 			if( prob(10) && health && !hal_crit )
 				emote("snore")
@@ -576,10 +570,10 @@
 
 		//Eyes
 		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
-			blinded = 1
+			blinded = TRUE
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind - 1,0)
-			blinded = 1
+			blinded = TRUE
 		else if(eye_blurry)			//blurry eyes heal slowly
 			eye_blurry = max(eye_blurry - 1, 0)
 
@@ -606,7 +600,7 @@
 
 		if(druggy)
 			druggy = max(druggy - 1, 0)
-	return 1
+	return TRUE
 
 /mob/living/carbon/ian/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
 	if(status_flags & GODMODE)

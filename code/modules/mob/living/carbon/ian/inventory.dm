@@ -133,24 +133,24 @@
 					to_chat(who, "<span class='warning'>Repeat at least every 7 seconds.</span>")
 			if("dnainjector")
 				var/obj/item/weapon/dnainjector/S = this_item
-				if(!istype(S, /obj/item/weapon/dnainjector))
-					S.inuse = 0
+				if(!istype(S))
+					S.inuse = FALSE
 					return
 				S.inject(src, who)
 				if(S.s_time >= world.time + 30)
-					S.inuse = 0
+					S.inuse = FALSE
 					return
 				S.s_time = world.time
 				who.visible_message("<span class='warning'>[who] injects [src] with the DNA Injector!</span>")
-				S.inuse = 0
+				S.inuse = FALSE
 			else
 				if(this_item.mob_can_equip(src, get_slot_id(where)))
 					if(where == "Neck")
 						if(istype(this_item, /obj/item/weapon/handcuffs))
-							var/grabbing = 0
+							var/grabbing = FALSE
 							for (var/obj/item/weapon/grab/G in src.grabbed_by)
 								if (G.loc == who && G.state >= GRAB_AGGRESSIVE)
-									grabbing = 1
+									grabbing = TRUE
 							if (!grabbing)
 								to_chat(who, "<span class='warning'>Your grasp was broken before you could restrain [src]!</span>")
 								return

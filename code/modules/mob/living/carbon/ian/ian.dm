@@ -134,8 +134,8 @@
 					else
 						visible_message("<span class='notice'>[src] sniffs around.</span>")
 						sniff_around()
-						isHandsBusy = FALSE
-						return
+					isHandsBusy = FALSE
+					return
 
 				if(!do_after(src, 10, target = A))
 					isHandsBusy = FALSE
@@ -310,7 +310,7 @@
 /mob/living/carbon/ian/SelfMove(turf/n, direct)
 	if(restrained())
 		to_chat(src, "<span class='red'>I feel something on my neck and cannot move!</span>")
-		return 0
+		return FALSE
 
 	return ..()
 
@@ -536,10 +536,7 @@
 
 /mob/living/carbon/ian/meteorhit(obj/O)
 	visible_message("<span class='red'>[src] has been hit by [O].</span>")
-	var/shielded = 0
 	adjustBruteLoss(30)
-	if ((O.icon_state == "flaming" && !( shielded )))
-		adjustFireLoss(40)
 	updatehealth()
 
 /mob/living/carbon/ian/emp_act(severity)
@@ -552,14 +549,14 @@
 		flash_eyes()
 
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib()
-		if(2.0)
+		if(2)
 			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 				updatehealth()
-		if(3.0)
+		if(3)
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 				updatehealth()
@@ -570,14 +567,10 @@
 	if (stat != DEAD)
 		adjustFireLoss(60)
 		updatehealth()
-	if (prob(50))
-		Paralyse(10)
-	if (stat == DEAD && client)
+		if (prob(50))
+			Paralyse(10)
+	else
 		gib()
-		return
-	if (stat == DEAD && !client)
-		gibs(loc, viruses)
-		qdel(src)
 
 /mob/living/carbon/ian/attack_paw(mob/M)
 	..()
@@ -605,11 +598,7 @@
 
 /mob/living/carbon/ian/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker.mode)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
+		to_chat(M, "<span class='warning'>You cannot attack people before the game has started.</span>")
 		return
 
 	switch(M.a_intent)
@@ -659,7 +648,7 @@
 			updatehealth()
 
 /mob/living/carbon/ian/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper == 0)
+	if(!M.melee_damage_upper)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)

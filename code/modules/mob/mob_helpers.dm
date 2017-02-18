@@ -234,7 +234,7 @@ proc/slur(phrase)
 /proc/GibberishAll(t) // Same as above, except there is no probability and chance always 100.
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
-	for(var/i = 1, i <= length(t), i++)
+	for(var/i = 1 to length(t))
 
 		var/letter = ""
 

@@ -12,17 +12,17 @@
 			if(IAN.ian_action == IAN_STANDARD) // Do nothing, if we already using this mode.
 				return
 			IAN.nose_memory = null
-			to_chat(IAN, "Click action is now back to normal.")
+			to_chat(IAN, "<span class='notice'>Click action is now back to normal.</span>")
 			IAN.ian_action = IAN_STANDARD
 		if("Tongue")
 			if(IAN.ian_action == IAN_LICK)
 				return
-			to_chat(IAN, "I want lick something!") //>_<, you dummy!
+			to_chat(IAN, "<span class='notice'>I want lick something!</span>") //>_<, you dummy!
 			IAN.ian_action = IAN_LICK
 		if("Nose")
 			if(IAN.ian_action == IAN_SNIFF)
 				return
-			to_chat(IAN, "I want sniff something! (Click yourself to drop current smell)")
+			to_chat(IAN, "<span class='notice'>I want sniff something! (Click yourself to drop current smell)</span>")
 			IAN.ian_action = IAN_SNIFF
 	icon_state = "ability[IAN.ian_action]"
 
@@ -66,17 +66,15 @@
 
 	var/mob/living/carbon/ian/IAN = mymob //shouldn't be in anywhere else, so no type check.
 
-	using = new /obj/screen()
+	using = new
 	using.name = "act_intent"
 	using.icon = ui_style
 	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
-	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	action_intent = using
 
-	using = new /obj/screen()
+	using = new
 	using.name = "resist"
 	using.icon = ui_style
 	using.icon_state = "act_resist"
@@ -85,32 +83,26 @@
 	using.plane = HUD_PLANE
 	src.hotkeybuttons += using
 
-	using = new /obj/screen()
+	using = new
 	using.name = "mov_intent"
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
-	using.layer = ABOVE_HUD_LAYER
-	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	move_intent = using
 
 	using = new /obj/screen/corgi/stamina_bar()
 	using.icon_state = "stam_bar_[round(((IAN.stamina / 100) * 100), 5)]"
 	using.screen_loc = ui_stamina
-	using.layer = ABOVE_HUD_LAYER
-	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	staminadisplay = using
 
 	using = new /obj/screen/corgi/sit_lie()
 	using.icon = ui_style
 	using.screen_loc = ui_ian_pselect
-	using.layer = ABOVE_HUD_LAYER
-	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 
-	using = new /obj/screen()
+	using = new
 	using.name = "drop"
 	using.icon = ui_style
 	using.icon_state = "act_drop"
@@ -119,7 +111,7 @@
 	using.plane = HUD_PLANE
 	src.adding += using
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new
 	inv_box.name = "head"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hair"
@@ -137,7 +129,7 @@
 	using.plane = HUD_PLANE
 	src.adding += using
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new
 	inv_box.name = "mouth"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mouth"
@@ -148,7 +140,7 @@
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new
 	inv_box.name = "neck"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
@@ -158,7 +150,7 @@
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
@@ -168,7 +160,7 @@
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
 
-	mymob.healths = new /obj/screen()
+	mymob.healths = new
 	mymob.healths.icon = ui_style
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
@@ -179,12 +171,10 @@
 	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 
-	mymob.zone_sel = new /obj/screen/zone_sel()
+	mymob.zone_sel = new
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.overlays.Cut()
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
-	mymob.client.screen = list()
-	mymob.client.screen += list( mymob.zone_sel, mymob.healths, mymob.pullin)
+	mymob.client.screen = list(mymob.zone_sel, mymob.healths, mymob.pullin)
 	mymob.client.screen += adding + other + hotkeybuttons
-	mymob.client.screen += mymob.client.void

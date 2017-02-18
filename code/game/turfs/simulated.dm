@@ -235,7 +235,7 @@
 		if(wet_timer_id)
 			deltimer(wet_timer_id)
 			wet_timer_id = null //actually, i see no point in cleaning ref, since we rewrite this var below.
-		wet_timer_id = addtimer(src, "make_dry_floor", 800)
+		wet_timer_id = addtimer(src, "make_dry_floor", rand(710,800))
 
 /turf/simulated/proc/make_dry_floor()
 	wet_timer_id = null

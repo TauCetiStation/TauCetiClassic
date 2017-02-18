@@ -1,5 +1,5 @@
 /mob/living/carbon/ian/examine(mob/user)
-	var/skipface = 0
+	var/skipface = FALSE
 
 	if(head)
 		skipface = head.flags_inv & HIDEFACE
