@@ -13,7 +13,13 @@
 	var/throw_range = 7
 	var/moved_recently = 0
 	var/mob/pulledby = null
+
 	var/inertia_dir = 0
+	var/atom/inertia_last_loc
+	var/inertia_moving = 0
+	var/inertia_next_move = 0
+	var/inertia_move_delay = 5
+
 	var/list/client_mobs_in_contents
 
 /atom/movable/New()
@@ -60,12 +66,6 @@
 
 	last_move = direct
 
-
-	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
-		if(loc && direct && last_move == direct)
-			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
-				newtonian_move(last_move)
-
 	if(. && buckled_mob && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob
 		. = 0
 
@@ -73,6 +73,9 @@
 		Moved(oldloc, direct)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	if (!inertia_moving)
+		inertia_next_move = world.time + inertia_move_delay
+		newtonian_move(Dir)
 	if(length(client_mobs_in_contents))
 		update_parallax_contents()
 	return 1
@@ -178,6 +181,9 @@
 	if(pulledby)
 		return 1
 
+	if(throwing)
+		return 1
+
 	if(locate(/obj/structure/lattice) in orange(1, get_turf(src))) //Not realistic but makes pushing things in space easier
 		return 1
 
@@ -193,9 +199,9 @@
 	if(!direction)
 		return 1
 
-	var/old_dir = dir
-	. = step(src, direction)
-	dir = old_dir
+	inertia_last_loc = loc
+	SSspacedrift.processing[src] = src
+	return 1
 
 //decided whether a movable atom being thrown can pass through the turf it is in.
 /atom/movable/proc/hit_check()
@@ -217,6 +223,7 @@
 	src.thrower = thrower
 	src.throw_source = get_turf(src)	//store the origin turf
 	src.fly_speed = speed
+	var/init_dir = get_dir(src, target)
 
 	if(usr)
 		if(HULK in usr.mutations)
@@ -303,10 +310,12 @@
 			a = get_area(src.loc)
 
 	//done throwing, either because it hit something or it finished moving
-	if(isobj(src)) src.throw_impact(get_turf(src))
+	if(isobj(src))
+		src.throw_impact(get_turf(src))
 	src.throwing = 0
 	src.thrower = null
 	src.throw_source = null
+	newtonian_move(init_dir)
 
 
 //Overlays

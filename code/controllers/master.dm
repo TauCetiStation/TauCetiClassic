@@ -136,7 +136,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/time = (world.timeofday - start_timeofday) / 10
 
 	world.log << "Initializations complete in [time] second[time == 1 ? "" : "s"]!"
-	to_chat(world, "<span class='boldannounce'>Initializations complete!</span>")
+	to_chat(world, "<span class='success'>Initializations complete!</span>")
 
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)

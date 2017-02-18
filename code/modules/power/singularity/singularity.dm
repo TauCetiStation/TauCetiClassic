@@ -223,7 +223,7 @@
 	return
 
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
-	return 0
+	return 1
 
 /obj/singularity/proc/consume(atom/A)
 	var/gain = A.singularity_act(current_size)
