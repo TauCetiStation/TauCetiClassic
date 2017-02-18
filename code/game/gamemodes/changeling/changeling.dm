@@ -289,6 +289,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	else					honorific = "Mr."
 	if(possible_changeling_IDs.len)
 		changelingID = pick(possible_changeling_IDs)
+		if(changelingID == "Tau") // yeah, cuz we can
+			geneticpoints++
 		possible_changeling_IDs -= changelingID
 		changelingID = "[honorific] [changelingID]"
 	else

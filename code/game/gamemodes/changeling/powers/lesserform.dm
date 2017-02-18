@@ -14,6 +14,9 @@
 	if(user.has_brain_worms())
 		to_chat(user, "<span class='warning'>We cannot perform this ability at the present time!</span>")
 		return
+	if(user.restrained())
+		to_chat(user,"<span class='warning'>We cannot perform this ability as you restrained!</span>")
+		return
 
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
 	to_chat(user, "<span class='warning'>Our genes cry out!</span>")

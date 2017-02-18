@@ -28,7 +28,7 @@
 
 /obj/effect/proc_holder/changeling/chameleon_skin/process()
 	owner.alpha = max(0, owner.alpha - 25)
-	if(owner.l_move_time + 40 > world.time) // looks like a shit
+	if(owner.l_hand || owner.r_hand || owner.l_move_time + 40 > world.time) // looks like a shit, but meh
 		owner.alpha = 200
 	if(owner.stat == DEAD)
 		SSobj.processing.Remove(src)
