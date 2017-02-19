@@ -137,7 +137,7 @@
 		return 1
 	return 0
 
-/atom/movable/proc/forceMoveOld(atom/destination)
+/mob/dead/observer/forceMove(atom/destination)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
