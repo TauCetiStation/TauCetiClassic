@@ -712,6 +712,12 @@
 /mob/living/carbon/ian/toggle_throw_mode()
 	return // nope.avi
 
+/mob/living/carbon/ian/throw_mode_on()
+	return
+
+/mob/living/carbon/ian/throw_mode_off()
+	return
+
 /mob/living/carbon/ian/say(message)
 	if(stat)
 		return
