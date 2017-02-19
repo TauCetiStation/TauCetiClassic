@@ -1,4 +1,4 @@
-#define EGG_INCUBATION_TIME 120
+#define EGG_INCUBATION_TIME 1200
 
 /obj/effect/proc_holder/changeling/headcrab
 	name = "Last Resort"
@@ -59,7 +59,6 @@
 	if(victim.stat == DEAD)
 		to_chat(src,"<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>")
 		var/obj/item/changeling_egg/egg = new(victim)
-		SSobj.processing |= egg
 		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
 			var/datum/organ/external/chest/C = H.get_organ("chest")
@@ -80,22 +79,26 @@
 	icon_state = "eggsac"
 	origin_tech = "biotech=7" // You need to be really lucky to obtain it.
 	var/datum/mind/origin
-	var/time = 0
+	var/respawn_time = 0
+
+
+/obj/item/changeling_egg/New()
+	respawn_time = world.time + EGG_INCUBATION_TIME
+	SSobj.processing |= src
 
 /obj/item/changeling_egg/process()
 	// Changeling eggs grow in dead people
-	time++
-	if(!istype(loc,/mob/living/carbon))
+	if(!iscarbon(loc))
 		SSobj.processing.Remove(src)
-	if(time >= EGG_INCUBATION_TIME)
+	if(respawn_time <= world.time)
 		Pop()
 		qdel(src)
 
 /obj/item/changeling_egg/proc/Pop()
 	var/mob/living/carbon/monkey/M = new(get_turf(loc))
-
-	if(origin && origin.current && origin.current.stat == DEAD)
-		origin.transfer_to(M)
+	if(origin && origin.current && origin.current.stat != DEAD)
+		return
+	origin.transfer_to(M)
 	if(origin.changeling)
 		origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 		M.changeling_update_languages(origin.changeling.absorbed_languages)
