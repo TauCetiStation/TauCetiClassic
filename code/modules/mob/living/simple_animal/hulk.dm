@@ -246,7 +246,8 @@
 				qdel(F)
 				return
 	if(D.density)
-		to_chat(src, "<span class='red'>You force your fingers between the doors and begin to pry them open...</span>")
+		to_chat(src, "<span class='red'>You force your fingers between \
+		 the doors and begin to pry them open...</span>")
 		playsound(D, 'sound/machines/electric_door_open.ogg', 30, 1, -4)
 		if (do_after(src,40,target = D))
 			if(!D) return

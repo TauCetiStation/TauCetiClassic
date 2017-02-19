@@ -44,7 +44,7 @@
 
 
 
-mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M)
+/mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M)
 	if(istype(M,/mob/living/simple_animal/headcrab))
 		var/mob/living/simple_animal/headcrab/crab = M
 		crab.Infect(src)

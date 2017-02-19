@@ -151,11 +151,11 @@
 		var/obj/machinery/door/airlock/A = src
 		if(istype(A,/obj/machinery/door/airlock))
 			if(user.a_intent == "hurt")
-				if(!user.hulk_scream(A, 90))
+				if(user.hulk_scream(A, 90))
 					if(istype(A,/obj/machinery/door/airlock/multi_tile)) //Some kind runtime with multi_tile airlock... So delete for now... #Z2
 						qdel(A)
-				else
-					A.door_rupture(src)
+					else
+						A.door_rupture(user)
 				return
 			else if(A.locked && user.a_intent != "hurt")
 				to_chat(user, "\red The door is bolted and you need more aggressive force to get thru!")
