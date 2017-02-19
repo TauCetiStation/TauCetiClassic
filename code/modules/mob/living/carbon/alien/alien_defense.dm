@@ -145,7 +145,6 @@ This is what happens, when we attack aliens.
 		updatehealth()
 
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
-	..()
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return

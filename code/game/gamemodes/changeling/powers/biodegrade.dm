@@ -59,8 +59,7 @@
 		var/obj/item/weapon/handcuffs/cuffs = O
 		if(O && user.handcuffed == O)
 			user.unEquip(cuffs)
-			cuffs.visible_message("<span class='warning'>[O] dissolves into a \
-				puddle of sizzling goop.</span>")
+			cuffs.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
 			cuffs.loc = get_turf(user)
 			qdel(cuffs)
 
@@ -77,14 +76,12 @@
 	if(istype(O,/obj/structure/closet))
 		var/obj/structure/closet/C = O
 		if(C && user.loc == C)
-			C.visible_message("<span class='warning'>[C]'s door breaks and \
-				opens!</span>")
+			C.visible_message("<span class='warning'>[C]'s door breaks and opens!</span>")
 			C.welded = FALSE
 			C.locked = FALSE
 			C.broken = TRUE
 			C.open()
-			to_chat(user,"<span class='warning'>We open the container restraining \
-				us!</span>")
+			to_chat(user,"<span class='warning'>We open the container restraining us!</span>")
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/O)
 	if(istype(O,/obj/effect/spider/cocoon))
