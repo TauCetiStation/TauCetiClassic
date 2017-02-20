@@ -199,8 +199,8 @@ var/list/alldepartments = list("Central Command")
 		to_chat(C, msg)
 	send2slack_custommsg("[key_name(Sender)] sent fax to Centcomm", sent, ":fax:")
 
-/proc/MakeFaxPaper(sent_text, sent_name, mob/Sender, stamp, stamp_text, stamp_imgbuf)
-	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper()
+proc/MakeFaxPaper(obj/fax, sent_text, sent_name, mob/Sender, stamp, stamp_text, stamp_imgbuf)
+	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(fax.loc)
 	P.name = "[sent_name]"
 	P.info = "[sent_text]"
 	P.update_icon()
@@ -242,7 +242,6 @@ var/list/alldepartments = list("Central Command")
 		else
 			P.stamp_text = "<HR><i>[stamp_text]</i>"
 		P.overlays += stamp_imgbuf
-	return P
 
 /proc/SendFax(sent_text, sent_name, mob/Sender, dpt, stamp, stamp_text)
 
@@ -254,17 +253,8 @@ var/list/alldepartments = list("Central Command")
 		stamp_imgbuf.icon_state = input(usr, "Please enter icon_state of the custom stamp, don't worry about that if it is not DMI file.") as message|null
 
 	for(var/obj/machinery/faxmachine/F in allfaxes)
-		if(dpt == "All")
-			if(! (F.stat & (BROKEN|NOPOWER) ) )
-				var/P = MakeFaxPaper (sent_text, sent_name, Sender, stamp, stamp_text, stamp_imgbuf)
-				flick("faxreceive", F)
-				addtimer(P, "MovePaper", 20, FALSE, F.loc) //20 is enough for animation to stop and spawn a paper
-				playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
-
-		if( F.department == dpt )
-			if(! (F.stat & (BROKEN|NOPOWER) ) )
-				var/P = MakeFaxPaper (sent_text, sent_name, Sender, stamp, stamp_text, stamp_imgbuf)
-				flick("faxreceive", F)
-				addtimer(P, "MovePaper", 20, FALSE, F.loc)
-				playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
+		if((dpt == "All" || F.department == dpt) && ! (F.stat & (BROKEN|NOPOWER) ))
+			flick("faxreceive", F)
+			addtimer(GLOBAL_PROC, "MakeFaxPaper", 20, FALSE, F, sent_text, sent_name, Sender, stamp, stamp_text, stamp_imgbuf)
+			playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
 
