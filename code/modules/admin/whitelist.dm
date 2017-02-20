@@ -299,9 +299,6 @@
 	if(!M || !role || !role_whitelist || !role_whitelist[M.ckey])
 		return FALSE
 
-	if(check_rights(R_ADMIN, FALSE))
-		return TRUE
-
 	role = lowertext(role)
 
 	if(role == "human")
