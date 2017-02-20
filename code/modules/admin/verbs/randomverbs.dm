@@ -1055,6 +1055,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		sent_name = "NanoTrasen Update"
 	if(sent_name == "Cancel")
 		return
+	alldepartments += "All"
 	var/dpt = input(usr, "Please choose the destination") as null|anything in alldepartments
 	if(!dpt)
 		return

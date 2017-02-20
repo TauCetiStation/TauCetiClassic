@@ -19,8 +19,7 @@ var/list/alldepartments = list("Central Command")
 	var/obj/item/weapon/paper/tofax = null // what we're sending
 	var/sendcooldown = 0 // to avoid spamming fax messages
 
-	var/department = "All" // our department
-	// NOTE: Default content of the var is used only in fax inside the CENTCOMM and is also used as identifier for sending to all faxes on the station, so you will have to change this identifier in SentFax proc
+	var/department = "Unknown" // our department
 
 	var/dptdest = "Central Command" // the department we're sending to
 
