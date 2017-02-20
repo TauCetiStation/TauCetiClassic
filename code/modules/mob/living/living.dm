@@ -128,32 +128,41 @@
 	return
 
 /mob/living/count_pull_debuff()
-	pull_debuff = 0
-	if(pulling)
-		var/tally = 0
+	if(!pulling)
+		return 0
 
-		//General pull debuff for playable mobs (playable without shitspawn, yeah)
-		if(ismonkey(src))
-			tally += 1
-		else if(isslime(src))
-			tally += 1.5
-		else
-			tally += 0.3
+	var/tally = 0
 
-		var/atom/movable/AM = pulling
-		//Mob pulling
-		if(ismob(AM))
-			tally += 1
-		//Structure pulling
-		if(istype(AM, /obj/structure))
-			tally += 0.5
-			var/obj/structure/S = AM
-			if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
-				tally -= 0.5
-		//Machinery pulling
-		if(istype(AM, /obj/machinery))
-			tally += 0.5
-		pull_debuff += tally
+	//General pull debuff for playable mobs (playable without shitspawn, yeah)
+	if(ismonkey(src))
+		tally += 1
+	else if(isslime(src))
+		tally += 1.5
+	else
+		tally += 0.3
+
+	var/atom/movable/AM = pulling
+	//Mob pulling
+	if(ismob(AM))
+		tally += 1
+	//Structure pulling
+	if(istype(AM, /obj/structure))
+		var/obj/structure/S = AM
+		tally += 0.5
+		if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
+			tally -= 0.5
+		else if(istype(S,/obj/structure/closet))
+			var/obj/structure/closet/CL = S
+			tally += CL.slowdown * 0.5
+
+	else if(istype(AM, /obj/item/weapon/storage))
+		var/obj/O = AM
+		tally += O.count_storage_slowdown()
+
+	//Machinery pulling
+	else if(istype(AM, /obj/machinery))
+		tally += 0.5
+	return tally
 
 /mob/living/proc/add_ingame_age()
 	if(client && !client.is_afk()) //5 minutes of inactive time will disable this, until player come back.

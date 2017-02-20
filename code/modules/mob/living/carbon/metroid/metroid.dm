@@ -129,8 +129,8 @@
 		if(reagents.has_reagent("frostoil")) // frostoil also makes them move VEEERRYYYYY slow
 			tally *= 5
 
-	if(pull_debuff)
-		tally += pull_debuff
+	if(pulling)
+		tally += count_pull_debuff()
 
 	if(health <= 0) // if damaged, the slime moves twice as slow
 		tally *= 2
