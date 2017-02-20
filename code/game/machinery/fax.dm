@@ -247,11 +247,12 @@ var/list/alldepartments = list("Central Command")
 /proc/SendFax(sent_text, sent_name, mob/Sender, dpt, stamp, stamp_text)
 
 	log_fax("[Sender] sending [sent_name] to [dpt] : [sent_text]")
-	var/stamp_imgbuf
+	var/image/stamp_imgbuf
 	if(stamp == "Custom")
-		stamp_imgbuf = input("Pick icon:","Icon") as icon
+		stamp_imgbuf = image (input("Pick icon:","Icon") as icon)
 		if (!stamp_imgbuf)
 			return
+		stamp_imgbuf.icon_state = input(usr, "Please enter icon_state of the custom stamp, don't worry about that if it is not DMI file.") as message|null
 	for(var/obj/machinery/faxmachine/F in allfaxes)
 		if(dpt == "All")
 			if(! (F.stat & (BROKEN|NOPOWER) ) )
