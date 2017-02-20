@@ -18,7 +18,6 @@ var/datum/subsystem/lighting/SSlighting
 
 /datum/subsystem/lighting/New()
 	NEW_SS_GLOBAL(SSlighting)
-	return ..()
 
 
 /datum/subsystem/lighting/stat_entry()

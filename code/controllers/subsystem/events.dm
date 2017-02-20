@@ -35,7 +35,7 @@ var/list/potentialRandomEvents = subtypesof(/datum/event)
 		if(thing)
 			thing.process()
 		else
-			running.Remove(thing)
+			running -= thing
 		if (MC_TICK_CHECK)
 			return
 

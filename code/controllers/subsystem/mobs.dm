@@ -32,6 +32,6 @@ var/datum/subsystem/mobs/SSmob
 		if(M)
 			M.Life(seconds)
 		else
-			mob_list.Remove(M)
+			mob_list -= M
 		if (MC_TICK_CHECK)
 			return

@@ -37,7 +37,7 @@ var/datum/subsystem/sun/SSsun
 	if(lastAngleUpdate != angle)
 		for(var/obj/machinery/power/tracker/T in solars)
 			if(!T.powernet)
-				solars.Remove(T)
+				solars -= T
 				continue
 			T.set_angle(angle)
 	lastAngleUpdate=angle
@@ -61,7 +61,7 @@ var/datum/subsystem/sun/SSsun
 
 	for(var/obj/machinery/power/solar/S in solars)
 		if(!S.powernet)
-			solars.Remove(S)
+			solars -= S
 			continue
 		if(S.control)
 			occlusion(S)

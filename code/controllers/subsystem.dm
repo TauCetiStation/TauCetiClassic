@@ -120,7 +120,7 @@
 	queued_time = 0
 
 /datum/subsystem/proc/pause()
-	. = 1
+	. = TRUE
 	paused = TRUE
 	paused_ticks++
 

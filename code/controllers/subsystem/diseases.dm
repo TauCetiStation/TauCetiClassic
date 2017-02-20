@@ -28,7 +28,7 @@ var/datum/subsystem/diseases/SSdisease
 		if(thing)
 			thing.process()
 		else
-			processing.Remove(thing)
+			processing -= thing
 
 		if (MC_TICK_CHECK)
 			return

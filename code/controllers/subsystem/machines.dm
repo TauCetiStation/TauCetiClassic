@@ -10,7 +10,7 @@ var/datum/subsystem/machines/SSmachine
 
 	var/list/processing = list()
 	var/list/currentrun = list()
-	var/list/powernets = list()
+	var/list/powernets  = list()
 
 
 /datum/subsystem/machines/Initialize()

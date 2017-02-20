@@ -71,7 +71,7 @@ var/datum/subsystem/timer/SStimer
 	var/hashlist = args.Copy()
 
 	hashlist[1] = "[thingToCall](\ref[thingToCall])"
-	event.hash = jointext(args, null)
+	event.hash = jointext(hashlist, null)
 	if(args.len > 4)
 		event.argList = args.Copy(5)
 

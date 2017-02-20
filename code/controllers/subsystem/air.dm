@@ -1,12 +1,9 @@
-#define AIR_BLOCKED  1
-#define ZONE_BLOCKED 2
-#define BLOCKED      3
-
-#define SSAIR_PIPENETS 1
-#define SSAIR_TILES    2
-#define SSAIR_EDGES    3
-#define SSAIR_FIRE     4
-#define SSAIR_ZONES    5
+#define SSAIR_PIPENETS   1
+#define SSAIR_TILES_CUR  2
+#define SSAIR_TILES_DEF  3
+#define SSAIR_EDGES      4
+#define SSAIR_FIRE       5
+#define SSAIR_ZONES      6
 var/datum/subsystem/air/SSair
 
 /datum/subsystem/air
@@ -20,17 +17,19 @@ var/datum/subsystem/air/SSair
 	flags = SS_BACKGROUND
 
 	var/current_cycle = 0
-	var/next_id = 1 //Used to keep track of zone UIDs.
+	var/next_id       = 1 //Used to keep track of zone UIDs.
 
-	var/cost_turfs = 0
-	var/cost_edges = 0
-	var/cost_zones = 0
-	var/cost_hotspots = 0
-	var/cost_pipenets = 0
+	var/cost_pipenets      = 0
+	var/cost_tils_current  = 0
+	var/cost_tils_deferred = 0
+	var/cost_edges         = 0
+	var/cost_hotspots      = 0
+	var/cost_zones         = 0
 
 	var/list/zones = list()
 	var/list/edges = list()
 	var/list/tiles_to_update = list()
+	var/list/deferred_tiles  = list()
 	var/list/zones_to_update = list()
 	var/list/active_hotspots = list()
 
@@ -41,8 +40,9 @@ var/datum/subsystem/air/SSair
 	NEW_SS_GLOBAL(SSair)
 
 /datum/subsystem/air/stat_entry(msg)
-	msg += "C:{"
-	msg += "T:[round(cost_turfs)]|"
+	msg += "\nC:{"
+	msg += "TC:[round(cost_tils_current)]|"
+	msg += "TD:[round(cost_tils_deferred)]|"
 	msg += "E:[round(cost_edges)]|"
 	msg += "HS:[round(cost_hotspots)]|"
 	msg += "PN:[round(cost_pipenets)]|"
@@ -70,12 +70,19 @@ var/datum/subsystem/air/SSair
 		process_pipenets(resumed)
 		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		resumed = 0
-		currentpart = SSAIR_TILES
+		currentpart = SSAIR_TILES_CUR
 
-	if (currentpart == SSAIR_TILES)
+	if (currentpart == SSAIR_TILES_CUR)
 		timer = world.tick_usage
-		process_tiles(resumed)
-		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		process_tiles_current(resumed)
+		cost_tils_current = MC_AVERAGE(cost_tils_current, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		resumed = 0
+		currentpart = SSAIR_TILES_DEF
+
+	if (currentpart == SSAIR_TILES_DEF)
+		timer = world.tick_usage
+		process_tiles_deferred(resumed)
+		cost_tils_deferred = MC_AVERAGE(cost_tils_deferred, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		resumed = 0
 		currentpart = SSAIR_EDGES
 
@@ -115,31 +122,34 @@ var/datum/subsystem/air/SSair
 			thing.process()
 		else
 			pipe_networks -= thing
-		CHECK_TICK
+		if (MC_TICK_CHECK)
+			return
 
-/datum/subsystem/air/proc/process_tiles(resumed = 0)
-	var/list/deferred = list()
-
+/datum/subsystem/air/proc/process_tiles_current(resumed = 0)
 	while (tiles_to_update.len)
 		var/turf/T = tiles_to_update[tiles_to_update.len]
 		tiles_to_update.len--
 		// Check if the turf is self-zone-blocked
 		if(T.c_airblock(T) & ZONE_BLOCKED)
-			deferred += T
+			deferred_tiles += T
+			if (MC_TICK_CHECK)
+				return
 			continue
-
 		T.update_air_properties()
 		T.post_update_air_properties()
 		T.needs_air_update = FALSE
-		CHECK_TICK
+		if (MC_TICK_CHECK)
+			return
 
-	while (deferred.len)
-		var/turf/T = deferred[deferred.len]
-		deferred.len--
+/datum/subsystem/air/proc/process_tiles_deferred(resumed = 0)
+	while (deferred_tiles.len)
+		var/turf/T = deferred_tiles[deferred_tiles.len]
+		deferred_tiles.len--
 		T.update_air_properties()
 		T.post_update_air_properties()
 		T.needs_air_update = FALSE
-		CHECK_TICK
+		if (MC_TICK_CHECK)
+			return
 
 /datum/subsystem/air/proc/process_edges(resumed = 0)
 	if (!resumed)
@@ -150,7 +160,8 @@ var/datum/subsystem/air/SSair
 		var/connection_edge/E = currentrun[currentrun.len]
 		currentrun.len--
 		E.tick()
-		CHECK_TICK
+		if (MC_TICK_CHECK)
+			return
 
 /datum/subsystem/air/proc/process_fire(resumed = 0)
 	if (!resumed)
@@ -161,7 +172,8 @@ var/datum/subsystem/air/SSair
 		var/obj/fire/F = currentrun[currentrun.len]
 		currentrun.len--
 		F.process()
-		CHECK_TICK
+		if (MC_TICK_CHECK)
+			return
 
 /datum/subsystem/air/proc/process_zones(resumed = 0)
 	while (zones_to_update.len)
@@ -169,7 +181,8 @@ var/datum/subsystem/air/SSair
 		zones_to_update.len--
 		Z.tick()
 		Z.needs_update = FALSE
-		CHECK_TICK
+		if (MC_TICK_CHECK)
+			return
 
 
 /*********** Setup procs ***********/
