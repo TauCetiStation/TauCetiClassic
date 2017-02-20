@@ -16,7 +16,6 @@
 	canremove = 0
 	force = 15
 	flags = ABSTRACT
-	abstract = 1
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_hammer"
 	item_state = "arm_hammer"

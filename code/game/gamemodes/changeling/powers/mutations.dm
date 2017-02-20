@@ -109,7 +109,6 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	flags = ABSTRACT
-	abstract = 1
 	canremove = 0
 	w_class = 5.0
 	force = 25
@@ -174,7 +173,6 @@
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
 	canremove = 0
 	flags = ABSTRACT
-	abstract = 1
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
 	item_state = "ling_shield"

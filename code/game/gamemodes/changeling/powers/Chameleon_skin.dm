@@ -31,16 +31,17 @@
 	owner.alpha = max(0, owner.alpha - 25)
 	if(owner.l_hand)
 		var/obj/item/I = owner.l_hand
-		if(!I.abstract)
+		if(!(I.flags & ABSTRACT))
 			owner.alpha = 200
 	if(owner.r_hand)
 		var/obj/item/I = owner.r_hand
-		if(!I.abstract)
+		if(!(I.flags & ABSTRACT))
 			owner.alpha = 200
 	if(owner.l_move_time + 40 > world.time) // looks like a shit, but meh
 		owner.alpha = 200
-	if(owner.stat == DEAD)
+	if(owner.stat == DEAD || owner.lying || owner.buckled)
 		SSobj.processing.Remove(src)
+		active = !active
 		owner.alpha = 255
 
 

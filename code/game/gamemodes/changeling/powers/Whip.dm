@@ -15,7 +15,6 @@
 	desc = "A mass of tough tissue that can be elastic"
 	canremove = 0
 	flags = ABSTRACT
-	abstract = 1
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_whip"
 	item_state = "arm_whip"
