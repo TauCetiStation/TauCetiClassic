@@ -1065,9 +1065,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	var/stamp_text = sanitize_alt(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay), if empty will be chosen default text for the selected stamp") as text)
 
-	message_admins("Fax message was created by [key_name_admin(src)] and sent to [dpt]")
-	log_admin("Fax message was created by [key_name_admin(src)] and sent to [dpt]: [sent_text]")
-
 	feedback_add_details("admin_verb","FAXMESS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	send2slack_custommsg("Fax message was created by [key_name_admin(src)] and sent to [dpt]: [sent_text]")
+	log_fax("[Sender] sending [sent_name] to [dpt] : [sent_text]")
+	message_admins("Fax message was created by [key_name_admin(src)] and sent to [dpt]")
 
 	SendFax(sent_text, sent_name, Sender, dpt, stamp, stamp_text)

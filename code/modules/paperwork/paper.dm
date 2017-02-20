@@ -504,6 +504,9 @@
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/paper/proc/MovePaper(locator)
+	loc = locator
+
 /*
  * Premade paper
  */

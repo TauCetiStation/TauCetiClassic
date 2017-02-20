@@ -199,71 +199,72 @@ var/list/alldepartments = list("Central Command")
 		to_chat(C, msg)
 	send2slack_custommsg("[key_name(Sender)] sent fax to Centcomm", sent, ":fax:")
 
-/proc/MakeFaxPaper(locator, sent_text, sent_name, mob/Sender, stamp, stamp_text, stamp_imgbuf)
-	spawn(20)	// give the sprite some time to flick
-		var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( locator )
-		P.name = "[sent_name]"
-		P.info = "[sent_text]"
-		P.update_icon()
-		if(stamp == "CentCom")
-			var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-			stampoverlay.icon_state = "paper_stamp-cent"
-			if(!stamp_text)
-				P.stamp_text += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
-			else
-				P.stamp_text = "<HR><i>[stamp_text]</i>"
-			P.overlays += stampoverlay
-		if (stamp == "Clown")
-			var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-			stampoverlay.icon_state = "paper_stamp-clown"
-			if(!stamp_text)
-				P.stamp_text += "<HR><i>This paper has been stamped by strange pink stamp.</i>"
-			else
-				P.stamp_text = "<HR><i>[stamp_text]</i>"
-			P.overlays += stampoverlay
-		if (stamp == "Syndicate")
-			var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-			stampoverlay.icon_state = "paper_stamp-syndicate"
-			if(!stamp_text)
-				P.stamp_text += "<HR><i>This paper has been stamped by the Syndicate Command Interception Relay.</i>"
-			else
-				P.stamp_text = "<HR><i>[stamp_text]</i>"
-			P.overlays += stampoverlay
-		if (stamp == "FakeCentCom")
-			var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-			stampoverlay.icon_state = "paper_stamp-fakecentcom"
-			if(!stamp_text)
-				P.stamp_text += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"
-			else
-				P.stamp_text = "<HR><i>[stamp_text]</i>"
-			P.overlays += stampoverlay
-		if (stamp == "Custom")
-			if(!stamp_text)
-				P.stamp_text += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"
-			else
-				P.stamp_text = "<HR><i>[stamp_text]</i>"
-			P.overlays += stamp_imgbuf
+/proc/MakeFaxPaper(sent_text, sent_name, mob/Sender, stamp, stamp_text, stamp_imgbuf)
+	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper()
+	P.name = "[sent_name]"
+	P.info = "[sent_text]"
+	P.update_icon()
+	if(stamp == "CentCom")
+		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+		stampoverlay.icon_state = "paper_stamp-cent"
+		if(!stamp_text)
+			P.stamp_text += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+		else
+			P.stamp_text = "<HR><i>[stamp_text]</i>"
+		P.overlays += stampoverlay
+	if (stamp == "Clown")
+		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+		stampoverlay.icon_state = "paper_stamp-clown"
+		if(!stamp_text)
+			P.stamp_text += "<HR><i>This paper has been stamped by strange pink stamp.</i>"
+		else
+			P.stamp_text = "<HR><i>[stamp_text]</i>"
+		P.overlays += stampoverlay
+	if (stamp == "Syndicate")
+		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+		stampoverlay.icon_state = "paper_stamp-syndicate"
+		if(!stamp_text)
+			P.stamp_text += "<HR><i>This paper has been stamped by the Syndicate Command Interception Relay.</i>"
+		else
+			P.stamp_text = "<HR><i>[stamp_text]</i>"
+		P.overlays += stampoverlay
+	if (stamp == "FakeCentCom")
+		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+		stampoverlay.icon_state = "paper_stamp-fakecentcom"
+		if(!stamp_text)
+			P.stamp_text += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"
+		else
+			P.stamp_text = "<HR><i>[stamp_text]</i>"
+		P.overlays += stampoverlay
+	if (stamp == "Custom")
+		if(!stamp_text)
+			P.stamp_text += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"
+		else
+			P.stamp_text = "<HR><i>[stamp_text]</i>"
+		P.overlays += stamp_imgbuf
+	return P
 
 /proc/SendFax(sent_text, sent_name, mob/Sender, dpt, stamp, stamp_text)
 
-	log_fax("[Sender] sending [sent_name] to [dpt] : [sent_text]")
 	var/image/stamp_imgbuf
 	if(stamp == "Custom")
 		stamp_imgbuf = image (input("Pick icon:","Icon") as icon)
 		if (!stamp_imgbuf)
 			return
 		stamp_imgbuf.icon_state = input(usr, "Please enter icon_state of the custom stamp, don't worry about that if it is not DMI file.") as message|null
+
 	for(var/obj/machinery/faxmachine/F in allfaxes)
 		if(dpt == "All")
 			if(! (F.stat & (BROKEN|NOPOWER) ) )
-
+				var/P = MakeFaxPaper (sent_text, sent_name, Sender, stamp, stamp_text, stamp_imgbuf)
 				flick("faxreceive", F)
-				MakeFaxPaper (F.loc, sent_text, sent_name, Sender, stamp, stamp_text, stamp_imgbuf)
+				addtimer(P, "MovePaper", 20, FALSE, F.loc) //20 is enough for animation to stop and spawn a paper
 				playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
 
 		if( F.department == dpt )
 			if(! (F.stat & (BROKEN|NOPOWER) ) )
-
+				var/P = MakeFaxPaper (sent_text, sent_name, Sender, stamp, stamp_text, stamp_imgbuf)
 				flick("faxreceive", F)
-				MakeFaxPaper (F.loc, sent_text, sent_name, Sender, stamp, stamp_text, stamp_imgbuf)
+				addtimer(P, "MovePaper", 20, FALSE, F.loc)
 				playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
+
