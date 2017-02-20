@@ -11,24 +11,7 @@
 	1.7	* src.getCloneLoss() + 		\
 	2	* src.halloss
 
-	if(reagents.has_reagent("alkysine"))
-		src.traumatic_shock -= 10
-	if(reagents.has_reagent("inaprovaline"))
-		src.traumatic_shock -= 25
-	if(reagents.has_reagent("synaptizine"))
-		src.traumatic_shock -= 40
-	if(reagents.has_reagent("paracetamol"))
-		src.traumatic_shock -= 50
-	if(reagents.has_reagent("tramadol"))
-		src.traumatic_shock -= 80
-	if(reagents.has_reagent("oxycodone"))
-		src.traumatic_shock -= 200
-	if(src.slurring)
-		src.traumatic_shock -= 20
-	if(src.analgesic)
-		src.traumatic_shock = 0
-
-	// broken or ripped off organs will add quite a bit of pain
+		// broken or ripped off organs will add quite a bit of pain
 	if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
 		for(var/datum/organ/external/organ in M.organs)
@@ -41,8 +24,31 @@
 				if(organ.status & ORGAN_SPLINTED)
 					src.traumatic_shock -= 25
 
+	if(reagents.has_reagent("alkysine"))
+		src.traumatic_shock -= 10
+	if(reagents.has_reagent("inaprovaline"))
+		src.traumatic_shock -= 25
+		src.shock_stage -= 1
+	if(reagents.has_reagent("synaptizine"))
+		src.traumatic_shock -= 40
+	if(reagents.has_reagent("paracetamol"))
+		src.traumatic_shock -= 50
+		src.shock_stage -= 3
+	if(reagents.has_reagent("tramadol"))
+		src.traumatic_shock -= 80
+		src.shock_stage -= 5
+	if(reagents.has_reagent("oxycodone"))
+		src.traumatic_shock -= 200
+		src.shock_stage -= 7
+	if(src.slurring)
+		src.traumatic_shock -= 20
+	if(src.analgesic)
+		src.traumatic_shock = 0
+
 	if(src.traumatic_shock < 0)
 		src.traumatic_shock = 0
+	if(src.shock_stage < 0)
+		src.shock_stage = 0
 
 	return src.traumatic_shock
 

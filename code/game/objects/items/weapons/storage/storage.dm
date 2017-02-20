@@ -444,8 +444,10 @@
 	src.closer.layer = ABOVE_HUD_LAYER
 	src.closer.plane = ABOVE_HUD_PLANE
 	orient2hud()
-	spawn(1)
-		slowdown  += count_storage_slowdown()
+	addtimer(src,"slow_counter",50)
+
+/obj/item/weapon/storage/proc/slow_counter()
+	slowdown  += count_storage_slowdown()
 
 
 /obj/item/weapon/storage/emp_act(severity)

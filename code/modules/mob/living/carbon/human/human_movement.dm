@@ -22,7 +22,7 @@
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
 
-	var/health_deficiency = (100 - health + halloss)
+	var/health_deficiency = (100 - health + (halloss / 2))
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
 
@@ -47,7 +47,7 @@
 			tally += shoes.slowdown
 
 		if(back)
-			tally += back.slowdown * 0.6
+			tally += back.slowdown * 0.7
 		if(buckled)	//so, if we buckled we have large debuff
 			tally += 5.5
 
@@ -93,6 +93,21 @@
 			slowback += 0.25
 
 	return slowback
+
+/obj/item/count_storage_slowdown()
+	var/slowback = 0
+	switch(w_class)
+		if(1)
+			slowback += 0.01
+		else if(2)
+			slowback += 0.05
+		else if(3)
+			slowback += 0.1
+		else if(4)
+			slowback += 0.2
+		else
+			slowback += w_class / 20 // for great shitspawners
+	return slowback + ..()
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
 
