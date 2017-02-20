@@ -250,15 +250,6 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Alien Shuttle Mine"
 	requires_power = 1
 
-/area/shuttle/prison/
-	name = "\improper Prison Shuttle"
-
-/area/shuttle/prison/station
-	icon_state = "shuttle"
-
-/area/shuttle/prison/prison
-	icon_state = "shuttle2"
-
 /area/shuttle/specops/centcom
 	name = "\improper Special Ops Shuttle"
 	icon_state = "shuttlered"
@@ -283,42 +274,9 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Administration Shuttle"
 	icon_state = "shuttlered2"
 
-/area/shuttle/thunderdome
-	name = "honk"
-
-/area/shuttle/thunderdome/grnshuttle
-	name = "\improper Thunderdome GRN Shuttle"
-	icon_state = "green"
-
-/area/shuttle/thunderdome/grnshuttle/dome
-	name = "\improper GRN Shuttle"
-	icon_state = "shuttlegrn"
-
-/area/shuttle/thunderdome/grnshuttle/station
-	name = "\improper GRN Station"
-	icon_state = "shuttlegrn2"
-
-/area/shuttle/thunderdome/redshuttle
-	name = "\improper Thunderdome RED Shuttle"
-	icon_state = "red"
-
-/area/shuttle/thunderdome/redshuttle/dome
-	name = "\improper RED Shuttle"
-	icon_state = "shuttlered"
-
-/area/shuttle/thunderdome/redshuttle/station
-	name = "\improper RED Station"
-	icon_state = "shuttlered2"
-// === Trying to remove these areas:
-
 /area/shuttle/research
 	name = "\improper Research Shuttle"
 	music = "music/escape.ogg"
-
-/area/shuttle/research/station
-	icon_state = "shuttle2"
-
-/area/shuttle/research/outpost
 	icon_state = "shuttle"
 
 /area/shuttle/vox/station
@@ -2092,4 +2050,3 @@ var/list/the_station_areas = list (
 						H << S
 
 		spawn(60) .()
-

@@ -2,7 +2,7 @@
 
 #define STATION_DOCK /area/shuttle/mining/station
 #define MINE_DOCK /area/shuttle/mining/outpost
-#define SCI_DOCK /area/shuttle/research/outpost
+#define SCI_DOCK /area/shuttle/research
 
 #define M_S_SHUTTLE_FLOOR /turf/simulated/shuttle/floor/mining
 

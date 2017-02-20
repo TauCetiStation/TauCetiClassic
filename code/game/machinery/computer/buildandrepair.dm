@@ -239,10 +239,6 @@
 	name = "Circuit board (Area Air Control)"
 	build_path = /obj/machinery/computer/area_atmos
 	origin_tech = "programming=2"
-/obj/item/weapon/circuitboard/prison_shuttle
-	name = "Circuit board (Prison Shuttle)"
-	build_path = /obj/machinery/computer/prison_shuttle
-	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/libraryconsole
 	name = "circuit board (Library Visitor Console)"
 	build_path = /obj/machinery/computer/libraryconsole

@@ -407,10 +407,6 @@
 	dat += "<BR>\[ [(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	return dat
 
-/proc/enable_prison_shuttle(mob/user)
-	for(var/obj/machinery/computer/prison_shuttle/PS in machines)
-		PS.allowedtocall = !(PS.allowedtocall)
-
 /proc/call_shuttle_proc(mob/user)
 	if ((!( ticker ) || SSshuttle.location))
 		return

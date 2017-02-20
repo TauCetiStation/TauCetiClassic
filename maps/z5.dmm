@@ -636,7 +636,7 @@
 "ml" = (/obj/effect/alien/weeds{icon_state = "weeds2"},/turf/simulated/floor,/area/mine/abandoned)
 "mm" = (/obj/effect/alien/weeds{icon_state = "weeds"},/turf/simulated/floor/airless{icon_state = "damaged2"},/area/mine/abandoned)
 "mn" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/research_outpost/entry)
-"mo" = (/turf/space,/area/shuttle/research/outpost)
+"mo" = (/turf/space,/area/shuttle/research)
 "mp" = (/turf/simulated/wall,/area/research_outpost/gearstore)
 "mq" = (/obj/structure/closet/excavation,/turf/simulated/floor,/area/research_outpost/gearstore)
 "mr" = (/turf/simulated/floor,/area/research_outpost/gearstore)
