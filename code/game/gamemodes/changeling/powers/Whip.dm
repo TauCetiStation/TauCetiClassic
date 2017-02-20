@@ -14,6 +14,8 @@
 	name = "Organic Whip"
 	desc = "A mass of tough tissue that can be elastic"
 	canremove = 0
+	flags = ABSTRACT
+	abstract = 1
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_whip"
 	item_state = "arm_whip"
@@ -35,7 +37,7 @@
 		return
 	if(!use_charge(A,user))
 		return
-	next_click = world.time + 10
+	next_click = world.time + 14
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(T)
@@ -79,11 +81,12 @@
 		host.attack_log += text("\[[time_stamp()]\] <font color='red'>whipped [M.name]'s ([M.ckey])</font>")
 		msg_admin_attack("[host] ([host.ckey]) whipped [M.name] ([M.ckey]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span></span>")
 	var/atom/movable/T = target
-	if(grabber && !T.anchored)
+	var/grab_chance = iscarbon(T) ? 30 : 90
+	if(grabber && !T.anchored && prob(grab_chance))
 		spawn(1)
 			T.throw_at(host, 7 - kill_count, 0.2)
 			sleep(2)
-			if(in_range(T, host) && !host.get_inactive_hand() && prob(90))
+			if(in_range(T, host) && !host.get_inactive_hand())
 				if(iscarbon(T))
 					var/obj/item/weapon/grab/G = new(host,T)
 					host.put_in_inactive_hand(G)

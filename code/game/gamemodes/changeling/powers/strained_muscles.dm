@@ -51,7 +51,7 @@
 		if(stacks == 10)
 			to_chat(owner,"<span class='warning'>Our legs are really starting to hurt...</span>")
 		if(stacks > 10)
-			owner.apply_effect(1.1 * stacks,AGONY)
+			owner.apply_effect(5,AGONY)
 	else if(stacks)
 		stacks -= 0.25
 	else

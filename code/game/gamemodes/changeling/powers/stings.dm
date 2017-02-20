@@ -69,6 +69,16 @@
 /obj/effect/proc_holder/changeling/sting/proc/sting_fail(mob/user, mob/target)
 	if(!target)
 		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.wear_suit)
+			var/obj/item/clothing/I = H.wear_suit
+			if(I.flags & THICKMATERIAL)
+				to_chat(user, "<span class='warning'>We broke our sting about our's armor!</span>")
+				unset_sting(user)
+				user.mind.changeling.chem_charges -= rand(5,10)
+				H.drip(10)
+				return 1
 	if(ishuman(target))
 		var/datum/organ/external/affecting = target:get_organ(user.zone_sel.selecting)
 		if(target:check_thickmaterial(affecting))

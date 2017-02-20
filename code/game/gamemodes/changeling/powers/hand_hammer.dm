@@ -3,7 +3,7 @@
 	desc = "We reform one of our arms into hammer."
 	helptext = "Can break walls, airlocks, windows and humans, requires a lot of chemical for each use. Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 4
+	genomecost = 5
 	genetic_damage = 12
 	req_human = 1
 	max_genetic_damage = 10
@@ -15,6 +15,8 @@
 	desc = "A mass of tough, boney tissue,reminiscent of hammer."
 	canremove = 0
 	force = 15
+	flags = ABSTRACT
+	abstract = 1
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_hammer"
 	item_state = "arm_hammer"
@@ -48,7 +50,4 @@
 				H.apply_damage(force/2,BRUTE,Org.name, H.getarmor(Org.name, "melee"))
 			if(O.parent)
 				H.apply_damage(force/2,BRUTE,O.parent.name, H.getarmor(O.parent.name, "melee"))
-		if(istype(target,/obj/mecha))
-			var/obj/mecha/M = target
-			M.dynattackby(force * 3, user)
 		return..(target,user)

@@ -13,11 +13,27 @@
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = FALSE // only one form of shackles removed per use
-	if(!user.restrained() && istype(user.loc, /turf))
+	if(user.back && istype(user.back,/obj/item/device/radio/electropack))
+		user.visible_message("<span class='warning'>[user] vomits a glob of \
+			acid on \his [user.back]!</span>", \
+			"<span class='warning'>We vomit acidic ooze onto our \
+			electropack!</span>")
+		addtimer(src, "dissolve_electropack",30,FALSE,user,user.back)
+		used = TRUE
+
+	if(user.wear_mask  && istype(user.wear_mask ,/obj/item/clothing/mask/horsehead))
+		user.visible_message("<span class='warning'>[user] vomits a glob of \
+			acid on \his [user.wear_mask ]!</span>", \
+			"<span class='warning'>We vomit acidic ooze onto our \
+			mask!</span>")
+		addtimer(src,"dissolve_horsehead",30,FALSE,user,user.wear_mask )
+		used = TRUE
+
+	if(!user.restrained() && istype(user.loc, /turf) && !used)
 		to_chat(user,"<span class='warning'>We are already free!</span>")
 		return 0
 
-	if(user.handcuffed)
+	if(user.handcuffed && !used)
 		var/obj/item/weapon/handcuffs/O = user.handcuffed
 		user.visible_message("<span class='warning'>[user] vomits a glob of \
 			acid on \his [O]!</span>", \
@@ -89,3 +105,19 @@
 		if(C && user.loc == C)
 			qdel(C) //The cocoon's destroy will move the changeling outside of it without interference
 			to_chat(user,"<span class='warning'>We dissolve the cocoon!</span>")
+
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_electropack(mob/living/carbon/human/user, obj/O)
+	if(istype(user.back,/obj/item/device/radio/electropack))
+		var/obj/item/device/radio/electropack/E = O
+		if(E && user.back == E)
+			user.unEquip(E)
+			E.visible_message("<span class='warning'>[E] dissolves into a puddle of sizzling goop.</span>")
+			qdel(E)
+
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_horsehead(mob/living/carbon/human/user, obj/O)
+	if(istype(O,/obj/item/clothing/mask/horsehead))
+		var/obj/item/clothing/mask/horsehead/Horse = O
+		if(Horse && user.wear_mask  == Horse)
+			user.unEquip(Horse)
+			Horse.visible_message("<span class='warning'>[Horse] dissolves into a puddle of sizzling goop.</span>")
+			qdel(Horse)
