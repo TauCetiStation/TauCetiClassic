@@ -1331,6 +1331,59 @@ datum
 						if(I.damage > 0)
 							I.damage = max(I.damage - 0.20, 0)
 
+		kyphotorin
+			name = "Kyphotorin"
+			id = "kyphotorin"
+			description = "Used nanites to encourage recovery of external organs and bones. Medicate cautiously."
+			reagent_state = LIQUID
+			color = "#551a8b" // rgb: 85, 26, 139
+			overdose = 5.1
+			custom_metabolism = 0.07
+			var/heal_time = 0
+			var/datum/organ/external/External
+
+			on_mob_life(mob/living/M)
+				if(!..())
+					return
+				if(!ishuman(M) || volume > overdose)
+					return
+				var/mob/living/carbon/human/H = M
+				if(!External)
+					for(var/datum/organ/external/E in H.organs) // find a broken/destroyed limb
+						if(E.status & ORGAN_DESTROYED)
+							if(E.parent && E.parent.status & ORGAN_DESTROYED)
+								continue
+							else
+								heal_time = 65
+								External = E
+						if(E.status & (ORGAN_BROKEN || ORGAN_SPLINTED))
+							heal_time = 30
+							External = E
+						if(External)
+							for(var/datum/wound/W in E.wounds) // remove internal
+								if(W.internal)
+									E.wounds -= W
+									E.update_damages()
+							break
+				else if(H.bodytemperature >= 170 && H.nutrition >= 300 && H.vessel) // start fixing broken/destroyed limb
+					for(var/datum/reagent/blood/B in H.vessel.reagent_list)
+						B.volume -= 4
+					H.nutrition -= 4
+					H.apply_effect(3, WEAKEN)
+					H.apply_damages(0,0,1,5,0,5) // 1 toxic, 5 oxy and 5 halloss
+					data++
+					if(prob(50))
+						H.emote("scream",1,null,1)
+					if(data >= heal_time) // recover organ
+						External.status = 0
+						External.stage = 0
+						External.perma_injury = 0
+						data = 0
+						External = null
+						heal_time = 0
+						H.update_body()
+
+
 		bicaridine
 			name = "Bicaridine"
 			id = "bicaridine"
