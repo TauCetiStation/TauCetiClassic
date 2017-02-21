@@ -207,7 +207,7 @@ var/list/turret_icons
 		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 		return 1
 
-	if(locked && !issilicon(user))
+	if(locked && !issilicon(user) && !IsAdminGhost(user))
 		to_chat(user, "<span class='notice'>Access denied.</span>")
 		return 1
 
@@ -510,13 +510,10 @@ var/list/turret_icons
 			secondarytargets += L
 
 /obj/machinery/porta_turret/proc/assess_living(mob/living/L)
-	if(!istype(L))
+	if(!L || !istype(L))
 		return TURRET_NOT_TARGET
 
 	if(L.invisibility >= INVISIBILITY_LEVEL_ONE) // Cannot see him. see_invisible is a mob-var
-		return TURRET_NOT_TARGET
-
-	if(!L)
 		return TURRET_NOT_TARGET
 
 	if(get_dist(src, L) > 7)	//if it's too far away, why bother?

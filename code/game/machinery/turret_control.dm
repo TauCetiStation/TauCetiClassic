@@ -75,7 +75,7 @@
 		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 		return 1
 
-	if(locked && !issilicon(user))
+	if(locked && !issilicon(user) && !IsAdminGhost(user))
 		to_chat(user, "<span class='notice'>Access denied.</span>")
 		return 1
 
