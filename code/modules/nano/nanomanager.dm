@@ -3,32 +3,6 @@
 /datum/nanomanager
 	// a list of current open /nanoui UIs, grouped by src_object and ui_key
 	var/open_uis[0]
-	// a list of asset filenames which are to be sent to the client on user logon
-	var/list/asset_files = list()
-
- /**
-  * Create a new nanomanager instance.
-  * This proc generates a list of assets which are to be sent to each client on connect
-  *
-  * @return /nanomanager new nanomanager object
-  */
-/datum/nanomanager/New()
-	var/list/nano_asset_dirs = list(\
-		"nano/css/",\
-		"nano/images/",\
-		"nano/js/",\
-		"nano/templates/"\
-	)
-
-	var/list/filenames = null
-	for (var/path in nano_asset_dirs)
-		filenames = flist(path)
-		for(var/filename in filenames)
-			if(copytext(filename, length(filename)) != "/") // filenames which end in "/" are actually directories, which we want to ignore
-				if(fexists(path + filename))
-					asset_files.Add(fcopy_rsc(path + filename)) // add this file to asset_files for sending to clients when they connect
-
-	return
 
  /**
   * Get an open /nanoui ui for the current user, src_object and ui_key and try to update it with data
@@ -252,17 +226,3 @@
 	oldMob.open_uis.Cut()
 
 	return 1 // success
-
- /**
-  * Sends all nano assets to the client
-  * This is called on user login
-  *
-  * @param client /client The user's client
-  *
-  * @return nothing
-  */
-
-/datum/nanomanager/proc/send_resources(client)
-	for(var/file in asset_files)
-		client << browse_rsc(file)	// send the file to the client
-

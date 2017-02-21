@@ -39,6 +39,12 @@
 		//del(usr)
 		return
 
+	if(href_list["asset_cache_confirm_arrival"])
+		//to_chat(src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")
+		var/job = text2num(href_list["asset_cache_confirm_arrival"])
+		completed_asset_jobs += job
+		return
+
 	//Admin PM
 	if(href_list["priv_msg"])
 		var/client/C = locate(href_list["priv_msg"])
@@ -207,6 +213,12 @@
 	if(!cob)
 		cob = new()
 
+	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
+		to_chat(src, "<span class='warning'>Unable to access asset cache browser, \
+		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
+		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
+
+
 	//////////////
 	//DISCONNECT//
 	//////////////
@@ -333,51 +345,14 @@
 		sleep(5)
 		stoplag()
 
-//send resources to the client. It's here in its own proc so we can move it around easiliy if need be
+// Send resources to the client.
 /client/proc/send_resources()
-//	preload_vox() //Causes long delays with initial start window and subsequent windows when first logged in.
-
+	// Most assets are now handled through global_cache.dm
 	getFiles(
-		'html/search.js',
-		'html/panels.css',
-		'html/painew.png',
-		'html/loading.gif',
-		'icons/pda_icons/pda_atmos.png',
-		'icons/pda_icons/pda_back.png',
-		'icons/pda_icons/pda_bell.png',
-		'icons/pda_icons/pda_blank.png',
-		'icons/pda_icons/pda_boom.png',
-		'icons/pda_icons/pda_bucket.png',
-		'icons/pda_icons/pda_crate.png',
-		'icons/pda_icons/pda_cuffs.png',
-		'icons/pda_icons/pda_eject.png',
-		'icons/pda_icons/pda_exit.png',
-		'icons/pda_icons/pda_flashlight.png',
-		'icons/pda_icons/pda_honk.png',
-		'icons/pda_icons/pda_mail.png',
-		'icons/pda_icons/pda_medical.png',
-		'icons/pda_icons/pda_menu.png',
-		'icons/pda_icons/pda_mule.png',
-		'icons/pda_icons/pda_notes.png',
-		'icons/pda_icons/pda_power.png',
-		'icons/pda_icons/pda_rdoor.png',
-		'icons/pda_icons/pda_reagent.png',
-		'icons/pda_icons/pda_refresh.png',
-		'icons/pda_icons/pda_scanner.png',
-		'icons/pda_icons/pda_signaler.png',
-		'icons/pda_icons/pda_status.png',
-		'icons/spideros_icons/sos_1.png',
-		'icons/spideros_icons/sos_2.png',
-		'icons/spideros_icons/sos_3.png',
-		'icons/spideros_icons/sos_4.png',
-		'icons/spideros_icons/sos_5.png',
-		'icons/spideros_icons/sos_6.png',
-		'icons/spideros_icons/sos_7.png',
-		'icons/spideros_icons/sos_8.png',
-		'icons/spideros_icons/sos_9.png',
-		'icons/spideros_icons/sos_10.png',
-		'icons/spideros_icons/sos_11.png',
-		'icons/spideros_icons/sos_12.png',
-		'icons/spideros_icons/sos_13.png',
-		'icons/spideros_icons/sos_14.png'
-		)
+		'html/search.js', // Used in various non-NanoUI HTML windows for search functionality
+		'html/panels.css' // Used for styling certain panels, such as in the new player panel
+	)
+
+	spawn (10) //removing this spawn causes all clients to not get verbs.
+		//Precache the client with all other assets slowly, so as to not block other browse() calls
+		getFilesSlow(src, SSasset.cache, register_asset = FALSE)

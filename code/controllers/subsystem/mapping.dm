@@ -7,6 +7,7 @@ var/datum/subsystem/mapping/SSmapping
 
 	flags = SS_NO_FIRE
 
+	var/const/max_secret_rooms = 3
 
 /datum/subsystem/mapping/New()
 	NEW_SS_GLOBAL(SSmapping)
@@ -22,7 +23,6 @@ var/datum/subsystem/mapping/SSmapping
 	..()
 
 /datum/subsystem/mapping/proc/make_mining_asteroid_secrets()
-	var/max_secret_rooms = 3
 	for(var/i in 1 to max_secret_rooms)
 		make_mining_asteroid_secret()
 

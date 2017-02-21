@@ -11,6 +11,7 @@
 #define SS_INIT_LIGHTING  1
 #define SS_INIT_DEFAULT   0
 #define SS_INIT_AIR      -1
+#define SS_INIT_ASSETS   -2
 
 
 #define SS_PRIORITY_TICKER     200

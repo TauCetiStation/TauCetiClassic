@@ -23,6 +23,47 @@ var/datum/subsystem/lighting/SSlighting
 /datum/subsystem/lighting/stat_entry()
 	..("L:[round(changed_lights_workload,1)]|T:[round(changed_turfs_workload,1)]")
 
+//Does not loop. Should be run prior to process() being called for the first time.
+/datum/subsystem/lighting/Initialize(timeofday)
+	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
+
+	for(var/thing in turfs_to_init)
+		var/turf/T = thing
+		if(!T.dynamic_lighting)
+			continue
+		else
+			var/area/A = T.loc
+			if(!A.dynamic_lighting)
+				continue
+		T.init_lighting_corners()
+		T.init_lighting_overlays()
+		CHECK_TICK
+
+	var/list/changed_lights = src.changed_lights
+	while (changed_lights.len)
+		var/datum/light_source/LS = changed_lights[changed_lights.len]
+		changed_lights.len--
+		if(LS.check() || LS.destroyed || LS.force_update)
+			LS.remove_lum()
+			if(!LS.destroyed)
+				LS.apply_lum()
+
+		else if(LS.vis_update)	// We smartly update only tiles that became (in) visible to use.
+			LS.smart_vis_update()
+
+		LS.vis_update   = FALSE
+		LS.force_update = FALSE
+		LS.needs_update = FALSE
+		CHECK_TICK
+
+	var/list/changed_overlays = src.changed_overlays
+	while (changed_overlays.len)
+		var/atom/movable/lighting_overlay/LO = changed_overlays[changed_overlays.len]
+		changed_overlays.len--
+		LO.update_overlay()
+		LO.needs_update = FALSE
+		CHECK_TICK
+	..()
 
 //Workhorse of lighting. It cycles through each light that needs updating. It updates their
 //effects and then processes every turf in the queue, updating their lighting object's appearance
@@ -65,48 +106,6 @@ var/datum/subsystem/lighting/SSlighting
 		LO.needs_update = FALSE
 		if (MC_TICK_CHECK)
 			return
-
-//Does not loop. Should be run prior to process() being called for the first time.
-/datum/subsystem/lighting/Initialize(timeofday)
-	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
-
-	for(var/thing in turfs_to_init)
-		var/turf/T = thing
-		if(!T.dynamic_lighting)
-			continue
-		else
-			var/area/A = T.loc
-			if(!A.dynamic_lighting)
-				continue
-		T.init_lighting_corners()
-		T.init_lighting_overlays()
-		CHECK_TICK
-
-	var/list/changed_lights = src.changed_lights
-	while (changed_lights.len)
-		var/datum/light_source/LS = changed_lights[changed_lights.len]
-		changed_lights.len--
-		if(LS.check() || LS.destroyed || LS.force_update)
-			LS.remove_lum()
-			if(!LS.destroyed)
-				LS.apply_lum()
-
-		else if(LS.vis_update)	// We smartly update only tiles that became (in) visible to use.
-			LS.smart_vis_update()
-
-		LS.vis_update   = FALSE
-		LS.force_update = FALSE
-		LS.needs_update = FALSE
-		CHECK_TICK
-
-	var/list/changed_overlays = src.changed_overlays
-	while (changed_overlays.len)
-		var/atom/movable/lighting_overlay/LO = changed_overlays[changed_overlays.len]
-		changed_overlays.len--
-		LO.update_overlay()
-		LO.needs_update = FALSE
-		CHECK_TICK
-	..()
 
 /turf/proc/init_lighting_corners()
 	for(var/i = 1 to 4)

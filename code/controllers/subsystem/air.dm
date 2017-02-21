@@ -19,12 +19,12 @@ var/datum/subsystem/air/SSair
 	var/current_cycle = 0
 	var/next_id       = 1 //Used to keep track of zone UIDs.
 
-	var/cost_pipenets      = 0
-	var/cost_tils_current  = 0
-	var/cost_tils_deferred = 0
-	var/cost_edges         = 0
-	var/cost_hotspots      = 0
-	var/cost_zones         = 0
+	var/cost_pipenets   = 0
+	var/cost_tiles_curr = 0
+	var/cost_tiles_def  = 0
+	var/cost_edges      = 0
+	var/cost_hotspots   = 0
+	var/cost_zones      = 0
 
 	var/list/zones = list()
 	var/list/edges = list()
@@ -41,8 +41,8 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/stat_entry(msg)
 	msg += "\nC:{"
-	msg += "TC:[round(cost_tils_current)]|"
-	msg += "TD:[round(cost_tils_deferred)]|"
+	msg += "TC:[round(cost_tiles_curr)]|"
+	msg += "TD:[round(cost_tiles_def)]|"
 	msg += "E:[round(cost_edges)]|"
 	msg += "HS:[round(cost_hotspots)]|"
 	msg += "PN:[round(cost_pipenets)]|"
@@ -75,14 +75,14 @@ var/datum/subsystem/air/SSair
 	if (currentpart == SSAIR_TILES_CUR)
 		timer = world.tick_usage
 		process_tiles_current(resumed)
-		cost_tils_current = MC_AVERAGE(cost_tils_current, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_tiles_curr = MC_AVERAGE(cost_tiles_curr, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		resumed = 0
 		currentpart = SSAIR_TILES_DEF
 
 	if (currentpart == SSAIR_TILES_DEF)
 		timer = world.tick_usage
 		process_tiles_deferred(resumed)
-		cost_tils_deferred = MC_AVERAGE(cost_tils_deferred, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_tiles_def = MC_AVERAGE(cost_tiles_def, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		resumed = 0
 		currentpart = SSAIR_EDGES
 
