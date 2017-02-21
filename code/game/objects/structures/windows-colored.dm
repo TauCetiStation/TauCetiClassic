@@ -31,7 +31,6 @@ var/global/wcDw
 		/area/security/main,
 		/area/security/prison,
 		/area/security/warden,
-		/area/security/tactical,
 		/area/security/range,
 		/area/security/forensic_office
 		)
