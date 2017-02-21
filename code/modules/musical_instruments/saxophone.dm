@@ -29,6 +29,6 @@
 		hitsound = null
 		force = 1
 		make_old()
-	else if(target != user)
+	else if(target != user && health)
 		health--
 	return ..(target,user)
