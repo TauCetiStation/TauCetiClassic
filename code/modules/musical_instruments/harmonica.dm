@@ -30,12 +30,5 @@
 	addtimer(src,"spam",cooldown)
 	return
 
-/obj/item/device/harmonica/dropped(mob/user)
-	var/sound/melody = sound()
-	melody.channel = channel
-	hearers(20, get_turf(src)) << melody
-	spam_flag = 0
-	return ..()
-
 /obj/item/device/harmonica/proc/spam()
 	spam_flag = 0
