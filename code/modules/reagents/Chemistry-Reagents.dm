@@ -1348,27 +1348,27 @@ datum
 				if(!ishuman(M) || volume > overdose)
 					return
 				var/mob/living/carbon/human/H = M
-				if(H.nutrition < 300) // if nanites doesn't have enough resources, they're stops working and spends
+				if(H.nutrition < 200) // if nanites doesn't have enough resources, they're stops working and spends
 					H.make_jittery(100)
 					volume += 0.07
 					return
 				H.jitteriness = max(0,H.jitteriness - 100)
 				if(!External)
 					for(var/datum/organ/external/E in H.organs) // find a broken/destroyed limb
+						for(var/datum/wound/W in E.wounds) // remove internal
+							if(W.internal)
+								E.wounds -= W
+								E.update_damages()
 						if(E.status & ORGAN_DESTROYED)
 							if(E.parent && E.parent.status & ORGAN_DESTROYED)
 								continue
 							else
 								heal_time = 65
 								External = E
-						if(E.status & (ORGAN_BROKEN || ORGAN_SPLINTED))
+						else if(E.status & (ORGAN_BROKEN || ORGAN_SPLINTED))
 							heal_time = 30
 							External = E
 						if(External)
-							for(var/datum/wound/W in E.wounds) // remove internal
-								if(W.internal)
-									E.wounds -= W
-									E.update_damages()
 							break
 				else if(H.bodytemperature >= 170 && H.vessel) // start fixing broken/destroyed limb
 					for(var/datum/reagent/blood/B in H.vessel.reagent_list)
