@@ -275,7 +275,7 @@ datum
 			name = "Kyphotorin"
 			id = "kyphotorin"
 			result = "kyphotorin"
-			required_reagents = list("lexorin" = 5, "peridaxon" = 5, "nanites" = 1, "dexalinp" = 5, "sugar" = 5, "iron" = 5)
+			required_reagents = list("lexorin" = 5, "peridaxon" = 5, "nanobots" = 1, "dexalinp" = 5, "sugar" = 5, "iron" = 5)
 			result_amount = 1
 
 		hyperzine
