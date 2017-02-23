@@ -133,7 +133,8 @@
 	if(istype(W, /obj/item/weapon/cable_coil))
 		if (src.stage != 1) return
 		var/obj/item/weapon/cable_coil/coil = W
-		coil.use(1)
+		if(!coil.use(1))
+			return
 		switch(fixture_type)
 			if ("tube")
 				src.icon_state = "tube-construct-stage2"

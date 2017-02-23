@@ -20,7 +20,7 @@
 
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
-	var/stamps		//The (text for the) stamps on the paper.
+	var/stamp_text		//The (text for the) stamp_text on the paper.
 	var/fields		//Amount of user created fields
 	var/list/stamped
 	var/ico[0]      //Icons and
@@ -40,7 +40,7 @@
 	..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
-	stamps = ""
+	stamp_text = ""
 	spawn(2)
 		update_icon()
 		updateinfolinks()
@@ -70,12 +70,12 @@
 
 	var/data
 	if((!(ishuman(user) || isobserver(user) || issilicon(user)) && !forceshow) || forcestars)
-		data = "<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamps]</BODY></HTML>"
+		data = "<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamp_text]</BODY></HTML>"
 		if(view)
 			user << browse(data, "window=[name]")
 			onclose(user, "[name]")
 	else
-		data = "<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[infolinks ? info_links : info][stamps]</BODY></HTML>"
+		data = "<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[infolinks ? info_links : info][stamp_text]</BODY></HTML>"
 		if(view)
 			user << browse(data, "window=[name]")
 			onclose(user, "[name]")
@@ -227,7 +227,7 @@
 
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
-	stamps = null
+	stamp_text = null
 	stamped = list()
 	overlays.Cut()
 	updateinfolinks()
@@ -471,7 +471,7 @@
 		if((!in_range(src, usr) && loc != user && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != user && user.get_active_hand() != P))
 			return
 
-		stamps += (stamps=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the [P.name].</i>"
+		stamp_text += (stamp_text=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the [P.name].</i>"
 
 		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 		var/{x; y;}

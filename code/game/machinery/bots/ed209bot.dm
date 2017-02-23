@@ -965,7 +965,8 @@ Auto Patrol: []"},
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
 				sleep(40)
 				if(get_turf(user) == T && build_step == 6)
-					coil.use(1)
+					if(!coil.use(1))
+						return
 					build_step++
 					to_chat(user, "<span class='notice'>You wire the ED-209 assembly.</span>")
 					name = "wired ED-209 assembly"

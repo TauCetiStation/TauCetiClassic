@@ -62,7 +62,7 @@
 /mob/living/carbon/alien/proc/handle_environment(datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some plasma
-	if(locate(/obj/effect/alien/weeds) in loc)
+	if(locate(/obj/structure/alien/weeds) in loc)
 		if(health >= maxHealth)
 			adjustToxLoss(plasma_rate)
 		else
@@ -101,15 +101,15 @@
 			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-	if(bodytemperature > 360.15)
+	if(bodytemperature > 700)
 		//Body temperature is too hot.
 		throw_alert("alien_fire")
 		switch(bodytemperature)
-			if(360 to 400)
+			if(700 to 850)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
-			if(400 to 460)
+			if(850 to 1000)
 				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-			if(460 to INFINITY)
+			if(1000 to INFINITY)
 				if(on_fire)
 					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
 				else

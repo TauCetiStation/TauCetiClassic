@@ -14,10 +14,12 @@
 	if (istype(M,/mob/living/silicon/robot))	//Repairing cyborgs
 		var/mob/living/silicon/robot/R = M
 		if (R.getBruteLoss() || R.getFireLoss() )
+			if(!use(1))
+				to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
+				return
 			R.adjustBruteLoss(-15)
 			R.adjustFireLoss(-15)
 			R.updatehealth()
-			use(1)
 			user.visible_message("<span class='notice'>\The [user] applied some [src] at [R]'s damaged areas.</span>",\
 				"<span class='notice'>You apply some [src] at [R]'s damaged areas.</span>")
 		else
@@ -29,9 +31,11 @@
 
 		if (S && (S.status & ORGAN_ROBOT))
 			if(S.get_damage())
+				if(!use(1))
+					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
+					return
 				S.heal_damage(15, 15, robo_repair = 1)
 				H.updatehealth()
-				use(1)
 				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][S.display_name] with \the [src].</span>",\
 				"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [S.display_name].</span>")
 			else

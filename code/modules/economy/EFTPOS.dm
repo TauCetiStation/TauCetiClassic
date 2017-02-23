@@ -56,7 +56,7 @@
 		R.ico += "paper_stamp-cent"
 		R.stamped += /obj/item/weapon/stamp
 		R.overlays += stampoverlay
-		R.stamps += "<HR><i>This paper has been stamped by the EFTPOS device.</i>"
+		R.stamp_text += "<HR><i>This paper has been stamped by the EFTPOS device.</i>"
 
 	//by default, connect to the station account
 	//the user of the EFTPOS device can change the target account though, and no-one will be the wiser (except whoever's being charged)
@@ -76,7 +76,7 @@
 		R.stamped = new
 	R.stamped += /obj/item/weapon/stamp
 	R.overlays += stampoverlay
-	R.stamps += "<HR><i>This paper has been stamped by the EFTPOS device.</i>"
+	R.stamp_text += "<HR><i>This paper has been stamped by the EFTPOS device.</i>"
 	var/obj/item/smallDelivery/D = new(R.loc)
 	R.loc = D
 	D.wrapped = R

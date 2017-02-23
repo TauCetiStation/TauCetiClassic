@@ -66,7 +66,8 @@
 			return
 		else if(istype(W,/obj/item/stack/rods))
 			var/obj/item/stack/rods/R = W
-			R.use(1)
+			if(!R.use(1))
+				return
 			arrow = new /obj/item/weapon/arrow/rod(src)
 			arrow.fingerprintslast = src.fingerprintslast
 			arrow.loc = src
