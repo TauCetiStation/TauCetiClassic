@@ -1144,7 +1144,6 @@
 
 
 /datum/construction/mecha/phazon_chassis
-	result = "/obj/mecha/combat/phazon"
 	steps = list(list("key"=/obj/item/mecha_parts/part/phazon_torso),//1
 					 list("key"=/obj/item/mecha_parts/part/phazon_left_arm),//2
 					 list("key"=/obj/item/mecha_parts/part/phazon_right_arm),//3
@@ -1159,8 +1158,267 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
+	action(atom/used_atom,mob/user as mob)
 		return check_all_steps(used_atom,user)
+	spawn_result()
+		var/obj/item/mecha_parts/chassis/const_holder = holder
+		const_holder.construct = new /datum/construction/reversible/mecha/phazon(const_holder)
+		const_holder.icon = 'icons/mecha/mech_construction.dmi'
+		const_holder.icon_state = "phazon0"
+		const_holder.density = 1
+		spawn()
+			qdel(src)
+		return
+
+/datum/construction/reversible/mecha/phazon
+	result = "/obj/mecha/combat/phazon"
+	steps = list(
+					//1
+					list("key"=/obj/item/weapon/weldingtool,
+							"backkey"=/obj/item/weapon/wrench,
+							"desc"="Phazon capacitor's are sparkling with energy ."),
+					 //2
+					 list("key"=/obj/item/device/assembly/signaler/anomaly,
+					 		"backkey"=/obj/item/weapon/crowbar,
+					 		"desc"="External armor is installed."),
+					 //3
+					 list("key"=/obj/item/mecha_parts/part/phazon_armour,
+					 		"backkey"=/obj/item/weapon/weldingtool,
+					 		"desc"="Internal armor is welded."),
+					 //4
+					 list("key"=/obj/item/weapon/weldingtool,
+					 		"backkey"=/obj/item/weapon/wrench,
+					 		"desc"="Internal armor is wrenched"),
+					 //5
+					 list("key"=/obj/item/weapon/wrench,
+					 		"backkey"=/obj/item/weapon/crowbar,
+					 		"desc"="Internal armor is installed"),
+					 //6
+					 list("key"=/obj/item/stack/sheet/metal,
+					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"desc"="Quadratic capacitor is secured"),
+					 //7
+					 list("key"=/obj/item/weapon/screwdriver,
+					 		"backkey"=/obj/item/weapon/crowbar,
+					 		"desc"="Quadratic capacitor is installed"),
+					 //8
+					 list("key"=/obj/item/weapon/stock_parts/capacitor/quadratic,
+					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"desc"="Triphasic scanner module is secured"),
+					 //9
+					 list("key"=/obj/item/weapon/screwdriver,
+					 		"backkey"=/obj/item/weapon/crowbar,
+					 		"desc"="Triphasic scanner module is installed"),
+					 //10
+					 list("key"=/obj/item/weapon/stock_parts/scanning_module/triphasic,
+					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"desc"="Bluespace relay controller is secured"),
+					 //11
+					 list("key"=/obj/item/weapon/screwdriver,
+					 		"backkey"=/obj/item/weapon/crowbar,
+					 		"desc"="Bluespace relay controller module is installed"),
+					 //12
+					 list("key"=/obj/item/weapon/circuitboard/mecha/phazon/targeting,
+					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"desc"="Peripherals control module is secured"),
+					 //13
+					 list("key"=/obj/item/weapon/screwdriver,
+					 		"backkey"=/obj/item/weapon/crowbar,
+					 		"desc"="Peripherals control module is installed"),
+					 //14
+					 list("key"=/obj/item/weapon/circuitboard/mecha/phazon/peripherals,
+					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"desc"="Central control module is secured"),
+					 //15
+					 list("key"=/obj/item/weapon/screwdriver,
+					 		"backkey"=/obj/item/weapon/crowbar,
+					 		"desc"="Central control module is installed"),
+					 //16
+					 list("key"=/obj/item/weapon/circuitboard/mecha/phazon/main,
+					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"desc"="The wiring is adjusted"),
+					 //17
+					 list("key"=/obj/item/weapon/wirecutters,
+					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"desc"="The wiring is added"),
+					 //18
+					 list("key"=/obj/item/weapon/cable_coil,
+					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"desc"="The hydraulic systems are active."),
+					 //19
+					 list("key"=/obj/item/weapon/screwdriver,
+					 		"backkey"=/obj/item/weapon/wrench,
+					 		"desc"="The hydraulic systems are connected."),
+					 //20
+					 list("key"=/obj/item/weapon/wrench,
+					 		"desc"="The hydraulic systems are disconnected.")
+					)
+
+	action(atom/used_atom,mob/user as mob)
+		return check_step(used_atom,user)
+
+	custom_action(index, diff, atom/used_atom, mob/user)
+		if(!..())
+			return 0
+
+		switch(index)
+			if(20)
+				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
+				holder.icon_state = "phazon1"
+			if(19)
+				if(diff==FORWARD)
+					user.visible_message("[user] activates [holder] hydraulic systems.", "You activate [holder] hydraulic systems.")
+					holder.icon_state = "phazon2"
+				else
+					user.visible_message("[user] disconnects [holder] hydraulic systems", "You disconnect [holder] hydraulic systems.")
+					holder.icon_state = "phazon0"
+			if(18)
+				if(diff==FORWARD)
+					user.visible_message("[user] adds the wiring to [holder].", "You add the wiring to [holder].")
+					holder.icon_state = "phazon3"
+				else
+					user.visible_message("[user] deactivates [holder] hydraulic systems.", "You deactivate [holder] hydraulic systems.")
+					holder.icon_state = "phazon1"
+			if(17)
+				if(diff==FORWARD)
+					user.visible_message("[user] adjusts the wiring of [holder].", "You adjust the wiring of [holder].")
+					holder.icon_state = "phazon4"
+				else
+					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
+					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil(get_turf(holder))
+					coil.amount = 6
+					holder.icon_state = "phazon2"
+			if(16)
+				if(diff==FORWARD)
+					user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
+					qdel(used_atom)
+					holder.icon_state = "phazon5"
+				else
+					user.visible_message("[user] disconnects the wiring of [holder].", "You disconnect the wiring of [holder].")
+					holder.icon_state = "phazon3"
+			if(15)
+				if(diff==FORWARD)
+					user.visible_message("[user] secures the mainboard.", "You secure the mainboard.")
+					holder.icon_state = "phazon6"
+				else
+					user.visible_message("[user] removes the central control module from [holder].", "You remove the central computer mainboard from [holder].")
+					new /obj/item/weapon/circuitboard/mecha/phazon/main(get_turf(holder))
+					holder.icon_state = "phazon4"
+			if(14)
+				if(diff==FORWARD)
+					user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
+					qdel(used_atom)
+					holder.icon_state = "phazon7"
+				else
+					user.visible_message("[user] unfastens the mainboard.", "You unfasten the mainboard.")
+					holder.icon_state = "phazon5"
+			if(13)
+				if(diff==FORWARD)
+					user.visible_message("[user] secures the peripherals control module.", "You secure the peripherals control module.")
+					holder.icon_state = "phazon8"
+				else
+					user.visible_message("[user] removes the peripherals control module from [holder].", "You remove the peripherals control module from [holder].")
+					new /obj/item/weapon/circuitboard/mecha/phazon/peripherals(get_turf(holder))
+					holder.icon_state = "phazon6"
+			if(12)
+				if(diff==FORWARD)
+					user.visible_message("[user] installs the Bluespace relay controllere into [holder].", "You install the Bluespace relay controller into [holder].")
+					qdel(used_atom)
+					holder.icon_state = "phazon9"
+				else
+					user.visible_message("[user] unfastens the peripherals control module.", "You unfasten the peripherals control module.")
+					holder.icon_state = "phazon7"
+			if(11)
+				if(diff==FORWARD)
+					user.visible_message("[user] secures the Bluespace relay controller.", "You secure the Bluespace relay controller module.")
+					holder.icon_state = "phazon10"
+				else
+					user.visible_message("[user] removes the Bluespace relay controller from [holder].", "You remove the Bluespace relay controller from [holder].")
+					new /obj/item/weapon/circuitboard/mecha/phazon/targeting(get_turf(holder))
+					holder.icon_state = "phazon8"
+			if(10)
+				if(diff==FORWARD)
+					user.visible_message("[user] installs triphasic scanner module to [holder].", "You install triphasic scanner module to [holder].")
+					qdel(used_atom)
+					holder.icon_state = "phazon11"
+				else
+					user.visible_message("[user] unfastens the wBluespace relay controller.", "You unfasten the Bluespace relay controller.")
+					holder.icon_state = "phazon9"
+			if(9)
+				if(diff==FORWARD)
+					user.visible_message("[user] secures the triphasic scanner module.", "You secure the triphasic scanner module.")
+					holder.icon_state = "phazon12"
+				else
+					user.visible_message("[user] removes the triphasic scanner module from [holder].", "You remove the triphasic scanner module from [holder].")
+					new /obj/item/weapon/stock_parts/scanning_module/triphasic(get_turf(holder))
+					holder.icon_state = "phazon10"
+			if(8)
+				if(diff==FORWARD)
+					user.visible_message("[user] installs quadratic capacitor to [holder].", "You install quadratic capacitor to [holder].")
+					qdel(used_atom)
+					holder.icon_state = "phazon13"
+				else
+					user.visible_message("[user] unfastens the triphasic scanner module.", "You unfasten the triphasic scanner module.")
+					holder.icon_state = "phazon11"
+			if(7)
+				if(diff==FORWARD)
+					user.visible_message("[user] secures the quadratic capacitor.", "You secure the quadratic capacitor.")
+					holder.icon_state = "phazon14"
+				else
+					user.visible_message("[user] removes the quadratic capacitor from [holder].", "You remove the quadratic capacitor from [holder].")
+					new /obj/item/weapon/stock_parts/capacitor/quadratic(get_turf(holder))
+					holder.icon_state = "phazon12"
+			if(6)
+				if(diff==FORWARD)
+					user.visible_message("[user] installs internal armor layer to [holder].", "You install internal armor layer to [holder].")
+					holder.icon_state = "phazon15"
+				else
+					user.visible_message("[user] unfastens the quadratic capacitor.", "You unfasten the quadratic capacitor.")
+					holder.icon_state = "phazon13"
+			if(5)
+				if(diff==FORWARD)
+					user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
+					holder.icon_state = "phazon16"
+				else
+					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
+					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
+					MS.amount = 10
+					holder.icon_state = "phazon14"
+			if(4)
+				if(diff==FORWARD)
+					user.visible_message("[user] welds internal armor layer to [holder].", "You weld the internal armor layer to [holder].")
+					holder.icon_state = "phazon17"
+				else
+					user.visible_message("[user] unfastens the internal armor layer.", "You unfasten the internal armor layer.")
+					holder.icon_state = "phazon15"
+			if(3)
+				if(diff==FORWARD)
+					user.visible_message("[user] installs Phazon Armour Plates to [holder].", "You install Phazon Armour Plates to [holder].")
+					qdel(used_atom)
+					holder.icon_state = "phazon18"
+				else
+					user.visible_message("[user] cuts internal armor layer from [holder].", "You cut the internal armor layer from [holder].")
+					holder.icon_state = "phazon16"
+			if(2)
+				if(diff==FORWARD)
+					user.visible_message("[user] charges Phazon capacitors with Anomaly power .", "You charge Phazon capacitors with Anomaly power.")
+					holder.icon_state = "phazon19"
+				else
+					user.visible_message("[user] discharges Phazon capacitors [holder].", "You discharge Phazon capacitors [holder].")
+					new /obj/item/mecha_parts/part/phazon_armour(get_turf(holder))
+					holder.icon_state = "phazon17"
+			if(1)
+				if(diff==FORWARD)
+					user.visible_message("[user] welds Phazon Armour Plates to [holder].", "You weld Phazon Armour Plates to [holder].")
+				else
+					user.visible_message("[user] unfastens Phazon Armour Plates.", "You unfasten Phazon Armour Plates.")
+					holder.icon_state = "phazon18"
+		return 1
+
+	spawn_result()
+		..()
+		feedback_inc("mecha_phazon_created",1)
+		return
 
 
 

@@ -39,6 +39,7 @@
 								"Odysseus",
 								"Gygax",
 								"Gygax Ultra",
+								"Phazon",
 								"Durand",
 								"Vindicator",
 								"Exosuit Equipment",

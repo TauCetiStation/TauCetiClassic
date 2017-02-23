@@ -227,6 +227,7 @@
 
 /obj/item/mecha_parts/chassis/phazon
 	name = "Phazon Chassis"
+	desc = "A mech chassis, looks bluespacey"
 	origin_tech = "materials=7"
 
 	New()
@@ -235,33 +236,45 @@
 
 /obj/item/mecha_parts/part/phazon_torso
 	name="Phazon Torso"
+	desc="A torso part of Phazon. Contains knowledge about bluespace and electromagnetic fields"
 	icon_state = "phazon_harness"
 	origin_tech = "programming=5;materials=7;bluespace=6;powerstorage=6"
 
 /obj/item/mecha_parts/part/phazon_head
 	name="Phazon Head"
+	desc="A head part of Phazon. Used for looking"
 	icon_state = "phazon_head"
 	origin_tech = "programming=4;materials=5;magnets=6"
 
 /obj/item/mecha_parts/part/phazon_left_arm
 	name="Phazon Left Arm"
+	desc="A left arm for Phazon. It has some unique power cores."
 	icon_state = "phazon_l_arm"
 	origin_tech = "materials=5;bluespace=2;magnets=2"
 
 /obj/item/mecha_parts/part/phazon_right_arm
 	name="Phazon Right Arm"
+	desc="A right arm for Phazon. It has some uniqie power cores."
 	icon_state = "phazon_r_arm"
 	origin_tech = "materials=5;bluespace=2;magnets=2"
 
 /obj/item/mecha_parts/part/phazon_left_leg
 	name="Phazon Left Leg"
+	desc="A left leg for Phazon. It has some stabilizing bluespace crystalls in it."
 	icon_state = "phazon_l_leg"
 	origin_tech = "materials=5;bluespace=3;magnets=3"
 
 /obj/item/mecha_parts/part/phazon_right_leg
 	name="Phazon Right Leg"
+	desc="A right leg for Phazon. It has some stabilizing bluespace crystalls in it."
 	icon_state = "phazon_r_leg"
 	origin_tech = "materials=5;bluespace=3;magnets=3"
+
+/obj/item/mecha_parts/part/phazon_armour
+	name="Phazon Armour"
+	desc="An electromagnetic and bluespace secret"
+	icon_state = "phazon_armour"
+	origin_tech = "materials=7;bluespace=5;magnets=5"
 
 ///////// Odysseus
 
@@ -426,6 +439,21 @@
 
 	odysseus/main
 		name = "Circuit board (Odysseus Central Control module)"
+		icon_state = "mainboard"
+
+	phazon
+		origin_tech = "programming=4;combat=4"
+
+	phazon/peripherals
+		name = "Circuit board (Phazon Peripherals Control module)"
+		icon_state = "mcontroller"
+
+	phazon/targeting
+		name = "Circuit board (Phazon Bluespace relay controller)"
+		icon_state = "mcontroller"
+
+	phazon/main
+		name = "Circuit board (Phazon Central Control module)"
 		icon_state = "mainboard"
 
 ////////////Vindicator
