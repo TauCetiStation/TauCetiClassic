@@ -1047,28 +1047,27 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/sent = sanitize_alt(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null)
-	if(!sent)
+	var/sent_text = sanitize_alt(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null)
+	if(!sent_text)
 		return
-	var/sentname = sanitize_alt(input(usr, "Pick a title for the message. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects, enter Cancel to stop sending", "Title") as text)
-	if(!sentname)
-		sentname = "NanoTrasen Update"
-	if(sentname == "Cancel")
+	var/sent_name = sanitize_alt(input(usr, "Pick a title for the message. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects, enter Cancel to stop sending", "Title") as text)
+	if(!sent_name)
+		sent_name = "NanoTrasen Update"
+	if(sent_name == "Cancel")
 		return
-	var/dpt = input(usr, "Please choose the needed fax, choose unknown to send to all faxes on the station") as null|anything in alldepartments
+	alldepartments += "All"
+	var/dpt = input(usr, "Please choose the destination") as null|anything in alldepartments
 	if(!dpt)
 		return
-	var/list/stampos = list("CentCom", "Syndicate", "Clown", "FakeCentCom", "Unknown")
-	var/stamp = input(usr, "Please choose the needed stamp, choose unknown to send without any stamp") as null|anything in stampos
+	var/list/stamp_list = list("CentCom", "Syndicate", "Clown", "FakeCentCom", "None", "Custom")
+	var/stamp = input(usr, "Please choose the needed stamp") as null|anything in stamp_list
 	if(!stamp)
 		return
-	var/stamps = sanitize_alt(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay), if empty will be chosen default text for the selected stamp") as text)
+	var/stamp_text = sanitize_alt(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay), if empty will be chosen default text for the selected stamp") as text)
 
-	var/question1 = alert(src, "Do you want to cancel the sending of this fax?", "Confirm", "Yes", "No")
-	if(question1 != "No")
-		return
-
-	message_admins("Fax message was created by [key_name_admin(src)] and sent to [dpt]")
 	feedback_add_details("admin_verb","FAXMESS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	send2slack_custommsg("Fax message was created by [key_name_admin(src)] and sent to [dpt]: [sent_text]")
+	log_fax("[Sender] sending [sent_name] to [dpt] : [sent_text]")
+	message_admins("Fax message was created by [key_name_admin(src)] and sent to [dpt]")
 
-	SendFax(sent, sentname, Sender, dpt, stamp, stamps)
+	SendFax(sent_text, sent_name, Sender, dpt, stamp, stamp_text)

@@ -68,7 +68,7 @@
 			R.stamped = new
 		R.stamped += /obj/item/weapon/stamp
 		R.overlays += stampoverlay
-		R.stamps += "<HR><i>This paper has been stamped by the Accounts Database.</i>"
+		R.stamp_text += "<HR><i>This paper has been stamped by the Accounts Database.</i>"
 
 	//add the account
 	M.transaction_log.Add(T)
