@@ -291,6 +291,8 @@ h1.alert, h2.alert		{color: #000000;}
 .abductor_team4			{color: #800080;	font-style: italic;}
 .cult					{color: #800080;	font-weight: bold; font-style: italic;}
 .alien					{color: #543354;}
+.noticealien			{color: #00c000;}
+.alertalien				{color: #00c000;	font-weight: bold;}
 
 /* Admin: Channels */
 .mod					{color: #735638;	font-weight: bold;}
