@@ -24,11 +24,14 @@
 		if(locate(/obj/structure/gravemarker) in src.loc)
 			to_chat(user, "<span class='notice'>There's already a grave marker here.</span>")
 		else
+			var/obj/item/stack/sheet/wood/plank = W
+			if(plank.amount < 1)
+				return
 			visible_message("<span class='notice'>\The [user] starts making a grave marker on top of \the [src]</span>")
 			if(do_after(user, 50, target = src))
 				visible_message("<span class='notice'>\The [user] finishes the grave marker</span>")
-				var/obj/item/stack/sheet/wood/plank = W
-				plank.use(1)
+				if(!plank.use(1))
+					return
 				new/obj/structure/gravemarker(src.loc)
 			else
 				to_chat(user, "<span class='notice'>You stop making a grave marker.</span>")

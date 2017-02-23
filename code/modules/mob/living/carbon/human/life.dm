@@ -137,29 +137,17 @@
 /mob/living/carbon/human/proc/get_pressure_protection(pressure_check = STOPS_PRESSUREDMAGE)
 	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
 
-	if((head && (head.flags_pressure & STOPS_PRESSUREDMAGE))&&(wear_suit && (wear_suit.flags_pressure & STOPS_PRESSUREDMAGE)))
+	if((head && (head.flags_pressure & pressure_check))&&(wear_suit && (wear_suit.flags_pressure & pressure_check)))
 		pressure_adjustment_coefficient = 0
 
 		//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
-		if(wear_suit && (wear_suit.flags_pressure & STOPS_PRESSUREDMAGE))
-			if(istype(wear_suit,/obj/item/clothing/suit/space))
-				var/obj/item/clothing/suit/space/S = wear_suit
-				if(S.can_breach && S.damage)
-					var/pressure_loss = S.damage * 0.1
-					pressure_adjustment_coefficient += pressure_loss
-	else
-		if((head && (head.flags_pressure & pressure_check))&&(wear_suit && (wear_suit.flags_pressure & pressure_check)))
-			pressure_adjustment_coefficient = 0
+		if(istype(wear_suit,/obj/item/clothing/suit/space))
+			var/obj/item/clothing/suit/space/S = wear_suit
+			if(S.can_breach && S.damage)
+				var/pressure_loss = S.damage * 0.1
+				pressure_adjustment_coefficient = pressure_loss
 
-		//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
-		if(wear_suit && (wear_suit.flags_pressure & pressure_check))
-			if(istype(wear_suit,/obj/item/clothing/suit/space))
-				var/obj/item/clothing/suit/space/S = wear_suit
-				if(S.can_breach && S.damage)
-					var/pressure_loss = S.damage * 0.1
-					pressure_adjustment_coefficient += pressure_loss
-
-	pressure_adjustment_coefficient = min(1,max(pressure_adjustment_coefficient,0)) //So it isn't less than 0 or larger than 1.
+	pressure_adjustment_coefficient = CLAMP01(pressure_adjustment_coefficient) //So it isn't less than 0 or larger than 1.
 
 	return 1 - pressure_adjustment_coefficient	//want 0 to be bad protection, 1 to be good protection
 
@@ -724,7 +712,7 @@
 		if(istype(loc, /obj/structure/transit_tube_pod))
 			return
 		var/protected = 0
-		if( (head && istype(head, /obj/item/clothing/head/helmet/space)) && (wear_suit && istype(wear_suit, /obj/item/clothing/suit/space)) && !istype(wear_suit, /obj/item/clothing/suit/space/sk) && !istype(head, /obj/item/clothing/head/helmet/space/sk)) // only an exception for "SK" space suit and helm
+		if( (head && istype(head, /obj/item/clothing/head/helmet/space)) && (wear_suit && istype(wear_suit, /obj/item/clothing/suit/space)))
 			protected = 1
 		if(!protected && radiation < 100)
 			apply_effect(5, IRRADIATE)

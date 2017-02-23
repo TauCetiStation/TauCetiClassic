@@ -449,16 +449,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 			// let the GC handle the deletion of the wound
 
 		// Internal wounds get worse over time. Low temperatures (cryo) stop them.
-		if(W.internal && !W.can_autoheal() && owner.bodytemperature >= 170)
+		if(W.internal && owner.bodytemperature >= 170)
 			var/bicardose = owner.reagents.get_reagent_amount("bicaridine")
 			var/inaprovaline = owner.reagents.get_reagent_amount("inaprovaline")
-			if(!bicardose || !inaprovaline)	//bicaridine and inaprovaline stop internal wounds from growing bigger with time, and also stop bleeding
+			if(!(W.can_autoheal() || (bicardose && inaprovaline)))	//bicaridine and inaprovaline stop internal wounds from growing bigger with time
 				W.open_wound(0.1 * wound_update_accuracy)
-				owner.vessel.remove_reagent("blood",0.05 * W.damage * wound_update_accuracy)
 			if(bicardose >= 30)	//overdose of bicaridine begins healing IB
-				W.damage = max(0, W.damage - 0.2)
+				W.damage = max(0, W.damage - 0.2) // Bug: doesn't update W.current_stage
 
-			owner.vessel.remove_reagent("blood",0.02 * W.damage * wound_update_accuracy)
+			owner.vessel.remove_reagent("blood",0.05 * W.damage * wound_update_accuracy)
 			if(prob(1 * wound_update_accuracy))
 				owner.custom_pain("You feel a stabbing pain in your [display_name]!",1)
 
@@ -497,10 +496,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	status &= ~ORGAN_BLEEDING
 	var/clamped = 0
 	for(var/datum/wound/W in wounds)
-		if(W.damage_type == CUT || W.damage_type == BRUISE)
-			brute_dam += W.damage
-		else if(W.damage_type == BURN)
-			burn_dam += W.damage
+		if (!W.internal)
+			if(W.damage_type == CUT || W.damage_type == BRUISE)
+				brute_dam += W.damage
+			else if(W.damage_type == BURN)
+				burn_dam += W.damage
 
 		if(!(status & ORGAN_ROBOT) && W.bleeding())
 			W.bleed_timer--
@@ -1122,18 +1122,18 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(H.f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
 		if(facial_hair_style)
-			var/icon/facial = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
+			var/image/facial = image("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
 			if(facial_hair_style.do_colouration)
-				facial.Blend(rgb(H.r_facial, H.g_facial, H.b_facial), ICON_ADD)
+				facial.color = rgb(H.r_facial, H.g_facial, H.b_facial)
 
 			overlays.Add(facial) // icon.Blend(facial, ICON_OVERLAY)
 
 	if(H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
 		if(hair_style)
-			var/icon/hair = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+			var/image/hair = image("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			if(hair_style.do_colouration)
-				hair.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_ADD)
+				hair.color = rgb(H.r_hair, H.g_hair, H.b_hair)
 
 			overlays.Add(hair) //icon.Blend(hair, ICON_OVERLAY)
 	spawn(5)
@@ -1153,7 +1153,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	H.death()
 	brainmob.stat = DEAD
 	brainmob.death()
-
+	if(brainmob && brainmob.mind && brainmob.mind.changeling) //cuz fuck runtimes
+		var/datum/changeling/Host = brainmob.mind.changeling
+		if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
+			for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
+				if(istype(crab))
+					crab.sting_action(brainmob)
+					H.gib()
 /obj/item/weapon/organ/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
 	brainmob.name = H.real_name

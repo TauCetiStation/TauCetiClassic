@@ -193,7 +193,6 @@ Please contact me on #coderbus IRC. ~Carn x
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
-
 	var/list/standing	= list()
 
 	var/husk_color_mod = rgb(96,88,80)
@@ -341,8 +340,14 @@ Please contact me on #coderbus IRC. ~Carn x
 	if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
 			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
-
 	standing	+= image("icon"=stand_icon, "layer"=-BODY_LAYER)
+
+	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
+		if(!fat && organs_by_name["r_foot"] && organs_by_name["l_foot"]) //shit
+			var/datum/organ/external/rfoot = organs_by_name["r_foot"]
+			var/datum/organ/external/lfoot = organs_by_name["l_foot"]
+			if(!rfoot.amputated && !lfoot.amputated)
+				standing += image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-BODY_LAYER)
 
 	if(has_head)
 		//Eyes
@@ -357,9 +362,9 @@ Please contact me on #coderbus IRC. ~Carn x
 			standing	+= lips
 
 	update_tail_showing()
-
 	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
+
 
 
 //HAIR OVERLAY
@@ -813,8 +818,8 @@ Please contact me on #coderbus IRC. ~Carn x
 				overlays_standing[HEAD_LAYER]	= null
 
 		update_inv_shoes()
-		update_tail_showing()
 
+	update_tail_showing()
 	update_collar()
 
 	apply_overlay(SUIT_LAYER)

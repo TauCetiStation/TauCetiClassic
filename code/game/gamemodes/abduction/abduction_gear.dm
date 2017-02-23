@@ -77,7 +77,7 @@
 		M.regenerate_icons()
 	return
 
-/obj/item/clothing/suit/armor/abductor/vest/IsShield()
+/obj/item/clothing/suit/armor/abductor/vest/Get_shield_chance()
 	DeactivateStealth()
 	return 0
 

@@ -427,6 +427,14 @@
 				for(var/mob/O in viewers(user, 5))
 					O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", 2)
 		return
+	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
+		var/obj/item/weapon/changeling_hammer/C = W
+		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+		user.do_attack_animation(src)
+		if(C.use_charge(src,user))
+			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			take_damage(pick(10, 20, 30))
+		return
 
 	else if(istype(W,/obj/item/apc_frame))
 		var/obj/item/apc_frame/AH = W

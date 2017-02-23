@@ -45,6 +45,14 @@
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.storage_slots = 4
 
+/obj/item/clothing/suit/storage/flak/marinad
+	name = "marine armor"
+	desc = "This thing will protect you from any angry flora or fauna."
+	icon_state = "marinad"
+	item_state = "marinad_armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	slowdown = 1
+	armor = list(melee = 60, bullet = 65, laser = 50, energy = 60, bomb = 40, bio = 0, rad = 0)
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
 	desc = "An armoured jacket with gold rank pips and livery."
@@ -137,9 +145,10 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
 	slowdown = 1
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 0, rad = 0)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	flags_pressure = STOPS_LOWPRESSUREDMAGE
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
@@ -174,9 +183,9 @@
 	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/armor/reactive/IsShield()
+/obj/item/clothing/suit/armor/reactive/Get_shield_chance()
 	if(active)
-		return 1
+		return 35
 	return 0
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)

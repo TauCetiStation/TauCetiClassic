@@ -64,7 +64,7 @@
 	else
 		descriptive = "furiously hot"
 
-	to_chat(user, "<span class='notice'>\The [icon][src] feels [descriptive].</span>")
+	to_chat(user, "<span class='notice'>[bicon(src)] \The [src] feels [descriptive].</span>")
 
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))

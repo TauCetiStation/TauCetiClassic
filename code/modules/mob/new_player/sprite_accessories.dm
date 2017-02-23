@@ -1050,6 +1050,16 @@
 	icon_state = "taj_hair_messy"
 	species_allowed = list("Tajaran")
 
+/datum/sprite_accessory/hair/taj_ears_tailshort
+	name = "Tajara Short Tail"
+	icon_state = "taj_hair_shorttail"
+	species_allowed = list("Tajaran")
+
+/datum/sprite_accessory/hair/taj_ears_messylong
+	name = "Tajara Long Messy"
+	icon_state = "taj_hair_messylong"
+	species_allowed = list("Tajaran")
+
 /datum/sprite_accessory/hair/vox_quills_short
 	name = "Short Vox Quills"
 	icon_state = "vox_shortquills"

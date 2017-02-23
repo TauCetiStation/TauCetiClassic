@@ -52,7 +52,8 @@
 	if(istype(I, /obj/item/weapon/cable_coil))
 		if(assembled == 1)
 			var/obj/item/weapon/cable_coil/C = I
-			C.use(1)
+			if(!C.use(1))
+				return
 			assembled = 2
 			to_chat(user, "<span  class='notice'>You wire the igniter to detonate the fuel.</span>")
 			desc = "A weak, improvised explosive."

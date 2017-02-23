@@ -20,7 +20,7 @@
 	damage = 10
 	stun = 0
 	weaken = 0
-	agony = 80
+	agony = 40
 	embed = 0
 	sharp = 0
 
@@ -184,7 +184,7 @@
 	light_color = "#2be4b8"
 	light_power = 2
 	light_range = 2
-	damage = 15
+	damage = 18
 	damage_type = BURN
 	flag = "energy"
 	eyeblur = 4

@@ -123,8 +123,13 @@
 			oldloc.Exited(src, destination)
 		loc = destination
 		destination.Entered(src, oldloc)
+		var/area/old_area = get_area(oldloc)
+		var/area/destarea = get_area(destination)
+		if(old_area != destarea)
+			destarea.Entered(src)
 		for(var/atom/movable/AM in destination)
-			if(AM == src)	continue
+			if(AM == src)
+				continue
 			AM.Crossed(src)
 		return 1
 	return 0

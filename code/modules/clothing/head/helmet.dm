@@ -125,10 +125,16 @@
 	icon_state = "swathelm"
 	item_state = "helmet"
 	flags = HEADCOVERSEYES
-
 	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/head/helmet/tactical/marinad
+	name = "marine helmet"
+	desc = "Spectrum alloy helmet. Lightweight and ready for action."
+	icon_state = "marinad"
+	item_state = "marinad_helmet"
+
 
 /obj/item/clothing/head/helmet/helmet_of_justice
 	name = "helmet of justice"
