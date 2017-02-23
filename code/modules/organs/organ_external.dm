@@ -1153,7 +1153,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	H.death()
 	brainmob.stat = DEAD
 	brainmob.death()
-
+	if(brainmob && brainmob.mind && brainmob.mind.changeling) //cuz fuck runtimes
+		var/datum/changeling/Host = brainmob.mind.changeling
+		if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
+			for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
+				if(istype(crab))
+					crab.sting_action(brainmob)
+					H.gib()
 /obj/item/weapon/organ/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
 	brainmob.name = H.real_name

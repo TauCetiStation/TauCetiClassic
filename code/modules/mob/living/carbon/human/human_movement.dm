@@ -4,6 +4,9 @@
 	if(species)
 		tally = species.speed_mod
 
+	if(mind &&  mind.changeling && mind.changeling.strained_muscles)
+		return -3
+
 	if(crawling)
 		tally += 7
 	else if((reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")) && species && !(species.flags[NO_BLOOD]))

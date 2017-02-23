@@ -366,3 +366,4 @@
 		adjustFireLoss(6)
 		return
 //END FIRE CODE
+
