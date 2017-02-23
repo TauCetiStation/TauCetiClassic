@@ -145,18 +145,18 @@
 			return 0// nope.avi
 
 		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
+		var/miss_modifier = 0
 		if(damage && (distance > 7))
 			if(damage < 55)
 				damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
-		//var/miss_modifier = -30
-
-		//if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
-		//	var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
-		//	if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
-		//		miss_modifier += -30
-		//if(distance > 1)
-		//	def_zone = get_zone_with_miss_chance(def_zone, M)
-		def_zone = get_zone_with_probabilty(def_zone)
+				miss_modifier = - 100 // so sniper rifle and PTR-rifle projectiles cannot miss
+		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
+			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
+			if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
+				miss_modifier += -60
+		if(distance > 1)
+			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
+		//def_zone = get_zone_with_probabilty(def_zone)
 
 		if(!def_zone)
 			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")

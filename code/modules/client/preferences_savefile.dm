@@ -147,6 +147,7 @@
 	S["eyes_blue"]			>> b_eyes
 	S["underwear"]			>> underwear
 	S["undershirt"]			>> undershirt
+	S["socks"]				>> socks
 	S["backbag"]			>> backbag
 	S["b_type"]				>> b_type
 
@@ -212,6 +213,7 @@
 	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
 	underwear		= sanitize_integer(underwear, 1, underwear_m.len, initial(underwear))
 	undershirt		= sanitize_integer(undershirt, 1, undershirt_t.len, initial(undershirt))
+	socks			= sanitize_integer(socks, 1, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
@@ -312,6 +314,7 @@
 	S["eyes_blue"]			<< b_eyes
 	S["underwear"]			<< underwear
 	S["undershirt"]			<< undershirt
+	S["socks"]				<< socks
 	S["backbag"]			<< backbag
 	S["b_type"]				<< b_type
 

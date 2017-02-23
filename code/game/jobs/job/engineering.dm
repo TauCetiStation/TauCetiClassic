@@ -75,7 +75,6 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/yellow/visor(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/device/t_scanner(H), slot_r_store)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/engineering(H), slot_l_store)
-
 	if(visualsOnly)
 		return
 
@@ -123,3 +122,38 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 
 	return 1
+
+proc/identify_wire()
+	var/list/wires = list(
+			"Orange",
+			"Dark red",
+			"White",
+			"Yellow",
+			"Red",
+			"Blue",
+			"Green",
+			"Grey",
+			"Black",
+			"Gold",
+			"Aqua",
+			"Pink"
+		)
+	var/list/wirefunction = list(
+	"Id Scan",
+	"Main power",
+	"Backup power",
+	"Door Bolts",
+	"non",
+	"non", // here should be a BACKUP POWER 1 and 2, but they doesn't used anywhere, so fuck them
+	"Open door",
+	"Ai control",
+	"Electrify",
+	"Door safety",
+	"Timing mechanism",
+	"Bolt light")
+	var/info = ""
+	for(var/i in 1 to 12)
+		if(airlockWireColorToIndex[i] == 5 ||  airlockWireColorToIndex[i] == 6) // Exception for Backup powers
+			continue
+		info += "[wires[i]] is [wirefunction[airlockWireColorToIndex[i]]]<br>"
+	return info

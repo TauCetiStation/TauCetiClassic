@@ -107,9 +107,14 @@
 	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
+
+		var/list/resources_to_use = list()
+		resources_to_use[R] = 1
+		resources_to_use[src] = 1
+		if(!use_multi(user, resources_to_use))
+			return
+
 		var/obj/item/weapon/transparant/W = new /obj/item/weapon/transparant
-		R.use(1)
-		src.use(1)
 
 		user.remove_from_mob(src)
 

@@ -28,9 +28,8 @@
 /obj/item/stack/tile/light/attackby(obj/item/O, mob/user)
 	..()
 	if(istype(O,/obj/item/weapon/crowbar))
+		if(!use(1))
+			return
 		new/obj/item/stack/sheet/metal(user.loc)
-		amount--
 		new/obj/item/stack/light_w(user.loc)
-		if(amount <= 0)
-			user.drop_from_inventory(src)
-			qdel(src)
+

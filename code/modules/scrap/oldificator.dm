@@ -1,6 +1,6 @@
 /obj/item/proc/make_old()
 	color = pick("#996633", "#663300", "#666666")
-	name = pick("old ", "expired ", "dirty ") + name
+	name = pick("old ", "expired ", "dirty ") + initial(name)
 	desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
 	if(prob(75))
 		origin_tech = null
@@ -99,7 +99,7 @@
 		armor["bio"] = armor["bio"] / 2
 		armor["rad"] = armor["rad"] / 2
 	if(prob(50))
-		uncleanable = 1 
+		uncleanable = 1
 	if(prob(25))
 		flags_pressure = 0
 	if(prob(25))
@@ -138,3 +138,35 @@
 	sender.drop_from_inventory(src)
 	qdel(src)
 
+/obj/item/weapon/dnainjector/make_old()
+	if(prob(75))
+		name = "DNA-Injector (unknown)"
+		desc = pick("1mm0r74l17y 53rum", "1ncr3d1bl3 73l3p47y hNlk", "5up3rhum4n m16h7")
+		value = 0xFFF
+	if(prob(75))
+		block = pick(MONKEYBLOCK, HALLUCINATIONBLOCK, DEAFBLOCK, BLINDBLOCK, NERVOUSBLOCK, TWITCHBLOCK, CLUMSYBLOCK, COUGHBLOCK, HEADACHEBLOCK, GLASSESBLOCK)
+	..()
+
+/obj/item/clothing/glasses/hud/make_old()
+	if(prob(75) && !istype(src, /obj/item/clothing/glasses/hud/broken))
+		var/obj/item/clothing/glasses/hud/broken/brokenhud= new /obj/item/clothing/glasses/hud/broken
+		brokenhud.name = src.name
+		brokenhud.desc = src.desc
+		brokenhud.icon = src.icon
+		brokenhud.icon_state = src.icon_state
+		brokenhud.item_state = src.item_state
+		brokenhud.make_old()
+		qdel(src)
+	..()
+
+/obj/item/clothing/glasses/make_old()
+	..()
+	if(prob(75))
+		vision_flags = 0
+	if(prob(75))
+		darkness_view = -1
+
+/obj/item/clothing/glasses/sunglasses/sechud/make_old()
+	..()
+	if(hud && prob(75))
+		hud = new /obj/item/clothing/glasses/hud/broken

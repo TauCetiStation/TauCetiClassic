@@ -20,7 +20,7 @@
 
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
-	var/stamps		//The (text for the) stamps on the paper.
+	var/stamp_text		//The (text for the) stamp_text on the paper.
 	var/fields		//Amount of user created fields
 	var/list/stamped
 	var/ico[0]      //Icons and
@@ -40,7 +40,7 @@
 	..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
-	stamps = ""
+	stamp_text = ""
 	spawn(2)
 		update_icon()
 		updateinfolinks()
@@ -65,10 +65,10 @@
 			to_chat(usr, "<span class='notice'>You can't read anything until it crumpled.</span>")
 			return
 		if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
-			usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamps]</BODY></HTML>", "window=[name]")
+			usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamp_text]</BODY></HTML>", "window=[name]")
 			onclose(usr, "[name]")
 		else
-			usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
+			usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info][stamp_text]</BODY></HTML>", "window=[name]")
 			onclose(usr, "[name]")
 	else
 		to_chat(usr, "<span class='notice'>It is too far away.</span>")
@@ -146,10 +146,10 @@
 	if(crumpled==1)
 		return
 	if(dist < 2)
-		usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
+		usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info][stamp_text]</BODY></HTML>", "window=[name]")
 		onclose(usr, "[name]")
 	else
-		usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamps]</BODY></HTML>", "window=[name]")
+		usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamp_text]</BODY></HTML>", "window=[name]")
 		onclose(usr, "[name]")
 	return
 
@@ -222,7 +222,7 @@
 
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
-	stamps = null
+	stamp_text = null
 	stamped = list()
 	overlays.Cut()
 	updateinfolinks()
@@ -360,9 +360,9 @@
 		while(index)
 			t = copytext(t, 1, index) + "&#1103;" + copytext(t, index+8)
 			index = findtext(t, LETTER_255)*/
-		
+
 		var last_fields_value = fields
-		
+
 		t = sanitize_alt(t, list("\n"="\[br\]","ÿ"=LETTER_255))
 
 		// check for exploits
@@ -387,7 +387,7 @@
 			info += t // Oh, he wants to edit to the end of the file, let him.
 			updateinfolinks()
 
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]") // Update the window
+		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamp_text]</BODY></HTML>", "window=[name]") // Update the window
 
 		update_icon()
 
@@ -457,7 +457,7 @@
 		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )
 			P:RenamePaper(user,src)
 		else
-			user << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info_links][stamp_text]</BODY></HTML>", "window=[name]")
 		//openhelp(user)
 		add_fingerprint(user)
 		return
@@ -466,7 +466,7 @@
 		if((!in_range(src, usr) && loc != user && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != user && user.get_active_hand() != P))
 			return
 
-		stamps += (stamps=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the [P.name].</i>"
+		stamp_text += (stamp_text=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the [P.name].</i>"
 
 		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 		var/{x; y;}
@@ -554,3 +554,9 @@
 
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
+
+/obj/item/weapon/paper/wires
+	name = "Wires"
+	icon_state = "paper_words"
+	New()
+		info = identify_wire()

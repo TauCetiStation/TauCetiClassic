@@ -645,7 +645,6 @@
 
 /obj/mecha/attackby(obj/item/weapon/W, mob/user)
 
-
 	if(istype(W, /obj/item/device/mmi) || istype(W, /obj/item/device/mmi/posibrain))
 		if(mmi_move_inside(W,user))
 			to_chat(user, "[src]-MMI interface initialized successfuly")
@@ -779,7 +778,13 @@
 
 		user.drop_item()
 		qdel(P)
-
+	else if(istype(W, /obj/item/weapon/changeling_hammer))
+		var/obj/item/weapon/changeling_hammer/Ham = W
+		user.do_attack_animation(src)
+		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
+		if(prob(50) && Ham.use_charge(src,user,6))
+			take_damage(Ham.force * 3)
 	else
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
 /*
@@ -971,6 +976,9 @@
 	set src in oview(1)
 
 	if (usr.stat || !ishuman(usr))
+		return
+	if (usr.buckled)
+		to_chat(usr,"<span class='warning'>You can't climb into the exosuit while buckled!</span>")
 		return
 	src.log_message("[usr] tries to move in.")
 	if(iscarbon(usr))

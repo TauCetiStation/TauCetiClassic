@@ -413,6 +413,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
 	var/amount = MAXCOIL
+	var/max_amount = MAXCOIL
 	item_color = COLOR_RED
 	desc = "A coil of power cable."
 	throwforce = 10
@@ -430,7 +431,12 @@ By design, d1 is the smallest direction and d2 is the highest
 		to_chat(viewers(user), "<span class='warning'><b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 		return(OXYLOSS)
 
-/obj/item/weapon/cable_coil/New(loc, amount = MAXCOIL, var/param_color = null)
+/obj/item/weapon/cable_coil/cyborg
+	max_amount = 50
+	m_amt = 0
+	g_amt = 0
+
+/obj/item/weapon/cable_coil/New(loc, amount = max_amount, var/param_color = null)
 	..()
 	src.amount = amount
 	if (param_color)
@@ -459,12 +465,16 @@ By design, d1 is the smallest direction and d2 is the highest
 					to_chat(user, "\red You can't repair damage to your own body - it's against OH&S.")
 					return
 
-		if(S.burn_dam > 0 && use(1))
-			S.heal_damage(0,15,0,1)
-			user.visible_message("\red \The [user] repairs some burn damage on \the [M]'s [S.display_name] with \the [src].")
-			return
+		if(S.burn_dam > 0)
+			if(use(1))
+				S.heal_damage(0,15,0,1)
+				user.visible_message("\red \The [user] repairs some burn damage on \the [M]'s [S.display_name] with \the [src].")
+				return
+			else
+				to_chat(user, "Need more cable!")
 		else
 			to_chat(user, "Nothing to fix!")
+
 
 	else
 		return ..()
@@ -508,13 +518,12 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
 		if(!istype(usr.loc,/turf)) return
-		if(src.amount <= 14)
+		if(!src.use(15))
 			to_chat(usr, "<span class='warning'>You need at least 15 lengths to make restraints!</span>")
 			return
 		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
 		B.color = item_color
 		to_chat(usr, "<span class='notice'>You wind some cable together to make some restraints.</span>")
-		src.use(15)
 	else
 		to_chat(usr, "<span class='notice'>\blue You cannot do that.</span>")
 	..()
@@ -524,8 +533,7 @@ By design, d1 is the smallest direction and d2 is the highest
 //   - Cable coil : merge cables
 /obj/item/weapon/cable_coil/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if( istype(W, /obj/item/weapon/wirecutters) && src.amount > 1)
-		src.amount--
+	if( istype(W, /obj/item/weapon/wirecutters) && src.use(1))
 		new/obj/item/weapon/cable_coil(user.loc, 1,item_color)
 		to_chat(user, "<span class='notice'>You cut a piece off the cable coil.</span>")
 		src.update_icon()
@@ -534,45 +542,39 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	else if( istype(W, /obj/item/weapon/cable_coil) )
 		var/obj/item/weapon/cable_coil/C = W
-		if(C.amount == MAXCOIL)
+		if(C.amount == C.max_amount)
 			to_chat(user, "<span class='notice'>The coil is too long, you cannot add any more cable to it.</span>")
 			return
 
-		if( (C.amount + src.amount <= MAXCOIL) )
-			C.amount += src.amount
+		if( (C.amount + src.amount <= C.max_amount) )
+			C.give(src.amount)
 			to_chat(user, "<span class='notice'>You join the cable coils together.</span>")
-			C.update_icon()
-			C.update_wclass()
 			qdel(src)
 			return
-
 		else
-			to_chat(user, "<span class='notice'>You transfer [MAXCOIL - C.amount ] length\s of cable from one coil to the other.</span>")
-			src.amount -= (MAXCOIL-C.amount)
-			src.update_icon()
-			src.update_wclass()
-			C.amount = MAXCOIL
-			C.update_icon()
-			C.update_wclass()
+			to_chat(user, "<span class='notice'>You transfer [C.max_amount - C.amount ] length\s of cable from one coil to the other.</span>")
+			src.use(C.max_amount-C.amount)
+			C.give(C.max_amount-C.amount)
 			return
 
 //remove cables from the stack
 /obj/item/weapon/cable_coil/proc/use(used)
 	if(src.amount < used)
 		return 0
-	else if (src.amount == used)
-		. = 1
-		qdel(src)
 	else
 		amount -= used
-		update_icon()
-		update_wclass()
+		if ((src.amount <= 0) && !istype(loc,/obj/item/weapon/robot_module) && !istype(loc,/mob/living/silicon))
+			. = 1
+			qdel(src)
+		else
+			update_icon()
+			update_wclass()
 		return 1
 
 //add cables to the stack
 /obj/item/weapon/cable_coil/proc/give(extra)
-	if(amount + extra > MAXCOIL)
-		amount = MAXCOIL
+	if(amount + extra > max_amount)
+		amount = max_amount
 	else
 		amount += extra
 	update_icon()
@@ -585,6 +587,10 @@ By design, d1 is the smallest direction and d2 is the highest
 // called when cable_coil is clicked on a turf/simulated/floor
 /obj/item/weapon/cable_coil/proc/turf_place(turf/simulated/floor/F, mob/user)
 	if(!isturf(user.loc))
+		return
+
+	if(!use(1))
+		to_chat(user, "<span class='warning'>You need more cable.</span>")
 		return
 
 	if(get_dist(F,user) > 1) //too far
@@ -671,9 +677,6 @@ By design, d1 is the smallest direction and d2 is the highest
 			C.mergeConnectedNetworks(C.d2) //merge the powernet with adjacents powernets
 			C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
 
-
-			use(1)
-
 			if (C.shock(user, 50))
 				if (prob(50)) //fail
 					new/obj/item/weapon/cable_coil(C.loc, 1, C.color)
@@ -719,6 +722,9 @@ By design, d1 is the smallest direction and d2 is the highest
 					to_chat(user, "<span class='warning'>There's already a cable at that position.</span>")
 					return
 
+			if(!use(1))
+				return
+
 			var/obj/structure/cable/NC = new(U)
 			NC.cableColor(item_color)
 
@@ -733,8 +739,6 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			NC.mergeConnectedNetworks(NC.d2) //merge the powernet with adjacents powernets
 			NC.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
-
-			use(1)
 
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
@@ -762,6 +766,9 @@ By design, d1 is the smallest direction and d2 is the highest
 				to_chat(user, "<span class='warning'>There's already a cable at that position.</span>")
 				return
 
+		if(!use(1))
+			to_chat(user, "<span class='warning'>Need more cable.</span>")
+			return
 
 		C.cableColor(item_color)
 
@@ -775,8 +782,6 @@ By design, d1 is the smallest direction and d2 is the highest
 		C.mergeConnectedNetworks(C.d1) //merge the powernets...
 		C.mergeConnectedNetworks(C.d2) //...in the two new cable directions
 		C.mergeConnectedNetworksOnTurf()
-
-		use(1)
 
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
