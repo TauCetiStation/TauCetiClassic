@@ -24,7 +24,7 @@
 	return 0
 
 /obj/item/weapon/melee/energy/sword/New()
-	item_color = pick("red","blue","green","purple")
+	item_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
@@ -193,6 +193,26 @@
 /obj/item/weapon/melee/energy/sword/red
 	New()
 		item_color = "red"
+
+/obj/item/weapon/melee/energy/sword/blue
+	New()
+		item_color = "blue"
+
+/obj/item/weapon/melee/energy/sword/purple
+	New()
+		item_color = "purple"
+
+/obj/item/weapon/melee/energy/sword/yellow
+	New()
+		item_color = "yellow"
+
+/obj/item/weapon/melee/energy/sword/pink
+	New()
+		item_color = "pink"
+
+/obj/item/weapon/melee/energy/sword/black
+	New()
+		item_color = "black"
 
 /obj/item/weapon/melee/energy/blade/New()
 	spark_system = new /datum/effect/effect/system/spark_spread()
