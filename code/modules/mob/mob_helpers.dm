@@ -379,7 +379,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 	if(id && istype(id, /obj/item/weapon/card/id/syndicate))
 		threatcount -= 2
 	// A proper CentCom id is hard currency.
-	else if(id && istype(id, /obj/item/weapon/card/id/centcom))
+	else if(id && is_type_in_list(id, list(/obj/item/weapon/card/id/centcom, /obj/item/weapon/card/id/ert)))
 		return SAFE_PERP
 
 	if(check_access && !access_obj.allowed(src))
