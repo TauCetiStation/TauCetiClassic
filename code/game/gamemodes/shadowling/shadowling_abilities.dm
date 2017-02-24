@@ -531,7 +531,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 		boom.emote("scream",,, 1)
 		sleep(20)
 		if(istype(boom,/mob/living/simple_animal/hostile/carp/dog))
-			to_chat(SHA,"<span class='shadowling'>Probably, trying ty explode [boom] wasn't good idea....</span>")
+			to_chat(SHA,"<span class='shadowling'>Probably, trying to explode [boom] wasn't good idea....</span>")
 			boom = usr
 		playsound(boom, 'sound/effects/splat.ogg', 100, 1)
 		boom.visible_message("<span class='userdanger'>[boom] explodes!</span>")
