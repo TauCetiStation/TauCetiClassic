@@ -524,20 +524,26 @@ proc/FindNameFromID(mob/living/carbon/human/H)
 proc/get_all_job_icons() //For all existing HUD icons
 	return joblist + list("Prisoner")
 
+proc/get_all_alt_job_icons()
+	return jobaltlist
+
 /obj/proc/GetJobName() //Used in secHUD icon generation
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
 		return
 
 	var/jobName
-
+	var/alt
 	if(istype(src, /obj/item/device/pda))
 		var/obj/item/device/pda/P = src
 		if(P.id)
 			jobName = P.id.rank
+			alt = P.id.assignment
 	if(istype(src, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = src
 		jobName = I.rank
-
+		alt = I.assignment
+	if(alt in get_all_alt_job_icons())
+		return alt
 	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
 		return jobName
 	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
