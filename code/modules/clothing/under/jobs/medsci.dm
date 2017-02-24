@@ -149,6 +149,7 @@
 	icon_state = "psych"
 	item_state = "w_suit"
 	item_color = "psych"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/psych/turtleneck
 	desc = "A turqouise turtleneck and a pair of dark blue slacks, belonging to a psychologist."

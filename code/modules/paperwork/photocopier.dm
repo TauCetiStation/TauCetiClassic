@@ -222,7 +222,7 @@
 	c.info += "</font>"
 	c.name = copy.name // -- Doohl
 	c.fields = copy.fields
-	c.stamps = copy.stamps
+	c.stamp_text = copy.stamp_text
 	c.stamped = copy.stamped
 	c.ico = copy.ico
 	c.offset_x = copy.offset_x

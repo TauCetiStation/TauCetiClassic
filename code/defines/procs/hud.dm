@@ -3,7 +3,7 @@ Use the regular_hud_updates() proc before process_med_hud(mob) or process_sec_hu
 the HUD updates properly! */
 
 //Medical HUD outputs. Called by the Life() proc of the mob using it, usually.
-/proc/process_med_hud(mob/M, local_scanner, mob/Alt)
+/proc/process_med_hud(mob/M, local_scanner, mob/Alt, crit_fail = 0)
 	if(!can_process_hud(M))
 		return
 
@@ -11,7 +11,9 @@ the HUD updates properly! */
 	for(var/mob/living/carbon/human/patient in P.Mob.in_view(P.Turf))
 		if(P.Mob.see_invisible < patient.invisibility)
 			continue
-
+		if(crit_fail)
+			P.Client.images += image('icons/mob/hud.dmi', loc = patient, icon_state = pick("hudbroken6", "hudbroken7"))
+			continue
 		if(!local_scanner)
 			if(istype(patient.w_uniform, /obj/item/clothing/under))
 				var/obj/item/clothing/under/U = patient.w_uniform
@@ -25,20 +27,31 @@ the HUD updates properly! */
 
 
 //Security HUDs. Pass a value for the second argument to enable implant viewing or other special features.
-/proc/process_sec_hud(mob/M, advanced_mode, mob/Alt)
+/proc/process_sec_hud(mob/M, advanced_mode, mob/Alt, crit_fail = 0)
 	if(!can_process_hud(M))
 		return
 	var/datum/arranged_hud_process/P = arrange_hud_process(M, Alt, sec_hud_users)
 	for(var/mob/living/carbon/human/perp in P.Mob.in_view(P.Turf))
 		if(P.Mob.see_invisible < perp.invisibility)
 			continue
-
+		if(crit_fail)
+			P.Client.images += image('icons/mob/hud.dmi', loc = perp, icon_state = pick("hudbroken4", "hudbroken5"))
+			continue
 		P.Client.images += perp.hud_list[ID_HUD]
 		if(advanced_mode)
 			P.Client.images += perp.hud_list[WANTED_HUD]
 			P.Client.images += perp.hud_list[IMPTRACK_HUD]
 			P.Client.images += perp.hud_list[IMPLOYAL_HUD]
 			P.Client.images += perp.hud_list[IMPCHEM_HUD]
+
+/proc/process_broken_hud(mob/M, advanced_mode, mob/Alt)
+	if(!can_process_hud(M))
+		return
+	var/datum/arranged_hud_process/P = arrange_hud_process(M, Alt, sec_hud_users)
+	for(var/mob/living/carbon/human/perp in P.Mob.in_view(P.Turf))
+		if(P.Mob.see_invisible < perp.invisibility)
+			continue
+		P.Client.images += image('icons/mob/hud.dmi', loc = perp, icon_state = "hudbroken[pick(1,2,3,4,5,6,7)]")
 
 /datum/arranged_hud_process
 	var/client/Client

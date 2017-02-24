@@ -74,7 +74,7 @@
 		density = 0
 		var/turf/T = loc
 		qdel(src)
-		for (var/obj/effect/alien/weeds/W in range(1,T))
+		for (var/obj/structure/alien/weeds/W in range(1,T))
 			W.updateWeedOverlays()
 	return
 
@@ -198,19 +198,20 @@
  */
 #define NODERANGE 3
 
-/obj/effect/alien/weeds
+/obj/structure/alien/weeds
 	name = "resin floor"
 	desc = "A thick resin surface covers the floor."
+	icon = 'icons/mob/xenomorph.dmi'
 	icon_state = "weeds"
 
 	anchored = 1
 	density = 0
-	layer = 2
+	layer = 2.5
 	var/health = 15
-	var/obj/effect/alien/weeds/node/linked_node = null
+	var/obj/structure/alien/weeds/node/linked_node = null
 	var/static/list/weedImageCache
 
-/obj/effect/alien/weeds/node
+/obj/structure/alien/weeds/node
 	icon_state = "weednode"
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
@@ -219,14 +220,14 @@
 	var/node_range = NODERANGE
 	light_color = "#24C1FF"
 
-/obj/effect/alien/weeds/node/New()
+/obj/structure/alien/weeds/node/New()
 	..(src.loc, src)
-	for (var/obj/effect/alien/weeds/W in loc)
+	for (var/obj/structure/alien/weeds/W in loc)
 		if (W != src)
 			qdel(W)
 	set_light(2)
 
-/obj/effect/alien/weeds/New(pos, node)
+/obj/structure/alien/weeds/New(pos, node)
 	..()
 	if(istype(loc, /turf/space))
 		qdel(src)
@@ -240,15 +241,15 @@
 			Life()
 	return
 
-/obj/effect/alien/weeds/node/Destroy()
+/obj/structure/alien/weeds/node/Destroy()
 	var/turf/T = loc
 	loc = null
-	for (var/obj/effect/alien/weeds/W in range(1,T))
+	for (var/obj/structure/alien/weeds/W in range(1,T))
 		W.updateWeedOverlays()
 	linked_node = null
 	..()
 
-/obj/effect/alien/weeds/proc/updateWeedOverlays()
+/obj/structure/alien/weeds/proc/updateWeedOverlays()
 
 	overlays.Cut()
 
@@ -265,25 +266,25 @@
 	var/turf/E = get_step(src, EAST)
 	var/turf/W = get_step(src, WEST)
 
-	if(!locate(/obj/effect/alien) in N.contents)
+	if(!locate(/obj/structure/alien/weeds) in N.contents)
 		if(istype(N, /turf/simulated/floor))
 			overlays += weedImageCache[WEED_SOUTH_EDGING]
-	if(!locate(/obj/effect/alien) in S.contents)
+	if(!locate(/obj/structure/alien/weeds) in S.contents)
 		if(istype(S, /turf/simulated/floor))
 			overlays += weedImageCache[WEED_NORTH_EDGING]
-	if(!locate(/obj/effect/alien) in E.contents)
+	if(!locate(/obj/structure/alien/weeds) in E.contents)
 		if(istype(E, /turf/simulated/floor))
 			overlays += weedImageCache[WEED_WEST_EDGING]
-	if(!locate(/obj/effect/alien) in W.contents)
+	if(!locate(/obj/structure/alien/weeds) in W.contents)
 		if(istype(W, /turf/simulated/floor))
 			overlays += weedImageCache[WEED_EAST_EDGING]
 
 
-/obj/effect/alien/weeds/proc/fullUpdateWeedOverlays()
-	for (var/obj/effect/alien/weeds/W in range(1,src))
+/obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
+	for (var/obj/structure/alien/weeds/W in range(1,src))
 		W.updateWeedOverlays()
 
-/obj/effect/alien/weeds/proc/Life()
+/obj/structure/alien/weeds/proc/Life()
 	//set background = 1
 	var/turf/U = get_turf(src)
 
@@ -297,7 +298,7 @@
 	for(var/dirn in cardinal)
 		var/turf/T = get_step(src, dirn)
 
-		if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
+		if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
 			continue
 
 		var/obj/structure/window/W = locate(/obj/structure/window) in T
@@ -311,10 +312,10 @@
 			if(W.density)
 				continue
 
-		new /obj/effect/alien/weeds(T, linked_node)
+		new /obj/structure/alien/weeds(T, linked_node)
 
 
-/obj/effect/alien/weeds/ex_act(severity)
+/obj/structure/alien/weeds/ex_act(severity)
 	var/turf/T = loc
 	switch(severity)
 		if(1.0)
@@ -325,11 +326,11 @@
 		if(3.0)
 			if (prob(5))
 				qdel(src)
-	for (var/obj/effect/alien/weeds/W in range(1,T))
+	for (var/obj/structure/alien/weeds/W in range(1,T))
 		W.updateWeedOverlays()
 	return
 
-/obj/effect/alien/weeds/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/alien/weeds/attackby(obj/item/weapon/W, mob/user)
 	if(W.attack_verb.len)
 		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
@@ -348,22 +349,25 @@
 	healthcheck()
 
 
-/obj/effect/alien/weeds/temperature_expose(null, temperature, volume)
+/obj/structure/alien/weeds/temperature_expose(null, temperature, volume)
 	if(temperature > T0C+200)
 		health -= 1 * temperature
 		healthcheck()
 
-/obj/effect/alien/weeds/proc/healthcheck()
+/obj/structure/alien/weeds/proc/healthcheck()
 	if(health <= 0)
 		var/turf/T = loc
 		qdel(src)
-		for (var/obj/effect/alien/weeds/W in range(1,T))
+		for (var/obj/structure/alien/weeds/W in range(1,T))
 			W.updateWeedOverlays()
 
-/obj/effect/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		health -= 5
 		healthcheck()
+
+/obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj)
+	return -1
 
 /*/obj/effect/alien/weeds/burn(fi_amount)
 	if (fi_amount > 18000)

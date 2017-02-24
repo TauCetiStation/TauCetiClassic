@@ -137,7 +137,8 @@ obj/structure/windoor_assembly/Destroy()
 					if(!src || !src.anchored || src.state != "01")
 						return
 					var/obj/item/weapon/cable_coil/CC = W
-					CC.use(1)
+					if(!CC.use(1))
+						return
 					to_chat(user, "\blue You wire the windoor!")
 					src.state = "02"
 					if(src.secure)

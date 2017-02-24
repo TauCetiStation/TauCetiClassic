@@ -818,8 +818,8 @@ Please contact me on #coderbus IRC. ~Carn x
 				overlays_standing[HEAD_LAYER]	= null
 
 		update_inv_shoes()
-		update_tail_showing()
 
+	update_tail_showing()
 	update_collar()
 
 	apply_overlay(SUIT_LAYER)

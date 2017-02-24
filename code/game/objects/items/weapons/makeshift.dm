@@ -29,8 +29,10 @@
 	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
+		if(!R.use(1))
+			return
+
 		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
-		R.use(1)
 
 		user.remove_from_mob(src)
 
