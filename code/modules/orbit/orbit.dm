@@ -99,15 +99,6 @@
 	SpinAnimation(0, 0)
 	qdel(orbiting)
 
-/atom/movable/Moved(atom/OldLoc, Dir)
-	..()
-	if (orbiters)
-		for (var/thing in orbiters)
-			var/datum/orbit/O = thing
-			O.Check()
-	if (orbiting)
-		orbiting.Check()
-
 /atom/Destroy()
 	. = ..()
 	if (orbiters)

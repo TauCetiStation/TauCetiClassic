@@ -751,7 +751,7 @@
 	return
 
 // called when bot bumps into anything
-/obj/machinery/bot/mulebot/Bump(var/atom/obs)
+/obj/machinery/bot/mulebot/Bump(atom/obs)
 	if(!(wires & wire_mobavoid))		//usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))

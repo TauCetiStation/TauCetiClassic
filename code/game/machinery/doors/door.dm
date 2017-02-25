@@ -196,7 +196,7 @@
 				for(var/i=0, i<2, i++)
 					target = get_turf(get_step(target,cur_dir))
 				playsound(user.loc, 'sound/weapons/thudswoosh.ogg', 50, 1)
-				user.throw_at(target, 200, 100)
+				user.throw_at(target, 200, 100, spin = FALSE)
 				user.visible_message("\red \The [user] forces \the [src] open with a bare hands!",\
 						"You force \the [src] open with a bare hands!",\
 						"You hear metal strain, and a door open.")

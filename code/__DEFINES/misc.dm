@@ -181,9 +181,6 @@
 #define ABOVE_NORMAL_TURF_LAYER 2.08
 #define BELOW_MOB_LAYER 3.7
 
-//Timing subsystem
-#define GLOBAL_PROC	"some_magic_bullshit"
-
 //teleport checks
 #define TELE_CHECK_NONE 0
 #define TELE_CHECK_TURFS 1

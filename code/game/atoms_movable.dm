@@ -2,8 +2,6 @@
 	layer = 3
 	var/last_move = null
 	var/anchored = 0
-	// var/elevation = 2    - not used anywhere
-	var/fly_speed = 0 //Because hitby called from Bump() and they not provide object speed
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/throwing = 0
@@ -11,6 +9,7 @@
 	var/turf/throw_source = null
 	var/throw_speed = 2
 	var/throw_range = 7
+	var/fly_speed = 0  // Used to get throw speed param exposed in proc, so we could use it in hitby reactions.
 	var/moved_recently = 0
 	var/mob/pulledby = null
 
@@ -78,6 +77,13 @@
 		newtonian_move(Dir)
 	if(length(client_mobs_in_contents))
 		update_parallax_contents()
+
+	if (orbiters)
+		for (var/thing in orbiters)
+			var/datum/orbit/O = thing
+			O.Check()
+	if (orbiting)
+		orbiting.Check()
 	return 1
 
 /atom/movable/proc/setLoc(T, teleported=0)
@@ -107,9 +113,11 @@
 		pulledby = null
 	return ..()
 
-/atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes, var/speed = 5)
-	if(src.throwing)
-		src.throw_impact(A, speed)
+/atom/movable/Bump(atom/A, yes)
+	if(throwing)
+		throwing = FALSE
+		throw_impact(A)
+		fly_speed = 0
 
 	spawn( 0 )
 		if ((A && yes))
@@ -148,26 +156,92 @@
 
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom)
-	if(istype(hit_atom,/mob/living))
-		var/mob/living/M = hit_atom
-		M.hitby(src)
+	hit_atom.hitby(src)
 
-	else if(isobj(hit_atom))
+	if(isobj(hit_atom))
 		var/obj/O = hit_atom
 		if(!O.anchored)
-			step(O, src.dir)
-		O.hitby(src)
+			step(O, dir)
 
-	else if(isturf(hit_atom))
-		src.throwing = 0
-		var/turf/T = hit_atom
-		if(T.density)
-			spawn(2)
-				step(src, turn(src.dir, 180))
-			if(istype(src,/mob/living))
-				var/mob/living/M = src
-				M.turf_collision(T, src.fly_speed)
-	src.fly_speed = 0
+	if(isturf(hit_atom) && hit_atom.density)
+		step(src, turn(dir, 180))
+
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+	if (!target || speed <= 0)
+		return
+
+	if (pulledby)
+		pulledby.stop_pulling()
+
+	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
+	if (thrower && thrower.last_move && thrower.client && thrower.client.move_delay >= world.time + world.tick_lag*2)
+		var/user_momentum = thrower.movement_delay()
+		if (!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
+			user_momentum = world.tick_lag
+
+		user_momentum = 1 / user_momentum // convert from ds to the tiles per ds that throw_at uses.
+
+		if (get_dir(thrower, target) & last_move)
+			user_momentum = user_momentum //basically a noop, but needed
+		else if (get_dir(target, thrower) & last_move)
+			user_momentum = -user_momentum //we are moving away from the target, lets slowdown the throw accordingly
+		else
+			user_momentum = 0
+
+
+		if (user_momentum)
+			//first lets add that momentum to range.
+			range *= (user_momentum / speed) + 1
+			//then lets add it to speed
+			speed += user_momentum
+			if (speed <= 0)
+				return //no throw speed, the user was moving too fast.
+
+	var/datum/thrownthing/TT = new()
+	TT.thrownthing = src
+	TT.target = target
+	TT.target_turf = get_turf(target)
+	TT.init_dir = get_dir(src, target)
+	TT.maxrange = range
+	TT.speed = speed
+	TT.thrower = thrower
+	TT.diagonals_first = diagonals_first
+	TT.callback = callback
+
+	var/dist_x = abs(target.x - src.x)
+	var/dist_y = abs(target.y - src.y)
+	var/dx = (target.x > src.x) ? EAST : WEST
+	var/dy = (target.y > src.y) ? NORTH : SOUTH
+
+	if (dist_x == dist_y)
+		TT.pure_diagonal = TRUE
+
+	else if(dist_x <= dist_y)
+		var/olddist_x = dist_x
+		var/olddx = dx
+		dist_x = dist_y
+		dist_y = olddist_x
+		dx = dy
+		dy = olddx
+	TT.dist_x = dist_x
+	TT.dist_y = dist_y
+	TT.dx = dx
+	TT.dy = dy
+	TT.diagonal_error = dist_x/2 - dist_y
+	TT.start_time = world.time
+
+	if(pulledby)
+		pulledby.stop_pulling()
+
+	fly_speed = speed
+	throwing = TRUE
+	if(spin)
+		SpinAnimation(5, 1)
+
+	SSthrowing.processing[src] = TT
+	if (SSthrowing.paused && length(SSthrowing.currentrun))
+		SSthrowing.currentrun[src] = TT
+	TT.tick()
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
@@ -202,121 +276,6 @@
 	inertia_last_loc = loc
 	SSspacedrift.processing[src] = src
 	return 1
-
-//decided whether a movable atom being thrown can pass through the turf it is in.
-/atom/movable/proc/hit_check()
-	if(src.throwing)
-		for(var/atom/A in get_turf(src))
-			if(A == src) continue
-			if(istype(A,/mob/living))
-				if(A:lying) continue
-				src.throw_impact(A)
-			if(isobj(A))
-				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
-					src.throw_impact(A)
-
-/atom/movable/proc/throw_at(atom/target, range, speed, thrower)
-	if(!target || !src)	return 0
-	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
-
-	src.throwing = 1
-	src.thrower = thrower
-	src.throw_source = get_turf(src)	//store the origin turf
-	src.fly_speed = speed
-	var/init_dir = get_dir(src, target)
-
-	if(usr)
-		if(HULK in usr.mutations)
-			src.throwing = 2 // really strong throw!
-
-	var/dist_x = abs(target.x - src.x)
-	var/dist_y = abs(target.y - src.y)
-
-	var/dx
-	if (target.x > src.x)
-		dx = EAST
-	else
-		dx = WEST
-
-	var/dy
-	if (target.y > src.y)
-		dy = NORTH
-	else
-		dy = SOUTH
-	var/dist_travelled = 0
-	var/dist_since_sleep = 0
-	var/area/a = get_area(src.loc)
-	if(dist_x > dist_y)
-		var/error = dist_x/2 - dist_y
-
-
-
-		while(src && target &&((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
-			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
-			if(error < 0)
-				var/atom/step = get_step(src, dy)
-				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
-					break
-				src.Move(step, get_dir(loc, step))
-				hit_check()
-				error += dist_x
-				dist_travelled++
-				dist_since_sleep++
-				if(dist_since_sleep >= speed)
-					dist_since_sleep = 0
-					sleep(1)
-			else
-				var/atom/step = get_step(src, dx)
-				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
-					break
-				src.Move(step)
-				hit_check()
-				error -= dist_y
-				dist_travelled++
-				dist_since_sleep++
-				if(dist_since_sleep >= speed)
-					dist_since_sleep = 0
-					sleep(1)
-			a = get_area(src.loc)
-	else
-		var/error = dist_y/2 - dist_x
-		while(src && target &&((((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
-			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
-			if(error < 0)
-				var/atom/step = get_step(src, dx)
-				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
-					break
-				src.Move(step)
-				hit_check()
-				error += dist_y
-				dist_travelled++
-				dist_since_sleep++
-				if(dist_since_sleep >= speed)
-					dist_since_sleep = 0
-					sleep(1)
-			else
-				var/atom/step = get_step(src, dy)
-				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
-					break
-				src.Move(step)
-				hit_check()
-				error -= dist_x
-				dist_travelled++
-				dist_since_sleep++
-				if(dist_since_sleep >= speed)
-					dist_since_sleep = 0
-					sleep(1)
-
-			a = get_area(src.loc)
-
-	//done throwing, either because it hit something or it finished moving
-	if(isobj(src))
-		src.throw_impact(get_turf(src))
-	src.throwing = 0
-	src.thrower = null
-	src.throw_source = null
-	newtonian_move(init_dir)
-
 
 //Overlays
 /atom/movable/overlay
