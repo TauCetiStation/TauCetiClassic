@@ -18,6 +18,20 @@
 	var/time = ""
 	var/source_terminal = ""
 
+/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H)
+	var/datum/money_account/M = create_account(H.real_name, rand(50,500)*10, null)
+	if(H.mind)
+		var/remembered_info = ""
+		remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
+		remembered_info += "<b>Your account pin is:</b> [M.remote_access_pin]<br>"
+		remembered_info += "<b>Your account funds are:</b> $[M.money]<br>"
+		if(M.transaction_log.len)
+			var/datum/transaction/T = M.transaction_log[1]
+			remembered_info += "<b>Your account was created:</b> [T.time], [T.date] at [T.source_terminal]<br>"
+		H.mind.store_memory(remembered_info)
+		H.mind.initial_account = M
+	return M
+
 /proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db)
 
 	//create a new account
