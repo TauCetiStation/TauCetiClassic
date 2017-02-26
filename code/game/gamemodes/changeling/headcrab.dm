@@ -84,12 +84,12 @@
 
 /obj/item/changeling_egg/New()
 	respawn_time = world.time + EGG_INCUBATION_TIME
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/changeling_egg/process()
 	// Changeling eggs grow in dead people
 	if(!iscarbon(loc))
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	if(respawn_time <= world.time)
 		Pop()
 		qdel(src)
