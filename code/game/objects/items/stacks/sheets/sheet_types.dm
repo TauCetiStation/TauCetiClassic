@@ -205,3 +205,35 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
 		return ..()
+
+/*
+ * Cult metall
+ */
+
+/obj/item/stack/sheet/runed_metal
+	name = "runed metal"
+	desc = "Sheets of cold metal with shifting inscriptions writ upon them."
+	singular_name = "runed metal sheet"
+	icon_state = "sheet-runed"
+	item_state = "sheet-metal"
+	icon = 'icons/obj/items.dmi'
+
+/obj/item/stack/sheet/runed_metal/New(loc,ex_amount=1)
+	recipes = runed_metal_recipes
+	amount = ex_amount
+	return ..()
+
+/obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
+	if(!iscultist(user))
+		to_chat(user,"<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
+		return
+	return ..()
+
+var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
+	new/datum/stack_recipe("runed door", /obj/machinery/door/airlock/cult, 1, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("runed girder", /obj/structure/cultgirder, 1, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 4, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("forge", /obj/structure/cult/forge, 3, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("archives", /obj/structure/cult/tome, 3, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("altar", /obj/structure/cult/talisman, 3, time = 40, one_per_turf = 1, on_floor = 1), \
+	)

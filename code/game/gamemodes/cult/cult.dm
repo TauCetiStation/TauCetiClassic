@@ -102,6 +102,7 @@
 		else
 			to_chat(cult_mind.current, "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 		cult_mind.special_role = "Cultist"
+		cult_mind.current.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/cult_comms(cult_mind.current))
 
 	return ..()
 
@@ -176,6 +177,8 @@
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult_mind.current.Paralyse(5)
 		cult += cult_mind
+		cult_mind.current.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/cult_comms(cult_mind.current))
+
 		update_all_cult_icons()
 		return 1
 
@@ -193,6 +196,7 @@
 		cult_mind.current.Paralyse(5)
 		to_chat(cult_mind.current, "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>")
 		cult_mind.memory = ""
+		cult_mind.current.remove_comms()
 		update_cult_icons_removed(cult_mind)
 		if(show_message)
 			for(var/mob/M in viewers(cult_mind.current))

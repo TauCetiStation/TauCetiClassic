@@ -790,25 +790,12 @@
 ///Returns a number between -1 to 2
 /mob/living/carbon/human/eyecheck()
 	var/number = 0
-	if(istype(src.head, /obj/item/clothing/head/welding))
-		if(!src.head:up)
-			number += 2
-	if(istype(src.head, /obj/item/clothing/head/helmet/space))
-		number += 2
-	if(istype(src.glasses, /obj/item/clothing/glasses/thermal))
-		number -= 1
-	if(istype(src.glasses, /obj/item/clothing/glasses/sunglasses))
-		number += 1
-	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/welding))
-		var/obj/item/clothing/mask/gas/welding/W = src.wear_mask
-		if(!W.up)
-			number += 2
-	if(istype(src.glasses, /obj/item/clothing/glasses/welding))
-		var/obj/item/clothing/glasses/welding/W = src.glasses
-		if(!W.up)
-			number += 2
-	if(istype(src.glasses, /obj/item/clothing/glasses/night/shadowling))
-		number -= 1
+	if(istype(head, /obj/item/clothing/head))
+		var/obj/item/clothing/head/Head_wear = head
+		number += Head_wear.flash_protection
+	if(istype(glasses,/obj/item/clothing/glasses))
+		var/obj/item/clothing/glasses/G = glasses
+		number += G.flash_protection
 	return number
 
 

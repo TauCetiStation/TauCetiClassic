@@ -3,8 +3,8 @@
 	unacidable = 1
 	var/i_attached//Added for possible image attachments to objects. For hallucinations and the like.
 
-	/obj/effect/overlay/attackby()
-		return
+/obj/effect/overlay/attackby()
+	return
 
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
 	name="beam"
@@ -13,7 +13,7 @@
 	var/tmp/atom/BeamSource
 	New()
 		..()
-		spawn(10) qdel(src)
+		addtimer(GLOBAL_PROC,"qdel",10,FALSE,src)
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"
@@ -49,3 +49,52 @@
 	layer = LIGHTING_LAYER + 1
 	plane = LIGHTING_PLANE + 1
 	anchored = 1
+
+/obj/effect/overlay/cult
+	var/duration = 10
+	icon = 'icons/effects/effects.dmi'
+	layer = LIGHTING_LAYER + 1
+	plane = LIGHTING_PLANE + 1
+
+/obj/effect/overlay/cult/New(loc, set_dir)
+	if(set_dir)
+		dir = set_dir
+	..()
+	addtimer(GLOBAL_PROC,"qdel",duration,FALSE,src)
+
+/obj/effect/overlay/cult/sparks
+	name = "blood sparks"
+	icon_state = "bloodsparkles"
+
+/obj/effect/overlay/cult/phase
+	name = "phase glow"
+	icon_state = "cultin"
+	duration = 8
+
+/obj/effect/overlay/cult/phase/out
+	icon_state = "cultout"
+
+/obj/effect/overlay/cult/floor
+	icon_state = "floorglow"
+	duration = 5
+
+/obj/effect/overlay/cult/door
+	name = "unholy glow"
+	icon_state = "doorglow"
+	layer = 21 //above closed doors
+
+/obj/effect/overlay/cult/sac
+	name = "maw of Nar-Sie"
+	icon_state = "sacconsume"
+
+/obj/effect/overlay/cult/heal //color is white by default, set to whatever is needed
+	name = "healing glow"
+	icon_state = "heal"
+	duration = 15
+
+/obj/effect/overlay/cult/heal/New(loc, colour)
+	..()
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(-9, 0)
+	if(colour)
+		color = colour

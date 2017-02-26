@@ -86,6 +86,7 @@
 	vision_flags = SEE_MOBS
 	alpha = 0
 	darkness_view = 3
+	flash_protection = -1
 	var/vision = 1
 	//invis_view = 2
 	//invisa_view = 2
@@ -108,13 +109,12 @@
 
 	if(!usr.stat)
 		if(src.vision)
-			src.vision = !src.vision
 			src.icon_state = "ling_vision_on"
 			//usr << ""
 		else
-			src.vision = !src.vision
 			src.icon_state = "ling_vision_off"
 			//usr << ""
+		src.vision = !src.vision
 
 		usr.update_inv_glasses()
 
