@@ -70,6 +70,7 @@
 		dat += "<A href='?src=\ref[src];rune=armor'>Sa tatha najin</A> - Allows you to summon armoured robes and an unholy blade<BR>"
 		dat += "<A href='?src=\ref[src];rune=soulstone'>Kal om neth</A> - Summons a soul stone<BR>"
 		dat += "<A href='?src=\ref[src];rune=construct'>Da A'ig Osk</A> - Summons a construct shell for use with captured souls. It is too large to carry on your person.<BR>"
+		dat += "<A href='?src=\ref[src];rune=metal'>Bar'tea eas!</A> - Provides 5 runed metal.<BR>"
 		usr << browse(dat, "window=id_com;size=350x200")
 		return
 
@@ -106,6 +107,11 @@
 					new /obj/item/device/soulstone(get_turf(usr))
 				if("construct")
 					new /obj/structure/constructshell(get_turf(usr))
+				if("metal")
+					if(istype(src,/obj/item/weapon/paper/talisman/supply/weak))
+						to_chat(usr, "<span class='cult'>Lesser supply talismans lack the strength to materialize runed metal!</span>")
+						return
+					new /obj/item/stack/sheet/runed_metal/five(get_turf(usr))
 			src.uses--
 			supply()
 		return
@@ -114,3 +120,7 @@
 /obj/item/weapon/paper/talisman/supply
 	imbue = "supply"
 	uses = 5
+
+/obj/item/weapon/paper/talisman/supply/weak
+	name = "Lesser Supply Talisman"
+	uses = 2

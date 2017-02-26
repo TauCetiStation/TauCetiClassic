@@ -177,9 +177,8 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-
 	action_icon_state = "artificer"
-
+	action_background_icon_state = "bg_cult"
 	summon_type = list(/obj/structure/constructshell)
 
 
@@ -274,6 +273,8 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
+	action_icon_state = "floorconstruct"
+	action_background_icon_state = "bg_cult"
 	summon_type = list(/turf/simulated/floor/engine/cult)
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
@@ -287,6 +288,8 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
+	action_icon_state = "cultforcewall"
+	action_background_icon_state = "bg_cult"
 	summon_type = list(/turf/simulated/wall/cult)
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
@@ -302,7 +305,6 @@
 	range = 0
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 	delay = 50
-
 	summon_type = list(/turf/simulated/wall/r_wall)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
@@ -315,7 +317,8 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-
+	action_icon_state = "summonsoulstone"
+	action_background_icon_state = "bg_cult"
 	summon_type = list(/obj/item/device/soulstone)
 
 
@@ -332,6 +335,11 @@
 	summon_type = list(/obj/effect/forcefield)
 	summon_lifespan = 50
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall/cult
+	summon_lifespan = 200
+	summon_type = list(/obj/effect/forcefield/cult)
+	action_icon_state = "floorconstruct"
+	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
 	name = "Phase Shift"
@@ -347,3 +355,5 @@
 	phaseshift = 1
 	jaunt_duration = 50 //in deciseconds
 	centcomm_cancast = 0 //Stop people from getting to centcomm
+	action_icon_state = "phaseshift"
+	action_background_icon_state = "bg_cult"

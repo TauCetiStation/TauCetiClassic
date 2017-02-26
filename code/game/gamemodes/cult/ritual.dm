@@ -149,6 +149,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return runestun()
 		if(word1 == cultwords["travel"] && word2 == cultwords["blood"] && word3 == cultwords["other"])
 			return brainswap()
+		if(word1 == cultwords["technology"] && word2 == cultwords["blood"] && word3 == cultwords["travel"])
+			var/obj/item/stack/sheet/Met
+			for(var/obj/item/stack/sheet/S in src.loc)
+				Met = S
+				break
+			construction(Met)
 		else
 			return fizzle()
 
@@ -220,6 +226,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				<b>Stun: </b>Join Hide Technology<br>
 				<b>Summon Cultist Armor: </b>Hell Destroy Other<br>
 				<b>See Invisible: </b>See Hell Join<br>
+				<b>Construct: </b>Technology Blood Travel<br>
 				</p>
 				<h2>Rune Descriptions</h2>
 				<h3>Teleport self</h3>
@@ -481,7 +488,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			var/r
 			if (!istype(user.loc,/turf))
 				to_chat(user, "\red You do not have enough space to write a proper rune.")
-			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun", "brainswap")
+			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp",\
+			"drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman",\
+			 "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun", "brainswap", "construction")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
 			var/obj/effect/rune/R = new /obj/effect/rune
 			if(istype(user, /mob/living/carbon/human))
@@ -645,6 +654,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					R.word1=cultwords["travel"]
 					R.word2=cultwords["blood"]
 					R.word3=cultwords["other"]
+					R.loc = user.loc
+					R.check_icon()
+				if("construction")
+					R.word1=cultwords["technology"]
+					R.word2=cultwords["blood"]
+					R.word3=cultwords["travel"]
 					R.loc = user.loc
 					R.check_icon()
 

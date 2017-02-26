@@ -225,6 +225,18 @@
 				to_chat(user, "\blue You dissasembled the girder!")
 				new /obj/effect/decal/remains/human(get_turf(src))
 				qdel(src)
+		if(istype(W,/obj/item/stack/sheet/runed_metal))
+			var/obj/item/stack/sheet/runed_metal/M = W
+			if(M.amount >= 3)
+				to_chat(user, "\blue Now adding metal the girder")
+				if(do_after(user,40,target = src))
+					M.use(3)
+					var/turf/T = loc
+					T.ChangeTurf(/turf/simulated/wall/cult)
+					return
+			else
+				to_chat(user,"<span class='notice'> Not enough metal!</span>")
+				return
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 			to_chat(user, "\blue Now slicing apart the girder")

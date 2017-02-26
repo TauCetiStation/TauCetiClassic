@@ -25,13 +25,37 @@
 	minbodytemp = 0
 	faction = "cult"
 	var/list/construct_spells = list()
+	var/toggle_vision = 0
 
 /mob/living/simple_animal/construct/New()
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
+	addtimer(src, "addspells",10) // without timer proc Addtimer is runtiming cuz of "mind.spell_list += spell" don't fuckin know why
+
+/mob/living/simple_animal/construct/Login()
+	..()
+	ticker.mode.update_all_cult_icons()
+
+/mob/living/simple_animal/construct/proc/addspells()
+	if(ticker.mode.name == "cult")
+		ticker.mode:add_cultist(mind)
+	else
+		ticker.mode.cult+=mind
+	ticker.mode.update_all_cult_icons()
 	for(var/spell in construct_spells)
-		spell_list += new spell(src)
+		AddSpell(new spell(src))
+
+/mob/living/simple_animal/construct/verb/toggle_vision()
+	set category = "IC"
+	set name = "Toggle Vision"
+	set desc = "This allowes you to see in the dark."
+	toggle_vision = !toggle_vision
+	if(toggle_vision)
+		see_invisible = SEE_INVISIBLE_MINIMUM
+	else
+		see_invisible = SEE_INVISIBLE_LIVING
+
 
 /mob/living/simple_animal/construct/death()
 	..()
@@ -108,7 +132,7 @@
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall/cult)
 
 /mob/living/simple_animal/construct/armoured/attackby(obj/item/O, mob/user)
 	if(O.force)
@@ -163,7 +187,7 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
-	speed = -1
+	speed = -2
 	see_in_dark = 7
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
@@ -184,7 +208,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "rams"
-	speed = 0
+	speed = -1
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,

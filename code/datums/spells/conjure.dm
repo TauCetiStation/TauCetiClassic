@@ -85,7 +85,11 @@
 			for(var/mob/M in T)
 				Proj.on_hit(M,M.bullet_act(Proj, def_zone))
 		return
-		
+
+/obj/effect/forcefield/cult
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "cultshield"
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/smoke
 	name = "Paralysing Smoke"
 	desc = "This spell spawns a cloud of paralysing smoke."
@@ -105,7 +109,7 @@
 	S.attach(location)
 	S.set_up(reagents, 5, 0, location, 15, 5)
 	S.start()
-	
+
 /datum/reagent/toxin/harvester
 	name = "Harvester Toxin"
 	id = "harvester"
@@ -113,7 +117,7 @@
 	color = "#9C3636"
 	toxpwr = 0
 	custom_metabolism = 1
-	
+
 	on_mob_life(var/mob/living/carbon/M as mob)
 		if(!M) M = holder.my_atom
 		if(!data) data = 1

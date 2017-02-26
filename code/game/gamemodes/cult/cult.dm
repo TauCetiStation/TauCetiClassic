@@ -8,6 +8,9 @@
 /proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
 
+/proc/isshade(mob/living/M)
+	return istype(M,/mob/living/simple_animal/construct) && ticker
+
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
 	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))	return 0

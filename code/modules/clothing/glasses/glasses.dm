@@ -128,6 +128,7 @@
 	name = "sunglasses"
 	icon_state = "sun"
 	item_state = "sunglasses"
+	flash_protection = 1
 	darkness_view = -1
 
 /obj/item/clothing/glasses/welding
@@ -136,6 +137,7 @@
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	action_button_name = "Flip Welding Goggles"
+	flash_protection = 2
 	var/up = 0
 
 /obj/item/clothing/glasses/welding/attack_self()
@@ -153,6 +155,7 @@
 			src.flags |= GLASSESCOVERSEYES
 			flags_inv |= HIDEEYES
 			body_parts_covered |= EYES
+			flash_protection = 2
 			icon_state = initial(icon_state)
 			to_chat(usr, "You flip \the [src] down to protect your eyes.")
 		else
@@ -160,9 +163,9 @@
 			src.flags &= ~HEADCOVERSEYES
 			flags_inv &= ~HIDEEYES
 			body_parts_covered &= ~EYES
+			flash_protection = 0
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push \the [src] up out of your face.")
-
 		usr.update_inv_glasses()
 
 /obj/item/clothing/glasses/welding/superior
@@ -211,6 +214,7 @@
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
 	invisa_view = 2
+	flash_protection = -2
 	toggleable = 1
 	action_button_name = "Toggle Goggles"
 

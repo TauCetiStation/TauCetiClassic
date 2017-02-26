@@ -107,7 +107,12 @@ var/list/sacrificed = list()
 				M.visible_message("<span class='red'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
 				"<span class='red'>AAAAAAHHHH!.</span>", \
 				"<span class='red'>You hear an anguished scream.</span>")
-				if(is_convertable_to_cult(M.mind) && !jobban_isbanned(M, ROLE_CULTIST) && !jobban_isbanned(M, "Syndicate") && !role_available_in_minutes(M, ROLE_CULTIST))//putting jobban check here because is_convertable uses mind as argument
+				var/choice = alert(M,"Do you wanna to gave your soul to the Geometr?",,"Yes","No")
+				var/accept = 0
+				if(choice == "Yes")
+					accept = 1
+				if(accept && is_convertable_to_cult(M.mind) && !jobban_isbanned(M, ROLE_CULTIST) && !jobban_isbanned(M, "Syndicate") && !role_available_in_minutes(M, ROLE_CULTIST))
+				//putting jobban check here because is_convertable uses mind as argument
 					ticker.mode.add_cultist(M.mind)
 					M.mind.special_role = "Cultist"
 					to_chat(M, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>")
@@ -228,6 +233,19 @@ var/list/sacrificed = list()
 						user.take_overall_damage(3, 0)
 				return
 			user.heal_organ_damage(drain%5, 0)
+			if(ishuman(user) && prob(20))
+				var/mob/living/carbon/human/H = user
+				for(var/datum/organ/external/External in H.organs)
+					for(var/datum/wound/W in External.wounds) // remove internal
+						if(W.internal)
+							External.wounds -= W
+							External.update_damages()
+					if(External.status & (ORGAN_BROKEN || ORGAN_SPLINTED || ORGAN_DESTROYED))
+						External.status = 0
+						External.stage = 0
+						External.perma_injury = 0
+						H.update_body()
+						break
 			drain-=drain%5
 			for (,drain>0,drain-=5)
 				sleep(2)
@@ -1078,6 +1096,7 @@ var/list/sacrificed = list()
 			//the above update their overlay icons cache but do not call update_icons()
 			//the below calls update_icons() at the end, which will update overlay icons by using the (now updated) cache
 			user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor
+			user.put_in_hands(new /obj/item/weapon/legcuffs/bola/cult(user))
 
 			qdel(src)
 			return
@@ -1114,3 +1133,26 @@ var/list/sacrificed = list()
 							D.Paralyse(7)
 
 			return
+
+//////////////////////////////////////////TWENTY-SEVENTH RUNE
+		construction(obj/item/stack/sheet/P)
+			usr.say("N[pick("'","`")]ath em ka'az an trus te'ng")
+			if(!istype(P))
+				to_chat(usr,"<span class='warning'>The talisman must be used on metal or plasteel!</span>")
+				return
+			if(istype(P,/obj/item/stack/sheet/plasteel))
+				var/amount = min(25,P.amount)
+				P.use(amount)
+				var/obj/item/stack/sheet/runed_metal/MET = new (get_turf(src))
+				MET.amount = amount
+				to_chat(usr,"<span class='warning'>The rune clings to the plasteel, transforming it into runed metal!</span>")
+				usr << sound('sound/effects/magic.ogg',0,1,25)
+				qdel(src)
+			if(istype(P, /obj/item/stack/sheet/metal))
+				if(P.use(25))
+					new /obj/structure/constructshell(get_turf(src))
+					to_chat(usr,"<span class='warning'>The rune clings to the metal and twists it into a construct shell!</span>")
+					usr << sound('sound/effects/magic.ogg',0,1,25)
+					qdel(src)
+				else
+					to_chat(usr,"<span class='warning'>You need more metal to produce a construct shell!</span>")

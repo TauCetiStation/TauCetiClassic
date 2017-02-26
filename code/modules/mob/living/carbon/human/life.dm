@@ -1403,6 +1403,8 @@
 					see_invisible = SEE_INVISIBLE_LIVING
 				else
 					see_invisible = SEE_INVISIBLE_MINIMUM
+			else if(istype(G,/obj/item/clothing/glasses/cultblind))
+				see_invisible = SEE_INVISIBLE_MINIMUM
 
 /* HUD shit goes here, as long as it doesn't modify sight flags */
 // The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
