@@ -41,7 +41,7 @@
 				return 0
 //		src << "updating alert [category] [id] [severity]"
 	else
-		alert = PoolOrNew(/obj/screen/alert)
+		alert = new /obj/screen/alert()
 //		src << "throwing new alert [category] [id] [severity]"
 
 	if(new_master)
@@ -270,6 +270,3 @@
 
 /obj/screen/alert/MouseExited()
 	closeToolTip(usr)
-
-/obj/screen/alert/Destroy()
-	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!

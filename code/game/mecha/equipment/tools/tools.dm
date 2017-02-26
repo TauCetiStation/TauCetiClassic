@@ -248,7 +248,7 @@
 				var/list/the_targets = list(T,T1,T2)
 				spawn(0)
 					for(var/a in 1 to 5)
-						var/obj/effect/effect/water/W = PoolOrNew(/obj/effect/effect/water, get_turf(chassis))
+						var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(chassis))
 						if(!W)	return
 						var/turf/my_target = pick(the_targets)
 						var/datum/reagents/R = new/datum/reagents(5)
