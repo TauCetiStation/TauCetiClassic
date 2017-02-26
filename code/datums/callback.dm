@@ -25,7 +25,7 @@
 			Example:
 				CALLBACK(src, .proc/some_proc_here)
 		proc defined on a parent of a some type:
-			/some/type/.proc/some_proc_here
+			/some/type.proc/some_proc_here
 		Other wise you will have to do the full typepath of the proc (/type/of/thing/proc/procname)
 */
 
@@ -44,7 +44,7 @@
 
 /datum/callback/proc/Invoke(...)
 	if (!object)
-		CRASH("Cannot call null.[delegate]")
+		return
 
 	var/list/calling_arguments = arguments
 
@@ -62,7 +62,7 @@
 /datum/callback/proc/InvokeAsync(...)
 	set waitfor = 0
 	if (!object)
-		CRASH("Cannot call null.[delegate]")
+		return
 
 	var/list/calling_arguments = arguments
 

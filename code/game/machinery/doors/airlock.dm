@@ -1385,7 +1385,7 @@ About the new airlock wires panel:
 	if(autoclose)
 		if(close_timer_id)
 			deltimer(close_timer_id)
-		close_timer_id = addtimer(src, "do_autoclose", normalspeed ? 150 : 5)
+		close_timer_id = addtimer(CALLBACK(src, .proc/do_autoclose), normalspeed ? 150 : 5)
 
 /obj/machinery/door/airlock/proc/do_autoclose()
 	close_timer_id = null
