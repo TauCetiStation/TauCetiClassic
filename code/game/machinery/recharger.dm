@@ -11,6 +11,7 @@ obj/machinery/recharger
 	active_power_usage = 250
 	var/obj/item/weapon/charging = null
 	var/recharge_coeff = 1
+	var/list/allowed_items
 
 /obj/machinery/recharger/New()
 	..()
@@ -19,6 +20,13 @@ obj/machinery/recharger
 	component_parts += new /obj/item/weapon/stock_parts/capacitor()
 	RefreshParts()
 
+	allowed_items = list(
+						/obj/item/weapon/gun/energy,
+						/obj/item/weapon/melee/baton,
+						/obj/item/weapon/defibrillator,
+						/obj/item/ammo_box/magazine/l10mag
+					)
+
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
@@ -26,7 +34,7 @@ obj/machinery/recharger
 obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/weapon/defibrillator) || istype(G, /obj/item/ammo_box/magazine/l10mag))
+	if(is_type_in_list(G, allowed_items))
 		if(charging || panel_open)
 			return
 

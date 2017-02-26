@@ -59,6 +59,8 @@ proc/isemptylist(list/list)
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
+	if(!L || !L.len || !A)
+		return 0
 	for(var/type in L)
 		if(istype(A, type))
 			return 1
@@ -671,7 +673,6 @@ datum/proc/dd_SortValue()
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
 /proc/is_type_in_typecache(atom/A, list/L)
 	if(!L || !L.len || !A)
-
 		return 0
 	return L[A.type]
 
