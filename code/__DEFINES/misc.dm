@@ -1,6 +1,9 @@
 //gets all subtypes of type
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
+//number of deciseconds in a day
+#define MIDNIGHT_ROLLOVER 864000
+
 //singularity defines
 #define STAGE_ONE	1
 #define STAGE_TWO	3

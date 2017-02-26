@@ -15,17 +15,17 @@
 	var/can_fire = TRUE
 
 	// Bookkeeping variables; probably shouldn't mess with these.
-	var/last_fire = 0		//last world.time we called fire()
-	var/next_fire = 0		//scheduled world.time for next fire()
-	var/cost = 0			//average time to execute
-	var/tick_usage = 0		//average tick usage
-	var/paused = 0			//was this subsystem paused mid fire.
-	var/paused_ticks = 0	//ticks this ss is taking to run right now.
-	var/paused_tick_usage	//total tick_usage of all of our runs while pausing this run
-	var/ticks = 1			//how many ticks does this ss take to run on avg.
-	var/times_fired = 0		//number of times we have called fire()
-	var/queued_time = 0		//time we entered the queue, (for timing and priority reasons)
-	var/queued_priority //we keep a running total to make the math easier, if it changes mid-fire that would break our running total, so we store it here
+	var/last_fire = 0       //last world.time we called fire()
+	var/next_fire = 0       //scheduled world.time for next fire()
+	var/cost = 0            //average time to execute
+	var/tick_usage = 0      //average tick usage
+	var/state = SS_IDLE     //tracks the current state of the ss, running, paused, etc.
+	var/paused_ticks = 0    //ticks this ss is taking to run right now.
+	var/paused_tick_usage   //total tick_usage of all of our runs while pausing this run
+	var/ticks = 1           //how many ticks does this ss take to run on avg.
+	var/times_fired = 0     //number of times we have called fire()
+	var/queued_time = 0     //time we entered the queue, (for timing and priority reasons)
+	var/queued_priority     //we keep a running total to make the math easier, if priority changes mid-fire that would break our running total, so we store it here
 	//linked list stuff for the queue
 	var/datum/subsystem/queue_next
 	var/datum/subsystem/queue_prev
@@ -36,13 +36,23 @@
 // Used to initialize the subsystem BEFORE the map has loaded
 /datum/subsystem/New()
 
+//This is used so the mc knows when the subsystem sleeps. do not override.
+/datum/subsystem/proc/ignite(resumed = 0)
+	set waitfor = 0
+	. = SS_SLEEPING
+	fire(resumed)
+	. = state
+	if (state == SS_SLEEPING)
+		state = SS_IDLE
+	if (state == SS_PAUSING)
+		var/QT = queued_time
+		enqueue()
+		state = SS_PAUSED
+		queued_time = QT
+
 //previously, this would have been named 'process()' but that name is used everywhere for different things!
 //fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
-//fire(), and the procs it calls, SHOULD NOT HAVE ANY SLEEP OPERATIONS in them!
-//YE BE WARNED!
 /datum/subsystem/proc/fire(resumed = 0)
-	set waitfor = 0 //this should not be depended upon, this is just to solve issues with sleeps messing up tick tracking
-	can_fire = 0
 	flags |= SS_NO_FIRE
 	throw EXCEPTION("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
 
@@ -52,6 +62,9 @@
 	flags |= SS_NO_FIRE
 	Master.subsystems -= src
 
+//Queue it to run.
+//  (we loop thru a linked list until we get to the end or find the right point)
+//  (this lets us sort our run order correctly without having to re-sort the entire already sorted list)
 /datum/subsystem/proc/enqueue()
 	var/SS_priority = priority
 	var/SS_flags = flags
@@ -85,6 +98,7 @@
 
 	queued_time = world.time
 	queued_priority = SS_priority
+	state = SS_QUEUED
 	if (SS_flags & SS_BACKGROUND) //update our running total
 		Master.queue_priority_count_bg += SS_priority
 	else
@@ -118,11 +132,15 @@
 	if (src == Master.queue_head)
 		Master.queue_head = queue_next
 	queued_time = 0
+	if (state == SS_QUEUED)
+		state = SS_IDLE
 
 /datum/subsystem/proc/pause()
 	. = TRUE
-	paused = TRUE
-	paused_ticks++
+	if (state == SS_RUNNING)
+		state = SS_PAUSED
+	else if (state == SS_SLEEPING)
+		state = SS_PAUSING
 
 //used to initialize the subsystem AFTER the map has loaded
 /datum/subsystem/proc/Initialize(start_timeofday)
@@ -141,7 +159,24 @@
 	else
 		msg = "OFFLINE\t[msg]"
 
-	stat(name, statclick.update(msg))
+	var/title = name
+	if (can_fire)
+		title = "\[[state_letter()]][title]"
+
+	stat(title, statclick.update(msg))
+
+/datum/subsystem/proc/state_letter()
+	switch (state)
+		if (SS_RUNNING)
+			. = "R"
+		if (SS_QUEUED)
+			. = "Q"
+		if (SS_PAUSED, SS_PAUSING)
+			. = "P"
+		if (SS_SLEEPING)
+			. = "S"
+		if (SS_IDLE)
+			. = "  "
 
 //could be used to postpone a costly subsystem for (default one) var/cycles, cycles
 //for instance, during cpu intensive operations like explosions

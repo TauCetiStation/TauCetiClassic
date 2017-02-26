@@ -69,6 +69,8 @@ var/datum/subsystem/air/SSair
 	if (currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
 		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		if(state != SS_RUNNING)
+			return
 		resumed = 0
 		currentpart = SSAIR_TILES_CUR
 
@@ -76,6 +78,8 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_tiles_current(resumed)
 		cost_tiles_curr = MC_AVERAGE(cost_tiles_curr, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		if(state != SS_RUNNING)
+			return
 		resumed = 0
 		currentpart = SSAIR_TILES_DEF
 
@@ -83,6 +87,8 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_tiles_deferred(resumed)
 		cost_tiles_def = MC_AVERAGE(cost_tiles_def, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		if(state != SS_RUNNING)
+			return
 		resumed = 0
 		currentpart = SSAIR_EDGES
 
@@ -90,6 +96,8 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_edges(resumed)
 		cost_edges = MC_AVERAGE(cost_edges, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		if(state != SS_RUNNING)
+			return
 		resumed = 0
 		currentpart = SSAIR_FIRE
 
@@ -97,6 +105,8 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_fire(resumed)
 		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		if(state != SS_RUNNING)
+			return
 		resumed = 0
 		currentpart = SSAIR_ZONES
 
@@ -104,6 +114,8 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_zones(resumed)
 		cost_zones = MC_AVERAGE(cost_zones, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		if(state != SS_RUNNING)
+			return
 		resumed = 0
 		currentpart = SSAIR_PIPENETS
 
