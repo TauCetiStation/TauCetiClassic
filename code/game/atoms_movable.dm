@@ -26,6 +26,15 @@
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
+
+	// Dynamic glide_size will make movement much smoothie
+	var/move_delay = max(5 * world.tick_lag, 1)
+	if(ismob(src))
+		var/mob/M = src
+		if(M.client)
+			move_delay = (3 + (M.client.move_delay - world.time)) * world.tick_lag
+	glide_size = Ceiling(world.icon_size / move_delay * world.tick_lag) - 1
+
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
