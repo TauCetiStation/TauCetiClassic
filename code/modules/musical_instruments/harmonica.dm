@@ -32,9 +32,3 @@
 
 /obj/item/device/harmonica/proc/spam()
 	spam_flag = 0
-
-/obj/item/device/harmonica/dropped(mob/user)
-	var/sound/melody = sound()
-	melody.channel = channel
-	hearers(20, get_turf(src)) << melody
-	return ..()
