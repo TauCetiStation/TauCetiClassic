@@ -31,11 +31,11 @@
 
 #define SS_WAIT_THROWING   1
 #define SS_WAIT_TIMER      1
+#define SS_WAIT_LIGHTING   2
 #define SS_WAIT_PARALAX    2
 #define SS_WAIT_ORBIT      2
 #define SS_WAIT_AIR        5
 #define SS_WAIT_GARBAGE    5
-#define SS_WAIT_LIGHTING   5
 #define SS_WAIT_SPACEDRIFT 5
 #define SS_WAIT_NANOUI     10
 #define SS_WAIT_SHUTTLES   10
