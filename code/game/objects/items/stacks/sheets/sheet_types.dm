@@ -218,12 +218,10 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	item_state = "sheet-metal"
 	icon = 'icons/obj/items.dmi'
 
-/obj/item/stack/sheet/runed_metal/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/runed_metal/New(var/loc, var/ex_amount=1)
 	recipes = runed_metal_recipes
+	amount = ex_amount
 	return ..()
-
-/obj/item/stack/sheet/runed_metal/five
-	amount = 5
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
 	if(!iscultist(user))
@@ -232,7 +230,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	return ..()
 
 var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
-/*	new/datum/stack_recipe("runed door", /obj/machinery/door/airlock/cult, 1, time = 50, one_per_turf = 1, on_floor = 1), \ */
+	new/datum/stack_recipe("runed door", /obj/machinery/door/airlock/cult, 1, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("runed girder", /obj/structure/cultgirder, 1, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 4, time = 40, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("forge", /obj/structure/cult/forge, 3, time = 40, one_per_turf = 1, on_floor = 1), \

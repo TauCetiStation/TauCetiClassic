@@ -87,6 +87,7 @@
 		return
 
 /obj/effect/forcefield/cult
+	name = "Cult Shield"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cultshield"
 

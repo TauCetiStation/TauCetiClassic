@@ -545,6 +545,11 @@ var/list/sacrificed = list()
 					T.imbue = "runestun"
 					imbued_from = R
 					break
+				if(R.word1==cultwords["technology"] && R.word2==cultwords["blood"] && R.word3==cultwords["travel"]) //construct
+					T = new(src.loc)
+					T.imbue = "construction"
+					imbued_from = R
+					break
 			if (imbued_from)
 				for (var/mob/V in viewers(src))
 					V.show_message("<span class='red'>The runes turn into dust, which then forms into an arcane image on the paper.</span>", 3)
@@ -595,9 +600,11 @@ var/list/sacrificed = list()
 				usr.say("[input]")
 			else
 				usr.whisper("[input]")
+			var/my_message = "<span class='cult'>[(ishuman(usr) ? "Acolyte" : "Construct")] [usr] [input]</span>"
 			for(var/datum/mind/H in ticker.mode.cult)
 				if (H.current)
-					to_chat(H.current, "<span class='danger'>[input]</span>")
+					to_chat(H.current,my_message)
+			log_say("[usr.real_name]/[usr.key] : [input]")
 			qdel(src)
 			return 1
 
@@ -1139,18 +1146,17 @@ var/list/sacrificed = list()
 			usr.say("N[pick("'","`")]ath em ka'az an trus te'ng")
 			if(!istype(P))
 				to_chat(usr,"<span class='warning'>The talisman must be used on metal or plasteel!</span>")
-				return
+				return fizzle()
 			if(istype(P,/obj/item/stack/sheet/plasteel))
 				var/amount = min(25,P.amount)
 				P.use(amount)
-				var/obj/item/stack/sheet/runed_metal/MET = new (get_turf(src))
-				MET.amount = amount
+				new /obj/item/stack/sheet/runed_metal(get_turf(usr), amount)
 				to_chat(usr,"<span class='warning'>The rune clings to the plasteel, transforming it into runed metal!</span>")
 				usr << sound('sound/effects/magic.ogg',0,1,25)
 				qdel(src)
-			if(istype(P, /obj/item/stack/sheet/metal))
+			else if(istype(P, /obj/item/stack/sheet/metal))
 				if(P.use(25))
-					new /obj/structure/constructshell(get_turf(src))
+					new /obj/structure/constructshell(get_turf(usr))
 					to_chat(usr,"<span class='warning'>The rune clings to the metal and twists it into a construct shell!</span>")
 					usr << sound('sound/effects/magic.ogg',0,1,25)
 					qdel(src)

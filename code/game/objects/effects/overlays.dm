@@ -3,8 +3,8 @@
 	unacidable = 1
 	var/i_attached//Added for possible image attachments to objects. For hallucinations and the like.
 
-	/obj/effect/overlay/attackby()
-		return
+/obj/effect/overlay/attackby()
+	return
 
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
 	name="beam"
@@ -13,7 +13,7 @@
 	var/tmp/atom/BeamSource
 	New()
 		..()
-		spawn(10) qdel(src)
+		addtimer(src,"Delit",10)
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"
@@ -60,8 +60,10 @@
 	if(set_dir)
 		dir = set_dir
 	..()
-	spawn(duration)
-		qdel(src)
+	addtimer(src,"Delit",duration)
+
+/obj/effect/overlay/proc/Delit()
+	qdel(src)
 
 /obj/effect/overlay/cult/sparks
 	name = "blood sparks"

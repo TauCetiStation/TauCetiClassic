@@ -252,7 +252,7 @@
 	name = "void torch"
 	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
 	w_class = 2
-	brightness_on = 1
+	brightness_on = 4
 	icon_state = "torch"
 	item_state = "torch"
 	color = "#ff0000"
@@ -268,7 +268,7 @@
 
 		var/list/cultists = list()
 		for(var/datum/mind/M in ticker.mode.cult)
-			if(M.current != user && M.current.stat != DEAD)
+			if(M.current != user && M.current.stat != DEAD && !isshade(M.current))
 				cultists += M.current
 		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
 		if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
@@ -296,3 +296,37 @@
 		..()
 		to_chat(user,"<span class='warning'>\The [src] can only transport items!</span>")
 		return
+
+/obj/item/device/shuttle_curse
+	name = "cursed orb"
+	desc = "You peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
+	icon_state ="shuttlecurse"
+	var/global/curselimit = 0
+	var/cursetime = 180
+
+/obj/item/device/shuttle_curse/attack_self(mob/user)
+	if(!iscultist(user))
+		user.unEquip(src, 1)
+		user.Weaken(5)
+		to_chat(user,"<span class='warning'>A powerful force shoves you away from [src]!</span>")
+		return
+	if(curselimit > 1)
+		to_chat(user,"<span class='notice'>We have exhausted our ability to curse the shuttle.</span>")
+		return
+	SSshuttle.settimeleft(SSshuttle.timeleft() + cursetime)
+	to_chat(user,"<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
+	playsound(user.loc, "sound/effects/Glassbr1.ogg", 50, 1)
+	qdel(src)
+	sleep(20)
+	var/global/list/curses
+	if(!curses)
+		curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by three minutes.",
+		"The shuttle's navigation programming was replaced by a file containing two words, IT COMES. The shuttle will be delayed by three minutes.",
+		"The shuttle's custodian tore out his guts and began painting strange shapes on the floor. The shuttle will be delayed by three minutes.",
+		"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh. The shuttle will be delayed by three minutes.",
+		"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine. The shuttle will be delayed by three minutes.",
+		"The shuttle dispatcher was found dead with bloody symbols carved into their flesh. The shuttle will be delayed by three minutes.")
+	var/message = pick_n_take(curses)
+	command_alert("System Failure","[message]")
+	player_list << sound('sound/misc/notice1.ogg')
+	curselimit++

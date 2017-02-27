@@ -28,6 +28,7 @@
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	amt_weakened = 5
 	amt_dam_fire = 10
+	clothes_req = 0
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"

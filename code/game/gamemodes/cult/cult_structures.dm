@@ -23,7 +23,7 @@
 
 /obj/structure/cult/examine(mob/user)
 	..()
-	var/can_see_cult = iscultist(user) || isobserver(user)
+	var/can_see_cult = iscultist(user) || isobserver(user) || isshade(user)
 	if(can_see_cult)
 		to_chat(user,"<span class='cult'>It is at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>")
 	to_chat(user,"<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>")
@@ -41,6 +41,7 @@
 		else
 			to_chat(M,"<span class='cult'>You cannot repair [src], as them are undamaged!</span>")
 	else
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		take_damage(M.melee_damage_upper + M.melee_damage_lower)
 
 /obj/structure/cult/attackby(obj/item/I, mob/user, params)
@@ -98,6 +99,8 @@
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
 	icon_state = "forge"
 	luminosity = 3
+	light_color = "#ff0000"
+	light_range = 4
 	break_message = "<span class='warning'>The force breaks apart into shards with a howling scream!</span>"
 
 /obj/structure/cult/forge/attack_hand(mob/living/user)
@@ -141,6 +144,8 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
 	icon_state = "pylon"
 	luminosity = 5
+	light_color = "#ff0000"
+	light_range = 4
 	break_sound = 'sound/effects/Glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
 	var/heal_delay = 25
@@ -166,9 +171,11 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 				if(L.health != L.maxHealth)
 					new /obj/effect/overlay/cult/heal(get_turf(src), "#960000")
 					if(ishuman(L))
-						L.adjustBruteLoss(-1, 0)
-						L.adjustFireLoss(-1, 0)
-						L.updatehealth()
+						var/mob/living/carbon/human/H = L
+						H.adjustBruteLoss(-1, 0)
+						H.adjustFireLoss(-1, 0)
+						H.shock_stage = max(0, H.shock_stage - 1)
+						H.updatehealth()
 					if(isshade(L))
 						var/mob/living/simple_animal/M = L
 						if(M.health < M.maxHealth)
@@ -222,8 +229,7 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 		if("Supply Talisman")
 			pickedtype += /obj/item/weapon/paper/talisman/supply/weak
 		if("Shuttle Curse")
-			//pickedtype += /obj/item/device/shuttle_curse
-			pickedtype += /obj/item/device
+			pickedtype += /obj/item/device/shuttle_curse
 		if("Veil Walker Set")
 			pickedtype += /obj/item/device/cult_shift
 			pickedtype += /obj/item/device/flashlight/culttorch
