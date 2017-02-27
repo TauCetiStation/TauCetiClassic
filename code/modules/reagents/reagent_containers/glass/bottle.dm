@@ -40,9 +40,9 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
 
-	New()
-		..()
-		reagents.add_reagent("kyphotorin", 30)
+/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin/New()
+	..()
+	reagents.add_reagent("kyphotorin", 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"
@@ -367,24 +367,27 @@
 	desc = "A small bottle of peridaxon."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
-	New()
-		..()
-		reagents.add_reagent("peridaxon", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/peridaxon/New()
+	..()
+	reagents.add_reagent("peridaxon", 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/lexorin
 	name = "lexorin bottle"
 	desc = "A small bottle of peridaxon."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
-	New()
-		..()
-		reagents.add_reagent("lexorin", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/lexorin/New()
+	..()
+	reagents.add_reagent("lexorin", 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nanites
 	name = "nantes bottle"
 	desc = "A small bottle of peridaxon."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle10"
-	New()
-		..()
-		reagents.add_reagent("nanites", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/nanites/New()
+	..()
+	reagents.add_reagent("nanites", 30)
