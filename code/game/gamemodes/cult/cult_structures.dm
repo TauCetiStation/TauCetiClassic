@@ -66,7 +66,7 @@
 	return eta
 
 /obj/structure/cult/talisman
-	name = "altar"
+	name = "Altar"
 	desc = "A bloodstained altar dedicated to Nar-Sie."
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
@@ -95,7 +95,7 @@
 
 
 /obj/structure/cult/forge
-	name = "daemon forge"
+	name = "Daemon Forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
 	icon_state = "forge"
 	luminosity = 3
@@ -131,8 +131,6 @@
 			var/obj/item/D = new N(get_turf(src))
 			to_chat(user,"<span class='cult'>You work the forge as dark knowledge guides your hands, creating [D]!</span>")
 
-
-
 var/list/blacklisted_pylon_turfs = typecacheof(list(
 	/turf/unsimulated,
 	/turf/simulated/floor/engine/cult,
@@ -140,7 +138,7 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	/turf/simulated/wall))
 
 /obj/structure/cult/pylon
-	name = "pylon"
+	name = "Pylon"
 	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
 	icon_state = "pylon"
 	luminosity = 5
@@ -207,7 +205,7 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 				last_corrupt = world.time + corrupt_delay*2
 
 /obj/structure/cult/tome
-	name = "archives"
+	name = "Archives"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
 	luminosity = 1

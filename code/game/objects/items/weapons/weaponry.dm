@@ -48,7 +48,7 @@
 		return
 
 	if (M.stat !=2)
-		if((M.mind in ticker.mode.cult) && prob(33))
+		if((M.mind in ticker.mode.cult) && user.mind && user.mind.assigned_role == "Chaplain" && prob(33))
 			to_chat(M, "\red The power of [src] clears your mind of the cult's influence!")
 			to_chat(user, "\red You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.")
 			ticker.mode.remove_cultist(M.mind)
