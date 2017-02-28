@@ -1030,7 +1030,6 @@ Please contact me on #coderbus IRC. ~Carn x
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER
 #undef SURGERY_LAYER
-#undef BANDAGE_LAYER
 #undef UNIFORM_LAYER
 #undef TAIL_LAYER
 #undef ID_LAYER

@@ -612,6 +612,8 @@
 					message = "<span class='danger'>[source] is trying to set on [target]'s internals.</span>"
 			if("splints")
 				message = text("<span class='danger'>[] is trying to remove []'s splints!", source, target)
+			if("bandages")
+				message = text("<span class='danger'>[] is trying to remove []'s bandages!", source, target)
 			if("sensor")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their sensors toggled by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) sensors</font>")
@@ -762,6 +764,9 @@ It can still be worn/put on as normal.
 						W.layer = initial(W.layer)
 						W.appearance_flags = 0
 						W.add_fingerprint(source)
+		if("bandages")
+			target.remove_overlay(BANDAGE_LAYER)
+			target.update_icons()
 		if("CPR")
 			if ((target.health > config.health_threshold_dead && target.health < config.health_threshold_crit))
 				var/suff = min(target.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
