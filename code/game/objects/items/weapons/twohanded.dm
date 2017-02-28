@@ -173,7 +173,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	reflect_chance = rand(50,85)
-	item_color = pick("red", "blue", "green", "purple")
+	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
 	switch(item_color)
 		if("red")
 			light_color = "#ff0000"
@@ -184,6 +184,12 @@
 		if("purple")
 			light_color = "#551a8b"
 			light_power = 2
+		if("yellow")
+			light_color = "#ffff00"
+		if("pink")
+			light_color = "#ff00ff"
+		if("black")
+			light_color = "#aeaeae"
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
