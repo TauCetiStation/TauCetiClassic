@@ -765,7 +765,7 @@ It can still be worn/put on as normal.
 						W.appearance_flags = 0
 						W.add_fingerprint(source)
 		if("bandages")
-			target.remove_overlay(BANDAGE_LAYER)
+			target.remove_overlay(22) // BANDAGE_LAYER
 			target.update_icons()
 		if("CPR")
 			if ((target.health > config.health_threshold_dead && target.health < config.health_threshold_crit))
