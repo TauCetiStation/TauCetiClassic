@@ -771,10 +771,7 @@ It can still be worn/put on as normal.
 				for(var/datum/wound/W in External.wounds)
 					if(W.bandaged)
 						W.bandaged = 0
-			for(var/image/I in target.overlays_standing[22])
-				if(I in bandages)
-					target.overlays_standing[22] -= I
-					target.overlays -= I
+			target.update_bandage()
 		if("CPR")
 			if ((target.health > config.health_threshold_dead && target.health < config.health_threshold_crit))
 				var/suff = min(target.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.

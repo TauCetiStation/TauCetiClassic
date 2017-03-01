@@ -1002,15 +1002,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_overlay(SURGERY_LAYER)
 
-var/global/list/bandages = list(
-								image("icon"='icons/mob/bandages.dmi', "icon_state"="chest", "layer"=-BANDAGE_LAYER),
-								image("icon"='icons/mob/bandages.dmi', "icon_state"="head", "layer"=-BANDAGE_LAYER),
-								image("icon"='icons/mob/bandages.dmi', "icon_state"="l_leg", "layer"=-BANDAGE_LAYER),
-								image("icon"='icons/mob/bandages.dmi', "icon_state"="r_leg", "layer"=-BANDAGE_LAYER),
-								image("icon"='icons/mob/bandages.dmi', "icon_state"="r_arm", "layer"=-BANDAGE_LAYER),
-								image("icon"='icons/mob/bandages.dmi', "icon_state"="l_arm", "layer"=-BANDAGE_LAYER)
-								)
-
 /mob/living/carbon/human/proc/update_bandage()
 	remove_overlay(BANDAGE_LAYER)
 
@@ -1019,10 +1010,7 @@ var/global/list/bandages = list(
 		if(E.wounds.len)
 			for(var/datum/wound/W in E.wounds)
 				if(W.bandaged)
-					for(var/image/I in bandages)
-						if(E.name == I.icon_state)
-							standing += I
-							break
+					standing +=	image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.name]", "layer"=-BANDAGE_LAYER)
 
 	if(standing.len)
 		overlays_standing[BANDAGE_LAYER] = standing
