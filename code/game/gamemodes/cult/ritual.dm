@@ -160,7 +160,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		usr.say(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
 	else
 		usr.whisper(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
-		visible_message("<span class='danger'>red The markings pulse with a small burst of light, then fall dark.</span>", "<span class='danger'> You hear a faint fizzle.</span>")
+	visible_message("<span class='danger'>red The markings pulse with a small burst of light, then fall dark.</span>", "<span class='danger'> You hear a faint fizzle.</span>")
 	return
 
 /obj/effect/rune/proc/check_icon()

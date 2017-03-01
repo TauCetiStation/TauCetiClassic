@@ -150,11 +150,12 @@
 
 /obj/structure/cult/pylon/New()
 	SSobj.processing |= src
-	blacklisted_pylon_turfs = typecacheof(list(
-	/turf/unsimulated,
-	/turf/simulated/floor/engine/cult,
-	/turf/space,
-	/turf/simulated/wall))
+	if(!blacklisted_pylon_turfs)
+		blacklisted_pylon_turfs = typecacheof(list(
+		/turf/unsimulated,
+		/turf/simulated/floor/engine/cult,
+		/turf/space,
+		/turf/simulated/wall))
 	..()
 
 /obj/structure/cult/pylon/Destroy()
