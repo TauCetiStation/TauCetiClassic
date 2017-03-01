@@ -72,13 +72,15 @@
 	alert.desc = initial(path_as_obj.desc)
 	alert.timeout = initial(path_as_obj.timeout)
 	if(alert.timeout)
-		spawn(alert.timeout)
-			if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
-				clear_alert(category)
+		addtimer(CALLBACK(src, .proc/alert_timeout, alert, category), alert.timeout)
 		alert.timeout = world.time + alert.timeout - world.tick_lag
 	alert.mouse_opacity = 1
 
 	return alert
+
+/mob/proc/alert_timeout(obj/screen/alert/alert, category)
+	if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
+		clear_alert(category)
 
 // Proc to clear an existing alert.
 /mob/proc/clear_alert(category)

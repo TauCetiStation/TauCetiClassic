@@ -30,8 +30,7 @@
 
 	src.energy = starting_energy
 	if(temp)
-		spawn(temp)
-			qdel(src)
+		QDEL_IN(src, temp)
 	..()
 	START_PROCESSING(SSobj, src)
 	poi_list |= src

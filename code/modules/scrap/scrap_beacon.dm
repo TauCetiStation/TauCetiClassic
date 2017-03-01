@@ -19,8 +19,7 @@
 		return
 	last_summon = world.time
 	if(!active)
-		spawn()
-			start_scrap_summon()
+		INVOKE_ASYNC(src, .proc/start_scrap_summon)
 
 /obj/structure/scrap_beacon/update_icon()
 	icon_state = "beacon[active]"

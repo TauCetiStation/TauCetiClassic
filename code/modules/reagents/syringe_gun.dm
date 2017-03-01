@@ -48,7 +48,7 @@
 
 /obj/item/weapon/gun/syringe/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(syringes.len)
-		spawn(0) fire_syringe(target,user)
+		INVOKE_ASYNC(src, .proc/fire_syringe, target,user)
 	else
 		to_chat(usr, "\red [src] is empty.")
 
@@ -113,7 +113,8 @@
 
 			sleep(1)
 
-		if (D) spawn(10) qdel(D)
+		if (D)
+			QDEL_IN(D, 10)
 
 		return
 

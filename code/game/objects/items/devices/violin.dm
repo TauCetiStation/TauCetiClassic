@@ -314,7 +314,7 @@
 		else if(href_list["play"])
 			if(song)
 				playing = 1
-				spawn() playsong()
+				INVOKE_ASYNC(src, .proc/playsong)
 
 		else if(href_list["newline"])
 			var/newline = html_encode(input("Enter your line: ", "violin") as text|null)
@@ -366,28 +366,30 @@
 			while(lentext(t) > 3072)
 
 			//split into lines
-			spawn()
-				var/list/lines = splittext(t, "\n")
-				var/tempo = 5
-				if(copytext(lines[1],1,6) == "BPM: ")
-					tempo = 600 / text2num(copytext(lines[1],6))
-					lines.Cut(1,2)
-				if(lines.len > 50)
-					to_chat(usr, "Too many lines!")
-					lines.Cut(51)
-				var/linenum = 1
-				for(var/l in lines)
-					if(lentext(l) > 50)
-						to_chat(usr, "Line [linenum] too long!")
-						lines.Remove(l)
-					else
-						linenum++
-				song = new()
-				song.lines = lines
-				song.tempo = tempo
+			INVOKE_ASYNC(src, .proc/split_into_lines, t)
 
 	add_fingerprint(usr)
 	for(var/mob/M in viewers(1, loc))
 		if((M.client && M.machine == src))
 			attack_self(M)
 	return
+
+/obj/item/device/violin/proc/split_into_lines(t)
+	var/list/lines = splittext(t, "\n")
+	var/tempo = 5
+	if(copytext(lines[1],1,6) == "BPM: ")
+		tempo = 600 / text2num(copytext(lines[1],6))
+		lines.Cut(1,2)
+	if(lines.len > 50)
+		to_chat(usr, "Too many lines!")
+		lines.Cut(51)
+	var/linenum = 1
+	for(var/l in lines)
+		if(lentext(l) > 50)
+			to_chat(usr, "Line [linenum] too long!")
+			lines.Remove(l)
+		else
+			linenum++
+	song = new()
+	song.lines = lines
+	song.tempo = tempo

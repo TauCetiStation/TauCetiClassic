@@ -392,9 +392,8 @@
 	if( flush_count >= flush_every_ticks )
 		if( contents.len )
 			if(mode == 2)
-				spawn(0)
-					feedback_inc("disposal_auto_flush",1)
-					flush()
+				feedback_inc("disposal_auto_flush",1)
+				INVOKE_ASYNC(src, .proc/flush)
 		flush_count = 0
 
 	src.updateDialog()
@@ -580,10 +579,7 @@
 	loc = D.trunk
 	active = 1
 	dir = DOWN
-	spawn(1)
-		move()		// spawn off the movement process
-
-	return
+	addtimer(CALLBACK(src, .proc/move), 1)
 
 // movement process, persists while holder is moving through pipes
 /obj/structure/disposalholder/proc/move()
@@ -877,8 +873,7 @@
 		if(H)
 			expel(H, T, 0)
 
-	spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
-		qdel(src)
+	QDEL_IN(src, 2) // delete pipe after 2 ticks to ensure expel proc finished
 
 
 // pipe affected by explosion

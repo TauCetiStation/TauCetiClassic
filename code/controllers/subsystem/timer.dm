@@ -296,9 +296,7 @@ var/datum/subsystem/timer/SStimer
 	if (!callback)
 		return
 
-	if (wait <= 0)
-		callback.InvokeAsync()
-		return
+	wait = max(wait, 0)
 
 	var/hash
 

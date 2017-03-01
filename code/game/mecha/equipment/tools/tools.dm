@@ -452,8 +452,7 @@
 	P.name = "wormhole"
 	do_after_cooldown()
 	src = null
-	spawn(rand(150,300))
-		qdel(P)
+	QDEL_IN(P, rand(150,300))
 	return
 
 

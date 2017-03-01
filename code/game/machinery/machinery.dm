@@ -145,8 +145,7 @@ Class Procs:
 		pulse2.anchored = 1
 		pulse2.dir = pick(cardinal)
 
-		spawn(10)
-			qdel(pulse2)
+		QDEL_IN(pulse2, 10)
 	..()
 
 /obj/machinery/proc/open_machine()

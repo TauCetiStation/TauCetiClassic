@@ -172,8 +172,7 @@ var/const/tk_maxrange = 15
 	O.icon = 'icons/effects/effects.dmi'
 	O.icon_state = "nothing"
 	flick("empdisable",O)
-	spawn(5)
-		qdel(O)
+	QDEL_IN(O, 5)
 	return
 
 

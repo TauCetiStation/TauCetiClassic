@@ -77,11 +77,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		O.loc = src
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
 		flick("d_analyzer_la", src)
-		spawn(10)
-			icon_state = "d_analyzer_l"
-			busy = 0
+		addtimer(CALLBACK(src, .proc/unbusy), 10)
 		return 1
 	return
+
+/obj/machinery/r_n_d/destructive_analyzer/proc/unbusy()
+	icon_state = "d_analyzer_l"
+	busy = 0
 
 //For testing purposes only.
 /*/obj/item/weapon/deconstruction_test

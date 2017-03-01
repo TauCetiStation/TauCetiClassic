@@ -10,3 +10,5 @@
 //defines for the gc_destroyed var
 #define GC_QUEUED_FOR_QUEUING -1
 #define GC_QUEUED_FOR_HARD_DEL -2
+
+#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)

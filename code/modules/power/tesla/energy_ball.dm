@@ -90,18 +90,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		energy_to_raise = energy_to_raise * 1.5
 
 		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 30)
-		spawn(100)
-			if (!loc)
-				return
-			var/obj/singularity/energy_ball/EB = new(loc)
-
-			EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
-			var/icon/I = icon(icon,icon_state,dir)
-
-			var/orbitsize = (I.Width() + I.Height()) * pick(0.4, 0.5, 0.6, 0.7, 0.8)
-			orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
-
-			EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
+		addtimer(CALLBACK(src, .proc/create_energy_ball), 100)
 
 	else if(energy < energy_to_lower && orbiting_balls.len)
 		energy_to_raise = energy_to_raise / 1.5
@@ -112,6 +101,19 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 	else if(orbiting_balls.len)
 		energy -= orbiting_balls.len * 0.5
+
+/obj/singularity/energy_ball/proc/create_energy_ball()
+	if (!loc)
+		return
+	var/obj/singularity/energy_ball/EB = new(loc)
+
+	EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
+	var/icon/I = icon(icon,icon_state,dir)
+
+	var/orbitsize = (I.Width() + I.Height()) * pick(0.4, 0.5, 0.6, 0.7, 0.8)
+	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
+
+	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
 
 /obj/singularity/energy_ball/proc/eat_shield()
 	if(orbiting_balls.len)

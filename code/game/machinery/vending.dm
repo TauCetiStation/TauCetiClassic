@@ -82,8 +82,9 @@
 	return
 
 /obj/machinery/vending/Destroy()
-	qdel(coin)
-	coin = null
+	if(coin)
+		qdel(coin)
+		coin = null
 	return ..()
 
 /obj/machinery/vending/ex_act(severity)

@@ -45,8 +45,7 @@
 	if(open)
 		playsound(src.loc, 'sound/weapons/guns/m79_out.ogg', 50, 1)
 		if(chambered)
-			spawn(3)
-				playsound(src.loc, 'sound/weapons/shell_drop.ogg', 50, 1)
+			addtimer(CALLBACK(src, .proc/playsound, loc, 'sound/weapons/shell_drop.ogg', 50, 1), 3)
 			chambered.loc = get_turf(src)//Eject casing
 			chambered.SpinAnimation(5, 1)
 			chambered = null

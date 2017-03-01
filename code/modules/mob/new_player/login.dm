@@ -27,7 +27,9 @@
 		loc = pick(watch_locations)
 */
 	new_player_panel()
-	spawn(40)
-		if(client)
-			handle_privacy_poll()
-			client.playtitlemusic()
+	addtimer(CALLBACK(src, .proc/welcome_player), 40)
+
+/mob/new_player/proc/welcome_player()
+	if(client)
+		handle_privacy_poll()
+		client.playtitlemusic()

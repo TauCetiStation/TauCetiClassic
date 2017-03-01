@@ -112,8 +112,7 @@ steam.start() -- spawns the effect
 				for(i=0, i<pick(1,2,3), i++)
 					sleep(5)
 					step(steam,direction)
-				spawn(20)
-					qdel(steam)
+				QDEL_IN(steam, 20)
 
 /////////////////////////////////////////////
 //SPARK SYSTEM (like steam system)
@@ -135,8 +134,7 @@ steam.start() -- spawns the effect
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
-	spawn (100)
-		qdel(src)
+	QDEL_IN(src, 100)
 	return
 
 /obj/effect/effect/sparks/Destroy()
@@ -183,12 +181,12 @@ steam.start() -- spawns the effect
 				for(i=0, i<pick(1,2,3), i++)
 					sleep(5)
 					step(sparks,direction)
-				spawn(20)
-					if(sparks)
-						qdel(sparks)
-					src.total_sparks--
+				addtimer(CALLBACK(src, .proc/delete_sparks, sparks), 20)
 
-
+/datum/effect/effect/system/spark_spread/proc/delete_sparks(obj/effect/effect/sparks/sparks)
+	if(sparks)
+		qdel(sparks)
+	total_sparks--
 
 /////////////////////////////////////////////
 //// SMOKE SYSTEMS
@@ -213,8 +211,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/smoke/New()
 	..()
-	spawn (time_to_live)
-		qdel(src)
+	QDEL_IN(src, time_to_live)
 	return
 
 /obj/effect/effect/smoke/Crossed(mob/living/carbon/M as mob )
@@ -401,9 +398,7 @@ steam.start() -- spawns the effect
 				I.dir = src.holder.dir
 				flick("ion_fade", I)
 				I.icon_state = "blank"
-				spawn( 20 )
-					if(I)
-						qdel(I)
+				QDEL_IN(I, 20)
 			src.oldposition = T
 		spawn(2)
 			if(src.on)
@@ -540,10 +535,7 @@ steam.start() -- spawns the effect
 /obj/effect/effect/foam/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!metal && prob(max(0, exposed_temperature - 475)))
 		flick("[icon_state]-disolve", src)
-
-		spawn(5)
-			qdel(src)
-
+		QDEL_IN(src, 5)
 
 /obj/effect/effect/foam/Crossed(var/atom/movable/AM)
 	if(metal)

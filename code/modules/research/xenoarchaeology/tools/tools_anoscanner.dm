@@ -21,8 +21,7 @@
 /obj/item/device/ano_scanner/interact(mob/user)
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
-		spawn(0)
-			scan()
+		INVOKE_ASYNC(src, .proc/scan)
 		if(nearest_artifact_distance >= 0)
 			message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"
 	else
