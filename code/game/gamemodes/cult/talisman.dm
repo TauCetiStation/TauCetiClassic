@@ -57,7 +57,7 @@
 /obj/item/weapon/paper/talisman/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
 		return
-	if(!istype(A,/obj/item/stack/sheet))
+	if(!istype(A,/obj/item/stack/sheet/metal) || !istype(A,/obj/item/stack/sheet/plasteel))
 		return
 	call(/obj/effect/rune/proc/construction)(A)
 	qdel(src)
@@ -118,7 +118,7 @@
 				if(istype(src,/obj/item/weapon/paper/talisman/supply/weak))
 					to_chat(usr, "<span class='cult'>Lesser supply talismans lack the strength to materialize runed metal!</span>")
 					return
-				 new /obj/item/stack/sheet/runed_metal(get_turf(usr), 5)
+				new /obj/item/stack/sheet/runed_metal(get_turf(usr),5)
 		src.uses--
 		supply()
 	return

@@ -58,6 +58,8 @@
 
 #define isorgan(A) (istype(A, /datum/organ/external))
 
+#define isshade(A) (istype(A,/mob/living/simple_animal/construct))
+
 // GOONCHAT PORT
 
 #define isatom(A) istype(A, /atom)

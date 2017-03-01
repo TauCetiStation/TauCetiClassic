@@ -131,11 +131,7 @@
 			var/obj/item/D = new N(get_turf(src))
 			to_chat(user,"<span class='cult'>You work the forge as dark knowledge guides your hands, creating [D]!</span>")
 
-var/list/blacklisted_pylon_turfs = typecacheof(list(
-	/turf/unsimulated,
-	/turf/simulated/floor/engine/cult,
-	/turf/space,
-	/turf/simulated/wall))
+
 
 /obj/structure/cult/pylon
 	name = "Pylon"
@@ -150,9 +146,15 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	var/last_heal = 0
 	var/corrupt_delay = 50
 	var/last_corrupt = 0
+	var/static/list/blacklisted_pylon_turfs
 
 /obj/structure/cult/pylon/New()
 	SSobj.processing |= src
+	blacklisted_pylon_turfs = typecacheof(list(
+	/turf/unsimulated,
+	/turf/simulated/floor/engine/cult,
+	/turf/space,
+	/turf/simulated/wall))
 	..()
 
 /obj/structure/cult/pylon/Destroy()
@@ -173,11 +175,10 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 						H.adjustBruteLoss(-1, 0)
 						H.adjustFireLoss(-1, 0)
 						H.shock_stage = max(0, H.shock_stage - 1)
-						H.updatehealth()
 					if(isshade(L))
 						var/mob/living/simple_animal/M = L
 						if(M.health < M.maxHealth)
-							M.health++
+							M.adjustBruteLoss(-1)
 	if(last_corrupt <= world.time)
 		var/list/validturfs = list()
 		var/list/cultturfs = list()

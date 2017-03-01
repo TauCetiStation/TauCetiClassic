@@ -79,12 +79,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	if(istype(I, /obj/item/weapon/book/tome) && iscultist(user))
 		to_chat(user, "You retrace your steps, carefully undoing the lines of the rune.")
 		qdel(src)
-		return
 	else if(istype(I, /obj/item/weapon/nullrod))
 		to_chat(user, "\blue You disrupt the vile magic with the deadening field of the null rod!")
 		qdel(src)
-		return
-	return
 
 
 /obj/effect/rune/attack_hand(mob/living/user)
@@ -163,8 +160,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		usr.say(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
 	else
 		usr.whisper(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
-	for (var/mob/V in viewers(src))
-		V.show_message("\red The markings pulse with a small burst of light, then fall dark.", 3, "\red You hear a faint fizzle.", 2)
+		visible_message("<span class='danger'>red The markings pulse with a small burst of light, then fall dark.</span>", "<span class='danger'> You hear a faint fizzle.</span>")
 	return
 
 /obj/effect/rune/proc/check_icon()

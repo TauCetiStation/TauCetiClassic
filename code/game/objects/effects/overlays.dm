@@ -13,7 +13,7 @@
 	var/tmp/atom/BeamSource
 	New()
 		..()
-		addtimer(src,"Delit",10)
+		addtimer(GLOBAL_PROC,"qdel",10,FALSE,src)
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"
@@ -60,10 +60,7 @@
 	if(set_dir)
 		dir = set_dir
 	..()
-	addtimer(src,"Delit",duration)
-
-/obj/effect/overlay/proc/Delit()
-	qdel(src)
+	addtimer(GLOBAL_PROC,"qdel",duration,FALSE,src)
 
 /obj/effect/overlay/cult/sparks
 	name = "blood sparks"

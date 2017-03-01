@@ -192,9 +192,10 @@
 	desc = "Toxic to nonbelievers; this water renews and reinvigorates the faithful of nar'sie."
 	icon_state = "holyflask"
 	color = "#333333"
-	New()
-		..()
-		reagents.add_reagent("unholywater", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater/New()
+	..()
+	reagents.add_reagent("unholywater", 100)
 
 /obj/item/device/cult_shift
 	name = "veil shifter"
@@ -212,11 +213,11 @@
 /obj/item/device/cult_shift/proc/handle_teleport_grab(turf/T, mob/living/user)
 	if(istype(user.get_active_hand(),/obj/item/weapon/grab)).
 		var/obj/item/weapon/grab/G = user.get_active_hand()
-		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)
+		G.affecting.forceMove(T)
 	if(istype(user.get_inactive_hand(),/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = user.get_inactive_hand()
-		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)
-	return //copypaste from space_ninja/proc/handle_teleport_grab
+		G.affecting.forceMove(T)
+	return
 
 /obj/item/device/cult_shift/attack_self(mob/user)
 	if(!uses || !iscarbon(user))
@@ -271,7 +272,7 @@
 			if(M.current != user && M.current.stat != DEAD && !isshade(M.current))
 				cultists += M.current
 		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
-		if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+		if(!Adjacent(user) || user.incapacitated())
 			return
 		if(!cultist_to_receive)
 			to_chat(user,"<span class='cult'>You require a destination!</span>")

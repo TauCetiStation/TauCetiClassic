@@ -218,7 +218,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	item_state = "sheet-metal"
 	icon = 'icons/obj/items.dmi'
 
-/obj/item/stack/sheet/runed_metal/New(var/loc, var/ex_amount=1)
+/obj/item/stack/sheet/runed_metal/New(var/turf/loc, var/ex_amount=1)
 	recipes = runed_metal_recipes
 	amount = ex_amount
 	return ..()
