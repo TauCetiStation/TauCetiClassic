@@ -614,6 +614,8 @@
 				message = text("<span class='danger'>[] is trying to remove []'s splints!", source, target)
 			if("bandages")
 				message = text("<span class='danger'>[] is trying to remove []'s bandages!", source, target)
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their bandages removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) bandages</font>")
 			if("sensor")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their sensors toggled by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) sensors</font>")
@@ -765,8 +767,14 @@ It can still be worn/put on as normal.
 						W.appearance_flags = 0
 						W.add_fingerprint(source)
 		if("bandages")
-			target.remove_overlay(22) // BANDAGE_LAYER
-			target.update_icons()
+			for(var/datum/organ/external/External in target.organs)
+				for(var/datum/wound/W in External.wounds)
+					if(W.bandaged)
+						W.bandaged = 0
+			for(var/image/I in target.overlays_standing[22])
+				if(I in bandages)
+					target.overlays_standing[22] -= I
+					target.overlays -= I
 		if("CPR")
 			if ((target.health > config.health_threshold_dead && target.health < config.health_threshold_crit))
 				var/suff = min(target.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
