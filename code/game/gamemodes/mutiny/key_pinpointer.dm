@@ -3,16 +3,17 @@
 	desc = "Tracks the positions of the emergency authentication keys."
 	var/datum/game_mode/mutiny/mutiny
 
-	New()
-		if(ticker.mode && istype(ticker.mode, /datum/game_mode/mutiny))
-			mutiny = ticker.mode
-		else
-			mutiny = null
-		..()
+/obj/item/weapon/pinpointer/advpinpointer/auth_key/New()
+	if(ticker.mode && istype(ticker.mode, /datum/game_mode/mutiny))
+		mutiny = ticker.mode
+	else
+		mutiny = null
+	..()
 
 /obj/item/weapon/pinpointer/advpinpointer/auth_key/attack_self()
 	if(!mutiny)
 		to_chat(usr, "<span class='danger'>[src] buzzes rudely.</span>")
+		return
 	switch(mode)
 		if (0)
 			mode = 1
@@ -49,7 +50,7 @@
 	access = access_heads
 	group = "Operations"
 
-	New()
-		// This crate is only accessible during mutiny rounds
-		if (istype(ticker.mode,/datum/game_mode/mutiny))
-			..()
+/datum/supply_pack/key_pinpointer/New()
+	// This crate is only accessible during mutiny rounds
+	if (istype(ticker.mode,/datum/game_mode/mutiny))
+		..()

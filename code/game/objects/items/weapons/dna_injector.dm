@@ -91,7 +91,7 @@
 			domutcheck(M, null, block!=null, 0) //#Z2 We go thru chance check
 			uses--
 
-			if(M && prob(5 + M.dna_inject_count))
+			if(prob(5 + M.dna_inject_count))
 				M.dna_inject_count = 0
 				trigger_side_effect(M)
 
@@ -102,7 +102,7 @@
 	return uses
 
 /obj/item/weapon/dnainjector/attack(mob/M, mob/user)
-	if (!istype(M, /mob))
+	if (!istype(M))
 		return
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey") //#Z2
 		to_chat(user, "\red You don't have the dexterity to do this!")
