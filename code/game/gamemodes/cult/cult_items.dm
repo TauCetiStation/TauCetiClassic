@@ -45,7 +45,7 @@
 	flags_inv = HIDEFACE
 	flags = HEADCOVERSEYES
 	body_parts_covered = HEAD|EYES
-	armor = list(melee = 60, bullet = 40, laser = 40,energy = 5, bomb = 30, bio = 50, rad = 20)
+	armor = list(melee = 50, bullet = 45, laser = 40,energy = 5, bomb = 30, bio = 50, rad = 20)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
@@ -66,19 +66,18 @@
 	item_state = "cultrobes"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/book/tome,/obj/item/weapon/melee/cultblade)
-	armor = list(melee = 60, bullet = 50, laser = 45,energy = 5, bomb = 30, bio = 50, rad = 20)
+	armor = list(melee = 50, bullet = 50, laser = 45,energy = 5, bomb = 30, bio = 50, rad = 20)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0
 
-/obj/item/clothing/suit/cultrobes/equipped(mob/living/user, slot)
-	..()
+/obj/item/clothing/suit/cultrobes/attack_hand(mob/living/user)
 	if(!iscultist(user))
 		to_chat(user,"<span class='cult'>\"Trying to use things you don't own is bad, you know.\"</span>",
 		"<span class='cult'>The armor squeezes at your body!</span>")
 		user.emote("scream")
 		user.adjustBruteLoss(25)
-		user.unEquip(src, 1)
 		return
+	return..()
 
 /obj/item/clothing/suit/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -86,7 +85,7 @@
 	icon_state = "cult_armour"
 	item_state = "cult_armour"
 	w_class = 4
-	armor = list(melee = 60, bullet = 50, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 60, laser = 60,energy = 30, bomb = 50, bio = 30, rad = 30)
 	var/current_charges = 3
 	var/image/shield
 
@@ -178,14 +177,14 @@
 	darkness_view = 8
 	flash_protection = 1
 
-/obj/item/clothing/glasses/cultblind/equipped(mob/user, slot)
-	..()
+/obj/item/clothing/glasses/cultblind/attack_hand(mob/user)
 	if(!iscultist(user))
 		to_chat(user,"<span class='userdanger'>\"You want to be blind, do you?\"</span>")
-		user.unEquip(src, 1)
 		user.make_dizzy(30)
 		user.Weaken(5)
 		user.eye_blurry += 30
+		return
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
 	name = "flask of unholy water"
@@ -263,6 +262,8 @@
 
 /obj/item/device/flashlight/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
+		return
+	if(!iscultist(A))
 		return
 
 	if(istype(A, /obj/item))
