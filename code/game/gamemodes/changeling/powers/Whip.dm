@@ -32,17 +32,19 @@
 /obj/item/weapon/changeling_whip/afterattack(atom/A, mob/living/carbon/human/user)
 	if(!istype(user))
 		return
+	if(user.incapacitated() || user.lying)
+		return
 	if(next_click > world.time)
 		return
 	if(!use_charge(A,user))
 		return
-	next_click = world.time + 14
+	next_click = world.time + 12
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(T)
 	if(user.a_intent == "grab")
 		LE.grabber = 1
-	else if(user.a_intent == "disarm" && prob(35))
+	else if(user.a_intent == "disarm" && prob(65))
 		LE.weaken = 5
 	else if(user.a_intent == "hurt")
 		LE.damage = 30
@@ -80,7 +82,8 @@
 		host.attack_log += text("\[[time_stamp()]\] <font color='red'>whipped [M.name]'s ([M.ckey])</font>")
 		msg_admin_attack("[host] ([host.ckey]) whipped [M.name] ([M.ckey]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span></span>")
 	var/atom/movable/T = target
-	var/grab_chance = iscarbon(T) ? 30 : 90
+	var/grab_chance = iscarbon(T) ? 45 : 90
+	visible_message("<span class='danger'>A [target] has been hit by [host]'s whip!</span> ")
 	if(grabber && !T.anchored && prob(grab_chance))
 		spawn(1)
 			T.throw_at(host, 7 - kill_count, 0.2)

@@ -14,21 +14,17 @@
 		return
 	owner = user
 	if(active)
-		to_chat(user, "<span class='notice'>We feel oddly exposed.</span>")
-		owner.mind.changeling.chem_recharge_slowdown -= 0.25
-		SSobj.processing.Remove(src)
-		owner.alpha = 255
+		turn_off()
 	else
-		to_chat(user, "<span class='notice'>We feel one with our surroundings.</span>")
-		owner.alpha = 200
-		owner.mind.changeling.chem_recharge_slowdown += 0.25
-		SSobj.processing |= src
+		turn_on()
 	active = !active
 	feedback_add_details("changeling_powers","CS")
 	return 1
 
 /obj/effect/proc_holder/changeling/chameleon_skin/process()
 	owner.alpha = max(0, owner.alpha - 25)
+	if(!owner.alpha)
+		owner.invisibility = 5 // formal invis to prevent AI TRACKING, cmon, He merged with surroundings
 	if(owner.l_hand)
 		var/obj/item/I = owner.l_hand
 		if(!(I.flags & ABSTRACT))
@@ -40,8 +36,17 @@
 	if(owner.l_move_time + 40 > world.time) // looks like a shit, but meh
 		owner.alpha = 200
 	if(owner.stat == DEAD || owner.lying || owner.buckled)
-		SSobj.processing.Remove(src)
+		turn_off()
 		active = !active
-		owner.alpha = 255
 
+/obj/effect/proc_holder/changeling/chameleon_skin/proc/turn_off()
+	to_chat(owner, "<span class='notice'>We feel oddly exposed.</span>")
+	owner.alpha = 255
+	SSobj.processing.Remove(src)
+	owner.mind.changeling.chem_recharge_slowdown -= 0.25
 
+/obj/effect/proc_holder/changeling/chameleon_skin/proc/turn_on()
+	to_chat(owner, "<span class='notice'>We feel one with our surroundings.</span>")
+	owner.alpha = 200
+	SSobj.processing |= src
+	owner.mind.changeling.chem_recharge_slowdown += 0.25

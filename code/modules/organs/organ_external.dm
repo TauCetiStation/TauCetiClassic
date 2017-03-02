@@ -211,6 +211,7 @@ This function completely restores a damaged organ to perfect condition.
 		status = 0
 	perma_injury = 0
 	brute_dam = 0
+	open = 0
 	burn_dam = 0
 	germ_level = 0
 	wounds.Cut()

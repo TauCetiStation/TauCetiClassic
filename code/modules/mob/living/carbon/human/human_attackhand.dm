@@ -236,7 +236,7 @@
 				//End BubbleWrap
 
 				if(!talked)	//BubbleWrap
-					if(istype(l_hand, /obj/item/weapon/melee/arm_blade) || istype(r_hand, /obj/item/weapon/melee/arm_blade) || istype(l_hand, /obj/item/weapon/shield/changeling) || istype(r_hand, /obj/item/weapon/shield/changeling))
+					if( (l_hand && l_hand.flags & ABSTRACT) || (r_hand && r_hand.flags & ABSTRACT) )
 						return
 					else
 						drop_item()

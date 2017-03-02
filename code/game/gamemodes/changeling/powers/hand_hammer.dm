@@ -40,7 +40,7 @@
 	return 1
 
 /obj/item/weapon/changeling_hammer/attack(atom/target, mob/living/carbon/human/user, proximity)
-	if(user.a_intent == "hurt" && use_charge(target,user, 6))
+	if(user.a_intent == "hurt" && use_charge(target,user, 4))
 		playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
