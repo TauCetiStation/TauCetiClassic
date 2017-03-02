@@ -20,7 +20,7 @@
 	user.SetWeakened(0)
 	user.lying = 0
 	user.update_canmove()
-	user.reagents.add_reagent("synaptizine", 20)
+	user.reagents.add_reagent("synaptizine", 0.5)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.halloss = 0
