@@ -1062,10 +1062,3 @@
 				butcher_results.Remove(path)
 			visible_message("<span class='notice'>[user] butchers [src].</span>")
 			gib()
-
-/mob/living/proc/handle_diginvis()
-	if(!digitaldisguise)
-		src.digitaldisguise = image(loc = src)
-	src.digitaldisguise.override = 1
-	for(var/mob/living/silicon/ai/AI in player_list)
-		AI.client.images |= src.digitaldisguise

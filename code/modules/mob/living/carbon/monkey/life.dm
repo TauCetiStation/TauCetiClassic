@@ -36,8 +36,6 @@
 
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
-		if(digitalcamo)
-			handle_diginvis()
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 

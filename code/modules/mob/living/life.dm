@@ -13,8 +13,6 @@
 
 	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'
 		pull_debuff = 0
-	if(digitalcamo)
-		handle_diginvis()
 	update_gravity(mob_has_gravity())
 
 	handle_actions()
