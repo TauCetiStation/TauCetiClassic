@@ -35,8 +35,8 @@ var/datum/subsystem/lighting/SSlighting
 			var/area/A = T.loc
 			if(!A.dynamic_lighting)
 				continue
-		T.init_lighting_corners()
 		T.init_lighting_overlays()
+		T.init_lighting_corners()
 		CHECK_TICK
 
 	var/list/changed_lights = src.changed_lights

@@ -31,7 +31,7 @@
 
 #define SS_WAIT_THROWING   1
 #define SS_WAIT_TIMER      1
-#define SS_WAIT_LIGHTING   2
+#define SS_WAIT_LIGHTING   1
 #define SS_WAIT_PARALAX    2
 #define SS_WAIT_ORBIT      2
 #define SS_WAIT_AIR        5
