@@ -185,11 +185,16 @@
 			return
 
 	if(hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
+		var/mob/living/carbon/human/H = user
+		var/slot_hand = slot_r_hand
+		var/datum/organ/external/temp = H.organs_by_name["r_hand"]
 		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
+			temp = H.organs_by_name["l_hand"]
+			slot_hand = slot_l_hand
 		if(temp && !temp.is_usable())
 			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
+			return
+		if(!mob_can_equip(user, slot_hand))
 			return
 
 	if(istype(src.loc, /obj/item/weapon/storage))
@@ -344,15 +349,6 @@
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
-		//fat mutation
-		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
-			if(FAT in H.mutations)
-				//testing("[M] TOO FAT TO WEAR [src]!")
-				if(!(flags & ONESIZEFITSALL))
-					if(!disable_warning)
-						to_chat(H, "\red You're too fat to wear the [name].")
-					return 0
-
 		switch(slot)
 			if(slot_l_hand)
 				if(H.l_hand)
@@ -378,6 +374,10 @@
 				if(H.wear_suit)
 					return 0
 				if( !(slot_flags & SLOT_OCLOTHING) )
+					return 0
+				if((FAT in H.mutations) && !(flags & ONESIZEFITSALL))
+					if(!disable_warning)
+						to_chat(H, "\red You're too fat to wear the [name].")
 					return 0
 				return 1
 			if(slot_gloves)
@@ -438,6 +438,10 @@
 				if(H.w_uniform)
 					return 0
 				if( !(slot_flags & SLOT_ICLOTHING) )
+					return 0
+				if((FAT in H.mutations) && !(flags & ONESIZEFITSALL))
+					if(!disable_warning)
+						to_chat(H, "\red You're too fat to wear the [name].")
 					return 0
 				return 1
 			if(slot_wear_id)

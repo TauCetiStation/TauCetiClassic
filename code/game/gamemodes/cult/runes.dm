@@ -41,7 +41,6 @@ var/list/sacrificed = list()
 	//allrunesloc = new/list()
 	//var/index = 0
 	//var/tempnum = 0
-	var/culcount = 0
 	var/runecount = 0
 	var/obj/effect/rune/IP = null
 	var/mob/living/user = usr
@@ -54,23 +53,18 @@ var/list/sacrificed = list()
 	if(runecount >= 2)
 		to_chat(user, "<span class='red'>You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric.</span>")
 		if (istype(user, /mob/living))
-			user.take_overall_damage(5, 0)
+			user.take_overall_damage(14, 0)
 		qdel(src)
-	for(var/mob/living/carbon/C in orange(1,src))
-		if(iscultist(C) && !C.stat)
-			culcount++
-	if(culcount>=3)
-		user.say("Sas[pick("'","`")]so c'arta forbici tarem!")
-		user.visible_message("<span class='red'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
-		"<span class='red'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
-		"<span class='red'>You smell ozone.</span>")
-		for(var/obj/O in src.loc)
-			if(!O.anchored)
-				O.loc = IP.loc
-		for(var/mob/M in src.loc)
-			M.loc = IP.loc
-		return
-	return fizzle()
+	user.say("Sas[pick("'","`")]so c'arta forbici tarem!")
+	user.visible_message("<span class='red'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
+	"<span class='red'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
+	"<span class='red'>You smell ozone.</span>")
+	for(var/obj/O in src.loc)
+		if(!O.anchored)
+			O.loc = IP.loc
+	for(var/mob/M in src.loc)
+		M.loc = IP.loc
+	return
 
 
 /////////////////////////////////////////SECOND RUNE
@@ -1072,8 +1066,7 @@ var/list/sacrificed = list()
 	usr.visible_message("<span class='red'>The rune disappears with a flash of red light, and a set of armor appears on [usr]...</span>", \
 	"<span class='red'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
 
-	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
-	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
+	user.equip_to_slot_or_del(new /obj/item/clothing/suit/hooded/cultrobes/alt(user), slot_wear_suit)
 	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
 	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
 	//the above update their overlay icons cache but do not call update_icons()

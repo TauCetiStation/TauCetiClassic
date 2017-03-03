@@ -63,10 +63,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 // join hide technology - stun rune. Rune color: bright pink.
 /obj/effect/rune/New()
 	..()
-	var/image/blood = image(loc = src)
+	var/image/blood = image('icons/effects/blood.dmi',src,"mfloor[rand(1,7)]",2)
 	blood.override = 1
-	for(var/mob/living/silicon/ai/AI in player_list)
-		AI.client.images += blood
+	blood.color = "#a10808"
+	for(var/mob/living/silicon/Sil in mob_list)
+		if(Sil.client)
+			Sil.client.images += blood
 
 /obj/effect/rune/examine(mob/user)
 	..()

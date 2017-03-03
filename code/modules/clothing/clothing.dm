@@ -213,6 +213,7 @@ BLIND     // can't see anything
 	w_class = 2.0
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/head.dmi')
 	var/blockTracking = 0
+	var/flash_protection = 0
 
 
 //Mask
@@ -298,6 +299,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude","Diona","Vox")
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/head.dmi')
+	flash_protection = 2
 
 /obj/item/clothing/suit/space
 	name = "space suit"

@@ -64,8 +64,6 @@
 	if(src && src.client)
 		src.client.screen = null
 	..()
-	update_hud()
-	update_action_buttons()
 
 /mob/living/simple_animal/updatehealth()
 	return

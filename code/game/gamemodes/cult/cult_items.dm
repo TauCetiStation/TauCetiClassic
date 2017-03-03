@@ -55,22 +55,24 @@
 	icon_state = "cult_hoodalt"
 	item_state = "cult_hoodalt"
 
-/obj/item/clothing/suit/cultrobes/alt
+/obj/item/clothing/suit/hooded/cultrobes/alt
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
+	hoodtype = /obj/item/clothing/head/culthood/alt
 
-/obj/item/clothing/suit/cultrobes
+/obj/item/clothing/suit/hooded/cultrobes
 	name = "cult robes"
 	desc = "A set of armored robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
 	allowed = list(/obj/item/weapon/book/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 50, laser = 45,energy = 5, bomb = 30, bio = 50, rad = 20)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0
+	hoodtype = /obj/item/clothing/head/culthood
 
-/obj/item/clothing/suit/cultrobes/attack_hand(mob/living/user)
+/obj/item/clothing/suit/hooded/cultrobes/attack_hand(mob/living/user)
 	if(!iscultist(user))
 		to_chat(user,"<span class='cult'>\"Trying to use things you don't own is bad, you know.\"</span>",
 		"<span class='cult'>The armor squeezes at your body!</span>")
@@ -79,27 +81,38 @@
 		return
 	return..()
 
-/obj/item/clothing/suit/cultrobes/cult_shield
+/obj/item/clothing/suit/hooded/cultrobes/mob_can_equip(M, slot, disable_warning = 0)
+	if(!..())
+		return 0
+	if(iscultist(M))
+		return 1
+	else
+		return 0
+
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
 	desc = "Empowered garb which creates a powerful shield around the user."
-	icon_state = "cult_armour"
-	item_state = "cult_armour"
+	icon_state = "shielded_armor"
+	item_state = "shielded_armor"
 	w_class = 4
 	armor = list(melee = 60, bullet = 60, laser = 60,energy = 30, bomb = 50, bio = 30, rad = 30)
 	var/current_charges = 3
 	var/image/shield
+	hoodtype = /obj/item/clothing/head/culthood/crown
 
-/obj/item/clothing/suit/cultrobes/cult_shield/New()
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/New()
+	..()
 	shield = image("icon"='icons/effects/effects.dmi', "icon_state"="shield-cult", "layer" = (LIGHTING_LAYER + 1))
 	shield.plane = LIGHTING_PLANE + 1
 
-/obj/item/clothing/suit/cultrobes/cult_shield/pickup(mob/user)
-	user.overlays += shield
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/carbon/human/user)
+	..()
+	if(user.wear_suit == src && current_charges)
+		user.overlays |= shield
+	else
+		user.overlays -= shield
 
-/obj/item/clothing/suit/cultrobes/cult_shield/dropped(mob/user)
-	user.overlays -= shield
-
-/obj/item/clothing/suit/cultrobes/cult_shield/Get_shield_chance()
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/Get_shield_chance()
 	if(current_charges)
 		var/mob/living/carbon/human/H = loc
 		current_charges--
@@ -111,13 +124,20 @@
 	else
 		return 0
 
-/obj/item/clothing/suit/cultrobes/berserker
+/obj/item/clothing/head/culthood/crown
+	name = "Burning Crown"
+	icon_state = "shielded_hat"
+	item_state = "shielded_hat"
+	armor = list(melee = 60, bullet = 60, laser = 60,energy = 30, bomb = 50, bio = 30, rad = 30)
+
+/obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
 	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
 	armor = list(melee = -50, bullet = -50, laser = -100,energy = -50, bomb = -50, bio = -50, rad = -50)
 	slowdown = -1.5
+	hoodtype = /obj/item/clothing/head/culthood/berserkerhood
 
 /obj/item/clothing/head/culthood/berserkerhood
 	name = "flagellant's robes"

@@ -117,11 +117,9 @@
 	var/pickedtype = list()
 	switch(choice)
 		if("Shielded Robe")
-			pickedtype += /obj/item/clothing/suit/cultrobes/cult_shield
-			pickedtype += /obj/item/clothing/head/culthood/alt
+			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
-			pickedtype += /obj/item/clothing/suit/cultrobes/berserker
-			pickedtype += /obj/item/clothing/head/culthood/berserkerhood
+			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if("Nar-Sien Hardsuit")
 			pickedtype += /obj/item/clothing/suit/space/cult
 			pickedtype += /obj/item/clothing/head/helmet/space/cult

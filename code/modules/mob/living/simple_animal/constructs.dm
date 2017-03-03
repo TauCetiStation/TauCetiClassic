@@ -31,24 +31,24 @@
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
-	addtimer(src, "addspells",10) // without timer proc Addtimer is runtiming cuz of "mind.spell_list += spell" don't fuckin know why
 
 /mob/living/simple_animal/construct/Login()
 	..()
+	if(!(mind in ticker.mode.cult))
+		if(ticker.mode.name == "cult")
+			ticker.mode:add_cultist(mind)
+		else
+			ticker.mode.cult += mind
 	ticker.mode.update_all_cult_icons()
+	if(spell_list.len == 0)
+		for(var/spell in construct_spells)
+			AddSpell(new spell(src))
 
 /mob/living/simple_animal/construct/Life()
 	..()
+	if(client)
+		update_action_buttons()
 	sleeping = max(sleeping - 1, 0)
-
-/mob/living/simple_animal/construct/proc/addspells()
-	if(ticker.mode.name == "cult")
-		ticker.mode:add_cultist(mind)
-	else
-		ticker.mode.cult+=mind
-	ticker.mode.update_all_cult_icons()
-	for(var/spell in construct_spells)
-		AddSpell(new spell(src))
 
 /mob/living/simple_animal/construct/verb/toggle_vision()
 	set category = "IC"
@@ -136,7 +136,7 @@
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall/cult, /obj/effect/proc_holder/spell/aoe_turf/cult_comms)
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall/cult, /obj/effect/proc_holder/spell/aoe_turf/cult_comms/construct)
 
 /mob/living/simple_animal/construct/armoured/attackby(obj/item/O, mob/user)
 	if(O.force)
@@ -194,7 +194,7 @@
 	speed = -2
 	see_in_dark = 7
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift, /obj/effect/proc_holder/spell/aoe_turf/cult_comms)
+	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift, /obj/effect/proc_holder/spell/aoe_turf/cult_comms/construct)
 
 
 /////////////////////////////Artificer/////////////////////////
@@ -219,7 +219,7 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
-							/obj/effect/proc_holder/spell/aoe_turf/cult_comms,
+							/obj/effect/proc_holder/spell/aoe_turf/cult_comms/construct,
 							/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile)
 
 
@@ -277,7 +277,7 @@
 	environment_smash = 1
 	see_in_dark = 7
 	attack_sound = 'sound/weapons/slash.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke, /obj/effect/proc_holder/spell/aoe_turf/cult_comms)
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke, /obj/effect/proc_holder/spell/aoe_turf/cult_comms/construct)
 
 /mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
 	return 1

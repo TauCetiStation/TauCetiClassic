@@ -28,3 +28,5 @@
 		for(var/obj/effect/proc_holder/spell/aoe_turf/cult_comms/C in mind.spell_list)
 			mind.spell_list -= C
 
+/obj/effect/proc_holder/spell/aoe_turf/cult_comms/construct
+	charge_max = 300
