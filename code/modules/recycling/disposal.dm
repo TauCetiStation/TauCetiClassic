@@ -492,7 +492,7 @@
 			AM.forceMove(src.loc)
 			AM.pipe_eject(0)
 			if(!isdrone(AM)) //Poor drones kept smashing windows and taking system damage being fired out of disposals. ~Z
-				AM.throw_at(target, 5, 1)
+				AM.throw_at(target, 5, 2)
 
 		H.vent_gas(loc)
 		qdel(H)
@@ -823,7 +823,7 @@
 			for(var/atom/movable/AM in H)
 				AM.forceMove(T)
 				AM.pipe_eject(direction)
-				AM.throw_at(target, 100, 1)
+				AM.throw_at(target, 100, 2)
 			H.vent_gas(T)
 			qdel(H)
 
@@ -835,7 +835,7 @@
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 				AM.forceMove(T)
 				AM.pipe_eject(0)
-				AM.throw_at(target, 5, 1)
+				AM.throw_at(target, 5, 2)
 
 			H.vent_gas(T)	// all gas vent to turf
 			qdel(H)
@@ -1467,7 +1467,7 @@
 			AM.forceMove(src.loc)
 			AM.pipe_eject(dir)
 			if(!isdrone(AM)) //Drones keep smashing windows from being fired out of chutes. Bad for the station. ~Z
-				AM.throw_at(target, 3, 1)
+				AM.throw_at(target, 3, 2)
 		H.vent_gas(src.loc)
 		qdel(H)
 
