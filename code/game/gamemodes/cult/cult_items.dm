@@ -129,6 +129,7 @@
 	icon_state = "shielded_hat"
 	item_state = "shielded_hat"
 	armor = list(melee = 60, bullet = 60, laser = 60,energy = 30, bomb = 50, bio = 30, rad = 30)
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
