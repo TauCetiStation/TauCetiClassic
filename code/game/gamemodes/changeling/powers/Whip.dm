@@ -49,6 +49,7 @@
 	else if(user.a_intent == "hurt")
 		LE.damage = 30
 	LE.host = user
+	LE.firer = user
 	LE.def_zone = check_zone(user.zone_sel.selecting)
 	LE.starting = T
 	LE.original = A
