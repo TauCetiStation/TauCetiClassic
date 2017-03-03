@@ -24,7 +24,7 @@
 /obj/effect/proc_holder/changeling/chameleon_skin/process()
 	owner.alpha = max(0, owner.alpha - 25)
 	if(!owner.alpha)
-		owner.invisibility = 5 // formal invis to prevent AI TRACKING, cmon, He merged with surroundings
+		owner.invisibility = 26 // formal invis to prevent AI TRACKING and alt-clicking, cmon, He merged with surroundings
 	if(owner.l_hand)
 		var/obj/item/I = owner.l_hand
 		if(!(I.flags & ABSTRACT))
