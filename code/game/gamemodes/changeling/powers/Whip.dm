@@ -48,6 +48,8 @@
 		LE.weaken = 5
 	else if(user.a_intent == "hurt")
 		LE.damage = 30
+	else
+		LE.agony = 25
 	LE.host = user
 	LE.firer = user
 	LE.def_zone = check_zone(user.zone_sel.selecting)

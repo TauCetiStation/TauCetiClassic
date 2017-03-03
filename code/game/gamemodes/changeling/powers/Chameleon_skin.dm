@@ -8,6 +8,7 @@
 	max_genetic_damage = 50
 	var/active = 0
 	var/mob/living/carbon/human/owner
+	var/turf/last_loc
 
 /obj/effect/proc_holder/changeling/chameleon_skin/sting_action(mob/living/carbon/user)
 	if(!ishuman(user))
@@ -25,6 +26,8 @@
 	owner.alpha = max(0, owner.alpha - 25)
 	if(!owner.alpha)
 		owner.invisibility = 26 // formal invis to prevent AI TRACKING and alt-clicking, cmon, He merged with surroundings
+	else
+		owner.invisibility = 0
 	if(owner.l_hand)
 		var/obj/item/I = owner.l_hand
 		if(!(I.flags & ABSTRACT))
@@ -33,17 +36,19 @@
 		var/obj/item/I = owner.r_hand
 		if(!(I.flags & ABSTRACT))
 			owner.alpha = 200
-	if(owner.l_move_time + 40 > world.time) // looks like a shit, but meh
+	if(owner.loc != last_loc) // looks like a shit, but meh
 		owner.alpha = 200
 	if(owner.stat == DEAD || owner.lying || owner.buckled)
 		turn_off()
 		active = !active
+	last_loc = owner.loc
 
 /obj/effect/proc_holder/changeling/chameleon_skin/proc/turn_off()
 	to_chat(owner, "<span class='notice'>We feel oddly exposed.</span>")
 	owner.alpha = 255
 	SSobj.processing.Remove(src)
 	owner.mind.changeling.chem_recharge_slowdown -= 0.25
+	owner.invisibility = 0
 
 /obj/effect/proc_holder/changeling/chameleon_skin/proc/turn_on()
 	to_chat(owner, "<span class='notice'>We feel one with our surroundings.</span>")
