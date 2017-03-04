@@ -643,7 +643,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/ed209/proc/assess_perp(mob/living/carbon/perp)
 	var/threatcount = 0
 
-	if(!perp || !istype(perp))
+	if(!istype(perp))
 		return 0
 
 	if(emagged == 2)
@@ -941,25 +941,21 @@ Auto Patrol: []"},
 
 
 /obj/machinery/bot/ed209/bullet_act(obj/item/projectile/Proj)
-	set waitfor = 0
-	if((lasercolor == "b") && !disabled)
-		if(istype(Proj, /obj/item/projectile/beam/lastertag/red))
+	if(!disabled)
+		if((lasercolor == "b") && istype(Proj, /obj/item/projectile/beam/lastertag/red))
 			disabled = 1
 			qdel(Proj)
-			sleep(100)
-			disabled = 0
-		else
-			..()
-	else if((lasercolor == "r") && !disabled)
-		if(istype(Proj, /obj/item/projectile/beam/lastertag/blue))
+			addtimer(src, "enable", 100)
+			return
+		else if((lasercolor == "r") && istype(Proj, /obj/item/projectile/beam/lastertag/blue))
 			disabled = 1
 			qdel(Proj)
-			sleep(100)
-			disabled = 0
-		else
-			..()
-	else
-		..()
+			addtimer(src, "enable", 100)
+			return
+	..()
+
+/obj/machinery/bot/ed209/proc/enable()
+	disabled = 0
 
 /obj/machinery/bot/ed209/bluetag/New()//If desired, you spawn red and bluetag bots easily
 	new /obj/machinery/bot/ed209(get_turf(src), null, "b")

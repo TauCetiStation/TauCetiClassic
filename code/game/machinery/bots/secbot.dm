@@ -626,7 +626,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/perp)
 	var/threatcount = 0
 
-	if(!perp || !istype(perp))
+	if(!istype(perp))
 		return 0
 
 	if(src.emagged == 2)

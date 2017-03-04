@@ -1,5 +1,6 @@
 // see _DEFINES/is_helpers.dm for mob type checks
 #define SAFE_PERP -50
+#define ASSESS_WEAPON_LIST list(/obj/item/weapon/gun, /obj/item/weapon/melee)
 
 /proc/hasorgans(A)
 	return ishuman(A)
@@ -361,7 +362,6 @@ var/list/intents = list("help","disarm","grab","hurt")
 		return SAFE_PERP
 	return ..()
 
-/var/list/weapon_list = list(/obj/item/weapon/gun, /obj/item/weapon/melee)
 /mob/living/carbon/human/assess_perp(obj/access_obj, check_access, auth_weapons, check_records, check_arrest)
 	var/threatcount = ..()
 	if(threatcount == SAFE_PERP)
@@ -386,13 +386,13 @@ var/list/intents = list("help","disarm","grab","hurt")
 		threatcount += 4
 
 	if(auth_weapons && !access_obj.allowed(src))
-		if(l_hand && is_type_in_list(l_hand, weapon_list))
+		if(l_hand && is_type_in_list(l_hand, ASSESS_WEAPON_LIST))
 			threatcount += 4
 
-		if(r_hand && is_type_in_list(r_hand, weapon_list))
+		if(r_hand && is_type_in_list(r_hand, ASSESS_WEAPON_LIST))
 			threatcount += 4
 
-		if(belt && is_type_in_list(belt, weapon_list))
+		if(belt && is_type_in_list(belt, ASSESS_WEAPON_LIST))
 			threatcount += 2
 
 		if(species.name != "Human")
@@ -428,3 +428,4 @@ var/list/intents = list("help","disarm","grab","hurt")
 		return 0
 
 #undef SAFE_PERP
+#undef ASSESS_WEAPON_LIST
