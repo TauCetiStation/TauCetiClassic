@@ -941,17 +941,11 @@ Auto Patrol: []"},
 
 
 /obj/machinery/bot/ed209/bullet_act(obj/item/projectile/Proj)
-	if(!disabled)
-		if((lasercolor == "b") && istype(Proj, /obj/item/projectile/beam/lastertag/red))
-			disabled = 1
-			qdel(Proj)
-			addtimer(src, "enable", 100)
-			return
-		else if((lasercolor == "r") && istype(Proj, /obj/item/projectile/beam/lastertag/blue))
-			disabled = 1
-			qdel(Proj)
-			addtimer(src, "enable", 100)
-			return
+	if(!disabled && ((lasercolor == "b") && istype(Proj, /obj/item/projectile/beam/lastertag/red) \
+				|| (lasercolor == "r") && istype(Proj, /obj/item/projectile/beam/lastertag/blue)))
+		disabled = 1
+		qdel(Proj)
+		addtimer(src, "enable", 100)
 	..()
 
 /obj/machinery/bot/ed209/proc/enable()
