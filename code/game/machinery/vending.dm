@@ -329,7 +329,7 @@
 						else
 							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 					else
-						to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
+						to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
 				else
 					to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
 			else
