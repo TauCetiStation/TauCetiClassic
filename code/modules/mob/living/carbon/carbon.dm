@@ -256,7 +256,6 @@
 										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 				else
 					if(!src.sleeping)
-						src.resting = 1
 						M.visible_message("<span class='notice'>[M] cuddles with [src] to make [t_him] feel better!</span>", \
 								"<span class='notice'>You cuddle with [src] to make [t_him] feel better!</span>")
 					else
