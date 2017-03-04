@@ -105,7 +105,8 @@
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/orange/proc/attach_cuffs(obj/item/weapon/handcuffs/cuffs, mob/user)
-	if (src.chained) return
+	if (src.chained)
+		return
 	user.drop_item(cuffs)
 	cuffs.loc = src
 	chained = cuffs
@@ -115,7 +116,8 @@
 	item_state = "o_shoes1"
 
 /obj/item/clothing/shoes/orange/proc/remove_cuffs()
-	if (!src.chained) return
+	if (!src.chained)
+		return
 	chained.loc = get_turf(src)
 	slowdown = initial(slowdown)
 	name = initial(name)

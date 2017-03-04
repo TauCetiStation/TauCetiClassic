@@ -80,7 +80,7 @@
 	if(!grab)
 		return H
 	if(grab.state >= GRAB_NECK && !grab.affecting.lying)
-		if(is_opposite_dir(H.dir,dir))
+		if(is_the_opposite_dir(H.dir,dir))
 
 			return grab.affecting
 	return H
@@ -177,24 +177,25 @@
 
 	if(A)
 		if(!forcedodge)
-			if(ishuman(A))
-				A = check_living_shield(A)
-				M = A
+			if(istype(M))
+				if(ishuman(A))
+					A = check_living_shield(A)
+					M = A
 
-			if(silenced)
-				to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
-			else
-				visible_message("<span class = 'red'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
-				//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-			if(firer)
-				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-				if(!fake)
-					msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
-			else
-				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				if(!fake)
-					msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
+				if(silenced)
+					to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
+				else
+					visible_message("<span class = 'red'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
+					//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+				if(firer)
+					M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+					firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+					if(!fake)
+						msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
+				else
+					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+					if(!fake)
+						msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
 
 			forcedodge = A.bullet_act(src, def_zone) // searches for return value
 		if(forcedodge == -1) // the bullet passes through a dense object!

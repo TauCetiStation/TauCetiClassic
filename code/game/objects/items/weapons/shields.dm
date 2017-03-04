@@ -50,7 +50,7 @@
 
 /obj/item/weapon/shield/energy/IsReflect(def_zone, hol_dir, hit_dir)
 	if(active)
-		return is_opposite_dir(hol_dir, hit_dir)
+		return is_the_opposite_dir(hol_dir, hit_dir)
 	return FALSE
 
 

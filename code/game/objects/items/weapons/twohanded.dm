@@ -212,7 +212,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
 	if(wielded && prob(reflect_chance))
-		return is_opposite_dir(hol_dir, hit_dir)
+		return is_the_opposite_dir(hol_dir, hit_dir)
 	return FALSE
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
