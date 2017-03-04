@@ -16,7 +16,8 @@
 		return 0
 	return 1
 
-/obj/effect/proc_holder/spell/aoe_turf/cult_comms/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/cult_comms/cast(list/targets, mob/living/user = usr)
+	user.adjustBruteLoss(rand(10,25))
 	call(/obj/effect/rune/proc/communicate)()
 
 /mob/living/proc/remove_comms()
@@ -30,3 +31,6 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/cult_comms/construct
 	charge_max = 300
+
+/obj/effect/proc_holder/spell/aoe_turf/cult_comms/construct/cast(list/targets, mob/user = usr)
+	call(/obj/effect/rune/proc/communicate)()

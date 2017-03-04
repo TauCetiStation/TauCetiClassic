@@ -39,7 +39,7 @@
 			ticker.mode:add_cultist(mind)
 		else
 			ticker.mode.cult += mind
-	ticker.mode.update_all_cult_icons()
+		ticker.mode.update_all_cult_icons()
 	if(spell_list.len == 0)
 		for(var/spell in construct_spells)
 			AddSpell(new spell(src))
