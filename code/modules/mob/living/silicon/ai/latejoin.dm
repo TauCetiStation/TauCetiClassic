@@ -18,6 +18,9 @@ var/global/list/empty_playable_ai_cores = list()
 	if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
 		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
 		return
+	if(istype(loc,/obj/item/device/aicard))
+		to_chat(usr, "<span class='danger'>Unable to establish connection with Repository. Wiping isn't possible at now.</span>")
+		return
 
 	// Guard against misclicks, this isn't the sort of thing we want happening accidentally
 	if(alert("WARNING: This will immediately wipe your core and ghost you, removing your character from the round permanently (similar to cryo and robotic storage). Are you entirely sure you want to do this?",
