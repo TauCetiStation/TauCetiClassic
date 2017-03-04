@@ -257,7 +257,7 @@
 
 	if(user != src)
 		user.do_attack_animation(src)
-		if(check_shields(I.force, "the [I.name]"))
+		if(check_shields(I.force, "the [I.name]",user.dir))
 			return 0
 
 	if(istype(I,/obj/item/weapon/card/emag))
@@ -366,7 +366,7 @@
 
 		O.throwing = 0		//it hit, so stop moving
 
-		if ((O.thrower != src) && check_shields(throw_damage, "[O]"))
+		if ((O.thrower != src) && check_shields(throw_damage, "[O]",get_dir(O,src)))
 			return
 
 		var/datum/organ/external/affecting = get_organ(zone)
