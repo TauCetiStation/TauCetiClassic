@@ -13,12 +13,16 @@
 	var/obj/machinery/field_generator/FG1 = null
 	var/obj/machinery/field_generator/FG2 = null
 	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
+	var/clean_up = 0
 
 /obj/machinery/containment_field/Destroy()
+	clean_up = 1
 	if(FG1 && !FG1.clean_up)
 		FG1.cleanup()
+		FG1 = null
 	if(FG2 && !FG2.clean_up)
 		FG2.cleanup()
+		FG2 = null
 	return ..()
 
 /obj/machinery/containment_field/attack_hand(mob/user)

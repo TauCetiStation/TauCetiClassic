@@ -325,18 +325,18 @@ field_generator power level display
 
 /obj/machinery/field_generator/proc/cleanup()
 	clean_up = 1
-	for (var/obj/machinery/containment_field/F in fields)
-		if (isnull(F))
+	for(var/obj/machinery/containment_field/F in fields)
+		if(isnull(F) || F.clean_up)
 			continue
 		qdel(F)
-	fields = list()
+	fields.Cut()
 	for(var/obj/machinery/field_generator/FG in connected_gens)
-		if (isnull(FG))
+		if(isnull(FG))
 			continue
-		FG.connected_gens.Remove(src)
+		FG.connected_gens -= src
 		if(!FG.clean_up)//Makes the other gens clean up as well
 			FG.cleanup()
-		connected_gens.Remove(FG)
+		connected_gens -= FG
 	connected_gens = list()
 	clean_up = 0
 	update_icon()
