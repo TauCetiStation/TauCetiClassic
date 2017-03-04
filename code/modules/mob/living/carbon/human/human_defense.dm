@@ -21,7 +21,7 @@
 
 				return -1 // complete projectile permutation
 
-	if(check_shields(P.damage, "the [P.name]"))
+	if(check_shields(P.damage, "the [P.name]",P.dir))
 		P.on_hit(src, 100, def_zone)
 		return 2
 
@@ -194,15 +194,15 @@
 				return 1
 	return 0
 
-/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack")
+/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", proj_dir = 0)
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
-		if(prob(I.Get_shield_chance() - round(damage / 3)))
+		if( (!proj_dir || is_opposite_dir(dir,proj_dir)) && prob(I.Get_shield_chance() - round(damage / 3)))
 			visible_message("\red <B>[src] blocks [attack_text] with the [l_hand.name]!</B>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
-		if(prob(I.Get_shield_chance() - round(damage / 3)))
+		if( (!proj_dir || is_opposite_dir(dir,proj_dir)) && prob(I.Get_shield_chance() - round(damage / 3)))
 			visible_message("\red <B>[src] blocks [attack_text] with the [r_hand.name]!</B>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
