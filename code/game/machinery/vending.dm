@@ -658,8 +658,8 @@
 		break
 	if (!throw_item)
 		return 0
-	throw_item.throw_at(target, 16, 3, src)
-	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
+	throw_item.throw_at(target, 16, 3)
+	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 	return 1
 
 /obj/machinery/vending/proc/isWireColorCut(wireColor)
