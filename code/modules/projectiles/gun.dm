@@ -54,7 +54,7 @@
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
 	if(recoil)
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/shake_camera, user, recoil + 1, recoil)
+		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)
 		playsound(user, fire_sound, 10, 1)

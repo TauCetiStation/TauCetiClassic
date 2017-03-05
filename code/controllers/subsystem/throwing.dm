@@ -114,20 +114,21 @@ var/datum/subsystem/throwing/SSthrowing
 	set waitfor = 0
 	SSthrowing.processing -= thrownthing
 	//done throwing, either because it hit something or it finished moving
-	thrownthing.throwing = FALSE
-	if (!hit)
-		for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
-			var/atom/A = thing
-			if (A == target)
-				hit = TRUE
-				thrownthing.throw_impact(A)
-				break
+	if (thrownthing.throwing)
+		thrownthing.throwing = FALSE
 		if (!hit)
-			thrownthing.throw_impact(get_turf(thrownthing))  // we haven't hit something yet and we still must, let's hit the ground.
+			for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
+				var/atom/A = thing
+				if (A == target)
+					hit = TRUE
+					thrownthing.throw_impact(A)
+					break
+			if (!hit)
+				thrownthing.throw_impact(get_turf(thrownthing))  // we haven't hit something yet and we still must, let's hit the ground.
+				thrownthing.newtonian_move(init_dir)
+		else
 			thrownthing.newtonian_move(init_dir)
-	else
-		thrownthing.newtonian_move(init_dir)
-	thrownthing.fly_speed = 0
+		thrownthing.fly_speed = 0
 	if (callback)
 		callback.Invoke()
 
