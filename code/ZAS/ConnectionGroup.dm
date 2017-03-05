@@ -316,8 +316,6 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	A.update_values()
 	B.update_values()
 
-	CHECK_TICK
-
 	if(A.compare(B))
 		return 1
 	else

@@ -11,7 +11,12 @@ obj/machinery/recharger
 	active_power_usage = 250
 	var/obj/item/weapon/charging = null
 	var/recharge_coeff = 1
-	var/list/allowed_items
+	var/static/list/allowed_items = list(
+                                        /obj/item/weapon/gun/energy,
+                                        /obj/item/weapon/melee/baton,
+                                        /obj/item/weapon/defibrillator,
+                                        /obj/item/ammo_box/magazine/l10mag
+                                    )
 
 /obj/machinery/recharger/New()
 	..()
@@ -19,13 +24,6 @@ obj/machinery/recharger
 	component_parts += new /obj/item/weapon/circuitboard/recharger()
 	component_parts += new /obj/item/weapon/stock_parts/capacitor()
 	RefreshParts()
-
-	allowed_items = list(
-						/obj/item/weapon/gun/energy,
-						/obj/item/weapon/melee/baton,
-						/obj/item/weapon/defibrillator,
-						/obj/item/ammo_box/magazine/l10mag
-					)
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)

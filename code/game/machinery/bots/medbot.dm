@@ -494,7 +494,7 @@
 			D.open()
 			src.frustration = 0
 	else if ((istype(M, /mob/living/)) && (!src.anchored))
-		src.loc = M:loc
+		src.loc = M.loc
 		src.frustration = 0
 	return
 
