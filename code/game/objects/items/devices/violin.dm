@@ -366,7 +366,7 @@
 			while(lentext(t) > 3072)
 
 			//split into lines
-			INVOKE_ASYNC(src, .proc/split_into_lines, t)
+			split_into_lines(t)
 
 	add_fingerprint(usr)
 	for(var/mob/M in viewers(1, loc))
@@ -375,6 +375,8 @@
 	return
 
 /obj/item/device/violin/proc/split_into_lines(t)
+	set waitfor = FALSE
+
 	var/list/lines = splittext(t, "\n")
 	var/tempo = 5
 	if(copytext(lines[1],1,6) == "BPM: ")

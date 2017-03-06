@@ -424,7 +424,7 @@
 	if(href_list["process_queue"])
 		if(processing_queue || being_built)
 			return FALSE
-		INVOKE_ASYNC(src, .proc/processing_queue)
+		processing_queue()
 
 	if(href_list["clear_temp"])
 		temp = null
@@ -475,6 +475,8 @@
 	updateUsrDialog()
 
 /obj/machinery/mecha_part_fabricator/proc/processing_queue()
+	set waitfor = FALSE
+
 	processing_queue = TRUE
 	process_queue()
 	processing_queue = FALSE

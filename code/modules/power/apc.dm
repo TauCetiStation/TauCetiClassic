@@ -1394,9 +1394,11 @@
 		return
 	if( cell && cell.charge>=20)
 		cell.use(20);
-		INVOKE_ASYNC(src, .proc/break_lights, skip_sound_and_sparks)
+		break_lights(skip_sound_and_sparks)
 
 /obj/machinery/power/apc/proc/break_lights(skip_sound_and_sparks)
+	set waitfor = FALSE
+
 	for(var/area/A in area.related)
 		for(var/obj/machinery/light/L in A)
 			L.on = 1
