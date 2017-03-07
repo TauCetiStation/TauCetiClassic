@@ -143,9 +143,18 @@ var/const/INGEST = 2
 
 	src.trans_to(B, amount)
 
-	addtimer(CALLBACK(src, .proc/digest_delay, BR, target, B), 95)
+	digest_with_delay(BR, target, B)
 
 	return amount
+
+/datum/reagents/proc/digest_with_delay(datum/reagents/BR, obj/target, obj/item/weapon/reagent_containers/glass/beaker/noreact/B)
+	set waitfor = FALSE
+
+	sleep(95)
+	BR.reaction(target, INGEST)
+	sleep(5)
+	BR.trans_to(target, BR.total_volume)
+	qdel(B)
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1, safety = 0)
 	if(!target)
@@ -594,12 +603,3 @@ var/const/INGEST = 2
 /atom/proc/create_reagents(max_vol)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
-
-// Временное (а может и постоянное) решение бага с проком, который симулирует поедание еды/таблеток и передает с задержкой реагенты из временного контейнера...
-//... по какой-то причине, кудел прерывает spawn который был вызван объектом(еда/таблетка)...
-//... быстрое решение нашел только такое - отвязать проблемный блок в проке от регов. ~Zve
-/datum/reagents/proc/digest_delay(datum/reagents/BR, obj/target, obj/item/weapon/reagent_containers/glass/beaker/noreact/B)
-	BR.reaction(target, INGEST)
-	sleep(5)
-	BR.trans_to(target, BR.total_volume)
-	qdel(B)
