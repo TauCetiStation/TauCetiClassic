@@ -21,7 +21,8 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	desc = "An energy ball."
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
-	layer = LIGHTING_LAYER+1
+	layer = LIGHTING_LAYER + 1
+	plane = LIGHTING_PLANE + 1
 	pixel_x = -32
 	pixel_y = -32
 	current_size = STAGE_TWO
@@ -30,6 +31,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	contained = 0
 	density = 1
 	energy = 0
+
 	var/list/orbiting_balls = list()
 	var/produced_power
 	var/energy_to_raise = 32
@@ -105,6 +107,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/proc/create_energy_ball()
 	if (!loc)
 		return
+
 	var/obj/singularity/energy_ball/EB = new(loc)
 
 	EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
@@ -119,7 +122,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	if(orbiting_balls.len)
 		for(var/obj/machinery/field_generator/FG in oview(src))
 			if(FG.active == 2)
-				FG.power = max(-200, FG.power - orbiting_balls.len * 3)//10 balls is a safe limit in standard setup. 11 - 50/50, but probably will end up bad. And 12 - release of tesla.
+				FG.power = max(0, FG.power - orbiting_balls.len * 3) // 5 balls - stable field work, 6 and more - 50/50.
 
 /obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
