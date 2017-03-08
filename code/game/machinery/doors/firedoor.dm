@@ -41,7 +41,7 @@
 
 /obj/machinery/door/firedoor/New()
 	. = ..()
-	for(var/obj/machinery/door/firedoor/F in loc)
+	for(var/obj/machinery/door/firedoor/F in loc) // i don't like the way this written ~zve
 		if(F != src)
 			spawn(1)
 				qdel(src)
@@ -263,6 +263,7 @@
 	..()
 	layer = base_layer + FIREDOOR_CLOSED_MOD
 	latetoggle()
+	SSmachine.processing |= src
 
 /obj/machinery/door/firedoor/do_open()
 	..()
@@ -348,3 +349,5 @@
 			changed = 1
 		if(changed)
 			update_icon()
+	else if(!density)
+		return PROCESS_KILL
