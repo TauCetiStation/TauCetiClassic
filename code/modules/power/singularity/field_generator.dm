@@ -300,17 +300,20 @@ field_generator power level display
 
 
 /obj/machinery/field_generator/proc/cleanup()
+	if(clean_up)
+		return
+
 	clean_up = TRUE
 
 	if(LAZYLEN(fields))
-		for(var/field in fields)  // `fileds` list will be cleared by field themself in `Destroy()` so no `Cut()`
-			qdel(field)
+		for(var/obj/machinery/containment_field/CF in fields)  // `fileds` list will be cleared by field themself in `Destroy()` so no `Cut()`.
+			if(!QDESTROYING(CF))
+				qdel(CF)
 
 	if(LAZYLEN(connected_gens))
 		for(var/obj/machinery/field_generator/FG in connected_gens)
 			FG.connected_gens -= src
-			if(!FG.clean_up)
-				FG.cleanup()
+			FG.cleanup()
 		connected_gens.Cut()
 
 	clean_up = FALSE

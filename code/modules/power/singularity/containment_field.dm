@@ -18,13 +18,17 @@
 	var/shock_cooldown = 20
 
 /obj/machinery/containment_field/Destroy()
-	if(FG1)
-		FG1.fields -= src
-		FG1 = null
-	if(FG2)
-		FG2.fields -= src
-		FG2 = null
+	detach_from_field_generator(FG1)
+	FG1 = null
+	detach_from_field_generator(FG2)
+	FG2 = null
 	return ..()
+
+/obj/machinery/containment_field/proc/detach_from_field_generator(obj/machinery/field_generator/FG)
+	if(!FG)
+		return
+	FG.fields -= src
+	FG.turn_off()
 
 /obj/machinery/containment_field/attack_hand(mob/user)
 	if(get_dist(src, user) <= 1)
