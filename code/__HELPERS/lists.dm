@@ -719,6 +719,5 @@ datum/proc/dd_SortValue()
 	return input_key
 
 #define LAZYINITLIST(L) if (!L) L = list()
-
+#define LAZYLEN(L) length(L)
 #define UNSETEMPTY(L) if (L && !L.len) L = null
-

@@ -1665,7 +1665,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	for(var/obj/machinery/field_generator/F in machines)
 		if(F.anchored)
-			F.Varedit_start = 1
+			F.var_edit_start = 1
 	spawn(30)
 		for(var/obj/machinery/the_singularitygen/G in machines)
 			if(G.anchored)
