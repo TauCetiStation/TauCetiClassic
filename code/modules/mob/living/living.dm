@@ -1052,7 +1052,7 @@
 	floating = 0
 
 /mob/living/proc/harvest(mob/living/user)
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	if(butcher_results)
 		if(butcher_results.len)

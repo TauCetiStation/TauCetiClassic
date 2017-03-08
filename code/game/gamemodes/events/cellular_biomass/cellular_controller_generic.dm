@@ -152,7 +152,7 @@
 
 /obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_living(loc)
 	var/obj/structure/cellular_biomass/living = new living_type(loc)
-	if(!qdeleted(living))
+	if(!QDELETED(living))
 		biomass += living
 		living.set_master(src)
 
