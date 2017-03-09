@@ -58,6 +58,8 @@
 
 #define isorgan(A) (istype(A, /datum/organ/external))
 
+#define ismachinery(A) (istype(A, /obj/machinery))
+
 // GOONCHAT PORT
 
 #define isatom(A) istype(A, /atom)

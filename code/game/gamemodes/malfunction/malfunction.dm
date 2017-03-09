@@ -5,7 +5,7 @@
 	name = "AI malfunction"
 	config_tag = "malfunction"
 	role_type = ROLE_MALF
-	required_players = 2
+	required_players = 1
 	required_players_secret = 15
 	required_enemies = 1
 	recommended_enemies = 1
@@ -20,6 +20,8 @@
 	var/station_captured = 0
 	var/to_nuke_or_not_to_nuke = 0
 	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
+	var/AI_malf_revealed = 0
+	var/holhack = 0
 
 
 /datum/game_mode/malfunction/announce()
@@ -84,6 +86,9 @@
 /datum/game_mode/malfunction/proc/hack_intercept()
 	intercept_hacked = 1
 
+/datum/game_mode/malfunction/proc/hack_holopads()
+	holhack = 1
+
 
 /datum/game_mode/malfunction/process(seconds)
 	if (apcs >= APC_MIN_TO_MALDF_DECLARE && malf_mode_declared)
@@ -91,6 +96,23 @@
 	..()
 	if (AI_win_timeleft<=0)
 		check_win()
+
+	if (apcs == (1 + intercept_hacked) && AI_malf_revealed==0)
+		AI_malf_revealed = 1
+		world << sound('sound/AI/commandreport.ogg')
+		captain_announce("Caution, [station_name]. We have detected abnormal behaviour in your network. It seems someone is trying to hack your electronic systems. We will update you when we have more information.", "Network Monitoring")
+	if (apcs == (2 + intercept_hacked) && AI_malf_revealed==1)
+		AI_malf_revealed = 2
+		world << sound('sound/AI/commandreport.ogg')
+		captain_announce("We started tracing the intruder. Whoever is doing this, they seem to be on the station itself. We suggest checking all network control terminals. We will keep you updated on the situation.", "Network Monitoring")
+	if (apcs == (4 + intercept_hacked) && AI_malf_revealed==2)
+		AI_malf_revealed = 3
+		world << sound('sound/AI/commandreport.ogg')
+		captain_announce("This is highly abnormal and somewhat concerning. The intruder is too fast, he is evading our traces. No man could be this fast...", "Network Monitoring")
+	if (apcs == 6 && AI_malf_revealed==3 && !ticker.mode:malf_mode_declared)
+		AI_malf_revealed = 4
+		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
+		takeover()
 	return
 
 
@@ -155,27 +177,28 @@
 	set name = "System Override"
 	set desc = "Start the victory timer."
 	if (!istype(ticker.mode,/datum/game_mode/malfunction))
-		to_chat(usr, "You cannot begin a takeover in this round type!")
+		to_chat(usr,"You cannot begin a takeover in this round type!")
 		return
 	if (ticker.mode:malf_mode_declared)
-		to_chat(usr, "You've already begun your takeover.")
+		to_chat(usr,"You've already begun your takeover.")
 		return
 	if (ticker.mode:apcs < APC_MIN_TO_MALDF_DECLARE)
-		to_chat(usr, "You don't have enough hacked APCs to take over the station yet. You need to hack at least 3, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far.")
+		to_chat(usr,"You don't have enough hacked APCs to take over the station yet. You need to hack at least 5, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far.")
 		return
-
-	if (alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
-		return
-
-	command_alert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert")
-	set_security_level("delta")
-
+	var/datum/game_mode/malfunction/malf = ticker.mode
+	if (malf.AI_malf_revealed < 4)
+		if (alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
+			return
+		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
 	ticker.mode:malf_mode_declared = 1
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			M << sound('sound/AI/aimalf.ogg')
+	sleep(50)
+	set_security_level("delta")
+
 
 
 /datum/game_mode/malfunction/proc/ai_win()
