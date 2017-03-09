@@ -1,19 +1,20 @@
 /obj/effect/overlay
 	name = "overlay"
 	unacidable = 1
-	var/i_attached//Added for possible image attachments to objects. For hallucinations and the like.
+	var/i_attached //Added for possible image attachments to objects. For hallucinations and the like.
 
-	/obj/effect/overlay/attackby()
-		return
+/obj/effect/overlay/attackby()
+	return
 
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
 	name="beam"
 	icon='icons/effects/beam.dmi'
 	icon_state="b_beam"
 	var/tmp/atom/BeamSource
-	New()
-		..()
-		spawn(10) qdel(src)
+
+/obj/effect/overlay/beam/New()
+	..()
+	QDEL_IN(src, 10)
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"

@@ -237,8 +237,7 @@
 
 /obj/machinery/power/turbinemotor/New()
 	..()
-	spawn(1)
-		updateConnection()
+	addtimer(CALLBACK(src, .proc/updateConnection), 1)
 
 /obj/machinery/power/turbinemotor/proc/updateConnection()
 	turbine = null

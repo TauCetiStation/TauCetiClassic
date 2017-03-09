@@ -4,9 +4,7 @@
 /obj/item/weapon/stock_parts/cell/New()
 	..()
 	charge = maxcharge
-
-	spawn(5)
-		updateicon()
+	addtimer(CALLBACK(src, .proc/updateicon), 5)
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	overlays.Cut()

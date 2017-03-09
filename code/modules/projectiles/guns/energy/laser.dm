@@ -67,11 +67,11 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/captain/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/item/weapon/gun/energy/laser/captain/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
@@ -157,11 +157,11 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/bluetag/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/item/weapon/gun/energy/laser/bluetag/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
@@ -192,11 +192,11 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/redtag/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/item/weapon/gun/energy/laser/redtag/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 

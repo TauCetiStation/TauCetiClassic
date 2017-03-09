@@ -51,9 +51,10 @@
 
 /obj/vehicle/space/spacebike/load(atom/movable/C)
 	var/mob/living/M = C
-	if(!istype(C)) return 0
+	if(!istype(M))
+		return FALSE
 	if(M.buckled || M.restrained() || !Adjacent(M) || !M.Adjacent(src))
-		return 0
+		return FALSE
 	return ..(M)
 
 /obj/vehicle/space/spacebike/MouseDrop_T(atom/movable/C, mob/user)

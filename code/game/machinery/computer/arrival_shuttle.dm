@@ -25,7 +25,7 @@ var/lastMove = 0
 		return
 	var/myArea = get_area(src)
 	if(SSshuttle.forbidden_atoms_check(myArea))
-		addtimer(src, "try_move_from_station", 600, FALSE)
+		addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
 		return
 	arrival_shuttle_move()
 
@@ -102,7 +102,7 @@ var/lastMove = 0
 	open_doors(toArea, location)
 
 	if(location == 2)
-		addtimer(src, "try_move_from_station", 600, FALSE)
+		addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
 
 
 /obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)

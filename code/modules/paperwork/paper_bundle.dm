@@ -103,10 +103,7 @@
 				dat+= "<DIV STYLE='float;left; text-align:right; with:33.33333%'></DIV>"
 		if(istype(src[page], /obj/item/weapon/paper))
 			var/obj/item/weapon/paper/P = W
-			if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
-				dat+= "<HTML><HEAD><TITLE>[sanitize_popup(P.name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(P.info)))][P.stamp_text]</BODY></HTML>"
-			else
-				dat+= "<HTML><HEAD><TITLE>[sanitize_popup(P.name)]</TITLE></HEAD><BODY>[P.info][P.stamp_text]</BODY></HTML>"
+			dat += P.show_content(human_user, view = FALSE)
 			human_user << browse(dat, "window=[name]")
 			P.add_fingerprint(usr)
 		else if(istype(src[page], /obj/item/weapon/photo))

@@ -509,7 +509,7 @@
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message(text("\red [] has been splashed with [] in the face by []!", target, src, user), 1)
 				src.reagents.reaction(target, TOUCH)
-				spawn(5) src.reagents.clear_reagents()
+				addtimer(CALLBACK(reagents, /datum/reagents.proc/clear_reagents), 5)
 				return
 		else
 			if(user.a_intent == "help")

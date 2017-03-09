@@ -82,8 +82,9 @@
 	return
 
 /obj/machinery/vending/Destroy()
-	qdel(coin)
-	coin = null
+	if(coin)
+		qdel(coin)
+		coin = null
 	return ..()
 
 /obj/machinery/vending/ex_act(severity)
@@ -220,7 +221,7 @@
 					stat &= ~NOPOWER
 					set_light(light_range_on, light_power_on)
 
-	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID()) //ѕда с картой
+	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID())
 		var/obj/item/weapon/card/I = W.GetID()
 		scan_card(I)
 
@@ -657,9 +658,8 @@
 		break
 	if (!throw_item)
 		return 0
-	spawn(0)
-		throw_item.throw_at(target, 16, 3, src)
-	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
+	throw_item.throw_at(target, 16, 3)
+	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 	return 1
 
 /obj/machinery/vending/proc/isWireColorCut(wireColor)

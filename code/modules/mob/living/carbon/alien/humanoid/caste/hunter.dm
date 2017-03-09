@@ -113,9 +113,11 @@
 		stop_pulling()
 		leaping = 1
 		update_icons()
-		throw_at(A,MAX_ALIEN_LEAP_DIST,1)
-		leaping = 0
-		update_icons()
+		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .leap_end))
+
+/mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
+	leaping = 0
+	update_icons()
 
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(A)
 
@@ -141,49 +143,3 @@
 		if(leaping)
 			leaping = 0
 			update_canmove()
-
-
-
-//Modified throw_at() that will use diagonal dirs where appropriate
-//instead of locking it to cardinal dirs
-/mob/living/carbon/alien/humanoid/throw_at(atom/target, range, speed)
-	if(!target || !src)	return 0
-
-	src.throwing = 1
-
-	var/dist_x = abs(target.x - src.x)
-	var/dist_y = abs(target.y - src.y)
-	var/dist_travelled = 0
-	var/dist_since_sleep = 0
-
-	var/tdist_x = dist_x;
-	var/tdist_y = dist_y;
-
-	if(dist_x <= dist_y)
-		tdist_x = dist_y;
-		tdist_y = dist_x;
-
-	var/error = tdist_x/2 - tdist_y
-	//while(src && target &&((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
-	while(target && (((((dist_x > dist_y) && ((src.x < target.x) || (src.x > target.x))) || ((dist_x <= dist_y) && ((src.y < target.y) || (src.y > target.y))) || (src.x > target.x)) && dist_travelled < range) || istype(src.loc, /turf/space)))
-
-		if(!src.throwing) break
-		if(!istype(src.loc, /turf)) break
-
-		var/atom/step = get_step(src, get_dir(src,target))
-		if(!step)
-			break
-		src.Move(step, get_dir(src, step))
-		hit_check()
-		error += (error < 0) ? tdist_x : -tdist_y;
-		dist_travelled++
-		dist_since_sleep++
-		if(dist_since_sleep >= speed)
-			dist_since_sleep = 0
-			sleep(1)
-
-
-	src.throwing = 0
-
-	return 1
-

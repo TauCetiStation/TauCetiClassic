@@ -18,7 +18,7 @@
 			acid on \his [user.back]!</span>", \
 			"<span class='warning'>We vomit acidic ooze onto our \
 			electropack!</span>")
-		addtimer(src, "dissolve_electropack",30,FALSE,user,user.back)
+		addtimer(CALLBACK(src, .proc/dissolve_electropack, user, user.back), 30)
 		used = TRUE
 
 	if(user.wear_mask  && istype(user.wear_mask ,/obj/item/clothing/mask/horsehead))
@@ -26,7 +26,7 @@
 			acid on \his [user.wear_mask ]!</span>", \
 			"<span class='warning'>We vomit acidic ooze onto our \
 			mask!</span>")
-		addtimer(src,"dissolve_horsehead",30,FALSE,user,user.wear_mask )
+		addtimer(CALLBACK(src, .proc/dissolve_horsehead, user, user.wear_mask), 30)
 		used = TRUE
 
 	if(!user.restrained() && istype(user.loc, /turf) && !used)
@@ -39,8 +39,7 @@
 			acid on \his [O]!</span>", \
 			"<span class='warning'>We vomit acidic ooze onto our \
 			restraints!</span>")
-
-		addtimer(src, "dissolve_handcuffs", 30, FALSE, user, O)
+		addtimer(CALLBACK(src, .proc/dissolve_handcuffs, user, O), 30)
 		used = TRUE
 
 	if(user.wear_suit && istype(user.wear_suit, /obj/item/clothing/suit/straight_jacket) && !used)
@@ -48,7 +47,7 @@
 			of acid across the front of \his [user.wear_suit]!</span>", \
 			"<span class='warning'>We vomit acidic ooze onto our straight \
 			jacket!</span>")
-		addtimer(src, "dissolve_straightjacket", 30, FALSE, user, user.wear_suit)
+		addtimer(CALLBACK(src, .proc/dissolve_straightjacket, user, user.wear_suit), 30)
 		used = TRUE
 
 
@@ -57,13 +56,13 @@
 			begin to melt and run!</span>")
 		to_chat(user,"<span class='warning'>We vomit acidic goop onto the \
 			interior of [user.loc]!</span>")
-		addtimer(src, "open_closet", 70, FALSE, user, user.loc)
+		addtimer(CALLBACK(src, .proc/open_closet, user, user.loc), 70)
 		used = TRUE
 
 	if(istype(user.loc, /obj/effect/spider/cocoon) && !used)
 		user.loc.visible_message("<span class='warning'>[user.loc] shifts and starts to fall apart!</span>")
 		to_chat(user,"<span class='warning'>We secrete acidic enzymes from our skin and begin melting our cocoon...</span>")
-		addtimer(src, "dissolve_cocoon", 25, FALSE, user, user.loc) //Very short because it's just webs
+		addtimer(CALLBACK(src, .proc/dissolve_cocoon, user, user.loc), 25) //Very short because it's just webs
 		used = TRUE
 
 	if(used)
@@ -96,7 +95,7 @@
 			C.welded = FALSE
 			C.locked = FALSE
 			C.broken = TRUE
-			C.open()
+			C.open(TRUE)
 			to_chat(user,"<span class='warning'>We open the container restraining us!</span>")
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/O)
