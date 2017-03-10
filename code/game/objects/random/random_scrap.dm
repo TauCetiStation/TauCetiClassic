@@ -12,6 +12,7 @@
 						/obj/structure/scrap/food/large,\
 						/obj/structure/scrap/guns/large,\
 						/obj/structure/scrap/cloth/large,\
+						/obj/structure/scrap/syndie/large,\
 						/obj/structure/scrap/science/large\
 					)
 
@@ -22,14 +23,15 @@
 	icon_state = "welder"
 /obj/random/scrap/dense_weighted/item_to_spawn()
 		return pick(\
-						prob(35);/obj/structure/scrap/poor/large,\
-						prob(6);/obj/structure/scrap/large,\
-						prob(4);/obj/structure/scrap/medical/large,\
-						prob(4);/obj/structure/scrap/science/large,\
-						prob(6);/obj/structure/scrap/vehicle/large,\
-						prob(8);/obj/structure/scrap/cloth/large,\
-						prob(12);/obj/structure/scrap/food/large,\
-						prob(1);/obj/structure/scrap/guns/large\
+						prob(105);/obj/structure/scrap/poor/large,\
+						prob(18);/obj/structure/scrap/large,\
+						prob(12);/obj/structure/scrap/medical/large,\
+						prob(12);/obj/structure/scrap/science/large,\
+						prob(18);/obj/structure/scrap/vehicle/large,\
+						prob(24);/obj/structure/scrap/cloth/large,\
+						prob(36);/obj/structure/scrap/food/large,\
+						prob(1);/obj/structure/scrap/syndie/large,\
+						prob(3);/obj/structure/scrap/guns/large\
 					)
 
 /obj/random/scrap/sparse_even
@@ -45,6 +47,7 @@
 						/obj/structure/scrap/food,\
 						/obj/structure/scrap/science,\
 						/obj/structure/scrap/guns,\
+						/obj/structure/scrap/syndie,\
 						/obj/structure/scrap/cloth\
 					)
 
@@ -55,14 +58,15 @@
 	icon_state = "welder"
 /obj/random/scrap/sparse_weighted/item_to_spawn()
 		return pick(\
-						prob(35);/obj/structure/scrap/poor,\
-						prob(6);/obj/structure/scrap,\
-						prob(4);/obj/structure/scrap/medical,\
-						prob(4);/obj/structure/scrap/science,\
-						prob(6);/obj/structure/scrap/vehicle,\
-						prob(8);/obj/structure/scrap/cloth,\
-						prob(12);/obj/structure/scrap/food,\
-						prob(1);/obj/structure/scrap/guns\
+						prob(105);/obj/structure/scrap/poor,\
+						prob(18);/obj/structure/scrap,\
+						prob(12);/obj/structure/scrap/medical,\
+						prob(12);/obj/structure/scrap/science,\
+						prob(18);/obj/structure/scrap/vehicle,\
+						prob(24);/obj/structure/scrap/cloth,\
+						prob(36);/obj/structure/scrap/food,\
+						prob(1);/obj/structure/scrap/syndie,\
+						prob(3);/obj/structure/scrap/guns\
 					)
 
 /obj/random/scrap/moderate_weighted

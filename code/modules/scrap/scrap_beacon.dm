@@ -19,13 +19,14 @@
 		return
 	last_summon = world.time
 	if(!active)
-		spawn()
-			start_scrap_summon()
+		start_scrap_summon()
 
 /obj/structure/scrap_beacon/update_icon()
 	icon_state = "beacon[active]"
 
 /obj/structure/scrap_beacon/proc/start_scrap_summon()
+	set waitfor = FALSE
+
 	active = 1
 	update_icon()
 	sleep(30)

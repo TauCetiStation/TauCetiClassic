@@ -16,7 +16,7 @@
 		if("Yes")
 			command_alert("Atmospheric anomaly detected on long range scanners. Prepare for station temperature drop.", "Anomaly Alert")
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	message_admins("Station freezing started!")
 
 /datum/anomaly_frost/process()
@@ -38,6 +38,6 @@
 
 		Time -= 1
 		if(Time < 0)
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 			message_admins("Station freezing stopped!")
 			qdel(src)

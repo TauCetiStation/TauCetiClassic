@@ -134,6 +134,5 @@
 
 /atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_layer=null)
 	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_layer)
-	spawn(0)
-		newbeam.Start()
+	INVOKE_ASYNC(newbeam, /datum/beam.proc/Start)
 	return newbeam

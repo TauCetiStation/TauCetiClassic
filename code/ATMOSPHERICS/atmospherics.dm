@@ -17,7 +17,7 @@ Pipelines + Other Objects -> Pipe network
 	var/nodealert = 0
 
 /obj/machinery/atmospherics/process()
-	if(qdeleted(src)) //comments on /vg/ imply that GC'd pipes still process
+	if(QDELETED(src)) //comments on /vg/ imply that GC'd pipes still process
 		return PROCESS_KILL
 	build_network()
 

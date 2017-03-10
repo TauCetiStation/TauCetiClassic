@@ -1394,7 +1394,7 @@ FIRE ALARM
 			src.alarm()
 			src.time = 0
 			src.timing = 0
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 		src.updateDialog()
 	last_process = world.timeofday
 
@@ -1471,7 +1471,7 @@ FIRE ALARM
 	else if (href_list["time"])
 		src.timing = text2num(href_list["time"])
 		last_process = world.timeofday
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else if (href_list["tp"])
 		var/tp = text2num(href_list["tp"])
 		src.time += tp

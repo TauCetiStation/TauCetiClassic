@@ -25,12 +25,12 @@ REAGENT SCANNER
 	icon_state = "t-ray[on]"
 
 	if(on)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	for(var/turf/T in range(1, src.loc) )

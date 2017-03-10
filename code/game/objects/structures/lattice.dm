@@ -61,7 +61,7 @@
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
 			to_chat(user, "\blue Slicing lattice joints ...")
-		PoolOrNew(/obj/item/stack/rods, src.loc)
+		new /obj/item/stack/rods(src.loc)
 		qdel(src)
 
 	return

@@ -68,7 +68,7 @@
 	C.dir = O.dir
 	C.current_type = O.type
 	C.layer = initial(O.layer) // scanning things in your inventory
-	C.plane = initial(O.plane) 
+	C.plane = initial(O.plane)
 
 /obj/item/device/chameleon/proc/toggle()
 	if(!can_use || !active_dummy)
@@ -84,7 +84,7 @@
 
 /obj/item/device/chameleon/proc/play_transform_effect()
 	playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
-	var/obj/effect/overlay/T = PoolOrNew(/obj/effect/overlay, get_turf(src))
+	var/obj/effect/overlay/T = new /obj/effect/overlay(get_turf(src))
 	T.icon = 'icons/effects/effects.dmi'
 	flick("emppulse",T)
 	spawn(8)

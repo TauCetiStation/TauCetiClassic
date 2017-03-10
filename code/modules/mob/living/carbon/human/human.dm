@@ -230,6 +230,7 @@
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
+	..()
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -1443,15 +1444,16 @@
 	status_flags |= LEAPING
 
 	src.visible_message("<span class='warning'><b>\The [src]</b> leaps at [T]!</span>")
-	src.throw_at(get_step(get_turf(T),get_turf(src)), 5, 1, src)
+	src.throw_at(get_step(get_turf(T),get_turf(src)), 5, 1, src, spin = FALSE, callback = CALLBACK(src, .end_leaping, T))
 	playsound(src.loc, 'sound/voice/shriek1.ogg', 50, 1)
 
-	sleep(5)
 
-	if(status_flags & LEAPING) status_flags &= ~LEAPING
+/mob/living/carbon/human/proc/end_leaping(mob/living/T)
+	if(status_flags & LEAPING)
+		status_flags &= ~LEAPING
 
 	if(!src.Adjacent(T))
-		to_chat(src, "\red You miss!")
+		to_chat(src, "<span class='warning'>You miss!</span>")
 		return
 
 	T.Weaken(5)
@@ -1459,12 +1461,12 @@
 	var/use_hand = "left"
 	if(l_hand)
 		if(r_hand)
-			to_chat(src, "\red You need to have one hand free to grab someone.")
+			to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
 			return
 		else
 			use_hand = "right"
 
-	src.visible_message("<span class='warning'><b>\The [src]</b> seizes [T] aggressively!</span>")
+	visible_message("<span class='warning'><b>\The [src]</b> seizes [T] aggressively!</span>")
 
 	var/obj/item/weapon/grab/G = new(src,T)
 	if(use_hand == "left")

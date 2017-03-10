@@ -274,5 +274,5 @@
 					holder.throw_atom = object
 			if(pa.Find("right"))
 				if(holder.throw_atom)
-					holder.throw_atom.throw_at(object, 10, 1)
+					holder.throw_atom.throw_at(object, 10, 3)
 					log_admin("[key_name(usr)] threw [holder.throw_atom] at [object]")

@@ -256,7 +256,7 @@ var/global/chicken_count = 0
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
 		if(chicken_count < MAX_CHICKENS && prob(10))
-			SSobj.processing |= E
+			START_PROCESSING(SSobj, E)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
@@ -265,7 +265,7 @@ var/global/chicken_count = 0
 		if(amount_grown >= 100)
 			visible_message("[src] hatches with a quiet cracking sound.")
 			new /mob/living/simple_animal/chick(get_turf(src))
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 			qdel(src)
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)

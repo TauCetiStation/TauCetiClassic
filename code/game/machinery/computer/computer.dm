@@ -33,7 +33,7 @@
 	for(var/x in verbs)
 		verbs -= x
 	set_broken()
-	var/datum/effect/effect/system/smoke_spread/smoke = PoolOrNew(/datum/effect/effect/system/smoke_spread)
+	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 	smoke.set_up(5, 0, src)
 	smoke.start()
 	return
@@ -162,6 +162,6 @@
 			"<span class='danger'>You hear a smashing sound.</span>")
 			set_broken()
 			return
-	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his claws.</spanclass>",\
-	"<span class='danger'>You smash against the [src.name] with your claws.</spanclass>",\
-	"<span class='danger'>You hear a clicking sound.</spanclass>") 
+	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his claws.</span>",\
+	"<span class='danger'>You smash against the [src.name] with your claws.</span>",\
+	"<span class='danger'>You hear a clicking sound.</span>")

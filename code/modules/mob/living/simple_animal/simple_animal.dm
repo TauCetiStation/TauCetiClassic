@@ -397,6 +397,7 @@
 /mob/living/simple_animal/death()
 	icon_state = icon_dead
 	stat = DEAD
+	health = 0
 	density = 0
 	return ..()
 

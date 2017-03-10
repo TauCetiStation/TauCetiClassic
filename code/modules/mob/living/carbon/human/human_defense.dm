@@ -101,6 +101,7 @@
 			(SP.desc) = "[SP.desc] It looks like it was fired from [P.shot_from]."
 			(SP.loc) = organ
 			organ.embed(SP)
+
 	if(istype(P, /obj/item/projectile/neurotoxin))
 		var/obj/item/projectile/neurotoxin/B = P
 
@@ -108,7 +109,8 @@
 		var/armor = getarmor_organ(organ, "bio")
 		if (armor < 100)
 			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
-			to_chat(src, "\red You have been shot!")
+			to_chat(src, "\red You feel that yor muscles can`t move!")
+
 
 	return (..(P , def_zone))
 
@@ -195,17 +197,17 @@
 /mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack")
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
+		if(prob(I.Get_shield_chance() - round(damage / 3)))
 			visible_message("\red <B>[src] blocks [attack_text] with the [l_hand.name]!</B>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
+		if(prob(I.Get_shield_chance() - round(damage / 3)))
 			visible_message("\red <B>[src] blocks [attack_text] with the [r_hand.name]!</B>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
-		if(I.IsShield() && (prob(35)))
+		if(prob(I.Get_shield_chance() - round(damage / 3)))
 			visible_message("\red <B>The reactive teleport system flings [src] clear of [attack_text]!</B>")
 			var/list/turfs = new/list()
 			for(var/turf/T in orange(6))
@@ -342,7 +344,7 @@
 		if(istype(O,/obj/item/weapon))
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
-		var/throw_damage = O.throwforce*(AM.fly_speed/5)
+		var/throw_damage = O.throwforce * (AM.fly_speed / 5)
 
 		var/zone
 		if (istype(O.thrower, /mob/living))
@@ -359,10 +361,8 @@
 			zone = get_zone_with_miss_chance(zone, src, 15)
 
 		if(!zone)
-			visible_message("\blue \The [O] misses [src] narrowly!")
+			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
-
-		O.throwing = 0		//it hit, so stop moving
 
 		if ((O.thrower != src) && check_shields(throw_damage, "[O]"))
 			return
@@ -370,7 +370,7 @@
 		var/datum/organ/external/affecting = get_organ(zone)
 		var/hit_area = affecting.display_name
 
-		src.visible_message("\red [src] has been hit in the [hit_area] by [O].")
+		src.visible_message("<span class='warning'>[src] has been hit in the [hit_area] by [O].</span>")
 		var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess "melee" is the best fit here
 
 		if(armor < 100)
@@ -391,7 +391,7 @@
 			var/momentum = AM.fly_speed/2
 			var/dir = get_dir(O.throw_source, src)
 
-			visible_message("\red [src] staggers under the impact!","\red You stagger under the impact!")
+			visible_message("<span class='warning'>[src] staggers under the impact!</span>","<span class='danger'>You stagger under the impact!</span>")
 			src.throw_at(get_edge_target_turf(src,dir),1,momentum)
 
 			if(!W || !src) return
@@ -401,10 +401,9 @@
 
 				if(T)
 					src.loc = T
-					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='warning'>You are pinned to the wall by [O]!</span>")
+					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='danger'>You are pinned to the wall by [O]!</span>")
 					src.anchored = 1
 					src.pinned += O
-		AM.fly_speed = 0
 
 /mob/living/carbon/human/proc/bloody_hands(mob/living/source, amount = 2)
 	if (gloves)
