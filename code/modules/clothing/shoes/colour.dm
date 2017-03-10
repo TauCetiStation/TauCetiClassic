@@ -132,7 +132,7 @@
 /obj/item/clothing/shoes/orange/attackby(H, mob/user)
 	..()
 	if (istype(H, /obj/item/weapon/handcuffs))
-		attach_cuffs(H,user)
+		attach_cuffs(H, user)
 
 /obj/item/clothing/shoes/orange/attack_hand(mob/user)
 	var/confirmed = 1
@@ -145,4 +145,4 @@
 			if(do_after(user,1200,target = usr))
 				confirmed = 1
 	if(confirmed)
-		return..()
+		return ..()

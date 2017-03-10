@@ -21,7 +21,7 @@ This is what happens, when alien attack.
 	return
 
 /mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/M)
-	if(check_shields(0, M.name, get_dir(M,src)))
+	if(check_shields(0, M.name, get_dir(M,src) ))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
@@ -41,7 +41,7 @@ This is what happens, when alien attack.
 			updatehealth()
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(check_shields(0, M.name, get_dir(M,src)))
+	if(check_shields(0, M.name, get_dir(M,src) ))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 

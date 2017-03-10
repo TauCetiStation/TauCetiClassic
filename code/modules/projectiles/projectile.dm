@@ -80,8 +80,7 @@
 	if(!grab)
 		return H
 	if(grab.state >= GRAB_NECK && !grab.affecting.lying)
-		if(is_the_opposite_dir(H.dir,dir))
-
+		if(is_the_opposite_dir(H.dir, dir))
 			return grab.affecting
 	return H
 
