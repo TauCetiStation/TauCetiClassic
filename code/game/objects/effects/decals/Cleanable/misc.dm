@@ -169,13 +169,13 @@
 		qdel(src)
 		return
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 	overlays |= get_water_icon("water")
 	update_icon()
 
 /obj/effect/decal/cleanable/water/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/decal/cleanable/water/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -231,7 +231,7 @@
 	var/turf/T = get_turf(A)
 	var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
 	if(!W)
-		PoolOrNew(/obj/effect/decal/cleanable/water,T)
+		new /obj/effect/decal/cleanable/water(T)
 	else
 		W.depth += rand(2,5)/10
 
@@ -288,7 +288,7 @@
 			var/turf/T = pick(clean_turf)
 			var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
 			if(!W)
-				W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
+				W = new /obj/effect/decal/cleanable/water(T)
 				W.depth += depth/10
 				depth -= 0.5+depth/10
 				try_trans_DNA(W)

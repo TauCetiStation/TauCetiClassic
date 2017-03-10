@@ -617,7 +617,7 @@ obj/item/projectile/kinetic/New()
 				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
 			template.load(T, centered = TRUE)
 
-		PoolOrNew(/datum/effect/effect/system/smoke_spread, T)
+		new /datum/effect/effect/system/smoke_spread(T)
 		qdel(src)
 
 //Pod turfs and objects

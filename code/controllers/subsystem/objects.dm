@@ -1,34 +1,37 @@
 var/datum/subsystem/objects/SSobj
 
+/datum/var/isprocessing = 0
 /datum/proc/process()
 	set waitfor = 0
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return 0
 
 /datum/subsystem/objects
 	name = "Objects"
-	priority = 12
+
+	init_order = SS_INIT_OBJECT
+	priority   = SS_PRIORITY_OBJECTS
 
 	var/list/processing = list()
 	var/list/currentrun = list()
-	var/list/burning = list()
 	var/list/drying = list()
 
 /datum/subsystem/objects/New()
 	NEW_SS_GLOBAL(SSobj)
 
-/datum/subsystem/objects/Initialize(timeofday, zlevel)
+/datum/subsystem/objects/Initialize(timeofday)
 	setupGenetics()
 	GenerateGasOverlays()
 	color_windows_init()
+	populate_gear_list()
+
 	global_announcer = new(null) //Doh...
-	for(var/V in world)
-		var/atom/A = V
-		if (zlevel && A.z != zlevel)
-			continue
+
+	for(var/thing in world)
+		var/atom/A = thing
 		A.initialize()
 		CHECK_TICK
-	. = ..()
+	..()
 
 
 /datum/subsystem/objects/stat_entry()
@@ -42,12 +45,12 @@ var/datum/subsystem/objects/SSobj
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/datum/thing = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/datum/thing = currentrun[currentrun.len]
+		currentrun.len--
 		if(thing)
 			thing.process(wait)
 		else
-			SSobj.processing.Remove(thing)
+			SSobj.processing -= thing
 		if (MC_TICK_CHECK)
 			return
 
@@ -55,16 +58,15 @@ var/datum/subsystem/objects/SSobj
 		if(dryingobj && dryingobj.wet)
 			dryingobj.dry_process()
 		else
-			SSobj.drying.Remove(dryingobj)
-
-	//for(var/obj/burningobj in SSobj.burning)
-	//	if(burningobj && (burningobj.burn_state == ON_FIRE))
-	//		if(burningobj.burn_world_time < world.time)
-	//			burningobj.burn()
-	//	else
-	//		SSobj.burning.Remove(burningobj)
+			SSobj.drying -= dryingobj
 
 /datum/subsystem/objects/proc/setup_template_objects(list/objects)
 	for(var/A in objects)
 		var/atom/B = A
 		B.initialize()
+
+/datum/subsystem/objects/Recover()
+	if (istype(SSobj.processing))
+		processing = SSobj.processing
+	if (istype(SSobj.drying))
+		drying = SSobj.drying

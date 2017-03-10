@@ -103,7 +103,7 @@
 							message = "<span class='notice'>[src] licks [A], then ate \him. In last moments of life, [A] was [expression]!</span>"
 							M.health = 0
 							M.loc = src
-							addtimer(src, "ate_mouse", rand(250, 1200))
+							addtimer(CALLBACK(src, .proc/ate_mouse), rand(250, 1200))
 					else if(iscorgi(A))
 						adjustBruteLoss(-1)
 						adjustFireLoss(-1)
@@ -240,7 +240,7 @@
 
 	var/end_in = rand(26,43)
 	animate(src, pixel_y = rand(28,66) , time = end_in, easing = SINE_EASING)
-	addtimer(src, "pop", end_in + 3)
+	addtimer(CALLBACK(src, .proc/pop), end_in + 3)
 
 /obj/effect/bubble_ian/proc/pop()
 	for(var/mob/living/carbon/C in view(1,src))
@@ -275,7 +275,7 @@
 				if((nose_memory in nose_database) && nose_database[nose_memory] == "Unknown")
 					I.color = list(1.438,-0.062,-0.062,0.122,1.378,-0.122,0.016,-0.016,1.483,-0.03,0.05,-0.02)
 				client.images += I
-				addtimer(src, "unvisualize_smell", rand(30, 60), FALSE, I)
+				addtimer(CALLBACK(src, .proc/unvisualize_smell, I), rand(30, 60))
 
 /mob/living/carbon/ian/proc/unvisualize_smell(image/I)
 	if(!client)
@@ -354,7 +354,7 @@
 					else
 						apply_effects(0,0,0,0,5,0,0,150)
 						M.visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>", , "<span class='red'>You hear someone fall</span>")
-					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+					var/datum/effect/effect/system/spark_spread/s = new
 					s.set_up(3, 1, src)
 					s.start()
 					M.do_attack_animation(src)

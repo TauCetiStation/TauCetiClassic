@@ -243,7 +243,8 @@
 			return
 		else
 			var/obj/item/weapon/cable_coil/coil = W
-			coil.use(1)
+			if(!coil.use(1))
+				return
 			src.wires = 1.0
 			to_chat(user, "\blue You insert the wire!")
 	return

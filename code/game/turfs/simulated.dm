@@ -221,24 +221,18 @@
 		new /obj/effect/decal/cleanable/blood/oil(src)
 
 //Wet floor procs.
-/turf/simulated/var/wet_timer_id = null
-
 /turf/simulated/proc/make_wet_floor(severity = WATER_FLOOR)
 	if(wet < severity)
 		wet = severity
 
-		if(severity < LUBE_FLOOR)
-			if(!wet_overlay)
+		if(severity < LUBE_FLOOR) // Thats right, lube does not add nor clean wet overlay. So if the floor was wet before and we add lube, wet overlay simply stays longer.
+			if(!wet_overlay)      // For stealth - floor must be dry, so added lube effect will be invisible.
 				wet_overlay = image('icons/effects/water.dmi', "wet_floor", src)
 				overlays += wet_overlay
 
-		if(wet_timer_id)
-			deltimer(wet_timer_id)
-			wet_timer_id = null //actually, i see no point in cleaning ref, since we rewrite this var below.
-		wet_timer_id = addtimer(src, "make_dry_floor", rand(710,800))
+		addtimer(CALLBACK(src, .proc/make_dry_floor), rand(710,800), TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /turf/simulated/proc/make_dry_floor()
-	wet_timer_id = null
 	if(wet)
 		if(wet_overlay)
 			overlays -= wet_overlay

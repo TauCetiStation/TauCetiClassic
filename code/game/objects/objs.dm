@@ -23,12 +23,12 @@
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
 /obj/process()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return 0
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	nanomanager.close_uis(src)
 	return ..()
 
@@ -52,7 +52,7 @@
 
 /obj/singularity_act()
 	ex_act(1.0)
-	if(src && !qdeleted(src))
+	if(src && !QDELETED(src))
 		qdel(src)
 	return 2
 

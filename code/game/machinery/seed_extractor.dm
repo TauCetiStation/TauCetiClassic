@@ -79,8 +79,9 @@ obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
 
 	else if(istype(O, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/S = O
+		if(!S.use(1))
+			return
 		to_chat(user, "<span class='notice'>You extract some seeds from the [S.name].</span>")
-		S.use(1)
 		new /obj/item/seeds/grassseed(loc)
 
 	return

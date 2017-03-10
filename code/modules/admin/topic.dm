@@ -208,7 +208,7 @@
 						if(timer_maint_revoke_id)
 							deltimer(timer_maint_revoke_id)
 							timer_maint_revoke_id = 0
-						timer_maint_revoke_id = addtimer(GLOBAL_PROC, "revoke_maint_all_access", 600, TRUE, FALSE)
+						timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 		href_list["secretsadmin"] = "check_antagonist"
 
@@ -1601,7 +1601,7 @@
 						P.stamped = new
 					P.stamped += /obj/item/weapon/stamp
 					P.overlays += stampoverlay
-					P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+					P.stamp_text += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
 
 		to_chat(src.owner, "Message reply to transmitted successfully.")
 		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")

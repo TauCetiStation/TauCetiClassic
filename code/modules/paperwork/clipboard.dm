@@ -124,12 +124,7 @@
 		if(href_list["read"])
 			var/obj/item/weapon/paper/P = locate(href_list["read"])
 			if(P)
-				if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
-					usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(P.name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(P.info)))][P.stamps]</BODY></HTML>", "window=[P.name]")
-					onclose(usr, "[P.name]")
-				else
-					usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(P.name)]</TITLE></HEAD><BODY>[P.info][P.stamps]</BODY></HTML>", "window=[P.name]")
-					onclose(usr, "[P.name]")
+				P.show_content(usr)
 
 		if(href_list["look"])
 			var/obj/item/weapon/photo/P = locate(href_list["look"])

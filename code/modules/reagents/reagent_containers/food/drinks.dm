@@ -11,132 +11,133 @@
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
 
-	on_reagent_change()
-		if (gulp_size < 5) gulp_size = 5
-		else gulp_size = max(round(reagents.total_volume / 5), 5)
+/obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
+	if (gulp_size < 5)
+		gulp_size = 5
+	else
+		gulp_size = max(round(reagents.total_volume / 5), 5)
 
-	attack_self(mob/user)
-		return
+/obj/item/weapon/reagent_containers/food/drinks/attack_self(mob/user)
+	return
 
-	attack(mob/M, mob/user, def_zone)
-		var/datum/reagents/R = src.reagents
-		var/fillevel = gulp_size
+/obj/item/weapon/reagent_containers/food/drinks/attack(mob/M, mob/user, def_zone)
+	var/datum/reagents/R = src.reagents
+	var/fillevel = gulp_size
 
-		if(!R.total_volume || !R)
-			to_chat(user, "\red None of [src] left, oh no!")
-			return 0
-
-		if(!CanEat(user, M, src, "drink")) return
-
-		if(M == user)
-
-			if(istype(M,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(H.species.flags[IS_SYNTHETIC])
-					to_chat(H, "\red You have a monitor for a head, where do you think you're going to put that?")
-					return
-
-			to_chat(M, "\blue You swallow a gulp of [src].")
-			if(reagents.total_volume)
-				reagents.trans_to_ingest(M, gulp_size)
-
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-			return 1
-		else
-			if( istype(M, /mob/living/carbon/human) )
-				var/mob/living/carbon/human/H = M
-				if(H.species.flags[IS_SYNTHETIC])
-					to_chat(H, "\red They have a monitor for a head, where do you think you're going to put that?")
-					return
-
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] attempts to feed [M] [src].", 1)
-			if(!do_mob(user, M)) return
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] feeds [M] [src].", 1)
-
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-			msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-
-			if(reagents.total_volume)
-				reagents.trans_to_ingest(M, gulp_size)
-
-			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-				var/mob/living/silicon/robot/bro = user
-				bro.cell.use(30)
-				var/refill = R.get_master_reagent_id()
-				spawn(600)
-					R.add_reagent(refill, fillevel)
-
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-			return 1
-
+	if(!R.total_volume || !R)
+		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
 		return 0
 
+	if(!CanEat(user, M, src, "drink")) return
 
-	afterattack(obj/target, mob/user, proximity)
-		if(!proximity) return
+	if(M == user)
 
-		if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
-
-			if(!target.reagents.total_volume)
-				to_chat(user, "\red [target] is empty.")
+		if(istype(M,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(H.species.flags[IS_SYNTHETIC])
+				to_chat(H, "<span class='warning'>You have a monitor for a head, where do you think you're going to put that?</span>")
 				return
 
-			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, "\red [src] is full.")
+		to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
+		if(reagents.total_volume)
+			reagents.trans_to_ingest(M, gulp_size)
+
+		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		return 1
+	else
+		if( istype(M, /mob/living/carbon/human) )
+
+			var/mob/living/carbon/human/H = M
+			if(H.species.flags[IS_SYNTHETIC])
+				to_chat(H, "<span class='warning'>They have a monitor for a head, where do you think you're going to put that?</span>")
 				return
 
-			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message("<span class='warning'>[user] attempts to feed [M] [src].</span>", 1)
+		if(!do_mob(user, M)) return
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message("<span class='warning'>[user] feeds [M] [src].</span>", 1)
 
-		else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
-			if(!reagents.total_volume)
-				to_chat(user, "\red [src] is empty.")
-				return
+		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
+		msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				to_chat(user, "\red [target] is full.")
-				return
+		if(reagents.total_volume)
+			reagents.trans_to_ingest(M, gulp_size)
 
+		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+			var/mob/living/silicon/robot/bro = user
+			bro.cell.use(30)
+			var/refill = R.get_master_reagent_id()
+			addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
 
+		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		return 1
 
-			var/datum/reagent/refill
-			var/datum/reagent/refillName
-			if(isrobot(user))
-				refill = reagents.get_master_reagent_id()
-				refillName = reagents.get_master_reagent_name()
-
-			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			to_chat(user, "\blue You transfer [trans] units of the solution to [target].")
-
-			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-				var/mob/living/silicon/robot/bro = user
-				var/chargeAmount = max(30,4*trans)
-				bro.cell.use(chargeAmount)
-				to_chat(user, "Now synthesizing [trans] units of [refillName]...")
+	return 0
 
 
-				spawn(300)
-					reagents.add_reagent(refill, trans)
-					to_chat(user, "Cyborg [src] refilled.")
+/obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user, proximity)
+	if(!proximity) return
 
-		return
+	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
-	examine(mob/user)
-		..()
-		if(src in user)
-			if(!reagents || reagents.total_volume==0)
-				to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
-			else if (reagents.total_volume<=src.volume/4)
-				to_chat(user, "<span class='notice'>\The [src] is almost empty!</span>")
-			else if (reagents.total_volume<=src.volume*0.66)
-				to_chat(user, "<span class='notice'>\The [src] is half full!</span>")
-			else if (reagents.total_volume<=src.volume*0.90)
-				to_chat(user, "<span class='notice'>\The [src] is almost full!</span>")
-			else
-				to_chat(user, "<span class='notice'>\The [src] is full!</span>")
+		if(!target.reagents.total_volume)
+			to_chat(user, "<span class='warning'>[target] is empty.</span>")
+			return
+
+		if(reagents.total_volume >= reagents.maximum_volume)
+			to_chat(user, "<span class='warning'>[src] is full.</span>")
+			return
+
+		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
+
+	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+		if(!reagents.total_volume)
+			to_chat(user, "<span class='warning'>[src] is empty.</span>")
+			return
+
+		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+			to_chat(user, "<span class='warning'>[target] is full.</span>")
+			return
+
+
+
+		var/datum/reagent/refill
+		var/datum/reagent/refillName
+		if(isrobot(user))
+			refill = reagents.get_master_reagent_id()
+			refillName = reagents.get_master_reagent_name()
+
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
+
+		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+			var/mob/living/silicon/robot/bro = user
+			var/chargeAmount = max(30,4*trans)
+			bro.cell.use(chargeAmount)
+			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
+			addtimer(CALLBACK(src, .proc/refill_by_borg, user, refill, trans), 300)
+	return
+
+/obj/item/weapon/reagent_containers/food/drinks/proc/refill_by_borg(user, refill, trans)
+	reagents.add_reagent(refill, trans)
+	to_chat(user, "Cyborg [src] refilled.")
+
+/obj/item/weapon/reagent_containers/food/drinks/examine(mob/user)
+	..()
+	if(src in user)
+		if(!reagents || reagents.total_volume==0)
+			to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
+		else if (reagents.total_volume<=src.volume/4)
+			to_chat(user, "<span class='notice'>\The [src] is almost empty!</span>")
+		else if (reagents.total_volume<=src.volume*0.66)
+			to_chat(user, "<span class='notice'>\The [src] is half full!</span>")
+		else if (reagents.total_volume<=src.volume*0.90)
+			to_chat(user, "<span class='notice'>\The [src] is almost full!</span>")
+		else
+			to_chat(user, "<span class='notice'>\The [src] is full!</span>")
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END

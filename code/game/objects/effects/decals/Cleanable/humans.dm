@@ -23,7 +23,7 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/New()
@@ -42,7 +42,7 @@ var/global/list/image/splatter_cache=list()
 						blood_DNA |= B.blood_DNA.Copy()
 					qdel(B)
 	drytime = world.time + DRYING_TIME * (amount+1)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/decal/cleanable/blood/process()
 	if(world.time > drytime)
@@ -53,9 +53,10 @@ var/global/list/image/splatter_cache=list()
 	color = basecolor
 
 /obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/perp)
+	if(!istype(perp))
+		return
 	if(amount < 1)
 		return
-
 	if(!islist(blood_DNA))	//prevent from runtime errors connected with shitspawn
 		blood_DNA = list()
 
@@ -66,7 +67,7 @@ var/global/list/image/splatter_cache=list()
 		var/datum/organ/external/l_foot = H.get_organ("l_foot")
 		var/datum/organ/external/r_foot = H.get_organ("r_foot")
 		if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
-			hasfeet = 0
+			hasfeet = FALSE
 		if(perp.shoes && !perp.buckled)//Adding blood to shoes
 			var/obj/item/clothing/shoes/S = perp.shoes
 			if(istype(S))
@@ -108,7 +109,7 @@ var/global/list/image/splatter_cache=list()
 	desc = "It's dry and crusty. Someone is not doing their job."
 	color = adjust_brightness(color, -50)
 	amount = 0
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/effect/decal/cleanable/blood/attack_hand(mob/living/carbon/human/user)
 	..()
@@ -225,7 +226,7 @@ var/global/list/image/splatter_cache=list()
 		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 			sleep(3)
 			if (i > 0)
-				var/obj/effect/decal/cleanable/blood/b = PoolOrNew(/obj/effect/decal/cleanable/blood/splatter, src.loc)
+				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
 				b.basecolor = src.basecolor
 				b.update_icon()
 				for(var/datum/disease/D in src.viruses)

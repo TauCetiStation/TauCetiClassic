@@ -266,9 +266,11 @@
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
 	on = 0
-	spawn(64)
-		icon_state = icon_on
-		on = 1
+	addtimer(CALLBACK(src, .proc/reload), 64)
+
+/obj/item/device/camera/proc/reload()
+	icon_state = icon_on
+	on = 1
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	var/mobs = ""
