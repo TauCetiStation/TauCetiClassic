@@ -76,11 +76,11 @@
 
 /obj/machinery/bot/secbot/New()
 	..()
-	icon_state = "secbot[src.on]"
-	addtimer(CALLBACK(src, .proc/post_New), 3)
+	update_icon()
+	addtimer(CALLBACK(src, .proc/post_creation), 3)
 
 
-/obj/machinery/bot/secbot/proc/post_New()
+/obj/machinery/bot/secbot/proc/post_creation()
 	botcard = new /obj/item/weapon/card/id(src)
 	var/datum/job/detective/J = new/datum/job/detective
 	botcard.access = J.get_access()
@@ -92,7 +92,7 @@
 /obj/machinery/bot/secbot/turn_on()
 	..()
 	same_pos_count = 0
-	icon_state = "secbot[src.on]"
+	update_icon()
 	updateUsrDialog()
 
 /obj/machinery/bot/secbot/turn_off()
@@ -102,7 +102,7 @@
 	anchored = 0
 	mode = SECBOT_IDLE
 	walk_to(src, 0)
-	icon_state = "secbot[src.on]"
+	update_icon()
 	updateUsrDialog()
 
 /obj/machinery/bot/secbot/attack_hand(mob/user)
@@ -190,8 +190,8 @@ Auto Patrol: []"},
 	..()
 	if(open && !locked)
 		if(user)
-			to_chat(user, "\red You short out [src]'s target assessment circuits.")
-		hearable_message("\red <B>[src] buzzes oddly!</B>")
+			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
+		audible_message("<span class='userdanger'><B>[src] buzzes oddly!</span>")
 		target = null
 		if(user)
 			oldtarget_name = user.name
@@ -199,7 +199,7 @@ Auto Patrol: []"},
 		anchored = 0
 		emagged = 2
 		on = 1
-		icon_state = "secbot[src.on]"
+		update_icon()
 		mode = SECBOT_IDLE
 
 /obj/machinery/bot/secbot/process()
@@ -612,7 +612,7 @@ Auto Patrol: []"},
 			playsound(loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
 			visible_message("<b>[src]</b> points at [M.name]!")
 			mode = SECBOT_HUNT
-			INVOKE_ASYNC(src, .process) // ensure bot quickly responds to a perp
+			process() // ensure bot quickly responds to a perp
 			break
 		else
 			continue
@@ -644,8 +644,7 @@ Auto Patrol: []"},
 		frustration = 0
 
 /obj/machinery/bot/secbot/proc/speak(message)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
+	audible_message("<span class='name'>[src]</span> beeps, \"[message]\"")
 
 
 /obj/machinery/bot/secbot/explode()

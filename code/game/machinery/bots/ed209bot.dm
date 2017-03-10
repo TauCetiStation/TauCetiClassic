@@ -89,10 +89,10 @@
 			name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
 		if((lasercolor == "r") && (name == "ED-209 Security Robot"))
 			name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
-	addtimer(CALLBACK(src, .proc/post_New), 3)
+	addtimer(CALLBACK(src, .proc/post_creation), 3)
 
 
-/obj/machinery/bot/ed209/proc/post_New()
+/obj/machinery/bot/ed209/proc/post_creation()
 	botcard = new /obj/item/weapon/card/id(src)
 	var/datum/job/detective/J = new/datum/job/detective
 	botcard.access = J.get_access()
@@ -117,7 +117,7 @@
 	anchored = 0
 	mode = SECBOT_IDLE
 	walk_to(src,0)
-	icon_state = "[lasercolor]ed209[on]"
+	update_icon()
 	updateUsrDialog()
 
 /obj/machinery/bot/ed209/attack_hand(mob/user)
@@ -212,7 +212,7 @@ Auto Patrol: []"},
 	if(open && !locked)
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
-		hearable_message("\red <B>[src] buzzes oddly!</B>")
+		audible_message("<span class='userdanger'><B>[src] buzzes oddly!</span>")
 		target = null
 		if(user)
 			oldtarget_name = user.name
@@ -638,7 +638,7 @@ Auto Patrol: []"},
 				playsound(loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = SECBOT_HUNT
-			INVOKE_ASYNC(src, .process) // ensure bot quickly responds to a perp
+			process() // ensure bot quickly responds to a perp
 			break
 		else
 			continue
@@ -693,8 +693,7 @@ Auto Patrol: []"},
 		frustration = 0
 
 /obj/machinery/bot/ed209/proc/speak(message)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
+	audible_message("<span class='name'>[src]</span> beeps, \"[message]\"")
 
 /obj/machinery/bot/ed209/explode()
 	walk_to(src, 0)
@@ -775,7 +774,7 @@ Auto Patrol: []"},
 	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	INVOKE_ASYNC(A, /obj/item/projectile/process)
+	A.process()
 
 /obj/machinery/bot/ed209/attack_alien(mob/living/carbon/alien/user)
 	..()
@@ -948,7 +947,7 @@ Auto Patrol: []"},
 				|| (lasercolor == "r") && istype(Proj, /obj/item/projectile/beam/lastertag/blue)))
 		disabled = 1
 		qdel(Proj)
-		addtimer(src, "enable", 100)
+		addtimer(CALLBACK(src, .proc/enable), 100)
 	..()
 
 /obj/machinery/bot/ed209/proc/enable()

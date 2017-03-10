@@ -498,7 +498,7 @@ var/list/turret_icons
 
 	if(!tryToShootAt(targets))
 		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
-			INVOKE_ASYNC(src, .proc/popDown) // no valid targets, close the cover
+			popDown() // no valid targets, close the cover
 
 	if(auto_repair && (health < maxhealth))
 		use_power(20000)
@@ -612,7 +612,7 @@ var/list/turret_icons
 	var/atom/flick_holder = new /obj/effect/porta_turret_cover(loc)
 	flick_holder.layer = layer + 0.1
 	flick("popdown", flick_holder)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, flick_holder), 10)
+	QDEL_IN(flick_holder, 10)
 	set_raised_raising(FALSE, FALSE)
 	update_icon()
 
@@ -624,9 +624,9 @@ var/list/turret_icons
 /obj/machinery/porta_turret/proc/target(mob/living/target)
 	if(target)
 		last_target = target
-		INVOKE_ASYNC(src, .proc/popUp) //pop the turret up if it's not already up.
+		popUp() //pop the turret up if it's not already up.
 		set_dir(get_dir(src, target))	//even if you can't shoot, follow the target
-		INVOKE_ASYNC(src, .proc/shootAt, target)
+		shootAt(target)
 		return TRUE
 	return FALSE
 
@@ -665,7 +665,7 @@ var/list/turret_icons
 	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	INVOKE_ASYNC(A, /obj/item/projectile/process)
+	A.process()
 
 	if(emagged || lethal)
 		playsound(loc, eshot_sound, 75, 1)

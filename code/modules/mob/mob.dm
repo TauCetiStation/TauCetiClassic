@@ -95,9 +95,35 @@
 	for(var/mob/M in viewers(src))
 		M.show_message(message, 1, blind_message, 2)
 
-/atom/proc/hearable_message(message)
-	for(var/mob/M in hearers(src))
-		M.show_message(message, 2, null, 0)
+// Show a message to all mobs in earshot of this one
+// This would be for audible actions by the src mob
+// message is the message output to anyone who can hear.
+// self_message (optional) is what the src mob hears.
+// deaf_message (optional) is what deaf people will see.
+// hearing_distance (optional) is the range, how many tiles away the message can be heard.
+
+/mob/audible_message(message, deaf_message, hearing_distance, self_message)
+	var/range = world.view
+	if(hearing_distance)
+		range = hearing_distance
+	for(var/mob/M in get_hearers_in_view(range, src))
+		var/msg = message
+		if(self_message && M == src)
+			msg = self_message
+		M.show_message(msg, 2, deaf_message, 1)
+
+// Show a message to all mobs in earshot of this atom
+// Use for objects performing audible actions
+// message is the message output to anyone who can hear.
+// deaf_message (optional) is what deaf people will see.
+// hearing_distance (optional) is the range, how many tiles away the message can be heard.
+
+/atom/proc/audible_message(message, deaf_message, hearing_distance)
+	var/range = world.view
+	if(hearing_distance)
+		range = hearing_distance
+	for(var/mob/M in get_hearers_in_view(range, src))
+		M.show_message(message, 2, deaf_message, 1)
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)
