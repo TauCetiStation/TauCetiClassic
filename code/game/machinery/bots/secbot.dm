@@ -300,7 +300,7 @@ Auto Patrol: []"},
 					playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
 					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
-					addtimer(CALLBACK(src, .proc/subprocess, mode), 60)
+					addtimer(CALLBACK(src, .proc/subprocess_arrest, C), 60)
 
 			else
 				mode = SECBOT_IDLE
@@ -344,22 +344,22 @@ Auto Patrol: []"},
 			addtimer(CALLBACK(src, .proc/subprocess, mode), 4)
 			addtimer(CALLBACK(src, .proc/subprocess, mode), 8)
 
+/obj/machinery/bot/secbot/proc/subprocess_arrest(mob/living/carbon/mob_carbon)
+	if(get_dist(src, target) <= 1)
+		if(iscarbon(target))
+			C = target
+			if(!C.handcuffed)
+				C.handcuffed = new /obj/item/weapon/handcuffs(target)
+				C.update_inv_handcuffed()	//update the handcuffs overlay
+		mode = SECBOT_IDLE
+		target = null
+		anchored = 0
+		last_found = world.time
+		frustration = 0
+		playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+
 /obj/machinery/bot/secbot/proc/subprocess(oldmode)
 	switch(oldmode)
-		if(SECBOT_PREP_ARREST)
-			if(get_dist(src, target) <= 1)
-				if(iscarbon(target))
-					C = target
-					if(!C.handcuffed)
-						C.handcuffed = new /obj/item/weapon/handcuffs(target)
-						C.update_inv_handcuffed()	//update the handcuffs overlay
-				mode = SECBOT_IDLE
-				target = null
-				anchored = 0
-				last_found = world.time
-				frustration = 0
-				playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-
 		if(SECBOT_START_PATROL)
 			calc_path()		// so just find a route to it
 			if(path.len == 0)
