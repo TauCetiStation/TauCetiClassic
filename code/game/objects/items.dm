@@ -297,8 +297,15 @@
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-
 	return
+
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
+
+/obj/item/proc/after_throw(datum/callback/callback)
+	if (callback) //call the original callback
+		. = callback.Invoke()
 
 /obj/item/proc/talk_into(mob/M, text)
 	return
@@ -578,7 +585,7 @@
 /obj/item/proc/IsReflect(def_zone, hol_dir, hit_dir) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return FALSE
 
-/obj/item/proc/IsShield()
+/obj/item/proc/Get_shield_chance()
 	return 0
 
 /obj/item/proc/get_loc_turf()

@@ -52,7 +52,7 @@
 		if(((gang == "A") && mode.A_timer) || ((gang == "B") && mode.B_timer))
 			playsound(loc, 'sound/items/timer.ogg', 30, 0)
 	else
-		SSmachine.processing -= src
+		return PROCESS_KILL
 
 /obj/machinery/dominator/proc/healthcheck(damage)
 	var/iconname = "dominator"
@@ -113,7 +113,7 @@
 	set_light(0)
 	icon_state = "dominator-broken"
 	operating = -1
-	SSmachine.processing -= src
+	STOP_PROCESSING(SSmachine, src)
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
@@ -201,7 +201,7 @@
 		healthcheck(0)
 		operating = 1
 		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover in progress: Estimated [time] seconds until victory.")
-		SSmachine.processing |= src
+		START_PROCESSING(SSmachine, src)
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)

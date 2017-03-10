@@ -7,7 +7,7 @@
 /datum/stockMarket/New()
 		..()
 		generateStocks()
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /datum/stockMarket/proc/balanceLog(whose, net)
 	if (!(whose in balances))

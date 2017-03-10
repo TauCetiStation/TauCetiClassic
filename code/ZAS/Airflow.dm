@@ -88,6 +88,7 @@ var/tick_multiplier = 2
 /atom/movable/var/tmp/last_airflow = 0
 
 /atom/movable/proc/GotoAirflowDest(n)
+	set waitfor = 0
 	if(!airflow_dest)
 		return
 	if(airflow_speed < 0)
@@ -161,6 +162,7 @@ var/tick_multiplier = 2
 
 
 /atom/movable/proc/RepelAirflowDest(n)
+	set waitfor = 0
 	if(!airflow_dest)
 		return
 	if(airflow_speed < 0)

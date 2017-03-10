@@ -20,7 +20,7 @@
 	playsound(src, "code/modules/musical_instruments/sound/saxophone/sax[rand(1,6)].ogg", 20, 1, falloff = 5, channel = channel)
 	user.visible_message( pick("[user] plays a bluesy tune with his saxophone!", "[user] plays a sexy tune with his gold thing!", \
 			"[user] plays a delightful tune with his music tube!", "[user] plays a chilling tune with his saxy!", "[user] plays a upbeat tune with his saxophone!"))
-	addtimer(src,"spam",cooldown)
+	addtimer(CALLBACK(src, .proc/spam), cooldown)
 	return
 
 /obj/item/device/harmonica/saxophone/attack(mob/living/target, mob/living/carbon/user)

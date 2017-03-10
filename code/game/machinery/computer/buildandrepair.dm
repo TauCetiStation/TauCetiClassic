@@ -78,7 +78,7 @@
 	var/cooldown = 0
 /obj/item/weapon/circuitboard/communications/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 /obj/item/weapon/circuitboard/communications/process()
 	cooldown = max(cooldown - 1, 0)
 /obj/item/weapon/circuitboard/card

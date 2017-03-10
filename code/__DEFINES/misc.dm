@@ -1,6 +1,9 @@
 //gets all subtypes of type
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
+//number of deciseconds in a day
+#define MIDNIGHT_ROLLOVER 864000
+
 //singularity defines
 #define STAGE_ONE	1
 #define STAGE_TWO	3
@@ -180,9 +183,6 @@
 // from /tg/
 #define ABOVE_NORMAL_TURF_LAYER 2.08
 #define BELOW_MOB_LAYER 3.7
-
-//Timing subsystem
-#define GLOBAL_PROC	"some_magic_bullshit"
 
 //teleport checks
 #define TELE_CHECK_NONE 0

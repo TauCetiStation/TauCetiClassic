@@ -15,7 +15,7 @@
 
 		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
-			spawn(0) breathe()
+			INVOKE_ASYNC(src, .proc/breathe)
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj/))
@@ -71,7 +71,7 @@
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
 			if (prob(75)) //High chance of gasping for air
-				spawn emote("gasp")
+				INVOKE_ASYNC(src, .proc/emote, "gasp")
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
@@ -99,9 +99,7 @@
 					for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
 						if(smoke.reagents.total_volume)
 							smoke.reagents.reaction(src, INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
+							addtimer(CALLBACK(smoke.reagents, /datum/reagents.proc/copy_to, src, 10), 5) // I dunno, maybe the reagents enter the blood stream through the lungs?
 							break // If they breathe in the nasty stuff once, no need to continue checking
 
 
@@ -366,3 +364,4 @@
 		adjustFireLoss(6)
 		return
 //END FIRE CODE
+

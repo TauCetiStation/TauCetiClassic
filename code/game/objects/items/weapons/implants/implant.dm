@@ -356,16 +356,16 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			"\red Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!")
 		H.adjustBrainLoss(80)
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	return 1
 
 /obj/item/weapon/implant/loyalty/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/implant/loyalty/process()
 	if (!implanted)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	var/mob/M = imp_in
@@ -373,7 +373,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if(!M)	return
 
 	if(M.stat == DEAD || isnull(M))
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	if(prob(1) && prob(25))//1/400
@@ -462,7 +462,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 			else
 				a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 		if ("emp")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
@@ -472,7 +472,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		else
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 
 /obj/item/weapon/implant/death_alarm/emp_act(severity)			//for some reason alarms stop going off in case they are emp'd, even without this
@@ -486,14 +486,14 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			meltdown()
 		else if (prob(60))	//but more likely it will just quietly die
 			malfunction = MALFUNCTION_PERMANENT
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 	spawn(20)
 		malfunction--
 
 /obj/item/weapon/implant/death_alarm/implanted(mob/source)
 	mobname = source.real_name
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	return 1
 
 /obj/item/weapon/implant/compressed

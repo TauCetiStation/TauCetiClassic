@@ -36,12 +36,12 @@
 	if(active && !defused && (timer <= 0))	//Boom
 		active = 0
 		timer = 60
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		explosion(src.loc,2,5,11)
 		qdel(src)
 		return
 	if(!active || defused)					//Counter terrorists win
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 
 /obj/machinery/syndicatebomb/New()
@@ -147,7 +147,7 @@
 			var/area/A = get_area(bombturf)
 			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
-			SSobj.processing |= src //Ticking down
+			START_PROCESSING(SSobj, src) //Ticking down
 
 /obj/machinery/syndicatebomb/proc/isWireCut(index)
 	return wires.IsIndexCut(index)

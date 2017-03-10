@@ -27,7 +27,7 @@
 	playsound(src, "code/modules/musical_instruments/sound/harmonica/fharp[rand(1,8)].ogg", 50, 1, falloff = 5, channel = channel)
 	visible_message( pick("[user] plays a bluesy tune with his harmonica!", "[user] plays a warm tune with his harmonica!", \
 		"[user] plays a delightful tune with his harmonica!", "[user] plays a chilling tune with his harmonica!", "[user] plays a upbeat tune with his harmonica!"))
-	addtimer(src,"spam",cooldown)
+	addtimer(CALLBACK(src, .proc/spam), cooldown)
 	return
 
 /obj/item/device/harmonica/proc/spam()

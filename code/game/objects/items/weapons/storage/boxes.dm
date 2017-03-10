@@ -427,7 +427,7 @@
 		W.lit = 1
 		W.damtype = "burn"
 		W.icon_state = "match_lit"
-		SSobj.processing |= W
+		START_PROCESSING(SSobj, W)
 	W.update_icon()
 	return
 

@@ -152,8 +152,7 @@
 		name = "[area.name] APC"
 		stat |= MAINT
 		src.update_icon()
-		spawn(5)
-			src.update()
+		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
 	if(malfai && operating)
@@ -208,8 +207,7 @@
 
 	make_terminal()
 
-	spawn(5)
-		src.update()
+	addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
@@ -394,13 +392,13 @@
 	return results
 
 /obj/machinery/power/apc/proc/queue_icon_update()
-
+	set waitfor = FALSE
 	if(!updating_icon)
 		updating_icon = 1
 		// Start the update
-		spawn(APC_UPDATE_ICON_COOLDOWN)
-			update_icon()
-			updating_icon = 0
+		sleep(APC_UPDATE_ICON_COOLDOWN)
+		update_icon()
+		updating_icon = 0
 
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
@@ -1396,12 +1394,16 @@
 		return
 	if( cell && cell.charge>=20)
 		cell.use(20);
-		spawn(0)
-			for(var/area/A in area.related)
-				for(var/obj/machinery/light/L in A)
-					L.on = 1
-					L.broken(skip_sound_and_sparks)
-					sleep(1)
+		break_lights(skip_sound_and_sparks)
+
+/obj/machinery/power/apc/proc/break_lights(skip_sound_and_sparks)
+	set waitfor = FALSE
+
+	for(var/area/A in area.related)
+		for(var/obj/machinery/light/L in A)
+			L.on = 1
+			L.broken(skip_sound_and_sparks)
+			stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))
