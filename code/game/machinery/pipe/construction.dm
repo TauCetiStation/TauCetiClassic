@@ -339,10 +339,8 @@ Buildable meters
 				return 1
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			P.build_network()
 
 		if(PIPE_HE_STRAIGHT, PIPE_HE_BENT)
@@ -358,10 +356,8 @@ Buildable meters
 				return 1
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			P.build_network()
 
 		if(PIPE_CONNECTOR)		// connector
@@ -375,7 +371,6 @@ Buildable meters
 			C.initialize()
 			if (C.node)
 				C.node.initialize()
-				//C.node.build_network()
 			C.build_network()
 
 		if(PIPE_MANIFOLD)		//manifold
@@ -392,13 +387,10 @@ Buildable meters
 				return 1
 			if (M.node1)
 				M.node1.initialize()
-				//M.node1.build_network()
 			if (M.node2)
 				M.node2.initialize()
-				//M.node2.build_network()
 			if (M.node3)
 				M.node3.initialize()
-				//M.node3.build_network()
 			M.build_network()
 
 		if(PIPE_MANIFOLD4W)		//4-way manifold
@@ -415,16 +407,12 @@ Buildable meters
 				return 1
 			if (M.node1)
 				M.node1.initialize()
-				//M.node1.build_network()
 			if (M.node2)
 				M.node2.initialize()
-				//M.node2.build_network()
 			if (M.node3)
 				M.node3.initialize()
-				//M.node3.build_network()
 			if (M.node4)
 				M.node4.initialize()
-				//M.node4.build_network()
 			M.build_network()
 
 		if(PIPE_JUNCTION)
@@ -440,10 +428,8 @@ Buildable meters
 				return 1
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			P.build_network()
 
 		if(PIPE_UVENT)		//unary vent
@@ -457,7 +443,6 @@ Buildable meters
 			V.initialize()
 			if (V.node)
 				V.node.initialize()
-				//V.node.build_network()
 			V.build_network()
 
 
@@ -472,10 +457,8 @@ Buildable meters
 			V.initialize()
 			if (V.node1)
 				V.node1.initialize()
-				//V.node1.build_network()
 			if (V.node2)
 				V.node2.initialize()
-				//V.node2.build_network()
 			V.build_network()
 
 		if(PIPE_PUMP)		//gas pump
@@ -489,10 +472,8 @@ Buildable meters
 			P.initialize()
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			P.build_network()
 
 		if(PIPE_GAS_FILTER)		//gas filter
@@ -506,13 +487,10 @@ Buildable meters
 			P.initialize()
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			if (P.node3)
 				P.node3.initialize()
-				//P.node3.build_network()
 			P.build_network()
 
 		if(PIPE_GAS_MIXER)		//gas mixer
@@ -526,13 +504,10 @@ Buildable meters
 			P.initialize()
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			if (P.node3)
 				P.node3.initialize()
-				//P.node3.build_network()
 			P.build_network()
 
 		if(PIPE_GAS_FILTER_M)		//gas filter mirrored
@@ -546,13 +521,10 @@ Buildable meters
 			P.initialize()
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			if (P.node3)
 				P.node3.initialize()
-				//P.node3.build_network()
 			P.build_network()
 
 		if(PIPE_GAS_MIXER_T)		//gas mixer-t
@@ -566,13 +538,10 @@ Buildable meters
 			P.initialize()
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			if (P.node3)
 				P.node3.initialize()
-				//P.node3.build_network()
 			P.build_network()
 
 		if(PIPE_GAS_MIXER_M)		//gas mixer mirrored
@@ -586,13 +555,10 @@ Buildable meters
 			P.initialize()
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			if (P.node3)
 				P.node3.initialize()
-				//P.node3.build_network()
 			P.build_network()
 
 		if(PIPE_SCRUBBER)		//scrubber
@@ -606,7 +572,6 @@ Buildable meters
 			S.initialize()
 			if (S.node)
 				S.node.initialize()
-				//S.node.build_network()
 			S.build_network()
 
 		if(PIPE_INSULATED_STRAIGHT, PIPE_INSULATED_BENT)
@@ -621,10 +586,8 @@ Buildable meters
 				return 1
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			P.build_network()
 
 		if(PIPE_MTVALVE)		//manual t-valve
@@ -638,13 +601,10 @@ Buildable meters
 			V.initialize()
 			if (V.node1)
 				V.node1.initialize()
-				//V.node1.build_network()
 			if (V.node2)
 				V.node2.initialize()
-				//V.node2.build_network()
 			if (V.node3)
 				V.node3.initialize()
-				//V.node3.build_network()
 			V.build_network()
 
 		if(PIPE_CAP)
@@ -654,7 +614,6 @@ Buildable meters
 			C.initialize()
 			if(C.node)
 				C.node.initialize()
-				//C.node.build_network()
 			C.build_network()
 
 		if(PIPE_PASSIVE_GATE)		//passive gate
@@ -668,10 +627,8 @@ Buildable meters
 			P.initialize()
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			P.build_network()
 
 		if(PIPE_VOLUME_PUMP)		//volume pump
@@ -685,10 +642,8 @@ Buildable meters
 			P.initialize()
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			P.build_network()
 
 		if(PIPE_HEAT_EXCHANGE)		// heat exchanger
@@ -702,7 +657,6 @@ Buildable meters
 			C.initialize()
 			if (C.node)
 				C.node.initialize()
-				//C.node.build_network()
 			C.build_network()
 
 ///// Z-Level stuff
@@ -717,10 +671,8 @@ Buildable meters
 			P.initialize()
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			P.build_network()
 
 		if(PIPE_DOWN)		//volume pump
@@ -734,10 +686,8 @@ Buildable meters
 			P.initialize()
 			if (P.node1)
 				P.node1.initialize()
-				//P.node1.build_network()
 			if (P.node2)
 				P.node2.initialize()
-				//P.node2.build_network()
 			P.build_network()
 ///// Z-Level stuff
 		if(PIPE_OMNI_MIXER)
