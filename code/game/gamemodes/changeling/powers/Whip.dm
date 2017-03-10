@@ -82,9 +82,8 @@
 	var/atom/movable/T = target
 	var/grab_chance = iscarbon(T) ? 50 : 90
 	if(grabber && !T.anchored && prob(grab_chance))
-		spawn( 1)
-			var/dist_to_host = max(0, get_dist(host, T) - 1) // Distance to turf in front of host.
-			T.throw_at(host, dist_to_host, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
+		var/dist_to_host = max(0, get_dist(host, T) - 1) // Distance to turf in front of host.
+		T.throw_at(host, dist_to_host, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
 
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
 	if(in_range(T, host) && !host.get_inactive_hand())
