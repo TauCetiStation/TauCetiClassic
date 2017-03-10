@@ -304,12 +304,16 @@ var/datum/subsystem/timer/SStimer
 
 		var/datum/timedevent/hash_timer = SStimer.hashes[hash]
 		if(hash_timer)
-			if (flags & TIMER_OVERRIDE)
-				qdel(hash_timer)
+			if (hash_timer.spent)  // It's pending deletion, pretend it doesn't exist.
+				hash_timer.hash = null
+				SStimer.hashes -= hash
 			else
-				if (hash_timer.flags & TIMER_STOPPABLE)
-					. = hash_timer.id
-				return
+				if (flags & TIMER_OVERRIDE)
+					qdel(hash_timer)
+				else
+					if (hash_timer.flags & TIMER_STOPPABLE)
+						. = hash_timer.id
+					return
 
 	var/timeToRun = world.time + wait
 	if (flags & TIMER_CLIENT_TIME)
