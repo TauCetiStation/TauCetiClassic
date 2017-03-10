@@ -50,7 +50,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigoff"
 	name = "burnt match"
 	desc = "A match. This one has seen better days."
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 
 //////////////////
 //FINE SMOKABLES//
@@ -150,7 +150,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = icon_on
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		if(ismob(loc))
 			var/mob/M = loc
 			M.update_inv_wear_mask()
@@ -199,7 +199,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
 		M.remove_from_mob(src)	//un-equip it so the overlays can update
 		M.update_inv_wear_mask(0)
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	qdel(src)
 
 ////////////
@@ -302,7 +302,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = icon_on
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		if(ismob(loc))
 			var/mob/M = loc
 			M.update_inv_wear_mask()
@@ -319,7 +319,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_off
 			item_state = icon_off
 			M.update_inv_wear_mask(0)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	if(location)
 		location.hotspot_expose(700, 5)
@@ -331,7 +331,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	if(smoketime <= 0)
 		to_chat(user, "<span class='notice'>You refill the pipe with tobacco.</span>")
@@ -430,7 +430,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
 			set_light(2)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
 			lit = 0
 			icon_state = icon_off
@@ -443,7 +443,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				playsound(src, 'sound/items/lighter.ogg', 20, 1, 1)
 
 			set_light(0)
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 	else
 		return ..()
 	return

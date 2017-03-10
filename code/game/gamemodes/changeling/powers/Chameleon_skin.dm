@@ -16,13 +16,13 @@
 	if(active)
 		to_chat(user, "<span class='notice'>We feel oddly exposed.</span>")
 		owner.mind.changeling.chem_recharge_slowdown -= 0.25
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		owner.alpha = 255
 	else
 		to_chat(user, "<span class='notice'>We feel one with our surroundings.</span>")
 		owner.alpha = 200
 		owner.mind.changeling.chem_recharge_slowdown += 0.25
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	active = !active
 	feedback_add_details("changeling_powers","CS")
 	return 1
@@ -40,7 +40,7 @@
 	if(owner.l_move_time + 40 > world.time) // looks like a shit, but meh
 		owner.alpha = 200
 	if(owner.stat == DEAD || owner.lying || owner.buckled)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		active = !active
 		owner.alpha = 255
 

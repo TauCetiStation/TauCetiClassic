@@ -255,6 +255,6 @@ proc/MakeFaxPaper(obj/fax, sent_text, sent_name, mob/Sender, stamp, stamp_text, 
 	for(var/obj/machinery/faxmachine/F in allfaxes)
 		if((dpt == "All" || F.department == dpt) && ! (F.stat & (BROKEN|NOPOWER) ))
 			flick("faxreceive", F)
-			addtimer(GLOBAL_PROC, "MakeFaxPaper", 20, FALSE, F, sent_text, sent_name, Sender, stamp, stamp_text, stamp_imgbuf)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/MakeFaxPaper, F, sent_text, sent_name, Sender, stamp, stamp_text, stamp_imgbuf), 20)
 			playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
 

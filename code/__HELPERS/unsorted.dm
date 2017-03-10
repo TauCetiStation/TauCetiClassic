@@ -1270,45 +1270,41 @@ proc/is_hot(obj/item/W)
 /*
 Checks if that loc and dir has a item on the wall
 */
-var/list/WALLITEMS = list(
-	"/obj/machinery/power/apc", "/obj/machinery/alarm", "/obj/item/device/radio/intercom",
-	"/obj/structure/extinguisher_cabinet", "/obj/structure/reagent_dispensers/peppertank",
-	"/obj/machinery/status_display", "/obj/machinery/requests_console", "/obj/machinery/light_switch", "/obj/effect/sign",
-	"/obj/machinery/newscaster", "/obj/machinery/firealarm", "/obj/structure/noticeboard", "/obj/machinery/door_control",
-	"/obj/machinery/computer/security/telescreen", "/obj/machinery/embedded_controller/radio/simple_vent_controller",
-	"/obj/item/weapon/storage/secure/safe", "/obj/machinery/door_timer", "/obj/machinery/flasher", "/obj/machinery/keycard_auth",
-	"/obj/structure/mirror", "/obj/structure/closet/fireaxecabinet", "/obj/machinery/computer/security/telescreen/entertainment"
-	)
+var/list/WALLITEMS = typecacheof(list(
+	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
+	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
+	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch,
+	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/door_control,
+	/obj/machinery/computer/security/telescreen,
+	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
+	/obj/structure/mirror, /obj/structure/closet/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
+))
 /proc/gotwallitem(loc, dir)
 	for(var/obj/O in loc)
-		for(var/item in WALLITEMS)
-			if(istype(O, text2path(item)))
-				//Direction works sometimes
-				if(O.dir == dir)
-					return 1
-
-				//Some stuff doesn't use dir properly, so we need to check pixel instead
-				switch(dir)
-					if(SOUTH)
-						if(O.pixel_y > 10)
-							return 1
-					if(NORTH)
-						if(O.pixel_y < -10)
-							return 1
-					if(WEST)
-						if(O.pixel_x > 10)
-							return 1
-					if(EAST)
-						if(O.pixel_x < -10)
-							return 1
+		if(is_type_in_typecache(O, WALLITEMS))
+			if(O.dir == dir)
+				return 1
+			//Some stuff doesn't use dir properly, so we need to check pixel instead
+			switch(dir)
+				if(SOUTH)
+					if(O.pixel_y > 10)
+						return 1
+				if(NORTH)
+					if(O.pixel_y < -10)
+						return 1
+				if(WEST)
+					if(O.pixel_x > 10)
+						return 1
+				if(EAST)
+					if(O.pixel_x < -10)
+						return 1
 
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in get_step(loc, dir))
-		for(var/item in WALLITEMS)
-			if(istype(O, text2path(item)))
-				if(O.pixel_x == 0 && O.pixel_y == 0)
-					return 1
+		if(is_type_in_typecache(O, WALLITEMS))
+			if(O.pixel_x == 0 && O.pixel_y == 0)
+				return 1
 	return 0
 
 /proc/format_text(text)
@@ -1436,67 +1432,6 @@ var/mob/dview/dview_mob = new
 				L += T.contents
 		c_dist++
 	return L
-
-
-//This is just so you can stop an orbit.
-//orbit() can run without it (swap orbiting for A)
-//but then you can never stop it and that's just silly.
-/atom/movable/var/atom/orbiting = null
-//A: atom to orbit
-//radius: range to orbit at, radius of the circle formed by orbiting
-//clockwise: whether you orbit clockwise or anti clockwise
-//rotation_speed: how fast to rotate
-//rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments), and so on, 36 is the best default.
-//pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
-//lockinorbit: Forces src to always be on A's turf, otherwise the orbit cancels when src gets too far away (eg: ghosts)
-
-/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
-	if(!istype(A))
-		return
-
-	if(orbiting)
-		stop_orbit()
-
-	orbiting = A
-	var/matrix/initial_transform = matrix(transform)
-	var/lastloc = loc
-
-	//Head first!
-	if(pre_rotation)
-		var/matrix/M = matrix(transform)
-		var/pre_rot = 90
-		if(!clockwise)
-			pre_rot = -90
-		M.Turn(pre_rot)
-		transform = M
-
-	if(istype(A, /atom/movable))
-		var/atom/movable/mov = A
-		mov.update_parallax_contents() //does it really necessery
-
-	var/matrix/shift = matrix(transform)
-	shift.Translate(0,radius)
-	transform = shift
-
-	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
-
-	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
-	transform = initial_transform
-	while(orbiting && orbiting == A && A.loc)
-		var/targetloc = get_turf(A)
-		if(!lockinorbit && loc != lastloc && loc != targetloc)
-			break
-		loc = targetloc
-		lastloc = loc
-		sleep(0.6)
-
-	if(orbiting == A) //make sure we haven't started orbiting something else.
-		orbiting = null
-		SpinAnimation(0,0)
-
-
-/atom/movable/proc/stop_orbit()
-	orbiting = null
 
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
@@ -1670,20 +1605,21 @@ var/mob/dview/dview_mob = new
 
 	return L
 
+//Increases delay as the server gets more overloaded,
+//as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
+#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
+
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 /proc/stoplag()
-	. = 1
-	sleep(world.tick_lag)
-#if DM_VERSION >= 510
-	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
-		. += 2
-		sleep(world.tick_lag*2)
-		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
-			. += 4
-			sleep(world.tick_lag*4)
-			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
-			//	not worth it.
-#endif
+	. = 0
+	var/i = 1
+	do
+		. += round(i * DELTA_CALC)
+		sleep(i*world.tick_lag * DELTA_CALC)
+		i *= 2
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+
+#undef DELTA_CALC
 
 proc/is_the_opposite_dir(hol_dir, hit_dir)
 	if(hol_dir == NORTH && (hit_dir in list(SOUTH, SOUTHEAST, SOUTHWEST)))

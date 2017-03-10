@@ -37,7 +37,7 @@
 
 /obj/item/weapon/anodevice/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/anodevice/attackby(obj/I, mob/user)
 	if(istype(I, /obj/item/weapon/anobattery))
@@ -194,7 +194,7 @@
 	icon_state = "anodev[round(p,25)]"
 
 /obj/item/weapon/anodevice/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/anodevice/attack(mob/living/M, mob/living/user, def_zone)

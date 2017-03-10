@@ -844,7 +844,7 @@ About the new airlock wires panel:
 	var/target = da.loc
 	for(var/i in 1 to 4)
 		target = get_turf(get_step(target,user.dir))
-	da.throw_at(target, 200, 100)
+	da.throw_at(target, 200, 100, spin = FALSE)
 
 	if(mineral)
 		da.change_mineral_airlock_type(mineral)
@@ -1385,7 +1385,7 @@ About the new airlock wires panel:
 	if(autoclose)
 		if(close_timer_id)
 			deltimer(close_timer_id)
-		close_timer_id = addtimer(src, "do_autoclose", normalspeed ? 150 : 5)
+		close_timer_id = addtimer(CALLBACK(src, .proc/do_autoclose), normalspeed ? 150 : 5, TIMER_STOPPABLE)
 
 /obj/machinery/door/airlock/proc/do_autoclose()
 	close_timer_id = null
@@ -1487,12 +1487,12 @@ About the new airlock wires panel:
 	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (LIGHTING_LAYER + 1))
 	fire_overlay.plane = LIGHTING_PLANE + 1
 	overlays += fire_overlay
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/door_scrap/process()
 	if(ticker >= 300)
 		overlays.Cut()
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	ticker++
 	var/spot = (locate(/obj/effect/decal/cleanable/water) in src.loc)

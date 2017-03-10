@@ -540,7 +540,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 /obj/item/weapon/disk/nuclear/New()
 	..()
 	poi_list |= src
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)

@@ -4,10 +4,10 @@
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
+	fps = 20
 
 
-
-#define RECOMMENDED_VERSION 510
+#define RECOMMENDED_VERSION 511
 /world/New()
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")

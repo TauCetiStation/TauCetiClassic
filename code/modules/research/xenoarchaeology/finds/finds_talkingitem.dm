@@ -16,11 +16,11 @@
 
 /datum/talking_atom/proc/init()
 	if(holder_atom)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /datum/talking_atom/process()
 	if(!holder_atom)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 	else if(heard_words.len >= 1 && world.time > last_talk_time + talk_interval && prob(talk_chance))
 		SaySomething()
