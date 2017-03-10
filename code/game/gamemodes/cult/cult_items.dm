@@ -226,9 +226,9 @@
 /obj/item/device/cult_shift/examine(mob/user)
 	..()
 	if(uses)
-		to_chat("<span class='cult'>It has [uses] uses remaining.</span>")
+		to_chat(user,"<span class='cult'>It has [uses] uses remaining.</span>")
 	else
-		to_chat("<span class='cult'>It seems drained.</span>")
+		to_chat(user,"<span class='cult'>It seems drained.</span>")
 
 /obj/item/device/cult_shift/proc/handle_teleport_grab(turf/T, mob/living/user)
 	if(istype(user.get_active_hand(),/obj/item/weapon/grab)).

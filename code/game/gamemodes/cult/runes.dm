@@ -231,10 +231,7 @@ var/list/sacrificed = list()
 					External.wounds -= W
 					External.update_damages()
 			if(External.status & (ORGAN_BROKEN || ORGAN_SPLINTED || ORGAN_DESTROYED))
-				External.status = 0
-				External.stage = 0
-				External.perma_injury = 0
-				H.update_body()
+				External.rejuvenate()
 				break
 	drain-=drain%5
 	for (,drain>0,drain-=5)
@@ -858,7 +855,7 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/human/C in orange(1,src))
 			if(iscultist(C) && !C.stat)
 				C.say("N'ath reth sh'yro eth d[pick("'","`")]rekkathnor!")
-				C.take_overall_damage(25, 0)
+				C.take_divided_damage(60, 0)
 		user.visible_message("<span class='red'>Rune disappears with a flash of red light, and in its place now a body lies.</span>", \
 		"<span class='red'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
 		"<span class='red'>You hear a pop and smell ozone.</span>")

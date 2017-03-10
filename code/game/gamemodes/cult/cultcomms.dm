@@ -2,7 +2,7 @@
 	name = "Communion"
 	action_icon_state = "cult_comms"
 	action_background_icon_state = "bg_cult"
-	charge_max = 3000
+	charge_max = 1800
 	clothes_req = 0
 
 
@@ -17,8 +17,16 @@
 	return 1
 
 /obj/effect/proc_holder/spell/aoe_turf/cult_comms/cast(list/targets, mob/living/user = usr)
-	user.adjustBruteLoss(rand(10,25))
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		addtimer(src,"payment",200 ,FALSE,H)
+	else
+		user.take_overall_damage(rand(10,15))
 	call(/obj/effect/rune/proc/communicate)()
+
+/obj/effect/proc_holder/spell/aoe_turf/cult_comms/proc/payment(mob/living/carbon/human/H)
+	to_chat(H,"<span class='notice'> You feel a powerful flow through your body, which takes away your Vitality</span>")
+	H.take_divided_damage(rand(60,120))
 
 /mob/living/proc/remove_comms()
 	for(var/obj/effect/proc_holder/spell/aoe_turf/cult_comms/C in spell_list)
