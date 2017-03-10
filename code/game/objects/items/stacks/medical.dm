@@ -126,6 +126,9 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been salved.</span>")
 				return 1
 			else
+				if(amount < 1)
+					to_chat(user, "<span class='danger'>You need more oniment to do this.</span>")
+					return
 				user.visible_message("<span class='notice'>\The [user] starts salving wounds on [M]'s [affecting.display_name].</span>", \
 									"<span class='notice'>You start salving the wounds on [M]'s [affecting.display_name].</span>")
 				if(!do_mob(user, M, 25))
@@ -241,6 +244,9 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been salved.</span>")
 				return 1
 			else
+				if(amount < 1)
+					to_chat(user, "<span class='danger'>You need more advanced burn kit's to do this.</span>")
+					return
 				user.visible_message("<span class='notice'>\The [user] starts salving wounds on [M]'s [affecting.display_name].</span>", \
 									"<span class='notice'>You start salving the wounds on [M]'s [affecting.display_name].</span>")
 				if(!do_mob(user, M, 25))
@@ -278,6 +284,9 @@
 			return
 		if(affecting.status & ORGAN_SPLINTED)
 			to_chat(user, "<span class='danger'>[M]'s [limb] is already splinted!</span>")
+			return
+		if(amount < 1)
+			to_chat(user, "<span class='danger'>You need more splints's to do this.</span>")
 			return
 		if(M != user)
 			user.visible_message("<span class='danger'>[user] starts to apply \the [src] to [M]'s [limb]</span>.", \

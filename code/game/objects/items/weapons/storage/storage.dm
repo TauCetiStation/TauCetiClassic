@@ -92,7 +92,7 @@
 	user.s_active = src
 	is_seeing |= user
 
-/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower)
+/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	close_all()
 	return ..()
 

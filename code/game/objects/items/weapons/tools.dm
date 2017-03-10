@@ -187,7 +187,8 @@
 
 	if((!status) && (istype(W,/obj/item/stack/rods)))
 		var/obj/item/stack/rods/R = W
-		R.use(1)
+		if(!R.use(1))
+			return
 		var/obj/item/weapon/flamethrower/F = new/obj/item/weapon/flamethrower(user.loc)
 		src.loc = F
 		F.weldtool = src
@@ -220,7 +221,7 @@
 				src.icon_state = initial(src.icon_state)
 				src.welding = 0
 			set_light(0)
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -275,11 +276,11 @@
 				var/mob/living/L = O
 				L.IgniteMob()
 		if(isturf(O))
-			var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 			s.set_up(3, 1, O)
 			s.start()
 		else if(isobj(O))
-			var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 			s.set_up(3, 1, O)
 			s.start()
 	return
@@ -323,7 +324,7 @@
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = initial(src.icon_state) + "1"
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
 			to_chat(usr, "<span class='info'>Need more fuel!</span>")
 			src.welding = 0
@@ -355,7 +356,7 @@
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = initial(src.icon_state) + "1"
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
 			to_chat(usr, "<span class='info'>Need more fuel!</span>")
 			src.welding = 0

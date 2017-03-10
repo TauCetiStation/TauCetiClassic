@@ -1,11 +1,13 @@
 var/datum/subsystem/parallax/SSparallax
 
 /datum/subsystem/parallax
-	name = "parallax"
-	wait = 2
-//  needs new TG controllers
-//	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND | SS_NO_INIT
-	priority = 65
+	name = "Parallax"
+
+	priority = SS_PRIORITY_PARALAX
+	wait     = SS_WAIT_PARALAX
+
+	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND | SS_NO_INIT
+
 	var/list/currentrun
 
 /datum/subsystem/parallax/New()
@@ -21,6 +23,7 @@ var/datum/subsystem/parallax/SSparallax
 	while(length(currentrun))
 		var/client/C = currentrun[currentrun.len]
 		currentrun.len--
+
 		if (!C || !C.eye)
 			if (MC_TICK_CHECK)
 				return

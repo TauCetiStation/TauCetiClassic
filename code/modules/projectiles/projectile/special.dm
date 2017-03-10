@@ -66,7 +66,7 @@
 	nodamage = 1
 	flag = "bullet"
 
-/obj/item/projectile/meteor/Bump(atom/A as mob|obj|turf|area)
+/obj/item/projectile/meteor/Bump(atom/A)
 	if(A == firer)
 		loc = A.loc
 		return
@@ -176,6 +176,7 @@
 	edge = 0
 
 /obj/item/projectile/missile/on_hit(atom/target, blocked = 0)
+	target.ex_act(1)
 	explosion(target, 1,2,4,5)
 	return 1
 
@@ -193,7 +194,58 @@
 	name = "neurotoxin"
 	icon_state = "energy2"
 	damage = 5
-	stun = 15
+	stun = 10
 	damage_type = TOX
 	flag = "bullet"
 
+/obj/item/projectile/acid_special
+	name = "acid"
+	icon_state = "neurotoxin"
+	damage = 25
+	damage_type = TOX
+	flag = "bullet"
+
+/obj/item/projectile/acid_special/on_hit(atom/target, blocked = 0)
+	if(issilicon(target))
+		var/mob/living/silicon/S = target
+		S.take_organ_damage(damage)//+10=30
+
+	if(istype(target,/obj/mecha))
+		var/obj/mecha/M = target
+		M.take_damage(damage)
+
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = target
+		var/datum/organ/external/select_area = H.get_organ(def_zone) // We're checking the outside, buddy!
+		var/list/body_parts = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes) // What all are we checking?
+		for(var/bp in body_parts) //Make an unregulated var to pass around.
+			if(istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
+				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
+				if(C.body_parts_covered & select_area.body_part) // Is that body part being targeted covered?
+					if(prob(75))
+						C.make_old()
+						if(bp == H.head)
+							H.update_inv_head()
+						if(bp == H.wear_mask)
+							H.update_inv_wear_mask()
+						if(bp == H.wear_suit)
+							H.update_inv_wear_suit()
+						if(bp == H.w_uniform)
+							H.update_inv_w_uniform()
+						if(bp == H.gloves)
+							H.update_inv_gloves()
+						if(bp == H.shoes)
+							H.update_inv_shoes()
+					visible_message("\red The [target.name] gets absorbed by [H]'s [C.name]!")
+					return
+			else
+				continue //Does this thing we're shooting even exist?
+
+		var/datum/organ/external/organ = H.get_organ(check_zone(def_zone))
+		var/armorblock = H.run_armor_check(organ, "bio")
+		H.apply_damage(damage, damage_type, organ, armorblock, src, 0, 0)
+		H.apply_effects(stun,weaken,0,0,stutter,0,0,armorblock)
+		H.flash_pain()
+		to_chat(H, "\red You feel the acid on your skin!")
+		return
+	..()

@@ -833,66 +833,40 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attack_animal(mob/user)
-	if(istype(user, /mob/living/simple_animal/hulk))    // TODO: attack_hulk() or something like that needed.
-		if(welded || locked)
-			var/obj/machinery/door/airlock/A = src
-			if(prob(75))
-				user.visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>",\
-				"You punch \the [src]!",\
-				"\red You feel some weird vibration!")
-				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-				return
-			else
-				user.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
-				user.visible_message("\red <B>[user]</B> has destroyed some mechanic in \the <B>[src]!</B>",\
-				"You destroy some mechanic in \the [src] door, which holds it in place!",\
-				"\red <B>You feel some weird vibration!</B>")
-				playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
-				if(istype(A,/obj/machinery/door/airlock/multi_tile/)) //Some kind runtime with multi_tile airlock... So delete for now... #Z2
-					qdel(A)
-				else
-					var/obj/structure/door_assembly/da = new A.assembly_type(A.loc)
-					da.anchored = 0
+	if(istype(user, /mob/living/simple_animal/hulk))
+		var/mob/living/simple_animal/hulk/H = user
+		H.attack_hulk(src)
 
-					var/target = da.loc
-					var/cur_dir = user.dir
-					for(var/i=0, i<4, i++)
-						target = get_turf(get_step(target,cur_dir))
-					da.throwforce = 50
-					da.throw_at(target, 200, 100)
-					da.throwforce = 1
+/obj/machinery/door/airlock/proc/door_rupture(mob/user)
+	var/obj/structure/door_assembly/da = new src.assembly_type(loc)
+	da.anchored = 0
 
-					if(A.mineral)
-						da.change_mineral_airlock_type(A.mineral)
-					if(A.glass && da.can_insert_glass)
-						da.set_glass(TRUE)
-					da.state = ASSEMBLY_WIRED
-					da.created_name = src.name
-					da.update_state()
+	var/target = da.loc
+	for(var/i in 1 to 4)
+		target = get_turf(get_step(target,user.dir))
+	da.throw_at(target, 200, 100, spin = FALSE)
 
-					var/obj/item/weapon/airlock_electronics/ae
-					ae = new/obj/item/weapon/airlock_electronics( A.loc )
-					if(!A.req_access)
-						A.check_access()
-					if(A.req_access.len)
-						ae.conf_access = A.req_access
-					else if (A.req_one_access.len)
-						ae.conf_access = A.req_one_access
-						ae.one_access = 1
-					ae.loc = da
-					da.electronics = ae
+	if(mineral)
+		da.change_mineral_airlock_type(mineral)
+	if(glass && da.can_insert_glass)
+		da.set_glass(TRUE)
+	da.state = ASSEMBLY_WIRED
+	da.created_name = name
+	da.update_state()
 
-					qdel(A)
-			return
-		else if(!density)
-			return
-		else
-			to_chat(user, "<span class='red'>You force your fingers between the doors and begin to pry them open...</span>")
-			playsound(src, door_forced_sound, 30, 1, -4)
-			if (do_after(user,40,target = src))
-				if(!src) return
-				open(1)
-	return
+	var/obj/item/weapon/airlock_electronics/ae
+	ae = new/obj/item/weapon/airlock_electronics(loc)
+	if(!req_access)
+		check_access()
+	if(req_access.len)
+		ae.conf_access = req_access
+	else if (req_one_access.len)
+		ae.conf_access = req_one_access
+		ae.one_access = 1
+	ae.loc = da
+	da.electronics = ae
+
+	qdel(src)
 
 /obj/machinery/door/airlock/attack_hand(mob/user)
 	if(!(istype(user, /mob/living/silicon) || IsAdminGhost(user)))
@@ -1228,6 +1202,17 @@ About the new airlock wires panel:
 		updateUsrDialog()
 
 /obj/machinery/door/airlock/attackby(C, mob/user)
+
+	if(istype(C,/obj/item/weapon/changeling_hammer) && !src.operating && src.density) // yeah, hammer ignore electrify
+		var/obj/item/weapon/changeling_hammer/W = C
+		user.do_attack_animation(src)
+		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
+		if(W.use_charge(src,user) && prob(20))
+			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			door_rupture(user)
+		return
+
 	if(!(istype(usr, /mob/living/silicon) || IsAdminGhost(user)))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
@@ -1236,6 +1221,7 @@ About the new airlock wires panel:
 		return
 
 	src.add_fingerprint(user)
+
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating > 0 ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.remove_fuel(0,user))
@@ -1399,7 +1385,7 @@ About the new airlock wires panel:
 	if(autoclose)
 		if(close_timer_id)
 			deltimer(close_timer_id)
-		close_timer_id = addtimer(src, "do_autoclose", normalspeed ? 150 : 5)
+		close_timer_id = addtimer(CALLBACK(src, .proc/do_autoclose), normalspeed ? 150 : 5, TIMER_STOPPABLE)
 
 /obj/machinery/door/airlock/proc/do_autoclose()
 	close_timer_id = null
@@ -1501,12 +1487,12 @@ About the new airlock wires panel:
 	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (LIGHTING_LAYER + 1))
 	fire_overlay.plane = LIGHTING_PLANE + 1
 	overlays += fire_overlay
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/door_scrap/process()
 	if(ticker >= 300)
 		overlays.Cut()
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	ticker++
 	var/spot = (locate(/obj/effect/decal/cleanable/water) in src.loc)

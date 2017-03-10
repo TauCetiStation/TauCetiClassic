@@ -56,9 +56,9 @@
 /obj/item/weapon/dice/attack_self(mob/user)
 	diceroll(user)
 
-/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user)
+/obj/item/weapon/dice/after_throw(datum/callback/callback)
 	..()
-	diceroll(user)
+	diceroll()
 
 /obj/item/weapon/dice/proc/diceroll(mob/user)
 	var/result = rand(1, sides)
@@ -70,12 +70,12 @@
 	icon_state = "[initial(icon_state)][result]"
 	if(initial(icon_state) == "d00")
 		result = (result - 1)*10
-	if(user != null) //Dice was rolled in someone's hand
+	if(user) //Dice was rolled in someone's hand
 		user.visible_message("<span class='notice'>[user] has thrown [src]. It lands on [result]. [comment]</span>", \
 							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
 							 "<span class='notice'>You hear [src] landing on [result]. [comment]</span>")
-	else if(src.throwing == 0) //Dice was thrown and is coming to rest
-		src.loc.visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
+	else //Dice was thrown and is coming to rest
+		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
 /obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
 	if(istype(H) && !H.shoes)

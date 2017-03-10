@@ -594,7 +594,7 @@ var/list/turret_icons
 	set_raised_raising(raised, 1)
 	update_icon()
 
-	var/atom/flick_holder = PoolOrNew(/obj/effect/porta_turret_cover, loc)
+	var/atom/flick_holder = new /obj/effect/porta_turret_cover(loc)
 	flick_holder.layer = layer + 0.1
 	flick("popup", flick_holder)
 	spawn(10)
@@ -612,7 +612,7 @@ var/list/turret_icons
 	set_raised_raising(raised, 1)
 	update_icon()
 
-	var/atom/flick_holder = PoolOrNew(/obj/effect/porta_turret_cover, loc)
+	var/atom/flick_holder = new /obj/effect/porta_turret_cover(loc)
 	flick_holder.layer = layer + 0.1
 	flick("popdown", flick_holder)
 	spawn(10)
@@ -943,9 +943,6 @@ var/list/turret_icons
 
 /obj/effect/porta_turret_cover
 	icon = 'icons/obj/turrets.dmi'
-
-/obj/effect/porta_turret_cover/Destroy()
-	return QDEL_HINT_PUTINPOOL
 
 #undef TURRET_PRIORITY_TARGET
 #undef TURRET_SECONDARY_TARGET

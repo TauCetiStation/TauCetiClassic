@@ -274,7 +274,7 @@ This is emryo growth procs
 /obj/item/alien_embryo/New()
 	if(istype(loc, /mob/living))
 		affected_mob = loc
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		spawn(0)
 			AddInfectionImages(affected_mob)
 	else
@@ -283,7 +283,7 @@ This is emryo growth procs
 /obj/item/alien_embryo/Destroy()
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
 	return ..()
@@ -304,7 +304,7 @@ This is emryo growth procs
 	if(!affected_mob)	return
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
 			affected_mob = null
@@ -384,11 +384,11 @@ This is facehugger Attach procs
 	var/current_hugger
 
 /obj/item/clothing/mask/facehugger/New()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/clothing/mask/facehugger/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/clothing/mask/facehugger/process()
@@ -485,7 +485,7 @@ This is facehugger Attach procs
 			for(var/obj/item/clothing/mask/facehugger/FH_mask in target.contents)
 				FH_mask.loc = get_turf(target)
 
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 		target.status_flags |= XENO_HOST
 		target.visible_message("\red \b [src] falls limp after violating [target]'s face!")

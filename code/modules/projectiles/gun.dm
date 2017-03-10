@@ -54,8 +54,7 @@
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
 	if(recoil)
-		spawn()
-			shake_camera(user, recoil + 1, recoil)
+		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)
 		playsound(user, fire_sound, 10, 1)
@@ -164,6 +163,9 @@
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
+		if(isrobot(user))
+			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it.</span>")
+			return
 		mouthshoot = 1
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
 		if(!do_after(user, 40, target = user))

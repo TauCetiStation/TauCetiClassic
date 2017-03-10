@@ -334,7 +334,7 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (qdeleted(P))
+			if (QDELETED(P))
 				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()
@@ -353,7 +353,7 @@ Buildable meters
 			//var/turf/T = P.loc
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (qdeleted(P))
+			if (QDELETED(P))
 				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()
@@ -388,7 +388,7 @@ Buildable meters
 			var/turf/T = M.loc
 			M.level = T.intact ? 2 : 1
 			M.initialize()
-			if (qdeleted(M))
+			if (QDELETED(M))
 				to_chat(usr, pipefailtext)
 				return 1
 			M.build_network()
@@ -411,7 +411,7 @@ Buildable meters
 			var/turf/T = M.loc
 			M.level = T.intact ? 2 : 1
 			M.initialize()
-			if (qdeleted(M))
+			if (QDELETED(M))
 				to_chat(usr, pipefailtext)
 				return 1
 			M.build_network()
@@ -436,7 +436,7 @@ Buildable meters
 			//var/turf/T = P.loc
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (qdeleted(P))
+			if (QDELETED(P))
 				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()
@@ -619,7 +619,7 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (qdeleted(P))
+			if (QDELETED(P))
 				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()

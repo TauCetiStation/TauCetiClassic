@@ -20,7 +20,7 @@
 	var/camera_cache = null
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if (user.stat || ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded) && !istype(user, /mob/living/silicon))) //user can't see - not sure why canmove is here.
+	if ((get_dist(user, src) > 1 || (user.incapacitated()) || user.blinded) && !istype(user, /mob/living/silicon))
 		return null
 	if ( !current || !current.can_use() ) //camera doesn't work
 		reset_current()
@@ -133,11 +133,9 @@
 		A.eyeobj.setLoc(get_turf(C))
 		A.client.eye = A.eyeobj
 		return 1
-
-	if (!C.can_use() || user.stat || (get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) && !istype(user, /mob/living/silicon)))
-		return 0
 	set_current(C)
-	check_eye(user)
+	if(!check_eye(user))
+		return 0
 	use_power(50)
 	return 1
 

@@ -392,9 +392,8 @@
 	if( flush_count >= flush_every_ticks )
 		if( contents.len )
 			if(mode == 2)
-				spawn(0)
-					feedback_inc("disposal_auto_flush",1)
-					flush()
+				feedback_inc("disposal_auto_flush",1)
+				INVOKE_ASYNC(src, .proc/flush)
 		flush_count = 0
 
 	src.updateDialog()
@@ -490,13 +489,10 @@
 	if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
-
-			AM.loc = src.loc
+			AM.forceMove(src.loc)
 			AM.pipe_eject(0)
-			if(!istype(AM,/mob/living/silicon/robot/drone)) //Poor drones kept smashing windows and taking system damage being fired out of disposals. ~Z
-				spawn(1)
-					if(AM)
-						AM.throw_at(target, 5, 1)
+			if(!isdrone(AM)) //Poor drones kept smashing windows and taking system damage being fired out of disposals. ~Z
+				AM.throw_at(target, 5, 2)
 
 		H.vent_gas(loc)
 		qdel(H)
@@ -583,10 +579,7 @@
 	loc = D.trunk
 	active = 1
 	dir = DOWN
-	spawn(1)
-		move()		// spawn off the movement process
-
-	return
+	addtimer(CALLBACK(src, .proc/move), 1)
 
 // movement process, persists while holder is moving through pipes
 /obj/structure/disposalholder/proc/move()
@@ -828,11 +821,9 @@
 		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		if(H)
 			for(var/atom/movable/AM in H)
-				AM.loc = T
+				AM.forceMove(T)
 				AM.pipe_eject(direction)
-				spawn(1)
-					if(AM)
-						AM.throw_at(target, 100, 1)
+				AM.throw_at(target, 100, 2)
 			H.vent_gas(T)
 			qdel(H)
 
@@ -842,12 +833,9 @@
 		if(H)
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
-
-				AM.loc = T
+				AM.forceMove(T)
 				AM.pipe_eject(0)
-				spawn(1)
-					if(AM)
-						AM.throw_at(target, 5, 1)
+				AM.throw_at(target, 5, 2)
 
 			H.vent_gas(T)	// all gas vent to turf
 			qdel(H)
@@ -885,8 +873,7 @@
 		if(H)
 			expel(H, T, 0)
 
-	spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
-		qdel(src)
+	QDEL_IN(src, 2) // delete pipe after 2 ticks to ensure expel proc finished
 
 
 // pipe affected by explosion
@@ -1477,11 +1464,10 @@
 
 	if(H)
 		for(var/atom/movable/AM in H)
-			AM.loc = src.loc
+			AM.forceMove(src.loc)
 			AM.pipe_eject(dir)
-			if(!istype(AM,/mob/living/silicon/robot/drone)) //Drones keep smashing windows from being fired out of chutes. Bad for the station. ~Z
-				spawn(5)
-					AM.throw_at(target, 3, 1)
+			if(!isdrone(AM)) //Drones keep smashing windows from being fired out of chutes. Bad for the station. ~Z
+				AM.throw_at(target, 3, 2)
 		H.vent_gas(src.loc)
 		qdel(H)
 

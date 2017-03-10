@@ -108,7 +108,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 			return
 
 		var/turf/T = get_turf(target)
-		forceMoveOld(T)
+		forceMove(T)
 
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/book/tome))
@@ -349,7 +349,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!L || !L.len)
 		to_chat(usr, "<span class='warning'>No area available.</span>")
 
-	usr.forceMoveOld(pick(L))
+	usr.forceMove(pick(L))
 	update_parallax_contents()
 
 /mob/dead/observer/verb/follow()
@@ -371,10 +371,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/icon/I = icon(target.icon,target.icon_state,target.dir)
 
-	var/orbitsize = (I.Width()+I.Height())*0.5
-	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+	var/orbitsize = (I.Width() + I.Height()) * 0.5
+	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
 
-	if(orbiting != target)
+	if(orbiting && orbiting.orbiting != target)
 		to_chat(src, "<span class='notice'>Now orbiting [target].</span>")
 
 	var/rot_seg
@@ -391,17 +391,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else //Circular
 			rot_seg = 36 //360/10 bby, smooth enough aproximation of a circle
 
-	forceMoveOld(target)
-
-	orbit(target,orbitsize, FALSE, 20, rot_seg)
+	forceMove(target)
+	orbit(target, orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
+	dir = SOUTH // Reset dir so the right directional sprites show up
 	..()
-	//restart our floating animation after orbit is done.
-	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
-	if (!orbiting) //make sure another orbit hasn't started
-		pixel_y = 0
-		animate(src, pixel_y = 2, time = 10, loop = -1)
+
+/mob/dead/observer/stop_orbit()
+	..()
+	pixel_y = 0
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
@@ -423,7 +422,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/turf/T = get_turf(M) //Turf of the destination mob
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				A.forceMoveOld(T)
+				A.forceMove(T)
 				A.update_parallax_contents()
 			else
 				to_chat(A, "This mob is not located in the game world.")
