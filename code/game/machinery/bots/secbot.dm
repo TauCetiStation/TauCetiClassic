@@ -191,7 +191,7 @@ Auto Patrol: []"},
 	if(open && !locked)
 		if(user)
 			to_chat(user, "\red You short out [src]'s target assessment circuits.")
-		INVOKE_ASYNC(src, .proc/hearable_message, "\red <B>[src] buzzes oddly!</B>")
+		hearable_message("\red <B>[src] buzzes oddly!</B>")
 		target = null
 		if(user)
 			oldtarget_name = user.name

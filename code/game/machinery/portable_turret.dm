@@ -596,7 +596,7 @@ var/list/turret_icons
 	var/atom/flick_holder = new /obj/effect/porta_turret_cover(loc)
 	flick_holder.layer = layer + 0.1
 	flick("popup", flick_holder)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, flick_holder), 10)
+	QDEL_IN(flick_holder, 10)
 	set_raised_raising(TRUE, FALSE)
 	update_icon()
 

@@ -212,7 +212,7 @@ Auto Patrol: []"},
 	if(open && !locked)
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
-		INVOKE_ASYNC(src, .proc/hearable_message, "\red <B>[src] buzzes oddly!</B>")
+		hearable_message("\red <B>[src] buzzes oddly!</B>")
 		target = null
 		if(user)
 			oldtarget_name = user.name
@@ -369,7 +369,7 @@ Auto Patrol: []"},
 			addtimer(CALLBACK(src, .proc/subprocess, mode), 4)
 			addtimer(CALLBACK(src, .proc/subprocess, mode), 8)
 
-/obj/machinery/bot/secbot/proc/subprocess(oldmode)
+/obj/machinery/bot/ed209/proc/subprocess(oldmode)
 	switch(oldmode)
 		if(SECBOT_PREP_ARREST)
 			if(get_dist(src, target) <= 1)
@@ -436,7 +436,7 @@ Auto Patrol: []"},
 	else	// no path, so calculate new one
 		mode = SECBOT_START_PATROL
 
-/obj/machinery/bot/secbot/proc/patrol_substep(turf/next)
+/obj/machinery/bot/ed209/proc/patrol_substep(turf/next)
 	calc_path(next)
 	if(path.len == 0)
 		find_patrol_target()
@@ -468,7 +468,7 @@ Auto Patrol: []"},
 	awaiting_beacon = 1
 	addtimer(CALLBACK(src, .proc/find_nearest_beacon_substep), 10)
 
-/obj/machinery/bot/secbot/proc/find_nearest_beacon_substep()
+/obj/machinery/bot/ed209/proc/find_nearest_beacon_substep()
 	awaiting_beacon = 0
 	if(nearest_beacon)
 		set_destination(nearest_beacon)
@@ -794,7 +794,7 @@ Auto Patrol: []"},
 		pulse2.name = "emp sparks"
 		pulse2.anchored = 1
 		pulse2.dir = pick(cardinal)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, pulse2), 10)
+		QDEL_IN(pulse2, 10)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12, src))
 			if(C.stat == DEAD)
