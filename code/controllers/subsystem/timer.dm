@@ -309,7 +309,7 @@ var/datum/subsystem/timer/SStimer
 			else
 				if (hash_timer.flags & TIMER_STOPPABLE)
 					. = hash_timer.id
-					return
+				return
 
 	var/timeToRun = world.time + wait
 	if (flags & TIMER_CLIENT_TIME)
