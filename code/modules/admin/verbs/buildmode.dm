@@ -87,7 +87,7 @@
 	switch(master.cl.buildmode)
 		if(1) // Basic Build
 			help_message = {"<span class='notice'>
-			***********************************************************
+			*****Basic Build*******************************************
 			Click and drag to do a fill operation
 			Left Mouse Button        = Construct / Upgrade
 			Right Mouse Button       = Deconstruct / Delete / Downgrade
@@ -100,7 +100,7 @@
 			</span>"}
 		if(2) // Adv. Build
 			help_message = {"<span class='notice'>
-			***********************************************************
+			*****Adv. Build********************************************
 			Click and drag to do a fill operation
 			Right Mouse Button on buildmode button = Set object type
 			Left Mouse Button on turf/obj          = Place objects
@@ -116,7 +116,7 @@
 			</span>"}
 		if(3) // Edit
 			help_message = {"<span class='notice'>
-			***********************************************************
+			*****Edit**************************************************
 			Click and drag to do a mass edit operation
 			Right Mouse Button on buildmode button = Select var(type) & value
 			Left Mouse Button on turf/obj/mob      = Set var(type) & value
@@ -125,14 +125,15 @@
 			</span>"}
 		if(4) // Throw
 			help_message = {"<span class='notice'>
-			***********************************************************
+			*****Throw*************************************************
 			Left Mouse Button on turf/obj/mob      = Select
 			Right Mouse Button on turf/obj/mob     = Throw
 			***********************************************************
 			</span>"}
 		if(5) // Room Build
 			help_message = {"<span class='notice'>
-			***********************************************************
+			*****Room Build********************************************
+			Build room betven A and B.
 			Left Mouse Button on turf              = Select as point A
 			Right Mouse Button on turf             = Select as point B
 			Right Mouse Button on buildmode button = Change floor/wall type
@@ -140,27 +141,35 @@
 			</span>"}
 		if(6) // Make Ladders
 			help_message = {"<span class='notice'>
-			***********************************************************
+			*****Make Ladders******************************************
 			Left Mouse Button on turf              = Set as upper ladder loc
 			Right Mouse Button on turf             = Set as lower ladder loc
 			***********************************************************
 			</span>"}
 		if(7) // Move Into Contents
 			help_message = {"<span class='notice'>
-			***********************************************************
+			*****Move Into Contents************************************
 			Left Mouse Button on turf/obj/mob      = Select
 			Right Mouse Button on turf/obj/mob     = Move into selection
 			***********************************************************
 			</span>"}
 		if(8) // Make Lights
 			help_message = {"<span class='notice'>
-			***********************************************************
+			*****Make Lights*******************************************
 			Left Mouse Button on turf/obj/mob      = Make it glow
 			Right Mouse Button on turf/obj/mob     = Reset glowing
 			Right Mouse Button on buildmode button = Change glow properties
 			***********************************************************
 			</span>"}
-
+		if(9) // Make Air
+			help_message = {"<span class='notice'>
+			*****Make Air**********************************************
+			Left Mouse Button on turf/obj/mob      = Set air in area
+			Right Mouse Button on turf/obj/mob     = Remove air in area
+			Right Mouse Button on buildmode button = Set Air properties
+			Gasses set in %
+			***********************************************************
+			</span>"}
 	to_chat(usr, help_message)
 	return 1
 
@@ -276,7 +285,7 @@ obj/effect/bmode/buildholder/New()
 				return 1
 			if(2)
 				copycat = null
-				objholder = easyTypeSelector()
+				objholder = get_path_from_partial_text()
 				if(!ispath(objholder))
 					objholder = /obj/structure/closet
 				else
@@ -307,9 +316,9 @@ obj/effect/bmode/buildholder/New()
 				var/choice = alert("Would you like to change the floor or wall holders?","Room Builder", "Floor", "Wall")
 				switch(choice)
 					if("Floor")
-						floor_holder = easyTypeSelector(/turf/simulated/floor/plating)
+						floor_holder = get_path_from_partial_text(/turf/simulated/floor/plating)
 					if("Wall")
-						wall_holder = easyTypeSelector(/turf/simulated/wall)
+						wall_holder = get_path_from_partial_text(/turf/simulated/wall)
 			if(8) // Lights
 				var/choice = alert("Change the new light range, power, or color?", "Light Maker", "Range", "Power", "Color")
 				switch(choice)
@@ -345,7 +354,7 @@ obj/effect/bmode/buildholder/New()
 						if(input)
 							new_pressure = input
 					if("Temperature")
-						var/input = input("New temperature in kelvin. 0C = [T0C]K.","Air Maker",20) as null|num
+						var/input = input("New temperature in kelvin. 0C = [T0C]K.","Air Maker",T20C) as null|num
 						if(input)
 							new_temperature = input
 	return 1
@@ -383,9 +392,7 @@ obj/effect/bmode/buildholder/New()
 					else
 						areaAction = (alert("Mass FILL or Selective(Type => Type) FILL?", "Do they really need [fillturfs.len] of closets?", "Selective", "Mass") == "Selective" ? 3 : 0)
 
-					var/whatfill = (buildmode == 1 ? input("What are we filling with?", "So many choices") as null|anything in list(/turf/simulated/floor,/turf/simulated/wall,/turf/simulated/wall/r_wall,/obj/machinery/door/airlock, /obj/structure/window/reinforced) : holder.buildmode.objholder)
-					if(!whatfill)
-						return
+					var/whatfill
 					var/msglog = "<span class='danger'>[key_name_admin(usr)] just buildmode"
 					var/strict = 1
 					var/chosen
@@ -393,18 +400,24 @@ obj/effect/bmode/buildholder/New()
 						if(MASS_DELETE)
 							msglog += " <big>DELETED EVERYTHING</big> in [fillturfs.len] tile\s "
 						if(SELECTIVE_DELETE)
-							chosen = easyTypeSelector()
+							chosen = get_path_from_partial_text()
 							if(!chosen)
 								return
 							strict = alert("Delete all children of [chosen]?", "Children being all types and subtypes of [chosen]", "Yes", "No") == "No"
 							msglog += " <big>DELETED [!strict ? "ALL TYPES OF " :""][chosen]</big> in [fillturfs.len] tile\s "
 						if(SELECTIVE_FILL)
-							chosen = easyTypeSelector()
+							whatfill = (buildmode == 1 ? input("What are we filling with?", "So many choices") as null|anything in list(/turf/simulated/floor,/turf/simulated/wall,/turf/simulated/wall/r_wall,/obj/machinery/door/airlock, /obj/structure/window/reinforced) : holder.buildmode.objholder)
+							if(!whatfill)
+								return
+							chosen = get_path_from_partial_text()
 							if(!chosen)
 								return
 							strict = alert("Change all children of [chosen]?", "Children being all types and subtypes of [chosen]", "Yes", "No") == "No"
 							msglog += " Changed all [chosen] in [fillturfs.len] tile\s to [whatfill] "
 						else
+							whatfill = (buildmode == 1 ? input("What are we filling with?", "So many choices") as null|anything in list(/turf/simulated/floor,/turf/simulated/wall,/turf/simulated/wall/r_wall,/obj/machinery/door/airlock, /obj/structure/window/reinforced) : holder.buildmode.objholder)
+							if(!whatfill)
+								return
 							msglog += " FILLED [fillturfs.len] tile\s with [whatfill] "
 					msglog += "at ([ADMIN_JMP(start)] to [ADMIN_JMP(end)])</span>"
 					message_admins(msglog)
@@ -415,7 +428,13 @@ obj/effect/bmode/buildholder/New()
 					for(var/turf/T in fillturfs)
 						if(areaAction == MASS_DELETE || areaAction == SELECTIVE_DELETE)
 							if(ispath(chosen, /turf))
-								T.ChangeTurf(chosen)
+								if(strict)
+									if(T.type != chosen)
+										continue
+								else
+									if(!istype(T, chosen))
+										continue
+								T.ChangeTurf(/turf/space)
 								deletions++
 							else
 								for(var/atom/thing in T.contents)
@@ -476,7 +495,7 @@ obj/effect/bmode/buildholder/New()
 						if(MASS_DELETE)
 							msglog += " <big>EDITED EVERYTHING</big> in [fillturfs.len] tile\s "
 						if(SELECTIVE_DELETE)
-							chosen = easyTypeSelector()
+							chosen = get_path_from_partial_text()
 							if(!chosen)
 								return
 							strict = alert("Edit all children of [chosen]?", "Children being all types and subtypes of [chosen]", "Yes", "No") == "No"
@@ -600,13 +619,13 @@ obj/effect/bmode/buildholder/New()
 								if(MASS_DELETE)
 									msglog += " <big>DELETED EVERYTHING</big> in [fillturfs.len] tile\s "
 								if(SELECTIVE_DELETE)
-									chosen = easyTypeSelector()
+									chosen = get_path_from_partial_text()
 									if(!chosen)
 										return
 									strict = alert("Delete all children of [chosen]?", "Children being all types and subtypes of [chosen]", "Yes", "No") == "No"
 									msglog += " <big>DELETED [!strict ? "ALL TYPES OF " :""][chosen]</big> in [fillturfs.len] tile\s "
 								if(SELECTIVE_FILL)
-									chosen = easyTypeSelector()
+									chosen = get_path_from_partial_text()
 									if(!chosen)
 										return
 									strict = alert("Change all children of [chosen]?", "Children being all types and subtypes of [chosen]", "Yes", "No") == "No"
@@ -824,26 +843,30 @@ obj/effect/bmode/buildholder/New()
 					if(Target.trace_gases.len)
 						qdel(Target.trace_gases)
 
-/proc/easyTypeSelector(ty)
-	var/chosen = null
+/proc/get_path_from_partial_text(default_path = "/obj")
+	var/desired_path = input("Enter full or partial typepath.","Typepath","[default_path]")
 
-	var/list/matches = new()
-	var/O = input("What type? Leave as /atom to choose from a global list of types.", "Gibs me dat", ty ? ty : "/atom") as text
-	for(var/path in typesof(/atom))
-		if(findtext("[path]", O))
-			matches += path
+	var/list/types = typesof(/atom)
+	var/list/matches = list()
+
+	if(default_path != "/atom")
+		for(var/path in types)
+			if(findtext("[path]", desired_path))
+				matches += path
+	else
+		matches = types
 
 	if(matches.len==0)
-		to_chat(usr, "<span class='warning'>No types of [O] found.</span>")
+		to_chat(usr, "<span class='warning'>No types of [desired_path] found.</span>")
 		return
 
+	var/result = null
+
 	if(matches.len==1)
-		chosen = matches[1]
+		result = matches[1]
 	else
-		chosen = input("Select an atom type", "Selected Atom", matches[1]) as null|anything in matches
-		if(!chosen)
-			return
-	return chosen
+		result = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+	return result
 
 /proc/setvar(varname, varvalue, atom/A, reset = 0)
 	if(!reset) //I cant believe this shit actually compiles.
