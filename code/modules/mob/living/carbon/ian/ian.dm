@@ -324,7 +324,7 @@
 	if(chance && prob(chance))
 		if(O.force)
 			user.visible_message("<span class='warning'>[user] hits [src] with the [O], however [src] is too armored.</span>",\
-	                             "<span class='warning'>You can't cause /him any damage.</span>")
+	                             "<span class='warning'>You can't cause [src] any damage.</span>")
 		else
 			user.visible_message("<span class='notice'>[user] gently taps [src] with the [O].</span>",\
 	                             "<span class='notice'>You can't reach its skin.</span>")
