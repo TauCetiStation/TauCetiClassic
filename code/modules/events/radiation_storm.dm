@@ -55,4 +55,4 @@
 		if(timer_maint_revoke_id)
 			deltimer(timer_maint_revoke_id)
 			timer_maint_revoke_id = 0
-		timer_maint_revoke_id = addtimer(GLOBAL_PROC, "revoke_maint_all_access", 600, TRUE, FALSE) // Want to give them time to get out of maintenance.
+		timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE) // Want to give them time to get out of maintenance.

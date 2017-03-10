@@ -77,7 +77,7 @@
 		M.regenerate_icons()
 	return
 
-/obj/item/clothing/suit/armor/abductor/vest/IsShield()
+/obj/item/clothing/suit/armor/abductor/vest/Get_shield_chance()
 	DeactivateStealth()
 	return 0
 
@@ -131,12 +131,12 @@
 		M.update_canmove()
 //		M.adjustStaminaLoss(-75)
 		combat_cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
 	if(combat_cooldown == initial(combat_cooldown))
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 
 //SCIENCE TOOL
@@ -301,7 +301,7 @@
 			imp_in.buckled.unbuckle_mob()
 		home.Retrieve(imp_in)
 		cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		to_chat(imp_in, "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>")
 	return
@@ -310,7 +310,7 @@
 	if(cooldown < initial(cooldown))
 		cooldown++
 		if(cooldown == initial(cooldown))
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 
 
 //ALIEN DECLONER

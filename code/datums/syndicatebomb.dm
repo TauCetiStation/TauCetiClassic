@@ -42,7 +42,7 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 					P.icon_state = "syndicate-bomb-active"
 				else
 					P.icon_state = "syndicate-bomb-active-wires"
-				SSobj.processing |= P
+				START_PROCESSING(SSobj, P)
 			else
 				P.loc.visible_message("\blue [bicon(holder)] The bomb seems to hesitate for a moment.")
 				P.timer += 5

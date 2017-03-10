@@ -26,11 +26,11 @@
 /obj/item/device/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(secured)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		scanning = 0
 		timing = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return secured
 

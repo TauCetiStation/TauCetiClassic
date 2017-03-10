@@ -119,14 +119,14 @@
 
 /obj/item/weapon/rcs/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/rcs/examine(mob/user)
 	..()
 	to_chat(user, "There are [rcharges] charges left.")
 
 /obj/item/weapon/rcs/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/rcs/process()

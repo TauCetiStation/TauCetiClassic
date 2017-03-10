@@ -107,7 +107,7 @@ var/global/area/mine_sci_curr_location = null
 
 	moving = TRUE
 	lastMove = world.time
-	addtimer(src, "mine_sci_do_move", MINE_SCI_SHUTTLE_COOLDOWN, TRUE, dest_location)
+	addtimer(CALLBACK(src, .proc/mine_sci_do_move, dest_location), MINE_SCI_SHUTTLE_COOLDOWN, TIMER_UNIQUE)
 	return TRUE
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_do_move(area/destination)

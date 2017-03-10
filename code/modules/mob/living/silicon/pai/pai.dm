@@ -79,11 +79,6 @@
 		pda.toff = 1
 	..()
 
-/mob/living/silicon/pai/Login()
-	..()
-	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
-
-
 /mob/living/silicon/pai/Stat()
 	..()
 	if(statpanel("Status"))

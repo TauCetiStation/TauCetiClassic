@@ -25,7 +25,7 @@ var/lastMove = 0
 		return
 	var/myArea = get_area(src)
 	if(SSshuttle.forbidden_atoms_check(myArea))
-		addtimer(src, "try_move_from_station", 600, FALSE)
+		addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
 		return
 	arrival_shuttle_move()
 
@@ -99,10 +99,10 @@ var/lastMove = 0
 	location = destLocation
 	curr_location = destArea
 	moving = 0
-	open_doors(toArea, 1)
+	open_doors(toArea, location)
 
 	if(location == 2)
-		addtimer(src, "try_move_from_station", 600, FALSE)
+		addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
 
 
 /obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)
@@ -129,20 +129,20 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
 	switch(arrival)
-		if(1) //Station
-			var/area/station = locate(/area/hallway/secondary/entry)
-			for(var/obj/machinery/door/airlock/external/D in station)
-				if(D.tag == "arrival_1")
+		if(0) //Velocity
+			var/area/velocity = locate(/area/centcom/arrival)
+			for(var/obj/machinery/door/airlock/external/D in velocity)
+				if(D.tag == "velocity_1")
 					D.unbolt()
 
 			for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
 				spawn(0)
 					D.locked = 0
 					D.open()
-		if(2) //Velocity
-			var/area/velocity = locate(/area/centcom/arrival)
-			for(var/obj/machinery/door/airlock/external/D in velocity)
-				if(D.tag == "velocity_1")
+		if(2) //Station
+			var/area/station = locate(/area/hallway/secondary/entry)
+			for(var/obj/machinery/door/airlock/external/D in station)
+				if(D.tag == "arrival_1")
 					D.unbolt()
 
 			for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)

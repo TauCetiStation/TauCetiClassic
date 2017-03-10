@@ -7,7 +7,7 @@
 	var/obj/lair_life_monitor/life_monitor = null
 
 /obj/structure/cellular_biomass/lair/New(spawned_mob_type)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	spawned_mob = spawned_mob_type
 	spawn_mob()
 
@@ -28,7 +28,7 @@
 /obj/structure/cellular_biomass/lair/Destroy()
 	if(life_monitor)
 		qdel(life_monitor)
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	..()
 	return QDEL_HINT_QUEUE
 

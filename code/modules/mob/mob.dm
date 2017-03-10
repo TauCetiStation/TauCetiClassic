@@ -614,7 +614,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					else
 						stat("Failsafe Controller:", "ERROR")
 					if(Master)
-						stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
 						stat(null)
 						for(var/datum/subsystem/SS in Master.subsystems)
 							SS.stat_entry()
