@@ -220,8 +220,11 @@
 
 //Damage ALL external organs, divided to their num
 /mob/living/carbon/human/proc/take_divided_damage(brute, burn)
-	if(status_flags & GODMODE)	return	//godmode
+	if(status_flags & GODMODE)
+		return	//godmode
 	var/list/datum/organ/external/parts = get_damageable_organs()
+	if(!parts.len)
+		return
 	for(var/datum/organ/external/External in parts)
 		External.take_damage(brute/parts.len,burn/parts.len)
 	updatehealth()

@@ -257,9 +257,7 @@
 				if("tube","bulb")
 					if(prob(2))
 						broken(1)
-
-		spawn(1)
-			update(0)
+		addtimer(CALLBACK(src, .proc/update, 0), 1)
 
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
@@ -639,13 +637,14 @@
 // explode the light
 
 /obj/machinery/light/proc/explode()
+	set waitfor = FALSE
+
 	var/turf/T = get_turf(src.loc)
-	spawn(0)
-		broken()	// break it first to give a warning
-		sleep(2)
-		explosion(T, 0, 0, 2, 2)
-		sleep(1)
-		qdel(src)
+	broken()	// break it first to give a warning
+	sleep(2)
+	explosion(T, 0, 0, 2, 2)
+	sleep(1)
+	qdel(src)
 
 // the light item
 // can be tube or bulb subtypes

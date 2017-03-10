@@ -16,6 +16,7 @@
 	if(!hood)
 		var/obj/item/clothing/head/W = new hoodtype(src)
 		hood = W
+		hood.canremove = 0
 
 /obj/item/clothing/suit/hooded/ui_action_click()
 	ToggleHood()

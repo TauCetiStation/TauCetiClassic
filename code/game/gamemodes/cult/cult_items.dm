@@ -43,7 +43,7 @@
 	icon_state = "culthood"
 	desc = "A hood worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE
-	flags = HEADCOVERSEYES
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | THICKMATERIAL
 	body_parts_covered = HEAD|EYES
 	armor = list(melee = 50, bullet = 45, laser = 40,energy = 5, bomb = 30, bio = 50, rad = 20)
 	cold_protection = HEAD
@@ -109,8 +109,10 @@
 	..()
 	if(user.wear_suit == src && current_charges)
 		user.overlays |= shield
-	else
-		user.overlays -= shield
+
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/dropped(mob/user)
+	user.overlays -= shield
+	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/Get_shield_chance()
 	if(current_charges)
@@ -129,7 +131,6 @@
 	icon_state = "shielded_hat"
 	item_state = "shielded_hat"
 	armor = list(melee = 60, bullet = 60, laser = 60,energy = 30, bomb = 50, bio = 30, rad = 30)
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
@@ -336,20 +337,21 @@
 	if(curselimit > 1)
 		to_chat(user,"<span class='notice'>We have exhausted our ability to curse the shuttle.</span>")
 		return
-	SSshuttle.settimeleft(SSshuttle.timeleft() + cursetime)
-	to_chat(user,"<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
-	playsound(user.loc, "sound/effects/Glassbr1.ogg", 50, 1)
-	qdel(src)
-	sleep(20)
-	var/global/list/curses
-	if(!curses)
-		curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by three minutes.",
-		"The shuttle's navigation programming was replaced by a file containing two words, IT COMES. The shuttle will be delayed by three minutes.",
-		"The shuttle's custodian tore out his guts and began painting strange shapes on the floor. The shuttle will be delayed by three minutes.",
-		"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh. The shuttle will be delayed by three minutes.",
-		"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine. The shuttle will be delayed by three minutes.",
-		"The shuttle dispatcher was found dead with bloody symbols carved into their flesh. The shuttle will be delayed by three minutes.")
-	var/message = pick_n_take(curses)
-	command_alert("System Failure","[message]")
-	player_list << sound('sound/misc/notice1.ogg')
-	curselimit++
+	if(SSshuttle.alert)
+		SSshuttle.settimeleft(SSshuttle.timeleft() + cursetime)
+		to_chat(user,"<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
+		playsound(user.loc, "sound/effects/Glassbr1.ogg", 50, 1)
+		qdel(src)
+		sleep(20)
+		var/global/list/curses
+		if(!curses)
+			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by three minutes.",
+			"The shuttle's navigation programming was replaced by a file containing two words, IT COMES. The shuttle will be delayed by three minutes.",
+			"The shuttle's custodian tore out his guts and began painting strange shapes on the floor. The shuttle will be delayed by three minutes.",
+			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh. The shuttle will be delayed by three minutes.",
+			"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine. The shuttle will be delayed by three minutes.",
+			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh. The shuttle will be delayed by three minutes.")
+		var/message = pick_n_take(curses)
+		command_alert("System Failure","[message]")
+		player_list << sound('sound/misc/notice1.ogg')
+		curselimit++

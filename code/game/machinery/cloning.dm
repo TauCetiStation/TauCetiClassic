@@ -222,7 +222,7 @@
 		ticker.mode.update_all_synd_icons()
 	if (H.mind in ticker.mode.cult)
 		ticker.mode.add_cultist(src.occupant.mind)
-		ticker.mode.update_all_cult_icons() //So the icon actually appears
+		INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons) //So the icon actually appears
 
 	// -- End mode specific stuff
 
@@ -262,6 +262,7 @@
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
+
 		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			src.go_out()

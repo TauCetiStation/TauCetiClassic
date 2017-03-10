@@ -991,7 +991,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		user.golem_rune = null
 		to_chat(user, "<span class='notice'>You are no longer queued for golem role.</span>")
 	else
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		last_ghost_click = world.time + 50
 		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
 		user.client.images += I
@@ -1045,7 +1045,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		spirit = null
 		result = 0
 	if(!result)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return result
 
@@ -1126,11 +1126,11 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow()
 	grown = 1
 	icon_state = "slime egg-grown"
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	var/turf/T = get_turf(src)
 	src.visible_message("\blue The [name] pulsates and quivers!")
 	spawn(rand(50,100))

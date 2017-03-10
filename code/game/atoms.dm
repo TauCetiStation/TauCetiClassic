@@ -180,9 +180,6 @@
 	return
 
 /atom/proc/hitby(atom/movable/AM)
-	if(density)
-		AM.throwing = 0
-		AM.fly_speed = 0
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M)
@@ -411,6 +408,7 @@
 /atom/Stat()
 	. = ..()
 	sleep(1)
+	stoplag()
 
 //This will be called after the map and objects are loaded
 /atom/proc/initialize()

@@ -202,10 +202,12 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!alerted)
 		alerted = 1
-		spawn(chase_time)
-		if(alerted)
-			visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
-			qdel(src)
+		addtimer(CALLBACK(src, .proc/burrow_check), chase_time)
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/burrow_check()
+	if(alerted)
+		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward()
 	if(!ore_eaten || ore_types_eaten.len == 0)
@@ -283,9 +285,11 @@
 	var/inert = 0
 
 /obj/item/asteroid/hivelord_core/New()
-	spawn(1200)
-		inert = 1
-		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+	addtimer(CALLBACK(src, .proc/make_inert), 1200)
+
+/obj/item/asteroid/hivelord_core/proc/make_inert()
+	inert = 1
+	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
 /obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
@@ -334,8 +338,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
-	spawn(100)
-		qdel(src)
+	QDEL_IN(src, 100)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
 	qdel(src)
@@ -415,8 +418,7 @@
 	if(istype(turftype, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = turftype
 		M.GetDrilled()
-	spawn(20)
-		Trip()
+	addtimer(CALLBACK(src, .proc/Trip), 20)
 
 /obj/effect/goliath_tentacle/original
 

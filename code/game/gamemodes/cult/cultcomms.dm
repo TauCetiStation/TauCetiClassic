@@ -19,7 +19,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/cult_comms/cast(list/targets, mob/living/user = usr)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		addtimer(src,"payment",200 ,FALSE,H)
+		addtimer(CALLBACK(src, .proc/payment, H), 200)
 	else
 		user.take_overall_damage(rand(10,15))
 	call(/obj/effect/rune/proc/communicate)()
@@ -29,6 +29,7 @@
 	H.take_divided_damage(rand(60,120))
 
 /mob/living/proc/remove_comms()
+
 	for(var/obj/effect/proc_holder/spell/aoe_turf/cult_comms/C in spell_list)
 		if(C.action)
 			C.action.Remove(src)
@@ -36,6 +37,7 @@
 	if(mind)
 		for(var/obj/effect/proc_holder/spell/aoe_turf/cult_comms/C in mind.spell_list)
 			mind.spell_list -= C
+			qdel(C)
 
 /obj/effect/proc_holder/spell/aoe_turf/cult_comms/construct
 	charge_max = 300

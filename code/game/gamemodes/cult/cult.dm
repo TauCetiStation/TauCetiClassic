@@ -94,7 +94,7 @@
 
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
-		update_all_cult_icons()
+		INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons)
 		to_chat(cult_mind.current, "<span class = 'info'><b>You are a member of the <font color='red'>cult</font>!</b></span>")
 		grant_runeword(cult_mind.current)
 		if(!config.objectives_disabled)
@@ -179,7 +179,7 @@
 		cult += cult_mind
 		cult_mind.current.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/cult_comms(cult_mind.current))
 
-		update_all_cult_icons()
+		INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons)
 		return 1
 
 
@@ -197,56 +197,48 @@
 		to_chat(cult_mind.current, "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>")
 		cult_mind.memory = ""
 		cult_mind.current.remove_comms()
-		update_cult_icons_removed(cult_mind)
+		INVOKE_ASYNC(ticker.mode, .proc/update_cult_icons_removed, cult_mind)
 		if(show_message)
 			for(var/mob/M in viewers(cult_mind.current))
 				to_chat(M, "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>")
 
 /datum/game_mode/proc/update_all_cult_icons()
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/image/I in cultist.current.client.images)
-						if(I.icon_state == "cult")
-							qdel(I)
-
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/datum/mind/cultist_1 in cult)
-						if(cultist_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = cultist_1.current, icon_state = "cult")
-							cultist.current.client.images += I
+	for(var/datum/mind/cultist in cult)
+		if(cultist.current && cultist.current.client)
+			for(var/image/I in cultist.current.client.images)
+				if(I.icon_state == "cult")
+					qdel(I)
+	for(var/datum/mind/cultist in cult)
+		if(cultist.current && cultist.current.client)
+			for(var/datum/mind/cultist_1 in cult)
+				if(cultist_1.current)
+					var/I = image('icons/mob/mob.dmi', loc = cultist_1.current, icon_state = "cult")
+					cultist.current.client.images += I
 
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = cult_mind.current, icon_state = "cult")
-					cultist.current.client.images += I
-			if(cult_mind.current)
-				if(cult_mind.current.client)
-					var/image/J = image('icons/mob/mob.dmi', loc = cultist.current, icon_state = "cult")
-					cult_mind.current.client.images += J
+	for(var/datum/mind/cultist in cult)
+		if(cultist.current)
+			if(cultist.current.client)
+				var/I = image('icons/mob/mob.dmi', loc = cult_mind.current, icon_state = "cult")
+				cultist.current.client.images += I
+		if(cult_mind.current && cult_mind.current.client)
+			var/image/J = image('icons/mob/mob.dmi', loc = cultist.current, icon_state = "cult")
+			cult_mind.current.client.images += J
 
 
 /datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/image/I in cultist.current.client.images)
-						if(I.icon_state == "cult" && I.loc == cult_mind.current)
-							qdel(I)
-
-		if(cult_mind.current)
-			if(cult_mind.current.client)
-				for(var/image/I in cult_mind.current.client.images)
-					if(I.icon_state == "cult")
-						qdel(I)
+	for(var/datum/mind/cultist in cult)
+		if(cultist.current && cultist.current.client)
+			for(var/image/I in cultist.current.client.images)
+				if(I.icon_state == "cult" && I.loc == cult_mind.current)
+					cultist.current.client.images -= I
+					qdel(I)
+	if(cult_mind.current && cult_mind.current.client)
+		for(var/image/I in cult_mind.current.client.images)
+			if(I.icon_state == "cult")
+				cult_mind.current.client.images -= I
+				qdel(I)
 
 
 /datum/game_mode/cult/proc/get_unconvertables()

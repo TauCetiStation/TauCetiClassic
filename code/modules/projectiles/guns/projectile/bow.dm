@@ -191,7 +191,7 @@
 
 	var/obj/item/weapon/arrow/A = arrow
 	A.loc = get_turf(user)
-	A.throw_at(target,26,tension*release_speed,user) //26 because speed must be < than distance
+	A.throw_at(target, (tension * release_speed) + 1, tension * release_speed, user)
 	arrow = null
 	tension = 0
 	icon_state = "crossbow"

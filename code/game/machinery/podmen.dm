@@ -101,18 +101,18 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			if(!C.prefs.ignore_question.Find("diona") && (ROLE_PLANT in C.prefs.be_role))
 				if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted) //No love for ghost with antaghud enabled
 					continue
-				question(C)
+				INVOKE_ASYNC(src, .proc/question, C)
 
 /obj/item/seeds/replicapod/proc/question(client/C)
-	spawn(0)
-		if(!C)	return
-		var/response = alert(C, "Someone is harvesting a diona pod. Would you like to play as a diona?", "Dionaea harvest", "No", "Yes", "Never for this round.")
-		if(!C || ckey)
-			return
-		if(response == "Yes")
-			transfer_personality(C)
-		else if (response == "Never for this round")
-			C.prefs.ignore_question += "diona"
+	if(!C)
+		return
+	var/response = alert(C, "Someone is harvesting a diona pod. Would you like to play as a diona?", "Dionaea harvest", "No", "Yes", "Never for this round.")
+	if(!C || ckey)
+		return
+	if(response == "Yes")
+		transfer_personality(C)
+	else if (response == "Never for this round")
+		C.prefs.ignore_question += "diona"
 
 /obj/item/seeds/replicapod/proc/transfer_personality(client/player)
 
@@ -148,7 +148,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		if ("cult")
 			if (podman.mind in ticker.mode:cult)
 				ticker.mode:add_cultist(podman.mind)
-				ticker.mode:update_all_cult_icons() //So the icon actually appears
+				INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons) //So the icon actually appears
 		// -- End mode specific stuff
 
 	to_chat(podman, "\green <B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B>")

@@ -88,7 +88,7 @@
 			pickedtype = /obj/item/clothing/glasses/cultblind
 		if("Flask of Unholy Water")
 			pickedtype = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
-	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
 		to_chat(user,"<span class='cult'>You kneel before the altar and your faith is rewarded with an [N]!</span>")
@@ -123,7 +123,7 @@
 		if("Nar-Sien Hardsuit")
 			pickedtype += /obj/item/clothing/suit/space/cult
 			pickedtype += /obj/item/clothing/head/helmet/space/cult
-	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)
 			var/obj/item/D = new N(get_turf(src))
@@ -147,7 +147,7 @@
 	var/static/list/blacklisted_pylon_turfs
 
 /obj/structure/cult/pylon/New()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	if(!blacklisted_pylon_turfs)
 		blacklisted_pylon_turfs = typecacheof(list(
 		/turf/unsimulated,
@@ -157,7 +157,7 @@
 	..()
 
 /obj/structure/cult/pylon/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/cult/pylon/process()
@@ -231,7 +231,7 @@
 		if("Veil Walker Set")
 			pickedtype += /obj/item/device/cult_shift
 			pickedtype += /obj/item/device/flashlight/culttorch
-	if(src && !qdeleted(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+	if(src && !QDELETED(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)
 			var/obj/item/D = new N(get_turf(src))
