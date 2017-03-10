@@ -300,7 +300,7 @@ Auto Patrol: []"},
 					playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
 					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
-					addtimer(CALLBACK(src, .proc/subprocess_arrest, C), 60)
+					addtimer(CALLBACK(src, .proc/subprocess_arrest), 60)
 
 			else
 				mode = SECBOT_IDLE
@@ -344,13 +344,14 @@ Auto Patrol: []"},
 			addtimer(CALLBACK(src, .proc/subprocess, mode), 4)
 			addtimer(CALLBACK(src, .proc/subprocess, mode), 8)
 
-/obj/machinery/bot/secbot/proc/subprocess_arrest(mob/living/carbon/mob_carbon)
+/obj/machinery/bot/secbot/proc/subprocess_arrest()
+	var/mob/living/carbon/mob_carbon
 	if(get_dist(src, target) <= 1)
 		if(iscarbon(target))
-			C = target
-			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/weapon/handcuffs(target)
-				C.update_inv_handcuffed()	//update the handcuffs overlay
+			mob_carbon = target
+			if(!mob_carbon.handcuffed)
+				mob_carbon.handcuffed = new /obj/item/weapon/handcuffs(target)
+				mob_carbon.update_inv_handcuffed()	//update the handcuffs overlay
 		mode = SECBOT_IDLE
 		target = null
 		anchored = 0
@@ -611,7 +612,7 @@ Auto Patrol: []"},
 			playsound(loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
 			visible_message("<b>[src]</b> points at [M.name]!")
 			mode = SECBOT_HUNT
-			INVOKE_ASYNC(src, .proc/process) // ensure bot quickly responds to a perp
+			INVOKE_ASYNC(src, .process) // ensure bot quickly responds to a perp
 			break
 		else
 			continue

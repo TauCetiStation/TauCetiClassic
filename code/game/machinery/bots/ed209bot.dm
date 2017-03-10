@@ -638,7 +638,7 @@ Auto Patrol: []"},
 				playsound(loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = SECBOT_HUNT
-			INVOKE_ASYNC(src, .proc/process) // ensure bot quickly responds to a perp
+			INVOKE_ASYNC(src, .process) // ensure bot quickly responds to a perp
 			break
 		else
 			continue
@@ -775,7 +775,7 @@ Auto Patrol: []"},
 	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	INVOKE_ASYNC(A, /obj/item/projectile.proc/process)
+	INVOKE_ASYNC(A, /obj/item/projectile/process)
 
 /obj/machinery/bot/ed209/attack_alien(mob/living/carbon/alien/user)
 	..()

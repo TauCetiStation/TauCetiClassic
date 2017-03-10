@@ -665,7 +665,7 @@ var/list/turret_icons
 	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	INVOKE_ASYNC(A, /obj/item/projectile.proc/process)
+	INVOKE_ASYNC(A, /obj/item/projectile/process)
 
 	if(emagged || lethal)
 		playsound(loc, eshot_sound, 75, 1)
