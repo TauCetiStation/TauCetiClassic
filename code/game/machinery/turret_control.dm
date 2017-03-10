@@ -258,10 +258,11 @@
 
 		enabled=0
 		updateTurrets()
-
-		spawn(rand(60,600))
-			if(!enabled)
-				enabled=1
-				updateTurrets()
+		addtimer(CALLBACK(src, .proc/emp_act_post), rand(60,600))
 
 	..()
+
+/obj/machinery/turretid/proc/emp_act_post()
+	if(!enabled)
+		enabled=1
+		updateTurrets()

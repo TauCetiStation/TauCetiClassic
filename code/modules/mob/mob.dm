@@ -95,6 +95,9 @@
 	for(var/mob/M in viewers(src))
 		M.show_message(message, 1, blind_message, 2)
 
+/atom/proc/hearable_message(message)
+	for(var/mob/M in hearers(src))
+		M.show_message(message, 2, null, 0)
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)

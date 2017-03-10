@@ -77,13 +77,16 @@
 /obj/machinery/bot/secbot/New()
 	..()
 	icon_state = "secbot[src.on]"
-	spawn(3)
-		botcard = new /obj/item/weapon/card/id(src)
-		var/datum/job/detective/J = new/datum/job/detective
-		botcard.access = J.get_access()
-		if(radio_controller)
-			radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
-			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
+	addtimer(CALLBACK(src, .proc/post_New), 3)
+
+
+/obj/machinery/bot/secbot/proc/post_New()
+	botcard = new /obj/item/weapon/card/id(src)
+	var/datum/job/detective/J = new/datum/job/detective
+	botcard.access = J.get_access()
+	if(radio_controller)
+		radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
+		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
 
 /obj/machinery/bot/secbot/turn_on()
@@ -188,9 +191,7 @@ Auto Patrol: []"},
 	if(open && !locked)
 		if(user)
 			to_chat(user, "\red You short out [src]'s target assessment circuits.")
-		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+		INVOKE_ASYNC(src, .proc/hearable_message, "\red <B>[src] buzzes oddly!</B>")
 		target = null
 		if(user)
 			oldtarget_name = user.name
@@ -240,8 +241,7 @@ Auto Patrol: []"},
 					if(iscarbon(target))
 						playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 						icon_state = "secbot-c"
-						spawn(2)
-							icon_state = "secbot[on]"
+						addtimer(CALLBACK(src, .proc/update_icon), 2)
 						var/mob/living/carbon/M = target
 						var/maxstuns = 4
 						if(M.stuttering < 10 && !(HULK in M.mutations))
@@ -268,9 +268,7 @@ Auto Patrol: []"},
 							playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 							visible_message("\red <B>[src] beats [src.target] with the stun baton!</B>")
 							icon_state = "secbot-c"
-							spawn(2)
-								icon_state = "secbot[src.on]"
-
+							addtimer(CALLBACK(src, .proc/update_icon), 2)
 							var/mob/living/simple_animal/S = target
 							S.AdjustStunned(10)
 							S.adjustBruteLoss(15)
@@ -302,27 +300,7 @@ Auto Patrol: []"},
 					playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
 					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
-
-					spawn(60)
-						if(get_dist(src, target) <= 1)
-							/*if(src.target.handcuffed)
-								return*/
-
-							if(iscarbon(target))
-								C = target
-								if(!C.handcuffed)
-									C.handcuffed = new /obj/item/weapon/handcuffs(target)
-									C.update_inv_handcuffed()	//update the handcuffs overlay
-
-							mode = SECBOT_IDLE
-							target = null
-							anchored = 0
-							last_found = world.time
-							frustration = 0
-
-							playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-		//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
-		//					src.speak(arrest_message)
+					addtimer(CALLBACK(src, .proc/subprocess, mode), 60)
 
 			else
 				mode = SECBOT_IDLE
@@ -350,13 +328,7 @@ Auto Patrol: []"},
 				return
 
 			else if(patrol_target)		// has patrol target already
-				spawn(0)
-					calc_path()		// so just find a route to it
-					if(path.len == 0)
-						patrol_target = 0
-						return
-					mode = SECBOT_PATROL
-
+				INVOKE_ASYNC(src, .proc/subprocess, mode)
 
 			else					// no patrol target, so need a new one
 				find_patrol_target()
@@ -365,18 +337,47 @@ Auto Patrol: []"},
 
 		if(SECBOT_PATROL)		// patrol mode
 			patrol_step()
-			spawn(5)
-				if(mode == SECBOT_PATROL)
-					patrol_step()
+			addtimer(CALLBACK(src, .proc/subprocess, mode), 5)
 
 		if(SECBOT_SUMMON)		// summoned to PDA
 			patrol_step()
-			spawn(4)
-				if(mode == SECBOT_SUMMON)
-					patrol_step()
-					sleep(4)
-					patrol_step()
+			addtimer(CALLBACK(src, .proc/subprocess, mode), 4)
+			addtimer(CALLBACK(src, .proc/subprocess, mode), 8)
 
+/obj/machinery/bot/secbot/proc/subprocess(oldmode)
+	switch(oldmode)
+		if(SECBOT_PREP_ARREST)
+			if(get_dist(src, target) <= 1)
+				if(iscarbon(target))
+					C = target
+					if(!C.handcuffed)
+						C.handcuffed = new /obj/item/weapon/handcuffs(target)
+						C.update_inv_handcuffed()	//update the handcuffs overlay
+				mode = SECBOT_IDLE
+				target = null
+				anchored = 0
+				last_found = world.time
+				frustration = 0
+				playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+
+		if(SECBOT_START_PATROL)
+			calc_path()		// so just find a route to it
+			if(path.len == 0)
+				patrol_target = 0
+				return
+			mode = SECBOT_PATROL
+
+		if(SECBOT_PATROL)
+			if(mode == SECBOT_PATROL)
+				patrol_step()
+
+		if(SECBOT_SUMMON)
+			if(mode == SECBOT_SUMMON)
+				patrol_step()
+
+
+/obj/machinery/bot/secbot/update_icon()
+	icon_state = "secbot[on]"
 
 // perform a single patrol step
 
@@ -401,25 +402,20 @@ Auto Patrol: []"},
 				blockcount++
 				if(blockcount > 5)	// attempt 5 times before recomputing
 					// find new path excluding blocked turf
-
-					spawn(2)
-						calc_path(next)
-						if(path.len == 0)
-							find_patrol_target()
-						else
-							blockcount = 0
-
-					return
-
-				return
+					addtimer(CALLBACK(src, .proc/patrol_substep, next), 2)
 
 		else	// not a valid turf
 			mode = SECBOT_IDLE
-			return
 
 	else	// no path, so calculate new one
 		mode = SECBOT_START_PATROL
 
+/obj/machinery/bot/secbot/proc/patrol_substep(turf/next)
+	calc_path(next)
+	if(path.len == 0)
+		find_patrol_target()
+	else
+		blockcount = 0
 
 // finds a new patrol target
 /obj/machinery/bot/secbot/proc/find_patrol_target()
@@ -443,16 +439,17 @@ Auto Patrol: []"},
 	new_destination = "__nearest__"
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1
-	spawn(10)
-		awaiting_beacon = 0
-		if(nearest_beacon)
-			set_destination(nearest_beacon)
-		else
-			auto_patrol = 0
-			mode = SECBOT_IDLE
-			speak("Disengaging patrol mode.")
-			send_status()
+	addtimer(CALLBACK(src, .proc/find_nearest_beacon_substep), 10)
 
+/obj/machinery/bot/secbot/proc/find_nearest_beacon_substep()
+	awaiting_beacon = 0
+	if(nearest_beacon)
+		set_destination(nearest_beacon)
+	else
+		auto_patrol = 0
+		mode = SECBOT_IDLE
+		speak("Disengaging patrol mode.")
+		send_status()
 
 /obj/machinery/bot/secbot/proc/at_patrol_target()
 	find_patrol_target()
@@ -614,8 +611,7 @@ Auto Patrol: []"},
 			playsound(loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
 			visible_message("<b>[src]</b> points at [M.name]!")
 			mode = SECBOT_HUNT
-			spawn(0)
-				process()	// ensure bot quickly responds to a perp
+			INVOKE_ASYNC(src, .proc/process) // ensure bot quickly responds to a perp
 			break
 		else
 			continue

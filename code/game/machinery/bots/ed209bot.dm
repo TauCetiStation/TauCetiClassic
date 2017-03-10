@@ -78,31 +78,37 @@
 		name = created_name
 	if(created_lasercolor)
 		lasercolor = created_lasercolor
-	icon_state = "[lasercolor]ed209[on]"
-	spawn(3)
-		botcard = new /obj/item/weapon/card/id(src)
-		var/datum/job/detective/J = new/datum/job/detective
-		botcard.access = J.get_access()
+	update_icon()
+	if(lasercolor)
+		shot_delay = 6		//Longer shot delay because JESUS CHRIST
+		check_records = 0	//Don't actively target people set to arrest
+		arrest_type = 1		//Don't even try to cuff
+		req_access = list(access_maint_tunnels)
+		arrest_type = 1
+		if((lasercolor == "b") && (name == "ED-209 Security Robot"))//Picks a name if there isn't already a custome one
+			name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
+		if((lasercolor == "r") && (name == "ED-209 Security Robot"))
+			name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
+	addtimer(CALLBACK(src, .proc/post_New), 3)
 
-		if(radio_controller)
-			radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
-			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-		if(lasercolor)
-			shot_delay = 6		//Longer shot delay because JESUS CHRIST
-			check_records = 0	//Don't actively target people set to arrest
-			arrest_type = 1		//Don't even try to cuff
-			req_access = list(access_maint_tunnels)
-			arrest_type = 1
-			if((lasercolor == "b") && (name == "ED-209 Security Robot"))//Picks a name if there isn't already a custome one
-				name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
-			if((lasercolor == "r") && (name == "ED-209 Security Robot"))
-				name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
+
+/obj/machinery/bot/ed209/proc/post_New()
+	botcard = new /obj/item/weapon/card/id(src)
+	var/datum/job/detective/J = new/datum/job/detective
+	botcard.access = J.get_access()
+
+	if(radio_controller)
+		radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
+		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
 /obj/machinery/bot/ed209/turn_on()
 	. = ..()
-	icon_state = "[lasercolor]ed209[on]"
 	mode = SECBOT_IDLE
+	update_icon()
 	updateUsrDialog()
+
+/obj/machinery/bot/ed209/update_icon()
+	icon_state = "[lasercolor]ed209[on]"
 
 /obj/machinery/bot/ed209/turn_off()
 	..()
@@ -206,9 +212,7 @@ Auto Patrol: []"},
 	if(open && !locked)
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
-		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+		INVOKE_ASYNC(src, .proc/hearable_message, "\red <B>[src] buzzes oddly!</B>")
 		target = null
 		if(user)
 			oldtarget_name = user.name
@@ -216,9 +220,9 @@ Auto Patrol: []"},
 		anchored = 0
 		emagged = 2
 		on = 1
-		icon_state = "[lasercolor]ed209[on]"
 		projectile = null
 		mode = SECBOT_IDLE
+		update_icon()
 
 /obj/machinery/bot/ed209/process()
 	//set background = 1
@@ -272,8 +276,7 @@ Auto Patrol: []"},
 				if(Adjacent(target))		// if right next to perp
 					playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 					icon_state = "[lasercolor]ed209-c"
-					spawn(2)
-						icon_state = "[lasercolor]ed209[on]"
+					addtimer(CALLBACK(src, .proc/update_icon), 2)
 					var/mob/living/carbon/M = target
 					var/maxstuns = 4
 					if(M.stuttering < 10 && !(HULK in M.mutations))
@@ -321,21 +324,8 @@ Auto Patrol: []"},
 					playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
 					visible_message("\red <B>[src] is trying to put handcuffs on [target]!</B>")
+					addtimer(CALLBACK(src, .proc/subprocess, mode), 60)
 
-					spawn(60)
-						if(get_dist(src, target) <= 1)
-							if(target.handcuffed)
-								return
-
-							if(iscarbon(target))
-								target.handcuffed = new /obj/item/weapon/handcuffs(target)
-								target.update_inv_handcuffed()	//update handcuff overlays
-
-							mode = SECBOT_IDLE
-							target = null
-							anchored = 0
-							last_found = world.time
-							frustration = 0
 
 		//					playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 		//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
@@ -363,12 +353,7 @@ Auto Patrol: []"},
 				return
 
 			else if(patrol_target)		// has patrol target already
-				spawn(0)
-					calc_path()		// so just find a route to it
-					if(path.len == 0)
-						patrol_target = 0
-						return
-					mode = SECBOT_PATROL
+				INVOKE_ASYNC(src, .proc/subprocess, mode)
 
 			else					// no patrol target, so need a new one
 				find_patrol_target()
@@ -377,19 +362,44 @@ Auto Patrol: []"},
 
 		if(SECBOT_PATROL)		// patrol mode
 			patrol_step()
-			spawn(5)
-				if(mode == SECBOT_PATROL)
-					patrol_step()
+			addtimer(CALLBACK(src, .proc/subprocess, mode), 5)
 
 		if(SECBOT_SUMMON)		// summoned to PDA
 			patrol_step()
-			spawn(4)
-				if(mode == SECBOT_SUMMON)
-					patrol_step()
-					sleep(4)
-					patrol_step()
+			addtimer(CALLBACK(src, .proc/subprocess, mode), 4)
+			addtimer(CALLBACK(src, .proc/subprocess, mode), 8)
 
+/obj/machinery/bot/secbot/proc/subprocess(oldmode)
+	switch(oldmode)
+		if(SECBOT_PREP_ARREST)
+			if(get_dist(src, target) <= 1)
+				if(target.handcuffed)
+					return
 
+				if(iscarbon(target))
+					target.handcuffed = new /obj/item/weapon/handcuffs(target)
+					target.update_inv_handcuffed()	//update handcuff overlays
+
+				mode = SECBOT_IDLE
+				target = null
+				anchored = 0
+				last_found = world.time
+				frustration = 0
+
+		if(SECBOT_START_PATROL)
+			calc_path()		// so just find a route to it
+			if(path.len == 0)
+				patrol_target = 0
+				return
+			mode = SECBOT_PATROL
+
+		if(SECBOT_PATROL)
+			if(mode == SECBOT_PATROL)
+				patrol_step()
+
+		if(SECBOT_SUMMON)
+			if(mode == SECBOT_SUMMON)
+				patrol_step()
 
 // perform a single patrol step
 
@@ -416,27 +426,22 @@ Auto Patrol: []"},
 					sleep(20)
 			else		// failed to move
 				blockcount++
-
 				if(blockcount > 5)	// attempt 5 times before recomputing
 					// find new path excluding blocked turf
-
-					spawn(2)
-						calc_path(next)
-						if(path.len == 0)
-							find_patrol_target()
-						else
-							blockcount = 0
-
-					return
-
-				return
+					addtimer(CALLBACK(src, .proc/patrol_substep, next), 2)
 
 		else	// not a valid turf
 			mode = SECBOT_IDLE
-			return
 
 	else	// no path, so calculate new one
 		mode = SECBOT_START_PATROL
+
+/obj/machinery/bot/secbot/proc/patrol_substep(turf/next)
+	calc_path(next)
+	if(path.len == 0)
+		find_patrol_target()
+	else
+		blockcount = 0
 
 
 // finds a new patrol target
@@ -461,15 +466,17 @@ Auto Patrol: []"},
 	new_destination = "__nearest__"
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1
-	spawn(10)
-		awaiting_beacon = 0
-		if(nearest_beacon)
-			set_destination(nearest_beacon)
-		else
-			auto_patrol = 0
-			mode = SECBOT_IDLE
-			speak("Disengaging patrol mode.")
-			send_status()
+	addtimer(CALLBACK(src, .proc/find_nearest_beacon_substep), 10)
+
+/obj/machinery/bot/secbot/proc/find_nearest_beacon_substep()
+	awaiting_beacon = 0
+	if(nearest_beacon)
+		set_destination(nearest_beacon)
+	else
+		auto_patrol = 0
+		mode = SECBOT_IDLE
+		speak("Disengaging patrol mode.")
+		send_status()
 
 
 /obj/machinery/bot/ed209/proc/at_patrol_target()
@@ -631,8 +638,7 @@ Auto Patrol: []"},
 				playsound(loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = SECBOT_HUNT
-			spawn(0)
-				process()	// ensure bot quickly responds to a perp
+			INVOKE_ASYNC(src, .proc/process) // ensure bot quickly responds to a perp
 			break
 		else
 			continue
@@ -769,8 +775,7 @@ Auto Patrol: []"},
 	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn(0)
-		A.process()
+	INVOKE_ASYNC(A, /obj/item/projectile.proc/process)
 
 /obj/machinery/bot/ed209/attack_alien(mob/living/carbon/alien/user)
 	..()
@@ -789,8 +794,7 @@ Auto Patrol: []"},
 		pulse2.name = "emp sparks"
 		pulse2.anchored = 1
 		pulse2.dir = pick(cardinal)
-		spawn(10)
-			qdel(pulse2)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, pulse2), 10)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12, src))
 			if(C.stat == DEAD)
