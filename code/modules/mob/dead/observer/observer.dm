@@ -554,6 +554,38 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(host, "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>")
 	return host
 
+/mob/dead/observer/proc/ianize()
+	set name = "Become Ian"
+	set category = "Ghost"
+
+	if(!abandon_allowed)
+		to_chat(src, "<span class='notice'>Respawn is disabled.</span>")
+		return
+
+	if(has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+		to_chat(src, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
+		return
+
+	if(!ticker.mode)
+		to_chat(src, "<span class='notice'>Please wait until game is started.</span>")
+		return
+
+	var/response = alert(src, "Are you -sure- you want to find Bag Boss?","Are you sure you want to become II?","Soap Pain!","Nope!")
+	if(response != "Soap Pain!")
+		return
+
+	var/mob/living/carbon/ian/phoron_dog
+	for(var/mob/living/carbon/ian/IAN in living_mob_list) // Incase there is multi_ians, what should NOT ever happen normally!
+		if(IAN.mind) // Mind means someone was or is in a body.
+			continue
+		phoron_dog = IAN
+		break
+
+	if(phoron_dog)
+		phoron_dog.ckey = src.ckey
+	else
+		to_chat(src, "<span class='notice'><B>Living and available Ian not found.</B></span>")
+
 /mob/dead/observer/verb/view_manfiest()
 	set name = "View Crew Manifest"
 	set category = "Ghost"

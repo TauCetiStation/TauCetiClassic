@@ -44,12 +44,13 @@
 
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1
-	else if( istype(M, /mob/living/carbon/human) )
+	else
+		if( istype(M, /mob/living/carbon/human) )
 
-		var/mob/living/carbon/human/H = M
-		if(H.species.flags[IS_SYNTHETIC])
-			to_chat(H, "<span class='warning'>They have a monitor for a head, where do you think you're going to put that?</span>")
-			return
+			var/mob/living/carbon/human/H = M
+			if(H.species.flags[IS_SYNTHETIC])
+				to_chat(H, "<span class='warning'>They have a monitor for a head, where do you think you're going to put that?</span>")
+				return
 
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message("<span class='warning'>[user] attempts to feed [M] [src].</span>", 1)

@@ -810,7 +810,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/device/flashlight(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
 			var/obj/item/weapon/card/id/syndicate/W = new(M)
