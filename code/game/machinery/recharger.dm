@@ -11,6 +11,12 @@ obj/machinery/recharger
 	active_power_usage = 250
 	var/obj/item/weapon/charging = null
 	var/recharge_coeff = 1
+	var/static/list/allowed_items = list(
+                                        /obj/item/weapon/gun/energy,
+                                        /obj/item/weapon/melee/baton,
+                                        /obj/item/weapon/defibrillator,
+                                        /obj/item/ammo_box/magazine/l10mag
+                                    )
 
 /obj/machinery/recharger/New()
 	..()
@@ -26,7 +32,7 @@ obj/machinery/recharger
 obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/weapon/defibrillator) || istype(G, /obj/item/ammo_box/magazine/l10mag))
+	if(is_type_in_list(G, allowed_items))
 		if(charging || panel_open)
 			return
 

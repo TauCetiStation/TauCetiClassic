@@ -66,7 +66,7 @@
 	nodamage = 1
 	flag = "bullet"
 
-/obj/item/projectile/meteor/Bump(atom/A as mob|obj|turf|area)
+/obj/item/projectile/meteor/Bump(atom/A)
 	if(A == firer)
 		loc = A.loc
 		return

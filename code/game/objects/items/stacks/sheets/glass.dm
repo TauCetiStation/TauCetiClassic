@@ -132,7 +132,7 @@
 			W.anchored = 0
 	return 0
 
-/obj/item/stack/sheet/glass/throw_at(atom/target, range, speed, mob/user)
+/obj/item/stack/sheet/glass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
@@ -142,7 +142,7 @@
 	else
 		qdel(src)
 
-/obj/item/stack/sheet/rglass/throw_at(atom/target, range, speed, mob/user)
+/obj/item/stack/sheet/rglass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)

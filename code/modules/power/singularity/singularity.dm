@@ -30,10 +30,9 @@
 
 	src.energy = starting_energy
 	if(temp)
-		spawn(temp)
-			qdel(src)
+		QDEL_IN(src, temp)
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	for(var/obj/machinery/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -42,7 +41,7 @@
 	return
 
 /obj/singularity/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	return ..()
 
@@ -223,7 +222,7 @@
 	return
 
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
-	return 0
+	return 1
 
 /obj/singularity/proc/consume(atom/A)
 	var/gain = A.singularity_act(current_size)

@@ -144,7 +144,7 @@
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
 
-			sleep(0)//Let a diagonal move finish, if necessary
+			stoplag()//Let a diagonal move finish, if necessary
 			A.newtonian_move(A.inertia_dir)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A)

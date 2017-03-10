@@ -67,10 +67,10 @@
 		qdel(src)
 
 	spawn_spacevine_piece(src.loc)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/spacevine_controller/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/spacevine_controller/proc/spawn_spacevine_piece(turf/location)

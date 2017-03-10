@@ -676,15 +676,14 @@ Auto Patrol: []"},
 
 	return threatcount
 
-/obj/machinery/bot/ed209/Bump(M as mob|obj) //Leave no door unopened!
+/obj/machinery/bot/ed209/Bump(atom/M) //Leave no door unopened!
 	if(istype(M, /obj/machinery/door) && !isnull(botcard))
 		var/obj/machinery/door/D = M
 		if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(botcard) && !istype(D,/obj/machinery/door/poddoor))
 			D.open()
 			frustration = 0
 	else if(!anchored && isliving(M))
-		var/mob/living/L = M
-		loc = L.loc
+		loc = M.loc
 		frustration = 0
 
 /obj/machinery/bot/ed209/proc/speak(message)

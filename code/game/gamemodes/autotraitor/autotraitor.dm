@@ -73,85 +73,84 @@
 /datum/game_mode/traitor/autotraitor/post_setup()
 	..()
 	abandon_allowed = 1
-	traitorcheckloop()
+	addtimer(CALLBACK(src, .proc/traitorcheckloop), 9000)
 
 /datum/game_mode/traitor/autotraitor/proc/traitorcheckloop()
-	spawn(9000)
-		if(SSshuttle.departed)
-			return
-		//message_admins("Performing AutoTraitor Check")
-		var/playercount = 0
-		var/traitorcount = 0
-		var/possible_traitors[0]
-		for(var/mob/living/player in mob_list)
+	if(SSshuttle.departed)
+		return
+	//message_admins("Performing AutoTraitor Check")
+	var/playercount = 0
+	var/traitorcount = 0
+	var/possible_traitors[0]
+	for(var/mob/living/player in mob_list)
 
-			if (player.client && player.stat != DEAD)
-				playercount += 1
-			if (player.client && player.mind && player.mind.special_role && player.stat != DEAD)
-				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != DEAD && (player.client && (ROLE_TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR))
-				possible_traitors += player
-		for(var/datum/mind/player in possible_traitors)
-			for(var/job in restricted_jobs)
-				if(player.assigned_role == job)
-					possible_traitors -= player
+		if (player.client && player.stat != DEAD)
+			playercount += 1
+		if (player.client && player.mind && player.mind.special_role && player.stat != DEAD)
+			traitorcount += 1
+		if (player.client && player.mind && !player.mind.special_role && player.stat != DEAD && (player.client && (ROLE_TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR))
+			possible_traitors += player
+	for(var/datum/mind/player in possible_traitors)
+		for(var/job in restricted_jobs)
+			if(player.assigned_role == job)
+				possible_traitors -= player
 
-		//message_admins("Live Players: [playercount]")
-		//message_admins("Live Traitors: [traitorcount]")
+	//message_admins("Live Players: [playercount]")
+	//message_admins("Live Traitors: [traitorcount]")
 //		message_admins("Potential Traitors:")
 //		for(var/mob/living/traitorlist in possible_traitors)
 //			message_admins("[traitorlist.real_name]")
 
 //		var/r = rand(5)
 //		var/target_traitors = 1
-		var/max_traitors = 1
-		var/traitor_prob = 0
-		max_traitors = round(playercount / 10) + 1
-		traitor_prob = (playercount - (max_traitors - 1) * 10) * 5
-		if(traitorcount < max_traitors - 1)
-			traitor_prob += 50
+	var/max_traitors = 1
+	var/traitor_prob = 0
+	max_traitors = round(playercount / 10) + 1
+	traitor_prob = (playercount - (max_traitors - 1) * 10) * 5
+	if(traitorcount < max_traitors - 1)
+		traitor_prob += 50
 
 
-		if(traitorcount < max_traitors)
-			//message_admins("Number of Traitors is below maximum.  Rolling for new Traitor.")
-			//message_admins("The probability of a new traitor is [traitor_prob]%")
+	if(traitorcount < max_traitors)
+		//message_admins("Number of Traitors is below maximum.  Rolling for new Traitor.")
+		//message_admins("The probability of a new traitor is [traitor_prob]%")
 
-			if(prob(traitor_prob))
-				message_admins("Making a new Traitor.")
-				if(!possible_traitors.len)
-					message_admins("No potential traitors.  Cancelling new traitor.")
-					traitorcheckloop()
-					return
-				var/mob/living/newtraitor = pick(possible_traitors)
-				//message_admins("[newtraitor.real_name] is the new Traitor.")
+		if(prob(traitor_prob))
+			message_admins("Making a new Traitor.")
+			if(!possible_traitors.len)
+				message_admins("No potential traitors.  Cancelling new traitor.")
+				addtimer(CALLBACK(src, .proc/traitorcheckloop), 9000)
+				return
+			var/mob/living/newtraitor = pick(possible_traitors)
+			//message_admins("[newtraitor.real_name] is the new Traitor.")
 
-				if (!config.objectives_disabled)
-					forge_traitor_objectives(newtraitor.mind)
+			if (!config.objectives_disabled)
+				forge_traitor_objectives(newtraitor.mind)
 
-				if(istype(newtraitor, /mob/living/silicon))
-					add_law_zero(newtraitor)
-				else
-					equip_traitor(newtraitor)
+			if(istype(newtraitor, /mob/living/silicon))
+				add_law_zero(newtraitor)
+			else
+				equip_traitor(newtraitor)
 
-				traitors += newtraitor.mind
-				to_chat(newtraitor, "\red <B>ATTENTION:</B> \black It is time to pay your debt to the Syndicate...")
-				to_chat(newtraitor, "<B>You are now a traitor.</B>")
-				newtraitor.mind.special_role = "traitor"
-				newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
-				var/obj_count = 1
-				to_chat(newtraitor, "\blue Your current objectives:")
-				if(!config.objectives_disabled)
-					for(var/datum/objective/objective in newtraitor.mind.objectives)
-						to_chat(newtraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-						obj_count++
-				else
-					to_chat(newtraitor, "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")
-			//else
-				//message_admins("No new traitor being added.")
+			traitors += newtraitor.mind
+			to_chat(newtraitor, "\red <B>ATTENTION:</B> \black It is time to pay your debt to the Syndicate...")
+			to_chat(newtraitor, "<B>You are now a traitor.</B>")
+			newtraitor.mind.special_role = "traitor"
+			newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
+			var/obj_count = 1
+			to_chat(newtraitor, "\blue Your current objectives:")
+			if(!config.objectives_disabled)
+				for(var/datum/objective/objective in newtraitor.mind.objectives)
+					to_chat(newtraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+					obj_count++
+			else
+				to_chat(newtraitor, "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")
 		//else
-			//message_admins("Number of Traitors is at maximum.  Not making a new Traitor.")
+			//message_admins("No new traitor being added.")
+	//else
+		//message_admins("Number of Traitors is at maximum.  Not making a new Traitor.")
 
-		traitorcheckloop()
+	addtimer(CALLBACK(src, .proc/traitorcheckloop), 9000)
 
 
 

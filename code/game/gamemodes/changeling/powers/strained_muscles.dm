@@ -25,7 +25,7 @@
 			changeling.chem_charges -= 10
 			changeling.strained_muscles = 1
 			to_chat(user,"<span class='notice'>Our muscles tense and strengthen.</span>")
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 	else
 		to_chat(user,"<span class='notice'>Our muscles relax.</span>")
 		changeling.strained_muscles = 0
@@ -55,4 +55,4 @@
 	else if(stacks)
 		stacks -= 0.25
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)

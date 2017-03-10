@@ -233,6 +233,9 @@ em						{font-style: normal;	font-weight: bold;}
 .adminobserver			{color: #996600;}
 .admin					{color: #386aff;}
 .adminsay				{color: #006666;}
+.adminnotice			{color: #0000ff;}
+.boldannounce			{color: #ff0000; font-weight: bold;}
+.success				{color: #00BF36; font-weight: bold;}
 
 /* Miscellaneous */
 .say					{}
@@ -288,6 +291,8 @@ h1.alert, h2.alert		{color: #000000;}
 .abductor_team4			{color: #800080;	font-style: italic;}
 .cult					{color: #800080;	font-weight: bold; font-style: italic;}
 .alien					{color: #543354;}
+.noticealien			{color: #00c000;}
+.alertalien				{color: #00c000;	font-weight: bold;}
 
 /* Admin: Channels */
 .mod					{color: #735638;	font-weight: bold;}

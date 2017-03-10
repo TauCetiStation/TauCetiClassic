@@ -157,6 +157,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/investigate_show,
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
+	/client/proc/reload_nanoui_resources,
 //	/client/proc/remake_distribution_map,
 //	/client/proc/show_distribution_map,
 	/client/proc/enable_debug_verbs,
