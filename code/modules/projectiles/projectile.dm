@@ -179,13 +179,12 @@
 		if(!forcedodge)
 			if(istype(M))
 				if(ishuman(A))
-					A = check_living_shield(A)
-					M = A
+					M = check_living_shield(A)
 
 				if(silenced)
 					to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
 				else
-					visible_message("<span class = 'red'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
+					visible_message("<span class = 'red'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
 					//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 				if(firer)
 					M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"

@@ -194,21 +194,21 @@
 				return 1
 	return 0
 
-/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", proj_dir = 0)
+/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", hit_dir = 0)
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
-		if( (!proj_dir || is_the_opposite_dir(dir,proj_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
-			visible_message("\red <B>[src] blocks [attack_text] with the [l_hand.name]!</B>")
+		if( (!hit_dir || is_the_opposite_dir(dir,hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
+			visible_message("<span class='userdanger'> <B>[src] blocks [attack_text] with the [l_hand.name]!</B></span>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
-		if( (!proj_dir || is_the_opposite_dir(dir,proj_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
-			visible_message("\red <B>[src] blocks [attack_text] with the [r_hand.name]!</B>")
+		if( (!hit_dir || is_the_opposite_dir(dir,hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
+			visible_message("<span class='userdanger'> <B>[src] blocks [attack_text] with the [r_hand.name]!</B></span>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
 		if(prob(I.Get_shield_chance() - round(damage / 3) ))
-			visible_message("\red <B>The reactive teleport system flings [src] clear of [attack_text]!</B>")
+			visible_message("<span class='userdanger'> <B>The reactive teleport system flings [src] clear of [attack_text]!</B></span>")
 			var/list/turfs = new/list()
 			for(var/turf/T in orange(6))
 				if(istype(T,/turf/space)) continue
@@ -244,7 +244,7 @@
 	if(user == src) // Attacking yourself can't miss
 		target_zone = user.zone_sel.selecting
 	if(!target_zone)
-		visible_message("\red <B>[user] misses [src] with \the [I]!")
+		visible_message("<span class='userdanger'><B>[user] misses [src] with \the [I]!</span>")
 		return 0
 
 	var/datum/organ/external/affecting = get_organ(target_zone)
@@ -262,21 +262,21 @@
 
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(!(affecting.status & ORGAN_ROBOT))
-			to_chat(user, "\red That limb isn't robotic.")
+			to_chat(user, "<span class='userdanger'>That limb isn't robotic.</span>")
 			return
 		if(affecting.sabotaged)
-			to_chat(user, "\red [src]'s [affecting.display_name] is already sabotaged!")
+			to_chat(user, "<span class='userdanger'>[src]'s [affecting.display_name] is already sabotaged!</span>")
 		else
-			to_chat(user, "\red You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties.")
+			to_chat(user, "<span class='userdanger'>You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties.</span>")
 			var/obj/item/weapon/card/emag/emag = I
 			emag.uses--
 			affecting.sabotaged = 1
 		return 1
 
 	if(I.attack_verb.len)
-		visible_message("\red <B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B>")
+		visible_message("<span class='userdanger'><B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B></span>")
 	else
-		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
+		visible_message("<span class='userdanger'><B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B></span>")
 
 	var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
 	var/weapon_sharp = is_sharp(I)
@@ -310,7 +310,7 @@
 			if("head")//Harder to score a stun but if you do it lasts a bit longer
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
-					visible_message("\red <B>[src] has been knocked unconscious!</B>")
+					visible_message("<span class='userdanger'><B>[src] has been knocked unconscious!</B></span>")
 				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
@@ -330,7 +330,7 @@
 			if("chest")//Easier to score a stun but lasts less time
 				if(prob((I.force + 10)))
 					apply_effect(5, WEAKEN, armor)
-					visible_message("\red <B>[src] has been knocked down!</B>")
+					visible_message("<span class='userdanger'><B>[src] has been knocked down!</B></span>")
 
 				if(bloody)
 					bloody_body(src)
@@ -363,9 +363,6 @@
 		if(!zone)
 			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
-
-		O.throwing = 0		//it hit, so stop moving
-
 		if ((O.thrower != src) && check_shields(throw_damage, "[O]", get_dir(O,src)))
 			return
 
