@@ -148,9 +148,8 @@
 				qdel(I)
 		//BubbleWrap END
 	if (src && usr.machine==src) //do not reopen closed window
-		spawn( 0 )
-			src.interact(usr)
-			return
+		INVOKE_ASYNC(src, .proc/interact, usr)
+		return
 	return
 
 /obj/item/stack/proc/use(used)
@@ -200,7 +199,7 @@
 		src.add_fingerprint(user)
 		F.add_fingerprint(user)
 		if (src && usr.machine==src)
-			spawn(0) src.interact(usr)
+			INVOKE_ASYNC(src, .proc/interact, usr)
 	else
 		..()
 	return
@@ -219,9 +218,9 @@
 		if(src.use(to_transfer))
 			S.amount+=to_transfer
 		if (S && usr.machine==S)
-			spawn(0) S.interact(usr)
+			INVOKE_ASYNC(S, /obj/item/stack.proc/interact, usr)
 		if (src && usr.machine==src)
-			spawn(0) src.interact(usr)
+			INVOKE_ASYNC(src, .proc/interact, usr)
 	else return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)

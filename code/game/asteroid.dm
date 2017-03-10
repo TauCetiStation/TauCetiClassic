@@ -15,8 +15,6 @@ var/global/list/space_surprises = list(		/obj/item/clothing/mask/facehugger				=
 
 var/global/list/spawned_surprises = list()
 
-var/global/max_secret_rooms = 3
-
 proc/spawn_room(atom/start_loc,x_size,y_size,wall,floor , clean = 0 , name)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())
 
@@ -86,11 +84,7 @@ proc/admin_spawn_room_at_pos()
 
 //////////////
 
-/proc/make_mining_asteroid_secrets()
-	for(var/i in 1 to max_secret_rooms)
-		make_mining_asteroid_secret()
-
-proc/make_mining_asteroid_secret(size = 5)
+/proc/make_mining_asteroid_secret(size = 5)
 	var/valid = 0
 	var/turf/T = null
 	var/sanity = 0

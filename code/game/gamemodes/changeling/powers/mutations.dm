@@ -24,7 +24,7 @@
 	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>",
 	 "<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
 	 "<span class='warning>You hear organic matter ripping and tearing!</span>")
-	return..(user, target)
+	return ..(user, target)
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)
 	if(!user.unEquip(user.get_active_hand()))
@@ -235,7 +235,7 @@
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/changeling/dropped()
 	qdel(src)

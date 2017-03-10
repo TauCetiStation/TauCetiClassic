@@ -12,7 +12,7 @@
 		new new_type(get_turf(src))
 		qdel(src)
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	spawned_animal = new spawn_type(get_turf(src))
 
 /obj/effect/landmark/animal_spawner/process()
@@ -24,7 +24,7 @@
 			spawned_animal.loc = locate(src.x + rand(-12,12), src.y + rand(-12,12), src.z)
 
 /obj/effect/landmark/animal_spawner/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/landmark/animal_spawner/panther

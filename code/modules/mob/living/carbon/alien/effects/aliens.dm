@@ -158,27 +158,6 @@
 	return
 
 /obj/effect/alien/resin/attackby(obj/item/weapon/W, mob/user)
-	/*if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
-		var/obj/item/weapon/grab/G = W
-		if(isalien(user)&&(ishuman(G.affecting)||ismonkey(G.affecting)))
-		//Only aliens can stick humans and monkeys into resin walls. Also, the wall must not have a person inside already.
-			if(!affecting)
-				if(G.state<2)
-					to_chat(user, "\red You need a better grip to do that!")
-					return
-				G.affecting.loc = src
-				G.affecting.paralysis = 10
-				for(var/mob/O in viewers(world.view, src))
-					if (O.client)
-						to_chat(O, text("\green [] places [] in the resin wall!", G.assailant, G.affecting))
-				affecting=G.affecting
-				qdel(W)
-				spawn(0)
-					process()
-			else
-				to_chat(user, "\red This wall is already occupied.")
-		return */
-
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)

@@ -83,24 +83,24 @@
 		var/mob/M = target
 		M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been whipped by [host.name] ([host.ckey])</font>")
 		host.attack_log += text("\[[time_stamp()]\] <font color='red'>whipped [M.name]'s ([M.ckey])</font>")
-		msg_admin_attack("[host] ([host.ckey]) whipped [M.name] ([M.ckey]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span></span>")
+		msg_admin_attack("[host] ([host.ckey]) whipped [M.name] ([M.ckey]) ([ADMIN_JMP(M)])")
 	var/atom/movable/T = target
 	var/grab_chance = iscarbon(T) ? 45 : 90
 	visible_message("<span class='danger'>A [target] has been hit by [host]'s whip!</span> ")
 	if(grabber && !T.anchored && prob(grab_chance))
-		spawn(1)
-			T.throw_at(host, 7 - kill_count, 0.2)
-			sleep(2)
-			if(in_range(T, host) && !host.get_inactive_hand())
-				if(iscarbon(T))
-					var/obj/item/weapon/grab/G = new(host,T)
-					host.put_in_inactive_hand(G)
-					G.state = GRAB_AGGRESSIVE
-					G.icon_state = "grabbed1"
-					G.synch()
-				else if(istype(T, /obj/item))
-					host.put_in_inactive_hand(T)
+		var/dist_to_host = max(0, (get_dist(host, T) - 1) - kill_count) // Distance to turf in front of host.
+		T.throw_at(host, dist_to_host, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
 
+/obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
+	if(in_range(T, host) && !host.get_inactive_hand())
+		if(iscarbon(T))
+			var/obj/item/weapon/grab/G = new(host,T)
+			host.put_in_inactive_hand(G)
+			G.state = GRAB_AGGRESSIVE
+			G.icon_state = "grabbed1"
+			G.synch()
+		else if(istype(T, /obj/item))
+			host.put_in_inactive_hand(T)
 
 /obj/effect/projectile/laser/tracer/changeling
 	icon_state = "changeling"

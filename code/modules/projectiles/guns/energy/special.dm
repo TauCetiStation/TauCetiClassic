@@ -63,11 +63,11 @@
 
 	New()
 		..()
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 
 	Destroy()
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return ..()
 
 	process()
@@ -98,11 +98,11 @@
 
 	New()
 		..()
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 
 	Destroy()
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return ..()
 
 	process()

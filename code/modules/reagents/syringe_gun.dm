@@ -48,11 +48,13 @@
 
 /obj/item/weapon/gun/syringe/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(syringes.len)
-		spawn(0) fire_syringe(target,user)
+		fire_syringe(target, user)
 	else
 		to_chat(usr, "\red [src] is empty.")
 
 /obj/item/weapon/gun/syringe/proc/fire_syringe(atom/target, mob/user)
+	set waitfor = FALSE
+
 	if (locate (/obj/structure/table, src.loc))
 		return
 	else
@@ -113,7 +115,8 @@
 
 			sleep(1)
 
-		if (D) spawn(10) qdel(D)
+		if (D)
+			QDEL_IN(D, 10)
 
 		return
 

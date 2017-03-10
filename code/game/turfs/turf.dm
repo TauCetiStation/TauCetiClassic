@@ -350,3 +350,8 @@
 				O.singularity_act()
 	ChangeTurf(/turf/space)
 	return(2)
+
+/turf/hitby(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		L.turf_collision(src)

@@ -38,7 +38,7 @@
 	if(!lighting_overlay)
 		var/area/A = loc
 		if(A.dynamic_lighting)
-			PoolOrNew(/atom/movable/lighting_overlay, src)
+			new /atom/movable/lighting_overlay(src)
 
 			for(var/LC in corners)
 				if(!LC)
