@@ -384,23 +384,29 @@ var/list/intents = list("help","disarm","grab","hurt")
 	var/obj/item/weapon/card/id/id = null
 	if(wear_id)
 		id = wear_id.GetID()
+	else if(l_hand)
+		id = l_hand.GetID()
+	else if(r_hand)
+		id = r_hand.GetID()
+
 	if(id && istype(id, /obj/item/weapon/card/id/syndicate))
 		threatcount -= 2
-	// A proper	CentCom id is hard currency.
-	else if(id && istype(id, /obj/item/weapon/card/id/centcom))
+	// A proper CentCom id is hard currency.
+	else if(id && is_type_in_list(id, list(/obj/item/weapon/card/id/centcom, /obj/item/weapon/card/id/ert)))
 		return SAFE_PERP
 
 	if(check_access && !access_obj.allowed(src))
 		threatcount += 4
 
 	if(auth_weapons && !access_obj.allowed(src))
-		if(istype(l_hand, /obj/item/weapon/gun) || istype(l_hand, /obj/item/weapon/melee))
+		var/list/weapon_list = list(/obj/item/weapon/gun, /obj/item/weapon/melee)
+		if(l_hand && is_type_in_list(l_hand, weapon_list))
 			threatcount += 4
 
-		if(istype(r_hand, /obj/item/weapon/gun) || istype(r_hand, /obj/item/weapon/melee))
+		if(r_hand && is_type_in_list(r_hand, weapon_list))
 			threatcount += 4
 
-		if(istype(belt, /obj/item/weapon/gun) || istype(belt, /obj/item/weapon/melee))
+		if(belt && is_type_in_list(belt, weapon_list))
 			threatcount += 2
 
 		if(species.name != "Human")

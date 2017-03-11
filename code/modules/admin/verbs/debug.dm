@@ -847,7 +847,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/clipboard(M), slot_belt)
 
-			var/obj/item/weapon/card/id/W = new(M)
+			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "NanoTrasen Navy Representative"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.icon_state = "centcom"
@@ -918,7 +918,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
-			var/obj/item/weapon/card/id/W = new(M)
+			var/obj/item/weapon/card/id/ert/W = new(M)
 			W.assignment = "Emergency Response Team"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.icon_state = "centcom"
@@ -941,7 +941,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
-			var/obj/item/weapon/card/id/W = new(M)
+			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "Special Operations Officer"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.icon_state = "centcom"

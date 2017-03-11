@@ -75,7 +75,7 @@
 		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 		return 1
 
-	if(locked && !issilicon(user))
+	if(locked && !issilicon(user) && !IsAdminGhost(user))
 		to_chat(user, "<span class='notice'>Access denied.</span>")
 		return 1
 
@@ -258,10 +258,11 @@
 
 		enabled=0
 		updateTurrets()
-
-		spawn(rand(60,600))
-			if(!enabled)
-				enabled=1
-				updateTurrets()
+		addtimer(CALLBACK(src, .proc/emp_act_post), rand(60,600))
 
 	..()
+
+/obj/machinery/turretid/proc/emp_act_post()
+	if(!enabled)
+		enabled=1
+		updateTurrets()

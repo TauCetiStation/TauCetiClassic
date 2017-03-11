@@ -111,7 +111,7 @@
 	if(!istype(target) || !istype(firer))
 		return 0
 
-	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
+	var/obj/item/projectile/test/dummy/trace = new /obj/item/projectile/test/dummy(get_turf(firer)) //Making the test....
 
 	//Set the flags and pass flags to that of the real projectile...
 	if(!isnull(flags))
@@ -360,7 +360,7 @@
 		return //cannot shoot yourself
 	if(istype(A, /obj/item/projectile))
 		return
-	if(is_type_in_list(A, list(/mob/living, /obj/mecha, /obj/machinery/bot/mulebot)))
+	if(istype(A, /mob/living))
 		result = 2 //We hit someone, return 1!
 		return
 	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
@@ -402,6 +402,14 @@
 			M = locate() in get_step(src,target)
 			if(istype(M))
 				return 1
+
+/obj/item/projectile/test/dummy/Bump(atom/A) //Another test projectile with increased checklist
+	..()
+	if(result != 1)
+		return
+	if(is_type_in_list(A, list(/obj/structure/closet, /obj/mecha, /obj/machinery/bot/mulebot)))
+		result = 2
+	return
 
 /obj/item/projectile/proc/Range() ///tg/
 	return
