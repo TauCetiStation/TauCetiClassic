@@ -72,7 +72,7 @@
 	power_channel = ENVIRON
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	var/breach_detection = TRUE // Whether to use automatic breach detection or not
-	var/frequency = 1439
+	frequency = 1439
 	//var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = 1437
 	var/remote_control = FALSE
@@ -94,8 +94,6 @@
 	var/target_temperature = T0C+20
 	var/regulating_temperature = 0
 	var/allow_regulate = 0 //Is thermoregulation enabled?
-
-	var/datum/radio_frequency/radio_connection
 
 	var/list/TLV = list()
 
@@ -163,6 +161,11 @@
 	if (!master_is_operating())
 		elect_master()
 
+/obj/machinery/alarm/Destroy()
+	if(alarm_area && alarm_area.master_air_alarm == src)
+		alarm_area.master_air_alarm = null
+	alarm_area = null
+	return ..()
 
 /obj/machinery/alarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted || buildstage != 2)
@@ -389,10 +392,11 @@
 			continue
 		send_signal(id_tag, list("status") )
 
-/obj/machinery/alarm/proc/set_frequency(new_frequency)
+/obj/machinery/alarm/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_TO_AIRALARM)
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_TO_AIRALARM)
 
 /obj/machinery/alarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)

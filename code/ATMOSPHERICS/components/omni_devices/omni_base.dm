@@ -199,6 +199,8 @@
 /obj/machinery/atmospherics/omni/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	for(var/datum/omni_port/P in ports)
 		if(reference == P.node)
+			if(P.network)
+				qdel(P.network)
 			P.network = new_network
 			break
 
@@ -219,8 +221,9 @@
 
 /obj/machinery/atmospherics/omni/initialize()
 	for(var/datum/omni_port/P in ports)
-		if(P.node || P.mode == 0)
+		if(P.mode == 0)
 			continue
+		P.node = null
 		for(var/obj/machinery/atmospherics/target in get_step(src, P.dir))
 			if(target.initialize_directions & get_dir(target,src))
 				P.node = target

@@ -407,19 +407,7 @@ var/datum/subsystem/job/SSjob
 			H.buckled.dir = H.dir
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_account(H.real_name, rand(50,500)*10, null)
-	if(H.mind)
-		var/remembered_info = ""
-		remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
-		remembered_info += "<b>Your account pin is:</b> [M.remote_access_pin]<br>"
-		remembered_info += "<b>Your account funds are:</b> $[M.money]<br>"
-
-		if(M.transaction_log.len)
-			var/datum/transaction/T = M.transaction_log[1]
-			remembered_info += "<b>Your account was created:</b> [T.time], [T.date] at [T.source_terminal]<br>"
-		H.mind.store_memory(remembered_info)
-
-		H.mind.initial_account = M
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H)
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -453,15 +441,15 @@ var/datum/subsystem/job/SSjob
 					if(1)
 						H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 					if(2)
-						var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
+						var/obj/item/weapon/storage/backpack/BPK = new(H)
 						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, slot_back,1)
 					if(3)
-						var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
+						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
 						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, slot_back,1)
 					if(4)
-						var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel(H)
+						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
 						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, slot_back,1)
 

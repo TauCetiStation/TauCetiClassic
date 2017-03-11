@@ -13,7 +13,7 @@
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/captain(src)
 		else
-			new /obj/item/weapon/storage/backpack/satchel_cap(src)
+			new /obj/item/weapon/storage/backpack/satchel/cap(src)
 		new /obj/item/clothing/suit/captunic(src)
 		new /obj/item/clothing/suit/captunic/capjacket(src)
 		new /obj/item/clothing/head/helmet/cap(src)
@@ -107,7 +107,7 @@
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/security(src)
 		else
-			new /obj/item/weapon/storage/backpack/satchel_sec(src)
+			new /obj/item/weapon/storage/backpack/satchel/sec(src)
 		new /obj/item/clothing/head/helmet/HoS(src)
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/clothing/under/rank/head_of_security_fem(src)
@@ -155,7 +155,7 @@
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/security(src)
 		else
-			new /obj/item/weapon/storage/backpack/satchel_sec(src)
+			new /obj/item/weapon/storage/backpack/satchel/sec(src)
 		new /obj/item/clothing/head/helmet/warden(src)
 		new /obj/item/clothing/head/beret/sec/warden(src)
 		new /obj/item/clothing/under/rank/warden(src)
@@ -196,7 +196,7 @@
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/security(src)
 		else
-			new /obj/item/weapon/storage/backpack/satchel_sec(src)
+			new /obj/item/weapon/storage/backpack/satchel/sec(src)
 		new /obj/item/clothing/gloves/security(src)
 		new /obj/item/clothing/suit/storage/flak(src)
 		new /obj/item/clothing/head/helmet(src)

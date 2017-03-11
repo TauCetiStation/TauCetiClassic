@@ -19,3 +19,18 @@
 	var/pose = null
 
 	var/pulse = PULSE_NORM	//current pulse level
+
+	var/oxygen_alert = 0
+	var/phoron_alert = 0
+	var/fire_alert = 0
+	var/pressure_alert = 0
+	var/temperature_alert = 0
+	var/co2overloadtime = null
+	var/temperature_resistance = T0C+75
+
+	var/obj/item/head
+	var/obj/item/shoes
+	var/obj/item/neck
+	var/obj/item/mouth
+
+	var/stamina = 100 //Ian uses this for now.

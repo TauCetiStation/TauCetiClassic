@@ -214,7 +214,7 @@ proc/slur(phrase)
 	return copytext(t,1,MAX_MESSAGE_LEN)
 
 
-proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
+/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
 	for(var/i = 1, i <= length(t), i++)
@@ -226,6 +226,20 @@ proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 fo
 
 			for(var/j = 1, j <= rand(0, 2), j++)
 				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+
+		returntext += letter
+
+	return returntext
+
+/proc/GibberishAll(t) // Same as above, except there is no probability and chance always 100.
+	/* Turn text into complete gibberish! */
+	var/returntext = ""
+	for(var/i = 1 to length(t))
+
+		var/letter = ""
+
+		for(var/j = rand(0, 2) to 0 step -1)
+			letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 
 		returntext += letter
 
@@ -322,7 +336,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src)|| isfacehugger(src))
+	else if(isrobot(src) || ismonkey(src) || islarva(src)|| isfacehugger(src) || isIAN(src))
 		switch(input)
 			if("help")
 				a_intent = "help"

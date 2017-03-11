@@ -159,7 +159,6 @@ var/global/floorIsLava = 0
 				<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> |
 				<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A> |
 				<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A> |
-				<A href='?src=\ref[src];simplemake=ian;mob=\ref[M]'>Ian</A> |
 				<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A> |
 				<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A> |
 				\[ Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> ,
@@ -641,9 +640,6 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
 			<A href='?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>
 			<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
-			<A href='?src=\ref[src];secretsfun=toggleprisonstatus'>Toggle Prison Shuttle Status(Use with S/R)</A><BR>
-			<A href='?src=\ref[src];secretsfun=activateprison'>Send Prison Shuttle</A><BR>
-			<A href='?src=\ref[src];secretsfun=deactivateprison'>Return Prison Shuttle</A><BR>
 			<A href='?src=\ref[src];secretsfun=prisonwarp'>Warp all Players to Prison</A><BR>
 			<A href='?src=\ref[src];secretsfun=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>

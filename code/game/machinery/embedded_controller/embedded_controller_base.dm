@@ -60,8 +60,8 @@
 	var/tag_interior_sensor
 	var/tag_secure = 0
 
-	var/frequency = 1379
-	var/datum/radio_frequency/radio_connection
+	frequency = 1379
+
 	unacidable = 1
 
 /obj/machinery/embedded_controller/radio/initialize()
@@ -100,7 +100,8 @@
 	else
 		qdel(signal)
 
-/obj/machinery/embedded_controller/radio/proc/set_frequency(new_frequency)
+/obj/machinery/embedded_controller/radio/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency)
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency)

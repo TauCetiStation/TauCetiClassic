@@ -6,7 +6,7 @@
 	var/obj/machinery/atmospherics/pipe/target = null
 	anchored = 1.0
 	power_channel = ENVIRON
-	var/frequency = 0
+	frequency = 0
 	var/id
 	use_power = 1
 	idle_power_usage = 2
@@ -15,11 +15,21 @@
 /obj/machinery/meter/New()
 	..()
 	src.target = locate(/obj/machinery/atmospherics/pipe) in loc
+	if(target)
+		target.targeted_by_meter = src
 	return 1
 
 /obj/machinery/meter/initialize()
 	if (!target)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
+		if(target)
+			target.targeted_by_meter = src
+
+/obj/machinery/meter/Destroy()
+	if(target)
+		target.targeted_by_meter = null
+	target = null
+	return ..()
 
 /obj/machinery/meter/process()
 	if(!target)
