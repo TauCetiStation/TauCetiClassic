@@ -628,6 +628,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"mime",
 		"clown"
 		)
+	var/list/dresspacks_without_money = list(
+		"strip",
+		"blue wizard",
+		"red wizard",
+		"marisa wizard"
+		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
 		return
@@ -645,7 +651,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/globose(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/globose(M), slot_head)
-			var /obj/item/weapon/tank/jetpack/J = new /obj/item/weapon/tank/jetpack/oxygen(M)
+			var/obj/item/weapon/tank/jetpack/J = new /obj/item/weapon/tank/jetpack/oxygen(M)
 			M.equip_to_slot_or_del(J, slot_back)
 			J.toggle()
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), slot_wear_mask)
@@ -1643,6 +1649,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
+	if(!(dresscode in dresspacks_without_money) && M.mind)
+		if(M.mind.initial_account)
+			if(M.mind.initial_account.owner_name != M.real_name)
+				qdel(M.mind.initial_account)
+				M.mind.initial_account = null
+				create_random_account_and_store_in_mind(M)
+			//else do nothing
+		else
+			create_random_account_and_store_in_mind(M)
 
 	M.regenerate_icons()
 
