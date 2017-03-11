@@ -182,7 +182,7 @@
 					to_chat(user, "You can't [eatverb] [food] through [Head]")
 				else
 					to_chat(user, "You can't feed [Feeded] with [food] through [Head]")
-				return 0
+				return FALSE
 		if(Feeded.wear_mask)
 			var/obj/item/Mask = Feeded.wear_mask
 			if(Mask.flags & MASKCOVERSMOUTH)
@@ -190,5 +190,16 @@
 					to_chat(user, "You can't [eatverb] [food] through [Mask]")
 				else
 					to_chat(user, "You can't feed [Feeded] with [food] through [Mask]")
-				return 0
-		return 1
+				return FALSE
+		return TRUE
+	if(isIAN(mob))
+		var/mob/living/carbon/ian/dumdum = mob
+		if(dumdum.head)
+			var/obj/item/Head = dumdum.head
+			if(Head.flags & HEADCOVERSMOUTH)
+				if (dumdum == user)
+					to_chat(user, "You can't [eatverb] [food] through [Head]")
+				else
+					to_chat(user, "You can't feed [dumdum] with [food] through [Head]")
+				return FALSE
+		return TRUE

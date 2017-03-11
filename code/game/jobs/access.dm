@@ -109,6 +109,10 @@
 		//if they are holding or wearing a card that has access, that works
 		if(src.check_access(H.get_active_hand()) || src.check_access(H.wear_id))
 			return TRUE
+	else if(isIAN(M))
+		var/mob/living/carbon/ian/IAN = M
+		if(src.check_access(IAN.mouth) || src.check_access(IAN.neck))
+			return TRUE
 	else if(istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/alien/humanoid))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(

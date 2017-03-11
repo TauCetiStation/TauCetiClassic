@@ -17,7 +17,7 @@
 	var/cuff_sound = 'sound/weapons/handcuffs.ogg'
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
-	if (!istype(user, /mob/living/carbon/human))
+	if (!ishuman(user) && !isIAN(user))
 		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 	if(!istype(C))
@@ -27,8 +27,8 @@
 		place_handcuffs(user, user)
 		return
 	if(!C.handcuffed)
-		if (C == user)
-			place_handcuffs(user, user)
+		if (C == user || isIAN(user))
+			place_handcuffs(C, user)
 			return
 
 		//check for an aggressive grab
@@ -73,6 +73,10 @@
 		spawn( 0 )
 			O.process()
 		return
+
+	if (isIAN(target))
+		var/mob/living/carbon/ian/IAN = target
+		IAN.un_equip_or_action(user, "Neck", user.get_active_hand())
 
 var/last_chew = 0
 /mob/living/carbon/human/RestrainedClickOn(atom/A)

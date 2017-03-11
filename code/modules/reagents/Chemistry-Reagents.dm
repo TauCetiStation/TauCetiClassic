@@ -219,21 +219,7 @@ datum
 				src = null
 				if(volume >= 3)
 					create_water(T)
-					if(T.wet >= 1) return
-					T.wet = 1
-					if(T.wet_overlay)
-						T.overlays -= T.wet_overlay
-						T.wet_overlay = null
-					T.wet_overlay = image('icons/effects/water.dmi',T,"wet_floor")
-					T.overlays += T.wet_overlay
-
-					spawn(800)
-						if (!istype(T)) return
-						if(T.wet >= 2) return
-						T.wet = 0
-						if(T.wet_overlay)
-							T.overlays -= T.wet_overlay
-							T.wet_overlay = null
+					T.make_wet_floor(WATER_FLOOR)
 
 				for(var/mob/living/carbon/slime/M in T)
 					M.adjustToxLoss(rand(15,20))
@@ -290,15 +276,7 @@ datum
 				if (!istype(T)) return
 				src = null
 				if(volume >= 1)
-					if(T.wet >= 2) return
-					T.wet = 2
-					spawn(800)
-						if (!istype(T)) return
-						T.wet = 0
-						if(T.wet_overlay)
-							T.overlays -= T.wet_overlay
-							T.wet_overlay = null
-						return
+					T.make_wet_floor(LUBE_FLOOR)
 
 		plasticide
 			name = "Plasticide"
@@ -2318,21 +2296,7 @@ datum
 				if (!istype(T)) return
 				src = null
 				if(volume >= 3)
-					if(T.wet >= 1) return
-					T.wet = 1
-					if(T.wet_overlay)
-						T.overlays -= T.wet_overlay
-						T.wet_overlay = null
-					T.wet_overlay = image('icons/effects/water.dmi',T,"wet_floor")
-					T.overlays += T.wet_overlay
-
-					spawn(800)
-						if (!istype(T)) return
-						if(T.wet >= 2) return
-						T.wet = 0
-						if(T.wet_overlay)
-							T.overlays -= T.wet_overlay
-							T.wet_overlay = null
+					T.make_wet_floor(WATER_FLOOR)
 				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot)
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )

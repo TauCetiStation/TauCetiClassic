@@ -405,7 +405,7 @@
 					src.anchored = 1
 					src.pinned += O
 
-/mob/living/carbon/human/proc/bloody_hands(mob/living/source, amount = 2)
+/mob/living/carbon/human/bloody_hands(mob/living/source, amount = 2)
 	if (gloves)
 		gloves.add_blood(source)
 		gloves:transfer_blood = amount
@@ -416,7 +416,7 @@
 		bloody_hands_mob = source
 	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
-/mob/living/carbon/human/proc/bloody_body(mob/living/source)
+/mob/living/carbon/human/bloody_body(mob/living/source)
 	if(wear_suit)
 		wear_suit.add_blood(source)
 		update_inv_wear_suit()

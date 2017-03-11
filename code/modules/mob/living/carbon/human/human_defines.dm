@@ -43,11 +43,9 @@
 	//Equipment slots
 	var/obj/item/wear_suit = null
 	var/obj/item/w_uniform = null
-	var/obj/item/shoes = null
 	var/obj/item/belt = null
 	var/obj/item/gloves = null
 	var/obj/item/glasses = null
-	var/obj/item/head = null
 	var/obj/item/l_ear = null
 	var/obj/item/r_ear = null
 	var/obj/item/wear_id = null
