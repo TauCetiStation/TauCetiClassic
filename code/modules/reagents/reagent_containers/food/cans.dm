@@ -28,8 +28,7 @@
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
 			reagents.reaction(M, INGEST)
-			spawn(5)
-				reagents.trans_to(M, gulp_size)
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, gulp_size), 5)
 
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1
@@ -56,8 +55,7 @@
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
 			var/refill = R.get_master_reagent_id()
-			spawn(600)
-				R.add_reagent(refill, fillevel)
+			addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
 
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1
@@ -107,12 +105,7 @@
 			var/chargeAmount = max(30,4*trans)
 			bro.cell.use(chargeAmount)
 			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
-
-
-			spawn(300)
-				reagents.add_reagent(refill, trans)
-				to_chat(user, "Cyborg [src] refilled.")
-
+			addtimer(CALLBACK(src, .proc/refill_by_borg, user, refill, trans), 300)
 	return
 
 

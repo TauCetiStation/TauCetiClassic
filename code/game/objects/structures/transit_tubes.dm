@@ -86,8 +86,7 @@ obj/structure/ex_act(severity)
 	air_contents.temperature = T20C
 
 	// Give auto tubes time to align before trying to start moving
-	spawn(5)
-		follow_tube()
+	addtimer(CALLBACK(src, .proc/follow_tube), 5)
 
 
 
@@ -131,7 +130,6 @@ obj/structure/ex_act(severity)
 			if(!pod.moving && pod.dir in directions())
 				if(icon_state == "closed")
 					open_animation()
-
 				else if(icon_state == "open")
 					close_animation()
 
@@ -140,47 +138,46 @@ obj/structure/ex_act(severity)
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(icon_state == "closed")
 		icon_state = "opening"
-		spawn(OPEN_DURATION)
-			if(icon_state == "opening")
-				icon_state = "open"
+		addtimer(CALLBACK(src, .proc/check_opening_icon), OPEN_DURATION)
 
-
+/obj/structure/transit_tube/station/proc/check_opening_icon()
+	if(icon_state == "opening")
+		icon_state = "open"
 
 /obj/structure/transit_tube/station/proc/close_animation()
 	if(icon_state == "open")
 		icon_state = "closing"
-		spawn(CLOSE_DURATION)
-			if(icon_state == "closing")
-				icon_state = "closed"
+		addtimer(CALLBACK(src, .proc/check_closing_icon), CLOSE_DURATION)
 
-
+/obj/structure/transit_tube/station/proc/check_closing_icon()
+	if(icon_state == "closing")
+		icon_state = "closed"
 
 /obj/structure/transit_tube/station/proc/launch_pod()
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		if(!pod.moving && pod.dir in directions())
-			spawn(5)
-				pod_moving = 1
-				close_animation()
-				sleep(CLOSE_DURATION + 2)
-
-				//reverse directions for automated cycling
-				var/turf/next_loc = get_step(loc, pod.dir)
-				var/obj/structure/transit_tube/nexttube
-				for(var/obj/structure/transit_tube/tube in next_loc)
-					if(tube.has_entrance(pod.dir))
-						nexttube = tube
-						break
-				if(!nexttube)
-					pod.dir = turn(pod.dir, 180)
-
-				if(icon_state == "closed" && pod)
-					pod.follow_tube()
-
-				pod_moving = 0
-
+			addtimer(CALLBACK(src, .proc/move_pod, pod), 5)
 			return
 
+/obj/structure/transit_tube/station/proc/move_pod(obj/structure/transit_tube_pod/pod)
+	pod_moving = 1
+	close_animation()
+	sleep(CLOSE_DURATION + 2)
 
+	//reverse directions for automated cycling
+	var/turf/next_loc = get_step(loc, pod.dir)
+	var/obj/structure/transit_tube/nexttube
+	for(var/obj/structure/transit_tube/tube in next_loc)
+		if(tube.has_entrance(pod.dir))
+			nexttube = tube
+			break
+	if(!nexttube)
+		pod.dir = turn(pod.dir, 180)
+
+	if(icon_state == "closed" && pod)
+		pod.follow_tube()
+
+	pod_moving = 0
 
 // Called to check if a pod should stop upon entering this tube.
 /obj/structure/transit_tube/proc/should_stop_pod(pod, from_dir)
@@ -201,25 +198,25 @@ obj/structure/ex_act(severity)
 
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = 1
-	spawn(5)
-		open_animation()
-		sleep(OPEN_DURATION + 2)
-		pod_moving = 0
-		pod.mix_air()
+	addtimer(CALLBACK(src, .proc/cycle_stopped_pod, pod, from_dir), 5)
 
-		if(automatic_launch_time)
-			var/const/wait_step = 5
-			var/i = 0
-			while(i < automatic_launch_time)
-				sleep(wait_step)
-				i += wait_step
+/obj/structure/transit_tube/station/proc/cycle_stopped_pod(obj/structure/transit_tube_pod/pod, from_dir)
+	open_animation()
+	sleep(OPEN_DURATION + 2)
+	pod_moving = 0
+	pod.mix_air()
 
-				if(pod_moving || icon_state != "open")
-					return
+	if(automatic_launch_time)
+		var/const/wait_step = 5
+		var/i = 0
+		while(i < automatic_launch_time)
+			sleep(wait_step)
+			i += wait_step
 
-			launch_pod()
+			if(pod_moving || icon_state != "open")
+				return
 
-
+		launch_pod()
 
 // Returns a /list of directions this tube section can connect to.
 //  Tubes that have some sort of logic or changing direction might
@@ -287,60 +284,61 @@ obj/structure/ex_act(severity)
 	else return ..()
 
 /obj/structure/transit_tube_pod/proc/follow_tube()
+	set waitfor = FALSE
+
 	if(moving)
 		return
 
 	moving = 1
 
-	spawn()
-		var/obj/structure/transit_tube/current_tube = null
-		var/next_dir
-		var/next_loc
-		var/last_delay = 0
-		var/exit_delay
+	var/obj/structure/transit_tube/current_tube = null
+	var/next_dir
+	var/next_loc
+	var/last_delay = 0
+	var/exit_delay
 
-		for(var/obj/structure/transit_tube/tube in loc)
-			if(tube.has_exit(dir))
+	for(var/obj/structure/transit_tube/tube in loc)
+		if(tube.has_exit(dir))
+			current_tube = tube
+			break
+
+	while(current_tube)
+		next_dir = current_tube.get_exit(dir)
+
+		if(!next_dir)
+			break
+
+		exit_delay = current_tube.exit_delay(src, dir)
+		last_delay += exit_delay
+
+		sleep(exit_delay)
+
+		next_loc = get_step(loc, next_dir)
+
+		current_tube = null
+		for(var/obj/structure/transit_tube/tube in next_loc)
+			if(tube.has_entrance(next_dir))
 				current_tube = tube
 				break
 
-		while(current_tube)
-			next_dir = current_tube.get_exit(dir)
-
-			if(!next_dir)
-				break
-
-			exit_delay = current_tube.exit_delay(src, dir)
-			last_delay += exit_delay
-
-			sleep(exit_delay)
-
-			next_loc = get_step(loc, next_dir)
-
-			current_tube = null
-			for(var/obj/structure/transit_tube/tube in next_loc)
-				if(tube.has_entrance(next_dir))
-					current_tube = tube
-					break
-
-			if(current_tube == null)
-				dir = next_dir
-				Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
-				break
-
-			last_delay = current_tube.enter_delay(src, next_dir)
-			sleep(last_delay)
+		if(current_tube == null)
 			dir = next_dir
-			loc = next_loc // When moving from one tube to another, skip collision and such.
-			density = current_tube.density
+			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
+			break
 
-			if(current_tube && current_tube.should_stop_pod(src, next_dir))
-				current_tube.pod_stopped(src, dir)
-				break
+		last_delay = current_tube.enter_delay(src, next_dir)
+		sleep(last_delay)
+		dir = next_dir
+		loc = next_loc // When moving from one tube to another, skip collision and such.
+		density = current_tube.density
 
-		density = 1
+		if(current_tube && current_tube.should_stop_pod(src, next_dir))
+			current_tube.pod_stopped(src, dir)
+			break
 
-		moving = 0
+	density = 1
+
+	moving = 0
 
 
 /obj/structure/transit_tube_pod/return_air()
@@ -434,8 +432,7 @@ obj/structure/ex_act(severity)
 /obj/structure/transit_tube/proc/init_dirs()
 	if(icon_state == "auto")
 		// Additional delay, for map loading.
-		spawn(1)
-			init_dirs_automatic()
+		addtimer(CALLBACK(src, .proc/init_dirs_automatic), 1)
 
 	else
 		tube_dirs = parse_dirs(icon_state)

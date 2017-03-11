@@ -58,10 +58,10 @@
 			qdel(src)
 
 		spawn_biomass_piece(src.loc)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 	Destroy()
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return ..()
 
 	proc/spawn_biomass_piece(turf/location)

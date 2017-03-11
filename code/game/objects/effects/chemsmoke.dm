@@ -209,7 +209,7 @@
 	var/step = A.alpha / frames
 	for(var/i = 0, i < frames, i++)
 		A.alpha -= step
-		sleep(world.tick_lag)
+		stoplag()
 	return
 
 //------------------------------------------
@@ -241,7 +241,7 @@
 					continue
 				if(current.c_airblock(target)) //this is needed to stop chemsmoke from passing through thin window walls
 					continue
-				if(target.c_airblock(current)) 
+				if(target.c_airblock(current))
 					continue
 				pending += target
 

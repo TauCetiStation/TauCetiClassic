@@ -262,6 +262,7 @@
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
+
 		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			src.go_out()

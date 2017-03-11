@@ -69,7 +69,7 @@
 			egg.origin = mind
 		visible_message("<span class='warning'>[src] plants something in [victim]'s flesh!</span>", \
 					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
-		addtimer(src,"death",100)
+		addtimer(CALLBACK(src, .proc/death), 100)
 		egg_lain = 1
 
 /obj/item/changeling_egg
@@ -84,12 +84,12 @@
 
 /obj/item/changeling_egg/New()
 	respawn_time = world.time + EGG_INCUBATION_TIME
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/changeling_egg/process()
 	// Changeling eggs grow in dead people
 	if(!iscarbon(loc))
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	if(respawn_time <= world.time)
 		Pop()
 		qdel(src)

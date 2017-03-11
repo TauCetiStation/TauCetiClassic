@@ -55,15 +55,13 @@
 			miss_chance = min(15*(distance-2), 0)
 
 		if (prob(miss_chance))
-			visible_message("\blue \The [O] misses [src] narrowly!")
+			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
 
-		src.visible_message("\red [src] has been hit by [O].")
+		src.visible_message("<span class='warning'>[src] has been hit by [O].</span>")
 		var/armor = run_armor_check(null, "melee")
 
 		apply_damage(throw_damage, dtype, null, armor, is_sharp(O), has_edge(O), O)
-
-		O.throwing = 0		//it hit, so stop moving
 
 		if(ismob(O.thrower))
 			var/mob/M = O.thrower
@@ -80,7 +78,7 @@
 			var/momentum = AM.fly_speed/2
 			var/dir = get_dir(O.throw_source, src)
 
-			visible_message("\red [src] staggers under the impact!","\red You stagger under the impact!")
+			visible_message("<span class='warning'>[src] staggers under the impact!</span>","<span class='danfer'>You stagger under the impact!</span>")
 			src.throw_at(get_edge_target_turf(src,dir),1,momentum)
 
 			if(!W || !src) return
@@ -94,15 +92,15 @@
 
 				if(T)
 					src.loc = T
-					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='warning'>You are pinned to the wall by [O]!</span>")
+					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='danger'>You are pinned to the wall by [O]!</span>")
 					src.anchored = 1
 					src.pinned += O
 					src.verbs += /mob/proc/yank_out_object
-		AM.fly_speed = 0
 
 //This is called when the mob is thrown into a dense turf
-/mob/living/proc/turf_collision(turf/T, speed)
-	src.take_organ_damage(speed*5)
+/mob/living/proc/turf_collision(turf/T)
+	visible_message("<span class='warning'>[src] crashed into \the [T]!</span>","<span class='danger'>You are crashed into \the [T]!</span>")
+	take_organ_damage(fly_speed * 5)
 
 /mob/living/proc/near_wall(direction,distance=1)
 	var/turf/T = get_step(get_turf(src),direction)

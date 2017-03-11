@@ -230,7 +230,7 @@
 
 	..(M,connected,flags)
 
-	addtimer(src, "mutate_user", rand(600, 900), TRUE, M)
+	addtimer(CALLBACK(src, .proc/mutate_user, M), rand(600, 900), TIMER_UNIQUE)
 
 /datum/dna/gene/basic/hulk/proc/mutate_user(mob/M)
 	if(!M)

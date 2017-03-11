@@ -12,7 +12,7 @@
 				if(!istype(T, /turf/space))
 					var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
 					if(!W)
-						W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
+						W = new /obj/effect/decal/cleanable/water(T)
 					if(!W.blood_DNA)
 						W.blood_DNA = list()
 					W.blood_DNA |= blood_DNA.Copy()
@@ -48,7 +48,7 @@
 			if(!istype(T, /turf/space))
 				var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
 				if(!W)
-					W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
+					W = new /obj/effect/decal/cleanable/water(T)
 				else
 					W.depth = min(2, W.depth + rand(2,5)/10)
 				if(blood_DNA)
