@@ -2593,7 +2593,7 @@
 "aXS" = (/obj/structure/stool,/turf/simulated/floor{dir = 1; icon_state = "chapel"},/area/chapel/main)
 "aXT" = (/obj/structure/stool,/turf/simulated/floor{dir = 4; icon_state = "chapel"},/area/chapel/main)
 "aXU" = (/obj/item/device/radio/intercom{dir = 2; name = "Station Intercom (General)"; pixel_x = 27},/turf/simulated/floor{icon_state = "dark"},/area/chapel/main)
-"aXV" = (/obj/structure/table,/obj/item/device/harmonica/saxophone,/turf/simulated/floor/carpet,/area/hallway/primary/starboard)
+"aXV" = (/obj/structure/table,/turf/simulated/floor/carpet,/area/hallway/primary/starboard)
 "aXW" = (/obj/structure/stool/bed/chair/metal{dir = 4},/turf/simulated/floor/carpet,/area/hallway/primary/starboard)
 "aXX" = (/turf/simulated/floor/plating,/area/hallway/secondary/exit)
 "aXY" = (/obj/machinery/door/airlock/external{name = "Escape Airlock"},/turf/simulated/floor/plating,/area/hallway/secondary/exit)
