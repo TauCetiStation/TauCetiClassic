@@ -901,13 +901,9 @@
 	set name = "Rest"
 	set category = "IC"
 
-	if(issilicon(usr))
+	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
-		for(var/V in R.components)
-			if(V == "power cell") continue
-			var/datum/robot_component/C = R.components[V]
-			if(C.installed)
-				C.toggled = !C.toggled
+		R.toggle_all_components()
 		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
 		return
 
