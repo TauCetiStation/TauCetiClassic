@@ -104,12 +104,16 @@
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return TRUE
-	else if(istype(M, /mob/living/carbon/human))
+	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(src.check_access(H.get_active_hand()) || src.check_access(H.wear_id))
 			return TRUE
-	else if(istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/alien/humanoid))
+	else if(isIAN(M))
+		var/mob/living/carbon/ian/IAN = M
+		if(src.check_access(IAN.mouth) || src.check_access(IAN.neck))
+			return TRUE
+	else if(ismonkey(M) || isalienadult(M))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
 		if(src.check_access(george.get_active_hand()))
@@ -529,15 +533,18 @@ proc/get_all_job_icons() //For all existing HUD icons
 		return
 
 	var/jobName
-
+	var/alt
 	if(istype(src, /obj/item/device/pda))
 		var/obj/item/device/pda/P = src
 		if(P.id)
 			jobName = P.id.rank
+			alt = P.id.assignment
 	if(istype(src, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = src
 		jobName = I.rank
-
+		alt = I.assignment
+	if(alt in get_alternate_titles(jobName))
+		return alt
 	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
 		return jobName
 	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job

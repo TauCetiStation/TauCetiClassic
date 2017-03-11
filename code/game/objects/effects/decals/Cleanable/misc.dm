@@ -179,7 +179,7 @@
 	return ..()
 
 /obj/effect/decal/cleanable/water/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(ishuman(mover) && mover.checkpass(PASSCRAWL))
+	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
 		mover.layer = 2.7
 	return 1
 

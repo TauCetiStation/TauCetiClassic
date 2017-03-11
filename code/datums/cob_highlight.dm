@@ -134,6 +134,8 @@
 		b_overlay.maptext = COB_HINT
 
 /turf/MouseEntered(location, control, params)
+	if(!usr.client.cob)
+		return
 	if(usr.client.cob.in_building_mode)
 		if(usr.restrained() || usr.stat || (usr.get_active_hand() != usr.client.cob.using_this && usr.get_inactive_hand() != usr.client.cob.using_this))
 			usr.client.cob.remove_build_overlay(usr.client)

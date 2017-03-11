@@ -197,3 +197,7 @@
 #define ASSEMBLY_SECURED       0
 #define ASSEMBLY_WIRED         1
 #define ASSEMBLY_NEAR_FINISHED 2
+
+//Wet floor states/severity
+#define WATER_FLOOR 1
+#define LUBE_FLOOR  2

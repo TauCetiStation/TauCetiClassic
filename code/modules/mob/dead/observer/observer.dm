@@ -220,7 +220,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Stay in body","Ghost")
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
-		resting = 1
+
+		if(isrobot(usr))
+			var/mob/living/silicon/robot/robot = usr
+			robot.toggle_all_components()
+		else
+			resting = 1
 		var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
 	return
@@ -553,6 +558,38 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		host.ckey = src.ckey
 		to_chat(host, "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>")
 	return host
+
+/mob/dead/observer/proc/ianize()
+	set name = "Become Ian"
+	set category = "Ghost"
+
+	if(!abandon_allowed)
+		to_chat(src, "<span class='notice'>Respawn is disabled.</span>")
+		return
+
+	if(has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+		to_chat(src, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
+		return
+
+	if(!ticker.mode)
+		to_chat(src, "<span class='notice'>Please wait until game is started.</span>")
+		return
+
+	var/response = alert(src, "Are you -sure- you want to find Bag Boss?","Are you sure you want to become II?","Soap Pain!","Nope!")
+	if(response != "Soap Pain!")
+		return
+
+	var/mob/living/carbon/ian/phoron_dog
+	for(var/mob/living/carbon/ian/IAN in living_mob_list) // Incase there is multi_ians, what should NOT ever happen normally!
+		if(IAN.mind) // Mind means someone was or is in a body.
+			continue
+		phoron_dog = IAN
+		break
+
+	if(phoron_dog)
+		phoron_dog.ckey = src.ckey
+	else
+		to_chat(src, "<span class='notice'><B>Living and available Ian not found.</B></span>")
 
 /mob/dead/observer/verb/view_manfiest()
 	set name = "View Crew Manifest"

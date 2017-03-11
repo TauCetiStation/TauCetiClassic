@@ -24,22 +24,14 @@
 
 /obj/item/device/taperecorder/hear_talk(mob/living/M, msg, verb="says")
 	if(recording)
-		//var/ending = copytext(msg, length(msg))
 		timestamp+= timerecorded
-	/*
-		if(M.stuttering)
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] stammers, \"[msg]\""
-			return
-		if(M.getBrainLoss() >= 60)
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] gibbers, \"[msg]\""
-			return
-		if(ending == "?")
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] asks, \"[msg]\""
-			return
-		else if(ending == "!")
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] exclaims, \"[msg]\""
-			return
-	*/
+		if(isanimal(M)) // Taken from say(). Temporary fix before refactor. Needs to actually pass languages or something like that here and when we see paper or hear audioplayback it depends whenever we can actually understand that language.
+			var/mob/living/simple_animal/S = M
+			msg = pick(S.speak)
+		else if(isIAN(M))
+			var/mob/living/carbon/ian/IAN = M
+			msg = pick(IAN.speak)
+
 		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[sanitize_plus_popup(msg)]\""//фиксим "я" сразу для принта, да. Записи могут быть большими.
 		return
 

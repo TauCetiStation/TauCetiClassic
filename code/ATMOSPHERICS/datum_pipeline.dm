@@ -13,10 +13,21 @@
 /datum/pipeline/Destroy()
 	if(network)
 		qdel(network)
+		network = null
 
 	if(air && air.volume)
 		temporarily_store_air()
 		qdel(air)
+		air = null
+
+	if(length(members))
+		for(var/obj/machinery/atmospherics/pipe/M in members)
+			if(M.parent && M.parent == src)
+				M.parent = null
+		members.Cut()
+
+	if(length(edges))
+		edges.Cut()
 
 	return ..()
 
@@ -84,6 +95,8 @@
 						possible_expansions += item
 
 						volume += item.volume
+						if(item.parent)
+							qdel(item.parent)
 						item.parent = src
 
 						alert_pressure = min(alert_pressure, item.alert_pressure)
@@ -128,6 +141,8 @@
 
 /datum/pipeline/proc/mingle_with_turf(turf/simulated/target, mingle_volume)
 	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
+	if(!air_sample)
+		return
 	air_sample.volume = mingle_volume
 
 	if(istype(target) && target.zone && !iscatwalk(target))

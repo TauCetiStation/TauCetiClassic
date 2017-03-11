@@ -201,15 +201,13 @@ var/datum/subsystem/timer/SStimer
 	src.hash = hash
 
 	if (flags & TIMER_UNIQUE)
-		src.hash = hash
 		SStimer.hashes[hash] = src
 
 	if (flags & TIMER_STOPPABLE)
 		SStimer.timer_id_dict["timerid[id]"] = src
 
 	if (callBack.object != GLOBAL_PROC)
-		LAZYINITLIST(callBack.object.active_timers)
-		callBack.object.active_timers += src
+		LAZYADD(callBack.object.active_timers, src)
 
 	if (flags & TIMER_CLIENT_TIME)
 		SStimer.clienttime_timers += src
@@ -247,8 +245,7 @@ var/datum/subsystem/timer/SStimer
 
 
 	if (callBack && callBack.object && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
-		callBack.object.active_timers -= src
-		UNSETEMPTY(callBack.object.active_timers)
+		LAZYREMOVE(callBack.object.active_timers, src)
 
 	callBack = null
 
@@ -307,11 +304,15 @@ var/datum/subsystem/timer/SStimer
 
 		var/datum/timedevent/hash_timer = SStimer.hashes[hash]
 		if(hash_timer)
-			if (flags & TIMER_OVERRIDE)
-				qdel(hash_timer)
+			if (hash_timer.spent)  // It's pending deletion, pretend it doesn't exist.
+				hash_timer.hash = null
+				SStimer.hashes -= hash
 			else
-				if (hash_timer.flags & TIMER_STOPPABLE)
-					. = hash_timer.id
+				if (flags & TIMER_OVERRIDE)
+					qdel(hash_timer)
+				else
+					if (hash_timer.flags & TIMER_STOPPABLE)
+						. = hash_timer.id
 					return
 
 	var/timeToRun = world.time + wait

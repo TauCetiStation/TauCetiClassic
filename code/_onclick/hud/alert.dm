@@ -181,6 +181,23 @@
 	name = "Burning"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you up."
 
+//IANS
+/obj/screen/alert/ian_oxy
+	name = "Choking"
+	desc = "You're not getting enough oxygen."
+
+/obj/screen/alert/ian_tox
+	name = "Gas"
+	desc = "There's gas in the air and you're breathing it in."
+
+/obj/screen/alert/ian_hot
+	name = "Too Hot"
+	desc = "You're flaming hot!"
+
+/obj/screen/alert/ian_cold
+	name = "Too Cold"
+	desc = "You're freezing cold!"
+
 //SILICONS
 
 /obj/screen/alert/nocell

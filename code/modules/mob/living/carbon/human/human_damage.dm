@@ -18,6 +18,8 @@
 /mob/living/carbon/human/getBrainLoss()
 	var/res = brainloss
 	var/datum/organ/internal/brain/sponge = internal_organs_by_name["brain"]
+	if(!sponge)
+		return 0
 	if (sponge.is_bruised())
 		res += 20
 	if (sponge.is_broken())

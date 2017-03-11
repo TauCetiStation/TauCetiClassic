@@ -266,32 +266,37 @@
 
 
 	/*		Power Monitor (Mode: 43 / 433)			*/
-	if(mode==43 || mode==433)
+	if(mode==43)
 		var/pMonData[0]
 		for(var/obj/machinery/computer/monitor/pMon in machines)
 			if(!(pMon.stat & (NOPOWER|BROKEN)) )
 				pMonData[++pMonData.len] = list ("Name" = pMon.name, "ref" = "\ref[pMon]")
-				if(isnull(powmonitor)) powmonitor = pMon
+				if(isnull(powmonitor))
+					powmonitor = pMon
 
 		values["powermonitors"] = pMonData
 
-		values["poweravail"] = powmonitor.powernet.avail
-		values["powerload"] = num2text(powmonitor.powernet.viewload,10)
+	if(mode==433)
+		if(powmonitor)
+			values["powermonitor_detected"] = TRUE
+			values["poweravail"] = powmonitor.powernet.avail
+			values["powerload"] = num2text(powmonitor.powernet.viewload,10)
 
-		var/list/L = list()
-		for(var/obj/machinery/power/terminal/term in powmonitor.powernet.nodes)
-			if(istype(term.master, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/A = term.master
-				L += A
+			var/list/L = list()
+			for(var/obj/machinery/power/terminal/term in powmonitor.powernet.nodes)
+				if(istype(term.master, /obj/machinery/power/apc))
+					var/obj/machinery/power/apc/A = term.master
+					L += A
 
-		var/list/Status = list(0,0,1,1) // Status:  off, auto-off, on, auto-on
-		var/list/chg = list(0,1,1)	// Charging: nope, charging, full
-		var/apcData[0]
-		for(var/obj/machinery/power/apc/A in L)
-			apcData[++apcData.len] = list("Name" = html_encode(A.area.name), "Equipment" = Status[A.equipment+1], "Lights" = Status[A.lighting+1], "Environment" = Status[A.environ+1], "CellPct" = A.cell ? round(A.cell.percent(),1) : -1, "CellStatus" = A.cell ? chg[A.charging+1] : 0)
+			var/list/Status = list("Off","AOff","On","AOn") // Status:  off, auto-off, on, auto-on
+			var/list/chg = list("N","C","F")	// Charging: nope, charging, full
+			var/apcData[0]
+			for(var/obj/machinery/power/apc/A in L)
+				apcData[++apcData.len] = list("Name" = html_encode(A.area.name), "Equipment" = Status[A.equipment+1], "Lights" = Status[A.lighting+1], "Environment" = Status[A.environ+1], "CellStatus" = A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "N/C", "Load" = add_lspace(A.lastused_total, 6))
 
-		values["apcs"] = apcData
-
+			values["apcs"] = apcData
+		else
+			values["powermonitor_detected"] = FALSE
 
 
 

@@ -542,7 +542,38 @@
 		return 0 //Unsupported slot
 
 		//END MONKEY
-
+	else if(isIAN(M))
+		var/mob/living/carbon/ian/C = M
+		switch(slot)
+			if(slot_head)
+				if(C.head)
+					return FALSE
+				if(istype(src, /obj/item/clothing/mask/facehugger))
+					return TRUE
+				if( !(slot_flags & SLOT_HEAD) )
+					return FALSE
+				return TRUE
+			if(slot_mouth)
+				if(C.mouth)
+					return FALSE
+				return TRUE
+			if(slot_neck)
+				if(C.neck)
+					return FALSE
+				if(istype(src, /obj/item/weapon/handcuffs))
+					return TRUE
+				if( !(slot_flags & SLOT_ID) )
+					return FALSE
+				return TRUE
+			if(slot_back)
+				if(C.back)
+					return FALSE
+				if(istype(src, /obj/item/clothing/suit/armor/vest))
+					return TRUE
+				if( !(slot_flags & SLOT_BACK) )
+					return FALSE
+				return TRUE
+		return FALSE
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)

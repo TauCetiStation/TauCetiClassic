@@ -1387,3 +1387,11 @@ var/list/robot_verbs_default = list(
 		used_power_this_tick += amount * CYBORG_POWER_USAGE_MULTIPLIER
 		return 1
 	return 0
+
+/mob/living/silicon/robot/proc/toggle_all_components()
+	for(var/V in components)
+		if(V == "power cell")
+			continue
+		var/datum/robot_component/C = components[V]
+		if(C.installed)
+			C.toggled = !C.toggled

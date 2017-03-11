@@ -102,7 +102,7 @@
 	return uses
 
 /obj/item/weapon/dnainjector/attack(mob/M, mob/user)
-	if (!istype(M, /mob))
+	if (!istype(M))
 		return
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey") //#Z2
 		to_chat(user, "\red You don't have the dexterity to do this!")
