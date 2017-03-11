@@ -323,12 +323,12 @@
 
 	if(chance && prob(chance))
 		if(O.force)
-			user.visible_message("<span class='warning'>[user] hits [src] with the [O], however [src] is too armored.</span>",\
-	                             "<span class='warning'>You can't cause [src] any damage.</span>")
+			user.visible_message("<span class='warning'>[user] hits [src] with the [O], however [src] is too armored.</span>",
+			                     "<span class='warning'>You can't cause [src] any damage.</span>")
 		else
-			user.visible_message("<span class='notice'>[user] gently taps [src] with the [O].</span>",\
-	                             "<span class='notice'>You can't reach its skin.</span>")
-		if(prob(15) && !stat)
+			user.visible_message("<span class='notice'>[user] gently taps [src] with the [O].</span>",
+			                     "<span class='notice'>You can't reach its skin.</span>")
+		if(prob(15) && stat == CONSCIOUS)
 			var/expression = pick("an amused","an annoyed","a confused","a resentful","a happy","an excited")
 			emote("me",1,"looks at [user] with [expression] expression on his face")
 		return
@@ -369,10 +369,10 @@
 				help_shake_act(M)
 				return
 			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				to_chat(M, "\blue <B>Remove your mask!</B>")
+				to_chat(M, "<span class='notice'>Remove your mask!</span>")
 				return
 			if(head && (head.flags & HEADCOVERSMOUTH))
-				to_chat(M, "\blue <B>Remove his [head]!</B>")
+				to_chat(M, "<span class='notice'>Remove his [head]!</span>")
 				return
 			un_equip_or_action(M, "CPR")
 		if ("hurt")
@@ -460,7 +460,7 @@
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-					visible_message("\red <B>[M] attempted to disarm [src]!</B>")
+					visible_message("<span class='danger'>[M] attempted to disarm [src]!</span>")
 
 /mob/living/carbon/ian/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
 	switch(FH.a_intent)
