@@ -70,6 +70,20 @@
 	if(light_color)
 		set_light(light_range,light_power,light_color)
 
+
+/obj/item/projectile/proc/check_living_shield(mob/living/carbon/human/H)
+	var/obj/item/weapon/grab/grab = null
+	if(istype(H.r_hand,/obj/item/weapon/grab))
+		grab = H.r_hand
+	else if(istype(H.l_hand,/obj/item/weapon/grab))
+		grab = H.l_hand
+	if(!grab)
+		return H
+	if(grab.state >= GRAB_NECK && !grab.affecting.lying)
+		if(is_the_opposite_dir(H.dir, dir))
+			return grab.affecting
+	return H
+
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
 	if(!isliving(target))	return 0
 	if(isanimal(target))	return 0
@@ -136,14 +150,12 @@
 		return 0
 
 	var/forcedodge = 0 // force the projectile to pass
-
+	var/mob/M = A
 	bumped = 1
-	if(firer && istype(A, /mob))
-		var/mob/M = A
+	if(firer && istype(M))
 		if(!istype(A, /mob/living))
 			loc = A.loc
 			return 0// nope.avi
-
 		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
 		var/miss_modifier = 0
 		if(damage && (distance > 7))
@@ -157,29 +169,32 @@
 		if(distance > 1)
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
 		//def_zone = get_zone_with_probabilty(def_zone)
-
 		if(!def_zone)
 			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")
 			forcedodge = -1
-		else
-			if(silenced)
-				to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
-			else
-				visible_message("<span class = 'red'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-			if(istype(firer, /mob))
-				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-				if(!fake)
-					msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
-			else
-				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				if(!fake)
-					msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
-
 //	if(istype(src, /obj/item/projectile/beam))
 
 	if(A)
-		if (!forcedodge)
+		if(!forcedodge)
+			if(istype(M))
+				if(ishuman(A))
+					M = check_living_shield(A)
+
+				if(silenced)
+					to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
+				else
+					visible_message("<span class = 'red'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
+					//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+				if(firer)
+					M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+					firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+					if(!fake)
+						msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
+				else
+					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+					if(!fake)
+						msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
+
 			forcedodge = A.bullet_act(src, def_zone) // searches for return value
 		if(forcedodge == -1) // the bullet passes through a dense object!
 			bumped = 0 // reset bumped variable!
@@ -192,8 +207,8 @@
 		if(istype(A,/turf))
 			for(var/obj/O in A)
 				O.bullet_act(src)
-			for(var/mob/M in A)
-				M.bullet_act(src, def_zone)
+			for(var/mob/Mob in A)
+				Mob.bullet_act(src, def_zone)
 
 		//stop flying
 		on_impact(A)
