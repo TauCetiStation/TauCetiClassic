@@ -20,14 +20,13 @@
 		qdel(air)
 		air = null
 
-	if(members)
+	if(length(members))
 		for(var/obj/machinery/atmospherics/pipe/M in members)
 			if(M.parent && M.parent == src)
 				M.parent = null
-			members -= M
 		members.Cut()
 
-	if(edges)
+	if(length(edges))
 		edges.Cut()
 
 	return ..()
