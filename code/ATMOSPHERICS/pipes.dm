@@ -219,15 +219,7 @@
 
 	if(node1 && node2)
 		icon_state = "intact[invisibility ? "-f" : "" ]"
-
-		//var/node1_direction = get_dir(src, node1)
-		//var/node2_direction = get_dir(src, node2)
-
-		//dir = node1_direction|node2_direction
-
 	else
-		//if(!node1&&!node2)
-		//	qdel(src) //TODO: silent deleting looks weird
 		var/have_node1 = node1?1:0
 		var/have_node2 = node2?1:0
 		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
@@ -257,7 +249,6 @@
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
 	update_icon()
-	//update_icon()
 
 /obj/machinery/atmospherics/pipe/simple/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
@@ -416,7 +407,7 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
-	if(node1&&node2&&node3)
+	if( node1 && node2 && node3)
 		switch(pipe_color)
 			if ("red") color = COLOR_RED
 			if ("blue") color = COLOR_BLUE
@@ -427,7 +418,7 @@
 			if ("grey") color = null
 		icon_state = "manifold[invisibility ? "-f" : "" ]"
 
-	else if(!node1&&!node2&&!node3)
+	else if(!node1 && !node2 && !node3)
 		icon_state = "manifold_ex"
 	else
 		var/connected = 0
@@ -444,10 +435,6 @@
 		unconnected = (~connected)&(connect_directions)
 
 		icon_state = "manifold_[connected]_[unconnected]"
-
-		//if(!connected)
-		//	qdel(src)
-
 	return
 
 /obj/machinery/atmospherics/pipe/manifold/initialize()
@@ -491,7 +478,6 @@
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
-	//update_icon()
 	update_icon()
 
 
@@ -647,9 +633,6 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 			overlays += new/image(con,dir=4)
 		if(node4)
 			overlays += new/image(con,dir=8)
-
-		//if(!node1 && !node2 && !node3 && !node4)
-		//	qdel(src)
 	return
 
 /obj/machinery/atmospherics/pipe/manifold4w/initialize()
@@ -676,7 +659,6 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
-	//update_icon()
 	update_icon()
 
 
@@ -800,7 +782,6 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
-	//update_icon()
 	update_icon()
 
 
