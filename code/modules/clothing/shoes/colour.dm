@@ -111,7 +111,7 @@
 	cuffs.loc = src
 	chained = cuffs
 	slowdown = 15
-	name = "Shackles"
+	name = "shackles"
 	icon_state = "orange1"
 	item_state = "o_shoes1"
 
