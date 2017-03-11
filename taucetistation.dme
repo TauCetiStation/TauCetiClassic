@@ -1411,7 +1411,6 @@
 #include "code\modules\musical_instruments\guitar.dm"
 #include "code\modules\musical_instruments\harmonica.dm"
 #include "code\modules\musical_instruments\royal.dm"
-#include "code\modules\musical_instruments\saxophone.dm"
 #include "code\modules\nano\_JSON.dm"
 #include "code\modules\nano\JSON Reader.dm"
 #include "code\modules\nano\JSON Writer.dm"
