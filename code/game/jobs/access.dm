@@ -524,9 +524,6 @@ proc/FindNameFromID(mob/living/carbon/human/H)
 proc/get_all_job_icons() //For all existing HUD icons
 	return joblist + list("Prisoner")
 
-proc/get_all_alt_job_icons()
-	return jobaltlist
-
 /obj/proc/GetJobName() //Used in secHUD icon generation
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
 		return
@@ -542,7 +539,7 @@ proc/get_all_alt_job_icons()
 		var/obj/item/weapon/card/id/I = src
 		jobName = I.rank
 		alt = I.assignment
-	if(alt in get_all_alt_job_icons())
+	if(alt in get_alternate_titles(jobName))
 		return alt
 	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
 		return jobName

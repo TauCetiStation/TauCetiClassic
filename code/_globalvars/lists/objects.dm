@@ -7,7 +7,6 @@ var/global/list/surgery_steps = list()      //list of all surgery steps  |BS12
 var/global/list/side_effects = list()       //list of all medical sideeffects types by thier names |BS12
 var/global/list/mechas_list = list()        //list of all mechs. Used by hostile mobs target tracking.
 var/global/list/joblist = list()            //list of all jobstypes, minus borg and AI
-var/global/list/jobaltlist = list()			// list of all alternative jobs
 
 var/global/list/all_areas = list()
 var/global/list/machines = list()

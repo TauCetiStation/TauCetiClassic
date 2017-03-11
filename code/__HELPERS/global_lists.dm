@@ -40,9 +40,6 @@
 	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
 		var/datum/job/J = new T
 		joblist[J.title] = J
-		for(var/Alt in J.alt_titles)
-			if(Alt)
-				jobaltlist += Alt
 
 	//Languages and species.
 	for(var/T in subtypesof(/datum/language))
