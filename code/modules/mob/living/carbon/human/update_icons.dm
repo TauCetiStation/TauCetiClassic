@@ -1002,7 +1002,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_overlay(SURGERY_LAYER)
 
-
 /mob/living/carbon/human/proc/update_bandage()
 	remove_overlay(BANDAGE_LAYER)
 
@@ -1011,7 +1010,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(E.wounds.len)
 			for(var/datum/wound/W in E.wounds)
 				if(W.bandaged)
-					standing += image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.name]", "layer"=-BANDAGE_LAYER)
+					standing +=	image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.name]", "layer"=-BANDAGE_LAYER)
 
 	if(standing.len)
 		overlays_standing[BANDAGE_LAYER] = standing
