@@ -16,7 +16,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	..()
 
 /datum/pipe_network/Destroy()
-	if(gases)
+	if(gases.len)
 		gases.Cut()
 
 	if(normal_members.len)
