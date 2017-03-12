@@ -2,7 +2,7 @@ obj/item/weapon/gun/magic/staff/
 	slot_flags = SLOT_BACK
 	icon_state = "staff"
 
-obj/item/weapon/gun/magic/staff/change
+/obj/item/weapon/gun/magic/staff/change
 	name = "staff of change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	ammo_type = /obj/item/ammo_casing/magic/change
@@ -10,7 +10,7 @@ obj/item/weapon/gun/magic/staff/change
 	item_state = "staffofchange"
 	fire_delay = 30
 
-obj/item/weapon/gun/magic/staff/animate
+/obj/item/weapon/gun/magic/staff/animate
 	name = "staff of animation"
 	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
 	ammo_type = /obj/item/ammo_casing/magic/animate

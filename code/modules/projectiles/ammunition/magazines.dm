@@ -277,6 +277,7 @@
 	icon_state = "45"
 	ammo_type = "/obj/item/ammo_casing/chameleon"
 	max_ammo = 7
+	m_amt = 500
 	multiple_sprites = 1
 
 /obj/item/ammo_box/magazine/l10mag

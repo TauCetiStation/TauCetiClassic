@@ -12,35 +12,44 @@
 		return
 	to_chat(user, "Planting explosives...")
 	if(ismob(target))
-
-		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target:real_name] ([target:ckey])</font>"
-		msg_admin_attack("[user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-
-		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
+		var/mob/living/M = target
+		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [M.real_name] ([M.ckey])</font>"
+		msg_admin_attack("[user.real_name] ([user.ckey]) tried planting [name] on [M.real_name] ([M.ckey]) [ADMIN_JMP(user)] [ADMIN_FLW(user)]")
+		user.visible_message("<span class ='red'> [user.name] is trying to plant some kind of explosive on [target.name]!</span>")
 
 	if(do_after(user, 50, target = target) && in_range(user, target))
 		user.drop_item()
 		target = target
 		loc = null
 		var/location
-		if (isturf(target)) location = target
-		if (isobj(target)) location = target.loc
-		if (ismob(target))
-			target:attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
-			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
+		if(isturf(target) )
+			location = target
+		else if(isobj(target) )
+			location = target.loc
+		else if(ismob(target) )
+			var/mob/living/M = target
+			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
+			user.visible_message("<span class ='red'> [user.name] finished planting an explosive on [M.name]!</span>")
 		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
 		to_chat(user, "Bomb has been planted. Timer counting down from [timer].")
-		spawn(timer*10)
+		addtimer(CALLBACK(src, .proc/timer_to_explosion, target, location), timer * 10)
+
+/obj/item/weapon/plastique/proc/timer_to_explosion(atom/target,location)
+	if(target)
+		if(ismob(target))
+			location = target.loc
+		if(istype(target, /turf/simulated/wall))
+			var/turf/simulated/wall/W = target
+			W.dismantle_wall(1)
+		else
+			target.ex_act(1)
+
+		if(isobj(target) )
 			if(target)
-				if(ismob(target)) location = target.loc
-				explosion(location, 0, 0, 2, 3)
-				if (istype(target, /turf/simulated/wall)) target:dismantle_wall(1)
-				else target.ex_act(1)
-				if (isobj(target))
-					if (target)
-						qdel(target)
-				if (src)
-					qdel(src)
+				qdel(target)
+		explosion(location, 0, 0, 2, 3)
+		if (src)
+			qdel(src)
 
 /obj/item/weapon/plastique/attack(mob/M, mob/user, def_zone)
 	return

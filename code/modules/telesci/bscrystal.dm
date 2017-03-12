@@ -15,6 +15,8 @@
 	pixel_y = rand(-5, 5)
 
 /obj/item/bluespace_crystal/attack_self(mob/user)
+	if(user.z == ZLEVEL_CENTCOMM)
+		return
 	blink_mob(user)
 	user.drop_item()
 	user.visible_message("<span class='notice'>[user] crushes the [src]!</span>")
