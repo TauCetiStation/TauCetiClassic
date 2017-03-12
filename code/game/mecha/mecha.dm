@@ -783,7 +783,7 @@
 		user.do_attack_animation(src)
 		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
-		if(prob(50) && Ham.use_charge(src,user,6))
+		if(prob(50) && Ham.use_charge(user,6))
 			take_damage(Ham.force * 3)
 	else
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)

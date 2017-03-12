@@ -257,7 +257,7 @@
 			return
 	if(istype(W,/obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/C = W
-		if(C.use_charge(src,user))
+		if(C.use_charge(user))
 			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			shatter()
 	if(istype(W, /obj/item/weapon/screwdriver))

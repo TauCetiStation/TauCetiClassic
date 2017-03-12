@@ -276,7 +276,7 @@
 
 	if( istype(I,/obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/W = I
-		if(W.use_charge(src,user,6))
+		if(W.use_charge(user,6))
 			visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			shatter()

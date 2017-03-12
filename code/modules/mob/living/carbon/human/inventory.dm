@@ -221,6 +221,7 @@
 	if(!slot) return
 	if(!istype(W)) return
 	if(!has_organ_for_slot(slot)) return
+	if(W.flags & ABSTRACT) return
 
 	if(W == src.l_hand)
 		src.l_hand = null

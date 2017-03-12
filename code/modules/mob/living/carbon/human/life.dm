@@ -73,7 +73,6 @@
 
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
-
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 

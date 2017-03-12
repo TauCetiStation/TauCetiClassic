@@ -7,7 +7,7 @@
 	genomecost = 2
 	req_human = 1
 	genetic_damage = 10
-	max_genetic_damage = 0
+	max_genetic_damage = 5
 	req_stat = UNCONSCIOUS
 
 
