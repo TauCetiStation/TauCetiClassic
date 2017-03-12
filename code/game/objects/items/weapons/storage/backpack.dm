@@ -42,7 +42,7 @@
 	icon_state = "holdingpack"
 	max_w_class = 4
 	max_combined_w_class = 28
-
+	storage_slots = 60
 /obj/item/weapon/storage/backpack/holding/New()
 	..()
 	return
