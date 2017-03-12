@@ -91,11 +91,11 @@
 	if(!target_ckey)
 		return
 
-	var/role = input(usr, "select role:", "Role") as null|anything in whitelisted_roles
+	var/role = input(usr, "select role for [target_ckey]:", "Role") as null|anything in whitelisted_roles
 	if(!role)
 		return
 
-	var/reason = input(usr, "type in reason:", "Reason") as null|text
+	var/reason = input(usr, "([target_ckey] [role]) type in reason:", "Reason") as null|text
 	if(!reason)
 		return
 
@@ -108,11 +108,11 @@
 	if(!target_ckey)
 		return
 
-	var/role = input(usr, "select role:", "Role") as null|anything in whitelisted_roles
+	var/role = input(usr, "select role for [target_ckey]:", "Role") as null|anything in whitelisted_roles
 	if(!role)
 		return
 
-	var/reason = input(usr, "type in reason:", "Reason") as null|text
+	var/reason = input(usr, "([target_ckey] [role]) type in reason:", "Reason") as null|text
 	if(!reason)
 		return
 
@@ -128,16 +128,16 @@
 	var/ban = role_whitelist[target_ckey][role]["ban"]
 
 	if(ban_edit)
-		ban_edit = alert(usr, ban ? "Do you want to UNBAN [role] for [target_ckey]?" : "Do you want to REMOVE [role] for [target_ckey]?",,ban ? "Unban" : "Remove", "Cancel")
+		ban_edit = alert(usr, ban ? "Do you want to UNBAN [role] for [target_ckey]?" : "Do you want to BAN [role] for [target_ckey]?",,ban ? "Unban" : "Ban", "Cancel")
 		switch(ban_edit)
 			if("Cancel")
 				return
 			if("Unban")
 				ban = FALSE
-			if("Remove")
+			if("Ban")
 				ban = TRUE
 
-	var/reason = input(usr, "type in reason:", "Reason") as null|text
+	var/reason = input(usr, "([target_ckey] [role][ban_edit ? (ban ? " BAN" : " UNBAN") : ""]) type in reason:", "Reason") as null|text
 	if(!reason)
 		return
 
@@ -149,16 +149,18 @@
 			to_chat(usr, "<span class='warning'>Whitelist disabled.</span>")
 		return FALSE
 
+	target_ckey = ckey(target_ckey)
+	role = lowertext(role)
+	reason = sql_sanitize_text(reason)
+	if(!replacetext(reason, " ", "")) // check if reason contains only spaces.
+		return FALSE
+	adm_ckey = ckey(adm_ckey)
+
 	if(!target_ckey || !role || !reason || !adm_ckey)
 		return FALSE
 
 	if(!added_by_bot && !check_rights(R_WHITELIST))
 		return FALSE
-
-	target_ckey = ckey(target_ckey)
-	role = lowertext(role)
-	reason = sql_sanitize_text(reason)
-	adm_ckey = ckey(adm_ckey)
 
 	if(!(role in whitelisted_roles))
 		if(!added_by_bot)
@@ -200,16 +202,18 @@
 		to_chat(usr, "<span class='notice'>Whitelist disabled.</span>")
 		return
 
+	target_ckey = ckey(target_ckey)
+	role = lowertext(role)
+	reason = sql_sanitize_text(reason)
+	if(!replacetext(reason, " ", "")) // check if reason contains only spaces.
+		return FALSE
+	adm_ckey = ckey(adm_ckey)
+
 	if(!target_ckey || !role || !reason || !adm_ckey)
 		return
 
 	if(!check_rights(R_WHITELIST))
 		return
-
-	target_ckey = ckey(target_ckey)
-	role = lowertext(role)
-	reason = sql_sanitize_text(reason)
-	adm_ckey = ckey(adm_ckey)
 
 	if(!(role in whitelisted_roles))
 		to_chat(usr, "<span class='warning'>Role [role] does not exist in whitelisted roles.</span>")
@@ -238,7 +242,7 @@
 	var/msg = "changed reason in whitelist from [sanitize(role_whitelist[target_ckey][role]["reason"])] to [sanitize(reason)] for [target_ckey] as [role]."
 	if(ban_edit)
 		role_whitelist[target_ckey][role]["ban"] = ban
-		msg = "[ban ? "removed" : "unbanned"] [role] from whitelist for [target_ckey] with reason [sanitize(reason)]."
+		msg = "[ban ? "banned" : "unbanned"] [role] from whitelist for [target_ckey] with reason [sanitize(reason)]."
 
 	role_whitelist[target_ckey][role]["reason"] = reason
 	role_whitelist[target_ckey][role]["editby"] = adm_ckey
@@ -257,7 +261,7 @@
 	if(!whitelist_db)
 
 		// Create or load the DB.
-		whitelist_db = new(whitelist_sqlite_path)
+		whitelist_db = new("data/whitelist.db")
 
 		// Whitelist table.
 		var/database/query/init_schema = new(
