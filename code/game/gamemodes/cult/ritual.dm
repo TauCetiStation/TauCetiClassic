@@ -157,7 +157,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return fizzle(user)
 
 
-/obj/effect/rune/proc/fizzle(mob/living/user)
+/obj/effect/rune/proc/fizzle(mob/living/user = usr)
 	if(istype(src,/obj/effect/rune))
 		user.say(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
 	else
@@ -369,7 +369,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		for(var/obj/effect/rune/N in world)
 			C++
 		if (!istype(user.loc,/turf))
-			to_chat(user, "\red You do not have enough space to write a proper rune.")
+			to_chat(user, "<span class='red'> You do not have enough space to write a proper rune.</span>")
 			return
 
 		if (C>=26+runedec+ticker.mode.cult.len) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist

@@ -194,6 +194,7 @@ var/list/sacrificed = list()
 
 /obj/effect/rune/proc/drain()
 	var/drain = 0
+	var/self_healing = 0
 	for(var/obj/effect/rune/R in world)
 		if(R.word1==cultwords["travel"] && R.word2==cultwords["blood"] && R.word3==cultwords["self"])
 			for(var/mob/living/carbon/D in R.loc)
@@ -202,7 +203,9 @@ var/list/sacrificed = list()
 					to_chat(D, "<span class='red'>You feel weakened.</span>")
 					D.take_overall_damage(bdrain, 0)
 					drain += bdrain
-	if(!drain)
+					if(D == usr)
+						self_healing = 1
+	if(!drain || self_healing)
 		return fizzle()
 	usr.say ("Yu[pick("'","`")]gular faras desdae. Havas mithum javara. Umathar uf'kal thenar!")
 	usr.visible_message("<span class='red'>Blood flows from the rune into [usr]!</span>", \
@@ -223,14 +226,10 @@ var/list/sacrificed = list()
 				user.take_overall_damage(3, 0)
 		return
 	user.heal_organ_damage(drain%5, 0)
-	if(ishuman(user) && prob(20))
+	if(prob(20) && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		for(var/datum/organ/external/External in H.organs)
-			for(var/datum/wound/W in External.wounds) // remove internal
-				if(W.internal)
-					External.wounds -= W
-					External.update_damages()
-			if(External.status & (ORGAN_BROKEN || ORGAN_SPLINTED || ORGAN_DESTROYED))
+			if(External.status & ORGAN_BROKEN || External.status & ORGAN_SPLINTED || External.status & ORGAN_DESTROYED)
 				External.rejuvenate()
 				break
 	drain-=drain%5

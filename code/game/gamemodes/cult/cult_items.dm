@@ -76,7 +76,7 @@
 		user.emote("scream")
 		user.adjustBruteLoss(25)
 		return
-	return..()
+	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/mob_can_equip(M, slot, disable_warning = 0)
 	if(!iscultist(M) || !..())
