@@ -91,7 +91,7 @@
 			domutcheck(M, null, block!=null, 0) //#Z2 We go thru chance check
 			uses--
 
-			if(prob(5 + M.dna_inject_count))
+			if(M && prob(5 + M.dna_inject_count))
 				M.dna_inject_count = 0
 				trigger_side_effect(M)
 	if(user)//If the user still exists. Their mob may not.

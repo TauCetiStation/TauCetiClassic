@@ -24,7 +24,6 @@
 	flags = ABSTRACT | THICKMATERIAL
 	slowdown = 0
 	unacidable = 1
-	armor = list(melee = 60, bullet = 60, laser = 0,energy = 0, bomb = 20, bio = 100, rad = 100)
 	heat_protection = null //You didn't expect a light-sensitive creature to have heat resistance, did you?
 	max_heat_protection_temperature = null
 	canremove = 0
@@ -73,7 +72,6 @@
 	origin_tech = null
 	unacidable = 1
 	flags = ABSTRACT
-	armor = list(melee = 60, bullet = 60, laser = 0,energy = 0, bomb = 20, bio = 100, rad = 100)
 	canremove = 0
 	flags_inv = 0
 

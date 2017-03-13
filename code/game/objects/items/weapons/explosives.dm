@@ -34,7 +34,7 @@
 		to_chat(user, "Bomb has been planted. Timer counting down from [timer].")
 		addtimer(CALLBACK(src, .proc/timer_to_explosion, target, location), timer * 10)
 
-/obj/item/weapon/plastique/proc/timer_to_explosion(atom/target,location)
+/obj/item/weapon/plastique/proc/timer_to_explosion(atom/target, location)
 	if(target)
 		if(ismob(target))
 			location = target.loc
