@@ -66,3 +66,5 @@
 	// Their chat window, sort of important.
 	// See /goon/code/datums/browserOutput.dm
 	var/datum/chatOutput/chatOutput
+
+	fps = 40
