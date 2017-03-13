@@ -21,7 +21,7 @@
 					ticker.mode.update_all_rev_icons()
 			if("cult")
 				if(mind in ticker.mode.cult)
-					INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons)
+					ticker.mode.update_all_cult_icons()
 			if("nuclear emergency")
 				if(mind in ticker.mode.syndicates)
 					ticker.mode.update_all_synd_icons()

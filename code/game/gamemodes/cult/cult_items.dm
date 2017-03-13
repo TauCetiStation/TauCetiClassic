@@ -32,11 +32,8 @@
 	breakouttime = 45
 
 /obj/item/weapon/legcuffs/bola/cult/throw_impact(atom/hit_atom)
-	if(ismob(hit_atom))
-		var/mob/M = hit_atom
-		if(iscultist(M))
-			return
-	return ..(hit_atom)
+	if(!iscultist(hit_atom))
+		return ..()
 
 /obj/item/clothing/head/culthood
 	name = "cult hood"
@@ -65,29 +62,26 @@
 	desc = "A set of armored robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS|FEET
 	allowed = list(/obj/item/weapon/book/tome,/obj/item/weapon/melee/cultblade)
-	armor = list(melee = 50, bullet = 50, laser = 45,energy = 5, bomb = 30, bio = 50, rad = 20)
+	armor = list(melee = 45, bullet = 35, laser = 40,energy = 5, bomb = 30, bio = 50, rad = 20)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0
 	hoodtype = /obj/item/clothing/head/culthood
 
 /obj/item/clothing/suit/hooded/cultrobes/attack_hand(mob/living/user)
 	if(!iscultist(user))
-		to_chat(user,"<span class='cult'>\"Trying to use things you don't own is bad, you know.\"</span>",
-		"<span class='cult'>The armor squeezes at your body!</span>")
+		to_chat(user,"<span class='cult'>Trying to use things you don't own is bad, you know.\
+		The armor squeezes at your body!</span>")
 		user.emote("scream")
 		user.adjustBruteLoss(25)
 		return
 	return..()
 
 /obj/item/clothing/suit/hooded/cultrobes/mob_can_equip(M, slot, disable_warning = 0)
-	if(!..())
-		return 0
-	if(iscultist(M))
-		return 1
-	else
-		return 0
+	if(!iscultist(M) || !..())
+		return FALSE
+	return TRUE
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -95,10 +89,11 @@
 	icon_state = "shielded_armor"
 	item_state = "shielded_armor"
 	w_class = 4
-	armor = list(melee = 60, bullet = 60, laser = 60,energy = 30, bomb = 50, bio = 30, rad = 30)
+	armor = list(melee = 70, bullet = 50, laser = 55,energy = 30, bomb = 60, bio = 50, rad = 30)
+	slowdown = 1
 	var/current_charges = 3
 	var/image/shield
-	hoodtype = /obj/item/clothing/head/culthood/crown
+	hoodtype = /obj/item/clothing/head/culthood/shield
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/New()
 	..()
@@ -107,15 +102,21 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/carbon/human/user)
 	..()
-	if(user.wear_suit == src && current_charges)
-		user.overlays |= shield
+
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/dropped(mob/user)
 	user.overlays -= shield
 	return ..()
 
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/ToggleHood()
+	..()
+	if(current_charges && hooded)
+		loc.overlays |= shield
+	else
+		loc.overlays -= shield
+
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/Get_shield_chance()
-	if(current_charges)
+	if(current_charges && hooded)
 		var/mob/living/carbon/human/H = loc
 		current_charges--
 		new /obj/effect/overlay/cult/sparks (get_turf(H))
@@ -126,8 +127,8 @@
 	else
 		return 0
 
-/obj/item/clothing/head/culthood/crown
-	name = "Burning Crown"
+/obj/item/clothing/head/culthood/shield
+	name = "Plate Helmet"
 	icon_state = "shielded_hat"
 	item_state = "shielded_hat"
 	armor = list(melee = 60, bullet = 60, laser = 60,energy = 30, bomb = 50, bio = 30, rad = 30)
@@ -135,16 +136,16 @@
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
 	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
-	icon_state = "cultrobes"
+	icon_state = "berserk_armor"
 	item_state = "cultrobes"
 	armor = list(melee = -50, bullet = -50, laser = -100,energy = -50, bomb = -50, bio = -50, rad = -50)
 	slowdown = -1.5
 	hoodtype = /obj/item/clothing/head/culthood/berserkerhood
 
 /obj/item/clothing/head/culthood/berserkerhood
-	name = "flagellant's robes"
+	name = "Burning Crown"
 	desc = "Blood-soaked garb infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
-	icon_state = "culthood"
+	icon_state = "berserk_hat"
 	armor = list(melee = -50, bullet = -50, laser = -50, energy = -50, bomb = -50, bio = -50, rad = -50)
 	slowdown = -0.5
 

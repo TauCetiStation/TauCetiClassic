@@ -94,7 +94,7 @@
 
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
-		INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons)
+		ticker.mode.update_all_cult_icons()
 		to_chat(cult_mind.current, "<span class = 'info'><b>You are a member of the <font color='red'>cult</font>!</b></span>")
 		grant_runeword(cult_mind.current)
 		if(!config.objectives_disabled)
@@ -179,7 +179,7 @@
 		cult += cult_mind
 		cult_mind.current.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/cult_comms(cult_mind.current))
 
-		INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons)
+		ticker.mode.update_all_cult_icons()
 		return 1
 
 
@@ -197,7 +197,7 @@
 		to_chat(cult_mind.current, "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>")
 		cult_mind.memory = ""
 		cult_mind.current.remove_comms()
-		INVOKE_ASYNC(ticker.mode, .proc/update_cult_icons_removed, cult_mind)
+		ticker.mode.update_cult_icons_removed(cult_mind)
 		if(show_message)
 			for(var/mob/M in viewers(cult_mind.current))
 				to_chat(M, "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>")

@@ -222,7 +222,7 @@
 		ticker.mode.update_all_synd_icons()
 	if (H.mind in ticker.mode.cult)
 		ticker.mode.add_cultist(src.occupant.mind)
-		INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons) //So the icon actually appears
+		ticker.mode.update_all_cult_icons() //So the icon actually appears
 
 	// -- End mode specific stuff
 

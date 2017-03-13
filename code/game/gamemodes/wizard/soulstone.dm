@@ -173,7 +173,7 @@
 								ticker.mode:add_cultist(Z.mind)
 							else
 								ticker.mode.cult+=Z.mind
-							INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons)
+							ticker.mode.update_all_cult_icons()
 						qdel(T)
 						to_chat(Z, "<B>You are playing a Juggernaut. Though slow, you can withstand extreme punishment, and rip apart enemies and walls alike.</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>")
@@ -188,7 +188,7 @@
 								ticker.mode:add_cultist(Z.mind)
 							else
 								ticker.mode.cult+=Z.mind
-							INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons)
+							ticker.mode.update_all_cult_icons()
 						qdel(T)
 						to_chat(Z, "<B>You are playing a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>")
@@ -203,7 +203,7 @@
 								ticker.mode:add_cultist(Z.mind)
 							else
 								ticker.mode.cult+=Z.mind
-							INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons)
+							ticker.mode.update_all_cult_icons()
 						qdel(T)
 						to_chat(Z, "<B>You are playing an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, repair allied constructs (by clicking on them), and even create new constructs</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>")

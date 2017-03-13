@@ -57,7 +57,7 @@
 /obj/item/weapon/paper/talisman/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
 		return
-	if(!istype(A,/obj/item/stack/sheet/metal) || !istype(A,/obj/item/stack/sheet/plasteel))
+	if(!istype(A,/obj/item/stack/sheet/metal) && !istype(A,/obj/item/stack/sheet/plasteel))
 		return
 	call(/obj/effect/rune/proc/construction)(A)
 	qdel(src)

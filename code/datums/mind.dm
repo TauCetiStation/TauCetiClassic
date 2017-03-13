@@ -665,7 +665,7 @@
 					to_chat(src, "\red <Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font>")
 				if(src in ticker.mode.cult)
 					ticker.mode.cult -= src
-					INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_cult_icons_removed, src)
+					ticker.mode.update_cult_icons_removed(src)
 					special_role = null
 					var/datum/game_mode/cult/cult = ticker.mode
 					if (istype(cult))
@@ -848,7 +848,7 @@
 			if("clear")
 				if(src in ticker.mode.cult)
 					ticker.mode.cult -= src
-					INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_cult_icons_removed, src)
+					ticker.mode.update_cult_icons_removed(src)
 					special_role = null
 					current.remove_comms()
 					var/datum/game_mode/cult/cult = ticker.mode
@@ -862,7 +862,7 @@
 				if(!(src in ticker.mode.cult))
 					ticker.mode.cult += src
 					current.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/cult_comms(current))
-					INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons)
+					ticker.mode.update_all_cult_icons()
 					special_role = "Cultist"
 					to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 					to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
@@ -1408,7 +1408,7 @@
 /datum/mind/proc/make_Cultist()
 	if(!(src in ticker.mode.cult))
 		ticker.mode.cult += src
-		INVOKE_ASYNC(ticker.mode, /datum/game_mode/proc/update_all_cult_icons)
+		ticker.mode.update_all_cult_icons()
 		special_role = "Cultist"
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")

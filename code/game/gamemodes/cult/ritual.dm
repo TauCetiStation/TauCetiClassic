@@ -66,9 +66,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	var/image/blood = image('icons/effects/blood.dmi',src,"mfloor[rand(1,7)]",2)
 	blood.override = 1
 	blood.color = "#a10808"
-	for(var/mob/living/silicon/Sil in mob_list)
-		if(Sil.client)
-			Sil.client.images += blood
+	for(var/mob/living/silicon/S in mob_list)
+		if(S.client)
+			S.client.images += blood
 
 /obj/effect/rune/examine(mob/user)
 	..()
@@ -94,7 +94,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		to_chat(user, "You are unable to speak the words of the rune.")
 		return
 	if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))
-		return fizzle()
+		return fizzle(user)
 	//if(!src.visibility)
 	//	src.visibility=1
 	if(word1 == cultwords["travel"] && word2 == cultwords["self"])
@@ -154,15 +154,15 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			break
 		construction(Met)
 	else
-		return fizzle()
+		return fizzle(user)
 
 
-/obj/effect/rune/proc/fizzle()
+/obj/effect/rune/proc/fizzle(mob/living/user)
 	if(istype(src,/obj/effect/rune))
-		usr.say(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
+		user.say(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
 	else
-		usr.whisper(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
-	visible_message("<span class='danger'>red The markings pulse with a small burst of light, then fall dark.</span>", "<span class='danger'> You hear a faint fizzle.</span>")
+		user.whisper(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
+	visible_message("<span class='danger'> The markings pulse with a small burst of light, then fall dark.</span>", "<span class='danger'> You hear a faint fizzle.</span>")
 	return
 
 /obj/effect/rune/proc/check_icon()
@@ -353,9 +353,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	if(iscultist(M))
 		return
 	M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
-	for(var/mob/O in viewers(M, null))
-		O.show_message(text("\red <B>[] beats [] with the arcane tome!</B>", user, M), 1)
-	to_chat(M, "\red You feel searing heat inside!")
+	M.visible_message("<span class='danger'>[user] beats [M] with the arcane tome!</span>")
+	to_chat(M,"<span class='danger' You feel searing heat inside!</span>")
 
 
 /obj/item/weapon/book/tome/attack_self(mob/living/user)
@@ -432,9 +431,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if(usr.get_active_hand() != src)
 			return
 
-		for (var/mob/V in viewers(src))
-			V.show_message("\red [user] slices open a finger and begins to chant and paint symbols on the floor.", 3, "\red You hear chanting.", 2)
-		to_chat(user, "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.")
+		user.visible_message("<span class='danger'> [user] slices open a finger and begins to chant and paint symbols on the floor.</span>", "<span class='danger'> You hear chanting.</span>")
+		to_chat(user, "<span class='danger'> You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.</span>")
 		user.take_overall_damage((rand(9)+1)/10) // 0.1 to 1.0 damage
 		if(do_after(user, 50, target = user))
 			if(usr.get_active_hand() != src)
@@ -481,9 +479,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		var/r
 		if (!istype(user.loc,/turf))
 			to_chat(user, "\red You do not have enough space to write a proper rune.")
-		var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp",\
-		"drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman",\
-		 "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun", "brainswap", "construction")
+		var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp",
+							  "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman",
+		 					  "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate",
+		 					  "stun", "brainswap", "construction")
 		r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
 		var/obj/effect/rune/R = new /obj/effect/rune
 		if(istype(user, /mob/living/carbon/human))
