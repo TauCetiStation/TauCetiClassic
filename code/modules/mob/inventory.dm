@@ -190,12 +190,8 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/put_in_hands(obj/item/W)
 	if(!W)		return 0
 	if(put_in_active_hand(W))
-		update_inv_l_hand()
-		update_inv_r_hand()
 		return 1
 	else if(put_in_inactive_hand(W))
-		update_inv_l_hand()
-		update_inv_r_hand()
 		return 1
 	else
 		W.forceMove(get_turf(src))
