@@ -3,8 +3,6 @@
 // This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
 obj/machinery/door/airlock
 	var/id_tag
-	var/frequency
-	var/datum/radio_frequency/radio_connection
 	var/suppres_next_status_send = FALSE
 
 
@@ -100,7 +98,7 @@ obj/machinery/door/airlock/Bumped(atom/AM)
 			radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 	return
 
-obj/machinery/door/airlock/proc/set_frequency(new_frequency)
+obj/machinery/door/airlock/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	if(new_frequency)
 		frequency = new_frequency
@@ -135,10 +133,9 @@ obj/machinery/airlock_sensor
 
 	var/id_tag
 	var/master_tag
-	var/frequency = 1379
+	frequency = 1379
 	var/command = "cycle"
 
-	var/datum/radio_frequency/radio_connection
 
 	var/on = 1
 	var/alert = 0
@@ -182,7 +179,7 @@ obj/machinery/airlock_sensor/process()
 
 			update_icon()
 
-obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
+obj/machinery/airlock_sensor/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
@@ -216,10 +213,10 @@ obj/machinery/access_button
 	power_channel = ENVIRON
 
 	var/master_tag
-	var/frequency = 1449
+	frequency = 1449
 	var/command = "cycle"
 
-	var/datum/radio_frequency/radio_connection
+
 
 	var/on = 1
 
@@ -246,10 +243,11 @@ obj/machinery/access_button/attack_hand(mob/user)
 	flick("access_button_cycle", src)
 
 
-obj/machinery/access_button/proc/set_frequency(new_frequency)
+obj/machinery/access_button/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
 
 
 obj/machinery/access_button/initialize()

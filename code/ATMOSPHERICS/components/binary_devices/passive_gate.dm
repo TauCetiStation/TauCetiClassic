@@ -10,9 +10,9 @@
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE
 
-	var/frequency = 0
+
 	var/id = null
-	var/datum/radio_frequency/radio_connection
+
 
 /obj/machinery/atmospherics/binary/passive_gate/update_icon()
 	if(stat & NOPOWER)
@@ -61,7 +61,7 @@
 
 //Radio remote control
 
-/obj/machinery/atmospherics/binary/passive_gate/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/binary/passive_gate/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)

@@ -1,14 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
-/mob/living/carbon/monkey
-	var/oxygen_alert = 0
-	var/phoron_alert = 0
-	var/fire_alert = 0
-	var/pressure_alert = 0
-
-	var/temperature_alert = 0
-
-
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
 	//set background = 1
@@ -36,7 +25,6 @@
 
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
-
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 

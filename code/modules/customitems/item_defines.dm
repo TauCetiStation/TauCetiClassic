@@ -627,7 +627,23 @@
 	item_state = "mantle-unathi"
 	body_parts_covered = 0
 
+/obj/item/clothing/suit/fluff/kung
+	name = "Kung jacket"
+	desc = "Leather jaket with an old security badge attached to it"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kung_jacket_w"
+	item_state = "kung_jacket_w"
+	w_class = 3
+
+
 //////////// Uniforms ////////////
+
+/obj/item/clothing/under/fluff/kung
+	name = "Kung Jeans"
+	desc = "Pair of old jeans combined with a red tank-top"
+	icon_state = "kung_suit"
+	item_color = "kung_suit"
+	w_class = 3
 
 /obj/item/clothing/under/fluff/milo_hachert //Field Dress Uniform - Milo Hachert - Commissar_Drew
 	name = "field dress uniform"
@@ -915,6 +931,12 @@
 
 //////////// Shoes ////////////
 
+/obj/item/clothing/shoes/fluff/kung
+	name = "Kung shoes"
+	desc = "Pair of a high red shoes."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kung_shoes_w"
+
 /obj/item/clothing/shoes/magboots/fluff/susan_harris_1 //sniperyeti: Susan Harris
 	name = "Susan's Magboots"
 	desc = "A colorful pair of magboots with the name Susan Harris clearly written on the back."
@@ -967,6 +989,13 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "retpoluniform"
 	item_color = "retpoluniform"
+
+/obj/item/clothing/head/det_hat/fluff/kung
+	name = "Kung headband"
+	desc = "Stripe of red cloth.You can wear it on your head."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kung_headband_w"
+	item_state = "kung_headband_w"
 
 //////////// Weapons ////////////
 

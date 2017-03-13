@@ -221,6 +221,7 @@
 	if(!slot) return
 	if(!istype(W)) return
 	if(!has_organ_for_slot(slot)) return
+	if(W.flags & ABSTRACT) return
 
 	if(W == src.l_hand)
 		src.l_hand = null
@@ -612,6 +613,10 @@
 					message = "<span class='danger'>[source] is trying to set on [target]'s internals.</span>"
 			if("splints")
 				message = text("<span class='danger'>[] is trying to remove []'s splints!", source, target)
+			if("bandages")
+				message = text("<span class='danger'>[] is trying to remove []'s bandages!", source, target)
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their bandages removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) bandages</font>")
 			if("sensor")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their sensors toggled by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) sensors</font>")
@@ -644,7 +649,7 @@ It can still be worn/put on as normal.
 */
 /obj/effect/equip_e/human/done()	//TODO: And rewrite this :< ~Carn
 	target.cpr_time = 1
-	if(isanimal(source)) return //animals cannot strip people
+	if(isanimal(source)) return //animals cannot strip people, except Ian, hes a cat, cats no no animal!
 	if(!source || !target) return		//Target or source no longer exist
 	if(source.loc != s_loc) return		//source has moved
 	if(target.loc != t_loc) return		//target has moved
@@ -762,6 +767,12 @@ It can still be worn/put on as normal.
 						W.layer = initial(W.layer)
 						W.appearance_flags = 0
 						W.add_fingerprint(source)
+		if("bandages")
+			for(var/datum/organ/external/External in target.organs)
+				for(var/datum/wound/W in External.wounds)
+					if(W.bandaged)
+						W.bandaged = 0
+			target.update_bandage()
 		if("CPR")
 			if ((target.health > config.health_threshold_dead && target.health < config.health_threshold_crit))
 				var/suff = min(target.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.

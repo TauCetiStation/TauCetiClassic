@@ -201,6 +201,21 @@
 	return hear
 
 
+/proc/get_hearers_in_view(R, atom/source)
+	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
+	var/turf/T = get_turf(source)
+	var/list/hear = list()
+
+	if(!T)
+		return hear
+
+	var/lum = T.luminosity
+	T.luminosity = 6
+	hear = get_mobs_in_view(R, T)
+	T.luminosity = lum
+	return hear
+
+
 /proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
 
 	//set background = 1

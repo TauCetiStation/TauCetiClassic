@@ -35,3 +35,8 @@
 	boots["jackboots"] = /obj/item/clothing/shoes/jackboots
 	boots["workboots"] = /obj/item/clothing/shoes/workboots
 	gear_tweaks += new/datum/gear_tweak/path(boots)
+
+/datum/gear/shoes/kung
+	display_name = "Kung shoes"
+	path = /obj/item/clothing/shoes/fluff/kung
+	cost = 1

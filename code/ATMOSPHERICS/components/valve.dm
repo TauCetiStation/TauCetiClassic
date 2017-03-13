@@ -17,6 +17,15 @@
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
 
+/obj/machinery/atmospherics/valve/remove_network(datum/pipe_network/old_network)
+	if(old_network == network_node1)
+		network_node1 = null
+
+	if(old_network == network_node2)
+		network_node2 = null
+
+	return ..()
+
 /obj/machinery/atmospherics/valve/open
 	open = 1
 	icon_state = "valve1"
@@ -38,12 +47,20 @@
 /obj/machinery/atmospherics/valve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 
 	if(reference == node1)
+		if(network_node1)
+			qdel(network_node1)
 		network_node1 = new_network
 		if(open)
+			if(network_node2)
+				qdel(network_node2)
 			network_node2 = new_network
 	else if(reference == node2)
+		if(network_node2)
+			qdel(network_node2)
 		network_node2 = new_network
 		if(open)
+			if(network_node1)
+				qdel(network_node1)
 			network_node1 = new_network
 
 	if(new_network.normal_members.Find(src))
@@ -241,9 +258,9 @@
 	desc = "A digitally controlled valve."
 	icon = 'icons/obj/atmospherics/digital_valve.dmi'
 
-	var/frequency = 0
+
 	var/id = null
-	var/datum/radio_frequency/radio_connection
+
 
 /obj/machinery/atmospherics/valve/digital/attack_ai(mob/user)
 	return src.attack_hand(user)
@@ -256,7 +273,7 @@
 
 //Radio remote control
 
-/obj/machinery/atmospherics/valve/digital/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/valve/digital/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)

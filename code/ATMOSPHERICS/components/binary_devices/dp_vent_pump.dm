@@ -13,9 +13,9 @@
 	var/on = 0
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
 
-	var/frequency = 0
+
 	var/id = null
-	var/datum/radio_frequency/radio_connection
+
 
 	var/external_pressure_bound = ONE_ATMOSPHERE
 	var/input_pressure_min = 0
@@ -110,7 +110,7 @@
 
 //Radio remote control
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/binary/dp_vent_pump/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)

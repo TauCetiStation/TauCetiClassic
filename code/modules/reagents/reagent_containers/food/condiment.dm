@@ -35,7 +35,7 @@
 
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 			return 1
-		else if( istype(M, /mob/living/carbon/human) )
+		else
 
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message("\red [user] attempts to feed [M] [src].", 1)

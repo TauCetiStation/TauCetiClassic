@@ -82,6 +82,8 @@
 	if(dna)
 		dna.real_name = real_name
 
+	verbs += /mob/living/carbon/proc/crawl
+
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
@@ -329,11 +331,6 @@
 	return 0
 
 
-
-/mob/living/carbon/human/var/co2overloadtime = null
-/mob/living/carbon/human/var/temperature_resistance = T0C+75
-
-
 /mob/living/carbon/human/show_inv(mob/user)
 	var/obj/item/clothing/under/suit = null
 	if (istype(w_uniform, /obj/item/clothing/under))
@@ -362,6 +359,7 @@
 	<BR>[(legcuffed ? text("<A href='?src=\ref[src];item=legcuff'>Legcuffed</A>") : text(""))]
 	<BR>[(suit) ? ((suit.hastie) ? text(" <A href='?src=\ref[];item=tie'>Remove Accessory</A>", src) : "") :]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
+	<BR><A href='?src=\ref[src];item=bandages'>Remove Bandages</A>
 	<BR><A href='?src=\ref[src];item=splints'>Remove Splints</A>
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
@@ -1330,42 +1328,6 @@
 		W.update_icon()
 		W.message = message
 		W.add_fingerprint(src)
-
-/mob/living/carbon/human/var/crawl_getup = 0
-/mob/living/carbon/human/verb/crawl()
-	set name = "Crawl"
-	set category = "IC"
-
-	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
-		return
-	if(crawl_getup)
-		return
-
-	if(crawling)
-		crawl_getup = 1
-		if(do_after(src, 10, target = src))
-			crawl_getup = 0
-			if(!crawl_can_use())
-				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-				var/datum/organ/external/E = get_organ("head")
-				E.take_damage(5, 0, 0, 0, "Table")
-				to_chat(src, "<span class='danger'>Ouch!</span>")
-				return
-			layer = 4.0
-		else
-			crawl_getup = 0
-			return
-	else
-		if(!crawl_can_use())
-			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
-			return
-		layer = 3.9
-
-	pass_flags ^= PASSCRAWL
-	crawling = !crawling
-
-	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
-	update_canmove()
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"

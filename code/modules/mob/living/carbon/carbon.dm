@@ -266,8 +266,49 @@
 /mob/living/carbon/proc/crawl_can_use()
 	var/turf/T = get_turf(src)
 	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/var/crawl_getup = FALSE
+/mob/living/carbon/proc/crawl()
+	set name = "Crawl"
+	set category = "IC"
+
+	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
+		return
+	if(crawl_getup)
+		return
+
+	if(crawling)
+		crawl_getup = TRUE
+		if(do_after(src, 10, target = src))
+			crawl_getup = FALSE
+			if(!crawl_can_use())
+				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+				if(ishuman(src))
+					var/mob/living/carbon/human/H = src
+					var/datum/organ/external/E = H.get_organ("head")
+					E.take_damage(5, 0, 0, 0, "Facepalm") // what?.. that guy was insane anyway.
+				else
+					take_overall_damage(5, used_weapon = "Table")
+				Stun(1)
+				to_chat(src, "<span class='danger'>Ouch!</span>")
+				return
+			layer = 4.0
+		else
+			crawl_getup = FALSE
+			return
+	else
+		if(!crawl_can_use())
+			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
+			return
+		layer = 3.9
+
+	pass_flags ^= PASSCRAWL
+	crawling = !crawling
+
+	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
+	update_canmove()
 
 /mob/living/carbon/proc/eyecheck()
 	return 0
@@ -573,3 +614,9 @@
 
 /mob/living/carbon/getTrail()
 	return "trails_1"
+
+/mob/living/carbon/proc/bloody_hands(mob/living/source, amount = 2)
+	return
+
+/mob/living/carbon/proc/bloody_body(mob/living/source)
+	return

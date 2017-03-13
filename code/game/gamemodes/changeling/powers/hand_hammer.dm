@@ -30,7 +30,7 @@
 	qdel(src)
 
 
-/obj/item/weapon/proc/use_charge(atom/movable/O, mob/living/carbon/human/user, req_chem = 3)
+/obj/item/weapon/proc/use_charge(mob/living/carbon/human/user, req_chem = 3)
 	if(!user.mind || !user.mind.changeling)
 		return 0
 	if(user.mind.changeling.chem_charges < req_chem)
@@ -40,7 +40,7 @@
 	return 1
 
 /obj/item/weapon/changeling_hammer/attack(atom/target, mob/living/carbon/human/user, proximity)
-	if(user.a_intent == "hurt" && use_charge(target,user, 6))
+	if(user.a_intent == "hurt" && use_charge(user, 4))
 		playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target

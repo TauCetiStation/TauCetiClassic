@@ -11,24 +11,27 @@
 	var/weapon_name_simple
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
+	if(istype(user.get_active_hand(),weapon_type))
+		user.drop_from_inventory(user.get_active_hand()) // cuz changeling weapons are unremovable with standart procedure with canremove = 0, but we still need it
+		return
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.handcuffed)
+			qdel(C.handcuffed)
+	if(user.incapacitated())
+		to_chat(user,"<span class='userdanger'> We cannot reform our [weapon_name_simple] while restrained</span>")
+		return
 	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>",
 	 "<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
 	 "<span class='warning>You hear organic matter ripping and tearing!</span>")
-	if(istype(user.l_hand, weapon_type)) //Not the nicest way to do it, but eh
-		qdel(user.l_hand)
-		user.update_inv_l_hand()
-		return
-	if(istype(user.r_hand, weapon_type))
-		user.update_inv_r_hand()
-		return
-	..(user, target)
+	return ..(user, target)
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)
 	if(!user.unEquip(user.get_active_hand()))
 		to_chat(user, "The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!")
 		return
 	var/obj/item/W = new weapon_type(user)
-	user.put_in_hands(W)
+	user.put_in_active_hand(W)
 	return W
 
 //Parent to space suits and armor.

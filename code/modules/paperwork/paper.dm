@@ -383,6 +383,9 @@
 		//t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
+		if(isIAN(usr))
+			t = GibberishAll(t)
+
 		if(fields > 50)
 			to_chat(usr, "<span class='warning'>Too many fields. Sorry, you can't do this.</span>")
 			fields = last_fields_value

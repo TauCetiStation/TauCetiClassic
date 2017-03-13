@@ -32,12 +32,11 @@
 
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1
-	else if( istype(M, /mob/living/carbon/human) )
-		if (!canopened)
-			to_chat(user, "<span class='notice'> You need to open the drink!</span>")
-			return
+	else if (!canopened)
+		to_chat(user, "<span class='notice'> You need to open the drink!</span>")
+		return
 
-	else if (canopened)
+	else
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message("\red [user] attempts to feed [M] [src].", 1)
 		if(!do_mob(user, M)) return

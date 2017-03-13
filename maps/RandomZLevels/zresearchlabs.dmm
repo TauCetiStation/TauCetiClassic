@@ -1047,7 +1047,7 @@
 "ug" = (/obj/machinery/power/apc{cell_type = 5000; dir = 1; name = "Virology APC"; pixel_x = 0; pixel_y = 24},/obj/structure/cable,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/labs/security)
 "uh" = (/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/labs/security)
 "ui" = (/obj/structure/closet/secure_closet/warden,/obj/effect/decal/cleanable/cobweb2,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/labs/security)
-"ul" = (/obj/structure/table,/obj/item/weapon/storage/backpack/satchel_med,/turf/simulated/floor{icon_state = "white"},/area/awaymission/labs/medical)
+"ul" = (/obj/structure/table,/obj/item/weapon/storage/backpack/satchel/med,/turf/simulated/floor{icon_state = "white"},/area/awaymission/labs/medical)
 "um" = (/obj/machinery/computer/prisoner,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/labs/security)
 "un" = (/obj/machinery/computer/security,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/labs/security)
 "uo" = (/obj/structure/table,/obj/item/weapon/gun/syringe/rapidsyringe,/turf/simulated/floor{icon_state = "white"},/area/awaymission/labs/medical)

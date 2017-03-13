@@ -82,30 +82,12 @@ This is called when facehugger has grabbed(left click) and then
 ----------------------------------------*/
 
 /mob/living/carbon/alien/facehugger/proc/leap_at_face(mob/living/L)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
+	if(ishuman(L) || ismonkey(L) || isIAN(L) || iscorgi(L)) // CP! THIS IS DELTA SIX! DO WE NEED THIS? CP!
 		var/obj/item/clothing/mask/facehugger/FH = new(loc)
 		src.loc = FH
 		FH.current_hugger = src
-		FH.Attach(H)
-		H.status_flags |= PASSEMOTES
-		return
-	else if(ismonkey(L))
-		var/mob/living/carbon/monkey/M = L
-		var/obj/item/clothing/mask/facehugger/FH = new(loc)
-		src.loc = FH
-		FH.current_hugger = src
-		FH.Attach(M)
-		M.status_flags |= PASSEMOTES
-		return
-	else if(iscorgi(L))
-		var/mob/living/simple_animal/corgi/C = L
-		var/obj/item/clothing/mask/facehugger/FH = new(loc)
-		src.loc = FH
-		FH.current_hugger = src
-		FH.Attach(C)
-		C.status_flags |= PASSEMOTES
-		return
+		FH.Attach(L)
+		L.status_flags |= PASSEMOTES
 
 /*----------------------------------------
 This is chestburster mechanic for damaging
@@ -186,7 +168,7 @@ This is chestburster mechanic for damaging
 	if(ishuman(affecting))
 		var/mob/living/carbon/human/H = affecting
 		var/datum/organ/external/chest/C = H.get_organ("chest")
-		if(C.status & ORGAN_BROKEN)
+		if((C.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but organs can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
 			chestburster << sound('sound/voice/hiss5.ogg',0,0,0,100)
@@ -204,8 +186,8 @@ This is chestburster mechanic for damaging
 			H.shock_stage = 20
 			H.Weaken(1)
 			H.emote("scream",,, 1)
-	else if(ismonkey(affecting))
-		var/mob/living/carbon/monkey/M = affecting
+	else if(ismonkey(affecting) || isIAN(affecting))
+		var/mob/living/carbon/M = affecting
 		if(M.stat == DEAD)
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
@@ -440,33 +422,42 @@ This is facehugger Attach procs
 		Die()
 	return
 
-/obj/item/clothing/mask/facehugger/proc/Attach(M)
-	if( (!iscorgi(M) && !iscarbon(M)) || isalien(M))
+/obj/item/clothing/mask/facehugger/proc/Attach(mob/living/L)
+	if( (!iscorgi(L) && !iscarbon(L)) || isalien(L) || isslime(L) )
 		return
 
-	var/mob/living/L = M //just so I don't need to use :
+	if(loc == L)
+		return
+	if(stat == DEAD)
+		return
+	if(!sterile)
+		L.take_organ_damage(strength, 0)
 
-	if(loc == L) return
-	if(stat == DEAD)	return
-	if(!sterile) L.take_organ_damage(strength,0)
-
-	if(ishuman(M))
-		var/mob/living/carbon/human/target = L
-		target.equip_to_slot(src, slot_wear_mask)
-	else if(ismonkey(M))
-		var/mob/living/carbon/monkey/target = L
-		target.equip_to_slot(src, slot_wear_mask)
-		target.contents += src // Monkey sanity check - Snapshot
-	else if(iscorgi(M))
-		var/mob/living/simple_animal/corgi/C = M
+	if(iscarbon(L))
+		var/mob/living/carbon/target = L
+		var/target_slot = slot_wear_mask
+		if(isIAN(L))
+			target_slot = slot_head
+		target.equip_to_slot(src, target_slot)
+		if(ismonkey(L)) // wtf is there in monkeys equip proc, that they need this?! ~zve
+			target.contents += src // Monkey sanity check - Snapshot
+	else if(iscorgi(L))
+		var/mob/living/simple_animal/corgi/C = L
 		src.loc = C
 		C.facehugger = src
 		C.wear_mask = src
-
-	return
+		C.regenerate_icons()
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target, mob/living/FH)
-	if(!target || target.wear_mask != src || target.stat == DEAD) //was taken off or something
+	if(!target || target.stat == DEAD) //was taken off or something
+		return
+
+	var/mob/living/carbon/ian/IAN = target
+	var/target_slot = target.wear_mask
+	if(isIAN(IAN))
+		target_slot = IAN.head
+
+	if(target_slot != src)
 		return
 
 	if(!FH || FH.stat == DEAD)
@@ -480,7 +471,7 @@ This is facehugger Attach procs
 		new_xeno.key = FH.key
 		new_embryo.baby = new_xeno
 		qdel(FH)
-		target.remove_from_mob(target.wear_mask)
+		target.remove_from_mob(target_slot)
 		if(ismonkey(target))
 			for(var/obj/item/clothing/mask/facehugger/FH_mask in target.contents)
 				FH_mask.loc = get_turf(target)
@@ -618,22 +609,17 @@ When we finish, facehugger's player will be transfered inside embryo.
 		qdel(src)
 		return
 
-	if(iscarbon(affecting))
-		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
-		if(hugger)
-			if(hugger.current_hugger != assailant)
-				to_chat(assailant, "There is already facehugger on the face")
-				qdel(src)
-				return
-	else if(iscorgi(affecting))
-		var/mob/living/simple_animal/corgi/C = affecting
-
-		var/obj/item/clothing/mask/facehugger/hugger = C.wear_mask
-		if(hugger)
-			if(hugger.current_hugger != assailant)
-				to_chat(assailant, "There is already facehugger on the face")
-				qdel(src)
-				return
+	var/obj/item/clothing/mask/facehugger/hugger
+	if(iscorgi(affecting) || iscarbon(affecting))
+		if(isIAN(affecting))
+			var/mob/living/carbon/ian/IAN = affecting
+			hugger = IAN.head
+		else
+			hugger = affecting.wear_mask
+	if(istype(hugger) && hugger.current_hugger != assailant)
+		to_chat(assailant, "There is already facehugger on the face")
+		qdel(src)
+		return
 
 	for(var/obj/item/alien_embryo/AE in affecting.contents)
 		to_chat(assailant, "\red [affecting] already impregnated.")
@@ -649,7 +635,13 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(state == GRAB_PASSIVE)
 		assailant.visible_message("<span class='warning'>[assailant] leaps at [affecting] face!</span>")
 		var/mob/living/carbon/alien/facehugger/FH = assailant
-		if(affecting.wear_mask)
+		if(isIAN(affecting)) //CP, we need helpers! I repeat, we need helpers! CP? CP!!
+			var/mob/living/carbon/ian/IAN = affecting
+			if(!istype(IAN.head, /obj/item/clothing/mask/facehugger))
+				var/obj/item/clothing/mask/victim_mask = IAN.head
+				IAN.remove_from_mob(victim_mask)
+				qdel(victim_mask)
+		else if(affecting.wear_mask)
 			if(!istype(affecting.wear_mask, /obj/item/clothing/mask/facehugger))
 				var/obj/item/clothing/mask/victim_mask = affecting.wear_mask
 				affecting.remove_from_mob(victim_mask)

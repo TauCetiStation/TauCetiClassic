@@ -20,12 +20,7 @@
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
 /mob/living/carbon/human
-	var/oxygen_alert = 0
-	var/phoron_alert = 0
-	var/fire_alert = 0
-	var/pressure_alert = 0
 	var/prev_gender = null // Debug for plural genders
-	var/temperature_alert = 0
 	var/in_stasis = 0
 
 
@@ -78,7 +73,6 @@
 
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
-
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 

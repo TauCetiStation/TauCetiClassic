@@ -1,6 +1,8 @@
 /************-Pipe code-************/
 /obj/machinery/atmospherics/pipe
 
+	icon = 'icons/obj/atmospherics/Atmos_pipes.dmi'
+
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent
 
@@ -15,6 +17,8 @@
 	can_buckle = 1
 	buckle_require_restraints = 1
 	buckle_lying = 1
+
+	var/obj/machinery/meter/targeted_by_meter
 
 /obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
 	return null
@@ -55,10 +59,19 @@
 
 /obj/machinery/atmospherics/pipe/Destroy()
 	qdel(parent)
+	if(targeted_by_meter)
+		targeted_by_meter.target = null
+		targeted_by_meter = null
+	parent = null
 	if(air_temporary)
 		loc.assume_air(air_temporary)
 		qdel(air_temporary)
+		air_temporary = null
 	return ..()
+
+/obj/machinery/atmospherics/pipe/disconnect(obj/machinery/atmospherics/reference)
+	build_network()
+	..()
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
 	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
@@ -99,7 +112,6 @@
 
 /************-Simple pipe-************/
 /obj/machinery/atmospherics/pipe/simple
-	icon = 'icons/obj/pipes.dmi'
 
 	name = "pipe"
 	desc = "A one meter section of regular pipe."
@@ -127,8 +139,10 @@
 	alpha = 255
 	switch(dir)
 		if(SOUTH || NORTH)
+			dir = NORTH
 			initialize_directions = SOUTH|NORTH
 		if(EAST || WEST)
+			dir = EAST
 			initialize_directions = EAST|WEST
 		if(NORTHEAST)
 			initialize_directions = NORTH|EAST
@@ -183,8 +197,10 @@
 /obj/machinery/atmospherics/pipe/simple/Destroy()
 	if(node1)
 		node1.disconnect(src)
+		node1 = null
 	if(node2)
 		node2.disconnect(src)
+		node2 = null
 
 	return ..()
 
@@ -203,15 +219,7 @@
 
 	if(node1 && node2)
 		icon_state = "intact[invisibility ? "-f" : "" ]"
-
-		//var/node1_direction = get_dir(src, node1)
-		//var/node2_direction = get_dir(src, node2)
-
-		//dir = node1_direction|node2_direction
-
 	else
-		if(!node1&&!node2)
-			qdel(src) //TODO: silent deleting looks weird
 		var/have_node1 = node1?1:0
 		var/have_node2 = node2?1:0
 		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
@@ -241,7 +249,6 @@
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
 	update_icon()
-	//update_icon()
 
 /obj/machinery/atmospherics/pipe/simple/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
@@ -256,7 +263,7 @@
 
 	update_icon()
 
-	return null
+	..()
 
 
 /////Visible simple pipe
@@ -323,8 +330,6 @@
 
 /************-Maibfold pipe-************/
 /obj/machinery/atmospherics/pipe/manifold
-	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
-
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes."
 
@@ -371,10 +376,13 @@
 /obj/machinery/atmospherics/pipe/manifold/Destroy()
 	if(node1)
 		node1.disconnect(src)
+		node1 = null
 	if(node2)
 		node2.disconnect(src)
+		node2 = null
 	if(node3)
 		node3.disconnect(src)
+		node3 = null
 
 	return ..()
 
@@ -399,7 +407,7 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
-	if(node1&&node2&&node3)
+	if( node1 && node2 && node3)
 		switch(pipe_color)
 			if ("red") color = COLOR_RED
 			if ("blue") color = COLOR_BLUE
@@ -410,6 +418,8 @@
 			if ("grey") color = null
 		icon_state = "manifold[invisibility ? "-f" : "" ]"
 
+	else if(!node1 && !node2 && !node3)
+		icon_state = "manifold_ex"
 	else
 		var/connected = 0
 		var/unconnected = 0
@@ -425,14 +435,14 @@
 		unconnected = (~connected)&(connect_directions)
 
 		icon_state = "manifold_[connected]_[unconnected]"
-
-		if(!connected)
-			qdel(src)
-
 	return
 
 /obj/machinery/atmospherics/pipe/manifold/initialize()
 	var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
+
+	node1 = null
+	node2 = null
+	node3 = null
 
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
@@ -468,7 +478,6 @@
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
-	//update_icon()
 	update_icon()
 
 
@@ -561,12 +570,16 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 /obj/machinery/atmospherics/pipe/manifold4w/Destroy()
 	if(node1)
 		node1.disconnect(src)
+		node1 = null
 	if(node2)
 		node2.disconnect(src)
+		node2 = null
 	if(node3)
 		node3.disconnect(src)
+		node3 = null
 	if(node4)
 		node4.disconnect(src)
+		node4 = null
 
 	return ..()
 
@@ -620,9 +633,6 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 			overlays += new/image(con,dir=4)
 		if(node4)
 			overlays += new/image(con,dir=8)
-
-		if(!node1 && !node2 && !node3 && !node4)
-			qdel(src)
 	return
 
 /obj/machinery/atmospherics/pipe/manifold4w/initialize()
@@ -649,7 +659,6 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
-	//update_icon()
 	update_icon()
 
 
@@ -745,6 +754,7 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 /obj/machinery/atmospherics/pipe/cap/Destroy()
 	if(node)
 		node.disconnect(src)
+		node = null
 
 	return ..()
 
@@ -772,7 +782,6 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
-	//update_icon()
 	update_icon()
 
 
@@ -911,6 +920,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 /obj/machinery/atmospherics/pipe/tank/Destroy()
 	if(node1)
 		node1.disconnect(src)
+		node1 = null
 
 	return ..()
 
@@ -1018,6 +1028,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 /obj/machinery/atmospherics/pipe/vent/Destroy()
 	if(node1)
 		node1.disconnect(src)
+		node1 = null
 
 	return ..()
 

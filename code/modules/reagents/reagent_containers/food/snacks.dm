@@ -192,23 +192,20 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
-	if(isanimal(M))
-		if(iscorgi(M))
-			if(bitecount == 0 || prob(50))
-				M.emote("nibbles away at the [src]")
-			bitecount++
-			if(bitecount >= 5)
-				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
-				if(sattisfaction_text)
-					M.emote("[sattisfaction_text]")
-				qdel(src)
-		if(ismouse(M))
-			var/mob/living/simple_animal/mouse/N = M
-			to_chat(N, text("<span class='notice'>You nibble away at [src].</span>"))
-			if(prob(50))
-				N.visible_message("[N] nibbles away at [src].</span>", "")
-			//N.emote("nibbles away at the [src]")
-			N.health = min(N.health + 1, N.maxHealth)
+	if(iscorgi(M) || isIAN(M))
+		if(bitecount == 0 || prob(50))
+			M.visible_message("<b>[M]</b> nibbles away at the [src]")
+		bitecount++
+		if(bitecount >= 5)
+			var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
+			M.visible_message("<b>[M]</b> [sattisfaction_text]")
+			qdel(src)
+	if(ismouse(M))
+		var/mob/living/simple_animal/mouse/N = M
+		to_chat(N, text("<span class='notice'>You nibble away at [src].</span>"))
+		if(prob(50))
+			N.visible_message("<b>[N]</b> nibbles away at [src].", "")
+		N.health = min(N.health + 1, N.maxHealth)
 
 
 ////////////////////////////////////////////////////////////////////////////////

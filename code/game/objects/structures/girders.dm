@@ -22,7 +22,7 @@
 			var/obj/item/weapon/changeling_hammer/C = W
 			visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 			user.do_attack_animation(src)
-			if(C.use_charge(src,user, 1) && prob(40))
+			if(C.use_charge(user, 1) && prob(40))
 				playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 				qdel(src)
 		else if(istype(W, /obj/item/weapon/wrench) && state == 0)

@@ -1208,7 +1208,7 @@ About the new airlock wires panel:
 		user.do_attack_animation(src)
 		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
-		if(W.use_charge(src,user) && prob(20))
+		if(W.use_charge(user) && prob(20))
 			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			door_rupture(user)
 		return
