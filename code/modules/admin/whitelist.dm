@@ -68,10 +68,10 @@
 		output += "<td><a class='small' href='?src=\ref[src];whitelist=edit_reason;ckey=[user_ckey];role=[role]'>(E)</a> [reason]</td>"
 		var/addby = role_whitelist[user_ckey][role]["addby"]
 		var/addtm = role_whitelist[user_ckey][role]["addtm"]
-		output += "<td>[addby] - [addtm]</td>"
+		output += "<td>[addby]<br>[addtm]</td>"
 		var/editby = role_whitelist[user_ckey][role]["editby"]
 		var/edittm = role_whitelist[user_ckey][role]["edittm"]
-		output += "<td>[editby] - [edittm]</td>"
+		output += "<td>[editby]<br>[edittm]</td>"
 
 		output += "</tr>"
 
@@ -170,10 +170,15 @@
 			to_chat(usr, "<span class='warning'>[role] for [target_ckey] already exists in whitelist.</span>")
 		return FALSE
 
-	var/database/query/insert_query = new("INSERT INTO whitelist VALUES (?, ?, '0', ?, ?, datetime('now'), ?, datetime('now'));", target_ckey, role, reason, adm_ckey, adm_ckey)
-	insert_query.Execute(whitelist_db)
-	var/fail_msg = insert_query.ErrorMsg()
-	if(fail_msg)
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		if(!added_by_bot)
+			to_chat(usr, "<span class='warning'>Failed to establish database connection.</span>")
+		return FALSE
+
+	var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `whitelist` (`ckey`, `role`, `ban`, `reason`, `addby`, `addtm`, `editby`, `edittm`) VALUES ('[target_ckey]', '[role]', '0', '[reason]', '[adm_ckey]', NOW(), '[adm_ckey]', NOW());")
+	if(!insert_query.Execute())
+		var/fail_msg = insert_query.ErrorMsg()
 		world.log << "SQL ERROR (I): [fail_msg]"
 		message_admins("SQL ERROR (I): [fail_msg]")
 		return FALSE
@@ -223,14 +228,19 @@
 		to_chat(usr, "<span class='warning'>[role] for [target_ckey] does not exist in whitelist.</span>")
 		return
 
-	var/database/query/update_query
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		to_chat(usr, "<span class='warning'>Failed to establish database connection.</span>")
+		return
+
+	var/sql_update
 	if(ban_edit)
-		update_query = new("UPDATE whitelist SET ban = ?, reason = ?, editby = ?, edittm = datetime('now') WHERE ckey = ? AND role = ?;", ban, reason, adm_ckey, target_ckey, role)
+		sql_update = "UPDATE `whitelist` SET ban = '[ban]', reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[role]'"
 	else
-		update_query = new("UPDATE whitelist SET reason = ?, editby = ?, edittm = datetime('now') WHERE ckey = ? AND role = ?;", reason, adm_ckey, target_ckey, role)
-	update_query.Execute(whitelist_db)
-	var/fail_msg = update_query.ErrorMsg()
-	if(fail_msg)
+		sql_update = "UPDATE `whitelist` SET reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[role]'"
+	var/DBQuery/query_update = dbcon.NewQuery(sql_update)
+	if(!query_update.Execute())
+		var/fail_msg = query_update.ErrorMsg()
 		world.log << "SQL ERROR (U): [fail_msg]"
 		message_admins("SQL ERROR (U): [fail_msg]")
 		return
@@ -254,38 +264,21 @@
 	if(!config.usealienwhitelist)
 		return
 
-	if(!whitelist_db)
-
-		// Create or load the DB.
-		whitelist_db = new("data/whitelist.db")
-
-		// Whitelist table.
-		var/database/query/init_schema = new(
-			"CREATE TABLE IF NOT EXISTS whitelist ( \
-			ckey TEXT NOT NULL, \
-			role TEXT NOT NULL, \
-			ban INTEGER NOT NULL, \
-			reason TEXT NOT NULL, \
-			addby TEXT NOT NULL, \
-			addtm INTEGER NOT NULL, \
-			editby TEXT NOT NULL, \
-			edittm INTEGER NOT NULL \
-			);")
-
-		init_schema.Execute(whitelist_db)
-		if(init_schema.ErrorMsg())
-			world.log << "SQL ERROR (C): whitelist: [init_schema.ErrorMsg()]."
-			return FALSE
-
 	role_whitelist = list()
-	var/database/query/query = new("SELECT * FROM whitelist")
-	query.Execute(whitelist_db)
-	if(query.ErrorMsg())
-		world.log << "SQL ERROR (L): whitelist: [query.ErrorMsg()]."
+
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		world.log << "SQL ERROR (L): whitelist: connection failed to SQL database."
+		return
+
+	var/DBQuery/select_query = dbcon.NewQuery("SELECT * FROM whitelist")
+
+	if(!select_query.Execute())
+		world.log << "SQL ERROR (L): whitelist: [select_query.ErrorMsg()]."
 		return FALSE
 	else
-		while(query.NextRow())
-			var/list/row = query.GetRowData()
+		while(select_query.NextRow())
+			var/list/row = select_query.GetRowData()
 			if(role_whitelist[row["ckey"]])
 				var/list/A = role_whitelist[row["ckey"]]
 				A.Add(list(row["role"] = list("ban" = row["ban"], "reason" = row["reason"], "addby" = row["addby"], "addtm" = row["addtm"], "editby" = row["editby"], "edittm" = row["edittm"])))
