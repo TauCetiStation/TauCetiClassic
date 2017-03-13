@@ -29,7 +29,7 @@ macro "macro"
 		is-disabled = false
 	elem "MACRO-WEST+REP"
 		name = "WEST+REP"
-		command = ".west"
+		command = ".moveleft"
 		is-disabled = false
 	elem "MACRO-CTRL+NORTH"
 		name = "CTRL+NORTH"
@@ -37,7 +37,7 @@ macro "macro"
 		is-disabled = false
 	elem "MACRO-NORTH+REP"
 		name = "NORTH+REP"
-		command = ".north"
+		command = ".moveup"
 		is-disabled = false
 	elem "MACRO-CTRL+EAST"
 		name = "CTRL+EAST"
@@ -45,7 +45,7 @@ macro "macro"
 		is-disabled = false
 	elem "MACRO-EAST+REP"
 		name = "EAST+REP"
-		command = ".east"
+		command = ".moveright"
 		is-disabled = false
 	elem "MACRO-CTRL+SOUTH"
 		name = "CTRL+SOUTH"
@@ -53,7 +53,7 @@ macro "macro"
 		is-disabled = false
 	elem "MACRO-SOUTH+REP"
 		name = "SOUTH+REP"
-		command = ".south"
+		command = ".movedown"
 		is-disabled = false
 	elem "MACRO-INSERT"
 		name = "INSERT"
@@ -81,11 +81,11 @@ macro "macro"
 		is-disabled = false
 	elem "MACRO-CTRL+A+REP"
 		name = "CTRL+A+REP"
-		command = ".west"
+		command = ".moveleft"
 		is-disabled = false
 	elem "MACRO-CTRL+D+REP"
 		name = "CTRL+D+REP"
-		command = ".east"
+		command = ".moveright"
 		is-disabled = false
 	elem "MACRO-CTRL+E"
 		name = "CTRL+E"
@@ -109,13 +109,13 @@ macro "macro"
 		is-disabled = false
 	elem "MACRO-CTRL+S+REP"
 		name = "CTRL+S+REP"
-		command = ".south"
+		command = ".movedown"
 		is-disabled = false
 	elem "MACRO-CTRL+W+REP"
 		name = "CTRL+W+REP"
-		command = ".north"
+		command = ".moveup"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+X"
 		command = ".northeast"
 		is-disabled = false
@@ -211,7 +211,7 @@ macro "hotkeymode"
 		is-disabled = false
 	elem "HKMODE-WEST+REP"
 		name = "WEST+REP"
-		command = ".west"
+		command = ".moveleft"
 		is-disabled = false
 	elem "HKMODE-CTRL+NORTH"
 		name = "CTRL+NORTH"
@@ -219,7 +219,7 @@ macro "hotkeymode"
 		is-disabled = false
 	elem "HKMODE-NORTH+REP"
 		name = "NORTH+REP"
-		command = ".north"
+		command = ".moveup"
 		is-disabled = false
 	elem "HKMODE-CTRL+EAST"
 		name = "CTRL+EAST"
@@ -227,7 +227,7 @@ macro "hotkeymode"
 		is-disabled = false
 	elem "HKMODE-EAST+REP"
 		name = "EAST+REP"
-		command = ".east"
+		command = ".moveright"
 		is-disabled = false
 	elem "HKMODE-CTRL+SOUTH"
 		name = "CTRL+SOUTH"
@@ -235,7 +235,7 @@ macro "hotkeymode"
 		is-disabled = false
 	elem "HKMODE-SOUTH+REP"
 		name = "SOUTH+REP"
-		command = ".south"
+		command = ".movedown"
 		is-disabled = false
 	elem "HKMODE-INSERT"
 		name = "INSERT"
@@ -279,19 +279,19 @@ macro "hotkeymode"
 		is-disabled = false
 	elem "HKMODE-A+REP"
 		name = "A+REP"
-		command = ".west"
+		command = ".moveleft"
 		is-disabled = false
 	elem "HKMODE-CTRL+A+REP"
 		name = "CTRL+A+REP"
-		command = ".west"
+		command = ".moveleft"
 		is-disabled = false
 	elem "HKMODE-D+REP"
 		name = "D+REP"
-		command = ".east"
+		command = ".moveright"
 		is-disabled = false
 	elem "HKMODE-CTRL+D+REP"
 		name = "CTRL+D+REP"
-		command = ".east"
+		command = ".moveright"
 		is-disabled = false
 	elem "HKMODE-E"
 		name = "E"
@@ -343,11 +343,11 @@ macro "hotkeymode"
 		is-disabled = false
 	elem "s_key"
 		name = "S+REP"
-		command = ".south"
+		command = ".movedown"
 		is-disabled = false
 	elem "HKMODE-CTRL+S+REP"
 		name = "CTRL+S+REP"
-		command = ".south"
+		command = ".movedown"
 		is-disabled = false
 	elem "HKMODE-T"
 		name = "T"
@@ -355,11 +355,11 @@ macro "hotkeymode"
 		is-disabled = false
 	elem "w_key"
 		name = "W+REP"
-		command = ".north"
+		command = ".moveup"
 		is-disabled = false
 	elem "HKMODE-CTRL+W+REP"
 		name = "CTRL+W+REP"
-		command = ".north"
+		command = ".moveup"
 		is-disabled = false
 	elem "HKMODE-X"
 		name = "X"
@@ -440,7 +440,7 @@ macro "hotkeymode"
 
 
 menu "menu"
-	elem 
+	elem
 		name = "&File"
 		command = ""
 		category = ""
@@ -449,7 +449,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
@@ -458,7 +458,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
@@ -467,7 +467,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&File"
@@ -476,7 +476,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quit"
 		command = ".quit"
 		category = "&File"
@@ -485,7 +485,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Icons"
 		command = ""
 		category = ""
@@ -521,7 +521,7 @@ menu "menu"
 		group = "size"
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&Icons"
@@ -539,7 +539,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Help"
 		command = ""
 		category = ""
@@ -548,7 +548,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Admin help\tF1"
 		command = "adminhelp"
 		category = "&Help"
@@ -557,7 +557,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Hotkeys"
 		command = "hotkeys-help"
 		category = "&Help"
