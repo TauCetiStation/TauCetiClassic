@@ -121,17 +121,23 @@
 
 /client/Move(n, direct)
 	if(!mob)
-		return // Moved here to avoid nullrefs below
+		return 0 // Moved here to avoid nullrefs below
 
-	if(mob.control_object)	Move_object(direct)
+	if(world.time < move_delay)
+		return 0
+	move_delay = world.time + world.tick_lag  // This is here because Move() can now be called mutiple times per tick.
 
-	if(isobserver(mob))	return mob.Move(n,direct)
+	if(mob.control_object)
+		Move_object(direct)
 
-	if(moving)	return 0
+	if(isobserver(mob))
+		return mob.Move(n,direct)
 
-	if(world.time < move_delay)	return
+	if(moving)
+		return 0
 
-	if(mob.stat==DEAD)	return
+	if(mob.stat == DEAD)
+		return 0
 
 /*	// handle possible spirit movement
 	if(istype(mob,/mob/spirit))
