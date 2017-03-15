@@ -1168,7 +1168,7 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-proc/is_hot(obj/item/W)
+/proc/is_hot(obj/item/W)
 	switch(W.type)
 		if(/obj/item/weapon/weldingtool)
 			var/obj/item/weapon/weldingtool/WT = W
