@@ -46,8 +46,7 @@
 		target.ex_act(1)
 
 	if(isobj(target) )
-		if(target)
-			qdel(target)
+		qdel(target)
 	explosion(location, 0, 0, 2, 3)
 	if(src)
 		qdel(src)
