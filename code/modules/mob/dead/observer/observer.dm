@@ -587,6 +587,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		break
 
 	if(phoron_dog)
+		message_admins("[src.ckey] joined the game as [phoron_dog] [ADMIN_JMP(phoron_dog)] [ADMIN_FLW(phoron_dog)].")
 		phoron_dog.ckey = src.ckey
 	else
 		to_chat(src, "<span class='notice'><B>Living and available Ian not found.</B></span>")

@@ -243,9 +243,10 @@
 	addtimer(CALLBACK(src, .proc/pop), end_in + 3)
 
 /obj/effect/bubble_ian/proc/pop()
-	for(var/mob/living/carbon/C in view(1,src))
-		C.Stun(3)
-		C.Weaken(3)
+	if(prob(3)) // There is too many of them!
+		for(var/mob/living/carbon/C in view(1,src))
+			C.Stun(1)
+			C.Weaken(1)
 	playsound(src, 'sound/effects/bubble_pop.ogg', 50, 1)
 	underlays.Cut()
 	qdel(src)
