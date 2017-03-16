@@ -252,6 +252,22 @@
 		return TRUE
 	return FALSE
 
+/mob/living/carbon/ian/put_in_inactive_hand(obj/item/W)
+	return put_in_active_hand(W)
+
+/mob/living/carbon/ian/put_in_hands(obj/item/W)
+	if(!W)
+		return FALSE
+	if(put_in_active_hand(W))
+		return TRUE
+	else
+		W.forceMove(get_turf(src))
+		W.layer = initial(W.layer)
+		W.plane = initial(W.plane)
+		W.appearance_flags = 0
+		W.dropped()
+		return FALSE
+
 /mob/living/carbon/ian/u_equip(obj/W)
 	if (W == head)
 		facehugger = FALSE
