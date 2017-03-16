@@ -1336,14 +1336,13 @@ datum
 						for(var/datum/wound/W in E.wounds) // remove internal
 							if(W.internal)
 								E.wounds -= W
-								E.update_damages()
 						if(E.status & ORGAN_DESTROYED)
 							if(E.parent && E.parent.status & ORGAN_DESTROYED)
 								continue
 							else
 								heal_time = 65
 								External = E
-						else if(E.status & (ORGAN_BROKEN || ORGAN_SPLINTED))
+						else if(E.status & ORGAN_BROKEN || E.status & ORGAN_SPLINTED)
 							heal_time = 30
 							External = E
 						if(External)
@@ -1374,13 +1373,10 @@ datum
 					if(prob(50))
 						H.emote("scream",1,null,1)
 					if(data >= heal_time) // recover organ
-						External.status = 0
-						External.stage = 0
-						External.perma_injury = 0
+						External.rejuvenate()
 						data = 0
 						External = null
 						heal_time = 0
-						H.update_body()
 
 		bicaridine
 			name = "Bicaridine"
