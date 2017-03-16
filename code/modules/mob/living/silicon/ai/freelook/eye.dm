@@ -42,7 +42,7 @@
 	set src = usr.contents
 	return 0
 
-/mob/aiEye/point()
+/mob/aiEye/pointed()
 	set popup_menu = 0
 	set src = usr.contents
 	return 0

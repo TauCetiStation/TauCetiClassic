@@ -315,6 +315,38 @@
 	face_atom(A)
 	A.examine(src)
 
+/mob/verb/pointed(atom/A as mob|obj|turf in oview())
+	set name = "Point To"
+	set category = "Object"
+
+	if(!usr || !isturf(usr.loc))
+		return
+	if(usr.stat || usr.restrained())
+		return
+	if(usr.status_flags & FAKEDEATH)
+		return
+	if(!(A in oview(usr.loc)))
+		return
+	if(istype(A, /obj/effect/decal/point))
+		return
+
+	var/tile = get_turf(A)
+	if(!tile)
+		return
+
+	var/obj/P = new /obj/effect/decal/point(tile)
+	P.pixel_x = A.pixel_x
+	P.pixel_y = A.pixel_y
+
+	QDEL_IN(P, 20)
+
+	usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
+
+	if(isliving(A))
+		for(var/mob/living/carbon/slime/S in oview())
+			if(usr in S.Friends)
+				S.last_pointed = A
+
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
