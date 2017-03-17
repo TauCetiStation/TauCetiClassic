@@ -37,10 +37,10 @@
 
 
 	var/mob/living/carbon/monkey/O = null
-	if(H.species.primitive)
-		O = new H.species.primitive(src)
+	if(H.species.backward_form)
+		O = new H.species.backward_form(src)
 	else
-		H.gib() //Trying to change the species of a creature with no primitive var set is messy.
+		H.gib() //Trying to change the species of a creature with no backward_form var set is messy.
 		return
 
 	if(M)

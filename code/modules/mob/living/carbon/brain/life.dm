@@ -32,8 +32,8 @@
 		handle_regular_hud_updates()
 
 
-/mob/living/carbon/brain/
-	proc/handle_mutations_and_radiation()
+/mob/living/carbon/brain
+	handle_mutations_and_radiation()
 
 		if (radiation)
 			if (radiation > 100)
@@ -67,7 +67,7 @@
 					updatehealth()
 
 
-	proc/handle_environment(datum/gas_mixture/environment)
+	handle_environment(datum/gas_mixture/environment)
 		if(!environment)
 			return
 		var/environment_heat_capacity = environment.heat_capacity()
@@ -103,7 +103,7 @@
 
 
 
-	proc/handle_chemicals_in_body()
+	handle_chemicals_in_body()
 
 		if(reagents) reagents.metabolize(src)
 
@@ -119,7 +119,7 @@
 		return //TODO: DEFERRED
 
 
-	proc/handle_regular_status_updates()	//TODO: comment out the unused bits >_>
+	handle_regular_status_updates()	//TODO: comment out the unused bits >_>
 		updatehealth()
 
 		if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP

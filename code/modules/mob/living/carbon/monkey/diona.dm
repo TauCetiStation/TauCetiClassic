@@ -27,17 +27,7 @@
 
 	..()
 
-/mob/living/carbon/monkey/diona/New()
-
-	..()
-	gender = NEUTER
-	dna.mutantrace = "plant"
-	greaterform = "Diona"
-	add_language("Rootspeak")
-	src.verbs += /mob/living/carbon/monkey/diona/proc/merge
-
 //Verbs after this point.
-
 /mob/living/carbon/monkey/diona/proc/merge()
 
 	set category = "Diona"

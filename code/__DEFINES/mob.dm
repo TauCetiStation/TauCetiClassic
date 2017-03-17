@@ -29,6 +29,30 @@
 #define GETPULSE_HAND	0	//less accurate (hand)
 #define GETPULSE_TOOL	1	//more accurate (med scanner, sleeper, etc)
 
+// Species Names
+#define S_HUMAN       "Human"
+#define S_UNATHI      "Unathi"
+#define S_TAJARAN     "Tajaran"
+#define S_SKRELL      "Skrell"
+#define S_VOX         "Vox"
+#define S_VOX_ARMALIS "Vox Armalis"
+#define S_DIONA       "Diona"
+#define S_IPC         "Machine"
+#define S_ABDUCTOR    "Abductor"
+#define S_SKELETON    "Skeleton"
+#define S_SHADOWLING  "Shadowling"
+#define S_MONKEY      "Monkey"
+#define S_MONKEY_U    "Stok"
+#define S_MONKEY_T    "Farwa"
+#define S_MONKEY_S    "Neaera"
+#define S_MONKEY_D    "Diona Nymph"
+#define S_SLIME       "Slime"
+#define S_XENO_FACE   "Alien Facehugger"
+#define S_XENO_LARVA  "Alien Larva"
+#define S_XENO_ADULT  "Alien Adult"
+#define S_XENO_QUEEN  "Alien Queen"
+#define S_DOG         "Dog"
+
 //Some on_mob_life() procs check for alien races.
 #define IS_DIONA  1
 #define IS_VOX	  2

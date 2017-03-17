@@ -1,8 +1,8 @@
 //Languages/species/whitelist.
-var/global/list/all_species[0]
+var/global/list/whitelisted_species = list("Human")
+var/global/list/all_species = make_datum_references_species() // initialize this list as soon as possible (monstly for monkeys and other hardmapped mobs, because we use global list for species and not single instances for each mob).
 var/global/list/all_languages[0]
 var/global/list/language_keys[0]					//table of say codes for all languages
-var/global/list/whitelisted_species = list("Human")
 
 var/list/clients = list()							//list of all clients
 var/list/admins = list()							//list of all clients whom are admins

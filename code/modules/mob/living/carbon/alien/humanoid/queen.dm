@@ -12,7 +12,7 @@
 	ventcrawler = 0
 
 
-/mob/living/carbon/alien/humanoid/queen/New()
+/mob/living/carbon/alien/humanoid/queen/New(loc, new_species = S_XENO_QUEEN)
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src

@@ -9,16 +9,6 @@
 /mob/living/carbon/ian/var/static/list/corgi_icons = list()
 /mob/living/carbon/ian/var/list/overlays_inv[LAYERIANS_TOTAL]
 
-/mob/living/carbon/ian/proc/apply_overlay(index)
-	var/image/I = overlays_inv[index]
-	if(I)
-		overlays += I
-
-/mob/living/carbon/ian/proc/remove_overlay(index)
-	if(overlays_inv[index])
-		overlays -= overlays_inv[index]
-		overlays_inv[index] = null
-
 /mob/living/carbon/ian/regenerate_icons()
 	update_inv_head()
 	update_inv_mouth()

@@ -1,6 +1,6 @@
 /datum/organ
 	var/name = "organ"
-	var/mob/living/carbon/human/owner = null
+	var/mob/living/carbon/owner = null
 
 	var/list/datum/autopsy_data/autopsy_data = list()
 	var/list/trace_chemicals = list() // traces of chemicals in the organ,
@@ -32,7 +32,7 @@
 		germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
 
 //Handles chem traces
-/mob/living/carbon/human/proc/handle_trace_chems()
+/mob/living/carbon/proc/handle_trace_chems()
 	//New are added for reagents to random organs.
 	for(var/datum/reagent/A in reagents.reagent_list)
 		var/datum/organ/O = pick(organs)
@@ -50,12 +50,12 @@
 	W.damage += damage
 	W.time_inflicted = world.time
 
-/mob/living/carbon/human/var/list/organs = list()
-/mob/living/carbon/human/var/list/organs_by_name = list() // map organ names to organs
-/mob/living/carbon/human/var/list/internal_organs_by_name = list() // so internal organs have less ickiness too
+/mob/living/carbon/var/list/organs = list()
+/mob/living/carbon/var/list/organs_by_name = list() // map organ names to organs
+/mob/living/carbon/var/list/internal_organs_by_name = list() // so internal organs have less ickiness too
 
 // Takes care of organ related updates, such as broken and missing limbs
-/mob/living/carbon/human/proc/handle_organs()
+/mob/living/carbon/proc/handle_organs()
 	number_wounds = 0
 	var/leg_tally = 2
 	var/force_process = 0

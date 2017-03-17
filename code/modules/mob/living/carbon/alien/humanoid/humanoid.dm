@@ -4,9 +4,6 @@
 	icon_state = "alien_s"
 
 	pass_flags = PASSTABLE
-	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
-	var/obj/item/weapon/r_store = null
-	var/obj/item/weapon/l_store = null
 	var/caste = ""
 	//var/perception = 0 //0 - standart mode, 1 - SEE_TURF mode
 	var/praetorians = 2
@@ -23,7 +20,7 @@
 
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/humanoid/New()
+/mob/living/carbon/alien/humanoid/New(loc, new_species = S_XENO_ADULT)
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src

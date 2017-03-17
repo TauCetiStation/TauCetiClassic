@@ -8,8 +8,8 @@
 #define X_TOTAL_LAYERS			6
 /////////////////////////////////
 
-/mob/living/carbon/alien/humanoid
-	var/list/overlays_standing[X_TOTAL_LAYERS]
+//mob/living/carbon/alien/humanoid
+//	var/list/overlays_standing[X_TOTAL_LAYERS]
 
 /mob/living/carbon/alien/humanoid/update_icons()
 	update_hud()		//TODO: remove the need for this to be here

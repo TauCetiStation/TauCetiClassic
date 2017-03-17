@@ -7,11 +7,11 @@ var/const/BLOOD_VOLUME_OKAY = 336
 var/const/BLOOD_VOLUME_BAD = 224
 var/const/BLOOD_VOLUME_SURVIVE = 122
 
-/mob/living/carbon/human/var/datum/reagents/vessel	//Container for blood and BLOOD ONLY. Do not transfer other chems here.
-/mob/living/carbon/human/var/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
+/mob/living/carbon/var/datum/reagents/vessel	//Container for blood and BLOOD ONLY. Do not transfer other chems here.
+/mob/living/carbon/var/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
 
 //Initializes blood vessels
-/mob/living/carbon/human/proc/make_blood()
+/mob/living/carbon/proc/make_blood()
 
 	if(vessel)
 		return
@@ -26,14 +26,14 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	addtimer(CALLBACK(src, .proc/fixblood), 1)
 
 //Resets blood data
-/mob/living/carbon/human/proc/fixblood()
+/mob/living/carbon/proc/fixblood()
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
 			B.data = list(	"donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.b_type,	\
 							"resistances"=null,"trace_chem"=null, "virus2" = null, "antibodies" = null)
 
 // Takes care blood loss and regeneration
-/mob/living/carbon/human/proc/handle_blood()
+/mob/living/carbon/proc/handle_blood()
 
 	if(species && species.flags[NO_BLOOD])
 		return
@@ -134,7 +134,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		drip(blood_max)
 
 //Makes a blood drop, leaking certain amount of blood from the mob
-/mob/living/carbon/human/proc/drip(amt)
+/mob/living/carbon/proc/drip(amt)
 
 	if(!isturf(loc))	//No drips, if we are in closet, or disposal pipe or anywhere else, but not on the floor
 		return

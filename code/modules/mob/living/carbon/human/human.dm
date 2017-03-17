@@ -4,11 +4,7 @@
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
 	//icon_state = "body_m_s"
-	var/list/hud_list[9]
-	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/dog_owner
-	var/heart_beat = 0
-	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
 	var/scientist = 0	//Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
 	var/agent = 0
@@ -21,61 +17,46 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/human/skrell/New(var/new_loc)
+/mob/living/carbon/human/skrell/New()
 	h_style = "Skrell Male Tentacles"
-	..(new_loc, "Skrell")
+	..(new_species = S_SKRELL)
 
-/mob/living/carbon/human/tajaran/New(var/new_loc)
+/mob/living/carbon/human/tajaran/New()
 	h_style = "Tajaran Ears"
-	..(new_loc, "Tajaran")
+	..(new_species = S_TAJARAN)
 
-/mob/living/carbon/human/unathi/New(var/new_loc)
+/mob/living/carbon/human/unathi/New()
 	h_style = "Unathi Horns"
-	..(new_loc, "Unathi")
+	..(new_species = S_UNATHI)
 
-/mob/living/carbon/human/vox/New(var/new_loc)
+/mob/living/carbon/human/vox/New()
 	h_style = "Short Vox Quills"
-	..(new_loc, "Vox")
+	..(new_species = S_VOX)
 
-/mob/living/carbon/human/voxarmalis/New(var/new_loc)
+/mob/living/carbon/human/voxarmalis/New()
 	h_style = "Bald"
-	..(new_loc, "Vox Armalis")
+	..(new_species = S_VOX_ARMALIS)
 
-/mob/living/carbon/human/diona/New(var/new_loc)
-	..(new_loc, "Diona")
+/mob/living/carbon/human/diona/New()
+	..(new_species = S_DIONA)
 
-/mob/living/carbon/human/machine/New(var/new_loc)
+/mob/living/carbon/human/machine/New()
 	h_style = "blue IPC screen"
-	..(new_loc, "Machine")
+	..(new_species = S_IPC)
 
-/mob/living/carbon/human/abductor/New(var/new_loc)
-	..(new_loc, "Abductor")
+/mob/living/carbon/human/abductor/New()
+	..(new_species = S_ABDUCTOR)
 
-/mob/living/carbon/human/New(var/new_loc, var/new_species = null)
-
-	if(!species)
-		if(new_species)
-			set_species(new_species,null,1)
-		else
-			set_species()
-
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
-
-	if(!dna)
-		dna = new /datum/dna(null)
-		dna.species=species.name
-
-	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
-	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
-	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
-	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
+/mob/living/carbon/human/New(loc, new_species = S_HUMAN)
+	//hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
+	//hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
+	//hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
+	//hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
+	//hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	//hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
+	//hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	//hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
+	//hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
 
 	..()
 
@@ -83,10 +64,6 @@
 		dna.real_name = real_name
 
 	verbs += /mob/living/carbon/proc/crawl
-
-	prev_gender = gender // Debug for plural genders
-	make_blood()
-	regenerate_icons()
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -368,101 +345,6 @@
 	user << browse(dat, text("window=mob[name];size=340x540"))
 	onclose(user, "mob[name]")
 	return
-
-// called when something steps onto a human
-// this could be made more general, but for now just handle mulebot
-/mob/living/carbon/human/Crossed(var/atom/movable/AM)
-	var/obj/machinery/bot/mulebot/MB = AM
-	if(istype(MB))
-		MB.RunOver(src)
-
-// Get rank from ID, ID inside PDA, PDA, ID in wallet, etc.
-/mob/living/carbon/human/proc/get_authentification_rank(if_no_id = "No id", if_no_job = "No job")
-	var/obj/item/device/pda/pda = wear_id
-	if (istype(pda))
-		if (pda.id)
-			return pda.id.rank
-		else
-			return pda.ownrank
-	else
-		var/obj/item/weapon/card/id/id = get_idcard()
-		if(id)
-			return id.rank ? id.rank : if_no_job
-		else
-			return if_no_id
-
-//gets assignment from ID or ID inside PDA or PDA itself
-//Useful when player do something with computers
-/mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job")
-	var/obj/item/device/pda/pda = wear_id
-	var/obj/item/weapon/card/id/id = wear_id
-	if (istype(pda))
-		if (pda.id && istype(pda.id, /obj/item/weapon/card/id))
-			. = pda.id.assignment
-		else
-			. = pda.ownjob
-	else if (istype(id))
-		. = id.assignment
-	else
-		return if_no_id
-	if (!.)
-		. = if_no_job
-	return
-
-//gets name from ID or ID inside PDA or PDA itself
-//Useful when player do something with computers
-/mob/living/carbon/human/proc/get_authentification_name(if_no_id = "Unknown")
-	var/obj/item/device/pda/pda = wear_id
-	var/obj/item/weapon/card/id/id = wear_id
-	if (istype(pda))
-		if (pda.id)
-			. = pda.id.registered_name
-		else
-			. = pda.owner
-	else if (istype(id))
-		. = id.registered_name
-	else
-		return if_no_id
-	return
-
-//repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
-/mob/living/carbon/human/proc/get_visible_name()
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
-		return get_id_name("Unknown")
-	if( head && (head.flags_inv&HIDEFACE) )
-		return get_id_name("Unknown")		//Likewise for hats
-	if(name_override)
-		return name_override
-	var/face_name = get_face_name()
-	var/id_name = get_id_name("")
-	if(id_name && (id_name != face_name))
-		return "[face_name] (as [id_name])"
-	return face_name
-
-//Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
-/mob/living/carbon/human/proc/get_face_name()
-	var/datum/organ/external/head/head = get_organ("head")
-	if( !head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
-		return "Unknown"
-	return real_name
-
-//gets name from ID or PDA itself, ID inside PDA doesn't matter
-//Useful when player is being seen by other mobs
-/mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
-	. = if_no_id
-	if(istype(wear_id,/obj/item/device/pda))
-		var/obj/item/device/pda/P = wear_id
-		return P.owner
-	if(wear_id)
-		var/obj/item/weapon/card/id/I = wear_id.GetID()
-		if(I)
-			return I.registered_name
-	return
-
-//gets ID card object from special clothes slot or null.
-/mob/living/carbon/human/proc/get_idcard()
-	if(wear_id)
-		return wear_id.GetID()
 
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
@@ -824,10 +706,6 @@
 	return 0
 
 
-/mob/living/carbon/human/proc/check_dna()
-	dna.check_integrity(src)
-	return
-
 /mob/living/carbon/human/get_species()
 
 	if(!species)
@@ -849,31 +727,6 @@
 		spawn(1200)
 			xylophone=0
 	return
-
-/mob/living/carbon/human/proc/vomit()
-
-	if(species.flags[IS_SYNTHETIC])
-		return //Machines don't throw up.
-
-	if(!lastpuke)
-		lastpuke = 1
-		to_chat(src, "<span class='warning'>You feel nauseous...</span>")
-		spawn(150)	//15 seconds until second warning
-			to_chat(src, "<span class='warning'>You feel like you are about to throw up!</span>")
-			spawn(100)	//and you have 10 more for mad dash to the bucket
-				Stun(5)
-
-				src.visible_message("<span class='warning'>[src] throws up!","<spawn class='warning'>You throw up!</span>")
-				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-				var/turf/location = loc
-				if (istype(location, /turf/simulated))
-					location.add_vomit_floor(src, 1)
-
-				nutrition -= 40
-				adjustToxLoss(-3)
-				spawn(350)	//wait 35 seconds before next volley
-					lastpuke = 0
 
 /mob/living/carbon/human/proc/morph()
 	set name = "Morph"
@@ -1065,17 +918,6 @@
 		remoteview_target = null
 		reset_view(0) //##Z2
 
-/mob/living/carbon/human/proc/get_visible_gender()
-	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
-		return NEUTER
-	return gender
-
-/mob/living/carbon/human/proc/increase_germ_level(n)
-	if(gloves)
-		gloves.germ_level += n
-	else
-		germ_level += n
-
 /mob/living/carbon/human/revive()
 	for (var/datum/organ/external/O in organs)
 		O.status &= ~ORGAN_BROKEN
@@ -1113,17 +955,6 @@
 		V.cure(src)
 
 	..()
-
-/mob/living/carbon/human/proc/is_lung_ruptured()
-	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
-	return L.is_bruised()
-
-/mob/living/carbon/human/proc/rupture_lung()
-	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
-
-	if(!L.is_bruised())
-		src.custom_pain("You feel a stabbing pain in your chest!", 1)
-		L.damage = L.min_bruised_damage
 
 /*
 /mob/living/carbon/human/verb/simulate()
@@ -1177,39 +1008,6 @@
 		update_inv_shoes()
 		return 1
 
-/mob/living/carbon/human/get_visible_implants(class = 0)
-
-	var/list/visible_implants = list()
-	for(var/datum/organ/external/organ in src.organs)
-		for(var/obj/item/weapon/O in organ.implants)
-			if(!istype(O,/obj/item/weapon/implant) && O.w_class > class)
-				visible_implants += O
-
-	return(visible_implants)
-
-/mob/living/carbon/human/proc/handle_embedded_objects()
-
-	for(var/datum/organ/external/organ in src.organs)
-		if(organ.status & ORGAN_SPLINTED) //Splints prevent movement.
-			continue
-		for(var/obj/item/weapon/O in organ.implants)
-			if(!istype(O,/obj/item/weapon/implant) && prob(5)) //Moving with things stuck in you could be bad.
-				// All kinds of embedded objects cause bleeding.
-				var/msg = null
-				switch(rand(1,3))
-					if(1)
-						msg ="<span class='warning'>A spike of pain jolts your [organ.display_name] as you bump [O] inside.</span>"
-					if(2)
-						msg ="<span class='warning'>Your movement jostles [O] in your [organ.display_name] painfully.</span>"
-					if(3)
-						msg ="<span class='warning'>[O] in your [organ.display_name] twists painfully as you move.</span>"
-				to_chat(src, msg)
-
-				organ.take_damage(rand(1,3), 0, 0)
-				if(!(organ.status & ORGAN_ROBOT)) //There is no blood in protheses.
-					organ.status |= ORGAN_BLEEDING
-					src.adjustToxLoss(rand(1,3))
-
 /mob/living/carbon/human/verb/check_pulse()
 	set category = "Object"
 	set name = "Check pulse"
@@ -1241,51 +1039,6 @@
 		to_chat(usr, "You moved while counting. Try again.")
 	else
 		to_chat(usr, "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].")
-
-/mob/living/carbon/human/proc/set_species(new_species, force_organs, default_colour)
-
-	if(!dna)
-		if(!new_species)
-			new_species = "Human"
-	else
-		if(!new_species)
-			new_species = dna.species
-		else
-			dna.species = new_species
-
-	if(species && (species.name && species.name == new_species))
-		return
-
-	if(species && species.language)
-		remove_language(species.language)
-
-	species = all_species[new_species]
-
-	if(force_organs || !organs || !organs.len)
-		species.create_organs(src)
-
-	if(species.language)
-		add_language(species.language)
-
-	if(species.base_color && default_colour)
-		//Apply colour.
-		r_skin = hex2num(copytext(species.base_color,2,4))
-		g_skin = hex2num(copytext(species.base_color,4,6))
-		b_skin = hex2num(copytext(species.base_color,6,8))
-	else
-		r_skin = 0
-		g_skin = 0
-		b_skin = 0
-
-	species.handle_post_spawn(src)
-
-	spawn(0)
-		update_icons()
-
-	if(species)
-		return 1
-	else
-		return 0
 
 /mob/living/carbon/human/proc/bloody_doodle()
 	set category = "IC"

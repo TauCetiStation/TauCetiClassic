@@ -9,8 +9,8 @@
 #define M_TOTAL_LAYERS			7
 /////////////////////////////////
 
-/mob/living/carbon/monkey
-	var/list/overlays_standing[M_TOTAL_LAYERS]
+//mob/living/carbon/monkey
+//	var/list/overlays_standing[M_TOTAL_LAYERS]
 
 /mob/living/carbon/monkey/regenerate_icons()
 	..()

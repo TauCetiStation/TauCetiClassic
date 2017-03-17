@@ -159,7 +159,7 @@
 
 	AIproc = 0
 
-/mob/living/carbon/slime/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/slime/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		adjustToxLoss(rand(10,20))
 		return
@@ -234,7 +234,7 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/carbon/slime/proc/handle_chemicals_in_body()
+/mob/living/carbon/slime/handle_chemicals_in_body()
 
 	if(reagents) reagents.metabolize(src)
 
@@ -244,7 +244,7 @@
 	return //TODO: DEFERRED
 
 
-/mob/living/carbon/slime/proc/handle_regular_status_updates()
+/mob/living/carbon/slime/handle_regular_status_updates()
 
 	if(istype(src, /mob/living/carbon/slime/adult))
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
@@ -780,3 +780,6 @@
 /mob/living/carbon/slime/proc/get_starve_nutrition() // Below it we will eat before everything else
 	if(isslimeadult(src)) return 300
 	else return 200
+
+/mob/living/carbon/slime/handle_mutations_and_radiation()
+	return

@@ -33,8 +33,6 @@
 	universal_understand = FALSE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi = 5)
 
-	var/obj/item/weapon/card/id/wear_id = null
-
 	var/dodged = FALSE
 	var/unlock_mouth = FALSE        // Whitelist related, blocks attack_paw() usage.
 	var/ian_action = IAN_STANDARD   // Overrides click logic, holds special abilities.
@@ -47,7 +45,7 @@
 	var/pose_prev = 0
 	var/pose_last = 0
 
-/mob/living/carbon/ian/New()
+/mob/living/carbon/ian/New(loc, new_species = S_DOG)
 	reagents = new(1000)
 	reagents.my_atom = src
 

@@ -16,7 +16,6 @@
 	var/storedPlasma = 250
 	var/max_plasma = 500
 
-	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 
 	var/move_delay_add = 0 // movement delay to add
@@ -59,7 +58,7 @@
 		//toxloss isn't used for aliens, its actually used as alien powers!!
 		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
-/mob/living/carbon/alien/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in loc)
@@ -117,7 +116,7 @@
 	else
 		clear_alert("alien_fire")
 
-/mob/living/carbon/alien/proc/handle_mutations_and_radiation()
+/mob/living/carbon/alien/handle_mutations_and_radiation()
 
 	// Aliens love radiation nom nom nom
 	if (radiation)

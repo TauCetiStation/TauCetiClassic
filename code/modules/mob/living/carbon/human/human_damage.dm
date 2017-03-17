@@ -224,15 +224,6 @@
 ////////////////////////////////////////////
 
 /*
-This function restores the subjects blood to max.
-*/
-/mob/living/carbon/human/proc/restore_blood()
-	if(!species.flags[NO_BLOOD])
-		var/blood_volume = vessel.get_reagent_amount("blood")
-		vessel.add_reagent("blood",560.0-blood_volume)
-
-
-/*
 This function restores all organs.
 */
 /mob/living/carbon/human/restore_all_organs()
@@ -248,12 +239,6 @@ This function restores all organs.
 		return 0
 	return
 
-
-/mob/living/carbon/human/proc/get_organ(zone)
-	if(!zone)	zone = "chest"
-	if (zone in list( "eyes", "mouth" ))
-		zone = "head"
-	return organs_by_name[zone]
 
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, sharp = 0, edge = 0, obj/used_weapon = null)
 //	visible_message("Hit debug. [damage] | [damagetype] | [def_zone] | [blocked] | [sharp] | [used_weapon]")

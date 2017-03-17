@@ -24,13 +24,13 @@
 	sleep(48)
 	//animation = null
 
-	if(!species.primitive) //If the creature in question has no primitive set, this is going to be messy.
+	if(!species.backward_form) //If the creature in question has no backward_form set, this is going to be messy.
 		gib()
 		return
 
 	var/mob/living/carbon/monkey/O = null
 
-	O = new species.primitive(loc)
+	O = new species.backward_form(loc)
 
 	O.dna = dna.Clone()
 	O.dna.SetSEState(MONKEYBLOCK,1)

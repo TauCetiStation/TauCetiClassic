@@ -13,7 +13,7 @@
 
 /mob/living/carbon/alien/larva
 
-	proc/handle_random_events()
+	handle_random_events()
 		return
 
 /mob/living/carbon/alien/larva/handle_hud_icons_health()

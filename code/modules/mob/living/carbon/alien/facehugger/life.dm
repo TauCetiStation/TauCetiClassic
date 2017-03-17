@@ -8,7 +8,7 @@
 
 /mob/living/carbon/alien/facehugger
 
-	proc/handle_random_events()
+	handle_random_events()
 		return
 
 /mob/living/carbon/alien/facehugger/handle_hud_icons_health()

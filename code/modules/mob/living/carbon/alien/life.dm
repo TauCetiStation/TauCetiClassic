@@ -56,7 +56,7 @@
 
 
 /mob/living/carbon/alien
-	proc/breathe()
+	breathe()
 		if(reagents)
 			if(reagents.has_reagent("lexorin")) return
 
@@ -114,7 +114,7 @@
 			loc.assume_air(breath)
 
 
-	proc/get_breath_from_internal(volume_needed)
+	get_breath_from_internal(volume_needed)
 		if(internal)
 			if (!contents.Find(internal))
 				internal = null
@@ -129,7 +129,7 @@
 					internals.icon_state = "internal0"
 		return null
 
-	proc/handle_breath(datum/gas_mixture/breath)
+	handle_breath(datum/gas_mixture/breath)
 		if(status_flags & GODMODE)
 			return
 
@@ -215,7 +215,7 @@
 		return fire_prot
 	*/
 
-	proc/handle_regular_status_updates()
+	handle_regular_status_updates()
 		updatehealth()
 
 		if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -339,7 +339,7 @@
 	proc/handle_hud_icons_health()
 		return
 
-	proc/handle_stomach()
+	handle_stomach()
 		spawn(0)
 			for(var/mob/living/M in stomach_contents)
 				if(M.loc != src)

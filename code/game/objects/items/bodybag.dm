@@ -82,27 +82,39 @@
 		R.add_fingerprint(user)
 		qdel(src)
 
-
-
 /obj/structure/closet/body_bag/cryobag
 	name = "stasis bag"
 	desc = "A non-reusable plastic bag designed to prevent additional damage to an occupant at the cost of genetic damage."
 	icon = 'icons/obj/cryobag.dmi'
 	item_path = /obj/item/bodybag/cryobag
-	var/used = 0
+	var/used = FALSE
 
-	open()
-		. = ..()
-		if(used)
-			var/obj/item/O = new/obj/item(src.loc)
-			O.name = "used stasis bag"
-			O.icon = src.icon
-			O.icon_state = "bodybag_used"
-			O.desc = "Pretty useless now.."
-			qdel(src)
+/obj/structure/closet/body_bag/cryobag/open()
+	. = ..()
+	if(used)
+		var/obj/item/O = (src.loc)
+		O.name = "used stasis bag"
+		O.icon = src.icon
+		O.icon_state = "bodybag_used"
+		O.desc = "Pretty useless now.."
+		qdel(src)
 
-	MouseDrop(over_object, src_location, over_location)
-		if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-			if(!ishuman(usr))	return
-			to_chat(usr, "\red You can't fold that up anymore..")
-		..()
+/obj/structure/closet/body_bag/cryobag/close()
+	if(..())
+		if(locate(/mob/living/carbon) in contents)
+			used = TRUE
+			START_PROCESSING(SSobj, src)
+		return TRUE
+	return FALSE
+
+/obj/structure/closet/body_bag/cryobag/MouseDrop(over_object, src_location, over_location)
+	if( over_object == usr && (in_range(src, usr) || usr.contents.Find(src)) )
+		if(!ishuman(usr))
+			return
+		to_chat(usr, "<span class='red'>You can't fold that up anymore..</span>")
+	..()
+
+/obj/structure/closet/body_bag/cryobag/process()
+	for(var/mob/living/carbon/C in contents)
+		C.adjustBrainLoss(0.1) // First off, there's no oxygen supply, so the mob will slowly take brain damage
+		C.adjustCloneLoss(0.1) // Next, the method to induce stasis has some adverse side-effects, manifesting as cloneloss
