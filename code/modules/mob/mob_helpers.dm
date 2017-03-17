@@ -409,7 +409,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 		if(belt && is_type_in_list(belt, weapon_list))
 			threatcount += 2
 
-		if(species.name != "Human")
+		if(species.name != S_HUMAN)
 			threatcount += 2
 
 	if(check_records || check_arrest)

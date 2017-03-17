@@ -706,18 +706,6 @@
 	return 0
 
 
-/mob/living/carbon/human/get_species()
-
-	if(!species)
-		set_species()
-
-	if(dna && dna.mutantrace == "golem")
-		return "Animated Construct"
-
-
-
-	return species.name
-
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
 		visible_message("\red [src] begins playing his ribcage like a xylophone. It's quite spooky.","\blue You begin to play a spooky refrain on your ribcage.","\red You hear a spooky xylophone melody.")

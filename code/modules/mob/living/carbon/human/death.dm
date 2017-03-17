@@ -94,7 +94,7 @@
 		//Check for last assailant's mutantrace.
 		/*if( LAssailant && ( istype( LAssailant,/mob/living/carbon/human ) ) )
 			var/mob/living/carbon/human/V = LAssailant
-			if (V.dna && (V.dna.mutantrace == "vox"))*/ //Not currently feasible due to terrible LAssailant tracking.
+			if (V.dna && (V.dna.mutantrace == S_VOX))*/ //Not currently feasible due to terrible LAssailant tracking.
 		//world << "Vox kills: [vox_kills]"
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
@@ -121,13 +121,13 @@
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!species || (species.name == "Skeleton")) return
+	if(!species || (species.name == S_SKELETON)) return
 	if(f_style)
 		f_style = "Shaved"
 	if(h_style)
 		h_style = "Bald"
 
-	set_species("Skeleton")
+	set_species(S_SKELETON)
 	status_flags |= DISFIGURED
 	regenerate_icons()
 	return

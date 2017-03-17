@@ -136,12 +136,12 @@
 			C.update_hair()
 
 /datum/species/monkey
-	name = "Monkey"
+	name = S_MONKEY
 	backward_form = /mob/living/carbon/human
 	unarmed_type = /datum/unarmed_attack/punch
 
 /datum/species/monkey/human
-	name = "Human"
+	name = S_HUMAN
 	language = "Sol Common"
 	backward_form = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
@@ -157,11 +157,11 @@
 	/*abilities = list(/client/proc/test_ability)*/
 
 /datum/species/stok
-	name = "Stok"
+	name = S_MONKEY_U
 	backward_form = /mob/living/carbon/human/unathi
 
 /datum/species/stok/unathi
-	name = "Unathi"
+	name = S_UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
 	language = "Sinta'unathi"
@@ -196,11 +196,11 @@
 	base_color = "#066000"
 
 /datum/species/farwa
-	name = "Farwa"
+	name = S_MONKEY_T
 	backward_form = /mob/living/carbon/human/tajaran
 
 /datum/species/farwa/tajaran
-	name = "Tajaran"
+	name = S_TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = "Siik'maas"
@@ -237,11 +237,11 @@
 	base_color = "#333333"
 
 /datum/species/neaera
-	name = "Neaera"
+	name = S_MONKEY_S
 	backward_form = /mob/living/carbon/human/skrell
 
 /datum/species/neaera/skrell
-	name = "Skrell"
+	name = S_SKRELL
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
 	deform = 'icons/mob/human_races/r_def_skrell.dmi'
 	language = "Skrellian"
@@ -262,7 +262,7 @@
 	reagent_tag = IS_SKRELL
 
 /datum/species/vox
-	name = "Vox"
+	name = S_VOX
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
@@ -306,7 +306,7 @@
 	..()
 
 /datum/species/vox/armalis
-	name = "Vox Armalis"
+	name = S_VOX_ARMALIS
 	icobase = 'icons/mob/human_races/r_armalis.dmi'
 	deform = 'icons/mob/human_races/r_armalis.dmi'
 	damage_mask = FALSE
@@ -353,11 +353,11 @@
 		)
 
 /datum/species/nymph
-	name = "Diona Nymph"
+	name = S_MONKEY_D
 	backward_form = /mob/living/carbon/human/diona
 
 /datum/species/nymph/diona
-	name = "Diona"
+	name = S_DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
 	language = "Rootspeak"
@@ -416,7 +416,7 @@
 	C.visible_message("\red[C] splits apart with a wet slithering noise!")
 
 /datum/species/machine
-	name = "Machine"
+	name = S_IPC
 	icobase = 'icons/mob/human_races/r_machine.dmi'
 	deform = 'icons/mob/human_races/r_machine.dmi'
 	language = "Tradeband"
@@ -455,7 +455,7 @@
 	flesh_color = "#575757"
 
 /datum/species/abductor
-	name = "Abductor"
+	name = S_ABDUCTOR
 	darksight = 3
 
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
@@ -476,7 +476,7 @@
 	return ..()
 
 /datum/species/skeleton
-	name = "Skeleton"
+	name = S_SKELETON
 
 	icobase = 'icons/mob/human_races/r_skeleton.dmi'
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
@@ -495,7 +495,7 @@
 	return ..()
 
 /datum/species/shadowling
-	name = "Shadowling"
+	name = S_SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
 	deform = 'icons/mob/human_races/r_def_shadowling.dmi'
 	language = "Sol Common"
@@ -558,25 +558,25 @@
 	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
 
 /datum/species/slime
-	name = "Slime"
+	name = S_SLIME
 
 /datum/species/alien
 
 /datum/species/alien/facehugger
-	name = "Alien Facehugger"
+	name = S_XENO_FACE
 
 /datum/species/alien/larva
-	name = "Alien Larva"
+	name = S_XENO_LARVA
 	backward_form = /mob/living/carbon/alien/facehugger
 
 /datum/species/alien/adult
-	name = "Alien Adult"
+	name = S_XENO_ADULT
 	unarmed_type = /datum/unarmed_attack/claws
 	backward_form = /mob/living/carbon/alien/larva
 
 /datum/species/alien/adult/queen
-	name = "Alien Queen"
+	name = S_XENO_QUEEN
 	backward_form = /mob/living/carbon/alien/humanoid/drone
 
 /datum/species/dog
-	name = "Dog"
+	name = S_DOG

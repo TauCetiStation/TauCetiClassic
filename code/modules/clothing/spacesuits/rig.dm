@@ -15,16 +15,16 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 	//Species-specific stuff.
-	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Diona","Vox")
+	species_restricted = list("exclude", S_UNATHI, S_TAJARAN, S_SKRELL, S_DIONA, S_VOX)
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/mob/species/unathi/helmet.dmi',
-		"Tajaran" = 'icons/mob/species/tajaran/helmet.dmi',
-		"Skrell" = 'icons/mob/species/skrell/helmet.dmi',
+		S_UNATHI = 'icons/mob/species/unathi/helmet.dmi',
+		S_TAJARAN = 'icons/mob/species/tajaran/helmet.dmi',
+		S_SKRELL = 'icons/mob/species/skrell/helmet.dmi',
 		)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/species/unathi/hats.dmi',
-		"Tajaran" = 'icons/obj/clothing/species/tajaran/hats.dmi',
-		"Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi',
+		S_UNATHI = 'icons/obj/clothing/species/unathi/hats.dmi',
+		S_TAJARAN = 'icons/obj/clothing/species/tajaran/hats.dmi',
+		S_SKRELL = 'icons/obj/clothing/species/skrell/hats.dmi',
 		)
 
 /obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
@@ -54,16 +54,16 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
-	species_restricted = list("exclude","Unathi","Tajaran","Diona","Vox")
+	species_restricted = list("exclude", S_UNATHI, S_TAJARAN, S_DIONA, S_VOX)
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/mob/species/unathi/suit.dmi',
-		"Tajaran" = 'icons/mob/species/tajaran/suit.dmi',
-		"Skrell" = 'icons/mob/species/skrell/suit.dmi',
+		S_UNATHI = 'icons/mob/species/unathi/suit.dmi',
+		S_TAJARAN = 'icons/mob/species/tajaran/suit.dmi',
+		S_SKRELL = 'icons/mob/species/skrell/suit.dmi',
 		)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/species/unathi/suits.dmi',
-		"Tajaran" = 'icons/obj/clothing/species/tajaran/suits.dmi',
-		"Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi',
+		S_UNATHI = 'icons/obj/clothing/species/unathi/suits.dmi',
+		S_TAJARAN = 'icons/obj/clothing/species/tajaran/suits.dmi',
+		S_SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi',
 		)
 	var/magpulse = 0
 
@@ -279,8 +279,8 @@
 	item_color = "chief"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/helmet.dmi')
-	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi')
+	sprite_sheets_refit = list(S_SKRELL = 'icons/mob/species/skrell/helmet.dmi')
+	sprite_sheets_obj = list(S_SKRELL = 'icons/obj/clothing/species/skrell/hats.dmi')
 
 /obj/item/clothing/suit/space/rig/engineering/chief
 	icon_state = "rig-chief"
@@ -290,8 +290,8 @@
 	slowdown = 1
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/suit.dmi')
-	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi')
+	sprite_sheets_refit = list(S_SKRELL = 'icons/mob/species/skrell/suit.dmi')
+	sprite_sheets_obj = list(S_SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi')
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -320,7 +320,7 @@
 	item_color = "syndie"
 	armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
-	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
+	species_restricted = list("exclude", S_UNATHI, S_TAJARAN, S_SKRELL, S_VOX)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
@@ -345,7 +345,7 @@
 	slowdown = 1.4
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
-	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
+	species_restricted = list("exclude", S_UNATHI, S_TAJARAN, S_SKRELL, S_VOX)
 	breach_threshold = 28
 
 //Wizard Rig

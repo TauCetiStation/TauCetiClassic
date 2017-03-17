@@ -455,9 +455,9 @@ var/datum/subsystem/job/SSjob
 
 	//TODO: Generalize this by-species
 	if(H.species)
-		if(H.species.name == "Tajaran" || H.species.name == "Unathi")
+		if(H.species.name == S_TAJARAN || H.species.name == S_UNATHI)
 			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes,1)
-		else if(H.species.name == "Vox")
+		else if(H.species.name == S_VOX)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), slot_wear_mask)
 			if(!H.r_hand)
 				H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_r_hand)

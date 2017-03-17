@@ -9,7 +9,7 @@
 	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 
-	var/greaterform = "Human"                  // Used when humanizing a monkey.
+	var/greaterform = S_HUMAN                  // Used when humanizing a monkey.
 	icon_state = "monkey1"
 	//var/uni_append = "12C4E2"                // Small appearance modifier for different species.
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
@@ -81,30 +81,30 @@
 /mob/living/carbon/monkey/unathi/New(loc, new_species = S_MONKEY_U)
 
 	..()
-	dna.mutantrace = "lizard"
-	greaterform = "Unathi"
+	dna.mutantrace = S_UNATHI
+	greaterform = S_UNATHI
 	add_language("Sinta'unathi")
 
 /mob/living/carbon/monkey/skrell/New(loc, new_species = S_MONKEY_S)
 
 	..()
-	dna.mutantrace = "skrell"
-	greaterform = "Skrell"
+	dna.mutantrace = S_SKRELL
+	greaterform = S_SKRELL
 	add_language("Skrellian")
 
 /mob/living/carbon/monkey/tajara/New(loc, new_species = S_MONKEY_T)
 
 	..()
-	dna.mutantrace = "tajaran"
-	greaterform = "Tajaran"
+	dna.mutantrace = S_TAJARAN
+	greaterform = S_TAJARAN
 	add_language("Siik'tajr")
 
 /mob/living/carbon/monkey/diona/New(loc, new_species = S_MONKEY_D)
 	..()
 	alien = 1
 	gender = NEUTER
-	dna.mutantrace = "plant"
-	greaterform = "Diona"
+	dna.mutantrace = S_DIONA
+	greaterform = S_DIONA
 	add_language("Rootspeak")
 	src.verbs += /mob/living/carbon/monkey/diona/proc/merge
 

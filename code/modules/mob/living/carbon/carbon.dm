@@ -1,9 +1,6 @@
 /mob/living/carbon/New(loc, new_species = null)
 	if(!species)
-		if(new_species)
-			set_species(new_species,null,1)
-		else
-			set_species()
+		set_species(new_species, null, 1)
 
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
@@ -254,7 +251,7 @@
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.display_name,status),1)
-			if(H.species && (H.species.name == "Skeleton") && !H.w_uniform && !H.wear_suit)
+			if(H.species && (H.species.name == S_SKELETON) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			var/t_him = "it"
@@ -840,6 +837,12 @@ This function restores the subjects blood to max.
 	if(wear_id)
 		return wear_id.GetID()
 
+/mob/living/carbon/get_species()
+	if(dna && dna.mutantrace == "golem")
+		return "Animated Construct"
+
+	return species.name
+
 /mob/living/carbon/proc/set_species(new_species, force_organs, default_colour)
 	if(!new_species)
 		return 0
@@ -849,7 +852,7 @@ This function restores the subjects blood to max.
 
 	//if(!dna)
 	//	if(!new_species)
-	//		new_species = "Human"
+	//		new_species = S_HUMAN
 	//else
 	//	if(!new_species)
 	//		new_species = dna.species

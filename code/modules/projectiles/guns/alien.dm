@@ -93,7 +93,7 @@
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		if(H.species && H.species.name != "Vox")
+		if(H.species && H.species.name != S_VOX)
 			to_chat(user, "\red The weapon does not respond to you!")
 			return
 	else
@@ -138,7 +138,7 @@
 	if(loc != user)
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
-			if(H.species.name == "Vox Armalis")
+			if(H.species.name == S_VOX_ARMALIS)
 				..()
 				return
 		to_chat(user, "\red \The [src] is far too large for you to pick up.")

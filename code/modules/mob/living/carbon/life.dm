@@ -1020,7 +1020,7 @@
 		else if (light_amount < 2) //heal in the dark
 			heal_overall_damage(1,1)
 
-	if(dna && dna.mutantrace == "shadowling")
+	if(dna && dna.mutantrace == S_SHADOWLING)
 		var/light_amount = 0
 		nutrition = 450 //i aint never get hongry
 		if(isturf(loc))

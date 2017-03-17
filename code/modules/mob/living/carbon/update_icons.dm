@@ -460,7 +460,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_[species.name]_s", "layer"=-MUTANTRACE_LAYER)
 			if("golem","shadow","adamantine")
 				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_s", "layer"=-MUTANTRACE_LAYER)
-			if("shadowling")
+			if(S_SHADOWLING)
 				var/image/eyes = image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_ms_s", "layer"=GLASSES_LAYER)
 				var/image/body = image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_s", "layer"=-MUTANTRACE_LAYER)
 				eyes.plane = LIGHTING_PLANE + 1

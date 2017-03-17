@@ -523,7 +523,7 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/create_vox_raider(obj/spawn_location, leader_chosen = 0)
 
-	var/mob/living/carbon/human/new_vox = new(spawn_location.loc, "Vox")
+	var/mob/living/carbon/human/new_vox = new(spawn_location.loc, S_VOX)
 
 	new_vox.gender = pick(MALE, FEMALE)
 	new_vox.h_style = "Short Vox Quills"
@@ -542,7 +542,7 @@ client/proc/one_click_antag()
 	new_vox.age = rand(12,20)
 
 	new_vox.dna.ready_dna(new_vox) // Creates DNA.
-	new_vox.dna.mutantrace = "vox"
+	new_vox.dna.mutantrace = S_VOX
 	new_vox.mind_initialize()
 	new_vox.mind.assigned_role = "MODE"
 	new_vox.mind.special_role = "Vox Raider"

@@ -136,7 +136,7 @@ obj/item/gland/slime/activate()
 
 /obj/item/gland/pop/activate()
 	to_chat(host, "<span class='notice'>You feel unlike yourself.</span>")
-	var/species = pick(S_HUMAN,S_UNATHI,S_TAJARAN,S_DIONA,S_VOX)
+	var/species = pick(S_HUMAN, S_UNATHI, S_TAJARAN, S_DIONA, S_VOX)
 	host.set_species(species)
 	host.regenerate_icons()
 	return

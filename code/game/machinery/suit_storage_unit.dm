@@ -600,10 +600,10 @@
 	//Departments that the cycler can paint suits to look like.
 	var/list/departments = list("Engineering","Mining","Medical","Security","Atmos")
 	//Species that the suits can be configured to fit.
-	var/list/species = list("Human","Skrell","Unathi","Tajaran")
+	var/list/species = list(S_HUMAN, S_SKRELL, S_UNATHI, S_TAJARAN)
 
 	var/target_department = "Engineering"
-	var/target_species = "Human"
+	var/target_species = S_HUMAN
 
 	var/obj/item/clothing/suit/space/rig/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -613,14 +613,14 @@
 	model_text = "Engineering"
 	req_access = list(access_construction)
 	departments = list("Engineering","Atmos")
-	species = list("Human","Unathi","Tajaran")
+	species = list(S_HUMAN, S_UNATHI, S_TAJARAN)
 
 /obj/machinery/suit_cycler/mining
 	name = "Mining suit cycler"
 	model_text = "Mining"
 	req_access = list(access_mining)
 	departments = list("Mining")
-	species = list("Human","Unathi","Tajaran")
+	species = list(S_HUMAN, S_UNATHI, S_TAJARAN)
 
 /obj/machinery/suit_cycler/attack_ai(mob/user)
 	return src.attack_hand(user)

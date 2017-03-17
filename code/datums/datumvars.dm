@@ -741,7 +741,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","adamantine","golem","shadow","shadowling","slime")
+		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE", "adamantine", "golem", "shadow", S_SHADOWLING, "slime")
 		switch(new_mutantrace)
 			if(null)
 				return
@@ -762,7 +762,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		var/new_species = input("Please choose a new species.","Species",null) as null|anything in all_species
+		var/new_species = input("Please choose a new species.","Species",null) as null|anything in list(S_HUMAN, S_UNATHI, S_TAJARAN, S_DIONA, S_IPC, S_VOX, S_VOX_ARMALIS, S_SHADOWLING, S_ABDUCTOR, S_SKELETON)
 
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")

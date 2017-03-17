@@ -37,7 +37,7 @@
 	cure = "Unknown"
 	cure_id = list("lexorin","toxin","gargleblaster")
 	cure_chance = 50
-	affected_species = list("Human", "Monkey")
+	affected_species = list(S_HUMAN, S_MONKEY)
 	permeability_mod = 15//likely to infect
 	can_carry = 0
 	stage_prob = 3

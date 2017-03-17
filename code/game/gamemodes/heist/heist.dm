@@ -117,8 +117,8 @@
 		vox.name = vox.real_name
 		raider.name = vox.name
 		vox.age = rand(17,85)
-		//vox.dna.mutantrace = "vox"
-		//vox.set_species("Vox")
+		//vox.dna.mutantrace = S_VOX
+		//vox.set_species(S_VOX)
 		vox.languages = list() // Removing language from chargen.
 		vox.flavor_text = ""
 		vox.add_language("Gutter")

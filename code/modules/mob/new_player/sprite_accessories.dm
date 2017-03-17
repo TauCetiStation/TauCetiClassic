@@ -27,7 +27,7 @@
 	var/gender = NEUTER
 
 	// Restrict some styles to specific species
-	var/list/species_allowed = list("Human")
+	var/list/species_allowed = list(S_HUMAN)
 
 	// Whether or not the accessory can be affected by colouration
 	var/do_colouration = 1
@@ -710,7 +710,7 @@
 	name = "Shaved"
 	icon_state = "bald"
 	gender = NEUTER
-	species_allowed = list("Human","Unathi","Tajaran","Skrell","Vox","Machine")
+	species_allowed = list(S_HUMAN, S_UNATHI, S_TAJARAN, S_SKRELL, S_VOX, S_IPC)
 
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"
@@ -821,279 +821,279 @@
 /datum/sprite_accessory/hair/icp_screen_pink
 	name = "pink IPC screen"
 	icon_state = "ipc_pink"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_red
 	name = "red IPC screen"
 	icon_state = "ipc_red"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_green
 	name = "green IPC screen"
 	icon_state = "ipc_green"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_blue
 	name = "blue IPC screen"
 	icon_state = "ipc_blue"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_breakout
 	name = "breakout IPC screen"
 	icon_state = "ipc_breakout"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_eight
 	name = "eight IPC screen"
 	icon_state = "ipc_eight"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_goggles
 	name = "goggles IPC screen"
 	icon_state = "ipc_goggles"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_heart
 	name = "heart IPC screen"
 	icon_state = "ipc_heart"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_monoeye
 	name = "monoeye IPC screen"
 	icon_state = "ipc_monoeye"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_nature
 	name = "nature IPC screen"
 	icon_state = "ipc_nature"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_orange
 	name = "orange IPC screen"
 	icon_state = "ipc_orange"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_purple
 	name = "purple IPC screen"
 	icon_state = "ipc_purple"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_shower
 	name = "shower IPC screen"
 	icon_state = "ipc_shower"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_static
 	name = "static IPC screen"
 	icon_state = "ipc_static"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/icp_screen_yellow
 	name = "yellow IPC screen"
 	icon_state = "ipc_yellow"
-	species_allowed = list("Machine")
+	species_allowed = list(S_IPC)
 	do_colouration = 0
 
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"
 	icon_state = "unathi_warrior_horns"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_smallhorns
 	name = "Small Horns"
 	icon_state = "unathi_smallhorns"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads
 	name = "Dreads"
 	icon_state = "unathi_dreads"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads_long
 	name = "Long Dreads"
 	icon_state = "unathi_dreads_long"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads_short
 	name = "Short Dreads"
 	icon_state = "unathi_dreads_short"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads_predator
 	name = "Predator Dreads"
 	icon_state = "unathi_dreads_predator"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_hiss_collinss
 	name = "Hiss Collinss"
 	icon_state = "unathi_hiss_collinss"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_horns_curled
 	name = "Curled Horns"
 	icon_state = "unathi_horns_curled"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_horns_ram
 	name = "Ram Horns"
 	icon_state = "unathi_horns_ram"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/una_spines_long
 	name = "Long Unathi Spines"
 	icon_state = "una_longspines"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/una_spines_short
 	name = "Short Unathi Spines"
 	icon_state = "una_shortspines"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/una_frills_long
 	name = "Long Unathi Frills"
 	icon_state = "una_longfrills"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/una_frills_short
 	name = "Short Unathi Frills"
 	icon_state = "una_shortfrills"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/una_horns
 	name = "Unathi Horns"
 	icon_state = "una_horns"
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/skr_tentacle_m
 	name = "Skrell Male Tentacles"
 	icon_state = "skr_hair_m"
-	species_allowed = list("Skrell")
+	species_allowed = list(S_SKRELL)
 	gender = MALE
 
 /datum/sprite_accessory/hair/skr_tentacle_f
 	name = "Skrell Female Tentacles"
 	icon_state = "skr_hair_f"
-	species_allowed = list("Skrell")
+	species_allowed = list(S_SKRELL)
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/taj_ears
 	name = "Tajaran Ears"
 	icon_state = "taj_ears_plain"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_clean
 	name = "Tajara Clean"
 	icon_state = "taj_hair_clean"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_bangs
 	name = "Tajara Bangs"
 	icon_state = "taj_hair_bangs"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_braid
 	name = "Tajara Braid"
 	icon_state = "taj_hair_tbraid"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_shaggy
 	name = "Tajara Shaggy"
 	icon_state = "taj_hair_shaggy"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_mohawk
 	name = "Tajaran Mohawk"
 	icon_state = "taj_hair_mohawk"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_plait
 	name = "Tajara Plait"
 	icon_state = "taj_hair_plait"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_straight
 	name = "Tajara Straight"
 	icon_state = "taj_hair_straight"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_long
 	name = "Tajara Long"
 	icon_state = "taj_hair_long"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_rattail
 	name = "Tajara Rat Tail"
 	icon_state = "taj_hair_rattail"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_spiky
 	name = "Tajara Spiky"
 	icon_state = "taj_hair_tajspiky"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_messy
 	name = "Tajara Messy"
 	icon_state = "taj_hair_messy"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_tailshort
 	name = "Tajara Short Tail"
 	icon_state = "taj_hair_shorttail"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/taj_ears_messylong
 	name = "Tajara Long Messy"
 	icon_state = "taj_hair_messylong"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/hair/vox_quills_short
 	name = "Short Vox Quills"
 	icon_state = "vox_shortquills"
-	species_allowed = list("Vox")
+	species_allowed = list(S_VOX)
 
 /datum/sprite_accessory/facial_hair/taj_sideburns
 	name = "Tajara Sideburns"
 	icon_state = "taj_facial_mutton"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/facial_hair/taj_mutton
 	name = "Tajara Mutton"
 	icon_state = "taj_facial_mutton"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/facial_hair/taj_pencilstache
 	name = "Tajara Pencilstache"
 	icon_state = "taj_facial_pencilstache"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/facial_hair/taj_moustache
 	name = "Tajara Moustache"
 	icon_state = "taj_facial_moustache"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/facial_hair/taj_goatee
 	name = "Tajara Goatee"
 	icon_state = "taj_facial_goatee"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/facial_hair/taj_smallstache
 	name = "Tajara Smallsatche"
 	icon_state = "taj_facial_smallstache"
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 
 //skin styles - WIP
@@ -1105,27 +1105,27 @@
 /datum/sprite_accessory/skin/human
 	name = "Default human skin"
 	icon_state = "default"
-	species_allowed = list("Human")
+	species_allowed = list(S_HUMAN)
 
 /datum/sprite_accessory/skin/human_tatt01
 	name = "Tatt01 human skin"
 	icon_state = "tatt1"
-	species_allowed = list("Human")
+	species_allowed = list(S_HUMAN)
 
 /datum/sprite_accessory/skin/tajaran
 	name = "Default tajaran skin"
 	icon_state = "default"
 	icon = 'icons/mob/human_races/r_tajaran.dmi'
-	species_allowed = list("Tajaran")
+	species_allowed = list(S_TAJARAN)
 
 /datum/sprite_accessory/skin/unathi
 	name = "Default Unathi skin"
 	icon_state = "default"
 	icon = 'icons/mob/human_races/r_lizard.dmi'
-	species_allowed = list("Unathi")
+	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/skin/skrell
 	name = "Default skrell skin"
 	icon_state = "default"
 	icon = 'icons/mob/human_races/r_skrell.dmi'
-	species_allowed = list("Skrell")
+	species_allowed = list(S_SKRELL)

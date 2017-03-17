@@ -134,7 +134,7 @@
 	var/mob/living/carbon/human/user = usr
 	for(var/datum/mind/mindToCount in ticker.mode.thralls)
 		thrallsPresent++
-	if(thrallsPresent >= 5 && (user.dna.species != "Shadowling"))
+	if(thrallsPresent >= 5 && (user.dna.species != S_SHADOWLING))
 		to_chat(user, "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>")
 		charge_counter = charge_max
 		return
@@ -257,8 +257,8 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
 		var/mob/living/carbon/human/H = usr
-		H.set_species("Shadowling")
-		H.dna.mutantrace = "shadowling"
+		H.set_species(S_SHADOWLING)
+		H.dna.mutantrace = S_SHADOWLING
 		H.update_mutantrace()
 		H.regenerate_icons()
 

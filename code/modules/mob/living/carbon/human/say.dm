@@ -45,17 +45,17 @@
 		message = copytext(message,2+length(speaking.key))
 	else
 		switch(species.name)
-			if("Tajaran")
-				message = replacetext(message, "р", pick(list("ррр","рр","р-р")))
+			if(S_TAJARAN)
+				message = replacetext(message, "р", pick(list("ррр","рр")))
 				message = replacetext(message, "Р", pick(list("Ррр","Рр")))
-			if("Unathi")
-				message = replacetext(message, "с", pick(list("ссс","сс","с-с")))
+			if(S_UNATHI)
+				message = replacetext(message, "с", pick(list("ссс","сс")))
 				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
 				message = replacetext(message, "С", pick(list("Ссс","Сс")))
-			if("Abductor")
+			if(S_ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				for(var/mob/living/carbon/human/H in mob_list)
-					if(H.species.name != "Abductor")
+					if(H.species.name != S_ABDUCTOR)
 						continue
 					else
 						if(user.team != H.team)
@@ -160,7 +160,7 @@
 
 	var/sound/speech_sound
 	var/sound_vol
-	if((species.name == "Vox" || species.name == "Vox Armalis") && prob(20))
+	if((species.name == S_VOX || species.name == S_VOX_ARMALIS) && prob(20))
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
 

@@ -26,9 +26,9 @@ var/list/whitelist = list()
 /proc/is_alien_whitelisted(mob/M, species)
 	if(!config.usealienwhitelist)
 		return 1
-	if(species == "human" || species == "Human")
+	if(species == S_HUMAN)
 		return 1
-//	if(species == "machine" || species == "Machine")
+//	if(species == S_IPC)
 //		return 1
 	if(check_rights(R_ADMIN, 0))
 		return 1
@@ -37,11 +37,11 @@ var/list/whitelist = list()
 	if(M && species)
 		switch(species) //When something passes language name instead race name, we magically change variable.
 			if("Sinta'unathi")
-				species = "Unathi"
+				species = S_UNATHI
 			if("Siik'maas","Siik'tajr")
-				species = "Tajaran"
+				species = S_TAJARAN
 			if("Skrellian")
-				species = "Skrell"
+				species = S_SKRELL
 		for (var/s in alien_whitelist)
 			if(findtext(s,"[M.ckey] - [species]"))
 				return 1
@@ -74,7 +74,7 @@ client/proc/get_alienwhitelist()
 	if(length(player) == 0)
 		return
 	player += " - "
-	player += input("Input alien species, e.g. Unathi, Tajaran, Skrell, Diona, Machine") as text
+	player += input("Input alien species, e.g. Unathi, Tajaran, Skrell, Diona, Machine, ian (case sensitive)") as text
 	var/log_text = player + ",added by [src.key]."	//log without creating new line buy \n macros
 	player += " ,added by [src.key]\n"
 	if(fexists(path))
