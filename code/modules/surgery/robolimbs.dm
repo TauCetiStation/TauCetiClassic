@@ -143,7 +143,7 @@
 		if(..())
 			var/obj/item/robot_parts/p = tool
 			if (p.part)
-				if (!(target_zone in p.part))
+				if(target_zone != p.part)
 					return 0
 			var/datum/organ/external/affected = target.get_organ(target_zone)
 			return affected.status & ORGAN_ATTACHABLE

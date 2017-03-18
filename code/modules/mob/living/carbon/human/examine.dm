@@ -348,41 +348,25 @@
 		msg += wound_flavor_text["chest"]
 	else if(is_bleeding["chest"])
 		display_chest = 1
-	if(wound_flavor_text["left arm"] && (is_destroyed["left arm"] || (!w_uniform && !skipjumpsuit)))
+	if(wound_flavor_text["left arm"] && (is_destroyed["left arm"] || (!gloves && !skipgloves)))
 		msg += wound_flavor_text["left arm"]
 	else if(is_bleeding["left arm"])
-		display_chest = 1
-	if(wound_flavor_text["left hand"] && (is_destroyed["left hand"] || (!gloves && !skipgloves)))
-		msg += wound_flavor_text["left hand"]
-	else if(is_bleeding["left hand"])
 		display_gloves = 1
-	if(wound_flavor_text["right arm"] && (is_destroyed["right arm"] || (!w_uniform && !skipjumpsuit)))
+	if(wound_flavor_text["right arm"] && (is_destroyed["right arm"] || (!gloves && !skipgloves)))
 		msg += wound_flavor_text["right arm"]
 	else if(is_bleeding["right arm"])
-		display_chest = 1
-	if(wound_flavor_text["right hand"] && (is_destroyed["right hand"] || (!gloves && !skipgloves)))
-		msg += wound_flavor_text["right hand"]
-	else if(is_bleeding["right hand"])
 		display_gloves = 1
 	if(wound_flavor_text["groin"] && (is_destroyed["groin"] || (!w_uniform && !skipjumpsuit)))
 		msg += wound_flavor_text["groin"]
 	else if(is_bleeding["groin"])
 		display_chest = 1
-	if(wound_flavor_text["left leg"] && (is_destroyed["left leg"] || (!w_uniform && !skipjumpsuit)))
+	if(wound_flavor_text["left leg"] && (is_destroyed["left leg"] || (!shoes && !skipshoes)))
 		msg += wound_flavor_text["left leg"]
 	else if(is_bleeding["left leg"])
-		display_chest = 1
-	if(wound_flavor_text["left foot"]&& (is_destroyed["left foot"] || (!shoes && !skipshoes)))
-		msg += wound_flavor_text["left foot"]
-	else if(is_bleeding["left foot"])
 		display_shoes = 1
-	if(wound_flavor_text["right leg"] && (is_destroyed["right leg"] || (!w_uniform && !skipjumpsuit)))
+	if(wound_flavor_text["right leg"] && (is_destroyed["right leg"] || (!shoes  && !skipshoes)))
 		msg += wound_flavor_text["right leg"]
 	else if(is_bleeding["right leg"])
-		display_chest = 1
-	if(wound_flavor_text["right foot"]&& (is_destroyed["right foot"] || (!shoes  && !skipshoes)))
-		msg += wound_flavor_text["right foot"]
-	else if(is_bleeding["right foot"])
 		display_shoes = 1
 	if(display_chest)
 		msg += "<span class='warning'><b>[src] has blood soaking through from under [t_his] clothing!</b></span>\n"

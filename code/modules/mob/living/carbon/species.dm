@@ -96,10 +96,6 @@
 			C.organs_by_name["r_arm"] = new/datum/organ/external/r_arm(C.organs_by_name["chest"])
 			C.organs_by_name["r_leg"] = new/datum/organ/external/r_leg(C.organs_by_name["groin"])
 			C.organs_by_name["l_leg"] = new/datum/organ/external/l_leg(C.organs_by_name["groin"])
-			C.organs_by_name["l_hand"] = new/datum/organ/external/l_hand(C.organs_by_name["l_arm"])
-			C.organs_by_name["r_hand"] = new/datum/organ/external/r_hand(C.organs_by_name["r_arm"])
-			C.organs_by_name["l_foot"] = new/datum/organ/external/l_foot(C.organs_by_name["l_leg"])
-			C.organs_by_name["r_foot"] = new/datum/organ/external/r_foot(C.organs_by_name["r_leg"])
 
 			C.internal_organs = list()
 			C.internal_organs_by_name["heart"] = new/datum/organ/internal/heart(C)

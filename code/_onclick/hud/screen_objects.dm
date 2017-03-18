@@ -119,9 +119,9 @@
 		if(1 to 3) //Feet
 			switch(icon_x)
 				if(10 to 15)
-					selecting = "r_foot"
+					selecting = "r_leg"
 				if(17 to 22)
-					selecting = "l_foot"
+					selecting = "l_leg"
 				else
 					return 1
 		if(4 to 9) //Legs
@@ -135,11 +135,11 @@
 		if(10 to 13) //Hands and groin
 			switch(icon_x)
 				if(8 to 11)
-					selecting = "r_hand"
+					selecting = "r_arm"
 				if(12 to 20)
 					selecting = "groin"
 				if(21 to 24)
-					selecting = "l_hand"
+					selecting = "l_arm"
 				else
 					return 1
 		if(14 to 22) //Chest and arms to shoulders

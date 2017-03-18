@@ -27,9 +27,9 @@
 
 /obj/item/weapon/paper_bin/attack_hand(mob/user)
 	if (hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
+		var/datum/organ/external/temp = user:organs_by_name["r_arm"]
 		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
+			temp = user:organs_by_name["l_arm"]
 		if(temp && !temp.is_usable())
 			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
 			return

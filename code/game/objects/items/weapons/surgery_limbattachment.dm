@@ -11,13 +11,13 @@
 		return ..()
 
 	if((user.zone_sel.selecting == "l_arm") && (istype(src, /obj/item/robot_parts/l_arm)))
-		limbloc = "l_hand"
+		limbloc = "l_arm"
 	else if((user.zone_sel.selecting == "r_arm") && (istype(src, /obj/item/robot_parts/r_arm)))
-		limbloc = "r_hand"
+		limbloc = "r_arm"
 	else if((user.zone_sel.selecting == "r_leg") && (istype(src, /obj/item/robot_parts/r_leg)))
-		limbloc = "r_foot"
+		limbloc = "r_leg"
 	else if((user.zone_sel.selecting == "l_leg") && (istype(src, /obj/item/robot_parts/l_leg)))
-		limbloc = "l_foot"
+		limbloc = "l_leg"
 	else
 		to_chat(user, "\red That doesn't fit there!")
 		return ..()

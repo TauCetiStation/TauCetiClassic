@@ -20,17 +20,6 @@
 			zone = "head"
 		if("mouth")
 			zone = "head"
-/*		if("l_hand")
-			zone = "l_arm"
-		if("r_hand")
-			zone = "r_arm"
-		if("l_foot")
-			zone = "l_leg"
-		if("r_foot")
-			zone = "r_leg"
-		if("groin")
-			zone = "chest"
-*/
 	return zone
 
 // Returns zone with a certain probability.
@@ -67,20 +56,12 @@
 			if("head")
 				miss_chance = 30
 			if("l_leg")
-				miss_chance = 40
+				miss_chance = 60
 			if("r_leg")
-				miss_chance = 40
+				miss_chance = 60
 			if("l_arm")
-				miss_chance = 40
+				miss_chance = 60
 			if("r_arm")
-				miss_chance = 40
-			if("l_hand")
-				miss_chance = 60
-			if("r_hand")
-				miss_chance = 60
-			if("l_foot")
-				miss_chance = 60
-			if("r_foot")
 				miss_chance = 60
 		if(prob(max(miss_chance + miss_chance_mod, 0)))
 			if(prob(max(20, (miss_chance/2))))
@@ -88,29 +69,20 @@
 			else
 				var/t = rand(1, 100)
 				switch(t)
-					if(1 to 50)
+					if(1 to 65)
 						return "chest"
-					if(51 to 61)
+					if(66 to 75)
 						return "head"
-					if(62 to 66)
+					if(76 to 80)
 						return "l_arm"
-					if(67 to 71)
+					if(81 to 85)
 						return "r_arm"
-					if(72 to 76)
+					if(86 to 90)
 						return "r_leg"
-					if(77 to 81)
+					if(91 to 95)
 						return "l_leg"
-					if(82 to 87)
+					if(96 to 100)
 						return "groin"
-					if(88 to 91)
-						return "l_foot"
-					if(92 to 94)
-						return "r_foot"
-					if(95 to 97)
-						return "l_hand"
-					if(98 to 100)
-						return "r_hand"
-
 	return zone
 
 /proc/get_zone_with_probabilty(zone, probability = 80)

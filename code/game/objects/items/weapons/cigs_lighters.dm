@@ -424,9 +424,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				else
 					to_chat(user, "<span class='warning'>You burn yourself while lighting the lighter.</span>")
 					if (user.l_hand == src)
-						user.apply_damage(2,BURN,"l_hand")
+						user.apply_damage(2,BURN,"l_arm")
 					else
-						user.apply_damage(2,BURN,"r_hand")
+						user.apply_damage(2,BURN,"r_arm")
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
 			set_light(2)

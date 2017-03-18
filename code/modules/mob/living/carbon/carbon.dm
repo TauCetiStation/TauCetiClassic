@@ -97,30 +97,25 @@
 	else
 		..()
 
-/mob/living/carbon/attack_hand(mob/M)
-	if(!istype(M, /mob/living/carbon)) return
-	if (hasorgans(M))
-		var/datum/organ/external/temp = M:organs_by_name["r_hand"]
-		if (M.hand)
-			temp = M:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			to_chat(M, "<span class='rose'>You can't use your [temp.display_name].</span>")
-			return
+/mob/living/carbon/attack_hand(mob/living/carbon/C)
+	if(!istype(C))
+		return
+
+	var/datum/organ/external/temp = C.organs_by_name["r_arm"]
+	if (C.hand)
+		temp = C.organs_by_name["l_arm"]
+
+	if(temp && !temp.is_usable())
+		to_chat(C, "<span class='rose'>You can't use your [temp.display_name].</span>")
+		return
 
 	for(var/datum/disease/D in viruses)
-
 		if(D.spread_by_touch())
+			C.contract_disease(D, 0, 1, CONTACT_HANDS)
 
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in M.viruses)
-
+	for(var/datum/disease/D in C.viruses)
 		if(D.spread_by_touch())
-
 			contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	return
-
 
 /mob/living/carbon/attack_paw(mob/M)
 	if(!istype(M, /mob/living/carbon)) return

@@ -3,9 +3,9 @@
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
-	var/datum/organ/external/temp = M:organs_by_name["r_hand"]
+	var/datum/organ/external/temp = M:organs_by_name["r_arm"]
 	if (M.hand)
-		temp = M:organs_by_name["l_hand"]
+		temp = M:organs_by_name["l_arm"]
 	if(temp && !temp.is_usable())
 		to_chat(M, "\red You can't use your [temp.display_name].")
 		return

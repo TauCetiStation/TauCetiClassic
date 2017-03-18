@@ -1089,18 +1089,10 @@ proc/get_mob_with_client_list()
 
 
 /proc/parse_zone(zone)
-	if(zone == "r_hand") return "right hand"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "l_arm") return "left arm"
+	if (zone == "l_arm") return "left arm"
 	else if (zone == "r_arm") return "right arm"
 	else if (zone == "l_leg") return "left leg"
 	else if (zone == "r_leg") return "right leg"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "r_hand") return "right hand"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
 	else return zone
 
 
@@ -1461,7 +1453,7 @@ var/mob/dview/dview_mob = new
 	spawn()
 		//if limb names will ever be changed or procs that use names of limbs,
 		//you must adjust names of body_parts according to the current that server uses or mobs will be missing some icon_states.
-		var/list/body_parts = list("head","torso","l_arm","l_hand","r_arm","r_hand","groin","l_leg","l_foot","r_leg","r_foot")
+		var/list/body_parts = list("head","torso","l_arm","r_arm","groin","l_leg","r_leg")
 		//Same rules for damage states.. must be exactly same as other code uses...
 		var/list/damage_states = list("01","10","11","12","13","02","20","21","22","23","03","30","31","32","33")
 

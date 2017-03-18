@@ -127,18 +127,14 @@ Please contact me on #coderbus IRC. ~Carn x
 #define TOTAL_LAYERS			27
 //////////////////////////////////
 //Human Limb Overlays Indexes/////
-#define LIMB_HEAD_LAYER			11
-#define LIMB_TORSO_LAYER		10
-#define LIMB_L_ARM_LAYER		9
-#define LIMB_L_HAND_LAYER		8
-#define LIMB_R_ARM_LAYER		7
-#define LIMB_R_HAND_LAYER		6
-#define LIMB_GROIN_LAYER		5
-#define LIMB_L_LEG_LAYER		4
-#define LIMB_L_FOOT_LAYER		3
-#define LIMB_R_LEG_LAYER		2
-#define LIMB_R_FOOT_LAYER		1
-#define TOTAL_LIMB_LAYERS		11
+#define LIMB_HEAD_LAYER			7
+#define LIMB_TORSO_LAYER		6
+#define LIMB_L_ARM_LAYER		5
+#define LIMB_R_ARM_LAYER		4
+#define LIMB_GROIN_LAYER		3
+#define LIMB_L_LEG_LAYER		2
+#define LIMB_R_LEG_LAYER		1
+#define TOTAL_LIMB_LAYERS		7
 //////////////////////////////////
 
 /*
@@ -347,10 +343,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	standing	+= image("icon"=stand_icon, "layer"=-BODY_LAYER)
 
 	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
-		if(!fat && organs_by_name["r_foot"] && organs_by_name["l_foot"]) //shit
-			var/datum/organ/external/rfoot = organs_by_name["r_foot"]
-			var/datum/organ/external/lfoot = organs_by_name["l_foot"]
-			if(!rfoot.amputated && !lfoot.amputated)
+		if(!fat && organs_by_name["r_leg"] && organs_by_name["l_leg"]) //shit
+			var/datum/organ/external/r_leg = organs_by_name["r_leg"]
+			var/datum/organ/external/l_leg = organs_by_name["l_leg"]
+			if( !(r_leg.amputated || (r_leg.status & ORGAN_DESTROYED)) && !(l_leg.amputated || (l_leg.status & ORGAN_DESTROYED)) )
 				standing += image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-BODY_LAYER)
 
 	if(has_head)

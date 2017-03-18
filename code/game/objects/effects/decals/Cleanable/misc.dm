@@ -441,7 +441,6 @@
 		var/power_calculated = power
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
-			//var/rnd_foot = pick("l_foot","r_foot")
 			if(istype(H) && (istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags&NOSLIP))
 				power_calculated = 0
 				continue

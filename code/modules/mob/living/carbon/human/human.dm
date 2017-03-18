@@ -188,7 +188,7 @@
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>\The blob attacks you!</span>")
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+	var/dam_zone = pick("chest", "l_arm", "r_arm", "l_leg", "r_leg")
 	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
@@ -220,7 +220,7 @@
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/dam_zone = pick("chest", "l_arm", "r_arm", "l_leg", "r_leg")
 		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor)
@@ -353,7 +353,7 @@
 	if(NO_SHOCK in src.mutations)	return 0 //#Z2 no shock with that mutation.
 
 	if(!def_zone)
-		def_zone = pick("l_hand", "r_hand")
+		def_zone = pick("l_arm", "r_arm")
 
 	var/datum/organ/external/affected_organ = get_organ(check_zone(def_zone))
 

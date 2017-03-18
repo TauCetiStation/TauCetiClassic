@@ -610,36 +610,24 @@ Note that amputating the affected organ does in fact remove the infection from t
 					organ = new /obj/item/robot_parts/r_arm(owner.loc)
 				else
 					organ= new /obj/item/weapon/organ/r_arm(owner.loc, owner)
+				owner.u_equip(owner.gloves)
 			if(ARM_LEFT)
 				if(status & ORGAN_ROBOT)
 					organ= new /obj/item/robot_parts/l_arm(owner.loc)
 				else
 					organ= new /obj/item/weapon/organ/l_arm(owner.loc, owner)
+				owner.u_equip(owner.gloves)
 			if(LEG_RIGHT)
 				if(status & ORGAN_ROBOT)
 					organ = new /obj/item/robot_parts/r_leg(owner.loc)
 				else
 					organ= new /obj/item/weapon/organ/r_leg(owner.loc, owner)
+				owner.u_equip(owner.shoes)
 			if(LEG_LEFT)
 				if(status & ORGAN_ROBOT)
 					organ = new /obj/item/robot_parts/l_leg(owner.loc)
 				else
 					organ= new /obj/item/weapon/organ/l_leg(owner.loc, owner)
-			if(HAND_RIGHT)
-				if(!(status & ORGAN_ROBOT))
-					organ= new /obj/item/weapon/organ/r_hand(owner.loc, owner)
-				owner.u_equip(owner.gloves)
-			if(HAND_LEFT)
-				if(!(status & ORGAN_ROBOT))
-					organ= new /obj/item/weapon/organ/l_hand(owner.loc, owner)
-				owner.u_equip(owner.gloves)
-			if(FOOT_RIGHT)
-				if(!(status & ORGAN_ROBOT))
-					organ= new /obj/item/weapon/organ/r_foot/(owner.loc, owner)
-				owner.u_equip(owner.shoes)
-			if(FOOT_LEFT)
-				if(!(status & ORGAN_ROBOT))
-					organ = new /obj/item/weapon/organ/l_foot(owner.loc, owner)
 				owner.u_equip(owner.shoes)
 		if(organ)
 			destspawn = 1
@@ -680,14 +668,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 ****************************************************/
 
 /datum/organ/external/proc/release_restraints()
-	if (owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT, HAND_LEFT, HAND_RIGHT))
+	if (owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT))
 		owner.visible_message(\
 			"\The [owner.handcuffed.name] falls off of [owner.name].",\
 			"\The [owner.handcuffed.name] falls off you.")
 
 		owner.drop_from_inventory(owner.handcuffed)
 
-	if (owner.legcuffed && body_part in list(FOOT_LEFT, FOOT_RIGHT, LEG_LEFT, LEG_RIGHT))
+	if (owner.legcuffed && body_part in list(LEG_LEFT, LEG_RIGHT))
 		owner.visible_message(\
 			"\The [owner.legcuffed.name] falls off of [owner.name].",\
 			"\The [owner.legcuffed.name] falls off you.")
@@ -905,92 +893,46 @@ Note that amputating the affected organ does in fact remove the infection from t
 	display_name = "left arm"
 	icon_name = "l_arm"
 	limb_layer = LIMB_L_ARM_LAYER
-	max_damage = 50
-	min_broken_damage = 20
+	max_damage = 80
+	min_broken_damage = 35
 	body_part = ARM_LEFT
 
-	process()
-		..()
-		process_grasp(owner.l_hand, "left hand")
-
-/datum/organ/external/l_leg
-	name = "l_leg"
-	display_name = "left leg"
-	icon_name = "l_leg"
-	limb_layer = LIMB_L_LEG_LAYER
-	max_damage = 50
-	min_broken_damage = 20
-	body_part = LEG_LEFT
-	icon_position = LEFT
+/datum/organ/external/l_arm/process()
+	..()
+	process_grasp(owner.l_hand, "left hand")
 
 /datum/organ/external/r_arm
 	name = "r_arm"
 	display_name = "right arm"
 	icon_name = "r_arm"
 	limb_layer = LIMB_R_ARM_LAYER
-	max_damage = 50
-	min_broken_damage = 20
+	max_damage = 80
+	min_broken_damage = 35
 	body_part = ARM_RIGHT
 
-	process()
-		..()
-		process_grasp(owner.r_hand, "right hand")
+/datum/organ/external/r_arm/process()
+	..()
+	process_grasp(owner.r_hand, "right hand")
+
+/datum/organ/external/l_leg
+	name = "l_leg"
+	display_name = "left leg"
+	icon_name = "l_leg"
+	limb_layer = LIMB_L_LEG_LAYER
+	max_damage = 80
+	min_broken_damage = 35
+	body_part = LEG_LEFT
+	icon_position = LEFT
 
 /datum/organ/external/r_leg
 	name = "r_leg"
 	display_name = "right leg"
 	icon_name = "r_leg"
 	limb_layer = LIMB_R_LEG_LAYER
-	max_damage = 50
-	min_broken_damage = 20
+	max_damage = 80
+	min_broken_damage = 35
 	body_part = LEG_RIGHT
 	icon_position = RIGHT
-
-/datum/organ/external/l_foot
-	name = "l_foot"
-	display_name = "left foot"
-	icon_name = "l_foot"
-	limb_layer = LIMB_L_FOOT_LAYER
-	max_damage = 30
-	min_broken_damage = 15
-	body_part = FOOT_LEFT
-	icon_position = LEFT
-
-/datum/organ/external/r_foot
-	name = "r_foot"
-	display_name = "right foot"
-	icon_name = "r_foot"
-	limb_layer = LIMB_R_FOOT_LAYER
-	max_damage = 30
-	min_broken_damage = 15
-	body_part = FOOT_RIGHT
-	icon_position = RIGHT
-
-/datum/organ/external/r_hand
-	name = "r_hand"
-	display_name = "right hand"
-	icon_name = "r_hand"
-	limb_layer = LIMB_R_HAND_LAYER
-	max_damage = 30
-	min_broken_damage = 15
-	body_part = HAND_RIGHT
-
-	process()
-		..()
-		process_grasp(owner.r_hand, "right hand")
-
-/datum/organ/external/l_hand
-	name = "l_hand"
-	display_name = "left hand"
-	icon_name = "l_hand"
-	limb_layer = LIMB_L_HAND_LAYER
-	max_damage = 30
-	min_broken_damage = 15
-	body_part = HAND_LEFT
-
-	process()
-		..()
-		process_grasp(owner.l_hand, "left hand")
 
 /datum/organ/external/head
 	name = "head"
@@ -1085,24 +1027,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/weapon/organ/l_arm
 	name = "left arm"
 	icon_state = "l_arm"
-/obj/item/weapon/organ/l_foot
-	name = "left foot"
-	icon_state = "l_foot"
-/obj/item/weapon/organ/l_hand
-	name = "left hand"
-	icon_state = "l_hand"
 /obj/item/weapon/organ/l_leg
 	name = "left leg"
 	icon_state = "l_leg"
 /obj/item/weapon/organ/r_arm
 	name = "right arm"
 	icon_state = "r_arm"
-/obj/item/weapon/organ/r_foot
-	name = "right foot"
-	icon_state = "r_foot"
-/obj/item/weapon/organ/r_hand
-	name = "right hand"
-	icon_state = "r_hand"
 /obj/item/weapon/organ/r_leg
 	name = "right leg"
 	icon_state = "r_leg"
