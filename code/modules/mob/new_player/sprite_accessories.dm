@@ -1094,38 +1094,3 @@
 	name = "Tajara Smallsatche"
 	icon_state = "taj_facial_smallstache"
 	species_allowed = list(S_TAJARAN)
-
-
-//skin styles - WIP
-//going to have to re-integrate this with surgery
-//let the icon_state hold an icon preview for now
-/datum/sprite_accessory/skin
-	icon = 'icons/mob/human_races/r_human.dmi'
-
-/datum/sprite_accessory/skin/human
-	name = "Default human skin"
-	icon_state = "default"
-	species_allowed = list(S_HUMAN)
-
-/datum/sprite_accessory/skin/human_tatt01
-	name = "Tatt01 human skin"
-	icon_state = "tatt1"
-	species_allowed = list(S_HUMAN)
-
-/datum/sprite_accessory/skin/tajaran
-	name = "Default tajaran skin"
-	icon_state = "default"
-	icon = 'icons/mob/human_races/r_tajaran.dmi'
-	species_allowed = list(S_TAJARAN)
-
-/datum/sprite_accessory/skin/unathi
-	name = "Default Unathi skin"
-	icon_state = "default"
-	icon = 'icons/mob/human_races/r_lizard.dmi'
-	species_allowed = list(S_UNATHI)
-
-/datum/sprite_accessory/skin/skrell
-	name = "Default skrell skin"
-	icon_state = "default"
-	icon = 'icons/mob/human_races/r_skrell.dmi'
-	species_allowed = list(S_SKRELL)
