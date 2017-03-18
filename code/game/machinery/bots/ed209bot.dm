@@ -122,26 +122,23 @@ Auto Patrol: []"},
 	if(!on)
 		return
 
-	var/list/mob/living/carbon/targets = list()
-	for (var/mob/living/carbon/C in view(12, src)) //Let's find us a target
+	var/list/mob/living/targets = list()
+	for(var/mob/living/L in view(12, src)) //Let's find us a target
 		var/threatlevel = 0
-		if(C.stat || C.lying && !C.crawling)
+		if(L.stat || L.lying && !L.crawling)
 			continue
-		threatlevel = assess_perp(C)
+		threatlevel = assess_perp(L)
 		//speak(C.real_name + text(": threat: []", threatlevel))
 		if(threatlevel < 4)
 			continue
 
-		var/dst = get_dist(src, C)
-		if(dst <= 1 || dst > 12)
+		var/dst = get_dist(src, L)
+		if(dst <= 1)
 			continue
-		targets += C
+		targets += L
 
 	if(targets.len)
-		var/mob/living/carbon/t = pick(targets)
-		if((t.stat != DEAD) && (!t.lying || t.crawling))
-			//speak("selected target: " + t.real_name)
-			shootAt(t)
+		shootAt(pick(targets))
 
 	if((mode == SECBOT_HUNT || mode == SECBOT_PREP_ARREST) && lasercolor) //Lasertag bots do not tase or arrest anyone, just patrol and shoot and whatnot
 		mode = SECBOT_IDLE
@@ -190,27 +187,30 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/ed209/look_for_perp()
 	if(disabled)
 		return
+
 	anchored = 0
 	threatlevel = 0
-	for(var/mob/living/carbon/C in view(12, src)) //Let's find us a criminal
-		if(C.stat || C.handcuffed)
+	for(var/mob/living/L in view(12, src)) //Let's find us a criminal
+		if(L.stat || (lasercolor && L.lying && !L.crawling))
+			continue //Does not shoot at people lyind down when in lasertag mode, because it's just annoying, and they can fire once they get up.
+
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			if(C.handcuffed)
+				continue
+
+		if((L.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
 
-		if(lasercolor && C.lying)
-			continue//Does not shoot at people lyind down when in lasertag mode, because it's just annoying, and they can fire once they get up.
-
-		if((C.name == oldtarget_name) && (world.time < last_found + 100))
-			continue
-
-		threatlevel = assess_perp(C)
+		threatlevel = assess_perp(L)
 
 		if(threatlevel >= 4)
-			target = C
-			oldtarget_name = C.name
+			target = L
+			oldtarget_name = L.name
 			speak("Level [threatlevel] infraction alert!")
 			if(!lasercolor)
 				playsound(loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
-			visible_message("<b>[src]</b> points at [C.name]!")
+			visible_message("<b>[src]</b> points at [L.name]!")
 			mode = SECBOT_HUNT
 			process() // ensure bot quickly responds to a perp
 			break
@@ -220,7 +220,7 @@ Auto Patrol: []"},
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
-/obj/machinery/bot/secbot/ed209/assess_perp(mob/living/carbon/perp)
+/obj/machinery/bot/secbot/ed209/assess_perp(mob/living/perp)
 	var/threatcount = ..()
 
 	if(lasercolor && ishuman(perp))
@@ -238,7 +238,7 @@ Auto Patrol: []"},
 			threatcount = 0
 			if(istype(hperp.wear_suit, /obj/item/clothing/suit/bluetag))
 				threatcount += 4
-			if(istype(hperp.r_hand,/obj/item/weapon/gun/energy/laser/bluetag) || istype(hperp.l_hand,/obj/item/weapon/gun/energy/laser/bluetag))
+			if(istype(hperp.r_hand, /obj/item/weapon/gun/energy/laser/bluetag) || istype(hperp.l_hand, /obj/item/weapon/gun/energy/laser/bluetag))
 				threatcount += 4
 			if(istype(hperp.belt, /obj/item/weapon/gun/energy/laser/bluetag))
 				threatcount += 2

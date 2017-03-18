@@ -12,7 +12,7 @@
 	brute_dam_coeff = 0.5
 
 	req_one_access = list(access_security, access_forensics_lockers)
-	var/mob/living/carbon/target
+	var/mob/living/target
 	var/oldtarget_name
 	var/threatlevel = 0
 	var/target_lastloc //Loc of target when arrested.
@@ -118,10 +118,10 @@
 	dat += text({"
 <TT><B>Automatic Security Unit v1.3</B></TT><BR><BR>
 Status: []<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [src.open ? "opened" : "closed"]"},
+Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
+Maintenance panel panel is [open ? "opened" : "closed"]"},
 
-"<A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A>" )
+"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
 
 	if(!locked || issilicon(user))
 		dat += text({"<BR>
@@ -131,10 +131,10 @@ Operating Mode: []<BR>
 Report Arrests: []<BR>
 Auto Patrol: []"},
 
-"<A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A>",
-"<A href='?src=\ref[src];operation=declarearrests'>[src.declare_arrests ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
+"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
 
@@ -190,6 +190,14 @@ Auto Patrol: []"},
 		target = user
 		mode = SECBOT_HUNT
 
+/obj/machinery/bot/secbot/proc/forgetCurrentTarget()
+	target = null
+	last_found = world.time
+	mode = SECBOT_IDLE
+	walk_to(src, 0)
+	frustration = 0
+	anchored = FALSE
+
 /obj/machinery/bot/secbot/Emag(mob/user)
 	..()
 	if(open && !locked)
@@ -230,13 +238,7 @@ Auto Patrol: []"},
 		if(SECBOT_HUNT)		// hunting for perp
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
-		//		for(var/mob/O in hearers(src, null))
-		//			O << "<span class='game say'><span class='name'>[src]</span> beeps, \"Backup requested! Suspect has evaded arrest.\""
-				target = null
-				last_found = world.time
-				frustration = 0
-				mode = 0
-				walk_to(src, 0)
+				forgetCurrentTarget()
 
 			if(target)		// make sure target exists
 				if(Adjacent(target))		// if right next to perp
@@ -256,28 +258,27 @@ Auto Patrol: []"},
 
 						if(declare_arrests)
 							var/area/location = get_area(src)
-							broadcast_security_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] suspect <b>[target]</b> in <b>[location]</b>", src)
-						visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
+							broadcast_security_hud_message("[name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] suspect <b>[target]</b> in <b>[location]</b>", src)
+						visible_message("<span class='danger'>[target] has been stunned by [src]!</span>")
 
 						mode = SECBOT_PREP_ARREST
 						anchored = 1
 						target_lastloc = M.loc
 						return
 
-					else if(istype(target, /mob/living/simple_animal))
+					else
 						//just harmbaton them until dead
 						if(world.time > next_harm_time)
 							next_harm_time = world.time + 15
 							playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-							visible_message("\red <B>[src] beats [src.target] with the stun baton!</B>")
+							visible_message("<span class='danger'>[src] beats [target] with the stun baton!</span>")
 							icon_state = "secbot-c"
 							addtimer(CALLBACK(src, .proc/update_icon), 2)
-							var/mob/living/simple_animal/S = target
-							S.AdjustStunned(10)
-							S.adjustBruteLoss(15)
-							if(S.stat)
-								frustration = 8
-								playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+							target.AdjustStunned(10)
+							target.adjustBruteLoss(15)
+							if(target.stat)
+								forgetCurrentTarget()
+								playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, target)
@@ -290,9 +291,8 @@ Auto Patrol: []"},
 				frustration = 8
 
 		if(SECBOT_PREP_ARREST)		// preparing to arrest target
-
 			// see if he got away
-			if((get_dist(src, src.target) > 1) || ((target.loc != target_lastloc) && (target.weakened < 2)))
+			if((get_dist(src, target) > 1) || ((target.loc != target_lastloc) && (target.weakened < 2)))
 				anchored = 0
 				mode = SECBOT_HUNT
 				return
@@ -302,28 +302,19 @@ Auto Patrol: []"},
 				if(!C.handcuffed && !arrest_type)
 					playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
-					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
+					visible_message("\red <B>[src] is trying to put handcuffs on [target]!</B>")
 					addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PREP_ARREST), 60)
 
 			else
-				mode = SECBOT_IDLE
-				target = null
-				anchored = 0
-				last_found = world.time
-				frustration = 0
+				forgetCurrentTarget()
 
 		if(SECBOT_ARREST)		// arresting
 			if(!target || !iscarbon(target))
-				anchored = 0
-				mode = SECBOT_IDLE
-				return
+				forgetCurrentTarget()
 			else
 				var/mob/living/carbon/C = target
-				if(!C.handcuffed)
-					anchored = 0
-					mode = SECBOT_IDLE
-					return
-
+				if(C.handcuffed)
+					forgetCurrentTarget()
 
 		if(SECBOT_START_PATROL)	// start a patrol
 			if(path.len > 0 && patrol_target)	// have a valid path, so just resume
@@ -356,12 +347,8 @@ Auto Patrol: []"},
 					if(!mob_carbon.handcuffed)
 						mob_carbon.handcuffed = new /obj/item/weapon/handcuffs(target)
 						mob_carbon.update_inv_handcuffed()	//update the handcuffs overlay
-				mode = SECBOT_IDLE
-				target = null
-				anchored = 0
-				last_found = world.time
-				frustration = 0
-				playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+				forgetCurrentTarget()
+				playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 
 		if(SECBOT_START_PATROL)
 			calc_path()		// so just find a route to it
@@ -567,7 +554,7 @@ Auto Patrol: []"},
 
 // signals bot status etc. to controller
 /obj/machinery/bot/secbot/proc/send_status()
-	if(!(src && src.loc && src.loc.loc))
+	if(!(src && loc && loc.loc))
 		return
 	var/list/kv = list(
 	"type" = "secbot",
@@ -582,7 +569,7 @@ Auto Patrol: []"},
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/secbot/proc/calc_path(turf/avoid = null)
-	path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
+	path = AStar(loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
 	if(!path)
 		path = list()
 
@@ -590,29 +577,26 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/secbot/proc/look_for_perp()
 	anchored = 0
-	for(var/mob/living/M in view(7, src)) //Let's find us a criminal
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			if(C.stat || C.handcuffed)
+	for(var/mob/living/L in view(7, src)) //Let's find us a criminal
+		if(L.stat)
+			continue
+
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			if(C.handcuffed)
 				continue
 
-			if((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
-				continue
+		if((L.name == oldtarget_name) && (world.time < last_found + 100))
+			continue
 
-			threatlevel = assess_perp(C)
+		threatlevel = assess_perp(L)
 
-		else if(istype(M, /mob/living/simple_animal/hostile))
-			if(M.stat == DEAD)
-				continue
-			else
-				threatlevel = 4
-
-		if(src.threatlevel >= 4)
-			target = M
-			oldtarget_name = M.name
+		if(threatlevel >= 4)
+			target = L
+			oldtarget_name = L.name
 			speak("Level [threatlevel] infraction alert!")
 			playsound(loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
-			visible_message("<b>[src]</b> points at [M.name]!")
+			visible_message("<b>[src]</b> points at [L.name]!")
 			mode = SECBOT_HUNT
 			process() // ensure bot quickly responds to a perp
 			break
@@ -622,7 +606,7 @@ Auto Patrol: []"},
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
-/obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/perp)
+/obj/machinery/bot/secbot/proc/assess_perp(mob/living/perp)
 	var/threatcount = 0
 
 	if(!istype(perp))
@@ -632,13 +616,12 @@ Auto Patrol: []"},
 		return 10 //Everyone is a criminal!
 
 	threatcount = perp.assess_perp(src, FALSE, idcheck, FALSE, check_records)
-
 	return threatcount
 
 /obj/machinery/bot/secbot/Bump(atom/M) //Leave no door unopened!
 	if(istype(M, /obj/machinery/door) && !isnull(botcard))
 		var/obj/machinery/door/D = M
-		if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard) && !istype(D,/obj/machinery/door/poddoor))
+		if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(botcard) && !istype(D,/obj/machinery/door/poddoor))
 			D.open()
 			frustration = 0
 	else if(isliving(M) && !anchored)
@@ -682,7 +665,7 @@ Auto Patrol: []"},
 //Secbot Construction
 
 /obj/item/clothing/head/helmet/attackby(obj/item/device/assembly/signaler/S, mob/user)
-	if(!issignaler(S) || src.type != /obj/item/clothing/head/helmet || !S.secured) //Eh, but we don't want people making secbots out of space helmets.
+	if(!issignaler(S) || !istype(src, /obj/item/clothing/head/helmet) || !S.secured) //Eh, but we don't want people making secbots out of space helmets.
 		..()
 		return
 
@@ -698,8 +681,8 @@ Auto Patrol: []"},
 	if(istype(W, /obj/item/weapon/weldingtool) && !build_step)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			src.build_step++
-			src.overlays += image('icons/obj/aibots.dmi', "hs_hole")
+			build_step++
+			overlays += image('icons/obj/aibots.dmi', "hs_hole")
 			to_chat(user, "You weld a hole in [src]!")
 
 	else if(isprox(W) && build_step == 1)
@@ -718,7 +701,7 @@ Auto Patrol: []"},
 		overlays += image('icons/obj/aibots.dmi', "hs_arm")
 		qdel(W)
 
-	else if(istype(W, /obj/item/weapon/melee/baton) && (src.build_step >= 3))
+	else if(istype(W, /obj/item/weapon/melee/baton) && (build_step >= 3))
 		user.drop_item()
 		build_step++
 		to_chat(user, "You complete the Securitron! Beep boop.")
@@ -729,7 +712,7 @@ Auto Patrol: []"},
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
+		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name),1,MAX_NAME_LEN)
 		if(!t)
 			return
 		if(!in_range(src, usr) && loc != usr)
