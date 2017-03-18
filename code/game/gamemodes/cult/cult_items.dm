@@ -318,7 +318,6 @@
 			qdel(src)
 
 	else
-		..()
 		to_chat(user,"<span class='warning'>\The [src] can only transport items!</span>")
 		return
 

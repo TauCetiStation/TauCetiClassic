@@ -54,12 +54,13 @@
 		return
 	last_process = world.time
 	flame_off()
-	var/list/scum = typecacheof(list(/mob/living/simple_animal/construct,/obj/structure/cult,/obj/effect/rune,/mob/dead/observer))
+	var/static/list/scum
+	if(!scum)
+		scum = typecacheof(list(/mob/living/simple_animal/construct,/obj/structure/cult,/obj/effect/rune,/mob/dead/observer))
 	for(var/atom/A in range(6, loc))
 		if(is_type_in_typecache(A, scum) || iscultist(A))
 			flame_on()
 			break
-
 
 /obj/item/weapon/nullrod/proc/flame_on()
 	set_light(3)
