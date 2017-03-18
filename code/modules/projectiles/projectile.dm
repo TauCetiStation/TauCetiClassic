@@ -191,7 +191,7 @@
 					if(!fake)
 						msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
 				else
-					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 					if(!fake)
 						msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
 

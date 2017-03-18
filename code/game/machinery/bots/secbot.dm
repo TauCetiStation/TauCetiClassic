@@ -10,9 +10,9 @@
 	maxhealth = 25
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
-//	weight = 1.0E7
+
 	req_one_access = list(access_security, access_forensics_lockers)
-	var/mob/target
+	var/mob/living/carbon/target
 	var/oldtarget_name
 	var/threatlevel = 0
 	var/target_lastloc //Loc of target when arrested.
@@ -147,7 +147,7 @@ Auto Patrol: []"},
 	if(!.)
 		return
 
-	if((href_list["power"]) && (allowed(usr)))
+	if(href_list["power"] && allowed(usr))
 		if(on)
 			turn_off()
 		else
@@ -174,17 +174,21 @@ Auto Patrol: []"},
 		if(emagged)
 			to_chat(user, "<span class='warning'>ERROR</span>")
 		else if(open)
-			to_chat(user, "\red Please close the access panel before locking it.")
+			to_chat(user, "<span class='red'>Please close the access panel before locking it.</span>")
 		else if(allowed(user))
 			locked = !locked
-			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='notice'>Access denied.</span>")
 	else
 		..()
-		if(!istype(W, /obj/item/weapon/screwdriver) && W.force && !target)
-			target = user
-			mode = SECBOT_HUNT
+		beingAttacked(W, user)
+
+
+/obj/machinery/bot/secbot/proc/beingAttacked(obj/item/weapon/W, mob/user)
+	if(!istype(W, /obj/item/weapon/screwdriver) && W.force && !target)
+		target = user
+		mode = SECBOT_HUNT
 
 /obj/machinery/bot/secbot/Emag(mob/user)
 	..()
@@ -203,12 +207,10 @@ Auto Patrol: []"},
 		mode = SECBOT_IDLE
 
 /obj/machinery/bot/secbot/process()
-	//set background = 1
-
 	if(!on)
 		return
 
-	if(x_last == x && y_last == y) // Бипски очень часто не может пересобрать путь, в результате чего стоит на одной точке,..
+	if(x_last == x && y_last == y) // Бипски очень часто не может пересобрать путь, в результате чего стоит на одной точке,...
 		if(mode == SECBOT_START_PATROL)
 			same_pos_count++ //...флудит astar проком, который поднимает проц. время на 30-50 единиц, из-за чего на сервере появляется постоянный микрофриз каждую секунду...
 			if(same_pos_count > 14) //...пока бипски таки не соорудит новый путь, что обычно не происходит. Посему ввожу авто-выключение бипски, если у него позиция не менялась X итераций(?) процесса.
@@ -261,6 +263,7 @@ Auto Patrol: []"},
 						anchored = 1
 						target_lastloc = M.loc
 						return
+
 					else if(istype(target, /mob/living/simple_animal))
 						//just harmbaton them until dead
 						if(world.time > next_harm_time)
@@ -300,7 +303,7 @@ Auto Patrol: []"},
 					playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
 					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
-					addtimer(CALLBACK(src, .proc/subprocess_arrest), 60)
+					addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PREP_ARREST), 60)
 
 			else
 				mode = SECBOT_IDLE
@@ -328,7 +331,7 @@ Auto Patrol: []"},
 				return
 
 			else if(patrol_target)		// has patrol target already
-				INVOKE_ASYNC(src, .proc/subprocess, mode)
+				INVOKE_ASYNC(src, .proc/subprocess, SECBOT_START_PATROL)
 
 			else					// no patrol target, so need a new one
 				find_patrol_target()
@@ -337,30 +340,29 @@ Auto Patrol: []"},
 
 		if(SECBOT_PATROL)		// patrol mode
 			patrol_step()
-			addtimer(CALLBACK(src, .proc/subprocess, mode), 5)
+			addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PATROL), 5)
 
 		if(SECBOT_SUMMON)		// summoned to PDA
 			patrol_step()
-			addtimer(CALLBACK(src, .proc/subprocess, mode), 4)
-			addtimer(CALLBACK(src, .proc/subprocess, mode), 8)
-
-/obj/machinery/bot/secbot/proc/subprocess_arrest()
-	var/mob/living/carbon/mob_carbon
-	if(get_dist(src, target) <= 1)
-		if(iscarbon(target))
-			mob_carbon = target
-			if(!mob_carbon.handcuffed)
-				mob_carbon.handcuffed = new /obj/item/weapon/handcuffs(target)
-				mob_carbon.update_inv_handcuffed()	//update the handcuffs overlay
-		mode = SECBOT_IDLE
-		target = null
-		anchored = 0
-		last_found = world.time
-		frustration = 0
-		playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+			addtimer(CALLBACK(src, .proc/subprocess, SECBOT_SUMMON), 4)
+			addtimer(CALLBACK(src, .proc/subprocess, SECBOT_SUMMON), 8)
 
 /obj/machinery/bot/secbot/proc/subprocess(oldmode)
 	switch(oldmode)
+		if(SECBOT_PREP_ARREST)
+			if(get_dist(src, target) <= 1)
+				if(iscarbon(target))
+					var/mob/living/carbon/mob_carbon = target
+					if(!mob_carbon.handcuffed)
+						mob_carbon.handcuffed = new /obj/item/weapon/handcuffs(target)
+						mob_carbon.update_inv_handcuffed()	//update the handcuffs overlay
+				mode = SECBOT_IDLE
+				target = null
+				anchored = 0
+				last_found = world.time
+				frustration = 0
+				playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+
 		if(SECBOT_START_PATROL)
 			calc_path()		// so just find a route to it
 			if(path.len == 0)
@@ -481,7 +483,7 @@ Auto Patrol: []"},
 
 	var/recv = signal.data["command"]
 	// process all-bot input
-	if(recv=="bot_status")
+	if(recv == "bot_status")
 		send_status()
 
 	// check to see if we are the commanded bot
@@ -541,7 +543,7 @@ Auto Patrol: []"},
 
 // send a radio signal with a single data key/value pair
 /obj/machinery/bot/secbot/proc/post_signal(freq, key, value)
-	post_signal_multiple(freq, list("[key]" = value) )
+	post_signal_multiple(freq, list("[key]" = value))
 
 // send a radio signal with multiple data key/values
 /obj/machinery/bot/secbot/proc/post_signal_multiple(freq, list/keyval)
@@ -626,7 +628,7 @@ Auto Patrol: []"},
 	if(!istype(perp))
 		return 0
 
-	if(src.emagged == 2)
+	if(emagged == 2)
 		return 10 //Everyone is a criminal!
 
 	threatcount = perp.assess_perp(src, FALSE, idcheck, FALSE, check_records)
