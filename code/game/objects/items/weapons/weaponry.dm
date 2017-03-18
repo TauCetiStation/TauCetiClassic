@@ -36,13 +36,15 @@
 /obj/item/weapon/nullrod/equipped(mob/user, slot)
 	if(user.mind && user.mind.assigned_role == "Chaplain")
 		START_PROCESSING(SSobj, src)
-	else if(src.isprocessing)
-		flame_off()
-		STOP_PROCESSING(SSobj, src)
 	..()
 
+/obj/item/weapon/nullrod/Destroy()
+	if(isprocessing)
+		STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /obj/item/weapon/nullrod/dropped(mob/user)
-	if(src.isprocessing)
+	if(isprocessing)
 		flame_off()
 		STOP_PROCESSING(SSobj, src)
 	..()
@@ -52,14 +54,9 @@
 		return
 	last_process = world.time
 	flame_off()
+	var/list/scum = typecacheof(list(/mob/living/simple_animal/construct,/obj/structure/cult,/obj/effect/rune,/mob/dead/observer))
 	for(var/atom/A in range(6, loc))
-		if(isobserver(A) || iscultist(A) || isshade(A))
-			flame_on()
-			break
-		else if(istype(A, /obj/effect/rune))
-			flame_on()
-			break
-		else if(istype(A,/obj/structure/cult))
+		if(is_type_in_typecache(A, scum) || iscultist(A))
 			flame_on()
 			break
 
