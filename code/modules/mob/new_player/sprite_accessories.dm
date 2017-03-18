@@ -649,45 +649,45 @@
 //SHIT INCOMING
 /datum/sprite_accessory/hair/modern
 	name = "Modern"
-	icon_state = "hair_trap"
+	icon_state = "hair_modern"
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/twincurl
 	name = "Twincurl"
-	icon_state = "hair_trap2"
+	icon_state = "hair_twincurl"
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/rapunzel
 	name = "Rapunzel"
-	icon_state = "hair_trapinsane"
+	icon_state = "hair_rapunzel"
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/quadcurls
 	name = "Quadcurls "
-	icon_state = "hair_trapinsane2"
+	icon_state = "hair_quadcurls"
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/twincurl2
 	name = "Twincurl 2"
-	icon_state = "hair_trap3"
+	icon_state = "hair_twincurl2"
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/birdnest
 	name = "Birdnest "
-	icon_state = "hair_nolife"
+	icon_state = "hair_birdnest"
 
 /datum/sprite_accessory/hair/unkept
 	name = "Unkept"
-	icon_state = "hair_pidor"
+	icon_state = "hair_unkept"
 
 /datum/sprite_accessory/hair/fastline
 	name = "Fastline"
-	icon_state = "hair_dniwe"
+	icon_state = "hair_fastline"
 	gender = MALE
 
 /datum/sprite_accessory/hair/duelist
 	name = "Duelist "
-	icon_state = "hair_pidor2"
+	icon_state = "hair_duelist"
 
 /datum/sprite_accessory/hair/sparta
 	name = "Sparta hair"
