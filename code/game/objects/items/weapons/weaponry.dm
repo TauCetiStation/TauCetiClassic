@@ -28,6 +28,7 @@
 	light_power = 3
 	w_class = 2
 	var/last_process = 0
+	var/static/list/scum
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "<span class='userdanger'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -35,6 +36,8 @@
 
 /obj/item/weapon/nullrod/equipped(mob/user, slot)
 	if(user.mind && user.mind.assigned_role == "Chaplain")
+		if(!scum)
+			scum = typecacheof(list(/mob/living/simple_animal/construct,/obj/structure/cult,/obj/effect/rune,/mob/dead/observer))
 		START_PROCESSING(SSobj, src)
 	..()
 
@@ -54,9 +57,6 @@
 		return
 	last_process = world.time
 	flame_off()
-	var/static/list/scum
-	if(!scum)
-		scum = typecacheof(list(/mob/living/simple_animal/construct,/obj/structure/cult,/obj/effect/rune,/mob/dead/observer))
 	for(var/atom/A in range(6, loc))
 		if(is_type_in_typecache(A, scum) || iscultist(A))
 			flame_on()
