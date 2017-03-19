@@ -34,10 +34,13 @@
 		to_chat(viewers(user), "<span class='userdanger'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS|FIRELOSS)
 
+/obj/item/weapon/nullrod/New()
+	..()
+	if(!scum)
+		scum = typecacheof(list(/mob/living/simple_animal/construct,/obj/structure/cult,/obj/effect/rune,/mob/dead/observer))
+
 /obj/item/weapon/nullrod/equipped(mob/user, slot)
 	if(user.mind && user.mind.assigned_role == "Chaplain")
-		if(!scum)
-			scum = typecacheof(list(/mob/living/simple_animal/construct,/obj/structure/cult,/obj/effect/rune,/mob/dead/observer))
 		START_PROCESSING(SSobj, src)
 	..()
 
