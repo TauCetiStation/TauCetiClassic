@@ -3,12 +3,13 @@
 	desc = "A security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed2090"
+	icon_state_arrest = "ed209-c"
 	health = 100
 	maxhealth = 100
 
 	var/lastfired = 0
 	var/shot_delay = 3 //.3 seconds between shots
-	var/lasercolor = ""
+
 	var/disabled = 0//A holder for if it needs to be disabled, if true it will not seach for targets, shoot at targets, or move, currently only used for lasertag
 	idcheck = 1 //If false, all station IDs are authorized for weapons.
 	check_records = 1 //Does it check security records? Checks arrest status and existence of record

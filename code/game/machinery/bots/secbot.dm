@@ -3,6 +3,7 @@
 	desc = "A little security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
+	var/icon_state_arrest = "secbot-c"
 	layer = 5.0
 	density = 0
 	anchored = 0
@@ -18,6 +19,7 @@
 	var/target_lastloc //Loc of target when arrested.
 	var/last_found //There's a delay
 	var/frustration = 0
+	var/lasercolor = "" //Used by ED209
 //	var/emagged = 0 //Emagged Secbots view everyone as a criminal
 	var/idcheck = 0 //If false, all station IDs are authorized for weapons.
 	var/check_records = 1 //Does it check security records?
@@ -244,7 +246,7 @@ Auto Patrol: []"},
 				if(Adjacent(target))		// if right next to perp
 					if(iscarbon(target))
 						playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-						icon_state = "secbot-c"
+						icon_state = "[lasercolor][icon_state_arrest]"
 						addtimer(CALLBACK(src, .proc/update_icon), 2)
 						var/mob/living/carbon/M = target
 						var/maxstuns = 4
@@ -262,7 +264,7 @@ Auto Patrol: []"},
 						visible_message("<span class='danger'>[target] has been stunned by [src]!</span>")
 
 						mode = SECBOT_PREP_ARREST
-						anchored = 1
+						anchored = TRUE
 						target_lastloc = M.loc
 						return
 
@@ -272,7 +274,7 @@ Auto Patrol: []"},
 							next_harm_time = world.time + 15
 							playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 							visible_message("<span class='danger'>[src] beats [target] with the stun baton!</span>")
-							icon_state = "secbot-c"
+							icon_state = "[lasercolor][icon_state_arrest]"
 							addtimer(CALLBACK(src, .proc/update_icon), 2)
 							target.AdjustStunned(10)
 							target.adjustBruteLoss(15)
@@ -292,7 +294,7 @@ Auto Patrol: []"},
 
 		if(SECBOT_PREP_ARREST)		// preparing to arrest target
 			// see if he got away
-			if((get_dist(src, target) > 1) || ((target.loc != target_lastloc) && (target.weakened < 2)))
+			if(!Adjacent(target) || ((target.loc != target_lastloc) && (target.weakened < 2)))
 				anchored = 0
 				mode = SECBOT_HUNT
 				return
@@ -341,7 +343,9 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/proc/subprocess(oldmode)
 	switch(oldmode)
 		if(SECBOT_PREP_ARREST)
-			if(get_dist(src, target) <= 1)
+			if(!target) //All will be cleared in /process()
+				return
+			if(Adjacent(target))
 				if(iscarbon(target))
 					var/mob/living/carbon/mob_carbon = target
 					if(!mob_carbon.handcuffed)
@@ -349,6 +353,9 @@ Auto Patrol: []"},
 						mob_carbon.update_inv_handcuffed()	//update the handcuffs overlay
 				forgetCurrentTarget()
 				playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+			else if(mode == SECBOT_ARREST)
+				anchored = FALSE
+				mode = SECBOT_HUNT
 
 		if(SECBOT_START_PATROL)
 			calc_path()		// so just find a route to it
@@ -382,7 +389,7 @@ Auto Patrol: []"},
 			path -= next
 			return
 
-		if(istype( next, /turf/simulated))
+		if(istype(next, /turf/simulated))
 			var/moved = step_towards(src, next)	// attempt to move
 			if(moved)	// successful move
 				blockcount = 0
