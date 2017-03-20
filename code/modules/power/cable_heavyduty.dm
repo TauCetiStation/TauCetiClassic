@@ -23,6 +23,3 @@
 		return
 	else
 		..()
-
-/obj/structure/cable/heavyduty/cableColor(colorC)
-	return

@@ -33,7 +33,7 @@ obj/structure/firedoor_assembly/attackby(C, mob/user)
 		if(do_after(user, 40, target = src))
 			if(!src) return
 			to_chat(user, "<span class='notice'>You cut the wires!</span>")
-			new/obj/item/weapon/cable_coil(src.loc, 1)
+			new /obj/item/weapon/cable_coil/random(src.loc, 1)
 			wired = 0
 
 	else if(istype(C, /obj/item/weapon/airalarm_electronics) && wired)

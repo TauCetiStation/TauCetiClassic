@@ -33,7 +33,7 @@
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
-	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/weapon/cable_coil(src, 30, pick(COLOR_RED, COLOR_YELLOW, COLOR_ORANGE))
 
 
 /obj/item/weapon/storage/belt/utility/atmostech/New()

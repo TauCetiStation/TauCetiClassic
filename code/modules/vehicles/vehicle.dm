@@ -176,7 +176,7 @@
 
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
-	new /obj/item/weapon/cable_coil/cut(Tsec)
+	new /obj/item/weapon/cable_coil/red(Tsec, 2)
 
 	//stuns people who are thrown off a train that has been blown up
 	if(istype(load, /mob/living))
