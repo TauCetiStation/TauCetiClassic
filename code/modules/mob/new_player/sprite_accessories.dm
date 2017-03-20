@@ -41,7 +41,7 @@
 */
 
 /datum/sprite_accessory/hair
-	icon = 'icons/mob/Human_face.dmi'	  // default icon for all hairs
+	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
 
 /datum/sprite_accessory/hair/bald
 	name = "Bald"
@@ -317,17 +317,24 @@
 	icon_state = "hair_kusanagi"
 
 /datum/sprite_accessory/hair/kagami
-	name = "Pigtails"
+	name = "Kagami Hair"
 	icon_state = "hair_kagami"
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/pigtail
-	name = "Pigtails 2"
+	name = "Pigtails"
 	icon_state = "hair_pigtails"
+	gender = FEMALE
 
-/datum/sprite_accessory/hair/pigtail
-	name = "Pigtails 3"
+/datum/sprite_accessory/hair/pigtail2
+	name = "Pigtails 2"
 	icon_state = "hair_pigtails2"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/pigtail3
+	name = "Pigtails 3"
+	icon_state = "hair_pigtails3"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/himecut
 	name = "Hime Cut"
@@ -910,47 +917,47 @@
 
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"
-	icon_state = "unathi_warrior_horns"
+	icon_state = "una_warrior_horns"
 	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_smallhorns
 	name = "Small Horns"
-	icon_state = "unathi_smallhorns"
+	icon_state = "una_smallhorns"
 	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads
 	name = "Dreads"
-	icon_state = "unathi_dreads"
+	icon_state = "una_dreads"
 	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads_long
 	name = "Long Dreads"
-	icon_state = "unathi_dreads_long"
+	icon_state = "una_dreads_long"
 	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads_short
 	name = "Short Dreads"
-	icon_state = "unathi_dreads_short"
+	icon_state = "una_dreads_short"
 	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads_predator
 	name = "Predator Dreads"
-	icon_state = "unathi_dreads_predator"
+	icon_state = "una_dreads_predator"
 	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_hiss_collinss
 	name = "Hiss Collinss"
-	icon_state = "unathi_hiss_collinss"
+	icon_state = "una_hiss_collinss"
 	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_horns_curled
 	name = "Curled Horns"
-	icon_state = "unathi_horns_curled"
+	icon_state = "una_horns_curled"
 	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/unathi_horns_ram
 	name = "Ram Horns"
-	icon_state = "unathi_horns_ram"
+	icon_state = "una_horns_ram"
 	species_allowed = list(S_UNATHI)
 
 /datum/sprite_accessory/hair/una_spines_long
