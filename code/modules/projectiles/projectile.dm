@@ -129,7 +129,7 @@
 	starting = starting_loc
 	current = starting_loc
 	if(new_firer)
-		firer = src
+		firer = new_firer
 
 	yo = new_y - starting_loc.y
 	xo = new_x - starting_loc.x
