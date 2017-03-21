@@ -18,7 +18,7 @@
 		var/datum/organ/external/affecting = user.get_organ(organ)
 		affecting.take_damage(rand(force/2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
 		return
-	return ..(target, user)
+	return ..()
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
 	if(!iscultist(user))
@@ -99,10 +99,6 @@
 	..()
 	shield = image("icon"='icons/effects/effects.dmi', "icon_state"="shield-cult", "layer" = (LIGHTING_LAYER + 1))
 	shield.plane = LIGHTING_PLANE + 1
-
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/carbon/human/user)
-	..()
-
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/dropped(mob/user)
 	user.overlays -= shield
@@ -286,11 +282,10 @@
 /obj/item/device/flashlight/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
 		return
-	if(!iscultist(A))
+	if(!iscultist(user))
 		return
 
 	if(istype(A, /obj/item))
-
 		var/list/cultists = list()
 		for(var/datum/mind/M in ticker.mode.cult)
 			if(M.current != user && M.current.stat != DEAD && !isshade(M.current))

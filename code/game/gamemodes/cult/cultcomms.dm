@@ -10,7 +10,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/cult_comms/cast_check(skipcharge = 0,mob/user = usr)
 	if(!..())
 		return 0
-	if(!iscultist(usr) && !isshade(usr))
+	if(!iscultist(user) && !isshade(user))
 		return 0
 	if(user.incapacitated())
 		return 0
@@ -19,17 +19,18 @@
 /obj/effect/proc_holder/spell/aoe_turf/cult_comms/cast(list/targets, mob/living/user = usr)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		if(H.health <= 20)
+			return
 		addtimer(CALLBACK(src, .proc/payment, H), 200)
 	else
 		user.take_overall_damage(rand(10,15))
-	call(/obj/effect/rune/proc/communicate)()
+	call(/obj/effect/rune/proc/communicate)(user)
 
 /obj/effect/proc_holder/spell/aoe_turf/cult_comms/proc/payment(mob/living/carbon/human/H)
 	to_chat(H,"<span class='notice'> You feel a powerful flow through your body, which takes away your Vitality</span>")
 	H.take_divided_damage(rand(60,120))
 
 /mob/living/proc/remove_comms()
-
 	for(var/obj/effect/proc_holder/spell/aoe_turf/cult_comms/C in spell_list)
 		if(C.action)
 			C.action.Remove(src)
@@ -43,4 +44,4 @@
 	charge_max = 300
 
 /obj/effect/proc_holder/spell/aoe_turf/cult_comms/construct/cast(list/targets, mob/user = usr)
-	call(/obj/effect/rune/proc/communicate)()
+	call(/obj/effect/rune/proc/communicate)(user)

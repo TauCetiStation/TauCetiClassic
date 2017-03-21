@@ -9,29 +9,29 @@
 		var/delete = 1
 		switch(imbue)
 			if("newtome")
-				call(/obj/effect/rune/proc/tomesummon)()
+				call(/obj/effect/rune/proc/tomesummon)(user)
 			if("armor")
-				call(/obj/effect/rune/proc/armor)()
+				call(/obj/effect/rune/proc/armor)(user)
 			if("emp")
-				call(/obj/effect/rune/proc/emp)(usr.loc,3)
+				call(/obj/effect/rune/proc/emp)(user,user.loc,3)
 			if("conceal")
-				call(/obj/effect/rune/proc/obscure)(2)
+				call(/obj/effect/rune/proc/obscure)(user,2)
 			if("revealrunes")
-				call(/obj/effect/rune/proc/revealrunes)(src)
+				call(/obj/effect/rune/proc/revealrunes)(user,src)
 			if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
-				call(/obj/effect/rune/proc/teleport)(imbue)
+				call(/obj/effect/rune/proc/teleport)(user,imbue)
 			if("communicate")
 				//If the user cancels the talisman this var will be set to 0
-				delete = call(/obj/effect/rune/proc/communicate)()
+				delete = call(/obj/effect/rune/proc/communicate)(user)
 			if("deafen")
-				call(/obj/effect/rune/proc/deafen)()
+				call(/obj/effect/rune/proc/deafen)(user)
 			if("blind")
-				call(/obj/effect/rune/proc/blind)()
+				call(/obj/effect/rune/proc/blind)(user)
 			if("runestun")
-				to_chat(user, "\red To use this talisman, attack your target directly.")
+				to_chat(user, "<span class='red'> To use this talisman, attack your target directly.</span>")
 				return
 			if("supply")
-				supply()
+				supply(user)
 			if("construction")
 				to_chat(user,"<span class='warning'>The talisman must be used on metal or plasteel!</span>")
 				return
@@ -44,11 +44,11 @@
 		user.examinate(src)
 
 
-/obj/item/weapon/paper/talisman/attack(mob/living/carbon/T, mob/living/user)
+/obj/item/weapon/paper/talisman/attack(mob/living/T, mob/living/user)
 	if(iscultist(user))
 		if(imbue == "runestun")
 			user.take_organ_damage(5, 0)
-			call(/obj/effect/rune/proc/runestun)(T)
+			call(/obj/effect/rune/proc/runestun)(user,T)
 			qdel(src)
 			return
 	return..()
@@ -59,10 +59,10 @@
 		return
 	if(!istype(A,/obj/item/stack/sheet/metal) && !istype(A,/obj/item/stack/sheet/plasteel))
 		return
-	call(/obj/effect/rune/proc/construction)(A)
+	call(/obj/effect/rune/proc/construction)(user, A)
 	qdel(src)
 
-/obj/item/weapon/paper/talisman/proc/supply(key)
+/obj/item/weapon/paper/talisman/proc/supply(user, key)
 	if (!src.uses)
 		qdel(src)
 		return
