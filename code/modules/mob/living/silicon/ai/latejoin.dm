@@ -21,6 +21,9 @@ var/global/list/empty_playable_ai_cores = list()
 	if(istype(loc,/obj/item/device/aicard))
 		to_chat(usr, "<span class='danger'>Unable to establish connection with Repository. Wiping isn't possible at now.</span>")
 		return
+	if(stat)
+		to_chat(usr, "<span class='danger'>Connection with Repository is corrupted. Wiping isn't possible at now.</span>")
+		return
 
 	// Guard against misclicks, this isn't the sort of thing we want happening accidentally
 	if(alert("WARNING: This will immediately wipe your core and ghost you, removing your character from the round permanently (similar to cryo and robotic storage). Are you entirely sure you want to do this?",
