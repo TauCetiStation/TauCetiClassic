@@ -737,8 +737,9 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/C in range(7,src))
 			if (iscultist(C))
 				continue
-			if(/obj/item/weapon/nullrod in C)
-				continue
+			for(var/obj/item/weapon/nullrod/N in C)
+				if(N)
+					continue
 			C.ear_deaf += 50
 			C.show_message("<span class='red'>The world around you suddenly becomes quiet.</span>", 3)
 			affected++
@@ -755,8 +756,9 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/C in range(7,user))
 			if (iscultist(C))
 				continue
-			if(/obj/item/weapon/nullrod in C)
-				continue
+			for(var/obj/item/weapon/nullrod/N in C)
+				if(N)
+					continue
 			C.ear_deaf += 30
 			//talismans is weaker.
 			C.show_message("<span class='red'>The world around you suddenly becomes quiet.</span>", 3)
@@ -775,8 +777,9 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/C in viewers(src))
 			if (iscultist(C))
 				continue
-			if(/obj/item/weapon/nullrod in C)
-				continue
+			for(var/obj/item/weapon/nullrod/N in C)
+				if(N)
+					continue
 			C.eye_blurry += 50
 			C.eye_blind += 20
 			if(prob(5))
@@ -796,8 +799,9 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/C in view(2,user))
 			if (iscultist(C))
 				continue
-			if(/obj/item/weapon/nullrod in C)
-				continue
+			for(var/obj/item/weapon/nullrod/N in C)
+				if(N)
+					continue
 			C.eye_blurry += 30
 			C.eye_blind += 10
 			//talismans is weaker.
@@ -820,8 +824,9 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/M in viewers(user))
 			if(iscultist(M))
 				continue
-			if(/obj/item/weapon/nullrod in M)
-				continue
+			for(var/obj/item/weapon/nullrod/N in M)
+				if(N)
+					continue
 			M.take_overall_damage(51,51)
 			to_chat(M, "<span class='warning'>Your blood boils!</span>")
 			if(prob(5))
@@ -886,8 +891,9 @@ var/list/sacrificed = list()
 	else                        ///When invoked as talisman, stun and mute the target mob.
 		user.say("Dream sign ''Evil sealing talisman'[pick("'","`")]!")
 		user.visible_message("<span class='danger'>[user] invokes a talisman at [T]</span>")
-		if(/obj/item/weapon/nullrod in T)
-			return
+		for(var/obj/item/weapon/nullrod/N in T)
+			if(N)
+				return
 		if(issilicon(T))
 			T.Weaken(15)
 		else if(iscarbon(T))
