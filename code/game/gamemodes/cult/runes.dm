@@ -552,7 +552,7 @@ var/list/sacrificed = list()
 			to_chat(H.current,my_message)
 	for(var/mob/M in dead_mob_list)
 		if(M.client)
-			to_chat(M.my_message)
+			to_chat(M,my_message)
 	log_say("[user.real_name]/[user.key] : [input]")
 	qdel(src)
 	return 1
