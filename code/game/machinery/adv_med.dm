@@ -366,15 +366,15 @@
 							storedinfo += "<td>[BP.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"
 						storedinfo += "</tr>"
-					for(var/datum/organ/internal/i in occupant.internal_organs)
+					for(var/obj/item/organ/IO in occupant.internal_organs)
 						var/mech = ""
-						if(i.robotic == 1)
+						if(IO.robotic == 1)
 							mech = "Assisted:"
-						if(i.robotic == 2)
+						if(IO.robotic == 2)
 							mech = "Mechanical:"
 
 						var/infection = "None"
-						switch (i.germ_level)
+						switch (IO.germ_level)
 							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infection = "Mild Infection:"
 							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
@@ -391,10 +391,10 @@
 								infection = "Necrotic:"
 
 						dat += "<tr>"
-						dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"
+						dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
 						dat += "</tr>"
 						storedinfo += "<tr>"
-						storedinfo += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"
+						storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
 						storedinfo += "</tr>"
 					dat += "</table>"
 					storedinfo += "</table>"

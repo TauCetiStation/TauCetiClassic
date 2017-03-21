@@ -33,7 +33,7 @@
 	var/list/obj/item/bodypart/children
 
 	// Internal organs of this body part
-	var/list/datum/organ/internal/internal_organs
+	var/list/obj/item/organ/internal_organs
 
 	var/damage_msg = "\red You feel an intense pain"
 	var/broken_description
@@ -54,7 +54,7 @@
 	var/limb_layer = 0
 
 
-/obj/item/bodypart/New(var/obj/item/bodypart/BP)
+/obj/item/bodypart/New(loc, obj/item/bodypart/BP)
 	if(BP)
 		parent = BP
 		if(!parent.children)
@@ -137,8 +137,8 @@
 	// High brute damage or sharp objects may damage internal organs
 	if(internal_organs && ( (sharp && brute >= 5) || brute >= 10) && prob(5))
 		// Damage an internal organ
-		var/datum/organ/internal/I = pick(internal_organs)
-		I.take_damage(brute / 2)
+		var/obj/item/organ/IO = pick(internal_organs)
+		IO.take_damage(brute / 2)
 		brute -= brute / 2
 
 	if((status & ORGAN_BROKEN) && prob(40) && brute)
@@ -259,8 +259,8 @@ This function completely restores a damaged organ to perfect condition.
 	number_wounds = 0
 
 	// handle internal organs
-	for(var/datum/organ/internal/current_organ in internal_organs)
-		current_organ.rejuvenate()
+	for(var/obj/item/organ/IO in internal_organs)
+		IO.rejuvenate()
 
 	// remove embedded objects and drop them on the floor
 	for(var/obj/implanted_object in implants)
@@ -438,18 +438,18 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(germ_level >= INFECTION_LEVEL_TWO && antibiotics < 5)
 		//spread the infection to internal organs
-		var/datum/organ/internal/target_organ = null	//make internal organs become infected one at a time instead of all at once
-		for (var/datum/organ/internal/I in internal_organs)
-			if (I.germ_level > 0 && I.germ_level < min(germ_level, INFECTION_LEVEL_TWO))	//once the organ reaches whatever we can give it, or level two, switch to a different one
-				if (!target_organ || I.germ_level > target_organ.germ_level)	//choose the organ with the highest germ_level
-					target_organ = I
+		var/obj/item/organ/target_organ = null	//make internal organs become infected one at a time instead of all at once
+		for (var/obj/item/organ/IO in internal_organs)
+			if (IO.germ_level > 0 && IO.germ_level < min(germ_level, INFECTION_LEVEL_TWO))	//once the organ reaches whatever we can give it, or level two, switch to a different one
+				if (!target_organ || IO.germ_level > target_organ.germ_level)	//choose the organ with the highest germ_level
+					target_organ = IO
 
 		if (!target_organ)
 			//figure out which organs we can spread germs to and pick one at random
 			var/list/candidate_organs = list()
-			for (var/datum/organ/internal/I in internal_organs)
-				if (I.germ_level < germ_level)
-					candidate_organs += I
+			for (var/obj/item/organ/IO in internal_organs)
+				if (IO.germ_level < germ_level)
+					candidate_organs += IO
 			if (candidate_organs.len)
 				target_organ = pick(candidate_organs)
 

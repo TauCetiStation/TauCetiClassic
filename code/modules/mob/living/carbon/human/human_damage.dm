@@ -17,12 +17,12 @@
 
 /mob/living/carbon/human/getBrainLoss()
 	var/res = brainloss
-	var/datum/organ/internal/brain/sponge = internal_organs_by_name["brain"]
-	if(!sponge)
+	var/obj/item/organ/brain/IO = internal_organs_by_name["brain"]
+	if(!IO)
 		return 0
-	if (sponge.is_bruised())
+	if (IO.is_bruised())
 		res += 20
-	if (sponge.is_broken())
+	if (IO.is_broken())
 		res += 50
 	res = min(res,maxHealth*2)
 	return res

@@ -24,12 +24,12 @@ datum/event/organ_failure/start()
 		var/acute = prob(15)
 		if (prob(75))
 			//internal organ infection
-			var/datum/organ/internal/I = pick(C.internal_organs)
+			var/obj/item/organ/IO = pick(C.internal_organs)
 
 			if (acute)
-				I.germ_level = max(INFECTION_LEVEL_TWO, I.germ_level)
+				IO.germ_level = max(INFECTION_LEVEL_TWO, IO.germ_level)
 			else
-				I.germ_level = max(rand(INFECTION_LEVEL_ONE,INFECTION_LEVEL_ONE*2), I.germ_level)
+				IO.germ_level = max(rand(INFECTION_LEVEL_ONE,INFECTION_LEVEL_ONE*2), IO.germ_level)
 		else
 			//external organ infection
 			var/obj/item/bodypart/BP = pick(C.organs)

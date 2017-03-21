@@ -687,15 +687,15 @@
 		germ_level += n
 
 /mob/living/carbon/proc/is_lung_ruptured()
-	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
-	return L.is_bruised()
+	var/obj/item/organ/lungs/IO = internal_organs_by_name["lungs"]
+	return IO.is_bruised()
 
 /mob/living/carbon/proc/rupture_lung()
-	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
+	var/obj/item/organ/lungs/IO = internal_organs_by_name["lungs"]
 
-	if(!L.is_bruised())
+	if(!IO.is_bruised())
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
-		L.damage = L.min_bruised_damage
+		IO.damage = IO.min_bruised_damage
 
 /mob/living/carbon/get_visible_implants(class = 0)
 

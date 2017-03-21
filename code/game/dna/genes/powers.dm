@@ -56,9 +56,9 @@
 			M.UpdateAppearance()
 
 		var/obj/item/bodypart/chest/chest = M.get_organ("chest")
-		for(var/datum/organ/internal/I in chest.internal_organs)
-			if(I.damage > 0)
-				I.damage -= 0.25
+		for(var/obj/item/organ/IO in chest.internal_organs)
+			if(IO.damage > 0)
+				IO.damage -= 0.25
 
 		if(M.getBrainLoss() > 24)
 			if(M.getBrainLoss() < 76) M.adjustBrainLoss(-0.25)

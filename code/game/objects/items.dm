@@ -671,7 +671,7 @@
 		)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/internal/eyes/eyes = H.internal_organs_by_name["eyes"]
+		var/obj/item/organ/eyes/eyes = H.internal_organs_by_name["eyes"]
 		eyes.damage += rand(3,4)
 		if(eyes.damage >= eyes.min_bruised_damage)
 			if(H.stat != DEAD)

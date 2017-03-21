@@ -89,21 +89,21 @@
 		if(S_HUMAN,S_UNATHI,S_TAJARAN,S_SKRELL,S_DIONA,S_VOX,S_VOX_ARMALIS,S_IPC,S_ABDUCTOR,S_SHADOWLING)
 			C.make_blood()
 			C.organs = list()
-			C.organs_by_name["chest"] = new/obj/item/bodypart/chest()
-			C.organs_by_name["groin"] = new/obj/item/bodypart/groin(C.organs_by_name["chest"])
-			C.organs_by_name["head"] = new/obj/item/bodypart/head(C.organs_by_name["chest"])
-			C.organs_by_name["l_arm"] = new/obj/item/bodypart/l_arm(C.organs_by_name["chest"])
-			C.organs_by_name["r_arm"] = new/obj/item/bodypart/r_arm(C.organs_by_name["chest"])
-			C.organs_by_name["r_leg"] = new/obj/item/bodypart/r_leg(C.organs_by_name["groin"])
-			C.organs_by_name["l_leg"] = new/obj/item/bodypart/l_leg(C.organs_by_name["groin"])
+			C.organs_by_name["chest"] = new/obj/item/bodypart/chest(null)
+			C.organs_by_name["groin"] = new/obj/item/bodypart/groin(null, C.organs_by_name["chest"])
+			C.organs_by_name["head"] = new/obj/item/bodypart/head(null, C.organs_by_name["chest"])
+			C.organs_by_name["l_arm"] = new/obj/item/bodypart/l_arm(null, C.organs_by_name["chest"])
+			C.organs_by_name["r_arm"] = new/obj/item/bodypart/r_arm(null, C.organs_by_name["chest"])
+			C.organs_by_name["r_leg"] = new/obj/item/bodypart/r_leg(null, C.organs_by_name["groin"])
+			C.organs_by_name["l_leg"] = new/obj/item/bodypart/l_leg(null, C.organs_by_name["groin"])
 
 			C.internal_organs = list()
-			C.internal_organs_by_name["heart"] = new/datum/organ/internal/heart(C)
-			C.internal_organs_by_name["lungs"] = new/datum/organ/internal/lungs(C)
-			C.internal_organs_by_name["liver"] = new/datum/organ/internal/liver(C)
-			C.internal_organs_by_name["kidney"] = new/datum/organ/internal/kidney(C)
-			C.internal_organs_by_name["brain"] = new/datum/organ/internal/brain(C)
-			C.internal_organs_by_name["eyes"] = new/datum/organ/internal/eyes(C)
+			C.internal_organs_by_name["heart"] = new/obj/item/organ/heart(null, C)
+			C.internal_organs_by_name["lungs"] = new/obj/item/organ/lungs(null, C)
+			C.internal_organs_by_name["liver"] = new/obj/item/organ/liver(null, C)
+			C.internal_organs_by_name["kidney"] = new/obj/item/organ/kidney(null, C)
+			C.internal_organs_by_name["brain"] = new/obj/item/organ/brain(null, C)
+			C.internal_organs_by_name["eyes"] = new/obj/item/organ/eyes(null, C)
 
 			for(var/name in C.organs_by_name)
 				C.organs += C.organs_by_name[name]
@@ -116,8 +116,8 @@
 					if(BP.status & ORGAN_CUT_AWAY || BP.status & ORGAN_DESTROYED)
 						continue
 					BP.status |= ORGAN_ROBOT
-				for(var/datum/organ/internal/I in C.internal_organs)
-					I.mechanize()
+				for(var/obj/item/organ/IO in C.internal_organs)
+					IO.mechanize()
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/C) //Handles anything not already covered by basic species assignment.
 	return

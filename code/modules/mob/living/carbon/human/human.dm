@@ -933,8 +933,8 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 
-	for(var/datum/organ/internal/I in internal_organs)
-		I.damage = 0
+	for(var/obj/item/organ/IO in internal_organs)
+		IO.damage = 0
 
 	for (var/datum/disease/virus in viruses)
 		virus.cure()
@@ -1220,7 +1220,7 @@
 
 /mob/living/carbon/human/has_eyes()
 	if(internal_organs_by_name["eyes"])
-		var/datum/organ/internal/eyes = internal_organs_by_name["eyes"]
+		var/obj/item/organ/eyes = internal_organs_by_name["eyes"]
 		if(eyes && istype(eyes))
 			return 1
 	return 0

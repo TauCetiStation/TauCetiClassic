@@ -300,7 +300,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	for(var/name in organ_data)
 		var/obj/item/bodypart/BP = character.organs_by_name[name]
-		var/datum/organ/internal/I = character.internal_organs_by_name[name]
+		var/obj/item/organ/IO = character.internal_organs_by_name[name]
 		var/status = organ_data[name]
 
 		if(status == "amputated")
@@ -310,9 +310,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		if(status == "cyborg")
 			BP.status |= ORGAN_ROBOT
 		if(status == "assisted")
-			I.mechassist()
+			IO.mechassist()
 		else if(status == "mechanical")
-			I.mechanize()
+			IO.mechanize()
 
 		else continue
 

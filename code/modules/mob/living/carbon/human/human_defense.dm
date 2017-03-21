@@ -230,9 +230,9 @@
 	for(var/obj/item/bodypart/BP  in organs)
 		if(BP.status & ORGAN_DESTROYED)	continue
 		BP.emp_act(severity)
-		for(var/datum/organ/internal/I  in BP.internal_organs)
-			if(I.robotic == 0)	continue
-			I.emp_act(severity)
+		for(var/obj/item/organ/IO  in BP.internal_organs)
+			if(IO.robotic == 0)	continue
+			IO.emp_act(severity)
 	..()
 
 

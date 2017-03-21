@@ -4,25 +4,25 @@
 
 /mob/living/carbon/var/list/internal_organs = list()
 
-/datum/organ/internal
+/obj/item/organ
 	var/damage = 0 // amount of damage to the organ
 	var/min_bruised_damage = 10
 	var/min_broken_damage = 30
 	var/parent_organ = "chest"
 	var/robotic = 0 //For being a robot
 
-/datum/organ/internal/proc/rejuvenate()
+/obj/item/organ/proc/rejuvenate()
 	damage=0
 
-/datum/organ/internal/proc/is_bruised()
+/obj/item/organ/proc/is_bruised()
 	return damage >= min_bruised_damage
 
-/datum/organ/internal/proc/is_broken()
+/obj/item/organ/proc/is_broken()
 	return damage >= min_broken_damage
 
 
 
-/datum/organ/internal/New(mob/living/carbon/human/H)
+/obj/item/organ/New(loc, mob/living/carbon/human/H)
 	..()
 	var/obj/item/bodypart/BP = H.organs_by_name[src.parent_organ]
 	if(BP.internal_organs == null)
@@ -31,7 +31,7 @@
 	H.internal_organs |= src
 	src.owner = H
 
-/datum/organ/internal/process()
+/obj/item/organ/process()
 	//Process infections
 
 	if (robotic >= 2 || (owner.species && owner.species.flags[IS_PLANT]))	//TODO make robotic internal and external organs separate types of organ instead of a flag
@@ -62,7 +62,7 @@
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
 
-/datum/organ/internal/proc/take_damage(amount, silent=0)
+/obj/item/organ/proc/take_damage(amount, silent=0)
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
 	else
@@ -72,7 +72,7 @@
 	if (!silent)
 		owner.custom_pain("Something inside your [parent.display_name] hurts a lot.", 1)
 
-/datum/organ/internal/proc/emp_act(severity)
+/obj/item/organ/emp_act(severity)
 	switch(robotic)
 		if(0)
 			return
@@ -99,10 +99,10 @@
 					take_damage(10,0)
 					return
 
-/datum/organ/internal/proc/mechanize() //Being used to make robutt hearts, etc
+/obj/item/organ/proc/mechanize() //Being used to make robutt hearts, etc
 	robotic = 2
 
-/datum/organ/internal/proc/mechassist() //Used to add things like pacemakers, etc
+/obj/item/organ/proc/mechassist() //Used to add things like pacemakers, etc
 	robotic = 1
 	min_bruised_damage = 15
 	min_broken_damage = 35
@@ -111,16 +111,16 @@
 				INTERNAL ORGANS DEFINES
 ****************************************************/
 
-/datum/organ/internal/heart
+/obj/item/organ/heart
 	name = "heart"
 	parent_organ = "chest"
 
 
-/datum/organ/internal/lungs
+/obj/item/organ/lungs
 	name = "lungs"
 	parent_organ = "chest"
 
-/datum/organ/internal/lungs/process()
+/obj/item/organ/lungs/process()
 	..()
 	if (germ_level > INFECTION_LEVEL_ONE)
 		if(prob(5))
@@ -134,12 +134,12 @@
 			spawn owner.emote("me", 1, "gasps for air!")
 			owner.losebreath += 15
 
-/datum/organ/internal/liver
+/obj/item/organ/liver
 	name = "liver"
 	parent_organ = "chest"
 	var/process_accuracy = 10
 
-/datum/organ/internal/liver/process()
+/obj/item/organ/liver/process()
 	..()
 	if (germ_level > INFECTION_LEVEL_ONE)
 		if(prob(1))
@@ -159,9 +159,9 @@
 				src.damage += 0.2 * process_accuracy
 			//Damaged one shares the fun
 			else
-				var/datum/organ/internal/O = pick(owner.internal_organs)
-				if(O)
-					O.damage += 0.2  * process_accuracy
+				var/obj/item/organ/IO = pick(owner.internal_organs)
+				if(IO)
+					IO.damage += 0.2  * process_accuracy
 
 		//Detox can heal small amounts of damage
 		if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
@@ -177,19 +177,19 @@
 				if(istype(R, /datum/reagent/toxin))
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
-/datum/organ/internal/kidney
+/obj/item/organ/kidney
 	name = "kidney"
 	parent_organ = "chest"
 
-/datum/organ/internal/brain
+/obj/item/organ/brain
 	name = "brain"
 	parent_organ = "head"
 
-/datum/organ/internal/eyes
+/obj/item/organ/eyes
 	name = "eyes"
 	parent_organ = "head"
 
-/datum/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
+/obj/item/organ/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()
 	if(is_bruised())
 		owner.eye_blurry = 20

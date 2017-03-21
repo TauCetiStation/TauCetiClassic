@@ -1285,10 +1285,10 @@ datum
 				M.eye_blind = max(M.eye_blind - 5, 0)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
-					if(istype(E))
-						if(E.damage > 0)
-							E.damage = max(E.damage - 1, 0)
+					var/obj/item/organ/eyes/IO = H.internal_organs_by_name["eyes"]
+					if(istype(IO))
+						if(IO.damage > 0)
+							IO.damage = max(IO.damage - 1, 0)
 
 		peridaxon
 			name = "Peridaxon"
@@ -1305,9 +1305,9 @@ datum
 					var/mob/living/carbon/human/H = M
 
 					//Peridaxon is hard enough to get, it's probably fair to make this all internal organs
-					for(var/datum/organ/internal/I in H.internal_organs)
-						if(I.damage > 0)
-							I.damage = max(I.damage - 0.20, 0)
+					for(var/obj/item/organ/IO in H.internal_organs)
+						if(IO.damage > 0)
+							IO.damage = max(IO.damage - 0.20, 0)
 
 		kyphotorin
 			name = "Kyphotorin"
@@ -3100,9 +3100,9 @@ datum
 					M.drowsyness = max(M.drowsyness, 30)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
-						if(istype(L))
-							L.take_damage(0.1, 1)
+						var/obj/item/organ/liver/IO = H.internal_organs_by_name["liver"]
+						if(istype(IO))
+							IO.take_damage(0.1, 1)
 						H.adjustToxLoss(0.1)
 				return TRUE
 
@@ -3358,15 +3358,15 @@ datum
 							M.adjustToxLoss(2)
 						if(prob(5) && ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
-							if(istype(L))
-								L.take_damage(5, 0)
+							var/obj/item/organ/heart/IO = H.internal_organs_by_name["heart"]
+							if(istype(IO))
+								IO.take_damage(5, 0)
 					if(300 to INFINITY)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
-							if(istype(L))
-								L.take_damage(100, 0)
+							var/obj/item/organ/heart/IO = H.internal_organs_by_name["heart"]
+							if(istype(IO))
+								IO.take_damage(100, 0)
 
 		ethanol/deadrum
 			name = "Deadrum"
@@ -4116,9 +4116,9 @@ datum
 				M.adjustBrainLoss(2)
 				if(ishuman(M) && prob(5))
 					var/mob/living/carbon/human/H = M
-					var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
-					if(istype(L))
-						L.take_damage(10, 0)
+					var/obj/item/organ/heart/IO = H.internal_organs_by_name["heart"]
+					if(istype(IO))
+						IO.take_damage(10, 0)
 	data++
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
