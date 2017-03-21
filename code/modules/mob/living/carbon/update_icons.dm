@@ -2,34 +2,6 @@
 	//UPDATE_ICONS SYSTEM//
 	///////////////////////
 /*
-Calling this  a system is perhaps a bit trumped up. It is essentially update_clothing dismantled into its
-core parts. The key difference is that when we generate overlays we do not generate either lying or standing
-versions. Instead, we generate both and store them in two fixed-length lists, both using the same list-index
-(The indexes are in update_icons.dm): Each list for humans is (at the time of writing) of length 19.
-This will hopefully be reduced as the system is refined.
-
-	var/overlays_lying[19]			//For the lying down stance
-	var/overlays_standing[19]		//For the standing stance
-
-When we call update_icons, the 'lying' variable is checked and then the appropriate list is assigned to our overlays!
-That in itself uses a tiny bit more memory (no more than all the ridiculous lists the game has already mind you).
-
-On the other-hand, it should be very CPU cheap in comparison to the old system.
-In the old system, we updated all our overlays every life() call, even if we were standing still inside a crate!
-or dead!. 25ish overlays, all generated from scratch every second for every xeno/human/monkey and then applied.
-More often than not update_clothing was being called a few times in addition to that! CPU was not the only issue,
-all those icons had to be sent to every client. So really the cost was extremely cumulative. To the point where
-update_clothing would frequently appear in the top 10 most CPU intensive procs during profiling.
-
-Another feature of this new system is that our lists are indexed. This means we can update specific overlays!
-So we only regenerate icons when we need them to be updated! This is the main saving for this system.
-
-In practice this means that:
-	everytime you fall over, we just switch between precompiled lists. Which is fast and cheap.
-	Everytime you do something minor like take a pen out of your pocket, we only update the in-hand overlay
-	etc...
-
-
 There are several things that need to be remembered:
 
 >	Whenever we do something that should cause an overlay to update (which doesn't use standard procs
@@ -52,10 +24,9 @@ There are several things that need to be remembered:
 		update_inv_handcuffed()
 		update_inv_wear_mask()
 
-	All of these are named after the variable they update from. They are defined at the mob/ level like
-	update_clothing was, so you won't cause undefined proc runtimes with usr.update_inv_wear_id() if the usr is a
+	All of these are named after the variable they update from. They are defined at the mob/ level
+	so you won't cause undefined proc runtimes with usr.update_inv_wear_id() if the usr is a
 	slime etc. Instead, it'll just return without doing any work. So no harm in calling it for slimes and such.
-
 
 >	There are also these special cases:
 		update_mutations()	//handles updating your appearance for certain mutations.  e.g TK head-glows
@@ -66,37 +37,17 @@ There are several things that need to be remembered:
 																			...eyes were merged into update_body)
 		update_targeted() // Updates the target overlay when someone points a gun at you
 
->	All of these procs update our overlays_lying and overlays_standing, and then call update_icons() by default.
-	If you wish to update several overlays at once, you can set the argument to 0 to disable the update and call
-	it manually:
-		e.g.
-		update_inv_head()
-		update_inv_l_hand()
-		update_inv_r_hand()		//<---calls update_icons()
-
-	or equivillantly:
-		update_inv_head()
-		update_inv_l_hand()
-		update_inv_r_hand()
-		update_icons()
-
->	If you need to update all overlays you can use regenerate_icons(). it works exactly like update_clothing used to.
+>	If you need to update all overlays you can use regenerate_icons().
 
 >	I reimplimented an old unused variable which was in the code called (coincidentally) var/update_icon
 	It can be used as another method of triggering regenerate_icons(). It's basically a flag that when set to non-zero
 	will call regenerate_icons() at the next life() call and then reset itself to 0.
 	The idea behind it is icons are regenerated only once, even if multiple events requested it.
 
-This system is confusing and is still a WIP. It's primary goal is speeding up the controls of the game whilst
-reducing processing costs. So please bear with me while I iron out the kinks. It will be worth it, I promise.
-If I can eventually free var/lying stuff from the life() process altogether, stuns/death/status stuff
-will become less affected by lag-spikes and will be instantaneous! :3
-
-If you have any questions/constructive-comments/bugs-to-report/or have a massivly devestated butt...
-Please contact me on #coderbus IRC. ~Carn x
 */
 
 //Human Overlays Indexes/////////
+#define BODYPARTS_LAYER			28
 #define BODY_LAYER				27
 #define MUTANTRACE_LAYER		26
 #define MUTATIONS_LAYER			25
@@ -124,17 +75,17 @@ Please contact me on #coderbus IRC. ~Carn x
 #define R_HAND_LAYER			3
 #define TARGETED_LAYER			2		//BS12: Layer for the target overlay from weapon targeting system
 #define FIRE_LAYER				1
-#define TOTAL_LAYERS			27
+#define TOTAL_LAYERS			28
 //////////////////////////////////
-//Human Limb Overlays Indexes/////
-#define LIMB_HEAD_LAYER			7
-#define LIMB_TORSO_LAYER		6
-#define LIMB_L_ARM_LAYER		5
-#define LIMB_R_ARM_LAYER		4
-#define LIMB_GROIN_LAYER		3
-#define LIMB_L_LEG_LAYER		2
-#define LIMB_R_LEG_LAYER		1
-#define TOTAL_LIMB_LAYERS		7
+//Human BodyParts Overlays Indexes/////
+#define BP_HEAD_LAYER		7
+#define BP_TORSO_LAYER		6
+#define BP_L_ARM_LAYER		5
+#define BP_R_ARM_LAYER		4
+#define BP_GROIN_LAYER		3
+#define BP_L_LEG_LAYER		2
+#define BP_R_LEG_LAYER		1
+#define TOTAL_BP_LAYERS		7
 //////////////////////////////////
 
 /*
@@ -142,12 +93,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	Global associative list for caching humanoid icons.
 	Index format m or f, followed by a string of 0 and 1 to represent bodyparts followed by husk fat hulk skeleton 1 or 0.
 	TODO: Proper documentation
-	icon_key is [species.race_key][g][husk][fat][hulk][s_tone]
+	icon_key is [species.race_key][g][husk][fat][hulk][s_tone][r_tone]
 */
 /mob/living/carbon
 	var/static/list/human_icon_cache = list()
 	var/list/overlays_standing[TOTAL_LAYERS]
-	var/list/overlays_damage[TOTAL_LIMB_LAYERS]
+	var/list/overlays_damage[TOTAL_BP_LAYERS]
 
 /mob/living/carbon/proc/apply_overlay(cache_index)
 	var/image/I = overlays_standing[cache_index]
@@ -180,44 +131,34 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/UpdateDamageIcon(datum/organ/external/O)
 	remove_damage_overlay(O.limb_layer)
 	if(species.damage_mask)
-		var/image/standing = image("icon"='icons/mob/human_races/damage_overlays.dmi', "icon_state"="[O.icon_name]_[O.damage_state]", "layer"=-DAMAGE_LAYER)
+		var/image/standing = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[O.icon_name]_[O.damage_state]", layer = -DAMAGE_LAYER)
 		standing.color = species.blood_color
 		overlays_damage[O.limb_layer]	= standing
 		apply_damage_overlay(O.limb_layer)
 
-
-//BASE MOB SPRITE
-/mob/living/carbon/proc/update_body()
-	remove_overlay(BODY_LAYER)
+/mob/living/carbon/proc/update_bodyparts()
+	remove_overlay(BODYPARTS_LAYER)
 
 	if(!get_organ("chest"))
 		return
 
-	var/list/standing	= list()
+	var/list/standing = list()
 
-	var/husk_color_mod = rgb(96,88,80)
-	var/hulk_color_mod = rgb(48,224,40)
-	var/necrosis_color_mod = rgb(10,50,0)
-
-	var/husk = (HUSK in src.mutations)
-	var/fat //= (FAT in src.mutations)
+	var/husk = (HUSK in src.mutations) // Implement assoc list later.
+	var/fat = (FAT in src.mutations)
 	var/hulk = (HULK in src.mutations)
-	if(FAT in mutations)
-		fat = "fat"
 
 	var/g = (gender == FEMALE ? "f" : "m")
-	var/has_head = 0
 
 	//CACHING: Generate an index key from visible bodyparts.
+	var/icon_key = "[species.race_key][g]"
+	if(species.flags[HAS_SKIN_TONE])
+		icon_key = "[icon_key][s_tone]"
+	if(species.flags[HAS_SKIN_COLOR])
+		icon_key = "[icon_key][r_skin]"
+
 	//0 = destroyed, 1 = normal, 2 = robotic, 3 = necrotic.
-
-	var/icon/stand_icon = new(species.icon_template ? species.icon_template : 'icons/mob/human.dmi',"blank")
-
-	var/icon_key = "[species.race_key][g][s_tone]"
 	for(var/datum/organ/external/part in organs)
-
-		if(istype(part,/datum/organ/external/head) && !(part.status & ORGAN_DESTROYED))
-			has_head = 1
 
 		if(part.status & ORGAN_DESTROYED)
 			icon_key = "[icon_key]0"
@@ -228,140 +169,97 @@ Please contact me on #coderbus IRC. ~Carn x
 		else
 			icon_key = "[icon_key]1"
 
-	icon_key = "[icon_key][husk ? 1 : 0][fat ? 1 : 0][hulk ? 1 : 0][s_tone]"
+	icon_key = "[icon_key][husk][fat][hulk]"
 
-	var/icon/base_icon
 	if(human_icon_cache[icon_key])
 		//Icon is cached, use existing icon.
-		base_icon = human_icon_cache[icon_key]
-
-	//	log_debug("Retrieved cached mob icon ([icon_key] [bicon(human_icon_cache[icon_key])] for [src].")
-
+		standing = human_icon_cache[icon_key]
+		//to_chat(world, "Retrieved cached mob icon ([icon_key]) for [src].")
 	else
-
-	//BEGIN CACHED ICON GENERATION.
-
-		var/race_icon =   species.icobase
+		//BEGIN CACHED ICON GENERATION.
+		var/race_icon = species.icobase
 		var/deform_icon = species.icobase
 
+		var/husk_color_mod = list(0.37,0.37,0.37, 0.34,0.34,0.34, 0.31,0.31,0.31, 0,0,0)
+		var/hulk_color_mod = list(0.18,0,0, 0,0.87,0, 0,0,0.15, 0,0,0)
+		var/necrosis_color_mod = list(0.03,0,0, 0,0.2,0, 0,0,0, 0.3,0.3,0.3)
 		//Robotic limbs are handled in get_icon() so all we worry about are missing or dead limbs.
 		//No icon stored, so we need to start with a basic one.
-		var/datum/organ/external/chest = get_organ("chest")
-		base_icon = chest.get_icon(race_icon,deform_icon,g,fat)
 
-		if(chest.status & ORGAN_DEAD)
-			base_icon.ColorTone(necrosis_color_mod)
-			base_icon.SetIntensity(0.7)
-
-		for(var/datum/organ/external/part in organs)
-
-			var/icon/temp //Hold the bodypart icon for processing.
-
-			if(part.status & ORGAN_DESTROYED)
+		for(var/datum/organ/external/E in organs)
+			if(E.status & ORGAN_DESTROYED)
 				continue
 
-			if (istype(part, /datum/organ/external/groin) || istype(part, /datum/organ/external/head))
-				temp = part.get_icon(race_icon,deform_icon,g)
+			var/image/temp
+			if(istype(E, /datum/organ/external/chest))// TODO: correct get_icon() so we don't need those istypes()?
+				temp = E.get_icon(race_icon,deform_icon,g,fat)
+			else if (istype(E, /datum/organ/external/groin) || istype(E, /datum/organ/external/head))
+				temp = E.get_icon(race_icon,deform_icon,g)
 			else
-				temp = part.get_icon(race_icon,deform_icon)
+				temp = E.get_icon(race_icon,deform_icon)
 
-			if(part.status & ORGAN_DEAD)
-				temp.ColorTone(necrosis_color_mod)
-				temp.SetIntensity(0.7)
-
-			//That part makes left and right legs drawn topmost and lowermost when human looks WEST or EAST
-			//And no change in rendering for other parts (they icon_position is 0, so goes to 'else' part)
-			if(part.icon_position&(LEFT|RIGHT))
-
-				var/icon/temp2 = new('icons/mob/human.dmi',"blank")
-
-				temp2.Insert(new/icon(temp,dir=NORTH),dir=NORTH)
-				temp2.Insert(new/icon(temp,dir=SOUTH),dir=SOUTH)
-
-				if(!(part.icon_position & LEFT))
-					temp2.Insert(new/icon(temp,dir=EAST),dir=EAST)
-
-				if(!(part.icon_position & RIGHT))
-					temp2.Insert(new/icon(temp,dir=WEST),dir=WEST)
-
-				base_icon.Blend(temp2, ICON_OVERLAY)
-
-				if(part.icon_position & LEFT)
-					temp2.Insert(new/icon(temp,dir=EAST),dir=EAST)
-
-				if(part.icon_position & RIGHT)
-					temp2.Insert(new/icon(temp,dir=WEST),dir=WEST)
-
-				base_icon.Blend(temp2, ICON_UNDERLAY)
-
-			else
-
-				base_icon.Blend(temp, ICON_OVERLAY)
-
-		if(husk)
-			base_icon.ColorTone(husk_color_mod)
-		else if(hulk)
-			var/list/tone = ReadRGB(hulk_color_mod)
-			base_icon.MapColors(rgb(tone[1],0,0),rgb(0,tone[2],0),rgb(0,0,tone[3]))
-
-		//Handle husk overlay.
-		if(husk)
-			var/icon/mask = new(base_icon)
-			var/icon/husk_over = new(race_icon,"overlay_husk")
-			mask.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,0)
-			husk_over.Blend(mask, ICON_ADD)
-			base_icon.Blend(husk_over, ICON_OVERLAY)
-
-		//Skin tone.
-		if(!husk && !hulk)
-			if(species.flags[HAS_SKIN_TONE])
-				if(s_tone >= 0)
-					base_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
+			if(!(E.status & ORGAN_ROBOT))
+				if(husk) // !REMINDER! reimplement husk properly.
+					temp.color = husk_color_mod
+				else if(E.status & ORGAN_DEAD)
+					temp.color = necrosis_color_mod
+				else if(hulk)
+					temp.color = hulk_color_mod
 				else
-					base_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+					if(species.flags[HAS_SKIN_TONE])
+						temp.color = list(1,0,0, 0,1,0, 0,0,1, s_tone/255,s_tone/255,s_tone/255)
+					if(species.flags[HAS_SKIN_COLOR])
+						temp.color = list(1,0,0, 0,1,0, 0,0,1, r_skin/255,g_skin/255,b_skin/255)
 
-		human_icon_cache[icon_key] = base_icon
+			standing += temp
 
-		//log_debug("Generated new cached mob icon ([icon_key] [bicon(human_icon_cache[icon_key])] for [src]. [human_icon_cache.len] cached mob icons.")
+		human_icon_cache[icon_key] = standing
+		//to_chat(world, "Generated cached mob icon ([icon_key]) for [src].")
 
-	//END CACHED ICON GENERATION.
+	overlays_standing[BODYPARTS_LAYER] = standing
+	apply_overlay(BODYPARTS_LAYER)
 
-	stand_icon.Blend(base_icon,ICON_OVERLAY)
+//BASE MOB SPRITE
+/mob/living/carbon/proc/update_body()
+	remove_overlay(BODY_LAYER)
 
-	//Skin colour. Not in cache because highly variable (and relatively benign).
-	if (species.flags[HAS_SKIN_COLOR])
-		stand_icon.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
+	update_bodyparts()
+	update_tail_showing()
+
+	var/g = (gender == FEMALE ? "f" : "m")
+	var/fat = (FAT in src.mutations)
+	var/hulk = (HULK in src.mutations)
+
+	var/list/standing = list()
 
 	//Underwear
-	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
-		if(!fat)
-			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+	if(!fat)
+		if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
+			standing += image(icon = 'icons/mob/human.dmi', icon_state = "underwear[underwear]_[g]_s", layer = -BODY_LAYER)
 
-	if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
-		if(!fat)
-			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
-	standing	+= image("icon"=stand_icon, "layer"=-BODY_LAYER)
+		if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
+			standing += image(icon = 'icons/mob/human_undershirt.dmi', icon_state = "undershirt[undershirt]_s", layer = -BODY_LAYER)
 
 	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
 		if(!fat && organs_by_name["r_leg"] && organs_by_name["l_leg"]) //shit
 			var/datum/organ/external/r_leg = organs_by_name["r_leg"]
 			var/datum/organ/external/l_leg = organs_by_name["l_leg"]
-			if( !(r_leg.amputated || (r_leg.status & ORGAN_DESTROYED)) && !(l_leg.amputated || (l_leg.status & ORGAN_DESTROYED)) )
-				standing += image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-BODY_LAYER)
+			if( !(r_leg.status & ORGAN_DESTROYED) && !(l_leg.status & ORGAN_DESTROYED) )
+				standing += image(icon = 'icons/mob/human_socks.dmi', icon_state = "socks[socks]_s", layer = -BODY_LAYER)
 
-	if(has_head)
+	var/datum/organ/external/E = get_organ("head")
+	if(E && !(E.status & ORGAN_DESTROYED))
 		//Eyes
-		var/image/img_eyes_s = image("icon"='icons/mob/human_face.dmi', "icon_state"=species.eyes, "layer"=-BODY_LAYER)
-		img_eyes_s.color = rgb(r_eyes, g_eyes, b_eyes)
-		standing	+= img_eyes_s
+		var/image/img_eyes_s = image(icon = 'icons/mob/human_face.dmi', icon_state = species.eyes, layer = -BODY_LAYER)
+		img_eyes_s.color = hulk ? "#ff0000" : rgb(r_eyes, g_eyes, b_eyes)
+		standing += img_eyes_s
 
 		//Mouth	(lipstick!)
 		if(lip_style && (species && species.flags[HAS_LIPS]))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
-			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_s", "layer"=-BODY_LAYER)
+			var/image/lips = image(icon = 'icons/mob/human_face.dmi', icon_state = "lips_[lip_style]_s", layer = -BODY_LAYER)
 			lips.color = lip_color
-			standing	+= lips
+			standing += lips
 
-	update_tail_showing()
 	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
 
@@ -388,7 +286,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(facial_hair_style && facial_hair_style.species_allowed && (species.name in facial_hair_style.species_allowed))
 			var/image/facial_s = image("icon"=facial_hair_style.icon, "icon_state"="[facial_hair_style.icon_state]_s", "layer"=-HAIR_LAYER)
 			if(facial_hair_style.do_colouration)
-				facial_s.color = rgb(r_facial, g_facial, b_facial)
+				facial_s.color = list(1,0,0, 0,1,0, 0,0,1, r_facial/255,g_facial/255,b_facial/255)//rgb(r_facial, g_facial, b_facial)
 			standing	+= facial_s
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
@@ -396,7 +294,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(hair_style && hair_style.species_allowed && (species.name in hair_style.species_allowed))
 			var/image/hair_s = image("icon"=hair_style.icon, "icon_state"="[hair_style.icon_state]_s", "layer"=-HAIR_LAYER)
 			if(hair_style.do_colouration)
-				hair_s.color = rgb(r_hair,g_hair,b_hair)
+				hair_s.color = list(1,0,0, 0,1,0, 0,0,1, r_hair/255,g_hair/255,b_hair/255)//rgb(r_hair,g_hair,b_hair)
 			standing	+= hair_s
 
 	if(standing.len)
@@ -967,10 +865,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(species.tail && species.flags[HAS_TAIL])
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			var/icon/tail_s = new/icon("icon"='icons/effects/species.dmi', "icon_state"="[species.tail]_s")
-			tail_s.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
-
-			overlays_standing[TAIL_LAYER]	= image("icon"=tail_s, "layer"=-TAIL_LAYER)
+			var/image/tail_s = image(icon = 'icons/effects/species.dmi', icon_state = "[species.tail]_s", layer = -BODYPARTS_LAYER)
+			tail_s.color = list(1,0,0, 0,1,0, 0,0,1, r_skin/255,g_skin/255,b_skin/255)
+			overlays_standing[TAIL_LAYER] = tail_s
 
 	apply_overlay(TAIL_LAYER)
 

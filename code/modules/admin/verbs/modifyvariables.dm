@@ -526,6 +526,7 @@ var/list/forbidden_varedit_object_types = list(
 		if("marked datum")
 			O.vars[variable] = holder.marked_datum
 
+	O.on_varedit(variable)
 	world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
 	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]")

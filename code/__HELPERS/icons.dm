@@ -766,7 +766,14 @@ The _flatIcons list is a cache for generated icon files.
 		flat.Blend(add, blendMode2iconMode(curblend), I:pixel_x + 2 - flatX1, I:pixel_y + 2 - flatY1)
 
 	if(A.color)
-		flat.Blend(A.color, ICON_MULTIPLY)
+		if(islist(A.color)) // Matrix color support.
+			flat.MapColors(
+			A.color[1],A.color[2],A.color[3],
+			A.color[5],A.color[6],A.color[7],
+			A.color[9],A.color[10],A.color[11],
+			A.color[17],A.color[18],A.color[19])
+		else
+			flat.Blend(A.color, ICON_MULTIPLY)
 	if(A.alpha < 255)
 		flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 

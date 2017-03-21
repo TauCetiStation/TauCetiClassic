@@ -15,7 +15,7 @@
 		return 0
 
 /datum/organ/proc/get_icon(icon/race_icon, icon/deform_icon)
-	return icon('icons/mob/human.dmi',"blank")
+	return image(icon = 'icons/mob/human.dmi', icon_state = "blank", layer = -BODYPARTS_LAYER)
 
 //Germs
 /datum/organ/proc/handle_antibiotics()

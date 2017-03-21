@@ -813,15 +813,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 			return 1
 	return 0
 
-/datum/organ/external/get_icon(icon/race_icon, icon/deform_icon,gender="",fat="")
+/datum/organ/external/get_icon(icon/race_icon, icon/deform_icon, gender="", fat)
 	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags[IS_SYNTHETIC]))
-		return new /icon('icons/mob/human_races/robotic.dmi', "[icon_name][gender ? "_[gender]" : ""]")
+		return image(icon = 'icons/mob/human_races/robotic.dmi', icon_state = "[icon_name][gender ? "_[gender]" : ""]", layer = -BODYPARTS_LAYER)
 
 	if (status & ORGAN_MUTATED)
-		return new /icon(deform_icon, "[icon_name][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
+		return image(icon = deform_icon, icon_state = "[icon_name][gender ? "_[gender]" : ""][fat ? "_fat" : ""]", layer = -BODYPARTS_LAYER)
 
-	return new /icon(race_icon, "[icon_name][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
-
+	return image(icon = race_icon, icon_state = "[icon_name][gender ? "_[gender]" : ""][fat ? "_fat" : ""]", layer = -BODYPARTS_LAYER)
 
 /datum/organ/external/proc/is_usable()
 	return !(status & (ORGAN_DESTROYED|ORGAN_MUTATED|ORGAN_DEAD))
@@ -872,7 +871,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "chest"
 	icon_name = "torso"
 	display_name = "chest"
-	limb_layer = LIMB_TORSO_LAYER
+	limb_layer = BP_TORSO_LAYER
 	max_damage = 75
 	min_broken_damage = 40
 	body_part = UPPER_TORSO
@@ -882,7 +881,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "groin"
 	icon_name = "groin"
 	display_name = "groin"
-	limb_layer = LIMB_GROIN_LAYER
+	limb_layer = BP_GROIN_LAYER
 	max_damage = 50
 	min_broken_damage = 30
 	body_part = LOWER_TORSO
@@ -892,7 +891,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "l_arm"
 	display_name = "left arm"
 	icon_name = "l_arm"
-	limb_layer = LIMB_L_ARM_LAYER
+	limb_layer = BP_L_ARM_LAYER
 	max_damage = 80
 	min_broken_damage = 35
 	body_part = ARM_LEFT
@@ -905,7 +904,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "r_arm"
 	display_name = "right arm"
 	icon_name = "r_arm"
-	limb_layer = LIMB_R_ARM_LAYER
+	limb_layer = BP_R_ARM_LAYER
 	max_damage = 80
 	min_broken_damage = 35
 	body_part = ARM_RIGHT
@@ -918,7 +917,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "l_leg"
 	display_name = "left leg"
 	icon_name = "l_leg"
-	limb_layer = LIMB_L_LEG_LAYER
+	limb_layer = BP_L_LEG_LAYER
 	max_damage = 80
 	min_broken_damage = 35
 	body_part = LEG_LEFT
@@ -928,7 +927,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "r_leg"
 	display_name = "right leg"
 	icon_name = "r_leg"
-	limb_layer = LIMB_R_LEG_LAYER
+	limb_layer = BP_R_LEG_LAYER
 	max_damage = 80
 	min_broken_damage = 35
 	body_part = LEG_RIGHT
@@ -938,7 +937,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "head"
 	icon_name = "head"
 	display_name = "head"
-	limb_layer = LIMB_HEAD_LAYER
+	limb_layer = BP_HEAD_LAYER
 	max_damage = 75
 	min_broken_damage = 40
 	body_part = HEAD
@@ -952,9 +951,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(owner.gender == FEMALE)
 		g = "f"
 	if(status & ORGAN_MUTATED)
-		. = new /icon(deform_icon, "[icon_name]_[g]")
+		. = image(icon = deform_icon, icon_state = "[icon_name]_[g]", layer = -BODYPARTS_LAYER)
 	else
-		. = new /icon(race_icon, "[icon_name]_[g]")
+		. = image(icon = race_icon, icon_state = "[icon_name]_[g]", layer = -BODYPARTS_LAYER)
 
 /datum/organ/external/head/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list())
 	. = ..(brute, burn, sharp, edge, used_weapon, forbidden_limbs)

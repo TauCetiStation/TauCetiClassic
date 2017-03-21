@@ -23,7 +23,7 @@
 	..()
 
 	//make_blood()
-	//regenerate_icons()
+	regenerate_icons()
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
@@ -886,3 +886,30 @@ This function restores the subjects blood to max.
 		return 1
 	else
 		return 0
+
+/mob/living/carbon/on_varedit(modified_var)
+	switch(modified_var) // TODO: better implementation..
+		if("s_tone")
+			if(!species || !species.flags[HAS_SKIN_TONE])
+				return
+			s_tone = 35 - Clamp(s_tone, 0, 220)
+			update_bodyparts()
+		if("r_skin")
+			if(!species || !species.flags[HAS_SKIN_COLOR])
+				return
+			r_skin = Clamp(r_skin, 0, 255)
+			update_bodyparts()
+			update_tail_showing()
+		if("g_skin")
+			if(!species || !species.flags[HAS_SKIN_COLOR])
+				return
+			g_skin = Clamp(g_skin, 0, 255)
+			update_bodyparts()
+			update_tail_showing()
+		if("b_skin")
+			if(!species || !species.flags[HAS_SKIN_COLOR])
+				return
+			b_skin = Clamp(b_skin, 0, 255)
+			update_bodyparts()
+			update_tail_showing()
+
