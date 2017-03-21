@@ -51,9 +51,9 @@
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
 					var/organ = H.get_organ("chest")
-					if (istype(organ, /datum/organ/external))
-						var/datum/organ/external/temp = organ
-						temp.take_damage(d, 0)
+					if (istype(organ, /obj/item/bodypart))
+						var/obj/item/bodypart/BP = organ
+						BP.take_damage(d, 0)
 					H.updatehealth()
 				else
 					src.take_organ_damage(d)
@@ -101,12 +101,12 @@
 	if(!istype(C))
 		return
 
-	var/datum/organ/external/temp = C.organs_by_name["r_arm"]
+	var/obj/item/bodypart/BP = C.organs_by_name["r_arm"]
 	if (C.hand)
-		temp = C.organs_by_name["l_arm"]
+		BP = C.organs_by_name["l_arm"]
 
-	if(temp && !temp.is_usable())
-		to_chat(C, "<span class='rose'>You can't use your [temp.display_name].</span>")
+	if(BP && !BP.is_usable())
+		to_chat(C, "<span class='rose'>You can't use your [BP.display_name].</span>")
 		return
 
 	for(var/datum/disease/D in viruses)
@@ -214,10 +214,10 @@
 				"<span class='notice'>You check yourself for injuries.</span>" \
 				)
 
-			for(var/datum/organ/external/org in H.organs)
+			for(var/obj/item/bodypart/BP in H.organs)
 				var/status = ""
-				var/brutedamage = org.brute_dam
-				var/burndamage = org.burn_dam
+				var/brutedamage = BP.brute_dam
+				var/burndamage = BP.burn_dam
 				if(halloss > 0)
 					if(prob(30))
 						brutedamage += halloss
@@ -239,13 +239,13 @@
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
-				if(org.status & ORGAN_DESTROYED)
+				if(BP.status & ORGAN_DESTROYED)
 					status = "MISSING!"
-				if(org.status & ORGAN_MUTATED)
+				if(BP.status & ORGAN_MUTATED)
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.display_name,status),1)
+				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",BP.display_name,status),1)
 			if(H.species && (H.species.name == S_SKELETON) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
@@ -302,8 +302,8 @@
 				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					var/datum/organ/external/E = H.get_organ("head")
-					E.take_damage(5, 0, 0, 0, "Facepalm") // what?.. that guy was insane anyway.
+					var/obj/item/bodypart/BP = H.get_organ("head")
+					BP.take_damage(5, 0, 0, 0, "Facepalm") // what?.. that guy was insane anyway.
 				else
 					take_overall_damage(5, used_weapon = "Table")
 				Stun(1)
@@ -700,8 +700,8 @@
 /mob/living/carbon/get_visible_implants(class = 0)
 
 	var/list/visible_implants = list()
-	for(var/datum/organ/external/organ in src.organs)
-		for(var/obj/item/weapon/O in organ.implants)
+	for(var/obj/item/bodypart/BP in src.organs)
+		for(var/obj/item/weapon/O in BP.implants)
 			if(!istype(O,/obj/item/weapon/implant) && O.w_class > class)
 				visible_implants += O
 
@@ -709,25 +709,25 @@
 
 /mob/living/carbon/proc/handle_embedded_objects()
 
-	for(var/datum/organ/external/organ in src.organs)
-		if(organ.status & ORGAN_SPLINTED) //Splints prevent movement.
+	for(var/obj/item/bodypart/BP in src.organs)
+		if(BP.status & ORGAN_SPLINTED) //Splints prevent movement.
 			continue
-		for(var/obj/item/weapon/O in organ.implants)
+		for(var/obj/item/weapon/O in BP.implants)
 			if(!istype(O,/obj/item/weapon/implant) && prob(5)) //Moving with things stuck in you could be bad.
 				// All kinds of embedded objects cause bleeding.
 				var/msg = null
 				switch(rand(1,3))
 					if(1)
-						msg ="<span class='warning'>A spike of pain jolts your [organ.display_name] as you bump [O] inside.</span>"
+						msg ="<span class='warning'>A spike of pain jolts your [BP.display_name] as you bump [O] inside.</span>"
 					if(2)
-						msg ="<span class='warning'>Your movement jostles [O] in your [organ.display_name] painfully.</span>"
+						msg ="<span class='warning'>Your movement jostles [O] in your [BP.display_name] painfully.</span>"
 					if(3)
-						msg ="<span class='warning'>[O] in your [organ.display_name] twists painfully as you move.</span>"
+						msg ="<span class='warning'>[O] in your [BP.display_name] twists painfully as you move.</span>"
 				to_chat(src, msg)
 
-				organ.take_damage(rand(1,3), 0, 0)
-				if(!(organ.status & ORGAN_ROBOT)) //There is no blood in protheses.
-					organ.status |= ORGAN_BLEEDING
+				BP.take_damage(rand(1,3), 0, 0)
+				if(!(BP.status & ORGAN_ROBOT)) //There is no blood in protheses.
+					BP.status |= ORGAN_BLEEDING
 					src.adjustToxLoss(rand(1,3))
 
 /*
@@ -809,8 +809,8 @@ This function restores the subjects blood to max.
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/proc/get_face_name()
-	var/datum/organ/external/head/head = get_organ("head")
-	if( !head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+	var/obj/item/bodypart/head/BP = get_organ("head")
+	if( !BP || BP.disfigured || (BP.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 

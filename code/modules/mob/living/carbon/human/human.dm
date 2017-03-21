@@ -151,8 +151,8 @@
 				Paralyse(10)
 
 	// focus most of the blast on one organ
-	var/datum/organ/external/O = pick(organs)
-	O.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
+	var/obj/item/bodypart/BP = pick(organs)
+	BP.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
 
 	// distribute the remaining 10% on all limbs equally
 	b_loss *= 0.1
@@ -189,8 +189,8 @@
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>\The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_arm", "r_arm", "l_leg", "r_leg")
-	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
-	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
+	var/obj/item/bodypart/BP = get_organ(ran_zone(dam_zone))
+	apply_damage(rand(30,40), BRUTE, BP, run_armor_check(BP, "melee"))
 	return
 
 /mob/living/carbon/human/meteorhit(O)
@@ -198,12 +198,12 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message("\red [src] has been hit by [O]", 1)
 	if (health > 0)
-		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
-		if(!affecting)	return
+		var/obj/item/bodypart/BP = get_organ(pick("chest", "chest", "chest", "head"))
+		if(!BP)	return
 		if (istype(O, /obj/effect/immovablerod))
-			affecting.take_damage(101, 0)
+			BP.take_damage(101, 0)
 		else
-			affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30)
+			BP.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30)
 		updatehealth()
 	return
 
@@ -221,17 +221,17 @@
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = pick("chest", "l_arm", "r_arm", "l_leg", "r_leg")
-		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
-		var/armor = run_armor_check(affecting, "melee")
-		apply_damage(damage, BRUTE, affecting, armor)
+		var/obj/item/bodypart/BP = get_organ(ran_zone(dam_zone))
+		var/armor = run_armor_check(BP, "melee")
+		apply_damage(damage, BRUTE, BP, armor)
 		if(armor >= 2)	return
 
 
 /mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
 	for(var/L in M.contents)
 		if(istype(L, /obj/item/weapon/implant/loyalty))
-			for(var/datum/organ/external/O in M.organs)
-				if(L in O.implants)
+			for(var/obj/item/bodypart/BP in M.organs)
+				if(L in BP.implants)
 					return 1
 	return 0
 
@@ -254,9 +254,9 @@
 
 		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
 
-		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
-		var/armor_block = run_armor_check(affecting, "melee")
-		apply_damage(damage, BRUTE, affecting, armor_block)
+		var/obj/item/bodypart/BP = get_organ(ran_zone(dam_zone))
+		var/armor_block = run_armor_check(BP, "melee")
+		apply_damage(damage, BRUTE, BP, armor_block)
 
 
 		if(M.powerlevel > 0)
@@ -355,7 +355,7 @@
 	if(!def_zone)
 		def_zone = pick("l_arm", "r_arm")
 
-	var/datum/organ/external/affected_organ = get_organ(check_zone(def_zone))
+	var/obj/item/bodypart/BP = get_organ(check_zone(def_zone))
 
 	if(tesla_shock)
 		var/total_coeff = 1
@@ -369,7 +369,7 @@
 				total_coeff -= 0.95
 		siemens_coeff = total_coeff
 	else
-		siemens_coeff *= get_siemens_coefficient_organ(affected_organ)
+		siemens_coeff *= get_siemens_coefficient_organ(BP)
 
 	. = ..(shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(.)
@@ -907,20 +907,20 @@
 		reset_view(0) //##Z2
 
 /mob/living/carbon/human/revive()
-	for (var/datum/organ/external/O in organs)
-		O.status &= ~ORGAN_BROKEN
-		O.status &= ~ORGAN_BLEEDING
-		O.status &= ~ORGAN_SPLINTED
-		O.status &= ~ORGAN_CUT_AWAY
-		O.status &= ~ORGAN_ATTACHABLE
-		if (!O.amputated)
-			O.status &= ~ORGAN_DESTROYED
-			O.destspawn = 0
-		O.wounds.Cut()
-		O.heal_damage(1000,1000,1,1)
+	for (var/obj/item/bodypart/BP in organs)
+		BP.status &= ~ORGAN_BROKEN
+		BP.status &= ~ORGAN_BLEEDING
+		BP.status &= ~ORGAN_SPLINTED
+		BP.status &= ~ORGAN_CUT_AWAY
+		BP.status &= ~ORGAN_ATTACHABLE
+		if (!BP.amputated)
+			BP.status &= ~ORGAN_DESTROYED
+			BP.destspawn = 0
+		BP.wounds.Cut()
+		BP.heal_damage(1000,1000,1,1)
 
-	var/datum/organ/external/head/h = organs_by_name["head"]
-	h.disfigured = 0
+	var/obj/item/bodypart/head/BP = organs_by_name["head"]
+	BP.disfigured = 0
 
 	if(species && !species.flags[NO_BLOOD])
 		vessel.add_reagent("blood",560-vessel.total_volume)

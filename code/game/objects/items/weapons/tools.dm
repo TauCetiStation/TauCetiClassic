@@ -485,10 +485,10 @@
 
 	if(hasorgans(M))
 
-		var/datum/organ/external/S = M:organs_by_name[user.zone_sel.selecting]
+		var/obj/item/bodypart/BP = M:organs_by_name[user.zone_sel.selecting]
 
-		if (!S) return
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
+		if (!BP) return
+		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 
 		if(istype(M,/mob/living/carbon/human))
@@ -498,9 +498,9 @@
 					to_chat(user, "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>")
 					return
 
-		if(S.brute_dam)
-			S.heal_damage(15,0,0,1)
-			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [S.display_name] with \the [src].</span>")
+		if(BP.brute_dam)
+			BP.heal_damage(15,0,0,1)
+			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [BP.display_name] with \the [src].</span>")
 			return
 		else
 			to_chat(user, "<span class='info'>Nothing to fix!</span>")

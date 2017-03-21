@@ -18,27 +18,27 @@
 		if(!ishuman(target))	return 0
 		if (!hasorgans(target))
 			return 0
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return affected.open >= 2 && affected.stage == 0
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		return BP.open >= 2 && BP.stage == 0
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		if (affected.stage == 0)
-			user.visible_message("[user] starts applying medication to the damaged bones in [target]'s [affected.display_name] with \the [tool]." , \
-			"You start applying medication to the damaged bones in [target]'s [affected.display_name] with \the [tool].")
-		target.custom_pain("Something in your [affected.display_name] is causing you a lot of pain!",1)
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		if (BP.stage == 0)
+			user.visible_message("[user] starts applying medication to the damaged bones in [target]'s [BP.display_name] with \the [tool]." , \
+			"You start applying medication to the damaged bones in [target]'s [BP.display_name] with \the [tool].")
+		target.custom_pain("Something in your [BP.display_name] is causing you a lot of pain!",1)
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\blue [user] applies some [tool] to [target]'s bone in [affected.display_name]", \
-			"\blue You apply some [tool] to [target]'s bone in [affected.display_name] with \the [tool].")
-		affected.stage = 1
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		user.visible_message("\blue [user] applies some [tool] to [target]'s bone in [BP.display_name]", \
+			"\blue You apply some [tool] to [target]'s bone in [BP.display_name] with \the [tool].")
+		BP.stage = 1
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [affected.display_name]!" , \
-		"\red Your hand slips, smearing [tool] in the incision in [target]'s [affected.display_name]!")
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.display_name]!" , \
+		"\red Your hand slips, smearing [tool] in the incision in [target]'s [BP.display_name]!")
 
 /datum/surgery_step/set_bone
 	allowed_tools = list(
@@ -53,32 +53,32 @@
 		if(!ishuman(target))	return 0
 		if (!hasorgans(target))
 			return 0
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return affected.name != "head" && affected.open >= 2 && affected.stage == 1
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		return BP.name != "head" && BP.open >= 2 && BP.stage == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("[user] is beginning to set the bone in [target]'s [affected.display_name] in place with \the [tool]." , \
-			"You are beginning to set the bone in [target]'s [affected.display_name] in place with \the [tool].")
-		target.custom_pain("The pain in your [affected.display_name] is going to make you pass out!",1)
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		user.visible_message("[user] is beginning to set the bone in [target]'s [BP.display_name] in place with \the [tool]." , \
+			"You are beginning to set the bone in [target]'s [BP.display_name] in place with \the [tool].")
+		target.custom_pain("The pain in your [BP.display_name] is going to make you pass out!",1)
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		if (affected.status & ORGAN_BROKEN)
-			user.visible_message("\blue [user] sets the bone in [target]'s [affected.display_name] in place with \the [tool].", \
-				"\blue You set the bone in [target]'s [affected.display_name] in place with \the [tool].")
-			affected.stage = 2
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		if (BP.status & ORGAN_BROKEN)
+			user.visible_message("\blue [user] sets the bone in [target]'s [BP.display_name] in place with \the [tool].", \
+				"\blue You set the bone in [target]'s [BP.display_name] in place with \the [tool].")
+			BP.stage = 2
 		else
-			user.visible_message("\blue [user] sets the bone in [target]'s [affected.display_name]\red in the WRONG place with \the [tool].", \
-				"\blue You set the bone in [target]'s [affected.display_name]\red in the WRONG place with \the [tool].")
-			affected.fracture()
+			user.visible_message("\blue [user] sets the bone in [target]'s [BP.display_name]\red in the WRONG place with \the [tool].", \
+				"\blue You set the bone in [target]'s [BP.display_name]\red in the WRONG place with \the [tool].")
+			BP.fracture()
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, damaging the bone in [target]'s [affected.display_name] with \the [tool]!" , \
-			"\red Your hand slips, damaging the bone in [target]'s [affected.display_name] with \the [tool]!")
-		affected.createwound(BRUISE, 5)
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		user.visible_message("\red [user]'s hand slips, damaging the bone in [target]'s [BP.display_name] with \the [tool]!" , \
+			"\red Your hand slips, damaging the bone in [target]'s [BP.display_name] with \the [tool]!")
+		BP.createwound(BRUISE, 5)
 
 /datum/surgery_step/mend_skull
 	allowed_tools = list(
@@ -93,8 +93,8 @@
 		if(!ishuman(target))	return 0
 		if (!hasorgans(target))
 			return 0
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return affected.name == "head" && affected.open >= 2 && affected.stage == 1
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		return BP.name == "head" && BP.open >= 2 && BP.stage == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] is beginning to piece together [target]'s skull with \the [tool]."  , \
@@ -102,16 +102,16 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
 		user.visible_message("\blue [user] sets [target]'s skull with \the [tool]." , \
 			"\blue You set [target]'s skull with \the [tool].")
-		affected.stage = 2
+		BP.stage = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, damaging [target]'s face with \the [tool]!"  , \
 			"\red Your hand slips, damaging [target]'s face with \the [tool]!")
-		var/datum/organ/external/head/h = affected
+		var/obj/item/bodypart/head/h = BP
 		h.createwound(BRUISE, 10)
 		h.disfigured = 1
 
@@ -130,25 +130,25 @@
 		if(!ishuman(target))	return 0
 		if (!hasorgans(target))
 			return 0
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return affected.open >= 2 && affected.stage == 2
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		return BP.open >= 2 && BP.stage == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("[user] starts to finish mending the damaged bones in [target]'s [affected.display_name] with \the [tool].", \
-		"You start to finish mending the damaged bones in [target]'s [affected.display_name] with \the [tool].")
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		user.visible_message("[user] starts to finish mending the damaged bones in [target]'s [BP.display_name] with \the [tool].", \
+		"You start to finish mending the damaged bones in [target]'s [BP.display_name] with \the [tool].")
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\blue [user] has mended the damaged bones in [target]'s [affected.display_name] with \the [tool]."  , \
-			"\blue You have mended the damaged bones in [target]'s [affected.display_name] with \the [tool]." )
-		affected.status &= ~ORGAN_BROKEN
-		affected.status &= ~ORGAN_SPLINTED
-		affected.stage = 0
-		affected.perma_injury = 0
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		user.visible_message("\blue [user] has mended the damaged bones in [target]'s [BP.display_name] with \the [tool]."  , \
+			"\blue You have mended the damaged bones in [target]'s [BP.display_name] with \the [tool]." )
+		BP.status &= ~ORGAN_BROKEN
+		BP.status &= ~ORGAN_SPLINTED
+		BP.stage = 0
+		BP.perma_injury = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [affected.display_name]!" , \
-		"\red Your hand slips, smearing [tool] in the incision in [target]'s [affected.display_name]!")
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.display_name]!" , \
+		"\red Your hand slips, smearing [tool] in the incision in [target]'s [BP.display_name]!")

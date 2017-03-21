@@ -38,12 +38,12 @@
 
 	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
 		for(var/organ_name in list("l_arm", "r_arm"))
-			var/datum/organ/external/E = get_organ(organ_name)
-			if(!E || (E.status & ORGAN_DESTROYED))
+			var/obj/item/bodypart/BP = get_organ(organ_name)
+			if(!BP || (BP.status & ORGAN_DESTROYED))
 				tally += 4
-			else if(E.status & ORGAN_SPLINTED)
+			else if(BP.status & ORGAN_SPLINTED)
 				tally += 0.5
-			else if(E.status & ORGAN_BROKEN)
+			else if(BP.status & ORGAN_BROKEN)
 				tally += 1.5
 	else
 		if(shoes)
@@ -56,12 +56,12 @@
 			tally += 5.5
 
 		for(var/organ_name in list("l_leg", "r_leg"))
-			var/datum/organ/external/E = get_organ(organ_name)
-			if(!E || (E.status & ORGAN_DESTROYED))
+			var/obj/item/bodypart/BP = get_organ(organ_name)
+			if(!BP || (BP.status & ORGAN_DESTROYED))
 				tally += 4
-			else if(E.status & ORGAN_SPLINTED)
+			else if(BP.status & ORGAN_SPLINTED)
 				tally += 0.5
-			else if(E.status & ORGAN_BROKEN)
+			else if(BP.status & ORGAN_BROKEN)
 				tally += 1.5
 
 	if(shock_stage >= 10)

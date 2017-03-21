@@ -6,9 +6,9 @@
 		return
 	var/total_burn	= 0
 	var/total_brute	= 0
-	for(var/datum/organ/external/O in organs)	//hardcoded to streamline things a bit
-		total_brute	+= O.brute_dam
-		total_burn	+= O.burn_dam
+	for(var/obj/item/bodypart/BP in organs)	//hardcoded to streamline things a bit
+		total_brute	+= BP.brute_dam
+		total_burn	+= BP.burn_dam
 	health = 100 - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	//TODO: fix husking
 	if( ((100 - total_burn) < config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
@@ -30,14 +30,14 @@
 //These procs fetch a cumulative total damage from all organs
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
-	for(var/datum/organ/external/O in organs)
-		amount += O.brute_dam
+	for(var/obj/item/bodypart/BP in organs)
+		amount += BP.brute_dam
 	return amount
 
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
-	for(var/datum/organ/external/O in organs)
-		amount += O.burn_dam
+	for(var/obj/item/bodypart/BP in organs)
+		amount += BP.burn_dam
 	return amount
 
 
@@ -66,13 +66,13 @@
 		amount = amount*species.brute_mod
 
 	if (organ_name in organs_by_name)
-		var/datum/organ/external/O = get_organ(organ_name)
+		var/obj/item/bodypart/BP = get_organ(organ_name)
 
 		if(amount > 0)
-			O.take_damage(amount, 0, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
+			BP.take_damage(amount, 0, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
 		else
 			//if you don't want to heal robot organs, they you will have to check that yourself before using this proc.
-			O.heal_damage(-amount, 0, internal=0, robo_repair=(O.status & ORGAN_ROBOT))
+			BP.heal_damage(-amount, 0, internal=0, robo_repair=(BP.status & ORGAN_ROBOT))
 
 	hud_updateflag |= 1 << HEALTH_HUD
 
@@ -81,13 +81,13 @@
 		amount = amount*species.burn_mod
 
 	if (organ_name in organs_by_name)
-		var/datum/organ/external/O = get_organ(organ_name)
+		var/obj/item/bodypart/BP = get_organ(organ_name)
 
 		if(amount > 0)
-			O.take_damage(0, amount, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
+			BP.take_damage(0, amount, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
 		else
 			//if you don't want to heal robot organs, they you will have to check that yourself before using this proc.
-			O.heal_damage(0, -amount, internal=0, robo_repair=(O.status & ORGAN_ROBOT))
+			BP.heal_damage(0, -amount, internal=0, robo_repair=(BP.status & ORGAN_ROBOT))
 
 	hud_updateflag |= 1 << HEALTH_HUD
 
@@ -123,56 +123,56 @@
 	var/mut_prob = min(80, getCloneLoss()+10)
 	if (amount > 0)
 		if (prob(mut_prob))
-			var/list/datum/organ/external/candidates = list()
-			for (var/datum/organ/external/O in organs)
-				if(!(O.status & ORGAN_MUTATED))
-					candidates |= O
+			var/list/obj/item/bodypart/candidates = list()
+			for (var/obj/item/bodypart/BP in organs)
+				if(!(BP.status & ORGAN_MUTATED))
+					candidates |= BP
 			if (candidates.len)
-				var/datum/organ/external/O = pick(candidates)
-				O.mutate()
-				to_chat(src, "<span class = 'notice'>Something is not right with your [O.display_name]...</span>")
+				var/obj/item/bodypart/BP = pick(candidates)
+				BP.mutate()
+				to_chat(src, "<span class = 'notice'>Something is not right with your [BP.display_name]...</span>")
 				return
 	else
 		if (prob(heal_prob))
-			for (var/datum/organ/external/O in organs)
-				if (O.status & ORGAN_MUTATED)
-					O.unmutate()
-					to_chat(src, "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>")
+			for (var/obj/item/bodypart/BP in organs)
+				if (BP.status & ORGAN_MUTATED)
+					BP.unmutate()
+					to_chat(src, "<span class = 'notice'>Your [BP.display_name] is shaped normally again.</span>")
 					return
 
 	if (getCloneLoss() < 1)
-		for (var/datum/organ/external/O in organs)
-			if (O.status & ORGAN_MUTATED)
-				O.unmutate()
-				to_chat(src, "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>")
+		for (var/obj/item/bodypart/BP in organs)
+			if (BP.status & ORGAN_MUTATED)
+				BP.unmutate()
+				to_chat(src, "<span class = 'notice'>Your [BP.display_name] is shaped normally again.</span>")
 	hud_updateflag |= 1 << HEALTH_HUD
 
 ////////////////////////////////////////////
 
 //Returns a list of damaged organs
 /mob/living/carbon/human/proc/get_damaged_organs(brute, burn)
-	var/list/datum/organ/external/parts = list()
-	for(var/datum/organ/external/O in organs)
-		if((brute && O.brute_dam) || (burn && O.burn_dam))
-			parts += O
+	var/list/obj/item/bodypart/parts = list()
+	for(var/obj/item/bodypart/BP in organs)
+		if((brute && BP.brute_dam) || (burn && BP.burn_dam))
+			parts += BP
 	return parts
 
 //Returns a list of damageable organs
 /mob/living/carbon/human/proc/get_damageable_organs()
-	var/list/datum/organ/external/parts = list()
-	for(var/datum/organ/external/O in organs)
-		if(O.brute_dam + O.burn_dam < O.max_damage)
-			parts += O
+	var/list/obj/item/bodypart/parts = list()
+	for(var/obj/item/bodypart/BP in organs)
+		if(BP.brute_dam + BP.burn_dam < BP.max_damage)
+			parts += BP
 	return parts
 
 //Heals ONE external organ, organ gets randomly selected from damaged ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
 /mob/living/carbon/human/heal_organ_damage(brute, burn)
-	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
+	var/list/obj/item/bodypart/parts = get_damaged_organs(brute,burn)
 	if(!parts.len)	return
-	var/datum/organ/external/picked = pick(parts)
-	if(picked.heal_damage(brute,burn))
+	var/obj/item/bodypart/BP = pick(parts)
+	if(BP.heal_damage(brute,burn))
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
 
@@ -180,10 +180,10 @@
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
 /mob/living/carbon/human/take_organ_damage(brute, burn, sharp = 0, edge = 0)
-	var/list/datum/organ/external/parts = get_damageable_organs()
+	var/list/obj/item/bodypart/parts = get_damageable_organs()
 	if(!parts.len)	return
-	var/datum/organ/external/picked = pick(parts)
-	if(picked.take_damage(brute,burn,sharp,edge))
+	var/obj/item/bodypart/BP = pick(parts)
+	if(BP.take_damage(brute,burn,sharp,edge))
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
 	speech_problem_flag = 1
@@ -191,15 +191,15 @@
 
 //Heal MANY external organs, in random order
 /mob/living/carbon/human/heal_overall_damage(brute, burn)
-	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
+	var/list/obj/item/bodypart/parts = get_damaged_organs(brute,burn)
 	while(parts.len && (brute>0 || burn>0) )
-		var/datum/organ/external/picked = pick(parts)
-		var/brute_was = picked.brute_dam
-		var/burn_was = picked.burn_dam
-		picked.heal_damage(brute,burn)
-		brute -= (brute_was-picked.brute_dam)
-		burn -= (burn_was-picked.burn_dam)
-		parts -= picked
+		var/obj/item/bodypart/BP = pick(parts)
+		var/brute_was = BP.brute_dam
+		var/burn_was = BP.burn_dam
+		BP.heal_damage(brute,burn)
+		brute -= (brute_was-BP.brute_dam)
+		burn -= (burn_was-BP.burn_dam)
+		parts -= BP
 	updatehealth()
 	hud_updateflag |= 1 << HEALTH_HUD
 	speech_problem_flag = 1
@@ -208,15 +208,15 @@
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(brute, burn, sharp = 0, edge = 0, used_weapon = null)
 	if(status_flags & GODMODE)	return	//godmode
-	var/list/datum/organ/external/parts = get_damageable_organs()
+	var/list/obj/item/bodypart/parts = get_damageable_organs()
 	while(parts.len && (brute>0 || burn>0) )
-		var/datum/organ/external/picked = pick(parts)
-		var/brute_was = picked.brute_dam
-		var/burn_was = picked.burn_dam
-		picked.take_damage(brute,burn,sharp,edge,used_weapon)
-		brute	-= (picked.brute_dam - brute_was)
-		burn	-= (picked.burn_dam - burn_was)
-		parts -= picked
+		var/obj/item/bodypart/BP = pick(parts)
+		var/brute_was = BP.brute_dam
+		var/burn_was = BP.burn_dam
+		BP.take_damage(brute,burn,sharp,edge,used_weapon)
+		brute	-= (BP.brute_dam - brute_was)
+		burn	-= (BP.burn_dam - burn_was)
+		parts -= BP
 	updatehealth()
 	hud_updateflag |= 1 << HEALTH_HUD
 
@@ -227,13 +227,13 @@
 This function restores all organs.
 */
 /mob/living/carbon/human/restore_all_organs()
-	for(var/datum/organ/external/current_organ in organs)
-		current_organ.rejuvenate()
+	for(var/obj/item/bodypart/BP in organs)
+		BP.rejuvenate()
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
-	var/datum/organ/external/O = get_organ(zone)
-	if(istype(O, /datum/organ/external))
-		if(O.heal_damage(brute, burn))
+	var/obj/item/bodypart/BP = get_organ(zone)
+	if(istype(BP, /obj/item/bodypart))
+		if(BP.heal_damage(brute, burn))
 			hud_updateflag |= 1 << HEALTH_HUD
 	else
 		return 0
@@ -248,13 +248,13 @@ This function restores all organs.
 
 
 
-	var/datum/organ/external/organ = null
-	if(isorgan(def_zone))
-		organ = def_zone
+	var/obj/item/bodypart/BP = null
+	if(isBODYPART(def_zone))
+		BP = def_zone
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
-		organ = get_organ(check_zone(def_zone))
-	if(!organ)	return 0
+		BP = get_organ(check_zone(def_zone))
+	if(!BP)	return 0
 
 	if(istype(used_weapon, /obj/item/projectile))
 		damage = (damage - blocked)
@@ -267,12 +267,12 @@ This function restores all organs.
 			damageoverlaytemp = 20
 			if(species && species.brute_mod)
 				damage = damage*species.brute_mod
-			organ.take_damage(damage, 0, sharp, edge, used_weapon)
+			BP.take_damage(damage, 0, sharp, edge, used_weapon)
 		if(BURN)
 			damageoverlaytemp = 20
 			if(species && species.burn_mod)
 				damage = damage*species.burn_mod
-			organ.take_damage(0, damage, sharp, edge, used_weapon)
+			BP.take_damage(0, damage, sharp, edge, used_weapon)
 
 	handle_suit_punctures(damagetype, damage)
 
@@ -281,7 +281,7 @@ This function restores all organs.
 	hud_updateflag |= 1 << HEALTH_HUD
 
 	//Embedded object code.
-	if(!organ) return
+	if(!BP) return
 	if(istype(used_weapon, /obj/item))
 		var/obj/item/W = used_weapon
 		if(!W.can_embed)
@@ -294,5 +294,5 @@ This function restores all organs.
 			//Sharp objects will always embed if they do enough damage.
 			//Thrown objects have some momentum already and have a small chance to embed even if the damage is below the threshold
 			if((sharp && damage > (10*W.w_class)) || (sharp && !ismob(W.loc) && prob(damage/(10*W.w_class)*100)) || (damage > embed_threshold && prob(embed_chance)))
-				organ.embed(W)
+				BP.embed(W)
 	return 1

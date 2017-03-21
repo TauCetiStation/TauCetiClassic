@@ -58,9 +58,9 @@
 
 
 /mob/living/carbon/human/proc/has_organ(name)
-	var/datum/organ/external/O = organs_by_name[name]
+	var/obj/item/bodypart/BP = organs_by_name[name]
 
-	return (O && !(O.status & ORGAN_DESTROYED) )
+	return (BP && !(BP.status & ORGAN_DESTROYED) )
 
 /mob/living/carbon/human/proc/has_organ_for_slot(slot)
 	switch(slot)
@@ -423,8 +423,8 @@
 			if("splints")
 				var/count = 0
 				for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
-					var/datum/organ/external/o = target.organs_by_name[organ]
-					if(o.status & ORGAN_SPLINTED)
+					var/obj/item/bodypart/BP = target.organs_by_name[organ]
+					if(BP.status & ORGAN_SPLINTED)
 						count = 1
 						break
 				if(count == 0)
@@ -758,18 +758,18 @@ It can still be worn/put on as normal.
 				strip_item = target.legcuffed
 		if("splints")
 			for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
-				var/datum/organ/external/o = target.get_organ(organ)
-				if (o && o.status & ORGAN_SPLINTED)
+				var/obj/item/bodypart/BP = target.get_organ(organ)
+				if (BP && BP.status & ORGAN_SPLINTED)
 					var/obj/item/W = new /obj/item/stack/medical/splint(amount=1)
-					o.status &= ~ORGAN_SPLINTED
+					BP.status &= ~ORGAN_SPLINTED
 					if (W)
 						W.loc = target.loc
 						W.layer = initial(W.layer)
 						W.appearance_flags = 0
 						W.add_fingerprint(source)
 		if("bandages")
-			for(var/datum/organ/external/External in target.organs)
-				for(var/datum/wound/W in External.wounds)
+			for(var/obj/item/bodypart/BP in target.organs)
+				for(var/datum/wound/W in BP.wounds)
 					if(W.bandaged)
 						W.bandaged = 0
 			target.update_bandage()

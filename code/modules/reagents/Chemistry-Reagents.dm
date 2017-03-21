@@ -1318,7 +1318,7 @@ datum
 			overdose = 5.1
 			custom_metabolism = 0.07
 			var/heal_time = 0
-			var/datum/organ/external/External
+			var/obj/item/bodypart/External
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1332,7 +1332,7 @@ datum
 					return
 				H.jitteriness = max(0,H.jitteriness - 100)
 				if(!External)
-					for(var/datum/organ/external/E in H.organs) // find a broken/destroyed limb
+					for(var/obj/item/bodypart/E in H.organs) // find a broken/destroyed limb
 						for(var/datum/wound/W in E.wounds) // remove internal
 							if(W.internal)
 								E.wounds -= W
@@ -2006,9 +2006,9 @@ datum
 					if(!M.unacidable)
 						if(istype(M, /mob/living/carbon/human) && volume >= 10)
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/external/affecting = H.get_organ("head")
-							if(affecting)
-								affecting.take_damage(4*toxpwr, 2*toxpwr)
+							var/obj/item/bodypart/BP = H.get_organ("head")
+							if(BP)
+								BP.take_damage(4*toxpwr, 2*toxpwr)
 								if(prob(meltprob)) //Applies disfigurement
 									H.emote("scream",,, 1)
 									H.status_flags |= DISFIGURED
@@ -3906,9 +3906,9 @@ datum
 		if(H.species.name != "Dionae")
 			switch(volume)
 				if(1 to 5)
-					var/datum/organ/external/affecting = H.get_organ()
-					for(var/datum/wound/W in affecting.wounds)
-						affecting.wounds -= W
+					var/obj/item/bodypart/BP = H.get_organ()
+					for(var/datum/wound/W in BP.wounds)
+						BP.wounds -= W
 						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 					if(H.getOxyLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
@@ -3950,9 +3950,9 @@ datum
 						if(D.stage < 1)
 							D.cure()
 				if(5 to 20)		//Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
-					var/datum/organ/external/affecting = H.get_organ()
-					for(var/datum/wound/W in affecting.wounds)
-						affecting.wounds -= W
+					var/obj/item/bodypart/BP = H.get_organ()
+					for(var/datum/wound/W in BP.wounds)
+						BP.wounds -= W
 						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 					if(H.getOxyLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))

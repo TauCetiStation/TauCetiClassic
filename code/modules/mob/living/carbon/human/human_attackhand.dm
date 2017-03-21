@@ -3,11 +3,11 @@
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
-	var/datum/organ/external/temp = M:organs_by_name["r_arm"]
+	var/obj/item/bodypart/r_arm = M:organs_by_name["r_arm"]
 	if (M.hand)
-		temp = M:organs_by_name["l_arm"]
-	if(temp && !temp.is_usable())
-		to_chat(M, "\red You can't use your [temp.display_name].")
+		r_arm = M:organs_by_name["l_arm"]
+	if(r_arm && !r_arm.is_usable())
+		to_chat(M, "\red You can't use your [r_arm.display_name].")
 		return
 
 	..()
@@ -30,7 +30,7 @@
 					G.cell.use(2500)
 					G.update_icon()
 					var/mob/living/carbon/human/target = src
-					var/datum/organ/external/select_area = get_organ(M.zone_sel.selecting) // We're checking the outside, buddy!
+					var/obj/item/bodypart/BP = get_organ(M.zone_sel.selecting) // We're checking the outside, buddy!
 					var/calc_power
 					if((prob(25) && !istype(G, /obj/item/clothing/gloves/yellow)) && (target != M))
 						visible_message("\red <B>[M] accidentally touched \himself with the stun gloves!</B>")
@@ -38,13 +38,13 @@
 						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been unsuccessfully touched with stungloves by [M.name] ([M.ckey])</font>")
 						msg_admin_attack("[M.name] ([M.ckey]) failed to stun [src.name] ([src.ckey]) with stungloves (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
 						target = M
-						calc_power = 150 * get_siemens_coefficient_organ(select_area)
+						calc_power = 150 * get_siemens_coefficient_organ(BP)
 					else
 						visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 						M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
 						msg_admin_attack("[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
-						calc_power = 100 * get_siemens_coefficient_organ(select_area)
+						calc_power = 100 * get_siemens_coefficient_organ(BP)
 					target.apply_effects(0,0,0,0,2,0,0,calc_power)
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 					s.set_up(3, 1, target)
@@ -62,8 +62,8 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("\red <B>[M] has attempted to punch [src]!</B>")
 				return 0
-			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
+			var/obj/item/bodypart/BP = get_organ(ran_zone(M.zone_sel.selecting))
+			var/armor_block = run_armor_check(BP, "melee")
 
 			if(HULK in M.mutations)			damage += 5
 			if(dna && dna.mutantrace == "adamantine")
@@ -73,7 +73,7 @@
 
 			visible_message("\red <B>[M] has punched [src]!</B>")
 
-			apply_damage(damage, HALLOSS, affecting, armor_block)
+			apply_damage(damage, HALLOSS, BP, armor_block)
 			if(damage >= 9)
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(4, WEAKEN, armor_block)
@@ -149,8 +149,8 @@
 				return 0
 
 
-			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
+			var/obj/item/bodypart/BP = get_organ(ran_zone(M.zone_sel.selecting))
+			var/armor_block = run_armor_check(BP, "melee")
 
 			if(HULK in M.mutations)			damage += 5
 
@@ -164,7 +164,7 @@
 				apply_effect(2, WEAKEN, armor_block)
 
 			damage += attack.damage
-			apply_damage(damage, BRUTE, affecting, armor_block, sharp=attack.sharp, edge=attack.edge)
+			apply_damage(damage, BRUTE, BP, armor_block, sharp=attack.sharp, edge=attack.edge)
 
 
 		if("disarm")
@@ -176,7 +176,7 @@
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
+			var/obj/item/bodypart/BP = get_organ(ran_zone(M.zone_sel.selecting))
 
 			if(istype(r_hand,/obj/item/weapon/gun) || istype(l_hand,/obj/item/weapon/gun))
 				var/obj/item/weapon/gun/W = null
@@ -200,7 +200,7 @@
 
 			var/randn = rand(1, 100)
 			if (randn <= 25)
-				var/armor_check = run_armor_check(affecting, "melee")
+				var/armor_check = run_armor_check(BP, "melee")
 				apply_effect(3, WEAKEN, armor_check)
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				if(armor_check < 2)

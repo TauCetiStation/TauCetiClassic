@@ -26,8 +26,8 @@
 		return 2
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
-		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
-		if(check_thickmaterial(select_area))
+		var/obj/item/bodypart/BP = get_organ(def_zone) // We're checking the outside, buddy!
+		if(check_thickmaterial(BP))
 			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
 			P.agony /= 2
 		apply_effect(P.agony,AGONY,0)
@@ -35,11 +35,11 @@
 		return
 
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
-		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
-		P.agony *= get_siemens_coefficient_organ(select_area)
-		P.stun *= get_siemens_coefficient_organ(select_area)
-		P.weaken *= get_siemens_coefficient_organ(select_area)
-		P.stutter *= get_siemens_coefficient_organ(select_area)
+		var/obj/item/bodypart/BP = get_organ(def_zone) // We're checking the outside, buddy!
+		P.agony *= get_siemens_coefficient_organ(BP)
+		P.stun *= get_siemens_coefficient_organ(BP)
+		P.weaken *= get_siemens_coefficient_organ(BP)
+		P.stutter *= get_siemens_coefficient_organ(BP)
 
 		if(P.agony) // No effect against full protection.
 			if(prob(max(P.agony, 20)))
@@ -51,22 +51,22 @@
 		return
 
 	if(istype(P, /obj/item/projectile/energy/bolt))
-		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
+		var/obj/item/bodypart/BP = get_organ(def_zone) // We're checking the outside, buddy!
 		var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes) // What all are we checking?
 		for(var/bp in body_parts) //Make an unregulated var to pass around.
 			if(!bp)
 				continue //Does this thing we're shooting even exist?
 			if(bp && istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
-				if(C.body_parts_covered & select_area.body_part) // Is that body part being targeted covered?
+				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
 					if(C.flags & THICKMATERIAL )
 						visible_message("<span class='userdanger'> <B>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
 						qdel(P)
 						return
 
-		var/datum/organ/external/organ = get_organ(check_zone(def_zone))
-		var/armorblock = run_armor_check(organ, "energy")
-		apply_damage(P.damage, P.damage_type, organ, armorblock, P, 0, 0)
+		BP = get_organ(check_zone(def_zone))
+		var/armorblock = run_armor_check(BP, "energy")
+		apply_damage(P.damage, P.damage_type, BP, armorblock, P, 0, 0)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		flash_pain()
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
@@ -76,8 +76,8 @@
 	if(istype(P, /obj/item/projectile/bullet))
 		var/obj/item/projectile/bullet/B = P
 
-		var/datum/organ/external/organ = get_organ(check_zone(def_zone))
-		var/armor = getarmor_organ(organ, "bullet")
+		var/obj/item/bodypart/BP = get_organ(check_zone(def_zone))
+		var/armor = getarmor_organ(BP, "bullet")
 
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
 		if(delta)
@@ -99,14 +99,14 @@
 			var/obj/item/weapon/shard/shrapnel/SP = new()
 			(SP.name) = "[P.name] shrapnel"
 			(SP.desc) = "[SP.desc] It looks like it was fired from [P.shot_from]."
-			(SP.loc) = organ
-			organ.embed(SP)
+			(SP.loc) = BP
+			BP.embed(SP)
 
 	if(istype(P, /obj/item/projectile/neurotoxin))
 		var/obj/item/projectile/neurotoxin/B = P
 
-		var/datum/organ/external/organ = get_organ(check_zone(def_zone))
-		var/armor = getarmor_organ(organ, "bio")
+		var/obj/item/bodypart/BP = get_organ(check_zone(def_zone))
+		var/armor = getarmor_organ(BP, "bio")
 		if (armor < 100)
 			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
 			to_chat(src, "<span class='userdanger'>You feel that yor muscles can`t move!</span>")
@@ -137,21 +137,21 @@
 	var/organnum = 0
 
 	if(def_zone)
-		if(isorgan(def_zone))
+		if(isBODYPART(def_zone))
 			return getarmor_organ(def_zone, type)
-		var/datum/organ/external/affecting = get_organ(def_zone)
-		return getarmor_organ(affecting, type)
+		var/obj/item/bodypart/BP = get_organ(def_zone)
+		return getarmor_organ(BP, type)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/datum/organ/external/organ in organs)
-		armorval += getarmor_organ(organ, type)
+	for(var/obj/item/bodypart/BP in organs)
+		armorval += getarmor_organ(BP, type)
 		organnum++
 	return (armorval/max(organnum, 1))
 
 //this proc returns the Siemens coefficient of electrical resistivity for a particular external organ.
-/mob/living/carbon/human/proc/get_siemens_coefficient_organ(datum/organ/external/def_zone)
-	if (!def_zone)
+/mob/living/carbon/human/proc/get_siemens_coefficient_organ(obj/item/bodypart/BP)
+	if (!BP)
 		return 1.0
 
 	var/siemens_coefficient = 1.0
@@ -160,7 +160,7 @@
 	for(var/obj/item/clothing/C in clothing_items)
 		if(!istype(C))	//is this necessary?
 			continue
-		else if(C.body_parts_covered & def_zone.body_part) // Is that body part being targeted covered?
+		else if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
 			if(C.wet)
 				siemens_coefficient = 3.0
 				var/turf/T = get_turf(src)
@@ -172,14 +172,14 @@
 	return siemens_coefficient
 
 //this proc returns the armour value for a particular external organ.
-/mob/living/carbon/human/proc/getarmor_organ(datum/organ/external/def_zone, type)
-	if(!type || !def_zone) return 0
+/mob/living/carbon/human/proc/getarmor_organ(obj/item/bodypart/BP, type)
+	if(!type || !BP) return 0
 	var/protection = 0
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
 	for(var/gear in protective_gear)
 		if(gear && istype(gear ,/obj/item/clothing))
 			var/obj/item/clothing/C = gear
-			if(istype(C) && C.body_parts_covered & def_zone.body_part)
+			if(istype(C) && C.body_parts_covered & BP.body_part)
 				protection += C.armor[type]
 	return protection
 
@@ -227,10 +227,10 @@
 	for(var/obj/O in src)
 		if(!O)	continue
 		O.emp_act(severity)
-	for(var/datum/organ/external/O  in organs)
-		if(O.status & ORGAN_DESTROYED)	continue
-		O.emp_act(severity)
-		for(var/datum/organ/internal/I  in O.internal_organs)
+	for(var/obj/item/bodypart/BP  in organs)
+		if(BP.status & ORGAN_DESTROYED)	continue
+		BP.emp_act(severity)
+		for(var/datum/organ/internal/I  in BP.internal_organs)
 			if(I.robotic == 0)	continue
 			I.emp_act(severity)
 	..()
@@ -247,13 +247,13 @@
 		visible_message("<span class='userdanger'>[user] misses [src] with \the [I]!</span>")
 		return 0
 
-	var/datum/organ/external/affecting = get_organ(target_zone)
-	if (!affecting)
+	var/obj/item/bodypart/BP = get_organ(target_zone)
+	if (!BP)
 		return 0
-	if(affecting.status & ORGAN_DESTROYED)
-		to_chat(user, "What [affecting.display_name]?")
+	if(BP.status & ORGAN_DESTROYED)
+		to_chat(user, "What [BP.display_name]?")
 		return 0
-	var/hit_area = affecting.display_name
+	var/hit_area = BP.display_name
 
 	if(user != src)
 		user.do_attack_animation(src)
@@ -261,16 +261,16 @@
 			return 0
 
 	if(istype(I,/obj/item/weapon/card/emag))
-		if(!(affecting.status & ORGAN_ROBOT))
+		if(!(BP.status & ORGAN_ROBOT))
 			to_chat(user, "<span class='userdanger'>That limb isn't robotic.</span>")
 			return
-		if(affecting.sabotaged)
-			to_chat(user, "<span class='userdanger'>[src]'s [affecting.display_name] is already sabotaged!</span>")
+		if(BP.sabotaged)
+			to_chat(user, "<span class='userdanger'>[src]'s [BP.display_name] is already sabotaged!</span>")
 		else
-			to_chat(user, "<span class='userdanger'>You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties.</span>")
+			to_chat(user, "<span class='userdanger'>You sneakily slide [I] into the dataport on [src]'s [BP.display_name] and short out the safeties.</span>")
 			var/obj/item/weapon/card/emag/emag = I
 			emag.uses--
-			affecting.sabotaged = 1
+			BP.sabotaged = 1
 		return 1
 
 	if(I.attack_verb.len)
@@ -278,7 +278,7 @@
 	else
 		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>")
 
-	var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
+	var/armor = run_armor_check(BP, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
 	var/weapon_sharp = is_sharp(I)
 	var/weapon_edge = has_edge(I)
 	if ((weapon_sharp || weapon_edge) && prob(getarmor(target_zone, "melee")))
@@ -288,7 +288,7 @@
 	if(armor >= 100)	return 0
 	if(!I.force)	return 0
 
-	apply_damage(I.force, I.damtype, affecting, armor, sharp=weapon_sharp, edge=weapon_edge, used_weapon=I)
+	apply_damage(I.force, I.damtype, BP, armor, sharp=weapon_sharp, edge=weapon_edge, used_weapon=I)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
@@ -366,11 +366,11 @@
 		if ((O.thrower != src) && check_shields(throw_damage, "[O]", get_dir(O,src) ))
 			return
 
-		var/datum/organ/external/affecting = get_organ(zone)
-		var/hit_area = affecting.display_name
+		var/obj/item/bodypart/BP = get_organ(zone)
+		var/hit_area = BP.display_name
 
 		src.visible_message("<span class='warning'>[src] has been hit in the [hit_area] by [O].</span>")
-		var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess "melee" is the best fit here
+		var/armor = run_armor_check(BP, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess "melee" is the best fit here
 
 		if(armor < 100)
 			apply_damage(throw_damage, dtype, zone, armor, is_sharp(O), has_edge(O), O)
@@ -423,7 +423,7 @@
 		w_uniform.add_blood(source)
 		update_inv_w_uniform()
 
-/mob/living/carbon/human/proc/check_thickmaterial(datum/organ/external/def_zone, type)
+/mob/living/carbon/human/proc/check_thickmaterial(obj/item/bodypart/BP, type)
 //	if(!type)	return 0
 	var/thickmaterial = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes, glasses, l_ear, r_ear)
@@ -431,7 +431,7 @@
 		if(!bp)	continue
 		if(bp && istype(bp ,/obj/item/clothing))
 			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & def_zone.body_part)
+			if(C.body_parts_covered & BP.body_part)
 				if(C.flags & THICKMATERIAL)
 					thickmaterial = 1
 	return thickmaterial

@@ -110,21 +110,21 @@
 				M.adjustBruteLoss(damage)
 				return
 
-			var/datum/organ/external/affecting
+			var/obj/item/bodypart/BP
 
 			switch(pick(list("head","knee","elbow")))
 				if("knee")
-					affecting = H.get_organ(pick("l_leg", "r_leg"))
+					BP = H.get_organ(pick("l_leg", "r_leg"))
 				if("elbow")
-					affecting = H.get_organ(pick("l_arm", "r_arm"))
+					BP = H.get_organ(pick("l_arm", "r_arm"))
 				if("head")
-					affecting = H.get_organ("head")
+					BP = H.get_organ("head")
 
-			if(affecting)
-				to_chat(M, "<span class='red'>You land heavily on your [affecting.display_name]!</span>")
-				affecting.take_damage(damage, 0)
-				if(affecting.parent)
-					affecting.parent.add_autopsy_data("Misadventure", damage)
+			if(BP)
+				to_chat(M, "<span class='red'>You land heavily on your [BP.display_name]!</span>")
+				BP.take_damage(damage, 0)
+				if(BP.parent)
+					BP.parent.add_autopsy_data("Misadventure", damage)
 			else
 				to_chat(H, "<span class='red'>You land heavily!</span>")
 				H.adjustBruteLoss(damage)

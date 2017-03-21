@@ -299,16 +299,16 @@ var/const/MAX_SAVE_SLOTS = 10
 	// Destroy/cyborgize organs
 
 	for(var/name in organ_data)
-		var/datum/organ/external/O = character.organs_by_name[name]
+		var/obj/item/bodypart/BP = character.organs_by_name[name]
 		var/datum/organ/internal/I = character.internal_organs_by_name[name]
 		var/status = organ_data[name]
 
 		if(status == "amputated")
-			O.amputated = 1
-			O.status |= ORGAN_DESTROYED
-			O.destspawn = 1
+			BP.amputated = 1
+			BP.status |= ORGAN_DESTROYED
+			BP.destspawn = 1
 		if(status == "cyborg")
-			O.status |= ORGAN_ROBOT
+			BP.status |= ORGAN_ROBOT
 		if(status == "assisted")
 			I.mechassist()
 		else if(status == "mechanical")
@@ -334,8 +334,8 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.overeatduration = 2000
 
 	// Wheelchair necessary?
-	var/datum/organ/external/l_leg = character.get_organ("l_leg")
-	var/datum/organ/external/r_leg = character.get_organ("r_leg")
+	var/obj/item/bodypart/l_leg = character.get_organ("l_leg")
+	var/obj/item/bodypart/r_leg = character.get_organ("r_leg")
 	if((!l_leg || l_leg.status & ORGAN_DESTROYED) && (!r_leg || r_leg.status & ORGAN_DESTROYED))
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W

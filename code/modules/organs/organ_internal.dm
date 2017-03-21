@@ -24,10 +24,10 @@
 
 /datum/organ/internal/New(mob/living/carbon/human/H)
 	..()
-	var/datum/organ/external/E = H.organs_by_name[src.parent_organ]
-	if(E.internal_organs == null)
-		E.internal_organs = list()
-	E.internal_organs |= src
+	var/obj/item/bodypart/BP = H.organs_by_name[src.parent_organ]
+	if(BP.internal_organs == null)
+		BP.internal_organs = list()
+	BP.internal_organs |= src
 	H.internal_organs |= src
 	src.owner = H
 
@@ -54,7 +54,7 @@
 				germ_level++
 
 		if (germ_level >= INFECTION_LEVEL_TWO)
-			var/datum/organ/external/parent = owner.get_organ(parent_organ)
+			var/obj/item/bodypart/parent = owner.get_organ(parent_organ)
 			//spread germs
 			if (antibiotics < 5 && parent.germ_level < germ_level && ( parent.germ_level < INFECTION_LEVEL_ONE*2 || prob(30) ))
 				parent.germ_level++
@@ -68,7 +68,7 @@
 	else
 		src.damage += amount
 
-	var/datum/organ/external/parent = owner.get_organ(parent_organ)
+	var/obj/item/bodypart/parent = owner.get_organ(parent_organ)
 	if (!silent)
 		owner.custom_pain("Something inside your [parent.display_name] hurts a lot.", 1)
 

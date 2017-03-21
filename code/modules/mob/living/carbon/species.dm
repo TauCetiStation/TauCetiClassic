@@ -89,13 +89,13 @@
 		if(S_HUMAN,S_UNATHI,S_TAJARAN,S_SKRELL,S_DIONA,S_VOX,S_VOX_ARMALIS,S_IPC,S_ABDUCTOR,S_SHADOWLING)
 			C.make_blood()
 			C.organs = list()
-			C.organs_by_name["chest"] = new/datum/organ/external/chest()
-			C.organs_by_name["groin"] = new/datum/organ/external/groin(C.organs_by_name["chest"])
-			C.organs_by_name["head"] = new/datum/organ/external/head(C.organs_by_name["chest"])
-			C.organs_by_name["l_arm"] = new/datum/organ/external/l_arm(C.organs_by_name["chest"])
-			C.organs_by_name["r_arm"] = new/datum/organ/external/r_arm(C.organs_by_name["chest"])
-			C.organs_by_name["r_leg"] = new/datum/organ/external/r_leg(C.organs_by_name["groin"])
-			C.organs_by_name["l_leg"] = new/datum/organ/external/l_leg(C.organs_by_name["groin"])
+			C.organs_by_name["chest"] = new/obj/item/bodypart/chest()
+			C.organs_by_name["groin"] = new/obj/item/bodypart/groin(C.organs_by_name["chest"])
+			C.organs_by_name["head"] = new/obj/item/bodypart/head(C.organs_by_name["chest"])
+			C.organs_by_name["l_arm"] = new/obj/item/bodypart/l_arm(C.organs_by_name["chest"])
+			C.organs_by_name["r_arm"] = new/obj/item/bodypart/r_arm(C.organs_by_name["chest"])
+			C.organs_by_name["r_leg"] = new/obj/item/bodypart/r_leg(C.organs_by_name["groin"])
+			C.organs_by_name["l_leg"] = new/obj/item/bodypart/l_leg(C.organs_by_name["groin"])
 
 			C.internal_organs = list()
 			C.internal_organs_by_name["heart"] = new/datum/organ/internal/heart(C)
@@ -108,14 +108,14 @@
 			for(var/name in C.organs_by_name)
 				C.organs += C.organs_by_name[name]
 
-			for(var/datum/organ/external/O in C.organs)
-				O.owner = C
+			for(var/obj/item/bodypart/BP in C.organs)
+				BP.owner = C
 
 			if(flags[IS_SYNTHETIC])
-				for(var/datum/organ/external/E in C.organs)
-					if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED)
+				for(var/obj/item/bodypart/BP in C.organs)
+					if(BP.status & ORGAN_CUT_AWAY || BP.status & ORGAN_DESTROYED)
 						continue
-					E.status |= ORGAN_ROBOT
+					BP.status |= ORGAN_ROBOT
 				for(var/datum/organ/internal/I in C.internal_organs)
 					I.mechanize()
 

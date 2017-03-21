@@ -32,11 +32,11 @@
 	if(isrobot(user) || isalien(user))
 		return
 	if (hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_arm"]
+		var/obj/item/bodypart/BP = user:organs_by_name["r_arm"]
 		if (user.hand)
-			temp = user:organs_by_name["l_arm"]
-		if(temp && !temp.is_usable())
-			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
+			BP = user:organs_by_name["l_arm"]
+		if(BP && !BP.is_usable())
+			to_chat(user, "<span class='notice'>You try to move your [BP.display_name], but cannot!")
 			return
 	if(has_extinguisher)
 		user.put_in_hands(has_extinguisher)

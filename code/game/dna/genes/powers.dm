@@ -46,17 +46,17 @@
 
 	OnMobLife(mob/living/carbon/human/M)
 		if(!istype(M)) return
-		var/datum/organ/external/head/H = M.organs_by_name["head"]
+		var/obj/item/bodypart/head/head = M.organs_by_name["head"]
 
-		if(H.disfigured) H.disfigured = 0
+		if(head.disfigured) head.disfigured = 0
 
 		if(HUSK in M.mutations)
 			M.mutations.Remove(HUSK)
 			M.update_mutations()
 			M.UpdateAppearance()
 
-		var/datum/organ/external/chest/C = M.get_organ("chest")
-		for(var/datum/organ/internal/I in C.internal_organs)
+		var/obj/item/bodypart/chest/chest = M.get_organ("chest")
+		for(var/datum/organ/internal/I in chest.internal_organs)
 			if(I.damage > 0)
 				I.damage -= 0.25
 

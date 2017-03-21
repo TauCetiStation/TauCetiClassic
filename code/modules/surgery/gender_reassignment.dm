@@ -11,7 +11,7 @@
 			return 0
 		if (target_zone != "groin")
 			return 0
-		var/datum/organ/external/groin = target.get_organ("groin")
+		var/obj/item/bodypart/groin = target.get_organ("groin")
 		if (!groin)
 			return 0
 		if (groin.open < 1)
@@ -30,8 +30,8 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(!ishuman(target))	return 0
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return ..() && affected.open == 1
+		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		return ..() && BP.open == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(target.gender == FEMALE)
@@ -56,7 +56,7 @@
 		target.regenerate_icons()
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/groin = target.get_organ("groin")
+		var/obj/item/bodypart/groin = target.get_organ("groin")
 		user.visible_message("\red [user]'s hand slips, slicing [target]'s genitals with \the [tool]!", \
 		"\red Your hand slips, slicing [target]'s genitals with \the [tool]!")
 		groin.createwound(CUT, 20, 1)

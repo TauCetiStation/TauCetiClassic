@@ -885,10 +885,10 @@ About the new airlock wires panel:
 			playsound(src, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("\red [user] headbutts the airlock.")
-				var/datum/organ/external/affecting = H.get_organ("head")
+				var/obj/item/bodypart/BP = H.get_organ("head")
 				H.Stun(8)
 				H.Weaken(5)
-				affecting.take_damage(10, 0)
+				BP.take_damage(10, 0)
 			else
 				visible_message("\red [user] headbutts the airlock. Good thing they're wearing a helmet.")
 			return

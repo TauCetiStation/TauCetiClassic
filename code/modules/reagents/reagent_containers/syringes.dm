@@ -241,14 +241,14 @@
 		var/mob/living/carbon/human/H = target
 
 		var/target_zone = ran_zone(check_zone(user.zone_sel.selecting, H))
-		var/datum/organ/external/affecting = H.get_organ(target_zone)
+		var/obj/item/bodypart/BP = H.get_organ(target_zone)
 
-		if (!affecting)
+		if (!BP)
 			return
-		if(affecting.status & ORGAN_DESTROYED)
-			to_chat(user, "What [affecting.display_name]?")
+		if(BP.status & ORGAN_DESTROYED)
+			to_chat(user, "What [BP.display_name]?")
 			return
-		var/hit_area = affecting.display_name
+		var/hit_area = BP.display_name
 
 		if((user != H) && H.check_shields(7, "the [src.name]", get_dir(user,target)))
 			return
@@ -263,7 +263,7 @@
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message(text("\red <B>[user] stabs [H] in \the [hit_area] with [name]!</B>"), 1)
 
-		affecting.take_damage(3)
+		BP.take_damage(3)
 
 	else
 		for(var/mob/O in viewers(world.view, user))

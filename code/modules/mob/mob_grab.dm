@@ -315,10 +315,10 @@
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
-					var/datum/organ/external/organ = affecting:get_organ(check_zone(hit_zone))
-					if(!organ)
+					var/obj/item/bodypart/BP = affecting:get_organ(check_zone(hit_zone))
+					if(!BP)
 						return
-					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [organ.display_name] into a jointlock!</span>")
+					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [BP.display_name] into a jointlock!</span>")
 					var/armor = affecting:run_armor_check(affecting, "melee")
 					if(armor < 2)
 						to_chat(affecting, "<span class='danger'>You feel extreme pain!</span>")
@@ -453,28 +453,28 @@
 
 /obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
 
-	var/datum/organ/external/E = H.get_organ(target_zone)
+	var/obj/item/bodypart/BP = H.get_organ(target_zone)
 
-	if(!E || E.status & ORGAN_DESTROYED)
+	if(!BP || BP.status & ORGAN_DESTROYED)
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [E.display_name] carefully.</span>")
+	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [BP.display_name] carefully.</span>")
 	if(!do_mob(user,H, 30))
-		to_chat(user, "<span class='notice'>You must stand still to inspect [E] for wounds.</span>")
-	else if(E.wounds.len)
-		to_chat(user, "<span class='warning'>You find [E.get_wounds_desc()]</span>")
+		to_chat(user, "<span class='notice'>You must stand still to inspect [BP] for wounds.</span>")
+	else if(BP.wounds.len)
+		to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
 	else
 		to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
 
 	to_chat(user, "<span class='notice'>Checking bones now...</span>")
 	if(!do_mob(user, H, 60))
-		to_chat(user, "<span class='notice'>You must stand still to feel [E] for fractures.</span>")
-	else if(E.status & ORGAN_BROKEN)
-		to_chat(user, "<span class='warning'>The bone in the [E.display_name] moves slightly when you poke it!</span>")
-		H.custom_pain("Your [E.display_name] hurts where it's poked.")
+		to_chat(user, "<span class='notice'>You must stand still to feel [BP] for fractures.</span>")
+	else if(BP.status & ORGAN_BROKEN)
+		to_chat(user, "<span class='warning'>The bone in the [BP.display_name] moves slightly when you poke it!</span>")
+		H.custom_pain("Your [BP.display_name] hurts where it's poked.")
 	else
-		to_chat(user, "<span class='notice'>The bones in the [E.display_name] seem to be fine.</span>")
+		to_chat(user, "<span class='notice'>The bones in the [BP.display_name] seem to be fine.</span>")
 
 	to_chat(user, "<span class='notice'>Checking skin now...</span>")
 	if(!do_mob(user, H, 30))
@@ -487,8 +487,8 @@
 		if(H.getOxyLoss() >= 20)
 			to_chat(user, "<span class='warning'>[H]'s skin is unusaly pale.</span>")
 			bad = 1
-		if(E.status & ORGAN_DEAD)
-			to_chat(user, "<span class='warning'>[E] is decaying!</span>")
+		if(BP.status & ORGAN_DEAD)
+			to_chat(user, "<span class='warning'>[BP] is decaying!</span>")
 			bad = 1
 		if(!bad)
 			to_chat(user, "<span class='notice'>[H]'s skin is normal.</span>")

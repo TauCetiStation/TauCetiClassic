@@ -1563,17 +1563,17 @@
 		surprise.transform *= 0.6
 		surprise.add_blood(M)
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/E = H.get_organ("chest")
-		E.fracture()
-		for (var/datum/organ/internal/I in E.internal_organs)
+		var/obj/item/bodypart/BP = H.get_organ("chest")
+		BP.fracture()
+		for (var/datum/organ/internal/I in BP.internal_organs)
 			I.take_damage(rand(I.min_bruised_damage, I.min_broken_damage+1))
 
-		if (!E.hidden && prob(60)) //set it snuggly
-			E.hidden = surprise
-			E.cavity = 0
+		if (!BP.hidden && prob(60)) //set it snuggly
+			BP.hidden = surprise
+			BP.cavity = 0
 		else 		//someone is having a bad day
-			E.createwound(CUT, 30)
-			E.embed(surprise)
+			BP.createwound(CUT, 30)
+			BP.embed(surprise)
 	else if (ismonkey(M))
 		M.visible_message("<span class='danger'>[M] suddenly tears in half!</span>")
 		var/mob/living/carbon/monkey/ook = new monkey_type(M.loc)

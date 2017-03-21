@@ -119,11 +119,11 @@
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
 			var/organ = pick(list("r_arm","l_arm","r_leg","r_leg"))
-			var/datum/organ/external/E = H.organs_by_name[organ]
-			if (!(E.status & ORGAN_DEAD))
-				E.status |= ORGAN_DEAD
-				to_chat(H, "<span class='notice'>You can't feel your [E.display_name] anymore...</span>")
-				for (var/datum/organ/external/C in E.children)
+			var/obj/item/bodypart/BP = H.organs_by_name[organ]
+			if (!(BP.status & ORGAN_DEAD))
+				BP.status |= ORGAN_DEAD
+				to_chat(H, "<span class='notice'>You can't feel your [BP.display_name] anymore...</span>")
+				for (var/obj/item/bodypart/C in BP.children)
 					C.status |= ORGAN_DEAD
 			H.update_body()
 		mob.adjustToxLoss(15*multiplier)
@@ -131,9 +131,9 @@
 	deactivate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/datum/organ/external/E in H.organs)
-				E.status &= ~ORGAN_DEAD
-				for (var/datum/organ/external/C in E.children)
+			for (var/obj/item/bodypart/BP in H.organs)
+				BP.status &= ~ORGAN_DEAD
+				for (var/obj/item/bodypart/C in BP.children)
 					C.status &= ~ORGAN_DEAD
 			H.update_body()
 
@@ -143,9 +143,9 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/datum/organ/external/E in H.organs)
-				if (E.status & ORGAN_BROKEN && prob(30))
-					E.status ^= ORGAN_BROKEN
+			for (var/obj/item/bodypart/BP in H.organs)
+				if (BP.status & ORGAN_BROKEN && prob(30))
+					BP.status ^= ORGAN_BROKEN
 		var/heal_amt = -5*multiplier
 		mob.apply_damages(heal_amt,heal_amt,heal_amt,heal_amt)
 
@@ -165,14 +165,14 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/datum/organ/external/E in H.organs)
-				E.min_broken_damage = max(5, E.min_broken_damage - 30)
+			for (var/obj/item/bodypart/BP in H.organs)
+				BP.min_broken_damage = max(5, BP.min_broken_damage - 30)
 
 	deactivate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/datum/organ/external/E in H.organs)
-				E.min_broken_damage = initial(E.min_broken_damage)
+			for (var/obj/item/bodypart/BP in H.organs)
+				BP.min_broken_damage = initial(BP.min_broken_damage)
 
 /datum/disease2/effect/toxins
 	name = "Hyperacidity"

@@ -25,11 +25,11 @@
 
 /datum/genetics/side_effect/genetic_burn/finish(mob/living/carbon/human/H)
 	for(var/organ_name in list("chest","l_arm","r_arm","r_leg","l_leg","head","groin"))
-		var/datum/organ/external/E = H.get_organ(organ_name)
+		var/obj/item/bodypart/BP = H.get_organ(organ_name)
 		if(prob(85))//#Z2 - now 15% chance even for more burn
-			E.take_damage(0, 5, 0)
+			BP.take_damage(0, 5, 0)
 		else
-			E.take_damage(0, 20, 0)
+			BP.take_damage(0, 20, 0)
 
 /datum/genetics/side_effect/bone_snap
 	name = "Bone Snap"
@@ -44,14 +44,14 @@
 /datum/genetics/side_effect/bone_snap/finish(mob/living/carbon/human/H)
 	if(prob(85))//#Z2 - now 15% chance for heavy brute damage
 		var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-		var/datum/organ/external/E = H.get_organ(organ_name)
-		E.take_damage(20, 0, 0)
-		E.fracture()
+		var/obj/item/bodypart/BP = H.get_organ(organ_name)
+		BP.take_damage(20, 0, 0)
+		BP.fracture()
 	else
 		var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-		var/datum/organ/external/E = H.get_organ(organ_name)
-		E.take_damage(70, 0, 0)
-		//E.fracture()
+		var/obj/item/bodypart/BP = H.get_organ(organ_name)
+		BP.take_damage(70, 0, 0)
+		//BP.fracture()
 
 /datum/genetics/side_effect/monkey //#Z2 Random monkey transform is back
 	name = "Monkey"

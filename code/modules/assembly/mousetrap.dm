@@ -23,20 +23,20 @@
 /obj/item/device/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)
 		return
-	var/datum/organ/external/affecting = null
+	var/obj/item/bodypart/BP = null
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		switch(type)
 			if("feet")
 				if(!H.shoes)
-					affecting = H.get_organ(pick("l_leg", "r_leg"))
+					BP = H.get_organ(pick("l_leg", "r_leg"))
 					H.Weaken(3)
 			if("l_arm", "r_arm")
 				if(!H.gloves)
-					affecting = H.get_organ(type)
+					BP = H.get_organ(type)
 					H.Stun(3)
-		if(affecting)
-			affecting.take_damage(1, 0)
+		if(BP)
+			BP.take_damage(1, 0)
 			H.updatehealth()
 	else if(ismouse(target))
 		var/mob/living/simple_animal/mouse/M = target

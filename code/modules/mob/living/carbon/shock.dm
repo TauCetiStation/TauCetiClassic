@@ -31,14 +31,14 @@
 	// broken or ripped off organs will add quite a bit of pain
 	if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
-		for(var/datum/organ/external/organ in M.organs)
-			if (!organ)
+		for(var/obj/item/bodypart/BP in M.organs)
+			if (!BP)
 				continue
-			if((organ.status & ORGAN_DESTROYED) && !organ.amputated)
+			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
 				src.traumatic_shock += 60
-			else if(organ.status & ORGAN_BROKEN || organ.open)
+			else if(BP.status & ORGAN_BROKEN || BP.open)
 				src.traumatic_shock += 30
-				if(organ.status & ORGAN_SPLINTED)
+				if(BP.status & ORGAN_SPLINTED)
 					src.traumatic_shock -= 25
 
 	if(src.traumatic_shock < 0)

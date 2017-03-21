@@ -6,7 +6,7 @@
 	icon_state = "implant"
 	var/implanted = null
 	var/mob/imp_in = null
-	var/datum/organ/external/part = null
+	var/obj/item/bodypart/part = null
 	item_color = "b"
 	var/allow_reagents = 0
 	var/malfunction = 0
@@ -172,9 +172,9 @@ Implant Specifics:<BR>"}
 					imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!")
 					playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 					sleep(25)
-					if (istype(part,/datum/organ/external/chest) ||	\
-						istype(part,/datum/organ/external/groin) ||	\
-						istype(part,/datum/organ/external/head))
+					if (istype(part,/obj/item/bodypart/chest) ||	\
+						istype(part,/obj/item/bodypart/groin) ||	\
+						istype(part,/obj/item/bodypart/head))
 						part.createwound(BRUISE, 60)	//mangle them instead
 						explosion(get_turf(imp_in), -1, -1, 2, 3)
 						qdel(src)
@@ -240,9 +240,9 @@ Implant Specifics:<BR>"}
 			if (ishuman(imp_in) && part)
 				//No tearing off these parts since it's pretty much killing
 				//and you can't replace groins
-				if (istype(part,/datum/organ/external/chest) ||	\
-					istype(part,/datum/organ/external/groin) ||	\
-					istype(part,/datum/organ/external/head))
+				if (istype(part,/obj/item/bodypart/chest) ||	\
+					istype(part,/obj/item/bodypart/groin) ||	\
+					istype(part,/obj/item/bodypart/head))
 					part.createwound(BRUISE, 60)	//mangle them instead
 				else
 					part.droplimb(1)

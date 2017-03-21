@@ -11,8 +11,8 @@
 
 		var/damage = rand(1, 3)
 		var/dam_zone = pick("chest", "l_arm", "r_arm", "l_leg", "r_leg")
-		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
-		apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
+		var/obj/item/bodypart/BP = get_organ(ran_zone(dam_zone))
+		apply_damage(damage, BRUTE, BP, run_armor_check(BP, "melee"))
 
 		for(var/datum/disease/D in M.viruses)
 			if(istype(D, /datum/disease/jungle_fever))

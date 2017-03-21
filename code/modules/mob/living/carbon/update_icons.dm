@@ -128,13 +128,13 @@ There are several things that need to be remembered:
 
 
 //DAMAGE OVERLAYS
-/mob/living/carbon/UpdateDamageIcon(datum/organ/external/O)
-	remove_damage_overlay(O.limb_layer)
+/mob/living/carbon/UpdateDamageIcon(obj/item/bodypart/BP)
+	remove_damage_overlay(BP.limb_layer)
 	if(species.damage_mask)
-		var/image/standing = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[O.icon_name]_[O.damage_state]", layer = -DAMAGE_LAYER)
+		var/image/standing = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[BP.icon_name]_[BP.damage_state]", layer = -DAMAGE_LAYER)
 		standing.color = species.blood_color
-		overlays_damage[O.limb_layer]	= standing
-		apply_damage_overlay(O.limb_layer)
+		overlays_damage[BP.limb_layer]	= standing
+		apply_damage_overlay(BP.limb_layer)
 
 /mob/living/carbon/proc/update_bodyparts()
 	remove_overlay(BODYPARTS_LAYER)
@@ -158,13 +158,13 @@ There are several things that need to be remembered:
 		icon_key = "[icon_key][r_skin]"
 
 	//0 = destroyed, 1 = normal, 2 = robotic, 3 = necrotic.
-	for(var/datum/organ/external/part in organs)
+	for(var/obj/item/bodypart/BP in organs)
 
-		if(part.status & ORGAN_DESTROYED)
+		if(BP.status & ORGAN_DESTROYED)
 			icon_key = "[icon_key]0"
-		else if(part.status & ORGAN_ROBOT)
+		else if(BP.status & ORGAN_ROBOT)
 			icon_key = "[icon_key]2"
-		else if(part.status & ORGAN_DEAD) //Do we even have necrosis in our current code? ~Z
+		else if(BP.status & ORGAN_DEAD) //Do we even have necrosis in our current code? ~Z
 			icon_key = "[icon_key]3"
 		else
 			icon_key = "[icon_key]1"
@@ -186,22 +186,22 @@ There are several things that need to be remembered:
 		//Robotic limbs are handled in get_icon() so all we worry about are missing or dead limbs.
 		//No icon stored, so we need to start with a basic one.
 
-		for(var/datum/organ/external/E in organs)
-			if(E.status & ORGAN_DESTROYED)
+		for(var/obj/item/bodypart/BP in organs)
+			if(BP.status & ORGAN_DESTROYED)
 				continue
 
 			var/image/temp
-			if(istype(E, /datum/organ/external/chest))// TODO: correct get_icon() so we don't need those istypes()?
-				temp = E.get_icon(race_icon,deform_icon,g,fat)
-			else if (istype(E, /datum/organ/external/groin) || istype(E, /datum/organ/external/head))
-				temp = E.get_icon(race_icon,deform_icon,g)
+			if(istype(BP, /obj/item/bodypart/chest))// TODO: correct get_icon() so we don't need those istypes()?
+				temp = BP.get_icon(race_icon,deform_icon,g,fat)
+			else if (istype(BP, /obj/item/bodypart/groin) || istype(BP, /obj/item/bodypart/head))
+				temp = BP.get_icon(race_icon,deform_icon,g)
 			else
-				temp = E.get_icon(race_icon,deform_icon)
+				temp = BP.get_icon(race_icon,deform_icon)
 
-			if(!(E.status & ORGAN_ROBOT))
+			if(!(BP.status & ORGAN_ROBOT))
 				if(husk) // !REMINDER! reimplement husk properly.
 					temp.color = husk_color_mod
-				else if(E.status & ORGAN_DEAD)
+				else if(BP.status & ORGAN_DEAD)
 					temp.color = necrosis_color_mod
 				else if(hulk)
 					temp.color = hulk_color_mod
@@ -223,6 +223,9 @@ There are several things that need to be remembered:
 /mob/living/carbon/proc/update_body()
 	remove_overlay(BODY_LAYER)
 
+	if(!species)
+		return
+
 	update_bodyparts()
 	update_tail_showing()
 
@@ -242,13 +245,13 @@ There are several things that need to be remembered:
 
 	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
 		if(!fat && organs_by_name["r_leg"] && organs_by_name["l_leg"]) //shit
-			var/datum/organ/external/r_leg = organs_by_name["r_leg"]
-			var/datum/organ/external/l_leg = organs_by_name["l_leg"]
+			var/obj/item/bodypart/r_leg = organs_by_name["r_leg"]
+			var/obj/item/bodypart/l_leg = organs_by_name["l_leg"]
 			if( !(r_leg.status & ORGAN_DESTROYED) && !(l_leg.status & ORGAN_DESTROYED) )
 				standing += image(icon = 'icons/mob/human_socks.dmi', icon_state = "socks[socks]_s", layer = -BODY_LAYER)
 
-	var/datum/organ/external/E = get_organ("head")
-	if(E && !(E.status & ORGAN_DESTROYED))
+	var/obj/item/bodypart/BP = get_organ("head")
+	if(BP && !(BP.status & ORGAN_DESTROYED))
 		//Eyes
 		var/image/img_eyes_s = image(icon = 'icons/mob/human_face.dmi', icon_state = species.eyes, layer = -BODY_LAYER)
 		img_eyes_s.color = hulk ? "#ff0000" : rgb(r_eyes, g_eyes, b_eyes)
@@ -270,8 +273,8 @@ There are several things that need to be remembered:
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	var/datum/organ/external/head/head_organ = get_organ("head")
-	if(!head_organ || (head_organ.status & ORGAN_DESTROYED))
+	var/obj/item/bodypart/head/BP = get_organ("head")
+	if(!BP || (BP.status & ORGAN_DESTROYED))
 		return
 
 	//masks and helmets can obscure our hair.
@@ -420,8 +423,8 @@ There are several things that need to be remembered:
 	update_inv_pockets()
 	update_surgery()
 	update_bandage()
-	for(var/datum/organ/external/O in organs)
-		UpdateDamageIcon(O)
+	for(var/obj/item/bodypart/BP in organs)
+		UpdateDamageIcon(BP)
 	update_icons()
 	update_transform()
 	//Hud Stuff
@@ -892,9 +895,9 @@ There are several things that need to be remembered:
 	remove_overlay(SURGERY_LAYER)
 
 	var/list/standing	= list()
-	for(var/datum/organ/external/O in organs)
-		if(O.open)
-			standing += image("icon"='icons/mob/surgery.dmi', "icon_state"="[O.name][round(O.open)]", "layer"=-SURGERY_LAYER)
+	for(var/obj/item/bodypart/BP in organs)
+		if(BP.open)
+			standing += image("icon"='icons/mob/surgery.dmi', "icon_state"="[BP.name][round(BP.open)]", "layer"=-SURGERY_LAYER)
 
 	if(standing.len)
 		overlays_standing[SURGERY_LAYER] = standing
@@ -905,11 +908,11 @@ There are several things that need to be remembered:
 	remove_overlay(BANDAGE_LAYER)
 
 	var/list/standing	= list()
-	for(var/datum/organ/external/E in organs)
-		if(E.wounds.len)
-			for(var/datum/wound/W in E.wounds)
+	for(var/obj/item/bodypart/BP in organs)
+		if(BP.wounds.len)
+			for(var/datum/wound/W in BP.wounds)
 				if(W.bandaged)
-					standing +=	image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.name]", "layer"=-BANDAGE_LAYER)
+					standing +=	image("icon"='icons/mob/bandages.dmi', "icon_state"="[BP.name]", "layer"=-BANDAGE_LAYER)
 
 	if(standing.len)
 		overlays_standing[BANDAGE_LAYER] = standing
