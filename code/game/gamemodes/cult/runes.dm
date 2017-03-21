@@ -737,12 +737,7 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/C in range(7,src))
 			if (iscultist(C))
 				continue
-			var/cont = FALSE
-			for(var/obj/item/weapon/nullrod/N in C)
-				if(N)
-					cont = TRUE
-					break
-			if(cont)
+			if(locate(/obj/item/weapon/nullrod) in C)
 				continue
 			C.ear_deaf += 50
 			C.show_message("<span class='red'>The world around you suddenly becomes quiet.</span>", 3)
@@ -760,12 +755,7 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/C in range(7,user))
 			if (iscultist(C))
 				continue
-			var/cont = FALSE
-			for(var/obj/item/weapon/nullrod/N in C)
-				if(N)
-					cont = TRUE
-					break
-			if(cont)
+			if(locate(/obj/item/weapon/nullrod) in C)
 				continue
 			C.ear_deaf += 30
 			//talismans is weaker.
@@ -785,12 +775,7 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/C in viewers(src))
 			if (iscultist(C))
 				continue
-			var/cont = FALSE
-			for(var/obj/item/weapon/nullrod/N in C)
-				if(N)
-					cont = TRUE
-					break
-			if(cont)
+			if(locate(/obj/item/weapon/nullrod) in C)
 				continue
 			C.eye_blurry += 50
 			C.eye_blind += 20
@@ -811,12 +796,7 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/C in view(2,user))
 			if (iscultist(C))
 				continue
-			var/cont = FALSE
-			for(var/obj/item/weapon/nullrod/N in C)
-				if(N)
-					cont = TRUE
-					break
-			if(cont)
+			if(locate(/obj/item/weapon/nullrod) in C)
 				continue
 			C.eye_blurry += 30
 			C.eye_blind += 10
@@ -840,12 +820,7 @@ var/list/sacrificed = list()
 		for(var/mob/living/carbon/M in viewers(user))
 			if(iscultist(M))
 				continue
-			var/cont = FALSE
-			for(var/obj/item/weapon/nullrod/N in M)
-				if(N)
-					cont = TRUE
-					break
-			if(cont)
+			if(locate(/obj/item/weapon/nullrod) in M)
 				continue
 			M.take_overall_damage(51,51)
 			to_chat(M, "<span class='warning'>Your blood boils!</span>")
@@ -896,6 +871,8 @@ var/list/sacrificed = list()
 		for(var/mob/living/L in viewers(src))
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
+				if(locate(/obj/item/weapon/nullrod) in C)
+					continue
 				C.flash_eyes()
 				if(C.stuttering < 1 && (!(HULK in C.mutations)))
 					C.stuttering = 1
@@ -911,9 +888,8 @@ var/list/sacrificed = list()
 	else                        ///When invoked as talisman, stun and mute the target mob.
 		user.say("Dream sign ''Evil sealing talisman'[pick("'","`")]!")
 		user.visible_message("<span class='danger'>[user] invokes a talisman at [T]</span>")
-		for(var/obj/item/weapon/nullrod/N in T)
-			if(N)
-				return
+		if(locate(/obj/item/weapon/nullrod) in T)
+			return
 		if(issilicon(T))
 			T.Weaken(15)
 		else if(iscarbon(T))
