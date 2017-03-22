@@ -168,7 +168,7 @@ This is chestburster mechanic for damaging
 	if(ishuman(affecting))
 		var/mob/living/carbon/human/H = affecting
 		var/obj/item/bodypart/chest/BP = H.get_bodypart("chest")
-		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but organs can't be broken, when human is dead.
+		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but bodyparts can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
 			chestburster << sound('sound/voice/hiss5.ogg',0,0,0,100)

@@ -2,13 +2,13 @@
 				INTERNAL ORGANS
 ****************************************************/
 
-/mob/living/carbon/var/list/internal_organs = list()
+/mob/living/carbon/var/list/organs = list()
 
 /obj/item/organ
 	var/damage = 0 // amount of damage to the organ
 	var/min_bruised_damage = 10
 	var/min_broken_damage = 30
-	var/parent_organ = "chest"
+	var/parent_bodypart = "chest"
 	var/robotic = 0 //For being a robot
 
 /obj/item/organ/proc/rejuvenate()
@@ -24,17 +24,17 @@
 
 /obj/item/organ/New(loc, mob/living/carbon/human/H)
 	..()
-	var/obj/item/bodypart/BP = H.organs_by_name[src.parent_organ]
-	if(BP.internal_organs == null)
-		BP.internal_organs = list()
-	BP.internal_organs |= src
-	H.internal_organs |= src
+	var/obj/item/bodypart/BP = H.bodyparts_by_name[src.parent_bodypart]
+	if(BP.organs == null)
+		BP.organs = list()
+	BP.organs |= src
+	H.organs |= src
 	src.owner = H
 
 /obj/item/organ/process()
 	//Process infections
 
-	if (robotic >= 2 || (owner.species && owner.species.flags[IS_PLANT]))	//TODO make robotic internal and external organs separate types of organ instead of a flag
+	if (robotic >= 2 || (owner.species && owner.species.flags[IS_PLANT]))	//TODO make robotic internal and bodyparts separate types of organ instead of a flag
 		germ_level = 0
 		return
 
@@ -54,7 +54,7 @@
 				germ_level++
 
 		if (germ_level >= INFECTION_LEVEL_TWO)
-			var/obj/item/bodypart/parent = owner.get_bodypart(parent_organ)
+			var/obj/item/bodypart/parent = owner.get_bodypart(parent_bodypart)
 			//spread germs
 			if (antibiotics < 5 && parent.germ_level < germ_level && ( parent.germ_level < INFECTION_LEVEL_ONE*2 || prob(30) ))
 				parent.germ_level++
@@ -68,7 +68,7 @@
 	else
 		src.damage += amount
 
-	var/obj/item/bodypart/parent = owner.get_bodypart(parent_organ)
+	var/obj/item/bodypart/parent = owner.get_bodypart(parent_bodypart)
 	if (!silent)
 		owner.custom_pain("Something inside your [parent.display_name] hurts a lot.", 1)
 
@@ -113,12 +113,12 @@
 
 /obj/item/organ/heart
 	name = "heart"
-	parent_organ = "chest"
+	parent_bodypart = "chest"
 
 
 /obj/item/organ/lungs
 	name = "lungs"
-	parent_organ = "chest"
+	parent_bodypart = "chest"
 
 /obj/item/organ/lungs/process()
 	..()
@@ -136,7 +136,7 @@
 
 /obj/item/organ/liver
 	name = "liver"
-	parent_organ = "chest"
+	parent_bodypart = "chest"
 	var/process_accuracy = 10
 
 /obj/item/organ/liver/process()
@@ -159,7 +159,7 @@
 				src.damage += 0.2 * process_accuracy
 			//Damaged one shares the fun
 			else
-				var/obj/item/organ/IO = pick(owner.internal_organs)
+				var/obj/item/organ/IO = pick(owner.organs)
 				if(IO)
 					IO.damage += 0.2  * process_accuracy
 
@@ -179,15 +179,15 @@
 
 /obj/item/organ/kidney
 	name = "kidney"
-	parent_organ = "chest"
+	parent_bodypart = "chest"
 
 /obj/item/organ/brain
 	name = "brain"
-	parent_organ = "head"
+	parent_bodypart = "head"
 
 /obj/item/organ/eyes
 	name = "eyes"
-	parent_organ = "head"
+	parent_bodypart = "head"
 
 /obj/item/organ/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()

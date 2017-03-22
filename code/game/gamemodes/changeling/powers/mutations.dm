@@ -244,7 +244,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.reagents.add_reagent("dexalinp", REAGENTS_METABOLISM)
-		var/obj/item/organ/lungs/IO = H.internal_organs_by_name["lungs"]
+		var/obj/item/organ/lungs/IO = H.organs_by_name["lungs"]
 		if(IO.damage >= 5)
 			IO.damage -= 5
 

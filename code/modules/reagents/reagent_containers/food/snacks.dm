@@ -1565,7 +1565,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/bodypart/BP = H.get_bodypart("chest")
 		BP.fracture()
-		for (var/obj/item/organ/IO in BP.internal_organs)
+		for (var/obj/item/organ/IO in BP.organs)
 			IO.take_damage(rand(IO.min_bruised_damage, IO.min_broken_damage+1))
 
 		if (!BP.hidden && prob(60)) //set it snuggly

@@ -51,7 +51,7 @@
 	proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		if (can_infect && BP)
-			spread_germs_to_organ(BP, user)
+			spread_germs_to_bodypart(BP, user)
 		if (ishuman(user) && prob(60))
 			var/mob/living/carbon/human/H = user
 			if (blood_level)
@@ -68,7 +68,7 @@
 	proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		return null
 
-proc/spread_germs_to_organ(obj/item/bodypart/BP, mob/living/carbon/human/user)
+proc/spread_germs_to_bodypart(obj/item/bodypart/BP, mob/living/carbon/human/user)
 	if(!istype(user) || !istype(BP)) return
 
 	var/germ_level = user.germ_level
@@ -77,7 +77,7 @@ proc/spread_germs_to_organ(obj/item/bodypart/BP, mob/living/carbon/human/user)
 
 	BP.germ_level = max(germ_level,BP.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
 	if(BP.germ_level)
-		BP.owner.bad_external_organs |= BP
+		BP.owner.bad_bodyparts |= BP
 proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	if(!istype(M))
 		return 0

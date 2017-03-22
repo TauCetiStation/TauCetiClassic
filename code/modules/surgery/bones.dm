@@ -16,7 +16,7 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(!ishuman(target))	return 0
-		if (!hasorgans(target))
+		if (!hasbodyparts(target))
 			return 0
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		return BP.open >= 2 && BP.stage == 0
@@ -51,7 +51,7 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(!ishuman(target))	return 0
-		if (!hasorgans(target))
+		if (!hasbodyparts(target))
 			return 0
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		return BP.name != "head" && BP.open >= 2 && BP.stage == 1
@@ -91,7 +91,7 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(!ishuman(target))	return 0
-		if (!hasorgans(target))
+		if (!hasbodyparts(target))
 			return 0
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		return BP.name == "head" && BP.open >= 2 && BP.stage == 1
@@ -128,7 +128,7 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(!ishuman(target))	return 0
-		if (!hasorgans(target))
+		if (!hasbodyparts(target))
 			return 0
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		return BP.open >= 2 && BP.stage == 2

@@ -10,7 +10,7 @@
 			return 0
 		if (target_zone == "eyes")	//there are specific steps for eye surgery
 			return 0
-		if (!hasorgans(target))
+		if (!hasbodyparts(target))
 			return 0
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		if (BP == null)
@@ -55,7 +55,7 @@
 		BP.status |= ORGAN_BLEEDING
 		BP.createwound(CUT, 1)
 		BP.clamp()
-		spread_germs_to_organ(BP, user)
+		spread_germs_to_bodypart(BP, user)
 		if (target_zone == "head")
 			target.brain_op_stage = 1
 
@@ -283,7 +283,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (target_zone == "eyes")	//there are specific steps for eye surgery
 			return 0
-		if (!hasorgans(target))
+		if (!hasbodyparts(target))
 			return 0
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		if (BP == null)

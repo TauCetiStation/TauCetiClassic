@@ -57,52 +57,52 @@
 	return null
 
 
-/mob/living/carbon/human/proc/has_organ(name)
-	var/obj/item/bodypart/BP = organs_by_name[name]
+/mob/living/carbon/human/proc/has_bodypart(name)
+	var/obj/item/bodypart/BP = bodyparts_by_name[name]
 
 	return (BP && !(BP.status & ORGAN_DESTROYED) )
 
-/mob/living/carbon/human/proc/has_organ_for_slot(slot)
+/mob/living/carbon/human/proc/has_bodypart_for_slot(slot)
 	switch(slot)
 		if(slot_back)
-			return has_organ("chest")
+			return has_bodypart("chest")
 		if(slot_wear_mask)
-			return has_organ("head")
+			return has_bodypart("head")
 		if(slot_handcuffed)
-			return has_organ("l_arm") || has_organ("r_arm")
+			return has_bodypart("l_arm") || has_bodypart("r_arm")
 		if(slot_legcuffed)
-			return has_organ("l_leg") || has_organ("r_leg")
+			return has_bodypart("l_leg") || has_bodypart("r_leg")
 		if(slot_l_hand)
-			return has_organ("l_arm")
+			return has_bodypart("l_arm")
 		if(slot_r_hand)
-			return has_organ("r_arm")
+			return has_bodypart("r_arm")
 		if(slot_belt)
-			return has_organ("chest")
+			return has_bodypart("chest")
 		if(slot_wear_id)
 			// the only relevant check for this is the uniform check
 			return 1
 		if(slot_l_ear)
-			return has_organ("head")
+			return has_bodypart("head")
 		if(slot_r_ear)
-			return has_organ("head")
+			return has_bodypart("head")
 		if(slot_glasses)
-			return has_organ("head")
+			return has_bodypart("head")
 		if(slot_gloves)
-			return has_organ("l_arm") || has_organ("r_arm")
+			return has_bodypart("l_arm") || has_bodypart("r_arm")
 		if(slot_head)
-			return has_organ("head")
+			return has_bodypart("head")
 		if(slot_shoes)
-			return has_organ("r_leg") || has_organ("l_leg")
+			return has_bodypart("r_leg") || has_bodypart("l_leg")
 		if(slot_wear_suit)
-			return has_organ("chest")
+			return has_bodypart("chest")
 		if(slot_w_uniform)
-			return has_organ("chest")
+			return has_bodypart("chest")
 		if(slot_l_store)
-			return has_organ("chest")
+			return has_bodypart("chest")
 		if(slot_r_store)
-			return has_organ("chest")
+			return has_bodypart("chest")
 		if(slot_s_store)
-			return has_organ("chest")
+			return has_bodypart("chest")
 		if(slot_in_backpack)
 			return 1
 
@@ -220,7 +220,7 @@
 /mob/living/carbon/human/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
 	if(!slot) return
 	if(!istype(W)) return
-	if(!has_organ_for_slot(slot)) return
+	if(!has_bodypart_for_slot(slot)) return
 	if(W.flags & ABSTRACT) return
 
 	if(W == src.l_hand)
@@ -422,8 +422,8 @@
 					qdel(src)
 			if("splints")
 				var/count = 0
-				for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
-					var/obj/item/bodypart/BP = target.organs_by_name[organ]
+				for(var/bodypart in list("l_leg","r_leg","l_arm","r_arm"))
+					var/obj/item/bodypart/BP = target.bodyparts_by_name[bodypart]
 					if(BP.status & ORGAN_SPLINTED)
 						count = 1
 						break
@@ -757,8 +757,8 @@ It can still be worn/put on as normal.
 			if (target.legcuffed)
 				strip_item = target.legcuffed
 		if("splints")
-			for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
-				var/obj/item/bodypart/BP = target.get_bodypart(organ)
+			for(var/bodypart in list("l_leg","r_leg","l_arm","r_arm"))
+				var/obj/item/bodypart/BP = target.get_bodypart(bodypart)
 				if (BP && BP.status & ORGAN_SPLINTED)
 					var/obj/item/W = new /obj/item/stack/medical/splint(amount=1)
 					BP.status &= ~ORGAN_SPLINTED
@@ -768,7 +768,7 @@ It can still be worn/put on as normal.
 						W.appearance_flags = 0
 						W.add_fingerprint(source)
 		if("bandages")
-			for(var/obj/item/bodypart/BP in target.organs)
+			for(var/obj/item/bodypart/BP in target.bodyparts)
 				for(var/datum/wound/W in BP.wounds)
 					if(W.bandaged)
 						W.bandaged = 0
@@ -849,7 +849,7 @@ It can still be worn/put on as normal.
 						target.remove_from_mob(target.r_store) //At this stage l_store is already processed by the code above, we only need to process r_store.
 			W.add_fingerprint(source)
 		else
-			if(item && target.has_organ_for_slot(slot_to_process)) //Placing an item on the mob
+			if(item && target.has_bodypart_for_slot(slot_to_process)) //Placing an item on the mob
 				if(item.mob_can_equip(target, slot_to_process, 0))
 					source.remove_from_mob(item)
 					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 1)

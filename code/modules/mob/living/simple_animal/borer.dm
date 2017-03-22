@@ -212,7 +212,7 @@
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
-	if(!host.internal_organs_by_name["brain"]) //this should only run in admin-weirdness situations, but it's here non the less - RR
+	if(!host.organs_by_name["brain"]) //this should only run in admin-weirdness situations, but it's here non the less - RR
 		to_chat(src, "<span class='warning'>There is no brain here for us to command!</span>")
 		return
 

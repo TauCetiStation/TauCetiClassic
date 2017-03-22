@@ -150,8 +150,8 @@
 			if (prob(50) && !shielded)
 				Paralyse(10)
 
-	// focus most of the blast on one organ
-	var/obj/item/bodypart/BP = pick(organs)
+	// focus most of the blast on one bodypart
+	var/obj/item/bodypart/BP = pick(bodyparts)
 	BP.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
 
 	// distribute the remaining 10% on all limbs equally
@@ -230,7 +230,7 @@
 /mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
 	for(var/L in M.contents)
 		if(istype(L, /obj/item/weapon/implant/loyalty))
-			for(var/obj/item/bodypart/BP in M.organs)
+			for(var/obj/item/bodypart/BP in M.bodyparts)
 				if(L in BP.implants)
 					return 1
 	return 0
@@ -369,7 +369,7 @@
 				total_coeff -= 0.95
 		siemens_coeff = total_coeff
 	else
-		siemens_coeff *= get_siemens_coefficient_organ(BP)
+		siemens_coeff *= get_siemens_coefficient_bodypart(BP)
 
 	. = ..(shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(.)
@@ -907,7 +907,7 @@
 		reset_view(0) //##Z2
 
 /mob/living/carbon/human/revive()
-	for (var/obj/item/bodypart/BP in organs)
+	for (var/obj/item/bodypart/BP in bodyparts)
 		BP.status &= ~ORGAN_BROKEN
 		BP.status &= ~ORGAN_BLEEDING
 		BP.status &= ~ORGAN_SPLINTED
@@ -919,7 +919,7 @@
 		BP.wounds.Cut()
 		BP.heal_damage(1000,1000,1,1)
 
-	var/obj/item/bodypart/head/BP = organs_by_name["head"]
+	var/obj/item/bodypart/head/BP = bodyparts_by_name["head"]
 	BP.disfigured = 0
 
 	if(species && !species.flags[NO_BLOOD])
@@ -933,7 +933,7 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 
-	for(var/obj/item/organ/IO in internal_organs)
+	for(var/obj/item/organ/IO in organs)
 		IO.damage = 0
 
 	for (var/datum/disease/virus in viruses)
@@ -1219,8 +1219,8 @@
 			M.gib()
 
 /mob/living/carbon/human/has_eyes()
-	if(internal_organs_by_name["eyes"])
-		var/obj/item/organ/eyes = internal_organs_by_name["eyes"]
+	if(organs_by_name["eyes"])
+		var/obj/item/organ/eyes = organs_by_name["eyes"]
 		if(eyes && istype(eyes))
 			return 1
 	return 0

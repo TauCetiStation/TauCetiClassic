@@ -23,7 +23,7 @@
 	max_duration = 150
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		if (!hasorgans(target))
+		if (!hasbodyparts(target))
 			return
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		return ..() && BP.open == 1 && target.op_stage.lipoplasty == 0
@@ -61,7 +61,7 @@
 	max_duration = 85
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		if (!hasorgans(target))
+		if (!hasbodyparts(target))
 			return
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		return ..() && BP.open == 1 &&  target.op_stage.lipoplasty == 1

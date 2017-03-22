@@ -92,7 +92,7 @@
 		return
 	var/maxdam = 0
 	var/obj/item/bodypart/BP = null
-	for(var/obj/item/bodypart/E in organs)
+	for(var/obj/item/bodypart/E in bodyparts)
 		// amputated limbs don't cause pain
 		if(E.amputated) continue
 		if(E.status & ORGAN_DEAD) continue
@@ -106,9 +106,9 @@
 		pain(BP.display_name, maxdam, 0)
 
 	// Damage to internal organs hurts a lot.
-	for(var/obj/item/organ/IO in internal_organs)
+	for(var/obj/item/organ/IO in organs)
 		if(IO.damage > 2) if(prob(2))
-			var/obj/item/bodypart/parent = get_bodypart(IO.parent_organ)
+			var/obj/item/bodypart/parent = get_bodypart(IO.parent_bodypart)
 			src.custom_pain("You feel a sharp pain in your [parent.display_name]", 1)
 
 	var/toxDamageMessage = null

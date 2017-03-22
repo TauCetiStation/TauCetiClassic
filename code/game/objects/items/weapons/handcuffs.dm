@@ -90,7 +90,7 @@ var/last_chew = 0
 	if (H.wear_mask) return
 	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket)) return
 
-	var/obj/item/bodypart/BP = H.organs_by_name[H.hand ? "l_arm" : "r_arm"]
+	var/obj/item/bodypart/BP = H.bodyparts_by_name[H.hand ? "l_arm" : "r_arm"]
 	if (!BP) return
 
 	var/s = "\red [H.name] chews on \his [BP.display_name]!"

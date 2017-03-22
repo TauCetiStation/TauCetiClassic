@@ -23,7 +23,7 @@
 
 /obj/item/gland/proc/Inject(mob/living/carbon/human/target)
 	host = target
-	target.internal_organs += src
+	target.organs += src
 	src.loc = target
 
 /obj/item/gland/process()

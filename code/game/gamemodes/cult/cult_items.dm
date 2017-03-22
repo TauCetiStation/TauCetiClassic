@@ -16,8 +16,8 @@
 	else
 		user.Paralyse(5)
 		to_chat(user, "\red An unexplicable force powerfully repels the sword from [target]!")
-		var/organ = ((user.hand ? "l_":"r_") + "arm")
-		var/obj/item/bodypart/BP = user.get_bodypart(organ)
+		var/bodypart = ((user.hand ? "l_":"r_") + "arm")
+		var/obj/item/bodypart/BP = user.get_bodypart(bodypart)
 		BP.take_damage(rand(force/2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
 	return
 

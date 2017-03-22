@@ -158,7 +158,7 @@ There are several things that need to be remembered:
 		icon_key = "[icon_key][r_skin]"
 
 	//0 = destroyed, 1 = normal, 2 = robotic, 3 = necrotic.
-	for(var/obj/item/bodypart/BP in organs)
+	for(var/obj/item/bodypart/BP in bodyparts)
 
 		if(BP.status & ORGAN_DESTROYED)
 			icon_key = "[icon_key]0"
@@ -186,7 +186,7 @@ There are several things that need to be remembered:
 		//Robotic limbs are handled in get_icon() so all we worry about are missing or dead limbs.
 		//No icon stored, so we need to start with a basic one.
 
-		for(var/obj/item/bodypart/BP in organs)
+		for(var/obj/item/bodypart/BP in bodyparts)
 			if(BP.status & ORGAN_DESTROYED)
 				continue
 
@@ -244,9 +244,9 @@ There are several things that need to be remembered:
 			standing += image(icon = 'icons/mob/human_undershirt.dmi', icon_state = "undershirt[undershirt]_s", layer = -BODY_LAYER)
 
 	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
-		if(!fat && organs_by_name["r_leg"] && organs_by_name["l_leg"]) //shit
-			var/obj/item/bodypart/r_leg = organs_by_name["r_leg"]
-			var/obj/item/bodypart/l_leg = organs_by_name["l_leg"]
+		if(!fat && bodyparts_by_name["r_leg"] && bodyparts_by_name["l_leg"]) //shit
+			var/obj/item/bodypart/r_leg = bodyparts_by_name["r_leg"]
+			var/obj/item/bodypart/l_leg = bodyparts_by_name["l_leg"]
 			if( !(r_leg.status & ORGAN_DESTROYED) && !(l_leg.status & ORGAN_DESTROYED) )
 				standing += image(icon = 'icons/mob/human_socks.dmi', icon_state = "socks[socks]_s", layer = -BODY_LAYER)
 
@@ -423,7 +423,7 @@ There are several things that need to be remembered:
 	update_inv_pockets()
 	update_surgery()
 	update_bandage()
-	for(var/obj/item/bodypart/BP in organs)
+	for(var/obj/item/bodypart/BP in bodyparts)
 		UpdateDamageIcon(BP)
 	update_icons()
 	update_transform()
@@ -895,7 +895,7 @@ There are several things that need to be remembered:
 	remove_overlay(SURGERY_LAYER)
 
 	var/list/standing	= list()
-	for(var/obj/item/bodypart/BP in organs)
+	for(var/obj/item/bodypart/BP in bodyparts)
 		if(BP.open)
 			standing += image("icon"='icons/mob/surgery.dmi', "icon_state"="[BP.name][round(BP.open)]", "layer"=-SURGERY_LAYER)
 
@@ -908,7 +908,7 @@ There are several things that need to be remembered:
 	remove_overlay(BANDAGE_LAYER)
 
 	var/list/standing	= list()
-	for(var/obj/item/bodypart/BP in organs)
+	for(var/obj/item/bodypart/BP in bodyparts)
 		if(BP.wounds.len)
 			for(var/datum/wound/W in BP.wounds)
 				if(W.bandaged)

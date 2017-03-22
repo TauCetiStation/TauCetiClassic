@@ -195,9 +195,9 @@
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
-		var/divided_damage = (burn_amount)/(H.organs.len)
-		var/extradam = 0	//added to when organ is at max dam
-		for(var/obj/item/bodypart/BP in H.organs)
+		var/divided_damage = (burn_amount)/(H.bodyparts.len)
+		var/extradam = 0	//added to when bodypart is at max dam
+		for(var/obj/item/bodypart/BP in H.bodyparts)
 			if(!BP)	continue
 			BP.take_damage(0, divided_damage+extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 		H.updatehealth()
@@ -396,26 +396,26 @@
 	return BP
 
 
-// heal ONE external organ, organ gets randomly selected from damaged ones.
+// heal ONE bodypart, bodypart gets randomly selected from damaged ones.
 /mob/living/proc/heal_bodypart_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
-// damage ONE external organ, organ gets randomly selected from damaged ones.
+// damage ONE bodypart, bodypart gets randomly selected from damaged ones.
 /mob/living/proc/take_bodypart_damage(brute, burn)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
 
-// heal MANY external organs, in random order
+// heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
-// damage MANY external organs, in random order
+// damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute, burn, used_weapon = null)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
@@ -481,7 +481,7 @@
 		var/mob/living/carbon/human/human_mob = src
 		human_mob.restore_blood()
 
-	// fix all of our organs
+	// fix all of our bodyparts
 	restore_all_bodyparts()
 
 	// remove the character from the list of the dead

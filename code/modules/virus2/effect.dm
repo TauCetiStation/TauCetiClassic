@@ -112,14 +112,14 @@
 		scramble(0,mob,10)
 		mob.apply_damage(10, CLONE)
 
-/datum/disease2/effect/organs
+/datum/disease2/effect/bodyparts
 	name = "Shutdown Syndrome"
 	stage = 4
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			var/organ = pick(list("r_arm","l_arm","r_leg","r_leg"))
-			var/obj/item/bodypart/BP = H.organs_by_name[organ]
+			var/bodypart = pick(list("r_arm","l_arm","r_leg","r_leg"))
+			var/obj/item/bodypart/BP = H.bodyparts_by_name[bodypart]
 			if (!(BP.status & ORGAN_DEAD))
 				BP.status |= ORGAN_DEAD
 				to_chat(H, "<span class='notice'>You can't feel your [BP.display_name] anymore...</span>")
@@ -131,7 +131,7 @@
 	deactivate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/obj/item/bodypart/BP in H.organs)
+			for (var/obj/item/bodypart/BP in H.bodyparts)
 				BP.status &= ~ORGAN_DEAD
 				for (var/obj/item/bodypart/C in BP.children)
 					C.status &= ~ORGAN_DEAD
@@ -143,7 +143,7 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/obj/item/bodypart/BP in H.organs)
+			for (var/obj/item/bodypart/BP in H.bodyparts)
 				if (BP.status & ORGAN_BROKEN && prob(30))
 					BP.status ^= ORGAN_BROKEN
 		var/heal_amt = -5*multiplier
@@ -165,13 +165,13 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/obj/item/bodypart/BP in H.organs)
+			for (var/obj/item/bodypart/BP in H.bodyparts)
 				BP.min_broken_damage = max(5, BP.min_broken_damage - 30)
 
 	deactivate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/obj/item/bodypart/BP in H.organs)
+			for (var/obj/item/bodypart/BP in H.bodyparts)
 				BP.min_broken_damage = initial(BP.min_broken_damage)
 
 /datum/disease2/effect/toxins
@@ -202,7 +202,7 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			var/obj/item/organ/brain/IO = H.internal_organs_by_name["brain"]
+			var/obj/item/organ/brain/IO = H.organs_by_name["brain"]
 			if (IO.damage < IO.min_broken_damage)
 				IO.take_damage(5)
 		else

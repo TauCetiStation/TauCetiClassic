@@ -8,7 +8,7 @@
 	can_infect = 1
 	blood_level = 1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		if (!hasorgans(target))
+		if (!hasbodyparts(target))
 			return 0
 		if (target_zone != "groin")
 			return 0

@@ -36,10 +36,10 @@
 
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
 		var/obj/item/bodypart/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
-		P.agony *= get_siemens_coefficient_organ(BP)
-		P.stun *= get_siemens_coefficient_organ(BP)
-		P.weaken *= get_siemens_coefficient_organ(BP)
-		P.stutter *= get_siemens_coefficient_organ(BP)
+		P.agony *= get_siemens_coefficient_bodypart(BP)
+		P.stun *= get_siemens_coefficient_bodypart(BP)
+		P.weaken *= get_siemens_coefficient_bodypart(BP)
+		P.stutter *= get_siemens_coefficient_bodypart(BP)
 
 		if(P.agony) // No effect against full protection.
 			if(prob(max(P.agony, 20)))
@@ -77,7 +77,7 @@
 		var/obj/item/projectile/bullet/B = P
 
 		var/obj/item/bodypart/BP = get_bodypart(check_zone(def_zone))
-		var/armor = getarmor_organ(BP, "bullet")
+		var/armor = getarmor_bodypart(BP, "bullet")
 
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
 		if(delta)
@@ -106,7 +106,7 @@
 		var/obj/item/projectile/neurotoxin/B = P
 
 		var/obj/item/bodypart/BP = get_bodypart(check_zone(def_zone))
-		var/armor = getarmor_organ(BP, "bio")
+		var/armor = getarmor_bodypart(BP, "bio")
 		if (armor < 100)
 			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
 			to_chat(src, "<span class='userdanger'>You feel that yor muscles can`t move!</span>")
@@ -134,23 +134,23 @@
 
 /mob/living/carbon/human/getarmor(def_zone, type)
 	var/armorval = 0
-	var/organnum = 0
+	var/bodypartnum = 0
 
 	if(def_zone)
 		if(isBODYPART(def_zone))
-			return getarmor_organ(def_zone, type)
+			return getarmor_bodypart(def_zone, type)
 		var/obj/item/bodypart/BP = get_bodypart(def_zone)
-		return getarmor_organ(BP, type)
+		return getarmor_bodypart(BP, type)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/obj/item/bodypart/BP in organs)
-		armorval += getarmor_organ(BP, type)
-		organnum++
-	return (armorval/max(organnum, 1))
+	for(var/obj/item/bodypart/BP in bodyparts)
+		armorval += getarmor_bodypart(BP, type)
+		bodypartnum++
+	return (armorval/max(bodypartnum, 1))
 
-//this proc returns the Siemens coefficient of electrical resistivity for a particular external organ.
-/mob/living/carbon/human/proc/get_siemens_coefficient_organ(obj/item/bodypart/BP)
+//this proc returns the Siemens coefficient of electrical resistivity for a particular bodypart.
+/mob/living/carbon/human/proc/get_siemens_coefficient_bodypart(obj/item/bodypart/BP)
 	if (!BP)
 		return 1.0
 
@@ -171,8 +171,8 @@
 
 	return siemens_coefficient
 
-//this proc returns the armour value for a particular external organ.
-/mob/living/carbon/human/proc/getarmor_organ(obj/item/bodypart/BP, type)
+//this proc returns the armour value for a particular bodypart.
+/mob/living/carbon/human/proc/getarmor_bodypart(obj/item/bodypart/BP, type)
 	if(!type || !BP) return 0
 	var/protection = 0
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
@@ -227,10 +227,10 @@
 	for(var/obj/O in src)
 		if(!O)	continue
 		O.emp_act(severity)
-	for(var/obj/item/bodypart/BP  in organs)
+	for(var/obj/item/bodypart/BP  in bodyparts)
 		if(BP.status & ORGAN_DESTROYED)	continue
 		BP.emp_act(severity)
-		for(var/obj/item/organ/IO  in BP.internal_organs)
+		for(var/obj/item/organ/IO  in BP.organs)
 			if(IO.robotic == 0)	continue
 			IO.emp_act(severity)
 	..()

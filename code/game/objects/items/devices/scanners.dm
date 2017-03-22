@@ -163,8 +163,8 @@ REAGENT SCANNER
 		user.show_message("\red Significant brain damage detected. Subject may have had a concussion.")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		for(var/name in H.organs_by_name)
-			var/obj/item/bodypart/BP = H.organs_by_name[name]
+		for(var/name in H.bodyparts_by_name)
+			var/obj/item/bodypart/BP = H.bodyparts_by_name[name]
 			var/limb = BP.display_name
 			if(BP.status & ORGAN_BROKEN)
 				if(((BP.name == "l_arm") || (BP.name == "r_arm") || (BP.name == "l_leg") || (BP.name == "r_leg")) && (!(BP.status & ORGAN_SPLINTED)))
@@ -172,12 +172,12 @@ REAGENT SCANNER
 			if(BP.has_infected_wound())
 				to_chat(user, "\red Infected wound detected in subject [limb]. Disinfection recommended.")
 
-		for(var/name in H.organs_by_name)
-			var/obj/item/bodypart/BP = H.organs_by_name[name]
+		for(var/name in H.bodyparts_by_name)
+			var/obj/item/bodypart/BP = H.bodyparts_by_name[name]
 			if(BP.status & ORGAN_BROKEN)
 				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
 				break
-		for(var/obj/item/bodypart/BP in H.organs)
+		for(var/obj/item/bodypart/BP in H.bodyparts)
 			for(var/datum/wound/W in BP.wounds) if(W.internal)
 				user.show_message(text("\red Internal bleeding detected. Advanced scanner required for location."), 1)
 				break

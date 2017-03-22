@@ -383,7 +383,7 @@
 	var/safety = user:eyecheck()
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/eyes/IO = H.internal_organs_by_name["eyes"]
+		var/obj/item/organ/eyes/IO = H.organs_by_name["eyes"]
 		if(H.species.flags[IS_SYNTHETIC])
 			return
 		switch(safety)
@@ -483,9 +483,9 @@
 
 /obj/item/weapon/weldingtool/attack(mob/M, mob/user)
 
-	if(hasorgans(M))
+	if(hasbodyparts(M))
 
-		var/obj/item/bodypart/BP = M:organs_by_name[user.zone_sel.selecting]
+		var/obj/item/bodypart/BP = M:bodyparts_by_name[user.zone_sel.selecting]
 
 		if (!BP) return
 		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")

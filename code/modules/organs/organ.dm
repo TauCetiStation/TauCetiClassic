@@ -1,10 +1,8 @@
+/mob/living/carbon/var/list/organs_by_name = list() // so internal organs have less ickiness too
+
 /obj/item/organ
 	name = "organ"
 	var/mob/living/carbon/owner = null
-
-	//var/list/datum/autopsy_data/autopsy_data = list()
-	//var/list/trace_chemicals = list() // traces of chemicals in the organ,
-	//								  // links chemical IDs to number of ticks for which they'll stay in the blood
 
 	germ_level = 0		// INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
 
@@ -13,9 +11,6 @@
 
 /obj/item/organ/proc/receive_chem(chemical)
 	return 0
-
-//obj/item/organ/proc/get_icon(icon/race_icon, icon/deform_icon)
-//	return image(icon = 'icons/mob/human.dmi', icon_state = "blank", layer = -BODYPARTS_LAYER)
 
 //Germs
 /obj/item/organ/proc/handle_antibiotics()
@@ -31,29 +26,6 @@
 	else
 		germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
 
-//Handles chem traces
-//mob/living/carbon/proc/handle_trace_chems()
-//	//New are added for reagents to random organs.
-//	for(var/datum/reagent/A in reagents.reagent_list)
-//		var/obj/item/organ/O = pick(organs)
-//		O.trace_chemicals[A.name] = 100
-
-//Adds autopsy data for used_weapon.
-//obj/item/organ/proc/add_autopsy_data(used_weapon, damage)
-//	var/datum/autopsy_data/W = autopsy_data[used_weapon]
-//	if(!W)
-//		W = new()
-//		W.weapon = used_weapon
-//		autopsy_data[used_weapon] = W
-
-//	W.hits += 1
-//	W.damage += damage
-//	W.time_inflicted = world.time
-
-/mob/living/carbon/var/list/organs = list()
-/mob/living/carbon/var/list/organs_by_name = list() // map organ names to organs
-/mob/living/carbon/var/list/internal_organs_by_name = list() // so internal organs have less ickiness too
-
 // Takes care of organ related updates, such as broken and missing limbs
 /mob/living/carbon/proc/handle_organs()
 	number_wounds = 0
@@ -64,22 +36,22 @@
 		force_process = 1
 	last_dam = damage_this_tick
 	if(force_process)
-		bad_external_organs.Cut()
-		for(var/obj/item/bodypart/BP in organs)
-			bad_external_organs += BP
+		bad_bodyparts.Cut()
+		for(var/obj/item/bodypart/BP in bodyparts)
+			bad_bodyparts += BP
 
 	//processing internal organs is pretty cheap, do that first.
-	for(var/obj/item/organ/IO in internal_organs)
+	for(var/obj/item/organ/IO in organs)
 		IO.process()
 
-	if(!force_process && !bad_external_organs.len)
+	if(!force_process && !bad_bodyparts.len)
 		return
 
-	for(var/obj/item/bodypart/BP in bad_external_organs)
+	for(var/obj/item/bodypart/BP in bad_bodyparts)
 		if(!BP)
 			continue
 		if(!BP.need_process())
-			bad_external_organs -= BP
+			bad_bodyparts -= BP
 			continue
 		else
 			BP.process()
@@ -87,8 +59,8 @@
 
 			if (!lying && world.time - l_move_time < 15)
 			//Moving around with fractured ribs won't do you any good
-				if (BP.is_broken() && BP.internal_organs && prob(15))
-					var/obj/item/organ/IO = pick(BP.internal_organs)
+				if (BP.is_broken() && BP.organs && prob(15))
+					var/obj/item/organ/IO = pick(BP.organs)
 					custom_pain("You feel broken bones moving in your [BP.display_name]!", 1)
 					IO.take_damage(rand(3,5))
 
@@ -111,10 +83,10 @@
 
 	//Check arms and legs for existence
 	can_stand = 2 //can stand on both legs
-	var/obj/item/bodypart/BP = organs_by_name["l_leg"]
+	var/obj/item/bodypart/BP = bodyparts_by_name["l_leg"]
 	if(BP.status & ORGAN_DESTROYED)
 		can_stand--
 
-	BP = organs_by_name["r_leg"]
+	BP = bodyparts_by_name["r_leg"]
 	if(BP.status & ORGAN_DESTROYED)
 		can_stand--

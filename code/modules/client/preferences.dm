@@ -299,8 +299,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	// Destroy/cyborgize organs
 
 	for(var/name in organ_data)
-		var/obj/item/bodypart/BP = character.organs_by_name[name]
-		var/obj/item/organ/IO = character.internal_organs_by_name[name]
+		var/obj/item/bodypart/BP = character.bodyparts_by_name[name]
+		var/obj/item/organ/IO = character.organs_by_name[name]
 		var/status = organ_data[name]
 
 		if(status == "amputated")

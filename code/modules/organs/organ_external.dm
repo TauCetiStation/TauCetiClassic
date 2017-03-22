@@ -1,12 +1,15 @@
 /****************************************************
-				EXTERNAL ORGANS
+				BODYPARTS
 ****************************************************/
+/mob/living/carbon/var/list/bodyparts = list()
+/mob/living/carbon/var/list/bodyparts_by_name = list() // map bodypart names to bodyparts
+
 /obj/item/bodypart
 	name = "external"
 
 	var/mob/living/carbon/owner = null
 	var/list/datum/autopsy_data/autopsy_data = list()
-	var/list/trace_chemicals = list() // traces of chemicals in the organ,
+	var/list/trace_chemicals = list() // traces of chemicals in the bodypart,
 									  // links chemical IDs to number of ticks for which they'll stay in the blood
 
 	var/icon_name = null
@@ -33,7 +36,7 @@
 	var/list/obj/item/bodypart/children
 
 	// Internal organs of this body part
-	var/list/obj/item/organ/internal_organs
+	var/list/obj/item/organ/organs
 
 	var/damage_msg = "\red You feel an intense pain"
 	var/broken_description
@@ -52,7 +55,6 @@
 	var/wound_update_accuracy = 1
 
 	var/limb_layer = 0
-
 
 /obj/item/bodypart/New(loc, obj/item/bodypart/BP)
 	if(BP)
@@ -80,9 +82,9 @@
 
 //Handles chem traces
 /mob/living/carbon/proc/handle_trace_chems()
-	//New are added for reagents to random organs.
+	//New are added for reagents to random bodyparts.
 	for(var/datum/reagent/A in reagents.reagent_list)
-		var/obj/item/bodypart/BP = pick(organs)
+		var/obj/item/bodypart/BP = pick(bodyparts)
 		BP.trace_chemicals[A.name] = 100
 
 //Adds autopsy data for used_weapon.
@@ -135,9 +137,9 @@
 		burn *= bumod //~2/3 damage for ROBOLIMBS
 
 	// High brute damage or sharp objects may damage internal organs
-	if(internal_organs && ( (sharp && brute >= 5) || brute >= 10) && prob(5))
+	if(organs && ( (sharp && brute >= 5) || brute >= 10) && prob(5))
 		// Damage an internal organ
-		var/obj/item/organ/IO = pick(internal_organs)
+		var/obj/item/organ/IO = pick(organs)
 		IO.take_damage(brute / 2)
 		brute -= brute / 2
 
@@ -183,7 +185,7 @@
 			if (status & ORGAN_ROBOT)
 				droplimb(1) //Robot limbs just kinda fail at full damage.
 			else
-				//List organs we can pass it to
+				//List bodyparts we can pass it to
 				var/list/obj/item/bodypart/possible_points = list()
 				if(parent)
 					possible_points += parent
@@ -196,7 +198,7 @@
 					var/obj/item/bodypart/BP = pick(possible_points)
 					BP.take_damage(brute, burn, sharp, edge, used_weapon, forbidden_limbs + src)
 
-	// sync the organ's damage with its wounds
+	// sync the bodypart's damage with its wounds
 	src.update_damages()
 
 	//If limb took enough damage, try to cut or tear it off
@@ -232,7 +234,7 @@
 		status &= ~ORGAN_BROKEN
 		perma_injury = 0
 
-	//Sync the organ's damage with its wounds
+	//Sync the bodypart's damage with its wounds
 	src.update_damages()
 	owner.updatehealth()
 
@@ -242,11 +244,11 @@
 	return result
 
 /*
-This function completely restores a damaged organ to perfect condition.
+This function completely restores a damaged bodypart to perfect condition.
 */
 /obj/item/bodypart/proc/rejuvenate()
 	damage_state = "00"
-	if(status & 128)	//Robotic organs stay robotic.  Fix because right click rejuvinate makes IPC's organs organic.
+	if(status & 128)	//Robotic bodyparts stay robotic.  Fix because right click rejuvinate makes IPC's bodyparts organic.
 		status = 128
 	else
 		status = 0
@@ -259,7 +261,7 @@ This function completely restores a damaged organ to perfect condition.
 	number_wounds = 0
 
 	// handle internal organs
-	for(var/obj/item/organ/IO in internal_organs)
+	for(var/obj/item/organ/IO in organs)
 		IO.rejuvenate()
 
 	// remove embedded objects and drop them on the floor
@@ -320,7 +322,7 @@ This function completely restores a damaged organ to perfect condition.
 			   PROCESSING & UPDATING
 ****************************************************/
 
-//Determines if we even need to process this organ.
+//Determines if we even need to process this bodypart.
 
 /obj/item/bodypart/proc/need_process()
 	if(status && (status & ORGAN_ROBOT)) // If it's robotic, that's fine it will have a status.
@@ -368,7 +370,7 @@ This function completely restores a damaged organ to perfect condition.
 	//Infections
 	update_germs()
 
-//Updating germ levels. Handles organ germ levels and necrosis.
+//Updating germ levels. Handles bodypart germ levels and necrosis.
 /*
 The INFECTION_LEVEL values defined in setup.dm control the time it takes to reach the different
 infection levels. Since infection growth is exponential, you can adjust the time it takes to get
@@ -385,7 +387,7 @@ INFECTION_LEVEL_TWO		above this germ level the infection will start to spread to
 INFECTION_LEVEL_THREE	above this germ level the player will take additional toxin damage per second, and will die in minutes without
 						antitox. also, above this germ level you will need to overdose on spaceacillin to reduce the germ_level.
 
-Note that amputating the affected organ does in fact remove the infection from the player's body.
+Note that amputating the affected bodypart does in fact remove the infection from the player's body.
 */
 /obj/item/bodypart/proc/update_germs()
 
@@ -412,7 +414,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if (antibiotics < 5)
 		for(var/datum/wound/W in wounds)
-			//Infected wounds raise the organ's germ level
+			//Infected wounds raise the bodypart's germ level
 			if (W.germ_level > germ_level)
 				germ_level++
 				break	//limit increase to a maximum of one per second
@@ -439,7 +441,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(germ_level >= INFECTION_LEVEL_TWO && antibiotics < 5)
 		//spread the infection to internal organs
 		var/obj/item/organ/target_bodypart = null	//make internal organs become infected one at a time instead of all at once
-		for (var/obj/item/organ/IO in internal_organs)
+		for (var/obj/item/organ/IO in organs)
 			if (IO.germ_level > 0 && IO.germ_level < min(germ_level, INFECTION_LEVEL_TWO))	//once the organ reaches whatever we can give it, or level two, switch to a different one
 				if (!target_bodypart || IO.germ_level > target_bodypart.germ_level)	//choose the organ with the highest germ_level
 					target_bodypart = IO
@@ -447,7 +449,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if (!target_bodypart)
 			//figure out which organs we can spread germs to and pick one at random
 			var/list/candidate_organs = list()
-			for (var/obj/item/organ/IO in internal_organs)
+			for (var/obj/item/organ/IO in organs)
 				if (IO.germ_level < germ_level)
 					candidate_organs += IO
 			if (candidate_organs.len)
@@ -456,7 +458,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if (target_bodypart)
 			target_bodypart.germ_level++
 
-		//spread the infection to child and parent organs
+		//spread the infection to child and parent bodyparts
 		if (children)
 			for (var/obj/item/bodypart/child in children)
 				if (child.germ_level < germ_level && !(child.status & ORGAN_ROBOT))
@@ -525,7 +527,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			W.disinfected = 1
 			W.germ_level = 0
 
-	// sync the organ's damage with its wounds
+	// sync the bodypart's damage with its wounds
 	src.update_damages()
 	if(update_icon())
 		owner.UpdateDamageIcon(src)
@@ -597,7 +599,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			   DISMEMBERMENT
 ****************************************************/
 
-//Recursive setting of all child organs to amputated
+//Recursive setting of all child bodyparts to amputated
 /obj/item/bodypart/proc/setAmputatedTree()
 	for(var/obj/item/bodypart/BP in children)
 		BP.amputated=amputated
@@ -622,18 +624,18 @@ Note that amputating the affected organ does in fact remove the infection from t
 		for(var/implant in implants)
 			qdel(implant)
 
-		// If any organs are attached to this, destroy them
-		for(var/obj/item/bodypart/BP in owner.organs)
+		// If any bodyparts are attached to this, destroy them
+		for(var/obj/item/bodypart/BP in owner.bodyparts)
 			if(BP.parent == src)
 				BP.droplimb(1)
 
-		var/obj/organ	//Dropped limb object
+		var/obj/bodypart	//Dropped limb object
 		switch(body_part)
 			if(HEAD)
 				if(owner.species.flags[IS_SYNTHETIC])
-					organ= new /obj/item/weapon/organ/head/posi(owner.loc, owner)
+					bodypart = new /obj/item/weapon/organ/head/posi(owner.loc, owner)
 				else
-					organ= new /obj/item/weapon/organ/head(owner.loc, owner)
+					bodypart = new /obj/item/weapon/organ/head(owner.loc, owner)
 				owner.u_equip(owner.glasses)
 				owner.u_equip(owner.head)
 				owner.u_equip(owner.l_ear)
@@ -648,29 +650,29 @@ Note that amputating the affected organ does in fact remove the infection from t
 							owner.gib()
 			if(ARM_RIGHT)
 				if(status & ORGAN_ROBOT)
-					organ = new /obj/item/robot_parts/r_arm(owner.loc)
+					bodypart = new /obj/item/robot_parts/r_arm(owner.loc)
 				else
-					organ= new /obj/item/weapon/organ/r_arm(owner.loc, owner)
+					bodypart = new /obj/item/weapon/organ/r_arm(owner.loc, owner)
 				owner.u_equip(owner.gloves)
 			if(ARM_LEFT)
 				if(status & ORGAN_ROBOT)
-					organ= new /obj/item/robot_parts/l_arm(owner.loc)
+					bodypart = new /obj/item/robot_parts/l_arm(owner.loc)
 				else
-					organ= new /obj/item/weapon/organ/l_arm(owner.loc, owner)
+					bodypart = new /obj/item/weapon/organ/l_arm(owner.loc, owner)
 				owner.u_equip(owner.gloves)
 			if(LEG_RIGHT)
 				if(status & ORGAN_ROBOT)
-					organ = new /obj/item/robot_parts/r_leg(owner.loc)
+					bodypart = new /obj/item/robot_parts/r_leg(owner.loc)
 				else
-					organ= new /obj/item/weapon/organ/r_leg(owner.loc, owner)
+					bodypart = new /obj/item/weapon/organ/r_leg(owner.loc, owner)
 				owner.u_equip(owner.shoes)
 			if(LEG_LEFT)
 				if(status & ORGAN_ROBOT)
-					organ = new /obj/item/robot_parts/l_leg(owner.loc)
+					bodypart = new /obj/item/robot_parts/l_leg(owner.loc)
 				else
-					organ= new /obj/item/weapon/organ/l_leg(owner.loc, owner)
+					bodypart = new /obj/item/weapon/organ/l_leg(owner.loc, owner)
 				owner.u_equip(owner.shoes)
-		if(organ)
+		if(bodypart)
 			destspawn = 1
 			//Robotic limbs explode if sabotaged.
 			if(status & ORGAN_ROBOT && !no_explode && sabotaged)
@@ -689,9 +691,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 			"<span class='moderate'><b>Your [display_name] goes flying off!</b></span>",\
 			"You hear a terrible sound of ripping tendons and flesh.")
 
-			//Throw organs around
+			//Throw bodyparts around
 			var/lol = pick(cardinal)
-			step(organ,lol)
+			step(bodypart, lol)
 
 			owner.update_body()
 
@@ -723,7 +725,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		owner.drop_from_inventory(owner.legcuffed)
 
-// checks if all wounds on the organ are bandaged
+// checks if all wounds on the bodypart are bandaged
 /obj/item/bodypart/proc/is_bandaged()
 	for(var/datum/wound/W in wounds)
 		if(W.internal) continue
@@ -731,7 +733,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			return 0
 	return 1
 
-// checks if all wounds on the organ are salved
+// checks if all wounds on the bodypart are salved
 /obj/item/bodypart/proc/is_salved()
 	for(var/datum/wound/W in wounds)
 		if(W.internal) continue
@@ -739,7 +741,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			return 0
 	return 1
 
-// checks if all wounds on the organ are disinfected
+// checks if all wounds on the bodypart are disinfected
 /obj/item/bodypart/proc/is_disinfected()
 	for(var/datum/wound/W in wounds)
 		if(W.internal) continue
@@ -905,7 +907,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	W.loc = owner
 
 /****************************************************
-			   ORGAN DEFINES
+			   BODYPART DEFINES
 ****************************************************/
 
 /obj/item/bodypart/chest

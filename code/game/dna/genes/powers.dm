@@ -46,7 +46,7 @@
 
 	OnMobLife(mob/living/carbon/human/M)
 		if(!istype(M)) return
-		var/obj/item/bodypart/head/head = M.organs_by_name["head"]
+		var/obj/item/bodypart/head/head = M.bodyparts_by_name["head"]
 
 		if(head.disfigured) head.disfigured = 0
 
@@ -56,7 +56,7 @@
 			M.UpdateAppearance()
 
 		var/obj/item/bodypart/chest/chest = M.get_bodypart("chest")
-		for(var/obj/item/organ/IO in chest.internal_organs)
+		for(var/obj/item/organ/IO in chest.organs)
 			if(IO.damage > 0)
 				IO.damage -= 0.25
 

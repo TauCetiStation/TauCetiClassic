@@ -285,8 +285,8 @@
 			if(damage)
 				adjustToxLoss(damage)
 				updatehealth()
-				if (organs.len)
-					var/obj/item/bodypart/BP = pick(organs)
+				if (bodyparts.len)
+					var/obj/item/bodypart/BP = pick(bodyparts)
 					if(istype(BP))
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
@@ -1444,7 +1444,7 @@
 				healthdoll.icon_state = "healthdoll_DEAD"
 			else
 				healthdoll.icon_state = "healthdoll_OVERLAY"
-				for(var/obj/item/bodypart/BP in organs)
+				for(var/obj/item/bodypart/BP in bodyparts)
 					var/damage = BP.burn_dam + BP.brute_dam
 					var/comparison = (BP.max_damage/5)
 					var/icon_num = 0

@@ -546,10 +546,10 @@
 	var/busy = 0 	//Something's being washed at the moment
 
 /obj/structure/sink/attack_hand(mob/user)
-	if (hasorgans(user))
-		var/obj/item/bodypart/BP = user:organs_by_name["r_arm"]
+	if (hasbodyparts(user))
+		var/obj/item/bodypart/BP = user:bodyparts_by_name["r_arm"]
 		if (user.hand)
-			BP = user:organs_by_name["l_arm"]
+			BP = user:bodyparts_by_name["l_arm"]
 		if(BP && !BP.is_usable())
 			to_chat(user, "<span class='notice'>You try to move your [BP.display_name], but cannot!")
 			return

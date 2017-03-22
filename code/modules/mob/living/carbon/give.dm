@@ -8,11 +8,11 @@
 	if(src == usr || isalien(src) || isslime(src))
 		to_chat(usr, "<span class='red'>I feel stupider, suddenly.</span>")
 		return
-	if(ishuman(src) && hasorgans(src))
+	if(ishuman(src) && hasbodyparts(src))
 		var/mob/living/carbon/human/U = src
-		var/obj/item/bodypart/BP = U.organs_by_name["r_arm"]
+		var/obj/item/bodypart/BP = U.bodyparts_by_name["r_arm"]
 		if (U.hand)
-			BP = U.organs_by_name["l_arm"]
+			BP = U.bodyparts_by_name["l_arm"]
 		if(BP && !BP.is_usable())
 			return
 	var/obj/item/I = usr.get_active_hand()

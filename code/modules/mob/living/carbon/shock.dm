@@ -28,10 +28,10 @@
 	if(src.analgesic)
 		src.traumatic_shock = 0
 
-	// broken or ripped off organs will add quite a bit of pain
+	// broken or ripped off bodyparts will add quite a bit of pain
 	if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
-		for(var/obj/item/bodypart/BP in M.organs)
+		for(var/obj/item/bodypart/BP in M.bodyparts)
 			if (!BP)
 				continue
 			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)

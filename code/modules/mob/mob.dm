@@ -477,8 +477,8 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if((H.health - H.halloss) <= config.health_threshold_softcrit)
-			for(var/name in H.organs_by_name)
-				var/obj/item/bodypart/BP = H.organs_by_name[name]
+			for(var/name in H.bodyparts_by_name)
+				var/obj/item/bodypart/BP = H.bodyparts_by_name[name]
 				if(H.lying)
 					if((((BP.status & ORGAN_BROKEN) && !(BP.status & ORGAN_SPLINTED)) || (BP.status & ORGAN_BLEEDING)) && ((H.getBruteLoss() + H.getFireLoss()) >= 100))
 						return 1
@@ -976,10 +976,10 @@ mob/proc/yank_out_object()
 		var/mob/living/carbon/human/H = src
 		var/obj/item/bodypart/BP
 
-		for(var/obj/item/bodypart/organ in H.organs) //Grab the organ holding the implant.
-			for(var/obj/item/weapon/O in organ.implants)
+		for(var/obj/item/bodypart/bodypart in H.bodyparts) //Grab the bodypart holding the implant.
+			for(var/obj/item/weapon/O in bodypart.implants)
 				if(O == selection)
-					BP = organ
+					BP = bodypart
 
 		BP.implants -= selection
 		H.shock_stage += 10

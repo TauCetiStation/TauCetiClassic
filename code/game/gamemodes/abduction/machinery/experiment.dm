@@ -56,7 +56,7 @@
 	temp = new /icon(icobase, "head_[g]")
 	preview_icon.Blend(temp, ICON_OVERLAY)
 
-	for(var/obj/item/bodypart/BP in H.organs)
+	for(var/obj/item/bodypart/BP in H.bodyparts)
 		if(BP.status & ORGAN_CUT_AWAY || BP.status & ORGAN_DESTROYED) continue
 		temp = new /icon(icobase, "[BP.name]")
 		if(BP.status & ORGAN_ROBOT)

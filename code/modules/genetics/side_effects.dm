@@ -24,8 +24,8 @@
 	H.emote("me", 1, "starts turning very red..")
 
 /datum/genetics/side_effect/genetic_burn/finish(mob/living/carbon/human/H)
-	for(var/organ_name in list("chest","l_arm","r_arm","r_leg","l_leg","head","groin"))
-		var/obj/item/bodypart/BP = H.get_bodypart(organ_name)
+	for(var/bodypart_name in list("chest","l_arm","r_arm","r_leg","l_leg","head","groin"))
+		var/obj/item/bodypart/BP = H.get_bodypart(bodypart_name)
 		if(prob(85))//#Z2 - now 15% chance even for more burn
 			BP.take_damage(0, 5, 0)
 		else
@@ -43,13 +43,13 @@
 
 /datum/genetics/side_effect/bone_snap/finish(mob/living/carbon/human/H)
 	if(prob(85))//#Z2 - now 15% chance for heavy brute damage
-		var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-		var/obj/item/bodypart/BP = H.get_bodypart(organ_name)
+		var/bodypart_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+		var/obj/item/bodypart/BP = H.get_bodypart(bodypart_name)
 		BP.take_damage(20, 0, 0)
 		BP.fracture()
 	else
-		var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-		var/obj/item/bodypart/BP = H.get_bodypart(organ_name)
+		var/bodypart_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+		var/obj/item/bodypart/BP = H.get_bodypart(bodypart_name)
 		BP.take_damage(70, 0, 0)
 		//BP.fracture()
 

@@ -50,9 +50,9 @@
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
-					var/organ = H.get_bodypart("chest")
-					if (istype(organ, /obj/item/bodypart))
-						var/obj/item/bodypart/BP = organ
+					var/bodypart = H.get_bodypart("chest")
+					if (istype(bodypart, /obj/item/bodypart))
+						var/obj/item/bodypart/BP = bodypart
 						BP.take_damage(d, 0)
 					H.updatehealth()
 				else
@@ -101,9 +101,9 @@
 	if(!istype(C))
 		return
 
-	var/obj/item/bodypart/BP = C.organs_by_name["r_arm"]
+	var/obj/item/bodypart/BP = C.bodyparts_by_name["r_arm"]
 	if (C.hand)
-		BP = C.organs_by_name["l_arm"]
+		BP = C.bodyparts_by_name["l_arm"]
 
 	if(BP && !BP.is_usable())
 		to_chat(C, "<span class='rose'>You can't use your [BP.display_name].</span>")
@@ -214,7 +214,7 @@
 				"<span class='notice'>You check yourself for injuries.</span>" \
 				)
 
-			for(var/obj/item/bodypart/BP in H.organs)
+			for(var/obj/item/bodypart/BP in H.bodyparts)
 				var/status = ""
 				var/brutedamage = BP.brute_dam
 				var/burndamage = BP.burn_dam
@@ -687,11 +687,11 @@
 		germ_level += n
 
 /mob/living/carbon/proc/is_lung_ruptured()
-	var/obj/item/organ/lungs/IO = internal_organs_by_name["lungs"]
+	var/obj/item/organ/lungs/IO = organs_by_name["lungs"]
 	return IO.is_bruised()
 
 /mob/living/carbon/proc/rupture_lung()
-	var/obj/item/organ/lungs/IO = internal_organs_by_name["lungs"]
+	var/obj/item/organ/lungs/IO = organs_by_name["lungs"]
 
 	if(!IO.is_bruised())
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
@@ -700,7 +700,7 @@
 /mob/living/carbon/get_visible_implants(class = 0)
 
 	var/list/visible_implants = list()
-	for(var/obj/item/bodypart/BP in src.organs)
+	for(var/obj/item/bodypart/BP in src.bodyparts)
 		for(var/obj/item/weapon/O in BP.implants)
 			if(!istype(O,/obj/item/weapon/implant) && O.w_class > class)
 				visible_implants += O
@@ -709,7 +709,7 @@
 
 /mob/living/carbon/proc/handle_embedded_objects()
 
-	for(var/obj/item/bodypart/BP in src.organs)
+	for(var/obj/item/bodypart/BP in src.bodyparts)
 		if(BP.status & ORGAN_SPLINTED) //Splints prevent movement.
 			continue
 		for(var/obj/item/weapon/O in BP.implants)
@@ -742,7 +742,7 @@ This function restores the subjects blood to max.
 	if(!zone)	zone = "chest"
 	if (zone in list( "eyes", "mouth" ))
 		zone = "head"
-	return organs_by_name[zone]
+	return bodyparts_by_name[zone]
 
 // Get rank from ID, ID inside PDA, PDA, ID in wallet, etc.
 /mob/living/carbon/proc/get_authentification_rank(if_no_id = "No id", if_no_job = "No job")
@@ -862,7 +862,7 @@ This function restores the subjects blood to max.
 
 	species = all_species[new_species]
 
-	if(force_organs || !organs || !organs.len)
+	if(force_organs || !bodyparts || !bodyparts.len)
 		species.create_organs(src)
 
 	if(species.language)

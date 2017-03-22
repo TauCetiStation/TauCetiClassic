@@ -23,7 +23,7 @@
 		return ..()
 
 	var/mob/living/carbon/human/H = M
-	var/obj/item/bodypart/BP = H.organs[user.zone_sel.selecting]
+	var/obj/item/bodypart/BP = H.bodyparts[user.zone_sel.selecting]
 	if(BP.status & ORGAN_DESTROYED)
 		if(!(BP.status & ORGAN_ATTACHABLE))
 			to_chat(user, "\red The wound is not ready for a replacement!")
@@ -56,7 +56,7 @@
 			BP.status &= ~ORGAN_ATTACHABLE
 			BP.status &= ~ORGAN_DESTROYED
 			BP.status |= ORGAN_ROBOT
-			var/obj/item/bodypart/T = H.organs["[limbloc]"]
+			var/obj/item/bodypart/T = H.bodyparts["[limbloc]"]
 			T.status &= ~ORGAN_BROKEN
 			T.status &= ~ORGAN_SPLINTED
 			T.status &= ~ORGAN_ATTACHABLE

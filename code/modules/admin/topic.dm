@@ -1949,7 +1949,7 @@
 						for(var/obj/item/weapon/W in H)
 							if(istype(W, /obj/item/bodypart))
 								continue
-								//don't strip organs
+								//don't strip bodyparts
 							H.drop_from_inventory(W)
 						//teleport person to cell
 						H.loc = pick(prisonwarp)

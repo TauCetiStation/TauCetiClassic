@@ -8,7 +8,7 @@
 	priority = 2
 	can_infect = 0
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		if (!hasorgans(target))
+		if (!hasbodyparts(target))
 			return 0
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		if (!BP)

@@ -37,8 +37,8 @@
 		tally += wear_suit.slowdown
 
 	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
-		for(var/organ_name in list("l_arm", "r_arm"))
-			var/obj/item/bodypart/BP = get_bodypart(organ_name)
+		for(var/bodypart_name in list("l_arm", "r_arm"))
+			var/obj/item/bodypart/BP = get_bodypart(bodypart_name)
 			if(!BP || (BP.status & ORGAN_DESTROYED))
 				tally += 4
 			else if(BP.status & ORGAN_SPLINTED)
@@ -55,8 +55,8 @@
 		if(buckled)	//so, if we buckled we have large debuff
 			tally += 5.5
 
-		for(var/organ_name in list("l_leg", "r_leg"))
-			var/obj/item/bodypart/BP = get_bodypart(organ_name)
+		for(var/bodypart_name in list("l_leg", "r_leg"))
+			var/obj/item/bodypart/BP = get_bodypart(bodypart_name)
 			if(!BP || (BP.status & ORGAN_DESTROYED))
 				tally += 4
 			else if(BP.status & ORGAN_SPLINTED)

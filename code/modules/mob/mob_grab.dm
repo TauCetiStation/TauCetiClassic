@@ -309,7 +309,7 @@
 						to_chat(assailant, "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>")
 						force_down = 0
 					else
-						inspect_organ(affecting, assailant, hit_zone)
+						inspect_bodypart(affecting, assailant, hit_zone)
 						return
 				if("grab")
 					if(state < GRAB_AGGRESSIVE)
@@ -343,7 +343,7 @@
 						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Pressed fingers into the eyes of [affecting.name] ([affecting.ckey])</font>")
 						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had fingers pressed into their eyes by [assailant.name] ([assailant.ckey])</font>")
 						msg_admin_attack("[key_name(assailant)] has pressed his fingers into [key_name(affecting)]'s eyes.")
-						var/obj/item/organ/eyes/eyes = affecting:internal_organs_by_name["eyes"]
+						var/obj/item/organ/eyes/eyes = affecting:organs_by_name["eyes"]
 						eyes.damage += rand(3,4)
 						if (eyes.damage >= eyes.min_broken_damage)
 							if(affecting.stat != DEAD)
@@ -451,7 +451,7 @@
 	destroying = 1 // stops us calling qdel(src) on dropped()
 	return ..()
 
-/obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
+/obj/item/weapon/grab/proc/inspect_bodypart(mob/living/carbon/human/H, mob/user, target_zone)
 
 	var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
 

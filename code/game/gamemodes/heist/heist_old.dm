@@ -100,7 +100,7 @@ VOX HEIST ROUNDTYPE
 		vox.add_language("Vox-pidgin")
 		vox.h_style = "Short Vox Quills"
 		vox.f_style = "Shaved"
-		for(var/obj/item/bodypart/BP in vox.organs)
+		for(var/obj/item/bodypart/BP in vox.bodyparts)
 			BP.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
 		vox.equip_vox_raider()
 		vox.regenerate_icons()

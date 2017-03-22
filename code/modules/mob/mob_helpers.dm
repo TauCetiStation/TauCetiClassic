@@ -1,7 +1,7 @@
 // see _DEFINES/is_helpers.dm for mob type checks
 #define SAFE_PERP -50
 
-/proc/hasorgans(A)
+/proc/hasbodyparts(A)
 	return ishuman(A)
 
 /proc/hsl2rgb(h, s, l)

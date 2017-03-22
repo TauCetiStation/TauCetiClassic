@@ -83,40 +83,40 @@
 /datum/species/New()
 	unarmed = new unarmed_type()
 
-/datum/species/proc/create_organs(mob/living/carbon/C) //Handles creation of mob organs.
+/datum/species/proc/create_organs(mob/living/carbon/C) //Handles creation of mob bodyparts and organs.
 	//This is a basic humanoid limb setup.
 	switch(name)
 		if(S_HUMAN,S_UNATHI,S_TAJARAN,S_SKRELL,S_DIONA,S_VOX,S_VOX_ARMALIS,S_IPC,S_ABDUCTOR,S_SHADOWLING)
 			C.make_blood()
+			C.bodyparts = list()
+			C.bodyparts_by_name["chest"] = new/obj/item/bodypart/chest(null)
+			C.bodyparts_by_name["groin"] = new/obj/item/bodypart/groin(null, C.bodyparts_by_name["chest"])
+			C.bodyparts_by_name["head"] = new/obj/item/bodypart/head(null, C.bodyparts_by_name["chest"])
+			C.bodyparts_by_name["l_arm"] = new/obj/item/bodypart/l_arm(null, C.bodyparts_by_name["chest"])
+			C.bodyparts_by_name["r_arm"] = new/obj/item/bodypart/r_arm(null, C.bodyparts_by_name["chest"])
+			C.bodyparts_by_name["r_leg"] = new/obj/item/bodypart/r_leg(null, C.bodyparts_by_name["groin"])
+			C.bodyparts_by_name["l_leg"] = new/obj/item/bodypart/l_leg(null, C.bodyparts_by_name["groin"])
+
 			C.organs = list()
-			C.organs_by_name["chest"] = new/obj/item/bodypart/chest(null)
-			C.organs_by_name["groin"] = new/obj/item/bodypart/groin(null, C.organs_by_name["chest"])
-			C.organs_by_name["head"] = new/obj/item/bodypart/head(null, C.organs_by_name["chest"])
-			C.organs_by_name["l_arm"] = new/obj/item/bodypart/l_arm(null, C.organs_by_name["chest"])
-			C.organs_by_name["r_arm"] = new/obj/item/bodypart/r_arm(null, C.organs_by_name["chest"])
-			C.organs_by_name["r_leg"] = new/obj/item/bodypart/r_leg(null, C.organs_by_name["groin"])
-			C.organs_by_name["l_leg"] = new/obj/item/bodypart/l_leg(null, C.organs_by_name["groin"])
+			C.organs_by_name["heart"] = new/obj/item/organ/heart(null, C)
+			C.organs_by_name["lungs"] = new/obj/item/organ/lungs(null, C)
+			C.organs_by_name["liver"] = new/obj/item/organ/liver(null, C)
+			C.organs_by_name["kidney"] = new/obj/item/organ/kidney(null, C)
+			C.organs_by_name["brain"] = new/obj/item/organ/brain(null, C)
+			C.organs_by_name["eyes"] = new/obj/item/organ/eyes(null, C)
 
-			C.internal_organs = list()
-			C.internal_organs_by_name["heart"] = new/obj/item/organ/heart(null, C)
-			C.internal_organs_by_name["lungs"] = new/obj/item/organ/lungs(null, C)
-			C.internal_organs_by_name["liver"] = new/obj/item/organ/liver(null, C)
-			C.internal_organs_by_name["kidney"] = new/obj/item/organ/kidney(null, C)
-			C.internal_organs_by_name["brain"] = new/obj/item/organ/brain(null, C)
-			C.internal_organs_by_name["eyes"] = new/obj/item/organ/eyes(null, C)
+			for(var/name in C.bodyparts_by_name)
+				C.bodyparts += C.bodyparts_by_name[name]
 
-			for(var/name in C.organs_by_name)
-				C.organs += C.organs_by_name[name]
-
-			for(var/obj/item/bodypart/BP in C.organs)
+			for(var/obj/item/bodypart/BP in C.bodyparts)
 				BP.owner = C
 
 			if(flags[IS_SYNTHETIC])
-				for(var/obj/item/bodypart/BP in C.organs)
+				for(var/obj/item/bodypart/BP in C.bodyparts)
 					if(BP.status & ORGAN_CUT_AWAY || BP.status & ORGAN_DESTROYED)
 						continue
 					BP.status |= ORGAN_ROBOT
-				for(var/obj/item/organ/IO in C.internal_organs)
+				for(var/obj/item/organ/IO in C.organs)
 					IO.mechanize()
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/C) //Handles anything not already covered by basic species assignment.

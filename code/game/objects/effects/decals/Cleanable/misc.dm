@@ -451,7 +451,7 @@
 			if(H.check_thickmaterial(BP))
 				power_calculated = 0
 			else
-				power_calculated *= H.get_siemens_coefficient_organ(BP)
+				power_calculated *= H.get_siemens_coefficient_bodypart(BP)
 		if(power_calculated)
 			L.apply_effect(power_calculated,AGONY,0)
 

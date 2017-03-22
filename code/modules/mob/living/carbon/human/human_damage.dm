@@ -1,4 +1,4 @@
-//Updates the mob's health from organs and mob damage variables
+//Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/human/updatehealth()
 	if(status_flags & GODMODE)
 		health = 100
@@ -6,7 +6,7 @@
 		return
 	var/total_burn	= 0
 	var/total_brute	= 0
-	for(var/obj/item/bodypart/BP in organs)	//hardcoded to streamline things a bit
+	for(var/obj/item/bodypart/BP in bodyparts)	//hardcoded to streamline things a bit
 		total_brute	+= BP.brute_dam
 		total_burn	+= BP.burn_dam
 	health = 100 - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
@@ -17,7 +17,7 @@
 
 /mob/living/carbon/human/getBrainLoss()
 	var/res = brainloss
-	var/obj/item/organ/brain/IO = internal_organs_by_name["brain"]
+	var/obj/item/organ/brain/IO = organs_by_name["brain"]
 	if(!IO)
 		return 0
 	if (IO.is_bruised())
@@ -27,16 +27,16 @@
 	res = min(res,maxHealth*2)
 	return res
 
-//These procs fetch a cumulative total damage from all organs
+//These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
-	for(var/obj/item/bodypart/BP in organs)
+	for(var/obj/item/bodypart/BP in bodyparts)
 		amount += BP.brute_dam
 	return amount
 
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
-	for(var/obj/item/bodypart/BP in organs)
+	for(var/obj/item/bodypart/BP in bodyparts)
 		amount += BP.burn_dam
 	return amount
 
@@ -61,32 +61,32 @@
 		heal_overall_damage(0, -amount)
 	hud_updateflag |= 1 << HEALTH_HUD
 
-/mob/living/carbon/human/proc/adjustBruteLossByPart(amount, organ_name, obj/damage_source = null)
+/mob/living/carbon/human/proc/adjustBruteLossByPart(amount, bodypart_name, obj/damage_source = null)
 	if(species && species.brute_mod)
 		amount = amount*species.brute_mod
 
-	if (organ_name in organs_by_name)
-		var/obj/item/bodypart/BP = get_bodypart(organ_name)
+	if (bodypart_name in bodyparts_by_name)
+		var/obj/item/bodypart/BP = get_bodypart(bodypart_name)
 
 		if(amount > 0)
 			BP.take_damage(amount, 0, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
 		else
-			//if you don't want to heal robot organs, they you will have to check that yourself before using this proc.
+			//if you don't want to heal robot bodyparts, they you will have to check that yourself before using this proc.
 			BP.heal_damage(-amount, 0, internal=0, robo_repair=(BP.status & ORGAN_ROBOT))
 
 	hud_updateflag |= 1 << HEALTH_HUD
 
-/mob/living/carbon/human/proc/adjustFireLossByPart(amount, organ_name, obj/damage_source = null)
+/mob/living/carbon/human/proc/adjustFireLossByPart(amount, bodypart_name, obj/damage_source = null)
 	if(species && species.burn_mod)
 		amount = amount*species.burn_mod
 
-	if (organ_name in organs_by_name)
-		var/obj/item/bodypart/BP = get_bodypart(organ_name)
+	if (bodypart_name in bodyparts_by_name)
+		var/obj/item/bodypart/BP = get_bodypart(bodypart_name)
 
 		if(amount > 0)
 			BP.take_damage(0, amount, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
 		else
-			//if you don't want to heal robot organs, they you will have to check that yourself before using this proc.
+			//if you don't want to heal robot bodyparts, they you will have to check that yourself before using this proc.
 			BP.heal_damage(0, -amount, internal=0, robo_repair=(BP.status & ORGAN_ROBOT))
 
 	hud_updateflag |= 1 << HEALTH_HUD
@@ -124,7 +124,7 @@
 	if (amount > 0)
 		if (prob(mut_prob))
 			var/list/obj/item/bodypart/candidates = list()
-			for (var/obj/item/bodypart/BP in organs)
+			for (var/obj/item/bodypart/BP in bodyparts)
 				if(!(BP.status & ORGAN_MUTATED))
 					candidates |= BP
 			if (candidates.len)
@@ -134,14 +134,14 @@
 				return
 	else
 		if (prob(heal_prob))
-			for (var/obj/item/bodypart/BP in organs)
+			for (var/obj/item/bodypart/BP in bodyparts)
 				if (BP.status & ORGAN_MUTATED)
 					BP.unmutate()
 					to_chat(src, "<span class = 'notice'>Your [BP.display_name] is shaped normally again.</span>")
 					return
 
 	if (getCloneLoss() < 1)
-		for (var/obj/item/bodypart/BP in organs)
+		for (var/obj/item/bodypart/BP in bodyparts)
 			if (BP.status & ORGAN_MUTATED)
 				BP.unmutate()
 				to_chat(src, "<span class = 'notice'>Your [BP.display_name] is shaped normally again.</span>")
@@ -149,23 +149,23 @@
 
 ////////////////////////////////////////////
 
-//Returns a list of damaged organs
+//Returns a list of damaged bodyparts
 /mob/living/carbon/human/proc/get_damaged_bodyparts(brute, burn)
 	var/list/obj/item/bodypart/parts = list()
-	for(var/obj/item/bodypart/BP in organs)
+	for(var/obj/item/bodypart/BP in bodyparts)
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam))
 			parts += BP
 	return parts
 
-//Returns a list of damageable organs
+//Returns a list of damageable bodyparts
 /mob/living/carbon/human/proc/get_damageable_bodyparts()
 	var/list/obj/item/bodypart/parts = list()
-	for(var/obj/item/bodypart/BP in organs)
+	for(var/obj/item/bodypart/BP in bodyparts)
 		if(BP.brute_dam + BP.burn_dam < BP.max_damage)
 			parts += BP
 	return parts
 
-//Heals ONE external organ, organ gets randomly selected from damaged ones.
+//Heals ONE bodypart, bodypart gets randomly selected from damaged ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
 /mob/living/carbon/human/heal_bodypart_damage(brute, burn)
@@ -176,7 +176,7 @@
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
 
-//Damages ONE external organ, organ gets randomly selected from damagable ones.
+//Damages ONE bodypart, bodypart gets randomly selected from damagable ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
 /mob/living/carbon/human/take_bodypart_damage(brute, burn, sharp = 0, edge = 0)
@@ -189,7 +189,7 @@
 	speech_problem_flag = 1
 
 
-//Heal MANY external organs, in random order
+//Heal MANY external bodyparts, in random order
 /mob/living/carbon/human/heal_overall_damage(brute, burn)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn)
 	while(parts.len && (brute>0 || burn>0) )
@@ -205,7 +205,7 @@
 	speech_problem_flag = 1
 
 
-// damage MANY external organs, in random order
+// damage MANY external bodyparts, in random order
 /mob/living/carbon/human/take_overall_damage(brute, burn, sharp = 0, edge = 0, used_weapon = null)
 	if(status_flags & GODMODE)	return	//godmode
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
@@ -224,10 +224,10 @@
 ////////////////////////////////////////////
 
 /*
-This function restores all organs.
+This function restores all bodyparts.
 */
 /mob/living/carbon/human/restore_all_bodyparts()
-	for(var/obj/item/bodypart/BP in organs)
+	for(var/obj/item/bodypart/BP in bodyparts)
 		BP.rejuvenate()
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)

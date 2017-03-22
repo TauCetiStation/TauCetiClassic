@@ -3,9 +3,9 @@
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
-	var/obj/item/bodypart/r_arm = M:organs_by_name["r_arm"]
+	var/obj/item/bodypart/r_arm = M:bodyparts_by_name["r_arm"]
 	if (M.hand)
-		r_arm = M:organs_by_name["l_arm"]
+		r_arm = M:bodyparts_by_name["l_arm"]
 	if(r_arm && !r_arm.is_usable())
 		to_chat(M, "\red You can't use your [r_arm.display_name].")
 		return
@@ -38,13 +38,13 @@
 						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been unsuccessfully touched with stungloves by [M.name] ([M.ckey])</font>")
 						msg_admin_attack("[M.name] ([M.ckey]) failed to stun [src.name] ([src.ckey]) with stungloves (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
 						target = M
-						calc_power = 150 * get_siemens_coefficient_organ(BP)
+						calc_power = 150 * get_siemens_coefficient_bodypart(BP)
 					else
 						visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 						M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
 						msg_admin_attack("[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
-						calc_power = 100 * get_siemens_coefficient_organ(BP)
+						calc_power = 100 * get_siemens_coefficient_bodypart(BP)
 					target.apply_effects(0,0,0,0,2,0,0,calc_power)
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 					s.set_up(3, 1, target)

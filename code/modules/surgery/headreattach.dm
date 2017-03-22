@@ -5,7 +5,7 @@
 	clothless = 0
 	can_infect = 0
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		if (!hasorgans(target))
+		if (!hasbodyparts(target))
 			return 0
 		if(!ishuman(target))
 			return 0

@@ -286,24 +286,24 @@
 						if(!D.hidden[SCANNER])
 							dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
 
-					dat += "<HR><A href='?src=\ref[src];print=1'>Print organs report</A><BR>"
+					dat += "<HR><A href='?src=\ref[src];print=1'>Print body parts and organs report</A><BR>"
 					storedinfo = null
 					dat += "<HR><table border='1'>"
 					dat += "<tr>"
-					dat += "<th>Organ</th>"
+					dat += "<th>Body Part</th>"
 					dat += "<th>Burn Damage</th>"
 					dat += "<th>Brute Damage</th>"
 					dat += "<th>Other Wounds</th>"
 					dat += "</tr>"
 					storedinfo += "<HR><table border='1'>"
 					storedinfo += "<tr>"
-					storedinfo += "<th>Organ</th>"
+					storedinfo += "<th>Body Part</th>"
 					storedinfo += "<th>Burn Damage</th>"
 					storedinfo += "<th>Brute Damage</th>"
 					storedinfo += "<th>Other Wounds</th>"
 					storedinfo += "</tr>"
 
-					for(var/obj/item/bodypart/BP in occupant.organs)
+					for(var/obj/item/bodypart/BP in occupant.bodyparts)
 
 						dat += "<tr>"
 						storedinfo += "<tr>"
@@ -366,7 +366,7 @@
 							storedinfo += "<td>[BP.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"
 						storedinfo += "</tr>"
-					for(var/obj/item/organ/IO in occupant.internal_organs)
+					for(var/obj/item/organ/IO in occupant.organs)
 						var/mech = ""
 						if(IO.robotic == 1)
 							mech = "Assisted:"

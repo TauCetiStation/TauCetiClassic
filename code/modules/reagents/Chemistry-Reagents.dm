@@ -1285,7 +1285,7 @@ datum
 				M.eye_blind = max(M.eye_blind - 5, 0)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/obj/item/organ/eyes/IO = H.internal_organs_by_name["eyes"]
+					var/obj/item/organ/eyes/IO = H.organs_by_name["eyes"]
 					if(istype(IO))
 						if(IO.damage > 0)
 							IO.damage = max(IO.damage - 1, 0)
@@ -1305,14 +1305,14 @@ datum
 					var/mob/living/carbon/human/H = M
 
 					//Peridaxon is hard enough to get, it's probably fair to make this all internal organs
-					for(var/obj/item/organ/IO in H.internal_organs)
+					for(var/obj/item/organ/IO in H.organs)
 						if(IO.damage > 0)
 							IO.damage = max(IO.damage - 0.20, 0)
 
 		kyphotorin
 			name = "Kyphotorin"
 			id = "kyphotorin"
-			description = "Used nanites to encourage recovery of external organs and bones. Medicate cautiously."
+			description = "Used nanites to encourage recovery of bodyparts and bones. Medicate cautiously."
 			reagent_state = LIQUID
 			color = "#551a8b" // rgb: 85, 26, 139
 			overdose = 5.1
@@ -1332,7 +1332,7 @@ datum
 					return
 				H.jitteriness = max(0,H.jitteriness - 100)
 				if(!External)
-					for(var/obj/item/bodypart/E in H.organs) // find a broken/destroyed limb
+					for(var/obj/item/bodypart/E in H.bodyparts) // find a broken/destroyed limb
 						for(var/datum/wound/W in E.wounds) // remove internal
 							if(W.internal)
 								E.wounds -= W
@@ -3100,7 +3100,7 @@ datum
 					M.drowsyness = max(M.drowsyness, 30)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/obj/item/organ/liver/IO = H.internal_organs_by_name["liver"]
+						var/obj/item/organ/liver/IO = H.organs_by_name["liver"]
 						if(istype(IO))
 							IO.take_damage(0.1, 1)
 						H.adjustToxLoss(0.1)
@@ -3358,13 +3358,13 @@ datum
 							M.adjustToxLoss(2)
 						if(prob(5) && ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/obj/item/organ/heart/IO = H.internal_organs_by_name["heart"]
+							var/obj/item/organ/heart/IO = H.organs_by_name["heart"]
 							if(istype(IO))
 								IO.take_damage(5, 0)
 					if(300 to INFINITY)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/obj/item/organ/heart/IO = H.internal_organs_by_name["heart"]
+							var/obj/item/organ/heart/IO = H.organs_by_name["heart"]
 							if(istype(IO))
 								IO.take_damage(100, 0)
 
@@ -4116,7 +4116,7 @@ datum
 				M.adjustBrainLoss(2)
 				if(ishuman(M) && prob(5))
 					var/mob/living/carbon/human/H = M
-					var/obj/item/organ/heart/IO = H.internal_organs_by_name["heart"]
+					var/obj/item/organ/heart/IO = H.organs_by_name["heart"]
 					if(istype(IO))
 						IO.take_damage(10, 0)
 	data++

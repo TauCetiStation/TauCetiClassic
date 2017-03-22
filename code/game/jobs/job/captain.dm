@@ -45,7 +45,7 @@
 	L.imp_in = H
 	L.implanted = 1
 	to_chat(world, "<b>[H.real_name] is the captain!</b>")
-	var/obj/item/bodypart/BP = H.organs_by_name["head"]
+	var/obj/item/bodypart/BP = H.bodyparts_by_name["head"]
 	BP.implants += L
 	L.part = BP
 	return 1

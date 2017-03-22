@@ -202,8 +202,8 @@
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	//splints
-	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
-		var/obj/item/bodypart/BP = get_bodypart(organ)
+	for(var/bodypart in list("l_leg","r_leg","l_arm","r_arm"))
+		var/obj/item/bodypart/BP = get_bodypart(bodypart)
 		if(BP && BP.status & ORGAN_SPLINTED)
 			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [BP.display_name]!</span>\n"
 
@@ -252,7 +252,7 @@
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()
 	var/list/is_bleeding = list()
-	for(var/obj/item/bodypart/BP in organs)
+	for(var/obj/item/bodypart/BP in bodyparts)
 		if(BP)
 			if(BP.status & ORGAN_DESTROYED)
 				is_destroyed["[BP.display_name]"] = 1
