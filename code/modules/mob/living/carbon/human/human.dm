@@ -189,7 +189,7 @@
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>\The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_arm", "r_arm", "l_leg", "r_leg")
-	var/obj/item/bodypart/BP = get_organ(ran_zone(dam_zone))
+	var/obj/item/bodypart/BP = get_bodypart(ran_zone(dam_zone))
 	apply_damage(rand(30,40), BRUTE, BP, run_armor_check(BP, "melee"))
 	return
 
@@ -198,7 +198,7 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message("\red [src] has been hit by [O]", 1)
 	if (health > 0)
-		var/obj/item/bodypart/BP = get_organ(pick("chest", "chest", "chest", "head"))
+		var/obj/item/bodypart/BP = get_bodypart(pick("chest", "chest", "chest", "head"))
 		if(!BP)	return
 		if (istype(O, /obj/effect/immovablerod))
 			BP.take_damage(101, 0)
@@ -221,7 +221,7 @@
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = pick("chest", "l_arm", "r_arm", "l_leg", "r_leg")
-		var/obj/item/bodypart/BP = get_organ(ran_zone(dam_zone))
+		var/obj/item/bodypart/BP = get_bodypart(ran_zone(dam_zone))
 		var/armor = run_armor_check(BP, "melee")
 		apply_damage(damage, BRUTE, BP, armor)
 		if(armor >= 2)	return
@@ -254,7 +254,7 @@
 
 		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
 
-		var/obj/item/bodypart/BP = get_organ(ran_zone(dam_zone))
+		var/obj/item/bodypart/BP = get_bodypart(ran_zone(dam_zone))
 		var/armor_block = run_armor_check(BP, "melee")
 		apply_damage(damage, BRUTE, BP, armor_block)
 
@@ -355,7 +355,7 @@
 	if(!def_zone)
 		def_zone = pick("l_arm", "r_arm")
 
-	var/obj/item/bodypart/BP = get_organ(check_zone(def_zone))
+	var/obj/item/bodypart/BP = get_bodypart(check_zone(def_zone))
 
 	if(tesla_shock)
 		var/total_coeff = 1

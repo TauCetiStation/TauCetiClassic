@@ -23,7 +23,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (!hasorgans(target))
 			return
-		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		return ..() && target.op_stage.ribcage == 0 && BP.open >= 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -40,7 +40,7 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cracking [target]'s ribcage with \the [tool]!" , \
 		"\red Your hand slips, cracking [target]'s ribcage with \the [tool]!" )
-		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		BP.createwound(CUT, 20)
 		BP.fracture()
 
@@ -70,7 +70,7 @@
 		var/self_msg = "\blue You force open [target]'s ribcage with \the [tool]."
 		user.visible_message(msg, self_msg)
 		target.op_stage.ribcage = 2
-		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		BP.open = 3
 
 		// Whoops!
@@ -81,7 +81,7 @@
 		var/msg = "\red [user]'s hand slips, breaking [target]'s ribcage!"
 		var/self_msg = "\red Your hand slips, breaking [target]'s ribcage!"
 		user.visible_message(msg, self_msg)
-		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		BP.createwound(BRUISE, 20)
 		BP.fracture()
 
@@ -112,14 +112,14 @@
 		user.visible_message(msg, self_msg)
 
 		target.op_stage.ribcage = 1
-		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		BP.open = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/msg = "\red [user]'s hand slips, bending [target]'s ribs the wrong way!"
 		var/self_msg = "\red Your hand slips, bending [target]'s ribs the wrong way!"
 		user.visible_message(msg, self_msg)
-		var/obj/item/bodypart/chest/BP = target.get_organ("chest")
+		var/obj/item/bodypart/chest/BP = target.get_bodypart("chest")
 		BP.createwound(BRUISE, 20)
 		BP.fracture()
 		if (prob(40))
@@ -151,7 +151,7 @@
 		user.visible_message(msg, self_msg)
 
 		target.op_stage.ribcage = 0
-		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		BP.open = 1
 
 //////////////////////////////////////////////////////////////////
@@ -208,7 +208,7 @@
 			return 0
 
 		var/is_chest_organ_damaged = 0
-		var/obj/item/bodypart/chest/chest = target.get_organ("chest")
+		var/obj/item/bodypart/chest/chest = target.get_bodypart("chest")
 		for(var/obj/item/organ/IO in chest.internal_organs)
 			if(IO.damage > 0)
 				is_chest_organ_damaged = 1
@@ -224,7 +224,7 @@
 				tool_name = "the poultice"
 			else
 				tool_name = "the bandaid"
-		var/obj/item/bodypart/chest/chest = target.get_organ("chest")
+		var/obj/item/bodypart/chest/chest = target.get_bodypart("chest")
 		for(var/obj/item/organ/IO in chest.internal_organs)
 			if(IO && IO.damage > 0)
 				if(IO.robotic < 2)
@@ -246,7 +246,7 @@
 				tool_name = "the poultice"
 			else
 				tool_name = "the bandaid"
-		var/obj/item/bodypart/chest/chest = target.get_organ("chest")
+		var/obj/item/bodypart/chest/chest = target.get_bodypart("chest")
 		for(var/obj/item/organ/IO in chest.internal_organs)
 			if(IO && IO.damage > 0)
 				if(IO.robotic < 2)
@@ -258,7 +258,7 @@
 				IO.damage = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/bodypart/chest/BP = target.get_organ("chest")
+		var/obj/item/bodypart/chest/BP = target.get_bodypart("chest")
 		user.visible_message("\red [user]'s hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!", \
 		"\red Your hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!")
 		var/dam_amt = 2
@@ -294,7 +294,7 @@
 
 		var/is_chest_organ_damaged = 0
 		var/obj/item/organ/heart/heart = target.internal_organs_by_name["heart"]
-		var/obj/item/bodypart/chest/chest = target.get_organ("chest")
+		var/obj/item/bodypart/chest/chest = target.get_bodypart("chest")
 		for(var/obj/item/organ/IO in chest.internal_organs) if(IO.damage > 0)
 			is_chest_organ_damaged = 1
 			break

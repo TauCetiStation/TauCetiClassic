@@ -55,7 +55,7 @@
 			M.update_mutations()
 			M.UpdateAppearance()
 
-		var/obj/item/bodypart/chest/chest = M.get_organ("chest")
+		var/obj/item/bodypart/chest/chest = M.get_bodypart("chest")
 		for(var/obj/item/organ/IO in chest.internal_organs)
 			if(IO.damage > 0)
 				IO.damage -= 0.25
@@ -65,8 +65,8 @@
 		else
 			if(prob(20))
 				if(M.getOxyLoss() < 126) M.adjustOxyLoss(-1)
-				if(M.getBruteLoss() < 126) M.heal_organ_damage(1,0)
-				if(M.getFireLoss() < 126) M.heal_organ_damage(0,1)
+				if(M.getBruteLoss() < 126) M.heal_bodypart_damage(1,0)
+				if(M.getFireLoss() < 126) M.heal_bodypart_damage(0,1)
 				if(M.getToxLoss() < 126) M.adjustToxLoss(-1)
 				if(M.getCloneLoss() < 126) M.adjustCloneLoss(-1)
 			if(M.getBrainLoss()) M.adjustBrainLoss(-0.10)

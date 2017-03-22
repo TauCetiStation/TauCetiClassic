@@ -59,7 +59,7 @@
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
-				var/obj/item/bodypart/BP = H.get_organ(pick("l_leg", "r_leg"))
+				var/obj/item/bodypart/BP = H.get_bodypart(pick("l_leg", "r_leg"))
 				if(BP.status & ORGAN_ROBOT)
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
@@ -118,7 +118,7 @@
 		if(victim.gloves)
 			return 0
 		var/def_zone = pick("l_arm", "r_arm")
-		var/obj/item/bodypart/BP = victim.get_organ(check_zone(def_zone))
+		var/obj/item/bodypart/BP = victim.get_bodypart(check_zone(def_zone))
 		if(!BP)
 			return 0
 		if(BP.status & ORGAN_ROBOT)

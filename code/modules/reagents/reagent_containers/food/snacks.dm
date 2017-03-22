@@ -1563,7 +1563,7 @@
 		surprise.transform *= 0.6
 		surprise.add_blood(M)
 		var/mob/living/carbon/human/H = M
-		var/obj/item/bodypart/BP = H.get_organ("chest")
+		var/obj/item/bodypart/BP = H.get_bodypart("chest")
 		BP.fracture()
 		for (var/obj/item/organ/IO in BP.internal_organs)
 			IO.take_damage(rand(IO.min_bruised_damage, IO.min_broken_damage+1))

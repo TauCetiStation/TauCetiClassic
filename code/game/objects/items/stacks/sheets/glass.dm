@@ -345,7 +345,7 @@
 				return
 
 			if(!H.shoes && (!H.wear_suit || !(H.wear_suit.body_parts_covered & FEET)))
-				var/obj/item/bodypart/BP = H.get_organ(pick("l_leg", "r_leg"))
+				var/obj/item/bodypart/BP = H.get_bodypart(pick("l_leg", "r_leg"))
 				if(BP.status & ORGAN_ROBOT)
 					return
 				H.Weaken(3)

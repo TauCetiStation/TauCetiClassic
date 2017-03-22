@@ -199,7 +199,7 @@
 	/*attack(mob/M, mob/living/user)
 		if ((CLUMSY in user.mutations) && prob(50))
 			to_chat(user, "\red The [src] slips out of your hand and hits your head.")
-			user.take_organ_damage(10)
+			user.take_bodypart_damage(10)
 			user.Paralyse(2)
 			return
 

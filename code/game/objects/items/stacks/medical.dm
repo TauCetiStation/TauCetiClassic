@@ -23,7 +23,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/bodypart/BP = H.get_organ(user.zone_sel.selecting)
+		var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if(BP.display_name == "head")
 			if(H.head && istype(H.head,/obj/item/clothing/head/helmet/space))
@@ -38,7 +38,7 @@
 			to_chat(user, "<span class='warning'>This isn't useful at all on a robotic limb..</span>")
 			return 1
 	else
-		M.heal_organ_damage((heal_brute/2), (heal_burn/2))
+		M.heal_bodypart_damage((heal_brute/2), (heal_burn/2))
 		user.visible_message("<span class='notice'>[M] has been applied with [src] by [user].</span>", \
 							"<span class='notice'>You apply \the [src] to [M].</span>")
 		use(1)
@@ -57,7 +57,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/bodypart/BP = H.get_organ(user.zone_sel.selecting)
+		var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if(BP.open == 0)
 			if(BP.is_bandaged())
@@ -119,7 +119,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/bodypart/BP = H.get_organ(user.zone_sel.selecting)
+		var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if(BP.open == 0)
 			if(BP.is_salved())
@@ -175,7 +175,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/bodypart/BP = H.get_organ(user.zone_sel.selecting)
+		var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if(BP.open == 0)
 			if(BP.is_bandaged() && BP.is_disinfected())
@@ -237,7 +237,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/bodypart/BP = H.get_organ(user.zone_sel.selecting)
+		var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if(BP.open == 0)
 			if(BP.is_salved())
@@ -277,7 +277,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/bodypart/BP = H.get_organ(user.zone_sel.selecting)
+		var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
 		var/limb_name = BP.display_name
 		if(!((BP.name == "l_arm") || (BP.name == "r_arm") || (BP.name == "l_leg") || (BP.name == "r_leg")))
 			to_chat(user, "<span class='danger'>You can't apply a splint there!</span>")

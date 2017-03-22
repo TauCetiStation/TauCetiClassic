@@ -29,7 +29,7 @@
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red You accidentally cut yourself with [src].")
-		user.take_organ_damage(5,5)
+		user.take_bodypart_damage(5,5)
 	active = !active
 	if (active)
 		force = 30
@@ -80,7 +80,7 @@
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, "head")
 		else
-			user.take_organ_damage(2*force)
+			user.take_bodypart_damage(2*force)
 		return
 /*this is already called in ..()
 	src.add_fingerprint(user)
@@ -173,7 +173,7 @@
 				var/mob/living/carbon/human/H = user
 				H.apply_damage(2*force, BRUTE, "head")
 			else
-				user.take_organ_damage(2*force)
+				user.take_bodypart_damage(2*force)
 			return
 		if(..())
 			playsound(src.loc, "swing_hit", 50, 1, -1)
@@ -255,7 +255,7 @@
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red You beat yourself in the head with [src].")
-		user.take_organ_damage(5)
+		user.take_bodypart_damage(5)
 	active = !active
 	if (active)
 		force = 10

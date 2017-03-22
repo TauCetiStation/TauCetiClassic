@@ -438,23 +438,23 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(germ_level >= INFECTION_LEVEL_TWO && antibiotics < 5)
 		//spread the infection to internal organs
-		var/obj/item/organ/target_organ = null	//make internal organs become infected one at a time instead of all at once
+		var/obj/item/organ/target_bodypart = null	//make internal organs become infected one at a time instead of all at once
 		for (var/obj/item/organ/IO in internal_organs)
 			if (IO.germ_level > 0 && IO.germ_level < min(germ_level, INFECTION_LEVEL_TWO))	//once the organ reaches whatever we can give it, or level two, switch to a different one
-				if (!target_organ || IO.germ_level > target_organ.germ_level)	//choose the organ with the highest germ_level
-					target_organ = IO
+				if (!target_bodypart || IO.germ_level > target_bodypart.germ_level)	//choose the organ with the highest germ_level
+					target_bodypart = IO
 
-		if (!target_organ)
+		if (!target_bodypart)
 			//figure out which organs we can spread germs to and pick one at random
 			var/list/candidate_organs = list()
 			for (var/obj/item/organ/IO in internal_organs)
 				if (IO.germ_level < germ_level)
 					candidate_organs += IO
 			if (candidate_organs.len)
-				target_organ = pick(candidate_organs)
+				target_bodypart = pick(candidate_organs)
 
-		if (target_organ)
-			target_organ.germ_level++
+		if (target_bodypart)
+			target_bodypart.germ_level++
 
 		//spread the infection to child and parent organs
 		if (children)

@@ -25,7 +25,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (!hasorgans(target))
 			return
-		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		return ..() && BP.open == 1 && target.op_stage.lipoplasty == 0
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -47,7 +47,7 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cutting [target]'s chest with \the [tool]!" , \
 		"\red Your hand slips, cutting [target]'s chest with \the [tool]!" )
-		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		BP.createwound(CUT, 30)
 
 /datum/surgery_step/lipoplasty/remove_fat
@@ -63,7 +63,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (!hasorgans(target))
 			return
-		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		return ..() && BP.open == 1 &&  target.op_stage.lipoplasty == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -99,5 +99,5 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cutting [target]'s belly with \the [tool]!" , \
 		"\red Your hand slips, cutting [target]'s belly with \the [tool]!" )
-		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		BP.createwound(CUT, 30)

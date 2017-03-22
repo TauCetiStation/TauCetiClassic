@@ -687,10 +687,10 @@
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(H.stat != DEAD)
 					to_chat(H, "\red You go blind!")
-		var/obj/item/bodypart/BP = H.get_organ("head")
+		var/obj/item/bodypart/BP = H.get_bodypart("head")
 		BP.take_damage(7)
 	else
-		M.take_organ_damage(7)
+		M.take_bodypart_damage(7)
 	M.eye_blurry += rand(3,4)
 	return
 

@@ -16,7 +16,7 @@
 				for(var/obj/item/bodypart/BP in H.organs)
 					if(BP && istype(BP))
 						BP.heal_damage(25 * weakness, 25 * weakness)
-				//H:heal_organ_damage(25, 25)
+				//H:heal_bodypart_damage(25, 25)
 				H.vessel.add_reagent("blood",5)
 				H.nutrition += 50 * weakness
 				H.adjustBrainLoss(-25 * weakness)

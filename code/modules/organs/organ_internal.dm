@@ -54,7 +54,7 @@
 				germ_level++
 
 		if (germ_level >= INFECTION_LEVEL_TWO)
-			var/obj/item/bodypart/parent = owner.get_organ(parent_organ)
+			var/obj/item/bodypart/parent = owner.get_bodypart(parent_organ)
 			//spread germs
 			if (antibiotics < 5 && parent.germ_level < germ_level && ( parent.germ_level < INFECTION_LEVEL_ONE*2 || prob(30) ))
 				parent.germ_level++
@@ -68,7 +68,7 @@
 	else
 		src.damage += amount
 
-	var/obj/item/bodypart/parent = owner.get_organ(parent_organ)
+	var/obj/item/bodypart/parent = owner.get_bodypart(parent_organ)
 	if (!silent)
 		owner.custom_pain("Something inside your [parent.display_name] hurts a lot.", 1)
 

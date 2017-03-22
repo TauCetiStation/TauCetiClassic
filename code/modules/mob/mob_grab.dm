@@ -315,7 +315,7 @@
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
-					var/obj/item/bodypart/BP = affecting:get_organ(check_zone(hit_zone))
+					var/obj/item/bodypart/BP = affecting:get_bodypart(check_zone(hit_zone))
 					if(!BP)
 						return
 					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [BP.display_name] into a jointlock!</span>")
@@ -453,7 +453,7 @@
 
 /obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
 
-	var/obj/item/bodypart/BP = H.get_organ(target_zone)
+	var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
 
 	if(!BP || BP.status & ORGAN_DESTROYED)
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")

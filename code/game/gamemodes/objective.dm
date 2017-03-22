@@ -464,7 +464,7 @@ datum/objective/harm
 					already_completed = 1
 					return 1
 
-			var/obj/item/bodypart/head/head = H.get_organ("head")
+			var/obj/item/bodypart/head/head = H.get_bodypart("head")
 			if(head.disfigured)
 				return 1
 		return 0

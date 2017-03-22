@@ -66,7 +66,7 @@
 	if(species) species.handle_death(src)
 
 	//Handle brain slugs.
-	var/obj/item/bodypart/BP = get_organ("head")
+	var/obj/item/bodypart/BP = get_bodypart("head")
 	var/mob/living/simple_animal/borer/B
 
 	for(var/I in BP.implants)

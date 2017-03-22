@@ -203,7 +203,7 @@
 
 	//splints
 	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
-		var/obj/item/bodypart/BP = get_organ(organ)
+		var/obj/item/bodypart/BP = get_bodypart(organ)
 		if(BP && BP.status & ORGAN_SPLINTED)
 			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [BP.display_name]!</span>\n"
 

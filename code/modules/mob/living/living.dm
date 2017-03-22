@@ -387,7 +387,7 @@
 /mob/living/proc/can_inject()
 	return 1
 
-/mob/living/proc/get_organ_target()
+/mob/living/proc/get_bodypart_target()
 	var/mob/shooter = src
 	var/t = shooter:zone_sel.selecting
 	if ((t in list( "eyes", "mouth" )))
@@ -397,13 +397,13 @@
 
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_organ_damage(brute, burn)
+/mob/living/proc/heal_bodypart_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_organ_damage(brute, burn)
+/mob/living/proc/take_bodypart_damage(brute, burn)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
@@ -422,7 +422,7 @@
 	adjustFireLoss(burn)
 	src.updatehealth()
 
-/mob/living/proc/restore_all_organs()
+/mob/living/proc/restore_all_bodyparts()
 	return
 
 
@@ -482,7 +482,7 @@
 		human_mob.restore_blood()
 
 	// fix all of our organs
-	restore_all_organs()
+	restore_all_bodyparts()
 
 	// remove the character from the list of the dead
 	if(stat == DEAD)

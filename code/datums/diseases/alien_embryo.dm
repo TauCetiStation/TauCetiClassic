@@ -64,7 +64,7 @@
 			if(prob(2))
 				to_chat(affected_mob, "\red Your muscles ache.")
 				if(prob(20))
-					affected_mob.take_organ_damage(1)
+					affected_mob.take_bodypart_damage(1)
 			if(prob(2))
 				to_chat(affected_mob, "\red Your stomach hurts.")
 				if(prob(20))

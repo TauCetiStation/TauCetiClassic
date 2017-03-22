@@ -139,7 +139,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/proc/update_bodyparts()
 	remove_overlay(BODYPARTS_LAYER)
 
-	if(!get_organ("chest"))
+	if(!get_bodypart("chest"))
 		return
 
 	var/list/standing = list()
@@ -250,7 +250,7 @@ There are several things that need to be remembered:
 			if( !(r_leg.status & ORGAN_DESTROYED) && !(l_leg.status & ORGAN_DESTROYED) )
 				standing += image(icon = 'icons/mob/human_socks.dmi', icon_state = "socks[socks]_s", layer = -BODY_LAYER)
 
-	var/obj/item/bodypart/BP = get_organ("head")
+	var/obj/item/bodypart/BP = get_bodypart("head")
 	if(BP && !(BP.status & ORGAN_DESTROYED))
 		//Eyes
 		var/image/img_eyes_s = image(icon = 'icons/mob/human_face.dmi', icon_state = species.eyes, layer = -BODY_LAYER)
@@ -273,7 +273,7 @@ There are several things that need to be remembered:
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	var/obj/item/bodypart/head/BP = get_organ("head")
+	var/obj/item/bodypart/head/BP = get_bodypart("head")
 	if(!BP || (BP.status & ORGAN_DESTROYED))
 		return
 

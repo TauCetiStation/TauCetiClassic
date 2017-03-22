@@ -30,7 +30,7 @@
 					G.cell.use(2500)
 					G.update_icon()
 					var/mob/living/carbon/human/target = src
-					var/obj/item/bodypart/BP = get_organ(M.zone_sel.selecting) // We're checking the outside, buddy!
+					var/obj/item/bodypart/BP = get_bodypart(M.zone_sel.selecting) // We're checking the outside, buddy!
 					var/calc_power
 					if((prob(25) && !istype(G, /obj/item/clothing/gloves/yellow)) && (target != M))
 						visible_message("\red <B>[M] accidentally touched \himself with the stun gloves!</B>")
@@ -62,7 +62,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("\red <B>[M] has attempted to punch [src]!</B>")
 				return 0
-			var/obj/item/bodypart/BP = get_organ(ran_zone(M.zone_sel.selecting))
+			var/obj/item/bodypart/BP = get_bodypart(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(BP, "melee")
 
 			if(HULK in M.mutations)			damage += 5
@@ -149,7 +149,7 @@
 				return 0
 
 
-			var/obj/item/bodypart/BP = get_organ(ran_zone(M.zone_sel.selecting))
+			var/obj/item/bodypart/BP = get_bodypart(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(BP, "melee")
 
 			if(HULK in M.mutations)			damage += 5
@@ -176,7 +176,7 @@
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/obj/item/bodypart/BP = get_organ(ran_zone(M.zone_sel.selecting))
+			var/obj/item/bodypart/BP = get_bodypart(ran_zone(M.zone_sel.selecting))
 
 			if(istype(r_hand,/obj/item/weapon/gun) || istype(l_hand,/obj/item/weapon/gun))
 				var/obj/item/weapon/gun/W = null

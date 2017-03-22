@@ -100,7 +100,7 @@
 //This is called when the mob is thrown into a dense turf
 /mob/living/proc/turf_collision(turf/T)
 	visible_message("<span class='warning'>[src] crashed into \the [T]!</span>","<span class='danger'>You are crashed into \the [T]!</span>")
-	take_organ_damage(fly_speed * 5)
+	take_bodypart_damage(fly_speed * 5)
 
 /mob/living/proc/near_wall(direction,distance=1)
 	var/turf/T = get_step(get_turf(src),direction)

@@ -62,7 +62,7 @@
 
 	if (ishuman(M) && M:species.flags[IS_SYNTHETIC])
 		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_organs(1,1)
+		var/list/damaged = H.get_damaged_bodyparts(1,1)
 		user.show_message("\blue Localized Damage, Brute/Electronics:",1)
 		if(length(damaged)>0)
 			for(var/obj/item/bodypart/BP in damaged)

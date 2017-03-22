@@ -63,7 +63,7 @@
 				if(istype(H,/mob/living/carbon/human/))
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 					var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-					var/obj/item/bodypart/BP = H.get_organ(organ_name)
+					var/obj/item/bodypart/BP = H.get_bodypart(organ_name)
 					BP.take_damage(20, 0, 0, 0, "Hulk Foot")
 					BP.fracture()
 					H.Stun(5)
@@ -224,7 +224,7 @@
 						var/mob/living/carbon/human/H = M
 						if(istype(H,/mob/living/carbon/human/))
 							var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-							var/obj/item/bodypart/BP = H.get_organ(organ_name)
+							var/obj/item/bodypart/BP = H.get_bodypart(organ_name)
 							BP.take_damage(20, 0, 0, 0, "Hulk Shoulder")
 							BP.fracture()
 							M.Weaken(5)
@@ -338,7 +338,7 @@
 				if(istype(H,/mob/living/carbon/human/))
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 					var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-					var/obj/item/bodypart/BP = H.get_organ(organ_name)
+					var/obj/item/bodypart/BP = H.get_bodypart(organ_name)
 					if(FAT in usr.mutations)
 						BP.take_damage(100, 0, 0, 0, "Hulk Fat Arm")
 						H.Stun(10)
@@ -456,7 +456,7 @@
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-				var/obj/item/bodypart/BP = H.get_organ(organ_name)
+				var/obj/item/bodypart/BP = H.get_bodypart(organ_name)
 				BP.take_damage(1.5, 0, 0, 0, "Tail")
 			else
 				M.take_overall_damage(1.5, used_weapon = "Tail")

@@ -26,7 +26,7 @@
 		return 2
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
-		var/obj/item/bodypart/BP = get_organ(def_zone) // We're checking the outside, buddy!
+		var/obj/item/bodypart/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
 		if(check_thickmaterial(BP))
 			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
 			P.agony /= 2
@@ -35,7 +35,7 @@
 		return
 
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
-		var/obj/item/bodypart/BP = get_organ(def_zone) // We're checking the outside, buddy!
+		var/obj/item/bodypart/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
 		P.agony *= get_siemens_coefficient_organ(BP)
 		P.stun *= get_siemens_coefficient_organ(BP)
 		P.weaken *= get_siemens_coefficient_organ(BP)
@@ -51,7 +51,7 @@
 		return
 
 	if(istype(P, /obj/item/projectile/energy/bolt))
-		var/obj/item/bodypart/BP = get_organ(def_zone) // We're checking the outside, buddy!
+		var/obj/item/bodypart/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
 		var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes) // What all are we checking?
 		for(var/bp in body_parts) //Make an unregulated var to pass around.
 			if(!bp)
@@ -64,7 +64,7 @@
 						qdel(P)
 						return
 
-		BP = get_organ(check_zone(def_zone))
+		BP = get_bodypart(check_zone(def_zone))
 		var/armorblock = run_armor_check(BP, "energy")
 		apply_damage(P.damage, P.damage_type, BP, armorblock, P, 0, 0)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
@@ -76,7 +76,7 @@
 	if(istype(P, /obj/item/projectile/bullet))
 		var/obj/item/projectile/bullet/B = P
 
-		var/obj/item/bodypart/BP = get_organ(check_zone(def_zone))
+		var/obj/item/bodypart/BP = get_bodypart(check_zone(def_zone))
 		var/armor = getarmor_organ(BP, "bullet")
 
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
@@ -105,7 +105,7 @@
 	if(istype(P, /obj/item/projectile/neurotoxin))
 		var/obj/item/projectile/neurotoxin/B = P
 
-		var/obj/item/bodypart/BP = get_organ(check_zone(def_zone))
+		var/obj/item/bodypart/BP = get_bodypart(check_zone(def_zone))
 		var/armor = getarmor_organ(BP, "bio")
 		if (armor < 100)
 			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
@@ -139,7 +139,7 @@
 	if(def_zone)
 		if(isBODYPART(def_zone))
 			return getarmor_organ(def_zone, type)
-		var/obj/item/bodypart/BP = get_organ(def_zone)
+		var/obj/item/bodypart/BP = get_bodypart(def_zone)
 		return getarmor_organ(BP, type)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
@@ -247,7 +247,7 @@
 		visible_message("<span class='userdanger'>[user] misses [src] with \the [I]!</span>")
 		return 0
 
-	var/obj/item/bodypart/BP = get_organ(target_zone)
+	var/obj/item/bodypart/BP = get_bodypart(target_zone)
 	if (!BP)
 		return 0
 	if(BP.status & ORGAN_DESTROYED)
@@ -366,7 +366,7 @@
 		if ((O.thrower != src) && check_shields(throw_damage, "[O]", get_dir(O,src) ))
 			return
 
-		var/obj/item/bodypart/BP = get_organ(zone)
+		var/obj/item/bodypart/BP = get_bodypart(zone)
 		var/hit_area = BP.display_name
 
 		src.visible_message("<span class='warning'>[src] has been hit in the [hit_area] by [O].</span>")

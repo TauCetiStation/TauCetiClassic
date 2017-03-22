@@ -454,7 +454,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/weapon/cable_coil/attack(mob/M, mob/user)
 	if(hasorgans(M))
 
-		var/obj/item/bodypart/BP = M:get_organ(user.zone_sel.selecting)
+		var/obj/item/bodypart/BP = M:get_bodypart(user.zone_sel.selecting)
 		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 

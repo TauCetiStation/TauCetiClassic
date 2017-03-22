@@ -117,7 +117,7 @@ REAGENT SCANNER
 		user.show_message("\blue Time of Death: [M.tod]")
 	if(istype(M, /mob/living/carbon/human) && mode == 1)
 		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_organs(1,1)
+		var/list/damaged = H.get_damaged_bodyparts(1,1)
 		user.show_message("\blue Localized Damage, Brute/Burn:",1)
 		if(length(damaged)>0)
 			for(var/obj/item/bodypart/BP in damaged)

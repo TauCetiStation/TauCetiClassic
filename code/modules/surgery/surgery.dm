@@ -49,7 +49,7 @@
 
 	// does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
 	proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/bodypart/BP = target.get_organ(target_zone)
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		if (can_infect && BP)
 			spread_germs_to_organ(BP, user)
 		if (ishuman(user) && prob(60))

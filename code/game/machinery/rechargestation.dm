@@ -204,7 +204,7 @@
 			if(R.module)
 				R.module.respawn_consumable(R)
 			if(repairs)
-				R.heal_organ_damage(repairs, repairs - 1)
+				R.heal_bodypart_damage(repairs, repairs - 1)
 			if(!R.cell)
 				return
 			else if(R.cell.charge >= R.cell.maxcharge)

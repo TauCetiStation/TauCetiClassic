@@ -80,7 +80,7 @@
 				H.drip(10)
 				return 1
 	if(ishuman(target))
-		var/obj/item/bodypart/BP = target:get_organ(user.zone_sel.selecting)
+		var/obj/item/bodypart/BP = target:get_bodypart(user.zone_sel.selecting)
 		if(target:check_thickmaterial(BP))
 			to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [user.zone_sel.selecting]!</span>")
 			to_chat(target, "<span class='warning'>You feel a tiny push in your [user.zone_sel.selecting]!</span>")

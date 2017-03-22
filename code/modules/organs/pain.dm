@@ -108,7 +108,7 @@
 	// Damage to internal organs hurts a lot.
 	for(var/obj/item/organ/IO in internal_organs)
 		if(IO.damage > 2) if(prob(2))
-			var/obj/item/bodypart/parent = get_organ(IO.parent_organ)
+			var/obj/item/bodypart/parent = get_bodypart(IO.parent_organ)
 			src.custom_pain("You feel a sharp pain in your [parent.display_name]", 1)
 
 	var/toxDamageMessage = null

@@ -38,7 +38,7 @@
 
 	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
 		for(var/organ_name in list("l_arm", "r_arm"))
-			var/obj/item/bodypart/BP = get_organ(organ_name)
+			var/obj/item/bodypart/BP = get_bodypart(organ_name)
 			if(!BP || (BP.status & ORGAN_DESTROYED))
 				tally += 4
 			else if(BP.status & ORGAN_SPLINTED)
@@ -56,7 +56,7 @@
 			tally += 5.5
 
 		for(var/organ_name in list("l_leg", "r_leg"))
-			var/obj/item/bodypart/BP = get_organ(organ_name)
+			var/obj/item/bodypart/BP = get_bodypart(organ_name)
 			if(!BP || (BP.status & ORGAN_DESTROYED))
 				tally += 4
 			else if(BP.status & ORGAN_SPLINTED)

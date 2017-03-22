@@ -758,7 +758,7 @@ It can still be worn/put on as normal.
 				strip_item = target.legcuffed
 		if("splints")
 			for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
-				var/obj/item/bodypart/BP = target.get_organ(organ)
+				var/obj/item/bodypart/BP = target.get_bodypart(organ)
 				if (BP && BP.status & ORGAN_SPLINTED)
 					var/obj/item/W = new /obj/item/stack/medical/splint(amount=1)
 					BP.status &= ~ORGAN_SPLINTED

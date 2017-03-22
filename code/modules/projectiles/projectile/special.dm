@@ -208,7 +208,7 @@
 /obj/item/projectile/acid_special/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_organ_damage(damage)//+10=30
+		S.take_bodypart_damage(damage)//+10=30
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
@@ -216,7 +216,7 @@
 
 	if(istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = target
-		var/obj/item/bodypart/BP = H.get_organ(def_zone) // We're checking the outside, buddy!
+		var/obj/item/bodypart/BP = H.get_bodypart(def_zone) // We're checking the outside, buddy!
 		var/list/body_parts = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes) // What all are we checking?
 		for(var/bp in body_parts) //Make an unregulated var to pass around.
 			if(istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
@@ -241,7 +241,7 @@
 			else
 				continue //Does this thing we're shooting even exist?
 
-		BP = H.get_organ(check_zone(def_zone))
+		BP = H.get_bodypart(check_zone(def_zone))
 		var/armorblock = H.run_armor_check(BP, "bio")
 		H.apply_damage(damage, damage_type, BP, armorblock, src, 0, 0)
 		H.apply_effects(stun,weaken,0,0,stutter,0,0,armorblock)

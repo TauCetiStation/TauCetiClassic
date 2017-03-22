@@ -50,13 +50,13 @@
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
-					var/organ = H.get_organ("chest")
+					var/organ = H.get_bodypart("chest")
 					if (istype(organ, /obj/item/bodypart))
 						var/obj/item/bodypart/BP = organ
 						BP.take_damage(d, 0)
 					H.updatehealth()
 				else
-					src.take_organ_damage(d)
+					src.take_bodypart_damage(d)
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
 						M.show_message(text("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
@@ -302,7 +302,7 @@
 				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					var/obj/item/bodypart/BP = H.get_organ("head")
+					var/obj/item/bodypart/BP = H.get_bodypart("head")
 					BP.take_damage(5, 0, 0, 0, "Facepalm") // what?.. that guy was insane anyway.
 				else
 					take_overall_damage(5, used_weapon = "Table")
@@ -738,7 +738,7 @@ This function restores the subjects blood to max.
 		var/blood_volume = vessel.get_reagent_amount("blood")
 		vessel.add_reagent("blood",560.0-blood_volume)
 
-/mob/living/carbon/proc/get_organ(zone)
+/mob/living/carbon/proc/get_bodypart(zone)
 	if(!zone)	zone = "chest"
 	if (zone in list( "eyes", "mouth" ))
 		zone = "head"
@@ -809,7 +809,7 @@ This function restores the subjects blood to max.
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/proc/get_face_name()
-	var/obj/item/bodypart/head/BP = get_organ("head")
+	var/obj/item/bodypart/head/BP = get_bodypart("head")
 	if( !BP || BP.disfigured || (BP.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name

@@ -187,14 +187,14 @@
 
 				else
 
-					M.take_organ_damage(power)
+					M.take_bodypart_damage(power)
 					if (prob(33)) // Added blood for whacking non-humans too
 						var/turf/location = M.loc
 						if (istype(location, /turf/simulated))
 							location:add_blood_floor(M)
 			if("fire")
 				if (!(COLD_RESISTANCE in M.mutations))
-					M.take_organ_damage(0, power)
+					M.take_bodypart_damage(0, power)
 					to_chat(M, "Aargh it burns!")
 		M.updatehealth()
 	add_fingerprint(user)

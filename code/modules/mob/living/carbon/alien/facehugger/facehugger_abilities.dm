@@ -167,7 +167,7 @@ This is chestburster mechanic for damaging
 
 	if(ishuman(affecting))
 		var/mob/living/carbon/human/H = affecting
-		var/obj/item/bodypart/chest/BP = H.get_organ("chest")
+		var/obj/item/bodypart/chest/BP = H.get_bodypart("chest")
 		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but organs can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
@@ -323,7 +323,7 @@ This is emryo growth procs
 			if(prob(2))
 				to_chat(affected_mob, "\red Your muscles ache.")
 				if(prob(20))
-					affected_mob.take_organ_damage(1)
+					affected_mob.take_bodypart_damage(1)
 			if(prob(2))
 				to_chat(affected_mob, "\red Your stomach hurts.")
 				if(prob(20))
@@ -431,7 +431,7 @@ This is facehugger Attach procs
 	if(stat == DEAD)
 		return
 	if(!sterile)
-		L.take_organ_damage(strength, 0)
+		L.take_bodypart_damage(strength, 0)
 
 	if(iscarbon(L))
 		var/mob/living/carbon/target = L

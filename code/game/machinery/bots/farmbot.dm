@@ -438,7 +438,7 @@
 			src.visible_message("\red <B>[src] [attackVerb] [human]!</B>")
 			var/damage = 5
 			var/dam_zone = pick("chest", "l_arm", "r_arm", "l_leg", "r_leg")
-			var/obj/item/bodypart/BP = human.get_organ(ran_zone(dam_zone))
+			var/obj/item/bodypart/BP = human.get_bodypart(ran_zone(dam_zone))
 			var/armor = human.run_armor_check(BP, "melee")
 			human.apply_damage(damage,BRUTE,BP,armor,sharp=1,edge=1)
 

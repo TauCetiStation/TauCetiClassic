@@ -66,7 +66,7 @@
 		amount = amount*species.brute_mod
 
 	if (organ_name in organs_by_name)
-		var/obj/item/bodypart/BP = get_organ(organ_name)
+		var/obj/item/bodypart/BP = get_bodypart(organ_name)
 
 		if(amount > 0)
 			BP.take_damage(amount, 0, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
@@ -81,7 +81,7 @@
 		amount = amount*species.burn_mod
 
 	if (organ_name in organs_by_name)
-		var/obj/item/bodypart/BP = get_organ(organ_name)
+		var/obj/item/bodypart/BP = get_bodypart(organ_name)
 
 		if(amount > 0)
 			BP.take_damage(0, amount, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
@@ -150,7 +150,7 @@
 ////////////////////////////////////////////
 
 //Returns a list of damaged organs
-/mob/living/carbon/human/proc/get_damaged_organs(brute, burn)
+/mob/living/carbon/human/proc/get_damaged_bodyparts(brute, burn)
 	var/list/obj/item/bodypart/parts = list()
 	for(var/obj/item/bodypart/BP in organs)
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam))
@@ -158,7 +158,7 @@
 	return parts
 
 //Returns a list of damageable organs
-/mob/living/carbon/human/proc/get_damageable_organs()
+/mob/living/carbon/human/proc/get_damageable_bodyparts()
 	var/list/obj/item/bodypart/parts = list()
 	for(var/obj/item/bodypart/BP in organs)
 		if(BP.brute_dam + BP.burn_dam < BP.max_damage)
@@ -168,8 +168,8 @@
 //Heals ONE external organ, organ gets randomly selected from damaged ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/heal_organ_damage(brute, burn)
-	var/list/obj/item/bodypart/parts = get_damaged_organs(brute,burn)
+/mob/living/carbon/human/heal_bodypart_damage(brute, burn)
+	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn)
 	if(!parts.len)	return
 	var/obj/item/bodypart/BP = pick(parts)
 	if(BP.heal_damage(brute,burn))
@@ -179,8 +179,8 @@
 //Damages ONE external organ, organ gets randomly selected from damagable ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/take_organ_damage(brute, burn, sharp = 0, edge = 0)
-	var/list/obj/item/bodypart/parts = get_damageable_organs()
+/mob/living/carbon/human/take_bodypart_damage(brute, burn, sharp = 0, edge = 0)
+	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
 	if(!parts.len)	return
 	var/obj/item/bodypart/BP = pick(parts)
 	if(BP.take_damage(brute,burn,sharp,edge))
@@ -191,7 +191,7 @@
 
 //Heal MANY external organs, in random order
 /mob/living/carbon/human/heal_overall_damage(brute, burn)
-	var/list/obj/item/bodypart/parts = get_damaged_organs(brute,burn)
+	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn)
 	while(parts.len && (brute>0 || burn>0) )
 		var/obj/item/bodypart/BP = pick(parts)
 		var/brute_was = BP.brute_dam
@@ -208,7 +208,7 @@
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(brute, burn, sharp = 0, edge = 0, used_weapon = null)
 	if(status_flags & GODMODE)	return	//godmode
-	var/list/obj/item/bodypart/parts = get_damageable_organs()
+	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
 	while(parts.len && (brute>0 || burn>0) )
 		var/obj/item/bodypart/BP = pick(parts)
 		var/brute_was = BP.brute_dam
@@ -226,12 +226,12 @@
 /*
 This function restores all organs.
 */
-/mob/living/carbon/human/restore_all_organs()
+/mob/living/carbon/human/restore_all_bodyparts()
 	for(var/obj/item/bodypart/BP in organs)
 		BP.rejuvenate()
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
-	var/obj/item/bodypart/BP = get_organ(zone)
+	var/obj/item/bodypart/BP = get_bodypart(zone)
 	if(istype(BP, /obj/item/bodypart))
 		if(BP.heal_damage(brute, burn))
 			hud_updateflag |= 1 << HEALTH_HUD
@@ -253,7 +253,7 @@ This function restores all organs.
 		BP = def_zone
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
-		BP = get_organ(check_zone(def_zone))
+		BP = get_bodypart(check_zone(def_zone))
 	if(!BP)	return 0
 
 	if(istype(used_weapon, /obj/item/projectile))

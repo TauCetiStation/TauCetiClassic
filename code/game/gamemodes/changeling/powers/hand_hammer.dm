@@ -44,7 +44,7 @@
 		playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/obj/item/bodypart/BP = H.get_organ(user.zone_sel.selecting)
+			var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
 			for(var/obj/item/bodypart/child in BP.children)
 				H.apply_damage(force/2,BRUTE,child.name, H.getarmor(child.name, "melee"))
 			if(BP.parent)
