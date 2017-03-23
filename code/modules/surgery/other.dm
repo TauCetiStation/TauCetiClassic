@@ -16,40 +16,40 @@
 	min_duration = 70
 	max_duration = 90
 
-	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		if(!ishuman(target))
-			return 0
-		if(!hasbodyparts(target))
-			return 0
+/datum/surgery_step/fix_vein/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(!ishuman(target))
+		return 0
+	if(!hasbodyparts(target))
+		return 0
 
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 
-		var/internal_bleeding = 0
-		for(var/datum/wound/W in BP.wounds) if(W.internal)
-			internal_bleeding = 1
-			break
+	var/internal_bleeding = 0
+	for(var/datum/wound/W in BP.wounds) if(W.internal)
+		internal_bleeding = 1
+		break
 
-		return BP.open >= 2 && internal_bleeding
+	return BP.open >= 2 && internal_bleeding
 
-	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		user.visible_message("[user] starts patching the damaged vein in [target]'s [BP.display_name] with \the [tool]." , \
-		"You start patching the damaged vein in [target]'s [BP.display_name] with \the [tool].")
-		target.custom_pain("The pain in [BP.display_name] is unbearable!",1)
-		..()
+/datum/surgery_step/fix_vein/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	user.visible_message("[user] starts patching the damaged vein in [target]'s [BP.display_name] with \the [tool]." , \
+	"You start patching the damaged vein in [target]'s [BP.display_name] with \the [tool].")
+	target.custom_pain("The pain in [BP.display_name] is unbearable!",1)
+	..()
 
-	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		user.visible_message("\blue [user] has patched the damaged vein in [target]'s [BP.display_name] with \the [tool].", \
-			"\blue You have patched the damaged vein in [target]'s [BP.display_name] with \the [tool].")
+/datum/surgery_step/fix_vein/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	user.visible_message("\blue [user] has patched the damaged vein in [target]'s [BP.display_name] with \the [tool].", \
+		"\blue You have patched the damaged vein in [target]'s [BP.display_name] with \the [tool].")
 
-		for(var/datum/wound/W in BP.wounds) if(W.internal)
-			BP.wounds -= W
-			BP.update_damages()
-		if (ishuman(user) && prob(40)) user:bloody_hands(target, 0)
+	for(var/datum/wound/W in BP.wounds) if(W.internal)
+		BP.wounds -= W
+		BP.update_damages()
+	if (ishuman(user) && prob(40)) user:bloody_hands(target, 0)
 
-	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.display_name]!" , \
-		"\red Your hand slips, smearing [tool] in the incision in [target]'s [BP.display_name]!")
-		BP.take_damage(5, 0)
+/datum/surgery_step/fix_vein/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.display_name]!" , \
+	"\red Your hand slips, smearing [tool] in the incision in [target]'s [BP.display_name]!")
+	BP.take_damage(5, 0)
