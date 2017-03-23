@@ -155,7 +155,7 @@ There are several things that need to be remembered:
 	if(species.flags[HAS_SKIN_TONE])
 		icon_key = "[icon_key][s_tone]"
 	if(species.flags[HAS_SKIN_COLOR])
-		icon_key = "[icon_key][r_skin]"
+		icon_key = "[icon_key][r_skin + g_skin + b_skin]"
 
 	//0 = destroyed, 1 = normal, 2 = robotic, 3 = necrotic.
 	for(var/obj/item/bodypart/BP in bodyparts)

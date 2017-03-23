@@ -282,11 +282,13 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.g_facial = g_facial
 	character.b_facial = b_facial
 
-	character.r_skin = r_skin
-	character.g_skin = g_skin
-	character.b_skin = b_skin
+	if(character.species.flags[HAS_SKIN_COLOR])
+		character.r_skin = r_skin
+		character.g_skin = g_skin
+		character.b_skin = b_skin
 
-	character.s_tone = s_tone
+	if(character.species.flags[HAS_SKIN_TONE])
+		character.s_tone = s_tone
 
 	character.h_style = h_style
 	character.f_style = f_style
