@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/area_teleport
 	name = "Area teleport"
 	desc = "This spell teleports you to a type of area of your selection."
-
+	sound = 'sound/magic/Teleport_App.ogg'
 	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
 	var/invocation_area = 1 //if the invocation appends the selected area
 
@@ -10,11 +10,10 @@
 	if(!thearea || !cast_check(1))
 		revert_cast()
 		return
-	invocation(thearea)
-	spawn(0)
-		if(charge_type == "recharge" && recharge)
-			start_recharge()
+	if(charge_type == "recharge" && recharge)
+		INVOKE_ASYNC(src, .proc/start_recharge)
 	cast(targets,thearea)
+	invocation(thearea)
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)
@@ -26,7 +25,7 @@
 		A = pick(teleportlocs)
 
 	var/area/thearea = teleportlocs[A]
-
+	playsound(usr,'sound/magic/Teleport_diss.ogg',100,2)
 	return thearea
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets,area/thearea)
@@ -71,12 +70,14 @@
 	else
 		switch(invocation_type)
 			if("shout")
-				usr.say("[invocation] [uppertext(chosenarea.name)]")
-				if(usr.gender==MALE)
-					playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+				if(prob(50))//Auto-mute? Fuck that noise
+					usr.say(invocation)
 				else
-					playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+					usr.say(replacetext(invocation," ","`"))
 			if("whisper")
-				usr.whisper("[invocation] [uppertext(chosenarea.name)]")
-
-	return
+				if(prob(50))
+					usr.whisper(invocation)
+				else
+					usr.whisper(replacetext(invocation," ","`"))
+		if(sound)
+			playsound(usr,sound, 100, 1)

@@ -15,31 +15,33 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	throwforce = 100
 	density = 1
 	anchored = 1
+	var/z_original = 0
+	var/turf/destination
 
-	Bump(atom/clong)
-		if(istype(clong, /turf/simulated/shuttle)) //Skip shuttles without actually deleting the rod
-			return
+/obj/effect/immovablerod/New(atom/start, atom/end)
+	..()
+	z_original = z
+	destination = get_turf(end)
+	if(end && end.z==z_original)
+		walk_towards(src, destination, 1)
+	QDEL_IN(src,20)
 
-		else if (istype(clong, /turf) && !istype(clong, /turf/unsimulated))
-			if(clong.density)
-				clong.ex_act(2)
-				for (var/mob/O in hearers(src, null))
-					O.show_message("CLANG", 2)
+/obj/effect/immovablerod/Bump(atom/clong)
+	if(istype(clong, /turf/simulated/shuttle)) //Skip shuttles without actually deleting the rod
+		return
+	playsound(src, 'sound/effects/bang.ogg', 50, 1)
+	visible_message("<span class='danger'>CLANG</span>")
+	if((istype(clong, /turf/simulated) || isobj(clong)) && clong.density)
+		clong.ex_act(2)
+	else if(ismob(clong))
+		var/mob/living/M = clong
+		M.adjustBruteLoss(rand(10,40))
+	if(clong && prob(50))
+		x = clong.x
+		y = clong.y
 
-		else if (istype(clong, /obj))
-			if(clong.density)
-				clong.ex_act(2)
-				for (var/mob/O in hearers(src, null))
-					O.show_message("CLANG", 2)
-
-		else if (istype(clong, /mob))
-			if(clong.density || prob(10))
-				clong.meteorhit(src)
-		else
-			qdel(src)
-
-		if(clong && prob(25))
-			src.loc = clong.loc
+/obj/effect/immovablerod/ex_act(severity, target)
+	return 0
 
 /proc/immovablerod()
 	var/startx = 0

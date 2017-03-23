@@ -154,3 +154,16 @@
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "oldwardenhelm"
 	item_state = "helmet"
+
+/obj/item/clothing/head/helmet/roman
+	name = "roman helmet"
+	desc = "An ancient helmet made of bronze and leather."
+	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0, fire = 100, acid = 50)
+	icon_state = "roman"
+	item_state = "roman"
+
+/obj/item/clothing/head/helmet/roman/legionaire
+	name = "roman legionaire helmet"
+	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
+	icon_state = "roman_c"
+	item_state = "roman_c"

@@ -93,6 +93,11 @@
 	siemens_coefficient = 0.9
 	body_parts_covered = HEAD|FACE|EYES
 
+/obj/item/clothing/mask/pig/speechModification(message)
+	if(!canremove)
+		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
+	return message
+
 /obj/item/clothing/mask/horsehead
 	name = "horse head mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
@@ -102,8 +107,28 @@
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
 	w_class = 2
-	var/voicechange = 0
 	siemens_coefficient = 0.9
+
+
+/obj/item/clothing/mask/horsehead/speechModification(message)
+	if(!canremove)
+		message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
+	return message
+
+/obj/item/clothing/mask/cowmask
+	name = "Cowface"
+	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
+	icon_state = "cowmask"
+	item_state = "cowmask"
+	flags = BLOCKHAIR
+	flags_inv = HIDEFACE
+	body_parts_covered = HEAD|FACE|EYES
+	w_class = 2
+
+/obj/item/clothing/mask/cowmask/speechModification(message)
+	if(!canremove)
+		message = pick("Moooooooo!","Moo!","Moooo!")
+	return message
 
 /obj/item/clothing/mask/bandana
 	name = "botany bandana"
