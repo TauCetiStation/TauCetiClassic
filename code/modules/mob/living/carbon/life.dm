@@ -413,7 +413,7 @@
 	return null
 
 /mob/living/carbon/proc/handle_breath(datum/gas_mixture/breath)
-	if(status_flags & GODMODE)
+	if(!species || (status_flags & GODMODE))
 		return
 
 	if(!breath || (breath.total_moles() == 0) || suiciding)
@@ -987,7 +987,8 @@
 		for(var/obj/item/I in src)
 			if(I.contaminated)
 				total_phoronloss += vsc.plc.CONTAMINATION_LOSS
-		if(!(status_flags & GODMODE)) adjustToxLoss(total_phoronloss)
+		if(!(status_flags & GODMODE))
+			adjustToxLoss(total_phoronloss)
 
 	if(status_flags & GODMODE)	return 0	//godmode
 
@@ -1189,11 +1190,8 @@
 			clear_alert("asleep")
 
 		if(embedded_flag && !(life_tick % 10))
-			var/list/E
-			E = get_visible_implants(0)
-			if(!E.len)
+			if(!embedded_needs_process())
 				embedded_flag = 0
-
 
 		//Eyes
 		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own

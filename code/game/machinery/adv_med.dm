@@ -316,9 +316,8 @@
 						var/splint = ""
 						var/internal_bleeding = ""
 						var/lung_ruptured = ""
-						for(var/datum/wound/W in BP.wounds) if(W.internal)
-							internal_bleeding = "<br>Internal bleeding"
-							break
+						if(BP.status & ORGAN_ARTERY_CUT)
+							internal_bleeding = "<br>Arterial bleeding"
 						if(istype(BP, /obj/item/bodypart/chest) && occupant.is_lung_ruptured())
 							lung_ruptured = "Lung ruptured:"
 						if(BP.status & ORGAN_SPLINTED)

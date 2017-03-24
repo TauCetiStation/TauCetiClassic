@@ -1,15 +1,22 @@
 ///////////////////ORGAN DEFINES///////////////////
-#define ORGAN_CUT_AWAY		1
-#define ORGAN_GAUZED 		2
-#define ORGAN_ATTACHABLE 	4
-#define ORGAN_BLEEDING 		8
-#define ORGAN_BROKEN 		32
-#define ORGAN_DESTROYED 	64
-#define ORGAN_ROBOT 		128
-#define ORGAN_SPLINTED 		256
-#define SALVED 				512
-#define ORGAN_DEAD 			1024
-#define ORGAN_MUTATED 		2048
+#define ORGAN_CUT_AWAY   1
+#define ORGAN_ATTACHABLE 2
+#define ORGAN_BLEEDING   4
+#define ORGAN_BROKEN     8
+#define ORGAN_DESTROYED  16
+#define ORGAN_ROBOT      32
+#define ORGAN_SPLINTED   64
+#define ORGAN_DEAD       128
+#define ORGAN_MUTATED    256
+#define ORGAN_ARTERY_CUT 512
+#define ORGAN_TENDON_CUT 1024
+
+// These control the amount of blood lost from burns. The loss is calculated so
+// that dealing just enough burn damage to kill the player will cause the given
+// proportion of their max blood volume to be lost
+// (e.g. 0.6 == 60% lost if 200 burn damage is taken).
+#define FLUIDLOSS_WIDE_BURN 0.6 //for burns from heat applied over a wider area, like from fire
+#define FLUIDLOSS_CONC_BURN 0.4 //for concentrated burns, like from lasers
 
 #define AGE_MIN 25			//youngest a character can be
 #define AGE_MAX 85			//oldest a character can be

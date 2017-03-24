@@ -68,8 +68,6 @@
 									"<span class='notice'>You start treating [M]'s [BP.display_name].</span>")
 				var/used = 0
 				for(var/datum/wound/W in BP.wounds)
-					if(W.internal)
-						continue
 					if(W.bandaged)
 						continue
 					if(used == amount)
@@ -81,7 +79,7 @@
 						user.visible_message("<span class='notice'>\The [user] bandages [W.desc] on [M]'s [BP.display_name].</span>", \
 											"<span class='notice'>You bandage [W.desc] on [M]'s [BP.display_name].</span>")
 						//H.add_side_effect("Itch")
-					else if (istype(W,/datum/wound/bruise))
+					else if (W.damage_type == BRUISE)
 						user.visible_message("<span class='notice'>\The [user] places bruise patch over [W.desc] on [M]'s [BP.display_name].</span>", \
 											"<span class='notice'>You place bruise patch over [W.desc] on [M]'s [BP.display_name].</span>" )
 					else
@@ -186,8 +184,6 @@
 									"<span class='notice'>You start treating [M]'s [BP.display_name].</span>")
 				var/used = 0
 				for(var/datum/wound/W in BP.wounds)
-					if(W.internal)
-						continue
 					if(W.bandaged && W.disinfected)
 						continue
 					if(used == amount)
@@ -198,7 +194,7 @@
 					if(W.current_stage <= W.max_bleeding_stage)
 						user.visible_message("<span class='notice'>\The [user] cleans [W.desc] on [M]'s [BP.display_name] and seals edges with bioglue.</span>", \
 											"<span class='notice'>You clean and seal [W.desc] on [M]'s [BP.display_name].</span>")
-					else if (istype(W,/datum/wound/bruise))
+					else if (W.damage_type == BRUISE)
 						user.visible_message("<span class='notice'>\The [user] places medicine patch over [W.desc] on [M]'s [BP.display_name].</span>", \
 											"<span class='notice'>You place medicine patch over [W.desc] on [M]'s [BP.display_name].</span>")
 					else

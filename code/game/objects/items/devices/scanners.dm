@@ -178,8 +178,8 @@ REAGENT SCANNER
 				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
 				break
 		for(var/obj/item/bodypart/BP in H.bodyparts)
-			for(var/datum/wound/W in BP.wounds) if(W.internal)
-				user.show_message(text("\red Internal bleeding detected. Advanced scanner required for location."), 1)
+			if(BP.status & ORGAN_ARTERY_CUT)
+				user.show_message("\red Arterial bleeding detected. Advanced scanner required for location.", 1)
 				break
 		if(M:vessel)
 			var/blood_volume = round(M:vessel.get_reagent_amount("blood"))

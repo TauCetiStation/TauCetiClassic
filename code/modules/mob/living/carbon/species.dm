@@ -332,6 +332,7 @@
 	,NO_BLOOD = TRUE
 	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
+	,NO_EMBED = TRUE
 	)
 
 	blood_color = "#2299FC"
@@ -483,6 +484,7 @@
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_EMBED = TRUE
 	)
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/C)
@@ -516,6 +518,7 @@
 	,NO_BLOOD = TRUE
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_EMBED = TRUE
 	)
 	burn_mod = 2 //2x burn damage lel
 
@@ -556,7 +559,14 @@
 /datum/species/slime
 	name = S_SLIME
 
+	flags = list(
+	 NO_EMBED = TRUE
+	)
+
 /datum/species/alien
+	flags = list(
+	 NO_EMBED = TRUE
+	)
 
 /datum/species/alien/facehugger
 	name = S_XENO_FACE

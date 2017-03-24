@@ -27,6 +27,9 @@
 	var/list/wounds = list()
 	var/number_wounds = 0 // cache the number of wounds, which is NOT wounds.len!
 
+	var/artery_name = "artery" // Flavour text for cartoid artery, aorta, etc.
+	var/arterial_bleed_severity = 1 // Multiplier for bleeding in a limb.
+
 	var/tmp/perma_injury = 0
 	var/tmp/destspawn = 0 //Has it spawned the broken limb?
 	var/tmp/amputated = 0 //Whether this has been cleanly amputated, thus causing no pain
@@ -56,12 +59,46 @@
 
 	var/limb_layer = 0
 
+	germ_level = 0
+
 /obj/item/bodypart/New(loc, obj/item/bodypart/BP)
 	if(BP)
 		parent = BP
 		if(!parent.children)
 			parent.children = list()
 		parent.children.Add(src)
+	return ..()
+
+/obj/item/bodypart/Destroy()
+	for(var/datum/wound/W in wounds)
+		W.embedded_objects.Cut()
+	wounds.Cut()
+
+	if(parent && parent.children)
+		parent.children -= src
+
+	if(children)
+		for(var/obj/item/bodypart/BP in children)
+			qdel(BP)
+
+	if(organs)
+		for(var/obj/item/organ/O in organs)
+			qdel(O)
+
+	if(owner)
+		owner.bodyparts -= src
+		owner.bodyparts_by_name[name] = null
+		owner.bodyparts_by_name -= name
+		while(null in owner.bodyparts)
+			owner.bodyparts -= null
+		owner = null
+
+	if(autopsy_data)
+		autopsy_data.Cut()
+
+	if(trace_chemicals)
+		trace_chemicals.Cut()
+
 	return ..()
 
 /obj/item/bodypart/proc/get_icon(icon/race_icon, icon/deform_icon)
@@ -248,15 +285,18 @@ This function completely restores a damaged bodypart to perfect condition.
 */
 /obj/item/bodypart/proc/rejuvenate()
 	damage_state = "00"
-	if(status & 128)	//Robotic bodyparts stay robotic.  Fix because right click rejuvinate makes IPC's bodyparts organic.
-		status = 128
+	if(status & ORGAN_ROBOT)	//Robotic bodyparts stay robotic.  Fix because right click rejuvinate makes IPC's bodyparts organic.
+		status = ORGAN_ROBOT
 	else
 		status = 0
+
 	perma_injury = 0
 	brute_dam = 0
 	open = 0
 	burn_dam = 0
 	germ_level = 0
+	for(var/datum/wound/wound in wounds)
+		wound.embedded_objects.Cut()
 	wounds.Cut()
 	number_wounds = 0
 
@@ -267,25 +307,41 @@ This function completely restores a damaged bodypart to perfect condition.
 	// remove embedded objects and drop them on the floor
 	for(var/obj/implanted_object in implants)
 		if(!istype(implanted_object,/obj/item/weapon/implant))	// We don't want to remove REAL implants. Just shrapnel etc.
-			implanted_object.loc = owner.loc
+			implanted_object.loc = get_turf(src)
 			implants -= implanted_object
 
-	owner.updatehealth()
+	if(owner)
+		owner.updatehealth()
 
 
 /obj/item/bodypart/proc/createwound(type = CUT, damage)
-	if(damage == 0) return
+	if(damage == 0)
+		return
 
-	//moved this before the open_wound check so that having many small wounds for example doesn't somehow protect you from taking internal damage
-	//Possibly trigger an internal wound, too.
+	//moved this before the open_wound check so that having many small wounds for example doesn't somehow protect you from taking internal damage (because of the return)
+	//Brute damage can possibly trigger an internal wound, too.
 	var/local_damage = brute_dam + burn_dam + damage
-	if(damage > 15 && type != BURN && local_damage > 30 && prob(damage) && !(status & ORGAN_ROBOT))
-		var/datum/wound/internal_bleeding/I = new (15)
-		wounds += I
-		owner.custom_pain("You feel something rip in your [display_name]!", 1)
+	if( (type in list(CUT, PIERCE, BRUISE)) && damage > 15 && local_damage > 30)
+
+		var/internal_damage
+		if(prob(damage) && sever_artery())
+			internal_damage = TRUE
+		if(internal_damage)
+			owner.custom_pain("You feel something rip in your [display_name]!", 1)
+
+	//Burn damage can cause fluid loss due to blistering and cook-off
+	if( (type in list(BURN, LASER)) && (damage > 5 || damage + burn_dam >= 15) && !(status & ORGAN_ROBOT))
+		var/fluid_loss_severity
+		switch(type)
+			if(BURN)
+				fluid_loss_severity = FLUIDLOSS_WIDE_BURN
+			if(LASER)
+				fluid_loss_severity = FLUIDLOSS_CONC_BURN
+		var/fluid_loss = (damage / (owner.maxHealth - config.health_threshold_dead)) * 560 * fluid_loss_severity
+		owner.remove_blood(fluid_loss)
 
 	// first check whether we can widen an existing wound
-	if(wounds.len > 0 && prob(max(50+(number_wounds-1)*10,90)))
+	if(wounds.len > 0 && prob(max(50 + (number_wounds - 1) * 10, 90)))
 		if((type == CUT || type == BRUISE) && damage >= 5)
 			//we need to make sure that the wound we are going to worsen is compatible with the type of damage...
 			var/list/compatible_wounds = list()
@@ -297,11 +353,15 @@ This function completely restores a damaged bodypart to perfect condition.
 				var/datum/wound/W = pick(compatible_wounds)
 				W.open_wound(damage)
 				if(prob(25))
-					//maybe have a separate message for BRUISE type damage?
-					owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
-					"\red The wound on your [display_name] widens with a nasty ripping voice.",\
-					"You hear a nasty ripping noise, as if flesh is being torn apart.")
-				return
+					if(status & ORGAN_ROBOT)
+						owner.visible_message("<span class='danger'>The damage to [owner.name]'s [name] worsens.</span>",\
+						"<span class='danger'>The damage to your [name] worsens.</span>",\
+						"<span class='danger'>You hear the screech of abused metal.</span>")
+					else
+						owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
+						"\red The wound on your [display_name] widens with a nasty ripping voice.",\
+						"You hear a nasty ripping noise, as if flesh is being torn apart.")
+				return W
 
 	//Creating wound
 	var/wound_type = get_wound_type(type, damage)
@@ -317,6 +377,7 @@ This function completely restores a damaged bodypart to perfect condition.
 				break
 		if(W)
 			wounds += W
+		return W
 
 /****************************************************
 			   PROCESSING & UPDATING
@@ -492,19 +553,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			continue
 			// let the GC handle the deletion of the wound
 
-		// Internal wounds get worse over time. Low temperatures (cryo) stop them.
-		if(W.internal && owner.bodytemperature >= 170)
-			var/bicardose = owner.reagents.get_reagent_amount("bicaridine")
-			var/inaprovaline = owner.reagents.get_reagent_amount("inaprovaline")
-			if(!(W.can_autoheal() || (bicardose && inaprovaline)))	//bicaridine and inaprovaline stop internal wounds from growing bigger with time
-				W.open_wound(0.1 * wound_update_accuracy)
-			if(bicardose >= 30)	//overdose of bicaridine begins healing IB
-				W.damage = max(0, W.damage - 0.2) // Bug: doesn't update W.current_stage
-
-			owner.vessel.remove_reagent("blood",0.05 * W.damage * wound_update_accuracy)
-			if(prob(1 * wound_update_accuracy))
-				owner.custom_pain("You feel a stabbing pain in your [display_name]!",1)
-
 		// slow healing
 		var/heal_amt = 0
 
@@ -540,11 +588,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	status &= ~ORGAN_BLEEDING
 	var/clamped = 0
 	for(var/datum/wound/W in wounds)
-		if (!W.internal)
-			if(W.damage_type == CUT || W.damage_type == BRUISE)
-				brute_dam += W.damage
-			else if(W.damage_type == BURN)
-				burn_dam += W.damage
+		if(W.damage_type == CUT || W.damage_type == BRUISE)
+			brute_dam += W.damage
+		else if(W.damage_type == BURN)
+			burn_dam += W.damage
 
 		if(!(status & ORGAN_ROBOT) && W.bleeding())
 			W.bleed_timer--
@@ -606,14 +653,13 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		BP.setAmputatedTree()
 
 //Handles dismemberment
-/obj/item/bodypart/proc/droplimb(override = 0,no_explode = 0)
-	if(destspawn) return
+/obj/item/bodypart/proc/droplimb(override = 0, no_explode = 0)
+	if(destspawn)
+		return
+
 	if(override)
 		status |= ORGAN_DESTROYED
-	for(var/datum/wound/W in wounds)
-		if(W.internal)
-			wounds -= W
-			update_damages()
+
 	if(status & ORGAN_DESTROYED)
 		if(body_part == UPPER_TORSO)
 			return
@@ -672,6 +718,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 				else
 					bodypart = new /obj/item/weapon/organ/l_leg(owner.loc, owner)
 				owner.u_equip(owner.shoes)
+
 		if(bodypart)
 			destspawn = 1
 			//Robotic limbs explode if sabotaged.
@@ -706,6 +753,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		if(update_icon())
 			owner.UpdateDamageIcon(src)
 
+/obj/item/bodypart/proc/sever_artery()
+	if(!(status & (ORGAN_ARTERY_CUT|ORGAN_ROBOT)) && owner && owner.organs_by_name["heart"])
+		status |= ORGAN_ARTERY_CUT
+		return TRUE
+	return FALSE
+
 /****************************************************
 			   HELPERS
 ****************************************************/
@@ -728,7 +781,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 // checks if all wounds on the bodypart are bandaged
 /obj/item/bodypart/proc/is_bandaged()
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		if(!W.bandaged)
 			return 0
 	return 1
@@ -736,7 +788,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 // checks if all wounds on the bodypart are salved
 /obj/item/bodypart/proc/is_salved()
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		if(!W.salved)
 			return 0
 	return 1
@@ -744,7 +795,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 // checks if all wounds on the bodypart are disinfected
 /obj/item/bodypart/proc/is_disinfected()
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		if(!W.disinfected)
 			return 0
 	return 1
@@ -753,7 +803,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	var/rval = 0
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		rval |= !W.bandaged
 		W.bandaged = 1
 	return rval
@@ -761,7 +810,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/proc/disinfect()
 	var/rval = 0
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		rval |= !W.disinfected
 		W.disinfected = 1
 		W.germ_level = 0
@@ -771,7 +819,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	var/rval = 0
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		rval |= !W.clamped
 		W.clamped = 1
 	return rval
@@ -894,10 +941,27 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			qdel(spark_system)
 
 /obj/item/bodypart/proc/embed(obj/item/weapon/W, silent = 0)
+	if(!owner) //|| loc != owner)
+		return
+	if(owner.species.flags[NO_EMBED])
+		return
 	if(!silent)
 		owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
-	owner.throw_alert("embeddedobject")
+
+	var/datum/wound/supplied_wound
+	for(var/datum/wound/wound in wounds)
+		if((wound.damage_type == CUT || wound.damage_type == PIERCE) && wound.damage >= W.w_class * 5)
+			supplied_wound = wound
+			break
+	if(!supplied_wound)
+		supplied_wound = createwound(PIERCE, W.w_class * 5)
+
+	if(!supplied_wound || (W in supplied_wound.embedded_objects)) // Just in case.
+		return
+
+	supplied_wound.embedded_objects += W
 	implants += W
+	owner.throw_alert("embeddedobject")
 	owner.embedded_flag = 1
 	owner.verbs += /mob/proc/yank_out_object
 	W.add_blood(owner)
@@ -938,6 +1002,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 80
 	min_broken_damage = 35
 	body_part = ARM_LEFT
+	artery_name = "basilic vein"
+	arterial_bleed_severity = 0.75
 
 /obj/item/bodypart/l_arm/process()
 	..()
@@ -951,6 +1017,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 80
 	min_broken_damage = 35
 	body_part = ARM_RIGHT
+	artery_name = "basilic vein"
+	arterial_bleed_severity = 0.75
 
 /obj/item/bodypart/r_arm/process()
 	..()
@@ -965,6 +1033,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	min_broken_damage = 35
 	body_part = LEG_LEFT
 	icon_position = LEFT
+	artery_name = "femoral artery"
+	arterial_bleed_severity = 0.75
 
 /obj/item/bodypart/r_leg
 	name = "r_leg"
@@ -975,6 +1045,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	min_broken_damage = 35
 	body_part = LEG_RIGHT
 	icon_position = RIGHT
+	artery_name = "femoral artery"
+	arterial_bleed_severity = 0.75
 
 /obj/item/bodypart/head
 	name = "head"
@@ -1224,14 +1296,16 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	else if (open)
 		wound_descriptors["an incision"] = 1
 	for(var/datum/wound/W in wounds)
-		if(W.internal && !open) continue // can't see internal wounds
 		var/this_wound_desc = W.desc
 
 		if(W.damage_type == BURN && W.salved)
 			this_wound_desc = "salved [this_wound_desc]"
 
 		if(W.bleeding())
-			this_wound_desc = "bleeding [this_wound_desc]"
+			if(W.wound_damage() > W.bleed_threshold)
+				this_wound_desc = "<b>bleeding</b> [this_wound_desc]"
+			else
+				this_wound_desc = "bleeding [this_wound_desc]"
 		else if(W.bandaged)
 			this_wound_desc = "bandaged [this_wound_desc]"
 

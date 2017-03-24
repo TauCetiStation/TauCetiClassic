@@ -688,7 +688,7 @@
 
 /mob/living/carbon/proc/is_lung_ruptured()
 	var/obj/item/organ/lungs/IO = organs_by_name["lungs"]
-	return IO.is_bruised()
+	return IO && IO.is_bruised()
 
 /mob/living/carbon/proc/rupture_lung()
 	var/obj/item/organ/lungs/IO = organs_by_name["lungs"]
@@ -698,17 +698,22 @@
 		IO.damage = IO.min_bruised_damage
 
 /mob/living/carbon/get_visible_implants(class = 0)
-
 	var/list/visible_implants = list()
 	for(var/obj/item/bodypart/BP in src.bodyparts)
 		for(var/obj/item/weapon/O in BP.implants)
-			if(!istype(O,/obj/item/weapon/implant) && O.w_class > class)
+			if(!istype(O,/obj/item/weapon/implant) && (O.w_class > class)) //&& !istype(O,/obj/item/weapon/shard/shrapnel)) <- Bay12 rebalance, i'l leave that for later ~ZVe.
 				visible_implants += O
 
 	return(visible_implants)
 
-/mob/living/carbon/proc/handle_embedded_objects()
+/mob/living/carbon/human/embedded_needs_process()
+	for(var/obj/item/bodypart/BP in src.bodyparts)
+		for(var/obj/item/O in BP.implants)
+			if(!istype(O, /obj/item/weapon/implant)) //implant type items do not cause embedding effects, see handle_embedded_objects()
+				return TRUE
+	return FALSE
 
+/mob/living/carbon/proc/handle_embedded_objects()
 	for(var/obj/item/bodypart/BP in src.bodyparts)
 		if(BP.status & ORGAN_SPLINTED) //Splints prevent movement.
 			continue

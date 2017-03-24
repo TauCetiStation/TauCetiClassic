@@ -23,13 +23,7 @@
 		return 0
 
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-
-	var/internal_bleeding = 0
-	for(var/datum/wound/W in BP.wounds) if(W.internal)
-		internal_bleeding = 1
-		break
-
-	return BP.open >= 2 && internal_bleeding
+	return BP && (BP.status & ORGAN_ARTERY_CUT) && BP.open >= 2
 
 /datum/surgery_step/fix_vein/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -43,10 +37,9 @@
 	user.visible_message("\blue [user] has patched the damaged vein in [target]'s [BP.display_name] with \the [tool].", \
 		"\blue You have patched the damaged vein in [target]'s [BP.display_name] with \the [tool].")
 
-	for(var/datum/wound/W in BP.wounds) if(W.internal)
-		BP.wounds -= W
-		BP.update_damages()
-	if (ishuman(user) && prob(40)) user:bloody_hands(target, 0)
+	BP.status &= ~ORGAN_ARTERY_CUT
+	if (ishuman(user) && prob(40))
+		user:bloody_hands(target, 0)
 
 /datum/surgery_step/fix_vein/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)

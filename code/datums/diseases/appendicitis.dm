@@ -50,7 +50,7 @@
 			H.op_stage.appendix = 2.0
 
 			var/obj/item/bodypart/BP = H.get_bodypart("groin")
-			var/datum/wound/W = new /datum/wound/internal_bleeding(20)
+			BP.sever_artery()
+			BP.germ_level = max(INFECTION_LEVEL_TWO, BP.germ_level)
 			H.adjustToxLoss(25)
-			BP.wounds += W
 			src.cure()

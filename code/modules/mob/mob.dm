@@ -916,6 +916,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 			visible_implants += O
 	return visible_implants
 
+/mob/proc/embedded_needs_process()
+	return (embedded.len > 0)
+
 mob/proc/yank_out_object()
 	set category = "Object"
 	set name = "Yank out object"
@@ -942,7 +945,7 @@ mob/proc/yank_out_object()
 	if(S == U)
 		self = TRUE // Removing object from yourself.
 
-	valid_objects = get_visible_implants(1)
+	valid_objects = get_visible_implants(0)
 	if(!valid_objects.len)
 		if(self)
 			to_chat(src, "You have nothing stuck in your body that is large enough to remove.")
@@ -971,8 +974,7 @@ mob/proc/yank_out_object()
 		src.verbs -= /mob/proc/yank_out_object
 		clear_alert("embeddedobject")
 
-	if(istype(src, /mob/living/carbon/human))
-
+	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		var/obj/item/bodypart/BP
 
@@ -982,15 +984,21 @@ mob/proc/yank_out_object()
 					BP = bodypart
 
 		BP.implants -= selection
-		H.shock_stage += 10
-		H.bloody_hands(S)
+		for(var/datum/wound/W in BP.wounds)
+			W.embedded_objects -= selection
 
-		if(prob(10)) //I'M SO ANEMIC I COULD JUST -DIE-.
-			var/datum/wound/internal_bleeding/I = new (15)
-			BP.wounds += I
+		H.shock_stage += 20
+		BP.take_damage((selection.w_class * 3), 0, 0, 1, "Embedded object extraction")
+
+		if(prob(selection.w_class * 5) && BP.sever_artery()) //I'M SO ANEMIC I COULD JUST -DIE-.
 			H.custom_pain("Something tears wetly in your [BP] as [selection] is pulled free!", 1)
 
-	selection.loc = get_turf(src)
+		if(ishuman(U))
+			var/mob/living/carbon/human/human_user = U
+			human_user.bloody_hands(H)
+
+	//U.put_in_hands(selection) need to double check this later, i'm afraid of silicons or other mobs.
+	selection.forceMove(get_turf(src))
 
 	for(var/obj/item/weapon/O in pinned)
 		if(O == selection)

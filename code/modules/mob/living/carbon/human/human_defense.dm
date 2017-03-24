@@ -95,11 +95,11 @@
 			else if(force <= 40)
 				apply_effects(B.stoping_power,B.stoping_power,0,0,B.stoping_power,0,0,armor)
 
-		if((P.embed && prob(20 + max(P.damage - armor, -20))) && P.damage_type == BRUTE)
+		if(!species.flags[NO_EMBED] && P.embed && prob(20 + max(P.damage - armor, -20)) && P.damage_type == BRUTE)
 			var/obj/item/weapon/shard/shrapnel/SP = new()
-			(SP.name) = "[P.name] shrapnel"
-			(SP.desc) = "[SP.desc] It looks like it was fired from [P.shot_from]."
-			(SP.loc) = BP
+			SP.name = "[P.name] shrapnel"
+			SP.desc = "[SP.desc] It looks like it was fired from [P.shot_from]."
+			SP.loc = BP
 			BP.embed(SP)
 
 	if(istype(P, /obj/item/projectile/neurotoxin))

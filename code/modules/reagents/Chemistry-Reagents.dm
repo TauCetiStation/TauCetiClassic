@@ -1318,7 +1318,7 @@ datum
 			overdose = 5.1
 			custom_metabolism = 0.07
 			var/heal_time = 0
-			var/obj/item/bodypart/External
+			var/obj/item/bodypart/BP
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1331,21 +1331,18 @@ datum
 					volume += 0.07
 					return
 				H.jitteriness = max(0,H.jitteriness - 100)
-				if(!External)
-					for(var/obj/item/bodypart/E in H.bodyparts) // find a broken/destroyed limb
-						for(var/datum/wound/W in E.wounds) // remove internal
-							if(W.internal)
-								E.wounds -= W
-						if(E.status & ORGAN_DESTROYED)
-							if(E.parent && E.parent.status & ORGAN_DESTROYED)
+				if(!BP)
+					for(var/obj/item/bodypart/bodypart in H.bodyparts) // find a broken/destroyed limb
+						if(bodypart.status & ORGAN_DESTROYED)
+							if(bodypart.parent && bodypart.parent.status & ORGAN_DESTROYED)
 								continue
 							else
 								heal_time = 65
-								External = E
-						else if(E.status & ORGAN_BROKEN || E.status & ORGAN_SPLINTED)
+								BP = bodypart
+						else if(bodypart.status & ORGAN_BROKEN || bodypart.status & ORGAN_SPLINTED)
 							heal_time = 30
-							External = E
-						if(External)
+							BP = bodypart
+						if(BP)
 							break
 				else if(H.bodytemperature >= 170 && H.vessel) // start fixing broken/destroyed limb
 					for(var/datum/reagent/blood/B in H.vessel.reagent_list)
@@ -1355,27 +1352,27 @@ datum
 					H.apply_damages(0,0,1,4,0,5) // 1 toxic, 4 oxy and 5 halloss
 					data++
 					if(data == 1)
-						H.visible_message("<span class='notice'>You see oddly moving in [H]'s [External.display_name]...</span>"
-					 	,"<span class='notice'> You feel strange vibration on tips of your [External.display_name]... </span>")
+						H.visible_message("<span class='notice'>You see oddly moving in [H]'s [BP.display_name]...</span>"
+					 	,"<span class='notice'> You feel strange vibration on tips of your [BP.display_name]... </span>")
 					if(data == 10)
-						H.visible_message("<span class='notice'>You hear sickening crunch In [H]'s [External.display_name]...</span>")
+						H.visible_message("<span class='notice'>You hear sickening crunch In [H]'s [BP.display_name]...</span>")
 					if(data == 20)
-						H.visible_message("<span class='notice'>[H]'s [External.display_name] shortly bends...</span>")
+						H.visible_message("<span class='notice'>[H]'s [BP.display_name] shortly bends...</span>")
 					if(data == 30)
 						if(heal_time == 30)
-							H.visible_message("<span class='notice'>[H] stirs his [External.display_name]...</span>","<span class='userdanger'>You feel freedom in moving your [External.display_name]</span>")
+							H.visible_message("<span class='notice'>[H] stirs his [BP.display_name]...</span>","<span class='userdanger'>You feel freedom in moving your [BP.display_name]</span>")
 						else
-							H.visible_message("<span class='notice'>From [H]'s [External.parent.display_name] grow small meaty sprout...</span>")
+							H.visible_message("<span class='notice'>From [H]'s [BP.parent.display_name] grow small meaty sprout...</span>")
 					if(data == 50)
-						H.visible_message("<span class='notice'>You see something resembling [External.display_name] at [H]'s [External.parent.display_name]...</span>")
+						H.visible_message("<span class='notice'>You see something resembling [BP.display_name] at [H]'s [BP.parent.display_name]...</span>")
 					if(data == 65)
-						H.visible_message("<span class='userdanger'>A new [External.display_name] grown from [H]'s [External.parent.display_name]!</span>","<span class='userdanger'>You feel again your [External.display_name]!</span>")
+						H.visible_message("<span class='userdanger'>A new [BP.display_name] grown from [H]'s [BP.parent.display_name]!</span>","<span class='userdanger'>You feel again your [BP.display_name]!</span>")
 					if(prob(50))
 						H.emote("scream",1,null,1)
 					if(data >= heal_time) // recover organ
-						External.rejuvenate()
+						BP.rejuvenate()
 						data = 0
-						External = null
+						BP = null
 						heal_time = 0
 
 		bicaridine

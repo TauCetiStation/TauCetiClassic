@@ -252,6 +252,8 @@
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()
 	var/list/is_bleeding = list()
+	var/list/shown_objects = list()
+
 	for(var/obj/item/bodypart/BP in bodyparts)
 		if(BP)
 			if(BP.status & ORGAN_DESTROYED)
@@ -282,7 +284,10 @@
 			else if(BP.wounds.len > 0)
 				var/list/wound_descriptors = list()
 				for(var/datum/wound/W in BP.wounds)
-					if(W.internal && !BP.open) continue // can't see internal wounds
+					if(W.embedded_objects.len)
+						shown_objects += W.embedded_objects
+						wound_flavor_text["[BP.name]"] += "The [W.desc] on [t_his] [BP.name] has \a [english_list(W.embedded_objects, and_text = " and \a ", comma_text = ", \a ")] sticking out of it!<br>"
+
 					var/this_wound_desc = W.desc
 					if(W.damage_type == BURN && W.salved) this_wound_desc = "salved [this_wound_desc]"
 					if(W.bleeding()) this_wound_desc = "bleeding [this_wound_desc]"
@@ -375,7 +380,9 @@
 	if(display_gloves)
 		msg += "<span class='warning'><b>[src] has blood running from under [t_his] gloves!</b></span>\n"
 
-	for(var/implant in get_visible_implants(1))
+	for(var/implant in get_visible_implants(0))
+		if(implant in shown_objects)
+			continue
 		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their flesh!</b></span>\n"
 	if(digitalcamo)
 		msg += "<span class='warning'>[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.</span>\n"
