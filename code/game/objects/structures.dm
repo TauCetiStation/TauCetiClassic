@@ -121,7 +121,7 @@
 					BP = H.get_bodypart("head")
 
 			if(BP)
-				to_chat(M, "<span class='red'>You land heavily on your [BP.display_name]!</span>")
+				to_chat(M, "<span class='red'>You land heavily on your [BP.name]!</span>")
 				BP.take_damage(damage, 0)
 				if(BP.parent)
 					BP.parent.add_autopsy_data("Misadventure", damage)

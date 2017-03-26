@@ -122,7 +122,7 @@ REAGENT SCANNER
 		if(length(damaged)>0)
 			for(var/obj/item/bodypart/BP in damaged)
 				user.show_message(text("\blue &emsp; []: [][]\blue - []",	\
-				capitalize(BP.display_name),					\
+				capitalize(BP.name),					\
 				(BP.brute_dam > 0)	?	"\red [BP.brute_dam]"							:0,		\
 				(BP.status & ORGAN_BLEEDING)?"\red <b>\[Bleeding\]</b>":"&emsp;", 		\
 				(BP.burn_dam > 0)	?	"<font color='#FFA500'>[BP.burn_dam]</font>"	:0),1)
@@ -165,7 +165,7 @@ REAGENT SCANNER
 		var/mob/living/carbon/human/H = M
 		for(var/name in H.bodyparts_by_name)
 			var/obj/item/bodypart/BP = H.bodyparts_by_name[name]
-			var/limb = BP.display_name
+			var/limb = BP.name
 			if(BP.status & ORGAN_BROKEN)
 				if(((BP.name == "l_arm") || (BP.name == "r_arm") || (BP.name == "l_leg") || (BP.name == "r_leg")) && (!(BP.status & ORGAN_SPLINTED)))
 					to_chat(user, "\red Unsecured fracture in subject [limb]. Splinting recommended for transport.")

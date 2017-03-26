@@ -122,7 +122,7 @@
 			var/obj/item/bodypart/BP = H.bodyparts_by_name[bodypart]
 			if (!(BP.status & ORGAN_DEAD))
 				BP.status |= ORGAN_DEAD
-				to_chat(H, "<span class='notice'>You can't feel your [BP.display_name] anymore...</span>")
+				to_chat(H, "<span class='notice'>You can't feel your [BP.name] anymore...</span>")
 				for (var/obj/item/bodypart/C in BP.children)
 					C.status |= ORGAN_DEAD
 			H.update_body()

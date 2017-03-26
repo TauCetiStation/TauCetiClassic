@@ -74,7 +74,7 @@
 
 	var/obj/item/bodypart/parent = owner.get_bodypart(parent_bodypart)
 	if (!silent)
-		owner.custom_pain("Something inside your [parent.display_name] hurts a lot.", 1)
+		owner.custom_pain("Something inside your [parent.name] hurts a lot.", 1)
 
 /obj/item/organ/emp_act(severity)
 	switch(robotic)
@@ -160,7 +160,7 @@
 			//Moving around with fractured ribs won't do you any good
 				if (BP.is_broken() && BP.organs && prob(15))
 					var/obj/item/organ/IO = pick(BP.organs)
-					custom_pain("You feel broken bones moving in your [BP.display_name]!", 1)
+					custom_pain("You feel broken bones moving in your [BP.name]!", 1)
 					IO.take_damage(rand(3,5))
 
 				//Moving makes open wounds get infected much faster

@@ -1352,21 +1352,21 @@ datum
 					H.apply_damages(0,0,1,4,0,5) // 1 toxic, 4 oxy and 5 halloss
 					data++
 					if(data == 1)
-						H.visible_message("<span class='notice'>You see oddly moving in [H]'s [BP.display_name]...</span>"
-					 	,"<span class='notice'> You feel strange vibration on tips of your [BP.display_name]... </span>")
+						H.visible_message("<span class='notice'>You see oddly moving in [H]'s [BP.name]...</span>"
+					 	,"<span class='notice'> You feel strange vibration on tips of your [BP.name]... </span>")
 					if(data == 10)
-						H.visible_message("<span class='notice'>You hear sickening crunch In [H]'s [BP.display_name]...</span>")
+						H.visible_message("<span class='notice'>You hear sickening crunch In [H]'s [BP.name]...</span>")
 					if(data == 20)
-						H.visible_message("<span class='notice'>[H]'s [BP.display_name] shortly bends...</span>")
+						H.visible_message("<span class='notice'>[H]'s [BP.name] shortly bends...</span>")
 					if(data == 30)
 						if(heal_time == 30)
-							H.visible_message("<span class='notice'>[H] stirs his [BP.display_name]...</span>","<span class='userdanger'>You feel freedom in moving your [BP.display_name]</span>")
+							H.visible_message("<span class='notice'>[H] stirs his [BP.name]...</span>","<span class='userdanger'>You feel freedom in moving your [BP.name]</span>")
 						else
-							H.visible_message("<span class='notice'>From [H]'s [BP.parent.display_name] grow small meaty sprout...</span>")
+							H.visible_message("<span class='notice'>From [H]'s [BP.parent.name] grow small meaty sprout...</span>")
 					if(data == 50)
-						H.visible_message("<span class='notice'>You see something resembling [BP.display_name] at [H]'s [BP.parent.display_name]...</span>")
+						H.visible_message("<span class='notice'>You see something resembling [BP.name] at [H]'s [BP.parent.name]...</span>")
 					if(data == 65)
-						H.visible_message("<span class='userdanger'>A new [BP.display_name] grown from [H]'s [BP.parent.display_name]!</span>","<span class='userdanger'>You feel again your [BP.display_name]!</span>")
+						H.visible_message("<span class='userdanger'>A new [BP.name] grown from [H]'s [BP.parent.name]!</span>","<span class='userdanger'>You feel again your [BP.name]!</span>")
 					if(prob(50))
 						H.emote("scream",1,null,1)
 					if(data >= heal_time) // recover organ

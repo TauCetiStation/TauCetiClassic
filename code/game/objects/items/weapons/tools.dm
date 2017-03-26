@@ -500,7 +500,7 @@
 
 		if(BP.brute_dam)
 			BP.heal_damage(15,0,0,1)
-			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [BP.display_name] with \the [src].</span>")
+			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [BP.name] with \the [src].</span>")
 			return
 		else
 			to_chat(user, "<span class='info'>Nothing to fix!</span>")

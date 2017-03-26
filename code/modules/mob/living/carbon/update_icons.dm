@@ -78,14 +78,12 @@ There are several things that need to be remembered:
 #define TOTAL_LAYERS			28
 //////////////////////////////////
 //Human BodyParts Overlays Indexes/////
-#define BP_HEAD_LAYER		7
-#define BP_TORSO_LAYER		6
-#define BP_L_ARM_LAYER		5
-#define BP_R_ARM_LAYER		4
-#define BP_GROIN_LAYER		3
-#define BP_L_LEG_LAYER		2
-#define BP_R_LEG_LAYER		1
-#define TOTAL_BP_LAYERS		7
+#define BP_HEAD_LAYER		5
+#define BP_TORSO_LAYER		4
+#define BP_ARM_LAYER		3
+#define BP_GROIN_LAYER		2
+#define BP_LEG_LAYER		1
+#define TOTAL_BP_LAYERS		5
 //////////////////////////////////
 
 /*
@@ -131,7 +129,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/UpdateDamageIcon(obj/item/bodypart/BP)
 	remove_damage_overlay(BP.limb_layer)
 	if(species.damage_mask)
-		var/image/standing = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[BP.icon_name]_[BP.damage_state]", layer = -DAMAGE_LAYER)
+		var/image/standing = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[BP.icon_state]_[BP.damage_state]", layer = -DAMAGE_LAYER)
 		standing.color = species.blood_color
 		overlays_damage[BP.limb_layer]	= standing
 		apply_damage_overlay(BP.limb_layer)

@@ -93,8 +93,8 @@ var/last_chew = 0
 	var/obj/item/bodypart/BP = H.bodyparts_by_name[H.hand ? "l_arm" : "r_arm"]
 	if (!BP) return
 
-	var/s = "\red [H.name] chews on \his [BP.display_name]!"
-	H.visible_message(s, "\red You chew on your [BP.display_name]!")
+	var/s = "\red [H.name] chews on \his [BP.name]!"
+	H.visible_message(s, "\red You chew on your [BP.name]!")
 	H.attack_log += text("\[[time_stamp()]\] <font color='red'>[s] ([H.ckey])</font>")
 	log_attack("[s] ([H.ckey])")
 

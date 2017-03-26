@@ -318,7 +318,7 @@
 					var/obj/item/bodypart/BP = affecting:get_bodypart(check_zone(hit_zone))
 					if(!BP)
 						return
-					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [BP.display_name] into a jointlock!</span>")
+					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [BP.name] into a jointlock!</span>")
 					var/armor = affecting:run_armor_check(affecting, "melee")
 					if(armor < 2)
 						to_chat(affecting, "<span class='danger'>You feel extreme pain!</span>")
@@ -459,7 +459,7 @@
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [BP.display_name] carefully.</span>")
+	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [BP.name] carefully.</span>")
 	if(!do_mob(user,H, 30))
 		to_chat(user, "<span class='notice'>You must stand still to inspect [BP] for wounds.</span>")
 	else if(BP.wounds.len)
@@ -471,10 +471,10 @@
 	if(!do_mob(user, H, 60))
 		to_chat(user, "<span class='notice'>You must stand still to feel [BP] for fractures.</span>")
 	else if(BP.status & ORGAN_BROKEN)
-		to_chat(user, "<span class='warning'>The bone in the [BP.display_name] moves slightly when you poke it!</span>")
-		H.custom_pain("Your [BP.display_name] hurts where it's poked.")
+		to_chat(user, "<span class='warning'>The bone in the [BP.name] moves slightly when you poke it!</span>")
+		H.custom_pain("Your [BP.name] hurts where it's poked.")
 	else
-		to_chat(user, "<span class='notice'>The bones in the [BP.display_name] seem to be fine.</span>")
+		to_chat(user, "<span class='notice'>The bones in the [BP.name] seem to be fine.</span>")
 
 	to_chat(user, "<span class='notice'>Checking skin now...</span>")
 	if(!do_mob(user, H, 30))

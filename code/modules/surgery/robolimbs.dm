@@ -39,22 +39,22 @@
 
 /datum/surgery_step/limb/cut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts cutting away flesh where [target]'s [BP.display_name] used to be with \the [tool].", \
-	"You start cutting away flesh where [target]'s [BP.display_name] used to be with \the [tool].")
+	user.visible_message("[user] starts cutting away flesh where [target]'s [BP.name] used to be with \the [tool].", \
+	"You start cutting away flesh where [target]'s [BP.name] used to be with \the [tool].")
 	..()
 
 /datum/surgery_step/limb/cut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] cuts away flesh where [target]'s [BP.display_name] used to be with \the [tool].",	\
-	"\blue You cut away flesh where [target]'s [BP.display_name] used to be with \the [tool].")
+	user.visible_message("\blue [user] cuts away flesh where [target]'s [BP.name] used to be with \the [tool].",	\
+	"\blue You cut away flesh where [target]'s [BP.name] used to be with \the [tool].")
 	BP.status |= ORGAN_CUT_AWAY
 
 /datum/surgery_step/limb/cut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	if (BP.parent)
 		BP = BP.parent
-		user.visible_message("\red [user]'s hand slips, cutting [target]'s [BP.display_name] open!", \
-		"\red Your hand slips, cutting [target]'s [BP.display_name] open!")
+		user.visible_message("\red [user]'s hand slips, cutting [target]'s [BP.name] open!", \
+		"\red Your hand slips, cutting [target]'s [BP.name] open!")
 		BP.createwound(CUT, 10)
 
 
@@ -75,22 +75,22 @@
 
 /datum/surgery_step/limb/mend/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] is beginning to reposition flesh and nerve endings where where [target]'s [BP.display_name] used to be with [tool].", \
-	"You start repositioning flesh and nerve endings where [target]'s [BP.display_name] used to be with [tool].")
+	user.visible_message("[user] is beginning to reposition flesh and nerve endings where where [target]'s [BP.name] used to be with [tool].", \
+	"You start repositioning flesh and nerve endings where [target]'s [BP.name] used to be with [tool].")
 	..()
 
 /datum/surgery_step/limb/mend/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has finished repositioning flesh and nerve endings where [target]'s [BP.display_name] used to be with [tool].",	\
-	"\blue You have finished repositioning flesh and nerve endings where [target]'s [BP.display_name] used to be with [tool].")
+	user.visible_message("\blue [user] has finished repositioning flesh and nerve endings where [target]'s [BP.name] used to be with [tool].",	\
+	"\blue You have finished repositioning flesh and nerve endings where [target]'s [BP.name] used to be with [tool].")
 	BP.open = 3
 
 /datum/surgery_step/limb/mend/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	if (BP.parent)
 		BP = BP.parent
-		user.visible_message("\red [user]'s hand slips, tearing flesh on [target]'s [BP.display_name]!", \
-		"\red Your hand slips, tearing flesh on [target]'s [BP.display_name]!")
+		user.visible_message("\red [user]'s hand slips, tearing flesh on [target]'s [BP.name]!", \
+		"\red Your hand slips, tearing flesh on [target]'s [BP.name]!")
 		target.apply_damage(10, BRUTE, BP, sharp=1)
 
 
@@ -112,14 +112,14 @@
 
 /datum/surgery_step/limb/prepare/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts adjusting the area around [target]'s [BP.display_name] with \the [tool].", \
-	"You start adjusting the area around [target]'s [BP.display_name] with \the [tool].")
+	user.visible_message("[user] starts adjusting the area around [target]'s [BP.name] with \the [tool].", \
+	"You start adjusting the area around [target]'s [BP.name] with \the [tool].")
 	..()
 
 /datum/surgery_step/limb/prepare/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has finished adjusting the area around [target]'s [BP.display_name] with \the [tool].",	\
-	"\blue You have finished adjusting the area around [target]'s [BP.display_name] with \the [tool].")
+	user.visible_message("\blue [user] has finished adjusting the area around [target]'s [BP.name] with \the [tool].",	\
+	"\blue You have finished adjusting the area around [target]'s [BP.name] with \the [tool].")
 	BP.status |= ORGAN_ATTACHABLE
 	BP.amputated = 1
 	BP.setAmputatedTree()
@@ -129,8 +129,8 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	if (BP.parent)
 		BP = BP.parent
-		user.visible_message("\red [user]'s hand slips, searing [target]'s [BP.display_name]!", \
-		"\red Your hand slips, searing [target]'s [BP.display_name]!")
+		user.visible_message("\red [user]'s hand slips, searing [target]'s [BP.name]!", \
+		"\red Your hand slips, searing [target]'s [BP.name]!")
 		target.apply_damage(10, BURN, BP)
 
 
@@ -151,14 +151,14 @@
 
 /datum/surgery_step/limb/attach/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts attaching \the [tool] where [target]'s [BP.display_name] used to be.", \
-	"You start attaching \the [tool] where [target]'s [BP.display_name] used to be.")
+	user.visible_message("[user] starts attaching \the [tool] where [target]'s [BP.name] used to be.", \
+	"You start attaching \the [tool] where [target]'s [BP.name] used to be.")
 
 /datum/surgery_step/limb/attach/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/robot_parts/L = tool
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has attached \the [tool] where [target]'s [BP.display_name] used to be.",	\
-	"\blue You have attached \the [tool] where [target]'s [BP.display_name] used to be.")
+	user.visible_message("\blue [user] has attached \the [tool] where [target]'s [BP.name] used to be.",	\
+	"\blue You have attached \the [tool] where [target]'s [BP.name] used to be.")
 	BP.germ_level = 0
 	BP.robotize()
 	if(L.sabotaged)
@@ -172,6 +172,6 @@
 
 /datum/surgery_step/limb/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, damaging connectors on [target]'s [BP.display_name]!", \
-	"\red Your hand slips, damaging connectors on [target]'s [BP.display_name]!")
+	user.visible_message("\red [user]'s hand slips, damaging connectors on [target]'s [BP.name]!", \
+	"\red Your hand slips, damaging connectors on [target]'s [BP.name]!")
 	target.apply_damage(10, BRUTE, BP, sharp=1)

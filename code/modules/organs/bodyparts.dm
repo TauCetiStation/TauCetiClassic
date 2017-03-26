@@ -5,16 +5,19 @@
 /mob/living/carbon/var/list/bodyparts_by_name = list() // map bodypart names to bodyparts
 
 /obj/item/bodypart
-	name = "external"
+	name = "limb"
+	desc = "why is it detached..."
+	icon = null // ''
+	icon_state = null // ""
+	layer = BELOW_MOB_LAYER
+
+	var/body_part = null
+	var/limb_layer = 0
 
 	var/mob/living/carbon/owner = null
 	var/list/datum/autopsy_data/autopsy_data = list()
 	var/list/trace_chemicals = list() // traces of chemicals in the bodypart,
 									  // links chemical IDs to number of ticks for which they'll stay in the blood
-
-	var/icon_name = null
-	var/body_part = null
-	var/icon_position = 0
 
 	var/damage_state = "00"
 	var/brute_dam = 0
@@ -23,7 +26,6 @@
 	var/max_size = 0
 	var/last_dam = -1
 
-	var/display_name
 	var/list/wounds = list()
 	var/number_wounds = 0 // cache the number of wounds, which is NOT wounds.len!
 
@@ -56,8 +58,6 @@
 
 	// how often wounds should be updated, a higher number means less often
 	var/wound_update_accuracy = 1
-
-	var/limb_layer = 0
 
 	germ_level = 0
 
@@ -100,9 +100,6 @@
 		trace_chemicals.Cut()
 
 	return ..()
-
-/obj/item/bodypart/proc/get_icon(icon/race_icon, icon/deform_icon)
-	return image(icon = 'icons/mob/human.dmi', icon_state = "blank", layer = -BODYPARTS_LAYER)
 
 /obj/item/bodypart/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
@@ -327,7 +324,7 @@ This function completely restores a damaged bodypart to perfect condition.
 		if(prob(damage) && sever_artery())
 			internal_damage = TRUE
 		if(internal_damage)
-			owner.custom_pain("You feel something rip in your [display_name]!", 1)
+			owner.custom_pain("You feel something rip in your [name]!", 1)
 
 	//Burn damage can cause fluid loss due to blistering and cook-off
 	if( (type in list(BURN, LASER)) && (damage > 5 || damage + burn_dam >= 15) && !(status & ORGAN_ROBOT))
@@ -358,8 +355,8 @@ This function completely restores a damaged bodypart to perfect condition.
 						"<span class='danger'>The damage to your [name] worsens.</span>",\
 						"<span class='danger'>You hear the screech of abused metal.</span>")
 					else
-						owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
-						"\red The wound on your [display_name] widens with a nasty ripping voice.",\
+						owner.visible_message("\red The wound on [owner.name]'s [name] widens with a nasty ripping voice.",\
+						"\red The wound on your [name] widens with a nasty ripping voice.",\
 						"You hear a nasty ripping noise, as if flesh is being torn apart.")
 				return W
 
@@ -534,7 +531,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	if(germ_level >= INFECTION_LEVEL_THREE && antibiotics < 30)	//overdosing is necessary to stop severe infections
 		if (!(status & ORGAN_DEAD))
 			status |= ORGAN_DEAD
-			to_chat(owner, "<span class='notice'>You can't feel your [display_name] anymore...</span>")
+			to_chat(owner, "<span class='notice'>You can't feel your [name] anymore...</span>")
 			owner.update_body()
 
 		germ_level++
@@ -723,8 +720,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			destspawn = 1
 			//Robotic limbs explode if sabotaged.
 			if(status & ORGAN_ROBOT && !no_explode && sabotaged)
-				owner.visible_message("\red \The [owner]'s [display_name] explodes violently!",\
-				"\red <b>Your [display_name] explodes!</b>",\
+				owner.visible_message("\red \The [owner]'s [name] explodes violently!",\
+				"\red <b>Your [name] explodes!</b>",\
 				"You hear an explosion followed by a scream!")
 				explosion(get_turf(owner),-1,-1,2,3)
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -734,8 +731,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 				spawn(10)
 					qdel(spark_system)
 
-			owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.",\
-			"<span class='moderate'><b>Your [display_name] goes flying off!</b></span>",\
+			owner.visible_message("\red [owner.name]'s [name] flies off in an arc.",\
+			"<span class='moderate'><b>Your [name] goes flying off!</b></span>",\
 			"You hear a terrible sound of ripping tendons and flesh.")
 
 			//Throw bodyparts around
@@ -840,7 +837,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 	owner.visible_message(\
 		"\red You hear a loud cracking sound coming from \the [owner].",\
-		"\red <b>Something feels like it shattered in your [display_name]!</b>",\
+		"\red <b>Something feels like it shattered in your [name]!</b>",\
 		"You hear a sickening crack.")
 
 	if(owner.species && !owner.species.flags[NO_PAIN])
@@ -868,7 +865,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			if(isnull(suit.supporting_limbs))
 				return
 
-			to_chat(owner, "You feel \the [suit] constrict about your [display_name], supporting it.")
+			to_chat(owner, "You feel \the [suit] constrict about your [name], supporting it.")
 			status |= ORGAN_SPLINTED
 			suit.supporting_limbs |= src
 	return
@@ -903,14 +900,14 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			return 1
 	return 0
 
-/obj/item/bodypart/get_icon(icon/race_icon, icon/deform_icon, gender="", fat)
+/obj/item/bodypart/proc/get_icon(icon/race_icon, icon/deform_icon, gender="", fat)
 	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags[IS_SYNTHETIC]))
-		return image(icon = 'icons/mob/human_races/robotic.dmi', icon_state = "[icon_name][gender ? "_[gender]" : ""]", layer = -BODYPARTS_LAYER)
+		return image(icon = 'icons/mob/human_races/robotic.dmi', icon_state = "[icon_state][gender ? "_[gender]" : ""]", layer = -BODYPARTS_LAYER)
 
 	if (status & ORGAN_MUTATED)
-		return image(icon = deform_icon, icon_state = "[icon_name][gender ? "_[gender]" : ""][fat ? "_fat" : ""]", layer = -BODYPARTS_LAYER)
+		return image(icon = deform_icon, icon_state = "[icon_state][gender ? "_[gender]" : ""][fat ? "_fat" : ""]", layer = -BODYPARTS_LAYER)
 
-	return image(icon = race_icon, icon_state = "[icon_name][gender ? "_[gender]" : ""][fat ? "_fat" : ""]", layer = -BODYPARTS_LAYER)
+	return image(icon = race_icon, icon_state = "[icon_state][gender ? "_[gender]" : ""][fat ? "_fat" : ""]", layer = -BODYPARTS_LAYER)
 
 /obj/item/bodypart/proc/is_usable()
 	return !(status & (ORGAN_DESTROYED|ORGAN_MUTATED|ORGAN_DEAD))
@@ -976,88 +973,48 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/chest
 	name = "chest"
-	icon_name = "torso"
-	display_name = "chest"
+	icon_state = "torso"
+	w_class = ITEM_SIZE_HUGE
+
+	body_part = UPPER_TORSO
 	limb_layer = BP_TORSO_LAYER
+
 	max_damage = 75
 	min_broken_damage = 40
-	body_part = UPPER_TORSO
+
 	vital = 1
+	artery_name = "aorta"
 
 /obj/item/bodypart/groin
 	name = "groin"
-	icon_name = "groin"
-	display_name = "groin"
+	icon_state = "groin"
+	w_class = ITEM_SIZE_LARGE
+
+	body_part = LOWER_TORSO
 	limb_layer = BP_GROIN_LAYER
+
 	max_damage = 50
 	min_broken_damage = 30
-	body_part = LOWER_TORSO
+
 	vital = 1
-
-/obj/item/bodypart/l_arm
-	name = "l_arm"
-	display_name = "left arm"
-	icon_name = "l_arm"
-	limb_layer = BP_L_ARM_LAYER
-	max_damage = 80
-	min_broken_damage = 35
-	body_part = ARM_LEFT
-	artery_name = "basilic vein"
-	arterial_bleed_severity = 0.75
-
-/obj/item/bodypart/l_arm/process()
-	..()
-	process_grasp(owner.l_hand, "left hand")
-
-/obj/item/bodypart/r_arm
-	name = "r_arm"
-	display_name = "right arm"
-	icon_name = "r_arm"
-	limb_layer = BP_R_ARM_LAYER
-	max_damage = 80
-	min_broken_damage = 35
-	body_part = ARM_RIGHT
-	artery_name = "basilic vein"
-	arterial_bleed_severity = 0.75
-
-/obj/item/bodypart/r_arm/process()
-	..()
-	process_grasp(owner.r_hand, "right hand")
-
-/obj/item/bodypart/l_leg
-	name = "l_leg"
-	display_name = "left leg"
-	icon_name = "l_leg"
-	limb_layer = BP_L_LEG_LAYER
-	max_damage = 80
-	min_broken_damage = 35
-	body_part = LEG_LEFT
-	icon_position = LEFT
-	artery_name = "femoral artery"
-	arterial_bleed_severity = 0.75
-
-/obj/item/bodypart/r_leg
-	name = "r_leg"
-	display_name = "right leg"
-	icon_name = "r_leg"
-	limb_layer = BP_R_LEG_LAYER
-	max_damage = 80
-	min_broken_damage = 35
-	body_part = LEG_RIGHT
-	icon_position = RIGHT
-	artery_name = "femoral artery"
-	arterial_bleed_severity = 0.75
+	artery_name = "iliac artery"
 
 /obj/item/bodypart/head
 	name = "head"
-	icon_name = "head"
-	display_name = "head"
+	icon_state = "head"
+	slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_SMALL
+
+	body_part = HEAD
 	limb_layer = BP_HEAD_LAYER
+
 	max_damage = 75
 	min_broken_damage = 40
-	body_part = HEAD
-	var/disfigured = 0
+
 	vital = 1
+	artery_name = "cartoid artery"
+
+	var/disfigured = 0
 
 /obj/item/bodypart/head/get_icon(icon/race_icon, icon/deform_icon)
 	if (!owner)
@@ -1066,9 +1023,9 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	if(owner.gender == FEMALE)
 		g = "f"
 	if(status & ORGAN_MUTATED)
-		. = image(icon = deform_icon, icon_state = "[icon_name]_[g]", layer = -BODYPARTS_LAYER)
+		. = image(icon = deform_icon, icon_state = "[icon_state]_[g]", layer = -BODYPARTS_LAYER)
 	else
-		. = image(icon = race_icon, icon_state = "[icon_name]_[g]", layer = -BODYPARTS_LAYER)
+		. = image(icon = race_icon, icon_state = "[icon_state]_[g]", layer = -BODYPARTS_LAYER)
 
 /obj/item/bodypart/head/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list())
 	. = ..(brute, burn, sharp, edge, used_weapon, forbidden_limbs)
@@ -1091,6 +1048,70 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		"\red <b>Your face melts off!</b>",	\
 		"\red You hear a sickening sizzle.")
 	disfigured = 1
+
+/obj/item/bodypart/l_arm
+	name = "left arm"
+	icon_state = "l_arm"
+	w_class = ITEM_SIZE_NORMAL
+
+	body_part = ARM_LEFT
+	limb_layer = BP_ARM_LAYER
+
+	max_damage = 80
+	min_broken_damage = 35
+
+	artery_name = "basilic vein"
+	arterial_bleed_severity = 0.75
+
+/obj/item/bodypart/l_arm/process()
+	..()
+	process_grasp(owner.l_hand, "left hand")
+
+/obj/item/bodypart/r_arm
+	name = "right arm"
+	icon_state = "r_arm"
+	w_class = ITEM_SIZE_NORMAL
+
+	body_part = ARM_RIGHT
+	limb_layer = BP_ARM_LAYER
+
+	max_damage = 80
+	min_broken_damage = 35
+
+	artery_name = "basilic vein"
+	arterial_bleed_severity = 0.75
+
+/obj/item/bodypart/r_arm/process()
+	..()
+	process_grasp(owner.r_hand, "right hand")
+
+/obj/item/bodypart/l_leg
+	name = "left leg"
+	icon_state = "l_leg"
+	w_class = ITEM_SIZE_NORMAL
+
+	body_part = LEG_LEFT
+	limb_layer = BP_LEG_LAYER
+
+	max_damage = 80
+	min_broken_damage = 35
+
+	artery_name = "femoral artery"
+	arterial_bleed_severity = 0.75
+
+/obj/item/bodypart/r_leg
+	name = "right leg"
+	icon_state = "r_leg"
+	w_class = ITEM_SIZE_NORMAL
+
+	body_part = LEG_RIGHT
+	limb_layer = BP_LEG_LAYER
+
+	max_damage = 80
+	min_broken_damage = 35
+
+	artery_name = "femoral artery"
+	arterial_bleed_severity = 0.75
 
 /****************************************************
 			   EXTERNAL ORGAN ITEMS

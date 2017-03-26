@@ -358,11 +358,11 @@
 						if(!AN && !open && !infected & !imp)
 							AN = "None:"
 						if(!(BP.status & ORGAN_DESTROYED))
-							dat += "<td>[BP.display_name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
-							storedinfo += "<td>[BP.display_name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
+							dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
+							storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
 						else
-							dat += "<td>[BP.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
-							storedinfo += "<td>[BP.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
+							dat += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
+							storedinfo += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"
 						storedinfo += "</tr>"
 					for(var/obj/item/organ/IO in occupant.organs)

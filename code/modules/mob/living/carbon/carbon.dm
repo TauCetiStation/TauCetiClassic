@@ -106,7 +106,7 @@
 		BP = C.bodyparts_by_name["l_arm"]
 
 	if(BP && !BP.is_usable())
-		to_chat(C, "<span class='rose'>You can't use your [BP.display_name].</span>")
+		to_chat(C, "<span class='rose'>You can't use your [BP.name].</span>")
 		return
 
 	for(var/datum/disease/D in viruses)
@@ -245,7 +245,7 @@
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",BP.display_name,status),1)
+				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",BP.name,status),1)
 			if(H.species && (H.species.name == S_SKELETON) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
@@ -723,11 +723,11 @@
 				var/msg = null
 				switch(rand(1,3))
 					if(1)
-						msg ="<span class='warning'>A spike of pain jolts your [BP.display_name] as you bump [O] inside.</span>"
+						msg ="<span class='warning'>A spike of pain jolts your [BP.name] as you bump [O] inside.</span>"
 					if(2)
-						msg ="<span class='warning'>Your movement jostles [O] in your [BP.display_name] painfully.</span>"
+						msg ="<span class='warning'>Your movement jostles [O] in your [BP.name] painfully.</span>"
 					if(3)
-						msg ="<span class='warning'>[O] in your [BP.display_name] twists painfully as you move.</span>"
+						msg ="<span class='warning'>[O] in your [BP.name] twists painfully as you move.</span>"
 				to_chat(src, msg)
 
 				BP.take_damage(rand(1,3), 0, 0)

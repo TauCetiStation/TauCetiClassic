@@ -51,8 +51,8 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	if (BP.parent)
 		BP = BP.parent
-		user.visible_message("\red [user]'s hand slips, ripping [target]'s [BP.display_name] open!", \
-		"\red Your hand slips,  ripping [target]'s [BP.display_name] open!")
+		user.visible_message("\red [user]'s hand slips, ripping [target]'s [BP.name] open!", \
+		"\red Your hand slips,  ripping [target]'s [BP.name] open!")
 		BP.createwound(CUT, 10)
 
 
@@ -73,7 +73,7 @@
 /datum/surgery_step/head/shape/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] is beginning to reshape [target]'s esophagal and vocal region with \the [tool].", \
-	"You start to reshape [target]'s [BP.display_name] esophagal and vocal region with \the [tool].")
+	"You start to reshape [target]'s [BP.name] esophagal and vocal region with \the [tool].")
 	..()
 
 /datum/surgery_step/head/shape/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -160,7 +160,7 @@
 	if (BP.parent)
 		BP = BP.parent
 		user.visible_message("\red [user]'s hand slips, searing [target]'s neck!", \
-		"\red Your hand slips, searing [target]'s [BP.display_name]!")
+		"\red Your hand slips, searing [target]'s [BP.name]!")
 		target.apply_damage(10, BURN, BP)
 
 

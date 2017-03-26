@@ -30,22 +30,22 @@
 			return 0
 		if(M != user)
 			M.visible_message( \
-				"\red [user] is beginning to attach \the [src] where [H]'s [BP.display_name] used to be.", \
-				"\red [user] begins to attach \the [src] where your [BP.display_name] used to be.")
+				"\red [user] is beginning to attach \the [src] where [H]'s [BP.name] used to be.", \
+				"\red [user] begins to attach \the [src] where your [BP.name] used to be.")
 		else
 			M.visible_message( \
-				"\red [user] begins to attach a robotic limb where \his [BP.display_name] used to be with [src].", \
-				"\red You begin to attach \the [src] where your [BP.display_name] used to be.")
+				"\red [user] begins to attach a robotic limb where \his [BP.name] used to be with [src].", \
+				"\red You begin to attach \the [src] where your [BP.name] used to be.")
 
 		if(do_mob(user, H, 100))
 			if(M != user)
 				M.visible_message( \
-					"\red [user] finishes attaching [H]'s new [BP.display_name].", \
-					"\red [user] finishes attaching your new [BP.display_name].")
+					"\red [user] finishes attaching [H]'s new [BP.name].", \
+					"\red [user] finishes attaching your new [BP.name].")
 			else
 				M.visible_message( \
-					"\red [user] finishes attaching \his new [BP.display_name].", \
-					"\red You finish attaching your new [BP.display_name].")
+					"\red [user] finishes attaching \his new [BP.name].", \
+					"\red You finish attaching your new [BP.name].")
 
 			if(H == user && prob(25))
 				to_chat(user, "\red You mess up!")

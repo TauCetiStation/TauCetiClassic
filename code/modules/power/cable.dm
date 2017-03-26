@@ -468,7 +468,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		if(BP.burn_dam > 0)
 			if(use(1))
 				BP.heal_damage(0,15,0,1)
-				user.visible_message("\red \The [user] repairs some burn damage on \the [M]'s [BP.display_name] with \the [src].")
+				user.visible_message("\red \The [user] repairs some burn damage on \the [M]'s [BP.name] with \the [src].")
 				return
 			else
 				to_chat(user, "Need more cable!")

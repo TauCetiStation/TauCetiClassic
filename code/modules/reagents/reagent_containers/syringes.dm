@@ -246,9 +246,9 @@
 		if (!BP)
 			return
 		if(BP.status & ORGAN_DESTROYED)
-			to_chat(user, "What [BP.display_name]?")
+			to_chat(user, "What [BP.name]?")
 			return
-		var/hit_area = BP.display_name
+		var/hit_area = BP.name
 
 		if((user != H) && H.check_shields(7, "the [src.name]", get_dir(user,target)))
 			return

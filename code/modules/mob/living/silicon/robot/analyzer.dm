@@ -67,7 +67,7 @@
 		if(length(damaged)>0)
 			for(var/obj/item/bodypart/BP in damaged)
 				user.show_message(text("\blue &emsp; []: [] - []",	\
-				capitalize(BP.display_name),					\
+				capitalize(BP.name),					\
 				(BP.brute_dam > 0)	?	"\red [BP.brute_dam]"							:0,		\
 				(BP.burn_dam > 0)	?	"<font color='#FFA500'>[BP.burn_dam]</font>"	:0),1)
 		else

@@ -130,21 +130,21 @@
 			if (candidates.len)
 				var/obj/item/bodypart/BP = pick(candidates)
 				BP.mutate()
-				to_chat(src, "<span class = 'notice'>Something is not right with your [BP.display_name]...</span>")
+				to_chat(src, "<span class = 'notice'>Something is not right with your [BP.name]...</span>")
 				return
 	else
 		if (prob(heal_prob))
 			for (var/obj/item/bodypart/BP in bodyparts)
 				if (BP.status & ORGAN_MUTATED)
 					BP.unmutate()
-					to_chat(src, "<span class = 'notice'>Your [BP.display_name] is shaped normally again.</span>")
+					to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
 					return
 
 	if (getCloneLoss() < 1)
 		for (var/obj/item/bodypart/BP in bodyparts)
 			if (BP.status & ORGAN_MUTATED)
 				BP.unmutate()
-				to_chat(src, "<span class = 'notice'>Your [BP.display_name] is shaped normally again.</span>")
+				to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
 	hud_updateflag |= 1 << HEALTH_HUD
 
 ////////////////////////////////////////////

@@ -145,7 +145,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				if(bleed_amount)
 					if(open_wound)
 						blood_max += bleed_amount
-						do_spray += "the [BP.artery_name] in \the [src]'s [BP.display_name]"
+						do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
 					else
 						src.vessel.remove_reagent("blood", bleed_amount)
 

@@ -251,9 +251,9 @@
 	if (!BP)
 		return 0
 	if(BP.status & ORGAN_DESTROYED)
-		to_chat(user, "What [BP.display_name]?")
+		to_chat(user, "What [BP.name]?")
 		return 0
-	var/hit_area = BP.display_name
+	var/hit_area = BP.name
 
 	if(user != src)
 		user.do_attack_animation(src)
@@ -265,9 +265,9 @@
 			to_chat(user, "<span class='userdanger'>That limb isn't robotic.</span>")
 			return
 		if(BP.sabotaged)
-			to_chat(user, "<span class='userdanger'>[src]'s [BP.display_name] is already sabotaged!</span>")
+			to_chat(user, "<span class='userdanger'>[src]'s [BP.name] is already sabotaged!</span>")
 		else
-			to_chat(user, "<span class='userdanger'>You sneakily slide [I] into the dataport on [src]'s [BP.display_name] and short out the safeties.</span>")
+			to_chat(user, "<span class='userdanger'>You sneakily slide [I] into the dataport on [src]'s [BP.name] and short out the safeties.</span>")
 			var/obj/item/weapon/card/emag/emag = I
 			emag.uses--
 			BP.sabotaged = 1
@@ -367,7 +367,7 @@
 			return
 
 		var/obj/item/bodypart/BP = get_bodypart(zone)
-		var/hit_area = BP.display_name
+		var/hit_area = BP.name
 
 		src.visible_message("<span class='warning'>[src] has been hit in the [hit_area] by [O].</span>")
 		var/armor = run_armor_check(BP, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess "melee" is the best fit here

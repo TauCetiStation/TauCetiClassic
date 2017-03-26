@@ -7,7 +7,7 @@
 	if (M.hand)
 		r_arm = M:bodyparts_by_name["l_arm"]
 	if(r_arm && !r_arm.is_usable())
-		to_chat(M, "\red You can't use your [r_arm.display_name].")
+		to_chat(M, "\red You can't use your [r_arm.name].")
 		return
 
 	..()

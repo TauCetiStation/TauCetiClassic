@@ -64,9 +64,9 @@
 
 		if(!D.bodyparts_scanned[BP.name])
 			if(D.bodypart_names == "")
-				D.bodypart_names = BP.display_name
+				D.bodypart_names = BP.name
 			else
-				D.bodypart_names += ", [BP.display_name]"
+				D.bodypart_names += ", [BP.name]"
 
 		qdel(D.bodyparts_scanned[BP.name])
 		D.bodyparts_scanned[BP.name] = W.copy()
@@ -200,7 +200,7 @@
 		to_chat(usr, "<b>You have to cut the limb open first!</b>")
 		return
 	for(var/mob/O in viewers(M))
-		O.show_message("\red [user.name] scans the wounds on [M.name]'s [BP.display_name] with \the [src.name]", 1)
+		O.show_message("\red [user.name] scans the wounds on [M.name]'s [BP.name] with \the [src.name]", 1)
 
 	src.add_data(BP)
 
