@@ -91,7 +91,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/container_resist(mob/user)
 	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
-	//audible_message("<span class='notice'>You hear a thump from [src].</span>")
+	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300, target = src))
 		if(occupant == user) // Check they're still here.
 			open_machine()
@@ -355,4 +355,3 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/can_crawl_through()
 	return //can't ventcrawl in or out of cryo.
-
