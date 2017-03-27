@@ -728,18 +728,23 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	return 1 //we applied blood to the item
 
+var/list/items_blood_overlay_by_type = list()
 /obj/item/proc/generate_blood_overlay()
 	if(blood_overlay)
 		return
 
-	var/icon/I = new /icon(icon, icon_state)
-	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
-	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-
-	//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
-	for(var/obj/item/A in world)
-		if(A.type == type && !A.blood_overlay)
-			A.blood_overlay = image(I)
+	// TODO: proper implementation of this without blend if possible.
+	// At least this removes heavy CPU load and makes it cost smt like (self: 0.000 | calls: 3) instead of (self: 0.090 | calls: 3) with old code that uses for(A in world).
+	var/image/img = items_blood_overlay_by_type[src.type]
+	if(img)
+		blood_overlay = img
+	else
+		var/icon/I = new /icon(icon, icon_state)
+		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
+		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+		img = image("icon" = I)
+		items_blood_overlay_by_type[src.type] = img
+		blood_overlay = img
 
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))
