@@ -133,7 +133,8 @@ var/specops_shuttle_timeleft = 0
 	specops_shuttle_moving_to_centcom = 0
 
 	specops_shuttle_at_station = 1
-	if (specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
+	if (specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom)
+		return
 
 	if (!specops_can_move())
 		to_chat(usr, "\red The Special Operations shuttle is unable to leave.")

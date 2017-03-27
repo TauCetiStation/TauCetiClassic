@@ -211,7 +211,8 @@
 /obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
-	if(!frequency) return
+	if(!frequency)
+		return
 
 	var/datum/signal/status_signal = new
 	status_signal.source = src
@@ -224,11 +225,21 @@
 			status_signal.data["msg2"] = data2
 			if(loc)
 				var/obj/item/PDA = loc
-				var/mob/user = PDA.fingerprintslast
+				var/mob/user = null
 				if(istype(PDA.loc,/mob/living))
-					name = PDA.loc
-				log_admin("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
-				message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+					user = PDA.loc
+				else if(PDA.fingerprintslast)
+					var/client/user_client = directory[PDA.fingerprintslast]
+					if(user_client && user_client.mob)
+						user = user_client.mob
+
+				if(user)
+					log_admin("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
+					message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2] [ADMIN_FLW(user)]")
+				else
+					var/turf/PDA_turf = get_turf(PDA)
+					log_admin("STATUS: UNKNOWN set status screen with [PDA]. Message: [data1] [data2]")
+					message_admins("STATUS: UNKNOWN set status screen with [PDA]. Message: [data1] [data2] [PDA.loc ? "[ADMIN_JMP(PDA_turf)]" : ""] ")
 
 		if("alert")
 			status_signal.data["picture_state"] = data1

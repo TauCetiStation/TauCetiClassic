@@ -6,7 +6,7 @@ var/datum/subsystem/ticker/ticker
 	name = "Ticker"
 
 	priority = SS_PRIORITY_TICKER
-	
+
 	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING
 
 	var/const/restart_timeout = 600
@@ -463,7 +463,7 @@ var/datum/subsystem/ticker/ticker
 			ai_completions += "<BR>[robo.write_laws()]"
 
 		if(dronecount)
-			to_chat(ai_completions, "<B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>")
+			ai_completions += "<B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
 
 		ai_completions += "<HR>"
 

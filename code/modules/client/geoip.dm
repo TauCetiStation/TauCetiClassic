@@ -25,6 +25,9 @@ var/global/list/geoip_ckey_updated = list()
 	if(!try_update_geoip(C, addr))
 		return
 
+	if(!C)
+		return
+
 	if(status == "updated")
 		if(proxy == "true")
 			var/reason = "No proxy allowed"
