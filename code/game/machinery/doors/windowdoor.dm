@@ -57,7 +57,7 @@
 		new /obj/item/weapon/shard(src.loc)
 		new /obj/item/weapon/shard(src.loc)
 		new /obj/item/stack/rods(src.loc, 2)
-		new /obj/item/weapon/cable_coil(src.loc, 2)
+		new /obj/item/weapon/cable_coil/red(src.loc, 2)
 		var/obj/item/weapon/airlock_electronics/ae
 		if(!electronics)
 			ae = new/obj/item/weapon/airlock_electronics( src.loc )

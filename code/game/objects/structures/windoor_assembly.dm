@@ -160,7 +160,7 @@ obj/structure/windoor_assembly/Destroy()
 						return
 
 					to_chat(user, "\blue You cut the windoor wires.!")
-					new/obj/item/weapon/cable_coil(get_turf(user), 1)
+					new /obj/item/weapon/cable_coil/random(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)
 						src.name = "Secure Anchored Windoor Assembly"
