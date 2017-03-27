@@ -172,6 +172,27 @@
 				return
 		edit_admin_permissions()
 
+	else if(href_list["whitelist"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/target_ckey = ckey(href_list["ckey"])
+		var/task = href_list["whitelist"]
+		if(!task)
+			return
+		var/role = href_list["role"]
+
+		switch(task)
+			if("add_user")
+				whitelist_add_user()
+			if("add_role")
+				whitelist_add_role(target_ckey)
+			if("showroles")
+				whitelist_view(target_ckey)
+			if("edit_ban")
+				whitelist_edit(target_ckey, role, ban_edit = TRUE)
+			if("edit_reason")
+				whitelist_edit(target_ckey, role)
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
