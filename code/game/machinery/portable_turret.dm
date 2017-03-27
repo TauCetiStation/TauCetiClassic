@@ -663,6 +663,7 @@ var/list/turret_icons
 	A.original = target
 	A.current = T
 	A.starting = T
+	A.fake = TRUE
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	A.process()
