@@ -179,6 +179,7 @@
 			if(istype(M))
 				if(ishuman(A))
 					M = check_living_shield(A)
+					A = M
 
 				if(silenced)
 					to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")

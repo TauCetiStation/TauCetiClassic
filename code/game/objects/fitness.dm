@@ -8,7 +8,8 @@
 
 /obj/structure/stacklifter/attack_hand(mob/user)
 	var/mob/living/carbon/human/gymnast = user
-
+	if(!istype(gymnast) || gymnast.lying)
+		return
 	if(in_use)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
@@ -53,7 +54,8 @@
 
 /obj/structure/weightlifter/attack_hand(mob/user)
 	var/mob/living/carbon/human/gymnast = user
-
+	if(!istype(gymnast) || gymnast.lying)
+		return
 	if(in_use)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
