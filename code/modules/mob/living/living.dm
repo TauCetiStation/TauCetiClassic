@@ -510,10 +510,6 @@
 	hud_updateflag |= 1 << HEALTH_HUD
 	hud_updateflag |= 1 << STATUS_HUD
 
-/mob/living/proc/UpdateDamageIcon()
-	return
-
-
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
 	set category = "OOC"

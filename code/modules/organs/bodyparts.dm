@@ -12,7 +12,9 @@
 	layer = BELOW_MOB_LAYER
 
 	var/body_part = null
+	var/body_zone = null
 	var/limb_layer = 0
+	var/limb_layer_priority = 0 //chest and groin must be drawn under arms, head and legs.
 
 	var/mob/living/carbon/owner = null
 	var/list/datum/autopsy_data/autopsy_data = list()
@@ -100,6 +102,72 @@
 		trace_chemicals.Cut()
 
 	return ..()
+
+/obj/item/bodypart/proc/update_limb()
+	if(!owner)
+		return
+
+	if(status & (ORGAN_DESTROYED|ORGAN_CUT_AWAY)) // TODO REMOVE THIS OR VISUAL GLITCHES WILL HUNT (no limb - should mean NO LIMB, not ORGAN_DESTROYED)
+		icon_state = ""
+		overlays.Cut()
+		return
+
+	var/has_gender = TRUE
+	var/has_color = TRUE
+
+	if(owner.species.flags[IS_SYNTHETIC]) // TODO: bodyparts for this and ROBOT.
+		icon = owner.species.icobase
+		has_gender = FALSE
+		has_color = FALSE
+	else if(status & ORGAN_ROBOT)
+		icon = 'icons/mob/human_races/robotic.dmi'
+		has_gender = FALSE
+		has_color = FALSE
+	else if(status & ORGAN_MUTATED)
+		icon = owner.species.deform
+	else
+		icon = owner.species.icobase
+
+	if(has_gender)
+		var/g = (owner.gender == FEMALE ? "_f" : "_m")
+		switch(name)
+			if("chest")
+				icon_state = body_zone + g
+				if(FAT in owner.mutations)
+					icon_state += "_fat"
+			if("groin", "head")
+				icon_state = body_zone + g
+			else
+				icon_state = body_zone
+	else
+		icon_state = body_zone
+
+	if(has_color)
+		if(HUSK in owner.mutations) // !REMINDER! reimplement husk properly. // Implement assoc list later.
+			color = list(0.37,0.37,0.37, 0.34,0.34,0.34, 0.31,0.31,0.31, 0,0,0)
+		else if(status & ORGAN_DEAD)
+			color = list(0.03,0,0, 0,0.2,0, 0,0,0, 0.3,0.3,0.3)
+		else if(HULK in owner.mutations)
+			color = list(0.18,0,0, 0,0.87,0, 0,0,0.15, 0,0,0)
+		else
+			if(owner.species.flags[HAS_SKIN_TONE])
+				color = list(1,0,0, 0,1,0, 0,0,1, owner.s_tone/255,owner.s_tone/255,owner.s_tone/255)
+			if(owner.species.flags[HAS_SKIN_COLOR])
+				color = list(1,0,0, 0,1,0, 0,0,1, owner.r_skin/255,owner.g_skin/255,owner.b_skin/255)
+	else
+		color = null
+
+	// Damage overlays
+	if( (status & (ORGAN_DESTROYED|ORGAN_CUT_AWAY|ORGAN_ROBOT)) || damage_state == "00")
+		return
+
+	overlays.Cut()
+	var/image/damage_overlay = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[body_zone]_[damage_state]", layer = -DAMAGE_LAYER + limb_layer_priority)
+	damage_overlay.color = owner.species.blood_color
+	overlays += damage_overlay
+
+/obj/item/bodypart/proc/get_icon()
+	return image(icon = src, layer = -BODYPARTS_LAYER + limb_layer_priority)
 
 /obj/item/bodypart/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
@@ -246,7 +314,7 @@
 
 	var/result = update_icon()
 	if(result)
-		owner.UpdateDamageIcon(src)
+		owner.update_bodypart(src)
 	return result
 
 /obj/item/bodypart/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
@@ -274,7 +342,7 @@
 
 	var/result = update_icon()
 	if(result)
-		owner.UpdateDamageIcon(src)
+		owner.update_bodypart(src)
 	return result
 
 /*
@@ -575,7 +643,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	// sync the bodypart's damage with its wounds
 	src.update_damages()
 	if(update_icon())
-		owner.UpdateDamageIcon(src)
+		owner.update_bodypart(src)
 
 //Updates brute_damn and burn_damn from wound damages. Updates BLEEDING status.
 /obj/item/bodypart/proc/update_damages()
@@ -748,7 +816,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 				owner.death()
 
 		if(update_icon())
-			owner.UpdateDamageIcon(src)
+			owner.update_bodypart(src)
 
 /obj/item/bodypart/proc/sever_artery()
 	if(!(status & (ORGAN_ARTERY_CUT|ORGAN_ROBOT)) && owner && owner.organs_by_name["heart"])
@@ -900,15 +968,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			return 1
 	return 0
 
-/obj/item/bodypart/proc/get_icon(icon/race_icon, icon/deform_icon, gender="", fat)
-	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags[IS_SYNTHETIC]))
-		return image(icon = 'icons/mob/human_races/robotic.dmi', icon_state = "[icon_state][gender ? "_[gender]" : ""]", layer = -BODYPARTS_LAYER)
-
-	if (status & ORGAN_MUTATED)
-		return image(icon = deform_icon, icon_state = "[icon_state][gender ? "_[gender]" : ""][fat ? "_fat" : ""]", layer = -BODYPARTS_LAYER)
-
-	return image(icon = race_icon, icon_state = "[icon_state][gender ? "_[gender]" : ""][fat ? "_fat" : ""]", layer = -BODYPARTS_LAYER)
-
 /obj/item/bodypart/proc/is_usable()
 	return !(status & (ORGAN_DESTROYED|ORGAN_MUTATED|ORGAN_DEAD))
 
@@ -974,10 +1033,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/chest
 	name = "chest"
 	icon_state = "torso"
+	body_zone = "torso" // chest maybe? (need .dmi icon_state renames)
 	w_class = ITEM_SIZE_HUGE
 
 	body_part = UPPER_TORSO
 	limb_layer = BP_TORSO_LAYER
+	limb_layer_priority = -0.2
 
 	max_damage = 75
 	min_broken_damage = 40
@@ -988,10 +1049,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/groin
 	name = "groin"
 	icon_state = "groin"
+	body_zone = "groin"
 	w_class = ITEM_SIZE_LARGE
 
 	body_part = LOWER_TORSO
 	limb_layer = BP_GROIN_LAYER
+	limb_layer_priority = -0.1
 
 	max_damage = 50
 	min_broken_damage = 30
@@ -1002,6 +1065,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/head
 	name = "head"
 	icon_state = "head"
+	body_zone = "head"
 	slot_flags = SLOT_BELT
 	w_class = ITEM_SIZE_SMALL
 
@@ -1016,16 +1080,16 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 	var/disfigured = 0
 
-/obj/item/bodypart/head/get_icon(icon/race_icon, icon/deform_icon)
-	if (!owner)
-		return ..()
-	var/g = "m"
-	if(owner.gender == FEMALE)
-		g = "f"
-	if(status & ORGAN_MUTATED)
-		. = image(icon = deform_icon, icon_state = "[icon_state]_[g]", layer = -BODYPARTS_LAYER)
-	else
-		. = image(icon = race_icon, icon_state = "[icon_state]_[g]", layer = -BODYPARTS_LAYER)
+//obj/item/bodypart/head/get_icon(icon/race_icon, icon/deform_icon)
+//	if (!owner)
+//		return ..()
+//	var/g = "m"
+//	if(owner.gender == FEMALE)
+//		g = "f"
+//	if(status & ORGAN_MUTATED)
+//		. = image(icon = deform_icon, icon_state = "[icon_state]_[g]", layer = -BODYPARTS_LAYER)
+//	else
+//		. = image(icon = race_icon, icon_state = "[icon_state]_[g]", layer = -BODYPARTS_LAYER)
 
 /obj/item/bodypart/head/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list())
 	. = ..(brute, burn, sharp, edge, used_weapon, forbidden_limbs)
@@ -1052,10 +1116,11 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/l_arm
 	name = "left arm"
 	icon_state = "l_arm"
+	body_zone = "l_arm"
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = ARM_LEFT
-	limb_layer = BP_ARM_LAYER
+	limb_layer = BP_L_ARM_LAYER
 
 	max_damage = 80
 	min_broken_damage = 35
@@ -1070,10 +1135,11 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/r_arm
 	name = "right arm"
 	icon_state = "r_arm"
+	body_zone = "r_arm"
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = ARM_RIGHT
-	limb_layer = BP_ARM_LAYER
+	limb_layer = BP_R_ARM_LAYER
 
 	max_damage = 80
 	min_broken_damage = 35
@@ -1088,10 +1154,11 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/l_leg
 	name = "left leg"
 	icon_state = "l_leg"
+	body_zone = "l_leg"
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = LEG_LEFT
-	limb_layer = BP_LEG_LAYER
+	limb_layer = BP_L_LEG_LAYER
 
 	max_damage = 80
 	min_broken_damage = 35
@@ -1102,10 +1169,11 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/r_leg
 	name = "right leg"
 	icon_state = "r_leg"
+	body_zone = "r_leg"
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = LEG_RIGHT
-	limb_layer = BP_LEG_LAYER
+	limb_layer = BP_R_LEG_LAYER
 
 	max_damage = 80
 	min_broken_damage = 35

@@ -167,7 +167,7 @@
 		BP.sabotaged = 0
 	target.update_body()
 	target.updatehealth()
-	target.UpdateDamageIcon(BP)
+	target.update_bodypart(BP)
 	qdel(tool)
 
 /datum/surgery_step/limb/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

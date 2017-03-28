@@ -31,8 +31,9 @@ There are several things that need to be remembered:
 >	There are also these special cases:
 		update_mutations()	//handles updating your appearance for certain mutations.  e.g TK head-glows
 		update_mutantrace()	//handles updating your appearance after setting the mutantrace var
-		UpdateDamageIcon()	//handles damage overlays for brute/burn damage //(will rename this when I geta round to it)
-		update_body()	//Handles updating your mob's icon to reflect their gender/race/complexion etc
+		update_bodypart()	//handles updating your mob's icon to reflect their gender/race/complexion etc and
+								...damage overlays for brute/burn damage
+		update_body()	// Handles updating your underwear, socks, eyes and lips + colors.
 		update_hair()	//Handles updating your hair overlay (used to be update_face, but mouth and
 																			...eyes were merged into update_body)
 		update_targeted() // Updates the target overlay when someone points a gun at you
@@ -78,12 +79,14 @@ There are several things that need to be remembered:
 #define TOTAL_LAYERS			28
 //////////////////////////////////
 //Human BodyParts Overlays Indexes/////
-#define BP_HEAD_LAYER		5
-#define BP_TORSO_LAYER		4
-#define BP_ARM_LAYER		3
-#define BP_GROIN_LAYER		2
-#define BP_LEG_LAYER		1
-#define TOTAL_BP_LAYERS		5
+#define BP_HEAD_LAYER		7
+#define BP_TORSO_LAYER		6
+#define BP_L_ARM_LAYER		5
+#define BP_R_ARM_LAYER		4
+#define BP_GROIN_LAYER		3
+#define BP_L_LEG_LAYER		2
+#define BP_R_LEG_LAYER		1
+#define TOTAL_BP_LAYERS		7
 //////////////////////////////////
 
 /*
@@ -118,104 +121,22 @@ There are several things that need to be remembered:
 		overlays -= overlays_damage[cache_index]
 		overlays_damage[cache_index] = null
 
-//UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
-//this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
-//I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
+
 /mob/living/carbon/update_icons()
 	update_hud()		//TODO: remove the need for this
 
 
-//DAMAGE OVERLAYS
-/mob/living/carbon/UpdateDamageIcon(obj/item/bodypart/BP)
+/mob/living/carbon/proc/update_bodypart(obj/item/bodypart/BP)
 	remove_damage_overlay(BP.limb_layer)
-	if(species.damage_mask)
-		var/image/standing = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[BP.icon_state]_[BP.damage_state]", layer = -DAMAGE_LAYER)
-		standing.color = species.blood_color
-		overlays_damage[BP.limb_layer]	= standing
-		apply_damage_overlay(BP.limb_layer)
+
+	BP.update_limb()
+
+	overlays_damage[BP.limb_layer] = BP.get_icon()
+	apply_damage_overlay(BP.limb_layer)
 
 /mob/living/carbon/proc/update_bodyparts()
-	remove_overlay(BODYPARTS_LAYER)
-
-	if(!get_bodypart("chest"))
-		return
-
-	var/list/standing = list()
-
-	var/husk = (HUSK in src.mutations) // Implement assoc list later.
-	var/fat = (FAT in src.mutations)
-	var/hulk = (HULK in src.mutations)
-
-	var/g = (gender == FEMALE ? "f" : "m")
-
-	//CACHING: Generate an index key from visible bodyparts.
-	var/icon_key = "[species.race_key][g]"
-	if(species.flags[HAS_SKIN_TONE])
-		icon_key = "[icon_key][s_tone]"
-	if(species.flags[HAS_SKIN_COLOR])
-		icon_key = "[icon_key][r_skin + g_skin + b_skin]"
-
-	//0 = destroyed, 1 = normal, 2 = robotic, 3 = necrotic.
 	for(var/obj/item/bodypart/BP in bodyparts)
-
-		if(BP.status & ORGAN_DESTROYED)
-			icon_key = "[icon_key]0"
-		else if(BP.status & ORGAN_ROBOT)
-			icon_key = "[icon_key]2"
-		else if(BP.status & ORGAN_DEAD) //Do we even have necrosis in our current code? ~Z
-			icon_key = "[icon_key]3"
-		else
-			icon_key = "[icon_key]1"
-
-	icon_key = "[icon_key][husk][fat][hulk]"
-
-	if(human_icon_cache[icon_key])
-		//Icon is cached, use existing icon.
-		standing = human_icon_cache[icon_key]
-		//to_chat(world, "Retrieved cached mob icon ([icon_key]) for [src].")
-	else
-		//BEGIN CACHED ICON GENERATION.
-		var/race_icon = species.icobase
-		var/deform_icon = species.icobase
-
-		var/husk_color_mod = list(0.37,0.37,0.37, 0.34,0.34,0.34, 0.31,0.31,0.31, 0,0,0)
-		var/hulk_color_mod = list(0.18,0,0, 0,0.87,0, 0,0,0.15, 0,0,0)
-		var/necrosis_color_mod = list(0.03,0,0, 0,0.2,0, 0,0,0, 0.3,0.3,0.3)
-		//Robotic limbs are handled in get_icon() so all we worry about are missing or dead limbs.
-		//No icon stored, so we need to start with a basic one.
-
-		for(var/obj/item/bodypart/BP in bodyparts)
-			if(BP.status & ORGAN_DESTROYED)
-				continue
-
-			var/image/temp
-			if(istype(BP, /obj/item/bodypart/chest))// TODO: correct get_icon() so we don't need those istypes()?
-				temp = BP.get_icon(race_icon,deform_icon,g,fat)
-			else if (istype(BP, /obj/item/bodypart/groin) || istype(BP, /obj/item/bodypart/head))
-				temp = BP.get_icon(race_icon,deform_icon,g)
-			else
-				temp = BP.get_icon(race_icon,deform_icon)
-
-			if(!(BP.status & ORGAN_ROBOT))
-				if(husk) // !REMINDER! reimplement husk properly.
-					temp.color = husk_color_mod
-				else if(BP.status & ORGAN_DEAD)
-					temp.color = necrosis_color_mod
-				else if(hulk)
-					temp.color = hulk_color_mod
-				else
-					if(species.flags[HAS_SKIN_TONE])
-						temp.color = list(1,0,0, 0,1,0, 0,0,1, s_tone/255,s_tone/255,s_tone/255)
-					if(species.flags[HAS_SKIN_COLOR])
-						temp.color = list(1,0,0, 0,1,0, 0,0,1, r_skin/255,g_skin/255,b_skin/255)
-
-			standing += temp
-
-		human_icon_cache[icon_key] = standing
-		//to_chat(world, "Generated cached mob icon ([icon_key]) for [src].")
-
-	overlays_standing[BODYPARTS_LAYER] = standing
-	apply_overlay(BODYPARTS_LAYER)
+		update_bodypart(BP)
 
 //BASE MOB SPRITE
 /mob/living/carbon/proc/update_body()
@@ -224,8 +145,8 @@ There are several things that need to be remembered:
 	if(!species)
 		return
 
-	update_bodyparts()
-	update_tail_showing()
+	update_bodyparts() // TODO remove this
+	update_tail_showing() // TODO remove this
 
 	var/g = (gender == FEMALE ? "f" : "m")
 	var/fat = (FAT in src.mutations)
@@ -421,8 +342,7 @@ There are several things that need to be remembered:
 	update_inv_pockets()
 	update_surgery()
 	update_bandage()
-	for(var/obj/item/bodypart/BP in bodyparts)
-		UpdateDamageIcon(BP)
+	update_bodyparts()
 	update_icons()
 	update_transform()
 	//Hud Stuff
@@ -927,7 +847,7 @@ There are several things that need to be remembered:
 #undef BODY_LAYER
 #undef MUTANTRACE_LAYER
 #undef MUTATIONS_LAYER
-#undef DAMAGE_LAYER
+//#undef DAMAGE_LAYER
 #undef SURGERY_LAYER
 #undef BANDAGE_LAYER
 #undef UNIFORM_LAYER
