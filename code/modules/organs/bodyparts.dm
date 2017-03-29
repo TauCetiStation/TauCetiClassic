@@ -33,6 +33,7 @@
 
 	var/artery_name = "artery" // Flavour text for cartoid artery, aorta, etc.
 	var/arterial_bleed_severity = 1 // Multiplier for bleeding in a limb.
+	var/amputation_point // Descriptive string used in amputation.
 
 	var/tmp/perma_injury = 0
 	var/tmp/destspawn = 0 //Has it spawned the broken limb?
@@ -714,7 +715,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 //Recursive setting of all child bodyparts to amputated
 /obj/item/bodypart/proc/setAmputatedTree()
 	for(var/obj/item/bodypart/BP in children)
-		BP.amputated=amputated
+		BP.amputated = amputated
 		BP.setAmputatedTree()
 
 //Handles dismemberment
@@ -1043,7 +1044,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 75
 	min_broken_damage = 40
 
-	vital = 1
+	vital = TRUE
+	amputation_point = "spine"
 	artery_name = "aorta"
 
 /obj/item/bodypart/groin
@@ -1059,7 +1061,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 50
 	min_broken_damage = 30
 
-	vital = 1
+	vital = TRUE
+	amputation_point = "lumbar"
 	artery_name = "iliac artery"
 
 /obj/item/bodypart/head
@@ -1075,21 +1078,11 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 75
 	min_broken_damage = 40
 
-	vital = 1
+	vital = TRUE
+	amputation_point = "neck"
 	artery_name = "cartoid artery"
 
 	var/disfigured = 0
-
-//obj/item/bodypart/head/get_icon(icon/race_icon, icon/deform_icon)
-//	if (!owner)
-//		return ..()
-//	var/g = "m"
-//	if(owner.gender == FEMALE)
-//		g = "f"
-//	if(status & ORGAN_MUTATED)
-//		. = image(icon = deform_icon, icon_state = "[icon_state]_[g]", layer = -BODYPARTS_LAYER)
-//	else
-//		. = image(icon = race_icon, icon_state = "[icon_state]_[g]", layer = -BODYPARTS_LAYER)
 
 /obj/item/bodypart/head/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list())
 	. = ..(brute, burn, sharp, edge, used_weapon, forbidden_limbs)
@@ -1125,6 +1118,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 80
 	min_broken_damage = 35
 
+	amputation_point = "left shoulder"
 	artery_name = "basilic vein"
 	arterial_bleed_severity = 0.75
 
@@ -1144,6 +1138,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 80
 	min_broken_damage = 35
 
+	amputation_point = "right shoulder"
 	artery_name = "basilic vein"
 	arterial_bleed_severity = 0.75
 
@@ -1163,6 +1158,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 80
 	min_broken_damage = 35
 
+	amputation_point = "left hip"
 	artery_name = "femoral artery"
 	arterial_bleed_severity = 0.75
 
@@ -1178,6 +1174,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 80
 	min_broken_damage = 35
 
+	amputation_point = "right hip"
 	artery_name = "femoral artery"
 	arterial_bleed_severity = 0.75
 

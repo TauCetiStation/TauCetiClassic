@@ -133,14 +133,16 @@
 		"\red Your hand slips, searing [target]'s [BP.name]!")
 		target.apply_damage(10, BURN, BP)
 
-
-/datum/surgery_step/limb/attach
+//////////////////////////////////////////////////////////////////
+//	 robotic limb attachment surgery step
+//////////////////////////////////////////////////////////////////
+/datum/surgery_step/limb/mechanize
 	allowed_tools = list(/obj/item/robot_parts = 100)
 
 	min_duration = 80
 	max_duration = 100
 
-/datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/limb/mechanize/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/robot_parts/p = tool
 		if (p.part)
@@ -149,12 +151,12 @@
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		return BP.status & ORGAN_ATTACHABLE
 
-/datum/surgery_step/limb/attach/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/limb/mechanize/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts attaching \the [tool] where [target]'s [BP.name] used to be.", \
 	"You start attaching \the [tool] where [target]'s [BP.name] used to be.")
 
-/datum/surgery_step/limb/attach/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/limb/mechanize/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/robot_parts/L = tool
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("\blue [user] has attached \the [tool] where [target]'s [BP.name] used to be.",	\
@@ -165,12 +167,12 @@
 		BP.sabotaged = 1
 	else
 		BP.sabotaged = 0
-	target.update_body()
+	//target.update_body()
 	target.updatehealth()
 	target.update_bodypart(BP)
 	qdel(tool)
 
-/datum/surgery_step/limb/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/limb/mechanize/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("\red [user]'s hand slips, damaging connectors on [target]'s [BP.name]!", \
 	"\red Your hand slips, damaging connectors on [target]'s [BP.name]!")

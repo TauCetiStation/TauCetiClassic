@@ -271,7 +271,7 @@
 	"\red Your hand slips, leaving a small burn on [target]'s [BP.name] with \the [tool]!")
 	target.apply_damage(3, BURN, BP)
 
-/datum/surgery_step/generic/cut_limb
+/datum/surgery_step/generic/amputate
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
 	/obj/item/weapon/hatchet = 75,       \
@@ -281,7 +281,7 @@
 	min_duration = 110
 	max_duration = 160
 
-/datum/surgery_step/generic/cut_limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/generic/amputate/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (target_zone == "eyes")	//there are specific steps for eye surgery
 		return 0
 	if (!hasbodyparts(target))
@@ -293,22 +293,22 @@
 		return 0
 	return target_zone != "chest" && target_zone != "groin" && target_zone != "head"
 
-/datum/surgery_step/generic/cut_limb/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/generic/amputate/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] is beginning to cut off [target]'s [BP.name] with \the [tool]." , \
-	"You are beginning to cut off [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("Your [BP.name] is being ripped apart!",1)
+	user.visible_message("[user] is beginning to amputate [target]'s [BP.name] with \the [tool]." , \
+	"You are beginning to cut through [target]'s [BP.amputation_point] with \the [tool].")
+	target.custom_pain("Your [BP.amputation_point] is being ripped apart!",1)
 	..()
 
-/datum/surgery_step/generic/cut_limb/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/generic/amputate/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] cuts off [target]'s [BP.name] with \the [tool].", \
-	"\blue You cut off [target]'s [BP.name] with \the [tool].")
+	user.visible_message("\blue [user] amputates [target]'s [BP.name] at the [BP.amputation_point] with \the [tool].", \
+	"\blue You amputate [target]'s [BP.name] with \the [tool].")
 	BP.droplimb(1,0)
 
-/datum/surgery_step/generic/cut_limb/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/generic/amputate/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, sawwing through the bone in [target]'s [BP.name] with \the [tool]!", \
-	"\red Your hand slips, sawwing through the bone in [target]'s [BP.name] with \the [tool]!")
+	user.visible_message("\red [user]'s hand slips, sawing through the bone in [target]'s [BP.name] with \the [tool]!", \
+	"\red Your hand slips, sawing through the bone in [target]'s [BP.name] with \the [tool]!")
 	BP.createwound(CUT, 30)
 	BP.fracture()
