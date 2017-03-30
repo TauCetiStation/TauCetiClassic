@@ -12,11 +12,14 @@
 	item_color = "cargo"
 	pressure_resistance = 2
 	attack_verb = list("stamped")
+	var/stamp_by_message = ""
+	var/big_stamp = FALSE
 
 /obj/item/weapon/stamp/captain
 	name = "captain's rubber stamp"
 	icon_state = "stamp-cap"
 	item_color = "captain"
+	big_stamp = TRUE
 
 /obj/item/weapon/stamp/hop
 	name = "head of personnel's rubber stamp"
@@ -52,6 +55,7 @@
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
 	item_color = "clown"
+	stamp_by_message = "strange pink stamp"
 
 /obj/item/weapon/stamp/internalaffairs
 	name = "internal affairs rubber stamp"
@@ -62,16 +66,36 @@
 	name = "centcomm rubber stamp"
 	icon_state = "stamp-cent"
 	item_color = "centcomm"
+	stamp_by_message = "Central Command Quantum Relay"
+	big_stamp = TRUE
 
-/obj/item/weapon/stamp/proc/stamp_paper(obj/item/weapon/paper/P, stamp_text)
+/obj/item/weapon/stamp/fakecentcomm
+	name = "cantcom rubber stamp"
+	icon_state = "stamp-fakecentcom"
+	item_color = "fakecentcom"
+	stamp_by_message = "Central Compound Quantum Relay"
+	big_stamp = TRUE
+
+/obj/item/weapon/stamp/syndicate
+	name = "syndicate rubber stamp"
+	icon_state = "stamp-syndicate"
+	item_color = "syndicate"
+	stamp_by_message = "Syndicate Command Interception Relay"
+	big_stamp = TRUE
+
+/obj/item/weapon/stamp/proc/stamp_paper(obj/item/weapon/paper/P, stamp_text, use_stamp_by_message = FALSE)
 	P.stamp_text += (P.stamp_text == "" ? "<hr>" : "<br>")
-	P.stamp_text += stamp_text ? "<i>[stamp_text]</i>" : "<i>This paper has been stamped with the [name].</i>"
+
+	if(use_stamp_by_message)
+		P.stamp_text += "<i>This paper has been stamped by the [stamp_by_message].</i>"
+	else
+		P.stamp_text += stamp_text ? "<i>[stamp_text]</i>" : "<i>This paper has been stamped with the [name].</i>"
 
 	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 	var/x
 	var/y
 
-	if(istype(src, /obj/item/weapon/stamp/captain) || istype(src, /obj/item/weapon/stamp/centcomm))
+	if(big_stamp)
 		x = rand(-2, 0)
 		y = rand(-1, 2)
 	else
