@@ -724,3 +724,4 @@ datum/proc/dd_SortValue()
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
 #define LAZYLEN(L) length(L)
 #define LAZYCLEARLIST(L) if(L) L.Cut()
+#define LAZYCOPY(L) L && L.len ? L.Copy() : null

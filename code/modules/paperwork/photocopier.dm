@@ -223,10 +223,10 @@
 	P.name = copy.name // -- Doohl
 	P.fields = copy.fields
 	P.stamp_text = copy.stamp_text
-	P.stamped = copy.stamped
-	P.ico = copy.ico
-	P.offset_x = copy.offset_x
-	P.offset_y = copy.offset_y
+	P.stamped = LAZYCOPY(copy.stamped)
+	P.ico = LAZYCOPY(copy.ico)
+	P.offset_x = LAZYCOPY(copy.offset_x)
+	P.offset_y = LAZYCOPY(copy.offset_y)
 	var/image/img
 	for (var/i in 1 to copy.overlays.len)        //Iterates through stamps gray and puts a matching overlay onto the copy
 		if (findtext(copy.ico[i], "cap") || findtext(copy.ico[i], "cent"))
