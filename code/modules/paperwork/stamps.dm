@@ -63,6 +63,32 @@
 	icon_state = "stamp-cent"
 	item_color = "centcomm"
 
+/obj/item/weapon/stamp/proc/stamp_paper(obj/item/weapon/paper/P, stamp_text)
+	P.stamp_text += (P.stamp_text == "" ? "<hr>" : "<br>")
+	P.stamp_text += stamp_text ? "<i>[stamp_text]</i>" : "<i>This paper has been stamped with the [name].</i>"
+
+	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+	var/x
+	var/y
+
+	if(istype(src, /obj/item/weapon/stamp/captain) || istype(src, /obj/item/weapon/stamp/centcomm))
+		x = rand(-2, 0)
+		y = rand(-1, 2)
+	else
+		x = rand(-2, 2)
+		y = rand(-3, 2)
+
+	LAZYADD(P.offset_x, x)
+	LAZYADD(P.offset_y, y)
+
+	stampoverlay.pixel_x = x
+	stampoverlay.pixel_y = y
+
+	LAZYADD(P.ico, "paper_[icon_state]")
+	stampoverlay.icon_state = "paper_[icon_state]"
+
+	LAZYADD(P.stamped, type)
+	P.overlays += stampoverlay
 
 /obj/item/weapon/stamp/attack_paw(mob/user)
 	return attack_hand(user)

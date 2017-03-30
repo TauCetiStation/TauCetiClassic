@@ -1616,13 +1616,8 @@
 					playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
 
 					// Stamps
-					var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-					stampoverlay.icon_state = "paper_stamp-cent"
-					if(!P.stamped)
-						P.stamped = new
-					P.stamped += /obj/item/weapon/stamp
-					P.overlays += stampoverlay
-					P.stamp_text += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+					var/obj/item/weapon/stamp/centcomm/S = new
+					S.stamp_paper(P, "This paper has been stamped by the Central Command Quantum Relay.")
 
 		to_chat(src.owner, "Message reply to transmitted successfully.")
 		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")

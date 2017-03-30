@@ -23,9 +23,9 @@
 	var/stamp_text		//The (text for the) stamp_text on the paper.
 	var/fields		//Amount of user created fields
 	var/list/stamped
-	var/ico[0]      //Icons and
-	var/offset_x[0] //offsets stored for later
-	var/offset_y[0] //usage by the photocopier
+	var/list/ico      //Icons and
+	var/list/offset_x //offsets stored for later
+	var/list/offset_y //usage by the photocopier
 	var/rigged = 0
 	var/spam_flag = 0
 	var/crumpled = 0
@@ -230,7 +230,10 @@
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
 	stamp_text = null
-	stamped = list()
+	LAZYCLEARLIST(stamped)
+	LAZYCLEARLIST(ico)
+	LAZYCLEARLIST(offset_x)
+	LAZYCLEARLIST(offset_y)
 	overlays.Cut()
 	updateinfolinks()
 	update_icon()
@@ -473,40 +476,18 @@
 		return
 
 	else if(istype(P, /obj/item/weapon/stamp))
-		if((!in_range(src, usr) && loc != user && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != user && user.get_active_hand() != P))
+		if(!in_range(src, user))
 			return
-
-		stamp_text += (stamp_text=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the [P.name].</i>"
-
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-		var/{x; y;}
-		if(istype(P, /obj/item/weapon/stamp/captain) || istype(P, /obj/item/weapon/stamp/centcomm))
-			x = rand(-2, 0)
-			y = rand(-1, 2)
-		else
-			x = rand(-2, 2)
-			y = rand(-3, 2)
-		offset_x += x
-		offset_y += y
-		stampoverlay.pixel_x = x
-		stampoverlay.pixel_y = y
 
 		if(istype(P, /obj/item/weapon/stamp/clown))
 			if(!clown)
 				to_chat(user, "<span class='notice'>You are totally unable to use the stamp. HONK!</span>")
 				return
 
-		if(!ico)
-			ico = new
-		ico += "paper_[P.icon_state]"
-		stampoverlay.icon_state = "paper_[P.icon_state]"
+		var/obj/item/weapon/stamp/S = P
+		S.stamp_paper(src)
 
-		if(!stamped)
-			stamped = new
-		stamped += P.type
-		overlays += stampoverlay
-
-		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
+		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	else if(istype(P, /obj/item/weapon/lighter))
 		burnpaper(P, user)
