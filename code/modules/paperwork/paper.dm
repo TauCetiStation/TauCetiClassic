@@ -238,6 +238,24 @@
 	updateinfolinks()
 	update_icon()
 
+/obj/item/weapon/paper/proc/create_self_copy()
+	var/obj/item/weapon/paper/P = new
+
+	P.name       = name
+	P.info       = info
+	P.info_links = info_links
+	P.stamp_text = stamp_text
+	P.fields     = fields
+	P.stamped    = LAZYCOPY(stamped)
+	P.ico        = LAZYCOPY(ico)
+	P.offset_x   = LAZYCOPY(offset_x)
+	P.offset_y   = LAZYCOPY(offset_y)
+	P.overlays   = overlays.Copy()
+
+	P.updateinfolinks()
+	P.update_icon()
+
+	return P
 
 /obj/item/weapon/paper/proc/parsepencode(t, obj/item/weapon/pen/P, mob/user, iscrayon = 0)
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
