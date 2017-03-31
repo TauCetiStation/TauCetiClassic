@@ -46,10 +46,9 @@
 	density = TRUE
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
-	var/mob/occupier = null
 
 /obj/structure/transit_tube_pod/Destroy()
-	move_occupier_out()
+	move_out_content()
 	return ..()
 
 /obj/structure/transit_tube_pod/New()
@@ -64,27 +63,28 @@
 
 /obj/structure/transit_tube_pod/examine(mob/user)
 	..()
-	if(occupier)
-		to_chat(user, "<span class='notice'>Someone in it.</span>")
+	if(contents.len)
+		to_chat(user, "<span class='notice'>Something in it.</span>")
 
-/obj/structure/transit_tube_pod/proc/move_occupier_in(mob/M)
+/obj/structure/transit_tube_pod/proc/move_into_content(mob/M)
 	if(istype(M))
 		M.forceMove(src)
-		occupier = M
 
-/obj/structure/transit_tube_pod/proc/move_occupier_out()
-	if(occupier)
-		if(occupier.loc == src)
-			occupier.forceMove(loc)
-		occupier = null
+/obj/structure/transit_tube_pod/proc/move_out_content()
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(loc)
 
 /obj/structure/transit_tube_pod/attack_hand(mob/user)
-	if(occupier)
-		to_chat(user, "<span class='notice'>You started to get someone out of the [src].</span>")
-		to_chat(occupier, "<span class='warning'>Someone is trying to get you out of the [src].</span>")
-		if (do_after(user, 50, target = src) && occupier)
-			visible_message("<span class='notice'>[user] took out [occupier] from the [src].</span>", "<span class='notice'>You took out [occupier] out of the [src].</span>")
-			move_occupier_out()
+	if(contents.len)
+		to_chat(user, "<span class='notice'>You started to get everything out of the [src].</span>")
+
+		var/mob/M = locate(/mob) in contents
+		if(M)
+			to_chat(M, "<span class='warning'>Someone is trying to get you out of the [src].</span>")
+
+		if (do_after(user, 50, target = src) && contents.len)
+			visible_message("<span class='notice'>[user] took out everything from the [src].</span>")
+			move_out_content()
 
 /obj/structure/transit_tube/New()
 	..()
@@ -103,11 +103,11 @@
 /obj/structure/transit_tube/station/Bumped(mob/M)
 	if(!pod_moving && icon_state == "open" && istype(M))
 		for(var/obj/structure/transit_tube_pod/pod in loc)
-			if(pod.contents.len)
+			if(locate(/mob) in contents)
 				to_chat(M, "<span class='notice'>The pod is already occupied.</span>")
 				return
 			else if(!pod.moving && pod.dir in directions())
-				pod.move_occupier_in(M)
+				pod.move_into_content(M)
 				return
 
 /obj/structure/transit_tube/station/attack_hand(mob/user)
@@ -376,7 +376,7 @@
 	if(istype(mob, /mob) && mob.client)
 		// If the pod is not in a tube at all, you can get out at any time.
 		if(!(locate(/obj/structure/transit_tube) in loc))
-			move_occupier_out()
+			move_out_content()
 			mob.client.Move(get_step(loc, direction), direction)
 
 			//if(moving && istype(loc, /turf/space))
@@ -389,7 +389,7 @@
 					if(!station.pod_moving)
 						if(direction == station.dir)
 							if(station.icon_state == "open")
-								move_occupier_out()
+								move_out_content()
 								mob.client.Move(get_step(loc, direction), direction)
 
 							else
