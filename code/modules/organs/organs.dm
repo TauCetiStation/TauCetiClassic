@@ -10,18 +10,43 @@
 	var/damage = 0 // amount of damage to the organ
 	var/min_bruised_damage = 10
 	var/min_broken_damage = 30
-	var/parent_bodypart = BP_CHEST
+	var/organ_tag = null // Unique identifier
+	var/parent_bodypart = null
 	var/robotic = 0 //For being a robot
 	germ_level = 0 // INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
 
-/obj/item/organ/New(loc, mob/living/carbon/human/H)
-	..()
-	var/obj/item/bodypart/BP = H.bodyparts_by_name[src.parent_bodypart]
-	if(BP.organs == null)
-		BP.organs = list()
-	BP.organs |= src
-	H.organs |= src
-	src.owner = H
+
+/obj/item/organ/New(loc, mob/living/carbon/C)
+	if(istype(C))
+		C.organs += src
+		C.organs_by_name[organ_tag] = src
+
+		var/obj/item/bodypart/BP = C.bodyparts_by_name[parent_bodypart]
+		if(isnull(BP.organs))
+			BP.organs = list()
+
+		BP.organs += src
+		owner = C
+
+		if(BP.species.flags[IS_SYNTHETIC])
+			src.mechanize()
+
+	return ..()
+
+/obj/item/organ/Destroy()
+	if(owner)
+		var/obj/item/bodypart/BP = owner.bodyparts_by_name[parent_bodypart]
+		if(BP)
+			BP.organs -= src
+
+		owner.organs -= src
+		owner.organs_by_name[organ_tag] = null
+		owner.organs_by_name -= organ_tag
+		while(null in owner.organs)
+			owner.organs -= null
+		owner = null
+
+	return ..()
 
 /obj/item/organ/process()
 	//Process infections
@@ -196,11 +221,13 @@
 
 /obj/item/organ/heart
 	name = "heart"
+	organ_tag = BP_HEART
 	parent_bodypart = BP_CHEST
 
 
 /obj/item/organ/lungs
 	name = "lungs"
+	organ_tag = BP_LUNGS
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/lungs/process()
@@ -219,6 +246,7 @@
 
 /obj/item/organ/liver
 	name = "liver"
+	organ_tag = BP_LIVER
 	parent_bodypart = BP_CHEST
 	var/process_accuracy = 10
 
@@ -260,16 +288,19 @@
 				if(istype(R, /datum/reagent/toxin))
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
-/obj/item/organ/kidney
-	name = "kidney"
+/obj/item/organ/kidneys
+	name = "kidneys"
+	organ_tag = BP_KIDNEYS
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/brain
 	name = "brain"
+	organ_tag = BP_BRAIN
 	parent_bodypart = BP_HEAD
 
 /obj/item/organ/eyes
 	name = "eyes"
+	organ_tag = BP_EYES
 	parent_bodypart = BP_HEAD
 
 /obj/item/organ/eyes/process() //Eye damage replaces the old eye_stat var.

@@ -80,6 +80,28 @@
 
 	var/list/sprite_sheets = list()
 
+	//This is default bodyparts & organs set which is mostly used upon mob creation.
+	var/list/has_bodypart = list( // Keep in mind that this list also acts as priority for creating bodyparts/organs inside spawned mob.
+		BP_CHEST = /obj/item/bodypart/chest, // If chest is a main bodypart, it must be on top of the list, since everything else depends on it.
+		BP_GROIN = /obj/item/bodypart/groin,
+		BP_HEAD  = /obj/item/bodypart/head,
+		BP_L_ARM = /obj/item/bodypart/l_arm,
+		BP_R_ARM = /obj/item/bodypart/r_arm,
+		BP_L_LEG = /obj/item/bodypart/l_leg,
+		BP_R_LEG = /obj/item/bodypart/r_leg
+		)
+
+	var/list/has_organ = list(
+		BP_HEART   = /obj/item/organ/heart,
+		BP_LUNGS   = /obj/item/organ/lungs,
+		BP_LIVER   = /obj/item/organ/liver,
+		BP_KIDNEYS = /obj/item/organ/kidneys,
+		BP_BRAIN   = /obj/item/organ/brain,
+		BP_EYES    = /obj/item/organ/eyes
+		)
+
+
+
 /datum/species/New()
 	unarmed = new unarmed_type()
 
@@ -88,36 +110,16 @@
 	switch(name)
 		if(S_HUMAN,S_UNATHI,S_TAJARAN,S_SKRELL,S_DIONA,S_VOX,S_VOX_ARMALIS,S_IPC,S_ABDUCTOR,S_SHADOWLING)
 			C.make_blood()
+
 			C.bodyparts = list()
-			C.bodyparts_by_name[BP_CHEST] = new/obj/item/bodypart/chest(null)
-			C.bodyparts_by_name[BP_GROIN] = new/obj/item/bodypart/groin(null, C.bodyparts_by_name[BP_CHEST])
-			C.bodyparts_by_name[BP_HEAD] = new/obj/item/bodypart/head(null, C.bodyparts_by_name[BP_CHEST])
-			C.bodyparts_by_name[BP_L_ARM] = new/obj/item/bodypart/l_arm(null, C.bodyparts_by_name[BP_CHEST])
-			C.bodyparts_by_name[BP_R_ARM] = new/obj/item/bodypart/r_arm(null, C.bodyparts_by_name[BP_CHEST])
-			C.bodyparts_by_name[BP_R_LEG] = new/obj/item/bodypart/r_leg(null, C.bodyparts_by_name[BP_GROIN])
-			C.bodyparts_by_name[BP_L_LEG] = new/obj/item/bodypart/l_leg(null, C.bodyparts_by_name[BP_GROIN])
+			for(var/type in has_bodypart)
+				var/path = has_bodypart[type]
+				new path(null, C)
 
 			C.organs = list()
-			C.organs_by_name[BP_HEART] = new/obj/item/organ/heart(null, C)
-			C.organs_by_name[BP_LUNGS] = new/obj/item/organ/lungs(null, C)
-			C.organs_by_name[BP_LIVER] = new/obj/item/organ/liver(null, C)
-			C.organs_by_name[BP_KIDNEYS] = new/obj/item/organ/kidney(null, C)
-			C.organs_by_name[BP_BRAIN] = new/obj/item/organ/brain(null, C)
-			C.organs_by_name[BP_EYES] = new/obj/item/organ/eyes(null, C)
-
-			for(var/name in C.bodyparts_by_name)
-				C.bodyparts += C.bodyparts_by_name[name]
-
-			for(var/obj/item/bodypart/BP in C.bodyparts)
-				BP.owner = C
-
-			if(flags[IS_SYNTHETIC])
-				for(var/obj/item/bodypart/BP in C.bodyparts)
-					if(BP.status & ORGAN_CUT_AWAY || BP.status & ORGAN_DESTROYED)
-						continue
-					BP.status |= ORGAN_ROBOT
-				for(var/obj/item/organ/IO in C.organs)
-					IO.mechanize()
+			for(var/type in has_organ)
+				var/path = has_organ[type]
+				new path(null, C)
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/C) //Handles anything not already covered by basic species assignment.
 	return

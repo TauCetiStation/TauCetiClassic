@@ -11,12 +11,19 @@
 	icon_state = null // ""
 	layer = BELOW_MOB_LAYER
 
-	var/body_part = null
-	var/body_zone = null
+	var/body_part = null // Part flag (used in clothes for protection or other purpose).
+	var/body_zone = null // Unique identifier (used in targetting, icon_state, get_bodypart, etc).
+	var/parent_bodypart = null // Bodypart holding this object.
+
+	var/obj/item/bodypart/parent
+	var/list/obj/item/bodypart/children
+	var/list/obj/item/organ/organs // Internal organs of this body part
+
 	var/limb_layer = 0
 	var/limb_layer_priority = 0 //chest and groin must be drawn under arms, head and legs.
 
 	var/mob/living/carbon/owner = null
+	var/datum/species/species = null
 	var/list/datum/autopsy_data/autopsy_data = list()
 	var/list/trace_chemicals = list() // traces of chemicals in the bodypart,
 									  // links chemical IDs to number of ticks for which they'll stay in the blood
@@ -40,12 +47,6 @@
 	var/tmp/amputated = 0 //Whether this has been cleanly amputated, thus causing no pain
 	var/min_broken_damage = 30
 
-	var/obj/item/bodypart/parent
-	var/list/obj/item/bodypart/children
-
-	// Internal organs of this body part
-	var/list/obj/item/organ/organs
-
 	var/damage_msg = "\red You feel an intense pain"
 	var/broken_description
 
@@ -64,12 +65,25 @@
 
 	germ_level = 0
 
-/obj/item/bodypart/New(loc, obj/item/bodypart/BP)
-	if(BP)
-		parent = BP
-		if(!parent.children)
-			parent.children = list()
-		parent.children.Add(src)
+
+/obj/item/bodypart/New(loc, mob/living/carbon/C)
+	if(istype(C))
+		C.bodyparts += src
+		C.bodyparts_by_name[body_zone] = src
+
+		if(parent_bodypart)
+			parent = C.bodyparts_by_name[parent_bodypart]
+
+			if(isnull(parent.children))
+				parent.children = list()
+			parent.children += src
+
+		species = C.species
+
+		if(species.flags[IS_SYNTHETIC])
+			status |= ORGAN_ROBOT
+
+		owner = C
 	return ..()
 
 /obj/item/bodypart/Destroy()
@@ -88,10 +102,12 @@
 		for(var/obj/item/organ/O in organs)
 			qdel(O)
 
+	species = null // species are global, don't do anything to them.
+
 	if(owner)
 		owner.bodyparts -= src
-		owner.bodyparts_by_name[name] = null
-		owner.bodyparts_by_name -= name
+		owner.bodyparts_by_name[body_zone] = null
+		owner.bodyparts_by_name -= body_zone
 		while(null in owner.bodyparts)
 			owner.bodyparts -= null
 		owner = null
@@ -1033,11 +1049,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/chest
 	name = "chest"
-	icon_state = BP_CHEST
-	body_zone = BP_CHEST
+	icon_state = "chest"
 	w_class = ITEM_SIZE_HUGE
 
 	body_part = UPPER_TORSO
+	body_zone = BP_CHEST
+	parent_bodypart = null
 	limb_layer = BP_TORSO_LAYER
 	limb_layer_priority = -0.2
 
@@ -1050,11 +1067,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/groin
 	name = "groin"
-	icon_state = BP_GROIN
-	body_zone = BP_GROIN
+	icon_state = "groin"
 	w_class = ITEM_SIZE_LARGE
 
 	body_part = LOWER_TORSO
+	body_zone = BP_GROIN
+	parent_bodypart = BP_CHEST
 	limb_layer = BP_GROIN_LAYER
 	limb_layer_priority = -0.1
 
@@ -1067,12 +1085,13 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/head
 	name = "head"
-	icon_state = BP_HEAD
-	body_zone = BP_HEAD
+	icon_state = "head"
 	slot_flags = SLOT_BELT
 	w_class = ITEM_SIZE_SMALL
 
 	body_part = HEAD
+	body_zone = BP_HEAD
+	parent_bodypart = BP_CHEST
 	limb_layer = BP_HEAD_LAYER
 
 	max_damage = 75
@@ -1108,11 +1127,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/l_arm
 	name = "left arm"
-	icon_state = BP_L_ARM
-	body_zone = BP_L_ARM
+	icon_state = "l_arm"
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = ARM_LEFT
+	body_zone = BP_L_ARM
+	parent_bodypart = BP_CHEST
 	limb_layer = BP_L_ARM_LAYER
 
 	max_damage = 80
@@ -1128,11 +1148,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/r_arm
 	name = "right arm"
-	icon_state = BP_R_ARM
-	body_zone = BP_R_ARM
+	icon_state = "r_arm"
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = ARM_RIGHT
+	body_zone = BP_R_ARM
+	parent_bodypart = BP_CHEST
 	limb_layer = BP_R_ARM_LAYER
 
 	max_damage = 80
@@ -1148,11 +1169,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
-	icon_state = BP_L_LEG
-	body_zone = BP_L_LEG
+	icon_state = "l_leg"
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = LEG_LEFT
+	body_zone = BP_L_LEG
+	parent_bodypart = BP_GROIN
 	limb_layer = BP_L_LEG_LAYER
 
 	max_damage = 80
@@ -1164,11 +1186,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/r_leg
 	name = "right leg"
-	icon_state = BP_R_LEG
-	body_zone = BP_R_LEG
+	icon_state = "r_leg"
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = LEG_RIGHT
+	body_zone = BP_R_LEG
+	parent_bodypart = BP_GROIN
 	limb_layer = BP_R_LEG_LAYER
 
 	max_damage = 80
