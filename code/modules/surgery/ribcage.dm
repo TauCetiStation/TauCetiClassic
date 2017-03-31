@@ -9,7 +9,7 @@
 
 /datum/surgery_step/ribcage/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))	return 0
-	return target_zone == "chest"
+	return target_zone == BP_CHEST
 
 /datum/surgery_step/ribcage/saw_ribcage
 	allowed_tools = list(
@@ -120,7 +120,7 @@
 	var/msg = "\red [user]'s hand slips, bending [target]'s ribs the wrong way!"
 	var/self_msg = "\red Your hand slips, bending [target]'s ribs the wrong way!"
 	user.visible_message(msg, self_msg)
-	var/obj/item/bodypart/chest/BP = target.get_bodypart("chest")
+	var/obj/item/bodypart/chest/BP = target.get_bodypart(BP_CHEST)
 	BP.createwound(BRUISE, 20)
 	BP.fracture()
 	if (prob(40))
@@ -209,7 +209,7 @@
 		return 0
 
 	var/is_chest_organ_damaged = 0
-	var/obj/item/bodypart/chest/chest = target.get_bodypart("chest")
+	var/obj/item/bodypart/chest/chest = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/IO in chest.organs)
 		if(IO.damage > 0)
 			is_chest_organ_damaged = 1
@@ -225,7 +225,7 @@
 			tool_name = "the poultice"
 		else
 			tool_name = "the bandaid"
-	var/obj/item/bodypart/chest/chest = target.get_bodypart("chest")
+	var/obj/item/bodypart/chest/chest = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/IO in chest.organs)
 		if(IO && IO.damage > 0)
 			if(IO.robotic < 2)
@@ -247,7 +247,7 @@
 			tool_name = "the poultice"
 		else
 			tool_name = "the bandaid"
-	var/obj/item/bodypart/chest/chest = target.get_bodypart("chest")
+	var/obj/item/bodypart/chest/chest = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/IO in chest.organs)
 		if(IO && IO.damage > 0)
 			if(IO.robotic < 2)
@@ -259,7 +259,7 @@
 			IO.damage = 0
 
 /datum/surgery_step/ribcage/fix_chest_internal/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/bodypart/chest/BP = target.get_bodypart("chest")
+	var/obj/item/bodypart/chest/BP = target.get_bodypart(BP_CHEST)
 	user.visible_message("\red [user]'s hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!", \
 	"\red Your hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!")
 	var/dam_amt = 2
@@ -294,15 +294,15 @@
 		return 0
 
 	var/is_chest_organ_damaged = 0
-	var/obj/item/organ/heart/heart = target.organs_by_name["heart"]
-	var/obj/item/bodypart/chest/chest = target.get_bodypart("chest")
+	var/obj/item/organ/heart/heart = target.organs_by_name[BP_HEART]
+	var/obj/item/bodypart/chest/chest = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/IO in chest.organs) if(IO.damage > 0)
 		is_chest_organ_damaged = 1
 		break
 	return ..() && is_chest_organ_damaged && heart.robotic == 2 && target.op_stage.ribcage == 2
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/heart/heart = target.organs_by_name["heart"]
+	var/obj/item/organ/heart/heart = target.organs_by_name[BP_HEART]
 
 	if(heart.damage > 0)
 		user.visible_message("[user] starts mending the mechanisms on [target]'s heart with \the [tool].", \
@@ -311,14 +311,14 @@
 	..()
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/heart/heart = target.organs_by_name["heart"]
+	var/obj/item/organ/heart/heart = target.organs_by_name[BP_HEART]
 	if(heart.damage > 0)
 		user.visible_message("\blue [user] repairs [target]'s heart with \the [tool].", \
 		"\blue You repair [target]'s heart with \the [tool]." )
 		heart.damage = 0
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/heart/heart = target.organs_by_name["heart"]
+	var/obj/item/organ/heart/heart = target.organs_by_name[BP_HEART]
 	user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s heart, gumming it up!!" , \
 	"\red Your hand slips, smearing [tool] in the incision in [target]'s heart, gumming it up!")
 	heart.take_damage(5, 0)

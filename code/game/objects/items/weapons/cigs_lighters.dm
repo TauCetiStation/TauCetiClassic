@@ -424,9 +424,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				else
 					to_chat(user, "<span class='warning'>You burn yourself while lighting the lighter.</span>")
 					if (user.l_hand == src)
-						user.apply_damage(2,BURN,"l_arm")
+						user.apply_damage(2, BURN, BP_L_ARM)
 					else
-						user.apply_damage(2,BURN,"r_arm")
+						user.apply_damage(2, BURN, BP_R_ARM)
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
 			set_light(2)
@@ -453,7 +453,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!istype(M, /mob))
 		return
 	M.IgniteMob()	//Lighters can ignite mobs splashed with fuel
-	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == BP_MOUTH && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
 			cig.attackby(src, user)

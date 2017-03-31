@@ -3,9 +3,9 @@
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
-	var/obj/item/bodypart/r_arm = M:bodyparts_by_name["r_arm"]
+	var/obj/item/bodypart/r_arm = M:bodyparts_by_name[BP_R_ARM]
 	if (M.hand)
-		r_arm = M:bodyparts_by_name["l_arm"]
+		r_arm = M:bodyparts_by_name[BP_L_ARM]
 	if(r_arm && !r_arm.is_usable())
 		to_chat(M, "\red You can't use your [r_arm.name].")
 		return

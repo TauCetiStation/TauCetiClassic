@@ -336,8 +336,8 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.overeatduration = 2000
 
 	// Wheelchair necessary?
-	var/obj/item/bodypart/l_leg = character.get_bodypart("l_leg")
-	var/obj/item/bodypart/r_leg = character.get_bodypart("r_leg")
+	var/obj/item/bodypart/l_leg = character.get_bodypart(BP_L_LEG)
+	var/obj/item/bodypart/r_leg = character.get_bodypart(BP_R_LEG)
 	if((!l_leg || l_leg.status & ORGAN_DESTROYED) && (!r_leg || r_leg.status & ORGAN_DESTROYED))
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W

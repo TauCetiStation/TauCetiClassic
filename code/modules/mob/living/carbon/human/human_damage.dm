@@ -17,7 +17,7 @@
 
 /mob/living/carbon/human/getBrainLoss()
 	var/res = brainloss
-	var/obj/item/organ/brain/IO = organs_by_name["brain"]
+	var/obj/item/organ/brain/IO = organs_by_name[BP_BRAIN]
 	if(!IO)
 		return 0
 	if (IO.is_bruised())

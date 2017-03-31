@@ -215,8 +215,8 @@
 			else if(istype(mob.buckled, /obj/structure/stool/bed/chair/wheelchair))
 				if(ishuman(mob.buckled))
 					var/mob/living/carbon/human/driver = mob.buckled
-					var/obj/item/bodypart/l_arm = driver.get_bodypart("l_arm")
-					var/obj/item/bodypart/r_arm = driver.get_bodypart("r_arm")
+					var/obj/item/bodypart/l_arm = driver.get_bodypart(BP_L_ARM)
+					var/obj/item/bodypart/r_arm = driver.get_bodypart(BP_R_ARM)
 					if((!l_arm || (l_arm.status & ORGAN_DESTROYED)) && (!r_arm || (r_arm.status & ORGAN_DESTROYED)))
 						return // No hands to drive your chair? Tough luck!
 				move_delay += 2

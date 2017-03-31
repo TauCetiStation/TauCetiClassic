@@ -1285,7 +1285,7 @@ datum
 				M.eye_blind = max(M.eye_blind - 5, 0)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/obj/item/organ/eyes/IO = H.organs_by_name["eyes"]
+					var/obj/item/organ/eyes/IO = H.organs_by_name[BP_EYES]
 					if(istype(IO))
 						if(IO.damage > 0)
 							IO.damage = max(IO.damage - 1, 0)
@@ -2003,7 +2003,7 @@ datum
 					if(!M.unacidable)
 						if(istype(M, /mob/living/carbon/human) && volume >= 10)
 							var/mob/living/carbon/human/H = M
-							var/obj/item/bodypart/BP = H.get_bodypart("head")
+							var/obj/item/bodypart/BP = H.get_bodypart(BP_HEAD)
 							if(BP)
 								BP.take_damage(4*toxpwr, 2*toxpwr)
 								if(prob(meltprob)) //Applies disfigurement
@@ -3097,7 +3097,7 @@ datum
 					M.drowsyness = max(M.drowsyness, 30)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/obj/item/organ/liver/IO = H.organs_by_name["liver"]
+						var/obj/item/organ/liver/IO = H.organs_by_name[BP_LIVER]
 						if(istype(IO))
 							IO.take_damage(0.1, 1)
 						H.adjustToxLoss(0.1)
@@ -3355,13 +3355,13 @@ datum
 							M.adjustToxLoss(2)
 						if(prob(5) && ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/obj/item/organ/heart/IO = H.organs_by_name["heart"]
+							var/obj/item/organ/heart/IO = H.organs_by_name[BP_HEART]
 							if(istype(IO))
 								IO.take_damage(5, 0)
 					if(300 to INFINITY)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/obj/item/organ/heart/IO = H.organs_by_name["heart"]
+							var/obj/item/organ/heart/IO = H.organs_by_name[BP_HEART]
 							if(istype(IO))
 								IO.take_damage(100, 0)
 
@@ -4113,7 +4113,7 @@ datum
 				M.adjustBrainLoss(2)
 				if(ishuman(M) && prob(5))
 					var/mob/living/carbon/human/H = M
-					var/obj/item/organ/heart/IO = H.organs_by_name["heart"]
+					var/obj/item/organ/heart/IO = H.organs_by_name[BP_HEART]
 					if(istype(IO))
 						IO.take_damage(10, 0)
 	data++

@@ -253,7 +253,7 @@
 	if(BP.status & ORGAN_DESTROYED)
 		to_chat(user, "What [BP.name]?")
 		return 0
-	var/hit_area = BP.name
+	var/hit_area = BP.body_zone
 
 	if(user != src)
 		user.do_attack_animation(src)
@@ -274,11 +274,11 @@
 		return 1
 
 	if(I.attack_verb.len)
-		visible_message("<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</span>")
+		visible_message("<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [BP.name] with [I.name] by [user]!</span>")
 	else
-		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>")
+		visible_message("<span class='userdanger'>[src] has been attacked in the [BP.name] with [I.name] by [user]!</span>")
 
-	var/armor = run_armor_check(BP, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
+	var/armor = run_armor_check(BP, "melee", "Your armor has protected your [BP.name].", "Your armor has softened hit to your [BP.name].")
 	var/weapon_sharp = is_sharp(I)
 	var/weapon_edge = has_edge(I)
 	if ((weapon_sharp || weapon_edge) && prob(getarmor(target_zone, "melee")))
@@ -307,7 +307,7 @@
 					H.bloody_hands(src)
 
 		switch(hit_area)
-			if("head")//Harder to score a stun but if you do it lasts a bit longer
+			if(BP_HEAD) // Harder to score a stun but if you do it lasts a bit longer
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
@@ -327,7 +327,7 @@
 						glasses.add_blood(src)
 						update_inv_glasses()
 
-			if("chest")//Easier to score a stun but lasts less time
+			if(BP_CHEST)//Easier to score a stun but lasts less time
 				if(prob((I.force + 10)))
 					apply_effect(5, WEAKEN, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
@@ -351,7 +351,7 @@
 			var/mob/living/L = O.thrower
 			zone = check_zone(L.zone_sel.selecting)
 		else
-			zone = ran_zone("chest",75)	//Hits a random part of the body, geared towards the chest
+			zone = ran_zone(BP_CHEST, 75)	//Hits a random part of the body, geared towards the chest
 
 		//check if we hit
 		if (O.throw_source)

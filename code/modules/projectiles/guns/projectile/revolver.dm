@@ -191,7 +191,7 @@
 
 		if(isliving(target) && isliving(user))
 			var/obj/item/bodypart/BP = user.zone_sel.selecting
-			if(BP == "head")
+			if(BP == BP_HEAD)
 				var/obj/item/ammo_casing/AC = chambered
 				if(AC.fire(user, user))
 					user.apply_damage(300, BRUTE, BP, sharp=1)

@@ -111,7 +111,7 @@
 
 	var/mob/living/carbon/human/H = user
 
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes")
+	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", BP_EYES)
 
 	switch(choice)
 		if("name")
@@ -255,7 +255,7 @@
 			H.update_body()
 			H.check_dna(H)
 
-		if("eyes")
+		if(BP_EYES) // TODO check for organ eyes.
 			var/new_eyes = input(H, "Choose your eye color", "Eye Color") as null|color
 			if(new_eyes)
 				H.r_eyes = hex2num(copytext(new_eyes, 2, 4))

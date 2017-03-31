@@ -185,9 +185,9 @@
 			return
 
 	if(hasbodyparts(user))
-		var/obj/item/bodypart/BP = user:bodyparts_by_name["r_arm"]
+		var/obj/item/bodypart/BP = user:bodyparts_by_name[BP_R_ARM]
 		if (user.hand)
-			BP = user:bodyparts_by_name["l_arm"]
+			BP = user:bodyparts_by_name[BP_L_ARM]
 		if(BP && !BP.is_usable())
 			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return
@@ -671,7 +671,7 @@
 		)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/eyes/eyes = H.organs_by_name["eyes"]
+		var/obj/item/organ/eyes/eyes = H.organs_by_name[BP_EYES]
 		eyes.damage += rand(3,4)
 		if(eyes.damage >= eyes.min_bruised_damage)
 			if(H.stat != DEAD)
@@ -687,7 +687,7 @@
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(H.stat != DEAD)
 					to_chat(H, "\red You go blind!")
-		var/obj/item/bodypart/BP = H.get_bodypart("head")
+		var/obj/item/bodypart/BP = H.get_bodypart(BP_HEAD)
 		BP.take_damage(7)
 	else
 		M.take_bodypart_damage(7)

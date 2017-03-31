@@ -447,7 +447,7 @@
 			if(istype(H) && (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags&NOSLIP))
 				power_calculated = 0
 				continue
-			var/obj/item/bodypart/BP = H.get_bodypart("chest")
+			var/obj/item/bodypart/BP = H.get_bodypart(BP_CHEST)
 			if(H.check_thickmaterial(BP))
 				power_calculated = 0
 			else

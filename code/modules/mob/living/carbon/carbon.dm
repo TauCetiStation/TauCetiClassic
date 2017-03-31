@@ -50,7 +50,7 @@
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
-					var/bodypart = H.get_bodypart("chest")
+					var/bodypart = H.get_bodypart(BP_CHEST)
 					if (istype(bodypart, /obj/item/bodypart))
 						var/obj/item/bodypart/BP = bodypart
 						BP.take_damage(d, 0)
@@ -101,9 +101,9 @@
 	if(!istype(C))
 		return
 
-	var/obj/item/bodypart/BP = C.bodyparts_by_name["r_arm"]
+	var/obj/item/bodypart/BP = C.bodyparts_by_name[BP_R_ARM]
 	if (C.hand)
-		BP = C.bodyparts_by_name["l_arm"]
+		BP = C.bodyparts_by_name[BP_L_ARM]
 
 	if(BP && !BP.is_usable())
 		to_chat(C, "<span class='rose'>You can't use your [BP.name].</span>")
@@ -302,7 +302,7 @@
 				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					var/obj/item/bodypart/BP = H.get_bodypart("head")
+					var/obj/item/bodypart/BP = H.get_bodypart(BP_HEAD)
 					BP.take_damage(5, 0, 0, 0, "Facepalm") // what?.. that guy was insane anyway.
 				else
 					take_overall_damage(5, used_weapon = "Table")
@@ -687,11 +687,11 @@
 		germ_level += n
 
 /mob/living/carbon/proc/is_lung_ruptured()
-	var/obj/item/organ/lungs/IO = organs_by_name["lungs"]
+	var/obj/item/organ/lungs/IO = organs_by_name[BP_LUNGS]
 	return IO && IO.is_bruised()
 
 /mob/living/carbon/proc/rupture_lung()
-	var/obj/item/organ/lungs/IO = organs_by_name["lungs"]
+	var/obj/item/organ/lungs/IO = organs_by_name[BP_LUNGS]
 
 	if(!IO.is_bruised())
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
@@ -744,9 +744,9 @@ This function restores the subjects blood to max.
 		vessel.add_reagent("blood",560.0-blood_volume)
 
 /mob/living/carbon/proc/get_bodypart(zone)
-	if(!zone)	zone = "chest"
-	if (zone in list( "eyes", "mouth" ))
-		zone = "head"
+	if(!zone)	zone = BP_CHEST
+	if (zone in list( BP_EYES, BP_MOUTH ))
+		zone = BP_HEAD
 	return bodyparts_by_name[zone]
 
 // Get rank from ID, ID inside PDA, PDA, ID in wallet, etc.
@@ -814,7 +814,7 @@ This function restores the subjects blood to max.
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/proc/get_face_name()
-	var/obj/item/bodypart/head/BP = get_bodypart("head")
+	var/obj/item/bodypart/head/BP = get_bodypart(BP_HEAD)
 	if( !BP || BP.disfigured || (BP.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name

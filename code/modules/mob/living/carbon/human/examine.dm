@@ -202,7 +202,7 @@
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	//splints
-	for(var/bodypart in list("l_leg","r_leg","l_arm","r_arm"))
+	for(var/bodypart in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM))
 		var/obj/item/bodypart/BP = get_bodypart(bodypart)
 		if(BP && BP.status & ORGAN_SPLINTED)
 			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [BP.name]!</span>\n"

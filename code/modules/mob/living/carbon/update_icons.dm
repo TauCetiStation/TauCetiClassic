@@ -163,13 +163,13 @@ There are several things that need to be remembered:
 			standing += image(icon = 'icons/mob/human_undershirt.dmi', icon_state = "undershirt[undershirt]_s", layer = -BODY_LAYER)
 
 	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
-		if(!fat && bodyparts_by_name["r_leg"] && bodyparts_by_name["l_leg"]) //shit
-			var/obj/item/bodypart/r_leg = bodyparts_by_name["r_leg"]
-			var/obj/item/bodypart/l_leg = bodyparts_by_name["l_leg"]
+		if(!fat && bodyparts_by_name[BP_R_LEG] && bodyparts_by_name[BP_L_LEG]) //shit
+			var/obj/item/bodypart/r_leg = bodyparts_by_name[BP_R_LEG]
+			var/obj/item/bodypart/l_leg = bodyparts_by_name[BP_L_LEG]
 			if( !(r_leg.status & ORGAN_DESTROYED) && !(l_leg.status & ORGAN_DESTROYED) )
 				standing += image(icon = 'icons/mob/human_socks.dmi', icon_state = "socks[socks]_s", layer = -BODY_LAYER)
 
-	var/obj/item/bodypart/BP = get_bodypart("head")
+	var/obj/item/bodypart/BP = get_bodypart(BP_HEAD)
 	if(BP && !(BP.status & ORGAN_DESTROYED))
 		//Eyes
 		var/image/img_eyes_s = image(icon = 'icons/mob/human_face.dmi', icon_state = species.eyes, layer = -BODY_LAYER)
@@ -192,7 +192,7 @@ There are several things that need to be remembered:
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	var/obj/item/bodypart/head/BP = get_bodypart("head")
+	var/obj/item/bodypart/head/BP = get_bodypart(BP_HEAD)
 	if(!BP || (BP.status & ORGAN_DESTROYED))
 		return
 

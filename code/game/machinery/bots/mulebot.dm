@@ -776,12 +776,12 @@
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)
-	C.apply_damage(2*damage, BRUTE, "head")
-	C.apply_damage(2*damage, BRUTE, "chest")
-	C.apply_damage(0.5*damage, BRUTE, "l_leg")
-	C.apply_damage(0.5*damage, BRUTE, "r_leg")
-	C.apply_damage(0.5*damage, BRUTE, "l_arm")
-	C.apply_damage(0.5*damage, BRUTE, "r_arm")
+	C.apply_damage(2*damage, BRUTE, BP_HEAD)
+	C.apply_damage(2*damage, BRUTE, BP_CHEST)
+	C.apply_damage(0.5*damage, BRUTE, BP_L_LEG)
+	C.apply_damage(0.5*damage, BRUTE, BP_R_LEG)
+	C.apply_damage(0.5*damage, BRUTE, BP_L_ARM)
+	C.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
 	B.blood_DNA = list()

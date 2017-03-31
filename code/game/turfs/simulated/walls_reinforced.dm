@@ -22,11 +22,11 @@
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			if(prob(5))
 				playsound(user.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-				var/bodypart_name = pick("l_arm","r_arm")
+				var/bodypart_name = pick(BP_L_ARM, BP_R_ARM)
 				if(user.hand)
-					bodypart_name = "l_arm"
+					bodypart_name = BP_L_ARM
 				else
-					bodypart_name = "r_arm"
+					bodypart_name = BP_R_ARM
 				var/mob/living/carbon/human/H = user
 				var/obj/item/bodypart/BP = H.get_bodypart(bodypart_name)
 				BP.take_damage(rand(5, 15), 0, 0, 0, "Reinforced wall")

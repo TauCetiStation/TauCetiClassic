@@ -11,38 +11,38 @@
 /obj/item/robot_parts/l_arm
 	name = "robot left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	icon_state = "l_arm"
-	part = "l_arm"
+	icon_state = BP_L_ARM
+	part = BP_L_ARM
 
 /obj/item/robot_parts/r_arm
 	name = "robot right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	icon_state = "r_arm"
-	part = "r_arm"
+	icon_state = BP_R_ARM
+	part = BP_R_ARM
 
 /obj/item/robot_parts/l_leg
 	name = "robot left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	icon_state = "l_leg"
-	part = "l_leg"
+	icon_state = BP_L_LEG
+	part = BP_L_LEG
 
 /obj/item/robot_parts/r_leg
 	name = "robot right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	icon_state = "r_leg"
-	part = "r_leg"
+	icon_state = BP_R_LEG
+	part = BP_R_LEG
 
 /obj/item/robot_parts/chest
 	name = "robot torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
-	icon_state = "chest"
+	icon_state = BP_CHEST
 	var/wires = 0.0
 	var/obj/item/weapon/stock_parts/cell/cell = null
 
 /obj/item/robot_parts/head
 	name = "robot head"
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
-	icon_state = "head"
+	icon_state = BP_HEAD
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
 

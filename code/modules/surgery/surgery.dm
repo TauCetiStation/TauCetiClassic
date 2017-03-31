@@ -101,13 +101,13 @@
 			var/mob/living/carbon/human/T = M
 			if(S.clothless)
 				switch(target_zone)
-					if("chest","groin","l_leg","r_leg","r_arm","l_arm")
+					if(BP_CHEST, BP_GROIN, BP_L_LEG, BP_R_LEG, BP_R_ARM, BP_L_ARM)
 						if(T.wear_suit || T.w_uniform) return 0
-					if("r_leg","l_leg")
+					if(BP_R_LEG, BP_L_LEG)
 						if(T.shoes)                    return 0
-					if("eyes")
+					if(BP_EYES)
 						if(T.glasses)                  return 0
-					if("r_arm","l_arm")
+					if(BP_R_ARM, BP_L_ARM)
 						if(T.gloves)                   return 0
 
 		//check if tool is right or close enough and if this step is possible

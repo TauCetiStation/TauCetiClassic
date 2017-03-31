@@ -32,9 +32,9 @@
 	if(isrobot(user) || isalien(user))
 		return
 	if (hasbodyparts(user))
-		var/obj/item/bodypart/BP = user:bodyparts_by_name["r_arm"]
+		var/obj/item/bodypart/BP = user:bodyparts_by_name[BP_R_ARM]
 		if (user.hand)
-			BP = user:bodyparts_by_name["l_arm"]
+			BP = user:bodyparts_by_name[BP_L_ARM]
 		if(BP && !BP.is_usable())
 			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return

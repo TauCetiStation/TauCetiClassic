@@ -390,8 +390,8 @@
 /mob/living/proc/get_bodypart_target()
 	var/mob/shooter = src
 	var/t = shooter:zone_sel.selecting
-	if ((t in list( "eyes", "mouth" )))
-		t = "head"
+	if ((t in list( BP_EYES, BP_MOUTH )))
+		t = BP_HEAD
 	var/obj/item/bodypart/BP = ran_zone(t)
 	return BP
 

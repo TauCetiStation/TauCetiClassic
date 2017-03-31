@@ -122,12 +122,12 @@
 			L.apply_effects(8,5)
 			L.lying = 1
 			var/damage = rand(5,15)
-			L.apply_damage(2*damage, BRUTE, "head")
-			L.apply_damage(2*damage, BRUTE, "chest")
-			L.apply_damage(0.5*damage, BRUTE, "l_leg")
-			L.apply_damage(0.5*damage, BRUTE, "r_leg")
-			L.apply_damage(0.5*damage, BRUTE, "l_arm")
-			L.apply_damage(0.5*damage, BRUTE, "r_arm")
+			L.apply_damage(2*damage, BRUTE, BP_HEAD)
+			L.apply_damage(2*damage, BRUTE, BP_CHEST)
+			L.apply_damage(0.5*damage, BRUTE, BP_L_LEG)
+			L.apply_damage(0.5*damage, BRUTE, BP_R_LEG)
+			L.apply_damage(0.5*damage, BRUTE, BP_L_ARM)
+			L.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
 	..()
 
 /obj/vehicle/space/spacebike/relaymove(mob/user, direction)

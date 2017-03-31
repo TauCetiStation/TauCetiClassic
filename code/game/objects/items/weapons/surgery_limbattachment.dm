@@ -10,14 +10,14 @@
 	if(!istype(M, /mob/living/carbon/human))
 		return ..()
 
-	if((user.zone_sel.selecting == "l_arm") && (istype(src, /obj/item/robot_parts/l_arm)))
-		limbloc = "l_arm"
-	else if((user.zone_sel.selecting == "r_arm") && (istype(src, /obj/item/robot_parts/r_arm)))
-		limbloc = "r_arm"
-	else if((user.zone_sel.selecting == "r_leg") && (istype(src, /obj/item/robot_parts/r_leg)))
-		limbloc = "r_leg"
-	else if((user.zone_sel.selecting == "l_leg") && (istype(src, /obj/item/robot_parts/l_leg)))
-		limbloc = "l_leg"
+	if((user.zone_sel.selecting == BP_L_ARM) && (istype(src, /obj/item/robot_parts/l_arm)))
+		limbloc = BP_L_ARM
+	else if((user.zone_sel.selecting == BP_R_ARM) && (istype(src, /obj/item/robot_parts/r_arm)))
+		limbloc = BP_R_ARM
+	else if((user.zone_sel.selecting == BP_R_LEG) && (istype(src, /obj/item/robot_parts/r_leg)))
+		limbloc = BP_R_LEG
+	else if((user.zone_sel.selecting == BP_L_LEG) && (istype(src, /obj/item/robot_parts/l_leg)))
+		limbloc = BP_L_LEG
 	else
 		to_chat(user, "\red That doesn't fit there!")
 		return ..()

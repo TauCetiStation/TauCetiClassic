@@ -17,7 +17,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	if (!BP)
 		return 0
-	return target_zone == "mouth"
+	return target_zone == BP_MOUTH
 
 /datum/surgery_step/plastic_surgery/retract_face
 	allowed_tools = list(
@@ -129,7 +129,7 @@
 /datum/surgery_step/plastic_surgery/reshape_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("\red [user]'s hand slips, tearing skin on [target]'s face with \the [tool]!", \
 	"\red Your hand slips, tearing skin on [target]'s face with \the [tool]!")
-	target.apply_damage(20, BRUTE, "head", 1, sharp=1)
+	target.apply_damage(20, BRUTE, BP_HEAD, 1, sharp=1)
 
 /datum/surgery_step/plastic_surgery/cauterize
 	allowed_tools = list(

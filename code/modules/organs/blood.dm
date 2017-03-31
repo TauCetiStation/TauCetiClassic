@@ -63,7 +63,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 		// Damaged heart virtually reduces the blood volume, as the blood isn't
 		// being pumped properly anymore.
-		var/obj/item/organ/heart/heart = organs_by_name["heart"]
+		var/obj/item/organ/heart/heart = organs_by_name[BP_HEART]
 
 		if(heart.damage > 1 && heart.damage < heart.min_bruised_damage)
 			blood_volume *= 0.8
@@ -264,7 +264,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					H.bloody_body(src)
 					H.bloody_hands(src)
 					var/blinding = FALSE
-					if(ran_zone() == "head")
+					if(ran_zone() == BP_HEAD)
 						blinding = TRUE
 						for(var/obj/item/I in list(H.head, H.glasses, H.wear_mask))
 							if(I && (I.body_parts_covered & EYES))
@@ -296,7 +296,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 #undef BLOOD_SPRAY_DISTANCE
 
 /mob/living/carbon/proc/remove_blood(amt)
-	if(!organs_by_name["heart"] || (species && species.flags[NO_BLOOD])) //TODO: Make drips come from the reagents instead.
+	if(!organs_by_name[BP_HEART] || (species && species.flags[NO_BLOOD])) //TODO: Make drips come from the reagents instead.
 		return 0
 	if(!amt)
 		return 0

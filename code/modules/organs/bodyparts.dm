@@ -131,12 +131,12 @@
 
 	if(has_gender)
 		var/g = (owner.gender == FEMALE ? "_f" : "_m")
-		switch(name)
-			if("chest")
+		switch(body_zone)
+			if(BP_CHEST)
 				icon_state = body_zone + g
 				if(FAT in owner.mutations)
 					icon_state += "_fat"
-			if("groin", "head")
+			if(BP_GROIN, BP_HEAD)
 				icon_state = body_zone + g
 			else
 				icon_state = body_zone
@@ -820,7 +820,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			owner.update_bodypart(src)
 
 /obj/item/bodypart/proc/sever_artery()
-	if(!(status & (ORGAN_ARTERY_CUT|ORGAN_ROBOT)) && owner && owner.organs_by_name["heart"])
+	if(!(status & (ORGAN_ARTERY_CUT|ORGAN_ROBOT)) && owner && owner.organs_by_name[BP_HEART])
 		status |= ORGAN_ARTERY_CUT
 		return TRUE
 	return FALSE
@@ -1033,8 +1033,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/chest
 	name = "chest"
-	icon_state = "torso"
-	body_zone = "torso" // chest maybe? (need .dmi icon_state renames)
+	icon_state = BP_CHEST
+	body_zone = BP_CHEST
 	w_class = ITEM_SIZE_HUGE
 
 	body_part = UPPER_TORSO
@@ -1050,8 +1050,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/groin
 	name = "groin"
-	icon_state = "groin"
-	body_zone = "groin"
+	icon_state = BP_GROIN
+	body_zone = BP_GROIN
 	w_class = ITEM_SIZE_LARGE
 
 	body_part = LOWER_TORSO
@@ -1067,8 +1067,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/head
 	name = "head"
-	icon_state = "head"
-	body_zone = "head"
+	icon_state = BP_HEAD
+	body_zone = BP_HEAD
 	slot_flags = SLOT_BELT
 	w_class = ITEM_SIZE_SMALL
 
@@ -1108,8 +1108,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/l_arm
 	name = "left arm"
-	icon_state = "l_arm"
-	body_zone = "l_arm"
+	icon_state = BP_L_ARM
+	body_zone = BP_L_ARM
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = ARM_LEFT
@@ -1128,8 +1128,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/r_arm
 	name = "right arm"
-	icon_state = "r_arm"
-	body_zone = "r_arm"
+	icon_state = BP_R_ARM
+	body_zone = BP_R_ARM
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = ARM_RIGHT
@@ -1148,8 +1148,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
-	icon_state = "l_leg"
-	body_zone = "l_leg"
+	icon_state = BP_L_LEG
+	body_zone = BP_L_LEG
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = LEG_LEFT
@@ -1164,8 +1164,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/r_leg
 	name = "right leg"
-	icon_state = "r_leg"
-	body_zone = "r_leg"
+	icon_state = BP_R_LEG
+	body_zone = BP_R_LEG
 	w_class = ITEM_SIZE_NORMAL
 
 	body_part = LEG_RIGHT

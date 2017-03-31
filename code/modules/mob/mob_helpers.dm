@@ -14,12 +14,12 @@
 	return 0
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)	return BP_CHEST
 	switch(zone)
-		if("eyes")
-			zone = "head"
-		if("mouth")
-			zone = "head"
+		if(BP_EYES)
+			zone = BP_HEAD
+		if(BP_MOUTH)
+			zone = BP_HEAD
 	return zone
 
 // Returns zone with a certain probability.
@@ -32,16 +32,16 @@
 	if(probability == 100)
 		return zone
 
-	if(zone == "chest")
-		if(prob(probability))	return "chest"
+	if(zone == BP_CHEST)
+		if(prob(probability))	return BP_CHEST
 		var/t = rand(1, 9)
 		switch(t)
-			if(1 to 3)	return "head"
-			if(4 to 6)	return "l_arm"
-			if(7 to 9)	return "r_arm"
+			if(1 to 3)	return BP_HEAD
+			if(4 to 6)	return BP_L_ARM
+			if(7 to 9)	return BP_R_ARM
 
 	if(prob(probability * 0.75))	return zone
-	return "chest"
+	return BP_CHEST
 
 // Emulates targetting a specific body part, and miss chances
 // May return null if missed
@@ -53,15 +53,15 @@
 	if(!target.buckled && !target.lying)
 		var/miss_chance = 10
 		switch(zone)
-			if("head")
+			if(BP_HEAD)
 				miss_chance = 30
-			if("l_leg")
+			if(BP_L_LEG)
 				miss_chance = 60
-			if("r_leg")
+			if(BP_R_LEG)
 				miss_chance = 60
-			if("l_arm")
+			if(BP_L_ARM)
 				miss_chance = 60
-			if("r_arm")
+			if(BP_R_ARM)
 				miss_chance = 60
 		if(prob(max(miss_chance + miss_chance_mod, 0)))
 			if(prob(max(20, (miss_chance/2))))
@@ -70,19 +70,19 @@
 				var/t = rand(1, 100)
 				switch(t)
 					if(1 to 65)
-						return "chest"
+						return BP_CHEST
 					if(66 to 75)
-						return "head"
+						return BP_HEAD
 					if(76 to 80)
-						return "l_arm"
+						return BP_L_ARM
 					if(81 to 85)
-						return "r_arm"
+						return BP_R_ARM
 					if(86 to 90)
-						return "r_leg"
+						return BP_R_LEG
 					if(91 to 95)
-						return "l_leg"
+						return BP_L_LEG
 					if(96 to 100)
-						return "groin"
+						return BP_GROIN
 	return zone
 
 /proc/get_zone_with_probabilty(zone, probability = 80)
@@ -94,12 +94,12 @@
 
 	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
-		if(1)		 return "head"
-		if(2)		 return "chest"
-		if(3 to 6)	 return "l_arm"
-		if(7 to 10)	 return "r_arm"
-		if(11 to 14) return "l_leg"
-		if(15 to 18) return "r_leg"
+		if(1)		 return BP_HEAD
+		if(2)		 return BP_CHEST
+		if(3 to 6)	 return BP_L_ARM
+		if(7 to 10)	 return BP_R_ARM
+		if(11 to 14) return BP_L_LEG
+		if(15 to 18) return BP_R_LEG
 
 	return zone
 

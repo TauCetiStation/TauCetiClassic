@@ -60,17 +60,17 @@
 				var/status = organ_data[name]
 				var/organ_name = null
 				switch(name)
-					if("l_arm")
+					if(BP_L_ARM)
 						organ_name = "left arm"
-					if("r_arm")
+					if(BP_R_ARM)
 						organ_name = "right arm"
-					if("l_leg")
+					if(BP_L_LEG)
 						organ_name = "left leg"
-					if("r_leg")
+					if(BP_R_LEG)
 						organ_name = "right leg"
-					if("heart")
+					if(BP_HEART)
 						organ_name = "heart"
-					if("eyes")
+					if(BP_EYES)
 						organ_name = "eyes"
 
 				if(status == "cyborg")
@@ -483,13 +483,13 @@
 							var/limb = null
 							switch(limb_name)
 								if("Left Leg")
-									limb = "l_leg"
+									limb = BP_L_LEG
 								if("Right Leg")
-									limb = "r_leg"
+									limb = BP_R_LEG
 								if("Left Arm")
-									limb = "l_arm"
+									limb = BP_L_ARM
 								if("Right Arm")
-									limb = "r_arm"
+									limb = BP_R_ARM
 
 							var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
 							if(!new_state) return
@@ -509,9 +509,9 @@
 							var/organ = null
 							switch(organ_name)
 								if("Heart")
-									organ = "heart"
+									organ = BP_HEART
 								if("Eyes")
-									organ = "eyes"
+									organ = BP_EYES
 
 							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
 							if(!new_state) return

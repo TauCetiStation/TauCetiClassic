@@ -10,9 +10,9 @@
 		return
 	if(ishuman(src) && hasbodyparts(src))
 		var/mob/living/carbon/human/U = src
-		var/obj/item/bodypart/BP = U.bodyparts_by_name["r_arm"]
+		var/obj/item/bodypart/BP = U.bodyparts_by_name[BP_R_ARM]
 		if (U.hand)
-			BP = U.bodyparts_by_name["l_arm"]
+			BP = U.bodyparts_by_name[BP_L_ARM]
 		if(BP && !BP.is_usable())
 			return
 	var/obj/item/I = usr.get_active_hand()

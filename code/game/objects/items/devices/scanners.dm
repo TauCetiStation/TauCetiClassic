@@ -167,7 +167,7 @@ REAGENT SCANNER
 			var/obj/item/bodypart/BP = H.bodyparts_by_name[name]
 			var/limb = BP.name
 			if(BP.status & ORGAN_BROKEN)
-				if(((BP.name == "l_arm") || (BP.name == "r_arm") || (BP.name == "l_leg") || (BP.name == "r_leg")) && (!(BP.status & ORGAN_SPLINTED)))
+				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && (!(BP.status & ORGAN_SPLINTED)))
 					to_chat(user, "\red Unsecured fracture in subject [limb]. Splinting recommended for transport.")
 			if(BP.has_infected_wound())
 				to_chat(user, "\red Infected wound detected in subject [limb]. Disinfection recommended.")

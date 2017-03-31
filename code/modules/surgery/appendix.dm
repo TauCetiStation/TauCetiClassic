@@ -11,9 +11,9 @@
 /datum/surgery_step/appendectomy/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (!hasbodyparts(target))
 		return 0
-	if (target_zone != "groin")
+	if (target_zone != BP_GROIN)
 		return 0
-	var/obj/item/bodypart/groin = target.get_bodypart("groin")
+	var/obj/item/bodypart/groin = target.get_bodypart(BP_GROIN)
 	if (!groin)
 		return 0
 	if (groin.open < 2)
@@ -46,7 +46,7 @@
 	target.op_stage.appendix = 1
 
 /datum/surgery_step/appendectomy/cut_appendix/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/bodypart/groin = target.get_bodypart("groin")
+	var/obj/item/bodypart/groin = target.get_bodypart(BP_GROIN)
 	user.visible_message("\red [user]'s hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!", \
 	"\red Your hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!")
 	groin.createwound(CUT, 50, 1)

@@ -10,7 +10,7 @@
 	var/damage = 0 // amount of damage to the organ
 	var/min_bruised_damage = 10
 	var/min_broken_damage = 30
-	var/parent_bodypart = "chest"
+	var/parent_bodypart = BP_CHEST
 	var/robotic = 0 //For being a robot
 	germ_level = 0 // INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
 
@@ -169,7 +169,7 @@
 						if (W.infection_check())
 							W.germ_level += 1
 
-			if(BP.name in list("l_leg", "r_leg") && !lying)
+			if(BP.name in list(BP_L_LEG, BP_R_LEG) && !lying)
 				if (!BP.is_usable() || BP.is_malfunctioning() || (BP.is_broken() && !(BP.status & ORGAN_SPLINTED)))
 					leg_tally--			// let it fail even if just foot&leg
 
@@ -182,11 +182,11 @@
 
 	//Check arms and legs for existence
 	can_stand = 2 //can stand on both legs
-	var/obj/item/bodypart/BP = bodyparts_by_name["l_leg"]
+	var/obj/item/bodypart/BP = bodyparts_by_name[BP_L_LEG]
 	if(BP.status & ORGAN_DESTROYED)
 		can_stand--
 
-	BP = bodyparts_by_name["r_leg"]
+	BP = bodyparts_by_name[BP_R_LEG]
 	if(BP.status & ORGAN_DESTROYED)
 		can_stand--
 
@@ -196,12 +196,12 @@
 
 /obj/item/organ/heart
 	name = "heart"
-	parent_bodypart = "chest"
+	parent_bodypart = BP_CHEST
 
 
 /obj/item/organ/lungs
 	name = "lungs"
-	parent_bodypart = "chest"
+	parent_bodypart = BP_CHEST
 
 /obj/item/organ/lungs/process()
 	..()
@@ -219,7 +219,7 @@
 
 /obj/item/organ/liver
 	name = "liver"
-	parent_bodypart = "chest"
+	parent_bodypart = BP_CHEST
 	var/process_accuracy = 10
 
 /obj/item/organ/liver/process()
@@ -262,15 +262,15 @@
 
 /obj/item/organ/kidney
 	name = "kidney"
-	parent_bodypart = "chest"
+	parent_bodypart = BP_CHEST
 
 /obj/item/organ/brain
 	name = "brain"
-	parent_bodypart = "head"
+	parent_bodypart = BP_HEAD
 
 /obj/item/organ/eyes
 	name = "eyes"
-	parent_bodypart = "head"
+	parent_bodypart = BP_HEAD
 
 /obj/item/organ/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()

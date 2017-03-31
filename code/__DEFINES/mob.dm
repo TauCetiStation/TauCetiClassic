@@ -1,4 +1,4 @@
-///////////////////ORGAN DEFINES///////////////////
+///////////////////ORGAN STATUS DEFINES///////////////////
 #define ORGAN_CUT_AWAY   1
 #define ORGAN_ATTACHABLE 2
 #define ORGAN_BLEEDING   4
@@ -10,6 +10,25 @@
 #define ORGAN_MUTATED    256
 #define ORGAN_ARTERY_CUT 512
 #define ORGAN_TENDON_CUT 1024
+
+// BODYPART/ORGAN DEFINES
+// Limbs.
+#define BP_CHEST "chest"
+#define BP_GROIN "groin"
+#define BP_HEAD  "head"
+#define BP_L_ARM "l_arm"
+#define BP_R_ARM "r_arm"
+#define BP_L_LEG "l_leg"
+#define BP_R_LEG "r_leg"
+
+// Organs.
+#define BP_MOUTH   "mouth"
+#define BP_EYES    "eyes"
+#define BP_HEART   "heart"
+#define BP_LUNGS   "lungs"
+#define BP_BRAIN   "brain"
+#define BP_LIVER   "liver"
+#define BP_KIDNEYS "kidneys"
 
 // These control the amount of blood lost from burns. The loss is calculated so
 // that dealing just enough burn damage to kill the player will cause the given

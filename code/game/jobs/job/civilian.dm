@@ -349,7 +349,7 @@
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
-	var/obj/item/bodypart/BP = H.bodyparts_by_name["head"]
+	var/obj/item/bodypart/BP = H.bodyparts_by_name[BP_HEAD]
 	BP.implants += L
 	L.part = BP
 	return 1

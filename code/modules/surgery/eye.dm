@@ -14,7 +14,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	if (!BP)
 		return 0
-	return target_zone == "eyes"
+	return target_zone == BP_EYES
 
 /datum/surgery_step/eye/cut_open
 	allowed_tools = list(
@@ -42,7 +42,7 @@
 	target.blinded += 1.5
 
 /datum/surgery_step/eye/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/eyes/eyes = target.organs_by_name["eyes"]
+	var/obj/item/organ/eyes/eyes = target.organs_by_name[BP_EYES]
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("\red [user]'s hand slips, slicing [target]'s eyes wth \the [tool]!" , \
 	"\red Your hand slips, slicing [target]'s eyes wth \the [tool]!" )
@@ -74,7 +74,7 @@
 	target.op_stage.eyes = 2
 
 /datum/surgery_step/eye/lift_eyes/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/eyes/eyes = target.organs_by_name["eyes"]
+	var/obj/item/organ/eyes/eyes = target.organs_by_name[BP_EYES]
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("\red [user]'s hand slips, damaging [target]'s eyes with \the [tool]!", \
 	"\red Your hand slips, damaging [target]'s eyes with \the [tool]!")
@@ -108,7 +108,7 @@
 	target.op_stage.eyes = 3
 
 /datum/surgery_step/eye/mend_eyes/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/eyes/eyes = target.organs_by_name["eyes"]
+	var/obj/item/organ/eyes/eyes = target.organs_by_name[BP_EYES]
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("\red [user]'s hand slips, stabbing \the [tool] into [target]'s eye!", \
 	"\red Your hand slips, stabbing \the [tool] into [target]'s eye!")
@@ -135,7 +135,7 @@
 	"You are beginning to cauterize the incision around [target]'s eyes with \the [tool].")
 
 /datum/surgery_step/eye/cauterize/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/eyes/eyes = target.organs_by_name["eyes"]
+	var/obj/item/organ/eyes/eyes = target.organs_by_name[BP_EYES]
 	user.visible_message("\blue [user] cauterizes the incision around [target]'s eyes with \the [tool].", \
 	"\blue You cauterize the incision around [target]'s eyes with \the [tool].")
 	if (target.op_stage.eyes == 3)
@@ -145,7 +145,7 @@
 	target.op_stage.eyes = 0
 
 /datum/surgery_step/eye/cauterize/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/eyes/eyes = target.organs_by_name["eyes"]
+	var/obj/item/organ/eyes/eyes = target.organs_by_name[BP_EYES]
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("\red [user]'s hand slips,  searing [target]'s eyes with \the [tool]!", \
 	"\red Your hand slips, searing [target]'s eyes with \the [tool]!")

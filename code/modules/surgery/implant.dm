@@ -13,25 +13,25 @@
 	if(!ishuman(target))
 		return 0
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	return BP.open >= 2 && !(BP.status & ORGAN_BLEEDING) && (target_zone != "chest" || target.op_stage.ribcage == 2)
+	return BP.open >= 2 && !(BP.status & ORGAN_BLEEDING) && (target_zone != BP_CHEST || target.op_stage.ribcage == 2)
 
 /datum/surgery_step/cavity/proc/get_max_wclass(obj/item/bodypart/BP)
-	switch (BP.name)
-		if ("head")
+	switch (BP.body_zone)
+		if (BP_HEAD)
 			return 1
-		if ("chest")
+		if (BP_CHEST)
 			return 3
-		if ("groin")
+		if (BP_GROIN)
 			return 2
 	return 0
 
 /datum/surgery_step/cavity/proc/get_cavity(obj/item/bodypart/BP)
-	switch (BP.name)
-		if ("head")
+	switch (BP.body_zone)
+		if (BP_HEAD)
 			return "cranial"
-		if ("chest")
+		if (BP_CHEST)
 			return "thoracic"
-		if ("groin")
+		if (BP_GROIN)
 			return "abdominal"
 	return ""
 
@@ -132,7 +132,7 @@
 		to_chat(user, "\red You tear some blood vessels trying to fit such a big object in this cavity.")
 		BP.owner.custom_pain("You feel something rip in your [BP.name]!", 1)
 	if(istype(tool, /obj/item/gland))	//Abductor surgery integration
-		if(target_zone != "chest")
+		if(target_zone != BP_CHEST)
 			return
 		else
 			var/obj/item/gland/gland = tool
@@ -168,7 +168,7 @@
 /datum/surgery_step/cavity/implant_removal/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return ((BP.open == 3 && BP.name == "chest") || (BP.open == 2))
+		return ((BP.open == 3 && BP.name == BP_CHEST) || (BP.open == 2))
 
 /datum/surgery_step/cavity/implant_removal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)

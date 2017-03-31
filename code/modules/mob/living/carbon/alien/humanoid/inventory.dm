@@ -24,8 +24,6 @@
 	if(W)
 		if(!istype(W))	return
 		switch(slot_id)
-//			if("o_clothing")
-//			if("head")
 			if(slot_l_store)
 				if(l_store)
 					return

@@ -114,11 +114,11 @@
 
 			switch(pick(list("head","knee","elbow")))
 				if("knee")
-					BP = H.get_bodypart(pick("l_leg", "r_leg"))
+					BP = H.get_bodypart(pick(BP_L_LEG, BP_R_LEG))
 				if("elbow")
-					BP = H.get_bodypart(pick("l_arm", "r_arm"))
+					BP = H.get_bodypart(pick(BP_L_ARM, BP_R_ARM))
 				if("head")
-					BP = H.get_bodypart("head")
+					BP = H.get_bodypart(BP_HEAD)
 
 			if(BP)
 				to_chat(M, "<span class='red'>You land heavily on your [BP.name]!</span>")

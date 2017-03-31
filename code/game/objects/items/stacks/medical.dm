@@ -25,7 +25,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
 
-		if(BP.name == "head")
+		if(BP.body_zone == BP_HEAD)
 			if(H.head && istype(H.head,/obj/item/clothing/head/helmet/space))
 				to_chat(user, "<span class='warning'>You can't apply [src] through [H.head]!</span>")
 				return 1
@@ -275,7 +275,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
 		var/limb_name = BP.name
-		if(!((BP.name == "l_arm") || (BP.name == "r_arm") || (BP.name == "l_leg") || (BP.name == "r_leg")))
+		if(!((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)))
 			to_chat(user, "<span class='danger'>You can't apply a splint there!</span>")
 			return
 		if(BP.status & ORGAN_SPLINTED)
@@ -289,7 +289,7 @@
 								"<span class='danger'>You start to apply \the [src] to [M]'s [limb_name].</span>", \
 								"<span class='danger'>You hear something being wrapped.</span>")
 		else
-			if((!user.hand && BP.name == "r_arm") || (user.hand && BP.name == "l_arm"))
+			if((!user.hand && BP.body_zone == BP_R_ARM) || (user.hand && BP.body_zone == BP_L_ARM))
 				to_chat(user, "<span class='danger'>You can't apply a splint to the arm you're using!</span>")
 				return
 			user.visible_message("<span class='danger'>[user] starts to apply \the [src] to their [limb_name].</span>", \

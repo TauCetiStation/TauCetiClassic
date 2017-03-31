@@ -14,7 +14,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	if (!BP)
 		return 0
-	return target_zone == "mouth"
+	return target_zone == BP_MOUTH
 
 /datum/surgery_step/generic/cut_face
 	allowed_tools = list(
@@ -28,7 +28,7 @@
 
 /datum/surgery_step/generic/cut_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))	return 0
-	return ..() && target_zone == "mouth" && target.op_stage.face == 0
+	return ..() && target_zone == BP_MOUTH && target.op_stage.face == 0
 
 /datum/surgery_step/generic/cut_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to cut open [target]'s face and neck with \the [tool].", \

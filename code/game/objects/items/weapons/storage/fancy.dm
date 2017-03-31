@@ -207,7 +207,7 @@
 	if(!istype(M, /mob))
 		return
 
-	if(M == user && user.zone_sel.selecting == "mouth" && contents.len > 0 && !user.wear_mask)
+	if(M == user && user.zone_sel.selecting == BP_MOUTH && contents.len > 0 && !user.wear_mask)
 		var/has_cigarette = 0
 		for(var/obj/item/I in contents)
 			if(istype(I, /obj/item/clothing/mask/cigarette))

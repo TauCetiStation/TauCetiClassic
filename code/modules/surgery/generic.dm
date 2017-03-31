@@ -9,7 +9,7 @@
 /datum/surgery_step/generic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (isslime(target))
 		return 0
-	if (target_zone == "eyes")	//there are specific steps for eye surgery
+	if (target_zone == BP_EYES)	//there are specific steps for eye surgery
 		return 0
 	if (!hasbodyparts(target))
 		return 0
@@ -18,7 +18,7 @@
 		return 0
 	if (BP.status & ORGAN_DESTROYED)
 		return 0
-	if (target_zone == "head" && target.species && (target.species.flags[IS_SYNTHETIC]))
+	if (target_zone == BP_HEAD && target.species && (target.species.flags[IS_SYNTHETIC]))
 		return 1
 	if (BP.status & ORGAN_ROBOT)
 		return 0
@@ -38,7 +38,7 @@
 /datum/surgery_step/generic/cut_with_laser/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return BP.open == 0 && target_zone != "mouth"
+		return BP.open == 0 && target_zone != BP_MOUTH
 
 /datum/surgery_step/generic/cut_with_laser/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -57,7 +57,7 @@
 	BP.createwound(CUT, 1)
 	BP.clamp()
 	spread_germs_to_bodypart(BP, user)
-	if (target_zone == "head")
+	if (target_zone == BP_HEAD)
 		target.brain_op_stage = 1
 
 /datum/surgery_step/generic/cut_with_laser/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -78,7 +78,7 @@
 /datum/surgery_step/generic/incision_manager/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return BP.open == 0 && target_zone != "mouth"
+		return BP.open == 0 && target_zone != BP_MOUTH
 
 /datum/surgery_step/generic/incision_manager/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -96,7 +96,7 @@
 	BP.createwound(CUT, 1)
 	BP.clamp()
 	BP.open = 2
-	if (target_zone == "head")
+	if (target_zone == BP_HEAD)
 		target.brain_op_stage = 1
 
 /datum/surgery_step/generic/incision_manager/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -119,7 +119,7 @@
 /datum/surgery_step/generic/cut_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return BP.open == 0 && target_zone != "mouth"
+		return BP.open == 0 && target_zone != BP_MOUTH
 
 /datum/surgery_step/generic/cut_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -135,7 +135,7 @@
 	BP.open = 1
 	BP.status |= ORGAN_BLEEDING
 	BP.createwound(CUT, 1)
-	if (target_zone == "head")
+	if (target_zone == BP_HEAD)
 		target.brain_op_stage = 1
 
 /datum/surgery_step/generic/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -199,10 +199,10 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	var/msg = "[user] starts to pry open the incision on [target]'s [BP.name] with \the [tool]."
 	var/self_msg = "You start to pry open the incision on [target]'s [BP.name] with \the [tool]."
-	if (target_zone == "chest")
+	if (target_zone == BP_CHEST)
 		msg = "[user] starts to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
 		self_msg = "You start to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
-	if (target_zone == "groin")
+	if (target_zone == BP_GROIN)
 		msg = "[user] starts to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
 		self_msg = "You start to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
 	user.visible_message(msg, self_msg)
@@ -213,10 +213,10 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	var/msg = "\blue [user] keeps the incision open on [target]'s [BP.name] with \the [tool]."
 	var/self_msg = "\blue You keep the incision open on [target]'s [BP.name] with \the [tool]."
-	if (target_zone == "chest")
+	if (target_zone == BP_CHEST)
 		msg = "\blue [user] keeps the ribcage open on [target]'s torso with \the [tool]."
 		self_msg = "\blue You keep the ribcage open on [target]'s torso with \the [tool]."
-	if (target_zone == "groin")
+	if (target_zone == BP_GROIN)
 		msg = "\blue [user] keeps the incision open on [target]'s lower abdomen with \the [tool]."
 		self_msg = "\blue You keep the incision open on [target]'s lower abdomen with \the [tool]."
 	user.visible_message(msg, self_msg)
@@ -226,10 +226,10 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	var/msg = "\red [user]'s hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!"
 	var/self_msg = "\red Your hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!"
-	if (target_zone == "chest")
+	if (target_zone == BP_CHEST)
 		msg = "\red [user]'s hand slips, damaging several organs in [target]'s torso with \the [tool]!"
 		self_msg = "\red Your hand slips, damaging several organs in [target]'s torso with \the [tool]!"
-	if (target_zone == "groin")
+	if (target_zone == BP_GROIN)
 		msg = "\red [user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]"
 		self_msg = "\red Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!"
 	user.visible_message(msg, self_msg)
@@ -249,7 +249,7 @@
 /datum/surgery_step/generic/cauterize/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return BP.open && target_zone != "mouth"
+		return BP.open && target_zone != BP_MOUTH
 
 /datum/surgery_step/generic/cauterize/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -282,7 +282,7 @@
 	max_duration = 160
 
 /datum/surgery_step/generic/amputate/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (target_zone == "eyes")	//there are specific steps for eye surgery
+	if (target_zone == BP_EYES)	//there are specific steps for eye surgery
 		return 0
 	if (!hasbodyparts(target))
 		return 0
@@ -291,7 +291,7 @@
 		return 0
 	if (BP.status & ORGAN_DESTROYED)
 		return 0
-	return target_zone != "chest" && target_zone != "groin" && target_zone != "head"
+	return target_zone != BP_CHEST && target_zone != BP_GROIN && target_zone != BP_HEAD
 
 /datum/surgery_step/generic/amputate/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)

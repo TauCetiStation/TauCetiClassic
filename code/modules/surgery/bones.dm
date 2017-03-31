@@ -54,7 +54,7 @@
 	if (!hasbodyparts(target))
 		return 0
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	return BP.name != "head" && BP.open >= 2 && BP.stage == 1
+	return BP.body_zone != BP_HEAD && BP.open >= 2 && BP.stage == 1
 
 /datum/surgery_step/set_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -94,7 +94,7 @@
 	if (!hasbodyparts(target))
 		return 0
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	return BP.name == "head" && BP.open >= 2 && BP.stage == 1
+	return BP.body_zone == BP_HEAD && BP.open >= 2 && BP.stage == 1
 
 /datum/surgery_step/mend_skull/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] is beginning to piece together [target]'s skull with \the [tool]."  , \

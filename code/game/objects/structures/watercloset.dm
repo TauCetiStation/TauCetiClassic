@@ -181,7 +181,7 @@
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the urinal.</span>")
 					return
 				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
-				GM.apply_damage(8,BRUTE,"head")
+				GM.apply_damage(8, BRUTE, BP_HEAD)
 				playsound(src, 'sound/weapons/smash.ogg', 50, 1, 1)
 				return
 			else
@@ -230,9 +230,9 @@
 		sleep(60)
 		var/mob/living/carbon/C = user
 		if(C.r_hand)
-			C.apply_damage(25,BURN,"r_arm")
+			C.apply_damage(25, BURN, BP_R_ARM)
 		if(C.l_hand)
-			C.apply_damage(25,BURN,"l_arm")
+			C.apply_damage(25, BURN, BP_L_ARM)
 		to_chat(C, "<span class='danger'>The dryer is burning!</span>")
 		new /obj/effect/decal/cleanable/ash(C.loc)
 		qdel(O)
@@ -547,9 +547,9 @@
 
 /obj/structure/sink/attack_hand(mob/user)
 	if (hasbodyparts(user))
-		var/obj/item/bodypart/BP = user:bodyparts_by_name["r_arm"]
+		var/obj/item/bodypart/BP = user:bodyparts_by_name[BP_R_ARM]
 		if (user.hand)
-			BP = user:bodyparts_by_name["l_arm"]
+			BP = user:bodyparts_by_name[BP_L_ARM]
 		if(BP && !BP.is_usable())
 			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return

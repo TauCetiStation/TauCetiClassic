@@ -19,7 +19,7 @@
 	if (BP.parent)
 		if (BP.parent.status & ORGAN_DESTROYED)
 			return 0
-	return BP.name != "head"
+	return BP.body_zone != BP_HEAD
 
 
 /datum/surgery_step/limb/cut

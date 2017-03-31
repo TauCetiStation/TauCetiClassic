@@ -118,7 +118,7 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			var/bodypart = pick(list("r_arm","l_arm","r_leg","r_leg"))
+			var/bodypart = pick(list(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG))
 			var/obj/item/bodypart/BP = H.bodyparts_by_name[bodypart]
 			if (!(BP.status & ORGAN_DEAD))
 				BP.status |= ORGAN_DEAD
@@ -202,7 +202,7 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			var/obj/item/organ/brain/IO = H.organs_by_name["brain"]
+			var/obj/item/organ/brain/IO = H.organs_by_name[BP_BRAIN]
 			if (IO.damage < IO.min_broken_damage)
 				IO.take_damage(5)
 		else

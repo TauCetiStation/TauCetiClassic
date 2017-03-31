@@ -126,12 +126,12 @@
 			var/mob/living/carbon/human/AH = affecting
 			if(!AH.is_in_space_suit(only_helmet = TRUE))
 				switch(hit_zone)
-					if("mouth")
+					if(BP_MOUTH)
 						if(announce)
 							assailant.visible_message("<span class='warning'>[assailant] covers [AH]'s mouth!</span>")
 						if(AH.silent < 3)
 							AH.silent = 3
-					if("eyes")
+					if(BP_EYES)
 						if(announce)
 							assailant.visible_message("<span class='warning'>[assailant] covers [AH]'s eyes!</span>")
 						if(AH.eye_blind < 3)
@@ -326,7 +326,7 @@
 					return
 				if("hurt")
 
-					if(hit_zone == "eyes")
+					if(hit_zone == BP_EYES)
 						if(state < GRAB_NECK)
 							to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 							return
@@ -343,12 +343,12 @@
 						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Pressed fingers into the eyes of [affecting.name] ([affecting.ckey])</font>")
 						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had fingers pressed into their eyes by [assailant.name] ([assailant.ckey])</font>")
 						msg_admin_attack("[key_name(assailant)] has pressed his fingers into [key_name(affecting)]'s eyes.")
-						var/obj/item/organ/eyes/eyes = affecting:organs_by_name["eyes"]
+						var/obj/item/organ/eyes/eyes = affecting:organs_by_name[BP_EYES]
 						eyes.damage += rand(3,4)
 						if (eyes.damage >= eyes.min_broken_damage)
 							if(affecting.stat != DEAD)
 								to_chat(affecting, "\red You go blind!")
-//					else if(hit_zone != "head")
+//					else if(hit_zone != BP_HEAD)
 //						if(state < GRAB_NECK)
 //							assailant << "<span class='warning'>You require a better grab to do this.</span>"
 //							return

@@ -42,7 +42,7 @@
 				var/mob/living/carbon/human/H = target
 	//			if (M.health <= 0) return
 
-				var/obj/item/bodypart/BP = H.get_bodypart(pick("chest", "chest", "chest", "head"))
+				var/obj/item/bodypart/BP = H.get_bodypart(pick(BP_CHEST, BP_CHEST, BP_CHEST, BP_HEAD))
 				if(BP)
 					switch(damtype)
 						if("brute")
