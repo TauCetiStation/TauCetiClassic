@@ -103,7 +103,7 @@
 /obj/structure/transit_tube/station/Bumped(mob/M)
 	if(!pod_moving && icon_state == "open" && istype(M))
 		for(var/obj/structure/transit_tube_pod/pod in loc)
-			if(locate(/mob) in contents)
+			if(locate(/mob) in pod.contents)
 				to_chat(M, "<span class='notice'>The pod is already occupied.</span>")
 				return
 			else if(!pod.moving && pod.dir in directions())
