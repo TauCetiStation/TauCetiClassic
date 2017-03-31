@@ -145,10 +145,6 @@
 
 	var/enter_allowed = 1
 
-	var/use_irc_bot = 0
-	var/irc_bot_host = ""
-	var/main_irc = ""
-	var/admin_irc = ""
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 	var/use_lib_nudge = 0 //Use the C library nudge instead of the python nudge.
 	var/use_overmap = 0
@@ -433,9 +429,6 @@
 				if("allow_holidays")
 					Holiday = 1
 
-				if("use_irc_bot")
-					use_irc_bot = 1
-
 				if("ticklag")
 					var/ticklag = text2num(value)
 					if(ticklag > 0)
@@ -485,15 +478,6 @@
 
 				if("comms_password")
 					config.comms_password = value
-
-				if("irc_bot_host")
-					config.irc_bot_host = value
-
-				if("main_irc")
-					config.main_irc = value
-
-				if("admin_irc")
-					config.admin_irc = value
 
 				if("python_path")
 					if(value)
