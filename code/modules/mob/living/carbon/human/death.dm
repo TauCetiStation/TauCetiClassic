@@ -59,9 +59,6 @@
 	jitteriness = 0
 	dog_owner = null
 
-	update_health_hud()
-	handle_hud_list()
-
 	//Handle species-specific deaths.
 	if(species) species.handle_death(src)
 
@@ -102,23 +99,29 @@
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
 		//For ninjas exploding when they die.
-		if( istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_initialized )
-			src << browse(null, "window=spideros")//Just in case.
-			spawn(30)
-				var/location = loc
-				explosion(location, 0, 0, 3, 4)
-				src.gib()
-				gibbed = 1
+		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
+			var/obj/item/clothing/suit/space/space_ninja/n_suit = wear_suit
+			if(n_suit.s_initialized)
+				src << browse(null, "window=spideros")//Just in case.
+				spawn(30)
+					var/location = loc
+					explosion(location, 0, 0, 3, 4)
+					src.gib()
+					gibbed = 1
 
 		update_canmove()
 
 	tod = worldtime2text()		//weasellos time of death patch
-	if(mind)	mind.store_memory("Time of death: [tod]", 0)
+	if(mind)
+		mind.store_memory("Time of death: [tod]", 0)
 	if(ticker && ticker.mode)
 //		world.log << "k"
 		sql_report_death(src)
 		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
-	return ..(gibbed)
+
+	..(gibbed)
+	update_health_hud()
+	handle_hud_list()
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	if(!species || (species.name == "Skeleton")) return

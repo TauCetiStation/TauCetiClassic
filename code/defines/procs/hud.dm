@@ -21,7 +21,7 @@ the HUD updates properly! */
 					continue
 			else
 				continue
-		if(local_scanner)
+		else
 			P.Client.images += patient.hud_list[STATUS_HUD]
 		P.Client.images += patient.hud_list[HEALTH_HUD]
 
