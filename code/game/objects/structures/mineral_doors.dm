@@ -10,6 +10,7 @@
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 
+	var/operating_sound = 'sound/effects/stonedoor_openclose.ogg'
 	var/mineralType = "metal"
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
@@ -75,7 +76,7 @@
 
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
+	playsound(loc, operating_sound, 100, 1)
 	flick("[mineralType]opening",src)
 	sleep(10)
 	density = 0
@@ -87,7 +88,7 @@
 
 /obj/structure/mineral_door/proc/Close()
 	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
+	playsound(loc, operating_sound, 100, 1)
 	flick("[mineralType]closing",src)
 	sleep(10)
 	density = 1
@@ -257,29 +258,8 @@
 	health = 1000
 
 /obj/structure/mineral_door/wood
+	operating_sound = 'sound/effects/doorcreaky.ogg'
 	mineralType = "wood"
-
-/obj/structure/mineral_door/wood/Open()
-	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/doorcreaky.ogg', 100, 1)
-	flick("[mineralType]opening",src)
-	sleep(10)
-	density = 0
-	opacity = 0
-	state = 1
-	update_icon()
-	isSwitchingStates = 0
-
-/obj/structure/mineral_door/wood/Close()
-	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/doorcreaky.ogg', 100, 1)
-	flick("[mineralType]closing",src)
-	sleep(10)
-	density = 1
-	opacity = 1
-	state = 0
-	update_icon()
-	isSwitchingStates = 0
 
 /obj/structure/mineral_door/wood/Dismantle(devastated = 0)
 	if(!devastated)
@@ -289,6 +269,7 @@
 
 /obj/structure/mineral_door/resin
 	icon = 'icons/mob/alien.dmi'
+	operating_sound = 'sound/effects/attackblob.ogg'
 	mineralType = "resin"
 	health = 150
 	var/close_delay = 100
@@ -298,30 +279,12 @@
 		return ..()
 
 /obj/structure/mineral_door/resin/Open()
-	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	flick("[mineralType]opening",src)
-	sleep(10)
-	density = 0
-	opacity = 0
-	state = 1
-	update_icon()
-	isSwitchingStates = 0
+	..()
+	addtimer(CALLBACK(src, .proc/TryToClose), close_delay)
 
-	spawn(close_delay)
-		if(!isSwitchingStates && state == 1)
-			Close()
-
-/obj/structure/mineral_door/resin/Close()
-	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	flick("[mineralType]closing",src)
-	sleep(10)
-	density = 1
-	opacity = 1
-	state = 0
-	update_icon()
-	isSwitchingStates = 0
+/obj/structure/mineral_door/resin/proc/TryToClose()
+	if(!isSwitchingStates && state == 1)
+		Close()
 
 /obj/structure/mineral_door/resin/Dismantle(devastated = 0)
 	qdel(src)
@@ -335,4 +298,3 @@
 	..()
 	CheckHealth()
 	return
-
