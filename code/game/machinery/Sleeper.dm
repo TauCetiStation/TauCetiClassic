@@ -32,7 +32,6 @@
 
 /obj/machinery/sleeper/New()
 	..()
-	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
