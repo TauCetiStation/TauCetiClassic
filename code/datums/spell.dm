@@ -101,7 +101,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	return 1
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
-
+	if(invocation != "none")
+		var/words = input("type in correct magic words to cast:", "Casting?", null, null) as null|text
+		if(words != invocation)
+			usr.say(words)
+			return FALSE
 	switch(invocation_type)
 		if("shout")
 			if(prob(50))//Auto-mute? Fuck that noise
@@ -117,6 +121,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				usr.whisper(invocation)
 			else
 				usr.whisper(replacetext(invocation," ","`"))
+	return TRUE
 
 /obj/effect/proc_holder/spell/New()
 	..()
@@ -138,7 +143,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1) //if recharge is started is important for the trigger spells
 	before_cast(targets)
-	invocation()
+	if(!invocation())
+		revert_cast()
+		return
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
