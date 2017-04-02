@@ -1062,7 +1062,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/list/stamp_list = list("CentComm", "Syndicate", "Clown", "FakeCentComm", "None")
-	var/stamp_name = input(usr, "Please, choose stamp you want to send with.") as null|anything in stamp_list
+	var/stamp_name = input(usr, "Please, choose the stamp you want to send with.") as null|anything in stamp_list
 	if(!stamp_name)
 		return
 
@@ -1072,7 +1072,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/stamp_text = null
 	if(stamp_type)
-		stamp_text = sanitize_alt(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay), if empty will be chosen default text for the selected stamp") as text)
+		stamp_text = sanitize_alt(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay). In case of empty field there will be default stamp text.") as text)
 
 	var/obj/item/weapon/paper/P = new
 	P.name = sent_name
