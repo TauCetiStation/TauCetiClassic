@@ -176,11 +176,11 @@
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
 	if(config.continous_rounds)
-		if(finished != 0)
+		if(finished)
 			if(SSshuttle)
 				SSshuttle.always_fake_recall = 0
 		return ..()
-	if(finished != 0)
+	if(finished)
 		return 1
 	else
 		return 0
