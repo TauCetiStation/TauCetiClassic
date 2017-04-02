@@ -23,9 +23,18 @@
 	..()
 	icon_state = mineralType
 	name = "[mineralType] door"
-	update_nearby_tiles(need_rebuild=1)
+	if(!blocks_air)
+		update_nearby_tiles(need_rebuild=1)
+	else
+		var/turf/T = get_turf(loc)
+		if(T)
+			T.blocks_air = TRUE
 
 /obj/structure/mineral_door/Destroy()
+	if(blocks_air)
+		var/turf/T = get_turf(loc)
+		if(T)
+			T.blocks_air = FALSE
 	update_nearby_tiles()
 	return ..()
 
