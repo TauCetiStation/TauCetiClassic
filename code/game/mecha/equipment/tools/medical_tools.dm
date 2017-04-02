@@ -83,7 +83,8 @@
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/go_out()
 	if(!occupant)
 		return
-	occupant.forceMove(get_turf(src))
+	for(var/atom/movable/AM in src)
+		AM.forceMove(get_turf(src))
 	occupant_message("[occupant] ejected. Life support functions disabled.")
 	log_message("[occupant] ejected. Life support functions disabled.")
 	occupant.reset_view()
