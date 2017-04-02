@@ -17,24 +17,14 @@
 	var/oreAmount = 7
 
 	var/health = 100
-	var/blocks_air = FALSE
 
 /obj/structure/mineral_door/New(location)
 	..()
 	icon_state = mineralType
 	name = "[mineralType] door"
-	if(!blocks_air)
-		update_nearby_tiles(need_rebuild=1)
-	else
-		var/turf/T = get_turf(loc)
-		if(T)
-			T.blocks_air = TRUE
+	update_nearby_tiles(need_rebuild=1)
 
 /obj/structure/mineral_door/Destroy()
-	if(blocks_air)
-		var/turf/T = get_turf(loc)
-		if(T)
-			T.blocks_air = FALSE
 	update_nearby_tiles()
 	return ..()
 
@@ -94,8 +84,7 @@
 	state = 1
 	update_icon()
 	isSwitchingStates = 0
-	if(!blocks_air)
-		update_nearby_tiles()
+	update_nearby_tiles()
 
 /obj/structure/mineral_door/proc/Close()
 	isSwitchingStates = 1
@@ -107,8 +96,7 @@
 	state = 0
 	update_icon()
 	isSwitchingStates = 0
-	if(!blocks_air)
-		update_nearby_tiles()
+	update_nearby_tiles()
 
 /obj/structure/mineral_door/update_icon()
 	if(state)
@@ -284,8 +272,19 @@
 	operating_sound = 'sound/effects/attackblob.ogg'
 	mineralType = "resin"
 	health = 150
-	blocks_air = TRUE
 	var/close_delay = 100
+
+/obj/structure/mineral_door/resin/New()
+	var/turf/T = get_turf(loc)
+	if(T)
+		T.blocks_air = TRUE
+	..()
+
+/obj/structure/mineral_door/resin/Destroy()
+	var/turf/T = get_turf(loc)
+	if(T)
+		T.blocks_air = FALSE
+	return ..()
 
 /obj/structure/mineral_door/resin/TryToSwitchState(atom/user)
 	if(isalien(user))
