@@ -17,6 +17,7 @@
 	var/oreAmount = 7
 
 	var/health = 100
+	var/blocks_air = FALSE
 
 /obj/structure/mineral_door/New(location)
 	..()
@@ -84,7 +85,8 @@
 	state = 1
 	update_icon()
 	isSwitchingStates = 0
-	update_nearby_tiles()
+	if(!blocks_air)
+		update_nearby_tiles()
 
 /obj/structure/mineral_door/proc/Close()
 	isSwitchingStates = 1
@@ -96,7 +98,8 @@
 	state = 0
 	update_icon()
 	isSwitchingStates = 0
-	update_nearby_tiles()
+	if(!blocks_air)
+		update_nearby_tiles()
 
 /obj/structure/mineral_door/update_icon()
 	if(state)
@@ -272,6 +275,7 @@
 	operating_sound = 'sound/effects/attackblob.ogg'
 	mineralType = "resin"
 	health = 150
+	blocks_air = TRUE
 	var/close_delay = 100
 
 /obj/structure/mineral_door/resin/TryToSwitchState(atom/user)
