@@ -71,12 +71,11 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	<b><u>Black Marks</u></b>:<br> "}
 	for(var/A in marks)
 		text += "\red[A]<br>"
-	to_chat(user, "\blue You feel a sting as the scanner extracts some of your blood.")
+	to_chat(user, "<span class='notice'>You feel a sting as the scanner extracts some of your blood.</span>")
 	var/turf/T = get_step(src,outputdir)
 	var/obj/item/weapon/paper/print = new(T)
 	print.name = "[mname] Report"
 	print.info = text
-	print.stamped = 1
 
 	for(var/datum/data/record/test in data_core.general)
 		if (test.fields["name"] == mname)
