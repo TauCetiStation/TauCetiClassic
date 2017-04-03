@@ -128,7 +128,7 @@ var/datum/subsystem/job/SSjob
 			continue
 
 		if(!job.player_old_enough(player.client))
-			Debug("GRJ player not old enough, Player: [player]")
+			Debug("GRJ player not old enough for [job.title], Player: [player]")
 			continue
 
 		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
@@ -136,6 +136,12 @@ var/datum/subsystem/job/SSjob
 			AssignRole(player, job.title)
 			unassigned -= player
 			break
+
+	// So we end up here which means every other job is unavailable, lets give him "assistant", since this is the only job without any spawn limit and restrictions.
+	if(player.mind && !player.mind.assigned_role)
+		Debug("GRJ Random job given, Player: [player], Job: Test Subject")
+		AssignRole(player, "Test Subject")
+		unassigned -= player
 
 /datum/subsystem/job/proc/ResetOccupations()
 	for(var/mob/new_player/player in player_list)
