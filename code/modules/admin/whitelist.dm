@@ -281,9 +281,9 @@
 			var/list/row = select_query.GetRowData()
 			if(role_whitelist[row["ckey"]])
 				var/list/A = role_whitelist[row["ckey"]]
-				A.Add(list(row["role"] = list("ban" = row["ban"], "reason" = row["reason"], "addby" = row["addby"], "addtm" = row["addtm"], "editby" = row["editby"], "edittm" = row["edittm"])))
+				A.Add(list(row["role"] = list("ban" = text2num(row["ban"]), "reason" = row["reason"], "addby" = row["addby"], "addtm" = row["addtm"], "editby" = row["editby"], "edittm" = row["edittm"])))
 			else
-				role_whitelist[row["ckey"]] = list(row["role"] = list("ban" = row["ban"], "reason" = row["reason"], "addby" = row["addby"], "addtm" = row["addtm"], "editby" = row["editby"], "edittm" = row["edittm"]))
+				role_whitelist[row["ckey"]] = list(row["role"] = list("ban" = text2num(row["ban"]), "reason" = row["reason"], "addby" = row["addby"], "addtm" = row["addtm"], "editby" = row["editby"], "edittm" = row["edittm"]))
 	return TRUE
 
 /proc/is_alien_whitelisted(mob/M, role)
