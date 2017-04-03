@@ -24,7 +24,7 @@
 
 	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
 	if(H.age>49)
-		var/obj/item/clothing/tie/medal/gold/captain/new_medal = new ()
+		var/obj/item/clothing/tie/medal/gold/captain/new_medal = new(U)
 		U.hastie = new_medal
 		new_medal.has_suit = U
 		U.overlays += new_medal.inv_overlay
