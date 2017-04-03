@@ -56,7 +56,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			else
 				var/SQLquery = "SELECT author, title, category, id FROM library WHERE "
 				if(category == "Any")
-					SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' LIMIT [page], [page + LIBRETURNLIMIT]"
+					SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' LIMIT [page], [LIBRETURNLIMIT]"
 				else
 					SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]' LIMIT [page], [LIBRETURNLIMIT]"
 				dat += {"<table>
