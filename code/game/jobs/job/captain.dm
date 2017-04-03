@@ -27,6 +27,7 @@
 		var/obj/item/clothing/tie/medal/gold/captain/new_medal = new ()
 		U.hastie = new_medal
 		new_medal.has_suit = U
+		U.overlays += new_medal.inv_overlay
 	H.equip_to_slot_or_del(U, slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat(H), slot_head)
