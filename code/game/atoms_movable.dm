@@ -107,10 +107,8 @@
 		qdel(AM)
 	loc = null
 	invisibility = 101
-	if (pulledby)
-		if (pulledby.pulling == src)
-			pulledby.pulling = null
-		pulledby = null
+	if(pulledby)
+		pulledby.stop_pulling()
 	return ..()
 
 /atom/movable/Bump(atom/A, yes)
