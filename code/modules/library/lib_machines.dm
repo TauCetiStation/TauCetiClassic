@@ -8,6 +8,8 @@
  *		Book Binder
  */
 
+#define LIBRETURNLIMIT 15 // how many entries we will display to the user per page.
+
 /*
  * Borrowbook datum
  */
@@ -30,7 +32,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/title
 	var/category = "Any"
 	var/author
-	var/SQLquery
+	var/page = 0
 
 /obj/machinery/computer/libraryconsole/attack_hand(mob/user)
 	if(..())
@@ -51,9 +53,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			establish_old_db_connection()
 			if(!dbcon_old.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
-			else if(!SQLquery)
-				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
 			else
+				var/SQLquery = "SELECT author, title, category, id FROM library WHERE "
+				if(category == "Any")
+					SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' LIMIT [page], [page + LIBRETURNLIMIT]"
+				else
+					SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]' LIMIT [page], [LIBRETURNLIMIT]"
 				dat += {"<table>
 				<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"}
 
@@ -67,8 +72,15 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					var/id = query.item[4]
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
 				dat += "</table><BR>"
-			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
-	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 400)
+			dat += {"
+			<A href='?src=\ref[src];back=1'>\[Go Back\]</A>
+			 <A href='?src=\ref[src];pageprev=2'>\[<< Page\]</A>
+			 <A href='?src=\ref[src];pageprev=1'>\[< Page\]</A>
+			 <A href='?src=\ref[src];pagereset=1'>\[Reset\]</A>
+			 <A href='?src=\ref[src];pagenext=1'>\[Page >\]</A>
+			 <A href='?src=\ref[src];pagenext=2'>\[Page >>\]</A><BR>"}
+
+	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -100,15 +112,25 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			author = null
 		author = sanitizeSQL(author)
 	if(href_list["search"])
-		SQLquery = "SELECT author, title, category, id FROM library WHERE "
-		if(category == "Any")
-			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
-		else
-			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]'"
 		screenstate = 1
 
 	if(href_list["back"])
 		screenstate = 0
+
+	if(href_list["pageprev"] == "1")
+		page = max(0, page - LIBRETURNLIMIT)
+
+	if(href_list["pageprev"] == "2")
+		page = max(0, page - (LIBRETURNLIMIT * 5))
+
+	if(href_list["pagereset"])
+		page = 0
+
+	if(href_list["pagenext"] == "1")
+		page = min(page + LIBRETURNLIMIT, 10000)
+
+	if(href_list["pagenext"] == "2")
+		page = min(page + (LIBRETURNLIMIT * 5), 10000)
 
 	src.updateUsrDialog()
 
@@ -197,11 +219,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if(!dbcon_old.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
-				dat += {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>
+				dat += {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A>([page] - [page + LIBRETURNLIMIT])<BR><BR>
 				<table>
 				<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"}
 
-				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category FROM library")
+				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category FROM library LIMIT [page], [LIBRETURNLIMIT]")
 				query.Execute()
 
 				while(query.NextRow())
@@ -211,7 +233,13 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					var/category = query.item[4]
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[id]'>\[Order\]</A></td></tr>"
 				dat += "</table>"
-			dat += "<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+			dat += {"
+			<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A>
+			 <A href='?src=\ref[src];pageprev=2'>\[<< Page\]</A>
+			 <A href='?src=\ref[src];pageprev=1'>\[< Page\]</A>
+			 <A href='?src=\ref[src];pagereset=1'>\[Reset\]</A>
+			 <A href='?src=\ref[src];pagenext=1'>\[Page >\]</A>
+			 <A href='?src=\ref[src];pagenext=2'>\[Page >>\]</A><BR>"}
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"
 			if(!scanner)
@@ -237,7 +265,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>
 			<A href='?src=\ref[src];switchscreen=0'>No.</A><BR>"}
 
-	var/datum/browser/popup = new(user, "library", name, 600, 400)
+	var/datum/browser/popup = new(user, "library", name, 600, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -464,3 +492,5 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		qdel(O)
 	else
 		..()
+
+#undef LIBRETURNLIMIT
