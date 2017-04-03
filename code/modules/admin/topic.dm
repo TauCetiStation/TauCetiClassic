@@ -92,7 +92,7 @@
 		var/bancid = href_list["dbbanaddcid"]
 		var/banduration = text2num(href_list["dbbaddduration"])
 		var/banjob = href_list["dbbanaddjob"]
-		var/banreason = href_list["dbbanreason"]
+		var/banreason = sanitize_simple(href_list["dbbanreason"])
 
 		banckey = ckey(banckey)
 
