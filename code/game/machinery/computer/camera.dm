@@ -10,7 +10,7 @@
 	name = "security camera monitor"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
-	circuit = null
+	circuit = /obj/item/weapon/circuitboard/security
 	light_color = "#a91515"
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
@@ -18,14 +18,6 @@
 	var/mapping = 0//For the overview file, interesting bit of code.
 
 	var/camera_cache = null
-
-/obj/machinery/computer/security/New()
-	..()
-	if(circuit)	//For new assembled one
-		network = circuit:network
-	else	//For map-based changes in network
-		circuit = new /obj/item/weapon/circuitboard/security()
-		circuit:network = network
 
 /obj/machinery/computer/security/check_eye(mob/user)
 	if ((get_dist(user, src) > 1 || (user.incapacitated()) || user.blinded) && !istype(user, /mob/living/silicon))
