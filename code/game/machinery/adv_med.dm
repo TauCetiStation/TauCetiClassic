@@ -51,10 +51,9 @@
 	if (usr.abiotic())
 		to_chat(usr, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
-	usr.pulling = null
 	usr.client.perspective = EYE_PERSPECTIVE
 	usr.client.eye = src
-	usr.loc = src
+	usr.forceMove(src)
 	src.occupant = usr
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)
