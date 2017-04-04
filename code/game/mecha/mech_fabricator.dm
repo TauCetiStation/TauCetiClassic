@@ -172,9 +172,11 @@
 	desc = initial(desc)
 
 	var/location = get_step(src,(dir))
-	var/obj/item/I = new D.build_path(location)
-	I.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
-	I.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
+	var/I = new D.build_path(location)
+	if(istype(I, /obj/item))
+		var/obj/item/Item = I
+		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
+		Item.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
 	visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
 	being_built = null
 

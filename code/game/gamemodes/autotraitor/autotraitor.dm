@@ -10,7 +10,7 @@
 
 	votable = 0
 
-	var/list/possible_traitors = null
+	var/list/possible_traitors = list()
 	var/num_players = 0
 
 /datum/game_mode/traitor/autotraitor/announce()

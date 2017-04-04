@@ -114,7 +114,7 @@ var/datum/subsystem/throwing/SSthrowing
 	set waitfor = 0
 	SSthrowing.processing -= thrownthing
 	//done throwing, either because it hit something or it finished moving
-	if (thrownthing.throwing)
+	if (!QDELETED(thrownthing) && thrownthing.throwing)
 		thrownthing.throwing = FALSE
 		if (!hit)
 			for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.

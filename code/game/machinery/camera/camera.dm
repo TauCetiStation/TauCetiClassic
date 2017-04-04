@@ -217,8 +217,7 @@
 			playsound(loc, "sparks", 50, 1)
 			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
 			drop_assembly()
-			pick(new /obj/item/weapon/cable_coil(loc),
-                 new /obj/item/weapon/cable_coil/cut(loc))
+			new /obj/item/weapon/cable_coil/cut/red(loc)
 			qdel(src)
 	else
 		..()

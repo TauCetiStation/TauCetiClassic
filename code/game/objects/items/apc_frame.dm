@@ -35,7 +35,7 @@
 			to_chat(usr, "\red There is another network terminal here.")
 			return
 		else
-			var/obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(loc)
+			var/obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil/random(loc)
 			C.amount = 10
 			to_chat(usr, "You cut the cables and disassemble the unused power terminal.")
 			qdel(T)

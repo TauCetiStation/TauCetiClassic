@@ -20,6 +20,11 @@
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
 
 /**
+ * Delete `item` and nullify var, where it was.
+ */
+#define QDEL_NULL(item) qdel(item); item = null
+
+/**
  * Return `TRUE` if `X` already passed `Destroy()` phase.
  */
 #define QDELETED(X) (!X || X.gc_destroyed)

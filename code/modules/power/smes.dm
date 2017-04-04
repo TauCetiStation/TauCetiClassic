@@ -38,7 +38,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 5)
+	component_parts += new /obj/item/weapon/cable_coil/red(null, 5)
 	var/map_capacity = capacity
 	var/map_charge = charge
 	var/map_max_input = max_input

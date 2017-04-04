@@ -421,7 +421,7 @@
 				to_chat(user, "\blue You remove the cables.")
 				src.state = 2
 				src.icon_state = "2"
-				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
+				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil/random(src.loc)
 				A.amount = 5
 
 			if(istype(P, /obj/item/stack/sheet/glass))

@@ -1044,7 +1044,7 @@
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
 	req_access_txt = "29"
-	products = list(/obj/item/weapon/cable_coil = 2,/obj/item/device/flash = 4,
+	products = list(/obj/item/weapon/cable_coil/random = 2,/obj/item/device/flash = 4,
 					/obj/item/weapon/stock_parts/cell/high = 5, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 2)
 	//everything after the power cell had no amounts, I improvised.  -Sayu

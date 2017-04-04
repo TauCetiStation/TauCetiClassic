@@ -80,7 +80,7 @@
 					to_chat(user, "\blue You remove the cables.")
 					state = 2
 					icon_state = "2"
-					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( loc )
+					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil/red(loc)
 					A.amount = 5
 
 			if(istype(P, /obj/item/stack/sheet/rglass))

@@ -545,12 +545,10 @@
 
 		if(talkative)
 			new_item.talking_atom = new()
-			talking_atom.holder_atom = new_item
-			talking_atom.init()
+			talking_atom.init(new_item)
 
 		qdel(src)
 
 	else if(talkative)
 		src.talking_atom = new()
-		talking_atom.holder_atom = src
-		talking_atom.init()
+		talking_atom.init(src)

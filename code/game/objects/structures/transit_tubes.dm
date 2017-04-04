@@ -17,7 +17,7 @@
 	//  the specific order matters to get a usable icon_state, it is
 	//  copied here so that, in the unlikely case that alldirs is changed,
 	//  this continues to work.
-	var/global/list/tube_dir_list = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
+	var/static/list/tube_dir_list = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
 
 // A place where tube pods stop, and people can get in or out.
@@ -37,49 +37,22 @@
 
 
 /obj/structure/transit_tube_pod
+	name = "transit tube pod"
+	desc = "Used for moving through the tube."
 	icon = 'icons/obj/pipes/transit_tube_pod.dmi'
 	icon_state = "pod"
 	animate_movement = FORWARD_STEPS
-	anchored = 1.0
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
 
-
-
 /obj/structure/transit_tube_pod/Destroy()
-	for(var/atom/movable/AM in contents)
-		AM.loc = loc
-
+	move_out_content()
 	return ..()
 
-
-
-// When destroyed by explosions, properly handle contents.
-obj/structure/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/atom/movable/AM in contents)
-				AM.loc = loc
-				AM.ex_act(severity++)
-
-			qdel(src)
-			return
-		if(2.0)
-			if(prob(50))
-				for(var/atom/movable/AM in contents)
-					AM.loc = loc
-					AM.ex_act(severity++)
-
-				qdel(src)
-				return
-		if(3.0)
-			return
-
-
-
-/obj/structure/transit_tube_pod/New(loc)
-	..(loc)
+/obj/structure/transit_tube_pod/New()
+	..()
 
 	air_contents.oxygen = MOLES_O2STANDARD * 2
 	air_contents.nitrogen = MOLES_N2STANDARD
@@ -88,41 +61,54 @@ obj/structure/ex_act(severity)
 	// Give auto tubes time to align before trying to start moving
 	addtimer(CALLBACK(src, .proc/follow_tube), 5)
 
+/obj/structure/transit_tube_pod/examine(mob/user)
+	..()
+	if(contents.len)
+		to_chat(user, "<span class='notice'>Something in it.</span>")
 
+/obj/structure/transit_tube_pod/proc/move_into_content(mob/M)
+	if(istype(M))
+		M.forceMove(src)
 
-/obj/structure/transit_tube/New(loc)
-	..(loc)
+/obj/structure/transit_tube_pod/proc/move_out_content()
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(loc)
 
+/obj/structure/transit_tube_pod/attack_hand(mob/user)
+	if(contents.len)
+		to_chat(user, "<span class='notice'>You started to get everything out of the [src].</span>")
+
+		var/mob/M = locate(/mob) in contents
+		if(M)
+			to_chat(M, "<span class='warning'>Someone is trying to get you out of the [src].</span>")
+
+		if (do_after(user, 50, target = src) && contents.len)
+			visible_message("<span class='notice'>[user] took out everything from the [src].</span>")
+			move_out_content()
+
+/obj/structure/transit_tube/New()
+	..()
 	if(tube_dirs == null)
 		init_dirs()
 
-
-
-/obj/structure/transit_tube/Bumped(mob/AM)
-	var/obj/structure/transit_tube/T = locate() in AM.loc
+/obj/structure/transit_tube/Bumped(mob/M)
+	var/obj/structure/transit_tube/T = locate() in M.loc
 	if(T)
-		to_chat(AM, "<span class='warning'>The tube's support pylons block your way.</span>")
+		to_chat(M, "<span class='warning'>The tube's support pylons block your way.</span>")
 		return ..()
 	else
-		AM.loc = src.loc
-		to_chat(AM, "<span class='info'>You slip under the tube.</span>")
+		M.forceMove(loc)
+		to_chat(M, "<span class='info'>You slip under the tube.</span>")
 
-
-/obj/structure/transit_tube/station/New(loc)
-	..(loc)
-
-
-
-/obj/structure/transit_tube/station/Bumped(mob/AM)
-	if(!pod_moving && icon_state == "open" && istype(AM, /mob))
+/obj/structure/transit_tube/station/Bumped(mob/M)
+	if(!pod_moving && icon_state == "open" && istype(M))
 		for(var/obj/structure/transit_tube_pod/pod in loc)
-			if(pod.contents.len)
-				to_chat(AM, "<span class=The pod is already occupied.</span>")
+			if(locate(/mob) in pod.contents)
+				to_chat(M, "<span class='notice'>The pod is already occupied.</span>")
 				return
 			else if(!pod.moving && pod.dir in directions())
-				AM.loc = pod
+				pod.move_into_content(M)
 				return
-
 
 /obj/structure/transit_tube/station/attack_hand(mob/user)
 	if(!pod_moving)
@@ -132,8 +118,6 @@ obj/structure/ex_act(severity)
 					open_animation()
 				else if(icon_state == "open")
 					close_animation()
-
-
 
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(icon_state == "closed")
@@ -392,7 +376,7 @@ obj/structure/ex_act(severity)
 	if(istype(mob, /mob) && mob.client)
 		// If the pod is not in a tube at all, you can get out at any time.
 		if(!(locate(/obj/structure/transit_tube) in loc))
-			mob.loc = loc
+			move_out_content()
 			mob.client.Move(get_step(loc, direction), direction)
 
 			//if(moving && istype(loc, /turf/space))
@@ -405,7 +389,7 @@ obj/structure/ex_act(severity)
 					if(!station.pod_moving)
 						if(direction == station.dir)
 							if(station.icon_state == "open")
-								mob.loc = loc
+								move_out_content()
 								mob.client.Move(get_step(loc, direction), direction)
 
 							else

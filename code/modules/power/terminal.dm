@@ -68,7 +68,7 @@
 						s.set_up(5, 1, master)
 						s.start()
 						return
-					new /obj/item/weapon/cable_coil(loc, 10)
+					new /obj/item/weapon/cable_coil/red(loc, 10)
 					to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
 					qdel(src)
 

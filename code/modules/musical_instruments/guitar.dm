@@ -282,6 +282,9 @@
 			spawn()
 				var/list/lines = splittext(t, "\n")
 				var/tempo = 5
+				if(lines.len <= 1) //One line with BPM and at least one line with song
+					to_chat(usr, "Aaaand... Where is song?")
+					return
 				if(copytext(lines[1],1,6) == "BPM: ")
 					tempo = 600 / text2num(copytext(lines[1],6))
 					lines.Cut(1,2)
@@ -304,4 +307,3 @@
 		if((M.client && M.machine == src))
 			attack_self(M)
 	return
-

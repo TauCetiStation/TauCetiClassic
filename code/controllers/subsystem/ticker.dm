@@ -6,7 +6,7 @@ var/datum/subsystem/ticker/ticker
 	name = "Ticker"
 
 	priority = SS_PRIORITY_TICKER
-	
+
 	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING
 
 	var/const/restart_timeout = 600
@@ -188,10 +188,11 @@ var/datum/subsystem/ticker/ticker
 		src.mode = config.pick_mode(master_mode)
 
 	if (!src.mode.can_start())
-		to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby.")
+		message_admins("<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed.")
 		qdel(mode)
 		mode = null
 		current_state = GAME_STATE_PREGAME
+		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
 		SSjob.ResetOccupations()
 		return 0
 
@@ -199,6 +200,7 @@ var/datum/subsystem/ticker/ticker
 	SSjob.DivideOccupations() //Distribute jobs
 	var/can_continue = src.mode.pre_setup()//Setup special modes
 	if(!can_continue)
+		message_admins("Preparation phase for [mode.name] has failed.")
 		qdel(mode)
 		mode = null
 		current_state = GAME_STATE_PREGAME
@@ -463,7 +465,7 @@ var/datum/subsystem/ticker/ticker
 			ai_completions += "<BR>[robo.write_laws()]"
 
 		if(dronecount)
-			to_chat(ai_completions, "<B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>")
+			ai_completions += "<B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
 
 		ai_completions += "<HR>"
 
