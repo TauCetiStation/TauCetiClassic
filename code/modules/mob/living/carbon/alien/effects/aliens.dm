@@ -226,7 +226,7 @@
 	for (var/obj/structure/alien/weeds/W in range(1,T))
 		W.updateWeedOverlays()
 	linked_node = null
-	..()
+	return ..()
 
 /obj/structure/alien/weeds/proc/updateWeedOverlays()
 
