@@ -1835,8 +1835,12 @@
 		var/image/holder = hud_list[STATUS_HUD]
 		var/image/holder2 = hud_list[STATUS_HUD_OOC]
 		if(stat == DEAD)
-			holder.icon_state = "huddead"
-			holder2.icon_state = "huddead"
+			if(world.time - timeofdeath < 3600)
+				holder.icon_state = "huddeaddefib"
+				holder2.icon_state = "huddeaddefib"
+			else
+				holder.icon_state = "huddead"
+				holder2.icon_state = "huddead"
 		else if(status_flags & XENO_HOST)
 			holder.icon_state = "hudxeno"
 			holder2.icon_state = "hudxeno"
