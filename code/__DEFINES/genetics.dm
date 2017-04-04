@@ -24,8 +24,8 @@
 
 
 	// Extra powers:
-#define LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
-#define HEAL			10 	// healing people with hands
+#define MUT_LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
+#define MUT_HEAL			10 	// healing people with hands
 //#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)
 //#define SCREAM			12 	// supersonic screaming (25%)
 //#define EXPLOSIVE		13 	// exploding on-demand (15%)

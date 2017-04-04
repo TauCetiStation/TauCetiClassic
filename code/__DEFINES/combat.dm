@@ -11,6 +11,7 @@
 #define CUT			"cut"
 #define BRUISE		"bruise"
 #define PIERCE		"pierce"
+#define LASER		"laser"
 
 #define STUN		"stun"
 #define WEAKEN		"weaken"

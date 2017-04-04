@@ -254,7 +254,7 @@ There are several things that need to be remembered:
 			if(TK)
 				standing.underlays	+= "telekinesishead[fat]_s"
 			*/
-			if(LASER)
+			if(MUT_LASER)
 				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-MUTATIONS_LAYER)
 	if(standing.len)
 		overlays_standing[MUTATIONS_LAYER]	= standing
