@@ -6,18 +6,13 @@
 	can_infect = 0
 
 /datum/surgery_step/head/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!hasbodyparts(target))
-		return 0
 	if(!ishuman(target))
 		return 0
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return 0
-	if (!(BP.status & ORGAN_DESTROYED))
+	if(!BP.is_stump())
 		return 0
-	if (BP.parent)
-		if (BP.parent.status & ORGAN_DESTROYED)
-			return 0
 	return BP.body_zone == BP_HEAD
 
 
@@ -32,9 +27,10 @@
 	max_duration = 100
 
 /datum/surgery_step/head/peel/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return !(BP.status & ORGAN_CUT_AWAY)
+	if(!..())
+		return 0
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	return !(BP.status & ORGAN_CUT_AWAY)
 
 /datum/surgery_step/head/peel/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts peeling back tattered flesh where [target]'s head used to be with \the [tool].", \
@@ -66,9 +62,10 @@
 	max_duration = 100
 
 /datum/surgery_step/head/shape/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return BP.status & ORGAN_CUT_AWAY && BP.open < 3 && !(BP.status & ORGAN_ATTACHABLE)
+	if(!..())
+		return 0
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	return (BP.status & ORGAN_CUT_AWAY) && (BP.open < 3) && !(BP.status & ORGAN_ATTACHABLE)
 
 /datum/surgery_step/head/shape/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -102,9 +99,10 @@
 	max_duration = 100
 
 /datum/surgery_step/head/suture/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return BP.open == 3
+	if(!..())
+		return 0
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	return BP.open == 3
 
 /datum/surgery_step/head/suture/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] is stapling and suturing flesh into place in [target]'s esophagal and vocal region with \the [tool].", \
@@ -137,9 +135,10 @@
 	max_duration = 70
 
 /datum/surgery_step/head/prepare/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return BP.open == 4
+	if(!..())
+		return 0
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	return BP.open == 4
 
 /datum/surgery_step/head/prepare/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts adjusting area around [target]'s neck with \the [tool].", \
@@ -151,8 +150,6 @@
 	user.visible_message("\blue [user] has finished adjusting the area around [target]'s neck with \the [tool].",	\
 	"\blue You have finished adjusting the area around [target]'s neck with \the [tool].")
 	BP.status |= ORGAN_ATTACHABLE
-	BP.amputated = 1
-	BP.setAmputatedTree()
 	BP.open = 0
 
 /datum/surgery_step/head/prepare/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -165,36 +162,27 @@
 
 
 /datum/surgery_step/head/attach
-	allowed_tools = list(/obj/item/weapon/organ/head = 100)
+	allowed_tools = list(/obj/item/bodypart/head = 100)
 	can_infect = 0
 
 	min_duration = 80
 	max_duration = 100
 
 /datum/surgery_step/head/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/bodypart/head = target.get_bodypart(target_zone)
-		return head.status & ORGAN_ATTACHABLE
+	if(!..())
+		return 0
+	var/obj/item/bodypart/head = target.get_bodypart(target_zone)
+	return (head.status & ORGAN_ATTACHABLE)
 
 /datum/surgery_step/head/attach/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts attaching [tool] to [target]'s reshaped neck.", \
 	"You start attaching [tool] to [target]'s reshaped neck.")
 
-/datum/surgery_step/head/attach/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has attached [target]'s head to the body.",	\
-	"\blue You have attached [target]'s head to the body.")
-	BP.status = 0
-	BP.amputated = 0
-	BP.destspawn = 0
-	target.update_body()
-	target.updatehealth()
-	target.update_bodypart(BP)
-	var/obj/item/weapon/organ/head/B = tool
-	if (B.brainmob.mind)
-		B.brainmob.mind.transfer_to(target)
-	qdel(B)
-
+/datum/surgery_step/head/attach/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/bodypart/tool)
+	user.drop_from_inventory(tool)
+	if(tool.replace_stump(target))
+		user.visible_message("\blue [user] has attached [target]'s head to the body.",	\
+		"\blue You have attached [target]'s head to the body.")
 
 /datum/surgery_step/head/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)

@@ -16,7 +16,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	if (BP == null)
 		return 0
-	if (BP.status & ORGAN_DESTROYED)
+	if (BP.is_stump())
 		return 0
 	if (target_zone == BP_HEAD && target.species && (target.species.flags[IS_SYNTHETIC]))
 		return 1
@@ -289,9 +289,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	if (BP == null)
 		return 0
-	if (BP.status & ORGAN_DESTROYED)
-		return 0
-	return target_zone != BP_CHEST && target_zone != BP_GROIN && target_zone != BP_HEAD
+	return !BP.cannot_amputate
 
 /datum/surgery_step/generic/amputate/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -304,7 +302,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("\blue [user] amputates [target]'s [BP.name] at the [BP.amputation_point] with \the [tool].", \
 	"\blue You amputate [target]'s [BP.name] with \the [tool].")
-	BP.droplimb(1,0)
+	BP.droplimb(1, DROPLIMB_EDGE, user = user)
 
 /datum/surgery_step/generic/amputate/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)

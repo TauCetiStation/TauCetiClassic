@@ -3,13 +3,12 @@
 #define ORGAN_ATTACHABLE 2
 #define ORGAN_BLEEDING   4
 #define ORGAN_BROKEN     8
-#define ORGAN_DESTROYED  16
-#define ORGAN_ROBOT      32
-#define ORGAN_SPLINTED   64
-#define ORGAN_DEAD       128
-#define ORGAN_MUTATED    256
-#define ORGAN_ARTERY_CUT 512
-#define ORGAN_TENDON_CUT 1024
+#define ORGAN_ROBOT      16
+#define ORGAN_SPLINTED   32
+#define ORGAN_DEAD       64
+#define ORGAN_MUTATED    128
+#define ORGAN_ARTERY_CUT 256
+#define ORGAN_TENDON_CUT 512
 
 // BODYPART/ORGAN DEFINES
 // Limbs.

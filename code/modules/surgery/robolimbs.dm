@@ -9,16 +9,11 @@
 /datum/surgery_step/limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
 		return 0
-	if (!hasbodyparts(target))
-		return 0
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return 0
-	if (!(BP.status & ORGAN_DESTROYED))
+	if(!BP.is_stump())
 		return 0
-	if (BP.parent)
-		if (BP.parent.status & ORGAN_DESTROYED)
-			return 0
 	return BP.body_zone != BP_HEAD
 
 
@@ -33,9 +28,10 @@
 	max_duration = 100
 
 /datum/surgery_step/limb/cut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return !(BP.status & ORGAN_CUT_AWAY)
+	if(!..())
+		return 0
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	return !(BP.status & ORGAN_CUT_AWAY)
 
 /datum/surgery_step/limb/cut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -69,9 +65,10 @@
 	max_duration = 100
 
 /datum/surgery_step/limb/mend/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return BP.status & ORGAN_CUT_AWAY && BP.open < 3 && !(BP.status & ORGAN_ATTACHABLE)
+	if(!..())
+		return 0
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	return (BP.status & ORGAN_CUT_AWAY) && (BP.open < 3) && !(BP.status & ORGAN_ATTACHABLE)
 
 /datum/surgery_step/limb/mend/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -106,9 +103,10 @@
 	max_duration = 70
 
 /datum/surgery_step/limb/prepare/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return BP.open == 3
+	if(!..())
+		return 0
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	return BP.open == 3
 
 /datum/surgery_step/limb/prepare/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -121,8 +119,6 @@
 	user.visible_message("\blue [user] has finished adjusting the area around [target]'s [BP.name] with \the [tool].",	\
 	"\blue You have finished adjusting the area around [target]'s [BP.name] with \the [tool].")
 	BP.status |= ORGAN_ATTACHABLE
-	BP.amputated = 1
-	BP.setAmputatedTree()
 	BP.open = 0
 
 /datum/surgery_step/limb/prepare/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -143,34 +139,26 @@
 	max_duration = 100
 
 /datum/surgery_step/limb/mechanize/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/robot_parts/p = tool
-		if (p.part)
-			if(target_zone != p.part)
-				return 0
-		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-		return BP.status & ORGAN_ATTACHABLE
+	if (!..())
+		return 0
+	var/obj/item/robot_parts/p = tool
+	if (p.part)
+		if (target_zone != p.part)
+			return 0
+	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	return BP.status & ORGAN_ATTACHABLE
 
 /datum/surgery_step/limb/mechanize/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts attaching \the [tool] where [target]'s [BP.name] used to be.", \
 	"You start attaching \the [tool] where [target]'s [BP.name] used to be.")
 
-/datum/surgery_step/limb/mechanize/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/robot_parts/L = tool
-	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has attached \the [tool] where [target]'s [BP.name] used to be.",	\
-	"\blue You have attached \the [tool] where [target]'s [BP.name] used to be.")
-	BP.germ_level = 0
-	BP.robotize()
-	if(L.sabotaged)
-		BP.sabotaged = 1
-	else
-		BP.sabotaged = 0
-	//target.update_body()
-	target.updatehealth()
-	target.update_bodypart(BP)
-	qdel(tool)
+/datum/surgery_step/limb/mechanize/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/bodypart/tool)
+	user.drop_from_inventory(tool)
+	if(tool.replace_stump(target)) // TODO implement robot bodyparts or this won't work
+		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+		user.visible_message("\blue [user] has attached \the [tool] where [target]'s [BP.name] used to be.",	\
+		"\blue You have attached \the [tool] where [target]'s [BP.name] used to be.")
 
 /datum/surgery_step/limb/mechanize/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)

@@ -455,7 +455,7 @@
 
 	var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
 
-	if(!BP || BP.status & ORGAN_DESTROYED)
+	if(!BP || BP.is_stump())
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
 		return
 

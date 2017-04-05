@@ -384,10 +384,10 @@
 	if(chosen_species)
 		// Have to recheck admin due to no usr at roundstart. Latejoins are fine though.
 		if(is_species_whitelisted(chosen_species) || has_admin_rights())
-			new_character = new(loc, client.prefs.species)
+			new_character = new(loc, client.prefs.species, client.prefs.organ_data)
 
 	if(!new_character)
-		new_character = new(loc)
+		new_character = new(loc, organ_data = client.prefs.organ_data)
 
 	new_character.lastarea = get_area(loc)
 

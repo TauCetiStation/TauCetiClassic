@@ -40,7 +40,7 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H) // Broken now - TODO refactor this.
 	var/icon/preview_icon = null
 
 	var/g = "m"
@@ -57,7 +57,8 @@
 	preview_icon.Blend(temp, ICON_OVERLAY)
 
 	for(var/obj/item/bodypart/BP in H.bodyparts)
-		if(BP.status & ORGAN_CUT_AWAY || BP.status & ORGAN_DESTROYED) continue
+		if(BP.is_stump())
+			continue
 		temp = new /icon(icobase, "[BP.name]")
 		if(BP.status & ORGAN_ROBOT)
 			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))

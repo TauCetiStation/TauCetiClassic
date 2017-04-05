@@ -105,18 +105,29 @@
 /datum/species/New()
 	unarmed = new unarmed_type()
 
-/datum/species/proc/create_organs(mob/living/carbon/C) //Handles creation of mob bodyparts and organs.
+/datum/species/proc/create_organs(mob/living/carbon/C, list/organ_data) //Handles creation of mob bodyparts and organs.
 	//This is a basic humanoid limb setup.
 	switch(name)
 		if(S_HUMAN,S_UNATHI,S_TAJARAN,S_SKRELL,S_DIONA,S_VOX,S_VOX_ARMALIS,S_IPC,S_ABDUCTOR,S_SHADOWLING)
 			C.make_blood()
 
-			C.bodyparts = list()
-			for(var/type in has_bodypart)
-				var/path = has_bodypart[type]
-				new path(null, C)
+			if(!organ_data || !organ_data.len)
+				for(var/type in has_bodypart)
+					var/path = has_bodypart[type]
+					new path(null, C)
+			else
+				for(var/type in has_bodypart)
+					var/status = organ_data[type]
+					if(status)
+						if(status == "amputated")
+							var/obj/item/bodypart/path = has_bodypart[type]
+							var/obj/item/bodypart/stump/stump = new (null, C, path)
+							stump.status |= ORGAN_CUT_AWAY
+							continue
 
-			C.organs = list()
+					var/path = has_bodypart[type]
+					new path(null, C)
+
 			for(var/type in has_organ)
 				var/path = has_organ[type]
 				new path(null, C)

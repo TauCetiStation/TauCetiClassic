@@ -23,6 +23,15 @@
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
 
+#define DROPLIMB_EDGE 0
+#define DROPLIMB_BLUNT 1
+#define DROPLIMB_BURN 2
+
+//These control the damage thresholds for the various ways of removing limbs
+#define DROPLIMB_THRESHOLD_EDGE 5
+#define DROPLIMB_THRESHOLD_TEAROFF 2
+#define DROPLIMB_THRESHOLD_DESTROY 1
+
 //I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
 #define BRUTELOSS	1
 #define FIRELOSS	2

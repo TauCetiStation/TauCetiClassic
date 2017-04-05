@@ -94,7 +94,7 @@
 	var/obj/item/bodypart/BP = null
 	for(var/obj/item/bodypart/E in bodyparts)
 		// amputated limbs don't cause pain
-		if(E.amputated) continue
+		if(E.status & ORGAN_CUT_AWAY) continue
 		if(E.status & ORGAN_DEAD) continue
 		var/dam = E.get_damage()
 		// make the choice of the organ depend on damage,

@@ -1,6 +1,6 @@
-/mob/living/carbon/New(loc, new_species = null)
+/mob/living/carbon/New(loc, new_species = null, list/organ_data)
 	if(!species)
-		set_species(new_species, null, 1)
+		set_species(new_species, null, 1, organ_data)
 
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
@@ -218,6 +218,7 @@
 				var/status = ""
 				var/brutedamage = BP.brute_dam
 				var/burndamage = BP.burn_dam
+				var/bodypart_name = BP.name
 				if(halloss > 0)
 					if(prob(30))
 						brutedamage += halloss
@@ -239,13 +240,14 @@
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
-				if(BP.status & ORGAN_DESTROYED)
+				if(BP.is_stump())
+					bodypart_name = parse_zone(BP.body_zone)
 					status = "MISSING!"
 				if(BP.status & ORGAN_MUTATED)
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",BP.name,status),1)
+				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",bodypart_name,status),1)
 			if(H.species && (H.species.name == S_SKELETON) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
@@ -815,7 +817,7 @@ This function restores the subjects blood to max.
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/proc/get_face_name()
 	var/obj/item/bodypart/head/BP = get_bodypart(BP_HEAD)
-	if( !BP || BP.disfigured || (BP.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+	if( !BP || BP.is_stump() || BP.disfigured || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 
@@ -843,7 +845,7 @@ This function restores the subjects blood to max.
 
 	return species.name
 
-/mob/living/carbon/proc/set_species(new_species, force_organs, default_colour)
+/mob/living/carbon/proc/set_species(new_species, force_organs, default_colour, list/organ_data)
 	if(!new_species)
 		return 0
 
@@ -868,7 +870,7 @@ This function restores the subjects blood to max.
 	species = all_species[new_species]
 
 	if(force_organs || !bodyparts || !bodyparts.len)
-		species.create_organs(src)
+		species.create_organs(src, organ_data)
 
 	if(species.language)
 		add_language(species.language)

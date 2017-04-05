@@ -47,7 +47,7 @@
 /mob/living/carbon/human/abductor/New()
 	..(new_species = S_ABDUCTOR)
 
-/mob/living/carbon/human/New(loc, new_species = S_HUMAN)
+/mob/living/carbon/human/New(loc, new_species = S_HUMAN, list/organ_data)
 	//hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
 	//hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
 	//hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
@@ -906,16 +906,13 @@
 		remoteview_target = null
 		reset_view(0) //##Z2
 
-/mob/living/carbon/human/revive()
+/mob/living/carbon/human/revive() // TODO check if this proc requires any updates with new bodyparts system.
 	for (var/obj/item/bodypart/BP in bodyparts)
 		BP.status &= ~ORGAN_BROKEN
 		BP.status &= ~ORGAN_BLEEDING
 		BP.status &= ~ORGAN_SPLINTED
 		BP.status &= ~ORGAN_CUT_AWAY
-		BP.status &= ~ORGAN_ATTACHABLE
-		if (!BP.amputated)
-			BP.status &= ~ORGAN_DESTROYED
-			BP.destspawn = 0
+		//BP.status &= ~ORGAN_ATTACHABLE
 		BP.wounds.Cut()
 		BP.heal_damage(1000,1000,1,1)
 

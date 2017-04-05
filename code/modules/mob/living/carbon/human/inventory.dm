@@ -60,7 +60,7 @@
 /mob/living/carbon/human/proc/has_bodypart(name)
 	var/obj/item/bodypart/BP = bodyparts_by_name[name]
 
-	return (BP && !(BP.status & ORGAN_DESTROYED) )
+	return (BP && !BP.is_stump())
 
 /mob/living/carbon/human/proc/has_bodypart_for_slot(slot)
 	switch(slot)

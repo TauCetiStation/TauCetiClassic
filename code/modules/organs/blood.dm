@@ -140,7 +140,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					if(W.bleeding())
 						blood_max += W.damage / 40
 
-			if(BP.status && ORGAN_ARTERY_CUT)
+			if(BP.status & ORGAN_ARTERY_CUT)
 				var/bleed_amount = Floor((src.vessel.total_volume / 250) * BP.arterial_bleed_severity)
 				if(bleed_amount)
 					if(open_wound)

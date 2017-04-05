@@ -64,7 +64,7 @@
 			T.status |= ORGAN_ROBOT
 			//H.update_body()
 			M.updatehealth()
-			M.update_bodypart(BP)
+			M.update_bodypart(BP.body_zone)
 			qdel(src)
 
 			return 1

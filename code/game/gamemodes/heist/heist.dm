@@ -125,7 +125,7 @@
 		vox.h_style = "Skinhead"
 		vox.f_style = "Shaved"
 		//for(var/obj/item/bodypart/BP in vox.bodyparts)
-		//	BP.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
+		//	BP.status &= ~ORGAN_ROBOT
 		vox.equip_raider()
 		vox.regenerate_icons()
 

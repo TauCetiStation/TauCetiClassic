@@ -245,9 +245,10 @@
 
 		if (!BP)
 			return
-		if(BP.status & ORGAN_DESTROYED)
-			to_chat(user, "What [BP.name]?")
+		if (BP.is_stump())
+			to_chat(user, "What [parse_zone(BP.body_zone)]?")
 			return
+
 		var/hit_area = BP.name
 
 		if((user != H) && H.check_shields(7, "the [src.name]", get_dir(user,target)))

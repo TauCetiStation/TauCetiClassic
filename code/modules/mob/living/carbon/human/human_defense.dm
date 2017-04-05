@@ -227,11 +227,13 @@
 	for(var/obj/O in src)
 		if(!O)	continue
 		O.emp_act(severity)
-	for(var/obj/item/bodypart/BP  in bodyparts)
-		if(BP.status & ORGAN_DESTROYED)	continue
+	for(var/obj/item/bodypart/BP in bodyparts)
+		if(BP.is_stump())
+			continue
 		BP.emp_act(severity)
-		for(var/obj/item/organ/IO  in BP.organs)
-			if(IO.robotic == 0)	continue
+		for(var/obj/item/organ/IO in BP.organs)
+			if(IO.robotic == 0)
+				continue
 			IO.emp_act(severity)
 	..()
 
@@ -248,11 +250,10 @@
 		return 0
 
 	var/obj/item/bodypart/BP = get_bodypart(target_zone)
-	if (!BP)
+	if(!BP || BP.is_stump())
+		to_chat(user, "What [parse_zone(BP.body_zone)]?")
 		return 0
-	if(BP.status & ORGAN_DESTROYED)
-		to_chat(user, "What [BP.name]?")
-		return 0
+
 	var/hit_area = BP.body_zone
 
 	if(user != src)

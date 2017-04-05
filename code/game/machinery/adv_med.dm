@@ -316,6 +316,7 @@
 						var/splint = ""
 						var/internal_bleeding = ""
 						var/lung_ruptured = ""
+
 						if(BP.status & ORGAN_ARTERY_CUT)
 							internal_bleeding = "<br>Arterial bleeding"
 						if(istype(BP, /obj/item/bodypart/chest) && occupant.is_lung_ruptured())
@@ -330,6 +331,7 @@
 							robot = "Prosthetic:"
 						if(BP.open)
 							open = "Open:"
+
 						switch (BP.germ_level)
 							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infected = "Mild Infection:"
@@ -355,14 +357,16 @@
 
 						if(unknown_body || BP.hidden)
 							imp += "Unknown body present:"
+
 						if(!AN && !open && !infected & !imp)
 							AN = "None:"
-						if(!(BP.status & ORGAN_DESTROYED))
+
+						if(!BP.is_stump()) // TODO: update this properly.
 							dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
 							storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
 						else
-							dat += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
-							storedinfo += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
+							dat += "<td>[BP.name]</td><td>-</td><td>-</td><td>[bled][AN][internal_bleeding]</td>"
+							storedinfo += "<td>[BP.name]</td><td>-</td><td>-</td><td>[bled][AN][internal_bleeding]</td>"
 						dat += "</tr>"
 						storedinfo += "</tr>"
 					for(var/obj/item/organ/IO in occupant.organs)

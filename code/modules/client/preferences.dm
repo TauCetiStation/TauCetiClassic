@@ -243,32 +243,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
-	if(be_random_name)
-		real_name = random_name(gender)
-
-	if(config.humans_need_surnames)
-		var/firstspace = findtext(real_name, " ")
-		var/name_length = length(real_name)
-		if(!firstspace)	//we need a surname
-			real_name += " [pick(last_names)]"
-		else if(firstspace == name_length)
-			real_name += "[pick(last_names)]"
-
-	character.real_name = real_name
-	character.name = character.real_name
-	if(character.dna)
-		character.dna.real_name = character.real_name
-
-	character.flavor_text = flavor_text
-	character.metadata = metadata
-	character.med_record = med_record
-	character.sec_record = sec_record
-	character.gen_record = gen_record
-
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE)
 	character.gender = gender
-	character.age = age
-	character.b_type = b_type
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
@@ -293,58 +269,10 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.h_style = h_style
 	character.f_style = f_style
 
-	character.home_system = home_system
-	character.citizenship = citizenship
-	character.personal_faction = faction
-	character.religion = religion
-
-	// Destroy/cyborgize organs
-
-	for(var/name in organ_data)
-		var/obj/item/bodypart/BP = character.bodyparts_by_name[name]
-		var/obj/item/organ/IO = character.organs_by_name[name]
-		var/status = organ_data[name]
-
-		if(status == "amputated")
-			BP.amputated = 1
-			BP.status |= ORGAN_DESTROYED
-			BP.destspawn = 1
-		if(status == "cyborg")
-			BP.status |= ORGAN_ROBOT
-		if(status == "assisted")
-			IO.mechassist()
-		else if(status == "mechanical")
-			IO.mechanize()
-
-		else continue
-
-
-	//Disabilities
-	if(disabilities & DISABILITY_NEARSIGHTED)
-		character.disabilities|=NEARSIGHTED
-	if(disabilities & DISABILITY_EPILEPTIC)
-		character.disabilities|=EPILEPSY
-	if(disabilities & DISABILITY_COUGHING)
-		character.disabilities|=COUGHING
-	if(disabilities & DISABILITY_TOURETTES)
-		character.disabilities|=TOURETTES
-	if(disabilities & DISABILITY_NERVOUS)
-		character.disabilities|=NERVOUS
 	if(disabilities & DISABILITY_FATNESS)
 		character.mutations += FAT
 		character.nutrition = 1000
 		character.overeatduration = 2000
-
-	// Wheelchair necessary?
-	var/obj/item/bodypart/l_leg = character.get_bodypart(BP_L_LEG)
-	var/obj/item/bodypart/r_leg = character.get_bodypart(BP_R_LEG)
-	if((!l_leg || l_leg.status & ORGAN_DESTROYED) && (!r_leg || r_leg.status & ORGAN_DESTROYED))
-		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
-		character.buckled = W
-		character.update_canmove()
-		W.dir = character.dir
-		W.buckled_mob = character
-		W.add_fingerprint(character)
 
 	if(underwear > underwear_m.len || underwear < 1)
 		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
@@ -359,17 +287,84 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	character.socks = socks
 
+	character.update_body()
+	character.update_hair()
+
+	if(is_preview_copy) // Everything else is not needed for preview icon.
+		return
+
+	if(be_random_name)
+		real_name = random_name(gender)
+
+	if(config.humans_need_surnames)
+		var/firstspace = findtext(real_name, " ")
+		var/name_length = length(real_name)
+		if(!firstspace)	//we need a surname
+			real_name += " [pick(last_names)]"
+		else if(firstspace == name_length)
+			real_name += "[pick(last_names)]"
+
+	character.real_name = real_name
+	character.name = character.real_name
+	if(character.dna)
+		character.dna.real_name = character.real_name
+
+	character.flavor_text = flavor_text
+	character.metadata = metadata
+	character.med_record = med_record
+	character.sec_record = sec_record
+	character.gen_record = gen_record
+
+	character.age = age
+	character.b_type = b_type
+
+	character.home_system = home_system
+	character.citizenship = citizenship
+	character.personal_faction = faction
+	character.religion = religion
+
+	// Destroy/cyborgize organs
+	for(var/name in organ_data)
+		//var/obj/item/bodypart/BP = character.bodyparts_by_name[name]
+		var/obj/item/organ/IO = character.organs_by_name[name]
+		var/status = organ_data[name]
+
+		if(status == "assisted")
+			IO.mechassist()
+		else if(status == "mechanical")
+			IO.mechanize()
+		else
+			continue
+
+	//Disabilities
+	if(disabilities & DISABILITY_NEARSIGHTED)
+		character.disabilities|=NEARSIGHTED
+	if(disabilities & DISABILITY_EPILEPTIC)
+		character.disabilities|=EPILEPSY
+	if(disabilities & DISABILITY_COUGHING)
+		character.disabilities|=COUGHING
+	if(disabilities & DISABILITY_TOURETTES)
+		character.disabilities|=TOURETTES
+	if(disabilities & DISABILITY_NERVOUS)
+		character.disabilities|=NERVOUS
+
+	// Wheelchair necessary?
+	var/obj/item/bodypart/l_leg = character.get_bodypart(BP_L_LEG)
+	var/obj/item/bodypart/r_leg = character.get_bodypart(BP_R_LEG)
+	if( (!l_leg || l_leg.is_stump()) && (!r_leg || r_leg.is_stump()) )
+		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
+		character.buckled = W
+		character.update_canmove()
+		W.dir = character.dir
+		W.buckled_mob = character
+		W.add_fingerprint(character)
+
 	if(backbag > 4 || backbag < 1)
 		backbag = 1 //Same as above
 	character.backbag = backbag
 
 	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
-	if(character.gender in list(PLURAL, NEUTER))
-		if(isliving(src)) //Ghosts get neuter by default
-			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-			character.gender = MALE
-
-	if(icon_updates)
-		character.update_body()
-		character.update_hair()
-
+	//if(character.gender in list(PLURAL, NEUTER))
+	//	if(isliving(src)) //Ghosts get neuter by default
+	//		message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
+	//		character.gender = MALE

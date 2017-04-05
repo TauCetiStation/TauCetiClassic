@@ -857,7 +857,7 @@ var/global/list/humanoid_icon_cache = list()
 		var/mob/living/carbon/human/dummy/body = new(new_species = prefs.species)
 
 		if(prefs)
-			prefs.copy_to(body)
+			prefs.copy_to(body, TRUE)
 		if(J)
 			J.equip(body, TRUE)
 

@@ -146,7 +146,6 @@
 	BP.status &= ~ORGAN_BROKEN
 	BP.status &= ~ORGAN_SPLINTED
 	BP.stage = 0
-	BP.perma_injury = 0
 
 /datum/surgery_step/finish_bone/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)

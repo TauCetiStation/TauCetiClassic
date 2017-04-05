@@ -256,9 +256,10 @@
 
 	for(var/obj/item/bodypart/BP in bodyparts)
 		if(BP)
-			if(BP.status & ORGAN_DESTROYED)
-				is_destroyed["[BP.name]"] = 1
-				wound_flavor_text["[BP.name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [BP.name].</b></span>\n"
+			if(BP.is_stump())
+				var/bodypart_name = parse_zone(BP.body_zone)
+				is_destroyed[bodypart_name] = 1
+				wound_flavor_text[bodypart_name] = "<span class='warning'><b>[t_He] is missing [t_his] [bodypart_name].</b></span>\n"
 				continue
 			if(BP.status & ORGAN_ROBOT)
 				if(!(BP.brute_dam + BP.burn_dam))

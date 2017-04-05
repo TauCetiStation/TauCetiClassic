@@ -65,7 +65,7 @@ var/global/list/image/splatter_cache=list()
 		var/mob/living/carbon/human/H = perp
 		var/obj/item/bodypart/l_leg = H.get_bodypart(BP_L_LEG)
 		var/obj/item/bodypart/r_leg = H.get_bodypart(BP_R_LEG)
-		if((!l_leg || l_leg.status & ORGAN_DESTROYED) && (!r_leg || r_leg.status & ORGAN_DESTROYED))
+		if((!l_leg || l_leg.is_stump()) && (!r_leg || r_leg.is_stump())) // TODO update this properly (looks weird with one leg and bloody overlay which is visualized for both legs)
 			hasfeet = FALSE
 		if(perp.shoes && !perp.buckled)//Adding blood to shoes
 			var/obj/item/clothing/shoes/S = perp.shoes

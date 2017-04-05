@@ -1309,7 +1309,7 @@ datum
 						if(IO.damage > 0)
 							IO.damage = max(IO.damage - 0.20, 0)
 
-		kyphotorin
+		kyphotorin // TODO check if this reagent requires any updates with new bodyparts system.
 			name = "Kyphotorin"
 			id = "kyphotorin"
 			description = "Used nanites to encourage recovery of bodyparts and bones. Medicate cautiously."
@@ -1333,8 +1333,8 @@ datum
 				H.jitteriness = max(0,H.jitteriness - 100)
 				if(!BP)
 					for(var/obj/item/bodypart/bodypart in H.bodyparts) // find a broken/destroyed limb
-						if(bodypart.status & ORGAN_DESTROYED)
-							if(bodypart.parent && bodypart.parent.status & ORGAN_DESTROYED)
+						if(bodypart.is_stump())
+							if(bodypart.parent && bodypart.parent.is_stump())
 								continue
 							else
 								heal_time = 65

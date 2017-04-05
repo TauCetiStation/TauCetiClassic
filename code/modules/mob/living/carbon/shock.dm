@@ -32,9 +32,7 @@
 	if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
 		for(var/obj/item/bodypart/BP in M.bodyparts)
-			if (!BP)
-				continue
-			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
+			if(BP.is_stump() && !(BP.status & ORGAN_CUT_AWAY))
 				src.traumatic_shock += 60
 			else if(BP.status & ORGAN_BROKEN || BP.open)
 				src.traumatic_shock += 30

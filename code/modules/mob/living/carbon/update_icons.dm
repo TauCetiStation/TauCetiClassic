@@ -99,7 +99,8 @@ There are several things that need to be remembered:
 /mob/living/carbon
 	var/static/list/human_icon_cache = list()
 	var/list/overlays_standing[TOTAL_LAYERS]
-	var/list/overlays_damage[TOTAL_BP_LAYERS]
+	//var/list/overlays_damage[TOTAL_BP_LAYERS]
+	var/list/overlays_bodypart = list()
 
 /mob/living/carbon/proc/apply_overlay(cache_index)
 	var/image/I = overlays_standing[cache_index]
@@ -110,7 +111,7 @@ There are several things that need to be remembered:
 	if(overlays_standing[cache_index])
 		overlays -= overlays_standing[cache_index]
 		overlays_standing[cache_index] = null
-
+/*
 /mob/living/carbon/proc/apply_damage_overlay(cache_index)
 	var/image/I = overlays_damage[cache_index]
 	if(I)
@@ -120,23 +121,37 @@ There are several things that need to be remembered:
 	if(overlays_damage[cache_index])
 		overlays -= overlays_damage[cache_index]
 		overlays_damage[cache_index] = null
+*/
+/mob/living/carbon/proc/apply_bodypart_overlay(cache_index)
+	var/image/I = overlays_bodypart[cache_index]
+	if(I)
+		overlays += I
 
+/mob/living/carbon/proc/remove_bodypart_overlay(cache_index)
+	if(overlays_bodypart[cache_index])
+		overlays -= overlays_bodypart[cache_index]
+		overlays_bodypart[cache_index] = null
 
 /mob/living/carbon/update_icons()
 	update_hud()		//TODO: remove the need for this
 
 
-/mob/living/carbon/proc/update_bodypart(obj/item/bodypart/BP)
-	remove_damage_overlay(BP.limb_layer)
+/mob/living/carbon/proc/update_bodypart(body_zone)
+	remove_bodypart_overlay(body_zone)
+
+	var/obj/item/bodypart/BP = bodyparts_by_name[body_zone]
+
+	if(!BP || BP.is_stump())
+		return
 
 	BP.update_limb()
 
-	overlays_damage[BP.limb_layer] = BP.get_icon()
-	apply_damage_overlay(BP.limb_layer)
+	overlays_bodypart[body_zone] = BP.get_icon()
+	apply_bodypart_overlay(body_zone)
 
 /mob/living/carbon/proc/update_bodyparts()
 	for(var/obj/item/bodypart/BP in bodyparts)
-		update_bodypart(BP)
+		update_bodypart(BP.body_zone)
 
 //BASE MOB SPRITE
 /mob/living/carbon/proc/update_body()
@@ -156,7 +171,8 @@ There are several things that need to be remembered:
 
 	//Underwear
 	if(!fat)
-		if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
+		var/obj/item/bodypart/groin = get_bodypart(BP_GROIN)
+		if(groin && !groin.is_stump() && (underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 			standing += image(icon = 'icons/mob/human.dmi', icon_state = "underwear[underwear]_[g]_s", layer = -BODY_LAYER)
 
 		if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
@@ -166,11 +182,11 @@ There are several things that need to be remembered:
 		if(!fat && bodyparts_by_name[BP_R_LEG] && bodyparts_by_name[BP_L_LEG]) //shit
 			var/obj/item/bodypart/r_leg = bodyparts_by_name[BP_R_LEG]
 			var/obj/item/bodypart/l_leg = bodyparts_by_name[BP_L_LEG]
-			if( !(r_leg.status & ORGAN_DESTROYED) && !(l_leg.status & ORGAN_DESTROYED) )
+			if( r_leg && l_leg && !r_leg.is_stump() && !l_leg.is_stump() )
 				standing += image(icon = 'icons/mob/human_socks.dmi', icon_state = "socks[socks]_s", layer = -BODY_LAYER)
 
 	var/obj/item/bodypart/BP = get_bodypart(BP_HEAD)
-	if(BP && !(BP.status & ORGAN_DESTROYED))
+	if(BP && !BP.is_stump())
 		//Eyes
 		var/image/img_eyes_s = image(icon = 'icons/mob/human_face.dmi', icon_state = species.eyes, layer = -BODY_LAYER)
 		img_eyes_s.color = hulk ? "#ff0000" : rgb(r_eyes, g_eyes, b_eyes)
@@ -193,7 +209,7 @@ There are several things that need to be remembered:
 	remove_overlay(HAIR_LAYER)
 
 	var/obj/item/bodypart/head/BP = get_bodypart(BP_HEAD)
-	if(!BP || (BP.status & ORGAN_DESTROYED))
+	if(!BP || BP.is_stump())
 		return
 
 	//masks and helmets can obscure our hair.

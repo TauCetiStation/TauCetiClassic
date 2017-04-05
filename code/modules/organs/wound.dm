@@ -222,7 +222,7 @@
 					return /datum/wound/puncture/small
 		if(BRUISE)
 			return /datum/wound/bruise
-		if(BURN)
+		if(BURN, LASER)
 			switch(damage)
 				if(50 to INFINITY)
 					return /datum/wound/burn/carbonised
@@ -421,3 +421,35 @@ datum/wound/cut/massive
 		"healing carbonised area" = 20,
 		"massive burn scar" = 0
 		)
+
+/** EXTERNAL ORGAN LOSS **/
+/datum/wound/lost_limb
+
+/datum/wound/lost_limb/New(obj/item/bodypart/lost_limb, losstype, clean)
+	var/damage_amt = lost_limb.max_damage
+	if(clean)
+		damage_amt /= 2
+
+	switch(losstype)
+		if(DROPLIMB_EDGE, DROPLIMB_BLUNT)
+			damage_type = CUT
+			max_bleeding_stage = 3 //clotted stump and above can bleed.
+			stages = list(
+				"ripped stump" = damage_amt*1.3,
+				"bloody stump" = damage_amt,
+				"clotted stump" = damage_amt*0.5,
+				"scarred stump" = 0
+				)
+		if(DROPLIMB_BURN)
+			damage_type = BURN
+			stages = list(
+				"ripped charred stump" = damage_amt*1.3,
+				"charred stump" = damage_amt,
+				"scarred stump" = damage_amt*0.5,
+				"scarred stump" = 0
+				)
+
+	..(damage_amt)
+
+/datum/wound/lost_limb/can_merge(datum/wound/other)
+	return FALSE //cannot be merged

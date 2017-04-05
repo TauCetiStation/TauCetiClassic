@@ -217,7 +217,7 @@
 					var/mob/living/carbon/human/driver = mob.buckled
 					var/obj/item/bodypart/l_arm = driver.get_bodypart(BP_L_ARM)
 					var/obj/item/bodypart/r_arm = driver.get_bodypart(BP_R_ARM)
-					if((!l_arm || (l_arm.status & ORGAN_DESTROYED)) && (!r_arm || (r_arm.status & ORGAN_DESTROYED)))
+					if( (!l_arm || l_arm.is_stump()) && (!r_arm || r_arm.is_stump()) )
 						return // No hands to drive your chair? Tough luck!
 				move_delay += 2
 				return mob.buckled.relaymove(mob,direct)
