@@ -257,24 +257,23 @@
 	if(!linked_node || (get_dist(linked_node, src) > linked_node.node_range) )
 		return
 
-	for(var/dirn in cardinal)
-		var/turf/T = get_step(src, dirn)
+	check_next_dir:
+		for(var/dirn in cardinal)
+			var/turf/T = get_step(src, dirn)
 
-		if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
-			continue
-
-		var/obj/structure/window/W = locate(/obj/structure/window) in T
-		var/obj/machinery/door/D = locate(/obj/machinery/door) in T
-
-		if(D)
-			if(D.density)
+			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
 				continue
 
-		if(W)
-			if(W.density)
+			for(var/obj/machinery/door/D in T)
+				if(D.density)
+					continue check_next_dir
+
+			var/obj/structure/window/W = locate() in T
+
+			if(W && W.density)
 				continue
 
-		new /obj/structure/alien/weeds(T, linked_node)
+			new /obj/structure/alien/weeds(T, linked_node)
 
 
 /obj/structure/alien/weeds/ex_act(severity)
