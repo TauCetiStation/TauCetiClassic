@@ -56,8 +56,7 @@
 		//Dummy loads do not have to be moved as they are just an overlay
 		//See load_object() proc in cargo_trains.dm for an example
 		if(load && !istype(load, /datum/vehicle_dummy_load))
-			load.forceMove(loc)
-			load.set_dir(dir)
+			load.Move(loc, dir)
 
 		return 1
 	else

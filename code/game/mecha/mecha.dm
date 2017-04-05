@@ -1025,11 +1025,6 @@
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
 	if(H && H.client && H in range(1))
 		H.reset_view(src)
-		/*
-		H.client.perspective = EYE_PERSPECTIVE
-		H.client.eye = src
-		*/
-		H.stop_pulling()
 		H.forceMove(src)
 		if(H.hud_used)
 			last_user_hud = H.hud_used.hud_shown
