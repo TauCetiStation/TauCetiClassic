@@ -24,7 +24,10 @@
 
 	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
 	if(H.age>49)
-		U.hastie = new /obj/item/clothing/tie/medal/gold/captain(U)
+		var/obj/item/clothing/tie/medal/gold/captain/new_medal = new(U)
+		U.hastie = new_medal
+		new_medal.has_suit = U
+		U.overlays += new_medal.inv_overlay
 	H.equip_to_slot_or_del(U, slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat(H), slot_head)
