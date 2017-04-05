@@ -281,7 +281,7 @@
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
-	if(ishuman(mover) && mover.checkpass(PASSCRAWL))
+	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
 		mover.layer = 2.7
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
@@ -490,8 +490,7 @@
 	var/list/targets = list(get_step(src,dir),get_step(src,turn(dir, 45)),get_step(src,turn(dir, -45)))
 	for (var/atom/movable/A in get_turf(src))
 		if (!A.anchored)
-			spawn(0)
-				A.throw_at(pick(targets),1,1)
+			A.throw_at(pick(targets),1,1)
 
 	dir = direction
 	if(dir != NORTH)

@@ -219,21 +219,7 @@ datum
 				src = null
 				if(volume >= 3)
 					create_water(T)
-					if(T.wet >= 1) return
-					T.wet = 1
-					if(T.wet_overlay)
-						T.overlays -= T.wet_overlay
-						T.wet_overlay = null
-					T.wet_overlay = image('icons/effects/water.dmi',T,"wet_floor")
-					T.overlays += T.wet_overlay
-
-					spawn(800)
-						if (!istype(T)) return
-						if(T.wet >= 2) return
-						T.wet = 0
-						if(T.wet_overlay)
-							T.overlays -= T.wet_overlay
-							T.wet_overlay = null
+					T.make_wet_floor(WATER_FLOOR)
 
 				for(var/mob/living/carbon/slime/M in T)
 					M.adjustToxLoss(rand(15,20))
@@ -290,15 +276,7 @@ datum
 				if (!istype(T)) return
 				src = null
 				if(volume >= 1)
-					if(T.wet >= 2) return
-					T.wet = 2
-					spawn(800)
-						if (!istype(T)) return
-						T.wet = 0
-						if(T.wet_overlay)
-							T.overlays -= T.wet_overlay
-							T.wet_overlay = null
-						return
+					T.make_wet_floor(LUBE_FLOOR)
 
 		plasticide
 			name = "Plasticide"
@@ -1358,14 +1336,13 @@ datum
 						for(var/datum/wound/W in E.wounds) // remove internal
 							if(W.internal)
 								E.wounds -= W
-								E.update_damages()
 						if(E.status & ORGAN_DESTROYED)
 							if(E.parent && E.parent.status & ORGAN_DESTROYED)
 								continue
 							else
 								heal_time = 65
 								External = E
-						else if(E.status & (ORGAN_BROKEN || ORGAN_SPLINTED))
+						else if(E.status & ORGAN_BROKEN || E.status & ORGAN_SPLINTED)
 							heal_time = 30
 							External = E
 						if(External)
@@ -1396,13 +1373,10 @@ datum
 					if(prob(50))
 						H.emote("scream",1,null,1)
 					if(data >= heal_time) // recover organ
-						External.status = 0
-						External.stage = 0
-						External.perma_injury = 0
+						External.rejuvenate()
 						data = 0
 						External = null
 						heal_time = 0
-						H.update_body()
 
 		bicaridine
 			name = "Bicaridine"
@@ -2391,21 +2365,7 @@ datum
 				if (!istype(T)) return
 				src = null
 				if(volume >= 3)
-					if(T.wet >= 1) return
-					T.wet = 1
-					if(T.wet_overlay)
-						T.overlays -= T.wet_overlay
-						T.wet_overlay = null
-					T.wet_overlay = image('icons/effects/water.dmi',T,"wet_floor")
-					T.overlays += T.wet_overlay
-
-					spawn(800)
-						if (!istype(T)) return
-						if(T.wet >= 2) return
-						T.wet = 0
-						if(T.wet_overlay)
-							T.overlays -= T.wet_overlay
-							T.wet_overlay = null
+					T.make_wet_floor(WATER_FLOOR)
 				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot)
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )

@@ -1,6 +1,8 @@
 # Tau Ceti Classic
-[![Slack](http://slack.tauceti.ru/badge.svg)](http://slack.tauceti.ru/)
-[![tauceti.ru](https://img.shields.io/badge/site-tauceti.ru-blue.svg)](http://tauceti.ru/)
+[tauceti.ru](http://tauceti.ru/)  
+[RocketChat](https://chat.tauceti.ru/channel/rnd)
+
+---
 
 [Baystation12](http://baystation12.net/)-based build with many changes from another upstream and sibling builds like:  
 * [/tg/station13](https://tgstation13.org/)

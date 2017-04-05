@@ -73,6 +73,7 @@ var/can_call_ert
 			qdel(L)
 			new_commando.mind.key = usr.key
 			new_commando.key = usr.key
+			create_random_account_and_store_in_mind(new_commando)
 
 			to_chat(new_commando, "\blue You are [!leader_selected?"a member":"the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.")
 			to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.")

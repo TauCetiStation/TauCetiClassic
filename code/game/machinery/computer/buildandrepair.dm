@@ -78,7 +78,7 @@
 	var/cooldown = 0
 /obj/item/weapon/circuitboard/communications/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 /obj/item/weapon/circuitboard/communications/process()
 	cooldown = max(cooldown - 1, 0)
 /obj/item/weapon/circuitboard/card
@@ -238,10 +238,6 @@
 /obj/item/weapon/circuitboard/area_atmos
 	name = "Circuit board (Area Air Control)"
 	build_path = /obj/machinery/computer/area_atmos
-	origin_tech = "programming=2"
-/obj/item/weapon/circuitboard/prison_shuttle
-	name = "Circuit board (Prison Shuttle)"
-	build_path = /obj/machinery/computer/prison_shuttle
 	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/libraryconsole
 	name = "circuit board (Library Visitor Console)"
@@ -425,7 +421,7 @@
 				to_chat(user, "\blue You remove the cables.")
 				src.state = 2
 				src.icon_state = "2"
-				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
+				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil/random(src.loc)
 				A.amount = 5
 
 			if(istype(P, /obj/item/stack/sheet/glass))

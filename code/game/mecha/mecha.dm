@@ -783,7 +783,7 @@
 		user.do_attack_animation(src)
 		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
-		if(prob(50) && Ham.use_charge(src,user,6))
+		if(prob(50) && Ham.use_charge(user,6))
 			take_damage(Ham.force * 3)
 	else
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
@@ -1025,11 +1025,6 @@
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
 	if(H && H.client && H in range(1))
 		H.reset_view(src)
-		/*
-		H.client.perspective = EYE_PERSPECTIVE
-		H.client.eye = src
-		*/
-		H.stop_pulling()
 		H.forceMove(src)
 		if(H.hud_used)
 			last_user_hud = H.hud_used.hud_shown

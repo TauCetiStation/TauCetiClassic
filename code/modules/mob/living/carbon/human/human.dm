@@ -82,6 +82,8 @@
 	if(dna)
 		dna.real_name = real_name
 
+	verbs += /mob/living/carbon/proc/crawl
+
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
@@ -327,11 +329,6 @@
 	if (istype(buckled, /obj/structure/stool/bed/nest))
 		return 1
 	return 0
-
-
-
-/mob/living/carbon/human/var/co2overloadtime = null
-/mob/living/carbon/human/var/temperature_resistance = T0C+75
 
 
 /mob/living/carbon/human/show_inv(mob/user)
@@ -642,10 +639,10 @@
 									counter++
 								if(istype(usr,/mob/living/carbon/human))
 									var/mob/living/carbon/human/U = usr
-									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
+									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 								if(istype(usr,/mob/living/silicon/robot))
 									var/mob/living/silicon/robot/U = usr
-									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
+									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 
 	if (href_list["medical"])
 		if(hasHUD(usr,"medical"))
@@ -771,10 +768,10 @@
 									counter++
 								if(istype(usr,/mob/living/carbon/human))
 									var/mob/living/carbon/human/U = usr
-									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
+									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 								if(istype(usr,/mob/living/silicon/robot))
 									var/mob/living/silicon/robot/U = usr
-									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
+									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 
 	if (href_list["lookitem"])
 		var/obj/item/I = locate(href_list["lookitem"])
@@ -1332,42 +1329,6 @@
 		W.message = message
 		W.add_fingerprint(src)
 
-/mob/living/carbon/human/var/crawl_getup = 0
-/mob/living/carbon/human/verb/crawl()
-	set name = "Crawl"
-	set category = "IC"
-
-	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
-		return
-	if(crawl_getup)
-		return
-
-	if(crawling)
-		crawl_getup = 1
-		if(do_after(src, 10, target = src))
-			crawl_getup = 0
-			if(!crawl_can_use())
-				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-				var/datum/organ/external/E = get_organ("head")
-				E.take_damage(5, 0, 0, 0, "Table")
-				to_chat(src, "<span class='danger'>Ouch!</span>")
-				return
-			layer = 4.0
-		else
-			crawl_getup = 0
-			return
-	else
-		if(!crawl_can_use())
-			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
-			return
-		layer = 3.9
-
-	pass_flags ^= PASSCRAWL
-	crawling = !crawling
-
-	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
-	update_canmove()
-
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"
 	set category = "OOC"
@@ -1432,15 +1393,16 @@
 	status_flags |= LEAPING
 
 	src.visible_message("<span class='warning'><b>\The [src]</b> leaps at [T]!</span>")
-	src.throw_at(get_step(get_turf(T),get_turf(src)), 5, 1, src)
+	src.throw_at(get_step(get_turf(T),get_turf(src)), 5, 1, src, spin = FALSE, callback = CALLBACK(src, .end_leaping, T))
 	playsound(src.loc, 'sound/voice/shriek1.ogg', 50, 1)
 
-	sleep(5)
 
-	if(status_flags & LEAPING) status_flags &= ~LEAPING
+/mob/living/carbon/human/proc/end_leaping(mob/living/T)
+	if(status_flags & LEAPING)
+		status_flags &= ~LEAPING
 
 	if(!src.Adjacent(T))
-		to_chat(src, "\red You miss!")
+		to_chat(src, "<span class='warning'>You miss!</span>")
 		return
 
 	T.Weaken(5)
@@ -1448,12 +1410,12 @@
 	var/use_hand = "left"
 	if(l_hand)
 		if(r_hand)
-			to_chat(src, "\red You need to have one hand free to grab someone.")
+			to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
 			return
 		else
 			use_hand = "right"
 
-	src.visible_message("<span class='warning'><b>\The [src]</b> seizes [T] aggressively!</span>")
+	visible_message("<span class='warning'><b>\The [src]</b> seizes [T] aggressively!</span>")
 
 	var/obj/item/weapon/grab/G = new(src,T)
 	if(use_hand == "left")

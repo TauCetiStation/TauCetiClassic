@@ -21,14 +21,14 @@
 
 				return -1 // complete projectile permutation
 
-	if(check_shields(P.damage, "the [P.name]"))
+	if(check_shields(P.damage, "the [P.name]", P.dir))
 		P.on_hit(src, 100, def_zone)
 		return 2
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
 		if(check_thickmaterial(select_area))
-			visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
+			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
 			P.agony /= 2
 		apply_effect(P.agony,AGONY,0)
 		qdel(P)
@@ -46,7 +46,7 @@
 				drop_item()
 		P.on_hit(src)
 		flash_pain()
-		to_chat(src, "\red You have been shot!")
+		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
 		qdel(P)
 		return
 
@@ -60,7 +60,7 @@
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & select_area.body_part) // Is that body part being targeted covered?
 					if(C.flags & THICKMATERIAL )
-						visible_message("\red <B>The [P.name] gets absorbed by [src]'s [C.name]!</B>")
+						visible_message("<span class='userdanger'> <B>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
 						qdel(P)
 						return
 
@@ -69,7 +69,7 @@
 		apply_damage(P.damage, P.damage_type, organ, armorblock, P, 0, 0)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		flash_pain()
-		to_chat(src, "\red You have been shot!")
+		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
 		qdel(P)
 		return
 
@@ -109,7 +109,7 @@
 		var/armor = getarmor_organ(organ, "bio")
 		if (armor < 100)
 			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
-			to_chat(src, "\red You feel that yor muscles can`t move!")
+			to_chat(src, "<span class='userdanger'>You feel that yor muscles can`t move!</span>")
 
 
 	return (..(P , def_zone))
@@ -194,22 +194,22 @@
 				return 1
 	return 0
 
-/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack")
+/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", hit_dir = 0)
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
-		if(prob(I.Get_shield_chance() - round(damage / 3)))
-			visible_message("\red <B>[src] blocks [attack_text] with the [l_hand.name]!</B>")
+		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
+			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [l_hand.name]!</span>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
-		if(prob(I.Get_shield_chance() - round(damage / 3)))
-			visible_message("\red <B>[src] blocks [attack_text] with the [r_hand.name]!</B>")
+		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
+			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
 		if(prob(I.Get_shield_chance() - round(damage / 3)))
 			if(istype(wear_suit,/obj/item/clothing/suit/armor/reactive))
-				visible_message("\red <B>The reactive teleport system flings [src] clear of [attack_text]!</B>")
+				visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 				var/list/turfs = new/list()
 				for(var/turf/T in orange(6))
 					if(istype(T,/turf/space)) continue
@@ -220,9 +220,9 @@
 				if(!turfs.len) turfs += pick(/turf in orange(6))
 				var/turf/picked = pick(turfs)
 				if(!isturf(picked)) return
-				src.loc = picked
+				loc = picked
 			else
-				visible_message("\red <B>[src] blocks [attack_text] with the [wear_suit]!</B>")
+				visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [wear_suit]!</span>")
 			return 1
 	return 0
 
@@ -247,7 +247,7 @@
 	if(user == src) // Attacking yourself can't miss
 		target_zone = user.zone_sel.selecting
 	if(!target_zone)
-		visible_message("\red <B>[user] misses [src] with \the [I]!")
+		visible_message("<span class='userdanger'>[user] misses [src] with \the [I]!</span>")
 		return 0
 
 	var/datum/organ/external/affecting = get_organ(target_zone)
@@ -260,26 +260,26 @@
 
 	if(user != src)
 		user.do_attack_animation(src)
-		if(check_shields(I.force, "the [I.name]"))
+		if(check_shields(I.force, "the [I.name]", get_dir(user,src) ))
 			return 0
 
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(!(affecting.status & ORGAN_ROBOT))
-			to_chat(user, "\red That limb isn't robotic.")
+			to_chat(user, "<span class='userdanger'>That limb isn't robotic.</span>")
 			return
 		if(affecting.sabotaged)
-			to_chat(user, "\red [src]'s [affecting.display_name] is already sabotaged!")
+			to_chat(user, "<span class='userdanger'>[src]'s [affecting.display_name] is already sabotaged!</span>")
 		else
-			to_chat(user, "\red You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties.")
+			to_chat(user, "<span class='userdanger'>You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties.</span>")
 			var/obj/item/weapon/card/emag/emag = I
 			emag.uses--
 			affecting.sabotaged = 1
 		return 1
 
 	if(I.attack_verb.len)
-		visible_message("\red <B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B>")
+		visible_message("<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</span>")
 	else
-		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
+		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>")
 
 	var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
 	var/weapon_sharp = is_sharp(I)
@@ -313,7 +313,7 @@
 			if("head")//Harder to score a stun but if you do it lasts a bit longer
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
-					visible_message("\red <B>[src] has been knocked unconscious!</B>")
+					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
 				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
@@ -333,7 +333,7 @@
 			if("chest")//Easier to score a stun but lasts less time
 				if(prob((I.force + 10)))
 					apply_effect(5, WEAKEN, armor)
-					visible_message("\red <B>[src] has been knocked down!</B>")
+					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
 
 				if(bloody)
 					bloody_body(src)
@@ -347,7 +347,7 @@
 		if(istype(O,/obj/item/weapon))
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
-		var/throw_damage = O.throwforce*(AM.fly_speed/5)
+		var/throw_damage = O.throwforce * (AM.fly_speed / 5)
 
 		var/zone
 		if (istype(O.thrower, /mob/living))
@@ -364,18 +364,15 @@
 			zone = get_zone_with_miss_chance(zone, src, 15)
 
 		if(!zone)
-			visible_message("\blue \The [O] misses [src] narrowly!")
+			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
-
-		O.throwing = 0		//it hit, so stop moving
-
-		if ((O.thrower != src) && check_shields(throw_damage, "[O]"))
+		if ((O.thrower != src) && check_shields(throw_damage, "[O]", get_dir(O,src) ))
 			return
 
 		var/datum/organ/external/affecting = get_organ(zone)
 		var/hit_area = affecting.display_name
 
-		src.visible_message("\red [src] has been hit in the [hit_area] by [O].")
+		src.visible_message("<span class='warning'>[src] has been hit in the [hit_area] by [O].</span>")
 		var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess "melee" is the best fit here
 
 		if(armor < 100)
@@ -396,7 +393,7 @@
 			var/momentum = AM.fly_speed/2
 			var/dir = get_dir(O.throw_source, src)
 
-			visible_message("\red [src] staggers under the impact!","\red You stagger under the impact!")
+			visible_message("<span class='warning'>[src] staggers under the impact!</span>","<span class='danger'>You stagger under the impact!</span>")
 			src.throw_at(get_edge_target_turf(src,dir),1,momentum)
 
 			if(!W || !src) return
@@ -406,12 +403,11 @@
 
 				if(T)
 					src.loc = T
-					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='warning'>You are pinned to the wall by [O]!</span>")
+					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='danger'>You are pinned to the wall by [O]!</span>")
 					src.anchored = 1
 					src.pinned += O
-		AM.fly_speed = 0
 
-/mob/living/carbon/human/proc/bloody_hands(mob/living/source, amount = 2)
+/mob/living/carbon/human/bloody_hands(mob/living/source, amount = 2)
 	if (gloves)
 		gloves.add_blood(source)
 		gloves:transfer_blood = amount
@@ -422,7 +418,7 @@
 		bloody_hands_mob = source
 	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
-/mob/living/carbon/human/proc/bloody_body(mob/living/source)
+/mob/living/carbon/human/bloody_body(mob/living/source)
 	if(wear_suit)
 		wear_suit.add_blood(source)
 		update_inv_wear_suit()

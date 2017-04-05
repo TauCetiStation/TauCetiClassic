@@ -12,7 +12,7 @@
 
 	..()
 
-	if((M != src) && check_shields(0, M.name))
+	if((M != src) && check_shields(0, M.name, get_dir(M,src)))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
@@ -46,7 +46,7 @@
 						msg_admin_attack("[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
 						calc_power = 100 * get_siemens_coefficient_organ(select_area)
 					target.apply_effects(0,0,0,0,2,0,0,calc_power)
-					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 					s.set_up(3, 1, target)
 					s.start()
 					return 1
@@ -236,7 +236,7 @@
 				//End BubbleWrap
 
 				if(!talked)	//BubbleWrap
-					if(istype(l_hand, /obj/item/weapon/melee/arm_blade) || istype(r_hand, /obj/item/weapon/melee/arm_blade) || istype(l_hand, /obj/item/weapon/shield/changeling) || istype(r_hand, /obj/item/weapon/shield/changeling))
+					if( (l_hand && l_hand.flags & ABSTRACT) || (r_hand && r_hand.flags & ABSTRACT) )
 						return
 					else
 						drop_item()

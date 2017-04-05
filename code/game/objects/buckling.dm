@@ -21,10 +21,7 @@
 
 	//reset pulling
 	if(M.pulledby)
-		var/mob/P = M.pulledby
-		if(P.pulling)
-			P.pulling = null
-		M.pulledby = null
+		M.pulledby.stop_pulling()
 
 	M.buckled = src
 	M.set_dir(dir)

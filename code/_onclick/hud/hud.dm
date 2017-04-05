@@ -31,6 +31,7 @@
 	var/obj/screen/l_hand_hud_object
 	var/obj/screen/action_intent
 	var/obj/screen/move_intent
+	var/obj/screen/staminadisplay
 
 	var/list/adding
 	var/list/other
@@ -135,6 +136,8 @@
 
 	if(ishuman(mymob))
 		human_hud(ui_style, ui_color, ui_alpha) // Pass the player the UI style chosen in preferences
+	else if(isIAN(mymob))
+		ian_hud()
 	else if(ismonkey(mymob))
 		monkey_hud(ui_style)
 	else if(isbrain(mymob))

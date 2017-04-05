@@ -278,7 +278,7 @@
 		var/obj/item/weapon/changeling_hammer/C = W
 		user.do_attack_animation(src)
 		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
-		if(C.use_charge(src,user, 4))
+		if(C.use_charge(user, 4))
 			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			take_damage(pick(10, 20, 30))
 		return

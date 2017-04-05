@@ -66,7 +66,7 @@
 			..()
 			return
 
-		var/obj/item/weapon/cable_coil/CC = new/obj/item/weapon/cable_coil(user.loc)
+		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil/red(user.loc)
 		CC.amount = 1
 		CC.update_icon()
 		overlays = list()

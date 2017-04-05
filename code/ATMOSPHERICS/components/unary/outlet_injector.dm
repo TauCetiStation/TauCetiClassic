@@ -11,9 +11,9 @@
 
 	var/volume_rate = 50
 
-	var/frequency = 0
+
 	var/id = null
-	var/datum/radio_frequency/radio_connection
+
 
 	level = 1
 
@@ -73,7 +73,7 @@
 
 	flick("inject", src)
 
-/obj/machinery/atmospherics/unary/outlet_injector/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/unary/outlet_injector/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
@@ -105,6 +105,11 @@
 
 	set_frequency(frequency)
 
+/obj/machinery/atmospherics/unary/outlet_injector/Destroy()
+	if(frequency)
+		set_frequency(null)
+	return ..()
+
 /obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
@@ -116,7 +121,7 @@
 		on = !on
 
 	if("inject" in signal.data)
-		spawn inject()
+		INVOKE_ASYNC(src, .proc/inject)
 		return
 
 	if("set_volume_rate" in signal.data)
@@ -124,14 +129,12 @@
 		volume_rate = between(0, number, air_contents.volume)
 
 	if("status" in signal.data)
-		spawn(2)
-			broadcast_status()
+		addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 		return //do not update_icon
 
 		//log_admin("DEBUG \[[world.timeofday]\]: outlet_injector/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 		//return
-	spawn(2)
-		broadcast_status()
+	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 	update_icon()
 
 /obj/machinery/atmospherics/unary/outlet_injector/hide(i) //to make the little pipe section invisible, the icon changes.

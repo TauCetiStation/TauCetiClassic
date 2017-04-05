@@ -2,6 +2,11 @@
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
 	if(istype(W))
+		if(isIAN(src))
+			switch(slot)
+				if(slot_head, slot_back)
+					to_chat(src, "<span class='notice'>You have no idea how humans do this.</span>")
+					return
 		if (istype(W, /obj/item/clothing))
 			var/obj/item/clothing/C = W
 			if(C.rig_restrict_helmet)
@@ -185,12 +190,8 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/put_in_hands(obj/item/W)
 	if(!W)		return 0
 	if(put_in_active_hand(W))
-		update_inv_l_hand()
-		update_inv_r_hand()
 		return 1
 	else if(put_in_inactive_hand(W))
-		update_inv_l_hand()
-		update_inv_r_hand()
 		return 1
 	else
 		W.forceMove(get_turf(src))
@@ -298,8 +299,8 @@ var/list/slot_equipment_priority = list( \
 //	if(hasvar(src,"w_radio")) if(src:w_radio) items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN
 	if(hasvar(src,"w_uniform")) if(src:w_uniform) items += src:w_uniform
 
-	//if(hasvar(src,"l_hand")) if(src:l_hand) items += src:l_hand
-	//if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
+	if(hasvar(src,"l_hand")) if(src:l_hand) items += src:l_hand
+	if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
 
 	return items
 

@@ -147,8 +147,8 @@ Class Procs:
 	return A == Z || B == Z
 
 /connection_edge/zone/erase()
-	A.edges.Remove(src)
-	B.edges.Remove(src)
+	A.edges -= src
+	B.edges -= src
 	. = ..()
 
 /connection_edge/zone/tick()
@@ -301,6 +301,7 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 			var/G_avg = (G.moles*size) / (size+share_size)
 			G.moles = (G.moles - G_avg) * (1-ratio) + G_avg
 			H.moles = (H.moles - G_avg) * (1-ratio) + G_avg
+		CHECK_TICK
 
 	for(var/datum/gas/G in B.trace_gases)
 		var/datum/gas/H = locate(G.type) in A.trace_gases
@@ -310,6 +311,7 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 			var/G_avg = (G.moles*size) / (size+share_size)
 			G.moles = (G.moles - G_avg) * (1-ratio) + G_avg
 			H.moles = (H.moles - G_avg) * (1-ratio) + G_avg
+		CHECK_TICK
 
 	A.update_values()
 	B.update_values()

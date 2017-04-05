@@ -56,8 +56,8 @@
 
 /obj/structure/pbag/proc/swing(time = rand(5, 20))
 	icon_state = "pbaghit"
-	spawn(time)
-		icon_state = "pbag"
+	sleep(time)
+	icon_state = "pbag"
 
 /obj/structure/pbag/verb/hang()
 	set name = "Hang Bag"

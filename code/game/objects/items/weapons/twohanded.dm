@@ -48,7 +48,7 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
-			O.unwield()
+			user.drop_from_inventory(O)
 	return	unwield()
 
 /obj/item/weapon/twohanded/update_icon()
@@ -58,7 +58,7 @@
 	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
-	if( istype(user,/mob/living/carbon/monkey) )
+	if(istype(user,/mob/living/carbon/monkey))
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 
@@ -75,8 +75,8 @@
 			playsound(src.loc, unwieldsound, 50, 1)
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
-		if(O && istype(O))
-			O.unwield()
+		if(istype(O))
+			user.drop_from_inventory(O)
 		return
 
 	else //Trying to wield it
@@ -105,11 +105,11 @@
 	icon_state = "offhand"
 	name = "offhand"
 
-	unwield()
-		qdel(src)
+/obj/item/weapon/twohanded/offhand/unwield()
+	qdel(src)
 
-	wield()
-		qdel(src)
+/obj/item/weapon/twohanded/offhand/wield()
+	qdel(src)
 
 /*
  * Fireaxe
@@ -173,7 +173,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	reflect_chance = rand(50,85)
-	item_color = pick("red", "blue", "green", "purple")
+	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
 	switch(item_color)
 		if("red")
 			light_color = "#ff0000"
@@ -184,6 +184,12 @@
 		if("purple")
 			light_color = "#551a8b"
 			light_power = 2
+		if("yellow")
+			light_color = "#ffff00"
+		if("pink")
+			light_color = "#ff00ff"
+		if("black")
+			light_color = "#aeaeae"
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
@@ -212,14 +218,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
 	if(wielded && prob(reflect_chance))
-		if(hol_dir == NORTH && (hit_dir in list(SOUTH, SOUTHEAST, SOUTHWEST)))
-			return TRUE
-		else if(hol_dir == SOUTH && (hit_dir in list(NORTH, NORTHEAST, NORTHWEST)))
-			return TRUE
-		else if(hol_dir == EAST && (hit_dir in list(WEST, NORTHWEST, SOUTHWEST)))
-			return TRUE
-		else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
-			return TRUE
+		return is_the_opposite_dir(hol_dir, hit_dir)
 	return FALSE
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)

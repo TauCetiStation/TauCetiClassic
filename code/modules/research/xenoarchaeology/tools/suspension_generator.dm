@@ -305,15 +305,17 @@
 
 /obj/machinery/suspension_gen/proc/deactivate()
 	//drop anything we picked up
-	var/turf/T = get_turf(suspension_field)
+	if(suspension_field)
+		var/turf/T = get_turf(suspension_field)
 
-	for(var/mob/M in T)
-		to_chat(M, "<span class='info'>You no longer feel like floating.</span>")
-		M.weakened = min(M.weakened, 3)
+		for(var/mob/M in T)
+			to_chat(M, "<span class='info'>You no longer feel like floating.</span>")
+			M.weakened = min(M.weakened, 3)
 
-	src.visible_message("\blue [bicon(src)] [src] deactivates with a gentle shudder.")
-	qdel(suspension_field)
-	icon_state = "suspension2"
+		src.visible_message("\blue [bicon(src)] [src] deactivates with a gentle shudder.")
+		qdel(suspension_field)
+		suspension_field = null
+		icon_state = "suspension2"
 
 /obj/machinery/suspension_gen/Destroy()
 	//safety checks: clear the field and drop anything it's holding

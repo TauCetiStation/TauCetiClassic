@@ -142,33 +142,28 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang_segment"
 
-/obj/item/weapon/grenade/clusterbuster/segment/New(var/loc, var/payload_type = /obj/item/weapon/grenade/flashbang/cluster)
+/obj/item/weapon/grenade/clusterbuster/segment/New(loc, payload_type = /obj/item/weapon/grenade/flashbang/cluster)
 	..()
 	icon_state = "clusterbang_segment_active"
 	payload = payload_type
 	active = 1
 	walk_away(src,loc,rand(1,4))
-	addtimer(src, "prime", rand(15,60))
+	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
 /obj/item/weapon/grenade/clusterbuster/segment/prime()
-
 	new /obj/effect/payload_spawner(loc, payload, rand(4,8))
-
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-
 	qdel(src)
 
 //////////////////////////////////
 //The payload spawner effect
 /////////////////////////////////
-/obj/effect/payload_spawner/New(var/turf/newloc,var/type, var/numspawned as num)
-
+/obj/effect/payload_spawner/New(turf/newloc, type, numspawned)
 	for(var/loop = numspawned ,loop > 0, loop--)
 		var/obj/item/weapon/grenade/P = new type(loc)
 		P.active = 1
 		walk_away(P,loc,rand(1,4))
-
-		addtimer(P, "prime", rand(15,60))
+		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
 	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/cluster

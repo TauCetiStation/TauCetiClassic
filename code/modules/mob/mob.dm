@@ -95,6 +95,35 @@
 	for(var/mob/M in viewers(src))
 		M.show_message(message, 1, blind_message, 2)
 
+// Show a message to all mobs in earshot of this one
+// This would be for audible actions by the src mob
+// message is the message output to anyone who can hear.
+// self_message (optional) is what the src mob hears.
+// deaf_message (optional) is what deaf people will see.
+// hearing_distance (optional) is the range, how many tiles away the message can be heard.
+
+/mob/audible_message(message, deaf_message, hearing_distance, self_message)
+	var/range = world.view
+	if(hearing_distance)
+		range = hearing_distance
+	for(var/mob/M in get_hearers_in_view(range, src))
+		var/msg = message
+		if(self_message && M == src)
+			msg = self_message
+		M.show_message(msg, 2, deaf_message, 1)
+
+// Show a message to all mobs in earshot of this atom
+// Use for objects performing audible actions
+// message is the message output to anyone who can hear.
+// deaf_message (optional) is what deaf people will see.
+// hearing_distance (optional) is the range, how many tiles away the message can be heard.
+
+/atom/proc/audible_message(message, deaf_message, hearing_distance)
+	var/range = world.view
+	if(hearing_distance)
+		range = hearing_distance
+	for(var/mob/M in get_hearers_in_view(range, src))
+		M.show_message(message, 2, deaf_message, 1)
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)
@@ -286,6 +315,38 @@
 	face_atom(A)
 	A.examine(src)
 
+/mob/verb/pointed(atom/A as mob|obj|turf in oview())
+	set name = "Point To"
+	set category = "Object"
+
+	if(!usr || !isturf(usr.loc))
+		return
+	if(usr.stat || usr.restrained())
+		return
+	if(usr.status_flags & FAKEDEATH)
+		return
+	if(!(A in oview(usr.loc)))
+		return
+	if(istype(A, /obj/effect/decal/point))
+		return
+
+	var/tile = get_turf(A)
+	if(!tile)
+		return
+
+	var/obj/P = new /obj/effect/decal/point(tile)
+	P.pixel_x = A.pixel_x
+	P.pixel_y = A.pixel_y
+
+	QDEL_IN(P, 20)
+
+	usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
+
+	if(isliving(A))
+		for(var/mob/living/carbon/slime/S in oview())
+			if(usr in S.Friends)
+				S.last_pointed = A
+
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
@@ -345,12 +406,6 @@
 	M.key = key
 //	M.Login()	//wat
 	return
-
-/client/verb/changes()
-	set name = "Changelog"
-	set category = "OOC"
-
-	usr << link("http://tauceti.ru/forums/index.php?topic=3551")
 
 /mob/verb/observe()
 	set name = "Observe"
@@ -614,7 +669,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					else
 						stat("Failsafe Controller:", "ERROR")
 					if(Master)
-						stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
 						stat(null)
 						for(var/datum/subsystem/SS in Master.subsystems)
 							SS.stat_entry()

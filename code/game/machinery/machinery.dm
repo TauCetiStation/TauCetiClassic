@@ -116,17 +116,31 @@ Class Procs:
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 
+	var/frequency = 0
+	var/datum/radio_frequency/radio_connection
+	var/radio_filter_out
+	var/radio_filter_in
+
 /obj/machinery/New()
 	..()
 	machines += src
-	SSmachine.processing += src
+	START_PROCESSING(SSmachine, src)
 	power_change()
 
 /obj/machinery/Destroy()
-	machines.Remove(src)
-	SSmachine.processing -= src
+	if(frequency)
+		set_frequency(null)
+	machines -= src
+	STOP_PROCESSING(SSmachine, src)
+
 	dropContents()
 	return ..()
+
+/obj/machinery/proc/set_frequency(new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
 
 /obj/machinery/proc/locate_machinery()
 	return
@@ -138,15 +152,14 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		var/obj/effect/overlay/pulse2 = PoolOrNew(/obj/effect/overlay, src.loc)
+		var/obj/effect/overlay/pulse2 = new /obj/effect/overlay(loc)
 		pulse2.icon = 'icons/effects/effects.dmi'
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"
 		pulse2.anchored = 1
 		pulse2.dir = pick(cardinal)
 
-		spawn(10)
-			qdel(pulse2)
+		QDEL_IN(pulse2, 10)
 	..()
 
 /obj/machinery/proc/open_machine()

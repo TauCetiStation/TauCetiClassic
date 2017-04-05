@@ -32,21 +32,26 @@
 /obj/item/weapon/changeling_whip/afterattack(atom/A, mob/living/carbon/human/user)
 	if(!istype(user))
 		return
+	if(user.incapacitated() || user.lying)
+		return
 	if(next_click > world.time)
 		return
-	if(!use_charge(A,user))
+	if(!use_charge(user, 2))
 		return
-	next_click = world.time + 14
+	next_click = world.time + 10
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(T)
 	if(user.a_intent == "grab")
 		LE.grabber = 1
-	else if(user.a_intent == "disarm" && prob(35))
+	else if(user.a_intent == "disarm" && prob(65))
 		LE.weaken = 5
 	else if(user.a_intent == "hurt")
 		LE.damage = 30
+	else
+		LE.agony = 25
 	LE.host = user
+	LE.firer = user
 	LE.def_zone = check_zone(user.zone_sel.selecting)
 	LE.starting = T
 	LE.original = A
@@ -57,10 +62,10 @@
 		LE.process()
 
 /obj/item/projectile/changeling_whip
-	name = "laser"
+	name = "Whip"
 	icon_state = "laser"
 	pass_flags = PASSTABLE
-	damage = 5
+	damage = 0
 	kill_count = 7
 	damage_type = BRUTE
 	flag = "bullet"
@@ -74,27 +79,21 @@
 
 /obj/item/projectile/changeling_whip/on_hit(atom/target, blocked = 0)
 	..()
-	if(ismob(target))
-		var/mob/M = target
-		M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been whipped by [host.name] ([host.ckey])</font>")
-		host.attack_log += text("\[[time_stamp()]\] <font color='red'>whipped [M.name]'s ([M.ckey])</font>")
-		msg_admin_attack("[host] ([host.ckey]) whipped [M.name] ([M.ckey]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span></span>")
 	var/atom/movable/T = target
-	var/grab_chance = iscarbon(T) ? 30 : 90
+	var/grab_chance = iscarbon(T) ? 50 : 90
 	if(grabber && !T.anchored && prob(grab_chance))
-		spawn(1)
-			T.throw_at(host, 7 - kill_count, 0.2)
-			sleep(2)
-			if(in_range(T, host) && !host.get_inactive_hand())
-				if(iscarbon(T))
-					var/obj/item/weapon/grab/G = new(host,T)
-					host.put_in_inactive_hand(G)
-					G.state = GRAB_AGGRESSIVE
-					G.icon_state = "grabbed1"
-					G.synch()
-				else if(istype(T, /obj/item))
-					host.put_in_inactive_hand(T)
+		T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
 
+/obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
+	if(in_range(T, host) && !host.get_inactive_hand())
+		if(iscarbon(T))
+			var/obj/item/weapon/grab/G = new(host,T)
+			host.put_in_inactive_hand(G)
+			G.state = GRAB_AGGRESSIVE
+			G.icon_state = "grabbed1"
+			G.synch()
+		else if(istype(T, /obj/item))
+			host.put_in_inactive_hand(T)
 
 /obj/effect/projectile/laser/tracer/changeling
 	icon_state = "changeling"

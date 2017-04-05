@@ -82,8 +82,9 @@
 	return
 
 /obj/machinery/vending/Destroy()
-	qdel(coin)
-	coin = null
+	if(coin)
+		qdel(coin)
+		coin = null
 	return ..()
 
 /obj/machinery/vending/ex_act(severity)
@@ -220,7 +221,7 @@
 					stat &= ~NOPOWER
 					set_light(light_range_on, light_power_on)
 
-	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID()) //ѕда с картой
+	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID())
 		var/obj/item/weapon/card/I = W.GetID()
 		scan_card(I)
 
@@ -279,7 +280,8 @@
 	..()
 
 /obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
-	if(!currently_vending) return
+	if(!currently_vending)
+		return
 	if (istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
@@ -287,47 +289,50 @@
 			if(vendor_account)
 				var/datum/money_account/D = get_account(C.associated_account_number)
 				var/attempt_pin = 0
-				if(D.security_level > 0)
-					attempt_pin = input("Enter pin code", "Vendor transaction") as num
-				if(attempt_pin)
-					D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
 				if(D)
-					var/transaction_amount = currently_vending.price
-					if(transaction_amount <= D.money)
+					if(D.security_level > 0)
+						attempt_pin = input("Enter pin code", "Vendor transaction") as num
+					if(attempt_pin)
+						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+					if(D)
+						var/transaction_amount = currently_vending.price
+						if(transaction_amount <= D.money)
 
-						//transfer the money
-						D.money -= transaction_amount
-						vendor_account.money += transaction_amount
+							//transfer the money
+							D.money -= transaction_amount
+							vendor_account.money += transaction_amount
 
-						//create entries in the two account transaction logs
-						var/datum/transaction/T = new()
-						T.target_name = "[vendor_account.owner_name] (via [src.name])"
-						T.purpose = "Purchase of [currently_vending.product_name]"
-						if(transaction_amount > 0)
-							T.amount = "([transaction_amount])"
-						else
+							//create entries in the two account transaction logs
+							var/datum/transaction/T = new()
+							T.target_name = "[vendor_account.owner_name] (via [src.name])"
+							T.purpose = "Purchase of [currently_vending.product_name]"
+							if(transaction_amount > 0)
+								T.amount = "([transaction_amount])"
+							else
+								T.amount = "[transaction_amount]"
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							D.transaction_log.Add(T)
+							//
+							T = new()
+							T.target_name = D.owner_name
+							T.purpose = "Purchase of [currently_vending.product_name]"
 							T.amount = "[transaction_amount]"
-						T.source_terminal = src.name
-						T.date = current_date_string
-						T.time = worldtime2text()
-						D.transaction_log.Add(T)
-						//
-						T = new()
-						T.target_name = D.owner_name
-						T.purpose = "Purchase of [currently_vending.product_name]"
-						T.amount = "[transaction_amount]"
-						T.source_terminal = src.name
-						T.date = current_date_string
-						T.time = worldtime2text()
-						vendor_account.transaction_log.Add(T)
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							vendor_account.transaction_log.Add(T)
 
-						// Vend the item
-						src.vend(src.currently_vending, usr)
-						currently_vending = null
+							// Vend the item
+							src.vend(src.currently_vending, usr)
+							currently_vending = null
+						else
+							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 					else
-						to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
+						to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
 				else
-					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
+					to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
 			else
 				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access account. Check security settings and try again.</span>")
 		else
@@ -657,9 +662,8 @@
 		break
 	if (!throw_item)
 		return 0
-	spawn(0)
-		throw_item.throw_at(target, 16, 3, src)
-	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
+	throw_item.throw_at(target, 16, 3)
+	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 	return 1
 
 /obj/machinery/vending/proc/isWireColorCut(wireColor)
@@ -1040,7 +1044,7 @@
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
 	req_access_txt = "29"
-	products = list(/obj/item/weapon/cable_coil = 2,/obj/item/device/flash = 4,
+	products = list(/obj/item/weapon/cable_coil/random = 2,/obj/item/device/flash = 4,
 					/obj/item/weapon/stock_parts/cell/high = 5, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 2)
 	//everything after the power cell had no amounts, I improvised.  -Sayu

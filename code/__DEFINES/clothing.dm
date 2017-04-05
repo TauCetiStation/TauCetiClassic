@@ -33,6 +33,10 @@
 #define slot_r_ear 			20
 #define slot_legs 			21
 
+//Sol translation for dog slots.
+#define slot_mouth slot_wear_mask  // 2
+#define slot_neck  slot_handcuffed // 3 (Ian actually is a cat! ~if you know what i mean)
+
 //Cant seem to find a mob bitflags area other than the powers one
 
 // bitflags for clothing parts

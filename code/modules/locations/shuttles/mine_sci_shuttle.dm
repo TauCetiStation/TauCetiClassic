@@ -2,7 +2,7 @@
 
 #define STATION_DOCK /area/shuttle/mining/station
 #define MINE_DOCK /area/shuttle/mining/outpost
-#define SCI_DOCK /area/shuttle/research/outpost
+#define SCI_DOCK /area/shuttle/research
 
 #define M_S_SHUTTLE_FLOOR /turf/simulated/shuttle/floor/mining
 
@@ -107,7 +107,7 @@ var/global/area/mine_sci_curr_location = null
 
 	moving = TRUE
 	lastMove = world.time
-	addtimer(src, "mine_sci_do_move", MINE_SCI_SHUTTLE_COOLDOWN, TRUE, dest_location)
+	addtimer(CALLBACK(src, .proc/mine_sci_do_move, dest_location), MINE_SCI_SHUTTLE_COOLDOWN, TIMER_UNIQUE)
 	return TRUE
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_do_move(area/destination)

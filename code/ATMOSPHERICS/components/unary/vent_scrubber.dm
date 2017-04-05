@@ -10,8 +10,7 @@
 
 	var/area/initial_loc
 	var/id_tag = null
-	var/frequency = 1439
-	var/datum/radio_frequency/radio_connection
+	frequency = 1439
 
 	var/on = 0
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
@@ -23,8 +22,6 @@
 	var/panic = 0 //is this scrubber panicked?
 
 	var/area_uid
-	var/radio_filter_out
-	var/radio_filter_in
 
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
 	initial_loc = get_area(loc)
@@ -48,11 +45,6 @@
 	else
 		icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
 	return
-
-/obj/machinery/atmospherics/unary/vent_scrubber/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/broadcast_status()
 	if(!radio_connection)
@@ -191,13 +183,11 @@
 		return
 
 	if(signal.data["status"] != null)
-		spawn(2)
-			broadcast_status()
+		addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 		return //do not update_icon
 
 //			log_admin("DEBUG \[[world.timeofday]\]: vent_scrubber/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
-	spawn(2)
-		broadcast_status()
+	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 	update_icon()
 	return
 
@@ -238,4 +228,6 @@
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag
 		initial_loc.air_scrub_names -= id_tag
+	if(frequency)
+		set_frequency(null)
 	return ..()

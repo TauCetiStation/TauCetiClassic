@@ -185,8 +185,7 @@ Attach to transfer valve and open. BOOM.
 
 /obj/fire/Destroy()
 	RemoveFire()
-	..()
-	return QDEL_HINT_PUTINPOOL
+	return ..()
 
 /obj/fire/proc/RemoveFire()
 	if (istype(loc, /turf/simulated))

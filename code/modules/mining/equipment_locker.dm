@@ -841,5 +841,5 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /obj/structure/sign/xeno_warning_mining
 	name = "DANGEROUS ALIEN LIFE"
 	desc = "A sign that warns would be travellers of hostile alien life in the vicinity."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "xeno_warning"

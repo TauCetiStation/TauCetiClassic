@@ -214,7 +214,7 @@ proc/slur(phrase)
 	return copytext(t,1,MAX_MESSAGE_LEN)
 
 
-proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
+/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
 	for(var/i = 1, i <= length(t), i++)
@@ -226,6 +226,20 @@ proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 fo
 
 			for(var/j = 1, j <= rand(0, 2), j++)
 				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+
+		returntext += letter
+
+	return returntext
+
+/proc/GibberishAll(t) // Same as above, except there is no probability and chance always 100.
+	/* Turn text into complete gibberish! */
+	var/returntext = ""
+	for(var/i = 1 to length(t))
+
+		var/letter = ""
+
+		for(var/j = rand(0, 2) to 0 step -1)
+			letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 
 		returntext += letter
 
@@ -322,7 +336,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src)|| isfacehugger(src))
+	else if(isrobot(src) || ismonkey(src) || islarva(src)|| isfacehugger(src) || isIAN(src))
 		switch(input)
 			if("help")
 				a_intent = "help"
@@ -370,23 +384,29 @@ var/list/intents = list("help","disarm","grab","hurt")
 	var/obj/item/weapon/card/id/id = null
 	if(wear_id)
 		id = wear_id.GetID()
+	else if(l_hand)
+		id = l_hand.GetID()
+	else if(r_hand)
+		id = r_hand.GetID()
+
 	if(id && istype(id, /obj/item/weapon/card/id/syndicate))
 		threatcount -= 2
-	// A proper	CentCom id is hard currency.
-	else if(id && istype(id, /obj/item/weapon/card/id/centcom))
+	// A proper CentCom id is hard currency.
+	else if(id && is_type_in_list(id, list(/obj/item/weapon/card/id/centcom, /obj/item/weapon/card/id/ert)))
 		return SAFE_PERP
 
 	if(check_access && !access_obj.allowed(src))
 		threatcount += 4
 
 	if(auth_weapons && !access_obj.allowed(src))
-		if(istype(l_hand, /obj/item/weapon/gun) || istype(l_hand, /obj/item/weapon/melee))
+		var/list/weapon_list = list(/obj/item/weapon/gun, /obj/item/weapon/melee)
+		if(l_hand && is_type_in_list(l_hand, weapon_list))
 			threatcount += 4
 
-		if(istype(r_hand, /obj/item/weapon/gun) || istype(r_hand, /obj/item/weapon/melee))
+		if(r_hand && is_type_in_list(r_hand, weapon_list))
 			threatcount += 4
 
-		if(istype(belt, /obj/item/weapon/gun) || istype(belt, /obj/item/weapon/melee))
+		if(belt && is_type_in_list(belt, weapon_list))
 			threatcount += 2
 
 		if(species.name != "Human")

@@ -91,18 +91,17 @@
 			domutcheck(M, null, block!=null, 0) //#Z2 We go thru chance check
 			uses--
 
-			if(prob(5 + M.dna_inject_count))
+			if(M && prob(5 + M.dna_inject_count))
 				M.dna_inject_count = 0
 				trigger_side_effect(M)
-
-	spawn(0)//this prevents the collapse of space-time continuum
-		if (user)
-			user.drop_from_inventory(src)
-		qdel(src)
-	return uses
+	if(user)//If the user still exists. Their mob may not.
+		if(M)//Runtime fix: If the mob doesn't exist, mob.name doesnt work. - Nodrak
+			user.show_message(text("\red You inject [M.name]"))
+		else
+			user.show_message(text("\red You finish the injection."))
 
 /obj/item/weapon/dnainjector/attack(mob/M, mob/user)
-	if (!istype(M, /mob))
+	if (!istype(M))
 		return
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey") //#Z2
 		to_chat(user, "\red You don't have the dexterity to do this!")
@@ -190,18 +189,12 @@
 					log_game("[key_name(user)] injected [key_name(M)] with the [name]")
 				inuse = 1
 				inject(M, user)//Now we actually do the heavy lifting.
-				spawn(50)
-					inuse = 0
 				/*
 				A user injecting themselves could mean their own transformation and deletion of mob.
 				I don't have the time to figure out how this code works so this will do for now.
 				I did rearrange things a bit.
 				*/
-				if(user)//If the user still exists. Their mob may not.
-					if(M)//Runtime fix: If the mob doesn't exist, mob.name doesnt work. - Nodrak
-						user.show_message(text("\red You inject [M.name]"))
-					else
-						user.show_message(text("\red You finish the injection."))
+				QDEL_IN(src,10)
 	return
 
 

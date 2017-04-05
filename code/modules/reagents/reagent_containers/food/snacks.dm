@@ -192,23 +192,20 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
-	if(isanimal(M))
-		if(iscorgi(M))
-			if(bitecount == 0 || prob(50))
-				M.emote("nibbles away at the [src]")
-			bitecount++
-			if(bitecount >= 5)
-				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
-				if(sattisfaction_text)
-					M.emote("[sattisfaction_text]")
-				qdel(src)
-		if(ismouse(M))
-			var/mob/living/simple_animal/mouse/N = M
-			to_chat(N, text("<span class='notice'>You nibble away at [src].</span>"))
-			if(prob(50))
-				N.visible_message("[N] nibbles away at [src].</span>", "")
-			//N.emote("nibbles away at the [src]")
-			N.health = min(N.health + 1, N.maxHealth)
+	if(iscorgi(M) || isIAN(M))
+		if(bitecount == 0 || prob(50))
+			M.visible_message("<b>[M]</b> nibbles away at the [src]")
+		bitecount++
+		if(bitecount >= 5)
+			var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
+			M.visible_message("<b>[M]</b> [sattisfaction_text]")
+			qdel(src)
+	if(ismouse(M))
+		var/mob/living/simple_animal/mouse/N = M
+		to_chat(N, text("<span class='notice'>You nibble away at [src].</span>"))
+		if(prob(50))
+			N.visible_message("<b>[N]</b> nibbles away at [src].", "")
+		N.health = min(N.health + 1, N.maxHealth)
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -468,31 +465,31 @@
 	icon_state = "egg"
 	filling_color = "#FDFFD1"
 
-	New()
+/obj/item/weapon/reagent_containers/food/snacks/egg/New()
+	..()
+	reagents.add_reagent("nutriment", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
+	..()
+	new /obj/effect/decal/cleanable/egg_smudge(loc)
+	reagents.reaction(hit_atom, TOUCH)
+	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user)
+	if(istype( W, /obj/item/toy/crayon ))
+		var/obj/item/toy/crayon/C = W
+		var/clr = C.colourName
+
+		if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
+			to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
+			return
+
+		to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
+		icon_state = "egg-[clr]"
+		item_color = clr
+	else
 		..()
-		reagents.add_reagent("nutriment", 1)
-
-	throw_impact(atom/hit_atom)
-		..()
-		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
-		src.reagents.reaction(hit_atom, TOUCH)
-		src.visible_message("<span class='rose'>[src.name] has been squashed.</span>","<span class='rose'>You hear a smack.</span>")
-		qdel(src)
-
-	attackby(obj/item/weapon/W, mob/user)
-		if(istype( W, /obj/item/toy/crayon ))
-			var/obj/item/toy/crayon/C = W
-			var/clr = C.colourName
-
-			if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
-				to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
-				return
-
-			to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
-			icon_state = "egg-[clr]"
-			item_color = clr
-		else
-			..()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"

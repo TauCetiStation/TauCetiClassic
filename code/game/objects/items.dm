@@ -302,8 +302,15 @@
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-
 	return
+
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
+
+/obj/item/proc/after_throw(datum/callback/callback)
+	if (callback) //call the original callback
+		. = callback.Invoke()
 
 /obj/item/proc/talk_into(mob/M, text)
 	return
@@ -539,7 +546,38 @@
 		return 0 //Unsupported slot
 
 		//END MONKEY
-
+	else if(isIAN(M))
+		var/mob/living/carbon/ian/C = M
+		switch(slot)
+			if(slot_head)
+				if(C.head)
+					return FALSE
+				if(istype(src, /obj/item/clothing/mask/facehugger))
+					return TRUE
+				if( !(slot_flags & SLOT_HEAD) )
+					return FALSE
+				return TRUE
+			if(slot_mouth)
+				if(C.mouth)
+					return FALSE
+				return TRUE
+			if(slot_neck)
+				if(C.neck)
+					return FALSE
+				if(istype(src, /obj/item/weapon/handcuffs))
+					return TRUE
+				if( !(slot_flags & SLOT_ID) )
+					return FALSE
+				return TRUE
+			if(slot_back)
+				if(C.back)
+					return FALSE
+				if(istype(src, /obj/item/clothing/suit/armor/vest))
+					return TRUE
+				if( !(slot_flags & SLOT_BACK) )
+					return FALSE
+				return TRUE
+		return FALSE
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)

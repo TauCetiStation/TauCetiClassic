@@ -92,3 +92,33 @@ Admin:
 	to_chat(src, other)
 	if(holder)
 		to_chat(src, admin)
+
+/client/verb/changes()
+	set name = "Changelog"
+	set desc = "View the changelog."
+	set hidden = 1
+
+	getFiles(
+		'html/assets/images/icons/BugFix.png',
+		'html/assets/images/icons/CircledPlus.png',
+		'html/assets/images/icons/CircledMinus.png',
+		'html/assets/images/icons/Picture.png',
+		'html/assets/images/icons/Sound.png',
+		'html/assets/images/icons/SpellCheck.png',
+		'html/assets/images/icons/Wrench.png',
+		'html/assets/images/icons/Performance.png',
+		'html/assets/images/icons/NukeBurn.png',
+		'html/assets/images/icons/Balance.png',
+		'html/assets/images/icons/Map.png',
+		'html/assets/images/space.png',
+		'html/assets/css/bootstrap.min.css',
+		'html/assets/css/changelog.css',
+		'html/changelog.html'
+	)
+
+	src << browse('html/changelog.html', "window=changes;size=675x650")
+
+	if(prefs.lastchangelog != changelog_hash)
+		prefs.lastchangelog = changelog_hash
+		prefs.save_preferences()
+		winset(src, "rpane.changelog", "font-style=;")

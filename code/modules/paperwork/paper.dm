@@ -23,9 +23,9 @@
 	var/stamp_text		//The (text for the) stamp_text on the paper.
 	var/fields		//Amount of user created fields
 	var/list/stamped
-	var/ico[0]      //Icons and
-	var/offset_x[0] //offsets stored for later
-	var/offset_y[0] //usage by the photocopier
+	var/list/ico      //Icons and
+	var/list/offset_x //offsets stored for later
+	var/list/offset_y //usage by the photocopier
 	var/rigged = 0
 	var/spam_flag = 0
 	var/crumpled = 0
@@ -54,25 +54,32 @@
 		return
 	icon_state = "paper"
 
-/obj/item/weapon/paper/examine()
-	set src in oview(1)
-
-//	..()	//We don't want them to see the dumb "this is a paper" thing every time.
-// I didn't like the idea that people can read tiny pieces of paper from across the room.
-// Now you need to be next to the paper in order to read it.
-	if(in_range(usr, src))
-		if(crumpled==1)
-			to_chat(usr, "<span class='notice'>You can't read anything until it crumpled.</span>")
+/obj/item/weapon/paper/examine(mob/user)
+	..()
+	if(in_range(user, src) || istype(user, /mob/dead/observer))
+		if(crumpled == 1)
+			to_chat(user, "<span class='notice'>You can't read anything until it crumpled.</span>")
 			return
-		if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
-			usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamp_text]</BODY></HTML>", "window=[name]")
-			onclose(usr, "[name]")
-		else
-			usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info][stamp_text]</BODY></HTML>", "window=[name]")
-			onclose(usr, "[name]")
+		show_content(user)
 	else
-		to_chat(usr, "<span class='notice'>It is too far away.</span>")
-	return
+		to_chat(user, "<span class='notice'>It is too far away to see anything.</span>")
+
+/obj/item/weapon/paper/proc/show_content(mob/user, forceshow = FALSE, forcestars = FALSE, infolinks = FALSE, view = TRUE)
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
+	assets.send(user)
+
+	var/data
+	if((!(ishuman(user) || isobserver(user) || issilicon(user)) && !forceshow) || forcestars)
+		data = "<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamp_text]</BODY></HTML>"
+		if(view)
+			user << browse(data, "window=[name]")
+			onclose(user, "[name]")
+	else
+		data = "<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[infolinks ? info_links : info][stamp_text]</BODY></HTML>"
+		if(view)
+			user << browse(data, "window=[name]")
+			onclose(user, "[name]")
+	return data
 
 /obj/item/weapon/paper/verb/rename()
 	set name = "Rename paper"
@@ -128,14 +135,16 @@
 	return
 
 /obj/item/weapon/paper/attack_self(mob/living/user)
-	examine()
+	examine(user)
 	if(rigged && (Holiday == "April Fool's Day"))
 		if(spam_flag == 0)
 			spam_flag = 1
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
-			spawn(20)
-				spam_flag = 0
+			addtimer(CALLBACK(src, .proc/reset_spam_flag), 20)
 	return
+
+/obj/item/weapon/paper/proc/reset_spam_flag()
+	spam_flag = 0
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
 	var/dist
@@ -146,11 +155,9 @@
 	if(crumpled==1)
 		return
 	if(dist < 2)
-		usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info][stamp_text]</BODY></HTML>", "window=[name]")
-		onclose(usr, "[name]")
+		show_content(user, forceshow = TRUE)
 	else
-		usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamp_text]</BODY></HTML>", "window=[name]")
-		onclose(usr, "[name]")
+		show_content(user, forcestars = TRUE)
 	return
 
 /obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -223,11 +230,32 @@
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
 	stamp_text = null
-	stamped = list()
+	LAZYCLEARLIST(stamped)
+	LAZYCLEARLIST(ico)
+	LAZYCLEARLIST(offset_x)
+	LAZYCLEARLIST(offset_y)
 	overlays.Cut()
 	updateinfolinks()
 	update_icon()
 
+/obj/item/weapon/paper/proc/create_self_copy()
+	var/obj/item/weapon/paper/P = new
+
+	P.name       = name
+	P.info       = info
+	P.info_links = info_links
+	P.stamp_text = stamp_text
+	P.fields     = fields
+	P.stamped    = LAZYCOPY(stamped)
+	P.ico        = LAZYCOPY(ico)
+	P.offset_x   = LAZYCOPY(offset_x)
+	P.offset_y   = LAZYCOPY(offset_y)
+	P.overlays   = overlays.Copy()
+
+	P.updateinfolinks()
+	P.update_icon()
+
+	return P
 
 /obj/item/weapon/paper/proc/parsepencode(t, obj/item/weapon/pen/P, mob/user, iscrayon = 0)
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
@@ -376,6 +404,9 @@
 		//t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
+		if(isIAN(usr))
+			t = GibberishAll(t)
+
 		if(fields > 50)
 			to_chat(usr, "<span class='warning'>Too many fields. Sorry, you can't do this.</span>")
 			fields = last_fields_value
@@ -387,7 +418,7 @@
 			info += t // Oh, he wants to edit to the end of the file, let him.
 			updateinfolinks()
 
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamp_text]</BODY></HTML>", "window=[name]") // Update the window
+		show_content(usr, forceshow = TRUE, infolinks = TRUE)
 
 		update_icon()
 
@@ -457,46 +488,24 @@
 		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )
 			P:RenamePaper(user,src)
 		else
-			user << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info_links][stamp_text]</BODY></HTML>", "window=[name]")
+			show_content(user, forceshow = TRUE, infolinks = TRUE)
 		//openhelp(user)
 		add_fingerprint(user)
 		return
 
 	else if(istype(P, /obj/item/weapon/stamp))
-		if((!in_range(src, usr) && loc != user && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != user && user.get_active_hand() != P))
+		if(!in_range(src, user))
 			return
-
-		stamp_text += (stamp_text=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the [P.name].</i>"
-
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-		var/{x; y;}
-		if(istype(P, /obj/item/weapon/stamp/captain) || istype(P, /obj/item/weapon/stamp/centcomm))
-			x = rand(-2, 0)
-			y = rand(-1, 2)
-		else
-			x = rand(-2, 2)
-			y = rand(-3, 2)
-		offset_x += x
-		offset_y += y
-		stampoverlay.pixel_x = x
-		stampoverlay.pixel_y = y
 
 		if(istype(P, /obj/item/weapon/stamp/clown))
 			if(!clown)
 				to_chat(user, "<span class='notice'>You are totally unable to use the stamp. HONK!</span>")
 				return
 
-		if(!ico)
-			ico = new
-		ico += "paper_[P.icon_state]"
-		stampoverlay.icon_state = "paper_[P.icon_state]"
+		var/obj/item/weapon/stamp/S = P
+		S.stamp_paper(src)
 
-		if(!stamped)
-			stamped = new
-		stamped += P.type
-		overlays += stampoverlay
-
-		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
+		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	else if(istype(P, /obj/item/weapon/lighter))
 		burnpaper(P, user)

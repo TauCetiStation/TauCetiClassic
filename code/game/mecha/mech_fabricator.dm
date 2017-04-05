@@ -172,9 +172,11 @@
 	desc = initial(desc)
 
 	var/location = get_step(src,(dir))
-	var/obj/item/I = new D.build_path(location)
-	I.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
-	I.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
+	var/I = new D.build_path(location)
+	if(istype(I, /obj/item))
+		var/obj/item/Item = I
+		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
+		Item.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
 	visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
 	being_built = null
 
@@ -422,12 +424,9 @@
 		return update_queue_on_page()
 
 	if(href_list["process_queue"])
-		spawn(0)
-			if(processing_queue || being_built)
-				return FALSE
-			processing_queue = 1
-			process_queue()
-			processing_queue = 0
+		if(processing_queue || being_built)
+			return FALSE
+		processing_queue()
 
 	if(href_list["clear_temp"])
 		temp = null
@@ -476,6 +475,13 @@
 		temp += "<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 
 	updateUsrDialog()
+
+/obj/machinery/mecha_part_fabricator/proc/processing_queue()
+	set waitfor = FALSE
+
+	processing_queue = TRUE
+	process_queue()
+	processing_queue = FALSE
 
 /obj/machinery/mecha_part_fabricator/proc/remove_material(mat_string, amount)
 	if(resources[mat_string] < MINERAL_MATERIAL_AMOUNT) //not enough mineral for a sheet

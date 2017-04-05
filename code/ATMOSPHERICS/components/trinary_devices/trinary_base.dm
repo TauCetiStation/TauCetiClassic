@@ -34,15 +34,33 @@ obj/machinery/atmospherics/trinary/New()
 	air2.volume = 200
 	air3.volume = 200
 
+obj/machinery/atmospherics/trinary/remove_network(datum/pipe_network/old_network)
+	if(old_network == network1)
+		network1 = null
+
+	if(old_network == network2)
+		network2 = null
+
+	if(old_network == network3)
+		network3 = null
+
+	return ..()
+
 // Housekeeping and pipe network stuff below
 obj/machinery/atmospherics/trinary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
+		if(network1)
+			qdel(network1)
 		network1 = new_network
 
 	else if(reference == node2)
+		if(network2)
+			qdel(network2)
 		network2 = new_network
 
 	else if (reference == node3)
+		if(network3)
+			qdel(network3)
 		network3 = new_network
 
 	if(new_network.normal_members.Find(src))
@@ -70,7 +88,9 @@ obj/machinery/atmospherics/trinary/Destroy()
 	return ..()
 
 obj/machinery/atmospherics/trinary/initialize()
-	if(node1 && node2 && node3) return
+	node1 = null
+	node2 = null
+	node3 = null
 
 	var/node1_connect = turn(dir, -180)
 	var/node2_connect = turn(dir, -90)

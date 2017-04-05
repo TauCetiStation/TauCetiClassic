@@ -23,7 +23,7 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/New()
@@ -42,7 +42,7 @@ var/global/list/image/splatter_cache=list()
 						blood_DNA |= B.blood_DNA.Copy()
 					qdel(B)
 	drytime = world.time + DRYING_TIME * (amount+1)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/decal/cleanable/blood/process()
 	if(world.time > drytime)
@@ -52,37 +52,42 @@ var/global/list/image/splatter_cache=list()
 	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 	color = basecolor
 
-/obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/human/perp)
-	if (!istype(perp))
+/obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/perp)
+	if(!istype(perp))
 		return
 	if(amount < 1)
 		return
 	if(!islist(blood_DNA))	//prevent from runtime errors connected with shitspawn
 		blood_DNA = list()
 
-	var/datum/organ/external/l_foot = perp.get_organ("l_foot")
-	var/datum/organ/external/r_foot = perp.get_organ("r_foot")
-	var/hasfeet = 1
-	if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
-		hasfeet = 0
-	if(perp.shoes && !perp.buckled)//Adding blood to shoes
-		var/obj/item/clothing/shoes/S = perp.shoes
-		if(istype(S))
-			S.blood_color = basecolor
-			S.track_blood = max(amount,S.track_blood)
-			if(!S.blood_overlay)
-				S.generate_blood_overlay()
-			if(!S.blood_DNA)
-				S.blood_DNA = list()
-				S.blood_overlay.color = basecolor
-				S.overlays += S.blood_overlay
-			if(S.blood_overlay && S.blood_overlay.color != basecolor)
-				S.blood_overlay.color = basecolor
-				S.overlays.Cut()
-				S.overlays += S.blood_overlay
-			if(blood_DNA.len)
-				S.blood_DNA |= blood_DNA.Copy()
-	else if (hasfeet)//Or feet
+	var/hasfeet = TRUE
+	var/skip = FALSE
+	if (ishuman(perp))
+		var/mob/living/carbon/human/H = perp
+		var/datum/organ/external/l_foot = H.get_organ("l_foot")
+		var/datum/organ/external/r_foot = H.get_organ("r_foot")
+		if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
+			hasfeet = FALSE
+		if(perp.shoes && !perp.buckled)//Adding blood to shoes
+			var/obj/item/clothing/shoes/S = perp.shoes
+			if(istype(S))
+				S.blood_color = basecolor
+				S.track_blood = max(amount,S.track_blood)
+				if(!S.blood_overlay)
+					S.generate_blood_overlay()
+				if(!S.blood_DNA)
+					S.blood_DNA = list()
+					S.blood_overlay.color = basecolor
+					S.overlays += S.blood_overlay
+				if(S.blood_overlay && S.blood_overlay.color != basecolor)
+					S.blood_overlay.color = basecolor
+					S.overlays.Cut()
+					S.overlays += S.blood_overlay
+				if(blood_DNA.len)
+					S.blood_DNA |= blood_DNA.Copy()
+			skip = TRUE
+
+	if (hasfeet && !skip) // Or feet
 		perp.feet_blood_color = basecolor
 		perp.track_blood = max(amount,perp.track_blood)
 		if(!perp.feet_blood_DNA)
@@ -104,7 +109,7 @@ var/global/list/image/splatter_cache=list()
 	desc = "It's dry and crusty. Someone is not doing their job."
 	color = adjust_brightness(color, -50)
 	amount = 0
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/effect/decal/cleanable/blood/attack_hand(mob/living/carbon/human/user)
 	..()
@@ -221,7 +226,7 @@ var/global/list/image/splatter_cache=list()
 		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 			sleep(3)
 			if (i > 0)
-				var/obj/effect/decal/cleanable/blood/b = PoolOrNew(/obj/effect/decal/cleanable/blood/splatter, src.loc)
+				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
 				b.basecolor = src.basecolor
 				b.update_icon()
 				for(var/datum/disease/D in src.viruses)

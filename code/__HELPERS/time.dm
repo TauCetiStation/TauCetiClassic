@@ -36,3 +36,10 @@ proc/isDay(month, day)
 		// Uncomment this out when debugging!
 		//else
 			//return 1
+
+/var/midnight_rollovers = 0
+/var/rollovercheck_last_timeofday = 0
+/proc/update_midnight_rollover()
+	if (world.timeofday < rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
+		return midnight_rollovers++
+	return midnight_rollovers

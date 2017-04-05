@@ -15,11 +15,14 @@ var/global/list/empty_playable_ai_cores = list()
 	set category = "OOC"
 	set desc = "Wipe your core. This is functionally equivalent to cryo or robotic storage, freeing up your job slot."
 
-	if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
+	if(ticker.mode.name == "AI malfunction")
 		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
 		return
 	if(istype(loc,/obj/item/device/aicard))
 		to_chat(usr, "<span class='danger'>Unable to establish connection with Repository. Wiping isn't possible at now.</span>")
+		return
+	if(stat)
+		to_chat(usr, "<span class='danger'>Connection with Repository is corrupted. Wiping isn't possible at now.</span>")
 		return
 
 	// Guard against misclicks, this isn't the sort of thing we want happening accidentally
@@ -42,7 +45,8 @@ var/global/list/empty_playable_ai_cores = list()
 	else
 		if(ticker.mode.name == "AutoTraitor")
 			var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
-			current_mode.possible_traitors.Remove(src)
+			if(current_mode.possible_traitors.len)
+				current_mode.possible_traitors -= src
 
 	src.timeofdeath = world.time
 	ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)

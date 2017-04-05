@@ -27,12 +27,15 @@
 		product.reagents.add_reagent("blood",30,data)
 
 		virusing = 1
-		spawn(1200) virusing = 0
+		addtimer(CALLBACK(src, .proc/unvirus), 1200)
 
 		state("The [src.name] Buzzes", "blue")
 		return
 	..()
-	return 
+	return
+
+/obj/machinery/computer/curer/proc/unvirus()
+	virusing = 0
 
 /obj/machinery/computer/curer/attack_ai(mob/user)
 	return src.attack_hand(user)

@@ -34,11 +34,11 @@
 
 	var/welded = 0 // Added for aliens -- TLE
 
-	var/frequency = 1439
-	var/datum/radio_frequency/radio_connection
+	frequency = 1439
 
-	var/radio_filter_out
-	var/radio_filter_in
+
+
+
 
 /obj/machinery/atmospherics/unary/vent_pump/on
 	on = 1
@@ -145,7 +145,7 @@
 
 //Radio remote control
 
-/obj/machinery/atmospherics/unary/vent_pump/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/unary/vent_pump/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
@@ -265,13 +265,11 @@
 		return
 
 	if(signal.data["status"] != null)
-		spawn(2)
-			broadcast_status()
+		addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 		return //do not update_icon
 
 		//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
-	spawn(2)
-		broadcast_status()
+	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 	update_icon()
 	return
 
@@ -279,7 +277,7 @@
 	if(welded)
 		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]weld"
 		return
-	if(on&&node)
+	if(on && node && !(stat & (NOPOWER|BROKEN)))
 		if(pump_direction)
 			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
 		else
@@ -353,4 +351,6 @@
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag
+	if(frequency)
+		set_frequency(null)
 	return ..()

@@ -18,7 +18,7 @@
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/weapon/cable_coil/random(null, 1)
 	RefreshParts()
 
 /obj/machinery/telepad/RefreshParts()
@@ -119,14 +119,14 @@
 
 /obj/item/weapon/rcs/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/rcs/examine(mob/user)
 	..()
 	to_chat(user, "There are [rcharges] charges left.")
 
 /obj/item/weapon/rcs/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/rcs/process()

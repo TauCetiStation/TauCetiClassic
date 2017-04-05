@@ -205,7 +205,7 @@
 					G.cell.use(2500)
 					apply_effects(0,0,0,0,5,0,0,150)
 
-					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 					s.set_up(3, 1, src)
 					s.start()
 
@@ -444,9 +444,6 @@
 	set category = "IC"
 	internal = null
 	return
-
-/mob/living/carbon/monkey/var/co2overloadtime = null
-/mob/living/carbon/monkey/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/monkey/emp_act(severity)
 	if(wear_id) wear_id.emp_act(severity)
