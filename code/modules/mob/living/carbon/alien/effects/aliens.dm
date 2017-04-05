@@ -11,10 +11,10 @@
  * effect/alien
  */
 
-#define WEED_NORTH_EDGING "north"
-#define WEED_SOUTH_EDGING "south"
-#define WEED_EAST_EDGING "east"
-#define WEED_WEST_EDGING "west"
+#define WEED_SOUTH_EDGING 1
+#define WEED_NORTH_EDGING 2
+#define WEED_WEST_EDGING  4
+#define WEED_EAST_EDGING  8
 
 /obj/effect/alien
 	name = "alien thing"
@@ -213,54 +213,37 @@
 		return
 
 	linked_node = node
-	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
-	fullUpdateWeedOverlays()
-	spawn(rand(150, 200))
-		if(src)
-			Life()
-	return
+	if(icon_state == "weeds")
+		icon_state = pick("weeds", "weeds1", "weeds2")
 
-/obj/structure/alien/weeds/node/Destroy()
-	var/turf/T = loc
-	loc = null
-	for (var/obj/structure/alien/weeds/W in range(1,T))
-		W.updateWeedOverlays()
+	if(!weedImageCache)
+		weedImageCache = list()
+		weedImageCache["[WEED_NORTH_EDGING]"] = image('icons/mob/xenomorph.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
+		weedImageCache["[WEED_SOUTH_EDGING]"] = image('icons/mob/xenomorph.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
+		weedImageCache["[WEED_EAST_EDGING]"]  = image('icons/mob/xenomorph.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
+		weedImageCache["[WEED_WEST_EDGING]"]  = image('icons/mob/xenomorph.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
+
+	fullUpdateWeedOverlays()
+	addtimer(CALLBACK(src, .proc/Life), rand(150, 200))
+
+/obj/structure/alien/weeds/Destroy()
+	fullUpdateWeedOverlays()
 	linked_node = null
 	return ..()
 
 /obj/structure/alien/weeds/proc/updateWeedOverlays()
-
 	overlays.Cut()
 
-	if(!weedImageCache || !weedImageCache.len)
-		weedImageCache = list()
-		weedImageCache.len = 4
-		weedImageCache[WEED_NORTH_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
-		weedImageCache[WEED_SOUTH_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
-		weedImageCache[WEED_EAST_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
-		weedImageCache[WEED_WEST_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
+	for(var/dir in cardinal)
+		var/turf/T = get_step(src, dir)
+		var/obj/structure/alien/weeds = locate() in T
 
-	var/turf/N = get_step(src, NORTH)
-	var/turf/S = get_step(src, SOUTH)
-	var/turf/E = get_step(src, EAST)
-	var/turf/W = get_step(src, WEST)
-
-	if(!locate(/obj/structure/alien/weeds) in N.contents)
-		if(istype(N, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_SOUTH_EDGING]
-	if(!locate(/obj/structure/alien/weeds) in S.contents)
-		if(istype(S, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_NORTH_EDGING]
-	if(!locate(/obj/structure/alien/weeds) in E.contents)
-		if(istype(E, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_WEST_EDGING]
-	if(!locate(/obj/structure/alien/weeds) in W.contents)
-		if(istype(W, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_EAST_EDGING]
-
+		if(!weeds || QDESTROYING(weeds))
+			if(istype(T, /turf/simulated/floor))
+				overlays += weedImageCache["[dir]"]
 
 /obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
-	for (var/obj/structure/alien/weeds/W in range(1,src))
+	for(var/obj/structure/alien/weeds/W in range(1, src))
 		W.updateWeedOverlays()
 
 /obj/structure/alien/weeds/proc/Life()
@@ -295,7 +278,6 @@
 
 
 /obj/structure/alien/weeds/ex_act(severity)
-	var/turf/T = loc
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -305,9 +287,6 @@
 		if(3.0)
 			if (prob(5))
 				qdel(src)
-	for (var/obj/structure/alien/weeds/W in range(1,T))
-		W.updateWeedOverlays()
-	return
 
 /obj/structure/alien/weeds/attackby(obj/item/weapon/W, mob/user)
 	if(W.attack_verb.len)
@@ -534,3 +513,8 @@
 	if(exposed_temperature > 500)
 		health -= 5
 		healthcheck()
+
+#undef WEED_SOUTH_EDGING
+#undef WEED_NORTH_EDGING
+#undef WEED_WEST_EDGING
+#undef WEED_EAST_EDGING
