@@ -115,6 +115,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			world.log << msg
 
 	if (istype(Master.subsystems))
+		if(FireHim)
+			Master.subsystems += new BadBoy.type	//NEW_SS_GLOBAL will remove the old one
 		subsystems = Master.subsystems
 		StartProcessing(10)
 	else
