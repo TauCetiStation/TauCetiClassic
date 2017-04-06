@@ -42,6 +42,7 @@
 	user.visible_message("\blue [user] peels back tattered flesh where [target]'s head used to be with \the [tool].",	\
 	"\blue You peel back tattered flesh where [target]'s head used to be with \the [tool].")
 	BP.status |= ORGAN_CUT_AWAY
+	target.update_bodypart(BP.body_zone)
 
 /datum/surgery_step/head/peel/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)

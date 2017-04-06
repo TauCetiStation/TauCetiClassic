@@ -263,7 +263,7 @@
 	if(!owner)
 		return
 
-	var/has_gender = TRUE
+	var/has_gender = owner.species.flags[HAS_GENDERED_ICONS]
 	var/has_color = TRUE
 
 	if(owner.species.flags[IS_SYNTHETIC]) // TODO: bodyparts for this and ROBOT.
@@ -284,12 +284,13 @@
 		switch(body_zone)
 			if(BP_CHEST)
 				icon_state = body_zone + g
-				if(FAT in owner.mutations)
-					icon_state += "_fat"
 			if(BP_GROIN, BP_HEAD)
 				icon_state = body_zone + g
 			else
 				icon_state = body_zone
+		if(owner.species.name == S_HUMAN && (FAT in owner.mutations))
+			icon_state += "_fat"
+
 	else
 		icon_state = body_zone
 
@@ -951,7 +952,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 	spawn(1) // TODO check if we really need that.
 		victim.updatehealth()
-		//victim.update_bodypart(body_zone)
+		victim.update_bodypart(body_zone)
 		//victim.UpdateDamageIcon()
 		//victim.regenerate_icons()
 		dir = 2
@@ -1367,7 +1368,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/stump
 	name = "limb stump"
-	icon_state = ""
+	icon = 'icons/mob/human_races/limb_stump.dmi'
 	//dislocated = -1
 
 /obj/item/bodypart/stump/New(loc, mob/living/carbon/C, obj/item/bodypart/lost_limb)
@@ -1403,10 +1404,18 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	qdel(src)
 
 /obj/item/bodypart/stump/update_limb() // TODO: separate stump icons from body.
+	if(status & ORGAN_CUT_AWAY)
+		icon_state = null
+		return
+
+	if(status & ORGAN_ROBOT)
+		icon_state = body_zone + "_robot_stump"
+	else
+		icon_state = body_zone + "_stump"
 	return
 
 /obj/item/bodypart/stump/get_icon()
-	return
+	return image(icon = src.icon, icon_state = src.icon_state, layer = -BODYPARTS_LAYER)
 
 /obj/item/bodypart/stump/fracture()
 	return

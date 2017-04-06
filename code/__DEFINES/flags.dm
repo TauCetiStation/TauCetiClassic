@@ -36,6 +36,7 @@
 #define NO_BREATHE         "no_breathe"
 #define NO_SCAN            "no_scan"
 #define NO_PAIN            "no_pain"
+#define HAS_GENDERED_ICONS "has_gendered_icons" // TODO implement this for bodyparts.
 #define HAS_SKIN_TONE      "has_skin_tone"
 #define HAS_SKIN_COLOR     "has_skin_color"
 #define HAS_LIPS           "has_lips"

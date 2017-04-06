@@ -141,10 +141,13 @@ There are several things that need to be remembered:
 
 	var/obj/item/bodypart/BP = bodyparts_by_name[body_zone]
 
-	if(!BP || BP.is_stump())
+	if(!BP)
 		return
 
 	BP.update_limb()
+
+	if(!BP.icon_state)
+		return
 
 	overlays_bodypart[body_zone] = BP.get_icon()
 	apply_bodypart_overlay(body_zone)
