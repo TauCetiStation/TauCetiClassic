@@ -69,7 +69,7 @@
 	if(plane_masters.len)
 		for(var/thing in plane_masters)
 			qdel(plane_masters[thing])
-			plane_masters.Cut()
+		plane_masters.Cut()
 	return ..()
 
 /datum/hud/proc/hidden_inventory_update()
