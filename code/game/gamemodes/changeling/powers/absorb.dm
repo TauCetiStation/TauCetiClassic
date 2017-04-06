@@ -111,7 +111,7 @@
 			to_chat(U, "<span class='warning'>[T] is too simple for absorption.</span>")
 			return 0
 
-		if(NOCLONE in T.mutations || HUSK in T.mutations)
+		if(T.disabilities & (HUSK|NOCLONE))
 			to_chat(U, "<span class='warning'>DNA of [T] is ruined beyond usability!</span>")
 			return 0
 

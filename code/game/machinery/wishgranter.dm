@@ -39,8 +39,8 @@
 		if (!(HULK in user.mutations))
 			user.mutations.Add(HULK)
 
-		if (!(MUT_LASER in user.mutations))
-			user.mutations.Add(MUT_LASER)
+		if (!(LASER_EYES in user.mutations))
+			user.mutations.Add(LASER_EYES)
 
 		if (!(XRAY in user.mutations))
 			user.mutations.Add(XRAY)
@@ -53,9 +53,6 @@
 
 		if (!(TK in user.mutations))
 			user.mutations.Add(TK)
-
-		if(!(MUT_HEAL in user.mutations))
-			user.mutations.Add(MUT_HEAL)
 
 		user.update_mutations()
 

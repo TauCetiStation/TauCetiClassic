@@ -42,7 +42,7 @@
 				return 1
 
 		//Fat
-		if(FAT in M.mutations)
+		if(M.disabilities & FAT)
 			var/ran = 40
 			if(isrobot(src))
 				ran = 20
@@ -463,7 +463,6 @@
 	radiation = 0
 	nutrition = 400
 	bodytemperature = T20C
-	sdisabilities = 0
 	disabilities = 0
 	ExtinguishMob()
 	fire_stacks = 0
@@ -500,8 +499,8 @@
 	stat = CONSCIOUS
 
 	// make the icons look correct
-	if(HUSK in mutations)
-		mutations.Remove(HUSK)
+	if(disabilities & HUSK)
+		disabilities &= ~HUSK
 	regenerate_icons()
 	update_health_hud()
 	return

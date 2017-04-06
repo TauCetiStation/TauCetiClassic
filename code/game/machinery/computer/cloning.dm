@@ -370,7 +370,7 @@
 	if ((!subject.ckey) || (!subject.client))
 		scantemp = "Error: Mental interface failure."
 		return
-	if (NOCLONE in subject.mutations && src.scanner.scan_level < 4)
+	if (subject.disabilities & NOCLONE)
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		return
 	if (!isnull(find_record(subject.ckey)))

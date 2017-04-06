@@ -401,10 +401,10 @@
 						storedinfo += "</tr>"
 					dat += "</table>"
 					storedinfo += "</table>"
-					if(occupant.sdisabilities & BLIND)
+					if(occupant.disabilities & BLIND)
 						dat += text("<font color='red'>Cataracts detected.</font><BR>")
 						storedinfo += text("<font color='red'>Cataracts detected.</font><BR>")
-					if(occupant.sdisabilities & NEARSIGHTED)
+					if(occupant.disabilities & NEARSIGHTED)
 						dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 						storedinfo += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 			else

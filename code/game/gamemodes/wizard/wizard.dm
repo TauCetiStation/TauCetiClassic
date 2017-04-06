@@ -174,7 +174,7 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
 
-	wizard_mob.mutations.Add(CLUMSY)
+	wizard_mob.disabilities |= CLUMSY
 	to_chat(wizard_mob, "<span class='info'>All your life you were trained in magic. Regular human equipment like guns or handcuffs could break in your hands or act unexpectedly!</span>")
 	to_chat(wizard_mob, "<span class='info'>You will find a list of available spells in your spell book. Choose your magic arsenal carefully.</span>")
 	to_chat(wizard_mob, "<span class='info'>In your pockets you will find a teleport scroll. Use it as needed.</span>")

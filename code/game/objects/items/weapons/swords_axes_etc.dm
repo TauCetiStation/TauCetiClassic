@@ -27,7 +27,7 @@
 	item_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((user.disabilities & CLUMSY) && prob(50))
 		to_chat(user, "\red You accidentally cut yourself with [src].")
 		user.take_bodypart_damage(5,5)
 	active = !active
@@ -73,7 +73,7 @@
 	force = 10
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((user.disabilities & CLUMSY) && prob(50))
 		to_chat(user, "\red You club yourself over the head.")
 		user.Weaken(3 * force)
 		if(ishuman(user))
@@ -166,7 +166,7 @@
 
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
-		if ((CLUMSY in user.mutations) && prob(50))
+		if ((user.disabilities & CLUMSY) && prob(50))
 			to_chat(user, "\red You club yourself over the head.")
 			user.Weaken(3 * force)
 			if(ishuman(user))
@@ -253,7 +253,7 @@
 		return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((user.disabilities & CLUMSY) && prob(50))
 		to_chat(user, "\red You beat yourself in the head with [src].")
 		user.take_bodypart_damage(5)
 	active = !active

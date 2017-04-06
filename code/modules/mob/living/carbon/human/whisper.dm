@@ -59,7 +59,7 @@
 
 	// Mute disability
 	//TODO: handle_speech_problems
-	if(src.sdisabilities & MUTE)
+	if(src.disabilities & MUTE)
 		return
 
 	//TODO: handle_speech_problems

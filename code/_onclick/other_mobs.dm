@@ -23,7 +23,7 @@
 /mob/living/carbon/human/RangedAttack(atom/A)
 	if(!gloves && !mutations.len) return
 	var/obj/item/clothing/gloves/G = gloves
-	if((MUT_LASER in mutations) && a_intent == "hurt")
+	if((LASER_EYES in mutations) && a_intent == "hurt")
 		LaserEyes(A) // moved into a proc below
 
 	else if(istype(G) && G.Touch(A,0)) // for magic gloves

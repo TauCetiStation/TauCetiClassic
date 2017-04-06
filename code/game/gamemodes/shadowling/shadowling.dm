@@ -145,8 +145,7 @@ Made by Xhuis
 		S.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		if(shadow_mind.assigned_role == "Clown")
 			to_chat(S, "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>")
-			//S.dna.remove_mutation(CLOWNMUT) //TG
-			S.mutations.Remove(CLUMSY) //Bay
+			S.disabilities &= ~CLUMSY
 
 /datum/game_mode/proc/add_thrall(datum/mind/new_thrall_mind)
 	var/mob/living/carbon/human/H = new_thrall_mind.current

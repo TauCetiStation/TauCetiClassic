@@ -17,7 +17,7 @@
 	var/mode = 1;
 
 /obj/item/device/robotanalyzer/attack(mob/living/M, mob/living/user)
-	if(( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
+	if(( (user.disabilities & CLUMSY) || user.getBrainLoss() >= 60) && prob(50))
 		to_chat(user, text("\red You try to analyze the floor's vitals!"))
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)

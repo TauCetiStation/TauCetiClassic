@@ -167,7 +167,7 @@ There are several things that need to be remembered:
 	update_tail_showing() // TODO remove this
 
 	var/g = (gender == FEMALE ? "f" : "m")
-	var/fat = (FAT in src.mutations)
+	var/fat = (src.disabilities & FAT)
 	var/hulk = (HULK in src.mutations)
 
 	var/list/standing = list()
@@ -216,7 +216,7 @@ There are several things that need to be remembered:
 		return
 
 	//masks and helmets can obscure our hair.
-	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)))
+	if((disabilities & HUSK) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)))
 		return
 
 	//base icons
@@ -247,7 +247,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/update_mutations()
 	remove_overlay(MUTATIONS_LAYER)
 	var/fat
-	if(FAT in mutations)
+	if(disabilities & FAT)
 		fat = "fat"
 
 	var/list/standing	= list()
@@ -273,7 +273,7 @@ There are several things that need to be remembered:
 			if(TK)
 				standing.underlays	+= "telekinesishead[fat]_s"
 			*/
-			if(MUT_LASER)
+			if(LASER_EYES)
 				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-MUTATIONS_LAYER)
 	if(standing.len)
 		overlays_standing[MUTATIONS_LAYER]	= standing
@@ -285,7 +285,7 @@ There are several things that need to be remembered:
 	remove_overlay(MUTANTRACE_LAYER)
 
 	var/fat
-	if(FAT in mutations)
+	if(disabilities & FAT)
 		fat = "fat"
 
 	var/list/standing	= list()
@@ -406,7 +406,7 @@ There are several things that need to be remembered:
 				tie = image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]", "layer"=-UNIFORM_LAYER)
 			tie.color = U.hastie.color
 			standing.overlays += tie
-		if(FAT in mutations)
+		if(disabilities & FAT)
 			if(U.flags & ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
@@ -643,7 +643,7 @@ There are several things that need to be remembered:
 			bloodsies.color = wear_suit.blood_color
 			standing.overlays	+= bloodsies
 
-		if(FAT in mutations)
+		if(disabilities & FAT)
 			if(!(wear_suit.flags & ONESIZEFITSALL))
 				to_chat(src, "\red You burst out of \the [wear_suit]!")
 				drop_from_inventory(wear_suit)

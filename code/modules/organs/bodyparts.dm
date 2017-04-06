@@ -288,14 +288,14 @@
 				icon_state = body_zone + g
 			else
 				icon_state = body_zone
-		if(owner.species.name == S_HUMAN && (FAT in owner.mutations))
+		if(owner.species.name == S_HUMAN && (owner.disabilities & FAT))
 			icon_state += "_fat"
 
 	else
 		icon_state = body_zone
 
 	if(has_color)
-		if(HUSK in owner.mutations) // !REMINDER! reimplement husk properly. // Implement assoc list later.
+		if(owner.disabilities & HUSK) // !REMINDER! reimplement husk properly. // Implement assoc list later.
 			color = list(0.37,0.37,0.37, 0.34,0.34,0.34, 0.31,0.31,0.31, 0,0,0)
 		else if(status & ORGAN_DEAD)
 			color = list(0.03,0,0, 0,0.2,0, 0,0,0, 0.3,0.3,0.3)

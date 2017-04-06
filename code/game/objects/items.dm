@@ -353,7 +353,7 @@
 		var/mob/living/carbon/human/H = M
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
-			if(FAT in H.mutations)
+			if(H.disabilities & FAT)
 				//testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
@@ -651,11 +651,11 @@
 	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)") //BS12 EDIT ALG
 
 	src.add_fingerprint(user)
-	//if((CLUMSY in user.mutations) && prob(50))
+	//if((user.disabilities & CLUMSY) && prob(50))
 	//	M = user
 		/*
 		to_chat(M, "\red You stab yourself in the eye.")
-		M.sdisabilities |= BLIND
+		M.disabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)
 		*/

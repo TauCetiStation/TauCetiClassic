@@ -1042,10 +1042,10 @@
 			SetStunned(0)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(FAT in mutations)
+	if(disabilities & FAT)
 		if(overeatduration < 100)
 			to_chat(src, "\blue You feel fit again!")
-			mutations.Remove(FAT)
+			disabilities &= ~FAT
 			update_body()
 			update_mutantrace()
 			update_mutations()
@@ -1053,7 +1053,7 @@
 			update_inv_wear_suit()
 	else
 		if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
-			mutations.Add(FAT)
+			disabilities |= FAT
 			update_body()
 			update_mutantrace()
 			update_mutations()
@@ -1194,7 +1194,7 @@
 				embedded_flag = 0
 
 		//Eyes
-		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
+		if(disabilities & BLIND)	//disabled-blind, doesn't get better on its own
 			blinded = 1
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
@@ -1206,7 +1206,7 @@
 			eye_blurry = max(eye_blurry-1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
+		if(disabilities & DEAF)	//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
 		else if(ear_deaf)			//deafness, heals slowly over time
 			ear_deaf = max(ear_deaf-1, 0)

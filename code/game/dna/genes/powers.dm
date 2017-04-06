@@ -50,8 +50,8 @@
 
 		if(head.disfigured) head.disfigured = 0
 
-		if(HUSK in M.mutations)
-			M.mutations.Remove(HUSK)
+		if(M.disabilities & HUSK)
+			M.disabilities &= ~HUSK
 			M.update_mutations()
 			M.UpdateAppearance()
 

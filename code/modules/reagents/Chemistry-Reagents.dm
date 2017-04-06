@@ -721,7 +721,6 @@ datum
 
 				//M.mutations = list()
 				//M.disabilities = 0
-				//M.sdisabilities = 0
 				M.dna.ResetSE()
 				for(var/datum/dna/gene/gene in dna_genes)
 					if(!M || !M.dna)
@@ -1163,7 +1162,6 @@ datum
 				M.hallucination = 0
 				M.setBrainLoss(0)
 				M.disabilities = 0
-				M.sdisabilities = 0
 				M.eye_blurry = 0
 				M.eye_blind = 0
 				M.SetWeakened(0)
@@ -1718,7 +1716,7 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				if(FAT in M.mutations)
+				if(M.disabilities & FAT)
 					M.gib()
 
 		toxin/carpotoxin

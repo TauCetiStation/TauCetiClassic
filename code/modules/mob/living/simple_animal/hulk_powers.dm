@@ -87,7 +87,7 @@
 							if(i < 3) M.pixel_y += 8
 							else M.pixel_y -= 8
 
-		if ((FAT in usr.mutations) && prob(66))
+		if ((usr.disabilities & FAT) && prob(66))
 			usr.visible_message("\red <b>[usr.name]</b> crashes due to their heavy weight!")
 			playsound(usr.loc, 'sound/misc/slip.ogg', 50, 1)
 			usr.weakened += 10
@@ -262,7 +262,7 @@
 				step(usr, cur_dir)
 			sleep(1)
 
-		if ((FAT in usr.mutations) && prob(66))
+		if ((usr.disabilities & FAT) && prob(66))
 			usr.visible_message("\red <b>[usr.name]</b> crashes due to their heavy weight!")
 			playsound(usr.loc, 'sound/misc/slip.ogg', 50, 1)
 			usr.weakened += 10
@@ -339,7 +339,7 @@
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 					var/bodypart_name = pick(BP_CHEST, BP_L_ARM, BP_R_ARM, BP_R_LEG, BP_L_LEG, BP_HEAD, BP_GROIN)
 					var/obj/item/bodypart/BP = H.get_bodypart(bodypart_name)
-					if(FAT in usr.mutations)
+					if(usr.disabilities & FAT)
 						BP.take_damage(100, 0, 0, 0, "Hulk Fat Arm")
 						H.Stun(10)
 						H.Weaken(10)
@@ -350,7 +350,7 @@
 					BP.fracture()
 				else
 					playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					if(FAT in usr.mutations)
+					if(usr.disabilities & FAT)
 						M.Stun(10)
 						M.Weaken(10)
 						M.take_overall_damage(130, used_weapon = "Hulk Fat Arm")

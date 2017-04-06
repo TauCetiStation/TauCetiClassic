@@ -52,7 +52,7 @@
 	if(!armed)
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
-		if(((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
+		if((user.getBrainLoss() >= 60 || (user.disabilities & CLUMSY)) && prob(50))
 			var/which_hand = BP_L_ARM
 			if(!user.hand)
 				which_hand = BP_R_ARM
@@ -67,7 +67,7 @@
 
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/user)
 	if(armed)
-		if(((user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
+		if((user.getBrainLoss() >= 60 || (user.disabilities & CLUMSY)) && prob(50))
 			var/which_hand = BP_L_ARM
 			if(!user.hand)
 				which_hand = BP_R_ARM

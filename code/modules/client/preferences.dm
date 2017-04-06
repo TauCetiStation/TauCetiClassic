@@ -270,7 +270,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.f_style = f_style
 
 	if(disabilities & DISABILITY_FATNESS)
-		character.mutations += FAT
+		character.disabilities |= FAT
 		character.nutrition = 1000
 		character.overeatduration = 2000
 

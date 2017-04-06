@@ -41,7 +41,7 @@
 		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((user.disabilities & CLUMSY) && prob(50))
 		to_chat(user, "\red The rod slips out of your hand and hits your head.")
 		user.take_bodypart_damage(10)
 		user.Paralyse(20)

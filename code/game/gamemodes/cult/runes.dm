@@ -884,7 +884,7 @@ var/list/sacrificed = list()
 					C.show_message("<span class='red'>The world around you suddenly becomes quiet.</span>", 3)
 					affected++
 					if(prob(1))
-						C.sdisabilities |= DEAF
+						C.disabilities |= DEAF
 				if(affected)
 					usr.say("Sti[pick("'","`")] kaliedir!")
 					to_chat(usr, "<span class='red'>The world becomes quiet as the deafening rune dissipates into fine dust.</span>")
@@ -925,7 +925,7 @@ var/list/sacrificed = list()
 					if(prob(5))
 						C.disabilities |= NEARSIGHTED
 						if(prob(10))
-							C.sdisabilities |= BLIND
+							C.disabilities |= BLIND
 					C.show_message("<span class='red'>Suddenly you see red flash that blinds you.</span>", 3)
 					affected++
 				if(affected)

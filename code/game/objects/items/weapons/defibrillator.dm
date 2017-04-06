@@ -61,7 +61,7 @@
 			msg_admin_attack("[user.name] ([user.ckey]) shock [M.name] ([M.ckey]) with [src.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 			if((world.time - C.timeofdeath) < 3600 || C.stat != DEAD)	//if he is dead no more than 6 minutes
-				if(!(NOCLONE in C.mutations))
+				if(!(C.disabilities & NOCLONE))
 					if(C.health<=config.health_threshold_crit || prob(10))
 						var/suff = min(C.getOxyLoss(), 20)
 						C.adjustOxyLoss(-suff)

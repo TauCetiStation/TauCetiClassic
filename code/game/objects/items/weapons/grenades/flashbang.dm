@@ -91,7 +91,7 @@
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
 				if (prob(M.ear_damage - 10 + 5))
 					to_chat(M, "\red You can't hear anything!")
-					M.sdisabilities |= DEAF
+					M.disabilities |= DEAF
 		else
 			if (M.ear_damage >= 5)
 				to_chat(M, "\red Your ears start to ring!")

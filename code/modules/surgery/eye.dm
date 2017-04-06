@@ -140,7 +140,7 @@
 	"\blue You cauterize the incision around [target]'s eyes with \the [tool].")
 	if (target.op_stage.eyes == 3)
 		target.disabilities &= ~NEARSIGHTED
-		target.sdisabilities &= ~BLIND
+		target.disabilities &= ~BLIND
 		eyes.damage = 0
 	target.op_stage.eyes = 0
 

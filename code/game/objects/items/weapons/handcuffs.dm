@@ -22,7 +22,7 @@
 		return
 	if(!istype(C))
 		return
-	if ((CLUMSY in usr.mutations) && prob(50))
+	if ((user.disabilities & CLUMSY) && prob(50))
 		to_chat(user, "\red Uh ... how do those things work?!")
 		place_handcuffs(user, user)
 		return

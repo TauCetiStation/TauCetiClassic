@@ -261,7 +261,7 @@ obj/item/gland/slime/activate()
 
 	host.ghostize()
 	host.revive()
-	host.mutations |= NOCLONE
+	host.disabilities |= NOCLONE
 	host.adjustBrainLoss(100)
 	host.loc = C
 

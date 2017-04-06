@@ -85,7 +85,7 @@
 	if(!istype(M))	return ..()
 	if(user.zone_sel.selecting != BP_EYES && user.zone_sel.selecting != BP_HEAD)
 		return ..()
-	if((CLUMSY in user.mutations) && prob(50))
+	if((user.disabilities & CLUMSY) && prob(50))
 		M = user
 	return eyestab(M,user)
 
@@ -408,7 +408,7 @@
 
 			if (IO.damage >= IO.min_broken_damage)
 				to_chat(user, "<span class='danger'>You go blind!</span>")
-				user.sdisabilities |= BLIND
+				user.disabilities |= BLIND
 			else if (IO.damage >= IO.min_bruised_damage)
 				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.eye_blind = 5

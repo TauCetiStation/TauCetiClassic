@@ -252,7 +252,7 @@
 		if(message_mode != "changeling")
 			message = ""
 		handled = 1
-	if(sdisabilities & MUTE)
+	if(disabilities & MUTE)
 		message = ""
 		handled = 1
 	if(wear_mask)

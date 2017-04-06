@@ -143,7 +143,7 @@
 	if (mob.mind)
 		if (mob.mind.assigned_role == "Clown")
 			to_chat(mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-			mob.mutations.Remove(CLUMSY)
+			mob.disabilities &= ~CLUMSY
 
 	var/obj/item/weapon/pen/gang/T = new(mob)
 	var/obj/item/device/gangtool/gangtool = new(mob)

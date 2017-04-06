@@ -32,7 +32,7 @@
 			src.nutrition -= HUNGER_FACTOR/10
 			if(src.m_intent == "run")
 				src.nutrition -= HUNGER_FACTOR/10
-		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
+		if((src.disabilities & FAT) && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
 
 		// Moving around increases germ_level faster
@@ -817,7 +817,7 @@ This function restores the subjects blood to max.
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/proc/get_face_name()
 	var/obj/item/bodypart/head/BP = get_bodypart(BP_HEAD)
-	if( !BP || BP.is_stump() || BP.disfigured || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+	if( !BP || BP.is_stump() || BP.disfigured || !real_name || (disabilities & HUSK) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 

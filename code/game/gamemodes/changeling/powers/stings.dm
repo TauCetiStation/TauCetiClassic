@@ -153,7 +153,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	if((HUSK in target.mutations) || (NOCLONE in target.mutations))
+	if(target.disabilities & (HUSK|NOCLONE))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
@@ -215,8 +215,9 @@ obj/effect/proc_holder/changeling/sting/silence
 	if(sting_fail(user,target))
 		return 0
 	to_chat(target, "<span class='danger'>Your ears pop and begin ringing loudly!</span>")
-	target.sdisabilities |= DEAF
-	spawn(300)	target.sdisabilities &= ~DEAF
+	target.disabilities |= DEAF
+	spawn(300)
+		target.disabilities &= ~DEAF
 	target.silent += 30
 	feedback_add_details("changeling_powers","MS")
 	return 1
@@ -293,7 +294,7 @@ obj/effect/proc_holder/changeling/sting/unfat
 /obj/effect/proc_holder/changeling/sting/unfat/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
-	if(FAT in target.mutations)
+	if(target.disabilities & FAT)
 		target.overeatduration = 0
 		target.nutrition -= 100
 		to_chat(target, "<span class='danger'>You feel a small prick as stomach churns violently and you become to feel skinnier.</span>")
