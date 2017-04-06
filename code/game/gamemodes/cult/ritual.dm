@@ -283,7 +283,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		icon_state = "book[pick(1,2,3,4,5,6)]"
 
 /obj/item/weapon/book/tome/Topic(href,href_list[])
-	if (src.loc == usr)
+	if (loc == usr)
 		var/number = text2num(href_list["number"])
 		if (usr.stat|| usr.restrained())
 			return
@@ -471,7 +471,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	var/cultistsonly = 1
 
 /obj/item/weapon/book/tome/imbued/attack_self(mob/user)
-	if(src.cultistsonly && !iscultist(usr))
+	if(cultistsonly && !iscultist(usr))
 		return
 	if(!cultwords["travel"])
 		runerandom()

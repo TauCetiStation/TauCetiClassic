@@ -5,44 +5,42 @@
 
 
 /obj/item/weapon/paper/talisman/attack_self(mob/living/user)
-	if(iscultist(user))
-		var/delete = 1
-		switch(imbue)
-			if("newtome")
-				call(/obj/effect/rune/proc/tomesummon)(user)
-			if("armor")
-				call(/obj/effect/rune/proc/armor)(user)
-			if("emp")
-				call(/obj/effect/rune/proc/emp)(user,user.loc,3)
-			if("conceal")
-				call(/obj/effect/rune/proc/obscure)(user,2)
-			if("revealrunes")
-				call(/obj/effect/rune/proc/revealrunes)(user,src)
-			if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
-				call(/obj/effect/rune/proc/teleport)(user,imbue)
-			if("communicate")
-				//If the user cancels the talisman this var will be set to 0
-				delete = call(/obj/effect/rune/proc/communicate)(user)
-			if("deafen")
-				call(/obj/effect/rune/proc/deafen)(user)
-			if("blind")
-				call(/obj/effect/rune/proc/blind)(user)
-			if("runestun")
-				to_chat(user, "<span class='red'> To use this talisman, attack your target directly.</span>")
-				return
-			if("supply")
-				supply(user)
-			if("construction")
-				to_chat(user,"<span class='warning'>The talisman must be used on metal or plasteel!</span>")
-				return
-		user.take_organ_damage(5, 0)
-		if(src && src.imbue!="supply" && src.imbue!="runestun")
-			if(delete)
-				qdel(src)
-		return
-	else
+	if(!iscultist(user))
 		user.examinate(src)
+		return
 
+	var/delete = 1
+	switch(imbue)
+		if("newtome")
+			call(/obj/effect/rune/proc/tomesummon)(user)
+		if("armor")
+			call(/obj/effect/rune/proc/armor)(user)
+		if("emp")
+			call(/obj/effect/rune/proc/emp)(user,user.loc,3)
+		if("conceal")
+			call(/obj/effect/rune/proc/obscure)(user,2)
+		if("revealrunes")
+			call(/obj/effect/rune/proc/revealrunes)(user,src)
+		if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
+			call(/obj/effect/rune/proc/teleport)(user,imbue)
+		if("communicate")
+			//If the user cancels the talisman this var will be set to 0
+			delete = call(/obj/effect/rune/proc/communicate)(user)
+		if("deafen")
+			call(/obj/effect/rune/proc/deafen)(user)
+		if("blind")
+			call(/obj/effect/rune/proc/blind)(user)
+		if("runestun")
+			to_chat(user, "<span class='red'> To use this talisman, attack your target directly.</span>")
+			return
+		if("supply")
+			supply(user)
+		if("construction")
+			to_chat(user,"<span class='warning'>The talisman must be used on metal or plasteel!</span>")
+			return
+	user.take_organ_damage(5, 0)
+	if(src && imbue != "supply" && imbue != "runestun" && delete)
+		qdel(src)
 
 /obj/item/weapon/paper/talisman/attack(mob/living/T, mob/living/user)
 	if(iscultist(user))
@@ -51,7 +49,7 @@
 			call(/obj/effect/rune/proc/runestun)(user,T)
 			qdel(src)
 			return
-	return..()
+	return ..()
 
 
 /obj/item/weapon/paper/talisman/afterattack(atom/movable/A, mob/user, proximity)
@@ -63,10 +61,10 @@
 	qdel(src)
 
 /obj/item/weapon/paper/talisman/proc/supply(user, key)
-	if (!src.uses)
+	if (!uses)
 		qdel(src)
 		return
-	var/dat = "<B>There are [src.uses] bloody runes on the parchment.</B><BR>"
+	var/dat = "<B>There are [uses] bloody runes on the parchment.</B><BR>"
 	dat += "Please choose the chant to be imbued into the fabric of reality.<BR>"
 	dat += "<HR>"
 	dat += "<A href='?src=\ref[src];rune=newtome'>N'ath reth sh'yro eth d'raggathnor!</A> - Allows you to summon a new arcane tome.<BR>"
@@ -119,7 +117,7 @@
 					to_chat(usr, "<span class='cult'>Lesser supply talismans lack the strength to materialize runed metal!</span>")
 					return
 				new /obj/item/stack/sheet/runed_metal(get_turf(usr),5)
-		src.uses--
+		uses--
 		supply()
 	return
 

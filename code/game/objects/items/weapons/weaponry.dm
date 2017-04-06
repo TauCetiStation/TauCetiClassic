@@ -30,9 +30,9 @@
 	var/last_process = 0
 	var/static/list/scum
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "<span class='userdanger'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-		return (BRUTELOSS|FIRELOSS)
+/obj/item/weapon/nullrod/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='userdanger'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/nullrod/New()
 	..()
@@ -70,7 +70,7 @@
 	icon_state += "_on"
 	item_state += "_on"
 	if(ishuman(loc))
-		var/mob/living/carbon/human/H
+		var/mob/living/carbon/human/H = loc
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
 
@@ -79,7 +79,7 @@
 	icon_state = initial(icon_state)
 	item_state = initial(item_state)
 	if(ishuman(loc))
-		var/mob/living/carbon/human/H
+		var/mob/living/carbon/human/H = loc
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
 

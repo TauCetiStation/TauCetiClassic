@@ -57,10 +57,10 @@ var/list/sacrificed = list()
 	user.visible_message("<span class='red'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
 	"<span class='red'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
 	"<span class='red'>You smell ozone.</span>")
-	for(var/obj/O in src.loc)
+	for(var/obj/O in loc)
 		if(!O.anchored)
 			O.loc = IP.loc
-	for(var/mob/M in src.loc)
+	for(var/mob/M in loc)
 		M.loc = IP.loc
 	return
 
@@ -76,7 +76,7 @@ var/list/sacrificed = list()
 	"<span class='red'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a book.</span>", \
 	"<span class='red'>You hear a pop and smell ozone.</span>")
 	if(istype(src,/obj/effect/rune))
-		new /obj/item/weapon/book/tome(src.loc)
+		new /obj/item/weapon/book/tome(loc)
 	else
 		new /obj/item/weapon/book/tome(user.loc)
 	qdel(src)
@@ -87,7 +87,7 @@ var/list/sacrificed = list()
 /////////////////////////////////////////THIRD RUNE
 
 /obj/effect/rune/proc/convert(mob/living/user)
-	for(var/mob/living/carbon/M in src.loc)
+	for(var/mob/living/carbon/M in loc)
 		if(iscultist(M) || M.stat==2)
 			continue
 		user.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
@@ -257,7 +257,7 @@ var/list/sacrificed = list()
 	var/mob/living/carbon/human/body_to_sacrifice
 
 	var/is_sacrifice_target = 0
-	for(var/mob/living/carbon/human/M in src.loc)
+	for(var/mob/living/carbon/human/M in loc)
 		if(M.stat == DEAD)
 			if(ticker.mode.name == "cult" && M.mind == ticker.mode:sacrifice_target)
 				is_sacrifice_target = 1
@@ -327,7 +327,7 @@ var/list/sacrificed = list()
 /obj/effect/rune/proc/obscure(mob/living/user, rad)
 	var/S=0
 	for(var/obj/effect/rune/R in orange(rad,src))
-		if(R!=src)
+		if(R != src)
 			R.invisibility=INVISIBILITY_OBSERVER
 		S=1
 	if(S)
@@ -427,7 +427,7 @@ var/list/sacrificed = list()
 /obj/effect/rune/proc/talisman(mob/living/user)//only hide, emp, teleport, deafen, blind and tome runes can be imbued atm
 	var/obj/item/weapon/paper/newtalisman
 	var/unsuitable_newtalisman = 0
-	for(var/obj/item/weapon/paper/P in src.loc)
+	for(var/obj/item/weapon/paper/P in loc)
 		if(!P.info)
 			newtalisman = P
 			break
@@ -441,61 +441,61 @@ var/list/sacrificed = list()
 	var/obj/effect/rune/imbued_from
 	var/obj/item/weapon/paper/talisman/T
 	for(var/obj/effect/rune/R in orange(1,src))
-		if(R==src)
+		if(R == src)
 			continue
 		if(R.word1==cultwords["travel"] && R.word2==cultwords["self"])  //teleport
-			T = new(src.loc)
+			T = new(loc)
 			T.imbue = "[R.word3]"
 			T.info = "[R.word3]"
 			imbued_from = R
 			break
 		if(R.word1==cultwords["see"] && R.word2==cultwords["blood"] && R.word3==cultwords["hell"]) //tome
-			T = new(src.loc)
+			T = new(loc)
 			T.imbue = "newtome"
 			imbued_from = R
 			break
 		if(R.word1==cultwords["destroy"] && R.word2==cultwords["see"] && R.word3==cultwords["technology"]) //emp
-			T = new(src.loc)
+			T = new(loc)
 			T.imbue = "emp"
 			imbued_from = R
 			break
 		if(R.word1==cultwords["blood"] && R.word2==cultwords["see"] && R.word3==cultwords["destroy"]) //conceal
-			T = new(src.loc)
+			T = new(loc)
 			T.imbue = "conceal"
 			imbued_from = R
 			break
 		if(R.word1==cultwords["hell"] && R.word2==cultwords["destroy"] && R.word3==cultwords["other"]) //armor
-			T = new(src.loc)
+			T = new(loc)
 			T.imbue = "armor"
 			imbued_from = R
 			break
 		if(R.word1==cultwords["blood"] && R.word2==cultwords["see"] && R.word3==cultwords["hide"]) //reveal
-			T = new(src.loc)
+			T = new(loc)
 			T.imbue = "revealrunes"
 			imbued_from = R
 			break
 		if(R.word1==cultwords["hide"] && R.word2==cultwords["other"] && R.word3==cultwords["see"]) //deafen
-			T = new(src.loc)
+			T = new(loc)
 			T.imbue = "deafen"
 			imbued_from = R
 			break
 		if(R.word1==cultwords["destroy"] && R.word2==cultwords["see"] && R.word3==cultwords["other"]) //blind
-			T = new(src.loc)
+			T = new(loc)
 			T.imbue = "blind"
 			imbued_from = R
 			break
 		if(R.word1==cultwords["self"] && R.word2==cultwords["other"] && R.word3==cultwords["technology"]) //communicat
-			T = new(src.loc)
+			T = new(loc)
 			T.imbue = "communicate"
 			imbued_from = R
 			break
 		if(R.word1==cultwords["join"] && R.word2==cultwords["hide"] && R.word3==cultwords["technology"]) //communicat
-			T = new(src.loc)
+			T = new(loc)
 			T.imbue = "runestun"
 			imbued_from = R
 			break
 		if(R.word1==cultwords["technology"] && R.word2==cultwords["blood"] && R.word3==cultwords["travel"]) //construct
-			T = new(src.loc)
+			T = new(loc)
 			T.imbue = "construction"
 			imbued_from = R
 			break
@@ -565,7 +565,7 @@ var/list/sacrificed = list()
 	for(var/mob/living/carbon/human/V in loc)//Checks for non-cultist humans to sacrifice
 		if(ishuman(V) && !iscultist(V))
 			victims += V//Checks for cult status and mob type
-	for(var/obj/item/I in src.loc)//Checks for MMIs/brains/Intellicards
+	for(var/obj/item/I in loc)//Checks for MMIs/brains/Intellicards
 		if(istype(I,/obj/item/brain))
 			var/obj/item/brain/B = I
 			victims += B.brainmob
@@ -621,7 +621,7 @@ var/list/sacrificed = list()
 		go = 1
 	if(go)
 		for(var/obj/effect/rune/R in orange(rad,src))
-			if(R!=src)
+			if(R != src)
 				R:visibility=15
 			S=1
 	if(S)
@@ -651,9 +651,9 @@ var/list/sacrificed = list()
 
 /obj/effect/rune/proc/wall(mob/living/user)
 	user.say("Khari[pick("'","`")]d! Eske'te tannin!")
-	src.density = !src.density
+	density = !density
 	user.take_organ_damage(2, 0)
-	if(src.density)
+	if(density)
 		to_chat(user, "<span class='red'>Your blood flows into the rune, and you feel that the very space over the rune thickens.</span>")
 	else
 		to_chat(user, "<span class='red'>Your blood flows into the rune, and you feel as the rune releases its grasp on space.</span>")
@@ -719,7 +719,7 @@ var/list/sacrificed = list()
 		if(cultist.buckled || cultist.handcuffed || (!isturf(cultist.loc) && !istype(cultist.loc, /obj/structure/closet)))
 			to_chat(user, "<span class='red'>You cannot summon \the [cultist], for his shackles of blood are strong.")
 			return fizzle(user)
-		cultist.loc = src.loc
+		cultist.loc = loc
 		cultist.lying = 1
 		for(var/mob/living/carbon/human/C in users)
 			C.take_divided_damage(60, 0)
@@ -844,7 +844,7 @@ var/list/sacrificed = list()
 	var/list/cultcount = cults_in_range(src)
 	if(cultcount.len >= 5)
 		for(var/obj/effect/rune/R in world)
-			if(R.blood_DNA == src.blood_DNA)
+			if(R.blood_DNA == blood_DNA)
 				for(var/mob/living/M in orange(2,R))
 					M.take_overall_damage(0,15)
 					if (R.invisibility>M.see_invisible)
@@ -854,7 +854,7 @@ var/list/sacrificed = list()
 					var/turf/T = get_turf(R)
 					T.hotspot_expose(700,125)
 		for(var/obj/effect/decal/cleanable/blood/B in world)
-			if(B.blood_DNA == src.blood_DNA)
+			if(B.blood_DNA == blood_DNA)
 				for(var/mob/living/M in orange(1,B))
 					M.take_overall_damage(0,5)
 					to_chat(M, "<span class='red'>Blood suddenly ignites, burning you!</span>")
