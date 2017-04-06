@@ -13,6 +13,23 @@
 		backdrop.blend_mode = BLEND_OVERLAY
 		overlays += backdrop
 	..()
+
+/obj/screen/plane_master/parallax
+	name = "parallax plane master"
+	plane = PLANE_SPACE_PARALLAX
+	blend_mode = BLEND_MULTIPLY
+	mouse_opacity = FALSE
+
+/obj/screen/plane_master/parallax_white
+	name = "parallax whitifier plane master"
+	plane = PLANE_SPACE
+	color = list(
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		1, 1, 1, 1,
+		0, 0, 0, 0
+		)
 /*
 /obj/screen/plane_master/game_world
 	name = "game world plane master"
