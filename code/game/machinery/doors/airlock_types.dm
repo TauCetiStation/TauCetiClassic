@@ -61,6 +61,41 @@
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
 
+/obj/machinery/door/airlock/cult
+	name = "cult airlock"
+	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
+	assembly_type = /obj/structure/door_assembly/door_assembly_cult
+	hackProof = 1
+	aiControlDisabled = 1
+	var/openingoverlaytype = /obj/effect/overlay/cult/door
+	var/friendly = FALSE
+
+/obj/machinery/door/airlock/cult/New()
+	..()
+	new openingoverlaytype(src.loc)
+
+/obj/machinery/door/airlock/cult/canAIControl(mob/user)
+	return (iscultist(user) && !isAllPowerCut())
+
+/obj/machinery/door/airlock/cult/allowed(mob/M)
+	if(!density)
+		return 1
+	if(friendly || iscultist(M) || isshade(M))
+		new openingoverlaytype(loc)
+		return 1
+	else
+		new /obj/effect/overlay/cult/sac (loc)
+		var/atom/throwtarget
+		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
+		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
+		M.Weaken(2)
+		M.throw_at(throwtarget, 5, 1)
+		return 0
+
+/obj/machinery/door/airlock/cult/friendly // for the great future
+	friendly = TRUE
+
 
 /***********************
 * Station airlocks glass

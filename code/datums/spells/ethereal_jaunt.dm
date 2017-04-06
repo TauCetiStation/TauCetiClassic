@@ -38,6 +38,7 @@
 			target.status_flags ^= GODMODE	//Protection from any kind of damage, caused you in astral world
 			if(phaseshift == 1)
 				animation.dir = target.dir
+				playsound(target, 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
 				flick("phase_shift",animation)
 				target.loc = holder
 				target.client.eye = holder
@@ -45,6 +46,7 @@
 				mobloc = get_turf(target.loc)
 				animation.loc = mobloc
 				target.canmove = 0
+				playsound(target, 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
 				sleep(20)
 				animation.dir = target.dir
 				flick("phase_shift2",animation)

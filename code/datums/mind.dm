@@ -850,6 +850,7 @@
 					ticker.mode.cult -= src
 					ticker.mode.update_cult_icons_removed(src)
 					special_role = null
+					current.remove_comms()
 					var/datum/game_mode/cult/cult = ticker.mode
 					if (istype(cult))
 						if(!config.objectives_disabled)
@@ -860,6 +861,7 @@
 			if("cultist")
 				if(!(src in ticker.mode.cult))
 					ticker.mode.cult += src
+					current.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/cult_comms(current))
 					ticker.mode.update_all_cult_icons()
 					special_role = "Cultist"
 					to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")

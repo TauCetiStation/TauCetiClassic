@@ -24,11 +24,64 @@
 	throw_speed = 1
 	throw_range = 4
 	throwforce = 10
+	light_color = "#4c4cff"
+	light_power = 3
 	w_class = 2
+	var/last_process = 0
+	var/static/list/scum
 
 	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>")
+		to_chat(viewers(user), "<span class='userdanger'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS|FIRELOSS)
+
+/obj/item/weapon/nullrod/New()
+	..()
+	if(!scum)
+		scum = typecacheof(list(/mob/living/simple_animal/construct,/obj/structure/cult,/obj/effect/rune,/mob/dead/observer))
+
+/obj/item/weapon/nullrod/equipped(mob/user, slot)
+	if(user.mind && user.mind.assigned_role == "Chaplain")
+		START_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/weapon/nullrod/Destroy()
+	if(isprocessing)
+		STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/nullrod/dropped(mob/user)
+	if(isprocessing)
+		flame_off()
+		STOP_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/weapon/nullrod/process()
+	if(last_process + 60 >= world.time)
+		return
+	last_process = world.time
+	flame_off()
+	for(var/atom/A in range(6, loc))
+		if(is_type_in_typecache(A, scum) || iscultist(A))
+			flame_on()
+			break
+
+/obj/item/weapon/nullrod/proc/flame_on()
+	set_light(3)
+	icon_state += "_on"
+	item_state += "_on"
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
+
+/obj/item/weapon/nullrod/proc/flame_off()
+	set_light(0)
+	icon_state = initial(icon_state)
+	item_state = initial(item_state)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
 
 /obj/item/weapon/nullrod/attack(mob/M, mob/living/user) //Paste from old-code to decult with a null rod.
 
@@ -38,7 +91,7 @@
 	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		to_chat(user, "\red You don't have the dexterity to do this!")
+		to_chat(user, "<span class='danger'> You don't have the dexterity to do this!</span>")
 		return
 
 	if ((CLUMSY in user.mutations) && prob(50))
@@ -48,19 +101,17 @@
 		return
 
 	if (M.stat !=2)
-		if((M.mind in ticker.mode.cult) && prob(33))
-			to_chat(M, "\red The power of [src] clears your mind of the cult's influence!")
-			to_chat(user, "\red You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.")
+		if((M.mind in ticker.mode.cult) && user.mind && user.mind.assigned_role == "Chaplain" && prob(33))
+			to_chat(M, "<span class='danger'> The power of [src] clears your mind of the cult's influence!</span>")
+			to_chat(user, "<span class='danger'> You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
 			ticker.mode.remove_cultist(M.mind)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] waves [] over []'s head.", user, src, M), 1)
+			M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
 		else if(prob(10))
-			to_chat(user, "\red The rod slips in your hand.")
+			to_chat(user, "<span class='danger'> The rod slips in your hand.</span>")
 			..()
 		else
-			to_chat(user, "\red The rod appears to do nothing.")
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] waves [] over []'s head.", user, src, M), 1)
+			to_chat(user, "<span class='danger'> The rod appears to do nothing.</span>")
+			M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
 			return
 
 /obj/item/weapon/nullrod/afterattack(atom/A, mob/user)
