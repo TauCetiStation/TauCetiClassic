@@ -210,20 +210,21 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
+	action_button_name = "Toggle Goggles"
 	invisa_view = 2
 	toggleable = 1
-	action_button_name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(istype(src.loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = src.loc
-		to_chat(M, "\red The Optical Thermal Scanner overloads and blinds you!")
-		if(M.glasses == src)
-			M.eye_blind = 3
-			M.eye_blurry = 5
-			M.disabilities |= NEARSIGHTED
-			spawn(100)
-				M.disabilities &= ~NEARSIGHTED
+		if(active == 1)
+			var/mob/living/carbon/human/M = src.loc
+			to_chat(M, "\red The Optical Thermal Scanner overloads and blinds you!")
+			if(M.glasses == src)
+				M.eye_blind = 3
+				M.eye_blurry = 5
+				M.disabilities |= NEARSIGHTED
+				spawn(100)
+					M.disabilities &= ~NEARSIGHTED
 	..()
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
@@ -253,13 +254,16 @@
 	desc = "A set of implantable lenses designed to augment your vision."
 	icon_state = "thermalimplants"
 	item_state = "syringe_kit"
+	toggleable = 1
+	off_state = "deshades"
 
 /obj/item/clothing/glasses/thermal/hos_thermals
 	name = "Augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
-	icon_state = "hos_shades"
-	item_state = "hos_shades"
-	toggleable = 0
+	icon_state = "jensenshades"
+	item_state = "jensenshades"
+	toggleable = 1
+	off_state = "deshades"
 
 /obj/item/clothing/glasses/rosas_eyepatch
 	name = "WhiteEyepatch"
