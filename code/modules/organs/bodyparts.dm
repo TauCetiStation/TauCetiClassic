@@ -265,6 +265,7 @@
 
 	var/has_gender = owner.species.flags[HAS_GENDERED_ICONS]
 	var/has_color = TRUE
+	var/husk = (owner.disabilities & HUSK)
 
 	if(owner.species.flags[IS_SYNTHETIC]) // TODO: bodyparts for this and ROBOT.
 		icon = owner.species.icobase
@@ -274,6 +275,13 @@
 		icon = 'icons/mob/human_races/robotic.dmi'
 		has_gender = FALSE
 		has_color = FALSE
+	else if(husk) // TODO implement this for exact bodyparts.
+		overlays.Cut()
+		icon = 'icons/mob/human_races/bad_limb.dmi'
+		icon_state = body_zone + "_husk"
+		has_gender = FALSE
+		has_color = FALSE
+		return
 	else if(status & ORGAN_MUTATED)
 		icon = owner.species.deform
 	else
@@ -290,14 +298,11 @@
 				icon_state = body_zone
 		if(owner.species.name == S_HUMAN && (owner.disabilities & FAT))
 			icon_state += "_fat"
-
 	else
 		icon_state = body_zone
 
 	if(has_color)
-		if(owner.disabilities & HUSK) // !REMINDER! reimplement husk properly. // Implement assoc list later.
-			color = list(0.37,0.37,0.37, 0.34,0.34,0.34, 0.31,0.31,0.31, 0,0,0)
-		else if(status & ORGAN_DEAD)
+		if(status & ORGAN_DEAD)
 			color = list(0.03,0,0, 0,0.2,0, 0,0,0, 0.3,0.3,0.3)
 		else if(HULK in owner.mutations)
 			color = list(0.18,0,0, 0,0.87,0, 0,0,0.15, 0,0,0)
@@ -1368,7 +1373,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/stump
 	name = "limb stump"
-	icon = 'icons/mob/human_races/limb_stump.dmi'
+	icon = 'icons/mob/human_races/bad_limb.dmi'
 	//dislocated = -1
 
 /obj/item/bodypart/stump/New(loc, mob/living/carbon/C, obj/item/bodypart/lost_limb)
