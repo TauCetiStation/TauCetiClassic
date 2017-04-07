@@ -239,6 +239,7 @@
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	body_parts_covered = 0
 	toggleable = 0
+	action_button_name = null
 
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "Optical Thermal Eyepatch"
@@ -247,6 +248,7 @@
 	item_state = "eyepatch"
 	body_parts_covered = 0
 	toggleable = 0
+	action_button_name = null
 
 /obj/item/clothing/glasses/thermal/jensen
 	name = "Optical Thermal Implants"
@@ -259,7 +261,8 @@
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
 	icon_state = "hos_shades"
 	item_state = "hos_shades"
-	toggleable = 1
+	toggleable = 0
+	action_button_name = null
 
 /obj/item/clothing/glasses/rosas_eyepatch
 	name = "WhiteEyepatch"
@@ -286,6 +289,7 @@
 	icon_state = "garm"
 	item_state = "garm"
 	toggleable = 0
+	action_button_name = null
 
 /obj/item/clothing/glasses/sunglasses/sechud/gar
 	name = "Gar HUDSunglasses"
