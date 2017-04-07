@@ -261,8 +261,6 @@
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
 	icon_state = "hos_shades"
 	item_state = "hos_shades"
-	toggleable = 0
-	action_button_name = null
 
 /obj/item/clothing/glasses/rosas_eyepatch
 	name = "WhiteEyepatch"
