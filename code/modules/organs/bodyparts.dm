@@ -374,36 +374,36 @@
 		if (3)
 			burn_damage = 3
 	if(burn_damage)
-		take_damage(0, burn_damage, 1, 1, used_weapon = "EMP")
+		take_damage(0, burn_damage)
 
 /obj/item/bodypart/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you, and robot organs don't count towards total damage so no need to cap them.
 	return (vital || (status & ORGAN_ROBOT) || brute_dam + burn_dam + additional_damage < max_damage)
 
-/obj/item/bodypart/proc/take_damage(brute, burn, sharp, edge, used_weapon = null) // TODO proper port from Bay12 with LASER and damage flags.
+/obj/item/bodypart/proc/take_damage(brute, burn, damage_flags, used_weapon = null)
 	brute = round(brute * brute_mod, 0.1)
 	burn = round(burn * burn_mod, 0.1)
 	if((brute <= 0) && (burn <= 0))
 		return 0
 
-	//var/sharp = (damage_flags & DAM_SHARP)
-	//var/edge  = (damage_flags & DAM_EDGE)
-	//var/laser = (damage_flags & DAM_LASER)
+	var/sharp = (damage_flags & DAM_SHARP)
+	var/edge  = (damage_flags & DAM_EDGE)
+	var/laser = (damage_flags & DAM_LASER)
 
 	// High brute damage or sharp objects may damage internal organs
 	var/damage_amt = brute
 	var/cur_damage = brute_dam
-	//if(laser)
-	//	damage_amt += burn
-	//	cur_damage += burn_dam
+	if(laser)
+		damage_amt += burn
+		cur_damage += burn_dam
 	if(organs && (cur_damage + damage_amt >= max_damage || (((sharp && damage_amt >= 5) || damage_amt >= 10) && prob(5))))
 		// Damage an internal organ
 		if(organs && organs.len)
 			var/obj/item/organ/IO = pick(organs)
 			IO.take_damage(damage_amt / 2)
 			brute /= 2
-			//if(laser)
-			//	burn /= 2
+			if(laser)
+				burn /= 2
 
 	//if(status & ORGAN_BROKEN && brute)
 	//	jostle_bone(brute)
@@ -438,11 +438,10 @@
 			else
 				createwound( BRUISE, brute )
 		if(burn)
-			//if(laser)
-			//	createwound( LASER, burn )
-			//else
-			//	createwound( BURN, burn )
-			createwound( BURN, burn )
+			if(laser)
+				createwound( LASER, burn )
+			else
+				createwound( BURN, burn )
 	else
 		//If there are still hurties to dispense
 		if (spillover)
@@ -645,10 +644,6 @@ This function completely restores a damaged bodypart to perfect condition.
 				if(trace_chemicals[chemID] <= 0)
 					trace_chemicals.Remove(chemID)
 
-		//Bone fracurtes
-		if(brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
-			src.fracture()
-
 		//Infections
 		update_germs()
 	else
@@ -843,23 +838,26 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	burn_dam = 0
 	status &= ~ORGAN_BLEEDING
 	var/clamped = 0
-	for(var/datum/wound/W in wounds)
-		if(W.damage_type == CUT || W.damage_type == BRUISE)
-			brute_dam += W.damage
-		else if(W.damage_type == BURN)
-			burn_dam += W.damage
 
-		if(!(status & ORGAN_ROBOT) && W.bleeding())
+	for(var/datum/wound/W in wounds)
+		if(W.damage_type == BURN)
+			burn_dam += W.damage
+		else
+			brute_dam += W.damage
+
+		if(!(status & ORGAN_ROBOT) && W.bleeding()) // && (H && H.should_have_organ(BP_HEART)))
 			W.bleed_timer--
 			status |= ORGAN_BLEEDING
 
 		clamped |= W.clamped
-
 		number_wounds += W.amount
 
 	if (open && !clamped)	//things tend to bleed if they are CUT OPEN
 		status |= ORGAN_BLEEDING
 
+	//Bone fractures
+	if(brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
+		src.fracture()
 
 //Returns 1 if damage_state changed
 /obj/item/bodypart/proc/update_damstate()
@@ -1179,19 +1177,22 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		spawn(10)
 			qdel(spark_system)
 
-/obj/item/bodypart/proc/embed(obj/item/weapon/W, silent = 0)
+/obj/item/bodypart/proc/embed(obj/item/weapon/W, silent = 0, supplied_message, datum/wound/supplied_wound)
 	if(!owner) //|| loc != owner)
 		return
 	if(owner.species.flags[NO_EMBED])
 		return
 	if(!silent)
-		owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
+		if(supplied_message)
+			owner.visible_message("<span class='danger'>[supplied_message]</span>")
+		else
+			owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
 
-	var/datum/wound/supplied_wound
-	for(var/datum/wound/wound in wounds)
-		if((wound.damage_type == CUT || wound.damage_type == PIERCE) && wound.damage >= W.w_class * 5)
-			supplied_wound = wound
-			break
+	if(!supplied_wound)
+		for(var/datum/wound/wound in wounds)
+			if((wound.damage_type == CUT || wound.damage_type == PIERCE) && wound.damage >= W.w_class * 5)
+				supplied_wound = wound
+				break
 	if(!supplied_wound)
 		supplied_wound = createwound(PIERCE, W.w_class * 5)
 
@@ -1206,7 +1207,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	W.add_blood(owner)
 	if(ismob(W.loc))
 		var/mob/living/H = W.loc
-		H.drop_item()
+		H.drop_from_inventory(W)
 	W.loc = owner
 
 /****************************************************
@@ -1271,8 +1272,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 	var/disfigured = 0
 
-/obj/item/bodypart/head/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list())
-	. = ..(brute, burn, sharp, edge, used_weapon, forbidden_limbs)
+/obj/item/bodypart/head/take_damage(brute, burn, damage_flags, used_weapon = null)
+	. = ..()
 	if(!disfigured)
 		if(brute_dam > 40)
 			if (prob(50))

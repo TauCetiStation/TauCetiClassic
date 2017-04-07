@@ -192,7 +192,7 @@
 
 			chambered.BB.on_hit(M)
 			if (chambered.BB.damage_type != HALLOSS)
-				user.apply_damage(chambered.BB.damage*2.5, chambered.BB.damage_type, BP_HEAD, used_weapon = "Point blank shot in the mouth with \a [chambered.BB]", sharp=1)
+				user.apply_damage(chambered.BB.damage*2.5, chambered.BB.damage_type, BP_HEAD, 0, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
 				user.death()
 			else
 				to_chat(user, "<span class = 'notice'>Ow...</span>")

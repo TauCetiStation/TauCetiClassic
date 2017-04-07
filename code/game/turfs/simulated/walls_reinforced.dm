@@ -29,7 +29,7 @@
 					bodypart_name = BP_R_ARM
 				var/mob/living/carbon/human/H = user
 				var/obj/item/bodypart/BP = H.get_bodypart(bodypart_name)
-				BP.take_damage(rand(5, 15), 0, 0, 0, "Reinforced wall")
+				BP.take_damage(rand(5, 15), 0, 0, "Reinforced wall")
 				to_chat(user, text("\red Ouch!!"))
 			else
 				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)

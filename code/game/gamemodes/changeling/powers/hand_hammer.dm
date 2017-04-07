@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/changeling/weapon/hammer
-	name = "Organic Hammer"
+	name = "organic hammer"
 	desc = "We reform one of our arms into hammer."
 	helptext = "Can break walls, airlocks, windows and humans, requires a lot of chemical for each use. Cannot be used while in lesser form."
 	chemical_cost = 20
@@ -11,7 +11,7 @@
 	weapon_name_simple = "hammer"
 
 /obj/item/weapon/changeling_hammer
-	name = "Oganic Hammer"
+	name = "oganic hammer"
 	desc = "A mass of tough, boney tissue,reminiscent of hammer."
 	canremove = 0
 	force = 15

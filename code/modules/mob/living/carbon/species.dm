@@ -553,6 +553,9 @@
 	var/sharp = 0
 	var/edge = 0
 
+/datum/unarmed_attack/proc/damage_flags()
+	return (src.sharp? DAM_SHARP : 0)|(src.edge? DAM_EDGE : 0)
+
 /datum/unarmed_attack/punch
 	attack_verb = list("punch")
 

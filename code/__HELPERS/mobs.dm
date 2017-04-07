@@ -203,3 +203,6 @@ proc/RoundHealth(health)
 				break
 	if (progress)
 		qdel(progbar)
+
+//helper for inverting armor blocked values into a multiplier
+#define blocked_mult(blocked) max(1 - (blocked/100), 0)

@@ -124,7 +124,7 @@
 		if(BP.status & ORGAN_ROBOT)
 			return 0
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
-		BP.take_damage(5, 0, 1, 1, used_weapon = "Sharp debris")
+		BP.take_damage(5, 0, (DAM_SHARP|DAM_EDGE), used_weapon = "Sharp debris")
 		victim.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 		return 1
 	return 0

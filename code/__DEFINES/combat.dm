@@ -23,6 +23,11 @@
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
 
+// Damage flags
+#define DAM_SHARP 1
+#define DAM_EDGE 2
+#define DAM_LASER 4
+
 #define DROPLIMB_EDGE 0
 #define DROPLIMB_BLUNT 1
 #define DROPLIMB_BURN 2

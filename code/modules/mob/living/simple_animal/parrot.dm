@@ -497,7 +497,7 @@
 				var/mob/living/carbon/human/H = parrot_interest
 				var/obj/item/bodypart/BP = H.get_bodypart(ran_zone(pick(parrot_dam_zone)))
 
-				H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, "melee"), sharp=1)
+				H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP)
 				emote(pick("pecks [H]'s [BP]", "cuts [H]'s [BP] with its talons"))
 
 			else

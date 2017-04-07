@@ -403,7 +403,7 @@
 	src.updatehealth()
 
 // damage ONE bodypart, bodypart gets randomly selected from damaged ones.
-/mob/living/proc/take_bodypart_damage(brute, burn)
+/mob/living/proc/take_bodypart_damage(brute, burn, damage_flags, used_weapon)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
@@ -416,7 +416,7 @@
 	src.updatehealth()
 
 // damage MANY bodyparts, in random order
-/mob/living/proc/take_overall_damage(brute, burn, used_weapon = null)
+/mob/living/proc/take_overall_damage(brute, burn, damage_flags, used_weapon)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)

@@ -67,7 +67,7 @@
 /datum/surgery_step/brain/cut_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
 	"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
-	target.apply_damage(50, BRUTE, BP_HEAD, 1, sharp=1)
+	target.apply_damage(50, BRUTE, BP_HEAD, 1, DAM_SHARP)
 
 /datum/surgery_step/brain/saw_spine
 	allowed_tools = list(
@@ -122,7 +122,7 @@
 /datum/surgery_step/brain/saw_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
 	"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
-	target.apply_damage(30, BRUTE, BP_HEAD, 1, sharp=1)
+	target.apply_damage(30, BRUTE, BP_HEAD, 1, DAM_SHARP)
 	if (ishuman(user))
 		user:bloody_body(target)
 		user:bloody_hands(target, 0)
@@ -160,7 +160,7 @@
 /datum/surgery_step/brain/bone_chips/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("\red [user]'s hand slips, jabbing \the [tool] in [target]'s brain!", \
 	"\red Your hand slips, jabbing \the [tool] in [target]'s brain!")
-	target.apply_damage(30, BRUTE, BP_HEAD, 1, sharp=1)
+	target.apply_damage(30, BRUTE, BP_HEAD, 1, DAM_SHARP)
 
 /datum/surgery_step/brain/hematoma
 	allowed_tools = list(
@@ -191,7 +191,7 @@
 /datum/surgery_step/brain/hematoma/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("\red [user]'s hand slips, bruising [target]'s brain with \the [tool]!", \
 	"\red Your hand slips, bruising [target]'s brain with \the [tool]!")
-	target.apply_damage(20, BRUTE, BP_HEAD, 1, sharp=1)
+	target.apply_damage(20, BRUTE, BP_HEAD, 1, DAM_SHARP)
 
 //////////////////////////////////////////////////////////////////
 //				SLIME CORE EXTRACTION							//

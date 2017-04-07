@@ -164,7 +164,7 @@
 				apply_effect(2, WEAKEN, armor_block)
 
 			damage += attack.damage
-			apply_damage(damage, BRUTE, BP, armor_block, sharp=attack.sharp, edge=attack.edge)
+			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
 
 
 		if("disarm")

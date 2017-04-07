@@ -305,7 +305,7 @@
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
 					var/obj/item/bodypart/BP = H.get_bodypart(BP_HEAD)
-					BP.take_damage(5, 0, 0, 0, "Facepalm") // what?.. that guy was insane anyway.
+					BP.take_damage(5, 0, 0, "Facepalm") // what?.. that guy was insane anyway.
 				else
 					take_overall_damage(5, used_weapon = "Table")
 				Stun(1)

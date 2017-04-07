@@ -988,7 +988,7 @@ mob/proc/yank_out_object()
 			W.embedded_objects -= selection
 
 		H.shock_stage += 20
-		BP.take_damage((selection.w_class * 3), 0, 0, 1, "Embedded object extraction")
+		BP.take_damage((selection.w_class * 3), 0, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) //I'M SO ANEMIC I COULD JUST -DIE-.
 			H.custom_pain("Something tears wetly in your [BP] as [selection] is pulled free!", 1)

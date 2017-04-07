@@ -8,14 +8,16 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0, used_weapon = null, sharp = 0, edge = 0)
-	blocked = (100-blocked)/100
-	if(!damage || (blocked <= 0))	return 0
+/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null)
+	if(!damage || (blocked >= 100))
+		return 0
+
 	switch(damagetype)
 		if(BRUTE)
 			adjustBruteLoss(damage * blocked )
 		if(BURN)
-			if(COLD_RESISTANCE in mutations)	damage = 0
+			if(RESIST_HEAT in mutations)
+				return 0
 			adjustFireLoss(damage * blocked)
 		if(TOX)
 			adjustToxLoss(damage * blocked)
@@ -25,6 +27,8 @@
 			adjustCloneLoss(damage * blocked)
 		if(HALLOSS)
 			adjustHalLoss(damage * blocked)
+
+	flash_weak_pain()
 	updatehealth()
 	return 1
 

@@ -66,6 +66,7 @@
 										//  have to be recreated multiple times
 
 /obj/item/projectile/New()
+	damtype = damage_type // TODO unify these vars properly
 	..()
 	if(light_color)
 		set_light(light_range,light_power,light_color)
@@ -85,8 +86,10 @@
 	return H
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+	if(blocked >= 100)		return 0//Full block
 	if(!isliving(target))	return 0
 	if(isanimal(target))	return 0
+
 	var/mob/living/L = target
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 

@@ -281,7 +281,7 @@
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/bodypart = (H.hand ? "l_" : "r_") + "hand"
 			var/obj/item/bodypart/BP = H.get_bodypart(bodypart)
-			BP.take_damage(force / 2)
+			BP.take_damage(force / 2, damage_flags = damage_flags())
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
 		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")

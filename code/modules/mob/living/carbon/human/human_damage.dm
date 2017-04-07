@@ -69,7 +69,7 @@
 		var/obj/item/bodypart/BP = get_bodypart(bodypart_name)
 
 		if(amount > 0)
-			BP.take_damage(amount, 0, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
+			BP.take_damage(amount, 0, damage_source.damage_flags(), damage_source)
 		else
 			//if you don't want to heal robot bodyparts, they you will have to check that yourself before using this proc.
 			BP.heal_damage(-amount, 0, internal=0, robo_repair=(BP.status & ORGAN_ROBOT))
@@ -84,7 +84,7 @@
 		var/obj/item/bodypart/BP = get_bodypart(bodypart_name)
 
 		if(amount > 0)
-			BP.take_damage(0, amount, sharp=is_sharp(damage_source), edge=has_edge(damage_source), used_weapon=damage_source)
+			BP.take_damage(0, amount, damage_source.damage_flags(), damage_source)
 		else
 			//if you don't want to heal robot bodyparts, they you will have to check that yourself before using this proc.
 			BP.heal_damage(0, -amount, internal=0, robo_repair=(BP.status & ORGAN_ROBOT))
@@ -179,11 +179,11 @@
 //Damages ONE bodypart, bodypart gets randomly selected from damagable ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/take_bodypart_damage(brute, burn, sharp = 0, edge = 0)
+/mob/living/carbon/human/take_bodypart_damage(brute, burn, damage_flags, used_weapon)
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
 	if(!parts.len)	return
 	var/obj/item/bodypart/BP = pick(parts)
-	if(BP.take_damage(brute,burn,sharp,edge))
+	if(BP.take_damage(brute, burn, damage_flags))
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
 	speech_problem_flag = 1
@@ -206,14 +206,14 @@
 
 
 // damage MANY external bodyparts, in random order
-/mob/living/carbon/human/take_overall_damage(brute, burn, sharp = 0, edge = 0, used_weapon = null)
+/mob/living/carbon/human/take_overall_damage(brute, burn, damage_flags, used_weapon)
 	if(status_flags & GODMODE)	return	//godmode
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
 	while(parts.len && (brute>0 || burn>0) )
 		var/obj/item/bodypart/BP = pick(parts)
 		var/brute_was = BP.brute_dam
 		var/burn_was = BP.burn_dam
-		BP.take_damage(brute,burn,sharp,edge,used_weapon)
+		BP.take_damage(brute, burn, damage_flags, used_weapon)
 		brute	-= (BP.brute_dam - brute_was)
 		burn	-= (BP.burn_dam - burn_was)
 		parts -= BP
@@ -240,59 +240,47 @@ This function restores all bodyparts.
 	return
 
 
-/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, sharp = 0, edge = 0, obj/used_weapon = null)
-//	visible_message("Hit debug. [damage] | [damagetype] | [def_zone] | [blocked] | [sharp] | [used_weapon]")
-	if((damagetype != BRUTE) && (damagetype != BURN))
-		..(damage, damagetype, def_zone, blocked)
-		return 1
-
-
+/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
+	//visible_message("Hit debug. [damage] | [damagetype] | [def_zone] | [blocked] | [damage_flags] | [used_weapon]")
 
 	var/obj/item/bodypart/BP = null
 	if(isBODYPART(def_zone))
 		BP = def_zone
 	else
-		if(!def_zone)	def_zone = ran_zone(def_zone)
+		if(!def_zone)
+			def_zone = ran_zone(def_zone)
 		BP = get_bodypart(check_zone(def_zone))
-	if(!BP)	return 0
+	if(!BP)
+		return 0
 
-	if(istype(used_weapon, /obj/item/projectile))
-		damage = (damage - blocked)
-	else
-		blocked = (100-blocked)/100
-		if(blocked <= 0)	return 0
-		damage = (damage * blocked)
+	if( !(damagetype in list(BRUTE, BURN)) )
+		..()
+		return 1
+
+	handle_suit_punctures(damagetype, damage)
+
+	if(blocked >= 100)
+		return 0
+
+	if(blocked)
+		damage *= blocked_mult(blocked)
+
+	var/datum/wound/created_wound
+	damageoverlaytemp = 20
 	switch(damagetype)
 		if(BRUTE)
 			damageoverlaytemp = 20
 			if(species && species.brute_mod)
 				damage = damage*species.brute_mod
-			BP.take_damage(damage, 0, sharp, edge, used_weapon)
+			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon)
 		if(BURN)
 			damageoverlaytemp = 20
 			if(species && species.burn_mod)
 				damage = damage*species.burn_mod
-			BP.take_damage(0, damage, sharp, edge, used_weapon)
-
-	handle_suit_punctures(damagetype, damage)
+			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()
 	hud_updateflag |= 1 << HEALTH_HUD
 
-	//Embedded object code.
-	if(!BP) return
-	if(istype(used_weapon, /obj/item))
-		var/obj/item/W = used_weapon
-		if(!W.can_embed)
-			return
-		if(!W.is_robot_module())
-			//blunt objects should really not be embedding in things unless a huge amount of force is involved
-			var/embed_chance = sharp? damage/W.w_class : damage/(W.w_class*3)
-			var/embed_threshold = sharp? 5*W.w_class : 15*W.w_class
-
-			//Sharp objects will always embed if they do enough damage.
-			//Thrown objects have some momentum already and have a small chance to embed even if the damage is below the threshold
-			if((sharp && damage > (10*W.w_class)) || (sharp && !ismob(W.loc) && prob(damage/(10*W.w_class)*100)) || (damage > embed_threshold && prob(embed_chance)))
-				BP.embed(W)
-	return 1
+	return created_wound

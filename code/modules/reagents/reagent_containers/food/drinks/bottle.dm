@@ -99,7 +99,7 @@
 	armor_duration /= 10
 
 	//Apply the damage!
-	target.apply_damage(force, BRUTE, target_zone, armor_block, sharp=0)
+	target.apply_damage(force, BRUTE, target_zone, armor_block, 0)
 
 	// You are going to knock someone out for longer if they are not wearing a helmet.
 	if(target_zone == BP_HEAD && istype(target, /mob/living/carbon))

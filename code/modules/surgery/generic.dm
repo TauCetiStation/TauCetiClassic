@@ -233,7 +233,7 @@
 		msg = "\red [user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]"
 		self_msg = "\red Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!"
 	user.visible_message(msg, self_msg)
-	target.apply_damage(12, BRUTE, BP, sharp=1)
+	target.apply_damage(12, BRUTE, BP, 0, DAM_SHARP)
 
 /datum/surgery_step/generic/cauterize
 	allowed_tools = list(
