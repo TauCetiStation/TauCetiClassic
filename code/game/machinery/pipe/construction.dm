@@ -23,15 +23,11 @@ Buildable meters
 #define PIPE_MTVALVE			18
 #define PIPE_MANIFOLD4W			19
 #define PIPE_CAP				20
-///// Z-Level stuff
-#define PIPE_UP					21
-#define PIPE_DOWN				22
-///// Z-Level stuff
-#define PIPE_GAS_FILTER_M		23
-#define PIPE_GAS_MIXER_T		24
-#define PIPE_GAS_MIXER_M		25
-#define PIPE_OMNI_MIXER			26
-#define PIPE_OMNI_FILTER		27
+#define PIPE_GAS_FILTER_M		21
+#define PIPE_GAS_MIXER_T		22
+#define PIPE_GAS_MIXER_M		23
+#define PIPE_OMNI_MIXER			24
+#define PIPE_OMNI_FILTER		25
 
 /obj/item/pipe
 	name = "pipe"
@@ -103,12 +99,6 @@ Buildable meters
 			src.pipe_type = PIPE_OMNI_MIXER
 		else if(istype(make_from, /obj/machinery/atmospherics/omni/filter))
 			src.pipe_type = PIPE_OMNI_FILTER
-///// Z-Level stuff
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/zpipe/up))
-			src.pipe_type = PIPE_UP
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/zpipe/down))
-			src.pipe_type = PIPE_DOWN
-///// Z-Level stuff
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
@@ -142,10 +132,6 @@ Buildable meters
 		"t-valve", \
 		"4-way manifold", \
 		"pipe cap", \
-///// Z-Level stuff
-		"pipe up", \
-		"pipe down", \
-///// Z-Level stuff
 		"gas filter m", \
 		"gas mixer t", \
 		"gas mixer m", \
@@ -175,10 +161,6 @@ Buildable meters
 		"mtvalve", \
 		"manifold4w", \
 		"cap", \
-///// Z-Level stuff
-		"cap", \
-		"cap", \
-///// Z-Level stuff
 		"m_filter", \
 		"t_mixer", \
 		"m_mixer", \
@@ -260,10 +242,6 @@ Buildable meters
 			return dir|cw|acw
 		if(PIPE_CAP)
 			return flip
-///// Z-Level stuff
-		if(PIPE_UP,PIPE_DOWN)
-			return dir
-///// Z-Level stuff
 	return 0
 
 /obj/item/pipe/proc/get_pdir() //endpoints for regular pipes
@@ -659,37 +637,6 @@ Buildable meters
 				C.node.initialize()
 			C.build_network()
 
-///// Z-Level stuff
-		if(PIPE_UP)		//volume pump
-			var/obj/machinery/atmospherics/pipe/zpipe/up/P = new(src.loc)
-			P.dir = dir
-			P.initialize_directions = pipe_dir
-			if (pipename)
-				P.name = pipename
-			var/turf/T = P.loc
-			P.level = T.intact ? 2 : 1
-			P.initialize()
-			if (P.node1)
-				P.node1.initialize()
-			if (P.node2)
-				P.node2.initialize()
-			P.build_network()
-
-		if(PIPE_DOWN)		//volume pump
-			var/obj/machinery/atmospherics/pipe/zpipe/down/P = new(src.loc)
-			P.dir = dir
-			P.initialize_directions = pipe_dir
-			if (pipename)
-				P.name = pipename
-			var/turf/T = P.loc
-			P.level = T.intact ? 2 : 1
-			P.initialize()
-			if (P.node1)
-				P.node1.initialize()
-			if (P.node2)
-				P.node2.initialize()
-			P.build_network()
-///// Z-Level stuff
 		if(PIPE_OMNI_MIXER)
 			var/obj/machinery/atmospherics/omni/mixer/P = new(loc)
 			var/turf/T = P.loc
