@@ -204,5 +204,5 @@
 				return FALSE
 		return TRUE
 
-/obj/proc/CanAStarPass()
+/obj/proc/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	return !density

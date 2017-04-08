@@ -124,7 +124,7 @@
 	else
 		return 1
 
-/obj/structure/window/CanAStarPass(ID, to_dir)
+/obj/structure/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	if(!density)
 		return TRUE
 	if((dir == SOUTHWEST) || (dir == to_dir))

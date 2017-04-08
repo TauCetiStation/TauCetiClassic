@@ -188,7 +188,7 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user)
 	..(user)
 
-/obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID)
+/obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/proc/pulse(wireColor)
