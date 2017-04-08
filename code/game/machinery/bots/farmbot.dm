@@ -363,7 +363,6 @@
 					if ( spot.density )
 						continue
 					src.path = get_path_to(src, spot, /turf/proc/Distance, 0, 30,id=botcard)
-					src.path = reverselist(src.path)
 					if ( src.path.len > 0 )
 						break
 
