@@ -14,6 +14,9 @@
 	var/open = 0//Maint panel
 	var/locked = 1
 	//var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
+	var/x_last
+	var/y_last
+	var/same_pos_count
 
 
 /obj/machinery/bot/proc/turn_on()
@@ -157,3 +160,17 @@
 
 /obj/machinery/bot/is_operational_topic()
 	return TRUE
+
+/obj/machinery/bot/proc/inaction_check()
+	if(is_on_patrol() && (x_last == x && y_last == y))
+		same_pos_count++
+		if(same_pos_count >= 15)
+			turn_off()
+	else
+		same_pos_count = 0
+
+	x_last = x
+	y_last = y
+
+/obj/machinery/bot/proc/is_on_patrol()
+	return FALSE

@@ -162,8 +162,11 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		src.oddbutton = 1
 		src.screwloose = 1
 
+/obj/machinery/bot/cleanbot/is_on_patrol()
+	return should_patrol
+
 /obj/machinery/bot/cleanbot/process()
-	//set background = 1
+	inaction_check()
 
 	if(!src.on)
 		return

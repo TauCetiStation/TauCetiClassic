@@ -26,9 +26,6 @@
 	var/arrest_type = 0 //If true, don't handcuff
 	var/declare_arrests = 1 //When making an arrest, should it notify everyone wearing sechuds?
 	var/next_harm_time = 0
-	var/x_last
-	var/y_last
-	var/same_pos_count
 
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -216,19 +213,14 @@ Auto Patrol: []"},
 		update_icon()
 		mode = SECBOT_IDLE
 
+/obj/machinery/bot/secbot/is_on_patrol()
+	return mode == SECBOT_START_PATROL
+
 /obj/machinery/bot/secbot/process()
+	inaction_check()
+
 	if(!on)
 		return
-
-	if(x_last == x && y_last == y) // Бипски очень часто не может пересобрать путь, в результате чего стоит на одной точке,...
-		if(mode == SECBOT_START_PATROL)
-			same_pos_count++ //...флудит astar проком, который поднимает проц. время на 30-50 единиц, из-за чего на сервере появляется постоянный микрофриз каждую секунду...
-			if(same_pos_count > 14) //...пока бипски таки не соорудит новый путь, что обычно не происходит. Посему ввожу авто-выключение бипски, если у него позиция не менялась X итераций(?) процесса.
-				turn_off()
-	else
-		same_pos_count = 0
-	x_last = x
-	y_last = y
 
 	switch(mode)
 		if(SECBOT_IDLE)		// idle
