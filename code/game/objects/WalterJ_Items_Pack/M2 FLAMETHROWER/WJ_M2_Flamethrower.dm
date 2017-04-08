@@ -169,8 +169,6 @@
 		if(!previousturf && length(turflist)>1)
 			previousturf = get_turf(src)
 			continue	//so we don't burn the tile we be standin on
-		if(previousturf && LinkBlocked(previousturf, T))
-			break
 		ignite_turf(T)
 		sleep(1)
 	if(Connected_tank.reagents.total_volume < throw_amount)

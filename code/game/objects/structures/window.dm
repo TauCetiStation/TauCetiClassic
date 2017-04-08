@@ -124,6 +124,13 @@
 	else
 		return 1
 
+/obj/structure/window/CanAStarPass(ID, to_dir)
+	if(!density)
+		return TRUE
+	if((dir == SOUTHWEST) || (dir == to_dir))
+		return FALSE
+
+	return TRUE
 
 /obj/structure/window/CheckExit(atom/movable/O, target)
 	if(istype(O) && O.checkpass(PASSGLASS))

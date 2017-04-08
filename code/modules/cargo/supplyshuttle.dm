@@ -35,6 +35,17 @@ var/list/mechtoys = list(
 	layer = 4
 	explosion_resistance = 5
 
+/obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
+	if(istype(caller, /obj/machinery/bot/mulebot))
+		return TRUE
+
+	if(isliving(caller))
+		var/mob/living/M = caller
+		if(!M.ventcrawler || !M.lying)
+			return FALSE
+
+	return TRUE
+
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
 		return prob(60)

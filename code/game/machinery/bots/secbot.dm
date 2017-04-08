@@ -576,9 +576,7 @@ Auto Patrol: []"},
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/secbot/proc/calc_path(turf/avoid = null)
-	path = AStar(loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
-	if(!path)
-		path = list()
+	path = get_path_to(src, patrol_target, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
 
 // look for a criminal in view of the bot
 

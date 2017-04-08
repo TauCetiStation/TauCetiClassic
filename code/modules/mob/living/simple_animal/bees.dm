@@ -140,7 +140,7 @@
 					break
 
 		if(target_turf)
-			if (!(DirBlocked(get_step(src, get_dir(src,target_turf)),get_dir(src,target_turf)))) // Check for windows and doors!
+			if(AStar(src, target_turf, /turf/proc/Distance, 1))
 				Move(get_step(src, get_dir(src,target_turf)))
 				if (prob(0.1))
 					src.visible_message("\blue The bees swarm after [target_mob]!")

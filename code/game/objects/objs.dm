@@ -203,3 +203,6 @@
 					to_chat(user, "You can't feed [dumdum] with [food] through [Head]")
 				return FALSE
 		return TRUE
+
+/obj/proc/CanAStarPass()
+	return !density
