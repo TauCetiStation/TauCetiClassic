@@ -41,7 +41,7 @@
 
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
-	if(src in user)
+	if(in_range(src, user))
 		to_chat(user, "[reagents.total_volume] units of water left!")
 
 /obj/item/weapon/extinguisher/attack_self(mob/user)
