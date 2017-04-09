@@ -359,7 +359,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	for(var/mob/M in mobs)
 		if(skip_mindless && (!M.mind && !M.ckey))
-			if(!isbot(M) && !istype(M, /mob/camera/))
+			if(!isbot(M) && !istype(M, /mob/camera))
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
@@ -396,37 +396,34 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return pois
 
-//Orders mobs by type then by name
+
+#define ADD_TO_MOBLIST(type) \
+	for(var##type/M in sortmob) {moblist += M}
+
+/**
+ * Orders mobs by type then by name.
+ */
 /proc/sortmobs()
 	var/list/moblist = list()
 	var/list/sortmob = sortAtom(mob_list)
-	for(var/mob/living/silicon/ai/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/pai/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/robot/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/human/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/brain/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/alien/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/dead/observer/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/new_player/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/monkey/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/slime/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/ian/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/simple_animal/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/camera/M in sortmob)
-		moblist.Add(M)
+
+	ADD_TO_MOBLIST(/mob/camera)
+	ADD_TO_MOBLIST(/mob/living/silicon/ai)
+	ADD_TO_MOBLIST(/mob/living/silicon/pai)
+	ADD_TO_MOBLIST(/mob/living/silicon/robot)
+	ADD_TO_MOBLIST(/mob/living/carbon/human)
+	ADD_TO_MOBLIST(/mob/living/carbon/brain)
+	ADD_TO_MOBLIST(/mob/living/carbon/alien)
+	ADD_TO_MOBLIST(/mob/dead/observer)
+	ADD_TO_MOBLIST(/mob/new_player)
+	ADD_TO_MOBLIST(/mob/living/carbon/monkey)
+	ADD_TO_MOBLIST(/mob/living/carbon/slime)
+	ADD_TO_MOBLIST(/mob/living/carbon/ian)
+	ADD_TO_MOBLIST(/mob/living/simple_animal)
+
 	return moblist
+
+#undef ADD_TO_MOBLIST
 
 //E = MC^2
 /proc/convert2energy(M)
@@ -834,7 +831,7 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 						if (length(O.client_mobs_in_contents))
 							O.update_parallax_contents()
 					for(var/mob/M in T)
-						if(!istype(M,/mob) || istype(M, /mob/aiEye) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
+						if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
 						M.loc = X
 						M.update_parallax_contents()
 
@@ -963,7 +960,7 @@ proc/DuplicateObject(obj/original, perfectcopy = 0 , sameloc = 0)
 
 					for(var/mob/M in T)
 
-						if(!istype(M,/mob) || istype(M, /mob/aiEye) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
+						if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
 						mobs += M
 
 					for(var/mob/M in mobs)

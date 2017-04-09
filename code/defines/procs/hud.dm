@@ -87,7 +87,7 @@ the HUD updates properly! */
 /mob/proc/in_view(turf/T)
 	return view(T)
 
-/mob/aiEye/in_view(turf/T)
+/mob/camera/aiEye/in_view(turf/T)
 	var/list/viewed = new
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(get_dist(H, T) <= 7)
