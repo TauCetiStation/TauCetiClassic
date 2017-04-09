@@ -40,6 +40,30 @@
 		amount += BP.burn_dam
 	return amount
 
+/mob/living/carbon/human/getHalLoss()
+	var/amount = 0
+	for(var/obj/item/bodypart/BP in bodyparts)
+		amount += BP.get_pain()
+	return amount
+
+/mob/living/carbon/human/setHalLoss(amount)
+	adjustHalLoss(getHalLoss()-amount)
+
+/mob/living/carbon/human/adjustHalLoss(amount)
+	var/heal = (amount < 0)
+	amount = abs(amount)
+	var/list/pick_bodyparts = bodyparts.Copy()
+	while(amount > 0 && pick_bodyparts.len)
+		var/obj/item/bodypart/BP = pick(pick_bodyparts)
+		pick_bodyparts -= BP
+		if(!istype(BP))
+			continue
+
+		if(heal)
+			amount -= BP.remove_pain(amount)
+		else
+			amount -= BP.add_pain(amount)
+	hud_updateflag |= 1 << HEALTH_HUD
 
 /mob/living/carbon/human/adjustBruteLoss(amount)
 	if(species && species.brute_mod)
@@ -113,38 +137,27 @@
 	else
 		..()
 
+/mob/living/carbon/human/getCloneLoss()
+	var/amount = 0
+	for(var/obj/item/bodypart/BP in bodyparts)
+		amount += BP.get_genetic_damage()
+	return amount
+
+/mob/living/carbon/human/setCloneLoss(amount)
+	adjustCloneLoss(getCloneLoss()-amount)
+
 /mob/living/carbon/human/adjustCloneLoss(amount)
-	..()
+	var/heal = amount < 0
+	amount = abs(amount)
 
-	if(species.flags[IS_SYNTHETIC])
-		return
-
-	var/heal_prob = max(0, 80 - getCloneLoss())
-	var/mut_prob = min(80, getCloneLoss()+10)
-	if (amount > 0)
-		if (prob(mut_prob))
-			var/list/obj/item/bodypart/candidates = list()
-			for (var/obj/item/bodypart/BP in bodyparts)
-				if(!(BP.status & ORGAN_MUTATED))
-					candidates |= BP
-			if (candidates.len)
-				var/obj/item/bodypart/BP = pick(candidates)
-				BP.mutate()
-				to_chat(src, "<span class = 'notice'>Something is not right with your [BP.name]...</span>")
-				return
-	else
-		if (prob(heal_prob))
-			for (var/obj/item/bodypart/BP in bodyparts)
-				if (BP.status & ORGAN_MUTATED)
-					BP.unmutate()
-					to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
-					return
-
-	if (getCloneLoss() < 1)
-		for (var/obj/item/bodypart/BP in bodyparts)
-			if (BP.status & ORGAN_MUTATED)
-				BP.unmutate()
-				to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
+	var/list/pick_bodyparts = bodyparts.Copy()
+	while(amount > 0 && pick_bodyparts.len)
+		var/obj/item/bodypart/BP = pick(pick_bodyparts)
+		pick_bodyparts -= BP
+		if(heal)
+			amount -= BP.remove_genetic_damage(amount)
+		else
+			amount -= BP.add_genetic_damage(amount)
 	hud_updateflag |= 1 << HEALTH_HUD
 
 ////////////////////////////////////////////
@@ -253,7 +266,7 @@ This function restores all bodyparts.
 	if(!BP)
 		return 0
 
-	if( !(damagetype in list(BRUTE, BURN)) )
+	if( !(damagetype in list(BRUTE, BURN, HALLOSS, CLONE)) )
 		..()
 		return 1
 
@@ -278,6 +291,11 @@ This function restores all bodyparts.
 			if(species && species.burn_mod)
 				damage = damage*species.burn_mod
 			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
+
+		if(HALLOSS)
+			BP.add_pain(damage)
+		if(CLONE)
+			BP.add_genetic_damage(damage)
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()

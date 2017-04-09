@@ -274,15 +274,13 @@
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/getCloneLoss()
-	return cloneloss
+	return
 
 /mob/living/proc/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
+	return
 
 /mob/living/proc/setCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	cloneloss = amount
+	return
 
 /mob/living/proc/getBrainLoss()
 	return brainloss
@@ -296,15 +294,13 @@
 	brainloss = amount
 
 /mob/living/proc/getHalLoss()
-	return halloss
+	return 0
 
 /mob/living/proc/adjustHalLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = min(max(halloss + amount, 0),(maxHealth*2))
+	adjustBruteLoss(amount * 0.5)
 
 /mob/living/proc/setHalLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = amount
+	adjustBruteLoss((amount * 0.5)-getBruteLoss())
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -664,9 +660,9 @@
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!isliving(usr) || !canClick())
 		return
-	usr.next_move = world.time + 20
+	setClickCooldown(20)
 
 	var/mob/living/L = usr
 
@@ -724,30 +720,14 @@
 
 			return
 
-	//resisting grabs (as if it helps anyone...)
-	if (!L.stat && !L.restrained())
-		if(L.stunned > 2 || L.weakened)
-			return
-		var/resisting = 0
+
+	if (!incapacitated(INCAPACITATION_KNOCKOUT)) // TODO update resist properly
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
 			qdel(O)
-			resisting++
-		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
-			resisting++
-			switch(G.state)
-				if(GRAB_PASSIVE)
-					qdel(G)
-				if(GRAB_AGGRESSIVE)
-					if(prob(60)) //same chance of breaking the grab as disarm
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
-						qdel(G)
-				if(GRAB_NECK)
-					if(prob(5 - L.stunned * 2))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
-						qdel(G)
-		if(resisting)
-			L.visible_message("<span class='danger'>[L] resists!</span>")
+
+		resist_grab()
+
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))
 		var/obj/structure/pit/P = loc
@@ -891,6 +871,14 @@
 							CM.drop_from_inventory(CM.legcuffed)
 							CM.legcuffed = null
 							CM.update_inv_legcuffed()
+
+/mob/living/proc/resist_grab()
+	var/resisting = 0
+	for(var/obj/item/weapon/grab/G in grabbed_by)
+		resisting++
+		G.handle_resist()
+	if(resisting)
+		visible_message("<span class='danger'>[src] resists!</span>")
 
 /mob/living/verb/lay_down()
 	set name = "Rest"

@@ -25,9 +25,12 @@
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
 
-	var/health_deficiency = (100 - health + halloss)
+	var/health_deficiency = (maxHealth - health)
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
+
+	if(can_feel_pain() && getHalLoss() >= 10)
+		tally += (getHalLoss() / 10) //halloss shouldn't slow you down if you can't even feel it
 
 	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
 	if (hungry >= 70)

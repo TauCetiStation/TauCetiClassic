@@ -37,7 +37,7 @@
 /datum/surgery_step/appendectomy/cut_appendix/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to separate [target]'s appendix from the abdominal wall with \the [tool].", \
 	"You start to separate [target]'s appendix from the abdominal wall with \the [tool]." )
-	target.custom_pain("The pain in your abdomen is living hell!",1)
+	target.custom_pain("The pain in your abdomen is living hell!",100)
 	..()
 
 /datum/surgery_step/appendectomy/cut_appendix/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -68,7 +68,7 @@
 /datum/surgery_step/appendectomy/remove_appendix/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts removing [target]'s appendix with \the [tool].", \
 	"You start removing [target]'s appendix with \the [tool].")
-	target.custom_pain("Someone's ripping out your bowels!",1)
+	target.custom_pain("Someone's ripping out your bowels!",100)
 	..()
 
 /datum/surgery_step/appendectomy/remove_appendix/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

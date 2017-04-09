@@ -11,7 +11,7 @@
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
-		if (!speaker || ((src.disabilities & BLIND) || src.blinded) || !(speaker in view(src)))
+		if (!speaker || is_blind() || !(speaker in view(src)))
 			message = stars(message)
 
 	if(!say_understands(speaker,language))
@@ -47,10 +47,10 @@
 		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && speaker in view(src))
 			message = "<b>[message]</b>"
 
-	if((disabilities & DEAF) || ear_deaf)
+	if(is_deaf())
 		if(speaker == src)
 			to_chat(src, "<span class='warning'>You cannot hear yourself speak!</span>")
-		else
+		else if(!is_blind())
 			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear \him.")
 	else
 		if(language)

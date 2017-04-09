@@ -2005,7 +2005,8 @@ datum
 							if(BP)
 								BP.take_damage(4*toxpwr, 2*toxpwr)
 								if(prob(meltprob)) //Applies disfigurement
-									H.emote("scream",,, 1)
+									if(BP.can_feel_pain())
+										H.emote("scream",,, 1)
 									H.status_flags |= DISFIGURED
 						else
 							M.take_bodypart_damage(min(6*toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
@@ -2140,7 +2141,7 @@ datum
 			reagent_state = LIQUID
 			color = "#B31008" // rgb: 179, 16, 8
 
-			reaction_mob(mob/living/M, method=TOUCH, volume)
+			reaction_mob(mob/living/M, method=TOUCH, volume) // TODO update this properly
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)

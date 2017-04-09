@@ -41,7 +41,7 @@
 	else
 		user.visible_message("[user] begins to reshape [target]'s genitals to look more feminine with \the [tool].", \
 		"You start to reshape [target]'s genitals to look more feminine with \the [tool]." )
-	target.custom_pain("The pain in your groin is living hell!",1)
+	target.custom_pain("The pain in your groin is living hell!",100)
 	..()
 
 /datum/surgery_step/gender_reassignment/reshape_genitals/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

@@ -155,6 +155,14 @@
 
 	return
 
+/mob/proc/setClickCooldown(timeout)
+	next_move = max(world.time + timeout, next_move)
+
+/mob/proc/canClick()
+	if(next_move <= world.time)
+		return TRUE
+	return FALSE
+
 // Default behavior: ignore double clicks, consider them normal clicks instead
 /mob/proc/DblClickOn(atom/A, params)
 	ClickOn(A,params)

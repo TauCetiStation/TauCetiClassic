@@ -315,10 +315,16 @@
 						var/robot = ""
 						var/splint = ""
 						var/internal_bleeding = ""
+						var/severed_tendon = ""
 						var/lung_ruptured = ""
+						var/dislocation = ""
 
 						if(BP.status & ORGAN_ARTERY_CUT)
 							internal_bleeding = "<br>Arterial bleeding"
+						if(BP.status & ORGAN_TENDON_CUT)
+							severed_tendon = "<br>Severed tendon"
+						if(BP.dislocated == 2) // non-magical constants when
+							dislocation = "<br>Dislocated"
 						if(istype(BP, /obj/item/bodypart/chest) && occupant.is_lung_ruptured())
 							lung_ruptured = "Lung ruptured:"
 						if(BP.status & ORGAN_SPLINTED)
@@ -362,7 +368,7 @@
 							AN = "None:"
 
 						if(!BP.is_stump()) // TODO: update this properly.
-							dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
+							dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][severed_tendon][dislocation][lung_ruptured]</td>"
 							storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
 						else
 							dat += "<td>[BP.name]</td><td>-</td><td>-</td><td>[bled][AN][internal_bleeding]</td>"

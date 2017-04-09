@@ -248,10 +248,7 @@
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
 
 			M.put_in_active_hand(G)
-
-			grabbed_by += G
 			G.synch()
-			G.affecting = src
 			LAssailant = M
 
 			for(var/mob/O in viewers(src, null))
@@ -285,10 +282,7 @@
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
 
 			M.put_in_active_hand(G)
-
-			grabbed_by += G
 			G.synch()
-			G.affecting = src
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

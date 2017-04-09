@@ -319,13 +319,13 @@
 	for(i=0,i<4,i++)
 		sleep(50)
 		if(src.OCCUPANT)
+			var/burndamage
 			if(src.issuperUV)
-				var/burndamage = rand(28,35)
-				OCCUPANT.take_bodypart_damage(0,burndamage)
-				OCCUPANT.emote("scream",,, 1)
+				burndamage = rand(28,35)
 			else
-				var/burndamage = rand(6,10)
-				OCCUPANT.take_bodypart_damage(0,burndamage)
+				burndamage = rand(6,10)
+			OCCUPANT.take_bodypart_damage(0,burndamage)
+			if (OCCUPANT.can_feel_pain())
 				OCCUPANT.emote("scream",,, 1)
 		if(i==3) //End of the cycle
 			if(!src.issuperUV)

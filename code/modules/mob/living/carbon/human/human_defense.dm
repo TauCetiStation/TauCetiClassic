@@ -216,6 +216,108 @@
 			return 1
 	return 0
 
+/mob/living/carbon/proc/check_attack_tendons(obj/item/W, mob/living/user)
+	if(!W.edge || !W.force || W.damtype != BRUTE)
+		return FALSE
+
+	var/obj/item/bodypart/BP = get_bodypart(user.zone_sel.selecting)
+	if(!BP || BP.is_stump() || !BP.has_tendon || (BP.status & ORGAN_TENDON_CUT))
+		return FALSE
+
+	var/obj/item/weapon/grab/grab
+	if(user.a_intent == I_HURT)
+		for(var/obj/item/weapon/grab/G in src.grabbed_by)
+			if(G.assailant == user && G.state >= GRAB_NECK)
+				grab = G
+				break
+	if(!grab)
+		return FALSE
+
+	user.visible_message("<span class='danger'>\The [user] begins to cut \the [src]'s [BP.tendon_name] with \the [W]!</span>")
+	user.next_move = world.time + 20
+
+	if(!do_after(user, 20, progress=0))
+		return FALSE
+	if(!grab || grab.assailant != user || grab.affecting != src)
+		return FALSE
+	if(!BP || BP.is_stump() || !BP.sever_tendon())
+		return FALSE
+
+	user.visible_message("<span class='danger'>\The [user] cut \the [src]'s [BP.tendon_name] with \the [W]!</span>")
+	if(W.hitsound)
+		playsound(loc, W.hitsound, 50, 1, -1)
+	grab.last_action = world.time
+	flick(grab.hud.icon_state, grab.hud)
+	user.attack_log += "\[[time_stamp()]\]<font color='red'>Hamstrung [src.name] ([src.ckey])</font>"
+	src.attack_log += "\[[time_stamp()]\]<font color='orange'>Was hamstrung by [user.name] ([user.ckey])</font>"
+	msg_admin_attack("[user.name] ([user.ckey]) hamstrung [src.name] ([src.ckey]) [ADMIN_JMP(user)]")
+
+	return TRUE
+
+// Attacking someone with a weapon while they are neck-grabbed
+/mob/living/carbon/proc/check_attack_throat(obj/item/W, mob/user)
+	if(user.a_intent == I_HURT)
+		for(var/obj/item/weapon/grab/G in src.grabbed_by)
+			if(G.assailant == user && G.state >= GRAB_NECK)
+				if(attack_throat(W, G, user))
+					return TRUE
+	return FALSE
+
+// Knifing
+/mob/living/carbon/proc/attack_throat(obj/item/W, obj/item/weapon/grab/G, mob/user)
+
+	if(check_zone(user.zone_sel.selecting) != BP_HEAD)
+		return 0 // Not targetting correct slot.
+
+	if(!W.edge || !W.force || W.damtype != BRUTE)
+		return 0 //unsuitable weapon
+
+	user.visible_message("<span class='danger'>\The [user] begins to slit [src]'s throat with \the [W]!</span>")
+
+	user.next_move = world.time + 20 //also should prevent user from triggering this repeatedly
+	if(!do_after(user, 20, progress=0))
+		return 0
+	if(!(G && G.assailant == user && G.affecting == src)) //check that we still have a grab
+		return 0
+
+	var/damage_mod = 1
+	//presumably, if they are wearing a helmet that stops pressure effects, then it probably covers the throat as well
+	var/obj/item/clothing/head/helmet = get_equipped_item(slot_head)
+	if(istype(helmet) && (helmet.body_parts_covered & HEAD) && (helmet.flags & STOPS_PRESSUREDMAGE))
+		//we don't do an armor_check here because this is not an impact effect like a weapon swung with momentum, that either penetrates or glances off.
+		damage_mod = 1.0 - (helmet.armor["melee"]/100)
+
+	var/total_damage = 0
+	var/damage_flags = W.damage_flags()
+	for(var/i in 1 to 3)
+		var/damage = min(W.force*1.5, 20)*damage_mod
+		apply_damage(damage, W.damtype, BP_HEAD, 0, damage_flags, used_weapon=W)
+		total_damage += damage
+
+	var/oxyloss = total_damage
+	if(total_damage >= 40) //threshold to make someone pass out
+		oxyloss = 60 // Brain lacks oxygen immediately, pass out
+
+	adjustOxyLoss(min(oxyloss, 100 - getOxyLoss())) //don't put them over 100 oxyloss
+
+	if(total_damage)
+		if(oxyloss >= 40)
+			user.visible_message("<span class='danger'>\The [user] slit [src]'s throat open with \the [W]!</span>")
+		else
+			user.visible_message("<span class='danger'>\The [user] cut [src]'s neck with \the [W]!</span>")
+
+		if(W.hitsound)
+			playsound(loc, W.hitsound, 50, 1, -1)
+
+	G.last_action = world.time
+	flick(G.hud.icon_state, G.hud)
+
+	user.attack_log += "\[[time_stamp()]\]<font color='red'> Knifed [src.name] ([src.ckey]) with [W]</font>"
+	src.attack_log += "\[[time_stamp()]\]<font color='orange'> Got knifed by [user.name] ([user.ckey]) with [W]</font>"
+	msg_admin_attack("[key_name(user)] knifed [key_name(src)] with [W] [ADMIN_JMP(user)]")
+
+	return 1
+
 /mob/living/carbon/human/emp_act(severity)
 	for(var/obj/O in src)
 		if(!O)	continue
@@ -279,10 +381,19 @@
 		weapon_sharp = 0
 		weapon_edge = 0
 
-	if(armor >= 100)	return 0
-	if(!I.force)	return 0
+	if(armor >= 100)
+		return 0
+	if(!I.force)
+		return 0
 
-	apply_damage(I.force, I.damtype, BP, armor, I.damage_flags(), used_weapon=I)
+	var/effective_force = I.force
+	if(user.a_intent == I_DISARM) // TODO proper update?
+		effective_force *= 0.66 //reduced effective force...
+		//set the dislocate mult less than the effective force mult so that
+		//dislocating limbs on disarm is a bit easier than breaking limbs on harm
+		attack_joint(BP, I, effective_force, 0.5, armor) //...but can dislocate joints
+
+	apply_damage(effective_force, I.damtype, BP, armor, I.damage_flags(), used_weapon=I)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
@@ -329,6 +440,20 @@
 				if(bloody)
 					bloody_body(src)
 	return 1
+
+/mob/living/carbon/human/proc/attack_joint(obj/item/bodypart/BP, obj/item/W, effective_force, dislocate_mult, blocked)
+	if(!BP || (BP.dislocated == 2) || (BP.dislocated == -1) || blocked >= 100)
+		return 0
+	if(W.damtype != BRUTE)
+		return 0
+
+	//want the dislocation chance to be such that the limb is expected to dislocate after dealing a fraction of the damage needed to break the limb
+	var/dislocate_chance = effective_force/(dislocate_mult * BP.min_broken_damage * config.organ_health_multiplier)*100
+	if(prob(dislocate_chance * blocked_mult(blocked)))
+		visible_message("<span class='danger'>[src]'s [BP.joint] [pick("gives way","caves in","crumbles","collapses")]!</span>")
+		BP.dislocate(1)
+		return 1
+	return 0
 
 //this proc handles being hit by a thrown atom
 /mob/living/carbon/human/hitby(atom/movable/AM)

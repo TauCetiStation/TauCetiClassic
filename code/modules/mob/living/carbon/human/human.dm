@@ -691,6 +691,25 @@
 		number -= 1
 	return number
 
+//Used by various things that knock people out by applying blunt trauma to the head.
+//Checks that the species has a "head" (brain containing organ) and that hit_zone refers to it.
+/mob/living/carbon/human/proc/headcheck(target_zone, brain_tag = BP_BRAIN)
+
+	var/obj/item/organ/IO = organs_by_name[brain_tag]
+
+	target_zone = check_zone(target_zone)
+	if(!IO || IO.parent_bodypart != target_zone)
+		return 0
+
+	//if the parent bodypart is significantly larger than the brain organ, then hitting it is not guaranteed
+	var/obj/item/bodypart/BP = get_bodypart(target_zone)
+	if(!BP)
+		return 0
+
+	if(BP.w_class > IO.w_class + 1)
+		return prob(100 / 2**(BP.w_class - IO.w_class - 1))
+
+	return 1
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
@@ -993,6 +1012,16 @@
 		update_inv_shoes()
 		return 1
 
+/mob/living/carbon/human/verb/pull_punches()
+	set name = "Pull Punches"
+	set desc = "Try not to hurt them."
+	set category = "IC"
+
+	if(stat)
+		return
+	pulling_punches = !pulling_punches
+	to_chat(src, "<span class='notice'>You are now [pulling_punches ? "pulling your punches" : "not pulling your punches"].</span>")
+
 /mob/living/carbon/human/verb/check_pulse()
 	set category = "Object"
 	set name = "Check pulse"
@@ -1112,6 +1141,63 @@
  		// Might need re-wording.
 		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [target_zone == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 
+/mob/living/carbon/human/proc/undislocate()
+	set category = "Object"
+	set name = "Undislocate Joint"
+	set desc = "Pop a joint back into place. Extremely painful."
+	set src in view(1)
+
+	if(!isliving(usr) || !usr.canClick())
+		return
+
+	usr.setClickCooldown(20)
+
+	if(usr.stat > 0)
+		to_chat(usr, "You are unconcious and cannot do that!")
+		return
+
+	if(usr.restrained())
+		to_chat(usr, "You are restrained and cannot do that!")
+		return
+
+	var/mob/S = src
+	var/mob/U = usr
+	var/self = null
+	if(S == U)
+		self = 1 // Removing object from yourself.
+
+	var/list/limbs = list()
+	for(var/limb in bodyparts_by_name)
+		var/obj/item/bodypart/current_limb = bodyparts_by_name[limb]
+		if(current_limb && current_limb.dislocated > 0 && !current_limb.is_parent_dislocated()) //if the parent is also dislocated you will have to relocate that first
+			limbs |= current_limb
+	var/obj/item/bodypart/current_limb = input(usr,"Which joint do you wish to relocate?") as null|anything in limbs
+
+	if(!current_limb)
+		return
+
+	if(self)
+		to_chat(src, "<span class='warning'>You brace yourself to relocate your [current_limb.joint]...</span>")
+	else
+		to_chat(U, "<span class='warning'>You begin to relocate [S]'s [current_limb.joint]...</span>")
+	if(!do_after(U, 30, src))
+		return
+	if(!current_limb || !S || !U)
+		return
+
+	if(self)
+		to_chat(src, "<span class='danger'>You pop your [current_limb.joint] back in!</span>")
+	else
+		to_chat(U, "<span class='danger'>You pop [S]'s [current_limb.joint] back in!</span>")
+		to_chat(S, "<span class='danger'>[U] pops your [current_limb.joint] back in!</span>")
+	current_limb.undislocate()
+
+/mob/living/carbon/proc/can_feel_pain(obj/item/bodypart/check_bodypart)
+	if(check_bodypart)
+		if(!istype(check_bodypart))
+			return FALSE
+		return check_bodypart.can_feel_pain()
+	return !(species && (species.flags[NO_PAIN] || species.flags[IS_SYNTHETIC]))
 
 //Putting a couple of procs here that I don't know where else to dump.
 //Mostly going to be used for Vox and Vox Armalis, but other human mobs might like them (for adminbuse).

@@ -180,8 +180,8 @@ About the new airlock wires panel:
 				return
 		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
 			to_chat(user, "\red <B>You feel a powerful shock course through your body!</B>")
-			user.halloss += 10
-			user.stunned += 10
+			user.adjustHalLoss(10)
+			user.Stun(10)
 			return
 	..(user)
 
@@ -1374,6 +1374,10 @@ About the new airlock wires panel:
 				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				M.SetStunned(5)
 				M.SetWeakened(5)
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					if(C.can_feel_pain())
+						C.emote("scream",,, 1)
 			M.visible_message("<span class='red'>[M] was crushed by the [src] door.</span>",
 			                  "<span class='danger'>[src] door crushed you.</span>")
 

@@ -119,7 +119,7 @@ proc/RoundHealth(health)
 	return "0"
 
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1)
+/proc/do_mob(mob/user , mob/target, time = 30, target_zone = 0, uninterruptible = 0, progress = 1)
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
@@ -149,11 +149,16 @@ proc/RoundHealth(health)
 		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			. = 0
 			break
+
+		if(target_zone && user.zone_sel.selecting != target_zone)
+			. = 0
+			break
+
 	if (progress)
 		qdel(progbar)
 
 
-/proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1)
+/proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1, incapacitation_flags = INCAPACITATION_DEFAULT)
 	if(!user)
 		return 0
 	var/atom/Tloc = null
@@ -183,11 +188,11 @@ proc/RoundHealth(health)
 		if (progress)
 			progbar.update(world.time - starttime)
 
-		if(!user || user.stat || user.weakened || user.stunned  || user.loc != Uloc)
+		if(!user || user.incapacitated(incapacitation_flags) || user.loc != Uloc)
 			. = 0
 			break
 
-		if(Tloc && (!target || Tloc != target.loc))
+		if(Tloc && (!target || QDELETED(target) || Tloc != target.loc))
 			. = 0
 			break
 

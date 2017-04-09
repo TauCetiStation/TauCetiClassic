@@ -205,7 +205,7 @@
 	if(selhand != src.hand)
 		swap_hand()
 
-/mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
+/mob/living/carbon/proc/help_shake_act(mob/living/carbon/M) // TODO check Bay12 version of this proc.
 	if (src.health >= config.health_threshold_crit)
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
@@ -243,8 +243,16 @@
 				if(BP.is_stump())
 					bodypart_name = parse_zone(BP.body_zone)
 					status = "MISSING!"
-				if(BP.status & ORGAN_MUTATED)
+				else if(BP.status & ORGAN_MUTATED)
 					status = "weirdly shapen."
+				else if(BP.dislocated == 2)
+					status = "dislocated"
+				else if(BP.status & ORGAN_BROKEN)
+					status = "hurts when touched"
+				else if(BP.status & ORGAN_DEAD)
+					status = "is bruised and necrotic"
+				else if(!BP.is_usable() || BP.is_dislocated())
+					status = "dangling uselessly"
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",bodypart_name,status),1)
@@ -544,7 +552,11 @@
 
 	if(B.host_brain.ckey)
 		to_chat(src, "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>")
-		to_chat(B.host_brain, "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>")
+		if (!can_feel_pain())
+			to_chat(B.host_brain, "<span class='warning'>You feel a strange sensation as a foreign influence prods your mind.</span>")
+			to_chat(src, "<span class='danger'>It doesn't seem to be as effective as you hoped.</span>")
+		else
+			to_chat(B.host_brain, "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>")
 
 //Check for brain worms in head.
 /mob/proc/has_brain_worms()
@@ -577,6 +589,51 @@
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
 		return
+
+/**
+ *  Return FALSE if victim can't be devoured, DEVOUR_FAST if they can be devoured quickly, DEVOUR_SLOW for slow devour
+ */
+/mob/living/carbon/proc/can_devour(mob/living/victim)
+	if( (ishuman(src) && (FAT in disabilities & FAT) && ismonkey(victim)) || ( isalien(src) && iscarbon(victim) ) )
+		return TRUE
+	return FALSE
+
+/**
+ *  Attempt to devour victim
+ *
+ *  Returns TRUE on success, FALSE on failure
+ */
+/mob/living/carbon/proc/devour(mob/living/victim) // TODO update this
+	if(!can_devour(victim))
+		return FALSE
+	src.visible_message("<span class='danger'>[src] is attempting to devour [victim]!</span>")
+	if(istype(src, /mob/living/carbon/alien/humanoid/hunter))
+		if(!do_mob(src, victim) || !do_after(src, 30, target = victim))
+			return FALSE
+	else
+		if(!do_mob(src, victim) || !do_after(src, 100, target = victim))
+			return FALSE
+	src.visible_message("<span class='danger'>[src] devours [victim]!</span>")
+	if(isalien(src))
+		if(victim.stat == DEAD)
+			victim.gib()
+			if(src.health >= src.maxHealth - src.getCloneLoss())
+				src.adjustToxLoss(100)
+				to_chat(src, "<span class='notice'>You gain some plasma.</span>")
+			else
+				src.adjustBruteLoss(-100)
+				src.adjustFireLoss(-100)
+				src.adjustOxyLoss(-100)
+				src.adjustCloneLoss(-100)
+				to_chat(src, "<span class='notice'>You feel better.</span>")
+		else
+			victim.forceMove(src)
+			src.stomach_contents.Add(victim)
+	else
+		victim.forceMove(src)
+		src.stomach_contents.Add(victim)
+
+	return TRUE
 
 /mob/living/carbon/proc/uncuff()
 	if(handcuffed)
@@ -696,7 +753,7 @@
 	var/obj/item/organ/lungs/IO = organs_by_name[BP_LUNGS]
 
 	if(!IO.is_bruised())
-		src.custom_pain("You feel a stabbing pain in your chest!", 1)
+		custom_pain("You feel a stabbing pain in your chest!", 50, BP = IO.parent_bodypart)
 		IO.damage = IO.min_bruised_damage
 
 /mob/living/carbon/get_visible_implants(class = 0)
@@ -722,15 +779,14 @@
 		for(var/obj/item/weapon/O in BP.implants)
 			if(!istype(O,/obj/item/weapon/implant) && prob(5)) //Moving with things stuck in you could be bad.
 				// All kinds of embedded objects cause bleeding.
-				var/msg = null
-				switch(rand(1,3))
-					if(1)
-						msg ="<span class='warning'>A spike of pain jolts your [BP.name] as you bump [O] inside.</span>"
-					if(2)
-						msg ="<span class='warning'>Your movement jostles [O] in your [BP.name] painfully.</span>"
-					if(3)
-						msg ="<span class='warning'>[O] in your [BP.name] twists painfully as you move.</span>"
-				to_chat(src, msg)
+				if(!can_feel_pain())
+					to_chat(src, "<span class='warning'>You feel [O] moving inside your [BP.name].</span>")
+				else
+					var/msg = pick( \
+						"<span class='warning'>A spike of pain jolts your [BP.name] as you bump [O] inside.</span>", \
+						"<span class='warning'>Your movement jostles [O] in your [BP.name] painfully.</span>", \
+						"<span class='warning'>Your movement jostles [O] in your [BP.name] painfully.</span>")
+					custom_pain(msg, 40, BP = BP)
 
 				BP.take_damage(rand(1,3), 0, 0)
 				if(!(BP.status & ORGAN_ROBOT)) //There is no blood in protheses.

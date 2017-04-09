@@ -859,9 +859,8 @@ var/list/robot_verbs_default = list(
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
 
 			M.put_in_active_hand(G)
-
-			grabbed_by += G
 			G.synch()
+			LAssailant = M
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))

@@ -52,6 +52,7 @@
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define HAS_HAIR           "has_hair"
 #define NO_EMBED           "no_embed"
+#define NO_SLIP            "no_slip"
 
 //bitflags for door switches.
 #define OPEN     1

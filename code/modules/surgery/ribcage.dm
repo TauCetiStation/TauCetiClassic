@@ -30,7 +30,7 @@
 /datum/surgery_step/ribcage/saw_ribcage/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to cut through [target]'s ribcage with \the [tool].", \
 	"You begin to cut through [target]'s ribcage with \the [tool].")
-	target.custom_pain("Something hurts horribly in your chest!",1)
+	target.custom_pain("Something hurts horribly in your chest!",100)
 	..()
 
 /datum/surgery_step/ribcage/saw_ribcage/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -63,7 +63,7 @@
 	var/msg = "[user] starts to force open the ribcage in [target]'s torso with \the [tool]."
 	var/self_msg = "You start to force open the ribcage in [target]'s torso with \the [tool]."
 	user.visible_message(msg, self_msg)
-	target.custom_pain("Something hurts horribly in your chest!",1)
+	target.custom_pain("Something hurts horribly in your chest!",100)
 	..()
 
 /datum/surgery_step/ribcage/retract_ribcage/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -104,7 +104,7 @@
 	var/msg = "[user] starts bending [target]'s ribcage back into place with \the [tool]."
 	var/self_msg = "You start bending [target]'s ribcage back into place with \the [tool]."
 	user.visible_message(msg, self_msg)
-	target.custom_pain("Something hurts horribly in your chest!",1)
+	target.custom_pain("Something hurts horribly in your chest!",100)
 	..()
 
 /datum/surgery_step/ribcage/close_ribcage/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -143,7 +143,7 @@
 	var/msg = "[user] starts applying \the [tool] to [target]'s ribcage."
 	var/self_msg = "You start applying \the [tool] to [target]'s ribcage."
 	user.visible_message(msg, self_msg)
-	target.custom_pain("Something hurts horribly in your chest!",1)
+	target.custom_pain("Something hurts horribly in your chest!",100)
 	..()
 
 /datum/surgery_step/ribcage/mend_ribcage/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -180,7 +180,7 @@
 	var/msg = "[user] starts to pull something out from [target]'s ribcage with \the [tool]."
 	var/self_msg = "You start to pull something out from [target]'s ribcage with \the [tool]."
 	user.visible_message(msg, self_msg)
-	target.custom_pain("Something hurts horribly in your chest!",1)
+	target.custom_pain("Something hurts horribly in your chest!",100)
 	..()
 
 /datum/surgery_step/ribcage/remove_embryo/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -235,7 +235,7 @@
 				user.visible_message("\blue [user] attempts to repair [target]'s mechanical [IO.name] with [tool_name]...", \
 				"\blue You attempt to repair [target]'s mechanical [IO.name] with [tool_name]...")
 
-	target.custom_pain("The pain in your chest is living hell!",1)
+	target.custom_pain("The pain in your chest is living hell!",100)
 	..()
 
 /datum/surgery_step/ribcage/fix_chest_internal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -307,7 +307,7 @@
 	if(heart.damage > 0)
 		user.visible_message("[user] starts mending the mechanisms on [target]'s heart with \the [tool].", \
 		"You start mending the mechanisms on [target]'s heart with \the [tool]." )
-	target.custom_pain("The pain in your chest is living hell!",1)
+	target.custom_pain("The pain in your chest is living hell!",100)
 	..()
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

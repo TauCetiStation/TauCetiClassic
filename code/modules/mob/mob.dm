@@ -53,19 +53,19 @@
 		return
 
 	if(type)
-		if((type & 1) && ((disabilities & BLIND) || blinded || paralysis) )//Vision related
+		if((type & 1) && is_blind()) // Vision related
 			if(!alt)
 				return
 			else
 				msg = alt
 				type = alt_type
-		if((type & 2) && ((disabilities & DEAF) || ear_deaf))//Hearing related
+		if((type & 2) && is_deaf()) // Hearing related
 			if (!alt)
 				return
 			else
 				msg = alt
 				type = alt_type
-				if (((type & 1) && (disabilities & BLIND)))
+				if ((type & 1) && is_blind())
 					return
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
@@ -138,8 +138,48 @@
 	set waitfor = 0
 	return
 
-/mob/proc/incapacitated()
-	return
+#define UNBUCKLED 0
+#define PARTIALLY_BUCKLED 1
+#define FULLY_BUCKLED 2
+/mob/proc/buckled()
+	// Preliminary work for a future buckle rewrite,
+	// where one might be fully restrained (like an elecrical chair), or merely secured (shuttle chair, keeping you safe but not otherwise restrained from acting)
+	if(!buckled)
+		return UNBUCKLED
+	return restrained() ? FULLY_BUCKLED : PARTIALLY_BUCKLED
+
+/mob/proc/is_blind()
+	return ((disabilities & BLIND) || blinded || incapacitated(INCAPACITATION_KNOCKOUT))
+
+/mob/proc/is_deaf()
+	return ((disabilities & DEAF) || ear_deaf || incapacitated(INCAPACITATION_KNOCKOUT))
+
+/mob/proc/incapacitated(incapacitation_flags = INCAPACITATION_DEFAULT)
+
+	if ((incapacitation_flags & INCAPACITATION_STUNNED) && stunned)
+		return 1
+
+	if ((incapacitation_flags & INCAPACITATION_FORCELYING) && (weakened || resting))
+		return 1
+
+	if ((incapacitation_flags & INCAPACITATION_KNOCKOUT) && (stat || paralysis || sleeping || (status_flags & FAKEDEATH)))
+		return 1
+
+	if((incapacitation_flags & INCAPACITATION_RESTRAINED) && restrained())
+		return 1
+
+	if((incapacitation_flags & (INCAPACITATION_BUCKLED_PARTIALLY|INCAPACITATION_BUCKLED_FULLY)))
+		var/buckling = buckled()
+		if(buckling >= PARTIALLY_BUCKLED && (incapacitation_flags & INCAPACITATION_BUCKLED_PARTIALLY))
+			return 1
+		if(buckling == FULLY_BUCKLED && (incapacitation_flags & INCAPACITATION_BUCKLED_FULLY))
+			return 1
+
+	return 0
+
+#undef UNBUCKLED
+#undef PARTIALLY_BUCKLED
+#undef FULLY_BUCKLED
 
 /mob/proc/restrained()
 	return
@@ -308,7 +348,7 @@
 	set name = "Examine"
 	set category = "IC"
 
-	if((disabilities & BLIND) || blinded || stat == UNCONSCIOUS)
+	if(is_blind(src))
 		to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
@@ -728,37 +768,34 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 /mob/proc/update_canmove()
-	if(!ismob(src))
-		return
-	if(istype(buckled, /obj/vehicle))
-		var/obj/vehicle/V = buckled
-		if(incapacitated())
-			V.unload(src)
-			lying = 1
-			canmove = 0
-		else
-			if(buckled.buckle_lying != -1)
-				lying = buckled.buckle_lying
-			canmove = 1
-			pixel_y = V.mob_offset_y
-	else if(buckled)
-		if(buckled.buckle_lying != -1)
-			lying = buckled.buckle_lying
-		if(istype(buckled, /obj/structure/stool/bed/chair))
-			var/obj/structure/stool/bed/chair/C = buckled
-			if(C.flipped)
+
+	if(buckled)
+		if(istype(buckled, /obj/vehicle))
+			var/obj/vehicle/V = buckled
+			if(incapacitated())
+				V.unload(src)
 				lying = 1
-		if(!buckled.buckle_movable)
-			anchored = 1
-			canmove = 0
+				canmove = 0
+			else
+				if(buckled.buckle_lying != -1)
+					lying = buckled.buckle_lying
+				canmove = 1
+				pixel_y = V.mob_offset_y
 		else
-			anchored = 0
-			canmove = 1
-	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
-		lying = 1
-		canmove = 0
-	else if(stunned)
-		canmove = 0
+			if(buckled.buckle_lying == -1)
+				lying = incapacitated(INCAPACITATION_KNOCKDOWN)
+			else
+				lying = buckled.buckle_lying
+			if(istype(buckled, /obj/structure/stool/bed/chair))
+				var/obj/structure/stool/bed/chair/C = buckled
+				if(C.flipped)
+					lying = 1
+			if(!buckled.buckle_movable)
+				anchored = 1
+				canmove = 0
+			else
+				anchored = 0
+				canmove = 1
 	else if(captured)
 		anchored = 1
 		canmove = 0
@@ -766,9 +803,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else if (crawling)
 		lying = 1
 		canmove = 1
-	else if(!buckled)
-		lying = !can_stand
-		canmove = has_limbs
+	else
+		lying = incapacitated(INCAPACITATION_KNOCKDOWN)
+		canmove = !incapacitated(INCAPACITATION_DISABLED)
 
 	if(lying)
 		density = 0
@@ -991,7 +1028,7 @@ mob/proc/yank_out_object()
 		BP.take_damage((selection.w_class * 3), 0, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) //I'M SO ANEMIC I COULD JUST -DIE-.
-			H.custom_pain("Something tears wetly in your [BP] as [selection] is pulled free!", 1)
+			H.custom_pain("Something tears wetly in your [BP] as [selection] is pulled free!", 50, BP = BP)
 
 		if(ishuman(U))
 			var/mob/living/carbon/human/human_user = U

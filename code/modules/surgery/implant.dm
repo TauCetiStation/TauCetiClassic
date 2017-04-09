@@ -53,7 +53,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts making some space inside [target]'s [get_cavity(BP)] cavity with \the [tool].", \
 	"You start making some space inside [target]'s [get_cavity(BP)] cavity with \the [tool]." )
-	target.custom_pain("The pain in your chest is living hell!",1)
+	target.custom_pain("The pain in your chest is living hell!",100,BP = BP)
 	BP.cavity = 1
 	..()
 
@@ -89,7 +89,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts mending [target]'s [get_cavity(BP)] cavity wall with \the [tool].", \
 	"You start mending [target]'s [get_cavity(BP)] cavity wall with \the [tool]." )
-	target.custom_pain("The pain in your chest is living hell!",1)
+	target.custom_pain("The pain in your chest is living hell!",100,BP = BP)
 	BP.cavity = 0
 	..()
 
@@ -120,7 +120,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts putting \the [tool] inside [target]'s [get_cavity(BP)] cavity.", \
 	"You start putting \the [tool] inside [target]'s [get_cavity(BP)] cavity." )
-	target.custom_pain("The pain in your chest is living hell!",1)
+	target.custom_pain("The pain in your chest is living hell!",100,BP = BP)
 	..()
 
 /datum/surgery_step/cavity/place_item/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -130,7 +130,7 @@
 	"\blue You put \the [tool] inside [target]'s [get_cavity(BP)] cavity." )
 	if (tool.w_class > get_max_wclass(BP)/2 && prob(50) && !(BP.status & ORGAN_ROBOT) && BP.sever_artery())
 		to_chat(user, "\red You tear some blood vessels trying to fit such a big object in this cavity.")
-		BP.owner.custom_pain("You feel something rip in your [BP.name]!", 1)
+		BP.owner.custom_pain("You feel something rip in your [BP.name]!", 50,BP = BP)
 	if(istype(tool, /obj/item/gland))	//Abductor surgery integration
 		if(target_zone != BP_CHEST)
 			return
@@ -174,7 +174,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts poking around inside the incision on [target]'s [BP.name] with \the [tool].", \
 	"You start poking around inside the incision on [target]'s [BP.name] with \the [tool]" )
-	target.custom_pain("The pain in your chest is living hell!",1)
+	target.custom_pain("The pain in your [BP.name] is living hell!",100,BP = BP)
 	..()
 
 /datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

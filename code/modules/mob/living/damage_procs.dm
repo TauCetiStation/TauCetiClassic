@@ -14,19 +14,19 @@
 
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage * blocked )
+			adjustBruteLoss(damage * blocked_mult(blocked))
 		if(BURN)
 			if(RESIST_HEAT in mutations)
 				return 0
-			adjustFireLoss(damage * blocked)
+			adjustFireLoss(damage * blocked_mult(blocked))
 		if(TOX)
-			adjustToxLoss(damage * blocked)
+			adjustToxLoss(damage * blocked_mult(blocked))
 		if(OXY)
-			adjustOxyLoss(damage * blocked)
+			adjustOxyLoss(damage * blocked_mult(blocked))
 		if(CLONE)
-			adjustCloneLoss(damage * blocked)
+			adjustCloneLoss(damage * blocked_mult(blocked))
 		if(HALLOSS)
-			adjustHalLoss(damage * blocked)
+			adjustHalLoss(damage * blocked_mult(blocked))
 
 	flash_weak_pain()
 	updatehealth()
@@ -58,7 +58,7 @@
 		if(PARALYZE)
 			Paralyse(effect * blocked)
 		if(AGONY)
-			halloss += effect // Useful for objects that cause "subdual" damage. PAIN!
+			adjustHalLoss(effect * blocked) // Useful for objects that cause "subdual" damage. PAIN!
 		if(IRRADIATE)
 			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
 		if(STUTTER)

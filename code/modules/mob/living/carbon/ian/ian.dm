@@ -380,7 +380,13 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				return
 
-			var/datum/unarmed_attack/attack = M.species.unarmed
+			var/hit_zone = M.zone_sel.selecting
+
+			// See what attack they use
+			var/datum/unarmed_attack/attack = M.get_unarmed_attack(src, hit_zone)
+			if(!attack)
+				return 0
+
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[response_harm] [src.name] ([src.ckey])</font>")
 			attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
 			msg_admin_attack("[key_name(M)] [response_harm] [key_name(src)]")
@@ -419,7 +425,6 @@
 			if(!G)
 				return
 			M.put_in_active_hand(G)
-			grabbed_by += G
 			G.synch()
 			LAssailant = M
 
@@ -627,7 +632,6 @@
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
 			M.put_in_active_hand(G)
-			grabbed_by += G
 			G.synch()
 			LAssailant = M
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

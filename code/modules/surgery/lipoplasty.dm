@@ -33,7 +33,7 @@
 	user.visible_message("[user] begins to cut away [target]'s excess fat with \the [tool].", \
 	"You begin to cut away [target]'s excess fat with \the [tool].")
 	if (target.overeatduration > 0)
-		target.custom_pain("Something hurts horribly in your chest!",1)
+		target.custom_pain("Something hurts horribly in your chest!",100)
 	..()
 
 /datum/surgery_step/lipoplasty/cut_fat/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -71,7 +71,7 @@
 	user.visible_message("[user] begins to extract [target]'s loose fat with \the [tool].", \
 	"You begin to extract [target]'s loose fat with \the [tool].")
 	if (target.overeatduration > 0)
-		target.custom_pain("Something hurts horribly in your chest!",1)
+		target.custom_pain("Something hurts horribly in your chest!",100)
 	..()
 
 /datum/surgery_step/lipoplasty/remove_fat/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

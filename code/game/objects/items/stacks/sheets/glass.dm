@@ -348,8 +348,9 @@
 				var/obj/item/bodypart/BP = H.get_bodypart(pick(BP_L_LEG, BP_R_LEG))
 				if(BP.status & ORGAN_ROBOT)
 					return
-				H.Weaken(3)
 				BP.take_damage(5, 0)
+				if(BP.can_feel_pain())
+					H.Weaken(3)
 				H.updatehealth()
 	..()
 

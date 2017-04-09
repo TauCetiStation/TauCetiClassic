@@ -41,27 +41,41 @@
 	var/max_damage = 0
 	var/max_size = 0
 	var/last_dam = -1
+	var/pain = 0                       // How much the limb hurts.
+	var/pain_disability_threshold      // Point at which a limb becomes unusable due to pain.
 
 	var/list/wounds = list()
 	var/number_wounds = 0 // cache the number of wounds, which is NOT wounds.len!
+	var/genetic_degradation = 0
 
 	// Appearance vars.
 	var/nonsolid // Used for slime limbs.
 
 	// Joint/state stuff.
+	var/can_grasp = FALSE// It would be more appropriate if these two were named "affects_grasp" and "affects_stand" at this point
+	var/can_stand = FALSE// Modifies stance tally/ability to stand.
 	var/cannot_amputate = FALSE // Impossible to amputate.
+	var/cannot_break = FALSE // Impossible to fracture.
 	var/artery_name = "artery" // Flavour text for cartoid artery, aorta, etc.
 	var/arterial_bleed_severity = 1 // Multiplier for bleeding in a limb.
+	var/joint = "joint" // Descriptive string used in dislocation.
 	var/amputation_point // Descriptive string used in amputation.
+	var/dislocated = 0 // If you target a joint, you can dislocate the limb, causing temporary damage to the bodypart.
+	var/encased // Needs to be opened with a saw to access the organs. <- TODO proper port
+	var/has_tendon = FALSE // Can this limb be hamstrung?
+	var/tendon_name = "tendon" // Flavour text for Achilles tendon, etc.
 
 	var/min_broken_damage = 30
 
 	var/vital //Lose a vital limb, die immediately.
 	var/status = 0
+	var/sabotaged = 0 //If a prosthetic limb is emagged, it will detonate when it fails.
+
+	// Surgery vars.
 	var/open = 0
 	var/stage = 0
 	var/cavity = 0
-	var/sabotaged = 0 //If a prosthetic limb is emagged, it will detonate when it fails.
+	var/atom/movable/applied_pressure
 
 	var/obj/item/hidden = null
 	var/list/implants = list()
@@ -74,6 +88,9 @@
 /obj/item/bodypart/New(loc, mob/living/carbon/C)
 	if(!max_damage)
 		max_damage = min_broken_damage * 2
+
+	if(isnull(pain_disability_threshold))
+		pain_disability_threshold = (max_damage * 0.75)
 
 	if(istype(C))
 		owner = C
@@ -114,6 +131,8 @@
 	if(organs)
 		for(var/obj/item/organ/O in organs)
 			qdel(O)
+
+	applied_pressure = null
 
 	species = null // species are global, don't do anything to them.
 
@@ -405,10 +424,10 @@
 			if(laser)
 				burn /= 2
 
-	//if(status & ORGAN_BROKEN && brute)
-	//	jostle_bone(brute)
-	//	if(can_feel_pain() && prob(40))
-	//		owner.emote("scream")	//getting hit on broken hand hurts
+	if((status & ORGAN_BROKEN) && brute)
+		jostle_bone(brute)
+		if(can_feel_pain() && prob(40))
+			owner.emote("scream",,, 1) // getting hit on broken hand hurts
 	if(used_weapon)
 		add_autopsy_data("[used_weapon]", brute + burn)
 	var/can_cut = (prob(brute*2) || sharp) && !(status & ORGAN_ROBOT)
@@ -523,6 +542,8 @@ This function completely restores a damaged bodypart to perfect condition.
 	open = 0
 	burn_dam = 0
 	germ_level = 0
+	pain = 0
+	genetic_degradation = 0
 	for(var/datum/wound/wound in wounds)
 		wound.embedded_objects.Cut()
 	wounds.Cut()
@@ -554,8 +575,10 @@ This function completely restores a damaged bodypart to perfect condition.
 		var/internal_damage
 		if(prob(damage) && sever_artery())
 			internal_damage = TRUE
+		if(prob(ceil(damage/4)) && sever_tendon())
+			internal_damage = TRUE
 		if(internal_damage)
-			owner.custom_pain("You feel something rip in your [name]!", 1)
+			owner.custom_pain("You feel something rip in your [name]!", 50, BP = src)
 
 	//Burn damage can cause fluid loss due to blistering and cook-off
 	if( (type in list(BURN, LASER)) && (damage > 5 || damage + burn_dam >= 15) && !(status & ORGAN_ROBOT))
@@ -614,9 +637,13 @@ This function completely restores a damaged bodypart to perfect condition.
 //Determines if we even need to process this bodypart.
 
 /obj/item/bodypart/proc/need_process()
-	if(status && (status & ORGAN_ROBOT)) // If it's robotic, that's fine it will have a status.
+	if(get_pain())
 		return 1
-	if(brute_dam || burn_dam)
+	if(status & (ORGAN_BLEEDING|ORGAN_BROKEN|ORGAN_DEAD|ORGAN_MUTATED))
+		return 1
+	if(!(status & ORGAN_CUT_AWAY))
+		return 1
+	if((brute_dam || burn_dam) && !(status & ORGAN_ROBOT)) // Robot limbs don't autoheal and thus don't need to process when damaged
 		return 1
 	if(last_dam != brute_dam + burn_dam) // Process when we are fully healed up.
 		last_dam = brute_dam + burn_dam
@@ -629,9 +656,9 @@ This function completely restores a damaged bodypart to perfect condition.
 
 /obj/item/bodypart/process()
 	if(owner)
-		//if(pain)
-		//	pain = max(0, pain - owner.lying ? 3 : 1)
 
+		if(pain)
+			pain = max(0, pain - owner.lying ? 3 : 1)
 
 		// Process wounds, doing healing etc. Only do this every few ticks to save processing power
 		if(owner.life_tick % wound_update_accuracy == 0)
@@ -1012,6 +1039,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		return TRUE
 	return FALSE
 
+/obj/item/bodypart/proc/sever_tendon()
+	if(has_tendon && !(status & (ORGAN_TENDON_CUT|ORGAN_ROBOT)))
+		status |= ORGAN_TENDON_CUT
+		return TRUE
+	return FALSE
+
 /obj/item/bodypart/proc/release_restraints()
 	if (owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT))
 		owner.visible_message(\
@@ -1047,6 +1080,44 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		if(!W.disinfected)
 			return 0
 	return 1
+
+/obj/item/bodypart/proc/is_dislocated()
+	if(dislocated > 0)
+		return 1
+	if(is_parent_dislocated())
+		return 1//if any parent is dislocated, we are considered dislocated as well
+	return 0
+
+/obj/item/bodypart/proc/is_parent_dislocated()
+	var/obj/item/bodypart/BP = parent
+	while(BP && BP.dislocated != -1)
+		if(BP.dislocated == 1)
+			return 1
+		BP = BP.parent
+	return 0
+
+
+/obj/item/bodypart/proc/dislocate()
+	if(dislocated == -1)
+		return
+
+	dislocated = 1
+	if(owner)
+		owner.verbs |= /mob/living/carbon/human/proc/undislocate
+
+/obj/item/bodypart/proc/undislocate()
+	if(dislocated == -1)
+		return
+
+	dislocated = 0
+	if(owner)
+		owner.shock_stage += 20
+
+		//check to see if we still need the verb
+		for(var/obj/item/bodypart/limb in owner.bodyparts)
+			if(limb.dislocated == 1)
+				return
+		owner.verbs -= /mob/living/carbon/human/proc/undislocate
 
 /obj/item/bodypart/proc/bandage()
 	var/rval = 0
@@ -1084,7 +1155,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	if(owner.dna && owner.dna.mutantrace == "adamantine")
 		return
 
-	if(status & ORGAN_BROKEN)
+	if((status & ORGAN_BROKEN) || cannot_break)
 		return
 
 	owner.visible_message(\
@@ -1092,9 +1163,16 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		"\red <b>Something feels like it shattered in your [name]!</b>",\
 		"You hear a sickening crack.")
 
-	if(owner.species && !owner.species.flags[NO_PAIN])
-		owner.emote("scream",,, 1)
+	if(owner)
+		owner.visible_message(\
+			"<span class='danger'>You hear a loud cracking sound coming from \the [owner].</span>",\
+			"<span class='danger'>Something feels like it shattered in your [name]!</span>",\
+			"<span class='danger'>You hear a sickening crack.</span>")
+		jostle_bone()
+		if(can_feel_pain())
+			owner.emote("scream",,, 1)
 
+	playsound(owner ? owner : src, "fracture", 100, 1, -2)
 	status |= ORGAN_BROKEN
 	broken_description = pick("broken","fracture","hairline fracture")
 
@@ -1119,9 +1197,11 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			to_chat(owner, "You feel \the [suit] constrict about your [name], supporting it.")
 			status |= ORGAN_SPLINTED
 			suit.supporting_limbs |= src
-	return
 
 /obj/item/bodypart/proc/robotize()
+	if(status & ORGAN_ROBOT)
+		return
+
 	src.status &= ~ORGAN_BROKEN
 	src.status &= ~ORGAN_BLEEDING
 	src.status &= ~ORGAN_SPLINTED
@@ -1132,6 +1212,38 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		if(BP)
 			BP.robotize()
 
+	dislocated = -1
+
+// Geneloss/cloneloss.
+/obj/item/bodypart/proc/get_genetic_damage()
+	return (species.flags[NO_SCAN] || (status & ORGAN_ROBOT)) ? 0 : genetic_degradation
+
+/obj/item/bodypart/proc/remove_genetic_damage(amount)
+	if(species.flags[NO_SCAN] || (status & ORGAN_ROBOT))
+		genetic_degradation = 0
+		status &= ~ORGAN_MUTATED
+		return
+	var/last_gene_dam = genetic_degradation
+	genetic_degradation = min(100,max(0,genetic_degradation - amount))
+	if(genetic_degradation <= 30)
+		if(status & ORGAN_MUTATED)
+			unmutate()
+			to_chat(src, "<span class = 'notice'>Your [name] is shaped normally again.</span>")
+	return -(genetic_degradation - last_gene_dam)
+
+/obj/item/bodypart/proc/add_genetic_damage(amount)
+	if(species.flags[NO_SCAN] || (status & ORGAN_ROBOT))
+		genetic_degradation = 0
+		status &= ~ORGAN_MUTATED
+		return
+	var/last_gene_dam = genetic_degradation
+	genetic_degradation = min(100,max(0,genetic_degradation + amount))
+	if(genetic_degradation > 30)
+		if(!(status & ORGAN_MUTATED) && prob(genetic_degradation))
+			mutate()
+			to_chat(owner, "<span class = 'notice'>Something is not right with your [name]...</span>")
+	return (genetic_degradation - last_gene_dam)
+
 /obj/item/bodypart/proc/mutate()
 	src.status |= ORGAN_MUTATED
 	owner.update_body()
@@ -1139,6 +1251,39 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/proc/unmutate()
 	src.status &= ~ORGAN_MUTATED
 	owner.update_body()
+
+/obj/item/bodypart/proc/can_feel_pain()
+	return (!(status & ORGAN_ROBOT) && (!species || !(species.flags[NO_PAIN] || species.flags[IS_SYNTHETIC])))
+
+// Pain/halloss
+/obj/item/bodypart/proc/get_pain(amount)
+	if(!can_feel_pain() || (status & ORGAN_ROBOT))
+		return 0
+	var/lasting_pain = 0
+	lasting_pain += open * 5
+	if(is_broken())
+		lasting_pain += 10
+	else if(is_dislocated())
+		lasting_pain += 5
+	return pain + lasting_pain
+
+/obj/item/bodypart/proc/remove_pain(amount)
+	if(!can_feel_pain() || (status & ORGAN_ROBOT))
+		pain = 0
+		return
+	var/last_pain = pain
+	pain = max(0,min(max_damage,pain-amount))
+	return -(pain-last_pain)
+
+/obj/item/bodypart/proc/add_pain(amount)
+	if(!can_feel_pain() || (status & ORGAN_ROBOT))
+		pain = 0
+		return
+	var/last_pain = pain
+	pain = max(0,min(max_damage,pain+amount))
+	if(owner && ((amount > 15 && prob(20)) || (amount > 30 && prob(60))))
+		owner.emote("scream",,, 1)
+	return pain-last_pain
 
 /obj/item/bodypart/proc/get_damage()	//returns total damage
 	return (brute_dam + burn_dam)	//could use health?
@@ -1150,32 +1295,13 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	return 0
 
 /obj/item/bodypart/proc/is_usable()
-	return !(status & (ORGAN_MUTATED|ORGAN_DEAD))
+	return !(status & (ORGAN_MUTATED|ORGAN_DEAD|ORGAN_TENDON_CUT)) && (!can_feel_pain() || pain < pain_disability_threshold)
 
 /obj/item/bodypart/proc/is_broken()
 	return ((status & ORGAN_BROKEN) && !(status & ORGAN_SPLINTED))
 
 /obj/item/bodypart/proc/is_malfunctioning()
-	return ((status & ORGAN_ROBOT) && prob(brute_dam + burn_dam))
-
-//for arms and hands
-/obj/item/bodypart/proc/process_grasp(obj/item/c_hand, hand_name)
-	if (!c_hand)
-		return
-
-	if(is_broken())
-		owner.drop_from_inventory(c_hand)
-		var/emote_scream = pick("screams in pain and", "lets out a sharp cry and", "cries out and")
-		owner.emote("me", 1, "[(owner.species && owner.species.flags[NO_PAIN]) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
-	if(is_malfunctioning())
-		owner.drop_from_inventory(c_hand)
-		owner.emote("me", 1, "drops what they were holding, their [hand_name] malfunctioning!")
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, owner)
-		spark_system.attach(owner)
-		spark_system.start()
-		spawn(10)
-			qdel(spark_system)
+	return ((status & ORGAN_ROBOT) && (brute_dam + burn_dam) >= 10 && prob(brute_dam + burn_dam))
 
 /obj/item/bodypart/proc/embed(obj/item/weapon/W, silent = 0, supplied_message, datum/wound/supplied_wound)
 	if(!owner) //|| loc != owner)
@@ -1231,7 +1357,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	vital = TRUE
 	cannot_amputate = TRUE
 	amputation_point = "spine"
+	joint = "neck"
+	encased = "ribcage"
 	artery_name = "aorta"
+	dislocated = -1
 
 /obj/item/bodypart/groin
 	name = "groin"
@@ -1250,7 +1379,9 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	vital = TRUE
 	cannot_amputate = TRUE
 	amputation_point = "lumbar"
+	joint = "hip"
 	artery_name = "iliac artery"
+	dislocated = -1
 
 /obj/item/bodypart/head
 	name = "head"
@@ -1268,6 +1399,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 	vital = TRUE
 	amputation_point = "neck"
+	joint = "jaw"
+	encased = "skull"
 	artery_name = "cartoid artery"
 
 	var/disfigured = 0
@@ -1307,14 +1440,13 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 80
 	min_broken_damage = 35
 
+	can_grasp = TRUE
+	has_tendon = TRUE
+	tendon_name = "palmaris longus tendon"
 	amputation_point = "left shoulder"
+	joint = "left elbow"
 	artery_name = "basilic vein"
 	arterial_bleed_severity = 0.75
-
-/obj/item/bodypart/l_arm/process()
-	..()
-	if(owner)
-		process_grasp(owner.l_hand, "left hand")
 
 /obj/item/bodypart/r_arm
 	name = "right arm"
@@ -1329,14 +1461,13 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 80
 	min_broken_damage = 35
 
+	can_grasp = TRUE
+	has_tendon = TRUE
+	tendon_name = "palmaris longus tendon"
 	amputation_point = "right shoulder"
+	joint = "right elbow"
 	artery_name = "basilic vein"
 	arterial_bleed_severity = 0.75
-
-/obj/item/bodypart/r_arm/process()
-	..()
-	if(owner)
-		process_grasp(owner.r_hand, "right hand")
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
@@ -1351,7 +1482,11 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 80
 	min_broken_damage = 35
 
+	can_stand = TRUE
+	has_tendon = TRUE
+	tendon_name = "cruciate ligament"
 	amputation_point = "left hip"
+	joint = "left knee"
 	artery_name = "femoral artery"
 	arterial_bleed_severity = 0.75
 
@@ -1368,14 +1503,18 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	max_damage = 80
 	min_broken_damage = 35
 
+	can_stand = TRUE
+	has_tendon = TRUE
+	tendon_name = "cruciate ligament"
 	amputation_point = "right hip"
+	joint = "right knee"
 	artery_name = "femoral artery"
 	arterial_bleed_severity = 0.75
 
 /obj/item/bodypart/stump
 	name = "limb stump"
 	icon = 'icons/mob/human_races/bad_limb.dmi'
-	//dislocated = -1
+	dislocated = -1
 
 /obj/item/bodypart/stump/New(loc, mob/living/carbon/C, obj/item/bodypart/lost_limb)
 	if(istype(lost_limb))
@@ -1609,6 +1748,16 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 				..()
 	else
 		..()
+
+/obj/item/bodypart/proc/jostle_bone(force)
+	if(!(status & ORGAN_BROKEN)) //intact bones stay still
+		return
+	if(brute_dam + force < min_broken_damage/5)	//no papercuts moving bones
+		return
+	if(organs.len && prob(brute_dam + force))
+		owner.custom_pain("A piece of bone in your [encased ? encased : name] moves painfully!", 50, BP = src)
+		var/obj/item/organ/IO = pick(organs)
+		IO.take_damage(rand(3,5))
 
 /obj/item/bodypart/proc/get_wounds_desc()
 	if(status == ORGAN_ROBOT)

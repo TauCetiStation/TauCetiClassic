@@ -27,6 +27,9 @@
 
 	var/pulse = PULSE_NORM	//current pulse level
 
+	var/pulling_punches // Are you trying not to hurt your opponent?
+	var/stance_damage = 0 // Whether this mob's ability to stand has been affected
+
 	var/oxygen_alert = 0
 	var/phoron_alert = 0
 	var/fire_alert = 0

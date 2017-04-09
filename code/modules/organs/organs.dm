@@ -7,6 +7,7 @@
 /obj/item/organ
 	name = "organ"
 	var/mob/living/carbon/owner = null
+	var/datum/species/species = null
 	var/damage = 0 // amount of damage to the organ
 	var/max_damage // Damage cap
 	var/min_bruised_damage = 10
@@ -25,6 +26,7 @@
 
 	if(istype(C))
 		owner = C
+		species = owner.species
 		//w_class = max(w_class + mob_size_difference(owner.mob_size, MOB_MEDIUM), 1) //smaller mobs have smaller organs.
 
 		owner.organs += src
@@ -52,6 +54,8 @@
 		owner.organs_by_name[organ_tag] = null
 		owner.organs_by_name -= organ_tag
 		owner.organs -= src
+
+		species = null
 
 		owner = null
 
@@ -159,6 +163,9 @@
 		if (prob(3))	//about once every 30 seconds
 			take_damage(1,silent=prob(30))
 
+/obj/item/organ/proc/can_feel_pain()
+	return (robotic < ORGAN_ROBOT && (!species || !(species.flags[NO_PAIN] || species.flags[IS_SYNTHETIC])))
+
 /obj/item/organ/proc/receive_chem(chemical)
 	return 0
 
@@ -172,14 +179,18 @@
 	return damage >= min_broken_damage
 
 /obj/item/organ/proc/take_damage(amount, silent=0)
-	if(src.robotic == 2)
-		src.damage += (amount * 0.8)
-	else
-		src.damage += amount
+	amount = round(amount, 0.1)
 
-	var/obj/item/bodypart/parent = owner.get_bodypart(parent_bodypart)
-	if (!silent)
-		owner.custom_pain("Something inside your [parent.name] hurts a lot.", 1)
+	if(src.robotic == 2)
+		src.damage = between(0, src.damage + (amount * 0.8), max_damage)
+	else
+		src.damage = between(0, src.damage + amount, max_damage)
+
+	//only show this if the organ is not robotic
+	if(owner && parent_bodypart && amount > 0)
+		var/obj/item/bodypart/parent = owner.get_bodypart(parent_bodypart)
+		if (!silent)
+			owner.custom_pain("Something inside your [parent.name] hurts a lot.", amount, BP = parent)
 
 /obj/item/organ/emp_act(severity)
 	if(!robotic)
@@ -226,9 +237,8 @@
 		germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
 
 // Takes care of organ related updates, such as broken and missing limbs
-/mob/living/carbon/proc/handle_organs()
+/mob/living/carbon/proc/handle_organs() // TODO check Bay12
 	number_wounds = 0
-	var/leg_tally = 2
 	var/force_process = 0
 	var/damage_this_tick = getBruteLoss() + getFireLoss() + getToxLoss()
 	if(damage_this_tick > last_dam)
@@ -243,6 +253,9 @@
 	for(var/obj/item/organ/IO in organs)
 		IO.process()
 
+	handle_stance()
+	handle_grasp()
+
 	if(!force_process && !bad_bodyparts.len)
 		return
 
@@ -256,11 +269,14 @@
 			BP.process()
 			number_wounds += BP.number_wounds
 
-			if (!lying && world.time - l_move_time < 15)
+			if (!lying && !buckled && world.time - l_move_time < 15)
 			//Moving around with fractured ribs won't do you any good
-				if (BP.is_broken() && BP.organs && prob(15))
+				if (prob(10) && !stat && BP.is_broken() && BP.organs.len)
+					if(can_feel_pain())
+						custom_pain("Pain jolts through your broken [BP.encased ? BP.encased : BP.name], staggering you!", 50, BP = BP)
+						drop_item(loc)
+						Stun(2)
 					var/obj/item/organ/IO = pick(BP.organs)
-					custom_pain("You feel broken bones moving in your [BP.name]!", 1)
 					IO.take_damage(rand(3,5))
 
 				//Moving makes open wounds get infected much faster
@@ -269,26 +285,136 @@
 						if (W.infection_check())
 							W.germ_level += 1
 
-			if(BP.name in list(BP_L_LEG, BP_R_LEG) && !lying)
-				if (!BP.is_usable() || BP.is_malfunctioning() || (BP.is_broken() && !(BP.status & ORGAN_SPLINTED)))
-					leg_tally--			// let it fail even if just foot&leg
+/mob/living/carbon/proc/handle_stance()
+	// Don't need to process any of this if they aren't standing anyways
+	// unless their stance is damaged, and we want to check if they should stay down
+	if (!stance_damage && (lying || resting) && (life_tick % 4) != 0)
+		return
+
+	stance_damage = 0
+
+	// Buckled to a bed/chair. Stance damage is forced to 0 since they're sitting on something solid
+	if (istype(buckled, /obj/structure/stool/bed))
+		return
+
+	var/limb_pain
+	for(var/limb_tag in list(BP_L_LEG, BP_R_LEG))
+		var/obj/item/bodypart/BP = bodyparts_by_name[limb_tag]
+		if(!BP || !BP.is_usable())
+			stance_damage += 2 // let it fail even if just foot&leg
+		else if (BP.is_malfunctioning())
+			//malfunctioning only happens intermittently so treat it as a missing limb when it procs
+			stance_damage += 2
+			if(prob(10))
+				visible_message("\The [src]'s [BP.name] [pick("twitches", "shudders")] and sparks!")
+				var/datum/effect/effect/system/spark_spread/spark_system = new ()
+				spark_system.set_up(5, 0, src)
+				spark_system.attach(src)
+				spark_system.start()
+				spawn(10)
+					qdel(spark_system)
+		else if (BP.is_broken())
+			stance_damage += 1
+		else if (BP.is_dislocated())
+			stance_damage += 0.5
+
+		if(BP)
+			limb_pain = BP.can_feel_pain()
+
+	// Canes and crutches help you stand (if the latter is ever added)
+	// One cane mitigates a broken leg+foot, or a missing foot.
+	// Two canes are needed for a lost leg. If you are missing both legs, canes aren't gonna help you.
+	if (l_hand && istype(l_hand, /obj/item/weapon/cane))
+		stance_damage -= 2
+	if (r_hand && istype(r_hand, /obj/item/weapon/cane))
+		stance_damage -= 2
 
 	// standing is poor
-	if(leg_tally <= 0 && !paralysis && !(lying || resting) && prob(5))
-		if(species && species.flags[NO_PAIN])
-			emote("scream",,, 1)
-		emote("collapse")
-		paralysis = 10
+	if(stance_damage >= 4 || (stance_damage >= 2 && prob(5)))
+		if(!(lying || resting))
+			if(limb_pain)
+				emote("scream",,, 1)
+			emote("collapse")
+		Weaken(5) //can't emote while weakened, apparently.
 
-	//Check arms and legs for existence
-	can_stand = 2 //can stand on both legs
-	var/obj/item/bodypart/BP = bodyparts_by_name[BP_L_LEG]
-	if(!BP || BP.is_stump())
-		can_stand--
+/mob/living/carbon/proc/handle_grasp()
+	if(!l_hand && !r_hand)
+		return
 
-	BP = bodyparts_by_name[BP_R_LEG]
-	if(!BP || BP.is_stump())
-		can_stand--
+	// You should not be able to pick anything up, but stranger things have happened.
+	if(l_hand)
+		for(var/limb_tag in list(BP_L_ARM))
+			var/obj/item/bodypart/BP = get_bodypart(limb_tag)
+			if(!BP)
+				visible_message("<span class='danger'>Lacking a functioning left hand, \the [src] drops \the [l_hand].</span>")
+				drop_from_inventory(l_hand)
+				break
+
+	if(r_hand)
+		for(var/limb_tag in list(BP_R_ARM))
+			var/obj/item/bodypart/BP = get_bodypart(limb_tag)
+			if(!BP)
+				visible_message("<span class='danger'>Lacking a functioning right hand, \the [src] drops \the [r_hand].</span>")
+				drop_from_inventory(r_hand)
+				break
+
+	// Check again...
+	if(!l_hand && !r_hand)
+		return
+
+	for (var/obj/item/bodypart/BP in bodyparts)
+		if(!BP || !BP.can_grasp)
+			continue
+		if(((BP.is_broken() || BP.is_dislocated()) && !(BP.status & ORGAN_SPLINTED)) || BP.is_malfunctioning())
+			grasp_damage_disarm(BP)
+
+
+/mob/living/carbon/proc/grasp_damage_disarm(obj/item/bodypart/BP)
+	var/disarm_slot
+	switch(BP.body_part)
+		if(HAND_LEFT, ARM_LEFT)
+			disarm_slot = slot_l_hand
+		if(HAND_RIGHT, ARM_RIGHT)
+			disarm_slot = slot_r_hand
+
+	if(!disarm_slot)
+		return
+
+	var/obj/item/thing = get_equipped_item(disarm_slot)
+
+	if(!thing)
+		return
+
+	drop_from_inventory(thing)
+
+	if(BP.status & ORGAN_ROBOT)
+		visible_message("<B>\The [src]</B> drops what they were holding, \his [BP.name] malfunctioning!")
+
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, src)
+		spark_system.attach(src)
+		spark_system.start()
+		spawn(10)
+			qdel(spark_system)
+
+	else
+		var/grasp_name = BP.name
+		if((BP.body_part in list(ARM_LEFT, ARM_RIGHT)) && BP.children.len)
+			var/obj/item/bodypart/hand = pick(BP.children)
+			grasp_name = hand.name
+
+		if(BP.can_feel_pain())
+			var/emote_scream = pick("screams in pain", "lets out a sharp cry", "cries out")
+			var/emote_scream_alt = pick("scream in pain", "let out a sharp cry", "cry out")
+			visible_message(
+				"<B>\The [src]</B> [emote_scream] and drops what they were holding in their [grasp_name]!",
+				null,
+				"You hear someone [emote_scream_alt]!"
+			)
+			custom_pain("The sharp pain in your [BP.name] forces you to drop [thing]!", 30)
+		else
+			visible_message("<B>\The [src]</B> drops what they were holding in their [grasp_name]!")
+
 
 /****************************************************
 				INTERNAL ORGANS DEFINES

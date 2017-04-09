@@ -1285,6 +1285,7 @@
 #include "code\modules\mob\living\carbon\human\life.dm"
 #include "code\modules\mob\living\carbon\human\login.dm"
 #include "code\modules\mob\living\carbon\human\say.dm"
+#include "code\modules\mob\living\carbon\human\unarmed_attack.dm"
 #include "code\modules\mob\living\carbon\human\whisper.dm"
 #include "code\modules\mob\living\carbon\ian\emote.dm"
 #include "code\modules\mob\living\carbon\ian\examine.dm"

@@ -253,6 +253,7 @@
 	var/list/is_destroyed = list()
 	var/list/is_bleeding = list()
 	var/list/shown_objects = list()
+	var/applying_pressure = ""
 
 	for(var/obj/item/bodypart/BP in bodyparts)
 		if(BP)
@@ -261,6 +262,8 @@
 				is_destroyed[bodypart_name] = 1
 				wound_flavor_text[bodypart_name] = "<span class='warning'><b>[t_He] is missing [t_his] [bodypart_name].</b></span>\n"
 				continue
+			if(BP.applied_pressure == src)
+				applying_pressure = "<span class='info'>[t_He] is applying pressure to [t_his] [BP.name].</span><br>"
 			if(BP.status & ORGAN_ROBOT)
 				if(!(BP.brute_dam + BP.burn_dam))
 					if(!species.flags[IS_SYNTHETIC])
@@ -282,64 +285,66 @@
 						wound_flavor_text["[BP.name]"] += pick(" a lot of burns"," severe melting")
 				if(wound_flavor_text["[BP.name]"])
 					wound_flavor_text["[BP.name]"] += "!</span>\n"
-			else if(BP.wounds.len > 0)
-				var/list/wound_descriptors = list()
-				for(var/datum/wound/W in BP.wounds)
-					if(W.embedded_objects.len)
-						shown_objects += W.embedded_objects
-						wound_flavor_text["[BP.name]"] += "The [W.desc] on [t_his] [BP.name] has \a [english_list(W.embedded_objects, and_text = " and \a ", comma_text = ", \a ")] sticking out of it!<br>"
-
-					var/this_wound_desc = W.desc
-					if(W.damage_type == BURN && W.salved) this_wound_desc = "salved [this_wound_desc]"
-					if(W.bleeding()) this_wound_desc = "bleeding [this_wound_desc]"
-					else if(W.bandaged) this_wound_desc = "bandaged [this_wound_desc]"
-					if(W.germ_level > 600) this_wound_desc = "badly infected [this_wound_desc]"
-					else if(W.germ_level > 330) this_wound_desc = "lightly infected [this_wound_desc]"
-					if(this_wound_desc in wound_descriptors)
-						wound_descriptors[this_wound_desc] += W.amount
-						continue
-					wound_descriptors[this_wound_desc] = W.amount
-				if(wound_descriptors.len)
-					var/list/flavor_text = list()
-					var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
-					"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")
-					for(var/wound in wound_descriptors)
-						switch(wound_descriptors[wound])
-							if(1)
-								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude)  ? " what might be" : ""] a [wound]"
-								else
-									flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a [wound]"
-							if(2)
-								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
-								else
-									flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
-							if(3 to 5)
-								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has several [wound]s"
-								else
-									flavor_text += " several [wound]s"
-							if(6 to INFINITY)
-								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has a bunch of [wound]s"
-								else
-									flavor_text += " a ton of [wound]\s"
-					var/flavor_text_string = ""
-					for(var/text = 1, text <= flavor_text.len, text++)
-						if(text == flavor_text.len && flavor_text.len > 1)
-							flavor_text_string += ", and"
-						else if(flavor_text.len > 1 && text > 1)
-							flavor_text_string += ","
-						flavor_text_string += flavor_text[text]
-					flavor_text_string += " on [t_his] [BP.name].</span><br>"
-					wound_flavor_text["[BP.name]"] = flavor_text_string
-				else
-					wound_flavor_text["[BP.name]"] = ""
-				if(BP.status & ORGAN_BLEEDING)
-					is_bleeding["[BP.name]"] = 1
 			else
 				wound_flavor_text["[BP.name]"] = ""
+
+				if(BP.wounds.len > 0)
+					var/list/wound_descriptors = list()
+					for(var/datum/wound/W in BP.wounds)
+						if(W.embedded_objects.len)
+							shown_objects += W.embedded_objects
+							wound_flavor_text["[BP.name]"] += "The [W.desc] on [t_his] [BP.name] has \a [english_list(W.embedded_objects, and_text = " and \a ", comma_text = ", \a ")] sticking out of it!<br>"
+
+						var/this_wound_desc = W.desc
+						if(W.damage_type == BURN && W.salved) this_wound_desc = "salved [this_wound_desc]"
+						if(W.bleeding()) this_wound_desc = "bleeding [this_wound_desc]"
+						else if(W.bandaged) this_wound_desc = "bandaged [this_wound_desc]"
+						if(W.germ_level > 600) this_wound_desc = "badly infected [this_wound_desc]"
+						else if(W.germ_level > 330) this_wound_desc = "lightly infected [this_wound_desc]"
+						if(this_wound_desc in wound_descriptors)
+							wound_descriptors[this_wound_desc] += W.amount
+							continue
+						wound_descriptors[this_wound_desc] = W.amount
+					if(wound_descriptors.len)
+						var/list/flavor_text = list()
+						var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
+						"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")
+						for(var/wound in wound_descriptors)
+							switch(wound_descriptors[wound])
+								if(1)
+									if(!flavor_text.len)
+										flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude)  ? " what might be" : ""] a [wound]"
+									else
+										flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a [wound]"
+								if(2)
+									if(!flavor_text.len)
+										flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
+									else
+										flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
+								if(3 to 5)
+									if(!flavor_text.len)
+										flavor_text += "<span class='warning'>[t_He] has several [wound]s"
+									else
+										flavor_text += " several [wound]s"
+								if(6 to INFINITY)
+									if(!flavor_text.len)
+										flavor_text += "<span class='warning'>[t_He] has a bunch of [wound]s"
+									else
+										flavor_text += " a ton of [wound]\s"
+						var/flavor_text_string = ""
+						for(var/text = 1, text <= flavor_text.len, text++)
+							if(text == flavor_text.len && flavor_text.len > 1)
+								flavor_text_string += ", and"
+							else if(flavor_text.len > 1 && text > 1)
+								flavor_text_string += ","
+							flavor_text_string += flavor_text[text]
+						flavor_text_string += " on [t_his] [BP.name].</span><br>"
+						wound_flavor_text["[BP.name]"] = flavor_text_string
+					if(BP.status & ORGAN_BLEEDING)
+						is_bleeding["[BP.name]"] = 1
+				if(distance <= 1)
+					if(BP.dislocated > 0)
+						wound_flavor_text["[BP.name]"] += "[t_his] [BP.joint] is dislocated!<br>"
 
 	//Handles the text strings being added to the actual description.
 	//If they have something that covers the limb, and it is not missing, put flavortext.  If it is covered but bleeding, add other flavortext.
@@ -441,6 +446,7 @@
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span>"
+	msg += applying_pressure
 	if (pose)
 		if( findtext(pose,".",lentext(pose)) == 0 && findtext(pose,"!",lentext(pose)) == 0 && findtext(pose,"?",lentext(pose)) == 0 )
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.

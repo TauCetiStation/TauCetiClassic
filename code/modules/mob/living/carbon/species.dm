@@ -13,8 +13,18 @@
 	var/backward_form            // Mostly used in genetic (human <-> monkey), if null - gibs user when transformation happens.
 	var/tail                     // Name of tail image in species effects icon file.
 	var/language                 // Default racial language, if any.
-	var/unarmed                  //For empty hand harm-intent attack
-	var/unarmed_type = /datum/unarmed_attack
+
+	// Combat vars.
+	var/total_health = 100                   // Point at which the mob will enter crit.
+	var/list/unarmed_types = list(           // Possible unarmed attacks that the mob will use in combat,
+		/datum/unarmed_attack,
+		/datum/unarmed_attack/bite
+		)
+	var/list/unarmed_attacks = null          // For empty hand harm-intent attack
+
+	// Death vars.
+	var/knockout_message = "has been knocked unconscious!"
+
 	var/secondary_langs = list() // The names of secondary languages that are available to this species.
 	var/attack_verb = "punch"    // Empty hand hurt intent verb.
 	var/punch_damage = 0		 // Extra empty hand attack damage.
@@ -103,7 +113,10 @@
 
 
 /datum/species/New()
-	unarmed = new unarmed_type()
+	unarmed_attacks = list()
+
+	for(var/u_type in unarmed_types)
+		unarmed_attacks += new u_type()
 
 /datum/species/proc/create_organs(mob/living/carbon/C, list/organ_data) //Handles creation of mob bodyparts and organs.
 	//This is a basic humanoid limb setup.
@@ -147,13 +160,13 @@
 /datum/species/monkey
 	name = S_MONKEY
 	backward_form = /mob/living/carbon/human
-	unarmed_type = /datum/unarmed_attack/punch
+	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
 
 /datum/species/monkey/human
 	name = S_HUMAN
 	language = "Sol Common"
 	backward_form = /mob/living/carbon/monkey
-	unarmed_type = /datum/unarmed_attack/punch
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite)
 
 	flags = list(
 	 HAS_SKIN_TONE = TRUE
@@ -169,6 +182,7 @@
 /datum/species/stok
 	name = S_MONKEY_U
 	backward_form = /mob/living/carbon/human/unathi
+	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
 
 /datum/species/stok/unathi
 	name = S_UNATHI
@@ -176,7 +190,7 @@
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
 	language = "Sinta'unathi"
 	tail = "sogtail"
-	unarmed_type = /datum/unarmed_attack/claws
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/bite/sharp)
 	backward_form = /mob/living/carbon/monkey/unathi
 	darksight = 3
 
@@ -209,6 +223,7 @@
 /datum/species/farwa
 	name = S_MONKEY_T
 	backward_form = /mob/living/carbon/human/tajaran
+	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
 
 /datum/species/farwa/tajaran
 	name = S_TAJARAN
@@ -217,7 +232,7 @@
 	language = "Siik'maas"
 	secondary_langs = list("Siik'tajr")
 	tail = "tajtail"
-	unarmed_type = /datum/unarmed_attack/claws
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/bite/sharp)
 	darksight = 8
 	nighteyes = 1
 
@@ -251,6 +266,7 @@
 /datum/species/neaera
 	name = S_MONKEY_S
 	backward_form = /mob/living/carbon/human/skrell
+	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
 
 /datum/species/neaera/skrell
 	name = S_SKRELL
@@ -258,7 +274,7 @@
 	deform = 'icons/mob/human_races/r_def_skrell.dmi'
 	language = "Skrellian"
 	backward_form = /mob/living/carbon/monkey/skrell
-	unarmed_type = /datum/unarmed_attack/punch
+	unarmed_types = list(/datum/unarmed_attack/punch)
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -278,7 +294,7 @@
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
-	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick,  /datum/unarmed_attack/claws/strong, /datum/unarmed_attack/bite/strong)
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -323,7 +339,6 @@
 	deform = 'icons/mob/human_races/r_armalis.dmi'
 	damage_mask = FALSE
 	language = "Vox-pidgin"
-	unarmed_type = /datum/unarmed_attack/claws/armalis
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -368,13 +383,14 @@
 /datum/species/nymph
 	name = S_MONKEY_D
 	backward_form = /mob/living/carbon/human/diona
+	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
 
 /datum/species/nymph/diona
 	name = S_DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
 	language = "Rootspeak"
-	unarmed_type = /datum/unarmed_attack/diona
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/diona)
 	backward_form = /mob/living/carbon/monkey/diona
 
 	warning_low_pressure = 50
@@ -401,6 +417,7 @@
 	,RAD_ABSORB = TRUE
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
+	,NO_SLIP = TRUE
 	)
 
 	blood_color = "#004400"
@@ -433,7 +450,7 @@
 	icobase = 'icons/mob/human_races/r_machine.dmi'
 	deform = 'icons/mob/human_races/r_machine.dmi'
 	language = "Tradeband"
-	unarmed_type = /datum/unarmed_attack/punch
+	unarmed_types = list(/datum/unarmed_attack/punch)
 
 	eyes = "blank_eyes"
 
@@ -513,7 +530,7 @@
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
 	deform = 'icons/mob/human_races/r_def_shadowling.dmi'
 	language = "Sol Common"
-	unarmed_type = /datum/unarmed_attack/claws
+	unarmed_types = list(/datum/unarmed_attack/claws/strong, /datum/unarmed_attack/bite/sharp)
 
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
@@ -535,6 +552,7 @@
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_EMBED = TRUE
+	,NO_SLIP = TRUE
 	)
 	burn_mod = 2 //2x burn damage lel
 
@@ -542,38 +560,6 @@
 /datum/species/shadowling/handle_post_spawn(mob/living/carbon/C)
 	C.gender = NEUTER
 	return ..()
-
-
-// Species unarmed attacks
-/datum/unarmed_attack
-	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
-	var/damage = 0						// Extra empty hand attack damage.
-	var/attack_sound = "punch"
-	var/miss_sound = 'sound/weapons/punchmiss.ogg'
-	var/sharp = 0
-	var/edge = 0
-
-/datum/unarmed_attack/proc/damage_flags()
-	return (src.sharp? DAM_SHARP : 0)|(src.edge? DAM_EDGE : 0)
-
-/datum/unarmed_attack/punch
-	attack_verb = list("punch")
-
-/datum/unarmed_attack/diona
-	attack_verb = list("lash", "bludgeon")
-	damage = 5
-
-/datum/unarmed_attack/claws
-	attack_verb = list("scratch", "claw")
-	attack_sound = 'sound/weapons/slice.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
-	damage = 5
-	sharp = 1
-	edge = 1
-
-/datum/unarmed_attack/claws/armalis
-	attack_verb = list("slash", "claw")
-	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
 
 /datum/species/slime
 	name = S_SLIME
@@ -585,6 +571,7 @@
 /datum/species/alien
 	flags = list(
 	 NO_EMBED = TRUE
+	,NO_SLIP = TRUE
 	)
 
 /datum/species/alien/facehugger
@@ -596,7 +583,7 @@
 
 /datum/species/alien/adult
 	name = S_XENO_ADULT
-	unarmed_type = /datum/unarmed_attack/claws
+	unarmed_types = list(/datum/unarmed_attack/claws/strong, /datum/unarmed_attack/bite/strong)
 	backward_form = /mob/living/carbon/alien/larva
 
 /datum/species/alien/adult/queen
@@ -605,3 +592,20 @@
 
 /datum/species/dog
 	name = S_DOG
+
+// Called when using the shredding behavior.
+/datum/species/proc/can_shred(var/mob/living/carbon/human/H, var/ignore_intent)
+
+	if(!ignore_intent && H.a_intent != I_HURT)
+		return 0
+
+	for(var/datum/unarmed_attack/attack in unarmed_attacks)
+		if(!attack.is_usable(H))
+			continue
+		if(attack.shredding)
+			return 1
+
+	return 0
+
+/datum/species/proc/get_knockout_message(mob/living/carbon/C)
+	return ((C && C.species.flags[IS_SYNTHETIC]) ? "encounters a hardware fault and suddenly reboots!" : knockout_message)

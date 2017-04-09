@@ -23,16 +23,18 @@
 
 /datum/surgery_step/glue_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	var/bone = BP.encased ? "[target]'s [BP.encased]" : "bones in [target]'s [BP.name]"
 	if (BP.stage == 0)
-		user.visible_message("[user] starts applying medication to the damaged bones in [target]'s [BP.name] with \the [tool]." , \
-		"You start applying medication to the damaged bones in [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("Something in your [BP.name] is causing you a lot of pain!",1)
+		user.visible_message("[user] starts applying \the [tool] to the [bone]." , \
+		"You start \the [tool] to the [bone].")
+	target.custom_pain("Something in your [BP.name] is causing you a lot of pain!",50,BP = BP)
 	..()
 
 /datum/surgery_step/glue_bone/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] applies some [tool] to [target]'s bone in [BP.name]", \
-		"\blue You apply some [tool] to [target]'s bone in [BP.name] with \the [tool].")
+	var/bone = BP.encased ? "[target]'s [BP.encased]" : "bones in [target]'s [BP.name]"
+	user.visible_message("<span class='notice'>[user] applies some [tool.name] to [bone]</span>", \
+		"<span class='notice'>You apply some [tool.name] to [bone].</span>")
 	BP.stage = 1
 
 /datum/surgery_step/glue_bone/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -58,20 +60,22 @@
 
 /datum/surgery_step/set_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] is beginning to set the bone in [target]'s [BP.name] in place with \the [tool]." , \
-		"You are beginning to set the bone in [target]'s [BP.name] in place with \the [tool].")
-	target.custom_pain("The pain in your [BP.name] is going to make you pass out!",1)
+	var/bone = BP.encased ? "[target]'s [BP.encased]" : "bones in [target]'s [BP.name]"
+	user.visible_message("[user] is beginning to set the [bone] in place with \the [tool]." , \
+		"You are beginning to set the [bone] in place with \the [tool].")
+	target.custom_pain("The pain in your [BP.name] is going to make you pass out!",50, BP = BP)
 	..()
 
 /datum/surgery_step/set_bone/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+	var/bone = BP.encased ? "[target]'s [BP.encased]" : "bones in [target]'s [BP.name]"
 	if (BP.status & ORGAN_BROKEN)
-		user.visible_message("\blue [user] sets the bone in [target]'s [BP.name] in place with \the [tool].", \
-			"\blue You set the bone in [target]'s [BP.name] in place with \the [tool].")
+		user.visible_message("<span class='notice'>[user] sets the [bone] n place with \the [tool].</span>", \
+			"<span class='notice'>You set the [bone] in place with \the [tool].</span>")
 		BP.stage = 2
 	else
-		user.visible_message("\blue [user] sets the bone in [target]'s [BP.name]\red in the WRONG place with \the [tool].", \
-			"\blue You set the bone in [target]'s [BP.name]\red in the WRONG place with \the [tool].")
+		user.visible_message("<span class='notice'>[user] sets the [bone]</span> <span class='warning'>in the WRONG place with \the [tool].</span>", \
+			"<span class='notice'>You set the [bone]</span> <span class='warning'>in the WRONG place with \the [tool].</span>")
 		BP.fracture()
 
 /datum/surgery_step/set_bone/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -135,14 +139,16 @@
 
 /datum/surgery_step/finish_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts to finish mending the damaged bones in [target]'s [BP.name] with \the [tool].", \
-	"You start to finish mending the damaged bones in [target]'s [BP.name] with \the [tool].")
+	var/bone = BP.encased ? "[target]'s [BP.encased]" : "bones in [target]'s [BP.name]"
+	user.visible_message("[user] starts to finish mending the damaged [bone] with \the [tool].", \
+	"You start to finish mending the damaged [bone] with \the [tool].")
 	..()
 
 /datum/surgery_step/finish_bone/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has mended the damaged bones in [target]'s [BP.name] with \the [tool]."  , \
-		"\blue You have mended the damaged bones in [target]'s [BP.name] with \the [tool]." )
+	var/bone = BP.encased ? "[target]'s [BP.encased]" : "bones in [target]'s [BP.name]"
+	user.visible_message("<span class='notice'>[user] has mended the damaged [bone] with \the [tool].</span>"  , \
+		"<span class='notice'>You have mended the damaged [bone] with \the [tool].</span>" )
 	BP.status &= ~ORGAN_BROKEN
 	BP.status &= ~ORGAN_SPLINTED
 	BP.stage = 0
