@@ -116,12 +116,6 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	if(istype(W, /obj/item/weapon/wirecutters))
 
-///// Z-Level Stuff
-		if(src.d1 == 12 || src.d2 == 12)
-			to_chat(user, "<span class='warning'>You must cut this cable from above.</span>")
-			return
-///// Z-Level Stuff
-
 		if (shock(user, 50))
 			return
 
@@ -132,19 +126,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			newcable = new /obj/item/weapon/cable_coil(T, 1, color)
 		newcable.fingerprintslast = user.key
 
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='warning'>[user] cuts the cable.</span>", 1)
-
-///// Z-Level Stuff
-		if(src.d1 == 11 || src.d2 == 11)
-			var/turf/controllerlocation = locate(1, 1, z)
-			for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
-				if(controller.down)
-					var/turf/below = locate(src.x, src.y, controller.down_target)
-					for(var/obj/structure/cable/c in below)
-						if(c.d1 == 12 || c.d2 == 12)
-							c.Destroy()
-///// Z-Level Stuff
+		user.visible_message("<span class='warning'>[user] cuts the cable.</span>")
 
 		qdel(src)
 
@@ -598,74 +580,28 @@ By design, d1 is the smallest direction and d2 is the highest
 			if((LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0))
 				to_chat(user, "<span class='warning'>There's already a cable at that position.</span>")
 				return
-///// Z-Level Stuff
-		// check if the target is open space
-		if(istype(F, /turf/simulated/floor/open))
-			for(var/obj/structure/cable/LC in F)
-				if((LC.d1 == dirn && LC.d2 == 11 ) || ( LC.d2 == dirn && LC.d1 == 11))
-					to_chat(user, "<span class='warning'>There's already a cable at that position.</span>")
-					return
 
-			var/turf/simulated/floor/open/temp = F
-			var/obj/structure/cable/C = new(F)
-			var/obj/structure/cable/D = new(temp.floorbelow)
+		var/obj/structure/cable/C = new(F)
 
-			C.color = color
+		C.color = color
 
-			C.d1 = 11
-			C.d2 = dirn
-			C.add_fingerprint(user)
-			C.updateicon()
+		//set up the new cable
+		C.d1 = 0 //it's a O-X node cable
+		C.d2 = dirn
+		C.add_fingerprint(user)
+		C.updateicon()
 
-			C.powernet = new()
-			powernets += C.powernet
-			C.powernet.cables += C
+		//create a new powernet with the cable, if needed it will be merged later
+		var/datum/powernet/PN = new
+		PN.add_cable(C)
 
-			C.mergeConnectedNetworks(C.d2)
-			C.mergeConnectedNetworksOnTurf()
+		C.mergeConnectedNetworks(C.d2) //merge the powernet with adjacents powernets
+		C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
 
-			D.color = color
-
-			D.d1 = 12
-			D.d2 = 0
-			D.add_fingerprint(user)
-			D.updateicon()
-
-			D.powernet = C.powernet
-			D.powernet.cables += D
-
-			D.mergeConnectedNetworksOnTurf()
-
-		// do the normal stuff
-		else
-///// Z-Level Stuff
-
-			for(var/obj/structure/cable/LC in F)
-				if((LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0))
-					to_chat(user, "There's already a cable at that position.")
-					return
-
-			var/obj/structure/cable/C = new(F)
-
-			C.color = color
-
-			//set up the new cable
-			C.d1 = 0 //it's a O-X node cable
-			C.d2 = dirn
-			C.add_fingerprint(user)
-			C.updateicon()
-
-			//create a new powernet with the cable, if needed it will be merged later
-			var/datum/powernet/PN = new()
-			PN.add_cable(C)
-
-			C.mergeConnectedNetworks(C.d2) //merge the powernet with adjacents powernets
-			C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
-
-			if (C.shock(user, 50))
-				if (prob(50)) //fail
-					new /obj/item/weapon/cable_coil(C.loc, 1, C.color)
-					qdel(C)
+		if (C.shock(user, 50))
+			if (prob(50)) //fail
+				new /obj/item/weapon/cable_coil(C.loc, 1, C.color)
+				qdel(C)
 
 
 // called when cable_coil is click on an installed obj/cable
