@@ -217,9 +217,9 @@ Auto Patrol: []"},
 	return mode == SECBOT_START_PATROL
 
 /obj/machinery/bot/secbot/process()
-	inaction_check()
-
 	if(!on)
+		return
+	if(!inaction_check())
 		return
 
 	switch(mode)

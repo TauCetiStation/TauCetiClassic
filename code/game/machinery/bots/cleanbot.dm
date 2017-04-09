@@ -166,11 +166,11 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	return should_patrol
 
 /obj/machinery/bot/cleanbot/process()
-	inaction_check()
-
 	if(!src.on)
 		return
 	if(src.cleaning)
+		return
+	if(!inaction_check())
 		return
 
 	if(!src.screwloose && !src.oddbutton && prob(5))

@@ -166,11 +166,14 @@
 		same_pos_count++
 		if(same_pos_count >= 15)
 			turn_off()
+			return FALSE
 	else
 		same_pos_count = 0
 
 	x_last = x
 	y_last = y
+
+	return TRUE
 
 /obj/machinery/bot/proc/is_on_patrol()
 	return FALSE
