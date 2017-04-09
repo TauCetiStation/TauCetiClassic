@@ -147,6 +147,9 @@
 	else
 		return 1
 
+/obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
+
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1

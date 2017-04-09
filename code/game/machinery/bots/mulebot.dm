@@ -681,9 +681,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/mulebot/proc/calc_path(turf/avoid = null)
-	src.path = AStar(src.loc, src.target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 250, id=botcard, exclude=avoid)
-	if(!src.path)
-		src.path = list()
+	src.path = get_path_to(src.loc, src.target, /turf/proc/Distance_cardinal, 0, 250, id=botcard, exclude=avoid)
 
 
 // sets the current destination

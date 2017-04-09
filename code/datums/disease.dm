@@ -140,7 +140,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(isturf(source.loc))
 		for(var/mob/living/carbon/M in oview(check_range, source))
 			if(isturf(M.loc))
-				if(AStar(source.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, check_range))
+				if(AStar(source, M.loc, /turf/proc/Distance, check_range))
 					M.contract_disease(src, 0, 1, force_spread)
 
 	return
