@@ -22,14 +22,12 @@
 		target = target
 		loc = null
 		var/location
-		if(isturf(target) )
-			location = target
-		else if(isobj(target) )
-			location = target.loc
-		else if(ismob(target) )
+		if(ismob(target))
 			var/mob/living/M = target
 			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 			user.visible_message("<span class ='red'> [user.name] finished planting an explosive on [M.name]!</span>")
+		else
+			location = target
 		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
 		to_chat(user, "Bomb has been planted. Timer counting down from [timer].")
 		addtimer(CALLBACK(src, .proc/prime_explosion, target, location), timer * 10)
@@ -37,7 +35,7 @@
 /obj/item/weapon/plastique/proc/prime_explosion(atom/target, location)
 	if(!target)
 		return
-	if(ismob(target))
+	if(ismob(target) || isobj(target))
 		location = target.loc
 	if(istype(target, /turf/simulated/wall))
 		var/turf/simulated/wall/W = target
@@ -45,9 +43,9 @@
 	else
 		target.ex_act(1)
 
-	if(isobj(target) )
-		qdel(target)
 	explosion(location, 0, 0, 2, 3)
+	if(target && !QDELETED(target))
+		target.overlays -= image('icons/obj/assemblies.dmi', "plastic-explosive2")
 	if(src)
 		qdel(src)
 
