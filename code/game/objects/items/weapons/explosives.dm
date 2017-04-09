@@ -22,11 +22,11 @@
 		target = target
 		loc = null
 		var/location
-		if(isturf(target) )
+		if(isturf(target))
 			location = target
-		else if(isobj(target) )
-			location = target.loc
-		else if(ismob(target) )
+		else if(isobj(target))
+			location = target
+		else if(ismob(target))
 			var/mob/living/M = target
 			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 			user.visible_message("<span class ='red'> [user.name] finished planting an explosive on [M.name]!</span>")
@@ -39,15 +39,16 @@
 		return
 	if(ismob(target))
 		location = target.loc
+	if(isobj(target))
+		location = target.loc
 	if(istype(target, /turf/simulated/wall))
 		var/turf/simulated/wall/W = target
 		W.dismantle_wall(1)
 	else
 		target.ex_act(1)
 
-	if(isobj(target) )
-		qdel(target)
 	explosion(location, 0, 0, 2, 3)
+	target.overlays -= image('icons/obj/assemblies.dmi', "plastic-explosive2")
 	if(src)
 		qdel(src)
 
