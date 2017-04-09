@@ -44,7 +44,7 @@
 		target.ex_act(1)
 
 	explosion(location, 0, 0, 2, 3)
-	if(target)
+	if(target && !QDELETED(target))
 		target.overlays -= image('icons/obj/assemblies.dmi', "plastic-explosive2")
 	if(src)
 		qdel(src)
