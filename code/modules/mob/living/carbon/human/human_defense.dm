@@ -89,7 +89,8 @@
 			else if(force <= 40)
 				apply_effects(B.stoping_power,B.stoping_power,0,0,B.stoping_power,0,0,armor)
 
-		if(!species.flags[NO_EMBED] && P.embed && prob(20 + max(P.damage - armor, -10)) && P.damage_type == BRUTE)
+		//Shrapnel
+		if(!species.flags[NO_EMBED] && P.can_embed() && prob(20 + max(P.damage - armor, -10)))
 			var/obj/item/weapon/shard/shrapnel/SP = new()
 			SP.name = "[P.name] shrapnel"
 			SP.desc = "[SP.desc] It looks like it was fired from [P.shot_from]."

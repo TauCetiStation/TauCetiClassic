@@ -98,6 +98,13 @@
 	impact_effect(effect_transform)		// generate impact effect
 	return
 
+//Checks if the projectile is eligible for embedding. Not that it necessarily will.
+/obj/item/projectile/proc/can_embed()
+	//embed must be enabled and damage type must be brute
+	if(!embed || damage_type != BRUTE)
+		return FALSE
+	return TRUE
+
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
 	if(!istype(target) || !istype(user))
 		return 0

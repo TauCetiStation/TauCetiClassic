@@ -134,9 +134,15 @@ var/list/slot_equipment_priority = list( \
 
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/W)
-	if(lying && !(W.flags&ABSTRACT))	return 0
-	if(!istype(W))		return 0
-	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
+	if(lying && !(W.flags&ABSTRACT))
+		return 0
+	if(!istype(W))
+		return 0
+	if(W.anchored)
+		return 0 // Anchored things shouldn't be picked up because they... anchored?!
+	if(!iscarbon(src)) // TODO actual hands check?
+		return FALSE
+
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
@@ -155,9 +161,15 @@ var/list/slot_equipment_priority = list( \
 
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(obj/item/W)
-	if(lying && !(W.flags&ABSTRACT))	return 0
-	if(!istype(W))		return 0
-	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
+	if(lying && !(W.flags&ABSTRACT))
+		return 0
+	if(!istype(W))
+		return 0
+	if(W.anchored)
+		return 0 // Anchored things shouldn't be picked up because they... anchored?!
+	if(!iscarbon(src)) // TODO actual hands check?
+		return FALSE
+
 	if(!r_hand)
 		W.loc = src
 		r_hand = W

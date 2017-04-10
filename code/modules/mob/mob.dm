@@ -962,9 +962,9 @@ mob/proc/yank_out_object()
 	set desc = "Remove an embedded item at the cost of bleeding and pain."
 	set src in view(1)
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!isliving(usr) || !usr.canClick())
 		return
-	usr.next_move = world.time + 20
+	usr.setClickCooldown(20)
 
 	if(usr.stat == UNCONSCIOUS)
 		to_chat(usr, "You are unconcious and cannot do that!")
@@ -997,7 +997,7 @@ mob/proc/yank_out_object()
 	else
 		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
 
-	if(!do_after(U, 80, target = S))
+	if(!do_mob(U, S, 80))
 		return
 	if(!selection || !S || !U)
 		return
@@ -1034,8 +1034,13 @@ mob/proc/yank_out_object()
 			var/mob/living/carbon/human/human_user = U
 			human_user.bloody_hands(H)
 
-	//U.put_in_hands(selection) need to double check this later, i'm afraid of silicons or other mobs.
-	selection.forceMove(get_turf(src))
+	else if(issilicon(src))
+		var/mob/living/silicon/robot/R = src
+		R.embedded -= selection
+		R.adjustBruteLoss(5)
+		R.adjustFireLoss(10)
+
+	U.put_in_hands(selection)
 
 	for(var/obj/item/weapon/O in pinned)
 		if(O == selection)

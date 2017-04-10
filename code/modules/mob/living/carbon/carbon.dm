@@ -766,38 +766,52 @@
 	var/list/visible_implants = list()
 	for(var/obj/item/bodypart/BP in src.bodyparts)
 		for(var/obj/item/weapon/O in BP.implants)
-			if(!istype(O,/obj/item/weapon/implant) && (O.w_class > class)) //&& !istype(O,/obj/item/weapon/shard/shrapnel)) <- Bay12 rebalance, i'l leave that for later ~ZVe.
+			if(!istype(O,/obj/item/weapon/implant) && (O.w_class > class) && !istype(O,/obj/item/weapon/shard/shrapnel))
 				visible_implants += O
 
 	return(visible_implants)
 
-/mob/living/carbon/human/embedded_needs_process()
+/mob/living/carbon/embedded_needs_process()
 	for(var/obj/item/bodypart/BP in src.bodyparts)
 		for(var/obj/item/O in BP.implants)
 			if(!istype(O, /obj/item/weapon/implant)) //implant type items do not cause embedding effects, see handle_embedded_objects()
 				return TRUE
 	return FALSE
 
-/mob/living/carbon/proc/handle_embedded_objects()
+/mob/living/carbon/human/proc/handle_embedded_and_stomach_objects()
 	for(var/obj/item/bodypart/BP in src.bodyparts)
-		if(BP.status & ORGAN_SPLINTED) //Splints prevent movement.
+		if(BP.status & ORGAN_SPLINTED)
 			continue
-		for(var/obj/item/weapon/O in BP.implants)
+		for(var/obj/item/O in BP.implants)
 			if(!istype(O,/obj/item/weapon/implant) && prob(5)) //Moving with things stuck in you could be bad.
-				// All kinds of embedded objects cause bleeding.
-				if(!can_feel_pain())
-					to_chat(src, "<span class='warning'>You feel [O] moving inside your [BP.name].</span>")
-				else
-					var/msg = pick( \
-						"<span class='warning'>A spike of pain jolts your [BP.name] as you bump [O] inside.</span>", \
-						"<span class='warning'>Your movement jostles [O] in your [BP.name] painfully.</span>", \
-						"<span class='warning'>Your movement jostles [O] in your [BP.name] painfully.</span>")
-					custom_pain(msg, 40, BP = BP)
+				jossle_internal_object(BP, O)
+	var/obj/item/bodypart/groin = src.get_bodypart(BP_GROIN)
+	if(groin && stomach_contents && stomach_contents.len)
+		for(var/obj/item/O in stomach_contents)
+			if(O.edge || O.sharp)
+				if(prob(1))
+					stomach_contents.Remove(O)
+					if(can_feel_pain())
+						to_chat(src, "<span class='danger'>You feel something rip out of your stomach!</span>")
+						groin.embed(O)
+				else if(prob(5))
+					jossle_internal_object(groin, O)
 
-				BP.take_damage(rand(1,3), 0, 0)
-				if(!(BP.status & ORGAN_ROBOT)) //There is no blood in protheses.
-					BP.status |= ORGAN_BLEEDING
-					src.adjustToxLoss(rand(1,3))
+/mob/living/carbon/human/proc/jossle_internal_object(obj/item/bodypart/BP, obj/item/O)
+	// All kinds of embedded objects cause bleeding.
+	if(!can_feel_pain())
+		to_chat(src, "<span class='warning'>You feel [O] moving inside your [BP.name].</span>")
+	else
+		var/msg = pick( \
+			"<span class='warning'>A spike of pain jolts your [BP.name] as you bump [O] inside.</span>", \
+			"<span class='warning'>Your movement jostles [O] in your [BP.name] painfully.</span>", \
+			"<span class='warning'>Your movement jostles [O] in your [BP.name] painfully.</span>")
+		custom_pain(msg,40,affecting = BP)
+
+	BP.take_damage(rand(1,3), 0, 0)
+	if(!(BP.status & ORGAN_ROBOT)) // && (should_have_organ(BP_HEART))) //There is no blood in protheses.
+		BP.status |= ORGAN_BLEEDING
+		src.adjustToxLoss(rand(1,3))
 
 /*
 This function restores the subjects blood to max.
