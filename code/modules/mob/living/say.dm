@@ -144,15 +144,12 @@ var/list/department_radio_keys = list(
 		speech_sound = null	//so we don't play it twice.
 
 	//make sure the air can transmit speech
-	var/datum/gas_mixture/environment = T.return_air()
-	if(environment)
-		var/pressure = environment.return_pressure()
-		if(pressure < SOUND_MINIMUM_PRESSURE)
-			italics = 1
-			message_range = 1
+	if(is_below_sound_pressure(T))
+		italics = 1
+		message_range = 1
 
-			if (speech_sound)
-				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
+		if (speech_sound)
+			sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
 
 	var/list/listening = list()
 	var/list/listening_obj = list()

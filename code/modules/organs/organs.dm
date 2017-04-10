@@ -6,18 +6,30 @@
 
 /obj/item/organ
 	name = "organ"
-	var/mob/living/carbon/owner = null
-	var/datum/species/species = null
-	var/damage = 0 // amount of damage to the organ
-	var/max_damage // Damage cap
-	var/min_bruised_damage = 10
-	var/min_broken_damage = 30
+	icon = 'icons/obj/surgery.dmi'
+	var/dead_icon // Icon to use when the organ has died.
+	germ_level = 0 // INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
+
+	// Strings.
 	var/organ_tag = null // Unique identifier
 	var/parent_bodypart = null
-	var/robotic = 0 //For being a robot
-	var/status = 0
-	var/vital = 0
-	germ_level = 0 // INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
+
+	// Status tracking.
+	var/status = 0 // Various status flags
+	var/vital = FALSE
+	var/damage = 0 // Current damage to the organ
+	var/robotic = 0
+
+	// Reference data.
+	var/mob/living/carbon/owner = null // Current mob owning the organ.
+	var/datum/dna/dna = null // Original DNA.
+	var/datum/species/species = null // Original species.
+
+	// Damage vars.
+	var/min_bruised_damage = 10 // Damage before considered bruised
+	var/min_broken_damage = 30 // Damage before becoming broken
+	var/max_damage // Damage cap
+	var/rejecting // Is this organ already being rejected?
 
 
 /obj/item/organ/New(loc, mob/living/carbon/C)
@@ -27,7 +39,14 @@
 	if(istype(C))
 		owner = C
 		species = owner.species
-		//w_class = max(w_class + mob_size_difference(owner.mob_size, MOB_MEDIUM), 1) //smaller mobs have smaller organs.
+		w_class = max(w_class + mob_size_difference(owner.mob_size, MOB_MEDIUM), 1) //smaller mobs have smaller organs.
+
+		if(owner.dna)
+			dna = owner.dna.Clone()
+			species = all_species[dna.species]
+		else
+			species = all_species[S_HUMAN]
+			CRASH("[src] spawned in [owner] without a proper DNA.") // log_debug()
 
 		owner.organs += src
 		owner.organs_by_name[organ_tag] = src
@@ -39,6 +58,11 @@
 		BP.organs += src
 		if(BP.species.flags[IS_SYNTHETIC])
 			src.mechanize()
+
+	if(dna)
+		if(!blood_DNA)
+			blood_DNA = list()
+		blood_DNA[dna.unique_enzymes] = dna.b_type
 
 	create_reagents(5 * (w_class-1)**2)
 	reagents.add_reagent("nutriment", reagents.maximum_volume) // Bay12: protein
@@ -54,10 +78,10 @@
 		owner.organs_by_name[organ_tag] = null
 		owner.organs_by_name -= organ_tag
 		owner.organs -= src
-
-		species = null
-
 		owner = null
+
+	dna = null
+	species = null
 
 	return ..()
 
@@ -77,7 +101,7 @@
 		forceMove(owner.loc) // dropInto(owner.loc)
 
 	START_PROCESSING(SSobj, src)
-	//rejecting = null
+	rejecting = null
 	if(robotic < ORGAN_ROBOT)
 		var/datum/reagent/blood/organ_blood = locate(/datum/reagent/blood) in reagents.reagent_list //TODO fix this and all other occurences of locate(/datum/reagent/blood) horror
 		if(!organ_blood || !organ_blood.data["blood_DNA"])
@@ -122,12 +146,33 @@
 	else if(owner && owner.bodytemperature >= 170)	//cryo stops germs from moving and doing their bad stuffs
 		//** Handle antibiotics and curing infections
 		handle_antibiotics()
-		//handle_rejection() <- NOTE: blood rejection related
+		handle_rejection()
 		handle_germ_effects()
 
 	//check if we've hit max_damage
 	if(damage >= max_damage)
 		die()
+
+/obj/item/organ/proc/handle_rejection()
+	// Process unsuitable transplants. TODO: consider some kind of
+	// immunosuppressant that changes transplant data to make it match.
+	if(dna)
+		if(!rejecting)
+			if(blood_incompatible(dna.b_type, owner.dna.b_type))
+				rejecting = 1
+		else
+			rejecting++ //Rejection severity increases over time.
+			if(rejecting % 10 == 0) //Only fire every ten rejection ticks.
+				switch(rejecting)
+					if(1 to 50)
+						germ_level++
+					if(51 to 200)
+						germ_level += rand(1,2)
+					if(201 to 500)
+						germ_level += rand(2,3)
+					if(501 to INFINITY)
+						germ_level += rand(3,5)
+						owner.reagents.add_reagent("toxin", rand(1,2))
 
 /obj/item/organ/proc/die()
 	if(robotic >= 2)
@@ -222,6 +267,15 @@
 	min_bruised_damage = 15
 	min_broken_damage = 35
 
+/mob/living/carbon/proc/recheck_bad_external_organs()
+	var/damage_this_tick = getToxLoss()
+	for(var/obj/item/bodypart/BP in bodyparts)
+		damage_this_tick += BP.burn_dam + BP.brute_dam
+
+	if(damage_this_tick > last_dam)
+		. = TRUE
+	last_dam = damage_this_tick
+
 //Germs
 /obj/item/organ/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
@@ -237,17 +291,14 @@
 		germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
 
 // Takes care of organ related updates, such as broken and missing limbs
-/mob/living/carbon/proc/handle_organs() // TODO check Bay12
-	number_wounds = 0
-	var/force_process = 0
-	var/damage_this_tick = getBruteLoss() + getFireLoss() + getToxLoss()
-	if(damage_this_tick > last_dam)
-		force_process = 1
-	last_dam = damage_this_tick
+/mob/living/carbon/proc/handle_organs()
+
+	var/force_process = recheck_bad_external_organs()
+
 	if(force_process)
 		bad_bodyparts.Cut()
-		for(var/obj/item/bodypart/BP in bodyparts)
-			bad_bodyparts += BP
+		for(var/obj/item/bodypart/bad in bodyparts)
+			bad_bodyparts += bad
 
 	//processing internal organs is pretty cheap, do that first.
 	for(var/obj/item/organ/IO in organs)
@@ -267,7 +318,6 @@
 			continue
 		else
 			BP.process()
-			number_wounds += BP.number_wounds
 
 			if (!lying && !buckled && world.time - l_move_time < 15)
 			//Moving around with fractured ribs won't do you any good
@@ -276,8 +326,6 @@
 						custom_pain("Pain jolts through your broken [BP.encased ? BP.encased : BP.name], staggering you!", 50, BP = BP)
 						drop_item(loc)
 						Stun(2)
-					var/obj/item/organ/IO = pick(BP.organs)
-					IO.take_damage(rand(3,5))
 
 				//Moving makes open wounds get infected much faster
 				if (BP.wounds.len)
@@ -422,8 +470,154 @@
 
 /obj/item/organ/heart
 	name = "heart"
+	icon_state = "heart-on"
+	dead_icon = "heart-off"
 	organ_tag = BP_HEART
 	parent_bodypart = BP_CHEST
+	var/pulse = PULSE_NORM
+	var/heartbeat = 0
+	var/beat_sound = 'sound/effects/singlebeat.ogg'
+	var/tmp/next_blood_squirt = 0
+
+/obj/item/organ/heart/die()
+	if(dead_icon)
+		icon_state = dead_icon
+	..()
+
+/obj/item/organ/heart/process()
+	if(owner)
+		handle_pulse()
+		if(pulse)
+			handle_heartbeat()
+		handle_blood()
+	..()
+
+/obj/item/organ/heart/proc/handle_pulse()
+
+	if(owner.stat == DEAD || robotic >= 2)
+		pulse = PULSE_NONE	//that's it, you're dead (or your metal heart is), nothing can influence your pulse
+		return
+
+	if(owner.life_tick % 5)
+		return // update pulse every 5 life ticks (~1 tick/sec, depending on server load)
+
+	pulse = PULSE_NORM
+
+	if(species && species.flags[NO_BLOOD] || !owner.vessel)
+		pulse = PULSE_NONE
+		return
+
+	pulse = PULSE_NORM
+
+	if(round(owner.vessel.get_reagent_amount("blood")) <= BLOOD_VOLUME_BAD)	//how much blood do we have
+		pulse = PULSE_THREADY	//not enough :(
+
+	if(owner.status_flags & FAKEDEATH)
+		pulse = PULSE_NONE		//pretend that we're dead. unlike actual death, can be inflienced by meds
+
+	//handles different chems' influence on pulse
+	for(var/datum/reagent/R in owner.reagents.reagent_list)
+		if(R.id in bradycardics)
+			if(pulse <= PULSE_THREADY && pulse >= PULSE_NORM)
+				pulse--
+		if(R.id in tachycardics)
+			if(pulse <= PULSE_FAST && pulse >= PULSE_NONE)
+				pulse++
+		if(R.id in heartstopper) //To avoid using fakedeath
+			pulse = PULSE_NONE
+		if(R.id in cheartstopper) //Conditional heart-stoppage
+			if(R.volume >= R.overdose)
+				pulse = PULSE_NONE
+
+/obj/item/organ/heart/proc/handle_heartbeat()
+	if(pulse >= PULSE_2FAST || owner.shock_stage >= 10 || is_below_sound_pressure(get_turf(owner)))
+		//PULSE_THREADY - maximum value for pulse, currently it 5.
+		//High pulse value corresponds to a fast rate of heartbeat.
+		//Divided by 2, otherwise it is too slow.
+		var/rate = (PULSE_THREADY - pulse)/2
+
+		if(heartbeat >= rate)
+			heartbeat = 0
+			owner << sound(beat_sound, 0, 0, 0, 50)
+		else
+			heartbeat++
+
+/obj/item/organ/heart/proc/handle_blood()
+
+	if(!owner)
+		return
+
+	if(species && species.flags[NO_BLOOD])
+		return
+
+	//Dead or cryosleep people do not pump the blood.
+	if(!owner || owner.in_stasis || owner.stat == DEAD || owner.bodytemperature < 170)
+		return
+
+	if(pulse != PULSE_NONE || robotic >= 2)
+		//Bleeding out
+		var/blood_max = 0
+		var/list/do_spray = list()
+		for(var/obj/item/bodypart/BP in owner.bodyparts)
+
+			if(BP.status & ORGAN_ROBOT)
+				continue
+
+			var/open_wound
+			if(BP.status & ORGAN_BLEEDING)
+
+				if (BP.open)
+					blood_max += 2  //Yer stomach is cut open
+
+				for(var/datum/wound/W in BP.wounds)
+
+					if(!open_wound && (W.damage_type == CUT || W.damage_type == PIERCE) && W.damage && !W.is_treated())
+						open_wound = TRUE
+
+					if(W.bleeding())
+						if(BP.applied_pressure)
+							if(ishuman(BP.applied_pressure))
+								var/mob/living/carbon/human/H = BP.applied_pressure
+								H.bloody_hands(src, 0)
+							//somehow you can apply pressure to every wound on the organ at the same time
+							//you're basically forced to do nothing at all, so let's make it pretty effective
+							var/min_eff_damage = max(0, W.damage - 10) / 6 //still want a little bit to drip out, for effect
+							blood_max += max(min_eff_damage, W.damage - 30) / 40
+						else
+							blood_max += W.damage / 40
+
+			if(BP.status & ORGAN_ARTERY_CUT)
+				var/bleed_amount = Floor((owner.vessel.total_volume / (BP.applied_pressure ? 400 : 250))*BP.arterial_bleed_severity)
+				if(bleed_amount)
+					if(open_wound)
+						blood_max += bleed_amount
+						do_spray += "the [BP.artery_name] in \the [owner]'s [BP.name]"
+					else
+						owner.vessel.remove_reagent("blood", bleed_amount)
+
+		switch(pulse)
+			if(PULSE_SLOW)
+				blood_max *= 0.8
+			if(PULSE_FAST)
+				blood_max *= 1.25
+			if(PULSE_2FAST, PULSE_THREADY)
+				blood_max *= 1.5
+
+		if(reagents.has_reagent("inaprovaline"))
+			blood_max *= 0.8
+
+		if(world.time >= next_blood_squirt && istype(owner.loc, /turf) && do_spray.len)
+			owner.visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
+			// It becomes very spammy otherwise. Arterial bleeding will still happen outside of this block, just not the squirt effect.
+			next_blood_squirt = world.time + 100
+			var/turf/sprayloc = get_turf(owner)
+			blood_max -= owner.drip(ceil(blood_max/3), sprayloc)
+			if(blood_max > 0)
+				blood_max -= owner.blood_squirt(blood_max, sprayloc)
+				if(blood_max > 0)
+					owner.drip(blood_max, get_turf(owner))
+		else
+			owner.drip(blood_max)
 
 
 /obj/item/organ/lungs

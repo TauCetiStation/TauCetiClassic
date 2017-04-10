@@ -398,6 +398,8 @@
 								infection = "Acute Infection++:"
 							if (INFECTION_LEVEL_THREE to INFINITY)
 								infection = "Necrotic:"
+						if(IO.rejecting)
+							infection += "(being rejected)"
 
 						dat += "<tr>"
 						dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"

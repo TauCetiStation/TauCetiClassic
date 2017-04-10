@@ -94,7 +94,7 @@
 
 	if(istype(C))
 		owner = C
-		//w_class = max(w_class + mob_size_difference(owner.mob_size, MOB_MEDIUM), 1) //smaller mobs have smaller bodyparts.
+		w_class = max(w_class + mob_size_difference(owner.mob_size, MOB_MEDIUM), 1) //smaller mobs have smaller bodyparts.
 
 		owner.bodyparts += src
 		owner.bodyparts_by_name[body_zone] = src
@@ -164,7 +164,6 @@
 		forceMove(owner.loc)
 
 	START_PROCESSING(SSobj, src)
-	//rejecting = null
 	if(is_robotic)
 		var/datum/reagent/blood/organ_blood = locate(/datum/reagent/blood) in reagents.reagent_list //TODO fix this and all other occurences of locate(/datum/reagent/blood) horror
 		if(!organ_blood || !organ_blood.data["blood_DNA"])

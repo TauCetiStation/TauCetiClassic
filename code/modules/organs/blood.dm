@@ -32,156 +32,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			B.data = list(	"donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.b_type,	\
 							"resistances"=null,"trace_chem"=null, "virus2" = null, "antibodies" = null)
 
-// Takes care blood loss and regeneration
-/mob/living/carbon/var/tmp/next_blood_squirt = 0 // until this moved to heart...
-/mob/living/carbon/proc/handle_blood()
-
-	if(species && species.flags[NO_BLOOD])
-		return
-
-	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
-
-		var/blood_volume = round(vessel.get_reagent_amount("blood"))
-
-		//Blood regeneration if there is some space
-		if(blood_volume < 560 && blood_volume)
-			var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
-			if(B) // Make sure there's some blood at all
-				if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
-					for(var/datum/reagent/blood/D in vessel.reagent_list)
-						if(D.data["donor"] == src)
-							B = D
-							break
-
-				B.volume += 0.1 // regenerate blood VERY slowly
-				if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
-					B.volume += 0.4
-					reagents.remove_reagent("nutriment", 0.1)
-				if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
-					B.volume += 0.8
-					reagents.remove_reagent("iron", 0.1)
-
-		// Damaged heart virtually reduces the blood volume, as the blood isn't
-		// being pumped properly anymore.
-		var/obj/item/organ/heart/heart = organs_by_name[BP_HEART]
-
-		if(heart.damage > 1 && heart.damage < heart.min_bruised_damage)
-			blood_volume *= 0.8
-		else if(heart.damage >= heart.min_bruised_damage && heart.damage < heart.min_broken_damage)
-			blood_volume *= 0.6
-		else if(heart.damage >= heart.min_broken_damage && heart.damage < INFINITY)
-			blood_volume *= 0.3
-
-		//Effects of bloodloss
-		switch(blood_volume)
-			if(BLOOD_VOLUME_SAFE to 10000)
-				if(pale)
-					pale = 0
-					update_body()
-			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-				if(!pale)
-					pale = 1
-					update_body()
-					var/word = pick("dizzy","woosey","faint")
-					to_chat(src, "\red You feel [word]")
-				if(prob(1))
-					var/word = pick("dizzy","woosey","faint")
-					to_chat(src, "\red You feel [word]")
-				if(oxyloss < 20)
-					oxyloss += 3
-			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-				if(!pale)
-					pale = 1
-					update_body()
-				eye_blurry += 6
-				if(oxyloss < 50)
-					oxyloss += 10
-				oxyloss += 1
-				if(prob(15))
-					Paralyse(rand(1,3))
-					var/word = pick("dizzy","woosey","faint")
-					to_chat(src, "\red You feel extremely [word]")
-			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-				oxyloss += 5
-				toxloss += 3
-				if(prob(15))
-					var/word = pick("dizzy","woosey","faint")
-					to_chat(src, "\red You feel extremely [word]")
-			if(0 to BLOOD_VOLUME_SURVIVE)
-				// There currently is a strange bug here. If the mob is not below -100 health
-				// when death() is called, apparently they will be just fine, and this way it'll
-				// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
-				toxloss += 300 // just to be safe!
-				death()
-
-		// Without enough blood you slowly go hungry.
-		if(blood_volume < BLOOD_VOLUME_SAFE)
-			if(nutrition >= 300)
-				nutrition -= 10
-			else if(nutrition >= 200)
-				nutrition -= 3
-
-		//Bleeding out
-		var/blood_max = 0
-		var/list/do_spray = list()
-		for(var/obj/item/bodypart/BP in bodyparts)
-			if(BP.status & ORGAN_ROBOT)
-				continue
-
-			var/open_wound
-			if(BP.status & ORGAN_BLEEDING)
-				if (BP.open)
-					blood_max += 2  //Yer stomach is cut open
-
-				for(var/datum/wound/W in BP.wounds)
-					if(!open_wound && (W.damage_type == CUT || W.damage_type == PIERCE) && W.damage && !W.is_treated())
-						open_wound = TRUE
-
-					if(W.bleeding())
-						if(BP.applied_pressure)
-							if(ishuman(BP.applied_pressure))
-								var/mob/living/carbon/human/H = BP.applied_pressure
-								H.bloody_hands(src, 0)
-							//somehow you can apply pressure to every wound on the organ at the same time
-							//you're basically forced to do nothing at all, so let's make it pretty effective
-							var/min_eff_damage = max(0, W.damage - 10) / 6 //still want a little bit to drip out, for effect
-							blood_max += max(min_eff_damage, W.damage - 30) / 40
-						else
-							blood_max += W.damage / 40
-
-			if(BP.status & ORGAN_ARTERY_CUT)
-				var/bleed_amount = Floor((vessel.total_volume / (BP.applied_pressure ? 400 : 250))*BP.arterial_bleed_severity)
-				if(bleed_amount)
-					if(open_wound)
-						blood_max += bleed_amount
-						do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
-					else
-						src.vessel.remove_reagent("blood", bleed_amount)
-
-		switch(pulse)
-			if(PULSE_SLOW)
-				blood_max *= 0.8
-			if(PULSE_FAST)
-				blood_max *= 1.25
-			if(PULSE_2FAST, PULSE_THREADY)
-				blood_max *= 1.5
-
-		if(reagents.has_reagent("inaprovaline"))
-			blood_max *= 0.8
-
-		if(world.time >= next_blood_squirt && isturf(src.loc) && do_spray.len)
-			src.visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
-			// It becomes very spammy otherwise. Arterial bleeding will still happen outside of this block, just not the squirt effect.
-			next_blood_squirt = world.time + 100
-			var/turf/sprayloc = get_turf(src)
-			blood_max -= src.drip(ceil(blood_max / 3), sprayloc)
-			if(blood_max > 0)
-				blood_max -= src.blood_squirt(blood_max, sprayloc)
-				if(blood_max > 0)
-					src.drip(blood_max, get_turf(src))
-		else
-			drip(blood_max)
-
 //Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/proc/drip(amt, tar = src, ddir)
 	if(remove_blood(amt))
@@ -408,19 +258,26 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	return res
 
 proc/blood_incompatible(donor,receiver)
-	if(!donor || !receiver) return 0
-	var
-		donor_antigen = copytext(donor,1,lentext(donor))
-		receiver_antigen = copytext(receiver,1,lentext(receiver))
-		donor_rh = (findtext(donor,"+")>0)
-		receiver_rh = (findtext(receiver,"+")>0)
-	if(donor_rh && !receiver_rh) return 1
+	if(!donor || !receiver)
+		return FALSE
+
+	var/donor_antigen = copytext(donor,1,lentext(donor))
+	var/receiver_antigen = copytext(receiver,1,lentext(receiver))
+	var/donor_rh = (findtext(donor,"+")>0)
+	var/receiver_rh = (findtext(receiver,"+")>0)
+
+	if(donor_rh && !receiver_rh)
+		return TRUE
+
 	switch(receiver_antigen)
 		if("A")
-			if(donor_antigen != "A" && donor_antigen != "O") return 1
+			if(donor_antigen != "A" && donor_antigen != "O")
+				return TRUE
 		if("B")
-			if(donor_antigen != "B" && donor_antigen != "O") return 1
+			if(donor_antigen != "B" && donor_antigen != "O")
+				return TRUE
 		if("O")
-			if(donor_antigen != "O") return 1
+			if(donor_antigen != "O")
+				return TRUE
 		//AB is a universal receiver.
-	return 0
+	return FALSE

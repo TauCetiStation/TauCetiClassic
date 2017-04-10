@@ -1029,30 +1029,29 @@
 	set src in view(1)
 	var/self = 0
 
-	if(usr.stat == 1 || usr.restrained() || !isliving(usr)) return
+	if(usr.stat || usr.restrained() || !isliving(usr)) return
 
 	if(usr == src)
 		self = 1
 	if(!self)
-		usr.visible_message("\blue [usr] kneels down, puts \his hand on [src]'s wrist and begins counting their pulse.",\
+		usr.visible_message("<span class='notice'>[usr] kneels down, puts \his hand on [src]'s wrist and begins counting their pulse.</span>",\
 		"You begin counting [src]'s pulse")
 	else
-		usr.visible_message("\blue [usr] begins counting their pulse.",\
+		usr.visible_message("<span class='notice'>[usr] begins counting their pulse.</span>",\
 		"You begin counting your pulse.")
 
-	if(src.pulse)
-		to_chat(usr, "\blue [self ? "You have a" : "[src] has a"] pulse! Counting...")
+	if(pulse())
+		to_chat(usr, "<span class='notice'>[self ? "You have a" : "[src] has a"] pulse! Counting...</span>")
 	else
-		to_chat(usr, "\red [src] has no pulse!")//it is REALLY UNLIKELY that a dead person would check his own pulse
+		to_chat(usr, "<span class='danger'>[src] has no pulse!</span>")//it is REALLY UNLIKELY that a dead person would check his own pulse
 		return
 
-	to_chat(usr, "Don't move until counting is finished.")
-	var/time = world.time
-	sleep(60)
-	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
-		to_chat(usr, "You moved while counting. Try again.")
+	to_chat(usr, "You must[self ? "" : " both"] remain still until counting is finished.")
+	if(do_mob(usr, src, 60))
+		var/message = "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>"
+		to_chat(usr, message)
 	else
-		to_chat(usr, "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].")
+		to_chat(usr, "<span class='warning'>You failed to check the pulse. Try again.</span>")
 
 /mob/living/carbon/human/proc/bloody_doodle()
 	set category = "IC"

@@ -25,8 +25,6 @@
 	//Active emote/pose
 	var/pose = null
 
-	var/pulse = PULSE_NORM	//current pulse level
-
 	var/pulling_punches // Are you trying not to hurt your opponent?
 	var/stance_damage = 0 // Whether this mob's ability to stand has been affected
 

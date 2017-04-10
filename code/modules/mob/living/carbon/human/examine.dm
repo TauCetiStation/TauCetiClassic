@@ -225,7 +225,7 @@
 				O.show_message("[user] checks [src]'s pulse.", 1)
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
-				if(pulse == PULSE_NONE)
+				if(pulse() == PULSE_NONE)
 					to_chat(user, "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>")
 				else
 					to_chat(user, "<span class='deadsay'>[t_He] has a pulse!</span>")

@@ -82,8 +82,6 @@
 
 		handle_medical_side_effects()
 
-		handle_heart_beat()
-
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000)) // We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return // We go ahead and process them 5 times for HUD images and other stuff though.
 
@@ -108,8 +106,6 @@
 	name = get_visible_name()
 
 	handle_regular_hud_updates()
-
-	pulse = handle_pulse()
 
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
@@ -1109,7 +1105,6 @@
 		if(!in_stasis)
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_organs()	//Optimized.
-			handle_blood()
 
 		if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
 			death()
@@ -1661,56 +1656,6 @@
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && mind.changeling)
 		mind.changeling.regenerate()
-
-/mob/living/carbon/proc/handle_heart_beat()
-
-	if(pulse == PULSE_NONE)
-		return
-
-	if(pulse == PULSE_2FAST || shock_stage >= 10 || istype(get_turf(src), /turf/space))
-
-		var/temp = (5 - pulse)/2
-
-		if(heart_beat >= temp)
-			heart_beat = 0
-			src << sound('sound/effects/singlebeat.ogg',0,0,0,50)
-		else if(temp != 0)
-			heart_beat++
-
-/mob/living/carbon/proc/handle_pulse()
-
-	if(life_tick % 5)
-		return pulse	//update pulse every 5 life ticks (~1 tick/sec, depending on server load)
-
-	if(species && species.flags[NO_BLOOD])
-		return PULSE_NONE //No blood, no pulse.
-
-	if(stat == DEAD || !vessel)
-		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse
-
-	var/temp = PULSE_NORM
-
-	if(round(vessel.get_reagent_amount("blood")) <= BLOOD_VOLUME_BAD)	//how much blood do we have
-		temp = PULSE_THREADY	//not enough :(
-
-	if(status_flags & FAKEDEATH)
-		temp = PULSE_NONE		//pretend that we're dead. unlike actual death, can be inflienced by meds
-
-	//handles different chems' influence on pulse
-	for(var/datum/reagent/R in reagents.reagent_list)
-		if(R.id in bradycardics)
-			if(temp <= PULSE_THREADY && temp >= PULSE_NORM)
-				temp--
-		if(R.id in tachycardics)
-			if(temp <= PULSE_FAST && temp >= PULSE_NONE)
-				temp++
-		if(R.id in heartstopper) //To avoid using fakedeath
-			temp = PULSE_NONE
-		if(R.id in cheartstopper) //Conditional heart-stoppage
-			if(R.volume >= R.overdose)
-				temp = PULSE_NONE
-
-	return temp
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes

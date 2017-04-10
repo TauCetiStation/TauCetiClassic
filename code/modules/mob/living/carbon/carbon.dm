@@ -1,4 +1,9 @@
 /mob/living/carbon/New(loc, new_species = null, list/organ_data)
+
+	if(!dna)
+		dna = new /datum/dna(null)
+		// Species name is handled by set_species()
+
 	if(!species)
 		set_species(new_species, null, 1, organ_data)
 
@@ -6,9 +11,6 @@
 	reagents = R
 	R.my_atom = src
 
-	if(!dna && species)
-		dna = new /datum/dna(null)
-		dna.species = species.name
 
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
@@ -482,25 +484,29 @@
 
 //generates realistic-ish pulse output based on preset levels
 /mob/living/carbon/proc/get_pulse(method)	//method 0 is for hands, 1 is for machines, more accurate
-	var/temp = 0								//see setup.dm:694
-	switch(src.pulse)
+	var/temp = 0
+	switch(pulse())
 		if(PULSE_NONE)
 			return "0"
 		if(PULSE_SLOW)
 			temp = rand(40, 60)
-			return num2text(method ? temp : temp + rand(-10, 10))
 		if(PULSE_NORM)
 			temp = rand(60, 90)
-			return num2text(method ? temp : temp + rand(-10, 10))
 		if(PULSE_FAST)
 			temp = rand(90, 120)
-			return num2text(method ? temp : temp + rand(-10, 10))
 		if(PULSE_2FAST)
 			temp = rand(120, 160)
-			return num2text(method ? temp : temp + rand(-10, 10))
 		if(PULSE_THREADY)
 			return method ? ">250" : "extremely weak and fast, patient's artery feels like a thread"
+	return "[method ? temp : temp + rand(-10, 10)]"
 //			output for machines^	^^^^^^^output for people^^^^^^^^^
+
+/mob/living/carbon/proc/pulse()
+	var/obj/item/organ/heart/heart = organs_by_name[BP_HEART]
+	if(!heart)
+		return PULSE_NONE
+	else
+		return heart.pulse
 
 /mob/living/carbon/verb/mob_sleep()
 	set name = "Sleep"

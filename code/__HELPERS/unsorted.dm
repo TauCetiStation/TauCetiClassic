@@ -1622,3 +1622,10 @@ var/mob/dview/dview_mob = new
 	else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
 		return TRUE
 	return FALSE
+
+/proc/is_below_sound_pressure(turf/T)
+	var/datum/gas_mixture/environment = T ? T.return_air() : null
+	var/pressure =  environment ? environment.return_pressure() : 0
+	if(pressure < SOUND_MINIMUM_PRESSURE)
+		return TRUE
+	return FALSE
