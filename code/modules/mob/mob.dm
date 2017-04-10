@@ -200,24 +200,12 @@
 
 
 /mob/proc/show_inv(mob/user)
-	user.set_machine(src)
-	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR>
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand&&!(l_hand.flags&ABSTRACT)) 	? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand&&!(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
-	<BR>"}
-	user << browse(dat, text("window=mob[];size=325x500", name))
-	onclose(user, "mob[name]")
 	return
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
+	return
+
+/mob/living/carbon/ret_grab(obj/effect/list_container/mobl/L, flag)
 	if(!(istype(l_hand, /obj/item/weapon/grab) || istype(r_hand, /obj/item/weapon/grab)))
 		if(!L)
 			return null
@@ -249,7 +237,6 @@
 				return temp
 			else
 				return L.container
-	return
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -260,15 +247,17 @@
 		return
 
 	if(hand)
-		var/obj/item/W = l_hand
+		var/obj/item/W = get_active_hand()
 		if(W)
 			W.attack_self(src)
-			update_inv_l_hand()
+			update_inv_l_hand() // until appropriate helpers come.
+			update_inv_r_hand()
 	else
-		var/obj/item/W = r_hand
+		var/obj/item/W = get_inactive_hand()
 		if(W)
 			W.attack_self(src)
 			update_inv_r_hand()
+			update_inv_l_hand()
 	if(next_move < world.time)
 		next_move = world.time + 2
 	return
@@ -514,23 +503,28 @@
 
 
 /mob/proc/pull_damage()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if((H.health - H.halloss) <= config.health_threshold_softcrit)
-			for(var/name in H.bodyparts_by_name)
-				var/obj/item/bodypart/BP = H.bodyparts_by_name[name]
-				if(H.lying)
-					if((((BP.status & ORGAN_BROKEN) && !(BP.status & ORGAN_SPLINTED)) || (BP.status & ORGAN_BLEEDING)) && ((H.getBruteLoss() + H.getFireLoss()) >= 100))
-						return 1
-						break
-		return 0
 
-/mob/MouseDrop(mob/M as mob)
+/mob/living/carbon/pull_damage()
+	var/mob/living/carbon/C = src
+	if((C.health - C.getHalLoss()) <= config.health_threshold_softcrit)
+		for(var/name in C.bodyparts_by_name)
+			var/obj/item/bodypart/BP = C.bodyparts_by_name[name]
+			if(C.lying)
+				if((((BP.status & ORGAN_BROKEN) && !(BP.status & ORGAN_SPLINTED)) || (BP.status & ORGAN_BLEEDING)) && ((C.getBruteLoss() + C.getFireLoss()) >= 100))
+					return 1
+					break
+	return 0
+
+/mob/MouseDrop(mob/M)
 	..()
-	if(M != usr) return
-	if(usr == src) return
-	if(!Adjacent(usr)) return
-	if(istype(M, /mob/living/silicon/ai)) return
+	if(M != usr)
+		return
+	if(usr == src)
+		return
+	if(!Adjacent(usr))
+		return
+	if(istype(M, /mob/living/silicon/ai))
+		return
 	show_inv(usr)
 
 //this and stop_pulling really ought to be /mob/living procs
@@ -597,7 +591,7 @@
 	return istype(src, /mob/living/silicon) || get_species() == S_IPC
 
 /mob/proc/is_ready()
-	return client && !!mind
+	return client && mind
 
 /mob/proc/get_gender()
 	return gender
@@ -809,10 +803,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(lying)
 		density = 0
-		if((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove) )
-			if(!isalien(src))
-				drop_l_hand()
-				drop_r_hand()
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			if((C.l_hand && C.l_hand.canremove) || (C.r_hand && C.r_hand.canremove) )
+				if(!isalien(src))
+					drop_l_hand()
+					drop_r_hand()
 	else
 		density = 1
 

@@ -370,7 +370,7 @@
 //Used to attack a joint through grabbing
 /mob/living/carbon/human/proc/grab_joint(mob/living/user, def_zone)
 	var/has_grab = 0
-	for(var/obj/item/weapon/grab/G in list(user.l_hand, user.r_hand))
+	for(var/obj/item/weapon/grab/G in list(user.get_active_hand(), user.get_inactive_hand()))
 		if(G.affecting == src && G.state == GRAB_NECK)
 			has_grab = 1
 			break

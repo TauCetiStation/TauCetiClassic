@@ -247,7 +247,7 @@
 	item_state = "purplecomb"
 
 	attack_self(mob/user)
-		if(user.r_hand == src || user.l_hand == src)
+		if(user.get_active_hand() == src || user.get_inactive_hand() == src)
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
 		return

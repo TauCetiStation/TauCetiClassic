@@ -86,9 +86,9 @@
 	if(!(M.status_flags & CANPUSH) )
 		return 1
 	//anti-riot equipment is also anti-push
-	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
+	if(istype(M.get_active_hand(), /obj/item/weapon/shield/riot))
 		return 1
-	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
+	if(istype(M.get_inactive_hand(), /obj/item/weapon/shield/riot))
 		return 1
 
 //Called when we bump onto an obj
@@ -968,6 +968,8 @@
 	var/final_pixel_y = get_standard_pixel_y_offset(lying_current)
 	..(A, final_pixel_y)
 
+/mob/living/carbon/do_attack_animation(atom/A)
+	..()
 	//Show an image of the wielded weapon over the person who got dunked.
 	var/image/I
 	if(hand)

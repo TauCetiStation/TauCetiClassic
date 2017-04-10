@@ -112,7 +112,7 @@ This is chestburster mechanic for damaging
 	flags = NOBLUDGEON | ABSTRACT
 	var/obj/screen/larva_bite/hud = null
 	var/mob/affecting = null
-	var/mob/chestburster = null
+	var/mob/living/carbon/chestburster = null
 	var/state = null
 
 	var/last_bite = 0
@@ -530,7 +530,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	flags = NOBLUDGEON | ABSTRACT
 	var/obj/screen/fh_grab/hud = null
 	var/mob/affecting = null
-	var/mob/assailant = null
+	var/mob/living/carbon/assailant = null
 	var/state = GRAB_PASSIVE
 
 	var/last_upgrade = 0

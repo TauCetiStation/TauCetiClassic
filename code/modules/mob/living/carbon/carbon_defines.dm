@@ -66,6 +66,9 @@
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
+	var/obj/item/l_hand = null//Living
+	var/obj/item/r_hand = null//Living
+
 	// Ian
 	var/obj/item/neck
 	var/obj/item/mouth

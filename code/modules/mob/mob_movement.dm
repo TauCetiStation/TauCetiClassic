@@ -156,8 +156,7 @@
 					if(s.zoom)
 						s.zoom()
 
-	if(Process_Grab())
-		return
+	mob.Process_Grab()
 
 	if(istype(mob.buckled, /obj/vehicle))
 		//manually set move_delay for vehicles so we don't inherit any mob movement penalties

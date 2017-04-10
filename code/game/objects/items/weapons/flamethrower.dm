@@ -40,7 +40,7 @@
 	var/turf/location = loc
 	if(istype(location, /mob/))
 		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
+		if(M.get_active_hand() == src || M.get_inactive_hand() == src)
 			location = M.loc
 	if(isturf(location)) //start a fire if possible
 		location.hotspot_expose(700, 2)

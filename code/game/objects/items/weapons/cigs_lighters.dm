@@ -409,7 +409,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		icon_state = icon_off
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
-	if(user.r_hand == src || user.l_hand == src)
+	if(user.get_active_hand() == src || user.get_inactive_hand() == src)
 		if(!lit)
 			lit = 1
 			icon_state = icon_on
@@ -423,10 +423,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
 				else
 					to_chat(user, "<span class='warning'>You burn yourself while lighting the lighter.</span>")
-					if (user.l_hand == src)
-						user.apply_damage(2, BURN, BP_L_ARM)
-					else
-						user.apply_damage(2, BURN, BP_R_ARM)
+					var/burn_this_hand = pick(BP_L_ARM, BP_R_ARM) // until there will be appropriate proc.
+					user.apply_damage(2, BURN, burn_this_hand)
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
 			set_light(2)

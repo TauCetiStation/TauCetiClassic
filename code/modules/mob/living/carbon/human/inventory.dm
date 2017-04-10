@@ -841,7 +841,7 @@ It can still be worn/put on as normal.
 			if(ishuman(source))
 				var/mob/living/carbon/human/Striper = source
 				Strip = Striper.gloves
-			if(istype(Strip, /obj/item/clothing/gloves/black/strip) && (!source.l_hand || !source.r_hand))
+			if(istype(Strip, /obj/item/clothing/gloves/black/strip) && (!source.get_active_hand() || !source.get_inactive_hand()))
 				source.put_in_hands(W)
 			else
 				if(slot_to_process == slot_l_store) //pockets! Needs to process the other one too. Snowflake code, wooo! It's not like anyone will rewrite this anytime soon. If I'm wrong then... CONGRATULATIONS! ;)

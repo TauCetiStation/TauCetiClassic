@@ -74,24 +74,6 @@
 		return
 	..()
 
-/obj/item/weapon/watertank/MouseDrop(obj/over_object)
-	var/mob/H = src.loc
-	if(istype(H))
-		switch(over_object.name)
-			if("r_hand")
-				if(H.r_hand)
-					return
-				if(!H.unEquip(src))
-					return
-				H.put_in_r_hand(src)
-			if("l_hand")
-				if(H.l_hand)
-					return
-				if(!H.unEquip(src))
-					return
-				H.put_in_l_hand(src)
-	return
-
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
 		remove_noz()

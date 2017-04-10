@@ -505,7 +505,7 @@
 					M = null
 
 				if (M)
-					if (M.canmove && !M.r_hand && !M.restrained())
+					if (M.canmove && !M.get_active_hand() && !M.get_inactive_hand() && !M.restrained())
 						message = "<B>[src]</B> shakes hands with [M]."
 					else
 						message = "<B>[src]</B> holds out \his hand to [M]."

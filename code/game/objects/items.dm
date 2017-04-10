@@ -593,11 +593,8 @@
 	if(src.anchored) //Object isn't anchored
 		to_chat(usr, "\red You can't pick that up!")
 		return
-	if(!usr.hand && usr.r_hand) //Right hand is not full
-		to_chat(usr, "\red Your right hand is full.")
-		return
-	if(usr.hand && usr.l_hand) //Left hand is not full
-		to_chat(usr, "\red Your left hand is full.")
+	if(usr.get_active_hand() && usr.get_inactive_hand())
+		to_chat(usr, "\red Your hands are full.")
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf
 		to_chat(usr, "\red You can't pick that up!")

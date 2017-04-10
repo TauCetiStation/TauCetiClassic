@@ -133,7 +133,7 @@
 	if (!( locate(/obj/structure/table, src.loc) ))
 		to_chat(user, "\blue You MUST put the paper on a table!")
 	if (W.w_class < 4)
-		if ((istype(user.l_hand, /obj/item/weapon/wirecutters) || istype(user.r_hand, /obj/item/weapon/wirecutters)))
+		if ((istype(user.get_active_hand(), /obj/item/weapon/wirecutters) || istype(user.get_inactive_hand(), /obj/item/weapon/wirecutters)))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
 				to_chat(user, "\blue You need more paper!")

@@ -190,19 +190,9 @@
 		if(!R.use(1))
 			return
 		var/obj/item/weapon/flamethrower/F = new/obj/item/weapon/flamethrower(user.loc)
-		src.loc = F
+		user.drop_from_inventory(src)
 		F.weldtool = src
-		if (user.client)
-			user.client.screen -= src
-		if (user.r_hand == src)
-			user.remove_from_mob(src)
-		else
-			user.remove_from_mob(src)
 		src.master = F
-		src.layer = initial(src.layer)
-		user.remove_from_mob(src)
-		if (user.client)
-			user.client.screen -= src
 		src.loc = F
 		src.add_fingerprint(user)
 		return
@@ -246,7 +236,7 @@
 	var/turf/location = src.loc
 	if(istype(location, /mob/))
 		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
+		if(M.get_active_hand() == src || M.get_inactive_hand() == src)
 			location = get_turf(M)
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 5, 0, src)

@@ -239,13 +239,16 @@
 
 		if(istype(M, /mob/living))
 			var/mob/living/L = M
-			if(L.l_hand || L.r_hand)
-				if(L.l_hand) holding = "They are holding \a [L.l_hand]"
-				if(L.r_hand)
-					if(holding)
-						holding += " and \a [L.r_hand]"
-					else
-						holding = "They are holding \a [L.r_hand]"
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				if(C.l_hand || C.r_hand)
+					if(C.l_hand)
+						holding = "They are holding \a [C.l_hand]"
+					if(C.r_hand)
+						if(holding)
+							holding += " and \a [C.r_hand]"
+						else
+							holding = "They are holding \a [C.r_hand]"
 
 			if(!mob_detail)
 				mob_detail = "You can see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "

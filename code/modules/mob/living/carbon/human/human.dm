@@ -1125,7 +1125,7 @@
 	. = 1
 
 	if(!user)
-		target_zone = pick(BP_CHEST, BP_CHEST, BP_CHEST,"left leg","right leg","left arm", "right arm", BP_HEAD)
+		target_zone = pick(BP_CHEST, BP_CHEST, BP_CHEST, BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM, BP_HEAD)
 	else if(!target_zone)
 		target_zone = user.zone_sel.selecting
 

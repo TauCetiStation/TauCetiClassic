@@ -13,7 +13,7 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 
 /obj/item/weapon/gun/projectile/proc/silencer_attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
-		if(user.l_hand != src && user.r_hand != src)
+		if(user.get_active_hand() != src && user.get_inactive_hand() != src)
 			to_chat(user, "<span class='warning'>You'll need [src] in your hands to do that.</span>")
 			return
 		user.drop_item()
@@ -25,14 +25,11 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 		w_class = 3
 		I.loc = src
 		update_icon()
-		return
-	..()
 
 /obj/item/weapon/gun/projectile/proc/silencer_attack_hand(mob/user)
 	if(loc == user)
 		if(silenced)
-			if(user.l_hand != src && user.r_hand != src)
-				..()
+			if(user.get_active_hand() != src && user.get_inactive_hand() != src)
 				return
 			to_chat(user, "<span class='notice'>You unscrew [silenced] from [src].</span>")
 			user.put_in_hands(silenced)
@@ -41,5 +38,3 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 			silenced = 0
 			w_class = 2
 			update_icon()
-			return
-	..()

@@ -116,16 +116,22 @@ var/list/slot_equipment_priority = list( \
 
 //Returns the thing in our active hand
 /mob/proc/get_active_hand()
-	if(hand)	return l_hand
-	else		return r_hand
+	return
 
 //Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
+	return
+
+/mob/living/carbon/get_active_hand()
+	if(hand)	return l_hand
+	else		return r_hand
+
+/mob/living/carbon/get_inactive_hand()
 	if(hand)	return r_hand
 	else		return l_hand
 
 //Checks if thing in mob's hands
-/mob/living/carbon/human/proc/is_in_hands(typepath)
+/mob/living/carbon/proc/is_in_hands(typepath)
 	if(istype(l_hand,typepath))
 		return l_hand
 	if(istype(r_hand,typepath))
@@ -134,6 +140,13 @@ var/list/slot_equipment_priority = list( \
 
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/W)
+	return
+
+//Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
+/mob/proc/put_in_r_hand(obj/item/W)
+	return
+
+/mob/living/carbon/put_in_l_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))
 		return 0
 	if(!istype(W))
@@ -159,8 +172,7 @@ var/list/slot_equipment_priority = list( \
 		return 1
 	return 0
 
-//Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_r_hand(obj/item/W)
+/mob/living/carbon/put_in_r_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))
 		return 0
 	if(!istype(W))
@@ -188,11 +200,17 @@ var/list/slot_equipment_priority = list( \
 
 //Puts the item into our active hand if possible. returns 1 on success.
 /mob/proc/put_in_active_hand(obj/item/W)
-	if(hand)	return put_in_l_hand(W)
-	else		return put_in_r_hand(W)
+	return
 
 //Puts the item into our inactive hand if possible. returns 1 on success.
 /mob/proc/put_in_inactive_hand(obj/item/W)
+	return
+
+/mob/living/carbon/put_in_active_hand(obj/item/W)
+	if(hand)	return put_in_l_hand(W)
+	else		return put_in_r_hand(W)
+
+/mob/living/carbon/put_in_inactive_hand(obj/item/W)
 	if(hand)	return put_in_r_hand(W)
 	else		return put_in_l_hand(W)
 
@@ -200,6 +218,9 @@ var/list/slot_equipment_priority = list( \
 //If both fail it drops it on the floor and returns 0.
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(obj/item/W)
+	return
+
+/mob/living/carbon/put_in_hands(obj/item/W)
 	if(!W)		return 0
 	if(put_in_active_hand(W))
 		return 1
@@ -215,6 +236,9 @@ var/list/slot_equipment_priority = list( \
 
 // Removes an item from inventory and places it in the target atom
 /mob/proc/drop_from_inventory(obj/item/W, atom/target = null)
+	return
+
+/mob/living/carbon/drop_from_inventory(obj/item/W, atom/target = null)
 	if(W)
 		remove_from_mob(W, target)
 		if(!(W && W.loc))
@@ -225,14 +249,23 @@ var/list/slot_equipment_priority = list( \
 
 //Drops the item in our left hand
 /mob/proc/drop_l_hand(atom/Target)
-	return drop_from_inventory(l_hand, Target)
+	return
 
 //Drops the item in our right hand
 /mob/proc/drop_r_hand(atom/Target)
+	return
+
+/mob/living/carbon/drop_l_hand(atom/Target)
+	return drop_from_inventory(l_hand, Target)
+
+/mob/living/carbon/drop_r_hand(atom/Target)
 	return drop_from_inventory(r_hand, Target)
 
 //Drops the item in our active hand.
 /mob/proc/drop_item(atom/Target)
+	return
+
+/mob/living/carbon/drop_item(atom/Target)
 	if(hand)	return drop_l_hand(Target)
 	else		return drop_r_hand(Target)
 
@@ -248,6 +281,9 @@ var/list/slot_equipment_priority = list( \
 	the search through all the slots, without having to duplicate the rest of the item dropping.
 */
 /mob/proc/u_equip(obj/W)
+	return
+
+/mob/living/carbon/u_equip(obj/W)
 	if (W == r_hand)
 		r_hand = null
 		update_inv_r_hand()
@@ -264,6 +300,9 @@ var/list/slot_equipment_priority = list( \
 
 //This differs from remove_from_mob() in that it checks canremove first.
 /mob/proc/unEquip(obj/item/I, force = 0) //Force overrides NODROP for things like wizarditis and admin undress.
+	return
+
+/mob/living/carbon/unEquip(obj/item/I, force = 0)
 	if(!I) //If there's nothing to drop, the drop is automatically successful.
 		return 1
 
@@ -275,6 +314,9 @@ var/list/slot_equipment_priority = list( \
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
 /mob/proc/remove_from_mob(obj/O, atom/target)
+	return
+
+/mob/living/carbon/remove_from_mob(obj/O, atom/target)
 	if(!O) return
 	src.u_equip(O)
 	if (src.client)
@@ -343,7 +385,9 @@ var/list/slot_equipment_priority = list( \
 
 //Create delay for equipping
 /mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/
+	return
 
+/mob/living/carbon/delay_clothing_u_equip(obj/item/clothing/C)
 	if(!istype(C)) return 0
 
 	if(C.equipping) return 0 // Item is already being (un)equipped
@@ -365,6 +409,9 @@ var/list/slot_equipment_priority = list( \
 	C.equipping = 0
 
 /mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
+	return
+
+/mob/living/carbon/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
 	if(!istype(C)) return 0
 
 	if(ishuman(usr))
@@ -392,6 +439,9 @@ var/list/slot_equipment_priority = list( \
 	C.equipping = 0
 
 /mob/proc/get_item_by_slot(slot_id)
+	return
+
+/mob/living/carbon/get_item_by_slot(slot_id)
 	switch(slot_id)
 		if(slot_l_hand)
 			return l_hand
