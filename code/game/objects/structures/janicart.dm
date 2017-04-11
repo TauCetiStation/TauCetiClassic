@@ -13,17 +13,36 @@
 	var/obj/item/weapon/reagent_containers/spray/myspray = null
 	var/obj/item/device/lightreplacer/myreplacer = null
 	var/signs = 0	//maximum capacity hardcoded below
+	var/floorbuffer = FALSE
 
 
 /obj/structure/janitorialcart/New()
 	create_reagents(100)
 
+/obj/item/janiupgrade
+	name = "floor buffer upgrade"
+	desc = "An upgrade for janitorial cart."
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "upgrade"
+	origin_tech = "materials=3;engineering=4"
+
+
+/obj/structure/janitorialcart/Move(newloc,move_dir)
+	if(floorbuffer)
+		var/turf/tile = loc
+		if(isturf(tile))
+			tile.clean_blood()
+			for(var/A in tile)
+				if(istype(A,/obj/effect/rune) || istype(A,/obj/effect/decal/cleanable) || istype(A,/obj/effect/overlay))
+					qdel(A)
+	. = ..()
 
 /obj/structure/janitorialcart/examine(mob/user)
 	..()
 	if(src in user)
 		to_chat(user, "[src] contains [reagents.total_volume] unit\s of liquid!")
-
+	if(floorbuffer)
+		to_chat(user, "It has been upgraded with a floor buffer.")
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/storage/bag/trash) && !mybag)
@@ -80,6 +99,15 @@
 
 	else if(mybag)
 		mybag.attackby(I, user)
+
+	else if(istype(I, /obj/item/janiupgrade))
+		if(floorbuffer)
+			to_chat(user, "<span class='warning'>[src] already has a floor buffer!</span>")
+			return
+		floorbuffer = TRUE
+		qdel(I)
+		to_chat(user, "<span class='notice'>You upgrade \the [src] with the floor buffer.</span>")
+		update_icon()
 
 /obj/structure/janitorialcart/on_reagent_change()
 	update_icon()
@@ -157,6 +185,8 @@
 		overlays += "cart_sign[signs]"
 	if(reagents.total_volume > 1)
 		overlays += "cart_water"
+	if(floorbuffer)
+		overlays += "cart_buffer"
 
 
 //old style retardo-cart
