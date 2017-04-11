@@ -28,6 +28,24 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
+/obj/item/weapon/wrench/power
+	name = "Hand Drill"
+	desc ="A simple powered drill with a bolt bit"
+	icon_state = "drill_bolt"
+	item_state = "drill"
+	materials = list(MAT_METAL=150,MAT_SILVER=50)
+	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
+	force = 8 //might or might not be too high, subject to change
+	throwforce = 8
+	attack_verb = list("drilled", "screwed", "jabbed")
+	action_button_name = "Change mode"
+
+/obj/item/weapon/wrench/power/attack_self(mob/user)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	var/obj/item/weapon/wirecutters/power/s_drill = new /obj/item/weapon/screwdriver/power
+	to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
+	qdel(src)
+	user.put_in_active_hand(s_drill)
 
 /*
  * Screwdriver
@@ -89,6 +107,31 @@
 		M = user
 	return eyestab(M,user)
 
+/obj/item/weapon/screwdriver/power
+	name = "Hand Drill"
+	desc = "A simple hand drill with a screwdriver bit attached."
+	icon_state = "drill_screw"
+	item_state = "drill"
+	materials = list(MAT_METAL=150,MAT_SILVER=50)
+	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
+	force = 8 //might or might not be too high, subject to change
+	throwforce = 8
+	throw_speed = 2
+	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
+	attack_verb = list("drilled", "screwed", "jabbed","whacked")
+	hitsound = 'sound/items/drill_hit.ogg'
+	action_button_name = "Change mode"
+
+/obj/item/weapon/screwdriver/power/attack_self(mob/user)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	var/obj/item/weapon/wrench/power/b_drill = new /obj/item/weapon/wrench/power
+	to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
+	qdel(src)
+	user.put_in_active_hand(b_drill)
+
+/obj/item/weapon/screwdriver/power/New()
+	return
+
 /*
  * Wirecutters
  */
@@ -126,6 +169,26 @@
 		return
 	else
 		..()
+
+/obj/item/weapon/wirecutters/power
+	name = "Jaws of Life"
+	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a cutting head."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "jaws_cutter"
+	item_state = "jawsoflife"
+	origin_tech = "materials=2;engineering=2"
+	materials = list(MAT_METAL=150,MAT_SILVER=50)
+	action_button_name = "Change mode"
+
+/obj/item/weapon/wirecutters/power/attack_self(mob/user)
+	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
+	var/obj/item/weapon/crowbar/power/pryjaws = new /obj/item/weapon/crowbar/power
+	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
+	qdel(src)
+	user.put_in_active_hand(pryjaws)
+
+/obj/item/weapon/wirecutters/power/New()
+	return
 
 /*
  * Welding Tool
@@ -446,7 +509,7 @@
 	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
-	origin_tech = "engineering=4;phorontech=3"
+	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
 	var/last_gen = 0
 
 
@@ -480,6 +543,23 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
+
+/obj/item/weapon/crowbar/power
+	name = "Jaws of Life"
+	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a prying head"
+	icon_state = "jaws_pry"
+	item_state = "jawsoflife"
+	materials = list(MAT_METAL=150,MAT_SILVER=50)
+	origin_tech = "materials=2;engineering=2"
+	force = 15
+	action_button_name = "Change mode"
+
+/obj/item/weapon/crowbar/power/attack_self(mob/user)
+	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
+	var/obj/item/weapon/wirecutters/power/cutjaws = new /obj/item/weapon/wirecutters/power
+	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
+	qdel(src)
+	user.put_in_active_hand(cutjaws)
 
 /obj/item/weapon/weldingtool/attack(mob/M, mob/user)
 

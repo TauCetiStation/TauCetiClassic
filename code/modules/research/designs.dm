@@ -2031,6 +2031,16 @@ datum/design/bluespace_crystal
 	reliability = 100
 	build_path = /obj/item/bluespace_crystal/artificial
 
+/datum/design/miningsatchel_holding
+	name = "Mining Satchel of Holding"
+	desc = "A mining satchel that can hold an infinite amount of ores."
+	id = "minerbag_holding"
+	req_tech = list("bluespace" = 4, "materials" = 3, "engineering" = 4)
+	build_type = PROTOLATHE | MINEFAB
+	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 500) //quite cheap, for more convenience
+	build_path = /obj/item/weapon/storage/bag/ore/holding
+	category = list("Tools")
+
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
 /////////////////////////////////////////
@@ -2333,6 +2343,46 @@ datum/design/spraycan
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
 	build_path = /obj/item/clothing/mask/gas/welding
 
+/datum/design/exwelder
+	name = "Experimental Welding Tool"
+	desc = "An experimental welder capable of self-fuel generation."
+	id = "exwelder"
+	req_tech = list("materials" = 4, "engineering" = 5, "bluespace" = 2, "plasmatech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
+	build_path = /obj/item/weapon/weldingtool/experimental
+	category = list("Equipment")
+
+/datum/design/jawsoflife
+	name = "Jaws of Life"
+	desc = "A small, compact Jaws of Life with an interchangable pry jaws and cutting jaws"
+	id = "jawsoflife"
+	req_tech = list("materials" = 4, "engineering" = 6, "magnets" = 6) // added one more requirment since the Jaws of Life are a bit OP
+	build_path = /obj/item/weapon/crowbar/power
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
+	category = list("Equipment")
+
+/datum/design/handdrill
+	name = "Hand Drill"
+	desc = "A small electric hand drill with an interchangable screwdriver and bolt bit"
+	id = "handdrill"
+	req_tech = list("materials" = 4, "engineering" = 6, "magnets" = 6)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
+	build_path = /obj/item/weapon/screwdriver/power
+	category = list("Equipment")
+
+/datum/design/magboots
+	name = "Magnetic Boots"
+	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
+	id = "magboots"
+	req_tech = list("materials" = 4, "magnets" = 4, "engineering" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 1500, MAT_GOLD = 2500)
+	build_path = /obj/item/clothing/shoes/magboots
+	category = list("Equipment")
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
@@ -2363,3 +2413,12 @@ datum/design/holosign
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/holosign_creator
+
+/datum/design/buffer
+	name = "Floor Buffer Upgrade"
+	desc = "A floor buffer that can be attached to janitorial cart."
+	id = "buffer"
+	req_tech = list("materials" = 4, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 200)
+	build_path = /obj/item/janiupgrade
