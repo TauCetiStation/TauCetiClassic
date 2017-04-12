@@ -54,6 +54,7 @@
 	// Equipment slots
 	var/obj/item/head
 	var/obj/item/clothing/mask/wear_mask = null
+	var/obj/item/weapon/back = null
 	var/obj/item/wear_suit = null
 	var/obj/item/w_uniform = null
 	var/obj/item/shoes

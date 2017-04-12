@@ -26,23 +26,26 @@
 /obj/item/weapon/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
-	var/mob/M = usr
-	if (M.back != src)
-		to_chat(usr, "<span class='warning'>The watertank must be worn properly to use!</span>")
+
+	var/mob/living/carbon/human/H = usr
+	if(!istype(H))
+		to_chat(H, "<span class='warning'>You can't do that!</span>")
+		return
+	if (H.back != src)
+		to_chat(H, "<span class='warning'>The watertank must be worn properly to use!</span>")
 		return
 	on = !on
 
-	var/mob/living/carbon/human/user = usr
 	if(on)
 		if(noz == null)
 			noz = make_noz()
 
 		//Detach the nozzle into the user's hands
-		if(!user.put_in_hands(noz))
+		if(!H.put_in_hands(noz))
 			on = 0
-			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
+			to_chat(H, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
-		noz.loc = user
+		noz.loc = H
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz()

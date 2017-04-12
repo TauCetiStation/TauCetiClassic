@@ -12,9 +12,11 @@
 	var/code = 2
 
 /obj/item/device/radio/electropack/attack_hand(mob/user)
-	if(src == user.back)
-		to_chat(user, "<span class='notice'>You need help taking this off!</span>")
-		return
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(src == C.back)
+			to_chat(user, "<span class='notice'>You need help taking this off!</span>")
+			return
 	..()
 
 /obj/item/device/radio/electropack/attackby(obj/item/weapon/W, mob/user)

@@ -123,7 +123,6 @@
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
-	var/obj/item/weapon/back = null//Human/Monkey
 	var/obj/item/weapon/tank/internal = null//Human/Monkey
 	var/obj/item/weapon/storage/s_active = null//Carbon
 
