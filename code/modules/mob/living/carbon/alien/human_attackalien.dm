@@ -16,7 +16,41 @@ This is what happens, when alien attack.
 	return
 
 /mob/living/carbon/alien/larva/UnarmedAttack(atom/A)
-	A.attack_larva(src)
+	if(!chestburster)
+		A.attack_larva(src)
+	else
+		if(ishuman(A))
+			var/mob/living/carbon/human/H = A
+			var/obj/item/bodypart/chest/BP = H.get_bodypart(BP_CHEST)
+			if(H.stat == DEAD || BP && (BP.status & ORGAN_BROKEN))
+				chestburster = FALSE
+				loc = get_turf(H)
+				visible_message("<span class='danger'>[src] bursts thru [H]'s chest!</span>")
+				src << sound('sound/voice/hiss5.ogg',0,0,0,100)
+				if(H.key)
+					H.death()
+					H.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
+					BP.open = 1
+				else
+					H.gib()
+			else
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				H.apply_damage(rand(7,14), BRUTE, BP_CHEST)
+				H.shock_stage = 20
+				H.Weaken(1)
+				H.emote("scream",,, 1)
+		else if(isliving(A))
+			var/mob/living/L = A
+			if(L.stat == DEAD)
+				chestburster = FALSE
+				loc = get_turf(L)
+				visible_message("<span class='danger'>[src] bursts thru [L]'s butt!</span>")
+				src << sound('sound/voice/hiss5.ogg',0,0,0,100)
+			else
+				L.adjustBruteLoss(rand(20,65))
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				L.Weaken(8)
+
 /atom/proc/attack_larva(mob/user)
 	return
 

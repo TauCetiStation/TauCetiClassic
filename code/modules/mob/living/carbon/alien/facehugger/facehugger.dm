@@ -1,5 +1,6 @@
 var/const/MIN_IMPREGNATION_TIME = 100 //time it takes to impregnate someone
 var/const/MAX_IMPREGNATION_TIME = 150
+var/const/LEAP_AT_FACE_COOLDOWN = 100
 
 /mob/living/carbon/alien/facehugger
 	name = "alien facehugger"
@@ -20,6 +21,7 @@ var/const/MAX_IMPREGNATION_TIME = 150
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
+	var/next_leap = 0 // to avoid balance issues, there is hard coded delay between jumps.
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/facehugger/New(loc, new_species = S_XENO_FACE)

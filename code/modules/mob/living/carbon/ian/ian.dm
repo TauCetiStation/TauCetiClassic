@@ -466,22 +466,6 @@
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 					visible_message("<span class='danger'>[M] attempted to disarm [src]!</span>")
 
-/mob/living/carbon/ian/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
-	switch(FH.a_intent)
-		if("grab")
-			if(stat != DEAD)
-				if(FH == src)
-					return
-				var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(FH, src)
-				FH.put_in_active_hand(G)
-				grabbed_by += G
-				G.last_upgrade = world.time - 20
-				G.synch()
-				LAssailant = FH
-				visible_message("<span class='red'>[FH] atempts to leap at [src] face!</span>")
-			else
-				to_chat(FH, "<span class='red'>looks dead.</span>")
-
 /mob/living/carbon/ian/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker.mode)
 		to_chat(M, "You cannot attack people before the game has started.")

@@ -1,9 +1,6 @@
 /mob/living/carbon/alien/larva/Life()
 	set invisibility = 0
 
-	for(var/obj/item/weapon/larva_bite/G in src)
-		G.process()
-
 	if(istype(src.loc, /obj/item/alien_embryo))
 		sleeping = 5
 
