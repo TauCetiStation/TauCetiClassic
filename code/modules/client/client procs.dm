@@ -121,6 +121,7 @@
 	///////////
 /client/New(TopicData)
 	chatOutput = new /datum/chatOutput(src) // Right off the bat.
+	var/tdata = TopicData //save this for later use
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker")					//Invalid connection type.
@@ -194,7 +195,7 @@
 		add_admin_verbs()
 		admin_memo_show()
 
-	log_client_to_db()
+	log_client_to_db(tdata)
 
 	send_resources()
 
@@ -243,7 +244,7 @@
 
 
 
-/client/proc/log_client_to_db()
+/client/proc/log_client_to_db(connectiontopic)
 
 	if ( IsGuestKey(src.key) )
 		return
@@ -279,16 +280,19 @@
 		related_accounts_cid += "[query_cid.item[1]], "
 		break
 
+	var/admin_rank = "Player"
+	if (src.holder)
+		admin_rank = src.holder.rank
+	else
+		if (check_randomizer(connectiontopic))
+			return
+
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
 		if(istext(sql_id))
 			sql_id = text2num(sql_id)
 		if(!isnum(sql_id))
 			return
-
-	var/admin_rank = "Player"
-	if(src.holder)
-		admin_rank = src.holder.rank
 
 	var/sql_ip = sql_sanitize_text(src.address)
 	var/sql_computerid = sql_sanitize_text(src.computer_id)
@@ -308,6 +312,85 @@
 	var/serverip = "[world.internet_address]:[world.port]"
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
+
+/client/proc/check_randomizer(topic)
+	. = FALSE
+	if (connection != "seeker")
+		return
+	topic = params2list(topic)
+	var/static/cidcheck = list()
+	var/static/tokens = list()
+	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
+	var/static/cidcheck_spoofckeys = list()
+
+	var/oldcid = cidcheck[ckey]
+
+	if (oldcid)
+		if (!topic || !topic["token"] || !tokens[ckey] || topic["token"] != tokens[ckey])
+			if (!cidcheck_spoofckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name(src)] appears to have attempted to spoof a cid randomizer check.</span>")
+				cidcheck_spoofckeys[ckey] = TRUE
+			cidcheck[ckey] = computer_id
+			tokens[ckey] = cid_check_reconnect()
+
+			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			qdel(src)
+			return TRUE
+
+		if (oldcid != computer_id) //IT CHANGED!!!
+			cidcheck -= ckey //so they can try again after removing the cid randomizer.
+
+			to_chat(src, "<span class='userdanger'>Connection Error:</span>")
+			to_chat(src, "<span class='danger'>Invalid ComputerID(spoofed). Please remove the ComputerID spoofer from your byond installation and try again.</span>")
+
+			if (!cidcheck_failedckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
+				send2slack_logs(key_name(usr), "has been detected as using a cid randomizer. Connection rejected.", "(CidRandomizer)")
+				cidcheck_failedckeys[ckey] = TRUE
+				note_randomizer_user()
+
+			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
+
+			del(src)
+			return TRUE
+		else
+			if (cidcheck_failedckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
+				send2slack_logs(key_name(usr), "has been allowed to connect after showing they removed their cid randomizer.", "(CidRandomizer)")
+				cidcheck_failedckeys -= ckey
+			if (cidcheck_spoofckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
+				cidcheck_spoofckeys -= ckey
+			cidcheck -= ckey
+	else
+		var/sql_ckey = sanitizeSQL(ckey)
+		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM erro_player WHERE ckey = '[sql_ckey]'")
+		query_cidcheck.Execute()
+
+		var/lastcid
+		if (query_cidcheck.NextRow())
+			lastcid = query_cidcheck.item[1]
+
+		if (computer_id != lastcid)
+			cidcheck[ckey] = computer_id
+			tokens[ckey] = cid_check_reconnect()
+
+			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			del(src)
+			return TRUE
+
+/client/proc/cid_check_reconnect()
+	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][address][rand(0,9999)][computer_id][rand(0,9999)]")
+	. = token
+	log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
+	var/url = winget(src, null, "url")
+	//special javascript to make them reconnect under a new window.
+	src << browse("<a id='link' href='byond://[url]?token=[token]'>byond://[url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
+	to_chat(src, "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
+
+/client/proc/note_randomizer_user()
+	notes_add(ckey, "Detected as using a cid randomizer.")
+
 
 /client/proc/log_client_ingame_age_to_db()
 	if ( IsGuestKey(src.key) )
