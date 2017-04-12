@@ -565,7 +565,12 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if (M.a_intent == "hurt" && !istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
+		if (M.a_intent == "hurt")
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				if(istype(C.wear_mask, /obj/item/clothing/mask/muzzle))
+					return
+
 			M.do_attack_animation(src)
 
 			if(is_armored(M, 35))

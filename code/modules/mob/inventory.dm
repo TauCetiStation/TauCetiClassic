@@ -314,9 +314,6 @@ var/list/slot_equipment_priority = list( \
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
 /mob/proc/remove_from_mob(obj/O, atom/target)
-	return
-
-/mob/living/carbon/remove_from_mob(obj/O, atom/target)
 	if(!O) return
 	src.u_equip(O)
 	if (src.client)

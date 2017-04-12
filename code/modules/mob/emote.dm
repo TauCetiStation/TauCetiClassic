@@ -5,7 +5,10 @@
 		to_chat(usr, "You are unable to emote.")
 		return
 
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
+	var/muzzled
+	if(iscarbon(src)) // TODO update this properly.
+		var/mob/living/carbon/C = src
+		muzzled = istype(C.wear_mask, /obj/item/clothing/mask/muzzle)
 	if(m_type == 2 && muzzled) return
 
 	var/input

@@ -71,8 +71,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		return 0
 
 	if(ishuman(usr) || ismonkey(usr))
-		if(istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
-			to_chat(usr, "Mmmf mrrfff!")
+		var/mob/living/carbon/C = usr
+		if(istype(C.wear_mask, /obj/item/clothing/mask/muzzle))
+			to_chat(C, "Mmmf mrrfff!")
 			return 0
 
 	if(clothes_req) //clothes check

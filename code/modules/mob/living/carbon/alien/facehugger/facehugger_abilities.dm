@@ -321,10 +321,17 @@ This is facehugger Attach procs
 	if(!target || target.stat == DEAD) //was taken off or something
 		return
 
-	var/mob/living/carbon/ian/IAN = target
-	var/target_slot = target.wear_mask
-	if(isIAN(IAN))
+	var/target_slot
+	if(iscorgi(target))
+		var/mob/living/simple_animal/corgi/dog = target
+		target_slot = dog.facehugger
+
+	if(isIAN(target))
+		var/mob/living/carbon/ian/IAN = target
 		target_slot = IAN.head
+	else if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		target_slot = C.wear_mask
 
 	if(target_slot != src)
 		return
@@ -336,15 +343,19 @@ This is facehugger Attach procs
 		var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(target)
 		var/mob/living/carbon/alien/larva/new_xeno = new /mob/living/carbon/alien/larva(new_embryo)
 
-		new_xeno.loc = new_embryo
 		new_xeno.key = FH.key
 		new_xeno.chestburster = TRUE
 		new_embryo.baby = new_xeno
 		qdel(FH)
+
 		target.remove_from_mob(target_slot)
 		if(ismonkey(target))
 			for(var/obj/item/clothing/mask/facehugger/FH_mask in target.contents)
-				FH_mask.loc = get_turf(target)
+				FH_mask.forceMove(get_turf(target))
+		if(iscorgi(target))
+			var/mob/living/simple_animal/corgi/dog = target
+			dog.facehugger.forceMove(get_turf(target))
+			dog.facehugger = null
 
 		STOP_PROCESSING(SSobj, src)
 
