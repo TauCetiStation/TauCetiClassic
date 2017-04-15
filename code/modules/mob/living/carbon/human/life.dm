@@ -1220,15 +1220,14 @@
 			if( prob(2) && health && !hal_crit )
 				spawn(0)
 					emote("snore")
-		else if(resting)
-			if(halloss > 0)
-				adjustHalLoss(-3)
 		//CONSCIOUS
 		else
 			stat = CONSCIOUS
 			if(halloss > 0)
-				adjustHalLoss(-1)
-
+				if(resting)
+					adjustHalLoss(-3)
+				else
+					adjustHalLoss(-1)
 		if(!sleeping) //No refactor - no life!
 			clear_alert("asleep")
 
