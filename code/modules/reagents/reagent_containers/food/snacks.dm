@@ -269,7 +269,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Nougat, love it or hate it."
-	icon_state = "candy"
 	filling_color = "#7D5F46"
 
 	New()
@@ -3734,32 +3733,39 @@
 // CANDYBARS! :3
 ///////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/rice
+/obj/item/weapon/reagent_containers/food/snacks/candy/candybar
+	name = "candy bar"
+	desc = "Nougat, love it or hate it."
+	icon_state = "candy"
+	trash = /obj/item/trash/candy
+	filling_color = "#7D5F46"
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/rice
 	name = "Asteroid Crunch Bar"
 	desc = "Crunchy rice deposits in delicious chocolate! A favorite of miners galaxy-wide."
 	icon_state = "asteroidcrunch"
 	trash = /obj/item/trash/candy
 	filling_color = "#7D5F46"
 
-/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/toffee
+/obj/item/weapon/reagent_containers/food/snacks/candy/yumbaton
 	name = "Yum-baton Bar"
 	desc = "Chocolate and toffee in the shape of a baton. Security sure knows how to pound these down!"
 	icon_state = "yumbaton"
 	filling_color = "#7D5F46"
 
-/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/caramel
+/obj/item/weapon/reagent_containers/food/snacks/candy/malper
 	name = "Malper Bar"
 	desc = "A chocolate syringe filled with a caramel injection. Just what the doctor ordered!"
 	icon_state = "malper"
 	filling_color = "#7D5F46"
 
-/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/caramel_nougat
+/obj/item/weapon/reagent_containers/food/snacks/candy/caramel_nougat
 	name = "Toxins Test Bar"
 	desc = "An explosive combination of chocolate, caramel, and nougat. Research has never been so tasty!"
 	icon_state = "toxinstest"
 	filling_color = "#7D5F46"
 
-/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/nougat
+/obj/item/weapon/reagent_containers/food/snacks/candy/toolerone
 	name = "Tool-erone Bar"
 	desc = "Chocolate-covered nougat, shaped like a wrench. Great for an engineer on the go!"
 	icon_state = "toolerone"
