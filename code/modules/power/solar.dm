@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 #define SOLAR_MAX_DIST 40
 #define SOLARGENRATE 1500
 
@@ -20,7 +18,6 @@
 	icon_state = "sp_base"
 	anchored = 1
 	density = 1
-	directwired = 1
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
@@ -269,7 +266,6 @@
 	light_color = "#b88b2e"
 	anchored = 1
 	density = 1
-	directwired = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 20
@@ -465,7 +461,7 @@
 				nexttime = world.time + 6000 / trackrate
 
 	else if(href_list["track"])
-		if(src.trackrate) 
+		if(src.trackrate)
 			nexttime = world.time + 6000 / trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
