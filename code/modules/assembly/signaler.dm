@@ -21,7 +21,7 @@
 
 /obj/item/device/assembly/signaler/New()
 	..()
-	addtimer(CALLBACK(.proc/set_frequency, frequency), 40)
+	addtimer(CALLBACK(src, .proc/set_frequency, frequency), 40)
 	return
 
 /obj/item/device/assembly/signaler/Destroy()
@@ -35,7 +35,7 @@
 	if(cooldown > 0)
 		return FALSE
 	cooldown = 2
-	addtimer(CALLBACK(.proc/process_cooldown), 10)
+	addtimer(CALLBACK(src, .proc/process_cooldown), 10)
 	signal()
 	return 1
 

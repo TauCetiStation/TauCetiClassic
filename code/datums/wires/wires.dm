@@ -103,19 +103,19 @@ var/list/wire_colours = list("red", "blue", "green", "black", "orange", "brown",
 	popup.open()
 
 /datum/wires/proc/get_interact_window()
-	var/html = "<div class='block'>"
-	html += "<h3>Exposed Wires</h3>"
+	var/html = "<fieldset class='block'>"
+	html += "<legend><h3>Exposed Wires</h3></legend>"
 	html += "<table[table_options]>"
 
 	for(var/colour in wires)
 		html += "<tr>"
-		html += "<td[row_options1]><font color='[colour]'>[capitalize(colour)]</font></td>"
+		html += "<td[row_options1]><font color='[colour]'><b>[capitalize(colour)]</b></font></td>"
 		html += "<td[row_options2]>"
 		html += "<A href='?src=\ref[src];action=1;cut=[colour]'>[is_colour_cut(colour) ? "Mend" :  "Cut"]</A>"
 		html += " <A href='?src=\ref[src];action=1;pulse=[colour]'>Pulse</A>"
 		html += " <A href='?src=\ref[src];action=1;attach=[colour]'>[is_signaler_attached(colour) ? "Detach" : "Attach"] Signaller</A></td></tr>"
 	html += "</table>"
-	html += "</div>"
+	html += "</fieldset>"
 
 	return html
 
