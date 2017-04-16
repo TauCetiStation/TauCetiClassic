@@ -5,35 +5,32 @@
  *		Bike Horns
  */
 
+/obj/item/weapon/proc/slip_on_me(mob/living/carbon/victim)
+	if(ishuman(victim))
+		var/mob/living/carbon/human/human_victim = victim
+		if(isobj(human_victim.shoes) && (human_victim.shoes.flags & NOSLIP))
+			return
+
+	victim.stop_pulling()
+	to_chat(victim, "<span class='notice'>You slipped on the [src]!</span>")
+	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
+	victim.Stun(4)
+	victim.Weaken(2)
+	Move(get_step(get_turf(src), pick(cardinal)))
+
 /*
  * Banana Peals
  */
 /obj/item/weapon/bananapeel/Crossed(AM as mob|obj)
-	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
-			return
-
-		M.stop_pulling()
-		to_chat(M, "\blue You slipped on the [name]!")
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(4)
-		M.Weaken(2)
+	if(iscarbon(AM))
+		slip_on_me(AM)
 
 /*
  * Soap
  */
 /obj/item/weapon/soap/Crossed(AM as mob|obj) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
-	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && ( (isobj(M:shoes) && M:shoes.flags&NOSLIP)) || ((istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)) )
-			return
-
-		M.stop_pulling()
-		to_chat(M, "\blue You slipped on the [name]!")
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(3)
-		M.Weaken(2)
+	if(iscarbon(AM))
+		slip_on_me(AM)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
@@ -51,7 +48,7 @@
 
 /obj/item/weapon/soap/attack(mob/target, mob/user)
 	if(target && user && ishuman(target) && ishuman(user) && !target.stat && !user.stat && user.zone_sel &&user.zone_sel.selecting == BP_MOUTH )
-		user.visible_message("\red \the [user] washes \the [target]'s mouth out with soap!")
+		user.visible_message("<span class='red'>\the [user] washes \the [target]'s mouth out with soap!</span>")
 		return
 	..()
 

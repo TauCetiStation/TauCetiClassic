@@ -14,6 +14,7 @@
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diary << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]"
+	changelog_hash = md5('html/changelog.html')
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
@@ -30,7 +31,7 @@
 	if(config.usewhitelist)
 		load_whitelist()
 	if(config.usealienwhitelist)
-		load_alienwhitelist()
+		load_whitelistSQL()
 	LoadBans()
 	investigate_reset()
 

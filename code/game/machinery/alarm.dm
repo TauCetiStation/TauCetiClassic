@@ -1123,7 +1123,7 @@ table tr:first-child th:first-child { border: none;}
 			if (istype(W, /obj/item/weapon/wirecutters))
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				new/obj/item/weapon/cable_coil(get_turf(src), 5)
+				new /obj/item/weapon/cable_coil/random(get_turf(src), 5)
 				buildstage = 1
 				update_icon()
 				return
@@ -1338,7 +1338,7 @@ FIRE ALARM
 						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					user.visible_message("\red [user] has cut the wires inside \the [src]!", "You have cut the wires inside \the [src].")
-					new/obj/item/weapon/cable_coil(get_turf(src), 5)
+					new /obj/item/weapon/cable_coil/random(get_turf(src), 5)
 					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 					buildstage = 1
 					update_icon()

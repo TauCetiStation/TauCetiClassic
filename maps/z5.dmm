@@ -956,7 +956,7 @@
 "st" = (/turf/simulated/wall/r_wall,/area/mine/dwarf)
 "su" = (/obj/machinery/door/poddoor{id = "dwarf_blast"},/turf/simulated/floor{icon_state = "floorgrime"},/area/mine/dwarf)
 "sv" = (/obj/item/weapon/storage/box/lights/mixed,/obj/structure/table,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor/plating,/area/mine/dwarf)
-"sw" = (/obj/structure/table,/obj/item/weapon/cable_coil,/obj/item/weapon/cable_coil,/obj/item/clothing/gloves/fyellow,/obj/machinery/light_construct/small{dir = 1},/turf/simulated/floor/plating,/area/mine/dwarf)
+"sw" = (/obj/structure/table,/obj/item/weapon/cable_coil/red,/obj/item/weapon/cable_coil/red,/obj/item/clothing/gloves/fyellow,/obj/machinery/light_construct/small{dir = 1},/turf/simulated/floor/plating,/area/mine/dwarf)
 "sx" = (/obj/structure/closet/crate/dwarf_agriculture,/turf/simulated/floor/plating,/area/mine/dwarf)
 "sy" = (/obj/machinery/pipedispenser/disposal,/turf/simulated/floor/plating,/area/mine/dwarf)
 "sz" = (/obj/machinery/pipedispenser,/turf/simulated/floor/plating,/area/mine/dwarf)

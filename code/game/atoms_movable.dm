@@ -107,10 +107,8 @@
 		qdel(AM)
 	loc = null
 	invisibility = 101
-	if (pulledby)
-		if (pulledby.pulling == src)
-			pulledby.pulling = null
-		pulledby = null
+	if(pulledby)
+		pulledby.stop_pulling()
 	return ..()
 
 /atom/movable/Bump(atom/A, yes)
@@ -129,21 +127,40 @@
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
+		if(pulledby)
+			pulledby.stop_pulling()
 		var/atom/oldloc = loc
-		if(oldloc)
-			oldloc.Exited(src, destination)
-		loc = destination
-		destination.Entered(src, oldloc)
+		var/same_loc = (oldloc == destination)
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
-		if(old_area != destarea)
-			destarea.Entered(src)
-		for(var/atom/movable/AM in destination)
-			if(AM == src)
-				continue
-			AM.Crossed(src)
-		return 1
-	return 0
+
+		if(oldloc && !same_loc)
+			oldloc.Exited(src, destination)
+			if(old_area)
+				old_area.Exited(src, destination)
+
+		loc = destination
+
+		if(!same_loc)
+			destination.Entered(src, oldloc)
+			if(destarea && old_area != destarea)
+				destarea.Entered(src, oldloc)
+
+			for(var/atom/movable/AM in destination)
+				if(AM == src)
+					continue
+				AM.Crossed(src)
+
+		Moved(oldloc, 0)
+		return TRUE
+	return FALSE
+
+/mob/living/forceMove()
+	stop_pulling()
+	if(buckled)
+		buckled.unbuckle_mob()
+	. = ..()
+	update_canmove()
 
 /mob/dead/observer/forceMove(atom/destination)
 	if(destination)

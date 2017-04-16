@@ -40,6 +40,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
 
 	//antag preferences
 	var/list/be_role = list()

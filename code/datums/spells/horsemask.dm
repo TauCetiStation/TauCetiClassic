@@ -19,7 +19,12 @@
 		to_chat(user, "<span class='notice'>No target found in range.</span>")
 		return
 
-	var/mob/living/carbon/target = targets[1]
+	var/mob/living/carbon/target
+	while(targets.len)
+		target = targets[targets.len]
+		targets -= target
+		if(istype(target))
+			break
 
 	if(!(target.type in compatible_mobs))
 		to_chat(user, "<span class='notice'>It'd be stupid to curse [target] with a horse's head!</span>")

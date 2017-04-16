@@ -466,7 +466,7 @@
 	src << browse(null, "window=playersetup") //closes the player setup window
 
 /mob/new_player/proc/has_admin_rights()
-	return client.holder.rights & R_ADMIN
+	return (client && client.holder && (client.holder.rights & R_ADMIN))
 
 /mob/new_player/proc/is_species_whitelisted(datum/species/S)
 	if(!S)

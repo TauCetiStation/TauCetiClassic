@@ -725,26 +725,26 @@ steam.start() -- spawns the effect
 					M.Weaken(rand(1,5))
 			return
 		else
-			var/devastation = -1
-			var/heavy = -1
-			var/light = -1
-			var/flash = -1
+			var/devastation = 0
+			var/heavy = 0
+			var/light = 0
+			var/flash = 0
 
 			// Clamp all values to MAX_EXPLOSION_RANGE
 			if (round(amount/12) > 0)
-				devastation = min (MAX_EXPLOSION_RANGE, devastation + round(amount/12))
+				devastation = min (MAX_EXPLOSION_RANGE, round(amount/12))
 
 			if (round(amount/6) > 0)
-				heavy = min (MAX_EXPLOSION_RANGE, heavy + round(amount/6))
+				heavy = min (MAX_EXPLOSION_RANGE, round(amount/6))
 
 			if (round(amount/3) > 0)
-				light = min (MAX_EXPLOSION_RANGE, light + round(amount/3))
+				light = min (MAX_EXPLOSION_RANGE, round(amount/3))
 
 			if (flash && flashing_factor)
 				flash += (round(amount/4) * flashing_factor)
 
-			for(var/mob/M in viewers(8, location))
-				to_chat(M, "\red The solution violently explodes.")
+			for(var/mob/M in viewers(world.view, location))
+				to_chat(M, "<span class='red'>The solution violently explodes.</span>")
 
 			explosion(location, devastation, heavy, light, flash)
 

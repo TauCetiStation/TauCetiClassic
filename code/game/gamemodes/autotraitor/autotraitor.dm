@@ -10,7 +10,7 @@
 
 	votable = 0
 
-	var/list/possible_traitors = null
+	var/list/possible_traitors = list()
 	var/num_players = 0
 
 /datum/game_mode/traitor/autotraitor/announce()
@@ -86,7 +86,7 @@
 			playercount++
 			if(player.mind.special_role)
 				traitorcount++
-			else if((player.client && (ROLE_TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR))
+			else if((player.client && (ROLE_TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR) && !isloyal(player))
 				if(!possible_traitors.len || !possible_traitors.Find(player))
 					possible_traitors += player
 	for(var/mob/living/player in possible_traitors)

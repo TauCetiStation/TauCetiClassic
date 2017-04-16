@@ -260,9 +260,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				if(!possible_targets.len)
 					break
 				if(target_ignore_prev)
-					var/target = pick(possible_targets)
-					possible_targets -= target
-					targets += target
+					targets += pick_n_take(possible_targets)
 				else
 					targets += pick(possible_targets)
 

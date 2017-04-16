@@ -48,7 +48,7 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
-			O.unwield()
+			user.drop_from_inventory(O)
 	return	unwield()
 
 /obj/item/weapon/twohanded/update_icon()
@@ -58,7 +58,7 @@
 	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
-	if( istype(user,/mob/living/carbon/monkey) )
+	if(istype(user,/mob/living/carbon/monkey))
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 
@@ -75,8 +75,8 @@
 			playsound(src.loc, unwieldsound, 50, 1)
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
-		if(O && istype(O))
-			O.unwield()
+		if(istype(O))
+			user.drop_from_inventory(O)
 		return
 
 	else //Trying to wield it
@@ -105,11 +105,11 @@
 	icon_state = "offhand"
 	name = "offhand"
 
-	unwield()
-		qdel(src)
+/obj/item/weapon/twohanded/offhand/unwield()
+	qdel(src)
 
-	wield()
-		qdel(src)
+/obj/item/weapon/twohanded/offhand/wield()
+	qdel(src)
 
 /*
  * Fireaxe

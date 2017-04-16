@@ -139,7 +139,7 @@
 	starting = starting_loc
 	current = starting_loc
 	if(new_firer)
-		firer = src
+		firer = new_firer
 
 	yo = new_y - starting_loc.y
 	xo = new_x - starting_loc.x
@@ -189,6 +189,7 @@
 			if(istype(M))
 				if(ishuman(A))
 					M = check_living_shield(A)
+					A = M
 
 				if(silenced)
 					to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
@@ -201,7 +202,7 @@
 					if(!fake)
 						msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
 				else
-					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 					if(!fake)
 						msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
 

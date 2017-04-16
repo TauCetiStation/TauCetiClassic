@@ -155,7 +155,6 @@
 /obj/machinery/recharge_station/close_machine()
 	if(!panel_open)
 		for(var/mob/living/silicon/robot/R in loc)
-			R.stop_pulling()
 			if(R.client)
 				R.client.eye = src
 				R.client.perspective = EYE_PERSPECTIVE

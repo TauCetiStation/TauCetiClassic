@@ -41,11 +41,7 @@
 		return
 	if(!isturf(user.loc))
 		return
-	if(!ranged && get_dist(user, target) > 1)
-		return
-	if(get_dist(user, target) > (user.mind.changeling.sting_range))
-		return //sanity check as AStar is still throwing insane stunts
-	if(!AStar(user.loc, target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, user.mind.changeling.sting_range))
+	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = FALSE))
 		return //hope this ancient magic still works
 	if(target.mind && target.mind.changeling)
 		sting_feedback(user,target)

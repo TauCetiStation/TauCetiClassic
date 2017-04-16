@@ -45,7 +45,7 @@
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				construct_op ++
-				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
+				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil/red(user.loc)
 				A.amount = 5
 				stat |= BROKEN // the machine's been borked!
 		if(3)

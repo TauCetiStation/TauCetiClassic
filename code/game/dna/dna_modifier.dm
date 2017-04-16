@@ -60,8 +60,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/weapon/cable_coil/random(null, 1)
+	component_parts += new /obj/item/weapon/cable_coil/random(null, 1)
 	RefreshParts()
 
 /obj/machinery/dna_scannernew/RefreshParts()
@@ -206,7 +206,6 @@
 
 		var/mob/M = G.affecting
 		M.forceMove(loc)
-		user.stop_pulling()
 		qdel(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)

@@ -162,12 +162,15 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		src.oddbutton = 1
 		src.screwloose = 1
 
-/obj/machinery/bot/cleanbot/process()
-	//set background = 1
+/obj/machinery/bot/cleanbot/is_on_patrol()
+	return should_patrol
 
+/obj/machinery/bot/cleanbot/process()
 	if(!src.on)
 		return
 	if(src.cleaning)
+		return
+	if(!inaction_check())
 		return
 
 	if(!src.screwloose && !src.oddbutton && prob(5))
@@ -216,7 +219,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 				if (!next_dest_loc)
 					next_dest_loc = closest_loc
 				if (next_dest_loc)
-					src.patrol_path = AStar(src.loc, next_dest_loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=null)
+					src.patrol_path = get_path_to(src, next_dest_loc, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=null)
 		else
 			patrol_move()
 
@@ -225,8 +228,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(target && path.len == 0)
 		spawn(0)
 			if(!src || !target) return
-			src.path = AStar(src.loc, src.target.loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
-			if (!path) path = list()
+			src.path = get_path_to(src, src.target, /turf/proc/Distance_cardinal, 0, 30, id=botcard)
 			if(src.path.len == 0)
 				src.oldtarget = src.target
 				target.targeted_by = null

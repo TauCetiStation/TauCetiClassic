@@ -221,7 +221,6 @@
 	if(!slot) return
 	if(!istype(W)) return
 	if(!has_bodypart_for_slot(slot)) return
-	if(W.flags & ABSTRACT) return
 
 	if(W == src.l_hand)
 		src.l_hand = null
@@ -653,7 +652,7 @@ It can still be worn/put on as normal.
 	if(!source || !target) return		//Target or source no longer exist
 	if(source.loc != s_loc) return		//source has moved
 	if(target.loc != t_loc) return		//target has moved
-	if(LinkBlocked(s_loc,t_loc)) return	//Use a proxi!
+	if(!in_range(s_loc, t_loc)) return	//Use a proxi!
 	if(item && source.get_active_hand() != item) return	//Swapped hands / removed item from the active one
 	if ((source.restrained() || source.stat)) return //Source restrained or unconscious / dead
 

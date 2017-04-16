@@ -92,7 +92,7 @@
 		var/bancid = href_list["dbbanaddcid"]
 		var/banduration = text2num(href_list["dbbaddduration"])
 		var/banjob = href_list["dbbanaddjob"]
-		var/banreason = href_list["dbbanreason"]
+		var/banreason = sanitize_simple(href_list["dbbanreason"])
 
 		banckey = ckey(banckey)
 
@@ -172,6 +172,27 @@
 				return
 		edit_admin_permissions()
 
+	else if(href_list["whitelist"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/target_ckey = ckey(href_list["ckey"])
+		var/task = href_list["whitelist"]
+		if(!task)
+			return
+		var/role = href_list["role"]
+
+		switch(task)
+			if("add_user")
+				whitelist_add_user()
+			if("add_role")
+				whitelist_add_role(target_ckey)
+			if("showroles")
+				whitelist_view(target_ckey)
+			if("edit_ban")
+				whitelist_edit(target_ckey, role, ban_edit = TRUE)
+			if("edit_reason")
+				whitelist_edit(target_ckey, role)
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
@@ -1566,42 +1587,29 @@
 		send2slack_custommsg("[key_name(src.owner)] replied to [key_name(H)]'s Syndicate message", input, ":job-nuke:")
 		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\"")
 
-	else if(href_list["CentcommFaxView"])
-		var/info = locate(href_list["CentcommFaxView"])
+	else if(href_list["CentcommFaxViewInfo"])
+		var/info = locate(href_list["CentcommFaxViewInfo"])
+		var/stamps = locate(href_list["CentcommFaxViewStamps"])
 
-		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[info]</BODY></HTML>", "window=Centcomm Fax Message")
+		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=Centcomm Fax Message")
 
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 
 		var/input = sanitize_alt(input(src.owner, "Please enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null)
-		if(!input)	return
+		if(!input)
+			return
 
 		var/customname = sanitize_alt(input(src.owner, "Pick a title for the report", "Title") as text|null)
 
-		for(var/obj/machinery/faxmachine/F in machines)
-			if(! (F.stat & (BROKEN|NOPOWER) ) )
+		var/obj/item/weapon/paper/P = new
+		P.name = "[command_name()]- [customname]"
+		P.info = input
 
-				// animate! it's alive!
-				flick("faxreceive", F)
+		var/obj/item/weapon/stamp/centcomm/S = new
+		S.stamp_paper(P, use_stamp_by_message = TRUE)
 
-				// give the sprite some time to flick
-				spawn(20)
-					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( F.loc )
-					P.name = "[command_name()]- [customname]"
-					P.info = input
-					P.update_icon()
-
-					playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
-
-					// Stamps
-					var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-					stampoverlay.icon_state = "paper_stamp-cent"
-					if(!P.stamped)
-						P.stamped = new
-					P.stamped += /obj/item/weapon/stamp
-					P.overlays += stampoverlay
-					P.stamp_text += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+		send_fax(usr, P, "All")
 
 		to_chat(src.owner, "Message reply to transmitted successfully.")
 		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
@@ -2197,7 +2205,7 @@
 			if("friendai")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","FA")
-				for(var/mob/aiEye/aE in mob_list)
+				for(var/mob/camera/aiEye/aE in mob_list)
 					aE.icon_state = "ai_friend"
 				for(var/obj/machinery/M in machines)
 					if(istype(M, /obj/machinery/ai_status_display))

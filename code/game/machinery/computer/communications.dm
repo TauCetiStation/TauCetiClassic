@@ -467,10 +467,6 @@
 			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
 			return
 
-		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
-			//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
-			SSshuttle.fake_recall = rand(300,500)
-
 		if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
 			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 			return
@@ -528,7 +524,7 @@
 /obj/machinery/computer/communications/Destroy()
 
 	for(var/obj/machinery/computer/communications/commconsole in machines)
-		if(istype(commconsole.loc,/turf) && commconsole != src)
+		if(istype(commconsole.loc, /turf) && commconsole != src)
 			return ..()
 
 	for(var/obj/item/weapon/circuitboard/communications/commboard in machines)
@@ -539,7 +535,7 @@
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(sent_strike_team)
 		return ..()
 
 	SSshuttle.incall(2)
