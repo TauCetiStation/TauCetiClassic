@@ -34,3 +34,12 @@
  * So you would know for sure, that `qdel()` was used on `X`.
  */
 #define QDESTROYING(X) (!X || X.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+
+
+/**
+ * Macroses for `qdel()` operations on simple and associative lists.
+ * Use them only in case, when you need to invoke `Destroy()` proc on objects in list.
+ */
+
+#define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
+#define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) qdel(L[I]); L.Cut(); }
