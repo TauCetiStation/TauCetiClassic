@@ -18,7 +18,7 @@ var/const/WIRE_ACTIVATE = 16    // Will start a bombs timer if pulsed, will hint
 	switch(index)
 		if(WIRE_BOOM)
 			if (S.active)
-				S.loc.visible_message("<span class='red'>[bicon(holder)] An alarm sounds! It's go-</span>")
+				S.loc.visible_message("<span class='warning'>[bicon(holder)] An alarm sounds! It's go-</span>")
 				S.timer = 0
 
 		if(WIRE_UNBOLT)

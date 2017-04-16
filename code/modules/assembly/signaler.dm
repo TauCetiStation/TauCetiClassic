@@ -37,7 +37,7 @@
 	cooldown = 2
 	addtimer(CALLBACK(src, .proc/process_cooldown), 10)
 	signal()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/signaler/update_icon()
 	if(holder)
