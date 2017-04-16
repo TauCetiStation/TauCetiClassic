@@ -21,22 +21,21 @@
 
 /obj/item/device/assembly/signaler/New()
 	..()
-	spawn(40)
-		set_frequency(frequency)
+	addtimer(CALLBACK(.proc/set_frequency, frequency), 40)
 	return
 
 /obj/item/device/assembly/signaler/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	frequency = 0
+	connected = null
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()
-	if(cooldown > 0)	return 0
+	if(cooldown > 0)
+		return FALSE
 	cooldown = 2
-	spawn(10)
-		process_cooldown()
-
+	addtimer(CALLBACK(.proc/process_cooldown), 10)
 	signal()
 	return 1
 
