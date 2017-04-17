@@ -282,7 +282,7 @@
 	W.layer = ABOVE_HUD_LAYER
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
-	BP.update_inv()
+	BP.update_inv_limb(slot)
 
 /*
 	Which items (as flags) each bodypart can equip.

@@ -149,7 +149,7 @@ proc/RoundHealth(health)
 			break
 		if(uninterruptible)
 			continue
-		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated())
 			. = FALSE
 			break
 

@@ -57,6 +57,7 @@ There are several things that need to be remembered:
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
 	var/list/overlays_bodypart = list()
+	var/list/overlays_inventory = list()
 
 /mob/living/carbon/proc/apply_overlay(cache_index)
 	var/image/I = overlays_standing[cache_index]
@@ -78,6 +79,16 @@ There are several things that need to be remembered:
 		overlays -= overlays_damage[cache_index]
 		overlays_damage[cache_index] = null
 */
+/mob/living/carbon/proc/apply_inv_overlay(cache_index)
+	var/image/I = overlays_inventory[cache_index]
+	if(I)
+		overlays += I
+
+/mob/living/carbon/proc/remove_inv_overlay(cache_index)
+	if(overlays_inventory[cache_index])
+		overlays -= overlays_inventory[cache_index]
+		overlays_inventory[cache_index] = null
+
 /mob/living/carbon/proc/apply_bodypart_overlay(cache_index)
 	var/image/I = overlays_bodypart[cache_index]
 	if(I)
@@ -92,7 +103,7 @@ There are several things that need to be remembered:
 	update_hud()		//TODO: remove the need for this
 
 
-/mob/living/carbon/proc/update_bodypart(body_zone, inventory_only = FALSE) // TODO probably will be better to separate inventory update into another "overlay layer" with new proc.
+/mob/living/carbon/proc/update_bodypart(body_zone)
 	remove_bodypart_overlay(body_zone)
 
 	var/obj/item/bodypart/BP = bodyparts_by_name[body_zone]
@@ -100,8 +111,7 @@ There are several things that need to be remembered:
 	if(!BP)
 		return
 
-	if(!inventory_only)
-		BP.update_limb()
+	BP.update_limb()
 
 	if(!BP.icon_state)
 		return
@@ -328,92 +338,137 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
-/obj/item/bodypart/proc/update_inv()
-	overlays -= inv_overlays
-	inv_overlays.Cut()
+// Don't call this proc, update_inv_limb() handles it when needed.
+/mob/living/carbon/proc/update_inv_mob(SLOT, multi = FALSE)
+	if(multi)
+		if(islist(SLOT))
+			for(var/slot_to_update in SLOT)
+				update_inv_mob(slot_to_update)
+		return
 
-	for(var/SLOT in inv_box_data)
-		var/obj/item/O = item_in_slot[SLOT]
-		if(O)
-			var/i_icon = get_item_icon_for_mob(SLOT, O)
-			var/i_state = inv_box_data[SLOT]["icon_state_as_item_state"]
-			var/i_locked_state = inv_box_data[SLOT]["locked_icon_state"]
-			var/i_fat = inv_box_data[SLOT]["support_fat_people"]
-			var/i_blood = inv_box_data[SLOT]["has_blood_overlay"]
-			var/i_tie = inv_box_data[SLOT]["has_tie"]
-			var/i_simple = inv_box_data[SLOT]["simple_overlays"]
-			var/i_color = inv_box_data[SLOT]["icon_state_as_color"]
-			var/i_screen_loc = inv_box_data[SLOT]["screen_loc"]
-			var/i_layer = inv_box_data[SLOT]["slot_layer"]
-			var/i_other = inv_box_data[SLOT]["other"] // this is used to determine if we should check hud_shown, because player may minimized hud with equipment (need better name for this var).
-			                                          // this var comes from datum/hud and its list\adding and list\other, so if the element is in "other" list, then we do special checks.
+	remove_inv_overlay(SLOT)
 
-			if(i_fat && owner && (owner.disabilities & FAT))
-				if(O.flags & ONESIZEFITSALL)
-					i_icon = 'icons/mob/uniform_fat.dmi'
-				else // TODO we should process that else where, maybe even make something like on_gain_disability() proc.
-					to_chat(owner, "\red You burst out of \the [O]!")
-					owner.dropItemToGround(O)
-					return
+	var/obj/item/bodypart/BP = get_slot_bodypart(SLOT)
+	if(!BP)
+		return
 
-			if(owner && owner.client && owner.hud_used) // My brain... With all those ifs...
-				if(i_other && owner.hud_used.hud_shown)
-					if(owner.hud_used.inventory_shown) // if the inventory is open ...
-						O.screen_loc = i_screen_loc    //...draw the item in the inventory screen
-					owner.client.screen += O           // Either way, add the item to the HUD
-				else
-					O.screen_loc = i_screen_loc
-					owner.client.screen += O
+	var/list/standing = BP.inv_overlays[SLOT]
+	if(!standing)
+		return
 
-			var/t_state = O.icon_state
-			if(i_locked_state)
-				t_state = i_locked_state
+	overlays_inventory[SLOT] = standing
+	apply_inv_overlay(SLOT)
+
+
+// multi (TRUE) - pass "nothing or null" in SLOT to rebuild all inventory overlays for this bodypart.
+// multi (TRUE) - pass "list of slots" in SLOT to update exact inventory overlays.
+//(see code\_DEFINES\inventory.dm for slot names).
+/obj/item/bodypart/proc/update_inv_limb(SLOT, multi = FALSE)
+	if(!SLOT && !multi)
+		return
+	//overlays -= inv_overlays
+	//inv_overlays.Cut()
+
+	if(multi)
+		if(islist(SLOT))
+			for(var/slot_to_update in SLOT)
+				update_inv_limb(slot_to_update)
+		else
+			for(var/slot_to_update in inv_box_data)
+				update_inv_limb(slot_to_update)
+		return
+
+	overlays -= inv_overlays[SLOT]
+	inv_overlays[SLOT] = null
+
+	if(!inv_box_data.len)
+		return
+
+	var/obj/item/O = item_in_slot[SLOT]
+	if(O)
+		var/i_icon = get_item_icon_for_mob(SLOT, O)
+		var/i_state = inv_box_data[SLOT]["icon_state_as_item_state"]
+		var/i_locked_state = inv_box_data[SLOT]["locked_icon_state"]
+		var/i_fat = inv_box_data[SLOT]["support_fat_people"]
+		var/i_blood = inv_box_data[SLOT]["has_blood_overlay"]
+		var/i_tie = inv_box_data[SLOT]["has_tie"]
+		var/i_simple = inv_box_data[SLOT]["simple_overlays"]
+		var/i_color = inv_box_data[SLOT]["icon_state_as_color"]
+		var/i_screen_loc = inv_box_data[SLOT]["screen_loc"]
+		var/i_layer = inv_box_data[SLOT]["slot_layer"]
+		var/i_other = inv_box_data[SLOT]["other"] // this is used to determine if we should check hud_shown, because player may minimized hud with equipment (need better name for this var).
+		                                          // this var comes from datum/hud and its list\adding and list\other, so if the element is in "other" list, then we do special checks.
+
+		if(i_fat && owner && (owner.disabilities & FAT))
+			if(O.flags & ONESIZEFITSALL)
+				i_icon = 'icons/mob/uniform_fat.dmi'
+			else // TODO we should process that else where, maybe even make something like on_gain_disability() proc.
+				to_chat(owner, "\red You burst out of \the [O]!")
+				owner.dropItemToGround(O)
+				return
+
+		if(owner && owner.client && owner.hud_used) // My brain... With all those ifs...
+			if(i_other && owner.hud_used.hud_shown)
+				if(owner.hud_used.inventory_shown) // if the inventory is open ...
+					O.screen_loc = i_screen_loc    //...draw the item in the inventory screen
+				owner.client.screen += O           // Either way, add the item to the HUD
 			else
-				if(i_state && O.item_state)
-					t_state = O.item_state
-				if(i_color && O.item_color)
-					t_state = O.item_color
+				O.screen_loc = i_screen_loc
+				owner.client.screen += O
 
-			var/image/standing
-			if(!i_simple)
-				if(!O.icon_custom || O.icon_override || species.sprite_sheets[SLOT])
-					standing += image(icon = (O.icon_override ? O.icon_override : (species.sprite_sheets[SLOT] ? species.sprite_sheets[SLOT] : i_icon)), icon_state = t_state, layer = i_layer)
-				else
-					standing += image(icon = O.icon_custom, icon_state = "[t_state]_mob", layer = i_layer)
+		var/t_state = O.icon_state
+		if(i_locked_state)
+			t_state = i_locked_state
+		else
+			if(i_state && O.item_state)
+				t_state = O.item_state
+			if(i_color && O.item_color)
+				t_state = O.item_color
+
+		var/list/standing = list()
+
+		var/image/I
+		if(!i_simple)
+			if(!O.icon_custom || O.icon_override || species.sprite_sheets[SLOT])
+				I = image(icon = (O.icon_override ? O.icon_override : (species.sprite_sheets[SLOT] ? species.sprite_sheets[SLOT] : i_icon)), icon_state = t_state, layer = i_layer)
 			else
-				standing += image(icon = i_icon, icon_state = t_state, layer = i_layer)
+				I = image(icon = O.icon_custom, icon_state = "[t_state]_mob", layer = i_layer)
+		else
+			I = image(icon = i_icon, icon_state = t_state, layer = i_layer)
 
-			standing.color = O.color
-			inv_overlays += standing
+		I.color = O.color
+		standing += I
 
-			if(i_blood && O.blood_DNA)
-				var/image/bloodsies
-				if(i_blood = "by_type")
-					var/obj/item/clothing/suit/S = O
-					bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = "[S.blood_overlay_type]blood", layer = i_layer + 0.2)
+		if(i_tie)
+			var/obj/item/clothing/under/U = O
+			if(U.hastie)
+				var/tie_color = U.hastie.item_color
+				if(!tie_color)
+					tie_color = U.hastie.icon_state
+				var/image/tie
+				if(U.hastie.icon_custom)
+					tie = image(icon = U.hastie.icon_custom, icon_state = "[tie_color]_mob", layer = i_layer + 0.1)
 				else
-					bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = i_blood, layer = i_layer + 0.2)
-				bloodsies.color = O.blood_color
-				inv_overlays += bloodsies
+					tie = image(icon = 'icons/mob/ties.dmi', icon_state = "[tie_color]", layer = i_layer + 0.1)
+				tie.color = U.hastie.color
+				standing += tie
 
-			if(i_tie)
-				var/obj/item/clothing/under/U = O
-				if(U.hastie)
-					var/tie_color = U.hastie.item_color
-					if(!tie_color)
-						tie_color = U.hastie.icon_state
-					var/image/tie
-					if(U.hastie.icon_custom)
-						tie = image(icon = U.hastie.icon_custom, icon_state = "[tie_color]_mob", layer = i_layer + 0.1)
-					else
-						tie = image(icon = 'icons/mob/ties.dmi', icon_state = "[tie_color]", layer = i_layer + 0.1)
-					tie.color = U.hastie.color
-					inv_overlays += tie
+		if(i_blood && O.blood_DNA)
+			var/image/bloodsies
+			if(i_blood = "by_type")
+				var/obj/item/clothing/suit/S = O
+				bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = "[S.blood_overlay_type]blood", layer = i_layer + 0.2)
+			else
+				bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = i_blood, layer = i_layer + 0.2)
+			bloodsies.color = O.blood_color
+			standing += bloodsies
+
+		inv_overlays[SLOT] = standing
 
 	if(owner)
-		owner.update_bodypart(body_zone, TRUE)
-	else
-		overlays += inv_overlays
+		owner.update_inv_mob(SLOT)
+	else if(inv_overlays[SLOT])
+		overlays += inv_overlays[SLOT]
 
 /obj/item/bodypart/proc/update_inv_hud() // this is specialized proc that used upon mob login, so we don't rebuild overlays as update_inv() proc does.
 	for(var/SLOT in inv_box_data)
@@ -430,7 +485,7 @@ There are several things that need to be remembered:
 					O.screen_loc = i_screen_loc
 					owner.client.screen += O
 
-/obj/item/bodypart/proc/get_item_icon_for_mob(SLOT, obj/item/O) // Should be used only in update_inv() proc, since it tests if inv_box_data has anything at all.
+/obj/item/bodypart/proc/get_item_icon_for_mob(SLOT, obj/item/O) // Should be used only in update_inv_limb() proc.
 	return inv_box_data[SLOT]["slot_icon"]
 
 /obj/item/bodypart/r_arm/get_item_icon_for_mob(SLOT, obj/item/O)

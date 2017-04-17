@@ -297,10 +297,10 @@ var/list/slot_equipment_priority = list( \
 	var/obj/item/bodypart/BP = get_bodypart(W.slot_bodypart)
 	BP.unequip_chain(W.slot_equipped)
 	BP.item_in_slot[W.slot_equipped] = null
+	BP.update_inv_limb(W.slot_equipped)
 	W.slot_equipped = null
 	W.slot_bodypart = null
 	W.screen_loc = null
-	BP.update_inv()
 
 //The following functions are the same save for one small difference
 

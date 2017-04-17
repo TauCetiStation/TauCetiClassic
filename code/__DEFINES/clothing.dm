@@ -10,33 +10,6 @@
 #define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
 #define HIDEFACE	8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
 
-//slots
-#define slot_back			"1"
-#define slot_wear_mask 		"2"
-#define slot_handcuffed 	"3"
-#define slot_l_hand 		"4"
-#define slot_r_hand 		"5"
-#define slot_belt 			"6"
-#define slot_wear_id 		"7"
-#define slot_l_ear 			"8"
-#define slot_glasses 		"9"
-#define slot_gloves 		"10"
-#define slot_head 			"11"
-#define slot_shoes 			"12"
-#define slot_wear_suit 		"13"
-#define slot_w_uniform 		"14"
-#define slot_l_store 		"15"
-#define slot_r_store 		"16"
-#define slot_s_store 		"17"
-#define slot_in_backpack	"18"
-#define slot_legcuffed 		"19"
-#define slot_r_ear 			"20"
-#define slot_legs 			"21"
-
-//Sol translation for dog slots.
-#define slot_mouth slot_wear_mask  // 2
-#define slot_neck  slot_handcuffed // 3 (Ian actually is a cat! ~if you know what i mean)
-
 //Cant seem to find a mob bitflags area other than the powers one
 
 // bitflags for clothing parts

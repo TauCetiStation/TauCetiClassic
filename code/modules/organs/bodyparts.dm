@@ -175,7 +175,7 @@
 		if(!O)
 			continue
 		O.loc = src // i think we don't need forceMove() here and for lighting update dropped() should be enough.
-		O.dropped(owner) // this should be
+		O.dropped(owner)
 
 	var/is_robotic = (status & ORGAN_ROBOT)
 
@@ -258,8 +258,9 @@
 		qdel(src)
 
 	owner.update_bodypart(body_zone)
+	owner.update_inv_mob(inv_box_data, multi = TRUE)
 	owner = null
-	update_inv()
+	update_inv_limb(multi = TRUE)
 
 // Used in surgery, replaces amputated limb with this one.
 /obj/item/bodypart/proc/replace_stump(mob/living/carbon/target)
@@ -302,83 +303,66 @@
 	return 0
 
 /obj/item/bodypart/proc/update_limb()
-	if(owner && overlays.len)
-		overlays.Cut()
+	if(owner)
+		var/has_gender = owner.species.flags[HAS_GENDERED_ICONS]
+		var/has_color = TRUE
+		var/husk = (owner.disabilities & HUSK)
 
-	var/has_gender = owner.species.flags[HAS_GENDERED_ICONS]
-	var/has_color = TRUE
-	var/husk = (owner.disabilities & HUSK)
-
-	if(owner.species.flags[IS_SYNTHETIC]) // TODO: bodyparts for this and ROBOT.
-		icon = owner.species.icobase
-		has_gender = FALSE
-		has_color = FALSE
-	else if(status & ORGAN_ROBOT)
-		icon = 'icons/mob/human_races/robotic.dmi'
-		has_gender = FALSE
-		has_color = FALSE
-	else if(husk) // TODO implement this for exact bodyparts.
-		overlays.Cut()
-		icon = 'icons/mob/human_races/bad_limb.dmi'
-		icon_state = body_zone + "_husk"
-		has_gender = FALSE
-		has_color = FALSE
-		return
-	else if(status & ORGAN_MUTATED)
-		icon = owner.species.deform
-	else
-		icon = owner.species.icobase
-
-	if(has_gender)
-		var/g = (owner.gender == FEMALE ? "_f" : "_m")
-		switch(body_zone)
-			if(BP_CHEST)
-				icon_state = body_zone + g
-			if(BP_GROIN, BP_HEAD)
-				icon_state = body_zone + g
-			else
-				icon_state = body_zone
-		if(owner.species.name == S_HUMAN && (owner.disabilities & FAT))
-			icon_state += "_fat"
-	else
-		icon_state = body_zone
-
-	if(has_color)
-		if(status & ORGAN_DEAD)
-			color = list(0.03,0,0, 0,0.2,0, 0,0,0, 0.3,0.3,0.3)
-		else if(HULK in owner.mutations)
-			color = list(0.18,0,0, 0,0.87,0, 0,0,0.15, 0,0,0)
+		if(owner.species.flags[IS_SYNTHETIC]) // TODO: bodyparts for this and ROBOT.
+			icon = owner.species.icobase
+			has_gender = FALSE
+			has_color = FALSE
+		else if(status & ORGAN_ROBOT)
+			icon = 'icons/mob/human_races/robotic.dmi'
+			has_gender = FALSE
+			has_color = FALSE
+		else if(husk) // TODO implement this for exact bodyparts.
+			overlays.Cut()
+			icon = 'icons/mob/human_races/bad_limb.dmi'
+			icon_state = body_zone + "_husk"
+			has_gender = FALSE
+			has_color = FALSE
+			return
+		else if(status & ORGAN_MUTATED)
+			icon = owner.species.deform
 		else
-			if(owner.species.flags[HAS_SKIN_TONE])
-				color = list(1,0,0, 0,1,0, 0,0,1, owner.s_tone/255,owner.s_tone/255,owner.s_tone/255)
-			if(owner.species.flags[HAS_SKIN_COLOR])
-				color = list(1,0,0, 0,1,0, 0,0,1, owner.r_skin/255,owner.g_skin/255,owner.b_skin/255)
-	else
-		color = null
+			icon = owner.species.icobase
 
-	// Damage overlays
-	if( (status & ORGAN_ROBOT) || damage_state == "00")
-		dmg_overlay = null
-	else if(update_damstate())
-		dmg_overlay = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[body_zone]_[damage_state]", layer = -DAMAGE_LAYER + limb_layer_priority)
-		dmg_overlay.color = owner.species.blood_color
+		if(has_gender)
+			var/g = (owner.gender == FEMALE ? "_f" : "_m")
+			switch(body_zone)
+				if(BP_CHEST)
+					icon_state = body_zone + g
+				if(BP_GROIN, BP_HEAD)
+					icon_state = body_zone + g
+				else
+					icon_state = body_zone
+			if(owner.species.name == S_HUMAN && (owner.disabilities & FAT))
+				icon_state += "_fat"
+		else
+			icon_state = body_zone
 
-	if(!owner)
-		var/list/standing = list()
-		if(dmg_overlay)
-			standing += dmg_overlay
-		if(inv_overlays.len)
-			standing += inv_overlays
-		if(standing)
-			overlays += standing
+		if(has_color)
+			if(status & ORGAN_DEAD)
+				color = list(0.03,0,0, 0,0.2,0, 0,0,0, 0.3,0.3,0.3)
+			else if(HULK in owner.mutations)
+				color = list(0.18,0,0, 0,0.87,0, 0,0,0.15, 0,0,0)
+			else
+				if(owner.species.flags[HAS_SKIN_TONE])
+					color = list(1,0,0, 0,1,0, 0,0,1, owner.s_tone/255,owner.s_tone/255,owner.s_tone/255)
+				if(owner.species.flags[HAS_SKIN_COLOR])
+					color = list(1,0,0, 0,1,0, 0,0,1, owner.r_skin/255,owner.g_skin/255,owner.b_skin/255)
+		else
+			color = null
+
+	if(!owner && dmg_overlay)
+		overlays += dmg_overlay
 
 /obj/item/bodypart/proc/get_icon()
 	var/list/standing = list()
 	standing += image(icon = src, layer = -BODYPARTS_LAYER + limb_layer_priority)
 	if(dmg_overlay)
 		standing += dmg_overlay
-	if(inv_overlays.len)
-		standing += inv_overlays
 	return standing
 
 /obj/item/bodypart/proc/handle_antibiotics()
@@ -922,11 +906,22 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	if(brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
 		src.fracture()
 
-//Returns 1 if damage_state changed
+//Returns 1 if damage_state changed, also updates damage overlays (just rebuilding image for later use by procs that actually updates visual part).
 /obj/item/bodypart/proc/update_damstate()
 	var/n_is = damage_state_text()
 	if(n_is != damage_state)
 		damage_state = n_is
+
+		if(dmg_overlay)
+			overlays -= dmg_overlay
+
+		// Damage overlays
+		if( (status & ORGAN_ROBOT) || damage_state == "00")
+			dmg_overlay = null
+		else
+			dmg_overlay = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[body_zone]_[damage_state]", layer = -DAMAGE_LAYER + limb_layer_priority)
+			dmg_overlay.color = species.blood_color
+
 		return TRUE
 	return FALSE
 
