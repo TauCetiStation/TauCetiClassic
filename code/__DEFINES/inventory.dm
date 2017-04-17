@@ -9,3 +9,8 @@
 #define ITEM_SIZE_HUGE           5
 #define ITEM_SIZE_GARGANTUAN     6
 #define ITEM_SIZE_NO_CONTAINER INFINITY // Use this to forbid item from being placed in a container.
+
+//Inventory depth: limits how many nested storage items you can access directly.
+//1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
+#define INVENTORY_DEPTH		3
+#define STORAGE_VIEW_DEPTH	2

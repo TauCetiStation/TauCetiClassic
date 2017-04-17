@@ -497,6 +497,7 @@
 
 
 /mob/proc/pull_damage()
+	return FALSE
 
 /mob/living/carbon/pull_damage()
 	var/mob/living/carbon/C = src
@@ -505,9 +506,8 @@
 			var/obj/item/bodypart/BP = C.bodyparts_by_name[name]
 			if(C.lying)
 				if((((BP.status & ORGAN_BROKEN) && !(BP.status & ORGAN_SPLINTED)) || (BP.status & ORGAN_BLEEDING)) && ((C.getBruteLoss() + C.getFireLoss()) >= 100))
-					return 1
-					break
-	return 0
+					return TRUE
+	return FALSE
 
 /mob/MouseDrop(mob/M)
 	..()

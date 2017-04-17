@@ -2,20 +2,21 @@
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
 	if(istype(W))
-		if(isIAN(src))
-			switch(slot)
-				if(slot_head, slot_back)
-					to_chat(src, "<span class='notice'>You have no idea how humans do this.</span>")
-					return
+		//if(isIAN(src))
+		//	switch(slot)
+		//		if(slot_head, slot_back)
+		//			to_chat(src, "<span class='notice'>You have no idea how humans do this.</span>")
+		//			return
 		if (istype(W, /obj/item/clothing))
 			var/obj/item/clothing/C = W
 			if(C.rig_restrict_helmet)
 				to_chat(src, "<span class='red'>You must fasten the helmet to a hardsuit first. (Target the head)</span>")// Stop eva helms equipping.
 			else
-				if(C.equip_time > 0)
-					delay_clothing_equip_to_slot_if_possible(C, slot)
-				else
-					equip_to_slot_if_possible(C, slot)
+				//if(C.equip_time > 0)
+				//	delay_clothing_equip_to_slot_if_possible(C, slot)
+				//else
+				//	equip_to_slot_if_possible(C, slot)
+				equip_to_slot_if_possible(C, slot)
 		else
 			equip_to_slot_if_possible(W, slot)
 
@@ -122,13 +123,25 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/get_inactive_hand()
 	return
 
+/mob/living/carbon/var/obj/item/bodypart/active_hand = null
+/mob/living/carbon/var/list/inactive_hands = list()
+
 /mob/living/carbon/get_active_hand()
-	if(hand)	return l_hand
-	else		return r_hand
+	if(active_hand)
+		if(active_hand.inv_box_data && active_hand.inv_box_data.len)
+			return active_hand.item_in_slot[active_hand.inv_box_data[1]]
+
+//	if(hand)	return l_hand
+//	else		return r_hand
 
 /mob/living/carbon/get_inactive_hand()
-	if(hand)	return r_hand
-	else		return l_hand
+	if(inactive_hands.len)
+		for(var/obj/item/bodypart/BP in inactive_hands)
+			if(BP.inv_box_data && BP.inv_box_data.len)
+				return BP.item_in_slot[BP.inv_box_data[1]]
+
+//	if(hand)	return r_hand
+//	else		return l_hand
 
 //Checks if thing in mob's hands
 /mob/living/carbon/proc/is_in_hands(typepath)
@@ -146,6 +159,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/put_in_r_hand(obj/item/W)
 	return
 
+/*
 /mob/living/carbon/put_in_l_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))
 		return 0
@@ -196,7 +210,7 @@ var/list/slot_equipment_priority = list( \
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
 		return 1
-	return 0
+	return 0*/
 
 //Puts the item into our active hand if possible. returns 1 on success.
 /mob/proc/put_in_active_hand(obj/item/W)
@@ -207,8 +221,12 @@ var/list/slot_equipment_priority = list( \
 	return
 
 /mob/living/carbon/put_in_active_hand(obj/item/W)
-	if(hand)	return put_in_l_hand(W)
-	else		return put_in_r_hand(W)
+	var/obj/item/bodypart/BP = active_hand
+	var/slot_hand = BP.inv_slots_data[1]
+	return equip_to_slot_if_possible(W, slot_hand)
+
+	//if(hand)	return put_in_l_hand(W)
+	//else		return put_in_r_hand(W)
 
 /mob/living/carbon/put_in_inactive_hand(obj/item/W)
 	if(hand)	return put_in_r_hand(W)
@@ -266,8 +284,9 @@ var/list/slot_equipment_priority = list( \
 	return
 
 /mob/living/carbon/drop_item(atom/Target)
-	if(hand)	return drop_l_hand(Target)
-	else		return drop_r_hand(Target)
+	return unEquip(get_active_hand())
+	//if(hand)	return drop_l_hand(Target)
+	//else		return drop_r_hand(Target)
 
 /*
 	Removes the object from any slots the mob might have, calling the appropriate icon update proc.
@@ -283,26 +302,20 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/u_equip(obj/W)
 	return
 
-/mob/living/carbon/u_equip(obj/W)
-	if (W == r_hand)
-		r_hand = null
-		update_inv_r_hand()
-	else if (W == l_hand)
-		l_hand = null
-		update_inv_l_hand()
-	else if (W == back)
-		back = null
-		update_inv_back()
-	else if (W == wear_mask)
-		wear_mask = null
-		update_inv_wear_mask()
-	return
+/mob/living/carbon/u_equip(obj/W) // this proc is only for cleaning references and updating mob/bodypart overlays.
+	if(!W || !W.slot_bodypart)
+		return
+
+	var/obj/item/bodypart/BP = get_bodypart(W.slot_bodypart)
+	BP.unequip_chain(W.slot_equipped)
+	BP.item_in_slot[W.slot_equipped] = null
+	W.slot_equipped = null
+	W.slot_bodypart = null
+	W.screen_loc = null
+	BP.update_inv()
 
 //This differs from remove_from_mob() in that it checks canremove first.
 /mob/proc/unEquip(obj/item/I, force = 0) //Force overrides NODROP for things like wizarditis and admin undress.
-	return
-
-/mob/living/carbon/unEquip(obj/item/I, force = 0)
 	if(!I) //If there's nothing to drop, the drop is automatically successful.
 		return 1
 

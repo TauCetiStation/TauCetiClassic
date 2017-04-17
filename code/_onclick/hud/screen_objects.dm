@@ -31,7 +31,8 @@
 
 /obj/screen/inventory
 	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
-
+	var/other = FALSE // If we should add it into "other" hud list (hideable inventory slots).
+	var/visible_when_hud_reduced = FALSE // Relation with HUD_STYLE_REDUCED
 
 /obj/screen/close
 	name = "close"
@@ -567,12 +568,12 @@
 		if("r_hand")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
-				C.activate_hand("r")
+				C.activate_hand(master)
 				usr.next_move = world.time+2
 		if("l_hand")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
-				C.activate_hand("l")
+				C.activate_hand(master)
 				usr.next_move = world.time+2
 		if("swap")
 			usr:swap_hand()
@@ -580,7 +581,5 @@
 			usr:swap_hand()
 		else
 			if(usr.attack_ui(slot_id))
-				usr.update_inv_l_hand()
-				usr.update_inv_r_hand()
 				usr.next_move = world.time+6
 	return 1

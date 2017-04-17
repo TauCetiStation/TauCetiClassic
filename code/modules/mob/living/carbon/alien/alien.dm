@@ -320,7 +320,7 @@ Des: Removes all infected images from the alien.
 			if(dd_hasprefix_case(I.icon_state, "infected"))
 				qdel(I)
 	return
-
+/*
 /mob/living/carbon/alien/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
@@ -335,7 +335,7 @@ Des: Removes all infected images from the alien.
 			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
 		else
 			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
+			hud_used.r_hand_hud_object.icon_state = "hand_r_active"*/
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
 	else

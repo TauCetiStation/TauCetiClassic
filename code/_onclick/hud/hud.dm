@@ -27,8 +27,6 @@
 	var/obj/screen/lingstingdisplay
 	var/obj/screen/blobpwrdisplay
 	var/obj/screen/blobhealthdisplay
-	var/obj/screen/r_hand_hud_object
-	var/obj/screen/l_hand_hud_object
 	var/obj/screen/action_intent
 	var/obj/screen/move_intent
 	var/obj/screen/staminadisplay
@@ -36,6 +34,7 @@
 	var/list/adding
 	var/list/other
 	var/list/obj/screen/hotkeybuttons
+	var/list/visible_elements_while_reduced
 
 	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
@@ -57,13 +56,12 @@
 	lingchemdisplay = null
 	blobpwrdisplay = null
 	blobhealthdisplay = null
-	r_hand_hud_object = null
-	l_hand_hud_object = null
 	action_intent = null
 	move_intent = null
 	adding = null
 	other = null
 	hotkeybuttons = null
+	visible_elements_while_reduced = null
 	hide_actions_toggle = null
 	mymob = null
 	if(plane_masters.len)
@@ -76,53 +74,35 @@
 	if(!mymob)
 		return
 
-	if(ishuman(mymob))
-		var/mob/living/carbon/human/H = mymob
-		if(H.handcuffed)
-			H.handcuffed.screen_loc = null	//no handcuffs in my UI!
-		if(inventory_shown && hud_shown)
-			if(H.shoes)		H.shoes.screen_loc = ui_shoes
-			if(H.gloves)	H.gloves.screen_loc = ui_gloves
-			if(H.l_ear)		H.l_ear.screen_loc = ui_l_ear
-			if(H.r_ear)		H.r_ear.screen_loc = ui_r_ear
-			if(H.glasses)	H.glasses.screen_loc = ui_glasses
-			if(H.w_uniform)	H.w_uniform.screen_loc = ui_iclothing
-			if(H.wear_suit)	H.wear_suit.screen_loc = ui_oclothing
-			if(H.wear_mask)	H.wear_mask.screen_loc = ui_mask
-			if(H.head)		H.head.screen_loc = ui_head
-		else
-			if(H.shoes)		H.shoes.screen_loc = null
-			if(H.gloves)	H.gloves.screen_loc = null
-			if(H.l_ear)		H.l_ear.screen_loc = null
-			if(H.r_ear)		H.r_ear.screen_loc = null
-			if(H.glasses)	H.glasses.screen_loc = null
-			if(H.w_uniform)	H.w_uniform.screen_loc = null
-			if(H.wear_suit)	H.wear_suit.screen_loc = null
-			if(H.wear_mask)	H.wear_mask.screen_loc = null
-			if(H.head)		H.head.screen_loc = null
+	if(iscarbon(mymob))
+		var/mob/living/carbon/C = mymob
+		for(var/obj/item/bodypart/BP in C.bodyparts)
+			for(var/slot in BP.item_in_slot)
+				var/obj/item/I = BP.item_in_slot[slot]
+				if(I)
+					if(!BP.inv_box_data[slot]["other"])
+						continue
+					if(inventory_shown && hud_shown)
+						I.screen_loc = BP.inv_box_data[slot]["screen_loc"]
+					else
+						I.screen_loc = null
 
-
-/datum/hud/proc/persistant_inventory_update()
+/datum/hud/proc/persistent_inventory_update()
 	if(!mymob)
 		return
 
-	if(ishuman(mymob))
-		var/mob/living/carbon/human/H = mymob
-		if(hud_shown)
-			if(H.s_store)	H.s_store.screen_loc = ui_sstore1
-			if(H.wear_id)	H.wear_id.screen_loc = ui_id
-			if(H.belt)		H.belt.screen_loc = ui_belt
-			if(H.back)		H.back.screen_loc = ui_back
-			if(H.l_store)	H.l_store.screen_loc = ui_storage1
-			if(H.r_store)	H.r_store.screen_loc = ui_storage2
-		else
-			if(H.s_store)	H.s_store.screen_loc = null
-			if(H.wear_id)	H.wear_id.screen_loc = null
-			if(H.belt)		H.belt.screen_loc = null
-			if(H.back)		H.back.screen_loc = null
-			if(H.l_store)	H.l_store.screen_loc = null
-			if(H.r_store)	H.r_store.screen_loc = null
-
+	if(iscarbon(mymob))
+		var/mob/living/carbon/C = mymob
+		for(var/obj/item/bodypart/BP in C.bodyparts)
+			for(var/slot in BP.item_in_slot)
+				var/obj/item/I = BP.item_in_slot[slot]
+				if(I)
+					if(!BP.inv_box_data[slot]["persistent_hud"])
+						continue
+					if(hud_shown)
+						I.screen_loc = BP.inv_box_data[slot]["screen_loc"]
+					else
+						I.screen_loc = null
 
 /datum/hud/proc/instantiate()
 	if(!ismob(mymob))
@@ -197,7 +177,7 @@
 			mymob.client.screen += mymob.gun_setting_icon
 
 			hidden_inventory_update()
-			persistant_inventory_update()
+			persistent_inventory_update()
 			mymob.update_action_buttons()
 			reorganize_alerts()
 		if(HUD_STYLE_REDUCED)	//Reduced HUD
@@ -215,13 +195,12 @@
 			mymob.client.screen -= lingchemdisplay
 
 			//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
-			mymob.client.screen += l_hand_hud_object	//we want the hands to be visible
-			mymob.client.screen += r_hand_hud_object	//we want the hands to be visible
+			mymob.client.screen += visible_elements_while_reduced	//we want those elements to be visible
 			mymob.client.screen += action_intent		//we want the intent swticher visible
 			action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
 
 			hidden_inventory_update()
-			persistant_inventory_update()
+			persistent_inventory_update()
 			mymob.update_action_buttons()
 			reorganize_alerts()
 		if(HUD_STYLE_NOHUD)	//No HUD
@@ -243,7 +222,7 @@
 			mymob.client.screen -= mymob.gun_setting_icon
 
 			hidden_inventory_update()
-			persistant_inventory_update()
+			persistent_inventory_update()
 			mymob.update_action_buttons()
 			reorganize_alerts()
 	if(plane_masters.len)

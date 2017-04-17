@@ -47,48 +47,6 @@ There are several things that need to be remembered:
 
 */
 
-//Human Overlays Indexes/////////
-#define BODYPARTS_LAYER			28
-#define BODY_LAYER				27
-#define MUTANTRACE_LAYER		26
-#define MUTATIONS_LAYER			25
-#define DAMAGE_LAYER			24
-#define SURGERY_LAYER			23		//bs12 specific.
-#define BANDAGE_LAYER			22
-#define UNIFORM_LAYER			21
-#define TAIL_LAYER				20		//bs12 specific. this hack is probably gonna come back to haunt me
-#define ID_LAYER				19
-#define SHOES_LAYER				18
-#define GLOVES_LAYER			17
-#define EARS_LAYER				16
-#define SUIT_LAYER				15
-#define GLASSES_LAYER			14
-#define BELT_LAYER				13		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		12
-#define BACK_LAYER				11
-#define HAIR_LAYER				10		//TODO: make part of head layer?
-#define FACEMASK_LAYER			9
-#define HEAD_LAYER				8
-#define COLLAR_LAYER			7
-#define HANDCUFF_LAYER			6
-#define LEGCUFF_LAYER			5
-#define L_HAND_LAYER			4
-#define R_HAND_LAYER			3
-#define TARGETED_LAYER			2		//BS12: Layer for the target overlay from weapon targeting system
-#define FIRE_LAYER				1
-#define TOTAL_LAYERS			28
-//////////////////////////////////
-//Human BodyParts Overlays Indexes/////
-#define BP_HEAD_LAYER		7
-#define BP_TORSO_LAYER		6
-#define BP_L_ARM_LAYER		5
-#define BP_R_ARM_LAYER		4
-#define BP_GROIN_LAYER		3
-#define BP_L_LEG_LAYER		2
-#define BP_R_LEG_LAYER		1
-#define TOTAL_BP_LAYERS		7
-//////////////////////////////////
-
 /*
 	*** list/human_icon_cache ***
 	Global associative list for caching humanoid icons.
@@ -97,9 +55,7 @@ There are several things that need to be remembered:
 	icon_key is [species.race_key][g][husk][fat][hulk][s_tone][r_tone]
 */
 /mob/living/carbon
-	var/static/list/human_icon_cache = list()
 	var/list/overlays_standing[TOTAL_LAYERS]
-	//var/list/overlays_damage[TOTAL_BP_LAYERS]
 	var/list/overlays_bodypart = list()
 
 /mob/living/carbon/proc/apply_overlay(cache_index)
@@ -136,7 +92,7 @@ There are several things that need to be remembered:
 	update_hud()		//TODO: remove the need for this
 
 
-/mob/living/carbon/proc/update_bodypart(body_zone)
+/mob/living/carbon/proc/update_bodypart(body_zone, inventory_only = FALSE) // TODO probably will be better to separate inventory update into another "overlay layer" with new proc.
 	remove_bodypart_overlay(body_zone)
 
 	var/obj/item/bodypart/BP = bodyparts_by_name[body_zone]
@@ -144,7 +100,8 @@ There are several things that need to be remembered:
 	if(!BP)
 		return
 
-	BP.update_limb()
+	if(!inventory_only)
+		BP.update_limb()
 
 	if(!BP.icon_state)
 		return
@@ -342,7 +299,7 @@ There are several things that need to be remembered:
 	update_hair()
 	update_mutations()
 	update_mutantrace()
-	update_inv_w_uniform()
+	/*update_inv_w_uniform()
 	update_inv_wear_id()
 	update_inv_gloves()
 	update_inv_glasses()
@@ -358,7 +315,7 @@ There are several things that need to be remembered:
 	update_inv_l_hand()
 	update_inv_handcuffed()
 	update_inv_legcuffed()
-	update_inv_pockets()
+	update_inv_pockets()*/
 	update_surgery()
 	update_bandage()
 	update_bodyparts()
@@ -371,8 +328,119 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
+/obj/item/bodypart/proc/update_inv()
+	overlays -= inv_overlays
+	inv_overlays.Cut()
+
+	for(var/SLOT in inv_box_data)
+		var/obj/item/O = item_in_slot[SLOT]
+		if(O)
+			var/i_icon = get_item_icon_for_mob(SLOT, O)
+			var/i_state = inv_box_data[SLOT]["icon_state_as_item_state"]
+			var/i_locked_state = inv_box_data[SLOT]["locked_icon_state"]
+			var/i_fat = inv_box_data[SLOT]["support_fat_people"]
+			var/i_blood = inv_box_data[SLOT]["has_blood_overlay"]
+			var/i_tie = inv_box_data[SLOT]["has_tie"]
+			var/i_simple = inv_box_data[SLOT]["simple_overlays"]
+			var/i_color = inv_box_data[SLOT]["icon_state_as_color"]
+			var/i_screen_loc = inv_box_data[SLOT]["screen_loc"]
+			var/i_layer = inv_box_data[SLOT]["slot_layer"]
+			var/i_other = inv_box_data[SLOT]["other"] // this is used to determine if we should check hud_shown, because player may minimized hud with equipment (need better name for this var).
+			                                          // this var comes from datum/hud and its list\adding and list\other, so if the element is in "other" list, then we do special checks.
+
+			if(i_fat && owner && (owner.disabilities & FAT))
+				if(O.flags & ONESIZEFITSALL)
+					i_icon = 'icons/mob/uniform_fat.dmi'
+				else // TODO we should process that else where, maybe even make something like on_gain_disability() proc.
+					to_chat(owner, "\red You burst out of \the [O]!")
+					owner.drop_from_inventory(O)
+					return
+
+			if(owner && owner.client && owner.hud_used) // My brain... With all those ifs...
+				if(i_other && owner.hud_used.hud_shown)
+					if(owner.hud_used.inventory_shown) // if the inventory is open ...
+						O.screen_loc = i_screen_loc    //...draw the item in the inventory screen
+					owner.client.screen += O           // Either way, add the item to the HUD
+				else
+					O.screen_loc = i_screen_loc
+					owner.client.screen += O
+
+			var/t_state = O.icon_state
+			if(i_locked_state)
+				t_state = i_locked_state
+			else
+				if(i_state && O.item_state)
+					t_state = O.item_state
+				if(i_color && O.item_color)
+					t_state = O.item_color
+
+			var/image/standing
+			if(!i_simple)
+				if(!O.icon_custom || O.icon_override || species.sprite_sheets[SLOT])
+					standing += image(icon = (O.icon_override ? O.icon_override : (species.sprite_sheets[SLOT] ? species.sprite_sheets[SLOT] : i_icon)), icon_state = t_state, layer = i_layer)
+				else
+					standing += image(icon = O.icon_custom, icon_state = "[t_state]_mob", layer = i_layer)
+			else
+				standing += image(icon = i_icon, icon_state = t_state, layer = i_layer)
+
+			standing.color = O.color
+			inv_overlays += standing
+
+			if(i_blood && O.blood_DNA)
+				var/image/bloodsies
+				if(i_blood = "by_type")
+					var/obj/item/clothing/suit/S = O
+					bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = "[S.blood_overlay_type]blood", layer = i_layer + 0.2)
+				else
+					bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = i_blood, layer = i_layer + 0.2)
+				bloodsies.color = O.blood_color
+				inv_overlays += bloodsies
+
+			if(i_tie)
+				var/obj/item/clothing/under/U = O
+				if(U.hastie)
+					var/tie_color = U.hastie.item_color
+					if(!tie_color)
+						tie_color = U.hastie.icon_state
+					var/image/tie
+					if(U.hastie.icon_custom)
+						tie = image(icon = U.hastie.icon_custom, icon_state = "[tie_color]_mob", layer = i_layer + 0.1)
+					else
+						tie = image(icon = 'icons/mob/ties.dmi', icon_state = "[tie_color]", layer = i_layer + 0.1)
+					tie.color = U.hastie.color
+					inv_overlays += tie
+
+	if(owner)
+		owner.update_bodypart(body_zone, TRUE)
+	else
+		overlays += inv_overlays
+
+/obj/item/bodypart/proc/update_inv_hud() // this is specialized proc that used upon mob login, so we don't rebuild overlays as update_inv() proc does.
+	for(var/SLOT in inv_box_data)
+		var/obj/item/O = item_in_slot[SLOT]
+		if(O && !inv_box_data[SLOT]["no_hud"])
+			var/i_screen_loc = inv_box_data[SLOT]["screen_loc"]
+			var/i_other = inv_box_data[SLOT]["other"]
+			if(owner && owner.client && owner.hud_used) // My brain... With all those ifs...
+				if(i_other && owner.hud_used.hud_shown)
+					if(owner.hud_used.inventory_shown) // if the inventory is open ...
+						O.screen_loc = i_screen_loc    //...draw the item in the inventory screen
+					owner.client.screen += O           // Either way, add the item to the HUD
+				else
+					O.screen_loc = i_screen_loc
+					owner.client.screen += O
+
+/obj/item/bodypart/proc/get_item_icon_for_mob(SLOT, obj/item/O) // Should be used only in update_inv() proc, since it tests if inv_box_data has anything at all.
+	return inv_box_data[SLOT]["slot_icon"]
+
+/obj/item/bodypart/r_arm/get_item_icon_for_mob(SLOT, obj/item/O)
+	return O.righthand_file
+
+/obj/item/bodypart/l_arm/get_item_icon_for_mob(SLOT, obj/item/O)
+	return O.lefthand_file
+
 /mob/living/carbon/update_inv_w_uniform()
-	remove_overlay(UNIFORM_LAYER)
+	/*remove_overlay(UNIFORM_LAYER)
 
 	if(istype(w_uniform, /obj/item/clothing/under))
 		if(client && hud_used && hud_used.hud_shown)
@@ -419,11 +487,11 @@ There are several things that need to be remembered:
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
 			drop_from_inventory(thing)
 
-	apply_overlay(UNIFORM_LAYER)
+	apply_overlay(UNIFORM_LAYER)*/
 
 
 /mob/living/carbon/update_inv_wear_id()
-	remove_overlay(ID_LAYER)
+	/*remove_overlay(ID_LAYER)
 	if(wear_id)
 		wear_id.screen_loc = ui_id
 		if(client && hud_used)
@@ -434,11 +502,11 @@ There are several things that need to be remembered:
 	hud_updateflag |= 1 << ID_HUD
 	hud_updateflag |= 1 << WANTED_HUD
 
-	apply_overlay(ID_LAYER)
+	apply_overlay(ID_LAYER)*/
 
 
 /mob/living/carbon/update_inv_gloves()
-	remove_overlay(GLOVES_LAYER)
+	/*remove_overlay(GLOVES_LAYER)
 	if(gloves)
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
@@ -465,11 +533,11 @@ There are several things that need to be remembered:
 			bloodsies.color = hand_blood_color
 			overlays_standing[GLOVES_LAYER]	= bloodsies
 
-	apply_overlay(GLOVES_LAYER)
+	apply_overlay(GLOVES_LAYER)*/
 
 
 /mob/living/carbon/update_inv_glasses()
-	remove_overlay(GLASSES_LAYER)
+	/*remove_overlay(GLASSES_LAYER)
 
 	if(glasses)
 		if(client && hud_used && hud_used.hud_shown)
@@ -484,11 +552,11 @@ There are several things that need to be remembered:
 		standing.color = glasses.color
 		overlays_standing[GLASSES_LAYER] = standing
 
-	apply_overlay(GLASSES_LAYER)
+	apply_overlay(GLASSES_LAYER)*/
 
 
 /mob/living/carbon/update_inv_ears()
-	remove_overlay(EARS_LAYER)
+	/*remove_overlay(EARS_LAYER)
 
 	if(l_ear || r_ear)
 		if(l_ear)
@@ -516,11 +584,11 @@ There are several things that need to be remembered:
 			standing.color = r_ear.color
 			overlays_standing[EARS_LAYER] = standing
 
-	apply_overlay(EARS_LAYER)
+	apply_overlay(EARS_LAYER)*/
 
 
 /mob/living/carbon/update_inv_shoes()
-	remove_overlay(SHOES_LAYER)
+	/*remove_overlay(SHOES_LAYER)
 
 	if(shoes)
 		if(client && hud_used && hud_used.hud_shown)
@@ -546,11 +614,11 @@ There are several things that need to be remembered:
 			bloodsies.color = feet_blood_color
 			overlays_standing[SHOES_LAYER] = bloodsies
 
-	apply_overlay(SHOES_LAYER)
+	apply_overlay(SHOES_LAYER)*/
 
 
 /mob/living/carbon/update_inv_s_store()
-	remove_overlay(SUIT_STORE_LAYER)
+	/*remove_overlay(SUIT_STORE_LAYER)
 
 	if(s_store)
 		s_store.screen_loc = ui_sstore1
@@ -563,11 +631,11 @@ There are several things that need to be remembered:
 		standing.color = s_store.color
 		overlays_standing[SUIT_STORE_LAYER]	= standing
 
-	apply_overlay(SUIT_STORE_LAYER)
+	apply_overlay(SUIT_STORE_LAYER)*/
 
 
 /mob/living/carbon/update_inv_head()
-	remove_overlay(HEAD_LAYER)
+	/*remove_overlay(HEAD_LAYER)
 
 	if(head)
 		if(client && hud_used && hud_used.hud_shown)
@@ -592,11 +660,11 @@ There are several things that need to be remembered:
 			bloodsies.color = head.blood_color
 			standing.overlays	+= bloodsies
 
-	apply_overlay(HEAD_LAYER)
+	apply_overlay(HEAD_LAYER)*/
 
 
 /mob/living/carbon/update_inv_belt()
-	remove_overlay(BELT_LAYER)
+	/*remove_overlay(BELT_LAYER)
 
 	if(belt)
 		belt.screen_loc = ui_belt
@@ -612,11 +680,11 @@ There are several things that need to be remembered:
 			standing = image("icon"=belt:icon_custom, "icon_state"="[belt.icon_state]_mob", "layer"=-BELT_LAYER)
 		standing.color = belt.color
 		overlays_standing[BELT_LAYER] = standing
-	apply_overlay(BELT_LAYER)
+	apply_overlay(BELT_LAYER)*/
 
 
 /mob/living/carbon/update_inv_wear_suit()
-	remove_overlay(SUIT_LAYER)
+	/*remove_overlay(SUIT_LAYER)
 
 	if(istype(wear_suit, /obj/item/clothing/suit))
 		if(client && hud_used && hud_used.hud_shown)
@@ -660,7 +728,7 @@ There are several things that need to be remembered:
 	update_tail_showing()
 	update_collar()
 
-	apply_overlay(SUIT_LAYER)
+	apply_overlay(SUIT_LAYER)*/
 
 
 /mob/living/carbon/update_inv_pockets()
@@ -675,7 +743,7 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/update_inv_wear_mask()
-	remove_overlay(FACEMASK_LAYER)
+/*	remove_overlay(FACEMASK_LAYER)
 
 	if(istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/tie))
 		if(client && hud_used && hud_used.hud_shown)
@@ -696,11 +764,11 @@ There are several things that need to be remembered:
 			bloodsies.color = wear_mask.blood_color
 			standing.overlays	+= bloodsies
 
-	apply_overlay(FACEMASK_LAYER)
+	apply_overlay(FACEMASK_LAYER)*/
 
 
 /mob/living/carbon/update_inv_back()
-	remove_overlay(BACK_LAYER)
+	/*remove_overlay(BACK_LAYER)
 
 	if(back)
 		back.screen_loc = ui_back
@@ -713,7 +781,7 @@ There are several things that need to be remembered:
 			standing = image("icon"=back:icon_custom, "icon_state"="[back.icon_state]_mob", "layer"=-BACK_LAYER)
 		standing.color = back.color
 		overlays_standing[BACK_LAYER] = standing
-	apply_overlay(BACK_LAYER)
+	apply_overlay(BACK_LAYER)*/
 
 
 /mob/living/carbon/update_hud()	//TODO: do away with this if possible
@@ -749,7 +817,7 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/update_inv_r_hand()
-	remove_overlay(R_HAND_LAYER)
+	/*remove_overlay(R_HAND_LAYER)
 
 	if(r_hand)
 		r_hand.screen_loc = ui_rhand
@@ -770,11 +838,11 @@ There are several things that need to be remembered:
 		if(handcuffed)
 			drop_r_hand()
 
-	apply_overlay(R_HAND_LAYER)
+	apply_overlay(R_HAND_LAYER)*/
 
 
 /mob/living/carbon/update_inv_l_hand()
-	remove_overlay(L_HAND_LAYER)
+	/*remove_overlay(L_HAND_LAYER)
 
 	if(l_hand)
 		l_hand.screen_loc = ui_lhand
@@ -795,7 +863,7 @@ There are several things that need to be remembered:
 		if(handcuffed)
 			drop_l_hand()
 
-	apply_overlay(L_HAND_LAYER)
+	apply_overlay(L_HAND_LAYER)*/
 
 
 /mob/living/carbon/proc/update_tail_showing()
@@ -861,33 +929,3 @@ There are several things that need to be remembered:
 	var/list/out = new
 	out = overlays_standing.Copy()
 	return out
-
-//Human Overlays Indexes/////////
-#undef BODY_LAYER
-#undef MUTANTRACE_LAYER
-#undef MUTATIONS_LAYER
-//#undef DAMAGE_LAYER
-#undef SURGERY_LAYER
-#undef BANDAGE_LAYER
-#undef UNIFORM_LAYER
-#undef TAIL_LAYER
-#undef ID_LAYER
-#undef SHOES_LAYER
-#undef GLOVES_LAYER
-#undef EARS_LAYER
-#undef SUIT_LAYER
-#undef GLASSES_LAYER
-#undef FACEMASK_LAYER
-#undef BELT_LAYER
-#undef SUIT_STORE_LAYER
-#undef BACK_LAYER
-#undef HAIR_LAYER
-#undef HEAD_LAYER
-#undef COLLAR_LAYER
-#undef HANDCUFF_LAYER
-#undef LEGCUFF_LAYER
-#undef L_HAND_LAYER
-#undef R_HAND_LAYER
-#undef TARGETED_LAYER
-#undef FIRE_LAYER
-#undef TOTAL_LAYERS

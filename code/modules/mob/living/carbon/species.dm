@@ -73,17 +73,8 @@
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
 	sprite_sheets = list(
-		"held" = 'icons/mob/path',
-		"uniform" = 'icons/mob/path',
-		"suit" = 'icons/mob/path',
-		"belt" = 'icons/mob/path'
-		"head" = 'icons/mob/path',
-		"back" = 'icons/mob/path',
-		"mask" = 'icons/mob/path',
-		"ears" = 'icons/mob/path',
-		"eyes" = 'icons/mob/path',
-		"feet" = 'icons/mob/path',
-		"gloves" = 'icons/mob/path'
+		slot_wear_suit = 'icons/mob/path',
+		slot_belt = 'icon_mob/path'
 		)
 	If index term exists and icon_override is not set, this sprite sheet will be used.
 	*/
@@ -318,11 +309,11 @@
 	reagent_tag = IS_VOX
 
 	sprite_sheets = list(
-		"suit" = 'icons/mob/species/vox/suit.dmi',
-		"head" = 'icons/mob/species/vox/head.dmi',
-		"mask" = 'icons/mob/species/vox/masks.dmi',
-		"feet" = 'icons/mob/species/vox/shoes.dmi',
-		"gloves" = 'icons/mob/species/vox/gloves.dmi'
+		slot_wear_suit = 'icons/mob/species/vox/suit.dmi',
+		slot_head = 'icons/mob/species/vox/head.dmi',
+		slot_wear_mask = 'icons/mob/species/vox/masks.dmi',
+		slot_shoes = 'icons/mob/species/vox/shoes.dmi',
+		slot_gloves = 'icons/mob/species/vox/gloves.dmi'
 		)
 
 /datum/species/vox/handle_post_spawn(mob/living/carbon/C)
@@ -373,11 +364,12 @@
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
 	sprite_sheets = list(
-		"suit" = 'icons/mob/species/armalis/suit.dmi',
-		"gloves" = 'icons/mob/species/armalis/gloves.dmi',
-		"feet" = 'icons/mob/species/armalis/feet.dmi',
-		"head" = 'icons/mob/species/armalis/head.dmi',
-		"held" = 'icons/mob/species/armalis/held.dmi'
+		slot_wear_suit = 'icons/mob/species/armalis/suit.dmi',
+		slot_gloves = 'icons/mob/species/armalis/gloves.dmi',
+		slot_shoes = 'icons/mob/species/armalis/feet.dmi',
+		slot_head = 'icons/mob/species/armalis/head.dmi',
+		slot_r_hand = 'icons/mob/species/armalis/held.dmi',
+		slot_l_hand = 'icons/mob/species/armalis/held.dmi'
 		)
 
 /datum/species/nymph

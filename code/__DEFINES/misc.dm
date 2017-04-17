@@ -201,3 +201,35 @@
 //Wet floor states/severity
 #define WATER_FLOOR 1
 #define LUBE_FLOOR  2
+
+// Carbon Overlays Indexes
+// Acts as priority number for layer with overlay we apply.
+#define BODYPARTS_LAYER		28
+#define BODY_LAYER			27
+#define MUTANTRACE_LAYER	26
+#define MUTATIONS_LAYER		25
+#define DAMAGE_LAYER		24
+#define SURGERY_LAYER		23		//bs12 specific.
+#define BANDAGE_LAYER		22
+#define UNIFORM_LAYER		21
+#define TAIL_LAYER			20		//bs12 specific. this hack is probably gonna come back to haunt me
+#define ID_LAYER			19
+#define SHOES_LAYER			18
+#define GLOVES_LAYER		17
+#define EARS_LAYER			16
+#define SUIT_LAYER			15
+#define GLASSES_LAYER		14
+#define BELT_LAYER			13		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER	12
+#define BACK_LAYER			11
+#define HAIR_LAYER			10		//TODO: make part of head layer?
+#define FACEMASK_LAYER		9
+#define HEAD_LAYER			8
+#define COLLAR_LAYER		7
+#define HANDCUFF_LAYER		6
+#define LEGCUFF_LAYER		5
+#define L_HAND_LAYER		4
+#define R_HAND_LAYER		3
+#define TARGETED_LAYER		2		//BS12: Layer for the target overlay from weapon targeting system
+#define FIRE_LAYER			1
+#define TOTAL_LAYERS		28

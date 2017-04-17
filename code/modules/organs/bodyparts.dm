@@ -85,6 +85,13 @@
 
 	germ_level = 0
 
+	var/list/item_in_slot = list() // associative slots list with items equipped (no need to touch this).
+	var/list/inv_slots_data // this list will be automatically created and filled upon bodypart creation (no need to touch this).
+	var/list/inv_box_data // this list contains hud element information like slot name, id, icon_state, etc, see other bodyparts if you need to create new unique bodypart.
+	                      // also acts as information on which items can be equipped into that bodypart.
+	var/image/dmg_overlay
+	var/list/inv_overlays = list()
+
 /obj/item/bodypart/New(loc, mob/living/carbon/C)
 	if(!max_damage)
 		max_damage = min_broken_damage * 2
@@ -111,12 +118,17 @@
 		if(species.flags[IS_SYNTHETIC])
 			status |= ORGAN_ROBOT
 
+	generate_hud_data()
+
 	create_reagents(5 * (w_class-1)**2)
 	reagents.add_reagent("nutriment", reagents.maximum_volume) // Bay12: protein
 
 	return ..()
 
 /obj/item/bodypart/Destroy()
+	if(inv_slots_data)
+		remove_hud_data(TRUE)
+
 	for(var/datum/wound/W in wounds)
 		W.embedded_objects.Cut()
 	wounds.Cut()
@@ -155,6 +167,15 @@
 /obj/item/bodypart/proc/removed(mob/living/user, ignore_children = 0) // TODO implement this proc properly
 	if(!istype(owner))
 		return
+
+	remove_hud_data()
+
+	for(var/slot in item_in_slot)
+		var/obj/item/O = item_in_slot[slot]
+		if(!O)
+			continue
+		O.loc = src // i think we don't need forceMove() here and for lighting update dropped() should be enough.
+		O.dropped(owner) // this should be
 
 	var/is_robotic = (status & ORGAN_ROBOT)
 
@@ -238,6 +259,7 @@
 
 	owner.update_bodypart(body_zone)
 	owner = null
+	update_inv()
 
 // Used in surgery, replaces amputated limb with this one.
 /obj/item/bodypart/proc/replace_stump(mob/living/carbon/target)
@@ -253,6 +275,8 @@
 
 		loc = null
 		owner = target
+
+		owner.add_hud_data(src)
 
 		owner.bodyparts += src
 		owner.bodyparts_by_name[body_zone] = src
@@ -278,8 +302,8 @@
 	return 0
 
 /obj/item/bodypart/proc/update_limb()
-	if(!owner)
-		return
+	if(owner && overlays.len)
+		overlays.Cut()
 
 	var/has_gender = owner.species.flags[HAS_GENDERED_ICONS]
 	var/has_color = TRUE
@@ -334,15 +358,28 @@
 
 	// Damage overlays
 	if( (status & ORGAN_ROBOT) || damage_state == "00")
-		return
+		dmg_overlay = null
+	else if(update_damstate())
+		dmg_overlay = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[body_zone]_[damage_state]", layer = -DAMAGE_LAYER + limb_layer_priority)
+		dmg_overlay.color = owner.species.blood_color
 
-	overlays.Cut()
-	var/image/damage_overlay = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[body_zone]_[damage_state]", layer = -DAMAGE_LAYER + limb_layer_priority)
-	damage_overlay.color = owner.species.blood_color
-	overlays += damage_overlay
+	if(!owner)
+		var/list/standing = list()
+		if(dmg_overlay)
+			standing += dmg_overlay
+		if(inv_overlays.len)
+			standing += inv_overlays
+		if(standing)
+			overlays += standing
 
 /obj/item/bodypart/proc/get_icon()
-	return image(icon = src, layer = -BODYPARTS_LAYER + limb_layer_priority)
+	var/list/standing = list()
+	standing += image(icon = src, layer = -BODYPARTS_LAYER + limb_layer_priority)
+	if(dmg_overlay)
+		standing += dmg_overlay
+	if(inv_overlays.len)
+		standing += inv_overlays
+	return standing
 
 /obj/item/bodypart/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
@@ -1347,7 +1384,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	body_part = UPPER_TORSO
 	body_zone = BP_CHEST
 	parent_bodypart = null
-	limb_layer = BP_TORSO_LAYER
 	limb_layer_priority = -0.2
 
 	max_damage = 75
@@ -1369,7 +1405,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	body_part = LOWER_TORSO
 	body_zone = BP_GROIN
 	parent_bodypart = BP_CHEST
-	limb_layer = BP_GROIN_LAYER
 	limb_layer_priority = -0.1
 
 	max_damage = 50
@@ -1391,7 +1426,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	body_part = HEAD
 	body_zone = BP_HEAD
 	parent_bodypart = BP_CHEST
-	limb_layer = BP_HEAD_LAYER
 
 	max_damage = 75
 	min_broken_damage = 40
@@ -1434,7 +1468,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	body_part = ARM_LEFT
 	body_zone = BP_L_ARM
 	parent_bodypart = BP_CHEST
-	limb_layer = BP_L_ARM_LAYER
 
 	max_damage = 80
 	min_broken_damage = 35
@@ -1447,6 +1480,19 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "basilic vein"
 	arterial_bleed_severity = 0.75
 
+/obj/item/bodypart/l_arm/New(loc, mob/living/carbon/C)
+	..()
+
+	if(owner)
+		if(!owner.active_hand)
+			owner.active_hand = src
+			var/obj/screen/S = inv_slots_data[inv_slots_data[1]]
+			S.icon_state = body_zone + "_active"
+		else
+			owner.inactive_hands += src
+			var/obj/screen/S = inv_slots_data[inv_slots_data[1]]
+			S.icon_state = body_zone + "_inactive"
+
 /obj/item/bodypart/r_arm
 	name = "right arm"
 	icon_state = "r_arm"
@@ -1455,7 +1501,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	body_part = ARM_RIGHT
 	body_zone = BP_R_ARM
 	parent_bodypart = BP_CHEST
-	limb_layer = BP_R_ARM_LAYER
 
 	max_damage = 80
 	min_broken_damage = 35
@@ -1468,6 +1513,19 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "basilic vein"
 	arterial_bleed_severity = 0.75
 
+/obj/item/bodypart/r_arm/New(loc, mob/living/carbon/C)
+	..()
+
+	if(owner)
+		if(!owner.active_hand)
+			owner.active_hand = src
+			var/obj/screen/S = inv_slots_data[inv_slots_data[1]]
+			S.icon_state = body_zone + "_active"
+		else
+			owner.inactive_hands += src
+			var/obj/screen/S = inv_slots_data[inv_slots_data[1]]
+			S.icon_state = body_zone + "_inactive"
+
 /obj/item/bodypart/l_leg
 	name = "left leg"
 	icon_state = "l_leg"
@@ -1476,7 +1534,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	body_part = LEG_LEFT
 	body_zone = BP_L_LEG
 	parent_bodypart = BP_GROIN
-	limb_layer = BP_L_LEG_LAYER
 
 	max_damage = 80
 	min_broken_damage = 35
@@ -1497,7 +1554,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	body_part = LEG_RIGHT
 	body_zone = BP_R_LEG
 	parent_bodypart = BP_GROIN
-	limb_layer = BP_R_LEG_LAYER
 
 	max_damage = 80
 	min_broken_damage = 35

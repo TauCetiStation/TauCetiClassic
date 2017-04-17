@@ -137,7 +137,6 @@
 	inv_box.slot_id = slot_mouth
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
-	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
 	inv_box = new

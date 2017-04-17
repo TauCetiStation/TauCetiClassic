@@ -106,8 +106,7 @@
 		return
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
-	var/sdepth = A.storage_depth(src)
-	if(A == loc || (A in loc) || (sdepth != -1 && sdepth <= 1))
+	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
 
 		// faster access to objects already on you
 		if(A in contents)
@@ -131,8 +130,7 @@
 		return
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
-	sdepth = A.storage_depth_turf()
-	if(isturf(A) || isturf(A.loc) || (sdepth != -1 && sdepth <= 1))
+	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc))) // (tgstation version)
 		next_move = world.time + 10
 
 		if(A.Adjacent(src)) // see adjacent.dm
@@ -287,6 +285,20 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
+	return
+
+/*
+	Helper to check can the mob click/access an item.
+	Used by mob inventory and storage items.
+*/
+/atom/proc/ClickAccessible(mob/user, depth=1)
+	if(src == user.loc || (src in user.contents))
+		return TRUE
+
+	if(loc && depth > 1)
+		return loc.ClickAccessible(user, depth-1)
+
+/turf/ClickAccessible(mob/user, depth=1)
 	return
 
 /*

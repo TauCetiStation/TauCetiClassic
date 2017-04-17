@@ -11,7 +11,6 @@
 	reagents = R
 	R.my_atom = src
 
-
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
 	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
@@ -180,32 +179,49 @@
 			if(item_in_hand:wielded)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
-	src.hand = !( src.hand )
+
+	if(!active_hand && inactive_hands.len)
+		active_hand = inactive_hands[1]
+		inactive_hands -= active_hand
+		var/obj/screen/S = active_hand.inv_slots_data[active_hand.inv_slots_data[1]]
+		S.icon_state = active_hand.body_zone + "_active"
+	else if(active_hand && inactive_hands.len)
+		var/obj/item/bodypart/BP = active_hand
+		active_hand = null
+		inactive_hands += BP
+		var/obj/screen/S = BP.inv_slots_data[BP.inv_slots_data[1]]
+		S.icon_state = BP.body_zone + "_inactive"
+		active_hand = inactive_hands[1]
+		inactive_hands -= active_hand
+		BP = active_hand
+		S = active_hand.inv_slots_data[BP.inv_slots_data[1]]
+		S.icon_state = BP.body_zone + "_active"
+
+	/*src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
 			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
 			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
 		else
 			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
+			hud_used.r_hand_hud_object.icon_state = "hand_r_active"*/
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
 	else
 		src.hands.dir = SOUTH*/
-	return
 
-/mob/living/carbon/proc/activate_hand(selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
-
-	if(istext(selhand))
-		selhand = lowertext(selhand)
-
-		if(selhand == "right" || selhand == "r")
-			selhand = 0
-		if(selhand == "left" || selhand == "l")
-			selhand = 1
-
-	if(selhand != src.hand)
-		swap_hand()
+/mob/living/carbon/proc/activate_hand(obj/item/bodypart/selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
+	if(active_hand != selhand)
+		if(active_hand)
+			var/obj/item/bodypart/BP = active_hand
+			active_hand = null
+			inactive_hands += BP
+			var/obj/screen/S = BP.inv_slots_data[BP.inv_slots_data[1]]
+			S.icon_state = BP.body_zone + "_inactive"
+		active_hand = selhand
+		inactive_hands -= active_hand
+		var/obj/screen/S = active_hand.inv_slots_data[selhand.inv_slots_data[1]]
+		S.icon_state = selhand.body_zone + "_active"
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M) // TODO check Bay12 version of this proc.
 	if (src.health >= config.health_threshold_crit)
@@ -444,23 +460,6 @@
 /mob/living/carbon/restrained()
 	if (handcuffed)
 		return 1
-	return
-
-/mob/living/carbon/u_equip(obj/item/W)
-	if(!W)	return 0
-
-	else if (W == handcuffed)
-		handcuffed = null
-		update_inv_handcuffed()
-		if(buckled && buckled.buckle_require_restraints)
-			buckled.unbuckle_mob()
-
-	else if (W == legcuffed)
-		legcuffed = null
-		update_inv_legcuffed()
-	else
-	 ..()
-
 	return
 
 /mob/living/carbon/show_inv(mob/living/carbon/user)

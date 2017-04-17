@@ -406,28 +406,24 @@ BLIND     // can't see anything
 			hastie.attack_hand(user)
 
 //This is to ensure people can take off suits when there is an attached accessory
-/obj/item/clothing/under/MouseDrop(obj/over_object as obj)
+/obj/item/clothing/under/MouseDrop(atom/over_object)
 	if (ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
-		if (!(src.loc == usr))
-			return
-		if (!over_object)
+
+		if(istype(M.loc, /obj/mecha)) // stops inventory actions in a mech
 			return
 
-		if (!( usr.restrained() ) && !( usr.stat ))
+		if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory))
 			switch(over_object.name)
-				if("r_hand")
+				if("r_hand", "l_hand", "mouth")
+					var/obj/screen/inventory/S = over_object
 					if(!M.unEquip(src))
 						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
+					if(!isBODYPART(S.master))
 						return
-					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
-			return
-	return
+					M.equip_to_slot_if_possible(src, S.slot_id)
+			src.add_fingerprint(M)
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
