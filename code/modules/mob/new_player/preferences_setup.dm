@@ -179,7 +179,9 @@ datum/preferences
 		b_skin = blue
 
 
-/datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
+/datum/preferences/proc/update_preview_icon(mob/user)		//seriously. This is horrendous.
+	if(!user)
+		return
 	// Silicons only need a very basic preview since there is no customization for them.
 	if(job_engsec_high)
 		switch(job_engsec_high)
@@ -241,3 +243,8 @@ datum/preferences
 
 	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
 	qdel(mannequin)
+
+	user << browse_rsc(preview_icon, "previewicon.png")
+	user << browse_rsc('html/prefs/dossier_empty.png')
+	user << browse_rsc('html/prefs/dossier_photos.png')
+	user << browse_rsc('html/prefs/opacity7.png')

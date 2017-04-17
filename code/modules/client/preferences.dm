@@ -140,11 +140,10 @@ var/const/MAX_SAVE_SLOTS = 10
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
-	update_preview_icon()
-	user << browse_rsc(preview_icon, "previewicon.png")
-	user << browse_rsc('html/prefs/dossier_empty.png')
-	user << browse_rsc('html/prefs/dossier_photos.png')
-	user << browse_rsc('html/prefs/opacity7.png')
+
+	if(!preview_icon) // if this is first time user opens up his character setup, we should create preview for his character.
+		update_preview_icon(user) // We can put this inside preferences New(), but user may not even open setup window, so i see no point for this proc elsewhere.
+		                          // Anyway, don't call this proc if user did nothing with the visual appearance of his character in other places of preferences code,
 
 	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
@@ -202,10 +201,12 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if("reload")
 			load_preferences()
-			load_character()
+			if(load_character())
+				update_preview_icon(user)
 
 		if("changeslot")
-			load_character(text2num(href_list["num"]))
+			if(load_character(text2num(href_list["num"])))
+				update_preview_icon(user)
 
 		if("general")
 			menu_type = "general"
@@ -231,6 +232,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if("occupation")
 			process_link_occupation(user, href_list)
+			update_preview_icon(user) // TODO do something about this, we don't want to update preview if nothing really changed there.
 
 		if("roles")
 			process_link_roles(user, href_list)
