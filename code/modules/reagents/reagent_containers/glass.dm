@@ -291,17 +291,14 @@
 		to_chat(user, "<span class = 'notice'>You add [D] to [src].</span>")
 		qdel(D)
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
-		user.drop_from_inventory(src)
 		qdel(src)
 	if (istype(D, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = D
-		if(WT.remove_fuel(0,user))
-			user.remove_from_mob(src)
+		if(WT.remove_fuel(0, user))
+			user.dropItemToGround(src)
 			var/obj/item/clothing/head/helmet/battlebucket/BBucket = new(usr.loc)
-			for (var/mob/M in viewers(src))
-				M.show_message("<span class = 'rose'>[src] is shaped into [BBucket] by [user.name] with the weldingtool.</span>", 3, "<span class = 'rose'>You hear welding.</span>", 2)
+			visible_message("<span class = 'rose'>[src] is shaped into [BBucket] by [user.name] with the weldingtool.</span>", "<span class = 'rose'>You hear welding.</span>")
 			qdel(src)
-		return
 
 /obj/item/weapon/reagent_containers/glass/bucket/update_icon()
 	overlays.Cut()

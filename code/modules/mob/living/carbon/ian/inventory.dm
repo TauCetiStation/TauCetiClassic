@@ -56,8 +56,8 @@
 	return mouth
 
 //Drops the item in our active hand (errr... mouth!)
-/mob/living/carbon/ian/drop_item(atom/Target)
-	return drop_from_inventory(mouth, Target)
+/mob/living/carbon/ian/drop_item()
+	return dropItemToGround(mouth)
 
 /mob/living/carbon/ian/restrained()
 	if(handcuffed || facehugger) // Oh wow, whats this on my faaaaaaace?

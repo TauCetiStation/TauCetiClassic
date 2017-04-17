@@ -44,7 +44,7 @@
 	user.dna = null
 
 	for(var/obj/item/W in user)
-		user.drop_from_inventory(W)
+		user.dropItemToGround(W)
 	for(var/obj/T in user)
 		qdel(T)
 

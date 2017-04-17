@@ -15,7 +15,7 @@
 	desc = "A mass of tough, boney tissue,reminiscent of hammer."
 	canremove = 0
 	force = 15
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_hammer"
 	item_state = "arm_hammer"
@@ -27,7 +27,7 @@
 
 /obj/item/weapon/changeling_hammer/dropped(mob/user)
 	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his hammer into an arm!</span>", "<span class='notice'>We assimilate the hammer back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
-	qdel(src)
+	..()
 
 
 /obj/item/weapon/proc/use_charge(mob/living/carbon/human/user, req_chem = 3)

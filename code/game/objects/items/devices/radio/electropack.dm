@@ -25,16 +25,14 @@
 		if(!b_stat)
 			to_chat(user, "<span class='notice'>[src] is not ready to be attached!</span>")
 			return
-		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
+		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user.loc)
 		A.icon = 'icons/obj/assemblies.dmi'
 
-		user.drop_from_inventory(W)
-		W.loc = A
+		user.transferItemToLoc(W, A)
 		W.master = A
 		A.part1 = W
 
-		user.drop_from_inventory(src)
-		loc = A
+		user.transferItemToLoc(src, A)
 		master = A
 		A.part2 = src
 

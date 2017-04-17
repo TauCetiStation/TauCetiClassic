@@ -147,8 +147,7 @@
 	// Strip some clothing
 
 	for(var/obj/item/I in L.get_equipped_items())
-		if(L.unEquip(I))
-			I.forceMove(loc)
+		if(L.transferItemToLoc(I, loc))
 			if(prob(15)) //saved by ripped cloth
 				return
 

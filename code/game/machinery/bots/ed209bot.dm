@@ -487,13 +487,11 @@ Auto Patrol: []"},
 
 		if(9)
 			if(istype(W, /obj/item/weapon/stock_parts/cell))
+				qdel(W)
 				build_step++
 				to_chat(user, "<span class='notice'>You complete the ED-209.</span>")
 				var/turf/T = get_turf(src)
 				new /obj/machinery/bot/secbot/ed209(T, created_name, lasercolor)
-				user.drop_item()
-				qdel(W)
-				user.drop_from_inventory(src)
 				qdel(src)
 
 

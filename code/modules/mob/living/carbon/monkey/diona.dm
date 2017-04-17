@@ -164,7 +164,7 @@
 	adult.ckey = src.ckey
 
 	for (var/obj/item/W in src.contents)
-		src.drop_from_inventory(W)
+		src.dropItemToGround(W)
 	qdel(src)
 
 /mob/living/carbon/monkey/diona/verb/steal_blood()

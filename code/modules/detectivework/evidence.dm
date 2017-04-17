@@ -40,7 +40,7 @@
 			user.client.screen -= I
 			U.contents.Remove(I)
 		if(user.get_active_hand() == I || user.get_inactive_hand() == I)
-			user.drop_from_inventory(I)
+			user.dropItemToGround(I)
 
 	user.visible_message(
 		"[user] puts [I] into [src]",

@@ -17,21 +17,22 @@
 /obj/item/weapon/clipboard/MouseDrop(obj/over_object as obj) //Quick clipboard fix. -Agouri
 	if(ishuman(usr))
 		var/mob/M = usr
+
+		if(M.incapacitated())
+			return
+
 		if(!(istype(over_object, /obj/screen) ))
 			return ..()
 
-		if(!M.restrained() && !M.stat)
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
-			return
+		switch(over_object.name)
+			if("r_hand", "l_hand", "mouth")
+				var/obj/screen/inventory/S = over_object
+				if(!M.dropItemToGround(src))
+					return
+				if(!isBODYPART(S.master))
+					return
+				M.equip_to_slot_if_possible(src, S.slot_id)
+		src.add_fingerprint(M)
 
 /obj/item/weapon/clipboard/update_icon()
 	overlays.Cut()

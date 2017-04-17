@@ -385,29 +385,28 @@
 			emote("collapse")
 		Weaken(5) //can't emote while weakened, apparently.
 
-/mob/living/carbon/proc/handle_grasp()
-	if(!l_hand && !r_hand)
+/mob/living/carbon/proc/handle_grasp() // TODO check this proc
+	var/obj/item/i_left = get_item_in_bodypart_slot(slot_l_hand)
+	var/obj/item/i_right = get_item_in_bodypart_slot(slot_r_hand)
+
+	if(!i_left && !i_right)
 		return
 
 	// You should not be able to pick anything up, but stranger things have happened.
-	if(l_hand)
-		for(var/limb_tag in list(BP_L_ARM))
-			var/obj/item/bodypart/BP = get_bodypart(limb_tag)
-			if(!BP)
-				visible_message("<span class='danger'>Lacking a functioning left hand, \the [src] drops \the [l_hand].</span>")
-				drop_from_inventory(l_hand)
-				break
+	if(i_left)
+		var/obj/item/bodypart/BP = get_bodypart(BP_L_ARM)
+		if(!BP)
+			dropItemToGround(i_left, TRUE)
+			visible_message("<span class='danger'>Lacking a functioning left hand, \the [src] drops \the [l_hand].</span>")
 
-	if(r_hand)
-		for(var/limb_tag in list(BP_R_ARM))
-			var/obj/item/bodypart/BP = get_bodypart(limb_tag)
-			if(!BP)
-				visible_message("<span class='danger'>Lacking a functioning right hand, \the [src] drops \the [r_hand].</span>")
-				drop_from_inventory(r_hand)
-				break
+	if(i_right)
+		var/obj/item/bodypart/BP = get_bodypart(BP_R_ARM)
+		if(!BP)
+			dropItemToGround(i_right, TRUE)
+			visible_message("<span class='danger'>Lacking a functioning right hand, \the [src] drops \the [r_hand].</span>")
 
 	// Check again...
-	if(!l_hand && !r_hand)
+	if(!i_left && !i_right)
 		return
 
 	for (var/obj/item/bodypart/BP in bodyparts)
@@ -415,7 +414,6 @@
 			continue
 		if(((BP.is_broken() || BP.is_dislocated()) && !(BP.status & ORGAN_SPLINTED)) || BP.is_malfunctioning())
 			grasp_damage_disarm(BP)
-
 
 /mob/living/carbon/proc/grasp_damage_disarm(obj/item/bodypart/BP)
 	var/disarm_slot
@@ -433,7 +431,7 @@
 	if(!thing)
 		return
 
-	drop_from_inventory(thing)
+	dropItemToGround(thing)
 
 	if(BP.status & ORGAN_ROBOT)
 		visible_message("<B>\The [src]</B> drops what they were holding, \his [BP.name] malfunctioning!")

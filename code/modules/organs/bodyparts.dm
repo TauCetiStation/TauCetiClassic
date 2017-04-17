@@ -1087,14 +1087,14 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			"\The [owner.handcuffed.name] falls off of [owner.name].",\
 			"\The [owner.handcuffed.name] falls off you.")
 
-		owner.drop_from_inventory(owner.handcuffed)
+		owner.dropItemToGround(owner.handcuffed)
 
 	if (owner.legcuffed && body_part in list(LEG_LEFT, LEG_RIGHT))
 		owner.visible_message(\
 			"\The [owner.legcuffed.name] falls off of [owner.name].",\
 			"\The [owner.legcuffed.name] falls off you.")
 
-		owner.drop_from_inventory(owner.legcuffed)
+		owner.dropItemToGround(owner.legcuffed)
 
 // checks if all wounds on the bodypart are bandaged
 /obj/item/bodypart/proc/is_bandaged()
@@ -1369,8 +1369,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	W.add_blood(owner)
 	if(ismob(W.loc))
 		var/mob/living/H = W.loc
-		H.drop_from_inventory(W)
-	W.loc = owner
+		H.dropItemToGround(W)
+	W.forceMove(owner)
 
 /****************************************************
 			   BODYPART DEFINES

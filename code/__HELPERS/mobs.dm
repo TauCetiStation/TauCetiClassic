@@ -119,9 +119,12 @@ proc/RoundHealth(health)
 	return "0"
 
 
-/proc/do_mob(mob/user , mob/target, time = 30, target_zone = 0, uninterruptible = 0, progress = 1)
+/proc/do_mob(mob/user , mob/target, time = 30, target_zone = 0, uninterruptible = FALSE, progress = TRUE)
 	if(!user || !target)
-		return 0
+		return FALSE
+
+	user.busy_with_action = TRUE
+
 	var/user_loc = user.loc
 
 	var/target_loc = target.loc
@@ -132,35 +135,39 @@ proc/RoundHealth(health)
 		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = new(user, time, target)
 		else
-			progress = 0
+			progress = FALSE
 
 	var/endtime = world.time+time
 	var/starttime = world.time
-	. = 1
+	. = TRUE
 	while (world.time < endtime)
 		stoplag()
 		if (progress)
 			progbar.update(world.time - starttime)
 		if(!user || !target)
-			. = 0
+			. = FALSE
 			break
 		if(uninterruptible)
 			continue
 		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
-			. = 0
+			. = FALSE
 			break
 
 		if(target_zone && user.zone_sel.selecting != target_zone)
-			. = 0
+			. = FALSE
 			break
 
 	if (progress)
 		qdel(progbar)
+	if(user)
+		user.busy_with_action = FALSE
 
-
-/proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1, incapacitation_flags = INCAPACITATION_DEFAULT)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, progress = TRUE, incapacitation_flags = INCAPACITATION_DEFAULT)
 	if(!user)
-		return 0
+		return FALSE
+
+	user.busy_with_action = TRUE
+
 	var/atom/Tloc = null
 	if(target)
 		Tloc = target.loc
@@ -169,31 +176,31 @@ proc/RoundHealth(health)
 
 	var/holding = user.get_active_hand()
 
-	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
+	var/holdingnull = TRUE //User's hand started out empty, check for an empty hand
 	if(holding)
-		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
+		holdingnull = FALSE //Users hand started holding something, check to see if it's still holding that
 
 	var/datum/progressbar/progbar
 	if (progress)
 		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = new(user, delay, target)
 		else
-			progress = 0
+			progress = FALSE
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
-	. = 1
+	. = TRUE
 	while (world.time < endtime)
 		stoplag()
 		if (progress)
 			progbar.update(world.time - starttime)
 
 		if(!user || user.incapacitated(incapacitation_flags) || user.loc != Uloc)
-			. = 0
+			. = FALSE
 			break
 
 		if(Tloc && (!target || QDELETED(target) || Tloc != target.loc))
-			. = 0
+			. = FALSE
 			break
 
 		if(needhand)
@@ -201,13 +208,15 @@ proc/RoundHealth(health)
 			//i.e the hand is used to pull some item/tool out of the construction
 			if(!holdingnull)
 				if(!holding)
-					. = 0
+					. = FALSE
 					break
 			if(user.get_active_hand() != holding)
-				. = 0
+				. = FALSE
 				break
 	if (progress)
 		qdel(progbar)
+	if(user)
+		user.busy_with_action = FALSE
 
 //helper for inverting armor blocked values into a multiplier
 #define blocked_mult(blocked) max(1 - (blocked/100), 0)

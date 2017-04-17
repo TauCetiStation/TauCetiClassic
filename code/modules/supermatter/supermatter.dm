@@ -172,7 +172,7 @@
 
 	//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
 	//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
-	
+
 	var/thermal_power = THERMAL_RELEASE_MODIFIER
 	if(removed.total_moles < 35) thermal_power += 750   //If you don't add coolant, you are going to have a bad time.
 
@@ -244,14 +244,17 @@
 	return
 
 /obj/machinery/power/supermatter/attackby(obj/item/weapon/W, mob/living/user)
-	user.visible_message("<span class=\"warning\">\The [user] touches \a [W] to \the [src] as a silence fills the room...</span>",\
-		"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.\"</span>\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\
-		"<span class=\"warning\">Everything suddenly goes silent.</span>")
-
-	user.drop_from_inventory(W)
-	Consume(W)
-
-	user.apply_effect(150, IRRADIATE)
+	if(user.dropItemToGround(W))
+		user.visible_message("<span class=\"warning\">\The [user] touches \a [W] to \the [src] as a silence fills the room...</span>",\
+			"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.\"</span>\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\
+			"<span class=\"warning\">Everything suddenly goes silent.</span>")
+		Consume(W)
+		user.apply_effect(150, IRRADIATE)
+	else // Consume user if he fails to drop the item (contact!)
+		user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
+		"<span class=\"danger\">You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
+		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")
+		Consume(user)
 
 
 /obj/machinery/power/supermatter/Bumped(atom/AM)

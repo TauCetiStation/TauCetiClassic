@@ -21,7 +21,7 @@
 	name = "grab"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "reinforce"
-	flags = 0
+	flags = DROPDEL
 	var/obj/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/carbon/human/assailant = null
@@ -408,11 +408,6 @@
 		if(assailant.devour(affecting))
 			qdel(src)
 
-/obj/item/weapon/grab/dropped()
-	loc = null
-	if(!QDELETED(src))
-		qdel(src)
-
 /obj/item/weapon/grab/proc/reset_kill_state()
 	if(!assailant)
 		qdel(src)
@@ -605,10 +600,7 @@
 	affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Headbutted by [assailant.name] ([assailant.ckey])</font>")
 	msg_admin_attack("[key_name(assailant)] has headbutted [key_name(affecting)] ([ADMIN_JMP(assailant)])")
 
-	attacker.drop_from_inventory(src)
-	src.forceMove(null)
 	qdel(src)
-	return
 
 /obj/item/weapon/grab/proc/dislocate(mob/living/carbon/human/target, mob/living/attacker, target_zone)
 	if(state < GRAB_NECK)

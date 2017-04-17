@@ -39,8 +39,7 @@
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
-			user.drop_from_inventory(L)
-			L.loc = src
+			user.transferItemToLoc(L, src)
 			locked = L
 			to_chat(user, "<span class='notice'>You insert the GPS device into the [name]'s slot.</span>")
 	else

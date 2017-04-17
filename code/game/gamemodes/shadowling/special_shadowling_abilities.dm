@@ -23,8 +23,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			usr.Stun(34)
 			for(var/obj/item/I in usr) //drops all items
-				usr.drop_from_inventory(I)
-			usr.regenerate_icons()
+				usr.dropItemToGround(I)
 
 			sleep(50)
 			var/turf/simulated/floor/F

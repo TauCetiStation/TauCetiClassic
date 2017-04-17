@@ -10,7 +10,8 @@
 		return
 
 	for(var/obj/item/W in M)
-		M.drop_from_inventory(W)
+		if(!M.dropItemToGround(W))
+			qdel(W)
 
 	log_admin("[key_name(usr)] made [key_name(M)] drop everything!")
 	message_admins("[key_name_admin(usr)] made [key_name_admin(M)] drop everything!")
@@ -27,16 +28,16 @@
 			alert("The AI can't be sent to prison you jerk!", null, null, null, null, null)
 			return
 		//strip their stuff before they teleport into a cell :downs:
-		for(var/obj/item/W in M)
-			M.drop_from_inventory(W)
+		for(var/obj/item/W in M.contents)
+			M.dropItemToGround(W)
 		//teleport person to cell
 		M.Paralyse(5)
 		sleep(5)	//so they black out before warping
 		M.loc = pick(prisonwarp)
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/prisoner = M
-			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), slot_w_uniform)
-			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), slot_shoes)
+			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange, slot_w_uniform)
+			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange, slot_shoes)
 		spawn(50)
 			to_chat(M, "\red You have been sent to the prison station!")
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")

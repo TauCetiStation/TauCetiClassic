@@ -430,11 +430,11 @@
 		var/mob/living/carbon/C = src
 
 		if (C.handcuffed && !initial(C.handcuffed))
-			C.drop_from_inventory(C.handcuffed)
+			C.dropItemToGround(C.handcuffed)
 		C.handcuffed = initial(C.handcuffed)
 
 		if (C.legcuffed && !initial(C.legcuffed))
-			C.drop_from_inventory(C.legcuffed)
+			C.dropItemToGround(C.legcuffed)
 		C.legcuffed = initial(C.legcuffed)
 	update_health_hud()
 
@@ -673,7 +673,7 @@
 		var/mob/M = H.loc                      //Get our mob holder (if any).
 
 		if(istype(M))
-			M.drop_from_inventory(H)
+			M.dropItemToGround(H)
 			to_chat(M, "<span class='notice'>[H] wriggles out of your grip!</span>")
 			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
 		else if(istype(H.loc,/obj/item))
@@ -815,12 +815,11 @@
 							var/datum/effect/effect/system/spark_spread/S = new
 							S.set_up(4,0,CM.loc)
 							S.start()
-							CM.drop_from_inventory(CM.handcuffed)
 							qdel(HC)
 						else
 							CM.visible_message("<span class='danger'>[CM] manages to remove the handcuffs!</span>", \
 								"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
-							CM.drop_from_inventory(CM.handcuffed)
+							CM.dropItemToGround(CM.handcuffed)
 
 		else if(CM.legcuffed && (CM.last_special <= world.time))
 			if(!CM.canmove && !CM.resting)	return
@@ -861,15 +860,15 @@
 							var/datum/effect/effect/system/spark_spread/S = new
 							S.set_up(4,0,CM.loc)
 							S.start()
-							CM.drop_from_inventory(CM.legcuffed)
-							CM.legcuffed = null
+							CM.dropItemToGround(CM.legcuffed)
+							//CM.legcuffed = null // TODO check this
 							CM.update_inv_legcuffed()
 							qdel(HC)
 						else
 							CM.visible_message("<span class='danger'>[CM] manages to remove the legcuffs!</span>", \
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
-							CM.drop_from_inventory(CM.legcuffed)
-							CM.legcuffed = null
+							CM.dropItemToGround(CM.legcuffed)
+							//CM.legcuffed = null
 							CM.update_inv_legcuffed()
 
 /mob/living/proc/resist_grab()

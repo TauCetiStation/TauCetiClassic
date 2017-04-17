@@ -353,7 +353,7 @@ There are several things that need to be remembered:
 					i_icon = 'icons/mob/uniform_fat.dmi'
 				else // TODO we should process that else where, maybe even make something like on_gain_disability() proc.
 					to_chat(owner, "\red You burst out of \the [O]!")
-					owner.drop_from_inventory(O)
+					owner.dropItemToGround(O)
 					return
 
 			if(owner && owner.client && owner.hud_used) // My brain... With all those ifs...

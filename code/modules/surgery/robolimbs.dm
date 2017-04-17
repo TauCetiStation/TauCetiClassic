@@ -155,8 +155,7 @@
 	"You start attaching \the [tool] where [target]'s [BP.name] used to be.")
 
 /datum/surgery_step/limb/mechanize/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/bodypart/tool)
-	user.drop_from_inventory(tool)
-	if(tool.replace_stump(target)) // TODO implement robot bodyparts or this won't work
+	if(user.dropItemToGround(tool) && tool.replace_stump(target)) // TODO implement robot bodyparts or this won't work
 		var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 		user.visible_message("\blue [user] has attached \the [tool] where [target]'s [BP.name] used to be.",	\
 		"\blue You have attached \the [tool] where [target]'s [BP.name] used to be.")

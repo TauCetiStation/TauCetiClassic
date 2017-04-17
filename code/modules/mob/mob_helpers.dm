@@ -420,4 +420,11 @@ var/list/intents = list("help","disarm","grab","hurt")
 	else
 		return 0
 
+/mob/proc/is_busy(show_warning = TRUE)
+	if(busy_with_action)
+		if(show_warning)
+			to_chat(src, "<span class='warning'>You are busy with something else. Please wait or cancel your current action.</span>")
+		return TRUE
+	return FALSE
+
 #undef SAFE_PERP

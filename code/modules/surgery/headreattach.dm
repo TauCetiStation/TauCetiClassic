@@ -180,8 +180,7 @@
 	"You start attaching [tool] to [target]'s reshaped neck.")
 
 /datum/surgery_step/head/attach/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/bodypart/tool)
-	user.drop_from_inventory(tool)
-	if(tool.replace_stump(target))
+	if(user.dropItemToGround(tool) && tool.replace_stump(target))
 		user.visible_message("\blue [user] has attached [target]'s head to the body.",	\
 		"\blue You have attached [target]'s head to the body.")
 

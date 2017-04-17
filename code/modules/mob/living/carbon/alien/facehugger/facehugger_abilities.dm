@@ -408,7 +408,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 /obj/item/weapon/fh_grab
 	name = "grab"
-	flags = NOBLUDGEON | ABSTRACT
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	var/obj/screen/fh_grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/carbon/alien/facehugger/assailant = null
@@ -456,14 +456,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(M == affecting)
 		s_click(hud)
 		return
-
-/obj/item/weapon/fh_grab/dropped()
-	loc = null
-	if(!QDELETED(src))
-		qdel(src)
-
-/obj/item/weapon/fh_grab/proc/throw_held()
-	return null
 
 /obj/item/weapon/fh_grab/proc/synch()
 	if(affecting)

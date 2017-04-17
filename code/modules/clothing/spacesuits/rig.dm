@@ -102,18 +102,22 @@
 	if(helmet)
 		H = helmet.loc
 		if(istype(H))
-			if(helmet && H.head == helmet)
-				helmet.canremove = 1
-				H.drop_from_inventory(helmet)
-				helmet.loc = src
+			if(helmet && H.get_item_in_bodypart_slot(slot_head) == helmet)
+				helmet.canremove = TRUE
+				H.transferItemToLoc(helmet, src)
 
 	if(boots)
 		H = boots.loc
 		if(istype(H))
-			if(boots && H.shoes == boots)
-				boots.canremove = 1
-				H.drop_from_inventory(boots)
-				boots.loc = src
+			if(boots && H.get_item_in_bodypart_slot(slot_shoes) == boots)
+				boots.canremove = TRUE
+				H.transferItemToLoc(boots, src)
+
+/obj/item/clothing/suit/space/rig/proc/update_canremove() // surgery removal?
+	if(helmet && !helmet.canremove || boots && !boots.canremove)
+		canremove = FALSE
+	else
+		canremove = TRUE
 
 /obj/item/clothing/suit/space/rig/verb/toggle_helmet()
 
@@ -121,7 +125,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!istype(src.loc,/mob/living)) return
+	if(!istype(src.loc, /mob/living)) return
 
 	if(!helmet)
 		to_chat(usr, "There is no helmet installed.")
@@ -129,24 +133,22 @@
 
 	var/mob/living/carbon/human/H = usr
 
-	if(!istype(H)) return
-	if(H.stat) return
-	if(H.wear_suit != src) return
+	if(!istype(H) || H.incapacitated() || H.get_item_in_bodypart_slot(slot_wear_suit) != src)
+		return
 
-	if(H.head == helmet)
-		helmet.canremove = 1
-		H.drop_from_inventory(helmet)
-		helmet.loc = src
+	if(H.get_item_in_bodypart_slot(slot_head) == helmet)
+		helmet.canremove = TRUE
+		H.transferItemToLoc(helmet, src)
 		to_chat(H, "\blue You retract your hardsuit helmet.")
 	else
-		if(H.head)
+		if(H.get_item_in_bodypart_slot(slot_head))
 			to_chat(H, "\red You cannot deploy your helmet while wearing another helmet.")
 			return
 		//TODO: Species check, skull damage for forcing an unfitting helmet on?
-		helmet.loc = H
-		H.equip_to_slot(helmet, slot_head)
-		helmet.canremove = 0
-		to_chat(H, "\blue You deploy your hardsuit helmet, sealing you off from the world.")
+		if(H.equip_to_slot_if_possible(helmet, slot_head))
+			helmet.canremove = FALSE
+			to_chat(H, "\blue You deploy your hardsuit helmet, sealing you off from the world.")
+	update_canremove()
 
 /obj/item/clothing/suit/space/rig/verb/toggle_magboots()
 
@@ -154,7 +156,8 @@
 	set category = "Object"
 	set src in usr
 
-	if(!istype(src.loc,/mob/living)) return
+	if(!istype(src.loc, /mob/living))
+		return
 
 	if(!boots)
 		to_chat(usr, "\The [src] does not have any boots installed.")
@@ -162,20 +165,21 @@
 
 	var/mob/living/carbon/human/H = usr
 
-	if(!istype(H)) return
-	if(H.stat) return
-	if(H.wear_suit != src) return
+	if(!istype(H) || H.incapacitated() || H.get_item_in_bodypart_slot(slot_wear_suit) != src)
+		return
 
-	if(magpulse)
-		flags &= ~NOSLIP
-		src.slowdown = initial(slowdown)
-		magpulse = 0
-		to_chat(H, "You disable \the [src] the mag-pulse traction system.")
+	if(H.get_item_in_bodypart_slot(slot_shoes) == boots)
+		boots.canremove = TRUE
+		H.transferItemToLoc(boots, src)
+		to_chat(H, "\blue You retract your hardsuit magboots.")
 	else
-		flags |= NOSLIP
-		src.slowdown += boots.slowdown_off
-		magpulse = 1
-		to_chat(H, "You enable the mag-pulse traction system.")
+		if(H.get_item_in_bodypart_slot(slot_shoes))
+			to_chat(H, "\blue You cannot deploy your magboots while wearing another boots.")
+			return
+		if(H.equip_to_slot_if_possible(boots, slot_shoes))
+			boots.canremove = FALSE
+			to_chat(H, "\blue You deploy your hardsuit magboots.")
+	update_canremove()
 
 /obj/item/clothing/suit/space/rig/attackby(obj/item/W, mob/user)
 
@@ -183,7 +187,7 @@
 
 	if(user.a_intent == "help")
 
-		if(istype(src.loc,/mob/living) && !istype(W, /obj/item/weapon/patcher))
+		if(istype(src.loc, /mob/living) && !istype(W, /obj/item/weapon/patcher))
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
 
@@ -208,10 +212,9 @@
 				if(helmet)
 					to_chat(user, "\The [src] already has a helmet installed.")
 				else
-					to_chat(user, "You attach \the [W] to \the [src]'s helmet mount.")
-					user.drop_item()
-					W.loc = src
-					src.helmet = W
+					if(user.transferItemToLoc(W, src))
+						to_chat(user, "You attach \the [W] to \the [src]'s helmet mount.")
+						src.helmet = W
 				return
 			else
 				return ..()
@@ -235,10 +238,9 @@
 				if(boots)
 					to_chat(user, "\The [src] already has magboots installed.")
 				else
-					to_chat(user, "You attach \the [W] to \the [src]'s boot mounts.")
-					user.drop_item()
-					W.loc = src
-					boots = W
+					if(user.transferItemToLoc(W, src))
+						to_chat(user, "You attach \the [W] to \the [src]'s boot mounts.")
+						boots = W
 			else
 				return ..()
 

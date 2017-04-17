@@ -226,17 +226,17 @@
 	switch(slot)
 		if(slot_w_uniform)
 			for(var/thing in list(slot_r_store, slot_l_store, slot_wear_id, slot_belt))
-				owner.drop_from_inventory(item_in_slot[thing])
+				owner.dropItemToGround(item_in_slot[thing], TRUE)
 		if(slot_wear_suit)
-			owner.drop_from_inventory(item_in_slot[slot_s_store])
+			owner.dropItemToGround(item_in_slot[slot_s_store], TRUE)
 		if(slot_handcuffed)
-			owner.handcuffed = null
-			owner.drop_from_inventory(item_in_slot[slot_handcuffed])
-			if(owner.buckled && owner.buckled.buckle_require_restraints)
-				owner.buckled.unbuckle_mob()
+			if(owner.dropItemToGround(item_in_slot[slot_handcuffed]))
+				owner.handcuffed = null
+				if(owner.buckled && owner.buckled.buckle_require_restraints)
+					owner.buckled.unbuckle_mob()
 		if(slot_legcuffed)
-			owner.legcuffed = null
-			owner.drop_from_inventory(item_in_slot[slot_legcuffed])
+			if(owner.dropItemToGround(item_in_slot[slot_legcuffed]))
+				owner.legcuffed = null
 
 /*
 	Returns bodypart that supports provided slot as arg. Can return nothing, if we don't have that slot or bodypart.

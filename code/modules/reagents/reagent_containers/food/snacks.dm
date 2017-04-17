@@ -13,22 +13,22 @@
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
-	if(!usr)	return
+	if(!usr)
+		return
 	if(!reagents.total_volume)
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
 		score["foodeaten"]++
-		usr.drop_from_inventory(src)	//so icons update :[
 
+		usr.transferItemToLoc(src, null)
 		if(trash)
-			if(ispath(trash,/obj/item))
-				var/obj/item/TrashItem = new trash(usr)
+			if(ispath(trash, /obj/item))
+				var/obj/item/TrashItem = new trash
 				usr.put_in_hands(TrashItem)
-			else if(istype(trash,/obj/item))
+			else if(istype(trash, /obj/item))
 				usr.put_in_hands(trash)
 		qdel(src)
-	return
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
 	return
@@ -36,7 +36,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)				//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='rose'>None of [src] left, oh no!</span>")
-		M.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
 		return 0
 

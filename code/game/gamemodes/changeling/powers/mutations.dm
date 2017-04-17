@@ -11,8 +11,8 @@
 	var/weapon_name_simple
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
-	if(istype(user.get_active_hand(),weapon_type))
-		user.drop_from_inventory(user.get_active_hand()) // cuz changeling weapons are unremovable with standart procedure with canremove = 0, but we still need it
+	if(istype(user.get_active_hand(), weapon_type))
+		qdel(user.get_active_hand())
 		return
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -21,13 +21,14 @@
 	if(user.incapacitated())
 		to_chat(user,"<span class='userdanger'> We cannot reform our [weapon_name_simple] while restrained</span>")
 		return
-	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>",
-	 "<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
-	 "<span class='warning>You hear organic matter ripping and tearing!</span>")
+	user.visible_message(
+		"<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>",
+		"<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
+		"<span class='warning>You hear organic matter ripping and tearing!</span>")
 	return ..(user, target)
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)
-	if(!user.unEquip(user.get_active_hand()))
+	if(!user.dropItemToGround(user.get_active_hand()))
 		to_chat(user, "The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!")
 		return
 	var/obj/item/W = new weapon_type(user)
@@ -76,18 +77,23 @@
 	..(H, target)
 
 /obj/effect/proc_holder/changeling/suit/sting_action(mob/living/carbon/human/user)
-	if(!user.unEquip(user.wear_suit))
-		to_chat(user, "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!")
+	if(!user.dropSlotToGround(slot_wear_suit))
+		to_chat(user, "We cannot grow a [suit_name_simple] over our body!")
 		return
-	if(!user.unEquip(user.head))
-		to_chat(user, "\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!")
+	if(!user.dropSlotToGround(slot_head))
+		to_chat(user, "We cannot grow a [helmet_name_simple] over our head!")
 		return
 
-	user.drop_from_inventory(user.head)
-	user.drop_from_inventory(user.wear_suit)
+	var/failed_count = 0
+	if(!user.equip_to_slot_if_possible(new suit_type, slot_wear_suit, 1, 1, 1)) // in case, bodypart does not support this suit or head.
+		to_chat(user, "We failed to properly grow a [suit_name_simple] over this body!")
+		failed_count++
+	if(!user.equip_to_slot_if_possible(new helmet_type, slot_head, 1, 1, 1))
+		to_chat(user, "We failed to properly grow a [helmet_name_simple] over this head!")
+		failed_count++
 
-	user.equip_to_slot_if_possible(new suit_type(user), slot_wear_suit, 1, 1, 1)
-	user.equip_to_slot_if_possible(new helmet_type(user), slot_head, 1, 1, 1)
+	if(failed_count == 2)
+		return
 
 	var/datum/changeling/changeling = user.mind.changeling
 	changeling.chem_recharge_slowdown += recharge_slowdown
@@ -111,7 +117,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	canremove = 0
 	w_class = 5.0
 	force = 25
@@ -125,8 +131,11 @@
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 
 /obj/item/weapon/melee/arm_blade/dropped(mob/user)
-	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate the blade back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
-	qdel(src)
+	user.visible_message(
+		"<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>",
+		"<span class='notice'>We assimilate the blade back into our body.</span>",
+		"<span class='warning>You hear organic matter ripping and tearing!</span>")
+	..()
 
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
@@ -175,7 +184,7 @@
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
 	canremove = 0
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
 	item_state = "ling_shield"
@@ -190,15 +199,14 @@
 		if(M.mind.changeling.absorbedcount)
 			remaining_uses +=  M.mind.changeling.absorbedcount
 
-/obj/item/weapon/shield/changeling/dropped()
-	qdel(src)
-
 /obj/item/weapon/shield/changeling/Get_shield_chance()
 	if(!remaining_uses)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
-			visible_message("<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
-			H.unEquip(src, 1)
+			H.visible_message(
+				"<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>",
+				"<span class='notice'>We assimilate our shield into our body</span>",
+				"<span class='warning>You hear organic matter ripping and tearing!</span>")
 		qdel(src)
 		return 0
 	else
@@ -227,18 +235,16 @@
 	icon = 'icons/mob/suit.dmi'
 	icon_state = "lingspacesuit"
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
+	flags = DROPDEL // No PHORONGUARD or THICKMATERIAL, because it's organic tissue, so syringes or other things can get thru easily.
 	canremove = 0
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/tank/oxygen)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0) //No armor at all.
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) //No armor at all.
 
 /obj/item/clothing/suit/space/changeling/New()
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/suit/space/changeling/dropped()
-	qdel(src)
 
 /obj/item/clothing/suit/space/changeling/process()
 	if(ishuman(loc))
@@ -253,12 +259,9 @@
 	icon = 'icons/mob/head.dmi'
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | DROPDEL
 	canremove = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-
-/obj/item/clothing/head/helmet/space/changeling/dropped()
-	qdel(src)
 
 /obj/effect/proc_holder/changeling/suit/armor
 	name = "Chitinous Armor"
@@ -282,7 +285,7 @@
 	icon = 'icons/mob/suit.dmi'
 	icon_state = "lingarmor"
 	canremove = 0
-	flags = THICKMATERIAL
+	flags = THICKMATERIAL | DROPDEL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 1
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 35, bomb = 25, bio = 0, rad = 0)
@@ -296,19 +299,13 @@
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 
-/obj/item/clothing/suit/armor/changeling/dropped()
-	qdel(src)
-
 /obj/item/clothing/head/helmet/changeling
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon = 'icons/mob/head.dmi'
 	icon_state = "lingarmorhelmet"
-	flags = HEADCOVERSEYES | BLOCKHAIR | THICKMATERIAL
+	flags = HEADCOVERSEYES | BLOCKHAIR | THICKMATERIAL | DROPDEL
 	canremove = 0
 	armor = list(melee = 70, bullet = 45, laser = 45,energy = 35, bomb = 25, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.4
-
-/obj/item/clothing/head/helmet/changeling/dropped()
-	qdel(src)

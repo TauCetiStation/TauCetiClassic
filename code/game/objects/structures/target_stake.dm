@@ -26,8 +26,7 @@
 	if(istype(W, /obj/item/target))
 		density = 0
 		W.density = 1
-		user.drop_from_inventory(W)
-		W.loc = loc
+		user.transferItemToLoc(W, loc)
 		W.layer = 3.1
 		pinned_target = W
 		to_chat(user, "<span class='notice'>You slide the target into the stake.</span>")

@@ -418,7 +418,7 @@ BLIND     // can't see anything
 			switch(over_object.name)
 				if("r_hand", "l_hand", "mouth")
 					var/obj/screen/inventory/S = over_object
-					if(!M.unEquip(src))
+					if(!M.dropItemToGround(src))
 						return
 					if(!isBODYPART(S.master))
 						return

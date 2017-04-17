@@ -100,27 +100,27 @@
 
 	if((istype(usr, /mob/living/carbon/human)))
 		var/mob/living/carbon/human/M = usr
+
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()
+
 		playsound(loc, "rustle", 50, 1, -5)
-		if((!( M.restrained() ) && !( M.stat ) && M.back == src))
+		if(!M.incapacitated() && M.get_item_in_bodypart_slot(slot_back) == src)
 			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
+				if("r_hand", "l_hand", "mouth")
+					var/obj/screen/inventory/S = over_object
+					if(!M.dropItemToGround(src))
 						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
+					if(!isBODYPART(S.master))
 						return
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
-			return
+					M.equip_to_slot_if_possible(src, S.slot_id)
+					src.add_fingerprint(M)
+					return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
 			if(usr.s_active)
 				usr.s_active.close(usr)
 			show_to(usr)
 			return
-	return
 
 /*********
 * camera *

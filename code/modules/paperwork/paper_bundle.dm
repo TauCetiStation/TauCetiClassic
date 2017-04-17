@@ -30,27 +30,21 @@
 				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				add_fingerprint(user)
 				return
-
 		amount++
 		if(screen == 2)
 			screen = 1
 		to_chat(user, "<span class='notice'>You add [(P.name == "paper") ? "the paper" : P.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
-		user.drop_from_inventory(P)
-		P.loc = src
-		if(istype(user,/mob/living/carbon/human))
-			user:update_inv_l_hand()
-			user:update_inv_r_hand()
+		user.transferItemToLoc(P, src)
 	else if(istype(W, /obj/item/weapon/photo))
 		amount++
 		if(screen == 2)
 			screen = 1
 		to_chat(user, "<span class='notice'>You add [(W.name == "photo") ? "the photo" : W.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
-		user.drop_from_inventory(W)
-		W.loc = src
+		user.transferItemToLoc(W, src)
 	else if(istype(W, /obj/item/weapon/lighter))
 		burnpaper(W, user)
 	else if(istype(W, /obj/item/weapon/paper_bundle))
-		user.drop_from_inventory(W)
+		user.temporarilyRemoveItemFromInventory(W)
 		for(var/obj/O in W)
 			O.loc = src
 			O.add_fingerprint(usr)
@@ -148,7 +142,7 @@
 			to_chat(usr, "<span class='notice'>You remove the [W.name] from the bundle.</span>")
 			if(amount == 1)
 				var/obj/item/weapon/paper/P = src[1]
-				usr.drop_from_inventory(src)
+				usr.temporarilyRemoveItemFromInventory(src)
 				usr.put_in_hands(P)
 				qdel(src)
 			else if(page == amount)
@@ -189,7 +183,6 @@
 		O.layer = initial(O.layer)
 		O.plane = initial(O.plane)
 		O.add_fingerprint(usr)
-	usr.drop_from_inventory(src)
 	qdel(src)
 	return
 

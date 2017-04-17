@@ -583,7 +583,6 @@ What a mess.*/
 	else if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		P = user.get_active_hand()
 		I = P.img
-		user.drop_from_inventory(P)
 		qdel(P)
 	return I
 

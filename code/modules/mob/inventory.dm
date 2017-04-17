@@ -239,31 +239,19 @@ var/list/slot_equipment_priority = list( \
 	return
 
 /mob/living/carbon/put_in_hands(obj/item/W)
-	if(!W)		return 0
+	if(!W)
+		return FALSE
 	if(put_in_active_hand(W))
-		return 1
+		return TRUE
 	else if(put_in_inactive_hand(W))
-		return 1
+		return TRUE
 	else
-		W.forceMove(get_turf(src))
+		W.forceMove(loc)
 		W.layer = initial(W.layer)
 		W.plane = initial(W.plane)
 		W.appearance_flags = 0
-		W.dropped()
-		return 0
-
-// Removes an item from inventory and places it in the target atom
-/mob/proc/drop_from_inventory(obj/item/W, atom/target = null)
-	return
-
-/mob/living/carbon/drop_from_inventory(obj/item/W, atom/target = null)
-	if(W)
-		remove_from_mob(W, target)
-		if(!(W && W.loc))
-			return 1 // self destroying objects (tk, grabs)
-		update_icons()
-		return 1
-	return 0
+		W.dropped(src)
+		return FALSE
 
 //Drops the item in our left hand
 /mob/proc/drop_l_hand(atom/Target)
@@ -273,20 +261,20 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/drop_r_hand(atom/Target)
 	return
 
-/mob/living/carbon/drop_l_hand(atom/Target)
-	return drop_from_inventory(l_hand, Target)
+/mob/living/carbon/drop_l_hand()
+	return dropItemToGround(l_hand)
 
-/mob/living/carbon/drop_r_hand(atom/Target)
-	return drop_from_inventory(r_hand, Target)
+/mob/living/carbon/drop_r_hand()
+	return dropItemToGround(r_hand)
 
 //Drops the item in our active hand.
 /mob/proc/drop_item(atom/Target)
 	return
 
-/mob/living/carbon/drop_item(atom/Target)
-	return unEquip(get_active_hand())
-	//if(hand)	return drop_l_hand(Target)
-	//else		return drop_r_hand(Target)
+/mob/living/carbon/drop_item()
+	if(!loc)
+		return
+	return dropItemToGround(get_active_hand())
 
 /*
 	Removes the object from any slots the mob might have, calling the appropriate icon update proc.
@@ -314,35 +302,46 @@ var/list/slot_equipment_priority = list( \
 	W.screen_loc = null
 	BP.update_inv()
 
-//This differs from remove_from_mob() in that it checks canremove first.
-/mob/proc/unEquip(obj/item/I, force = 0) //Force overrides NODROP for things like wizarditis and admin undress.
-	if(!I) //If there's nothing to drop, the drop is automatically successful.
-		return 1
+//The following functions are the same save for one small difference
+
+//for when you want the item to end up on the ground
+//will force move the item to the ground and call the turf's Entered
+/mob/proc/dropItemToGround(obj/item/I, force = FALSE)
+	return remove_from_mob(I, force, loc, FALSE)
+
+/mob/living/carbon/proc/dropSlotToGround(slot, force = FALSE)
+	return remove_from_mob(get_item_in_bodypart_slot(slot), force, loc, FALSE)
+
+//for when the item will be immediately placed in a loc other than the ground
+/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE)
+	return remove_from_mob(I, force, newloc, FALSE)
+
+//visibly unequips I but it is NOT MOVED AND REMAINS IN SRC
+//item MUST BE FORCEMOVE'D OR QDEL'D
+/mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE)
+	return remove_from_mob(I, force, null, TRUE)
+
+//DO NOT CALL THIS PROC
+//use one of the above 3 helper procs
+//you may override it, but do not modify the args
+/mob/proc/remove_from_mob(obj/item/I, force, newloc, no_move)
+	if(!I) // If there's nothing to drop, the drop is automatically successful.
+		return TRUE
 
 	if(!I.canremove && !force)
-		return 0
+		return FALSE
 
-	drop_from_inventory(I)
-	return 1
+	u_equip(I)
 
-//Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
-/mob/proc/remove_from_mob(obj/O, atom/target)
-	if(!O) return
-	src.u_equip(O)
-	if (src.client)
-		src.client.screen -= O
-	O.layer = initial(O.layer)
-	O.plane = initial(O.plane)
-	O.appearance_flags = 0
-	O.screen_loc = null
-	if(istype(O, /obj/item))
-		var/obj/item/I = O
-		if(target)
-			I.forceMove(target)
-		else
-			I.forceMove(loc)
-		I.dropped(src)
-	return 1
+	if (client)
+		client.screen -= I
+	I.layer = initial(I.layer)
+	I.plane = initial(I.plane)
+	I.appearance_flags = 0
+	if(!no_move && !(I.flags & DROPDEL)) // item may be moved/qdel'd immedietely, don't bother moving it
+		I.forceMove(newloc)
+	I.dropped(src)
+	return TRUE
 
 //Returns the item equipped to the specified slot, if any.
 /mob/proc/get_equipped_item(slot)

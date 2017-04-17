@@ -215,7 +215,6 @@
 		A = teleportlocs[pick(teleportlocs)]
 	TeleportToArea(H,A)
 	var/obj/item/weapon/handcuffs/alien/handcuffs = H.handcuffed
-	H.drop_from_inventory(handcuffs)
 	qdel(handcuffs)
 	return
 

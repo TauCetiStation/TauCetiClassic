@@ -47,8 +47,8 @@
 		//prevent from teleporting victim though the grab on neck
 		for(var/obj/item/weapon/grab/G in list(target.get_active_hand(), target.get_inactive_hand()))
 			if(G.state >= GRAB_PASSIVE)
-				target.drop_from_inventory(G)
-		target.forceMove(src.loc)
+				qdel(G)
+		target.forceMove(loc)
 
 /obj/machinery/abductor/pad/proc/Send()
 	flick("alien-pad", src)

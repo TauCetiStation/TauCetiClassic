@@ -84,9 +84,10 @@
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/Destroy()
+	flags &= ~DROPDEL //prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
-		m.drop_from_inventory(src)
+		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	return ..()
 
 /obj/item/ex_act(severity)
@@ -155,7 +156,8 @@
 	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
-	if (!user) return
+	if (!user || user.is_busy())
+		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee/))
@@ -225,14 +227,14 @@
 	user.put_in_active_hand(src)
 	return
 
-/obj/item/attack_paw(mob/user)
+/obj/item/attack_paw(mob/user) // TODO rewrite this
 
 	if(isalien(user)) // -- TLE
 		var/mob/living/carbon/alien/A = user
 
 		if(!A.has_fine_manipulation || w_class >= 4)
 			if(src in A.contents) // To stop Aliens having items stuck in their pockets
-				A.drop_from_inventory(src)
+				A.dropItemToGround(src)
 			to_chat(user, "Your claws aren't capable of such fine manipulation.")
 			return
 
@@ -315,7 +317,8 @@
 
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
-	..()
+	if(DROPDEL & flags)
+		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)

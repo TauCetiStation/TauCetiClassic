@@ -746,8 +746,7 @@
 		return
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
-		user.drop_from_inventory(W)
-		W.forceMove(src)
+		user.transferItemToLoc(W, src)
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 		return
 
@@ -1079,7 +1078,7 @@
 		else if(mmi_as_oc.brainmob.stat)
 			to_chat(user, "Beta-rhythm below acceptable level.")
 			return 0
-		user.drop_from_inventory(mmi_as_oc)
+		user.dropItemToGround(mmi_as_oc) // TODO this manipulations down below looks very awful to me.
 		var/mob/brainmob = mmi_as_oc.brainmob
 		brainmob.reset_view(src)
 	/*

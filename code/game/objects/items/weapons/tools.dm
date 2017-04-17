@@ -190,10 +190,9 @@
 		if(!R.use(1))
 			return
 		var/obj/item/weapon/flamethrower/F = new/obj/item/weapon/flamethrower(user.loc)
-		user.drop_from_inventory(src)
+		user.transferItemToLoc(src, F)
 		F.weldtool = src
 		src.master = F
-		src.loc = F
 		src.add_fingerprint(user)
 		return
 

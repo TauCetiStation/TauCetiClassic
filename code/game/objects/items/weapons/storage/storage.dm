@@ -42,12 +42,12 @@
 		if (istype(M.loc, /obj/mecha)) // stops inventory actions in a mech
 			return
 
+		if(M.incapacitated())
+			return
+
 		// this must come before the screen objects only block
 		if(over_object == M && (src.ClickAccessible(M, depth = STORAGE_VIEW_DEPTH) || Adjacent(M))) // tgstation if(...)
 			src.open(M)
-			return
-
-		if(M.incapacitated())
 			return
 
 		if ( !istype(over_object, /obj/screen/inventory) )
@@ -59,7 +59,7 @@
 		switch(over_object.name)
 			if("r_hand", "l_hand", "mouth")
 				var/obj/screen/inventory/S = over_object
-				if(!M.unEquip(src))
+				if(!M.dropItemToGround(src))
 					return
 				if(!isBODYPART(S.master))
 					return

@@ -51,7 +51,7 @@
 
 	var/image/body_icon
 	if(facehugger)
-		drop_from_inventory(mouth)
+		dropItemToGround(mouth)
 		body_icon = image("icon" = 'icons/mob/mask.dmi', "icon_state" = "facehugger_corgi", "layer" = -LAYERIAN_HEAD)
 	else if(head.type in has_corgi_icons)
 		body_icon = image("icon" = 'icons/mob/corgi_head.dmi', "icon_state" = head.icon_state, "layer" = -LAYERIAN_HEAD)
@@ -173,7 +173,7 @@
 		return
 
 	if(handcuffed)
-		drop_from_inventory(mouth)
+		dropItemToGround(mouth)
 
 	neck.screen_loc = ui_ian_neck
 	if(client && hud_used && hud_used.hud_shown)
@@ -319,7 +319,7 @@
 	if(lying)
 		density = FALSE
 		if(mouth && mouth.canremove)
-			drop_from_inventory(mouth)
+			dropItemToGround(mouth)
 	else
 		density = TRUE
 
