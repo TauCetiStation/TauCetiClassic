@@ -1045,16 +1045,24 @@
 			update_body()
 			update_mutantrace()
 			update_mutations()
-			update_inv_w_uniform()
-			update_inv_wear_suit()
+			var/obj/item/I = get_equipped_item(slot_w_uniform) // TODO deal with that.
+			if(I)
+				I.update_inv_item()
+			I = get_equipped_item(slot_wear_suit)
+			if(I)
+				I.update_inv_item()
 	else
 		if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
 			disabilities |= FAT
 			update_body()
 			update_mutantrace()
 			update_mutations()
-			update_inv_w_uniform()
-			update_inv_wear_suit()
+			var/obj/item/I = get_equipped_item(slot_w_uniform) // TODO deal with that.
+			if(I)
+				I.update_inv_item()
+			I = get_equipped_item(slot_wear_suit)
+			if(I)
+				I.update_inv_item()
 
 
 	// nutrition decrease

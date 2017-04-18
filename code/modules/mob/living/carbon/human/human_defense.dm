@@ -550,23 +550,25 @@
 					src.pinned += O
 
 /mob/living/carbon/human/bloody_hands(mob/living/source, amount = 2)
-	if (gloves)
-		gloves.add_blood(source)
-		gloves:transfer_blood = amount
-		gloves:bloody_hands_mob = source
+	var/obj/item/I = get_equipped_item(slot_gloves)
+	if (I)
+		var/obj/item/clothing/gloves/G = I
+		G.add_blood(source)
+		G.transfer_blood = amount
+		G.bloody_hands_mob = source
 	else
-		add_blood(source)
+		add_blood(source) // TODO make special version for mob that will update everything we need.
 		bloody_hands = amount
 		bloody_hands_mob = source
-	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
 /mob/living/carbon/human/bloody_body(mob/living/source)
-	if(wear_suit)
-		wear_suit.add_blood(source)
-		update_inv_wear_suit()
-	if(w_uniform)
-		w_uniform.add_blood(source)
-		update_inv_w_uniform()
+	var/obj/item/I = get_equipped_item(slot_wear_suit)
+	if(I)
+		I.add_blood(source)
+
+	I = get_equipped_item(slot_w_uniform)
+	if(I)
+		I.add_blood(source)
 
 /mob/living/carbon/human/proc/check_thickmaterial(obj/item/bodypart/BP, type)
 //	if(!type)	return 0

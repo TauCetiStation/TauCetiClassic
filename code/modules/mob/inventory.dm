@@ -287,20 +287,19 @@ var/list/slot_equipment_priority = list( \
 	As far as I can tell the proc exists so that mobs with different inventory slots can override
 	the search through all the slots, without having to duplicate the rest of the item dropping.
 */
-/mob/proc/u_equip(obj/W)
+/mob/proc/u_equip(obj/item/I)
 	return
 
-/mob/living/carbon/u_equip(obj/W) // this proc is only for cleaning references and updating mob/bodypart overlays.
-	if(!W || !W.slot_bodypart)
+/mob/living/carbon/u_equip(obj/item/I) // this proc is only for cleaning references and updating mob/bodypart overlays.
+	if(!I || !I.slot_bodypart)
 		return
 
-	var/obj/item/bodypart/BP = get_bodypart(W.slot_bodypart)
-	BP.unequip_chain(W.slot_equipped)
-	BP.item_in_slot[W.slot_equipped] = null
-	BP.update_inv_limb(W.slot_equipped)
-	W.slot_equipped = null
-	W.slot_bodypart = null
-	W.screen_loc = null
+	I.slot_bodypart.unequip_chain(I.slot_equipped)
+	I.slot_bodypart.item_in_slot[I.slot_equipped] = null
+	I.slot_bodypart.update_inv_limb(I.slot_equipped)
+	I.slot_equipped = null
+	I.slot_bodypart = null
+	I.screen_loc = null
 
 //The following functions are the same save for one small difference
 
@@ -310,7 +309,7 @@ var/list/slot_equipment_priority = list( \
 	return remove_from_mob(I, force, loc, FALSE)
 
 /mob/living/carbon/proc/dropSlotToGround(slot, force = FALSE)
-	return remove_from_mob(get_item_in_bodypart_slot(slot), force, loc, FALSE)
+	return remove_from_mob(get_equipped_item(slot), force, loc, FALSE)
 
 //for when the item will be immediately placed in a loc other than the ground
 /mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE)
@@ -348,49 +347,65 @@ var/list/slot_equipment_priority = list( \
 	return null
 
 /mob/living/carbon/get_equipped_item(slot)
-	switch(slot)
-		if(slot_back)       return back
-		if(slot_handcuffed) return handcuffed
-		if(slot_l_store)    return l_store
-		if(slot_r_store)    return r_store
-		if(slot_wear_mask)  return wear_mask
-		if(slot_l_hand)     return l_hand
-		if(slot_r_hand)     return r_hand
-		if(slot_wear_id)    return wear_id
-		if(slot_glasses)    return glasses
-		if(slot_gloves)     return gloves
-		if(slot_head)       return head
-		if(slot_shoes)      return shoes
-		if(slot_belt)       return belt
-		if(slot_wear_suit)  return wear_suit
-		if(slot_w_uniform)  return w_uniform
-		if(slot_s_store)    return s_store
-		if(slot_l_ear)      return l_ear
-		if(slot_r_ear)      return r_ear
-	return null
+	var/obj/item/bodypart/BP = get_BP_by_slot(slot)
+	if(!BP)
+		return
+
+	return BP.item_in_slot[slot]
 
 /mob/proc/get_equipped_items()
-	return list()
+	return null
 
-/mob/living/carbon/get_equipped_items()
+/mob/living/carbon/get_equipped_items(pockets = TRUE)
 	var/list/items = list()
+	var/list/pocket_slots = list(slot_l_store, slot_r_store) // pockets should be moved inside uniform itself.
+	if(!pockets)
+		pocket_slots.Cut()
 
-	if(back)      items += back
-	if(belt)      items += belt
-	if(l_ear)     items += l_ear
-	if(r_ear)     items += r_ear
-	if(glasses)   items += glasses
-	if(gloves)    items += gloves
-	if(head)      items += head
-	if(shoes)     items += shoes
-	if(wear_id)   items += wear_id
-	if(wear_mask) items += wear_mask
-	if(wear_suit) items += wear_suit
-	if(w_uniform) items += w_uniform
-	if(l_hand)    items += l_hand
-	if(r_hand)    items += r_hand
+	for(var/obj/item/bodypart/BP in bodyparts)
+		for(var/slot in BP.item_in_slot - pocket_slots)
+			if(BP.item_in_slot[slot])
+				items += BP.item_in_slot[slot]
 
-	return items
+	if(items.len)
+		return items
+	else
+		return null
+
+/mob/living/carbon/proc/check_obscured_slots()
+	var/list/obscured = list()
+
+	var/list/items = get_equipped_items()
+	for(var/obj/item/I in items)
+		if(I.slot_equipped == slot_wear_suit)
+			if(I.flags_inv & HIDEGLOVES)
+				obscured[slot_gloves] = TRUE
+			if(I.flags_inv & HIDEJUMPSUIT)
+				obscured[slot_w_uniform] = TRUE
+			if(I.flags_inv & HIDESHOES)
+				obscured[slot_shoes] = TRUE
+
+		if(I.slot_equipped == slot_head)
+			if(I.flags_inv & HIDEMASK)
+				obscured[slot_wear_mask] = TRUE
+			if(I.flags_inv & HIDEEYES)
+				obscured[slot_glasses] = TRUE
+			if(I.flags_inv & HIDEEARS)
+				obscured[slot_l_ear] = TRUE
+				obscured[slot_r_ear] = TRUE
+			if(I.flags_inv & HIDEFACE)
+				obscured["hideface"] = TRUE
+
+		if(I.slot_equipped == slot_wear_mask)
+			if(I.flags_inv & HIDEMASK)
+				obscured[slot_wear_mask] = TRUE
+			if(I.flags_inv & HIDEFACE)
+				obscured["hideface"] = TRUE
+
+	if(obscured.len)
+		return obscured
+	else
+		return null
 
 //Create delay for equipping
 /mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/

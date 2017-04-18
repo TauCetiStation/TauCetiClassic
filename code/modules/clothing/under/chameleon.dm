@@ -27,7 +27,7 @@
 	icon_state = "psyche"
 	item_color = "psyche"
 	update_icon()
-	usr.update_inv_w_uniform()
+	update_inv_item(slot_w_uniform)
 
 /obj/item/clothing/under/chameleon/verb/change()
 	set name = "Change Jumpsuit Appearance"
@@ -57,7 +57,7 @@
 	item_color = A.item_color
 	body_parts_covered = A.body_parts_covered
 	if(usr)
-		usr.update_inv_w_uniform()	//so our overlays update.
+		update_inv_item()
 
 //*****************
 //**Chameleon Hat**

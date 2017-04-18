@@ -329,24 +329,6 @@
 	if(A.fingerprintshidden && fingerprintshidden)
 		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin	A.fingerprintslast = fingerprintslast
 
-
-//returns 1 if made bloody, returns 0 otherwise
-/atom/proc/add_blood(mob/living/carbon/human/M)
-	if(flags & NOBLOODY) return 0
-	.=1
-	if (!( istype(M, /mob/living/carbon/human) ))
-		return 0
-	if (!istype(M.dna, /datum/dna))
-		M.dna = new /datum/dna(null)
-		M.dna.real_name = M.real_name
-	M.check_dna()
-	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
-		blood_DNA = list()
-	blood_color = "#A10808"
-	if (M.species)
-		blood_color = M.species.blood_color
-	return
-
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if( istype(src, /turf/simulated) )
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
@@ -365,6 +347,23 @@
 				this.set_light(3)
 				this.stop_light()
 
+//returns 1 if made bloody, returns 0 otherwise
+/atom/proc/add_blood(mob/living/carbon/human/M)
+	if(flags & NOBLOODY)
+		return 0
+	. = 1
+	if (!( istype(M, /mob/living/carbon/human) ))
+		return 0
+	if (!istype(M.dna, /datum/dna))
+		M.dna = new /datum/dna(null)
+		M.dna.real_name = M.real_name
+	M.check_dna()
+	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
+		blood_DNA = list()
+	blood_color = "#A10808"
+	if (M.species)
+		blood_color = M.species.blood_color
+	return
 
 /atom/proc/clean_blood()
 	src.germ_level = 0
@@ -372,6 +371,44 @@
 		blood_DNA = null
 		return 1
 
+/atom/proc/do_wash()
+	if(isliving(src))
+		var/mob/living/L = src
+		L.ExtinguishMob()
+		L.fire_stacks = -20 //Douse ourselves with water to avoid fire more easily
+		to_chat(L, "<span class='warning'>You've been drenched in water!</span>")
+
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		var/washface = TRUE
+
+		var/list/equipped_items = C.get_equipped_items(FALSE)
+		if(equipped_items)
+			var/list/obscured = C.check_obscured_slots()
+			if(obscured)
+				if(obscured["hideface"])
+					washface = FALSE
+				for(var/obj/item/I in equipped_items)
+					if(!obscured[I.slot_equipped])
+						I.make_wet(1)
+						I.clean_blood()
+			else
+				for(var/obj/item/I in equipped_items)
+					I.make_wet(1)
+					I.clean_blood()
+
+		if(washface)
+			C.lip_style = null
+			C.update_body()
+	else
+		src.clean_blood()
+
+	if(isturf(loc))
+		var/turf/tile = loc
+		loc.clean_blood()
+		for(var/obj/effect/E in tile)
+			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay)) && !istype(E, /obj/effect/decal/cleanable/water))
+				qdel(E)
 
 /atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return

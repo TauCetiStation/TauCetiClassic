@@ -238,13 +238,17 @@ obj/item/gland/slime/activate()
 
 	for(var/turf/T in oview(2,host)) //Make this respect walls and such
 		T.add_blood(host)
-	for(var/mob/living/carbon/human/H in oview(3,host)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
-		if(H.wear_suit)
-			H.wear_suit.add_blood(host)
-			H.update_inv_wear_suit()
-		else if(H.w_uniform)
-			H.w_uniform.add_blood(host)
-			H.update_inv_w_uniform()
+
+	for(var/mob/living/carbon/C in oview(3,host)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
+		var/obj/item/I = C.get_equipped_item(slot_wear_suit)
+		if(I)
+			I.add_blood(host)
+			continue
+
+		I = C.get_equipped_item(slot_w_uniform)
+		if(I)
+			I.add_blood(host)
+
 
 
 //BODYSNATCH

@@ -20,10 +20,6 @@
 
 	var/being_shocked = 0
 
-	// Normaly, this vars should be in obj/item - because inventory procs should use obj/item type only.
-	var/slot_equipped = null // Where this item currently equipped (as slot).
-	var/slot_bodypart = null // What bodypart holds this item (as tag).
-
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
 /obj/process()

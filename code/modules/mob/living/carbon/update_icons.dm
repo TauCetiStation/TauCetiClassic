@@ -11,7 +11,6 @@ There are several things that need to be remembered:
 		update_inv_wear_suit()
 		update_inv_gloves()
 		update_inv_shoes()
-		update_inv_w_uniform()
 		update_inv_glasse()
 		update_inv_l_hand()
 		update_inv_r_hand()
@@ -130,7 +129,7 @@ There are several things that need to be remembered:
 	if(!species)
 		return
 
-	update_bodyparts() // TODO remove this
+	//update_bodyparts() // TODO remove this
 	update_tail_showing() // TODO remove this
 
 	var/g = (gender == FEMALE ? "f" : "m")
@@ -348,7 +347,7 @@ There are several things that need to be remembered:
 
 	remove_inv_overlay(SLOT)
 
-	var/obj/item/bodypart/BP = get_slot_bodypart(SLOT)
+	var/obj/item/bodypart/BP = get_BP_by_slot(SLOT)
 	if(!BP)
 		return
 
@@ -359,6 +358,15 @@ There are several things that need to be remembered:
 	overlays_inventory[SLOT] = standing
 	apply_inv_overlay(SLOT)
 
+// If mob/limb is holding this item after item's icon has changed and you wan't to update mob/limb overlays - use this proc.
+/obj/item/proc/update_inv_item(SLOT)
+	if(!slot_bodypart || !slot_equipped)
+		return
+
+	if(SLOT && SLOT != slot_equipped) // if you want to update overlays only while item is equipped in specified slot.
+		return
+
+	slot_bodypart.update_inv_limb(slot_equipped)
 
 // multi (TRUE) - pass "nothing or null" in SLOT to rebuild all inventory overlays for this bodypart.
 // multi (TRUE) - pass "list of slots" in SLOT to update exact inventory overlays.
@@ -455,7 +463,7 @@ There are several things that need to be remembered:
 
 		if(i_blood && O.blood_DNA)
 			var/image/bloodsies
-			if(i_blood = "by_type")
+			if(i_blood == "by_type")
 				var/obj/item/clothing/suit/S = O
 				bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = "[S.blood_overlay_type]blood", layer = i_layer + 0.2)
 			else
@@ -466,7 +474,7 @@ There are several things that need to be remembered:
 		inv_overlays[SLOT] = standing
 
 	if(owner)
-		owner.update_inv_mob(SLOT)
+		owner.update_inv_mob(SLOT, multi)
 	else if(inv_overlays[SLOT])
 		overlays += inv_overlays[SLOT]
 
@@ -494,8 +502,8 @@ There are several things that need to be remembered:
 /obj/item/bodypart/l_arm/get_item_icon_for_mob(SLOT, obj/item/O)
 	return O.lefthand_file
 
-/mob/living/carbon/update_inv_w_uniform()
-	/*remove_overlay(UNIFORM_LAYER)
+/*/mob/living/carbon/update_inv_w_uniform()
+	remove_overlay(UNIFORM_LAYER)
 
 	if(istype(w_uniform, /obj/item/clothing/under))
 		if(client && hud_used && hud_used.hud_shown)

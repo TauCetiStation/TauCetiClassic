@@ -382,9 +382,8 @@ BLIND     // can't see anything
 		hastie = I
 		hastie.on_attached(src, user)
 
-		if(istype(loc, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
+		if(iscarbon(loc))
+			update_inv_item(slot_w_uniform)
 		action_button_name = "Use inventory."
 		return
 
@@ -493,14 +492,17 @@ BLIND     // can't see anything
 	set name = "Roll Down Jumpsuit"
 	set category = "Object"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+
+	if(!isliving(usr))
+		return
+	if(usr.incapacitated())
+		return
 
 	if(copytext(item_color,-2) != "_d")
 		basecolor = item_color
-	if(basecolor + "_d_s" in icon_states('icons/mob/uniform.dmi'))
+	if(basecolor + "_d" in icon_states('icons/mob/uniform.dmi'))
 		item_color = item_color == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
-		usr.update_inv_w_uniform()
+		update_inv_item(slot_w_uniform)
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
@@ -511,9 +513,8 @@ BLIND     // can't see anything
 	hastie.on_removed(user)
 	hastie = null
 
-	if(istype(loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_w_uniform()
+	if(iscarbon(loc))
+		update_inv_item(slot_w_uniform)
 		action_button_name = null
 
 /obj/item/clothing/under/verb/removetie()

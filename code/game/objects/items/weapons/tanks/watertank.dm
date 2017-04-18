@@ -31,7 +31,7 @@
 	if(!istype(H))
 		to_chat(H, "<span class='warning'>You can't do that!</span>")
 		return
-	if (H.get_item_in_bodypart_slot(slot_back) != src)
+	if (H.get_equipped_item(slot_back) != src)
 		to_chat(H, "<span class='warning'>The watertank must be worn properly to use!</span>")
 		return
 	if(H.incapacitated())
@@ -59,7 +59,7 @@
 /obj/item/weapon/watertank/equipped(mob/user, slot)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if (src != C.get_item_in_bodypart_slot(slot_back))
+		if (src != C.get_equipped_item(slot_back))
 			remove_noz()
 	else
 		remove_noz()

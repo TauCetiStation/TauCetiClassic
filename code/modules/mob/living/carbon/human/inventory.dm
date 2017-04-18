@@ -122,8 +122,6 @@
 				update_hair = 1
 		if(update_hair)
 			update_hair()
-			update_inv_ears()
-			update_inv_wear_mask()
 		update_inv_wear_suit()
 	else if (W == w_uniform)
 		if (r_store)
@@ -135,13 +133,10 @@
 		if (belt)
 			drop_from_inventory(belt)
 		w_uniform = null
-		update_inv_w_uniform()
 	else if (W == gloves)
 		gloves = null
-		update_inv_gloves()
 	else if (W == glasses)
 		glasses = null
-		update_inv_glasses()
 	else if (W == head)
 		head = null
 
@@ -154,22 +149,16 @@
 				update_hair = 1
 		if(update_hair)
 			update_hair()
-			update_inv_ears()
-			update_inv_wear_mask()
 
 		update_inv_head()
 	else if (W == l_ear)
 		l_ear = null
-		update_inv_ears()
 	else if (W == r_ear)
 		r_ear = null
-		update_inv_ears()
 	else if (W == shoes)
 		shoes = null
-		update_inv_shoes()
 	else if (W == belt)
 		belt = null
-		update_inv_belt()
 	else if (W == wear_mask)
 		wear_mask = null
 		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
@@ -178,36 +167,26 @@
 			if(internals)
 				internals.icon_state = "internal0"
 			internal = null
-		update_inv_wear_mask()
 	else if (W == wear_id)
 		wear_id = null
-		update_inv_wear_id()
 	else if (W == r_store)
 		r_store = null
-		update_inv_pockets()
 	else if (W == l_store)
 		l_store = null
-		update_inv_pockets()
 	else if (W == s_store)
 		s_store = null
-		update_inv_s_store()
 	else if (W == back)
 		back = null
-		update_inv_back()
 	else if (W == handcuffed)
 		handcuffed = null
-		update_inv_handcuffed()
 		if(buckled && buckled.buckle_require_restraints)
 			buckled.unbuckle_mob()
 	else if (W == legcuffed)
 		legcuffed = null
-		update_inv_legcuffed()
 	else if (W == r_hand)
 		r_hand = null
-		update_inv_r_hand()
 	else if (W == l_hand)
 		l_hand = null
-		update_inv_l_hand()
 	else
 		return 0
 
@@ -241,25 +220,15 @@
 /*
 	Returns bodypart that supports provided slot as arg. Can return nothing, if we don't have that slot or bodypart.
 */
-/mob/living/carbon/proc/get_slot_bodypart(slot)
+/mob/living/carbon/proc/get_BP_by_slot(slot)
 	if(!slot)
 		return FALSE
 
-	var/slot_bodypart = bodyparts_slot_by_name[slot]
-	if(!slot_bodypart)
+	var/bp_slot = bodyparts_slot_by_name[slot]
+	if(!bp_slot)
 		return FALSE
 
-	return get_bodypart(slot_bodypart)
-
-/*
-	Returns equipped item in a slot. (Previously it was something like head, r_hand, l_hand, w_uniform vars on humans).
-*/
-/mob/living/carbon/proc/get_item_in_bodypart_slot(slot)
-	var/obj/item/bodypart/BP = get_slot_bodypart(slot)
-	if(!BP)
-		return
-
-	return BP.item_in_slot[slot]
+	return get_bodypart(bp_slot)
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible()
 //if you don't wish the hud to be updated - if you're doing it manually in your own proc.
@@ -267,7 +236,7 @@
 	if(!slot || !istype(W))
 		return FALSE
 
-	var/obj/item/bodypart/BP = get_slot_bodypart(slot)
+	var/obj/item/bodypart/BP = get_BP_by_slot(slot)
 	if(!BP)
 		return FALSE
 
@@ -278,7 +247,7 @@
 	BP.item_in_slot[slot] = W
 	W.equipped(src, slot)
 	W.slot_equipped = slot
-	W.slot_bodypart = BP.body_zone
+	W.slot_bodypart = BP
 	W.layer = ABOVE_HUD_LAYER
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
@@ -819,7 +788,7 @@ It can still be worn/put on as normal.
 				suit.hastie = null*/
 			suit.hastie.on_removed(usr)
 			suit.hastie = null
-			target.update_inv_w_uniform()
+			suit.update_inv_item(slot_w_uniform)
 		if("id")
 			slot_to_process = slot_wear_id
 			if (target.wear_id)

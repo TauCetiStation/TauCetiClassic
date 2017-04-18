@@ -1250,21 +1250,22 @@ var/list/robot_verbs_default = list(
 					else if(istype(A, /obj/item))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()
-					else if(istype(A, /mob/living/carbon/human))
-						var/mob/living/carbon/human/cleaned_human = A
+					else if(iscarbon(A))
+						var/mob/living/carbon/cleaned_human = A
 						if(cleaned_human.lying)
-							if(cleaned_human.head)
-								cleaned_human.head.clean_blood()
-								cleaned_human.update_inv_head()
-							if(cleaned_human.wear_suit)
-								cleaned_human.wear_suit.clean_blood()
-								cleaned_human.update_inv_wear_suit()
-							else if(cleaned_human.w_uniform)
-								cleaned_human.w_uniform.clean_blood()
-								cleaned_human.update_inv_w_uniform()
-							if(cleaned_human.shoes)
-								cleaned_human.shoes.clean_blood()
-								cleaned_human.update_inv_shoes()
+							var/obj/item/I = get_equipped_item(slot_head) // TODO shower proc?
+							if(I)
+								I.clean_blood()
+							I = get_equipped_item(slot_wear_suit)
+							if(I)
+								I.clean_blood()
+							else
+								I = get_equipped_item(slot_w_uniform)
+								if(I)
+									I.clean_blood()
+							I = get_equipped_item(slot_shoes)
+							if(I)
+								I.clean_blood()
 							cleaned_human.clean_blood(1)
 							to_chat(cleaned_human, "\red [src] cleans your face!")
 		return

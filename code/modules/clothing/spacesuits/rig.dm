@@ -102,14 +102,14 @@
 	if(helmet)
 		H = helmet.loc
 		if(istype(H))
-			if(helmet && H.get_item_in_bodypart_slot(slot_head) == helmet)
+			if(helmet && H.get_equipped_item(slot_head) == helmet)
 				helmet.canremove = TRUE
 				H.transferItemToLoc(helmet, src)
 
 	if(boots)
 		H = boots.loc
 		if(istype(H))
-			if(boots && H.get_item_in_bodypart_slot(slot_shoes) == boots)
+			if(boots && H.get_equipped_item(slot_shoes) == boots)
 				boots.canremove = TRUE
 				H.transferItemToLoc(boots, src)
 
@@ -133,15 +133,15 @@
 
 	var/mob/living/carbon/human/H = usr
 
-	if(!istype(H) || H.incapacitated() || H.get_item_in_bodypart_slot(slot_wear_suit) != src)
+	if(!istype(H) || H.incapacitated() || H.get_equipped_item(slot_wear_suit) != src)
 		return
 
-	if(H.get_item_in_bodypart_slot(slot_head) == helmet)
+	if(H.get_equipped_item(slot_head) == helmet)
 		helmet.canremove = TRUE
 		H.transferItemToLoc(helmet, src)
 		to_chat(H, "\blue You retract your hardsuit helmet.")
 	else
-		if(H.get_item_in_bodypart_slot(slot_head))
+		if(H.get_equipped_item(slot_head))
 			to_chat(H, "\red You cannot deploy your helmet while wearing another helmet.")
 			return
 		//TODO: Species check, skull damage for forcing an unfitting helmet on?
@@ -165,15 +165,15 @@
 
 	var/mob/living/carbon/human/H = usr
 
-	if(!istype(H) || H.incapacitated() || H.get_item_in_bodypart_slot(slot_wear_suit) != src)
+	if(!istype(H) || H.incapacitated() || H.get_equipped_item(slot_wear_suit) != src)
 		return
 
-	if(H.get_item_in_bodypart_slot(slot_shoes) == boots)
+	if(H.get_equipped_item(slot_shoes) == boots)
 		boots.canremove = TRUE
 		H.transferItemToLoc(boots, src)
 		to_chat(H, "\blue You retract your hardsuit magboots.")
 	else
-		if(H.get_item_in_bodypart_slot(slot_shoes))
+		if(H.get_equipped_item(slot_shoes))
 			to_chat(H, "\blue You cannot deploy your magboots while wearing another boots.")
 			return
 		if(H.equip_to_slot_if_possible(boots, slot_shoes))

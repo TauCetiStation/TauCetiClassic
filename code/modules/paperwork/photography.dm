@@ -105,7 +105,7 @@
 			return ..()
 
 		playsound(loc, "rustle", 50, 1, -5)
-		if(!M.incapacitated() && M.get_item_in_bodypart_slot(slot_back) == src)
+		if(!M.incapacitated() && M.get_equipped_item(slot_back) == src)
 			switch(over_object.name)
 				if("r_hand", "l_hand", "mouth")
 					var/obj/screen/inventory/S = over_object

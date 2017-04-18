@@ -20,6 +20,9 @@
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 
+	var/slot_equipped = null // Where this item currently equipped (as slot).
+	var/obj/item/bodypart/slot_bodypart = null // What bodypart holds this item (as ref).
+
 	var/flags_pressure = 0
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
 	var/cold_protection = 0 //flags which determine which body parts are protected from cold. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
@@ -347,18 +350,12 @@
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(mob/M, slot, disable_warning = FALSE)
-	if(!slot || !M)
+/obj/item/proc/mob_can_equip(mob/living/carbon/C, slot, disable_warning = FALSE)
+	if(!slot || !C)
 		return FALSE
 
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-
-		var/slot_bodypart = C.bodyparts_slot_by_name[slot]
-		if(!slot_bodypart)
-			return FALSE
-
-		var/obj/item/bodypart/BP = C.get_bodypart(slot_bodypart)
+	if(istype(C))
+		var/obj/item/bodypart/BP = C.get_BP_by_slot(slot)
 		if(BP && BP.can_hold(src, slot, disable_warning = FALSE))
 			return TRUE
 
@@ -481,22 +478,22 @@
 	return
 
 /obj/item/clean_blood()
-	. = ..()
 	if(uncleanable)
 		return
+
+	. = ..()
+
 	if(blood_overlay)
-		overlays.Remove(blood_overlay)
+		overlays -= blood_overlay
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
 		G.transfer_blood = 0
 
+	update_inv_item()
 
-/obj/item/add_blood(mob/living/carbon/human/M)
+/obj/item/add_blood(mob/living/carbon/C)
 	if (!..())
-		return 0
-
-	if(istype(src, /obj/item/weapon/melee/energy))
-		return
+		return FALSE
 
 	//if we haven't made our blood_overlay already
 	if( !blood_overlay )
@@ -509,10 +506,13 @@
 
 	//if this blood isn't already in the list, add it
 
-	if(blood_DNA[M.dna.unique_enzymes])
-		return 0 //already bloodied with this blood. Cannot add more.
-	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-	return 1 //we applied blood to the item
+	if(blood_DNA[C.dna.unique_enzymes])
+		return FALSE //already bloodied with this blood. Cannot add more.
+	blood_DNA[C.dna.unique_enzymes] = C.dna.b_type
+
+	update_inv_item()
+
+	return TRUE //we applied blood to the item
 
 var/list/items_blood_overlay_by_type = list()
 /obj/item/proc/generate_blood_overlay()

@@ -386,8 +386,8 @@
 		Weaken(5) //can't emote while weakened, apparently.
 
 /mob/living/carbon/proc/handle_grasp() // TODO check this proc
-	var/obj/item/i_left = get_item_in_bodypart_slot(slot_l_hand)
-	var/obj/item/i_right = get_item_in_bodypart_slot(slot_r_hand)
+	var/obj/item/i_left = get_equipped_item(slot_l_hand)
+	var/obj/item/i_right = get_equipped_item(slot_r_hand)
 
 	if(!i_left && !i_right)
 		return

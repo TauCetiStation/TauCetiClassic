@@ -380,7 +380,7 @@
 
 	if(iscarbon(user))
 		var/mob/living/carbon/human/H = user
-		if((H.get_item_in_bodypart_slot(slot_l_store) == src || H.get_item_in_bodypart_slot(slot_r_store) == src) && !H.get_active_hand())
+		if((H.get_equipped_item(slot_l_store) == src || H.get_equipped_item(slot_r_store) == src) && !H.get_active_hand())
 			H.u_equip(src)
 			H.put_in_hands(src)
 			return

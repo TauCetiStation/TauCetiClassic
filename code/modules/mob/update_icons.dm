@@ -31,8 +31,8 @@
 /mob/proc/update_inv_wear_suit()
 	return
 
-/mob/proc/update_inv_w_uniform()
-	return
+//mob/proc/update_inv_w_uniform()
+//	return
 
 /mob/proc/update_inv_belt()
 	return
