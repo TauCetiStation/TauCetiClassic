@@ -795,14 +795,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(lying)
 		density = 0
-		if(iscarbon(src) && !isalien(src))
-			var/mob/living/carbon/C = src
-			var/obj/item/right_hand = C.get_equipped_item(slot_r_hand)
-			var/obj/item/left_hand = C.get_equipped_item(slot_l_hand)
-			if(right_hand && right_hand.canremove) // Who made this as a single if(...) before?..
-				C.dropItemToGround(right_hand)
-			if(left_hand && left_hand.canremove)
-				C.dropItemToGround(left_hand)
 	else
 		density = 1
 

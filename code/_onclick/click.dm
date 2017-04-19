@@ -114,7 +114,8 @@
 		if(W)
 			if(W.flags&USEDELAY)
 				next_move += 5
-
+			if(lying) // items no longer dropped in lying state, instead we prevent action with items from that state.
+				return
 			var/resolved = A.attackby(W,src,params)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
@@ -133,7 +134,8 @@
 			if(W)
 				if(W.flags&USEDELAY)
 					next_move += 5
-
+				if(lying)
+					return
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 				var/resolved = A.attackby(W,src,params)
 				if(!resolved && A && W)
@@ -143,6 +145,8 @@
 			return
 		else // non-adjacent click
 			if(W)
+				if(lying)
+					return
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
