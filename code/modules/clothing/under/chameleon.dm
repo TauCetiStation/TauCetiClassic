@@ -25,9 +25,10 @@
 	name = "psychedelic"
 	desc = "Groovy!"
 	icon_state = "psyche"
+	item_state = "psyche"
 	item_color = "psyche"
 	update_icon()
-	update_inv_item(slot_w_uniform)
+	update_inv_item() // NOTE in-hand icon has no animation.
 
 /obj/item/clothing/under/chameleon/verb/change()
 	set name = "Change Jumpsuit Appearance"
@@ -56,8 +57,7 @@
 	item_state = A.item_state
 	item_color = A.item_color
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		update_inv_item()
+	update_inv_item()
 
 //*****************
 //**Chameleon Hat**
@@ -85,10 +85,11 @@
 /obj/item/clothing/head/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
-	icon_state = "greysoft"
-	item_color = "grey"
+	icon_state = initial(item_state)
+	item_state = initial(item_state)
+	item_color = initial(item_color)
 	update_icon()
-	usr.update_inv_head()
+	update_inv_item()
 
 /obj/item/clothing/head/chameleon/verb/change()
 	set name = "Change Hat/Helmet Appearance"
@@ -117,8 +118,7 @@
 	item_color = A.item_color
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		usr.update_inv_head()	//so our overlays update.
+	update_inv_item()
 
 //******************
 //**Chameleon Suit**
@@ -145,10 +145,11 @@
 /obj/item/clothing/suit/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
-	icon_state = "armor"
-	item_color = "armor"
+	icon_state = initial(item_state)
+	item_state = initial(item_state)
+	item_color = initial(item_color)
 	update_icon()
-	usr.update_inv_wear_suit()
+	update_inv_item()
 
 /obj/item/clothing/suit/chameleon/verb/change()
 	set name = "Change Exosuit Appearance"
@@ -177,8 +178,7 @@
 	item_color = A.item_color
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		usr.update_inv_wear_suit()	//so our overlays update.
+	update_inv_item()
 
 //*******************
 //**Chameleon Shoes**
@@ -204,11 +204,11 @@
 /obj/item/clothing/shoes/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "black shoes"
 	desc = "A pair of black shoes."
-	icon_state = "black"
-	item_state = "black"
-	item_color = "black"
+	icon_state = initial(item_state)
+	item_state = initial(item_state)
+	item_color = initial(item_color)
 	update_icon()
-	usr.update_inv_shoes()
+	update_inv_item()
 
 /obj/item/clothing/shoes/chameleon/verb/change()
 	set name = "Change Footwear Appearance"
@@ -235,8 +235,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	item_color = A.item_color
-	if(usr)
-		usr.update_inv_shoes()	//so our overlays update.
+	update_inv_item()
 
 //**********************
 //**Chameleon Backpack**
@@ -260,10 +259,10 @@
 /obj/item/weapon/storage/backpack/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "backpack"
 	desc = "You wear this on your back and put items into it."
-	icon_state = "backpack"
-	item_state = "backpack"
+	icon_state = initial(item_state)
+	item_state = initial(item_state)
 	update_icon()
-	usr.update_inv_back()
+	update_inv_item()
 
 /obj/item/weapon/storage/backpack/chameleon/verb/change()
 	set name = "Change Backpack Appearance"
@@ -290,8 +289,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	item_color = A.item_color
-	if(usr)
-		usr.update_inv_back()	//so our overlays update.
+	update_inv_item()
 
 //********************
 //**Chameleon Gloves**
@@ -317,10 +315,11 @@
 /obj/item/clothing/gloves/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "black gloves"
 	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
-	icon_state = "black"
-	item_color = "brown"
+	icon_state = initial(item_state)
+	item_state = initial(item_state)
+	item_color = initial(item_color)
 	update_icon()
-	usr.update_inv_gloves()
+	update_inv_item()
 
 /obj/item/clothing/gloves/chameleon/verb/change()
 	set name = "Change Gloves Appearance"
@@ -348,8 +347,7 @@
 	item_state = A.item_state
 	item_color = A.item_color
 	flags_inv = A.flags_inv
-	if(usr)
-		usr.update_inv_gloves()	//so our overlays update.
+	update_inv_item()
 
 //******************
 //**Chameleon Mask**
@@ -375,10 +373,10 @@
 /obj/item/clothing/mask/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "gas mask"
 	desc = "It's a gas mask."
-	item_state = "gas_mask_tc"
-	icon_state = "gas_mask_tc"
+	icon_state = initial(item_state)
+	item_state = initial(item_state)
 	update_icon()
-	usr.update_inv_wear_mask()
+	update_inv_item()
 
 /obj/item/clothing/mask/chameleon/verb/change()
 	set name = "Change Mask Appearance"
@@ -406,8 +404,7 @@
 	item_state = A.item_state
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		usr.update_inv_wear_mask()	//so our overlays update.
+	update_inv_item()
 
 //*********************
 //**Chameleon Glasses**
@@ -432,9 +429,10 @@
 /obj/item/clothing/glasses/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "Optical Meson Scanner"
 	desc = "It's a set of mesons."
-	icon_state = "meson"
+	icon_state = initial(item_state)
+	item_state = initial(item_state)
 	update_icon()
-	usr.update_inv_glasses()
+	update_inv_item()
 
 /obj/item/clothing/glasses/chameleon/verb/change()
 	set name = "Change Glasses Appearance"
@@ -461,8 +459,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	flags_inv = A.flags_inv
-	if(usr)
-		usr.update_inv_glasses()	//so our overlays update.
+	update_inv_item()
 
 //*****************
 //**Chameleon Gun**
@@ -487,10 +484,10 @@
 /obj/item/weapon/gun/projectile/chameleon/emp_act(severity)
 	name = "desert eagle"
 	desc = "It's a desert eagle."
-	icon_state = "deagle"
+	icon_state = initial(item_state)
+	item_state = initial(item_state)
 	update_icon()
-	usr.update_inv_r_hand()
-	usr.update_inv_l_hand()
+	update_inv_item()
 
 /obj/item/weapon/gun/projectile/chameleon/verb/change()
 	set name = "Change Gun Appearance"
@@ -517,6 +514,4 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	flags_inv = A.flags_inv
-	if(usr)
-		usr.update_inv_r_hand()
-		usr.update_inv_l_hand()	//so our overlays update.
+	update_inv_item()

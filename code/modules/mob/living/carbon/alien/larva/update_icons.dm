@@ -1,6 +1,5 @@
 /mob/living/carbon/alien/larva/regenerate_icons()
 	overlays = list()
-	update_inv_r_hand(0)
 	update_hud()
 	update_icons()
 
@@ -25,7 +24,7 @@
 		icon_state = "larva[state]"
 
 /mob/living/carbon/alien/larva/update_transform() //All this is handled in update_icons()
-	return update_icons() 
+	return update_icons()
 
 /mob/living/carbon/alien/larva/update_hud()
 	//TODO

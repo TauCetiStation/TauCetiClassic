@@ -14,11 +14,6 @@
 
 /mob/living/carbon/monkey/regenerate_icons()
 	..()
-	update_inv_wear_mask(0)
-	update_inv_back(0)
-	update_inv_r_hand(0)
-	update_inv_l_hand(0)
-	update_inv_handcuffed(0)
 	update_icons()
 	update_transform()
 	//Hud Stuff
@@ -35,7 +30,7 @@
 
 
 
-////////
+/*////////
 /mob/living/carbon/monkey/update_inv_wear_mask(var/update_icons=1)
 	if( wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
 		if(wear_mask:icon_custom)
@@ -78,16 +73,16 @@
 	if(update_icons)		update_icons()
 
 
-/mob/living/carbon/monkey/update_inv_back(var/update_icons=1)
-	if(back)
-		if(back:icon_custom)
-			overlays_standing[M_BACK_LAYER]	= image("icon" = back:icon_custom, "icon_state" = "[back.icon_state]_mob")
-		else
-			overlays_standing[M_BACK_LAYER]	= image("icon" = 'icons/mob/back.dmi', "icon_state" = "[back.icon_state]")
-		back.screen_loc = ui_monkey_back
-	else
-		overlays_standing[M_BACK_LAYER]	= null
-	if(update_icons)		update_icons()
+//mob/living/carbon/monkey/update_inv_back(var/update_icons=1)
+//	if(back)
+//		if(back:icon_custom)
+//			overlays_standing[M_BACK_LAYER]	= image("icon" = back:icon_custom, "icon_state" = "[back.icon_state]_mob")
+//		else
+//			overlays_standing[M_BACK_LAYER]	= image("icon" = 'icons/mob/back.dmi', "icon_state" = "[back.icon_state]")
+//		back.screen_loc = ui_monkey_back
+//	else
+//		overlays_standing[M_BACK_LAYER]	= null
+//	if(update_icons)		update_icons()
 
 
 /mob/living/carbon/monkey/update_inv_handcuffed(var/update_icons=1)
@@ -98,7 +93,7 @@
 		overlays_standing[M_HANDCUFF_LAYER]	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "handcuff1")
 	else
 		overlays_standing[M_HANDCUFF_LAYER]	= null
-	if(update_icons)		update_icons()
+	if(update_icons)		update_icons()*/
 
 
 /mob/living/carbon/monkey/update_hud()

@@ -98,11 +98,7 @@
 		if(W.flags&USEDELAY)
 			next_move += 5
 		W.attack_self(src)
-		if(hand)
-			update_inv_l_hand()
-		else
-			update_inv_r_hand()
-
+		W.update_inv_item()
 		return
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)

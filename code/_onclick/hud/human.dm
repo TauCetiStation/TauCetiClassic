@@ -10,7 +10,7 @@
 
 		for(var/slot_name in inv_box_data)
 			if(!inv_box_data[slot_name]["no_hud"])
-				var/obj/screen/inventory/inv_box = new()
+				var/obj/screen/inventory/inv_box = new() // could be transfered into initialize proc(), so we dont make object hud for mobs that will not get any client.
 				inv_box.master = src
 				inv_box.name = inv_box_data[slot_name]["name"]
 				inv_box.icon_state = inv_box_data[slot_name]["icon_state"]
@@ -24,6 +24,8 @@
 			else
 				inv_slots_data[slot_name] = null
 			item_in_slot["[slot_name]"] = null
+			if(owner)
+				owner.bodyparts_slot_by_name[slot_name] = body_zone
 	else
 		CRASH("Someone tried to create bodypart hud data again for [src].")
 
@@ -49,7 +51,6 @@
 						adding += S
 					if(S.visible_when_hud_reduced)
 						reduced += S
-				bodyparts_slot_by_name[slot_name] = BP.body_zone
 		BP.update_inv_hud()
 
 /*
@@ -88,7 +89,7 @@
 			removing += inv_slots_data[slot_name]
 			removing += item_in_slot[slot_name]
 
-			owner.bodyparts_slot_by_name -= slot_name // so the mob will know, that he does not have this slot anymore.
+			owner.bodyparts_slot_by_name -= slot_name // so the mob will know, that he no longer has this slot anymore.
 
 		if(destroy)
 			var/obj/screen/inventory/S = inv_slots_data[slot_name]
@@ -112,7 +113,7 @@
 /*
 	Code below used in hud creation process (mostly).
 */
-/* Note: in most of SS13 builds you will find something like this:
+/* Note: in most SS13 builds you will find something like this:
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "i_clothing"
 	inv_box.icon = ui_style
@@ -134,7 +135,7 @@
 			,"icon_state" = "hair"
 			,"screen_loc" = ui_head
 			,"slot_layer" = -HEAD_LAYER
-			,"slot_icon" = 'icons/mob/head.dmi'
+			,"mob_icon_path" = 'icons/mob/head.dmi'
 			,"other" = TRUE
 			,"has_blood_overlay" = "helmetblood"
 			)
@@ -143,7 +144,7 @@
 			,"icon_state" = "glasses"
 			,"screen_loc" = ui_glasses
 			,"slot_layer" = -GLASSES_LAYER
-			,"slot_icon" = 'icons/mob/eyes.dmi'
+			,"mob_icon_path" = 'icons/mob/eyes.dmi'
 			,"other" = TRUE
 			)
 		,slot_l_ear = list(
@@ -151,7 +152,7 @@
 			,"icon_state" = "ears"
 			,"screen_loc" = ui_l_ear
 			,"slot_layer" = -EARS_LAYER
-			,"slot_icon" = 'icons/mob/ears.dmi'
+			,"mob_icon_path" = 'icons/mob/ears.dmi'
 			,"other" = TRUE
 			)
 		,slot_r_ear = list(
@@ -159,7 +160,7 @@
 			,"icon_state" = "ears"
 			,"screen_loc" = ui_r_ear
 			,"slot_layer" = -EARS_LAYER
-			,"slot_icon" = 'icons/mob/ears.dmi'
+			,"mob_icon_path" = 'icons/mob/ears.dmi'
 			,"other" = TRUE
 			)
 		,slot_wear_mask = list(
@@ -167,7 +168,7 @@
 			,"icon_state" = "mask"
 			,"screen_loc" = ui_mask
 			,"slot_layer" = -FACEMASK_LAYER
-			,"slot_icon" = 'icons/mob/mask.dmi'
+			,"mob_icon_path" = 'icons/mob/mask.dmi'
 			,"other" = TRUE
 			)
 		)
@@ -179,7 +180,7 @@
 			,"icon_state" = "back"
 			,"screen_loc" = ui_back
 			,"slot_layer" = -BACK_LAYER
-			,"slot_icon" = 'icons/mob/back.dmi'
+			,"mob_icon_path" = 'icons/mob/back.dmi'
 			,"persistent_hud" = TRUE
 			)
 		,slot_w_uniform = list(
@@ -187,7 +188,7 @@
 			,"icon_state" = "center"
 			,"screen_loc" = ui_iclothing
 			,"slot_layer" = -UNIFORM_LAYER
-			,"slot_icon" = 'icons/mob/uniform.dmi'
+			,"mob_icon_path" = 'icons/mob/uniform.dmi'
 			,"other" = TRUE
 			,"icon_state_as_color" = TRUE  // uniform may use item_color var for icon_states, so for now, i need working code... TODO deal with this?
 			,"support_fat_people" = TRUE
@@ -199,7 +200,7 @@
 			,"icon_state" = "suit"
 			,"screen_loc" = ui_oclothing
 			,"slot_layer" = -SUIT_LAYER
-			,"slot_icon" = 'icons/mob/suit.dmi'
+			,"mob_icon_path" = 'icons/mob/suit.dmi'
 			,"other" = TRUE
 			,"has_blood_overlay" = "by_type"
 			)
@@ -208,9 +209,9 @@
 			,"icon_state" = "id"
 			,"screen_loc" = ui_id
 			,"slot_layer" = -ID_LAYER
-			,"slot_icon" = 'icons/mob/mob.dmi'
+			,"mob_icon_path" = 'icons/mob/mob.dmi'
 			,"simple_overlays" = TRUE
-			,"locked_icon_state" = "id"
+			,"mob_icon_state" = "id"
 			,"persistent_hud" = TRUE // used in persistent_inventory_update() proc (_onclick\hud\hud.dm)
 			)
 		,slot_l_store = list(
@@ -230,7 +231,7 @@
 			,"icon_state" = "suitstorage"
 			,"screen_loc" = ui_sstore1
 			,"slot_layer" = -SUIT_STORE_LAYER
-			,"slot_icon" = 'icons/mob/belt_mirror.dmi'
+			,"mob_icon_path" = 'icons/mob/belt_mirror.dmi'
 			,"icon_state_as_item_state" = TRUE
 			,"simple_overlays" = TRUE
 			,"persistent_hud" = TRUE
@@ -240,7 +241,7 @@
 			,"icon_state" = "belt"
 			,"screen_loc" = ui_belt
 			,"slot_layer" = -BELT_LAYER
-			,"slot_icon" = 'icons/mob/belt.dmi'
+			,"mob_icon_path" = 'icons/mob/belt.dmi'
 			,"icon_state_as_item_state" = TRUE
 			,"persistent_hud" = TRUE
 			)
@@ -249,7 +250,7 @@
 			,"icon_state" = "gloves"
 			,"screen_loc" = ui_gloves
 			,"slot_layer" = -GLOVES_LAYER
-			,"slot_icon" = 'icons/mob/hands.dmi'
+			,"mob_icon_path" = 'icons/mob/hands.dmi'
 			,"other" = TRUE
 			,"icon_state_as_item_state" = TRUE
 			,"has_blood_overlay" = "bloodyhands"
@@ -259,15 +260,21 @@
 			,"icon_state" = "shoes"
 			,"screen_loc" = ui_shoes
 			,"slot_layer" = -SHOES_LAYER
-			,"slot_icon" = 'icons/mob/feet.dmi'
+			,"mob_icon_path" = 'icons/mob/feet.dmi'
 			,"other" = TRUE
 			,"has_blood_overlay" = "shoeblood"
 			)
 		,slot_handcuffed = list(
 			"no_hud" = TRUE
+			,"slot_layer" = -HANDCUFF_LAYER
+			,"mob_icon_path" = 'icons/mob/mob.dmi'
+			,"mob_icon_state" = "handcuff1"
 			)
 		,slot_legcuffed = list(
 			"no_hud" = TRUE
+			,"slot_layer" = -LEGCUFF_LAYER
+			,"mob_icon_path" = 'icons/mob/mob.dmi'
+			,"mob_icon_state" = "legcuff1"
 			)
 		,slot_in_backpack = list(
 			"no_hud" = TRUE
@@ -281,7 +288,7 @@
 			,"icon_state" = null
 			,"screen_loc" = ui_lhand
 			,"slot_layer" = -L_HAND_LAYER
-			,"slot_icon" = null
+			,"mob_icon_path" = null
 			,"reduced" = TRUE
 			,"icon_state_as_item_state" = TRUE
 			)
@@ -294,7 +301,7 @@
 			,"icon_state" = null
 			,"screen_loc" = ui_rhand
 			,"slot_layer" = -R_HAND_LAYER
-			,"slot_icon" = null
+			,"mob_icon_path" = null
 			,"reduced" = TRUE
 			,"icon_state_as_item_state" = TRUE
 			)

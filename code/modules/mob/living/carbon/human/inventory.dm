@@ -25,11 +25,7 @@
 					return 0
 
 		if(H.equip_to_appropriate_slot(I))
-			if(hand)
-				update_inv_l_hand()
-			else
-				update_inv_r_hand()
-
+			// Do nothing (actually, mob overlays update was here and equip proc will do that itself now).
 		else if(s_active && s_active.can_be_inserted(I,1))	//if storage active insert there
 			s_active.handle_item_insertion(I)
 		else if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))	//see if we have box in other hand
@@ -122,7 +118,6 @@
 				update_hair = 1
 		if(update_hair)
 			update_hair()
-		update_inv_wear_suit()
 	else if (W == w_uniform)
 		if (r_store)
 			drop_from_inventory(r_store)
@@ -150,7 +145,6 @@
 		if(update_hair)
 			update_hair()
 
-		update_inv_head()
 	else if (W == l_ear)
 		l_ear = null
 	else if (W == r_ear)
@@ -208,25 +202,26 @@
 				owner.dropItemToGround(item_in_slot[thing], TRUE)
 		if(slot_wear_suit)
 			owner.dropItemToGround(item_in_slot[slot_s_store], TRUE)
+
 		if(slot_handcuffed)
-			if(owner.dropItemToGround(item_in_slot[slot_handcuffed]))
-				owner.handcuffed = null
-				if(owner.buckled && owner.buckled.buckle_require_restraints)
-					owner.buckled.unbuckle_mob()
-		if(slot_legcuffed)
-			if(owner.dropItemToGround(item_in_slot[slot_legcuffed]))
-				owner.legcuffed = null
+			if(owner.buckled && owner.buckled.buckle_require_restraints)
+				owner.buckled.unbuckle_mob()
+		//if(slot_legcuffed)
+			//owner.dropItemToGround(item_in_slot[slot_legcuffed])
 
 /*
 	Returns bodypart that supports provided slot as arg. Can return nothing, if we don't have that slot or bodypart.
 */
-/mob/living/carbon/proc/get_BP_by_slot(slot)
+/mob/proc/get_BP_by_slot(slot)
+	return
+
+/mob/living/carbon/get_BP_by_slot(slot)
 	if(!slot)
-		return FALSE
+		return
 
 	var/bp_slot = bodyparts_slot_by_name[slot]
 	if(!bp_slot)
-		return FALSE
+		return
 
 	return get_bodypart(bp_slot)
 
@@ -328,7 +323,7 @@
 			return TRUE
 		if(slot_wear_id)
 			if(!item_in_slot[slot_w_uniform])
-				if(!disable_warning)
+				if(owner && !disable_warning)
 					to_chat(owner, "\red You need a jumpsuit before you can attach this [I].")
 				return FALSE
 			if( !(flags & SLOT_ID) )
@@ -336,7 +331,7 @@
 			return TRUE
 		if(slot_l_store)
 			if(!item_in_slot[slot_w_uniform])
-				if(!disable_warning)
+				if(owner && !disable_warning)
 					to_chat(owner, "\red You need a jumpsuit before you can attach this [I].")
 				return FALSE
 			if(flags & SLOT_DENYPOCKET)
@@ -346,7 +341,7 @@
 			return FALSE
 		if(slot_r_store)
 			if(!item_in_slot[slot_w_uniform])
-				if(!disable_warning)
+				if(owner && !disable_warning)
 					to_chat(owner, "\red You need a jumpsuit before you can attach this [I].")
 				return FALSE
 			if(flags & SLOT_DENYPOCKET)
@@ -356,12 +351,12 @@
 			return FALSE
 		if(slot_s_store)
 			if(!item_in_slot[slot_wear_suit])
-				if(!disable_warning)
+				if(owner && !disable_warning)
 					to_chat(owner, "\red You need a suit before you can attach this [I].")
 				return FALSE
 			var/obj/item/w_suit = item_in_slot[slot_wear_suit]
 			if(!w_suit.allowed)
-				if(!disable_warning)
+				if(owner && !disable_warning)
 					to_chat(owner, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
 				return FALSE
 			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, w_suit.allowed) )
@@ -369,7 +364,7 @@
 			return FALSE
 		if(slot_belt)
 			if(!item_in_slot[slot_w_uniform])
-				if(!disable_warning)
+				if(owner && !disable_warning)
 					to_chat(owner, "\red You need a jumpsuit before you can attach this [name].")
 				return FALSE
 			if( !(flags & SLOT_BELT) )
@@ -384,13 +379,13 @@
 				return FALSE
 			return TRUE
 		if(slot_handcuffed)
-			if(owner.handcuffed)
+			if(owner && owner.handcuffed || item_in_slot[slot_handcuffed])
 				return FALSE
 			if(!istype(I, /obj/item/weapon/handcuffs))
 				return FALSE
 			return TRUE
 		if(slot_legcuffed)
-			if(owner.legcuffed)
+			if(owner && owner.legcuffed || item_in_slot[slot_legcuffed])
 				return FALSE
 			if(!istype(I, /obj/item/weapon/legcuffs))
 				return FALSE

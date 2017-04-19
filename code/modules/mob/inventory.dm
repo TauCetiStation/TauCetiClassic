@@ -308,7 +308,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE)
 	return remove_from_mob(I, force, loc, FALSE)
 
-/mob/living/carbon/proc/dropSlotToGround(slot, force = FALSE)
+/mob/proc/dropSlotToGround(slot, force = FALSE)
 	return remove_from_mob(get_equipped_item(slot), force, loc, FALSE)
 
 //for when the item will be immediately placed in a loc other than the ground

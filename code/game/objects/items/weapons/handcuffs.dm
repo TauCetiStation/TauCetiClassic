@@ -78,6 +78,20 @@
 		var/mob/living/carbon/ian/IAN = target
 		IAN.un_equip_or_action(user, "Neck", user.get_active_hand())
 
+/obj/item/weapon/handcuffs/equipped(mob/living/carbon/user, slot)
+	if(slot == slot_handcuffed)
+		user.handcuffed = src
+		user.stop_pulling()
+		user.dropSlotToGround(slot_r_hand)
+		user.dropSlotToGround(slot_l_hand)
+
+/obj/item/weapon/handcuffs/dropped(mob/living/carbon/user)
+	if(user.handcuffed == src)
+		user.handcuffed = null
+	if(user.buckled && user.buckled.buckle_require_restraints)
+		user.buckled.unbuckle_mob()
+	..()
+
 var/last_chew = 0
 /mob/living/carbon/human/RestrainedClickOn(atom/A)
 	if (A != src) return ..()
@@ -136,14 +150,19 @@ var/last_chew = 0
 /obj/item/weapon/handcuffs/cyborg
 	dispenser = 1
 
-/obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
-	if(!C.handcuffed)
-		var/turf/p_loc = user.loc
-		var/turf/p_loc_m = C.loc
-		playsound(src.loc, cuff_sound, 30, 1, -2)
-		user.visible_message("\red <B>[user] is trying to put handcuffs on [C]!</B>")
-		spawn(30)
-			if(!C)	return
-			if(p_loc == user.loc && p_loc_m == C.loc)
-				C.handcuffed = new /obj/item/weapon/handcuffs(C)
-				C.update_inv_handcuffed()
+/obj/item/weapon/handcuffs/cyborg/attack(mob/target, mob/user)
+	if(user.is_busy(target, slot_handcuffed))
+		return
+
+	playsound(src, cuff_sound, 30, 1, -2)
+	user.visible_message("<span class='danger'>[user] is trying to put handcuffs on [target]!</span>")
+
+	if(do_mob(user, target, 30, target_slot = slot_handcuffed))
+		if(target.equip_to_slot_or_del(new /obj/item/weapon/handcuffs/alien, slot_handcuffed))
+			to_chat(user, "<span class='notice'>You handcuff [target].</span>")
+			target.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[target]/[target.ckey]</b> with a <b>[src.type]</b>"
+			user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[target]/[target.ckey]</b> with a <b>[src.type]</b>"
+			msg_admin_attack("[user] ([user.ckey]) handcuffed [target] ([target.ckey]) with a [src] [ADMIN_JMP(user)]")
+			return
+
+	to_chat(user, "<span class='warning'>You fail to handcuff [target].</span>")

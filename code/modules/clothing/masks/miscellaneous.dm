@@ -126,7 +126,7 @@
 		else
 			src.icon_state += "_up"
 			to_chat(usr, "You tie the bandana around your head.")
-		usr.update_inv_wear_mask()
+		update_inv_item()
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)

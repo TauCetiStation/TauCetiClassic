@@ -250,14 +250,12 @@
 		var/obj/item/W = get_active_hand()
 		if(W)
 			W.attack_self(src)
-			update_inv_l_hand() // until appropriate helpers come.
-			update_inv_r_hand()
+			W.update_inv_item()
 	else
 		var/obj/item/W = get_inactive_hand()
 		if(W)
 			W.attack_self(src)
-			update_inv_r_hand()
-			update_inv_l_hand()
+			W.update_inv_item()
 	if(next_move < world.time)
 		next_move = world.time + 2
 	return

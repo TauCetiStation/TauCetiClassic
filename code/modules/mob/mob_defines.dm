@@ -228,3 +228,4 @@
 
 	var/fake_death = 0 //New changeling statis
 	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, check on this var can be used to prevent user do something multiple time.
+	var/busy_slot = null // used as arg in do_mob() and is_busy(), will prevent players to interact with slot if is_busy() passes the checks.

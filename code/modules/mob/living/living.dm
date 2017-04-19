@@ -776,25 +776,22 @@
 					"<span class='notice'>You extinguish yourself.</span>")
 				ExtinguishMob()
 			return
-		if(CM.handcuffed && (CM.last_special <= world.time))
-			if(!CM.canmove && !CM.resting)	return
+		if(CM.is_busy())
+			return
+		if(CM.handcuffed && (CM.last_special <= world.time)) // TODO this block is very messy
+			if(!CM.canmove && !CM.resting)
+				return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				to_chat(usr, "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message(text("<span class='danger'>[] is trying to break the handcuffs!</span>", CM), 1)
-				spawn(0)
-					if(do_after(CM, 50, target = usr))
-						if(!CM.handcuffed || CM.buckled)
-							return
-						for(var/mob/O in viewers(CM))
-							O.show_message(text("<span class='danger'>[] manages to break the handcuffs!</span>", CM), 1)
-						to_chat(CM, "<span class='notice'>You successfully break your handcuffs.</span>")
-						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						qdel(CM.handcuffed)
-						CM.handcuffed = null
-						CM.update_inv_handcuffed()
+			if(isalienadult(CM) || (HULK in CM.mutations))//Don't want to do a lot of logic gating here.
+				CM.visible_message("<span class='danger'>[CM] is trying to break the handcuffs!</span>",
+					"<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
+				if(do_after(CM, 50, target = CM, incapacitation_flags = INCAPACITATION_DEFAULT & ~INCAPACITATION_RESTRAINED))
+					if(!CM.handcuffed || CM.buckled)
+						return
+					CM.visible_message("<span class='danger'>[] manages to break the handcuffs!</span>", "<span class='notice'>You successfully break your handcuffs.</span>")
+					CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+					qdel(CM.handcuffed)
 			else
 				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
 				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
@@ -802,44 +799,37 @@
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
-				to_chat(CM, "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
-				spawn(0)
-					if(do_after(CM, breakouttime, target = usr))
-						if(!CM.handcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
-						if(istype(HC, /obj/item/weapon/handcuffs/alien))
-							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
-							"<span class='notice'>You successfully break in a discharge of energy!</span>")
-							var/datum/effect/effect/system/spark_spread/S = new
-							S.set_up(4,0,CM.loc)
-							S.start()
-							qdel(HC)
-						else
-							CM.visible_message("<span class='danger'>[CM] manages to remove the handcuffs!</span>", \
-								"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
-							CM.dropItemToGround(CM.handcuffed)
+				CM.visible_message("<span class='danger'>[CM] attempts to remove \the [HC]!</span>",
+					"<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
+				if(do_after(CM, breakouttime, target = CM, incapacitation_flags = INCAPACITATION_DEFAULT & ~INCAPACITATION_RESTRAINED))
+					if(!CM.handcuffed || CM.buckled)
+						return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
+					if(istype(HC, /obj/item/weapon/handcuffs/alien)) // DROPDEL in flags inv, so they will be qdel'd when unequipped.
+						CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
+						"<span class='notice'>You successfully break in a discharge of energy!</span>")
+						var/datum/effect/effect/system/spark_spread/S = new
+						S.set_up(4,0,CM.loc)
+						S.start()
+					else
+						CM.visible_message("<span class='danger'>[CM] manages to remove the handcuffs!</span>", \
+							"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
+					CM.dropItemToGround(CM.handcuffed)
 
 		else if(CM.legcuffed && (CM.last_special <= world.time))
-			if(!CM.canmove && !CM.resting)	return
+			if(!CM.canmove && !CM.resting)
+				return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				to_chat(usr, "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message(text("<span class='danger'>[] is trying to break the legcuffs!</span>", CM), 1)
-				spawn(0)
-					if(do_after(CM, 50, target = usr))
-						if(!CM.legcuffed || CM.buckled)
-							return
-						for(var/mob/O in viewers(CM))
-							O.show_message(text("<span class='danger'>[] manages to break the legcuffs!</span>", CM), 1)
-						to_chat(CM, "<span class='notice'>You successfully break your legcuffs.")
-						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						qdel(CM.legcuffed)
-						CM.legcuffed = null
-						CM.update_inv_legcuffed()
+			if(isalienadult(CM) || (HULK in CM.mutations))//Don't want to do a lot of logic gating here.
+				to_chat(CM, "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
+				CM.visible_message("<span class='danger'>[CM] is trying to break the legcuffs!</span>")
+				if(do_after(CM, 50, target = CM, incapacitation_flags = INCAPACITATION_DEFAULT & ~INCAPACITATION_RESTRAINED))
+					if(!CM.legcuffed || CM.buckled)
+						return
+					visible_message("<span class='danger'>[CM] manages to break the legcuffs!</span>")
+					to_chat(CM, "<span class='notice'>You successfully break your legcuffs.")
+					CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+					qdel(CM.legcuffed)
 			else
 				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
 				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
@@ -848,28 +838,20 @@
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
 				to_chat(CM, "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
-				spawn(0)
-					if(do_after(CM, breakouttime, target = usr))
-						if(!CM.legcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
-						if(istype(HC, /obj/item/weapon/handcuffs/alien))
-							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
-							"<span class='notice'>You successfully break in a discharge of energy!</span>")
-							var/datum/effect/effect/system/spark_spread/S = new
-							S.set_up(4,0,CM.loc)
-							S.start()
-							CM.dropItemToGround(CM.legcuffed)
-							//CM.legcuffed = null // TODO check this
-							CM.update_inv_legcuffed()
-							qdel(HC)
-						else
-							CM.visible_message("<span class='danger'>[CM] manages to remove the legcuffs!</span>", \
-								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
-							CM.dropItemToGround(CM.legcuffed)
-							//CM.legcuffed = null
-							CM.update_inv_legcuffed()
+				visible_message("<span class='danger'>[CM] attempts to remove \the [HC]!</span>")
+				if(do_after(CM, breakouttime, target = CM, incapacitation_flags = INCAPACITATION_DEFAULT & ~INCAPACITATION_RESTRAINED))
+					if(!CM.legcuffed || CM.buckled)
+						return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
+					if(istype(HC, /obj/item/weapon/handcuffs/alien)) // wut? handcuffs-legcuffs?
+						CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
+						"<span class='notice'>You successfully break in a discharge of energy!</span>")
+						var/datum/effect/effect/system/spark_spread/S = new
+						S.set_up(4,0,CM.loc)
+						S.start()
+					else
+						CM.visible_message("<span class='danger'>[CM] manages to remove the legcuffs!</span>", \
+							"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
+					CM.dropItemToGround(CM.legcuffed)
 
 /mob/living/proc/resist_grab()
 	var/resisting = 0

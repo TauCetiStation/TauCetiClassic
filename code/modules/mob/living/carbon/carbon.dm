@@ -375,14 +375,14 @@
 	. = ..()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if(H.gloves)
-			if(H.gloves.clean_blood())
-				H.update_inv_gloves()
-			H.gloves.germ_level = 0
+		var/obj/item/I = get_equipped_item(slot_gloves)
+		if(I)
+			I.clean_blood()
+			I.germ_level = 0
 		else
 			if(H.bloody_hands)
 				H.bloody_hands = 0
-				H.update_inv_gloves()
+				//H.update_inv_gloves() TODO deal with blood on limbs.
 			H.germ_level = 0
 	update_icons()	//apply the now updated overlays to the mob
 
@@ -639,33 +639,11 @@
 
 	return TRUE
 
-/mob/living/carbon/proc/uncuff()
+/mob/living/carbon/proc/uncuff() // maybe separated or arg?
 	if(handcuffed)
-		var/obj/item/weapon/W = handcuffed
-		handcuffed = null
-		if(buckled && buckled.buckle_require_restraints)
-			buckled.unbuckle_mob()
-		update_inv_handcuffed()
-		if(client)
-			client.screen -= W
-		if(W)
-			W.loc = loc
-			W.dropped(src)
-			if(W)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
+		dropItemToGround(handcuffed)
 	if(legcuffed)
-		var/obj/item/weapon/W = legcuffed
-		legcuffed = null
-		update_inv_legcuffed()
-		if (client)
-			client.screen -= W
-		if (W)
-			W.loc = loc
-			W.dropped(src)
-			if(W)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
+		dropItemToGround(legcuffed)
 
 //-TG- port for smooth lying/standing animations
 /mob/living/carbon/get_standard_pixel_y_offset(lying_current = 0)

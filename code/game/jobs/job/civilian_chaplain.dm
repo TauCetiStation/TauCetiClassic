@@ -139,7 +139,7 @@
 							if(T.icon_state == "carpetsymbol")
 								T.dir = 2
 
-			H.update_inv_l_hand() // so that it updates the bible's item_state in his hand
+			B.update_inv_item() // so that it updates the bible's item_state in his hand
 
 			switch(input(H,"Look at your bible - is this what you want?") in list("Yes","No"))
 				if("Yes")

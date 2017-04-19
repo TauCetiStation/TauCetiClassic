@@ -5,27 +5,8 @@
 There are several things that need to be remembered:
 
 >	Whenever we do something that should cause an overlay to update (which doesn't use standard procs
-	( i.e. you do something like l_hand = /obj/item/something new(src) )
-	You will need to call the relevant update_inv_* proc:
-		update_inv_head()
-		update_inv_wear_suit()
-		update_inv_gloves()
-		update_inv_shoes()
-		update_inv_glasse()
-		update_inv_l_hand()
-		update_inv_r_hand()
-		update_inv_belt()
-		update_inv_wear_id()
-		update_inv_ears()
-		update_inv_s_store()
-		update_inv_pockets()
-		update_inv_back()
-		update_inv_handcuffed()
-		update_inv_wear_mask()
-
-	All of these are named after the variable they update from. They are defined at the mob/ level
-	so you won't cause undefined proc runtimes with usr.update_inv_wear_id() if the usr is a
-	slime etc. Instead, it'll just return without doing any work. So no harm in calling it for slimes and such.
+	( i.e. user calls attack_self() on item )
+	You will need to call update_inv_item proc.
 
 >	There are also these special cases:
 		update_mutations()	//handles updating your appearance for certain mutations.  e.g TK head-glows
@@ -308,23 +289,6 @@ There are several things that need to be remembered:
 	update_hair()
 	update_mutations()
 	update_mutantrace()
-	/*update_inv_w_uniform()
-	update_inv_wear_id()
-	update_inv_gloves()
-	update_inv_glasses()
-	update_inv_ears()
-	update_inv_shoes()
-	update_inv_s_store()
-	update_inv_wear_mask()
-	update_inv_head()
-	update_inv_belt()
-	update_inv_back()
-	update_inv_wear_suit()
-	update_inv_r_hand()
-	update_inv_l_hand()
-	update_inv_handcuffed()
-	update_inv_legcuffed()
-	update_inv_pockets()*/
 	update_surgery()
 	update_bandage()
 	update_bodyparts()
@@ -337,11 +301,14 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
-// Don't call this proc, update_inv_limb() handles it when needed.
+// Don't call this proc directly (i mean, only call it when you exactly know why you need that), update_inv_limb() handles it when needed.
 /mob/living/carbon/proc/update_inv_mob(SLOT, multi = FALSE)
 	if(multi)
 		if(islist(SLOT))
 			for(var/slot_to_update in SLOT)
+				update_inv_mob(slot_to_update)
+		else
+			for(var/slot_to_update in bodyparts_slot_by_name)
 				update_inv_mob(slot_to_update)
 		return
 
@@ -374,8 +341,6 @@ There are several things that need to be remembered:
 /obj/item/bodypart/proc/update_inv_limb(SLOT, multi = FALSE)
 	if(!SLOT && !multi)
 		return
-	//overlays -= inv_overlays
-	//inv_overlays.Cut()
 
 	if(multi)
 		if(islist(SLOT))
@@ -394,16 +359,16 @@ There are several things that need to be remembered:
 
 	var/obj/item/O = item_in_slot[SLOT]
 	if(O)
-		var/i_icon = get_item_icon_for_mob(SLOT, O)
-		var/i_state = inv_box_data[SLOT]["icon_state_as_item_state"]
-		var/i_locked_state = inv_box_data[SLOT]["locked_icon_state"]
-		var/i_fat = inv_box_data[SLOT]["support_fat_people"]
-		var/i_blood = inv_box_data[SLOT]["has_blood_overlay"]
-		var/i_tie = inv_box_data[SLOT]["has_tie"]
-		var/i_simple = inv_box_data[SLOT]["simple_overlays"]
-		var/i_color = inv_box_data[SLOT]["icon_state_as_color"]
-		var/i_screen_loc = inv_box_data[SLOT]["screen_loc"]
-		var/i_layer = inv_box_data[SLOT]["slot_layer"]
+		var/i_icon = get_item_icon_for_mob(SLOT, O) // hands uses separate files for mob icons.
+		var/i_state = inv_box_data[SLOT]["icon_state_as_item_state"] // item_state will be used for mob overlay instead of icon_state.
+		var/i_locked_state = inv_box_data[SLOT]["mob_icon_state"] // if set, passed string will be used for mob overlay icon_state (has top priority over other "icon_state" vars).
+		var/i_fat = inv_box_data[SLOT]["support_fat_people"] // only uniforms actually support this, so if possible, its better to to do something about this.
+		var/i_blood = inv_box_data[SLOT]["has_blood_overlay"] // whenever this item can become bloody.
+		var/i_tie = inv_box_data[SLOT]["has_tie"] // again, mostly for uniforms.. accessories like captain medals or holster.
+		var/i_simple = inv_box_data[SLOT]["simple_overlays"] // whenever we wan't to check sprite sheets, icon_override or not. used by simple item slots like id, belt, etc.
+		var/i_color = inv_box_data[SLOT]["icon_state_as_color"] // some clothes uses icon_color var instead of icon_state.
+		var/i_screen_loc = inv_box_data[SLOT]["screen_loc"] // where we will see this item on our screen.
+		var/i_layer = inv_box_data[SLOT]["slot_layer"] // who should be displayer over who.
 		var/i_other = inv_box_data[SLOT]["other"] // this is used to determine if we should check hud_shown, because player may minimized hud with equipment (need better name for this var).
 		                                          // this var comes from datum/hud and its list\adding and list\other, so if the element is in "other" list, then we do special checks.
 
@@ -494,7 +459,7 @@ There are several things that need to be remembered:
 					owner.client.screen += O
 
 /obj/item/bodypart/proc/get_item_icon_for_mob(SLOT, obj/item/O) // Should be used only in update_inv_limb() proc.
-	return inv_box_data[SLOT]["slot_icon"]
+	return inv_box_data[SLOT]["mob_icon_path"]
 
 /obj/item/bodypart/r_arm/get_item_icon_for_mob(SLOT, obj/item/O)
 	return O.righthand_file
@@ -553,7 +518,7 @@ There are several things that need to be remembered:
 	apply_overlay(UNIFORM_LAYER)*/
 
 
-/mob/living/carbon/update_inv_wear_id()
+//mob/living/carbon/update_inv_wear_id()
 	/*remove_overlay(ID_LAYER)
 	if(wear_id)
 		wear_id.screen_loc = ui_id
@@ -568,7 +533,7 @@ There are several things that need to be remembered:
 	apply_overlay(ID_LAYER)*/
 
 
-/mob/living/carbon/update_inv_gloves()
+//mob/living/carbon/update_inv_gloves()
 	/*remove_overlay(GLOVES_LAYER)
 	if(gloves)
 		if(client && hud_used && hud_used.hud_shown)
@@ -599,7 +564,7 @@ There are several things that need to be remembered:
 	apply_overlay(GLOVES_LAYER)*/
 
 
-/mob/living/carbon/update_inv_glasses()
+//mob/living/carbon/update_inv_glasses()
 	/*remove_overlay(GLASSES_LAYER)
 
 	if(glasses)
@@ -618,7 +583,7 @@ There are several things that need to be remembered:
 	apply_overlay(GLASSES_LAYER)*/
 
 
-/mob/living/carbon/update_inv_ears()
+//mob/living/carbon/update_inv_ears()
 	/*remove_overlay(EARS_LAYER)
 
 	if(l_ear || r_ear)
@@ -650,7 +615,7 @@ There are several things that need to be remembered:
 	apply_overlay(EARS_LAYER)*/
 
 
-/mob/living/carbon/update_inv_shoes()
+//mob/living/carbon/update_inv_shoes()
 	/*remove_overlay(SHOES_LAYER)
 
 	if(shoes)
@@ -680,7 +645,7 @@ There are several things that need to be remembered:
 	apply_overlay(SHOES_LAYER)*/
 
 
-/mob/living/carbon/update_inv_s_store()
+//mob/living/carbon/update_inv_s_store()
 	/*remove_overlay(SUIT_STORE_LAYER)
 
 	if(s_store)
@@ -697,7 +662,7 @@ There are several things that need to be remembered:
 	apply_overlay(SUIT_STORE_LAYER)*/
 
 
-/mob/living/carbon/update_inv_head()
+//mob/living/carbon/update_inv_head()
 	/*remove_overlay(HEAD_LAYER)
 
 	if(head)
@@ -726,7 +691,7 @@ There are several things that need to be remembered:
 	apply_overlay(HEAD_LAYER)*/
 
 
-/mob/living/carbon/update_inv_belt()
+//mob/living/carbon/update_inv_belt()
 	/*remove_overlay(BELT_LAYER)
 
 	if(belt)
@@ -746,7 +711,7 @@ There are several things that need to be remembered:
 	apply_overlay(BELT_LAYER)*/
 
 
-/mob/living/carbon/update_inv_wear_suit()
+//mob/living/carbon/update_inv_wear_suit()
 	/*remove_overlay(SUIT_LAYER)
 
 	if(istype(wear_suit, /obj/item/clothing/suit))
@@ -794,18 +759,18 @@ There are several things that need to be remembered:
 	apply_overlay(SUIT_LAYER)*/
 
 
-/mob/living/carbon/update_inv_pockets()
-	if(l_store)
-		l_store.screen_loc = ui_storage1
-		if(client && hud_used)
-			client.screen += l_store
-	if(r_store)
-		r_store.screen_loc = ui_storage2
-		if(client && hud_used)
-			client.screen += r_store
+//mob/living/carbon/update_inv_pockets()
+//	if(l_store)
+//		l_store.screen_loc = ui_storage1
+//		if(client && hud_used)
+//			client.screen += l_store
+//	if(r_store)
+//		r_store.screen_loc = ui_storage2
+//		if(client && hud_used)
+//			client.screen += r_store
 
 
-/mob/living/carbon/update_inv_wear_mask()
+//mob/living/carbon/update_inv_wear_mask()
 /*	remove_overlay(FACEMASK_LAYER)
 
 	if(istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/tie))
@@ -830,7 +795,7 @@ There are several things that need to be remembered:
 	apply_overlay(FACEMASK_LAYER)*/
 
 
-/mob/living/carbon/update_inv_back()
+//mob/living/carbon/update_inv_back()
 	/*remove_overlay(BACK_LAYER)
 
 	if(back)
@@ -854,32 +819,32 @@ There are several things that need to be remembered:
 			hud_used.hidden_inventory_update() 	//Updates the screenloc of the items on the 'other' inventory bar
 
 
-/mob/living/carbon/update_inv_handcuffed()
-	remove_overlay(HANDCUFF_LAYER)
+//mob/living/carbon/update_inv_handcuffed()
+//	remove_overlay(HANDCUFF_LAYER)
 
-	if(handcuffed)
-		drop_r_hand()
-		drop_l_hand()
-		stop_pulling()	//TODO: should be handled elsewhere
-		overlays_standing[HANDCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
-	apply_overlay(HANDCUFF_LAYER)
-
-
-/mob/living/carbon/update_inv_legcuffed()
-	remove_overlay(LEGCUFF_LAYER)
-
-	if(legcuffed)
-		if(src.m_intent != "walk")
-			src.m_intent = "walk"
-			if(src.hud_used && src.hud_used.move_intent)
-				src.hud_used.move_intent.icon_state = "walking"
-
-		overlays_standing[LEGCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
-
-	apply_overlay(LEGCUFF_LAYER)
+//	if(handcuffed)
+//		drop_r_hand()
+//		drop_l_hand()
+//		stop_pulling()	//TODO: should be handled elsewhere
+//		overlays_standing[HANDCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
+//	apply_overlay(HANDCUFF_LAYER)
 
 
-/mob/living/carbon/update_inv_r_hand()
+//mob/living/carbon/update_inv_legcuffed()
+//	remove_overlay(LEGCUFF_LAYER)
+
+//	if(legcuffed)
+//		if(src.m_intent != "walk")
+//			src.m_intent = "walk"
+//			if(src.hud_used && src.hud_used.move_intent)
+//				src.hud_used.move_intent.icon_state = "walking"
+
+//		overlays_standing[LEGCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
+
+//	apply_overlay(LEGCUFF_LAYER)
+
+
+//mob/living/carbon/update_inv_r_hand()
 	/*remove_overlay(R_HAND_LAYER)
 
 	if(r_hand)
@@ -904,7 +869,7 @@ There are several things that need to be remembered:
 	apply_overlay(R_HAND_LAYER)*/
 
 
-/mob/living/carbon/update_inv_l_hand()
+//mob/living/carbon/update_inv_l_hand()
 	/*remove_overlay(L_HAND_LAYER)
 
 	if(l_hand)

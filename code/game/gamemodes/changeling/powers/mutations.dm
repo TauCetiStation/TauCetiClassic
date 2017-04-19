@@ -61,8 +61,6 @@
 		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple][genetic_damage > 0 ? ", temporarily weakening our genomes." : "."]</span>", "<span class='warning'>You hear the organic matter ripping and tearing!</span>")
 		qdel(H.wear_suit)
 		qdel(H.head)
-		H.update_inv_wear_suit()
-		H.update_inv_head()
 		H.update_hair()
 
 		if(blood_on_castoff)

@@ -142,6 +142,18 @@
 	origin_tech = "materials=1"
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
+/obj/item/weapon/legcuffs/equipped(mob/living/carbon/user, slot)
+	if(slot == slot_legcuffed && user.m_intent != "walk")
+		user.legcuffed = src
+		user.m_intent = "walk"
+		if(user.hud_used && user.hud_used.move_intent)
+			user.hud_used.move_intent.icon_state = "walking"
+
+/obj/item/weapon/legcuffs/dropped(mob/living/carbon/user)
+	if(user.legcuffed == src)
+		user.legcuffed = null
+	..()
+
 /obj/item/weapon/legcuffs/beartrap
 	name = "bear trap"
 	throw_speed = 2
@@ -162,22 +174,16 @@
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>")
 
 /obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
-	if(armed)
-		if(ishuman(AM))
-			if(isturf(src.loc))
-				var/mob/living/carbon/H = AM
-				if(H.m_intent == "run")
-					armed = 0
-					H.legcuffed = src
-					src.loc = H
-					H.update_inv_legcuffed()
-					to_chat(H, "<span class='danger'>You step on \the [src]!</span>")
+	if(armed && isturf(src.loc))
+		if(iscarbon(AM))
+			var/mob/living/carbon/C = AM
+			if(C.m_intent == "run")
+				armed = 0
+				if(C.equip_to_slot_if_possible(src, slot_legcuffed, disable_warning = TRUE)) // NOTE remove "if" when feedback removed.
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-					for(var/mob/O in viewers(H, null))
-						if(O == H)
-							continue
-						O.show_message("<span class='danger'>[H] steps on \the [src].</span>", 1)
-		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
+				C.visible_message("<span class='danger'>[C] steps on \the [src].</span>", "<span class='danger'>You step on \the [src]!</span>")
+
+		else if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
 			armed = 0
 			var/mob/living/simple_animal/SA = AM
 			SA.health -= 20
@@ -201,13 +207,10 @@
 	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return
 	var/mob/living/carbon/C = hit_atom
-	if(!C.legcuffed)
-		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
-		C.legcuffed = src
-		src.loc = C
-		C.update_inv_legcuffed()
+	if(C.equip_to_slot_if_possible(src, slot_legcuffed, disable_warning = TRUE))
+		C.visible_message("<span class='danger'>\The [src] ensnares [C]!</span>", "<span class='userdanger'>\The [src] ensnares you!</span>")
 		feedback_add_details("handcuffs","B")
-		to_chat(C,"<span class='userdanger'>\The [src] ensnares you!</span>")
+		to_chat(C,)
 		C.Weaken(weaken)
 
 /obj/item/weapon/legcuffs/bola/tactical//traitor variant

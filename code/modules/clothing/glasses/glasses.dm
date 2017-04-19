@@ -30,7 +30,7 @@
 				vision_flags = initial(vision_flags)
 				to_chat(usr, "You activate the optical matrix on the [src].")
 			playsound(src.loc, activation_sound, 10, 0)
-			H.update_inv_glasses()
+			update_inv_item()
 			H.update_sight()
 
 /obj/item/clothing/glasses/meson
@@ -162,8 +162,7 @@
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push \the [src] up out of your face.")
-
-		usr.update_inv_glasses()
+		update_inv_item()
 
 /obj/item/clothing/glasses/welding/superior
 	name = "superior welding goggles"

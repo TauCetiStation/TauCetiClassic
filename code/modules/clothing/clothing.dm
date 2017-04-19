@@ -254,7 +254,7 @@ BLIND     // can't see anything
 					species_restricted -= S_UNATHI
 					species_restricted -= S_TAJARAN
 				src.icon_state += "_cut"
-				user.update_inv_shoes()
+				update_inv_item()
 				clipped_status = CLIPPED
 			if(NO_CLIPPING)
 				to_chat(user, "<span class='notice'>You have no idea of how to clip [src]!</span>")

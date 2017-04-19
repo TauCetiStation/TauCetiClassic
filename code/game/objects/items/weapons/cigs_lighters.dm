@@ -108,10 +108,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(W, /obj/item/device/assembly/igniter))
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>")
 
-	//can't think of any other way to update the overlays :<
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
-	return
+	update_inv_item()
 
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user, proximity)
@@ -151,9 +148,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		START_PROCESSING(SSobj, src)
-		if(ismob(loc))
-			var/mob/M = loc
-			M.update_inv_wear_mask()
+		update_inv_item()
 
 
 /obj/item/clothing/mask/cigarette/process()
@@ -197,8 +192,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(ismob(loc))
 		var/mob/living/M = loc
 		to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
-		M.remove_from_mob(src)	//un-equip it so the overlays can update
-		M.update_inv_wear_mask(0)
 	STOP_PROCESSING(SSobj, src)
 	qdel(src)
 
@@ -303,9 +296,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		START_PROCESSING(SSobj, src)
-		if(ismob(loc))
-			var/mob/M = loc
-			M.update_inv_wear_mask()
+		update_inv_item()
 
 /obj/item/clothing/mask/cigarette/pipe/process()
 	var/turf/location = get_turf(src)
@@ -318,7 +309,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off
-			M.update_inv_wear_mask(0)
+			update_inv_item()
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(location)

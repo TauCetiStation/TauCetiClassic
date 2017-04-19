@@ -192,7 +192,6 @@
 
 	if(W == mouth)
 		src.mouth = null
-		update_inv_mouth() //So items actually disappear from mouth.
 
 	W.screen_loc = null // will get moved if inventory is visible
 
@@ -204,21 +203,17 @@
 				facehugger = TRUE
 			head = W
 			W.equipped(src, slot)
-			update_inv_head()
 		if(slot_mouth)
 			mouth = W
 			W.equipped(src, slot)
-			update_inv_mouth()
 		if(slot_neck)
 			if(istype(W, /obj/item/weapon/handcuffs))
 				handcuffed = W
 			neck = W
 			W.equipped(src, slot)
-			update_inv_neck()
 		if(slot_back)
 			back = W
 			W.equipped(src, slot)
-			update_inv_back()
 		else
 			to_chat(usr, "<span class='red'>You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return
@@ -246,7 +241,6 @@
 			client.screen |= W
 		if(pulling == W)
 			stop_pulling()
-		update_inv_mouth()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
 		return TRUE
@@ -272,17 +266,13 @@
 	if (W == head)
 		facehugger = FALSE
 		head = null
-		update_inv_head()
 	else if (W == neck)
 		handcuffed = null
 		neck = null
-		update_inv_neck()
 	else if (W == mouth)
 		mouth = null
-		update_inv_mouth()
 	else if (W == back)
 		back = null
-		update_inv_back()
 
 /mob/living/carbon/ian/proc/update_corgi_ability()
 	name = real_name

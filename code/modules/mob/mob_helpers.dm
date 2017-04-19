@@ -420,11 +420,24 @@ var/list/intents = list("help","disarm","grab","hurt")
 	else
 		return 0
 
-/mob/proc/is_busy(show_warning = TRUE)
-	if(busy_with_action)
+/mob/proc/is_busy(mob/target, slot, show_warning = TRUE) // is_busy is not a proper name for this proc, but i have no other idea on how to call it.
+	if(busy_with_action) // do_mob() and do_after() sets this to TRUE while call in progress and resets after it finished with any result.
 		if(show_warning)
-			to_chat(src, "<span class='warning'>You are busy with something else. Please wait or cancel your current action.</span>")
+			to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
 		return TRUE
+	if(target && slot)
+		if(!target.get_BP_by_slot(slot)) // checks if player has that slot at all.
+			if(show_warning)
+				to_chat(src, "<span class='warning'>It appears that [target] has no such place with which you want to interact.</span>")
+			return TRUE
+		if(slot == target.busy_slot) // busy_slot sets by do_mob() while call in progress with target_slot arg. Prevents multiple people to do same action with same slot.
+			if(show_warning)
+				to_chat(src, "<span class='warning'>Someone else is trying to put or strip item in that place. Please wait while they end their action or interrupt them and try again.</span>")
+			return TRUE
+		if(target.get_equipped_item(slot)) // and this is simple check, if something already equipped in that slot.
+			if(show_warning)
+				to_chat(src, "<span class='warning'>Something already equipped in that place.</span>")
+			return TRUE
 	return FALSE
 
 #undef SAFE_PERP

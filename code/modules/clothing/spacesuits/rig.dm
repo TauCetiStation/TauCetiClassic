@@ -34,14 +34,11 @@
 	on = !on
 	icon_state = "rig[on]-[item_color]"
 //	item_state = "rig[on]-[color]"
-	usr.update_inv_head()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_head()
+	update_inv_item()
 
 /obj/item/clothing/suit/space/rig
 	name = "hardsuit"

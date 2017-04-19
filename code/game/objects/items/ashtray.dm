@@ -21,8 +21,7 @@
 		if (contents.len >= max_butts)
 			to_chat(user, "This ashtray is full.")
 			return
-		user.remove_from_mob(W)
-		W.loc = src
+		user.transferItemToLoc(W, src)
 
 		if (istype(W,/obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/cig = W
@@ -37,8 +36,6 @@
 				to_chat(user, "You place [cig] in [src] without even smoking it. Why would you do that?")
 
 		src.visible_message("[user] places [W] in [src].")
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
 		add_fingerprint(user)
 		if (contents.len == max_butts)
 			icon_state = icon_full

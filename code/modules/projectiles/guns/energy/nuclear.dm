@@ -10,10 +10,7 @@
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
 	select_fire(user)
 	update_icon()
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	update_inv_item()
 
 /obj/item/weapon/gun/energy/gun/carbine
 	name = "energy carbine"

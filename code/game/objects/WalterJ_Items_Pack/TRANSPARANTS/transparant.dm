@@ -62,10 +62,7 @@
 	else
 		icon_state = not_bloody_state
 	..()
-	if(istype(src.loc, /mob/living))
-		var/mob/living/user = src.loc
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+	update_inv_item()
 
 
 /obj/item/weapon/transparant/clean_blood()

@@ -66,10 +66,7 @@
 	if(wielded) //Trying to unwield it
 		unwield()
 		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
+		update_inv_item()
 
 		if (src.unwieldsound)
 			playsound(src.loc, unwieldsound, 50, 1)
@@ -88,10 +85,7 @@
 		if (src.wieldsound)
 			playsound(src.loc, wieldsound, 50, 1)
 
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
+		update_inv_item()
 
 		var/obj/item/weapon/twohanded/offhand/O = new ////Let's reserve his other hand~
 		O.name = "[initial(name)] - offhand"

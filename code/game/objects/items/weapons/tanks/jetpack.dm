@@ -47,12 +47,12 @@
 			icon_state = "[icon_state]-on"
 //			item_state = "[item_state]-on"
 			ion_trail.start()
-			usr.update_inv_back()
+			update_inv_item(slot_back) // if item_state will be ever added - remove slot_back argument to update this anywhere else except mob's back.
 		else
 			icon_state = initial(icon_state)
 //			item_state = initial(item_state)
 			ion_trail.stop()
-			usr.update_inv_back()
+			update_inv_item(slot_back)
 		return
 
 

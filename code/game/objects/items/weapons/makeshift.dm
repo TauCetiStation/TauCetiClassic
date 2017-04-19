@@ -74,10 +74,6 @@
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
 	if(bcell && bcell.rigged)
 		bcell.explode()
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
 		qdel(src)
 		return
 	update_icon()

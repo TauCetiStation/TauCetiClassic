@@ -115,8 +115,7 @@
 			src.vision = !src.vision
 			src.icon_state = "ling_vision_off"
 			//usr << ""
-
-		usr.update_inv_glasses()
+		update_inv_item()
 
 /obj/structure/shadow_vortex
 	name = "vortex"

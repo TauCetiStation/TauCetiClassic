@@ -399,8 +399,6 @@
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
 		I.add_blood(src)	//Make the weapon bloody, not the person.
-//		if(user.hand)	user.update_inv_l_hand()	//updates the attacker's overlay for the (now bloodied) weapon
-//		else			user.update_inv_r_hand()	//removed because weapons don't have on-mob blood overlays
 		if(prob(33))
 			bloody = 1
 			var/turf/location = loc
@@ -425,13 +423,10 @@
 				if(bloody)//Apply blood
 					if(wear_mask)
 						wear_mask.add_blood(src)
-						update_inv_wear_mask()
 					if(head)
 						head.add_blood(src)
-						update_inv_head()
 					if(glasses && prob(33))
 						glasses.add_blood(src)
-						update_inv_glasses()
 
 			if(BP_CHEST)//Easier to score a stun but lasts less time
 				if(prob((I.force + 10)))

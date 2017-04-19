@@ -237,13 +237,8 @@ obj/structure/stool/bed/chair/holochair
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_item()
 	add_fingerprint(user)
-	return
 
 //BASKETBALL OBJECTS
 

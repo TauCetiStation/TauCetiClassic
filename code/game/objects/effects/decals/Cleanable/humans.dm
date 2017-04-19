@@ -61,30 +61,29 @@ var/global/list/image/splatter_cache=list()
 
 	var/hasfeet = TRUE
 	var/skip = FALSE
-	if (ishuman(perp))
-		var/mob/living/carbon/human/H = perp
-		var/obj/item/bodypart/l_leg = H.get_bodypart(BP_L_LEG)
-		var/obj/item/bodypart/r_leg = H.get_bodypart(BP_R_LEG)
-		if((!l_leg || l_leg.is_stump()) && (!r_leg || r_leg.is_stump())) // TODO update this properly (looks weird with one leg and bloody overlay which is visualized for both legs)
-			hasfeet = FALSE
-		if(perp.shoes && !perp.buckled)//Adding blood to shoes
-			var/obj/item/clothing/shoes/S = perp.shoes
-			if(istype(S))
-				S.blood_color = basecolor
-				S.track_blood = max(amount,S.track_blood)
-				if(!S.blood_overlay)
-					S.generate_blood_overlay()
-				if(!S.blood_DNA)
-					S.blood_DNA = list()
-					S.blood_overlay.color = basecolor
-					S.overlays += S.blood_overlay
-				if(S.blood_overlay && S.blood_overlay.color != basecolor)
-					S.blood_overlay.color = basecolor
-					S.overlays.Cut()
-					S.overlays += S.blood_overlay
-				if(blood_DNA.len)
-					S.blood_DNA |= blood_DNA.Copy()
-			skip = TRUE
+	var/obj/item/clothing/shoes/S = perp.get_equipped_item(slot_shoes)
+
+	var/obj/item/bodypart/l_leg = perp.get_bodypart(BP_L_LEG)
+	var/obj/item/bodypart/r_leg = perp.get_bodypart(BP_R_LEG)
+	if((!l_leg || l_leg.is_stump()) && (!r_leg || r_leg.is_stump())) // TODO update this properly (looks weird with one leg and bloody overlay which is visualized for both legs)
+		hasfeet = FALSE
+	if(S && !perp.buckled)//Adding blood to shoes
+		if(istype(S))
+			S.blood_color = basecolor
+			S.track_blood = max(amount,S.track_blood)
+			if(!S.blood_overlay)
+				S.generate_blood_overlay()
+			if(!S.blood_DNA)
+				S.blood_DNA = list()
+				S.blood_overlay.color = basecolor
+				S.overlays += S.blood_overlay
+			if(S.blood_overlay && S.blood_overlay.color != basecolor)
+				S.blood_overlay.color = basecolor
+				S.overlays.Cut()
+				S.overlays += S.blood_overlay
+			if(blood_DNA.len)
+				S.blood_DNA |= blood_DNA.Copy()
+		skip = TRUE
 
 	if (hasfeet && !skip) // Or feet
 		perp.feet_blood_color = basecolor
@@ -96,7 +95,8 @@ var/global/list/image/splatter_cache=list()
 		var/obj/structure/stool/bed/chair/wheelchair/W = perp.buckled
 		W.bloodiness = 4
 
-	perp.update_inv_shoes()
+	if(S)
+		S.update_inv_item()
 	if(!istype(src, /obj/effect/decal/cleanable/blood/oil))
 		if(perp.lying)
 			perp.bloody_body(perp)
@@ -124,7 +124,7 @@ var/global/list/image/splatter_cache=list()
 		user.blood_DNA |= blood_DNA.Copy()
 		user.bloody_hands += taken
 		user.hand_blood_color = basecolor
-		user.update_inv_gloves()
+		//user.update_inv_gloves() TODO deal with add_blood()
 		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
 
 /obj/effect/decal/cleanable/blood/splatter

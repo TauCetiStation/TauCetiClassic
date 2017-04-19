@@ -156,7 +156,7 @@
 		else
 			to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
 			return
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_item()
 
 //Medical
 /obj/item/clothing/suit/storage/fr_jacket
@@ -184,7 +184,7 @@
 		if("fr_jacket")
 			src.icon_state = "fr_jacket_open"
 			to_chat(usr, "You unbutton the jacket.")
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_item()
 
 //Mime
 /obj/item/clothing/suit/suspenders
@@ -220,4 +220,4 @@
         else
             to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
             return
-    usr.update_inv_wear_suit()    //so our overlays update
+    update_inv_item()

@@ -51,14 +51,8 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		to_chat(user, "\blue [src] can now be concealed.")
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_item()
 	add_fingerprint(user)
-	return
-
 
 /*
  * Classic Baton
@@ -144,11 +138,7 @@
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_item()
 	playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)
 
@@ -263,10 +253,5 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		to_chat(user, "\blue [src] can now be concealed.")
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_item()
 	add_fingerprint(user)
-	return

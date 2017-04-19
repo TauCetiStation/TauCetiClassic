@@ -992,7 +992,7 @@
 */
 //returns 1 if made bloody, returns 0 otherwise
 
-/mob/living/carbon/human/add_blood(mob/living/carbon/human/M)
+/mob/living/carbon/human/add_blood(mob/living/carbon/human/M) // TODO add_blood at bodyparts level
 	if (!..())
 		return 0
 	//if this blood isn't already in the list, add it
@@ -1000,16 +1000,17 @@
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	hand_blood_color = blood_color
-	src.update_inv_gloves()	//handles bloody hands overlays and updating
+	//src.update_inv_gloves()	//handles bloody hands overlays and updating //TODO deal with blood on limbs
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
 
 /mob/living/carbon/human/clean_blood(var/clean_feet)
 	.=..()
-	if(clean_feet && !shoes && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
+	var/obj/item/I = get_equipped_item(slot_shoes)
+	if(clean_feet && !I && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
 		feet_blood_color = null
 		feet_blood_DNA = null
-		update_inv_shoes()
+		//update_inv_shoes() // TODO deal with blood on limbs
 		return 1
 
 /mob/living/carbon/human/verb/pull_punches()

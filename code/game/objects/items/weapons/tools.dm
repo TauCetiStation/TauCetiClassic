@@ -114,15 +114,13 @@
 		icon_state = "cutters-y"
 		item_state = "cutters_yellow"
 
-/obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
-	if((C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
-		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
+/obj/item/weapon/wirecutters/attack(mob/target, mob/user)
+	var/obj/item/weapon/handcuffs/cable/C = target.get_equipped_item(slot_handcuffed)
+	if(istype(C))
+		user.visible_message("\The [user] cuts \the [C]'s restraints with \the [src]!",\
 		"<span class='notice'>You cut \the [C]'s restraints with \the [src]!</span>",\
 		"You hear cable being cut.")
-		C.handcuffed = null
-		if(C.buckled && C.buckled.buckle_require_restraints)
-			C.buckled.unbuckle_mob()
-		C.update_inv_handcuffed()
+		qdel(C)
 		return
 	else
 		..()
@@ -360,10 +358,8 @@
 		src.icon_state = initial(src.icon_state)
 		src.welding = 0
 
-	if(usr.hand)
-		usr.update_inv_l_hand()
-	else
-		usr.update_inv_r_hand()
+	update_inv_item()
+
 
 //Decides whether or not to damage a player's eyes based on what they're wearing as protection
 //Note: This should probably be moved to mob
