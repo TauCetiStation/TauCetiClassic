@@ -170,6 +170,7 @@
 			,"slot_layer" = -FACEMASK_LAYER
 			,"mob_icon_path" = 'icons/mob/mask.dmi'
 			,"other" = TRUE
+			,"has_blood_overlay" = "maskblood"
 			)
 		)
 

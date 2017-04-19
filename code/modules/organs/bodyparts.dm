@@ -90,6 +90,7 @@
 	var/list/inv_box_data // this list contains hud element information like slot name, id, icon_state, etc, see other bodyparts if you need to create new unique bodypart.
 	                      // also acts as information on which items can be equipped into that bodypart.
 	var/image/dmg_overlay
+	var/image/bld_overlay
 	var/list/inv_overlays = list()
 
 /obj/item/bodypart/New(loc, mob/living/carbon/C)
@@ -258,6 +259,7 @@
 		qdel(src)
 
 	owner.update_bodypart(body_zone)
+	owner.update_bloody_bodypart(body_zone)
 	owner.update_inv_mob(inv_box_data, multi = TRUE)
 	owner = null
 	update_inv_limb(multi = TRUE)
@@ -298,6 +300,8 @@
 		owner.update_body() // TODO check if this procs are necessary
 		owner.updatehealth()
 		owner.update_bodypart(src.body_zone)
+		owner.update_bloody_bodypart(body_zone)
+		update_inv_limb(multi = TRUE)
 		return 1
 
 	return 0

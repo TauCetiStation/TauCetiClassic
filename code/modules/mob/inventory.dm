@@ -402,6 +402,9 @@ var/list/slot_equipment_priority = list( \
 			if(I.flags_inv & HIDEFACE)
 				obscured["hideface"] = TRUE
 
+		if(I.body_parts_covered)
+			obscured["flags"] |= I.body_parts_covered
+
 	if(obscured.len)
 		return obscured
 	else

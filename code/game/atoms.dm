@@ -383,8 +383,8 @@
 		var/washface = TRUE
 
 		var/list/equipped_items = C.get_equipped_items(FALSE)
+		var/list/obscured = C.check_obscured_slots()
 		if(equipped_items)
-			var/list/obscured = C.check_obscured_slots()
 			if(obscured)
 				if(obscured["hideface"])
 					washface = FALSE
@@ -396,6 +396,13 @@
 				for(var/obj/item/I in equipped_items)
 					I.make_wet(1)
 					I.clean_blood()
+
+		var/obscured_flags = 0
+		if(obscured && obscured["flags"])
+			obscured_flags = obscured["flags"]
+		for(var/obj/item/bodypart/BP in C.bodyparts)
+			if(!(obscured_flags & BP.body_part))
+				BP.clean_blood()
 
 		if(washface)
 			C.lip_style = null

@@ -99,6 +99,17 @@ There are several things that need to be remembered:
 	overlays_bodypart[body_zone] = BP.get_icon()
 	apply_bodypart_overlay(body_zone)
 
+/mob/living/carbon/proc/update_bloody_bodypart(body_zone)
+	remove_bodypart_overlay(body_zone + "bld")
+
+	var/obj/item/bodypart/BP = bodyparts_by_name[body_zone]
+
+	if(!BP || !BP.bld_overlay)
+		return
+
+	overlays_bodypart[body_zone + "bld"] = BP.bld_overlay
+	apply_bodypart_overlay(body_zone + "bld")
+
 /mob/living/carbon/proc/update_bodyparts()
 	for(var/obj/item/bodypart/BP in bodyparts)
 		update_bodypart(BP.body_zone)
@@ -372,22 +383,22 @@ There are several things that need to be remembered:
 		var/i_other = inv_box_data[SLOT]["other"] // this is used to determine if we should check hud_shown, because player may minimized hud with equipment (need better name for this var).
 		                                          // this var comes from datum/hud and its list\adding and list\other, so if the element is in "other" list, then we do special checks.
 
-		if(i_fat && owner && (owner.disabilities & FAT))
-			if(O.flags & ONESIZEFITSALL)
-				i_icon = 'icons/mob/uniform_fat.dmi'
-			else // TODO we should process that else where, maybe even make something like on_gain_disability() proc.
-				to_chat(owner, "\red You burst out of \the [O]!")
-				owner.dropItemToGround(O)
-				return
-
-		if(owner && owner.client && owner.hud_used) // My brain... With all those ifs...
-			if(i_other && owner.hud_used.hud_shown)
-				if(owner.hud_used.inventory_shown) // if the inventory is open ...
-					O.screen_loc = i_screen_loc    //...draw the item in the inventory screen
-				owner.client.screen += O           // Either way, add the item to the HUD
-			else
-				O.screen_loc = i_screen_loc
-				owner.client.screen += O
+		if(owner)
+			if(i_fat && (owner.disabilities & FAT))
+				if(O.flags & ONESIZEFITSALL)
+					i_icon = 'icons/mob/uniform_fat.dmi'
+				else // TODO we should process that else where, maybe even make something like on_gain_disability() proc.
+					to_chat(owner, "\red You burst out of \the [O]!")
+					owner.dropItemToGround(O)
+					return
+			if(owner.client && owner.hud_used)
+				if(i_other && owner.hud_used.hud_shown)
+					if(owner.hud_used.inventory_shown) // if the inventory is open ...
+						O.screen_loc = i_screen_loc    //...draw the item in the inventory screen
+					owner.client.screen += O           // Either way, add the item to the HUD
+				else
+					O.screen_loc = i_screen_loc
+					owner.client.screen += O
 
 		var/t_state = O.icon_state
 		if(i_locked_state)

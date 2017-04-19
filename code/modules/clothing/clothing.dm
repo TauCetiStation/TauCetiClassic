@@ -203,6 +203,17 @@ BLIND     // can't see anything
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
 	return 0 // return 1 to cancel attack_hand()
 
+/obj/item/clothing/gloves/add_blood(mob/living/carbon/C, amount = 2)
+	if(!..())
+		return
+
+	transfer_blood = amount
+	bloody_hands_mob = C
+
+/obj/item/clothing/gloves/clean_blood()
+	transfer_blood = 0
+	. = ..()
+
 //Head
 /obj/item/clothing/head
 	name = "head"

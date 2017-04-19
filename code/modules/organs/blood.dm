@@ -121,7 +121,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				var/mob/living/carbon/human/H = A
 				if(!H.lying)
 					H.bloody_body(src)
-					H.bloody_hands(src)
 					var/blinding = FALSE
 					if(ran_zone() == BP_HEAD)
 						blinding = TRUE

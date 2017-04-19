@@ -125,7 +125,6 @@
 	target.apply_damage(30, BRUTE, BP_HEAD, 1, DAM_SHARP)
 	if (ishuman(user))
 		user:bloody_body(target)
-		user:bloody_hands(target, 0)
 
 
 //////////////////////////////////////////////////////////////////

@@ -485,11 +485,22 @@
 
 	if(blood_overlay)
 		overlays -= blood_overlay
-	if(istype(src, /obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = src
-		G.transfer_blood = 0
 
 	update_inv_item()
+
+/obj/item/bodypart/clean_blood()
+	if(uncleanable)
+		return
+
+	src.germ_level = 0 // copypasted from atom, because i dont want parents stuff.
+	if(istype(blood_DNA, /list))
+		blood_DNA = null
+		. = TRUE
+
+		if(bld_overlay)
+			bld_overlay = null
+			if(owner)
+				owner.update_bloody_bodypart(body_zone)
 
 /obj/item/add_blood(mob/living/carbon/C)
 	if (!..())
@@ -511,6 +522,18 @@
 	blood_DNA[C.dna.unique_enzymes] = C.dna.b_type
 
 	update_inv_item()
+
+	return TRUE //we applied blood to the item
+
+/obj/item/bodypart/add_blood(mob/living/carbon/C)
+	if (!..())
+		return FALSE
+
+	if(body_zone != BP_GROIN)
+		bld_overlay = image(icon = 'icons/effects/blood.dmi', icon_state = "bloody_" + body_zone, layer = -DAMAGE_LAYER + limb_layer_priority + 0.1)
+		bld_overlay.color = blood_color
+		if(owner)
+			owner.update_bloody_bodypart(body_zone)
 
 	return TRUE //we applied blood to the item
 

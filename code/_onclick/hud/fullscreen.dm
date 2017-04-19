@@ -1,5 +1,5 @@
 #define FULLSCREEN_LAYER 18
-#define DAMAGE_LAYER FULLSCREEN_LAYER + 0.1
+#define DAMAGE_SCREEN_LAYER FULLSCREEN_LAYER + 0.1
 #define BLIND_LAYER DAMAGE_LAYER + 0.1
 #define CRIT_LAYER BLIND_LAYER + 0.1
 
@@ -66,12 +66,12 @@
 
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
-	layer = DAMAGE_LAYER
+	layer = DAMAGE_SCREEN_LAYER
 	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/oxy
 	icon_state = "oxydamageoverlay"
-	layer = DAMAGE_LAYER
+	layer = DAMAGE_SCREEN_LAYER
 	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/crit
@@ -109,5 +109,5 @@
 
 #undef FULLSCREEN_LAYER
 #undef BLIND_LAYER
-#undef DAMAGE_LAYER
+#undef DAMAGE_SCREEN_LAYER
 #undef CRIT_LAYER

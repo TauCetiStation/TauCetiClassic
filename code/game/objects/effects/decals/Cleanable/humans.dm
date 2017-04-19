@@ -100,7 +100,6 @@ var/global/list/image/splatter_cache=list()
 	if(!istype(src, /obj/effect/decal/cleanable/blood/oil))
 		if(perp.lying)
 			perp.bloody_body(perp)
-			perp.bloody_hands(perp)
 	amount--
 
 /obj/effect/decal/cleanable/blood/proc/dry()
@@ -114,7 +113,7 @@ var/global/list/image/splatter_cache=list()
 	..()
 	if (amount && istype(user))
 		add_fingerprint(user)
-		if (user.gloves)
+		if (user.get_equipped_item(slot_gloves))
 			return
 		var/taken = rand(1,amount)
 		amount -= taken

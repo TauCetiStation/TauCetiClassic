@@ -61,10 +61,11 @@
 		spread_germs_to_bodypart(BP, user)
 	if (ishuman(user) && prob(60))
 		var/mob/living/carbon/human/H = user
-		if (blood_level)
-			H.bloody_hands(target,0)
 		if (blood_level > 1)
 			H.bloody_body(target,0)
+		else if (blood_level)
+			H.bloody_hands(target,0)
+
 	return
 
 // does stuff to end the step, which is normally print a message + do whatever this step changes

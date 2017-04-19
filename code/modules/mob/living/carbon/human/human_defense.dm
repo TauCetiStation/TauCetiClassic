@@ -408,7 +408,6 @@
 				var/mob/living/carbon/human/H = user
 				if(get_dist(H, src) <= 1) //people with TK won't get smeared with blood
 					H.bloody_body(src)
-					H.bloody_hands(src)
 
 		switch(hit_area)
 			if(BP_HEAD) // Harder to score a stun but if you do it lasts a bit longer
@@ -421,12 +420,15 @@
 						ticker.mode.remove_gangster(mind, exclude_bosses=1)
 
 				if(bloody)//Apply blood
-					if(wear_mask)
-						wear_mask.add_blood(src)
-					if(head)
-						head.add_blood(src)
-					if(glasses && prob(33))
-						glasses.add_blood(src)
+					var/obj/item/equipped = get_equipped_item(slot_wear_mask)
+					if(equipped)
+						equipped.add_blood(src)
+					equipped = get_equipped_item(slot_head)
+					if(equipped)
+						equipped.add_blood(src)
+					equipped = get_equipped_item(slot_glasses)
+					if(equipped && prob(33))
+						equipped.add_blood(src)
 
 			if(BP_CHEST)//Easier to score a stun but lasts less time
 				if(prob((I.force + 10)))
@@ -544,26 +546,51 @@
 					src.anchored = 1
 					src.pinned += O
 
-/mob/living/carbon/human/bloody_hands(mob/living/source, amount = 2)
+/mob/living/carbon/human/bloody_hands(mob/living/source, amount = 2) // dont call this in combination with bloody_body()
 	var/obj/item/I = get_equipped_item(slot_gloves)
 	if (I)
 		var/obj/item/clothing/gloves/G = I
-		G.add_blood(source)
-		G.transfer_blood = amount
-		G.bloody_hands_mob = source
+		G.add_blood(source, amount)
 	else
-		add_blood(source) // TODO make special version for mob that will update everything we need.
-		bloody_hands = amount
-		bloody_hands_mob = source
+		add_blood(source)
 
-/mob/living/carbon/human/bloody_body(mob/living/source)
-	var/obj/item/I = get_equipped_item(slot_wear_suit)
-	if(I)
-		I.add_blood(source)
+		var/obj/item/bodypart/BP = get_bodypart(BP_L_ARM)
+		if(BP)
+			BP.add_blood(source)
+			bloody_hands = amount // TODO move this into hands itself
+			bloody_hands_mob = source
+		BP = get_bodypart(BP_R_ARM)
+		if(BP)
+			BP.add_blood(source)
+			bloody_hands = amount
+			bloody_hands_mob = source
 
-	I = get_equipped_item(slot_w_uniform)
-	if(I)
-		I.add_blood(source)
+/mob/living/carbon/human/bloody_body(mob/living/source, amount = 2) // will do that for all equipped items and a whole body depending on covered parts
+	add_blood(source)
+
+	var/chance = 33
+	var/list/equipped_items = get_equipped_items(FALSE)
+	var/list/obscured = check_obscured_slots()
+	if(equipped_items)
+		if(obscured)
+			for(var/obj/item/I in equipped_items)
+				if(prob(chance) && !obscured[I.slot_equipped])
+					I.add_blood(source, amount)
+		else
+			for(var/obj/item/I in equipped_items)
+				if(prob(chance))
+					I.add_blood(source, amount)
+
+	var/obscured_flags = 0
+	if(obscured && obscured["flags"])
+		obscured_flags = obscured["flags"]
+	for(var/obj/item/bodypart/BP in bodyparts)
+		if(prob(chance) && !(obscured_flags & BP.body_part))
+			BP.add_blood(source)
+			if(BP.can_grasp)
+				bloody_hands = amount
+				bloody_hands_mob = source
+
 
 /mob/living/carbon/human/proc/check_thickmaterial(obj/item/bodypart/BP, type)
 //	if(!type)	return 0
