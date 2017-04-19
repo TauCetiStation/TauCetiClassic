@@ -579,7 +579,12 @@
 			usr:swap_hand()
 		if("hand")
 			usr:swap_hand()
+		if("undershirt","underwear","socks")
+			var/obj/item/I = usr.get_equipped_item(slot_id)
+			if(I)
+				usr.put_in_active_hand(I)
+			else
+				usr.attack_ui(slot_id) // can't think of another way atm without copypasting proc below.
 		else
-			if(usr.attack_ui(slot_id))
-				usr.next_move = world.time+6
+			usr.attack_ui(slot_id)
 	return 1

@@ -11,14 +11,14 @@
 		for(var/slot_name in inv_box_data)
 			if(!inv_box_data[slot_name]["no_hud"])
 				var/obj/screen/inventory/inv_box = new() // could be transfered into initialize proc(), so we dont make object hud for mobs that will not get any client.
-				inv_box.master = src
+				inv_box.master = src                     // Also, could be made as a child from inventory objects with all needed code instead of inv_box_data[] list.
 				inv_box.name = inv_box_data[slot_name]["name"]
 				inv_box.icon_state = inv_box_data[slot_name]["icon_state"]
 				inv_box.screen_loc = inv_box_data[slot_name]["screen_loc"]
 				inv_box.slot_id = slot_name
 				inv_box.other = inv_box_data[slot_name]["other"]
 				inv_box.visible_when_hud_reduced = inv_box_data[slot_name]["reduced"]
-				inv_box.layer = HUD_LAYER
+				inv_box.layer = inv_box_data[slot_name]["hud_layer"] ? inv_box_data[slot_name]["hud_layer"] : HUD_LAYER
 				inv_box.plane = HUD_PLANE
 				inv_slots_data[slot_name] = inv_box
 			else
@@ -137,7 +137,7 @@
 			,"slot_layer" = -HEAD_LAYER
 			,"mob_icon_path" = 'icons/mob/head.dmi'
 			,"other" = TRUE
-			,"has_blood_overlay" = "helmetblood"
+			,"mob_blood_overlay" = "helmetblood"
 			)
 		,slot_glasses = list(
 			"name" = "eyes"
@@ -170,7 +170,7 @@
 			,"slot_layer" = -FACEMASK_LAYER
 			,"mob_icon_path" = 'icons/mob/mask.dmi'
 			,"other" = TRUE
-			,"has_blood_overlay" = "maskblood"
+			,"mob_blood_overlay" = "maskblood"
 			)
 		)
 
@@ -193,8 +193,30 @@
 			,"other" = TRUE
 			,"icon_state_as_color" = TRUE  // uniform may use item_color var for icon_states, so for now, i need working code... TODO deal with this?
 			,"support_fat_people" = TRUE
-			,"has_blood_overlay" = "uniformblood"
+			,"mob_blood_overlay" = "uniformblood"
 			,"has_tie" = TRUE // TODO add this into uniform itself?
+			)
+		,slot_undershirt = list(
+			"name" = "undershirt"
+			,"icon_state" = "center_u"
+			,"screen_loc" = ui_iclothing
+			,"no_item_on_screen" = TRUE // So item won't block uniform slot with uniform, since this slot is somekind sub slot for uniforms.
+			,"hud_layer" = HUD_LAYER + 0.1
+			,"slot_layer" = -BODY_LAYER
+			,"mob_icon_path" = 'icons/mob/human_undershirt.dmi'
+			,"other" = TRUE
+			,"mob_blood_overlay" = "armorblood"
+			)
+		,slot_underwear = list(
+			"name" = "underwear"
+			,"icon_state" = "center_w"
+			,"screen_loc" = ui_iclothing
+			,"no_item_on_screen" = TRUE // So item won't block uniform slot with uniform, since this slot is somekind sub slot for uniforms.
+			,"hud_layer" = HUD_LAYER + 0.1
+			,"slot_layer" = -BODY_LAYER
+			,"mob_icon_path" = 'icons/mob/human_underwear.dmi'
+			,"other" = TRUE
+			,"mob_blood_overlay" = "wearblood"
 			)
 		,slot_wear_suit = list(
 			"name" = "o_clothing"
@@ -203,7 +225,7 @@
 			,"slot_layer" = -SUIT_LAYER
 			,"mob_icon_path" = 'icons/mob/suit.dmi'
 			,"other" = TRUE
-			,"has_blood_overlay" = "by_type"
+			,"mob_blood_overlay" = "by_type"
 			)
 		,slot_wear_id = list(
 			"name" = "id"
@@ -254,16 +276,27 @@
 			,"mob_icon_path" = 'icons/mob/hands.dmi'
 			,"other" = TRUE
 			,"icon_state_as_item_state" = TRUE
-			,"has_blood_overlay" = "bloodyhands"
+			,"mob_blood_overlay" = "bloodyhands"
 			)
-		,slot_shoes = list(
+		,slot_shoes = list( // should be moved into legs later (if separated)
 			"name" = "shoes"
 			,"icon_state" = "shoes"
 			,"screen_loc" = ui_shoes
 			,"slot_layer" = -SHOES_LAYER
 			,"mob_icon_path" = 'icons/mob/feet.dmi'
 			,"other" = TRUE
-			,"has_blood_overlay" = "shoeblood"
+			,"mob_blood_overlay" = "shoeblood"
+			)
+		,slot_socks = list( // should be moved into legs later
+			"name" = "socks"
+			,"icon_state" = "center_s"
+			,"screen_loc" = ui_shoes
+			,"no_item_on_screen" = TRUE // So item won't block uniform slot with uniform, since this slot is somekind sub slot for uniforms.
+			,"hud_layer" = HUD_LAYER + 0.1
+			,"slot_layer" = -BODY_LAYER
+			,"mob_icon_path" = 'icons/mob/human_socks.dmi'
+			,"other" = TRUE
+			,"mob_blood_overlay" = "shoeblood"
 			)
 		,slot_handcuffed = list(
 			"no_hud" = TRUE

@@ -53,7 +53,7 @@
 	return null
 
 
-/mob/living/carbon/human/proc/has_bodypart(name)
+/mob/living/carbon/proc/has_bodypart(name)
 	var/obj/item/bodypart/BP = bodyparts_by_name[name]
 
 	return (BP && !BP.is_stump())
@@ -249,6 +249,32 @@
 	BP.update_inv_limb(slot)
 
 /*
+	When certain bodypart removed, we may force to drop items from another bodypart slots.
+	Gloves, shoes, etc at this time is a single slot which inside chest, so we should drop items from that slots.
+	This proc will be no longer needed, when such slots and items separated and moved into their respective bodyparts.
+*/
+/obj/item/bodypart/proc/drop_linked_items()
+	return
+
+/obj/item/bodypart/r_arm/drop_linked_items()
+	owner.dropSlotToGround(slot_handcuffed, TRUE)
+	owner.dropSlotToGround(slot_gloves, TRUE)
+
+/obj/item/bodypart/l_arm/drop_linked_items()
+	owner.dropSlotToGround(slot_handcuffed, TRUE)
+	owner.dropSlotToGround(slot_gloves, TRUE)
+
+/obj/item/bodypart/r_leg/drop_linked_items()
+	owner.dropSlotToGround(slot_legcuffed, TRUE)
+	owner.dropSlotToGround(slot_shoes, TRUE)
+	owner.dropSlotToGround(slot_socks, TRUE)
+
+/obj/item/bodypart/l_leg/drop_linked_items()
+	owner.dropSlotToGround(slot_legcuffed, TRUE)
+	owner.dropSlotToGround(slot_shoes, TRUE)
+	owner.dropSlotToGround(slot_socks, TRUE)
+
+/*
 	Which items (as flags) each bodypart can equip.
 */
 /obj/item/bodypart/proc/can_hold(obj/item/I, slot, disable_warning = FALSE)
@@ -321,6 +347,14 @@
 			if( !(flags & SLOT_ICLOTHING) )
 				return FALSE
 			return TRUE
+		if(slot_undershirt)
+			if(istype(I, /obj/item/clothing/under/undershirt))
+				return TRUE
+			return FALSE
+		if(slot_underwear)
+			if(istype(I, /obj/item/clothing/under/underwear))
+				return TRUE
+			return FALSE
 		if(slot_wear_id)
 			if(!item_in_slot[slot_w_uniform])
 				if(owner && !disable_warning)
@@ -371,13 +405,29 @@
 				return FALSE
 			return TRUE
 		if(slot_gloves) // TODO think about feature: single glove for each hand, and similar for boots.
+			if(!owner) // since this slot shared with both hands..
+				return FALSE
+			if(!owner.has_bodypart(BP_R_ARM) || !owner.has_bodypart(BP_L_ARM)) // need both hands.
+				return FALSE
 			if( !(flags & SLOT_GLOVES) )
 				return FALSE
 			return TRUE
 		if(slot_shoes)
+			if(!owner) // since this slot shared with both legs..
+				return FALSE
+			if(!owner.has_bodypart(BP_R_LEG) || !owner.has_bodypart(BP_L_LEG)) // need both legs.
+				return FALSE
 			if( !(flags & SLOT_FEET) )
 				return FALSE
 			return TRUE
+		if(slot_socks)
+			if(!owner) // since this slot shared with both legs..
+				return FALSE
+			if(!owner.has_bodypart(BP_R_LEG) || !owner.has_bodypart(BP_L_LEG)) // need both legs.
+				return FALSE
+			if(istype(I, /obj/item/clothing/shoes/socks))
+				return TRUE
+			return FALSE
 		if(slot_handcuffed)
 			if(owner && owner.handcuffed || item_in_slot[slot_handcuffed])
 				return FALSE

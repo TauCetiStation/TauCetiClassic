@@ -170,6 +170,7 @@
 		return
 
 	remove_hud_data()
+	drop_linked_items()
 
 	for(var/slot in item_in_slot)
 		var/obj/item/O = item_in_slot[slot]

@@ -374,14 +374,11 @@ There are several things that need to be remembered:
 		var/i_state = inv_box_data[SLOT]["icon_state_as_item_state"] // item_state will be used for mob overlay instead of icon_state.
 		var/i_locked_state = inv_box_data[SLOT]["mob_icon_state"] // if set, passed string will be used for mob overlay icon_state (has top priority over other "icon_state" vars).
 		var/i_fat = inv_box_data[SLOT]["support_fat_people"] // only uniforms actually support this, so if possible, its better to to do something about this.
-		var/i_blood = inv_box_data[SLOT]["has_blood_overlay"] // whenever this item can become bloody.
+		var/i_blood = inv_box_data[SLOT]["mob_blood_overlay"] // whenever this item can become bloody.
 		var/i_tie = inv_box_data[SLOT]["has_tie"] // again, mostly for uniforms.. accessories like captain medals or holster.
 		var/i_simple = inv_box_data[SLOT]["simple_overlays"] // whenever we wan't to check sprite sheets, icon_override or not. used by simple item slots like id, belt, etc.
 		var/i_color = inv_box_data[SLOT]["icon_state_as_color"] // some clothes uses icon_color var instead of icon_state.
-		var/i_screen_loc = inv_box_data[SLOT]["screen_loc"] // where we will see this item on our screen.
 		var/i_layer = inv_box_data[SLOT]["slot_layer"] // who should be displayer over who.
-		var/i_other = inv_box_data[SLOT]["other"] // this is used to determine if we should check hud_shown, because player may minimized hud with equipment (need better name for this var).
-		                                          // this var comes from datum/hud and its list\adding and list\other, so if the element is in "other" list, then we do special checks.
 
 		if(owner)
 			if(i_fat && (owner.disabilities & FAT))
@@ -391,14 +388,7 @@ There are several things that need to be remembered:
 					to_chat(owner, "\red You burst out of \the [O]!")
 					owner.dropItemToGround(O)
 					return
-			if(owner.client && owner.hud_used)
-				if(i_other && owner.hud_used.hud_shown)
-					if(owner.hud_used.inventory_shown) // if the inventory is open ...
-						O.screen_loc = i_screen_loc    //...draw the item in the inventory screen
-					owner.client.screen += O           // Either way, add the item to the HUD
-				else
-					O.screen_loc = i_screen_loc
-					owner.client.screen += O
+			update_inv_hud(SLOT)
 
 		var/t_state = O.icon_state
 		if(i_locked_state)
@@ -454,20 +444,28 @@ There are several things that need to be remembered:
 	else if(inv_overlays[SLOT])
 		overlays += inv_overlays[SLOT]
 
-/obj/item/bodypart/proc/update_inv_hud() // this is specialized proc that used upon mob login, so we don't rebuild overlays as update_inv() proc does.
-	for(var/SLOT in inv_box_data)
-		var/obj/item/O = item_in_slot[SLOT]
-		if(O && !inv_box_data[SLOT]["no_hud"])
-			var/i_screen_loc = inv_box_data[SLOT]["screen_loc"]
-			var/i_other = inv_box_data[SLOT]["other"]
-			if(owner && owner.client && owner.hud_used) // My brain... With all those ifs...
-				if(i_other && owner.hud_used.hud_shown)
-					if(owner.hud_used.inventory_shown) // if the inventory is open ...
-						O.screen_loc = i_screen_loc    //...draw the item in the inventory screen
-					owner.client.screen += O           // Either way, add the item to the HUD
-				else
-					O.screen_loc = i_screen_loc
-					owner.client.screen += O
+/obj/item/bodypart/proc/update_inv_hud(SLOT) // Don't call this proc directly (only if you know exactly, why you need that).
+	if(!owner)
+		return
+
+	if(!SLOT) // if no slot provided, we will update all slots.
+		for(var/slot_to_update in inv_box_data)
+			update_inv_hud(slot_to_update)
+		return
+
+	var/obj/item/O = item_in_slot[SLOT]
+	if(O && !inv_box_data[SLOT]["no_hud"] && !inv_box_data[SLOT]["no_item_on_screen"])
+		var/i_screen_loc = inv_box_data[SLOT]["screen_loc"] // where we will see this item on our screen.
+		var/i_other = inv_box_data[SLOT]["other"] // this is used to determine if we should check hud_shown, because player may minimized hud with equipment (need better name for this var).
+		                                          // this var comes from datum/hud and its list\adding and list\other, so if the element is in "other" list, then we do special checks.
+		if(owner.client && owner.hud_used)
+			if(i_other && owner.hud_used.hud_shown)
+				if(owner.hud_used.inventory_shown) // if the inventory is open ...
+					O.screen_loc = i_screen_loc    //...draw the item in the inventory screen
+				owner.client.screen += O           // Either way, add the item to the HUD
+			else
+				O.screen_loc = i_screen_loc
+				owner.client.screen += O
 
 /obj/item/bodypart/proc/get_item_icon_for_mob(SLOT, obj/item/O) // Should be used only in update_inv_limb() proc.
 	return inv_box_data[SLOT]["mob_icon_path"]

@@ -1042,6 +1042,7 @@
 #include "code\modules\clothing\under\shorts.dm"
 #include "code\modules\clothing\under\syndicate.dm"
 #include "code\modules\clothing\under\ties.dm"
+#include "code\modules\clothing\under\underwear.dm"
 #include "code\modules\clothing\under\jobs\civilian.dm"
 #include "code\modules\clothing\under\jobs\engineering.dm"
 #include "code\modules\clothing\under\jobs\medsci.dm"

@@ -19,6 +19,7 @@
 				equip_to_slot_if_possible(C, slot)
 		else
 			equip_to_slot_if_possible(W, slot)
+		src.next_move = world.time + 6
 
 /mob/proc/put_in_any_hand_if_possible(obj/item/W, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
 	if(equip_to_slot_if_possible(W, slot_l_hand, del_on_fail, disable_warning, redraw_mob))

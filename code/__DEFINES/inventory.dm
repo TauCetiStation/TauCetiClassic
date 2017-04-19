@@ -37,6 +37,9 @@
 #define slot_legcuffed    "19"
 #define slot_r_ear        "20"
 #define slot_legs         "21"
+#define slot_undershirt   "22"
+#define slot_underwear    "23"
+#define slot_socks        "24"
 
 //Sol translation for dog slots.
 #define slot_mouth        slot_wear_mask  // 2
