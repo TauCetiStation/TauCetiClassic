@@ -89,8 +89,9 @@
 	var/list/inv_slots_data // this list will be automatically created and filled upon bodypart creation (no need to touch this).
 	var/list/inv_box_data // this list contains hud element information like slot name, id, icon_state, etc, see other bodyparts if you need to create new unique bodypart.
 	                      // also acts as information on which items can be equipped into that bodypart.
-	var/image/dmg_overlay
-	var/image/bld_overlay
+	var/image/dmg_overlay // damage overlays
+	var/image/bld_overlay // blood overlays (this ones come from combat - that blood may even be someone's else)
+	var/image/srg_overlay // surgery overlays
 	var/list/inv_overlays = list()
 
 /obj/item/bodypart/New(loc, mob/living/carbon/C)
@@ -126,7 +127,7 @@
 
 	return ..()
 
-/obj/item/bodypart/Destroy()
+/obj/item/bodypart/Destroy() // TODO proper Destroy for bodyparts.
 	if(inv_slots_data)
 		remove_hud_data(TRUE)
 
@@ -360,14 +361,27 @@
 		else
 			color = null
 
-	if(!owner && dmg_overlay)
-		overlays += dmg_overlay
+	if(srg_overlay)
+		overlays -= srg_overlay
+
+	if(open)
+		srg_overlay = image(icon = 'icons/mob/surgery.dmi', icon_state = "[body_zone][round(open)]", layer = -SURGERY_LAYER)
+	else
+		srg_overlay = null
+
+	if(!owner)
+		if(dmg_overlay)
+			overlays += dmg_overlay
+		if(srg_overlay)
+			overlays += srg_overlay
 
 /obj/item/bodypart/proc/get_icon()
 	var/list/standing = list()
 	standing += image(icon = src, layer = -BODYPARTS_LAYER + limb_layer_priority)
 	if(dmg_overlay)
 		standing += dmg_overlay
+	if(srg_overlay)
+		standing += srg_overlay
 	return standing
 
 /obj/item/bodypart/proc/handle_antibiotics()

@@ -124,27 +124,9 @@ There are several things that need to be remembered:
 	//update_bodyparts() // TODO remove this
 	update_tail_showing() // TODO remove this
 
-	var/g = (gender == FEMALE ? "f" : "m")
-	var/fat = (src.disabilities & FAT)
 	var/hulk = (HULK in src.mutations)
 
 	var/list/standing = list()
-
-	//Underwear
-	if(!fat)
-		var/obj/item/bodypart/groin = get_bodypart(BP_GROIN)
-		if(groin && !groin.is_stump() && (underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
-			standing += image(icon = 'icons/mob/human.dmi', icon_state = "underwear[underwear]_[g]_s", layer = -BODY_LAYER)
-
-		if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
-			standing += image(icon = 'icons/mob/human_undershirt.dmi', icon_state = "undershirt[undershirt]_s", layer = -BODY_LAYER)
-
-	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
-		if(!fat && bodyparts_by_name[BP_R_LEG] && bodyparts_by_name[BP_L_LEG]) //shit
-			var/obj/item/bodypart/r_leg = bodyparts_by_name[BP_R_LEG]
-			var/obj/item/bodypart/l_leg = bodyparts_by_name[BP_L_LEG]
-			if( r_leg && l_leg && !r_leg.is_stump() && !l_leg.is_stump() )
-				standing += image(icon = 'icons/mob/human_socks.dmi', icon_state = "socks[socks]_s", layer = -BODY_LAYER)
 
 	var/obj/item/bodypart/BP = get_bodypart(BP_HEAD)
 	if(BP && !BP.is_stump())
@@ -300,7 +282,6 @@ There are several things that need to be remembered:
 	update_hair()
 	update_mutations()
 	update_mutantrace()
-	update_surgery()
 	update_bandage()
 	update_bodyparts()
 	update_icons()
@@ -903,14 +884,15 @@ There are several things that need to be remembered:
 	apply_overlay(L_HAND_LAYER)*/
 
 
-/mob/living/carbon/proc/update_tail_showing()
+/mob/living/carbon/proc/update_tail_showing() // TODO tail as bodypart or somewhere there.
 	if(!species)
 		return
 	remove_overlay(TAIL_LAYER)
 
 	if(species.tail && species.flags[HAS_TAIL])
-		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			var/image/tail_s = image(icon = 'icons/effects/species.dmi', icon_state = "[species.tail]_s", layer = -BODYPARTS_LAYER)
+		var/obj/item/clothing/S = get_equipped_item(slot_wear_suit)
+		if(!S || !(S.flags_inv & HIDETAIL) && !istype(S, /obj/item/clothing/suit/space)) // why we shouldn't hide tail under space suit? it is drawn above tail anyway... and there is a flag that controls tail visibility too...
+			var/image/tail_s = image(icon = 'icons/effects/species.dmi', icon_state = "[species.tail]_s", layer = -TAIL_LAYER)
 			tail_s.color = list(1,0,0, 0,1,0, 0,0,1, r_skin/255,g_skin/255,b_skin/255)
 			overlays_standing[TAIL_LAYER] = tail_s
 
@@ -932,19 +914,6 @@ There are several things that need to be remembered:
 
 	apply_overlay(COLLAR_LAYER)
 
-
-/mob/living/carbon/proc/update_surgery()
-	remove_overlay(SURGERY_LAYER)
-
-	var/list/standing	= list()
-	for(var/obj/item/bodypart/BP in bodyparts)
-		if(BP.open)
-			standing += image("icon"='icons/mob/surgery.dmi', "icon_state"="[BP.name][round(BP.open)]", "layer"=-SURGERY_LAYER)
-
-	if(standing.len)
-		overlays_standing[SURGERY_LAYER] = standing
-
-	apply_overlay(SURGERY_LAYER)
 
 /mob/living/carbon/proc/update_bandage()
 	remove_overlay(BANDAGE_LAYER)

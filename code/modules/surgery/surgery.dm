@@ -112,21 +112,21 @@
 						if(T.gloves)                   return 0
 
 		//check if tool is right or close enough and if this step is possible
-		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M))
+		if( S.tool_quality(tool) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
 			M.op_stage.in_progress += target_zone						//begin step and...
-			S.begin_step(user, M, user.zone_sel.selecting, tool)		//...start on it
+			S.begin_step(user, M, target_zone, tool)		//...start on it
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if( prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)))
-				S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
+				S.end_step(user, M, target_zone, tool)		//finish successfully
 			else if((tool in user.contents) && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
-				S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
+				S.fail_step(user, M, target_zone, tool)		//malpractice~
 			else	// this failing silently was a pain.
 				to_chat(user, "\red You must remain close to your patient to conduct surgery.")
 			M.op_stage.in_progress -= target_zone						//end step
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.update_surgery()										//shows surgery results
-			return	1	  												//don't want to do weapony things after surgery
+				H.update_bodypart(target_zone) //shows surgery results
+			return 1 //don't want to do weapony things after surgery
 	return 0
 
 /proc/sort_surgeries()
