@@ -926,6 +926,14 @@
 		reset_view(0) //##Z2
 
 /mob/living/carbon/human/revive() // TODO check if this proc requires any updates with new bodyparts system.
+
+	for (var/obj/item/bodypart/head/H in world) // in world... TODO deal with that.
+		if(H.brainmob)
+			if(H.brainmob.real_name == src.real_name)
+				if(H.brainmob.mind)
+					H.replace_stump(src)
+					B.brainmob.mind.transfer_to(target) // TODO remove this
+
 	for (var/obj/item/bodypart/BP in bodyparts)
 		BP.status &= ~ORGAN_BROKEN
 		BP.status &= ~ORGAN_BLEEDING
@@ -941,13 +949,6 @@
 	if(species && !species.flags[NO_BLOOD])
 		vessel.add_reagent("blood",560-vessel.total_volume)
 		fixblood()
-
-	for (var/obj/item/weapon/organ/head/H in world)
-		if(H.brainmob)
-			if(H.brainmob.real_name == src.real_name)
-				if(H.brainmob.mind)
-					H.brainmob.mind.transfer_to(src)
-					qdel(H)
 
 	for(var/obj/item/organ/IO in organs)
 		IO.damage = 0

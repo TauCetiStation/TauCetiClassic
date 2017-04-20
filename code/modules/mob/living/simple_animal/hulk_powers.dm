@@ -632,9 +632,9 @@
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_lazor</font>"
 	msg_admin_attack("[key_name(usr)] uses hulk_lazor")
 
-/obj/item/weapon/organ/attack_animal(mob/user)
+/obj/item/bodypart/attack_animal(mob/user)
 	if(istype(user, /mob/living/simple_animal/hulk))
-		if(istype(src, /obj/item/weapon/organ/head))
+		if(istype(src, /obj/item/bodypart/head))
 			to_chat(usr, "\blue Head? Ewww..")
 			return
 		var/mob/living/simple_animal/hulk/Hulk = user

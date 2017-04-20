@@ -266,6 +266,10 @@
 	owner = null
 	update_inv_limb(multi = TRUE)
 
+/obj/item/bodypart/head/removed(mob/living/user, ignore_children = FALSE)
+	transfer_identity(owner)
+	..()
+
 // Used in surgery, replaces amputated limb with this one.
 /obj/item/bodypart/proc/replace_stump(mob/living/carbon/target)
 	if(istype(target))
@@ -280,8 +284,6 @@
 
 		loc = null
 		owner = target
-
-		owner.add_hud_data(src)
 
 		owner.bodyparts += src
 		owner.bodyparts_by_name[body_zone] = src
@@ -299,6 +301,7 @@
 				break
 			parent.update_damages()
 
+		owner.add_hud_data(src)
 		owner.update_body() // TODO check if this procs are necessary
 		owner.updatehealth()
 		owner.update_bodypart(src.body_zone)
@@ -1386,6 +1389,36 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		H.dropItemToGround(W)
 	W.forceMove(owner)
 
+/obj/item/bodypart/head/proc/transfer_identity(mob/living/carbon/C) // with new bodyparts system, this should be removed for head, since we have brain in head and identity must be there.
+	brainmob = new(src)
+	brainmob.name = C.real_name
+	brainmob.real_name = C.real_name
+	brainmob.dna = C.dna.Clone()
+	if(C.mind)
+		C.mind.transfer_to(brainmob)
+	brainmob.container = src
+
+	//after transfer_identity as it was before.
+
+	name = "[C.real_name]'s head"
+
+	//C.regenerate_icons()
+	//C.stat = DEAD
+	//C.death()
+	brainmob.stat = DEAD
+	brainmob.death()
+	if(brainmob && brainmob.mind && brainmob.mind.changeling)
+		var/datum/changeling/Host = brainmob.mind.changeling
+		if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
+			for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
+				if(istype(crab))
+					crab.sting_action(brainmob)
+					C.gib()
+
+	spawn(5)
+		if(brainmob && brainmob.client)
+			brainmob.client.screen.len = null //clear the hud
+
 /****************************************************
 			   BODYPART DEFINES
 ****************************************************/
@@ -1451,6 +1484,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "cartoid artery"
 
 	var/disfigured = 0
+	var/mob/living/carbon/brain/brainmob
+	var/brain_op_stage = 0
 
 /obj/item/bodypart/head/take_damage(brute, burn, damage_flags, used_weapon = null)
 	. = ..()
@@ -1643,129 +1678,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/stump/is_usable()
 	return FALSE
 
-
-/****************************************************
-			   EXTERNAL ORGAN ITEMS
-****************************************************/
-
-/obj/item/weapon/organ
-	icon = 'icons/mob/human_races/r_human.dmi'
-
-/obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
-	..(loc)
-	if(!istype(H))
-		return
-	if(H.dna)
-		if(!blood_DNA)
-			blood_DNA = list()
-		blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
-
-	//Forming icon for the limb
-
-	//Setting base icon for this mob's race
-	var/icon/base
-	if(H.species && H.species.icobase)
-		base = icon(H.species.icobase)
-	else
-		base = icon('icons/mob/human_races/r_human.dmi')
-
-	if(base)
-		//Changing limb's skin tone to match owner
-		if(!H.species || H.species.flags[HAS_SKIN_TONE])
-			if (H.s_tone >= 0)
-				base.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
-			else
-				base.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
-
-	if(base)
-		//Changing limb's skin color to match owner
-		if(!H.species || H.species.flags[HAS_SKIN_COLOR])
-			base.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
-
-	icon = base
-	dir = SOUTH
-	src.transform = turn(src.transform, rand(70,130))
-
-
-/****************************************************
-			   EXTERNAL ORGAN ITEMS DEFINES
-****************************************************/
-/obj/item/weapon/organ/l_arm
-	name = "left arm"
-	icon_state = "l_arm"
-/obj/item/weapon/organ/l_leg
-	name = "left leg"
-	icon_state = "l_leg"
-/obj/item/weapon/organ/r_arm
-	name = "right arm"
-	icon_state = "r_arm"
-/obj/item/weapon/organ/r_leg
-	name = "right leg"
-	icon_state = "r_leg"
-/obj/item/weapon/organ/head
-	name = "head"
-	icon_state = "head_m"
-	var/mob/living/carbon/brain/brainmob
-	var/brain_op_stage = 0
-
-/obj/item/weapon/organ/head/posi
-	name = "robotic head"
-
-/obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
-	if(istype(H))
-		src.icon_state = H.gender == MALE? "head_m" : "head_f"
-	..()
-	//Add (facial) hair.
-	if(H.f_style)
-		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
-		if(facial_hair_style)
-			var/image/facial = image("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
-			if(facial_hair_style.do_colouration)
-				facial.color = rgb(H.r_facial, H.g_facial, H.b_facial)
-
-			overlays.Add(facial) // icon.Blend(facial, ICON_OVERLAY)
-
-	if(H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)))
-		var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
-		if(hair_style)
-			var/image/hair = image("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
-			if(hair_style.do_colouration)
-				hair.color = rgb(H.r_hair, H.g_hair, H.b_hair)
-
-			overlays.Add(hair) //icon.Blend(hair, ICON_OVERLAY)
-	spawn(5)
-	if(brainmob && brainmob.client)
-		brainmob.client.screen.len = null //clear the hud
-
-	//if(ishuman(H))
-	//	if(H.gender == FEMALE)
-	//		H.icon_state = "head_f"
-	transfer_identity(H)
-
-	name = "[H.real_name]'s head"
-
-	H.regenerate_icons()
-
-	H.stat = DEAD
-	H.death()
-	brainmob.stat = DEAD
-	brainmob.death()
-	if(brainmob && brainmob.mind && brainmob.mind.changeling) //cuz fuck runtimes
-		var/datum/changeling/Host = brainmob.mind.changeling
-		if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
-			for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
-				if(istype(crab))
-					crab.sting_action(brainmob)
-					H.gib()
-/obj/item/weapon/organ/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
-	brainmob = new(src)
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
-	brainmob.dna = H.dna.Clone()
-	if(H.mind)
-		H.mind.transfer_to(brainmob)
-	brainmob.container = src
-
+/* UNUSED CODE, will be removed later.
 /obj/item/weapon/organ/head/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/scalpel))
 		switch(brain_op_stage)
@@ -1816,7 +1729,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			else
 				..()
 	else
-		..()
+		..()*/
 
 /obj/item/bodypart/proc/jostle_bone(force)
 	if(!(status & ORGAN_BROKEN)) //intact bones stay still

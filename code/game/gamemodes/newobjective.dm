@@ -1266,7 +1266,7 @@ datum
 					if(!owner.current||owner.current.stat==2)//If you're otherwise dead.
 						return 0
 					var/list/all_items = owner.current.get_contents()
-					for(var/obj/item/weapon/organ/head/mmi in all_items)
+					for(var/obj/item/bodypart/head/mmi in all_items)
 						if(mmi.brainmob&&mmi.brainmob.mind==target)
 							return 1
 					return 0
