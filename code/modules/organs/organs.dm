@@ -56,6 +56,7 @@
 			CRASH("[src] spawned in [owner] without a parent bodypart: [parent_bodypart].")
 
 		BP.organs += src
+		BP.organs_by_name[organ_tag] = src
 		if(BP.species.flags[IS_SYNTHETIC])
 			src.mechanize()
 
@@ -73,6 +74,8 @@
 	if(owner)
 		var/obj/item/bodypart/BP = owner.bodyparts_by_name[parent_bodypart]
 		if(BP)
+			BP.organs_by_name[organ_tag] = null
+			BP.organs_by_name -= organ_tag
 			BP.organs -= src
 
 		owner.organs_by_name[organ_tag] = null
@@ -620,8 +623,11 @@
 
 /obj/item/organ/lungs
 	name = "lungs"
+	icon_state = "lungs"
 	organ_tag = BP_LUNGS
 	parent_bodypart = BP_CHEST
+
+	var/breathing = FALSE
 
 /obj/item/organ/lungs/process()
 	..()
@@ -649,8 +655,184 @@
 			)
 			owner.losebreath += 15
 
+// RETURN TRUE = failed to breath.
+/obj/item/organ/lungs/proc/handle_breath(datum/gas_mixture/breath)
+	if(!owner)
+		return TRUE
+	if(!breath)
+		return TRUE
+
+	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	if(breath.total_moles() == 0)
+		return TRUE
+
+	var/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
+	// Lung damage increases the minimum safe pressure.
+	if(is_broken())
+		safe_pressure_min *= 1.5
+	else if(is_bruised())
+		safe_pressure_min *= 1.25
+
+
+	var/failed_inhale = FALSE
+	var/failed_exhale = FALSE
+
+	var/safe_exhaled_max = 10 // Yes it's an arbitrary value who cares?
+	var/safe_toxins_max = 0.005
+	var/SA_para_min = 1
+	var/SA_sleep_min = 5
+
+	var/inhaling
+	var/exhaling
+	var/poison
+	var/no_exhale
+
+	switch(species.breath_type)
+		if("nitrogen") inhaling = breath.nitrogen
+		if("phoron")   inhaling = breath.phoron
+		if("C02")      inhaling = breath.carbon_dioxide
+		else           inhaling = breath.oxygen
+
+	switch(species.poison_type)
+		if("oxygen")   poison = breath.oxygen
+		if("nitrogen") poison = breath.nitrogen
+		if("C02")      poison = breath.carbon_dioxide
+		else           poison = breath.phoron
+
+	switch(species.exhale_type)
+		if("C02")      exhaling = breath.carbon_dioxide
+		if("oxygen")   exhaling = breath.oxygen
+		if("nitrogen") exhaling = breath.nitrogen
+		if("phoron")   exhaling = breath.phoron
+		else           no_exhale = 1
+
+	var/inhale_pp = (inhaling/breath.total_moles())*breath_pressure
+	var/toxins_pp = (poison/breath.total_moles())*breath_pressure
+	var/exhaled_pp = (exhaling/breath.total_moles())*breath_pressure
+
+	// Not enough to breathe
+	if(inhale_pp < safe_pressure_min)
+		if(prob(20))
+			owner.emote("gasp")
+
+		var/ratio = inhale_pp/safe_pressure_min
+		owner.adjustOxyLoss(max(HUMAN_MAX_OXYLOSS*(1-ratio), 0))	// Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
+		failed_inhale = 1
+
+	var/inhaled_gas_used = inhaling/6
+
+	switch(species.breath_type)
+		if("nitrogen") breath.nitrogen -= inhaled_gas_used
+		else           breath.oxygen -= inhaled_gas_used
+
+	if(!no_exhale)
+		switch(species.exhale_type)
+			if("oxygen")         breath.oxygen += inhaled_gas_used
+			if("nitrogen")       breath.nitrogen += inhaled_gas_used
+			if("phoron")         breath.phoron += inhaled_gas_used
+			if("carbon_dioxide") breath.carbon_dioxide += inhaled_gas_used
+
+	// CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2,
+	// this will hurt you, but only once per 4 ticks, instead of once per tick.
+
+	if(exhaled_pp > safe_exhaled_max)
+		// If it's the first breath with too much CO2 in it, lets start a counter,
+		// then have them pass out after 12s or so.
+		failed_exhale = TRUE
+		if(!owner.co2overloadtime)
+			owner.co2overloadtime = world.time
+
+		else if(world.time - owner.co2overloadtime > 120)
+
+			// Lets hurt em a little, let them know we mean business
+			owner.Paralyse(3)
+			owner.adjustOxyLoss(3)
+
+			// They've been in here 30s now, lets start to kill them for their own good!
+			if(world.time - owner.co2overloadtime > 300)
+				owner.adjustOxyLoss(8)
+
+		// Lets give them some chance to know somethings not right though I guess.
+		if(prob(20))
+			owner.emote("cough")
+	else
+		owner.co2overloadtime = 0
+
+	// Too much poison in the air.
+	if(toxins_pp > safe_toxins_max)
+		var/ratio = (poison/safe_toxins_max) * 10
+		if(owner.reagents)
+			owner.reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+		//throw_alert("tox_in_air")
+	//else
+		//clear_alert("tox_in_air")
+
+	// If there's some other shit in the air lets deal with it here.
+	if(breath.trace_gases.len)
+		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
+			var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
+
+			// Enough to make us paralysed for a bit
+			if(SA_pp > SA_para_min)
+				// 3 gives them one second to wake up and run away a bit!
+				owner.Paralyse(3)
+				// Enough to make us sleep as well
+				if(SA_pp > SA_sleep_min)
+					owner.Sleeping(5)
+			// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+			else if(SA_pp > 0.15)
+				if(prob(20))
+					owner.emote(pick("giggle", "laugh"))
+			SA.moles = 0
+
+	// Hot air hurts :(
+	if( (breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1)) // mutation for lungs should be added.
+
+		switch(breath.temperature)
+			if(-INFINITY to species.cold_level_3)
+				owner.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
+			if(species.cold_level_3 to species.cold_level_2)
+				owner.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Cold")
+			if(species.cold_level_2 to species.cold_level_1)
+				owner.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Cold")
+			if(species.heat_level_1 to species.heat_level_2)
+				owner.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")
+			if(species.heat_level_2 to species.heat_level_3)
+				owner.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Heat")
+			if(species.heat_level_3 to INFINITY)
+				owner.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Heat")
+
+		//breathing in hot/cold air also heats/cools you a bit
+		var/temp_adj = breath.temperature - owner.bodytemperature
+		if (temp_adj < 0)
+			temp_adj /= (BODYTEMP_COLD_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
+		else
+			temp_adj /= (BODYTEMP_HEAT_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
+
+		var/relative_density = breath.total_moles() / (MOLES_CELLSTANDARD * BREATH_PERCENTAGE)
+		temp_adj *= relative_density
+
+		if (temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
+		if (temp_adj < BODYTEMP_COOLING_MAX) temp_adj = BODYTEMP_COOLING_MAX
+		//world << "Breath: [breath.temperature], [src]: [bodytemperature], Adjusting: [temp_adj]"
+		owner.bodytemperature += temp_adj
+
+	// Were we able to breathe?
+	var/failed_breath = failed_inhale || failed_exhale
+	if (!failed_breath)
+		owner.adjustOxyLoss(-5)
+		if(!(status & ORGAN_ROBOT) && species.breathing_sound && is_below_sound_pressure(get_turf(owner)))
+			if(breathing || owner.shock_stage >= 10)
+				owner << sound(species.breathing_sound,0,0,0,5)
+				breathing = FALSE
+			else
+				breathing = TRUE
+
+	return failed_breath
+
 /obj/item/organ/liver
 	name = "liver"
+	icon_state = "liver"
 	organ_tag = BP_LIVER
 	parent_bodypart = BP_CHEST
 	var/process_accuracy = 10
@@ -710,12 +892,17 @@
 					else
 						take_damage(0.3 * process_accuracy, prob(1))
 
-/*
 	//Blood regeneration if there is some space
 	var/blood_volume_raw = owner.vessel.get_reagent_amount("blood")
 	if(blood_volume_raw < species.blood_volume)
 		var/datum/reagent/blood/B = owner.get_blood(owner.vessel)
 		B.volume += 0.1 // regenerate blood VERY slowly
+		if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
+			B.volume += 0.4
+			reagents.remove_reagent("nutriment", 0.1)
+		if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
+			B.volume += 0.8
+			reagents.remove_reagent("iron", 0.1)
 		//if(CE_BLOODRESTORE in owner.chem_effects)
 		//	B.volume += owner.chem_effects[CE_BLOODRESTORE]
 
@@ -726,26 +913,72 @@
 			owner.nutrition -= 10
 		else if(owner.nutrition >= 200)
 			owner.nutrition -= 3
-*/
+
 
 /obj/item/organ/kidneys
 	name = "kidneys"
+	icon_state = "kidneys"
 	organ_tag = BP_KIDNEYS
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/brain
 	name = "brain"
+	icon_state = "brain"
 	organ_tag = BP_BRAIN
 	parent_bodypart = BP_HEAD
 
+/obj/item/organ/brain/process()
+	if(!owner || !owner.should_have_organ(BP_HEART))
+		return
+
+	// No heart? You are going to have a very bad time. Not 100% lethal because heart transplants should be a thing.
+	var/blood_volume = owner.get_effective_blood_volume()
+	if(!owner.organs_by_name[BP_HEART])
+		if(blood_volume > BLOOD_VOLUME_SURVIVE)
+			blood_volume = BLOOD_VOLUME_SURVIVE
+		owner.Paralyse(3)
+
+	//Effects of bloodloss
+	switch(blood_volume)
+		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+			if(prob(1))
+				to_chat(owner, "<span class='warning'>You feel [pick("dizzy","woosey","faint")]</span>")
+			if(owner.getOxyLoss() < 20)
+				owner.adjustOxyLoss(3)
+		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+			owner.eye_blurry = max(owner.eye_blurry,6)
+			if(owner.getOxyLoss() < 50)
+				owner.adjustOxyLoss(10)
+			owner.adjustOxyLoss(1)
+			if(prob(15))
+				owner.Paralyse(rand(1,3))
+				to_chat(owner, "<span class='warning'>You feel extremely [pick("dizzy","woosey","faint")]</span>")
+		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+			owner.adjustOxyLoss(5)
+			if(owner.getToxLoss() < 15)
+				owner.adjustToxLoss(3)
+			if(prob(15))
+				owner.Paralyse(3,5)
+				to_chat(owner, "<span class='warning'>You feel extremely [pick("dizzy","woosey","faint")]</span>")
+		if(-(INFINITY) to BLOOD_VOLUME_SURVIVE)
+			owner.setOxyLoss(max(owner.getOxyLoss(), owner.maxHealth+10))
+
 /obj/item/organ/eyes
 	name = "eyes"
+	icon_state = "eyeballs"
 	organ_tag = BP_EYES
 	parent_bodypart = BP_HEAD
 
 /obj/item/organ/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()
-	if(is_bruised())
-		owner.eye_blurry = 20
-	if(is_broken())
-		owner.eye_blind = 20
+	if(owner)
+		if(is_bruised())
+			owner.eye_blurry = 20
+		if(is_broken())
+			owner.eye_blind = 20
+
+/obj/item/organ/tongue
+	name = "tongue"
+	icon_state = "tonguenormal"
+	organ_tag = BP_MOUTH
+	parent_bodypart = BP_HEAD

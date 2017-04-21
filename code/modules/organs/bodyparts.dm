@@ -18,6 +18,7 @@
 	var/obj/item/bodypart/parent
 	var/list/obj/item/bodypart/children = list()
 	var/list/obj/item/organ/organs = list() // Internal organs of this body part
+	var/list/organs_by_name = list()
 
 	var/limb_layer = 0
 	var/limb_layer_priority = 0 //chest and groin must be drawn under arms, head and legs.
@@ -378,6 +379,37 @@
 		if(srg_overlay)
 			overlays += srg_overlay
 
+/obj/item/bodypart/head
+	var/image/eyes_overlay
+
+/obj/item/bodypart/head/update_limb()
+	..()
+
+	if(eyes_overlay)
+		overlays -= eyes_overlay
+
+	var/obj/item/organ/eyes/IO = get_organ(BP_EYES)
+	if(IO)
+		if(!eyes_overlay)
+			eyes_overlay = image(icon = 'icons/mob/human_face.dmi', layer = -BODY_LAYER)
+		if(owner)
+			eyes_overlay.icon_state = owner.species.eyes
+			eyes_overlay.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+	else
+		eyes_overlay = null
+
+	if(!owner && eyes_overlay)
+		overlays += eyes_overlay
+
+/obj/item/bodypart/proc/get_organ(organ_tag)
+	return organs_by_name[organ_tag]
+
+/obj/item/bodypart/head/get_icon()
+	. = ..()
+
+	if(eyes_overlay)
+		. += eyes_overlay
+
 /obj/item/bodypart/proc/get_icon()
 	var/list/standing = list()
 	standing += image(icon = src, layer = -BODYPARTS_LAYER + limb_layer_priority)
@@ -630,7 +662,7 @@ This function completely restores a damaged bodypart to perfect condition.
 				fluid_loss_severity = FLUIDLOSS_WIDE_BURN
 			if(LASER)
 				fluid_loss_severity = FLUIDLOSS_CONC_BURN
-		var/fluid_loss = (damage / (owner.maxHealth - config.health_threshold_dead)) * 560 * fluid_loss_severity
+		var/fluid_loss = (damage / (owner.maxHealth - config.health_threshold_dead)) * owner.species.blood_volume * fluid_loss_severity
 		owner.remove_blood(fluid_loss)
 
 	// first check whether we can widen an existing wound
@@ -1095,6 +1127,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/proc/sever_tendon()
 	if(has_tendon && !(status & (ORGAN_TENDON_CUT|ORGAN_ROBOT)))
 		status |= ORGAN_TENDON_CUT
+		if(can_grasp && owner) // can_grasp = hand
+			owner.dropItemToGround(item_in_slot[1]) // hands has one slot at this time, so we know exact location of possible item.
 		return TRUE
 	return FALSE
 
@@ -1400,7 +1434,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 	//after transfer_identity as it was before.
 
-	name = "[C.real_name]'s head"
+	name = "[C.real_name]'s [body_zone]"
 
 	//C.regenerate_icons()
 	//C.stat = DEAD
@@ -1500,13 +1534,19 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	if (disfigured)
 		return
 	if(type == "brute")
-		owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",	\
-		"\red <b>Your face becomes unrecognizible mangled mess!</b>",	\
-		"\red You hear a sickening crack.")
+		if(owner)
+			owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",
+			"\red <b>Your face becomes unrecognizible mangled mess!</b>",
+			"\red You hear a sickening crack.")
+		else
+			visible_message("\red You hear a sickening cracking sound coming from \the [name].")
 	else
-		owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",	\
-		"\red <b>Your face melts off!</b>",	\
-		"\red You hear a sickening sizzle.")
+		if(owner)
+			owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",
+			"\red <b>Your face melts off!</b>",
+			"\red You hear a sickening sizzle.")
+		else
+			visible_message("\red [name] melts away, turning into mangled mess!")
 	disfigured = 1
 
 /obj/item/bodypart/l_arm

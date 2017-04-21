@@ -62,6 +62,7 @@
 
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
+	var/blood_volume = 560 // Initial blood volume.
 	var/blood_color = "#A10808" //Red.
 	var/flesh_color = "#FFC896" //Pink.
 	var/base_color      //Used when setting species.
@@ -101,7 +102,7 @@
 		BP_EYES    = /obj/item/organ/eyes
 		)
 
-
+	var/breathing_sound = 'sound/voice/monkey.ogg'
 
 /datum/species/New()
 	unarmed_attacks = list()
@@ -210,6 +211,8 @@
 
 	reagent_tag = IS_UNATHI
 	base_color = "#066000"
+
+	breathing_sound = 'sound/voice/lizard.ogg'
 
 /datum/species/farwa
 	name = S_MONKEY_T

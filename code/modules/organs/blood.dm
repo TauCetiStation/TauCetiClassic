@@ -1,11 +1,11 @@
 /****************************************************
 				BLOOD SYSTEM
 ****************************************************/
-//Blood levels
-var/const/BLOOD_VOLUME_SAFE = 501
-var/const/BLOOD_VOLUME_OKAY = 336
-var/const/BLOOD_VOLUME_BAD = 224
-var/const/BLOOD_VOLUME_SURVIVE = 122
+//Blood levels. These are percentages based on the species blood_volume far.
+var/const/BLOOD_VOLUME_SAFE    = 85
+var/const/BLOOD_VOLUME_OKAY    = 75
+var/const/BLOOD_VOLUME_BAD     = 60
+var/const/BLOOD_VOLUME_SURVIVE = 40
 
 /mob/living/carbon/var/datum/reagents/vessel	//Container for blood and BLOOD ONLY. Do not transfer other chems here.
 /mob/living/carbon/var/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
@@ -22,7 +22,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(species && species.flags[NO_BLOOD]) //We want the var for safety but we can do without the actual blood.
 		return
 
-	vessel.add_reagent("blood",560)
+	vessel.add_reagent("blood", species.blood_volume)
 	addtimer(CALLBACK(src, .proc/fixblood), 1)
 
 //Resets blood data
@@ -219,7 +219,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/list/chems = list()
 	chems = params2list(injected.data["trace_chem"])
 	for(var/C in chems)
-		src.reagents.add_reagent(C, (text2num(chems[C]) / 560) * amount)//adds trace chemicals to owner's blood
+		src.reagents.add_reagent(C, (text2num(chems[C]) / species.blood_volume) * amount)//adds trace chemicals to owner's blood
 	reagents.update_total()
 
 	container.reagents.remove_reagent("blood", amount)
@@ -280,3 +280,14 @@ proc/blood_incompatible(donor,receiver)
 				return TRUE
 		//AB is a universal receiver.
 	return FALSE
+
+/mob/living/carbon/proc/get_effective_blood_volume()
+	var/obj/item/organ/heart/heart = organs_by_name[BP_HEART]
+	var/blood_volume = round((vessel.get_reagent_amount("blood")/species.blood_volume)*100)
+	if(!heart || heart.is_broken())
+		blood_volume *= 0.3
+	else if(heart.is_bruised())
+		blood_volume *= 0.6
+	else if(heart.damage > 1)
+		blood_volume *= 0.8
+	return blood_volume

@@ -119,12 +119,13 @@
 			if(T.disabilities & NOCLONE)
 				return
 
-			if(T.species && T.species.flags[NO_BLOOD])
+			if(!T.should_have_organ(BP_HEART))
 				return
 
 			// If the human is losing too much blood, beep.
-			if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE) if(prob(5))
-				visible_message("\The [src] beeps loudly.")
+			if(((T.vessel.get_reagent_amount("blood")/T.species.blood_volume)*100) < BLOOD_VOLUME_SAFE)
+				if(prob(5))
+					visible_message("\The [src] beeps loudly.")
 
 			var/datum/reagent/B = T.take_blood(beaker,amount)
 

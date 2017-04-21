@@ -116,15 +116,15 @@ There are several things that need to be remembered:
 
 //BASE MOB SPRITE
 /mob/living/carbon/proc/update_body()
-	remove_overlay(BODY_LAYER)
+	/*remove_overlay(BODY_LAYER)
 
 	if(!species)
-		return
+		return*/
 
 	//update_bodyparts() // TODO remove this
 	update_tail_showing() // TODO remove this
 
-	var/hulk = (HULK in src.mutations)
+	/*var/hulk = (HULK in src.mutations)
 
 	var/list/standing = list()
 
@@ -142,7 +142,7 @@ There are several things that need to be remembered:
 			standing += lips
 
 	overlays_standing[BODY_LAYER] = standing
-	apply_overlay(BODY_LAYER)
+	apply_overlay(BODY_LAYER)*/
 
 
 

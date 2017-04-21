@@ -727,15 +727,15 @@
 	else
 		germ_level += n
 
-/mob/living/carbon/proc/is_lung_ruptured()
+/mob/living/carbon/proc/is_lung_ruptured() // TODO update this code and lungs.
 	var/obj/item/organ/lungs/IO = organs_by_name[BP_LUNGS]
 	return IO && IO.is_bruised()
 
 /mob/living/carbon/proc/rupture_lung()
 	var/obj/item/organ/lungs/IO = organs_by_name[BP_LUNGS]
 
-	if(!IO.is_bruised())
-		custom_pain("You feel a stabbing pain in your chest!", 50, BP = IO.parent_bodypart)
+	if(IO && !IO.is_bruised())
+		custom_pain("You feel a stabbing pain in your chest!", 50, BP = get_bodypart(IO.parent_bodypart))
 		IO.damage = IO.min_bruised_damage
 
 /mob/living/carbon/get_visible_implants(class = 0)
@@ -795,7 +795,7 @@ This function restores the subjects blood to max.
 /mob/living/carbon/proc/restore_blood()
 	if(!species.flags[NO_BLOOD])
 		var/blood_volume = vessel.get_reagent_amount("blood")
-		vessel.add_reagent("blood",560.0-blood_volume)
+		vessel.add_reagent("blood", species.blood_volume - blood_volume)
 
 /mob/living/carbon/proc/get_bodypart(zone)
 	if(!zone)	zone = BP_CHEST

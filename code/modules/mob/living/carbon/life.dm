@@ -408,211 +408,30 @@
 			internals.icon_state = "internal0"
 	return null
 
+
 /mob/living/carbon/proc/handle_breath(datum/gas_mixture/breath)
 	if(!species || (status_flags & GODMODE))
 		return
 
-	if(!breath || (breath.total_moles() == 0) || suiciding)
-		if(suiciding)
-			adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
-			failed_last_breath = 1
-			throw_alert("oxy")
-			return 0
-		if(health > config.health_threshold_crit)
-			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-			failed_last_breath = 1
-		else
-			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
-			failed_last_breath = 1
+	var/obj/item/organ/lungs/L = organs_by_name[BP_LUNGS]
+	if(!L && should_have_organ(BP_LUNGS))
+		failed_last_breath = TRUE
+	else
+		failed_last_breath = L.handle_breath(breath) //if breath is null or vacuum, the lungs will handle it for us
 
-		throw_alert("oxy")
-
-		return 0
-
-	var/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
-	//var/safe_pressure_max = 140 // Maximum safe partial pressure of breathable gas in kPa (Not used for now)
-	var/safe_exhaled_max = 10 // Yes it's an arbitrary value who cares?
-	var/safe_toxins_max = 0.005
-	var/SA_para_min = 1
-	var/SA_sleep_min = 5
-	var/inhaled_gas_used = 0
-
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
-
-	var/inhaling
-	var/exhaling
-	var/poison
-	var/no_exhale
-
-	switch(species.breath_type)
-		if("nitrogen")
-			inhaling = breath.nitrogen
-		if("phoron")
-			inhaling = breath.phoron
-		if("C02")
-			inhaling = breath.carbon_dioxide
-		else
-			inhaling = breath.oxygen
-
-	switch(species.poison_type)
-		if("oxygen")
-			poison = breath.oxygen
-		if("nitrogen")
-			poison = breath.nitrogen
-		if("C02")
-			poison = breath.carbon_dioxide
-		else
-			poison = breath.phoron
-
-	switch(species.exhale_type)
-		if("C02")
-			exhaling = breath.carbon_dioxide
-		if("oxygen")
-			exhaling = breath.oxygen
-		if("nitrogen")
-			exhaling = breath.nitrogen
-		if("phoron")
-			exhaling = breath.phoron
-		else
-			no_exhale = 1
-
-	var/inhale_pp = (inhaling/breath.total_moles())*breath_pressure
-	var/toxins_pp = (poison/breath.total_moles())*breath_pressure
-	var/exhaled_pp = (exhaling/breath.total_moles())*breath_pressure
-
-	if(inhale_pp < safe_pressure_min)
+	if(failed_last_breath)
 		if(prob(20))
 			emote("gasp")
-		if(inhale_pp > 0)
-			var/ratio = inhale_pp/safe_pressure_min
-
-			 // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
-			adjustOxyLoss(min(5*(1 - ratio), HUMAN_MAX_OXYLOSS))
-			failed_last_breath = 1
-			inhaled_gas_used = inhaling*ratio/6
-
-		else
-
+		if(health > config.health_threshold_crit)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-			failed_last_breath = 1
+		else
+			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		throw_alert("oxy")
+		return FALSE
 
-	else
-		// We're in safe limits
-		failed_last_breath = 0
-		adjustOxyLoss(-5)
-		inhaled_gas_used = inhaling/6
-		clear_alert("oxy")
-
-	switch(species.breath_type)
-		if("nitrogen")
-			breath.nitrogen -= inhaled_gas_used
-		else
-			breath.oxygen -= inhaled_gas_used
-
-	if(!no_exhale)
-		switch(species.exhale_type)
-			if("oxygen")
-				breath.oxygen += inhaled_gas_used
-			if("nitrogen")
-				breath.nitrogen += inhaled_gas_used
-			if("phoron")
-				breath.phoron += inhaled_gas_used
-			if("carbon_dioxide")
-				breath.carbon_dioxide += inhaled_gas_used
-
-	// CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2,
-	// this will hurt you, but only once per 4 ticks, instead of once per tick.
-
-	if(exhaled_pp > safe_exhaled_max)
-		// If it's the first breath with too much CO2 in it, lets start a counter,
-		// then have them pass out after 12s or so.
-		if(!co2overloadtime)
-			co2overloadtime = world.time
-
-		else if(world.time - co2overloadtime > 120)
-
-			// Lets hurt em a little, let them know we mean business
-			Paralyse(3)
-			adjustOxyLoss(3)
-
-			// They've been in here 30s now, lets start to kill them for their own good!
-			if(world.time - co2overloadtime > 300)
-				adjustOxyLoss(8)
-
-		// Lets give them some chance to know somethings not right though I guess.
-		if(prob(20))
-			emote("cough")
-	else
-		co2overloadtime = 0
-
-	// Too much poison in the air.
-	if(toxins_pp > safe_toxins_max)
-		var/ratio = (poison/safe_toxins_max) * 10
-		if(reagents)
-			reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
-		throw_alert("tox_in_air")
-	else
-		clear_alert("tox_in_air")
-
-	// If there's some other shit in the air lets deal with it here.
-	if(breath.trace_gases.len)
-		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-			var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
-
-			// Enough to make us paralysed for a bit
-			if(SA_pp > SA_para_min)
-
-				// 3 gives them one second to wake up and run away a bit!
-				Paralyse(3)
-
-				// Enough to make us sleep as well
-				if(SA_pp > SA_sleep_min)
-					sleeping = min(sleeping+2, 10)
-
-			// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-			else if(SA_pp > 0.15)
-				if(prob(20))
-					emote(pick("giggle", "laugh"))
-			SA.moles = 0
-
-	// Hot air hurts :(
-	if( (breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1))
-	 // #Z2 Cold_resistance wont save us anymore, we have no_breath genetics power now @ZVe
-
-		if(status_flags & GODMODE)
-			return 1
-
-		switch(breath.temperature)
-			if(-INFINITY to species.cold_level_3)
-				apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-			if(species.cold_level_3 to species.cold_level_2)
-				apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-			if(species.cold_level_2 to species.cold_level_1)
-				apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-			if(species.heat_level_1 to species.heat_level_2)
-				apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")
-			if(species.heat_level_2 to species.heat_level_3)
-				apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Heat")
-			if(species.heat_level_3 to INFINITY)
-				apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Heat")
-
-		//breathing in hot/cold air also heats/cools you a bit
-		var/temp_adj = breath.temperature - bodytemperature
-		if (temp_adj < 0)
-			temp_adj /= (BODYTEMP_COLD_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
-		else
-			temp_adj /= (BODYTEMP_HEAT_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
-
-		var/relative_density = breath.total_moles() / (MOLES_CELLSTANDARD * BREATH_PERCENTAGE)
-		temp_adj *= relative_density
-
-		if (temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
-		if (temp_adj < BODYTEMP_COOLING_MAX) temp_adj = BODYTEMP_COOLING_MAX
-		//world << "Breath: [breath.temperature], [src]: [bodytemperature], Adjusting: [temp_adj]"
-		bodytemperature += temp_adj
-	return 1
+	clear_alert("oxy")
+	return TRUE
 
 /mob/living/carbon/proc/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
@@ -1831,7 +1650,3 @@
 
 			hud_list[SPECIALROLE_HUD] = holder
 	hud_updateflag = 0
-
-
-#undef HUMAN_MAX_OXYLOSS
-#undef HUMAN_CRIT_MAX_OXYLOSS

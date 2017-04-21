@@ -927,12 +927,13 @@
 
 /mob/living/carbon/human/revive() // TODO check if this proc requires any updates with new bodyparts system.
 
-	for (var/obj/item/bodypart/head/H in world) // in world... TODO deal with that.
-		if(H.brainmob)
-			if(H.brainmob.real_name == src.real_name)
-				if(H.brainmob.mind)
-					H.replace_stump(src)
-					B.brainmob.mind.transfer_to(target) // TODO remove this
+	var/obj/item/bodypart/check_head = bodyparts_by_name[BP_HEAD]
+	if(check_head && check_head.is_stump())
+		for (var/obj/item/bodypart/head/head in world) // in world... TODO deal with that.
+			head.replace_stump(src)
+			head.disfigured = FALSE
+			if(head.brainmob.mind)
+				head.brainmob.mind.transfer_to(src) // TODO remove this
 
 	for (var/obj/item/bodypart/BP in bodyparts)
 		BP.status &= ~ORGAN_BROKEN
@@ -943,11 +944,8 @@
 		BP.wounds.Cut()
 		BP.heal_damage(1000,1000,1,1)
 
-	var/obj/item/bodypart/head/BP = bodyparts_by_name[BP_HEAD]
-	BP.disfigured = 0
-
 	if(species && !species.flags[NO_BLOOD])
-		vessel.add_reagent("blood",560-vessel.total_volume)
+		vessel.add_reagent("blood", species.blood_volume - vessel.total_volume)
 		fixblood()
 
 	for(var/obj/item/organ/IO in organs)
@@ -1195,12 +1193,27 @@
 		to_chat(S, "<span class='danger'>[U] pops your [current_limb.joint] back in!</span>")
 	current_limb.undislocate()
 
+/mob/living/carbon/proc/should_have_organ(organ_check)
+	var/obj/item/bodypart/BP
+	if(organ_check in list(BP_HEART, BP_LUNGS))
+		BP = bodyparts_by_name[BP_CHEST]
+	else if(organ_check in list(BP_LIVER, BP_KIDNEYS))
+		BP = bodyparts_by_name[BP_GROIN]
+
+	if(BP && (BP.status & ORGAN_ROBOT))
+		return 0
+	return (species && species.has_organ[organ_check])
+
 /mob/living/carbon/proc/can_feel_pain(obj/item/bodypart/check_bodypart)
+	if(!species)
+		return 0
+	if(species.flags[IS_SYNTHETIC])
+		return 0
 	if(check_bodypart)
 		if(!istype(check_bodypart))
 			return FALSE
 		return check_bodypart.can_feel_pain()
-	return !(species && (species.flags[NO_PAIN] || species.flags[IS_SYNTHETIC]))
+	return !species.flags[NO_PAIN]
 
 //Putting a couple of procs here that I don't know where else to dump.
 //Mostly going to be used for Vox and Vox Armalis, but other human mobs might like them (for adminbuse).
