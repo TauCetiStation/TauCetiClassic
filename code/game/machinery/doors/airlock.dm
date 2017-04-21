@@ -870,29 +870,69 @@ About the new airlock wires panel:
 
 	qdel(src)
 
+/obj/machinery/door/airlock/proc/Hulk_Jump(mob/living/carbon/user)
+	if(!density)
+		return
+	if(user.a_intent == "hurt")
+		if(user.hulk_scream(src, 90))
+			if(istype(src,/obj/machinery/door/airlock/multi_tile)) //Some kind runtime with multi_tile airlock... So delete for now... #Z2
+				qdel(src)
+			else
+				door_rupture(user)
+		return
+	else if(locked)
+		to_chat(user, "<span class='userdanger'> The door is bolted and you need more aggressive force to get thru!</span>")
+		return
+	var/passed = FALSE
+	for(var/I in cardinalrange(src))
+		if(user == I)
+			passed = TRUE
+			break
+	if(!passed)
+		return
+	var/cur_dir = user.dir
+	user.visible_message("<span class='userdanger'>The [user] starts to force the [src] open with a bare hands!</span>",\
+			"<span class='userdanger'>You start forcing the [src] open with a bare hands!</span>",\
+			"You hear metal strain.")
+	if(do_after(user, 30, target = src) && density && in_range(src,user))
+		user.canmove = 0
+		var/turf/target = user.loc
+		open()
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		if(istype(target,/turf/simulated/floor))
+			var/turf/simulated/floor/tile = target
+			tile.break_tile()
+		for(var/i in 1 to 2)
+			if(!step(user,cur_dir))
+				break
+		playsound(user.loc, 'sound/weapons/thudswoosh.ogg', 50, 1)
+		user.visible_message("<span class='userdanger'>The [user] forces the [src] open with a bare hands!</span>",\
+				"<span class='userdanger'>You force the [src] open with a bare hands!</span>",\
+				"You hear metal strain, and a door open.")
+		user.canmove = 1
+		close()
+
 /obj/machinery/door/airlock/attack_hand(mob/user)
 	if(!(istype(user, /mob/living/silicon) || IsAdminGhost(user)))
 		if(src.isElectrified())
 			if(src.shock(user, 100))
 				return
-	if(HULK in user.mutations) //#Z2
-		..(user)
-		return //##Z2
-
-	// No. -- cib , Yes. -- zve , No. -- cib -- YES! -- zve
+	if(HULK in user.mutations)
+		Hulk_Jump(user)
+		return
 
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
 			playsound(src, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				visible_message("\red [user] headbutts the airlock.")
+				visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
 				var/datum/organ/external/affecting = H.get_organ("head")
 				H.Stun(8)
 				H.Weaken(5)
 				affecting.take_damage(10, 0)
 			else
-				visible_message("\red [user] headbutts the airlock. Good thing they're wearing a helmet.")
+				visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 			return
 
 	if(src.p_open)
@@ -1205,10 +1245,10 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/attackby(C, mob/user)
 
-	if(istype(C,/obj/item/weapon/changeling_hammer) && !src.operating && src.density) // yeah, hammer ignore electrify
+	if(istype(C,/obj/item/weapon/changeling_hammer) && !operating && density) // yeah, hammer ignore electrify
 		var/obj/item/weapon/changeling_hammer/W = C
 		user.do_attack_animation(src)
-		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+		visible_message("<span class='userdanger'>[user] has punched the [src]!</span>")
 		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if(W.use_charge(user) && prob(20))
 			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
@@ -1216,8 +1256,8 @@ About the new airlock wires panel:
 		return
 
 	if(!(istype(usr, /mob/living/silicon) || IsAdminGhost(user)))
-		if(src.isElectrified())
-			if(src.shock(user, 75))
+		if(isElectrified())
+			if(shock(user, 75))
 				return
 	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
 		return
