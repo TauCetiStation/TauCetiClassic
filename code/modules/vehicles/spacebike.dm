@@ -53,9 +53,9 @@
 	var/mob/living/M = C
 	if(!istype(M))
 		return FALSE
-	if(M.buckled || M.restrained() || !Adjacent(M) || !M.Adjacent(src))
+	if(M.buckled || M.incapacitated() || !Adjacent(M) || !M.Adjacent(src))
 		return FALSE
-	return ..(M)
+	return ..()
 
 /obj/vehicle/space/spacebike/MouseDrop_T(atom/movable/C, mob/user)
 	if(!load(C))
@@ -149,6 +149,8 @@
 /obj/vehicle/space/spacebike/can_move()
 	. = ..()
 	if(kickstand)
+		return 0
+	if(buckled_mob && (buckled_mob.stat || buckled_mob.lying))
 		return 0
 
 /obj/vehicle/space/spacebike/turn_on()

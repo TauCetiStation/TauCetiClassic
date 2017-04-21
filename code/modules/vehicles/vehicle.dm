@@ -109,6 +109,8 @@
 
 /obj/vehicle/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
+	if(buckled_mob)
+		buckled_mob.bullet_act(Proj)
 	..()
 	healthcheck()
 
@@ -308,5 +310,5 @@
 	src.health -= damage
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	spawn(1) healthcheck()
+	INVOKE_ASYNC(src,.proc/healthcheck)
 	return 1
