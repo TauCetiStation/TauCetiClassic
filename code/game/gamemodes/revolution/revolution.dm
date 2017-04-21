@@ -464,7 +464,7 @@
 			text += ")"
 
 
-
+	text +="<BR>"
 	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
 		text += printlogo("nano-logo", "heads of staff")
 
