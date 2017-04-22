@@ -842,12 +842,10 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/proc/door_rupture(mob/user)
 	var/obj/structure/door_assembly/da = new src.assembly_type(loc)
 	da.anchored = 0
-
 	var/target = da.loc
 	for(var/i in 1 to 4)
 		target = get_turf(get_step(target,user.dir))
 	da.throw_at(target, 200, 100, spin = FALSE)
-
 	if(mineral)
 		da.change_mineral_airlock_type(mineral)
 	if(glass && da.can_insert_glass)
@@ -870,22 +868,19 @@ About the new airlock wires panel:
 
 	qdel(src)
 
-/obj/machinery/door/airlock/proc/Hulk_Jump(mob/living/carbon/user)
+/obj/machinery/door/airlock/proc/hulk_break_reaction(mob/living/carbon/user)
 	if(!density)
 		return
 	if(user.a_intent == "hurt")
 		if(user.hulk_scream(src, 90))
-			if(istype(src,/obj/machinery/door/airlock/multi_tile)) //Some kind runtime with multi_tile airlock... So delete for now... #Z2
-				qdel(src)
-			else
-				door_rupture(user)
+			door_rupture(user)
 		return
 	else if(locked)
 		to_chat(user, "<span class='userdanger'> The door is bolted and you need more aggressive force to get thru!</span>")
 		return
 	var/passed = FALSE
-	for(var/I in cardinalrange(src))
-		if(user == I)
+	for(var/I in get_step(user,user.dir))
+		if(I == src)
 			passed = TRUE
 			break
 	if(!passed)
@@ -894,7 +889,7 @@ About the new airlock wires panel:
 	user.visible_message("<span class='userdanger'>The [user] starts to force the [src] open with a bare hands!</span>",\
 			"<span class='userdanger'>You start forcing the [src] open with a bare hands!</span>",\
 			"You hear metal strain.")
-	if(do_after(user, 30, target = src) && density && in_range(src,user))
+	if(do_after(user, 30, target = src) && density && user.dir == cur_dir)
 		user.canmove = 0
 		var/turf/target = user.loc
 		open()
@@ -904,8 +899,10 @@ About the new airlock wires panel:
 			tile.break_tile()
 		for(var/i in 1 to 2)
 			if(!step(user,cur_dir))
+				for(var/mob/living/L in get_step(user,cur_dir))
+					L.adjustBruteLoss(rand(20,60))
 				break
-		playsound(user.loc, 'sound/weapons/thudswoosh.ogg', 50, 1)
+		playsound(src,'sound/weapons/thudswoosh.ogg', 50, 1)
 		user.visible_message("<span class='userdanger'>The [user] forces the [src] open with a bare hands!</span>",\
 				"<span class='userdanger'>You force the [src] open with a bare hands!</span>",\
 				"You hear metal strain, and a door open.")
@@ -918,7 +915,7 @@ About the new airlock wires panel:
 			if(src.shock(user, 100))
 				return
 	if(HULK in user.mutations)
-		Hulk_Jump(user)
+		hulk_break_reaction(user)
 		return
 
 	if(ishuman(user) && prob(40) && src.density)
