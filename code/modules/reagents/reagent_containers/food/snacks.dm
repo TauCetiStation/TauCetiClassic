@@ -40,12 +40,13 @@
 		qdel(src)
 		return 0
 
-	if(!CanEat(user, M, src, "eat")) return	//tc code
+	if(!CanEat(user, M, src, "eat"))
+		return	//tc code
 
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 		if(M == user)								//If you're eating it yourself
-			if(istype(M,/mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags[IS_SYNTHETIC])
 					to_chat(H, "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>")
