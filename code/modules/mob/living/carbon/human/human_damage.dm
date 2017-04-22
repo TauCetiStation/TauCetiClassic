@@ -170,8 +170,7 @@
 //It automatically updates health status
 /mob/living/carbon/human/heal_organ_damage(brute, burn)
 	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
-	if(!parts.len)
-		return
+	if(!parts.len)	return
 	var/datum/organ/external/picked = pick(parts)
 	if(picked.heal_damage(brute,burn))
 		hud_updateflag |= 1 << HEALTH_HUD
@@ -182,8 +181,7 @@
 //It automatically updates health status
 /mob/living/carbon/human/take_organ_damage(brute, burn, sharp = 0, edge = 0)
 	var/list/datum/organ/external/parts = get_damageable_organs()
-	if(!parts.len)
-		return
+	if(!parts.len)	return
 	var/datum/organ/external/picked = pick(parts)
 	if(picked.take_damage(brute,burn,sharp,edge))
 		hud_updateflag |= 1 << HEALTH_HUD
@@ -209,8 +207,7 @@
 
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(brute, burn, sharp = 0, edge = 0, used_weapon = null)
-	if(status_flags & GODMODE)
-		return	//godmode
+	if(status_flags & GODMODE)	return	//godmode
 	var/list/datum/organ/external/parts = get_damageable_organs()
 	while(parts.len && (brute>0 || burn>0) )
 		var/datum/organ/external/picked = pick(parts)
@@ -253,9 +250,8 @@ This function restores all organs.
 
 
 /mob/living/carbon/human/proc/get_organ(zone)
-	if(!zone)
-		zone = "chest"
-	if(zone in list("eyes", "mouth"))
+	if(!zone)	zone = "chest"
+	if (zone in list( "eyes", "mouth" ))
 		zone = "head"
 	return organs_by_name[zone]
 
@@ -300,8 +296,7 @@ This function restores all organs.
 	hud_updateflag |= 1 << HEALTH_HUD
 
 	//Embedded object code.
-	if(!organ)
-		return
+	if(!organ) return
 	if(istype(used_weapon, /obj/item))
 		var/obj/item/W = used_weapon
 		if(!W.can_embed)
