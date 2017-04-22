@@ -407,7 +407,7 @@
 			updatehealth()
 
 		if("grab")
-			if(M == src || anchored)
+			if(M == src || anchored || M.lying)
 				return
 
 			for(var/obj/item/weapon/grab/G in grabbed_by)
@@ -625,9 +625,9 @@
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>has attempted to lunge at [name]!</span>")
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored || M.lying)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 			M.put_in_active_hand(G)
 			grabbed_by += G
 			G.synch()

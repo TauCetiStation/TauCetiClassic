@@ -85,7 +85,7 @@
 		T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
 
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
-	if(in_range(T, host) && !host.get_inactive_hand())
+	if(in_range(T, host) && !host.get_inactive_hand() && !host.lying)
 		if(iscarbon(T))
 			var/obj/item/weapon/grab/G = new(host,T)
 			host.put_in_inactive_hand(G)
