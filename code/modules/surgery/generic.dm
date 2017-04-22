@@ -302,7 +302,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("\blue [user] amputates [target]'s [BP.name] at the [BP.amputation_point] with \the [tool].", \
 	"\blue You amputate [target]'s [BP.name] with \the [tool].")
-	BP.droplimb(1, DROPLIMB_EDGE, user = user)
+	BP.droplimb(1, DROPLIMB_EDGE, user)
 
 /datum/surgery_step/generic/amputate/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)

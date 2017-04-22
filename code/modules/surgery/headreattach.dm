@@ -183,10 +183,6 @@
 	if(user.dropItemToGround(tool) && tool.replace_stump(target))
 		user.visible_message("\blue [user] has attached [target]'s head to the body.",	\
 		"\blue You have attached [target]'s head to the body.")
-		tool.status &= ~ORGAN_CUT_AWAY
-		var/obj/item/bodypart/head/B = tool
-		if (B.brainmob.mind)
-			B.brainmob.mind.transfer_to(target)
 
 /datum/surgery_step/head/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)

@@ -8,7 +8,7 @@
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
 	var/damage_mask = TRUE
-	var/eyes = "eyes_s"                                  // Icon for eyes.
+	var/eyes_icon = "eyes"                                  // Icon for eyes.
 
 	var/backward_form            // Mostly used in genetic (human <-> monkey), if null - gibs user when transformation happens.
 	var/tail                     // Name of tail image in species effects icon file.
@@ -84,22 +84,22 @@
 
 	//This is default bodyparts & organs set which is mostly used upon mob creation.
 	var/list/has_bodypart = list( // Keep in mind that this list also acts as priority for creating bodyparts/organs inside spawned mob.
-		BP_CHEST = /obj/item/bodypart/chest, // If chest is a main bodypart, it must be on top of the list, since everything else depends on it.
-		BP_GROIN = /obj/item/bodypart/groin,
-		BP_HEAD  = /obj/item/bodypart/head,
-		BP_L_ARM = /obj/item/bodypart/l_arm,
-		BP_R_ARM = /obj/item/bodypart/r_arm,
-		BP_L_LEG = /obj/item/bodypart/l_leg,
-		BP_R_LEG = /obj/item/bodypart/r_leg
+		BP_CHEST = /obj/item/bodypart/chest // If chest is a main bodypart, it must be on top of the list, since everything else depends on it.
+		,BP_GROIN = /obj/item/bodypart/groin
+		,BP_HEAD  = /obj/item/bodypart/head
+		,BP_L_ARM = /obj/item/bodypart/l_arm
+		,BP_R_ARM = /obj/item/bodypart/r_arm
+		,BP_L_LEG = /obj/item/bodypart/l_leg
+		,BP_R_LEG = /obj/item/bodypart/r_leg
 		)
 
 	var/list/has_organ = list(
-		BP_HEART   = /obj/item/organ/heart,
-		BP_LUNGS   = /obj/item/organ/lungs,
-		BP_LIVER   = /obj/item/organ/liver,
-		BP_KIDNEYS = /obj/item/organ/kidneys,
-		BP_BRAIN   = /obj/item/organ/brain,
-		BP_EYES    = /obj/item/organ/eyes
+		BP_HEART   = /obj/item/organ/heart
+		,BP_BRAIN   = /obj/item/organ/brain
+		,BP_EYES    = /obj/item/organ/eyes
+		,BP_LUNGS   = /obj/item/organ/lungs
+		,BP_LIVER   = /obj/item/organ/liver
+		,BP_KIDNEYS = /obj/item/organ/kidneys
 		)
 
 	var/breathing_sound = 'sound/voice/monkey.ogg'
@@ -112,30 +112,28 @@
 
 /datum/species/proc/create_organs(mob/living/carbon/C, list/organ_data) //Handles creation of mob bodyparts and organs.
 	//This is a basic humanoid limb setup.
-	switch(name)
-		if(S_HUMAN,S_UNATHI,S_TAJARAN,S_SKRELL,S_DIONA,S_VOX,S_VOX_ARMALIS,S_IPC,S_ABDUCTOR,S_SHADOWLING)
-			C.make_blood()
+	C.make_blood()
 
-			if(!organ_data || !organ_data.len)
-				for(var/type in has_bodypart)
-					var/path = has_bodypart[type]
-					new path(null, C)
-			else
-				for(var/type in has_bodypart)
-					var/status = organ_data[type]
-					if(status)
-						if(status == "amputated")
-							var/obj/item/bodypart/path = has_bodypart[type]
-							var/obj/item/bodypart/stump/stump = new (null, C, path)
-							stump.status |= ORGAN_CUT_AWAY
-							continue
+	if(!organ_data || !organ_data.len)
+		for(var/type in has_bodypart)
+			var/path = has_bodypart[type]
+			new path(null, C)
+	else
+		for(var/type in has_bodypart)
+			var/status = organ_data[type]
+			if(status)
+				if(status == "amputated")
+					var/obj/item/bodypart/path = has_bodypart[type]
+					var/obj/item/bodypart/stump/stump = new (null, C, path)
+					stump.status |= ORGAN_CUT_AWAY
+					continue
 
-					var/path = has_bodypart[type]
-					new path(null, C)
+			var/path = has_bodypart[type]
+			new path(null, C)
 
-			for(var/type in has_organ)
-				var/path = has_organ[type]
-				new path(null, C)
+	for(var/type in has_organ)
+		var/path = has_organ[type]
+		new path(null, C)
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/C) //Handles anything not already covered by basic species assignment.
 	return
@@ -154,7 +152,10 @@
 	backward_form = /mob/living/carbon/human
 	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
 
-/datum/species/monkey/human
+	has_bodypart = list()
+	has_organ = list()
+
+/datum/species/human
 	name = S_HUMAN
 	language = "Sol Common"
 	backward_form = /mob/living/carbon/monkey
@@ -176,7 +177,10 @@
 	backward_form = /mob/living/carbon/human/unathi
 	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
 
-/datum/species/stok/unathi
+	has_bodypart = list()
+	has_organ = list()
+
+/datum/species/unathi
 	name = S_UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
@@ -218,6 +222,9 @@
 	name = S_MONKEY_T
 	backward_form = /mob/living/carbon/human/tajaran
 	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
+
+	has_bodypart = list()
+	has_organ = list()
 
 /datum/species/farwa/tajaran
 	name = S_TAJARAN
@@ -262,7 +269,10 @@
 	backward_form = /mob/living/carbon/human/skrell
 	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
 
-/datum/species/neaera/skrell
+	has_bodypart = list()
+	has_organ = list()
+
+/datum/species/skrell
 	name = S_SKRELL
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
 	deform = 'icons/mob/human_races/r_def_skrell.dmi'
@@ -277,7 +287,7 @@
 	,HAS_SKIN_COLOR = TRUE
 	)
 
-	eyes = "skrell_eyes_s"
+	eyes_icon = "skrell_eyes"
 
 	flesh_color = "#8CD7A3"
 
@@ -297,7 +307,7 @@
 	cold_level_2 = 50
 	cold_level_3 = 0
 
-	eyes = "vox_eyes_s"
+	eyes_icon = "vox_eyes"
 
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
@@ -327,7 +337,7 @@
 	C.verbs += /mob/living/carbon/human/proc/gut
 	..()
 
-/datum/species/vox/armalis
+/datum/species/armalis
 	name = S_VOX_ARMALIS
 	icobase = 'icons/mob/human_races/r_armalis.dmi'
 	deform = 'icons/mob/human_races/r_armalis.dmi'
@@ -348,7 +358,7 @@
 	brute_mod = 0.2
 	burn_mod = 0.2
 
-	eyes = "blank_eyes"
+	eyes_icon = null
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
@@ -380,7 +390,10 @@
 	backward_form = /mob/living/carbon/human/diona
 	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
 
-/datum/species/nymph/diona
+	has_bodypart = list()
+	has_organ = list()
+
+/datum/species/diona
 	name = S_DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
@@ -447,7 +460,7 @@
 	language = "Tradeband"
 	unarmed_types = list(/datum/unarmed_attack/punch)
 
-	eyes = "blank_eyes"
+	eyes_icon = null
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -559,11 +572,17 @@
 /datum/species/slime
 	name = S_SLIME
 
+	has_bodypart = list()
+	has_organ = list()
+
 	flags = list(
 	 NO_EMBED = TRUE
 	)
 
 /datum/species/alien
+	has_bodypart = list()
+	has_organ = list()
+
 	flags = list(
 	 NO_EMBED = TRUE
 	,NO_SLIP = TRUE
@@ -587,6 +606,9 @@
 
 /datum/species/dog
 	name = S_DOG
+
+	has_bodypart = list()
+	has_organ = list()
 
 // Called when using the shredding behavior.
 /datum/species/proc/can_shred(var/mob/living/carbon/human/H, var/ignore_intent)

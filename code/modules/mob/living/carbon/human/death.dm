@@ -15,7 +15,7 @@
 		// Only make the limb drop if it's not too damaged
 		if(prob(100 - BP.get_damage()))
 			// Override the current limb status and don't cause an explosion
-			BP.droplimb(0, DROPLIMB_EDGE, 1)
+			BP.droplimb(0, DROPLIMB_EDGE)
 
 	flick("gibbed-h", animation)
 	if(species)

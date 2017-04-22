@@ -33,7 +33,8 @@
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return FALSE
 
 	if(!W.mob_can_equip(src, slot, disable_warning))
 		if(del_on_fail)
@@ -41,10 +42,15 @@
 		else
 			if(!disable_warning)
 				to_chat(src, "<span class='red'>You are unable to equip that.</span>")//Only print if del_on_fail is false
-		return 0
+		return FALSE
+
+	if(slot == slot_in_backpack) // Mostly used by datum/job/equip() proc. Also, this slot in reality does not exist, its just a shortcut for special inventory (backpack) manipulation.
+		var/obj/item/I = get_equipped_item(slot_back)
+		W.loc = I
+		return TRUE
 
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
-	return 1
+	return TRUE
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
 //In most cases you will want to use equip_to_slot_if_possible()

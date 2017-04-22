@@ -20,7 +20,6 @@
 	var/list/obj/item/organ/organs = list() // Internal organs of this body part
 	var/list/organs_by_name = list()
 
-	var/limb_layer = 0
 	var/limb_layer_priority = 0 //chest and groin must be drawn under arms, head and legs.
 
 	var/mob/living/carbon/owner = null
@@ -167,7 +166,13 @@
 
 	return ..()
 
-/obj/item/bodypart/proc/removed(mob/living/user, ignore_children = 0) // TODO implement this proc properly
+/obj/item/bodypart/head/New(loc, mob/living/carbon/C)
+	..()
+
+	if(species.eyes_icon)
+		eyes_overlay = image(icon = 'icons/mob/human_face.dmi', layer = -BODY_LAYER)
+
+/obj/item/bodypart/proc/removed(mob/living/user) // TODO implement this proc properly
 	if(!istype(owner))
 		return
 
@@ -203,46 +208,19 @@
 
 	owner.bad_bodyparts -= src
 
-	//remove_splint()
-	for(var/atom/movable/implant in implants)
-		//large items and non-item objs fall to the floor, everything else stays
-		var/obj/item/I = implant
-		if(istype(I) && I.w_class < ITEM_SIZE_NORMAL)
-			//implant.forceMove(src)
-
-			// let actual implants still inside know they're no longer implanted
-			//if(istype(I, /obj/item/weapon/implant))
-			//	var/obj/item/weapon/implant/imp_device = I
-			//	imp.imp_in = null
-			//	imp.implanted = 0
-			//	if(istype(imp,/obj/item/weapon/implant/storage))
-			//		var/obj/item/weapon/implant/storage/Simp = imp
-			//		Simp.removed()
-		else
-			//implants.Remove(implant)
-			implant.forceMove(get_turf(src))
-
-	// Attached organs also fly off.
-	if(!ignore_children)
-		for(var/obj/item/bodypart/limb in children)
-			limb.removed()
-			/*if(limb)
-				limb.forceMove(src)
-
-				// if we didn't lose the organ we still want it as a child
-				children += limb
-				limb.parent = src*/
+	src.status &= ~ORGAN_SPLINTED
+	for(var/implant in implants)
+		qdel(implant)
 
 	// Grab all the internal giblets too.
 	for(var/obj/item/organ/IO in organs)
-		IO.removed(null, 0)  // Organ stays inside and connected
+		IO.removed(null, FALSE) // Organ stays inside and connected
 
 	// Remove parent references
 	if(parent)
 		parent.children -= src
 		parent = null
 
-	//release_restraints(owner)
 	owner.bodyparts -= src
 	owner.bodyparts_by_name[body_zone] = null // Remove from owner's vars.
 
@@ -267,7 +245,7 @@
 	owner = null
 	update_inv_limb(multi = TRUE)
 
-/obj/item/bodypart/head/removed(mob/living/user, ignore_children = FALSE)
+/obj/item/bodypart/head/removed(mob/living/user)
 	transfer_identity(owner)
 	..()
 
@@ -276,10 +254,11 @@
 	if(istype(target))
 		var/obj/item/bodypart/stump = target.get_bodypart(src.body_zone)
 		if(!stump || !stump.is_stump())
-			return 0
+			return FALSE
 
 		qdel(stump)
 
+		status &= ~ORGAN_CUT_AWAY
 		src.transform = matrix()
 		src.dir = target.dir
 
@@ -308,116 +287,14 @@
 		owner.update_bodypart(src.body_zone)
 		owner.update_bloody_bodypart(body_zone)
 		update_inv_limb(multi = TRUE)
-		return 1
+		return TRUE
+	return FALSE
 
-	return 0
-
-/obj/item/bodypart/proc/update_limb()
-	if(owner)
-		var/has_gender = owner.species.flags[HAS_GENDERED_ICONS]
-		var/has_color = TRUE
-		var/husk = (owner.disabilities & HUSK)
-
-		if(owner.species.flags[IS_SYNTHETIC]) // TODO: bodyparts for this and ROBOT.
-			icon = owner.species.icobase
-			has_gender = FALSE
-			has_color = FALSE
-		else if(status & ORGAN_ROBOT)
-			icon = 'icons/mob/human_races/robotic.dmi'
-			has_gender = FALSE
-			has_color = FALSE
-		else if(husk) // TODO implement this for exact bodyparts.
-			overlays.Cut()
-			icon = 'icons/mob/human_races/bad_limb.dmi'
-			icon_state = body_zone + "_husk"
-			has_gender = FALSE
-			has_color = FALSE
-			return
-		else if(status & ORGAN_MUTATED)
-			icon = owner.species.deform
-		else
-			icon = owner.species.icobase
-
-		if(has_gender)
-			var/g = (owner.gender == FEMALE ? "_f" : "_m")
-			switch(body_zone)
-				if(BP_CHEST)
-					icon_state = body_zone + g
-				if(BP_GROIN, BP_HEAD)
-					icon_state = body_zone + g
-				else
-					icon_state = body_zone
-			if(owner.species.name == S_HUMAN && (owner.disabilities & FAT))
-				icon_state += "_fat"
-		else
-			icon_state = body_zone
-
-		if(has_color)
-			if(status & ORGAN_DEAD)
-				color = list(0.03,0,0, 0,0.2,0, 0,0,0, 0.3,0.3,0.3)
-			else if(HULK in owner.mutations)
-				color = list(0.18,0,0, 0,0.87,0, 0,0,0.15, 0,0,0)
-			else
-				if(owner.species.flags[HAS_SKIN_TONE])
-					color = list(1,0,0, 0,1,0, 0,0,1, owner.s_tone/255,owner.s_tone/255,owner.s_tone/255)
-				if(owner.species.flags[HAS_SKIN_COLOR])
-					color = list(1,0,0, 0,1,0, 0,0,1, owner.r_skin/255,owner.g_skin/255,owner.b_skin/255)
-		else
-			color = null
-
-	if(srg_overlay)
-		overlays -= srg_overlay
-
-	if(open)
-		srg_overlay = image(icon = 'icons/mob/surgery.dmi', icon_state = "[body_zone][round(open)]", layer = -SURGERY_LAYER)
-	else
-		srg_overlay = null
-
-	if(!owner)
-		if(dmg_overlay)
-			overlays += dmg_overlay
-		if(srg_overlay)
-			overlays += srg_overlay
-
-/obj/item/bodypart/head
-	var/image/eyes_overlay
-
-/obj/item/bodypart/head/update_limb()
-	..()
-
-	if(eyes_overlay)
-		overlays -= eyes_overlay
-
-	var/obj/item/organ/eyes/IO = get_organ(BP_EYES)
-	if(IO)
-		if(!eyes_overlay)
-			eyes_overlay = image(icon = 'icons/mob/human_face.dmi', layer = -BODY_LAYER)
-		if(owner)
-			eyes_overlay.icon_state = owner.species.eyes
-			eyes_overlay.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
-	else
-		eyes_overlay = null
-
-	if(!owner && eyes_overlay)
-		overlays += eyes_overlay
-
-/obj/item/bodypart/proc/get_organ(organ_tag)
-	return organs_by_name[organ_tag]
-
-/obj/item/bodypart/head/get_icon()
+/obj/item/bodypart/head/replace_stump(mob/living/carbon/target)
 	. = ..()
 
-	if(eyes_overlay)
-		. += eyes_overlay
-
-/obj/item/bodypart/proc/get_icon()
-	var/list/standing = list()
-	standing += image(icon = src, layer = -BODYPARTS_LAYER + limb_layer_priority)
-	if(dmg_overlay)
-		standing += dmg_overlay
-	if(srg_overlay)
-		standing += srg_overlay
-	return standing
+	if(. && brainmob && brainmob.mind)
+		brainmob.mind.transfer_to(target)
 
 /obj/item/bodypart/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
@@ -748,8 +625,7 @@ This function completely restores a damaged bodypart to perfect condition.
 		//Infections
 		update_germs()
 	else
-		//pain = 0
-		//..()
+		pain = 0
 
 		//dead already, no need for more processing
 		if(status & ORGAN_DEAD)
@@ -985,8 +861,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	var/tburn = 0
 	var/tbrute = 0
 
-	if(burn_dam ==0)
-		tburn =0
+	if(burn_dam == 0)
+		tburn = 0
 	else if (burn_dam < (max_damage * 0.25 / 2))
 		tburn = 1
 	else if (burn_dam < (max_damage * 0.75 / 2))
@@ -1009,7 +885,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 ****************************************************/
 
 //Handles dismemberment
-/obj/item/bodypart/proc/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, mob/living/user)
+/obj/item/bodypart/proc/droplimb(clean, disintegrate = DROPLIMB_EDGE, mob/living/user)
 	if(cannot_amputate || !owner)
 		return
 
@@ -1044,7 +920,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	var/use_flesh_colour = species.flesh_color
 	var/use_blood_colour = species.blood_color
 
-	removed(user, ignore_children)
+	removed(user)
 	victim.traumatic_shock += 60
 
 	if(parent_bodypart)
@@ -1118,6 +994,9 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /****************************************************
 			   HELPERS
 ****************************************************/
+/obj/item/bodypart/proc/get_organ(organ_tag)
+	return organs_by_name[organ_tag]
+
 /obj/item/bodypart/proc/sever_artery()
 	if(!(status & (ORGAN_ARTERY_CUT|ORGAN_ROBOT)) && owner && owner.organs_by_name[BP_HEART])
 		status |= ORGAN_ARTERY_CUT
@@ -1460,14 +1339,14 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/chest
 	name = "chest"
 	icon_state = "chest"
-	w_class = ITEM_SIZE_HUGE
+	w_class = ITEM_SIZE_HUGE // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
 	body_part = UPPER_TORSO
 	body_zone = BP_CHEST
 	parent_bodypart = null
 	limb_layer_priority = -0.2
 
-	max_damage = 75
+	max_damage = 100
 	min_broken_damage = 40
 
 	vital = TRUE
@@ -1488,8 +1367,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	parent_bodypart = BP_CHEST
 	limb_layer_priority = -0.1
 
-	max_damage = 50
-	min_broken_damage = 30
+	max_damage = 100
+	min_broken_damage = 40
 
 	vital = TRUE
 	cannot_amputate = TRUE
@@ -1520,6 +1399,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	var/disfigured = 0
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
+
+	var/image/eyes_overlay
 
 /obj/item/bodypart/head/take_damage(brute, burn, damage_flags, used_weapon = null)
 	. = ..()
@@ -1655,6 +1536,9 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "femoral artery"
 	arterial_bleed_severity = 0.75
 
+/****************************************************
+	RIPPED, MISSED, AMPUTATED LIMB
+****************************************************/
 /obj/item/bodypart/stump
 	name = "limb stump"
 	icon = 'icons/mob/human_races/bad_limb.dmi'
@@ -1665,16 +1549,16 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		body_part = lost_limb.body_part
 		body_zone = lost_limb.body_zone
 		parent_bodypart = lost_limb.parent_bodypart
-		limb_layer = lost_limb.limb_layer
+		limb_layer_priority = lost_limb.limb_layer_priority
 		amputation_point = lost_limb.amputation_point
-		//joint = lost_limb.joint
+		joint = lost_limb.joint
 	else if(ispath(lost_limb))
 		body_part = initial(lost_limb.body_part)
 		body_zone = initial(lost_limb.body_zone)
 		parent_bodypart = initial(lost_limb.parent_bodypart)
-		limb_layer = initial(lost_limb.limb_layer)
+		limb_layer_priority = initial(lost_limb.limb_layer_priority)
 		amputation_point = initial(lost_limb.amputation_point)
-		max_damage = initial(lost_limb.max_damage)
+		joint = initial(lost_limb.joint)
 
 	name = "stump of \a [parse_zone(body_zone)]"
 
@@ -1704,7 +1588,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	return
 
 /obj/item/bodypart/stump/get_icon()
-	return image(icon = src.icon, icon_state = src.icon_state, layer = -BODYPARTS_LAYER)
+	return image(icon = src.icon, icon_state = src.icon_state, layer = -BODYPARTS_LAYER + limb_layer_priority)
 
 /obj/item/bodypart/stump/fracture()
 	return

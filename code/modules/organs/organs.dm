@@ -88,7 +88,7 @@
 
 	return ..()
 
-/obj/item/organ/proc/removed(mob/living/user, detach = 1)
+/obj/item/organ/proc/removed(mob/living/user, detach = TRUE)
 	if(!istype(owner))
 		return
 
@@ -101,7 +101,7 @@
 		if(BP)
 			BP.organs -= src
 			status |= ORGAN_CUT_AWAY
-		forceMove(owner.loc) // dropInto(owner.loc)
+		forceMove(owner.loc)
 
 	START_PROCESSING(SSobj, src)
 	rejecting = null
