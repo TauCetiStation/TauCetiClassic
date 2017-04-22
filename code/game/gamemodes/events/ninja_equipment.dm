@@ -120,15 +120,18 @@ ________________________________________________________________________________
 	spawn while(cell.charge>=0)
 
 		//Let's check for some safeties.
-		if(s_initialized&&!affecting)	terminate()//Kills the suit and attached objects.
-		if(!s_initialized)	return//When turned off the proc stops.
-		if(AI&&AI.stat==2)//If there is an AI and it's ded. Shouldn't happen without purging, could happen.
+		if(s_initialized && !U)
+			terminate()//Kills the suit and attached objects.
+		if(!s_initialized || !U)
+			return//When turned off the proc stops.
+		if(AI && AI.stat==2)//If there is an AI and it's ded. Shouldn't happen without purging, could happen.
 			if(!s_control)
 				ai_return_control()//Return control to ninja if the AI was previously in control.
 			killai()//Delete AI.
 
 		//Now let's do the normal processing.
-		if(s_coold)	s_coold--//Checks for ability s_cooldown first.
+		if(s_coold)
+			s_coold--//Checks for ability s_cooldown first.
 		var/A = s_cost//s_cost is the default energy cost each ntick, usually 5.
 		if(!kamikaze)
 			if(blade_check(U))//If there is a blade held in hand.
