@@ -1,21 +1,47 @@
 /**
- * Use example:
+ * Usage should be the next. Create subtype of `wires` class for object you want to have wires.
+ * Then override procs under `Overridable procs` part to make reaction you want.
+ * After it you shoud create wires in object you want (see another implemetation for example).
  *
+ * Call `wires.interact(user)` from object method to interact with wires menu.
+ * See `get_interact_window()` to create additional data for view.
+ * Const values for wires defined in beetflag system with max value of 65535.
+ *
+ * Use example in defenition file:
  * > var/const/BOLTED  = 1
  * > var/const/SHOCKED = 2
  * > var/const/SAFETY  = 4
- * > var/const/POWER   = 8
  * >
- * > /datum/wires/door/update_cut(index, mended)
- * > 	var/obj/machinery/door/airlock/A = holder
+ * > /datum/wires/example
+ * > 	holder_type = /obj/machinery/example
+ * > 	wire_count = 3
+ * >
+ * > /datum/wires/example/update_cut(index, mended)
+ * > 	var/obj/machinery/example/E = holder
+ * >
  * > 	switch(index)
  * > 		if(BOLTED)
- * > 		if(!mended)
- * > 			A.bolt()
+ * > 			if(!mended)
+ * > 				E.foo_1()
  * > 		if(SHOCKED)
- * > 			A.shock()
+ * > 			E.foo_2()
  * > 		if(SAFETY )
- * > 			A.safety()
+ * > 			E.foo_3()
+ *
+ * In object:
+ * > /obj/machinery/example
+ * >	var/datum/wires/example/wires = null
+ * >
+ * > /obj/machinery/example/New()
+ * >	..()
+ * >	wires = new(src)
+ * >
+ * > /obj/machinery/example/Destroy()
+ * >	QDEL_NULL(wires)
+ * >	return ..()
+ * >
+ * > /obj/machinery/example/some_proc()
+ * >	wires.interact()
  */
 
 #define MAX_FLAG 65535
@@ -62,8 +88,8 @@ var/list/same_wires = list()
 			randomize_wires()
 			same_wires[holder_type] = src.wires.Copy()
 		else
-			var/list/wires = same_wires[holder_type]
-			src.wires = wires // Reference the wires list.
+			var/list/exist_wires = same_wires[holder_type]
+			wires = exist_wires // Reference the wires list.
 
 /datum/wires/Destroy()
 	wires = null
@@ -85,23 +111,39 @@ var/list/same_wires = list()
 
 		// Pick and remove an index
 		var/index = pick_n_take(indexes_to_pick)
-		src.wires[color] = index
+		wires[color] = index
 
-
+/**
+ * Will return TRUE if wires menu successful opened.
+ */
 /datum/wires/proc/interact(mob/living/user)
-	var/html = null
+	if(!holder || isAI(user) || !can_use(user))
+		return FALSE
 
-	if(holder && can_use(user))
-		html = get_interact_window()
+	if(additional_checks_and_effects(user))
+		return FALSE
 
-	if(html)
-		user.set_machine(holder)
+	var/html = get_interact_window()
+
+	user.set_machine(holder)
 
 	var/datum/browser/popup = new(user, "wires", holder.name, window_x, window_y)
 	popup.set_content(html)
 	popup.set_title_image(user.browse_rsc_icon(holder.icon, holder.icon_state))
 	popup.open()
 
+	return TRUE
+
+/**
+ * In default variation will display all wires and status of them.
+ * So you can override it in next variant to get additional data to display.
+ *
+ * > /datum/wires/example/get_interact_window()
+ * >   var/obj/machinery/example/E = holder
+ * >   . += ..()
+ * >   . += "<br>Some light is [E.some_status ? "off" : "on"]."
+ * >   . += "<br>Another light is [E.another_status ? "off" : "blinking"]."
+ */
 /datum/wires/proc/get_interact_window()
 	var/html = "<fieldset class='block'>"
 	html += "<legend><h3>Exposed Wires</h3></legend>"
@@ -111,9 +153,9 @@ var/list/same_wires = list()
 		html += "<tr>"
 		html += "<td[row_options1]><font color='[color]'><b>[capitalize(color)]</b></font></td>"
 		html += "<td[row_options2]>"
-		html += "<A href='?src=\ref[src];action=1;cut=[color]'>[is_color_cut(color) ? "Mend" :  "Cut"]</A>"
-		html += " <A href='?src=\ref[src];action=1;pulse=[color]'>Pulse</A>"
-		html += " <A href='?src=\ref[src];action=1;attach=[color]'>[is_signaler_attached(color) ? "Detach" : "Attach"] Signaller</A>"
+		html += "<a href='?src=\ref[src];action=1;cut=[color]'>[is_color_cut(color) ? "Mend" :  "Cut"]</a>"
+		html += "<a href='?src=\ref[src];action=1;pulse=[color]'>Pulse</a>"
+		html += "<a href='?src=\ref[src];action=1;attach=[color]'>[is_signaler_attached(color) ? "Detach" : "Attach"] Signaller</a>"
 		html += "</td>"
 		html += "</tr>"
 	html += "</table>"
@@ -179,17 +221,23 @@ var/list/same_wires = list()
 	return
 
 /**
- * Called when wire pulsed. Add code here.
+ * Called when wire pulsed.
  */
 /datum/wires/proc/update_pulsed(index)
 	return
 
 /**
- * Case defined proc for wires in different machines to valid
- * interaction with wires.
+ * Case defined proc in different machines to valid interaction with wires.
  */
-/datum/wires/proc/can_use(mob/living/L)
+/datum/wires/proc/can_use()
 	return TRUE
+
+/**
+ * Some wires may have additional checks or effects, like electric shock and etc.
+ * This proc should call those effects or checks and return `TRUE` to cancel interaction with wires.
+ */
+/datum/wires/proc/additional_checks_and_effects(mob/living/user)
+	return FALSE
 
 
 //////////

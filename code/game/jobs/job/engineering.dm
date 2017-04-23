@@ -123,37 +123,28 @@
 
 	return 1
 
-proc/identify_wire()
-	var/list/wires = list(
-			"Orange",
-			"Dark red",
-			"White",
-			"Yellow",
-			"Red",
-			"Blue",
-			"Green",
-			"Grey",
-			"Black",
-			"Gold",
-			"Aqua",
-			"Pink"
-		)
-	var/list/wirefunction = list(
-	"Id Scan",
-	"Main power",
-	"Backup power",
-	"Door Bolts",
-	"non",
-	"non", // here should be a BACKUP POWER 1 and 2, but they doesn't used anywhere, so fuck them
-	"Open door",
-	"Ai control",
-	"Electrify",
-	"Door safety",
-	"Timing mechanism",
-	"Bolt light")
+/proc/get_airlock_wires_identification()
+	var/list/wire_list = same_wires[/obj/machinery/door/airlock]
+	var/list/wire_functions_list = list(
+		"[AIRLOCK_WIRE_IDSCAN]"      = "ID scan",
+		"[AIRLOCK_WIRE_MAIN_POWER1]" = "main power",
+		"[AIRLOCK_WIRE_MAIN_POWER2]" = "backup power",
+		"[AIRLOCK_WIRE_DOOR_BOLTS]"  = "door Bolts",
+		"[AIRLOCK_WIRE_OPEN_DOOR]"   = "open door",
+		"[AIRLOCK_WIRE_AI_CONTROL]"  = "ai control",
+		"[AIRLOCK_WIRE_ELECTRIFY]"   = "electrify",
+		"[AIRLOCK_WIRE_SAFETY]"      = "door safety",
+		"[AIRLOCK_WIRE_SPEED]"       = "timing mechanism",
+		"[AIRLOCK_WIRE_LIGHT]"       = "bolt light"
+	)
+
 	var/info = ""
-	for(var/i in 1 to 12)
-		if(airlockWireColorToIndex[i] == 5 ||  airlockWireColorToIndex[i] == 6) // Exception for Backup powers
-			continue
-		info += "[wires[i]] is [wirefunction[airlockWireColorToIndex[i]]]<br>"
+
+	for(var/wire in wire_list)
+		var/current_wire_index = wire_list[wire]
+		var/current_wire_function = wire_functions_list["[current_wire_index]"]
+
+		if(current_wire_function)
+			info += "[capitalize(wire)] wire is [current_wire_function].<br>"
+
 	return info
