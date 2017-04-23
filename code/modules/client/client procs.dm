@@ -283,9 +283,8 @@
 	var/admin_rank = "Player"
 	if (src.holder)
 		admin_rank = src.holder.rank
-	else
-		if (check_randomizer(connectiontopic))
-			return
+	else if (check_randomizer(connectiontopic))
+		return
 
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
@@ -334,7 +333,7 @@
 			tokens[ckey] = cid_check_reconnect()
 
 			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
-			qdel(src)
+			del(src)
 			return TRUE
 
 		if (oldcid != computer_id) //IT CHANGED!!!
@@ -345,9 +344,9 @@
 
 			if (!cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
-				send2slack_logs(key_name(usr), "has been detected as using a cid randomizer. Connection rejected.", "(CidRandomizer)")
+				send2slack_logs(key_name(src), "has been detected as using a cid randomizer. Connection rejected.", "(CidRandomizer)")
 				cidcheck_failedckeys[ckey] = TRUE
-				note_randomizer_user()
+				notes_add(ckey, "Detected as using a cid randomizer.")
 
 			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
 
@@ -356,7 +355,7 @@
 		else
 			if (cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
-				send2slack_logs(key_name(usr), "has been allowed to connect after showing they removed their cid randomizer.", "(CidRandomizer)")
+				send2slack_logs(key_name(src), "has been allowed to connect after showing they removed their cid randomizer.", "(CidRandomizer)")
 				cidcheck_failedckeys -= ckey
 			if (cidcheck_spoofckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
@@ -387,10 +386,6 @@
 	//special javascript to make them reconnect under a new window.
 	src << browse("<a id='link' href='byond://[url]?token=[token]'>byond://[url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
 	to_chat(src, "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
-
-/client/proc/note_randomizer_user()
-	notes_add(ckey, "Detected as using a cid randomizer.")
-
 
 /client/proc/log_client_ingame_age_to_db()
 	if ( IsGuestKey(src.key) )
