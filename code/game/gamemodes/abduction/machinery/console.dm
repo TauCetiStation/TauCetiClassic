@@ -5,15 +5,15 @@
 /obj/machinery/abductor/proc/IsAbductor(mob/living/carbon/human/H)
 	if(!H.species)
 		return 0
-	return H.species.name == "Abductor"
+	return H.species.name == S_ABDUCTOR
 
 /obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
-	if(H.species.name == "Abductor")
+	if(H.species.name == S_ABDUCTOR)
 		return H.agent
 	return 0
 
 /obj/machinery/abductor/proc/IsScientist(mob/living/carbon/human/H)
-	if(H.species.name == "Abductor")
+	if(H.species.name == S_ABDUCTOR)
 		return H.scientist
 	return 0
 

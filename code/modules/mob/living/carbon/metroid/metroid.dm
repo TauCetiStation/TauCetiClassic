@@ -73,7 +73,7 @@
 	nutrition = 800 // 1200 = max
 
 
-/mob/living/carbon/slime/New()
+/mob/living/carbon/slime/New(loc, new_species = S_SLIME)
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -83,14 +83,15 @@
 	else
 		name = text("[colour] adult slime ([number])")
 	real_name = name
-	spawn (1)
-		regenerate_icons()
-		to_chat(src, "\blue Your icons have been generated!")
+	//spawn (1)
+	//	regenerate_icons()
+	//	to_chat(src, "\blue Your icons have been generated!")
 	..()
 
 /mob/living/carbon/slime/adult/New()
 	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
 	..()
+
 /mob/living/carbon/slime/Destroy()
 	Victim = null
 	Target = null
@@ -100,6 +101,7 @@
 	if(Friends.len)
 		Friends.Cut()
 	return ..()
+
 /mob/living/carbon/slime/regenerate_icons()
 	overlays.len = 0
 	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
@@ -456,10 +458,7 @@
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
 
 			M.put_in_active_hand(G)
-
-			grabbed_by += G
 			G.synch()
-
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -547,10 +546,7 @@
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
 
 			M.put_in_active_hand(G)
-
-			grabbed_by += G
 			G.synch()
-
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

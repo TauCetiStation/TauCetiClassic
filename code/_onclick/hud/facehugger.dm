@@ -35,7 +35,6 @@
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.slot_id = slot_r_hand
-	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
 	mymob.nightvisionicon = new /obj/screen/alien/nightvision()

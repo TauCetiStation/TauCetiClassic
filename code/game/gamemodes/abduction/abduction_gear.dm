@@ -32,26 +32,21 @@
 			DeactivateStealth()
 			armor = combat_armor
 			icon_state = "vest_combat"
-			if(istype(loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
+			update_inv_item()
 		if(VEST_COMBAT)// TO STEALTH
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
-			if(istype(loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
+			update_inv_item()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/ActivateStealth()
+/obj/item/clothing/suit/armor/abductor/vest/proc/ActivateStealth() // TODO check disguese properly
 	if(disguise == null)
 		return
-	stealth_active = 1
+	stealth_active = TRUE
+
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/M = src.loc
 		spawn(0)
@@ -60,22 +55,20 @@
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
 		M.overlays = disguise.overlays
-		M.update_inv_r_hand()
-		M.update_inv_l_hand()
-	return
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
 		return
-	stealth_active = 0
+	stealth_active = FALSE
+
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/M = src.loc
 		spawn(0)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
 		M.name_override = null
 		M.overlays.Cut()
-		M.regenerate_icons()
-	return
+		M.update_bodyparts()
+		M.update_inv_mob(multi = TRUE)
 
 /obj/item/clothing/suit/armor/abductor/vest/Get_shield_chance()
 	DeactivateStealth()
@@ -88,7 +81,7 @@
 /obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species.name != "Abductor")
+		if(H.species.name != S_ABDUCTOR)
 			return 0
 		return 1
 	return 0
@@ -143,7 +136,7 @@
 /obj/item/device/abductor/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species.name != "Abductor")
+		if(H.species.name != S_ABDUCTOR)
 			return 0
 		return 1
 	return 0
@@ -322,7 +315,7 @@
 	item_state = "alienpistol"
 
 /obj/item/weapon/gun/energy/decloner/alien/special_check(mob/living/carbon/human/M)
-	if(M.species.name != "Abductor")
+	if(M.species.name != S_ABDUCTOR)
 		to_chat(M, "<span class='notice'>You can't figure how this works.</span>")
 		return 0
 	return 1
@@ -352,7 +345,7 @@
 	else
 		icon_state = "alienhelmet_a"
 		item_state = "alienhelmet_a"
-		user.update_inv_head()
+		update_inv_item()
 		team = user.team
 		helm_cam = new /obj/machinery/camera(src)
 		helm_cam.c_tag = "[user.real_name] Cam"
@@ -374,7 +367,7 @@
 	var/mob/living/carbon/human/H = user
 	if(!H.species)
 		return 0
-	if(H.species.name != "Abductor")
+	if(H.species.name != S_ABDUCTOR)
 		return 0
 	return 1
 
@@ -419,8 +412,7 @@
 
 	to_chat(user, "<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
+	update_inv_item()
 
 /obj/item/weapon/abductor_baton/update_icon()
 	switch(mode)
@@ -443,7 +435,7 @@
 	var/mob/living/carbon/human/H = user
 	if(!H.species)
 		return 0
-	if(H.species.name != "Abductor")
+	if(H.species.name != S_ABDUCTOR)
 		return 0
 	return 1
 
@@ -507,25 +499,22 @@
 	msg_admin_attack("[user] ([user.ckey]) put to sleep [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	return
 
-/obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
-	if(!iscarbon(L))
+/obj/item/weapon/abductor_baton/proc/CuffAttack(mob/target, mob/living/user)
+	if(user.is_busy(target, slot_handcuffed))
 		return
-	var/mob/living/carbon/C = L
-	if(!C.handcuffed)
-		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-		C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
-								"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
-		if(do_mob(user, C, 30))
-			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/weapon/handcuffs/alien(C)
-				C.update_inv_handcuffed()
-				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
-				L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-				user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-				msg_admin_attack("[user] ([user.ckey]) handcuffed [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-		else
-			to_chat(user, "<span class='warning'>You fail to handcuff [C].</span>")
-	return
+
+	playsound(src, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+	target.visible_message("<span class='danger'>[user] begins restraining [target] with [src]!</span>", \
+							"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
+	if(do_mob(user, target, 30, target_slot = slot_handcuffed))
+		if(target.equip_to_slot_or_del(new /obj/item/weapon/handcuffs/alien, slot_handcuffed))
+			to_chat(user, "<span class='notice'>You handcuff [target].</span>")
+			target.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[target]/[target.ckey]</b> with a <b>[src.type]</b>"
+			user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[target]/[target.ckey]</b> with a <b>[src.type]</b>"
+			msg_admin_attack("[user] ([user.ckey]) handcuffed [target] ([target.ckey]) with a [src] [ADMIN_JMP(user)]")
+			return
+
+	to_chat(user, "<span class='warning'>You fail to handcuff [target].</span>")
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
@@ -558,6 +547,7 @@
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
 	icon_state = "handcuffAlien"
+	flags = CONDUCT | DROPDEL
 	origin_tech = "materials=5;combat=4;powerstorage=5"
 	breakouttime = 450
 

@@ -16,7 +16,41 @@ This is what happens, when alien attack.
 	return
 
 /mob/living/carbon/alien/larva/UnarmedAttack(atom/A)
-	A.attack_larva(src)
+	if(!chestburster)
+		A.attack_larva(src)
+	else
+		if(ishuman(A))
+			var/mob/living/carbon/human/H = A
+			var/obj/item/bodypart/chest/BP = H.get_bodypart(BP_CHEST)
+			if(H.stat == DEAD || BP && (BP.status & ORGAN_BROKEN))
+				chestburster = FALSE
+				loc = get_turf(H)
+				visible_message("<span class='danger'>[src] bursts thru [H]'s chest!</span>")
+				src << sound('sound/voice/hiss5.ogg',0,0,0,100)
+				if(H.key)
+					H.death()
+					H.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
+					BP.open = 1
+				else
+					H.gib()
+			else
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				H.apply_damage(rand(7,14), BRUTE, BP_CHEST)
+				H.shock_stage = 20
+				H.Weaken(1)
+				H.emote("scream",,, 1)
+		else if(isliving(A))
+			var/mob/living/L = A
+			if(L.stat == DEAD)
+				chestburster = FALSE
+				loc = get_turf(L)
+				visible_message("<span class='danger'>[src] bursts thru [L]'s butt!</span>")
+				src << sound('sound/voice/hiss5.ogg',0,0,0,100)
+			else
+				L.adjustBruteLoss(rand(20,65))
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				L.Weaken(8)
+
 /atom/proc/attack_larva(mob/user)
 	return
 
@@ -33,11 +67,11 @@ This is what happens, when alien attack.
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
-			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
+			var/obj/item/bodypart/BP = get_bodypart(ran_zone(M.zone_sel.selecting))
+			var/armor_block = run_armor_check(BP, "melee")
 			playsound(loc, 'sound/weapons/bite.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] has bitten [src]!</B>")
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BRUTE, BP, armor_block)
 			updatehealth()
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -56,8 +90,6 @@ This is what happens, when alien attack.
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
-
-			grabbed_by += G
 			G.synch()
 			LAssailant = M
 
@@ -73,13 +105,13 @@ This is what happens, when alien attack.
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
-			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
+			var/obj/item/bodypart/BP = get_bodypart(ran_zone(M.zone_sel.selecting))
+			var/armor_block = run_armor_check(BP, "melee")
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
 
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BRUTE, BP, armor_block)
 			if (damage >= 20)
 				visible_message("\red <B>[M] has wounded [src]!</B>")
 				apply_effect(rand(3,5), WEAKEN, armor_block)

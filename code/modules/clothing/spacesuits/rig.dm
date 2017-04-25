@@ -15,16 +15,16 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 	//Species-specific stuff.
-	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Diona","Vox")
+	species_restricted = list("exclude", S_UNATHI, S_TAJARAN, S_SKRELL, S_DIONA, S_VOX)
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/mob/species/unathi/helmet.dmi',
-		"Tajaran" = 'icons/mob/species/tajaran/helmet.dmi',
-		"Skrell" = 'icons/mob/species/skrell/helmet.dmi',
+		S_UNATHI = 'icons/mob/species/unathi/helmet.dmi',
+		S_TAJARAN = 'icons/mob/species/tajaran/helmet.dmi',
+		S_SKRELL = 'icons/mob/species/skrell/helmet.dmi',
 		)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/species/unathi/hats.dmi',
-		"Tajaran" = 'icons/obj/clothing/species/tajaran/hats.dmi',
-		"Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi',
+		S_UNATHI = 'icons/obj/clothing/species/unathi/hats.dmi',
+		S_TAJARAN = 'icons/obj/clothing/species/tajaran/hats.dmi',
+		S_SKRELL = 'icons/obj/clothing/species/skrell/hats.dmi',
 		)
 
 /obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
@@ -34,14 +34,11 @@
 	on = !on
 	icon_state = "rig[on]-[item_color]"
 //	item_state = "rig[on]-[color]"
-	usr.update_inv_head()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_head()
+	update_inv_item()
 
 /obj/item/clothing/suit/space/rig
 	name = "hardsuit"
@@ -54,16 +51,16 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
-	species_restricted = list("exclude","Unathi","Tajaran","Diona","Vox")
+	species_restricted = list("exclude", S_UNATHI, S_TAJARAN, S_DIONA, S_VOX)
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/mob/species/unathi/suit.dmi',
-		"Tajaran" = 'icons/mob/species/tajaran/suit.dmi',
-		"Skrell" = 'icons/mob/species/skrell/suit.dmi',
+		S_UNATHI = 'icons/mob/species/unathi/suit.dmi',
+		S_TAJARAN = 'icons/mob/species/tajaran/suit.dmi',
+		S_SKRELL = 'icons/mob/species/skrell/suit.dmi',
 		)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/species/unathi/suits.dmi',
-		"Tajaran" = 'icons/obj/clothing/species/tajaran/suits.dmi',
-		"Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi',
+		S_UNATHI = 'icons/obj/clothing/species/unathi/suits.dmi',
+		S_TAJARAN = 'icons/obj/clothing/species/tajaran/suits.dmi',
+		S_SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi',
 		)
 	var/magpulse = 0
 
@@ -102,18 +99,22 @@
 	if(helmet)
 		H = helmet.loc
 		if(istype(H))
-			if(helmet && H.head == helmet)
-				helmet.canremove = 1
-				H.drop_from_inventory(helmet)
-				helmet.loc = src
+			if(helmet && H.get_equipped_item(slot_head) == helmet)
+				helmet.canremove = TRUE
+				H.transferItemToLoc(helmet, src)
 
 	if(boots)
 		H = boots.loc
 		if(istype(H))
-			if(boots && H.shoes == boots)
-				boots.canremove = 1
-				H.drop_from_inventory(boots)
-				boots.loc = src
+			if(boots && H.get_equipped_item(slot_shoes) == boots)
+				boots.canremove = TRUE
+				H.transferItemToLoc(boots, src)
+
+/obj/item/clothing/suit/space/rig/proc/update_canremove() // surgery removal?
+	if(helmet && !helmet.canremove || boots && !boots.canremove)
+		canremove = FALSE
+	else
+		canremove = TRUE
 
 /obj/item/clothing/suit/space/rig/verb/toggle_helmet()
 
@@ -121,7 +122,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!istype(src.loc,/mob/living)) return
+	if(!istype(src.loc, /mob/living)) return
 
 	if(!helmet)
 		to_chat(usr, "There is no helmet installed.")
@@ -129,24 +130,22 @@
 
 	var/mob/living/carbon/human/H = usr
 
-	if(!istype(H)) return
-	if(H.stat) return
-	if(H.wear_suit != src) return
+	if(!istype(H) || H.incapacitated() || H.get_equipped_item(slot_wear_suit) != src)
+		return
 
-	if(H.head == helmet)
-		helmet.canremove = 1
-		H.drop_from_inventory(helmet)
-		helmet.loc = src
+	if(H.get_equipped_item(slot_head) == helmet)
+		helmet.canremove = TRUE
+		H.transferItemToLoc(helmet, src)
 		to_chat(H, "\blue You retract your hardsuit helmet.")
 	else
-		if(H.head)
+		if(H.get_equipped_item(slot_head))
 			to_chat(H, "\red You cannot deploy your helmet while wearing another helmet.")
 			return
 		//TODO: Species check, skull damage for forcing an unfitting helmet on?
-		helmet.loc = H
-		H.equip_to_slot(helmet, slot_head)
-		helmet.canremove = 0
-		to_chat(H, "\blue You deploy your hardsuit helmet, sealing you off from the world.")
+		if(H.equip_to_slot_if_possible(helmet, slot_head))
+			helmet.canremove = FALSE
+			to_chat(H, "\blue You deploy your hardsuit helmet, sealing you off from the world.")
+	update_canremove()
 
 /obj/item/clothing/suit/space/rig/verb/toggle_magboots()
 
@@ -154,7 +153,8 @@
 	set category = "Object"
 	set src in usr
 
-	if(!istype(src.loc,/mob/living)) return
+	if(!istype(src.loc, /mob/living))
+		return
 
 	if(!boots)
 		to_chat(usr, "\The [src] does not have any boots installed.")
@@ -162,20 +162,21 @@
 
 	var/mob/living/carbon/human/H = usr
 
-	if(!istype(H)) return
-	if(H.stat) return
-	if(H.wear_suit != src) return
+	if(!istype(H) || H.incapacitated() || H.get_equipped_item(slot_wear_suit) != src)
+		return
 
-	if(magpulse)
-		flags &= ~NOSLIP
-		src.slowdown = initial(slowdown)
-		magpulse = 0
-		to_chat(H, "You disable \the [src] the mag-pulse traction system.")
+	if(H.get_equipped_item(slot_shoes) == boots)
+		boots.canremove = TRUE
+		H.transferItemToLoc(boots, src)
+		to_chat(H, "\blue You retract your hardsuit magboots.")
 	else
-		flags |= NOSLIP
-		src.slowdown += boots.slowdown_off
-		magpulse = 1
-		to_chat(H, "You enable the mag-pulse traction system.")
+		if(H.get_equipped_item(slot_shoes))
+			to_chat(H, "\blue You cannot deploy your magboots while wearing another boots.")
+			return
+		if(H.equip_to_slot_if_possible(boots, slot_shoes))
+			boots.canremove = FALSE
+			to_chat(H, "\blue You deploy your hardsuit magboots.")
+	update_canremove()
 
 /obj/item/clothing/suit/space/rig/attackby(obj/item/W, mob/user)
 
@@ -183,13 +184,13 @@
 
 	if(user.a_intent == "help")
 
-		if(istype(src.loc,/mob/living) && !istype(W, /obj/item/weapon/patcher))
+		if(istype(src.loc, /mob/living) && !istype(W, /obj/item/weapon/patcher))
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
 
 		var/target_zone = user.zone_sel.selecting
 
-		if(target_zone == "head")
+		if(target_zone == BP_HEAD)
 
 			//Installing a component into or modifying the contents of the helmet.
 			if(!attached_helmet)
@@ -208,15 +209,14 @@
 				if(helmet)
 					to_chat(user, "\The [src] already has a helmet installed.")
 				else
-					to_chat(user, "You attach \the [W] to \the [src]'s helmet mount.")
-					user.drop_item()
-					W.loc = src
-					src.helmet = W
+					if(user.transferItemToLoc(W, src))
+						to_chat(user, "You attach \the [W] to \the [src]'s helmet mount.")
+						src.helmet = W
 				return
 			else
 				return ..()
 
-		else if(target_zone == "l_leg" || target_zone == "r_leg" || target_zone == "l_foot" || target_zone == "r_foot")
+		else if(target_zone == BP_L_LEG || target_zone == BP_R_LEG)
 
 			//Installing a component into or modifying the contents of the feet.
 			if(!attached_boots)
@@ -235,10 +235,9 @@
 				if(boots)
 					to_chat(user, "\The [src] already has magboots installed.")
 				else
-					to_chat(user, "You attach \the [W] to \the [src]'s boot mounts.")
-					user.drop_item()
-					W.loc = src
-					boots = W
+					if(user.transferItemToLoc(W, src))
+						to_chat(user, "You attach \the [W] to \the [src]'s boot mounts.")
+						boots = W
 			else
 				return ..()
 
@@ -279,8 +278,8 @@
 	item_color = "chief"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/helmet.dmi')
-	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi')
+	sprite_sheets_refit = list(S_SKRELL = 'icons/mob/species/skrell/helmet.dmi')
+	sprite_sheets_obj = list(S_SKRELL = 'icons/obj/clothing/species/skrell/hats.dmi')
 
 /obj/item/clothing/suit/space/rig/engineering/chief
 	icon_state = "rig-chief"
@@ -290,8 +289,8 @@
 	slowdown = 1
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/suit.dmi')
-	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi')
+	sprite_sheets_refit = list(S_SKRELL = 'icons/mob/species/skrell/suit.dmi')
+	sprite_sheets_obj = list(S_SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi')
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -320,7 +319,7 @@
 	item_color = "syndie"
 	armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
-	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
+	species_restricted = list("exclude", S_UNATHI, S_TAJARAN, S_SKRELL, S_VOX)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
@@ -345,7 +344,7 @@
 	slowdown = 1.4
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
-	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
+	species_restricted = list("exclude", S_UNATHI, S_TAJARAN, S_SKRELL, S_VOX)
 	breach_threshold = 28
 
 //Wizard Rig

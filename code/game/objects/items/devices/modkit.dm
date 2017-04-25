@@ -7,7 +7,7 @@
 	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user."
 	icon_state = "modkit"
 	var/parts = MODKIT_FULL
-	var/target_species = "Human"
+	var/target_species = S_HUMAN
 
 	var/list/permitted_types = list(
 		/obj/item/clothing/head/helmet/space/rig,
@@ -24,7 +24,6 @@
 
 	if(!parts)
 		to_chat(user, "<span class='warning'>This kit has no parts for this modification left.</span>")
-		user.drop_from_inventory(src)
 		qdel(src)
 		return
 
@@ -59,7 +58,6 @@
 		parts &= ~MODKIT_SUIT
 
 	if(!parts)
-		user.drop_from_inventory(src)
 		qdel(src)
 
 
@@ -70,15 +68,15 @@
 
 /obj/item/device/modkit/tajaran
 	name = "Tajaran hardsuit modification kit"
-	target_species = "Tajaran"
+	target_species = S_TAJARAN
 
 /obj/item/device/modkit/unathi
 	name = "Unathi hardsuit modification kit"
-	target_species = "Unathi"
+	target_species = S_UNATHI
 
 /obj/item/device/modkit/skrell
 	name = "Skrellian hardsuit modification kit"
-	target_species = "Skrell"
+	target_species = S_SKRELL
 
 
 /obj/item/device/modkit/engineering
@@ -94,15 +92,15 @@
 
 /obj/item/device/modkit/engineering/tajaran
 	name = "Tajaran engineering hardsuit modification kit"
-	target_species = "Tajaran"
+	target_species = S_TAJARAN
 
 /obj/item/device/modkit/engineering/unathi
 	name = "Unathi engineering hardsuit modification kit"
-	target_species = "Unathi"
+	target_species = S_UNATHI
 
 /obj/item/device/modkit/engineering/skrell
 	name = "Skrellian engineering hardsuit modification kit"
-	target_species = "Skrell"
+	target_species = S_SKRELL
 
 
 /obj/item/device/modkit/engineering/chief
@@ -117,7 +115,7 @@
 
 /obj/item/device/modkit/engineering/chief/skrell
 	name = "Skrellian chief-engineers hardsuit modification kit"
-	target_species = "Skrell"
+	target_species = S_SKRELL
 
 
 /obj/item/device/modkit/atmos
@@ -129,15 +127,15 @@
 
 /obj/item/device/modkit/atmos/tajaran
 	name = "Tajaran atmospherics hardsuit modification kit"
-	target_species = "Tajaran"
+	target_species = S_TAJARAN
 
 /obj/item/device/modkit/atmos/unathi
 	name = "Unathi atmospherics hardsuit modification kit"
-	target_species = "Unathi"
+	target_species = S_UNATHI
 
 /obj/item/device/modkit/atmos/skrell
 	name = "Skrellian atmospherics hardsuit modification kit"
-	target_species = "Skrell"
+	target_species = S_SKRELL
 
 
 /obj/item/device/modkit/med
@@ -149,15 +147,15 @@
 
 /obj/item/device/modkit/med/tajaran
 	name = "Tajaran medical hardsuit modification kit"
-	target_species = "Tajaran"
+	target_species = S_TAJARAN
 
 /obj/item/device/modkit/med/unathi
 	name = "Unathi medical hardsuit modification kit"
-	target_species = "Unathi"
+	target_species = S_UNATHI
 
 /obj/item/device/modkit/med/skrell
 	name = "Skrellian medical hardsuit modification kit"
-	target_species = "Skrell"
+	target_species = S_SKRELL
 
 
 /obj/item/device/modkit/sec
@@ -169,15 +167,15 @@
 
 /obj/item/device/modkit/sec/tajaran
 	name = "Tajaran security hardsuit modification kit"
-	target_species = "Tajaran"
+	target_species = S_TAJARAN
 
 /obj/item/device/modkit/sec/unathi
 	name = "Unathi security hardsuit modification kit"
-	target_species = "Unathi"
+	target_species = S_UNATHI
 
 /obj/item/device/modkit/sec/skrell
 	name = "Skrellian security hardsuit modification kit"
-	target_species = "Skrell"
+	target_species = S_SKRELL
 
 
 /obj/item/device/modkit/mining
@@ -189,15 +187,15 @@
 
 /obj/item/device/modkit/mining/tajaran
 	name = "Tajaran mining hardsuit modification kit"
-	target_species = "Tajaran"
+	target_species = S_TAJARAN
 
 /obj/item/device/modkit/mining/unathi
 	name = "Unathi mining hardsuit modification kit"
-	target_species = "Unathi"
+	target_species = S_UNATHI
 
 /obj/item/device/modkit/mining/skrell
 	name = "Skrellian mining hardsuit modification kit"
-	target_species = "Skrell"
+	target_species = S_SKRELL
 
 
 /obj/item/device/modkit/syndie
@@ -209,15 +207,15 @@
 
 /obj/item/device/modkit/syndie/tajaran
 	name = "Tajaran gorlex hardsuit modification kit"
-	target_species = "Tajaran"
+	target_species = S_TAJARAN
 
 /obj/item/device/modkit/syndie/unathi
 	name = "Unathi gorlex hardsuit modification kit"
-	target_species = "Unathi"
+	target_species = S_UNATHI
 
 /obj/item/device/modkit/syndie/skrell
 	name = "Skrellian gorlex hardsuit modification kit"
-	target_species = "Skrell"
+	target_species = S_SKRELL
 
 
 /obj/item/device/modkit/wizard
@@ -229,12 +227,12 @@
 
 /obj/item/device/modkit/wizard/tajaran
 	name = "Tajaran magical hardsuit modification kit"
-	target_species = "Tajaran"
+	target_species = S_TAJARAN
 
 /obj/item/device/modkit/wizard/unathi
 	name = "Unathi magical hardsuit modification kit"
-	target_species = "Unathi"
+	target_species = S_UNATHI
 
 /obj/item/device/modkit/wizard/skrell
 	name = "Skrellian magical hardsuit modification kit"
-	target_species = "Skrell"
+	target_species = S_SKRELL

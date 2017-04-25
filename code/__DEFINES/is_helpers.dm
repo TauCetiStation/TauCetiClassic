@@ -68,7 +68,7 @@
 
 // ELSE
 
-#define isorgan(A) (istype(A, /datum/organ/external))
+#define isBODYPART(A) (istype(A, /obj/item/bodypart))
 
 #define isbot(A) (istype(A, /obj/machinery/bot))
 

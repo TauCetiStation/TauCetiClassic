@@ -17,9 +17,9 @@
 
 /datum/autopsy_data_scanner
 	var/weapon = null // this is the DEFINITE weapon type that was used
-	var/list/organs_scanned = list() // this maps a number of scanned organs to
-									 // the wounds to those organs with this data's weapon type
-	var/organ_names = ""
+	var/list/bodyparts_scanned = list() // this maps a number of scanned bodyparts to
+									 // the wounds to those bodyparts with this data's weapon type
+	var/bodypart_names = ""
 
 /datum/autopsy_data
 	var/weapon = null
@@ -37,11 +37,11 @@
 	W.time_inflicted = time_inflicted
 	return W
 
-/obj/item/weapon/autopsy_scanner/proc/add_data(datum/organ/external/O)
-	if(!O.autopsy_data.len && !O.trace_chemicals.len) return
+/obj/item/weapon/autopsy_scanner/proc/add_data(obj/item/bodypart/BP)
+	if(!BP.autopsy_data.len && !BP.trace_chemicals.len) return
 
-	for(var/V in O.autopsy_data)
-		var/datum/autopsy_data/W = O.autopsy_data[V]
+	for(var/V in BP.autopsy_data)
+		var/datum/autopsy_data/W = BP.autopsy_data[V]
 
 		if(!W.pretend_weapon)
 			/*
@@ -62,17 +62,17 @@
 			D.weapon = W.weapon
 			wdata[V] = D
 
-		if(!D.organs_scanned[O.name])
-			if(D.organ_names == "")
-				D.organ_names = O.display_name
+		if(!D.bodyparts_scanned[BP.name])
+			if(D.bodypart_names == "")
+				D.bodypart_names = BP.name
 			else
-				D.organ_names += ", [O.display_name]"
+				D.bodypart_names += ", [BP.name]"
 
-		qdel(D.organs_scanned[O.name])
-		D.organs_scanned[O.name] = W.copy()
+		qdel(D.bodyparts_scanned[BP.name])
+		D.bodyparts_scanned[BP.name] = W.copy()
 
-	for(var/V in O.trace_chemicals)
-		if(O.trace_chemicals[V] > 0 && !chemtraces.Find(V))
+	for(var/V in BP.trace_chemicals)
+		if(BP.trace_chemicals[V] > 0 && !chemtraces.Find(V))
 			chemtraces += V
 
 /obj/item/weapon/autopsy_scanner/verb/print_data()
@@ -96,8 +96,8 @@
 		var/list/weapon_chances = list() // maps weapon names to a score
 		var/age = 0
 
-		for(var/wound_idx in D.organs_scanned)
-			var/datum/autopsy_data/W = D.organs_scanned[wound_idx]
+		for(var/wound_idx in D.bodyparts_scanned)
+			var/datum/autopsy_data/W = D.bodyparts_scanned[wound_idx]
 			total_hits += W.hits
 
 			var/wname = W.pretend_weapon
@@ -127,14 +127,14 @@
 			if(30 to 1000)
 				damage_desc = "<font color='red'>severe</font>"
 
-		if(!total_score) total_score = D.organs_scanned.len
+		if(!total_score) total_score = D.bodyparts_scanned.len
 
 		scan_data += "<b>Weapon #[n]</b><br>"
 		if(damaging_weapon)
 			scan_data += "Severity: [damage_desc]<br>"
 			scan_data += "Hits by weapon: [total_hits]<br>"
 		scan_data += "Approximate time of wound infliction: [worldtime2text(age)]<br>"
-		scan_data += "Affected limbs: [D.organ_names]<br>"
+		scan_data += "Affected limbs: [D.bodypart_names]<br>"
 		scan_data += "Possible weapons:<br>"
 		for(var/weapon_name in weapon_chances)
 			scan_data += "\t[100*weapon_chances[weapon_name]/total_score]% [weapon_name]<br>"
@@ -159,22 +159,9 @@
 	P.info = "<tt>[scan_data]</tt>"
 	P.icon_state = "paper_words"
 
-	if(istype(usr,/mob/living/carbon))
+	if(istype(usr, /mob/living/carbon))
 		// place the item in the usr's hand if possible
-		if(!usr.r_hand)
-			P.loc = usr
-			usr.r_hand = P
-			P.layer = ABOVE_HUD_LAYER
-			P.plane = ABOVE_HUD_PLANE
-		else if(!usr.l_hand)
-			P.loc = usr
-			usr.l_hand = P
-			P.layer = ABOVE_HUD_LAYER
-			P.plane = ABOVE_HUD_PLANE
-
-	if(istype(usr,/mob/living/carbon/human))
-		usr:update_inv_l_hand()
-		usr:update_inv_r_hand()
+		usr.put_in_hands(P)
 
 /obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M, mob/living/carbon/user)
 	if(!istype(M))
@@ -192,16 +179,16 @@
 
 	src.timeofdeath = M.timeofdeath
 
-	var/datum/organ/external/S = M.get_organ(user.zone_sel.selecting)
-	if(!S)
+	var/obj/item/bodypart/BP = M.get_bodypart(user.zone_sel.selecting)
+	if(!BP)
 		to_chat(usr, "<b>You can't scan this body part.</b>")
 		return
-	if(!S.open)
+	if(!BP.open)
 		to_chat(usr, "<b>You have to cut the limb open first!</b>")
 		return
 	for(var/mob/O in viewers(M))
-		O.show_message("\red [user.name] scans the wounds on [M.name]'s [S.display_name] with \the [src.name]", 1)
+		O.show_message("\red [user.name] scans the wounds on [M.name]'s [BP.name] with \the [src.name]", 1)
 
-	src.add_data(S)
+	src.add_data(BP)
 
 	return 1

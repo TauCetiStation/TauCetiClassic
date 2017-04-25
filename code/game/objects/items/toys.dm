@@ -337,13 +337,8 @@
 			src.item_state = "sword0"
 			src.w_class = 2
 
-		if(istype(user,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			H.update_inv_l_hand()
-			H.update_inv_r_hand()
-
+		update_inv_item()
 		src.add_fingerprint(user)
-		return
 
 /obj/item/toy/katana
 	name = "replica katana"
@@ -1277,14 +1272,10 @@ Owl & Griffin toys
 	desc = "Mini-Borg action figure! Limited edition! 10/11. He's loves you."
 	icon_state = "poly_companion"
 
-	attack_self(mob/user)
-		to_chat(user, "\blue You have clicked a switch behind the toy.")
-		src.icon_state = "poly_companion" + pick("1","2","")
-
-		if(istype(user,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			H.update_inv_l_hand()
-			H.update_inv_r_hand()
+/obj/item/toy/prize/poly/polycompanion/attack_self(mob/user)
+	to_chat(user, "\blue You have clicked a switch behind the toy.")
+	src.icon_state = "poly_companion" + pick("1","2","")
+	update_inv_item()
 
 /obj/item/toy/prize/poly/polygold
 	name = "golden Poly"
@@ -1296,10 +1287,7 @@ Owl & Griffin toys
 	desc = "Mini-Borg action figure! Limited edition! 11/11. Fully from gold and platinum."
 	icon_state = "poly_special"
 
-	attack_self(mob/user)
-		to_chat(user, "\blue You have clicked a switch behind the toy.")
-		src.icon_state = "poly_special" + pick("1","2","")
-		if(istype(user,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			H.update_inv_l_hand()
-			H.update_inv_r_hand()
+/obj/item/toy/prize/poly/polyspecial/attack_self(mob/user)
+	to_chat(user, "\blue You have clicked a switch behind the toy.")
+	src.icon_state = "poly_special" + pick("1","2","")
+	update_inv_item()

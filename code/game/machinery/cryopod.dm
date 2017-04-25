@@ -183,8 +183,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 
 			//Drop all items into the pod.
 			for(var/obj/item/W in occupant)
-				occupant.drop_from_inventory(W)
-				W.loc = src
+				occupant.transferItemToLoc(W, src)
 
 				if(W.contents.len) //Make sure we catch anything not handled by del() on the items.
 					for(var/obj/item/O in W.contents)

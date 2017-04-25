@@ -136,10 +136,7 @@
 			if(wielded) //Trying to unwield it
 				unwield()
 				to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
-				if(user.hand)
-					user.update_inv_l_hand()
-				else
-					user.update_inv_r_hand()
+				update_inv_item()
 
 				var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 				if(O && istype(O))
@@ -152,11 +149,7 @@
 					return
 				wield()
 				to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
-
-				if(user.hand)
-					user.update_inv_l_hand()
-				else
-					user.update_inv_r_hand()
+				update_inv_item()
 
 				var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
 				O.name = "[initial(name)] - offhand"
@@ -300,12 +293,7 @@
 	else
 		icon_state = "[initial(icon_state)]-0"
 		item_state = "[initial(item_state)]-0"
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-		H.update_inv_belt()
-	return
+	update_inv_item()
 
 
 /obj/item/weapon/gun/projectile/automatic/c5
@@ -321,12 +309,7 @@
 /obj/item/weapon/gun/projectile/automatic/c5/update_icon(mob/M)
 	icon_state = "c5[magazine ? "" : "-e"]"
 	item_state = "c5[magazine ? "" : "-e"]"
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-		H.update_inv_belt()
-	return
+	update_inv_item()
 
 /obj/item/weapon/gun/projectile/automatic/l13
 	name = "security submachine gun"
@@ -341,12 +324,7 @@
 /obj/item/weapon/gun/projectile/automatic/l13/update_icon(mob/M)
 	icon_state = "l13[magazine ? "" : "-e"]"
 	item_state = "l13[magazine ? "" : "-e"]"
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-		H.update_inv_belt()
-	return
+	update_inv_item()
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"

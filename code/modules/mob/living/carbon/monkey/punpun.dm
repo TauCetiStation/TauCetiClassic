@@ -1,6 +1,6 @@
 /mob/living/carbon/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
 	name = "Pun Pun" //C A N O N
-	icon_state = "punpun1"
+	//icon_state = "punpun1"
 	var/ancestor_name
 	var/ancestor_chain = 1
 	var/relic_hat	//Note: these two are paths
@@ -11,8 +11,6 @@
 
 /mob/living/carbon/monkey/punpun/New()
 	Read_Memory()
-	if(relic_mask)
-		equip_to_slot_or_del(new relic_mask, slot_wear_mask)
 	if(ancestor_name)
 		name = ancestor_name
 		if(ancestor_chain > 1)
@@ -23,7 +21,12 @@
 		else
 			name = pick(pet_monkey_names)
 		gender = pick(MALE, FEMALE)
+
 	..()
+
+	if(relic_mask)
+		equip_to_slot_or_del(new relic_mask, slot_wear_mask)
+	equip_to_slot_or_del(new /obj/item/clothing/under/monkey/punpun, slot_undershirt)
 
 /mob/living/carbon/monkey/punpun/Life()
 	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)

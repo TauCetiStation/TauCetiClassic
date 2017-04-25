@@ -20,6 +20,9 @@
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 
+	var/slot_equipped = null // Where this item currently equipped (as slot).
+	var/obj/item/bodypart/slot_bodypart = null // What bodypart holds this item (as ref).
+
 	var/flags_pressure = 0
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
 	var/cold_protection = 0 //flags which determine which body parts are protected from cold. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
@@ -62,7 +65,7 @@
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
 	sprite_sheets = list(
-		"Tajaran" = 'icons/cat/are/bad'
+		S_TAJARAN = 'icons/cat/are/bad'
 		)
 	If index term exists and icon_override is not set, this sprite sheet will be used.
 	*/
@@ -84,9 +87,10 @@
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/Destroy()
+	flags &= ~DROPDEL //prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
-		m.drop_from_inventory(src)
+		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	return ..()
 
 /obj/item/ex_act(severity)
@@ -155,7 +159,8 @@
 	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
-	if (!user) return
+	if (!user || user.is_busy())
+		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee/))
@@ -184,12 +189,11 @@
 			to_chat(user, "\red \The [src] is far too small for you to pick up.")
 			return
 
-	if(hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
-		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
+	if(hasbodyparts(user))
+		var/mob/living/carbon/C = user
+		var/obj/item/bodypart/BP = C.active_hand
+		if(BP && !BP.is_usable())
+			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return
 
 	if(istype(src.loc, /obj/item/weapon/storage))
@@ -199,22 +203,24 @@
 	src.throwing = 0
 	if(src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
+		//if(!do_after(user, w_class * 15, target = src)) // TODO implement delays for equip/unequip process (leaving this and commented code below here so i don't forget about that.)
+		//	return 0
 		if(!src.canremove)
 			return
-		if(istype(user,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-					if(V.stealth_active)
-						V.DeactivateStealth()
-			if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-				if(!user.delay_clothing_u_equip(src))
-					return 0
-			else
-				user.remove_from_mob(src)
-		else
-			user.remove_from_mob(src)
-
+		//if(istype(user,/mob/living/carbon/human))
+		//	var/mob/living/carbon/human/H = user
+		//	if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+		//		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
+		//			if(V.stealth_active)
+		//				V.DeactivateStealth()
+		//	if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
+		//		if(!user.delay_clothing_u_equip(src))
+		//			return 0
+		//	else
+		//		user.remove_from_mob(src)
+		//else
+		//	user.remove_from_mob(src)
+		user.remove_from_mob(src)
 	else
 		if(isliving(src.loc))
 			return
@@ -224,15 +230,14 @@
 	user.put_in_active_hand(src)
 	return
 
-
-/obj/item/attack_paw(mob/user)
+/obj/item/attack_paw(mob/user) // TODO rewrite this
 
 	if(isalien(user)) // -- TLE
 		var/mob/living/carbon/alien/A = user
 
 		if(!A.has_fine_manipulation || w_class >= 4)
 			if(src in A.contents) // To stop Aliens having items stuck in their pockets
-				A.drop_from_inventory(src)
+				A.dropItemToGround(src)
 			to_chat(user, "Your claws aren't capable of such fine manipulation.")
 			return
 
@@ -315,7 +320,8 @@
 
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
-	..()
+	if(DROPDEL & flags)
+		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -344,236 +350,16 @@
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(M, slot, disable_warning = 0)
-	if(!slot) return 0
-	if(!M) return 0
-
-	if(ishuman(M))
-		//START HUMAN
-		var/mob/living/carbon/human/H = M
-		//fat mutation
-		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
-			if(FAT in H.mutations)
-				//testing("[M] TOO FAT TO WEAR [src]!")
-				if(!(flags & ONESIZEFITSALL))
-					if(!disable_warning)
-						to_chat(H, "\red You're too fat to wear the [name].")
-					return 0
-
-		switch(slot)
-			if(slot_l_hand)
-				if(H.l_hand)
-					return 0
-				return 1
-			if(slot_r_hand)
-				if(H.r_hand)
-					return 0
-				return 1
-			if(slot_wear_mask)
-				if(H.wear_mask)
-					return 0
-				if( !(slot_flags & SLOT_MASK) )
-					return 0
-				return 1
-			if(slot_back)
-				if(H.back)
-					return 0
-				if( !(slot_flags & SLOT_BACK) )
-					return 0
-				return 1
-			if(slot_wear_suit)
-				if(H.wear_suit)
-					return 0
-				if( !(slot_flags & SLOT_OCLOTHING) )
-					return 0
-				return 1
-			if(slot_gloves)
-				if(H.gloves)
-					return 0
-				if( !(slot_flags & SLOT_GLOVES) )
-					return 0
-				return 1
-			if(slot_shoes)
-				if(H.shoes)
-					return 0
-				if( !(slot_flags & SLOT_FEET) )
-					return 0
-				return 1
-			if(slot_belt)
-				if(H.belt)
-					return 0
-				if(!H.w_uniform)
-					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
-					return 0
-				if( !(slot_flags & SLOT_BELT) )
-					return
-				return 1
-			if(slot_glasses)
-				if(H.glasses)
-					return 0
-				if( !(slot_flags & SLOT_EYES) )
-					return 0
-				return 1
-			if(slot_head)
-				if(H.head)
-					return 0
-				if( !(slot_flags & SLOT_HEAD) )
-					return 0
-				return 1
-			if(slot_l_ear)
-				if(H.l_ear)
-					return 0
-				if( w_class < 2	)
-					return 1
-				if( !(slot_flags & SLOT_EARS) )
-					return 0
-				if( (slot_flags & SLOT_TWOEARS) && H.r_ear )
-					return 0
-				return 1
-			if(slot_r_ear)
-				if(H.r_ear)
-					return 0
-				if( w_class < 2 )
-					return 1
-				if( !(slot_flags & SLOT_EARS) )
-					return 0
-				if( (slot_flags & SLOT_TWOEARS) && H.l_ear )
-					return 0
-				return 1
-			if(slot_w_uniform)
-				if(H.w_uniform)
-					return 0
-				if( !(slot_flags & SLOT_ICLOTHING) )
-					return 0
-				return 1
-			if(slot_wear_id)
-				if(H.wear_id)
-					return 0
-				if(!H.w_uniform)
-					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
-					return 0
-				if( !(slot_flags & SLOT_ID) )
-					return 0
-				return 1
-			if(slot_l_store)
-				if(H.l_store)
-					return 0
-				if(!H.w_uniform)
-					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
-					return 0
-				if(slot_flags & SLOT_DENYPOCKET)
-					return 0
-				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
-					return 1
-			if(slot_r_store)
-				if(H.r_store)
-					return 0
-				if(!H.w_uniform)
-					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
-					return 0
-				if(slot_flags & SLOT_DENYPOCKET)
-					return 0
-				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
-					return 1
-				return 0
-			if(slot_s_store)
-				if(H.s_store)
-					return 0
-				if(!H.wear_suit)
-					if(!disable_warning)
-						to_chat(H, "\red You need a suit before you can attach this [name].")
-					return 0
-				if(!H.wear_suit.allowed)
-					if(!disable_warning)
-						to_chat(usr, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
-					return 0
-				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
-					return 1
-				return 0
-			if(slot_handcuffed)
-				if(H.handcuffed)
-					return 0
-				if(!istype(src, /obj/item/weapon/handcuffs))
-					return 0
-				return 1
-			if(slot_legcuffed)
-				if(H.legcuffed)
-					return 0
-				if(!istype(src, /obj/item/weapon/legcuffs))
-					return 0
-				return 1
-			if(slot_in_backpack)
-				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
-					var/obj/item/weapon/storage/backpack/B = H.back
-					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
-						return 1
-				return 0
-		return 0 //Unsupported slot
-		//END HUMAN
-
-	else if(ismonkey(M))
-		//START MONKEY
-		var/mob/living/carbon/monkey/MO = M
-		switch(slot)
-			if(slot_l_hand)
-				if(MO.l_hand)
-					return 0
-				return 1
-			if(slot_r_hand)
-				if(MO.r_hand)
-					return 0
-				return 1
-			if(slot_wear_mask)
-				if(MO.wear_mask)
-					return 0
-				if( !(slot_flags & SLOT_MASK) )
-					return 0
-				return 1
-			if(slot_back)
-				if(MO.back)
-					return 0
-				if( !(slot_flags & SLOT_BACK) )
-					return 0
-				return 1
-		return 0 //Unsupported slot
-
-		//END MONKEY
-	else if(isIAN(M))
-		var/mob/living/carbon/ian/C = M
-		switch(slot)
-			if(slot_head)
-				if(C.head)
-					return FALSE
-				if(istype(src, /obj/item/clothing/mask/facehugger))
-					return TRUE
-				if( !(slot_flags & SLOT_HEAD) )
-					return FALSE
-				return TRUE
-			if(slot_mouth)
-				if(C.mouth)
-					return FALSE
-				return TRUE
-			if(slot_neck)
-				if(C.neck)
-					return FALSE
-				if(istype(src, /obj/item/weapon/handcuffs))
-					return TRUE
-				if( !(slot_flags & SLOT_ID) )
-					return FALSE
-				return TRUE
-			if(slot_back)
-				if(C.back)
-					return FALSE
-				if(istype(src, /obj/item/clothing/suit/armor/vest))
-					return TRUE
-				if( !(slot_flags & SLOT_BACK) )
-					return FALSE
-				return TRUE
+/obj/item/proc/mob_can_equip(mob/living/carbon/C, slot, disable_warning = FALSE)
+	if(!slot || !C)
 		return FALSE
+
+	if(istype(C))
+		var/obj/item/bodypart/BP = C.get_BP_by_slot(slot)
+		if(BP && BP.can_hold(src, slot, disable_warning = FALSE))
+			return TRUE
+
+	return FALSE
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
@@ -593,11 +379,8 @@
 	if(src.anchored) //Object isn't anchored
 		to_chat(usr, "\red You can't pick that up!")
 		return
-	if(!usr.hand && usr.r_hand) //Right hand is not full
-		to_chat(usr, "\red Your right hand is full.")
-		return
-	if(usr.hand && usr.l_hand) //Left hand is not full
-		to_chat(usr, "\red Your left hand is full.")
+	if(usr.get_active_hand() && usr.get_inactive_hand())
+		to_chat(usr, "\red Your hands are full.")
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf
 		to_chat(usr, "\red You can't pick that up!")
@@ -651,11 +434,11 @@
 	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)") //BS12 EDIT ALG
 
 	src.add_fingerprint(user)
-	//if((CLUMSY in user.mutations) && prob(50))
+	//if((user.disabilities & CLUMSY) && prob(50))
 	//	M = user
 		/*
 		to_chat(M, "\red You stab yourself in the eye.")
-		M.sdisabilities |= BLIND
+		M.disabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)
 		*/
@@ -671,7 +454,7 @@
 		)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/internal/eyes/eyes = H.internal_organs_by_name["eyes"]
+		var/obj/item/organ/eyes/eyes = H.organs_by_name[BP_EYES]
 		eyes.damage += rand(3,4)
 		if(eyes.damage >= eyes.min_bruised_damage)
 			if(H.stat != DEAD)
@@ -687,30 +470,44 @@
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(H.stat != DEAD)
 					to_chat(H, "\red You go blind!")
-		var/datum/organ/external/affecting = H.get_organ("head")
-		affecting.take_damage(7)
+		var/obj/item/bodypart/BP = H.get_bodypart(BP_HEAD)
+		BP.take_damage(7)
 	else
-		M.take_organ_damage(7)
+		M.take_bodypart_damage(7)
 	M.eye_blurry += rand(3,4)
 	return
 
 /obj/item/clean_blood()
-	. = ..()
 	if(uncleanable)
 		return
+
+	. = ..()
+
 	if(blood_overlay)
-		overlays.Remove(blood_overlay)
-	if(istype(src, /obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = src
-		G.transfer_blood = 0
+		overlays -= blood_overlay
 
+	update_inv_item()
 
-/obj/item/add_blood(mob/living/carbon/human/M)
-	if (!..())
-		return 0
-
-	if(istype(src, /obj/item/weapon/melee/energy))
+/obj/item/bodypart/clean_blood()
+	if(uncleanable)
 		return
+
+	src.germ_level = 0 // copypasted from atom, because i dont want parents stuff.
+	if(istype(blood_DNA, /list))
+		blood_DNA = null
+		. = TRUE
+
+	if(blood_overlay)
+		overlays -= blood_overlay
+
+	if(bld_overlay)
+		bld_overlay = null
+		if(owner)
+			owner.update_bloody_bodypart(body_zone)
+
+/obj/item/add_blood(mob/living/carbon/C)
+	if (!..())
+		return FALSE
 
 	//if we haven't made our blood_overlay already
 	if( !blood_overlay )
@@ -723,23 +520,43 @@
 
 	//if this blood isn't already in the list, add it
 
-	if(blood_DNA[M.dna.unique_enzymes])
-		return 0 //already bloodied with this blood. Cannot add more.
-	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-	return 1 //we applied blood to the item
+	if(blood_DNA[C.dna.unique_enzymes])
+		return FALSE //already bloodied with this blood. Cannot add more.
+	blood_DNA[C.dna.unique_enzymes] = C.dna.b_type
 
+	update_inv_item()
+
+	return TRUE //we applied blood to the item
+
+/obj/item/bodypart/add_blood(mob/living/carbon/C)
+	if (!..())
+		return FALSE
+
+	if(body_zone != BP_GROIN)
+		bld_overlay = image(icon = species.blood_overlays, icon_state = "bloody_" + body_zone, layer = -DAMAGE_LAYER + limb_layer_priority + 0.1)
+		bld_overlay.color = blood_color
+		if(owner)
+			owner.update_bloody_bodypart(body_zone)
+
+	return TRUE //we applied blood to the item
+
+var/list/items_blood_overlay_by_type = list()
 /obj/item/proc/generate_blood_overlay()
 	if(blood_overlay)
 		return
 
-	var/icon/I = new /icon(icon, icon_state)
-	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
-	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-
-	//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
-	for(var/obj/item/A in world)
-		if(A.type == type && !A.blood_overlay)
-			A.blood_overlay = image(I)
+	// TODO: proper implementation of this without blend if possible.
+	// At least this removes heavy CPU load and makes it cost smt like (self: 0.000 | calls: 3) instead of (self: 0.090 | calls: 3) with old code that uses for(A in world).
+	var/image/img = items_blood_overlay_by_type[src.type]
+	if(img)
+		blood_overlay = img
+	else
+		var/icon/I = new /icon(icon, icon_state)
+		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
+		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+		img = image("icon" = I)
+		items_blood_overlay_by_type[src.type] = img
+		blood_overlay = img
 
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))

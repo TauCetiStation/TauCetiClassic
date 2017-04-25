@@ -76,7 +76,7 @@ REAGENT SCANNER
 
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
-	if (( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
+	if (( (user.disabilities & CLUMSY) || user.getBrainLoss() >= 60) && prob(50))
 		to_chat(user, text("\red You try to analyze the floor's vitals!"))
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)
@@ -117,15 +117,15 @@ REAGENT SCANNER
 		user.show_message("\blue Time of Death: [M.tod]")
 	if(istype(M, /mob/living/carbon/human) && mode == 1)
 		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_organs(1,1)
+		var/list/damaged = H.get_damaged_bodyparts(1,1)
 		user.show_message("\blue Localized Damage, Brute/Burn:",1)
 		if(length(damaged)>0)
-			for(var/datum/organ/external/org in damaged)
+			for(var/obj/item/bodypart/BP in damaged)
 				user.show_message(text("\blue &emsp; []: [][]\blue - []",	\
-				capitalize(org.display_name),					\
-				(org.brute_dam > 0)	?	"\red [org.brute_dam]"							:0,		\
-				(org.status & ORGAN_BLEEDING)?"\red <b>\[Bleeding\]</b>":"&emsp;", 		\
-				(org.burn_dam > 0)	?	"<font color='#FFA500'>[org.burn_dam]</font>"	:0),1)
+				capitalize(BP.name),					\
+				(BP.brute_dam > 0)	?	"\red [BP.brute_dam]"							:0,		\
+				(BP.status & ORGAN_BLEEDING)?"\red <b>\[Bleeding\]</b>":"&emsp;", 		\
+				(BP.burn_dam > 0)	?	"<font color='#FFA500'>[BP.burn_dam]</font>"	:0),1)
 		else
 			user.show_message("\blue &emsp; Limbs are OK.",1)
 
@@ -163,38 +163,49 @@ REAGENT SCANNER
 		user.show_message("\red Significant brain damage detected. Subject may have had a concussion.")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		for(var/name in H.organs_by_name)
-			var/datum/organ/external/e = H.organs_by_name[name]
-			var/limb = e.display_name
-			if(e.status & ORGAN_BROKEN)
-				if(((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg")) && (!(e.status & ORGAN_SPLINTED)))
+		for(var/name in H.bodyparts_by_name)
+			var/obj/item/bodypart/BP = H.bodyparts_by_name[name]
+			var/limb = BP.name
+			if(BP.status & ORGAN_BROKEN)
+				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && (!(BP.status & ORGAN_SPLINTED)))
 					to_chat(user, "\red Unsecured fracture in subject [limb]. Splinting recommended for transport.")
-			if(e.has_infected_wound())
+			if(BP.has_infected_wound())
 				to_chat(user, "\red Infected wound detected in subject [limb]. Disinfection recommended.")
 
-		for(var/name in H.organs_by_name)
-			var/datum/organ/external/e = H.organs_by_name[name]
-			if(e.status & ORGAN_BROKEN)
+		for(var/name in H.bodyparts_by_name)
+			var/obj/item/bodypart/BP = H.bodyparts_by_name[name]
+			if(BP.status & ORGAN_BROKEN)
 				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
 				break
-		for(var/datum/organ/external/e in H.organs)
-			for(var/datum/wound/W in e.wounds) if(W.internal)
-				user.show_message(text("\red Internal bleeding detected. Advanced scanner required for location."), 1)
+
+		var/found_bleed
+		var/found_tendon
+		var/found_disloc
+		for(var/obj/item/bodypart/BP in H.bodyparts)
+			if(!found_disloc && BP.dislocated == 2)
+				user.show_message("<span class='warning'>Dislocation detected. Advanced scanner required for location.</span>", 1)
+				found_disloc = TRUE
+			if(!found_bleed && (BP.status & ORGAN_ARTERY_CUT))
+				user.show_message("<span class='warning'>Arterial bleeding detected. Advanced scanner required for location.</span>", 1)
+				found_bleed = TRUE
+			if(!found_tendon && (BP.status & ORGAN_TENDON_CUT))
+				user.show_message("<span class='warning'>Tendon or ligament damage detected. Advanced scanner required for location.</span>", 1)
+				found_tendon = TRUE
+			if(found_disloc && found_bleed && found_tendon)
 				break
-		if(M:vessel)
-			var/blood_volume = round(M:vessel.get_reagent_amount("blood"))
-			var/blood_percent =  blood_volume / 560
-			var/blood_type = M.dna.b_type
-			blood_percent *= 100
-			if(blood_volume <= 500 && blood_volume > 336)
-				user.show_message("\red <b>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.\blue Type: [blood_type]")
-			else if(blood_volume <= 336)
-				user.show_message("\red <b>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.\blue Type: [blood_type]")
+
+		if(H.vessel)
+			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
+			var/blood_percent =  round((blood_volume / H.species.blood_volume)*100)
+			var/blood_type = H.dna.b_type
+			if((blood_percent <= BLOOD_VOLUME_SAFE) && (blood_percent > BLOOD_VOLUME_BAD))
+				user.show_message("<span class='danger'>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.</span> <span class='notice'>Type: [blood_type]</span>")
+			else if(blood_percent <= BLOOD_VOLUME_BAD)
+				user.show_message("<span class='danger'><i>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</i></span> <span class='notice'>Type: [blood_type]</span>")
 			else
-				user.show_message("\blue Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]")
-		user.show_message("\blue Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font>")
+				user.show_message("<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span>")
+		user.show_message("\blue Subject's pulse: <font color='[H.pulse() == PULSE_THREADY || H.pulse() == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font>")
 	src.add_fingerprint(user)
-	return
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"

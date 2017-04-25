@@ -180,7 +180,7 @@
 
 	return TRUE
 
-/mob/living/carbon/ian/proc/breathe()
+/mob/living/carbon/ian/breathe()
 	if(status_flags & GODMODE) // Do we even need GODMODE? ~Zve
 		return
 
@@ -318,7 +318,7 @@
 
 	return TRUE
 
-/mob/living/carbon/ian/proc/handle_mutations_and_radiation()
+/mob/living/carbon/ian/handle_mutations_and_radiation()
 	if(getFireLoss())
 		if((COLD_RESISTANCE in mutations) || prob(50))
 			switch(getFireLoss())
@@ -366,7 +366,7 @@
 					domutcheck(src,null)
 					emote("gasp")
 
-/mob/living/carbon/ian/proc/handle_chemicals_in_body()
+/mob/living/carbon/ian/handle_chemicals_in_body()
 	if(reagents && reagents.reagent_list.len)
 		reagents.metabolize(src)
 
@@ -406,7 +406,7 @@
 		dizziness = max(0, dizziness - 1)
 		jitteriness = max(0, jitteriness - 1)
 
-/mob/living/carbon/ian/proc/handle_disabilities()
+/mob/living/carbon/ian/handle_disabilities()
 	if (disabilities & EPILEPSY)
 		if (prob(1) && paralysis < 10)
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
@@ -423,7 +423,7 @@
 		if (prob(10))
 			stuttering = max(10, stuttering)
 
-/mob/living/carbon/ian/proc/handle_virus_updates()
+/mob/living/carbon/ian/handle_virus_updates()
 	if(status_flags & GODMODE)
 		return FALSE
 	if(bodytemperature > 406)
@@ -464,7 +464,7 @@
 			if(V.antigen & src.antibodies)
 				V.dead = TRUE
 
-/mob/living/carbon/ian/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/ian/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return
 
@@ -521,7 +521,7 @@
 	else
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
-/mob/living/carbon/ian/proc/handle_regular_status_updates()
+/mob/living/carbon/ian/handle_regular_status_updates()
 	if(stat == DEAD)
 		blinded = TRUE
 		silent = 0
@@ -569,7 +569,7 @@
 				adjustHalLoss(-1)
 
 		//Eyes
-		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
+		if(disabilities & BLIND)	//disabled-blind, doesn't get better on its own
 			blinded = TRUE
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind - 1,0)
@@ -578,7 +578,7 @@
 			eye_blurry = max(eye_blurry - 1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
+		if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
 		else if(ear_deaf)			//deafness, heals slowly over time
 			ear_deaf = max(ear_deaf - 1, 0)

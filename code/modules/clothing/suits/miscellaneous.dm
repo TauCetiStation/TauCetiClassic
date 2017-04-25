@@ -256,7 +256,7 @@
 	else
 		to_chat(usr, "You button-up some imaginary buttons on your [src].")
 		return
-	usr.update_inv_wear_suit()
+	update_inv_item()
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -428,7 +428,7 @@
 		src.icon_state += "_open"
 		to_chat(usr, "You unbutton your jacket.")
 		src.is_button_up = 0
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_item()
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
 	name = "Field jacket desert"
@@ -549,5 +549,4 @@
 	else
 		to_chat(usr, "You button-up some imaginary buttons on your [src].")
 		return
-	usr.update_inv_wear_suit()
-
+	update_inv_item()

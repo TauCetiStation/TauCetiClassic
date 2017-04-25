@@ -20,6 +20,14 @@
 /obj/item/weapon/storage/internal/mob_can_equip()
 	return 0	//make sure this is never picked up
 
+/obj/item/weapon/storage/internal/ClickAccessible(mob/user, depth=1)
+	if(loc)
+		return loc.ClickAccessible(user, depth)
+
+/obj/item/weapon/storage/internal/Adjacent(A)
+	if(loc)
+		return loc.Adjacent(A)
+
 //Helper procs to cleanly implement internal storages - storage items that provide inventory slots for other items.
 //These procs are completely optional, it is up to the master item to decide when it's storage get's opened by calling open()
 //However they are helpful for allowing the master item to pretend it is a storage item itself.
@@ -30,37 +38,43 @@
 //returns 1 if the master item's parent's MouseDrop() should be called, 0 otherwise. It's strange, but no other way of
 //doing it without the ability to call another proc's parent, really.
 /obj/item/weapon/storage/internal/proc/handle_mousedrop(mob/user, obj/over_object)
-	if (ishuman(user) || ismonkey(user)) //so monkeys can take off their backpacks -- Urist
-		var/mob/M = usr
+	if(!over_object)
+		return FALSE
 
-		if (istype(user.loc,/obj/mecha)) // stops inventory actions in a mech
-			return 0
+	if (ishuman(user) || ismonkey(user) || isIAN(user)) //so monkeys can take off their backpacks -- Urist
+		var/mob/M = user
 
-		if(over_object == user && Adjacent(user)) // this must come before the screen objects only block
-			src.open(user)
-			return 0
+		if (istype(M.loc, /obj/mecha)) // stops inventory actions in a mech
+			return FALSE
+
+		if(M.incapacitated())
+			return FALSE
+
+		// this must come before the screen objects only block
+		if(over_object == M && (src.ClickAccessible(M, depth = STORAGE_VIEW_DEPTH) || Adjacent(M))) // tgstation if(...)
+			src.open(M)
+			return FALSE
 
 		if (!( istype(over_object, /obj/screen) ))
-			return 1
+			return TRUE
 
 		//makes sure master_item is equipped before putting it in hand, so that we can't drag it into our hand from miles away.
 		//there's got to be a better way of doing this...
-		if (!(master_item.loc == user) || (master_item.loc && master_item.loc.loc == user))
-			return 0
+		if (master_item.loc != M || (master_item.loc && master_item.loc.loc == M))
+			return FALSE
 
-		if (!( user.restrained() ) && !( user.stat ))
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(master_item))
-						return
-					M.put_in_r_hand(master_item)
-				if("l_hand")
-					if(!M.unEquip(master_item))
-						return
-					M.put_in_l_hand(master_item)
-			master_item.add_fingerprint(user)
-			return 0
-	return 0
+		switch(over_object.name)
+			if("r_hand", "l_hand", "mouth")
+				var/obj/screen/inventory/S = over_object
+				if(!M.dropItemToGround(master_item))
+					return FALSE
+				if(!isBODYPART(S.master))
+					return FALSE
+				if(!M.equip_to_slot_if_possible(master_item, S.slot_id))
+					return FALSE
+		master_item.add_fingerprint(M)
+		return TRUE
+	return FALSE
 
 //items that use internal storage have the option of calling this to emulate default storage attack_hand behaviour.
 //returns 1 if the master item's parent's attack_hand() should be called, 0 otherwise.
@@ -87,6 +101,3 @@
 		if (M.s_active == src)
 			src.close(M)
 	return 1
-
-/obj/item/weapon/storage/internal/Adjacent(atom/neighbor)
-	return master_item.Adjacent(neighbor)

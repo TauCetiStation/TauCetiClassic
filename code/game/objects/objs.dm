@@ -91,7 +91,7 @@
 		// check for TK users
 
 		if (istype(usr, /mob/living/carbon/human))
-			if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab/))
+			if(istype(usr.get_active_hand(), /obj/item/tk_grab) || istype(usr.get_inactive_hand(), /obj/item/tk_grab/))
 				if(!(usr in nearby))
 					if(usr.client && usr.machine==src)
 						is_in_use = 1
@@ -111,6 +111,15 @@
 
 		if(!ai_in_use && !is_in_use)
 			in_use = 0
+
+/obj/proc/damage_flags()
+	. = 0
+	if(has_edge(src))
+		. |= DAM_EDGE
+	if(is_sharp(src))
+		. |= DAM_SHARP
+		if(damtype == BURN)
+			. |= DAM_LASER
 
 /obj/proc/interact(mob/user)
 	return

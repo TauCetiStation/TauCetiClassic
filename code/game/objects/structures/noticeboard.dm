@@ -57,13 +57,15 @@
 		var/obj/item/P = locate(href_list["write"])
 
 		if((P && P.loc == src)) //ifthe paper's on the board
-			if(istype(usr.r_hand, /obj/item/weapon/pen)) //and you're holding a pen
+			var/obj/item/weapon/pen/pen = usr.get_active_hand()
+			if(istype(pen)) //and you're holding a pen
 				add_fingerprint(usr)
-				P.attackby(usr.r_hand, usr) //then do ittttt
+				P.attackby(pen, usr) //then do ittttt
 			else
-				if(istype(usr.l_hand, /obj/item/weapon/pen)) //check other hand for pen
+				pen = usr.get_inactive_hand()
+				if(istype(pen)) //check other hand for pen
 					add_fingerprint(usr)
-					P.attackby(usr.l_hand, usr)
+					P.attackby(pen, usr)
 				else
 					to_chat(usr, "<span class='notice'>You'll need something to write with!</span>")
 

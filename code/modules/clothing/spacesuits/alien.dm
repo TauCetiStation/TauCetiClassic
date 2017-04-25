@@ -4,7 +4,7 @@
 	desc = "Smoothly contoured and polished to a shine. Still looks like a fishbowl."
 	armor = list(melee = 20, bullet = 20, laser = 25,energy = 50, bomb = 50, bio = 100, rad = 100)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list("Skrell","Human")
+	species_restricted = list(S_SKRELL, S_HUMAN)
 
 /obj/item/clothing/head/helmet/space/skrell/white
 	icon_state = "skrell_helmet_white"
@@ -23,7 +23,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list("Skrell","Human")
+	species_restricted = list(S_SKRELL, S_HUMAN)
 
 /obj/item/clothing/suit/space/skrell/white
 	icon_state = "skrell_suit_white"
@@ -41,7 +41,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/up = 0 //So Unathi helmets play nicely with the weldervision check.
-	species_restricted = list("Unathi")
+	species_restricted = list(S_UNATHI)
 
 /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
 	name = "NT breacher helmet"
@@ -55,7 +55,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list("Unathi")
+	species_restricted = list(S_UNATHI)
 
 /obj/item/clothing/suit/space/unathi/rig_cheap
 	name = "NT breacher chassis"
@@ -88,19 +88,19 @@
 	armor = list(melee = 60, bullet = 30, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list("Vox", "Vox Armalis")
+	species_restricted = list(S_VOX, S_VOX_ARMALIS)
 	sprite_sheets = list(
-		"Vox" = 'icons/mob/species/vox/suit.dmi',
-		"Vox Armalis" = 'icons/mob/species/armalis/suit.dmi',
+		S_VOX = 'icons/mob/species/vox/suit.dmi',
+		S_VOX_ARMALIS = 'icons/mob/species/armalis/suit.dmi',
 		)
 
 /obj/item/clothing/head/helmet/space/vox
 	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES
-	species_restricted = list("Vox","Vox Armalis")
+	species_restricted = list(S_VOX, S_VOX_ARMALIS)
 	sprite_sheets = list(
-		"Vox" = 'icons/mob/species/vox/head.dmi',
-		"Vox Armalis" = 'icons/mob/species/armalis/head.dmi',
+		S_VOX = 'icons/mob/species/vox/head.dmi',
+		S_VOX_ARMALIS = 'icons/mob/species/armalis/head.dmi',
 		)
 
 /obj/item/clothing/head/helmet/space/vox/pressure
@@ -154,7 +154,7 @@
 
 /obj/item/clothing/under/vox
 	has_sensor = 0
-	species_restricted = list("Vox")
+	species_restricted = list(S_VOX)
 
 /obj/item/clothing/under/vox/vox_casual
 	name = "alien clothing"
@@ -179,10 +179,10 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	item_color = "gloves-vox"
-	species_restricted = list("Vox","Vox Armalis")
+	species_restricted = list(S_VOX, S_VOX_ARMALIS)
 	sprite_sheets = list(
-		"Vox" = 'icons/mob/species/vox/gloves.dmi',
-		"Vox Armalis" = 'icons/mob/species/armalis/gloves.dmi',
+		S_VOX = 'icons/mob/species/vox/gloves.dmi',
+		S_VOX_ARMALIS = 'icons/mob/species/armalis/gloves.dmi',
 		)
 /obj/item/clothing/shoes/magboots/vox
 
@@ -191,9 +191,9 @@
 	item_state = "boots-vox"
 	icon_state = "boots-vox"
 
-	species_restricted = list("Vox","Vox Armalis")
+	species_restricted = list(S_VOX, S_VOX_ARMALIS)
 	sprite_sheets = list(
-		"Vox Armalis" = 'icons/mob/species/armalis/feet.dmi'
+		S_VOX_ARMALIS = 'icons/mob/species/armalis/feet.dmi'
 		)
 
 	action_button_name = "Toggle the magclaws"

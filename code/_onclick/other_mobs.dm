@@ -23,7 +23,7 @@
 /mob/living/carbon/human/RangedAttack(atom/A)
 	if(!gloves && !mutations.len) return
 	var/obj/item/clothing/gloves/G = gloves
-	if((LASER in mutations) && a_intent == "hurt")
+	if((LASER_EYES in mutations) && a_intent == "hurt")
 		LaserEyes(A) // moved into a proc below
 
 	else if(istype(G) && G.Touch(A,0)) // for magic gloves
@@ -71,10 +71,10 @@
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 	var/mob/living/carbon/ML = A
-	var/dam_zone = ran_zone(pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
+	var/dam_zone = ran_zone(pick(BP_CHEST, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG))
 	var/armor = ML.run_armor_check(dam_zone, "melee")
 	if(prob(75))
-		ML.apply_damage(rand(1,3), BRUTE, dam_zone, armor)
+		ML.apply_damage(rand(1,3), BRUTE, dam_zone, armor, 0, "teeths")
 		for(var/mob/O in viewers(ML, null))
 			O.show_message("\red <B>[name] has bit [ML]!</B>", 1)
 		if(armor >= 100) return

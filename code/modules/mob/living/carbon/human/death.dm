@@ -11,13 +11,11 @@
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
-	for(var/datum/organ/external/E in src.organs)
-		if(istype(E, /datum/organ/external/chest))
-			continue
+	for(var/obj/item/bodypart/BP in src.bodyparts)
 		// Only make the limb drop if it's not too damaged
-		if(prob(100 - E.get_damage()))
+		if(prob(100 - BP.get_damage()))
 			// Override the current limb status and don't cause an explosion
-			E.droplimb(1,1)
+			BP.droplimb(0, DROPLIMB_EDGE)
 
 	flick("gibbed-h", animation)
 	if(species)
@@ -66,10 +64,10 @@
 	if(species) species.handle_death(src)
 
 	//Handle brain slugs.
-	var/datum/organ/external/head = get_organ("head")
+	var/obj/item/bodypart/BP = get_bodypart(BP_HEAD)
 	var/mob/living/simple_animal/borer/B
 
-	for(var/I in head.implants)
+	for(var/I in BP.implants)
 		if(istype(I,/mob/living/simple_animal/borer))
 			B = I
 	if(B)
@@ -94,7 +92,7 @@
 		//Check for last assailant's mutantrace.
 		/*if( LAssailant && ( istype( LAssailant,/mob/living/carbon/human ) ) )
 			var/mob/living/carbon/human/V = LAssailant
-			if (V.dna && (V.dna.mutantrace == "vox"))*/ //Not currently feasible due to terrible LAssailant tracking.
+			if (V.dna && (V.dna.mutantrace == S_VOX))*/ //Not currently feasible due to terrible LAssailant tracking.
 		//world << "Vox kills: [vox_kills]"
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
@@ -121,26 +119,27 @@
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!species || (species.name == "Skeleton")) return
+	if(!species || (species.name == S_SKELETON)) return
 	if(f_style)
 		f_style = "Shaved"
 	if(h_style)
 		h_style = "Bald"
 
-	set_species("Skeleton")
+	set_species(S_SKELETON)
 	status_flags |= DISFIGURED
 	regenerate_icons()
 	return
 
 /mob/living/carbon/human/proc/ChangeToHusk()
-	if(HUSK in mutations)	return
+	if(disabilities & HUSK)
+		return
 	if(f_style)
 		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
 	if(h_style)
 		h_style = "Bald"
 
 	update_hair()
-	mutations.Add(HUSK)
+	disabilities |= HUSK
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	update_body()
 	update_mutantrace()
@@ -150,5 +149,5 @@
 	if(fake_death)
 		fake_death = 0
 	ChangeToHusk()
-	mutations |= NOCLONE
+	disabilities |= NOCLONE
 	return

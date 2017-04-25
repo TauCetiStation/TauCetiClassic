@@ -227,11 +227,11 @@ var/list/sacrificed = list()
 						sleep(50)
 						user.take_overall_damage(3, 0)
 				return
-			user.heal_organ_damage(drain%5, 0)
+			user.heal_bodypart_damage(drain%5, 0)
 			drain-=drain%5
 			for (,drain>0,drain-=5)
 				sleep(2)
-				user.heal_organ_damage(5, 0)
+				user.heal_bodypart_damage(5, 0)
 			return
 
 
@@ -382,7 +382,7 @@ var/list/sacrificed = list()
 						L.ajourn=0
 						return
 					else
-						L.take_organ_damage(10, 0)
+						L.take_bodypart_damage(10, 0)
 					sleep(100)
 			return fizzle()
 
@@ -442,7 +442,7 @@ var/list/sacrificed = list()
 
 			var/mob/living/user = usr
 			while(this_rune && user && user.stat==CONSCIOUS && user.client && user.loc==this_rune.loc)
-				user.take_organ_damage(1, 0)
+				user.take_bodypart_damage(1, 0)
 				sleep(30)
 			if(D)
 				D.visible_message("<span class='red'>[D] slowly dissipates into dust and bones.</span>", \
@@ -781,7 +781,7 @@ var/list/sacrificed = list()
 			usr.say("Khari[pick("'","`")]d! Eske'te tannin!")
 			src.density = !src.density
 			var/mob/living/user = usr
-			user.take_organ_damage(2, 0)
+			user.take_bodypart_damage(2, 0)
 			if(src.density)
 				to_chat(usr, "<span class='red'>Your blood flows into the rune, and you feel that the very space over the rune thickens.</span>")
 			else
@@ -818,9 +818,9 @@ var/list/sacrificed = list()
 				if(cultist.buckled)
 					cultist.buckled.unbuckle_mob()
 				if (cultist.handcuffed)
-					cultist.drop_from_inventory(cultist.handcuffed)
+					cultist.dropItemToGround(cultist.handcuffed)
 				if (cultist.legcuffed)
-					cultist.drop_from_inventory(cultist.legcuffed)
+					cultist.dropItemToGround(cultist.legcuffed)
 				if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
 					cultist.remove_from_mob(cultist.wear_mask)
 				if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)
@@ -884,7 +884,7 @@ var/list/sacrificed = list()
 					C.show_message("<span class='red'>The world around you suddenly becomes quiet.</span>", 3)
 					affected++
 					if(prob(1))
-						C.sdisabilities |= DEAF
+						C.disabilities |= DEAF
 				if(affected)
 					usr.say("Sti[pick("'","`")] kaliedir!")
 					to_chat(usr, "<span class='red'>The world becomes quiet as the deafening rune dissipates into fine dust.</span>")
@@ -925,7 +925,7 @@ var/list/sacrificed = list()
 					if(prob(5))
 						C.disabilities |= NEARSIGHTED
 						if(prob(10))
-							C.sdisabilities |= BLIND
+							C.disabilities |= BLIND
 					C.show_message("<span class='red'>Suddenly you see red flash that blinds you.</span>", 3)
 					affected++
 				if(affected)

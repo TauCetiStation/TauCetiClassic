@@ -247,7 +247,7 @@
 	item_state = "purplecomb"
 
 	attack_self(mob/user)
-		if(user.r_hand == src || user.l_hand == src)
+		if(user.get_active_hand() == src || user.get_inactive_hand() == src)
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
 		return
@@ -478,7 +478,7 @@
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
 	item_color="white"
-	species_restricted = list("exclude","Unathi")
+	species_restricted = list("exclude", S_UNATHI)
 
 /obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
 	name = "mittens"
@@ -795,7 +795,7 @@
 	flags = ONESIZEFITSALL
 
 //Suit roll-down toggle.
-/obj/item/clothing/under/fluff/jane_sidsuit/verb/toggle_zipper()
+/obj/item/clothing/under/fluff/jane_sidsuit/verb/toggle_zipper() // TODO remove this, it does exactly same thing as roll down jumpsuit verb.
 	set name = "Toggle Jumpsuit Zipper"
 	set category = "Object"
 	set src in usr
@@ -812,7 +812,7 @@
 
 	src.icon_state = "[item_color]"
 	src.item_state = "[item_color]"
-	usr.update_inv_w_uniform()
+	update_inv_item(slot_w_uniform)
 
 ////// Wyatt's Ex-Commander Jumpsuit - RawrTaicho
 /obj/item/clothing/under/fluff/wyatt_1

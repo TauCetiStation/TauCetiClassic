@@ -56,15 +56,15 @@
 		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
+			if(H.species.flags[IS_SYNTHETIC] || H.species.flags[NO_EMBED])
 				return
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
-				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
-				if(affecting.status & ORGAN_ROBOT)
+				var/obj/item/bodypart/BP = H.get_bodypart(pick(BP_L_LEG, BP_R_LEG))
+				if(BP.status & ORGAN_ROBOT)
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
 				H.Weaken(3)
-				affecting.take_damage(5, 0)
+				BP.take_damage(5, 0)
 				H.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 				H.updatehealth()
 	..()
@@ -117,14 +117,14 @@
 			return 0
 		if(victim.gloves)
 			return 0
-		var/def_zone = pick("l_hand", "r_hand")
-		var/datum/organ/external/affected_organ = victim.get_organ(check_zone(def_zone))
-		if(!affected_organ)
+		var/def_zone = pick(BP_L_ARM, BP_R_ARM)
+		var/obj/item/bodypart/BP = victim.get_bodypart(check_zone(def_zone))
+		if(!BP)
 			return 0
-		if(affected_organ.status & ORGAN_ROBOT)
+		if(BP.status & ORGAN_ROBOT)
 			return 0
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
-		affected_organ.take_damage(5, 0, 1, 1, used_weapon = "Sharp debris")
+		BP.take_damage(5, 0, (DAM_SHARP|DAM_EDGE), used_weapon = "Sharp debris")
 		victim.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 		return 1
 	return 0

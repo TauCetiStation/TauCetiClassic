@@ -51,16 +51,6 @@
 		for(var/key in L.key)
 			language_keys[":[lowertext(key)]"] = L
 
-	var/rkey = 0
-	for(var/T in subtypesof(/datum/species))
-		rkey++
-		var/datum/species/S = new T
-		S.race_key = rkey //Used in mob icon caching.
-		all_species[S.name] = S
-
-		if(S.flags[IS_WHITELISTED])
-			whitelisted_species += S.name
-
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 
@@ -72,6 +62,22 @@
 				. += "    has: [t]\n"
 	to_chat(world, .)
 */
+
+/proc/make_datum_references_species()
+	all_species = list()
+	var/rkey = 0
+	for(var/T in subtypesof(/datum/species))
+		var/datum/species/S = T
+		if(!initial(S.name))
+			continue
+		rkey++
+		S = new T
+		S.race_key = rkey //Used in mob icon caching.
+		all_species[S.name] = S
+
+		if(S.flags[IS_WHITELISTED])
+			whitelisted_species += S.name
+	return all_species
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.

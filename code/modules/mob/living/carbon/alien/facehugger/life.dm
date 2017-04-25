@@ -1,14 +1,6 @@
-/mob/living/carbon/alien/facehugger/Life()
-	set invisibility = 0
-
-	for(var/obj/item/weapon/fh_grab/G in src)
-		G.process()
-
-	..()
-
 /mob/living/carbon/alien/facehugger
 
-	proc/handle_random_events()
+	handle_random_events()
 		return
 
 /mob/living/carbon/alien/facehugger/handle_hud_icons_health()

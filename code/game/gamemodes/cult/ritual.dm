@@ -92,9 +92,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if(!iscultist(user))
 			to_chat(user, "You can't mouth the arcane scratchings without fumbling over them.")
 			return
-		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-			to_chat(user, "You are unable to speak the words of the rune.")
-			return
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			if(istype(C.wear_mask, /obj/item/clothing/mask/muzzle))
+				to_chat(C, "You are unable to speak the words of the rune.")
+				return
 		if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))
 			return fizzle()
 //		if(!src.visibility)
@@ -349,7 +351,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return ..()
 		if(iscultist(M))
 			return
-		M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
+		M.take_bodypart_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] beats [] with the arcane tome!</B>", user, M), 1)
 		to_chat(M, "\red You feel searing heat inside!")

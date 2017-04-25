@@ -13,22 +13,22 @@
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
-	if(!usr)	return
+	if(!usr)
+		return
 	if(!reagents.total_volume)
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
 		score["foodeaten"]++
-		usr.drop_from_inventory(src)	//so icons update :[
 
+		usr.transferItemToLoc(src, null)
 		if(trash)
-			if(ispath(trash,/obj/item))
-				var/obj/item/TrashItem = new trash(usr)
+			if(ispath(trash, /obj/item))
+				var/obj/item/TrashItem = new trash
 				usr.put_in_hands(TrashItem)
-			else if(istype(trash,/obj/item))
+			else if(istype(trash, /obj/item))
 				usr.put_in_hands(trash)
 		qdel(src)
-	return
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
 	return
@@ -36,7 +36,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)				//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='rose'>None of [src] left, oh no!</span>")
-		M.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
 		return 0
 
@@ -1562,17 +1561,17 @@
 		surprise.transform *= 0.6
 		surprise.add_blood(M)
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/E = H.get_organ("chest")
-		E.fracture()
-		for (var/datum/organ/internal/I in E.internal_organs)
-			I.take_damage(rand(I.min_bruised_damage, I.min_broken_damage+1))
+		var/obj/item/bodypart/BP = H.get_bodypart(BP_CHEST)
+		BP.fracture()
+		for (var/obj/item/organ/IO in BP.organs)
+			IO.take_damage(rand(IO.min_bruised_damage, IO.min_broken_damage+1))
 
-		if (!E.hidden && prob(60)) //set it snuggly
-			E.hidden = surprise
-			E.cavity = 0
+		if (!BP.hidden && prob(60)) //set it snuggly
+			BP.hidden = surprise
+			BP.cavity = 0
 		else 		//someone is having a bad day
-			E.createwound(CUT, 30)
-			E.embed(surprise)
+			BP.createwound(CUT, 30)
+			BP.embed(surprise)
 	else if (ismonkey(M))
 		M.visible_message("<span class='danger'>[M] suddenly tears in half!</span>")
 		var/mob/living/carbon/monkey/ook = new monkey_type(M.loc)
@@ -1607,7 +1606,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube
 	name = "farwa cube"
-	monkey_type =/mob/living/carbon/monkey/tajara
+	monkey_type = /mob/living/carbon/monkey/tajara
 
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/stokcube
@@ -1616,16 +1615,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube
 	name = "stok cube"
-	monkey_type =/mob/living/carbon/monkey/unathi
+	monkey_type = /mob/living/carbon/monkey/unathi
 
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/neaeracube
 	name = "neaera cube"
-	monkey_type ="skrell"
+	monkey_type = /mob/living/carbon/monkey/skrell
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube
 	name = "neaera cube"
-	monkey_type =/mob/living/carbon/monkey/skrell
+	monkey_type = /mob/living/carbon/monkey/skrell
 
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger

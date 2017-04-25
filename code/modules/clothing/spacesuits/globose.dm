@@ -12,10 +12,7 @@
 /obj/item/clothing/head/helmet/space/globose/attack_self(mob/user)
 	visor = !visor
 	icon_state = "glob[visor]_[mode]"
-
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_head()
+	update_inv_item()
 
 
 /***********-Yellow-***********/

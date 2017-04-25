@@ -59,14 +59,14 @@
 
 	// Mute disability
 	//TODO: handle_speech_problems
-	if(src.sdisabilities & MUTE)
+	if(src.disabilities & MUTE)
 		return
 
 	//TODO: handle_speech_problems
 	if(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 
-	if(src.species.name == "Abductor")
+	if(src.species.name == S_ABDUCTOR)
 		return
 
 	//looks like this only appears in whisper. Should it be elsewhere as well? Maybe handle_speech_problems?

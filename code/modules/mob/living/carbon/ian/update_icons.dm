@@ -9,21 +9,10 @@
 /mob/living/carbon/ian/var/static/list/corgi_icons = list()
 /mob/living/carbon/ian/var/list/overlays_inv[LAYERIANS_TOTAL]
 
-/mob/living/carbon/ian/proc/apply_overlay(index)
-	var/image/I = overlays_inv[index]
-	if(I)
-		overlays += I
-
-/mob/living/carbon/ian/proc/remove_overlay(index)
-	if(overlays_inv[index])
-		overlays -= overlays_inv[index]
-		overlays_inv[index] = null
-
 /mob/living/carbon/ian/regenerate_icons()
-	update_inv_head()
-	update_inv_mouth()
-	update_inv_neck()
-	update_inv_back()
+	//update_inv_head()
+	//update_inv_mouth()
+	//update_inv_back()
 	update_hud()
 	update_transform()
 
@@ -31,7 +20,7 @@
 	if(client)
 		client.screen |= contents
 
-/mob/living/carbon/ian/update_inv_head()
+/*/mob/living/carbon/ian/update_inv_head()
 	remove_overlay(LAYERIAN_HEAD)
 
 	update_corgi_ability()
@@ -61,7 +50,7 @@
 
 	var/image/body_icon
 	if(facehugger)
-		drop_from_inventory(mouth)
+		dropItemToGround(mouth)
 		body_icon = image("icon" = 'icons/mob/mask.dmi', "icon_state" = "facehugger_corgi", "layer" = -LAYERIAN_HEAD)
 	else if(head.type in has_corgi_icons)
 		body_icon = image("icon" = 'icons/mob/corgi_head.dmi', "icon_state" = head.icon_state, "layer" = -LAYERIAN_HEAD)
@@ -183,15 +172,16 @@
 		return
 
 	if(handcuffed)
-		drop_from_inventory(mouth)
+		dropItemToGround(mouth)
 
 	neck.screen_loc = ui_ian_neck
 	if(client && hud_used && hud_used.hud_shown)
 		client.screen += neck
 
 	//apply_overlay(LAYERIAN_NECKCUFF)
+	*/
 
-/mob/living/carbon/ian/update_inv_back()
+/*/mob/living/carbon/ian/update_inv_back()
 	remove_overlay(LAYERIAN_BACK)
 
 	if(!back)
@@ -222,7 +212,7 @@
 
 	overlays_inv[LAYERIAN_BACK] = body_icon
 
-	apply_overlay(LAYERIAN_BACK)
+	apply_overlay(LAYERIAN_BACK)*/
 
 /mob/living/carbon/ian/update_targeted()
 	remove_overlay(LAYERIAN_TARGETED)
@@ -265,9 +255,9 @@
 		if(POSE_STAT)
 			icon_state = "corgi_stat"
 
-	update_inv_head()
-	update_inv_mouth()
-	update_inv_back()
+	//update_inv_head()
+	//update_inv_mouth()
+	//update_inv_back()
 
 /mob/living/carbon/ian/update_canmove() // uh oh, i have no other idea, except copypaste this proc as edited version for now.
 	if(!ismob(src))
@@ -329,7 +319,7 @@
 	if(lying)
 		density = FALSE
 		if(mouth && mouth.canremove)
-			drop_from_inventory(mouth)
+			dropItemToGround(mouth)
 	else
 		density = TRUE
 

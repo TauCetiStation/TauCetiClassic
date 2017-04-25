@@ -71,7 +71,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/r_eyes = 0						//Eye color
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
-	var/species = "Human"
+	var/species = S_HUMAN
 	var/language = "None"				//Secondary language
 
 	//Some faction information.
@@ -140,11 +140,10 @@ var/const/MAX_SAVE_SLOTS = 10
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
-	update_preview_icon()
-	user << browse_rsc(preview_icon, "previewicon.png")
-	user << browse_rsc('html/prefs/dossier_empty.png')
-	user << browse_rsc('html/prefs/dossier_photos.png')
-	user << browse_rsc('html/prefs/opacity7.png')
+
+	if(!preview_icon) // if this is first time user opens up his character setup, we should create preview for his character.
+		update_preview_icon(user) // We can put this inside preferences New(), but user may not even open setup window, so i see no point for this proc elsewhere.
+		                          // Anyway, don't call this proc if user did nothing with the visual appearance of his character in other places of preferences code,
 
 	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
@@ -202,10 +201,12 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if("reload")
 			load_preferences()
-			load_character()
+			if(load_character())
+				update_preview_icon(user)
 
 		if("changeslot")
-			load_character(text2num(href_list["num"]))
+			if(load_character(text2num(href_list["num"])))
+				update_preview_icon(user)
 
 		if("general")
 			menu_type = "general"
@@ -231,6 +232,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if("occupation")
 			process_link_occupation(user, href_list)
+			update_preview_icon(user) // TODO do something about this, we don't want to update preview if nothing really changed there.
 
 		if("roles")
 			process_link_roles(user, href_list)
@@ -244,7 +246,57 @@ var/const/MAX_SAVE_SLOTS = 10
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE)
+	character.gender = gender
+
+	character.r_eyes = r_eyes
+	character.g_eyes = g_eyes
+	character.b_eyes = b_eyes
+
+	character.r_hair = r_hair
+	character.g_hair = g_hair
+	character.b_hair = b_hair
+
+	character.r_facial = r_facial
+	character.g_facial = g_facial
+	character.b_facial = b_facial
+
+	if(character.species.flags[HAS_SKIN_COLOR])
+		character.r_skin = r_skin
+		character.g_skin = g_skin
+		character.b_skin = b_skin
+
+	if(character.species.flags[HAS_SKIN_TONE])
+		character.s_tone = s_tone
+
+	character.h_style = h_style
+	character.f_style = f_style
+
+	if(disabilities & DISABILITY_FATNESS)
+		character.disabilities |= FAT
+		character.nutrition = 1000
+		character.overeatduration = 2000
+
+	if(underwear > underwear_m.len || underwear < 1)
+		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
+	character.underwear = underwear
+
+	if(undershirt > undershirt_t.len || undershirt < 1)
+		undershirt = 0
+	character.undershirt = undershirt
+
+	if(socks > socks_t.len || socks < 1)
+		socks = 0
+
+	character.socks = socks
+
+	character.update_bodyparts()
+	character.update_tail_showing()
+	character.update_hair()
+
+	if(is_preview_copy) // Everything else is not needed for preview icon.
+		return
+
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -267,30 +319,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.sec_record = sec_record
 	character.gen_record = gen_record
 
-	character.gender = gender
 	character.age = age
 	character.b_type = b_type
-
-	character.r_eyes = r_eyes
-	character.g_eyes = g_eyes
-	character.b_eyes = b_eyes
-
-	character.r_hair = r_hair
-	character.g_hair = g_hair
-	character.b_hair = b_hair
-
-	character.r_facial = r_facial
-	character.g_facial = g_facial
-	character.b_facial = b_facial
-
-	character.r_skin = r_skin
-	character.g_skin = g_skin
-	character.b_skin = b_skin
-
-	character.s_tone = s_tone
-
-	character.h_style = h_style
-	character.f_style = f_style
 
 	character.home_system = home_system
 	character.citizenship = citizenship
@@ -298,25 +328,17 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.religion = religion
 
 	// Destroy/cyborgize organs
-
 	for(var/name in organ_data)
-		var/datum/organ/external/O = character.organs_by_name[name]
-		var/datum/organ/internal/I = character.internal_organs_by_name[name]
+		//var/obj/item/bodypart/BP = character.bodyparts_by_name[name]
+		var/obj/item/organ/IO = character.organs_by_name[name]
 		var/status = organ_data[name]
 
-		if(status == "amputated")
-			O.amputated = 1
-			O.status |= ORGAN_DESTROYED
-			O.destspawn = 1
-		if(status == "cyborg")
-			O.status |= ORGAN_ROBOT
 		if(status == "assisted")
-			I.mechassist()
+			IO.mechassist()
 		else if(status == "mechanical")
-			I.mechanize()
-
-		else continue
-
+			IO.mechanize()
+		else
+			continue
 
 	//Disabilities
 	if(disabilities & DISABILITY_NEARSIGHTED)
@@ -329,15 +351,11 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.disabilities|=TOURETTES
 	if(disabilities & DISABILITY_NERVOUS)
 		character.disabilities|=NERVOUS
-	if(disabilities & DISABILITY_FATNESS)
-		character.mutations += FAT
-		character.nutrition = 1000
-		character.overeatduration = 2000
 
 	// Wheelchair necessary?
-	var/datum/organ/external/l_foot = character.get_organ("l_foot")
-	var/datum/organ/external/r_foot = character.get_organ("r_foot")
-	if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
+	var/obj/item/bodypart/l_leg = character.get_bodypart(BP_L_LEG)
+	var/obj/item/bodypart/r_leg = character.get_bodypart(BP_R_LEG)
+	if( (!l_leg || l_leg.is_stump()) && (!r_leg || r_leg.is_stump()) )
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
 		character.update_canmove()
@@ -345,30 +363,12 @@ var/const/MAX_SAVE_SLOTS = 10
 		W.buckled_mob = character
 		W.add_fingerprint(character)
 
-	if(underwear > underwear_m.len || underwear < 1)
-		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
-	character.underwear = underwear
-
-	if(undershirt > undershirt_t.len || undershirt < 1)
-		undershirt = 0
-	character.undershirt = undershirt
-
-	if(socks > socks_t.len || socks < 1)
-		socks = 0
-
-	character.socks = socks
-
 	if(backbag > 4 || backbag < 1)
 		backbag = 1 //Same as above
 	character.backbag = backbag
 
 	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
-	if(character.gender in list(PLURAL, NEUTER))
-		if(isliving(src)) //Ghosts get neuter by default
-			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-			character.gender = MALE
-
-	if(icon_updates)
-		character.update_body()
-		character.update_hair()
-
+	//if(character.gender in list(PLURAL, NEUTER))
+	//	if(isliving(src)) //Ghosts get neuter by default
+	//		message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
+	//		character.gender = MALE

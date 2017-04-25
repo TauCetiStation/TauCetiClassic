@@ -297,10 +297,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	update_icon()
 
-	/*if(user.hand) with custom inhand sprites - yes, without - no.
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()*/
+	/* update_inv_item() with custom inhand sprites - yes, without - no. */
 
 	return 0
 

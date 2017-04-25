@@ -9,8 +9,8 @@
 	if(user.stat == DEAD)
 		dead_mob_list -= user
 		living_mob_list += user
-	if(HUSK in user.mutations)
-		user.mutations.Remove(HUSK)
+	if(user.disabilities & HUSK)
+		user.disabilities &= ~HUSK
 	user.fake_death = 0
 	user.stat = CONSCIOUS
 	user.tod = null
@@ -24,7 +24,7 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/revive/can_sting(mob/user)
-	if(NOCLONE in user.mutations)
+	if(user.disabilities & NOCLONE)
 		to_chat(user, "<span class='notice'>We could not regenerate. Something wrong with our DNA.</span>")
 		user.fake_death = 0
 		user.mind.changeling.purchasedpowers -= src //We dont need that power from now anyway.

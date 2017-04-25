@@ -83,9 +83,9 @@
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))	return ..()
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+	if(user.zone_sel.selecting != BP_EYES && user.zone_sel.selecting != BP_HEAD)
 		return ..()
-	if((CLUMSY in user.mutations) && prob(50))
+	if((user.disabilities & CLUMSY) && prob(50))
 		M = user
 	return eyestab(M,user)
 
@@ -114,15 +114,13 @@
 		icon_state = "cutters-y"
 		item_state = "cutters_yellow"
 
-/obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
-	if((C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
-		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
+/obj/item/weapon/wirecutters/attack(mob/target, mob/user)
+	var/obj/item/weapon/handcuffs/cable/C = target.get_equipped_item(slot_handcuffed)
+	if(istype(C))
+		user.visible_message("\The [user] cuts \the [C]'s restraints with \the [src]!",\
 		"<span class='notice'>You cut \the [C]'s restraints with \the [src]!</span>",\
 		"You hear cable being cut.")
-		C.handcuffed = null
-		if(C.buckled && C.buckled.buckle_require_restraints)
-			C.buckled.unbuckle_mob()
-		C.update_inv_handcuffed()
+		qdel(C)
 		return
 	else
 		..()
@@ -190,20 +188,9 @@
 		if(!R.use(1))
 			return
 		var/obj/item/weapon/flamethrower/F = new/obj/item/weapon/flamethrower(user.loc)
-		src.loc = F
+		user.transferItemToLoc(src, F)
 		F.weldtool = src
-		if (user.client)
-			user.client.screen -= src
-		if (user.r_hand == src)
-			user.remove_from_mob(src)
-		else
-			user.remove_from_mob(src)
 		src.master = F
-		src.layer = initial(src.layer)
-		user.remove_from_mob(src)
-		if (user.client)
-			user.client.screen -= src
-		src.loc = F
 		src.add_fingerprint(user)
 		return
 
@@ -246,7 +233,7 @@
 	var/turf/location = src.loc
 	if(istype(location, /mob/))
 		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
+		if(M.get_active_hand() == src || M.get_inactive_hand() == src)
 			location = get_turf(M)
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 5, 0, src)
@@ -371,10 +358,8 @@
 		src.icon_state = initial(src.icon_state)
 		src.welding = 0
 
-	if(usr.hand)
-		usr.update_inv_l_hand()
-	else
-		usr.update_inv_r_hand()
+	update_inv_item()
+
 
 //Decides whether or not to damage a player's eyes based on what they're wearing as protection
 //Note: This should probably be moved to mob
@@ -383,33 +368,33 @@
 	var/safety = user:eyecheck()
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
+		var/obj/item/organ/eyes/IO = H.organs_by_name[BP_EYES]
 		if(H.species.flags[IS_SYNTHETIC])
 			return
 		switch(safety)
 			if(1)
 				to_chat(usr, "<span class='warning'>Your eyes sting a little.</span>")
-				E.damage += rand(1, 2)
-				if(E.damage > 12)
+				IO.damage += rand(1, 2)
+				if(IO.damage > 12)
 					user.eye_blurry += rand(3,6)
 			if(0)
 				to_chat(usr, "<span class='warning'>Your eyes burn.</span>")
-				E.damage += rand(2, 4)
-				if(E.damage > 10)
-					E.damage += rand(4,10)
+				IO.damage += rand(2, 4)
+				if(IO.damage > 10)
+					IO.damage += rand(4,10)
 			if(-1)
 				to_chat(usr, "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>")
 				user.eye_blurry += rand(12,20)
-				E.damage += rand(12, 16)
+				IO.damage += rand(12, 16)
 		if(safety<2)
 
-			if(E.damage > 10)
+			if(IO.damage > 10)
 				to_chat(user, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
 
-			if (E.damage >= E.min_broken_damage)
+			if (IO.damage >= IO.min_broken_damage)
 				to_chat(user, "<span class='danger'>You go blind!</span>")
-				user.sdisabilities |= BLIND
-			else if (E.damage >= E.min_bruised_damage)
+				user.disabilities |= BLIND
+			else if (IO.damage >= IO.min_bruised_damage)
 				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.eye_blind = 5
 				user.eye_blurry = 5
@@ -483,12 +468,12 @@
 
 /obj/item/weapon/weldingtool/attack(mob/M, mob/user)
 
-	if(hasorgans(M))
+	if(hasbodyparts(M))
 
-		var/datum/organ/external/S = M:organs_by_name[user.zone_sel.selecting]
+		var/obj/item/bodypart/BP = M:bodyparts_by_name[user.zone_sel.selecting]
 
-		if (!S) return
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
+		if (!BP) return
+		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 
 		if(istype(M,/mob/living/carbon/human))
@@ -498,9 +483,9 @@
 					to_chat(user, "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>")
 					return
 
-		if(S.brute_dam)
-			S.heal_damage(15,0,0,1)
-			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [S.display_name] with \the [src].</span>")
+		if(BP.brute_dam)
+			BP.heal_damage(15,0,0,1)
+			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [BP.name] with \the [src].</span>")
 			return
 		else
 			to_chat(user, "<span class='info'>Nothing to fix!</span>")

@@ -769,21 +769,21 @@
 
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
-/obj/machinery/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	src.visible_message("\red [src] drives over [H]!")
+/obj/machinery/bot/mulebot/proc/RunOver(mob/living/carbon/C)
+	src.visible_message("\red [src] drives over [C]!")
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)
-	H.apply_damage(2*damage, BRUTE, "head")
-	H.apply_damage(2*damage, BRUTE, "chest")
-	H.apply_damage(0.5*damage, BRUTE, "l_leg")
-	H.apply_damage(0.5*damage, BRUTE, "r_leg")
-	H.apply_damage(0.5*damage, BRUTE, "l_arm")
-	H.apply_damage(0.5*damage, BRUTE, "r_arm")
+	C.apply_damage(2*damage, BRUTE, BP_HEAD)
+	C.apply_damage(2*damage, BRUTE, BP_CHEST)
+	C.apply_damage(0.5*damage, BRUTE, BP_L_LEG)
+	C.apply_damage(0.5*damage, BRUTE, BP_R_LEG)
+	C.apply_damage(0.5*damage, BRUTE, BP_L_ARM)
+	C.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
 	B.blood_DNA = list()
-	B.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
+	B.blood_DNA[C.dna.unique_enzymes] = C.dna.b_type
 
 	bloodiness += 4
 

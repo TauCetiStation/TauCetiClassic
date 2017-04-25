@@ -56,13 +56,13 @@
 		return C
 	return 0
 
-/mob/living/silicon/robot/heal_organ_damage(brute, burn)
+/mob/living/silicon/robot/heal_bodypart_damage(brute, burn)
 	var/list/datum/robot_component/parts = get_damaged_components(brute,burn)
 	if(!parts.len)	return
 	var/datum/robot_component/picked = pick(parts)
 	picked.heal_damage(brute,burn)
 
-/mob/living/silicon/robot/take_organ_damage(brute = 0, burn = 0, sharp = 0, edge = 0)
+/mob/living/silicon/robot/take_bodypart_damage(brute = 0, burn = 0, damage_flags, used_weapon)
 	var/list/components = get_damageable_components()
 	if(!components.len)
 		return
@@ -86,11 +86,11 @@
 
 	var/datum/robot_component/armour/A = get_armour()
 	if(A)
-		A.take_damage(brute,burn,sharp,edge)
+		A.take_damage(brute,burn,damage_flags)
 		return
 
 	var/datum/robot_component/C = pick(components)
-	C.take_damage(brute,burn,sharp,edge)
+	C.take_damage(brute,burn,damage_flags,used_weapon)
 
 /mob/living/silicon/robot/heal_overall_damage(brute, burn)
 	var/list/datum/robot_component/parts = get_damaged_components(brute,burn)
@@ -108,7 +108,7 @@
 
 		parts -= picked
 
-/mob/living/silicon/robot/take_overall_damage(brute = 0, burn = 0, sharp = 0, used_weapon = null)
+/mob/living/silicon/robot/take_overall_damage(brute = 0, burn = 0, damage_flags, used_weapon)
 	if(status_flags & GODMODE)	return	//godmode
 	var/list/datum/robot_component/parts = get_damageable_components()
 
@@ -131,7 +131,7 @@
 
 	var/datum/robot_component/armour/A = get_armour()
 	if(A)
-		A.take_damage(brute,burn,sharp)
+		A.take_damage(brute,burn,damage_flags,used_weapon)
 		return
 
 	while(parts.len && (brute>0 || burn>0) )
@@ -140,7 +140,7 @@
 		var/brute_was = picked.brute_damage
 		var/burn_was = picked.electronics_damage
 
-		picked.take_damage(brute,burn)
+		picked.take_damage(brute,burn,damage_flags,used_weapon)
 
 		brute	-= (picked.brute_damage - brute_was)
 		burn	-= (picked.electronics_damage - burn_was)

@@ -27,50 +27,44 @@
 
 /obj/item/weapon/storage/Destroy()
 	close_all()
-	qdel(boxes)
+	qdel(boxes) // TODO no need to clean references? (check later)
 	qdel(closer)
 	return ..()
 
-/obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
-	if (ishuman(usr) || ismonkey(usr) || isIAN(usr)) //so monkeys can take off their backpacks -- Urist
+/obj/item/weapon/storage/MouseDrop(atom/over_object)
+	if(!canremove || !over_object)
+		return
+
+	if (iscarbon(usr))
+
 		var/mob/M = usr
 
-		if(!over_object)
+		if (istype(M.loc, /obj/mecha)) // stops inventory actions in a mech
 			return
 
-		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		if(M.incapacitated())
 			return
 
-		if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-			src.open(usr)
+		// this must come before the screen objects only block
+		if(over_object == M && (src.ClickAccessible(M, depth = STORAGE_VIEW_DEPTH) || Adjacent(M))) // tgstation if(...)
+			src.open(M)
 			return
 
-		if (!( istype(over_object, /obj/screen) ))
+		if ( !istype(over_object, /obj/screen/inventory) )
 			return ..()
 
-		//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
-		//there's got to be a better way of doing this.
-		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+		if(loc != M || (loc && loc.loc == M))
 			return
 
-		if (!( usr.restrained() ) && !( usr.stat ))
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-				if("mouth")
-					if(!M.unEquip(src))
-						return
-					M.put_in_active_hand(src)
-			src.add_fingerprint(usr)
-			return
-	return
-
+		switch(over_object.name)
+			if("r_hand", "l_hand", "mouth")
+				var/obj/screen/inventory/S = over_object
+				if(!M.dropItemToGround(src))
+					return
+				if(!isBODYPART(S.master))
+					return
+				M.equip_to_slot_if_possible(src, S.slot_id)
+		src.add_fingerprint(M)
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
@@ -81,6 +75,8 @@
 	return L
 
 /obj/item/weapon/storage/proc/show_to(mob/user)
+	if(!user.client)
+		return
 	if(user.s_active != src && (user.stat == CONSCIOUS))
 		for(var/obj/item/I in src)
 			if(I.on_found(user))
@@ -377,15 +373,16 @@
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)
-	if(ishuman(user))
+	if(user.s_active == src && loc == user) //if you're already looking inside the storage item
+		user.s_active.close(user)
+		close(user)
+		return
+
+	if(iscarbon(user))
 		var/mob/living/carbon/human/H = user
-		if(H.l_store == src && !H.get_active_hand())	//Prevents opening if it's in a pocket.
+		if((H.get_equipped_item(slot_l_store) == src || H.get_equipped_item(slot_r_store) == src) && !H.get_active_hand())
+			H.u_equip(src)
 			H.put_in_hands(src)
-			H.l_store = null
-			return
-		if(H.r_store == src && !H.get_active_hand())
-			H.put_in_hands(src)
-			H.r_store = null
 			return
 
 	if (src.loc == user)
@@ -492,42 +489,6 @@
 		if(istype(A,/obj/))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)
-
-//Returns the storage depth of an atom. This is the number of storage items the atom is contained in before reaching toplevel (the area).
-//Returns -1 if the atom was not found on container.
-/atom/proc/storage_depth(atom/container)
-	var/depth = 0
-	var/atom/cur_atom = src
-
-	while (cur_atom && !(cur_atom in container.contents))
-		if (isarea(cur_atom))
-			return -1
-		if (istype(cur_atom.loc, /obj/item/weapon/storage))
-			depth++
-		cur_atom = cur_atom.loc
-
-	if (!cur_atom)
-		return -1	//inside something with a null loc.
-
-	return depth
-
-//Like storage depth, but returns the depth to the nearest turf
-//Returns -1 if no top level turf (a loc was null somewhere, or a non-turf atom's loc was an area somehow).
-/atom/proc/storage_depth_turf()
-	var/depth = 0
-	var/atom/cur_atom = src
-
-	while (cur_atom && !isturf(cur_atom))
-		if (isarea(cur_atom))
-			return -1
-		if (istype(cur_atom.loc, /obj/item/weapon/storage))
-			depth++
-		cur_atom = cur_atom.loc
-
-	if (!cur_atom)
-		return -1	//inside something with a null loc.
-
-	return depth
 
 /obj/item/weapon/storage/handle_atom_del(atom/A)
 	if(A in contents)

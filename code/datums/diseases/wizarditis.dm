@@ -6,7 +6,7 @@
 	cure_id = "manlydorf"
 	cure_chance = 100
 	agent = "Rincewindus Vulgaris"
-	affected_species = list("Human")
+	affected_species = list(S_HUMAN)
 	curable = 1
 	permeability_mod = 0.75
 	desc = "Some speculate, that this virus is the cause of Wizard Federation existance. Subjects affected show the signs of mental retardation, yelling obscure sentences or total gibberish. On late stages subjects sometime express the feelings of inner power, and, cite, 'the ability to control the forces of cosmos themselves!' A gulp of strong, manly spirits usually reverts them to normal, humanlike, condition."
@@ -55,41 +55,35 @@ STI KALY - blind
 
 
 /datum/disease/wizarditis/proc/spawn_wizard_clothes(chance = 0)
-	if(istype(affected_mob, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = affected_mob
+	if(iscarbon(affected_mob))
+		var/mob/living/carbon/C = affected_mob
 		if(prob(chance))
-			if(!istype(H.head, /obj/item/clothing/head/wizard))
-				if(H.head)
-					H.drop_from_inventory(H.head)
-				H.head = new /obj/item/clothing/head/wizard(H)
-				H.head.layer = ABOVE_HUD_LAYER
-				H.head.plane = ABOVE_HUD_PLANE
+			var/obj/item/I = C.get_equipped_item(slot_head)
+			if(!istype(I, /obj/item/clothing/head/wizard))
+				if(!C.dropItemToGround(I))
+					qdel(I)
+				C.equip_to_slot_or_del(new /obj/item/clothing/head/wizard, slot_head)
 			return
 		if(prob(chance))
-			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
-				if(H.wear_suit)
-					H.drop_from_inventory(H.wear_suit)
-				H.wear_suit = new /obj/item/clothing/suit/wizrobe(H)
-				H.wear_suit.layer = ABOVE_HUD_LAYER
-				H.wear_suit.plane = ABOVE_HUD_PLANE
+			var/obj/item/I = C.get_equipped_item(slot_wear_suit)
+			if(!istype(I, /obj/item/clothing/suit/wizrobe))
+				if(!C.dropItemToGround(I))
+					qdel(I)
+				C.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe, slot_wear_suit)
 			return
 		if(prob(chance))
-			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
-				if(H.shoes)
-					H.drop_from_inventory(H.shoes)
-				H.shoes = new /obj/item/clothing/shoes/sandal(H)
-				H.shoes.layer = ABOVE_HUD_LAYER
-				H.shoes.plane = ABOVE_HUD_PLANE
+			var/obj/item/I = C.get_equipped_item(slot_shoes)
+			if(!istype(I, /obj/item/clothing/shoes/sandal))
+				if(!C.dropItemToGround(I))
+					qdel(I)
+				C.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal, slot_shoes)
 			return
 	else
-		var/mob/living/carbon/H = affected_mob
+		var/mob/living/carbon/C = affected_mob
 		if(prob(chance))
-			if(!istype(H.r_hand, /obj/item/weapon/staff))
-				H.drop_r_hand()
-				H.put_in_r_hand( new /obj/item/weapon/staff(H) )
-			return
-	return
-
+			var/obj/item/weapon/staff/S = new
+			if(!C.put_in_hands(S))
+				qdel(S)
 
 
 /datum/disease/wizarditis/proc/teleport()

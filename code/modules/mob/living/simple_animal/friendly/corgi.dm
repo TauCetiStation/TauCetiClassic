@@ -18,7 +18,7 @@
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
-	var/facehugger
+	var/obj/item/clothing/mask/facehugger/facehugger
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "Corgi meat"

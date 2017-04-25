@@ -30,7 +30,7 @@
 		src.icon_state += "_open"
 		to_chat(usr, "You unbutton your labcoat.")
 		src.is_button_up = 0
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_item()
 
 /obj/item/clothing/suit/storage/labcoat/red
 	name = "red labcoat"

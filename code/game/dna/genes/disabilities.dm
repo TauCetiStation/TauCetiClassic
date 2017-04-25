@@ -1,51 +1,39 @@
 /////////////////////
 // DISABILITY GENES
 //
-// These activate either a mutation, disability, or sdisability.
+// These activate a disability.
 //
 // Gene is always activated.
 /////////////////////
 
 /datum/dna/gene/disability
-	name="DISABILITY"
-
-	// Mutation to give (or 0)
-	var/mutation=0
+	name = "DISABILITY"
 
 	// Disability to give (or 0)
-	var/disability=0
-
-	// SDisability to give (or 0)
-	var/sdisability=0
+	var/disability = 0
 
 	// Activation message
-	var/activation_message=""
+	var/activation_message = null
 
 	// Yay, you're no longer growing 3 arms
-	var/deactivation_message=""
+	var/deactivation_message = null
 
-/datum/dna/gene/disability/can_activate(mob/M,flags)
-	return 1 // Always set!
+/datum/dna/gene/disability/can_activate(mob/M, flags)
+	return TRUE // Always set!
 
 /datum/dna/gene/disability/activate(mob/M, connected, flags)
-	if(mutation && !(mutation in M.mutations))
-		M.mutations.Add(mutation)
 	if(disability)
-		M.disabilities|=disability
-	if(mutation)
-		M.sdisabilities|=sdisability
+		M.disabilities |= disability
+
 	if(activation_message)
 		to_chat(M, "\red [activation_message]")
 	//else
 		//testing("[name] has no activation message.")
 
 /datum/dna/gene/disability/deactivate(mob/M, connected, flags)
-	if(mutation && (mutation in M.mutations))
-		M.mutations.Remove(mutation)
 	if(disability)
-		M.disabilities-=disability
-	if(mutation)
-		M.sdisabilities-=sdisability
+		M.disabilities &= ~disability
+
 	if(deactivation_message)
 		to_chat(M, "\red [deactivation_message]")
 	//else
@@ -53,20 +41,21 @@
 
 // Note: Doesn't seem to do squat, at the moment.
 /datum/dna/gene/disability/hallucinate
-	name="Hallucinate"
-	activation_message="Your mind says 'Hello'."
-	mutation=HALLUCINATE
+	name = "Hallucinate"
+	activation_message = "Your mind says 'Hello'."
+	disability = HALLUCINATE
 
 	New()
-		block=HALLUCINATIONBLOCK
+		block = HALLUCINATIONBLOCK
 
-	OnMobLife(mob/living/carbon/human/M) //#Z2
-		if(!istype(M)) return
+	OnMobLife(mob/living/carbon/human/M)
+		if(!istype(M))
+			return
 		M.hallucination = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
 		..(M,connected,flags)
-		M.hallucination = 0 //##Z2
+		M.hallucination = 0
 
 /datum/dna/gene/disability/epilepsy
 	name="Epilepsy"
@@ -85,12 +74,12 @@
 		block=COUGHBLOCK
 
 /datum/dna/gene/disability/clumsy
-	name="Clumsiness"
-	activation_message="You feel lightheaded."
-	mutation=CLUMSY
+	name = "Clumsiness"
+	activation_message = "You feel lightheaded."
+	disability = CLUMSY
 
 	New()
-		block=CLUMSYBLOCK
+		block = CLUMSYBLOCK
 
 /datum/dna/gene/disability/tourettes
 	name="Tourettes"
@@ -109,38 +98,40 @@
 		block=NERVOUSBLOCK
 
 /datum/dna/gene/disability/blindness
-	name="Blindness"
-	activation_message="You can't seem to see anything."
-	sdisability=BLIND
+	name = "Blindness"
+	activation_message = "You can't seem to see anything."
+	disability = BLIND
 
 	New()
-		block=BLINDBLOCK
+		block = BLINDBLOCK
 
-	OnMobLife(mob/living/carbon/human/M) //#Z2
-		if(!istype(M)) return
+	OnMobLife(mob/living/carbon/human/M)
+		if(!istype(M))
+			return
 		M.eye_blurry = 200
 		M.eye_blind = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
 		..(M,connected,flags)
 		M.eye_blurry = 0
-		M.eye_blind = 0 //##Z2
+		M.eye_blind = 0
 
 /datum/dna/gene/disability/deaf
-	name="Deafness"
-	activation_message="It's kinda quiet."
-	sdisability=DEAF
+	name = "Deafness"
+	activation_message = "It's kinda quiet."
+	disability = DEAF
 
 	New()
-		block=DEAFBLOCK
+		block = DEAFBLOCK
 
-	OnMobLife(mob/living/carbon/human/M) //#Z2
-		if(!istype(M)) return
+	OnMobLife(mob/living/carbon/human/M)
+		if(!istype(M))
+			return
 		M.ear_deaf = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
 		..(M,connected,flags)
-		M.ear_deaf = 0 //##Z2
+		M.ear_deaf = 0
 
 /datum/dna/gene/disability/nearsighted
 	name="Nearsightedness"

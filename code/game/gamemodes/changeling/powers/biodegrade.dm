@@ -72,19 +72,15 @@
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/O)
 	if(istype(O,/obj/item/weapon/handcuffs))
 		var/obj/item/weapon/handcuffs/cuffs = O
-		if(O && user.handcuffed == O)
-			user.unEquip(cuffs)
+		if(O && user.get_equipped_item(slot_handcuffed) == O)
 			cuffs.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
-			cuffs.loc = get_turf(user)
 			qdel(cuffs)
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_straightjacket(mob/living/carbon/human/user, obj/O)
 	if(istype(O,/obj/item/clothing/suit/straight_jacket))
 		var/obj/item/clothing/suit/straight_jacket/S = O
-		if(S && user.wear_suit == S)
-			user.unEquip(S)
+		if(S && user.get_equipped_item(slot_wear_suit) == S)
 			S.visible_message("<span class='warning'>[S] dissolves into a puddle of sizzling goop.</span>")
-			S.loc = get_turf(user)
 			qdel(S)
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/open_closet(mob/living/carbon/human/user, obj/O)
@@ -108,15 +104,13 @@
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_electropack(mob/living/carbon/human/user, obj/O)
 	if(istype(user.back,/obj/item/device/radio/electropack))
 		var/obj/item/device/radio/electropack/E = O
-		if(E && user.back == E)
-			user.unEquip(E)
+		if(E && user.get_equipped_item(slot_back) == E)
 			E.visible_message("<span class='warning'>[E] dissolves into a puddle of sizzling goop.</span>")
 			qdel(E)
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_horsehead(mob/living/carbon/human/user, obj/O)
 	if(istype(O,/obj/item/clothing/mask/horsehead))
 		var/obj/item/clothing/mask/horsehead/Horse = O
-		if(Horse && user.wear_mask  == Horse)
-			user.unEquip(Horse)
+		if(Horse && user.get_equipped_item(slot_wear_mask)  == Horse)
 			Horse.visible_message("<span class='warning'>[Horse] dissolves into a puddle of sizzling goop.</span>")
 			qdel(Horse)

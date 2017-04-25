@@ -33,8 +33,6 @@
 	universal_understand = FALSE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi = 5)
 
-	var/obj/item/weapon/card/id/wear_id = null
-
 	var/dodged = FALSE
 	var/unlock_mouth = FALSE        // Whitelist related, blocks attack_paw() usage.
 	var/ian_action = IAN_STANDARD   // Overrides click logic, holds special abilities.
@@ -47,7 +45,7 @@
 	var/pose_prev = 0
 	var/pose_last = 0
 
-/mob/living/carbon/ian/New()
+/mob/living/carbon/ian/New(loc, new_species = S_DOG)
 	reagents = new(1000)
 	reagents.my_atom = src
 
@@ -285,9 +283,6 @@
 	client.images -= I
 
 //Standard procs, etc.
-/mob/living/carbon/ian/IsAdvancedToolUser()
-	return FALSE
-
 /mob/living/carbon/ian/movement_delay(tally = 0)
 	if(crawling)
 		tally += 5
@@ -382,7 +377,13 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				return
 
-			var/datum/unarmed_attack/attack = M.species.unarmed
+			var/hit_zone = M.zone_sel.selecting
+
+			// See what attack they use
+			var/datum/unarmed_attack/attack = M.get_unarmed_attack(src, hit_zone)
+			if(!attack)
+				return 0
+
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[response_harm] [src.name] ([src.ckey])</font>")
 			attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
 			msg_admin_attack("[key_name(M)] [response_harm] [key_name(src)]")
@@ -421,7 +422,6 @@
 			if(!G)
 				return
 			M.put_in_active_hand(G)
-			grabbed_by += G
 			G.synch()
 			LAssailant = M
 
@@ -462,22 +462,6 @@
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 					visible_message("<span class='danger'>[M] attempted to disarm [src]!</span>")
-
-/mob/living/carbon/ian/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
-	switch(FH.a_intent)
-		if("grab")
-			if(stat != DEAD)
-				if(FH == src)
-					return
-				var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(FH, src)
-				FH.put_in_active_hand(G)
-				grabbed_by += G
-				G.last_upgrade = world.time - 20
-				G.synch()
-				LAssailant = FH
-				visible_message("<span class='red'>[FH] atempts to leap at [src] face!</span>")
-			else
-				to_chat(FH, "<span class='red'>looks dead.</span>")
 
 /mob/living/carbon/ian/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker.mode)
@@ -578,7 +562,12 @@
 	if (M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if (M.a_intent == "hurt" && !istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
+		if (M.a_intent == "hurt")
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				if(istype(C.wear_mask, /obj/item/clothing/mask/muzzle))
+					return
+
 			M.do_attack_animation(src)
 
 			if(is_armored(M, 35))
@@ -629,7 +618,6 @@
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
 			M.put_in_active_hand(G)
-			grabbed_by += G
 			G.synch()
 			LAssailant = M
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

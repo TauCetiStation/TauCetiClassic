@@ -1,35 +1,53 @@
+//This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
 #define SAVEFILE_VERSION_MIN	8
+
+//This is the current version, anything below this will attempt to update (if it's not obsolete)
 #define SAVEFILE_VERSION_MAX	13
 
-//handles converting savefiles to new formats
-//MAKE SURE YOU KEEP THIS UP TO DATE!
-//If the sanity checks are capable of handling any issues. Only increase SAVEFILE_VERSION_MAX,
-//this will mean that savefile_version will still be over SAVEFILE_VERSION_MIN, meaning
-//this savefile update doesn't run everytime we load from the savefile.
-//This is mainly for format changes, such as the bitflags in toggles changing order or something.
-//if a file can't be updated, return 0 to delete it and start again
-//if a file was updated, return 1
-/datum/preferences/proc/savefile_update()
-	if(savefile_version < 8)	//lazily delete everything + additional files so they can be saved in the new format
-		for(var/ckey in preferences_datums)
-			var/datum/preferences/D = preferences_datums[ckey]
-			if(D == src)
-				var/delpath = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/"
-				if(delpath && fexists(delpath))
-					fdel(delpath)
-				break
-		return 0
+/*
+SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
+	This proc checks if the current directory of the savefile S needs updating
+	It is to be used by the load_character and load_preferences procs.
+	(S.cd=="/" is preferences, S.cd=="/character[integer]" is a character slot, etc)
+	if the current directory's version is below SAVEFILE_VERSION_MIN it will simply wipe everything in that directory
+	(if we're at root "/" then it'll just wipe the entire savefile, for instance.)
+	if its version is below SAVEFILE_VERSION_MAX but above the minimum, it will load data but later call the
+	respective update_preferences() or update_character() proc.
+	Those procs allow coders to specify format changes so users do not lose their setups and have to redo them again.
+	Failing all that, the standard sanity checks are performed. They simply check the data is suitable, reverting to
+	initial() values if necessary.
+*/
 
-	if(savefile_version == SAVEFILE_VERSION_MAX)	//update successful.
-		save_preferences()
-		save_character()
-		return 1
-	return 0
+/datum/preferences/proc/savefile_needs_update(savefile/S)
+	S["version"] >> savefile_version
+
+	if(isnull(savefile_version)) // By the time this feature added, we don't have separate version value for characters, so lets create it.
+		savefile_version = SAVEFILE_VERSION_MIN
+
+	if(savefile_version < SAVEFILE_VERSION_MIN)
+		S.dir.Cut()
+		return -2
+
+	if(savefile_version < SAVEFILE_VERSION_MAX)
+		return savefile_version
+	return -1
+
+//datum/preferences/proc/update_preferences(current_version, savefile/S)
+	/* EXAMPLE FOR NOW
+	if(current_version < 10)
+		toggles |= MEMBER_PUBLIC
+	*/
+
+//datum/preferences/proc/update_character(current_version, savefile/S)
+	/* EXAMPLE FOR NOW
+	if(current_version < 10)
+		toggles |= MEMBER_PUBLIC
+	*/
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
-	if(!ckey)	return
+	if(!ckey)
+		return
 	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
-	savefile_version = SAVEFILE_VERSION_MAX
 
 /datum/preferences/proc/load_preferences()
 	if(!path)
@@ -41,14 +59,9 @@
 		return 0
 	S.cd = "/"
 
-	S["version"] >> savefile_version
-	//Conversion
-	if(!savefile_version || !isnum(savefile_version) || savefile_version < SAVEFILE_VERSION_MIN || savefile_version > SAVEFILE_VERSION_MAX)
-		if(!savefile_update())  //handles updates
-			savefile_version = SAVEFILE_VERSION_MAX
-			save_preferences()
-			save_character()
-			return 0
+	var/needs_update = savefile_needs_update(S)
+	if(needs_update == -2)		//fatal, can't load any data
+		return 0
 
 	//Account data
 	S["cid_list"]			>> cid_list
@@ -72,6 +85,12 @@
 
 	//Antag preferences
 	S["be_role"]			>> be_role
+
+	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
+	//try to fix any outdated data if necessary
+	//if(needs_update >= 0)
+	//	update_preferences(needs_update, S) //needs_update = savefile_version if we need an update (positive integer)
+
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
@@ -96,7 +115,7 @@
 		return 0
 	S.cd = "/"
 
-	S["version"] << savefile_version
+	S["version"] << SAVEFILE_VERSION_MAX
 
 	//Account data
 	S["cid_list"]			<< cid_list
@@ -122,6 +141,10 @@
 	if(!S)
 		return 0
 	S.cd = dir
+
+	var/needs_update = savefile_needs_update(S)
+	if(needs_update == -2)		//fatal, can't load any data
+		return 0
 
 	//Character
 	S["OOC_Notes"]			>> metadata
@@ -188,10 +211,15 @@
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
 
+	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
+	//try to fix any outdated data if necessary
+	//if(needs_update >= 0)
+	//	update_character(needs_update, S) //needs_update == savefile_version if we need an update (positive integer)
+
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
-	if(isnull(species)) species = "Human"
+	if(isnull(species)) species = S_HUMAN
 	if(isnull(language)) language = "None"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
 	if(!real_name) real_name = random_name(gender)
@@ -274,7 +302,8 @@
 	if(!S)
 		return 0
 	S.cd = "/"
-	if(!slot)	slot = default_slot
+	if(!slot)
+		slot = default_slot
 	slot = sanitize_integer(slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
@@ -291,6 +320,8 @@
 	if(!S)
 		return 0
 	S.cd = "/character[default_slot]"
+
+	S["version"]			<< SAVEFILE_VERSION_MAX	//load_character will sanitize any bad data, so assume up-to-date.
 
 	//Character
 	S["OOC_Notes"]			<< metadata

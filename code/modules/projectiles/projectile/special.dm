@@ -208,42 +208,36 @@
 /obj/item/projectile/acid_special/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_organ_damage(damage)//+10=30
+		S.take_bodypart_damage(damage)//+10=30
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(damage)
 
-	if(istype(target, /mob/living/carbon/human))
+	if(istype(target, /mob/living/carbon/human)) // TODO wut is going on in this code block???
 		var/mob/living/carbon/human/H = target
-		var/datum/organ/external/select_area = H.get_organ(def_zone) // We're checking the outside, buddy!
-		var/list/body_parts = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes) // What all are we checking?
+		var/obj/item/bodypart/BP = H.get_bodypart(def_zone) // We're checking the outside, buddy!
+		var/list/body_parts = list(
+			H.get_equipped_item(slot_head),
+			H.get_equipped_item(slot_wear_mask),
+			H.get_equipped_item(slot_wear_suit),
+			H.get_equipped_item(slot_w_uniform),
+			H.get_equipped_item(slot_gloves),
+			H.get_equipped_item(slot_shoes)
+			) // What all are we checking?
 		for(var/bp in body_parts) //Make an unregulated var to pass around.
-			if(istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
+			if(istype(bp, /obj/item/clothing)) // If it exists, and it's clothed
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
-				if(C.body_parts_covered & select_area.body_part) // Is that body part being targeted covered?
+				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
 					if(prob(75))
 						C.make_old()
-						if(bp == H.head)
-							H.update_inv_head()
-						if(bp == H.wear_mask)
-							H.update_inv_wear_mask()
-						if(bp == H.wear_suit)
-							H.update_inv_wear_suit()
-						if(bp == H.w_uniform)
-							H.update_inv_w_uniform()
-						if(bp == H.gloves)
-							H.update_inv_gloves()
-						if(bp == H.shoes)
-							H.update_inv_shoes()
+						C.update_inv_item()
 					visible_message("\red The [target.name] gets absorbed by [H]'s [C.name]!")
 					return
-			else
-				continue //Does this thing we're shooting even exist?
 
-		var/datum/organ/external/organ = H.get_organ(check_zone(def_zone))
-		var/armorblock = H.run_armor_check(organ, "bio")
-		H.apply_damage(damage, damage_type, organ, armorblock, src, 0, 0)
+		BP = H.get_bodypart(check_zone(def_zone))
+		var/armorblock = H.run_armor_check(BP, "bio")
+		H.apply_damage(damage, damage_type, BP, armorblock, src, 0, 0)
 		H.apply_effects(stun,weaken,0,0,stutter,0,0,armorblock)
 		H.flash_pain()
 		to_chat(H, "\red You feel the acid on your skin!")

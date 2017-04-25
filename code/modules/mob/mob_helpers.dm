@@ -1,7 +1,11 @@
 // see _DEFINES/is_helpers.dm for mob type checks
 #define SAFE_PERP -50
 
-/proc/hasorgans(A)
+//returns the number of size categories between two mob_sizes, rounded. Positive means A is larger than B
+/proc/mob_size_difference(mob_size_A, mob_size_B)
+	return round(log(2, mob_size_A/mob_size_B), 1)
+
+/proc/hasbodyparts(A)
 	return ishuman(A)
 
 /proc/hsl2rgb(h, s, l)
@@ -14,23 +18,12 @@
 	return 0
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)	return BP_CHEST
 	switch(zone)
-		if("eyes")
-			zone = "head"
-		if("mouth")
-			zone = "head"
-/*		if("l_hand")
-			zone = "l_arm"
-		if("r_hand")
-			zone = "r_arm"
-		if("l_foot")
-			zone = "l_leg"
-		if("r_foot")
-			zone = "r_leg"
-		if("groin")
-			zone = "chest"
-*/
+		if(BP_EYES)
+			zone = BP_HEAD
+		if(BP_MOUTH)
+			zone = BP_HEAD
 	return zone
 
 // Returns zone with a certain probability.
@@ -43,16 +36,16 @@
 	if(probability == 100)
 		return zone
 
-	if(zone == "chest")
-		if(prob(probability))	return "chest"
+	if(zone == BP_CHEST)
+		if(prob(probability))	return BP_CHEST
 		var/t = rand(1, 9)
 		switch(t)
-			if(1 to 3)	return "head"
-			if(4 to 6)	return "l_arm"
-			if(7 to 9)	return "r_arm"
+			if(1 to 3)	return BP_HEAD
+			if(4 to 6)	return BP_L_ARM
+			if(7 to 9)	return BP_R_ARM
 
 	if(prob(probability * 0.75))	return zone
-	return "chest"
+	return BP_CHEST
 
 // Emulates targetting a specific body part, and miss chances
 // May return null if missed
@@ -64,23 +57,15 @@
 	if(!target.buckled && !target.lying)
 		var/miss_chance = 10
 		switch(zone)
-			if("head")
+			if(BP_HEAD)
 				miss_chance = 30
-			if("l_leg")
-				miss_chance = 40
-			if("r_leg")
-				miss_chance = 40
-			if("l_arm")
-				miss_chance = 40
-			if("r_arm")
-				miss_chance = 40
-			if("l_hand")
+			if(BP_L_LEG)
 				miss_chance = 60
-			if("r_hand")
+			if(BP_R_LEG)
 				miss_chance = 60
-			if("l_foot")
+			if(BP_L_ARM)
 				miss_chance = 60
-			if("r_foot")
+			if(BP_R_ARM)
 				miss_chance = 60
 		if(prob(max(miss_chance + miss_chance_mod, 0)))
 			if(prob(max(20, (miss_chance/2))))
@@ -88,29 +73,20 @@
 			else
 				var/t = rand(1, 100)
 				switch(t)
-					if(1 to 50)
-						return "chest"
-					if(51 to 61)
-						return "head"
-					if(62 to 66)
-						return "l_arm"
-					if(67 to 71)
-						return "r_arm"
-					if(72 to 76)
-						return "r_leg"
-					if(77 to 81)
-						return "l_leg"
-					if(82 to 87)
-						return "groin"
-					if(88 to 91)
-						return "l_foot"
-					if(92 to 94)
-						return "r_foot"
-					if(95 to 97)
-						return "l_hand"
-					if(98 to 100)
-						return "r_hand"
-
+					if(1 to 65)
+						return BP_CHEST
+					if(66 to 75)
+						return BP_HEAD
+					if(76 to 80)
+						return BP_L_ARM
+					if(81 to 85)
+						return BP_R_ARM
+					if(86 to 90)
+						return BP_R_LEG
+					if(91 to 95)
+						return BP_L_LEG
+					if(96 to 100)
+						return BP_GROIN
 	return zone
 
 /proc/get_zone_with_probabilty(zone, probability = 80)
@@ -122,12 +98,12 @@
 
 	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
-		if(1)		 return "head"
-		if(2)		 return "chest"
-		if(3 to 6)	 return "l_arm"
-		if(7 to 10)	 return "r_arm"
-		if(11 to 14) return "l_leg"
-		if(15 to 18) return "r_leg"
+		if(1)		 return BP_HEAD
+		if(2)		 return BP_CHEST
+		if(3 to 6)	 return BP_L_ARM
+		if(7 to 10)	 return BP_R_ARM
+		if(11 to 14) return BP_L_LEG
+		if(15 to 18) return BP_R_LEG
 
 	return zone
 
@@ -292,14 +268,17 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return 0
 
 
-/mob/proc/abiotic(var/full_body = 0)
+/mob/proc/abiotic(full_body = 0)
+	return FALSE
+
+/mob/living/carbon/abiotic(full_body = 0)
 	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
 		return 1
 
 	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
 		return 1
 
-	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
+	if(l_hand && !(l_hand.flags & ABSTRACT) || r_hand && !(r_hand.flags & ABSTRACT))
 		return 1
 
 	return 0
@@ -409,7 +388,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 		if(belt && is_type_in_list(belt, weapon_list))
 			threatcount += 2
 
-		if(species.name != "Human")
+		if(species.name != S_HUMAN)
 			threatcount += 2
 
 	if(check_records || check_arrest)
@@ -440,5 +419,25 @@ var/list/intents = list("help","disarm","grab","hurt")
 		return 1
 	else
 		return 0
+
+/mob/proc/is_busy(mob/target, slot, show_warning = TRUE) // is_busy is not a proper name for this proc, but i have no other idea on how to call it.
+	if(busy_with_action) // do_mob() and do_after() sets this to TRUE while call in progress and resets after it finished with any result.
+		if(show_warning)
+			to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
+		return TRUE
+	if(target && slot)
+		if(!target.get_BP_by_slot(slot)) // checks if player has that slot at all.
+			if(show_warning)
+				to_chat(src, "<span class='warning'>It appears that [target] has no such place with which you want to interact.</span>")
+			return TRUE
+		if(slot == target.busy_slot) // busy_slot sets by do_mob() while call in progress with target_slot arg. Prevents multiple people to do same action with same slot.
+			if(show_warning)
+				to_chat(src, "<span class='warning'>Someone else is trying to put or strip item in that place. Please wait while they end their action or interrupt them and try again.</span>")
+			return TRUE
+		if(target.get_equipped_item(slot)) // and this is simple check, if something already equipped in that slot.
+			if(show_warning)
+				to_chat(src, "<span class='warning'>Something already equipped in that place.</span>")
+			return TRUE
+	return FALSE
 
 #undef SAFE_PERP

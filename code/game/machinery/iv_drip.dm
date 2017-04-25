@@ -86,7 +86,7 @@
 
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
 			visible_message("The needle is ripped out of [src.attached], doesn't that hurt?")
-			src.attached:apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
+			src.attached:apply_damage(3, BRUTE, pick(BP_R_ARM, BP_L_ARM))
 			src.attached = null
 			src.update_icon()
 			return
@@ -116,15 +116,16 @@
 			if(!istype(T)) return
 			if(!T.dna)
 				return
-			if(NOCLONE in T.mutations)
+			if(T.disabilities & NOCLONE)
 				return
 
-			if(T.species && T.species.flags[NO_BLOOD])
+			if(!T.should_have_organ(BP_HEART))
 				return
 
 			// If the human is losing too much blood, beep.
-			if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE) if(prob(5))
-				visible_message("\The [src] beeps loudly.")
+			if(((T.vessel.get_reagent_amount("blood")/T.species.blood_volume)*100) < BLOOD_VOLUME_SAFE)
+				if(prob(5))
+					visible_message("\The [src] beeps loudly.")
 
 			var/datum/reagent/B = T.take_blood(beaker,amount)
 

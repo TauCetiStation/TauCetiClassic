@@ -8,8 +8,8 @@
 #define X_TOTAL_LAYERS			6
 /////////////////////////////////
 
-/mob/living/carbon/alien/humanoid
-	var/list/overlays_standing[X_TOTAL_LAYERS]
+//mob/living/carbon/alien/humanoid
+//	var/list/overlays_standing[X_TOTAL_LAYERS]
 
 /mob/living/carbon/alien/humanoid/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
@@ -54,11 +54,6 @@
 	..()
 	if (monkeyizing)	return
 
-	update_inv_head(0)
-	update_inv_wear_suit(0)
-	update_inv_r_hand(0)
-	update_inv_l_hand(0)
-	update_inv_pockets(0)
 	update_hud()
 //	update_icons() //Handled in update_transform(), leaving this here as a reminder
 	update_transform()
@@ -79,7 +74,7 @@
 
 
 
-/mob/living/carbon/alien/humanoid/update_inv_wear_suit(var/update_icons=1)
+/*/mob/living/carbon/alien/humanoid/update_inv_wear_suit(var/update_icons=1)
 	if(wear_suit)
 		var/t_state = wear_suit.item_state
 		if(!t_state)	t_state = wear_suit.icon_state
@@ -94,7 +89,7 @@
 		//TODO
 		wear_suit.screen_loc = ui_alien_oclothing
 		if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-			drop_from_inventory(handcuffed)
+			dropItemToGround(handcuffed)
 			drop_r_hand()
 			drop_l_hand()
 
@@ -142,7 +137,7 @@
 		overlays_standing[X_L_HAND_LAYER]	= image("icon" = l_hand.lefthand_file, "icon_state" = t_state)
 	else
 		overlays_standing[X_L_HAND_LAYER]	= null
-	if(update_icons)	update_icons()
+	if(update_icons)	update_icons()*/
 
 //Call when target overlay should be added/removed
 /mob/living/carbon/alien/humanoid/update_targeted(var/update_icons=1)

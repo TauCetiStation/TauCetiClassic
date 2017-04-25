@@ -8,32 +8,35 @@
 	var/list/cures
 	var/cure_message
 
-/datum/medical_effect/proc/manifest(mob/living/carbon/human/H)
+/datum/medical_effect/proc/manifest(mob/living/carbon/C)
 	for(var/R in cures)
-		if(H.reagents.has_reagent(R))
+		if(C.reagents.has_reagent(R))
 			return 0
 	for(var/R in triggers)
-		if(H.reagents.get_reagent_amount(R) >= triggers[R])
+		if(C.reagents.get_reagent_amount(R) >= triggers[R])
 			return 1
 	return 0
 
-/datum/medical_effect/proc/on_life(mob/living/carbon/human/H, strength)
+/datum/medical_effect/proc/on_life(mob/living/carbon/C, strength)
 	return
 
-/datum/medical_effect/proc/cure(mob/living/carbon/human/H)
+/datum/medical_effect/proc/cure(mob/living/carbon/C)
 	for(var/R in cures)
-		if(H.reagents.has_reagent(R))
+		if(C.reagents.has_reagent(R))
 			if (cure_message)
-				to_chat(H, "\blue [cure_message]")
+				to_chat(C, "\blue [cure_message]")
 			return 1
 	return 0
 
 
 // MOB HELPERS
 // ===========
-/mob/living/carbon/human/var/list/datum/medical_effect/side_effects = list()
+/mob/living/carbon/var/list/datum/medical_effect/side_effects = list()
+
 /mob/proc/add_side_effect(name, strength = 0)
-/mob/living/carbon/human/add_side_effect(name, strength = 0)
+	return
+
+/mob/living/carbon/add_side_effect(name, strength = 0)
 	for(var/datum/medical_effect/M in src.side_effects)
 		if(M.name == name)
 			M.strength = max(M.strength, 10)
@@ -51,7 +54,7 @@
 		M.start = life_tick
 		side_effects += M
 
-/mob/living/carbon/human/proc/handle_medical_side_effects()
+/mob/living/carbon/proc/handle_medical_side_effects()
 	//Going to handle those things only every few ticks.
 	if(life_tick % 15 != 0)
 		return 0
@@ -86,14 +89,16 @@
 	cures = list("alkysine", "tramadol", "paracetamol", "oxycodone")
 	cure_message = "Your head stops throbbing..."
 
-/datum/medical_effect/headache/on_life(mob/living/carbon/human/H, strength)
-	switch(strength)
-		if(1 to 10)
-			H.custom_pain("You feel a light pain in your head.",0)
-		if(11 to 30)
-			H.custom_pain("You feel a throbbing pain in your head!",1)
-		if(31 to INFINITY)
-			H.custom_pain("You feel an excrutiating pain in your head!",1)
+/datum/medical_effect/headache/on_life(mob/living/carbon/C, strength)
+	var/obj/item/bodypart/head/head = C.get_bodypart(BP_HEAD)
+	if(istype(head))
+		switch(strength)
+			if(1 to 10)
+				C.custom_pain("You feel a light pain in your head.",0, BP = head)
+			if(11 to 30)
+				C.custom_pain("You feel a throbbing pain in your head!",1, BP = head)
+			if(31 to INFINITY)
+				C.custom_pain("You feel an excrutiating pain in your head!",1, BP = head)
 
 // BAD STOMACH
 // ===========
@@ -103,14 +108,14 @@
 	cures = list("anti_toxin")
 	cure_message = "Your stomach feels a little better now..."
 
-/datum/medical_effect/bad_stomach/on_life(mob/living/carbon/human/H, strength)
+/datum/medical_effect/bad_stomach/on_life(mob/living/carbon/C, strength)
 	switch(strength)
 		if(1 to 10)
-			H.custom_pain("You feel a bit light around the stomach.",0)
+			C.custom_pain("You feel a bit light around the stomach.",0)
 		if(11 to 30)
-			H.custom_pain("Your stomach hurts.",0)
+			C.custom_pain("Your stomach hurts.",0)
 		if(31 to INFINITY)
-			H.custom_pain("You feel sick.",1)
+			C.custom_pain("You feel sick.",1)
 
 // CRAMPS
 // ======
@@ -120,15 +125,15 @@
 	cures = list("inaprovaline")
 	cure_message = "The cramps let up..."
 
-/datum/medical_effect/cramps/on_life(mob/living/carbon/human/H, strength)
+/datum/medical_effect/cramps/on_life(mob/living/carbon/C, strength)
 	switch(strength)
 		if(1 to 10)
-			H.custom_pain("The muscles in your body hurt a little.",0)
+			C.custom_pain("The muscles in your body hurt a little.",0)
 		if(11 to 30)
-			H.custom_pain("The muscles in your body cramp up painfully.",0)
+			C.custom_pain("The muscles in your body cramp up painfully.",0)
 		if(31 to INFINITY)
-			H.emote("me",1,"flinches as all the muscles in their body cramp up.")
-			H.custom_pain("There's pain all over your body.",1)
+			C.emote("me",1,"flinches as all the muscles in their body cramp up.")
+			C.custom_pain("There's pain all over your body.",1)
 
 // ITCH
 // ====
@@ -138,12 +143,12 @@
 	cures = list("inaprovaline")
 	cure_message = "The itching stops..."
 
-/datum/medical_effect/itch/on_life(mob/living/carbon/human/H, strength)
+/datum/medical_effect/itch/on_life(mob/living/carbon/C, strength)
 	switch(strength)
 		if(1 to 10)
-			H.custom_pain("You feel a slight itch.",0)
+			C.custom_pain("You feel a slight itch.",0)
 		if(11 to 30)
-			H.custom_pain("You want to scratch your itch badly.",0)
+			C.custom_pain("You want to scratch your itch badly.",0)
 		if(31 to INFINITY)
-			H.emote("me",1,"shivers slightly.")
-			H.custom_pain("This itch makes it really hard to concentrate.",1)
+			C.emote("me",1,"shivers slightly.")
+			C.custom_pain("This itch makes it really hard to concentrate.",1)

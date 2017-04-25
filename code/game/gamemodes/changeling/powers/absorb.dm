@@ -42,8 +42,8 @@
 				to_chat(user, "<span class='notice'>We stab [target] with the proboscis.</span>")
 				user.visible_message("<span class='danger'>[user] stabs [target] with the proboscis!</span>")
 				to_chat(target, "<span class='danger'>You feel a sharp stabbing pain!</span>")
-				var/datum/organ/external/affecting = target.get_organ(user.zone_sel.selecting)
-				if(affecting.take_damage(39,0,1,0,"large organic needle"))
+				var/obj/item/bodypart/BP = target.get_bodypart(user.zone_sel.selecting)
+				if(BP.take_damage(39, 0, DAM_SHARP, "large organic needle"))
 					continue
 
 		feedback_add_details("changeling_powers","A[stage]")
@@ -111,7 +111,7 @@
 			to_chat(U, "<span class='warning'>[T] is too simple for absorption.</span>")
 			return 0
 
-		if(NOCLONE in T.mutations || HUSK in T.mutations)
+		if(T.disabilities & (HUSK|NOCLONE))
 			to_chat(U, "<span class='warning'>DNA of [T] is ruined beyond usability!</span>")
 			return 0
 

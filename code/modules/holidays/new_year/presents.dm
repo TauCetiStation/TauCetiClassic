@@ -87,11 +87,11 @@
 						/obj/item/toy/prize/poly/polyspecial			= 1
 						)
 
-	var/list/species_list = list("Unathi",	//Species list for whitelist present
-								 "Tajaran",
-								 "Skrell",
-								 "Diona",
-								 "Machine")
+	var/list/species_list = list(S_UNATHI,	//Species list for whitelist present
+								 S_TAJARAN,
+								 S_SKRELL,
+								 S_DIONA,
+								 S_IPC)
 
 /obj/item/weapon/present/New()
 	icon_state = "gift[rand(1,9)]"

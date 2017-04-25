@@ -85,11 +85,11 @@
 				else
 					sound_strength = "hear a weak"
 					switch(body_part)
-						if("chest")
+						if(BP_CHEST)
 							if(M.oxyloss < 50)
 								sound_strength = "hear a healthy"
 							sound = "pulse and respiration"
-						if("eyes","mouth")
+						if(BP_EYES, BP_MOUTH)
 							sound_strength = "cannot hear"
 							sound = "anything"
 						else
@@ -218,11 +218,10 @@
 		to_chat(user, "\red This [W] won't fit in the [src]!")
 		return
 
-	holstered = W
-	user.drop_from_inventory(holstered)
-	holstered.loc = src
-	holstered.add_fingerprint(user)
-	user.visible_message("\blue [user] holsters the [holstered].", "You holster the [holstered].")
+	if(user.transferItemToLoc(holstered, src))
+		holstered = W
+		holstered.add_fingerprint(user)
+		user.visible_message("\blue [user] holsters the [holstered].", "You holster the [holstered].")
 
 /obj/item/clothing/tie/holster/proc/unholster(mob/user)
 	if(!holstered)

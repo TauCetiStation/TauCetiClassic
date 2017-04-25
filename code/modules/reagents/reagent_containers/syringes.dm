@@ -60,7 +60,7 @@
 		return
 
 	if (user.a_intent == "hurt" && ismob(target))
-		if((CLUMSY in user.mutations) && prob(50))
+		if((user.disabilities & CLUMSY) && prob(50))
 			target = user
 		syringestab(target, user)
 		return
@@ -86,7 +86,7 @@
 					if(!T.dna)
 						to_chat(usr, "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)")
 						return
-					if(NOCLONE in T.mutations) //target done been et, no more blood in him
+					if(T.disabilities & NOCLONE) //target done been et, no more blood in him
 						to_chat(user, "\red You are unable to locate any blood.")
 						return
 
@@ -241,14 +241,15 @@
 		var/mob/living/carbon/human/H = target
 
 		var/target_zone = ran_zone(check_zone(user.zone_sel.selecting, H))
-		var/datum/organ/external/affecting = H.get_organ(target_zone)
+		var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
 
-		if (!affecting)
+		if (!BP)
 			return
-		if(affecting.status & ORGAN_DESTROYED)
-			to_chat(user, "What [affecting.display_name]?")
+		if (BP.is_stump())
+			to_chat(user, "What [parse_zone(BP.body_zone)]?")
 			return
-		var/hit_area = affecting.display_name
+
+		var/hit_area = BP.name
 
 		if((user != H) && H.check_shields(7, "the [src.name]", get_dir(user,target)))
 			return
@@ -263,12 +264,12 @@
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message(text("\red <B>[user] stabs [H] in \the [hit_area] with [name]!</B>"), 1)
 
-		affecting.take_damage(3)
+		BP.take_damage(3)
 
 	else
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message(text("\red <B>[user] stabs [target] with [src.name]!</B>"), 1)
-		target.take_organ_damage(3)// 7 is the same as crowbar punch
+		target.take_bodypart_damage(3)// 7 is the same as crowbar punch
 
 	src.reagents.reaction(target, INGEST)
 	var/syringestab_amount_transferred = rand(0, (reagents.total_volume - 5)) //nerfed by popular demand

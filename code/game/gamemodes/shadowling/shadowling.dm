@@ -145,8 +145,7 @@ Made by Xhuis
 		S.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		if(shadow_mind.assigned_role == "Clown")
 			to_chat(S, "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>")
-			//S.dna.remove_mutation(CLOWNMUT) //TG
-			S.mutations.Remove(CLUMSY) //Bay
+			S.disabilities &= ~CLUMSY
 
 /datum/game_mode/proc/add_thrall(datum/mind/new_thrall_mind)
 	var/mob/living/carbon/human/H = new_thrall_mind.current
@@ -329,68 +328,3 @@ Made by Xhuis
 					if(I.icon_state == "thrall" || I.icon_state == "shadowling")
 						qdel(I)
 
-/*
-/datum/species/shadow
-	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
-	name = "Shadow"
-	language = "Sol Common"
-	unarmed_type = /datum/unarmed_attack/claws
-	warning_low_pressure = 50
-	hazard_low_pressure = -1
-
-	cold_level_1 = 50
-	cold_level_2 = -1
-	cold_level_3 = -1
-
-	heat_level_1 = 2000
-	heat_level_2 = 3000
-	heat_level_3 = 4000
-	blood_color = "#000000"
-	//id = "shadow"
-	darksight = 8
-	//sexes = 0
-	//ignored_by = list(/mob/living/simple_animal/hostile/faithless)
-	//faction = list("faithless")
-	//meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	//specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
-	flags = list(
-	 NO_BREATHE = TRUE
-	,NO_BLOOD = TRUE
-	,RAD_IMMUNE = TRUE
-	)*/
-
-/datum/species/shadow/ling
-	//Normal shadowpeople but with enhanced effects
-	name = "Shadowling"
-	icobase = 'icons/mob/human_races/r_shadowling.dmi'
-	deform = 'icons/mob/human_races/r_def_shadowling.dmi'
-	language = "Sol Common"
-	unarmed_type = /datum/unarmed_attack/claws
-
-	warning_low_pressure = 50
-	hazard_low_pressure = -1
-
-	cold_level_1 = 50
-	cold_level_2 = -1
-	cold_level_3 = -1
-
-	heat_level_1 = 2000
-	heat_level_2 = 3000
-	heat_level_3 = 4000
-
-	blood_color = "#000000"
-	darksight = 8
-
-	flags = list(
-	 NO_BREATHE = TRUE
-	,NO_BLOOD = TRUE
-	,RAD_IMMUNE = TRUE
-	,VIRUS_IMMUNE = TRUE
-	)
-	burn_mod = 2 //2x burn damage lel
-
-
-/datum/species/shadow/ling/handle_post_spawn(mob/living/carbon/human/H)
-	H.gender = NEUTER
-
-	return ..()

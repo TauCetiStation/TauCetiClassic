@@ -1048,18 +1048,10 @@ proc/get_mob_with_client_list()
 
 
 /proc/parse_zone(zone)
-	if(zone == "r_hand") return "right hand"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "l_arm") return "left arm"
-	else if (zone == "r_arm") return "right arm"
-	else if (zone == "l_leg") return "left leg"
-	else if (zone == "r_leg") return "right leg"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "r_hand") return "right hand"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
+	if (zone == BP_L_ARM) return "left arm"
+	else if (zone == BP_R_ARM) return "right arm"
+	else if (zone == BP_L_LEG) return "left leg"
+	else if (zone == BP_R_LEG) return "right leg"
 	else return zone
 
 
@@ -1412,39 +1404,38 @@ var/mob/dview/dview_mob = new
 
 /*
  * Use proc below to generate new damage overlays for humans.
- * Uncomment generate_damage_overlays_dmi() and gen_dam_dmi() below.
+ * Uncomment generate_damage_overlays_dmi() below.
  * Compile and start server, then join it. You will find verb in command tab.
  */
 /*
-/proc/generate_damage_overlays_dmi()
-	spawn()
-		//if limb names will ever be changed or procs that use names of limbs,
-		//you must adjust names of body_parts according to the current that server uses or mobs will be missing some icon_states.
-		var/list/body_parts = list("head","torso","l_arm","l_hand","r_arm","r_hand","groin","l_leg","l_foot","r_leg","r_foot")
-		//Same rules for damage states.. must be exactly same as other code uses...
-		var/list/damage_states = list("01","10","11","12","13","02","20","21","22","23","03","30","31","32","33")
+/mob/verb/generate_damage_overlays_dmi()
 
-		var/icon/master = new()
-		var/total = body_parts.len * damage_states.len
-		var/count = 0
+	var/race = alert(src, "Select:",,"human","monkey")
 
-		//Use different dam_human.dmi and dam_mask_gen.dmi files, if you need something else.
+	//if limb names will ever be changed or procs that use names of limbs,
+	//you must adjust names of body_parts according to the current that server uses or mobs will be missing some icon_states.
+	var/list/body_parts = list(BP_HEAD , BP_CHEST , BP_L_ARM , BP_R_ARM , BP_GROIN , BP_L_LEG , BP_R_LEG)
+	//Same rules for damage states.. must be exactly same as other code uses...
+	var/list/damage_states = list("01","10","11","12","13","02","20","21","22","23","03","30","31","32","33")
 
-		for(var/body_part in body_parts)
-			for(var/damage_state in damage_states)
-				var/icon/DI = new /icon('icons/mob/human_races/masks/dam_human.dmi', damage_state)
-				DI.Blend(new /icon('icons/mob/human_races/masks/dam_mask_gen.dmi', body_part), ICON_MULTIPLY)
-				master.Insert(DI, "[body_part]_[damage_state]")
+	var/icon/master = new()
+	var/total = body_parts.len * damage_states.len
+	var/count = 0
 
-				count += 1
-				var/pct = round(100 * count / total)
-				to_chat(world, "[pct]%")
-				sleep(world.tick_lag)
+	//Use different dam_human.dmi and dam_mask_gen.dmi files, if you need something else.
 
-		world << ftp(master, "damage_overlays.dmi")
+	for(var/body_part in body_parts)
+		for(var/damage_state in damage_states)
+			var/icon/DI = new /icon("icons/mob/human_races/masks/dam_" + race + ".dmi", damage_state) // dam_human.dmi
+			DI.Blend(new /icon("icons/mob/human_races/masks/dam_mask_" + race + ".dmi", body_part), ICON_MULTIPLY) // dam_mask_human.dmi
+			master.Insert(DI, "[body_part]_[damage_state]")
 
-/mob/verb/gen_dam_dmi()
-	generate_damage_overlays_dmi()
+			count += 1
+			var/pct = round(100 * count / total)
+			to_chat(world, "[pct]%")
+			sleep(world.tick_lag)
+
+	world << ftp(master, race + "_damage_overlays.dmi")
 */
 
 /proc/find_loc(obj/R)
@@ -1590,5 +1581,12 @@ var/mob/dview/dview_mob = new
 	else if(hol_dir == EAST && (hit_dir in list(WEST, NORTHWEST, SOUTHWEST)))
 		return TRUE
 	else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
+		return TRUE
+	return FALSE
+
+/proc/is_below_sound_pressure(turf/T)
+	var/datum/gas_mixture/environment = T ? T.return_air() : null
+	var/pressure =  environment ? environment.return_pressure() : 0
+	if(pressure < SOUND_MINIMUM_PRESSURE)
 		return TRUE
 	return FALSE

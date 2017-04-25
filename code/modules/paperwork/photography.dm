@@ -99,28 +99,28 @@
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
 
 	if((istype(usr, /mob/living/carbon/human)))
-		var/mob/M = usr
+		var/mob/living/carbon/human/M = usr
+
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()
+
 		playsound(loc, "rustle", 50, 1, -5)
-		if((!( M.restrained() ) && !( M.stat ) && M.back == src))
+		if(!M.incapacitated() && M.get_equipped_item(slot_back) == src)
 			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
+				if("r_hand", "l_hand", "mouth")
+					var/obj/screen/inventory/S = over_object
+					if(!M.dropItemToGround(src))
 						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
+					if(!isBODYPART(S.master))
 						return
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
-			return
+					M.equip_to_slot_if_possible(src, S.slot_id)
+					src.add_fingerprint(M)
+					return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
 			if(usr.s_active)
 				usr.s_active.close(usr)
 			show_to(usr)
 			return
-	return
 
 /*********
 * camera *
@@ -239,13 +239,16 @@
 
 		if(istype(M, /mob/living))
 			var/mob/living/L = M
-			if(L.l_hand || L.r_hand)
-				if(L.l_hand) holding = "They are holding \a [L.l_hand]"
-				if(L.r_hand)
-					if(holding)
-						holding += " and \a [L.r_hand]"
-					else
-						holding = "They are holding \a [L.r_hand]"
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				if(C.l_hand || C.r_hand)
+					if(C.l_hand)
+						holding = "They are holding \a [C.l_hand]"
+					if(C.r_hand)
+						if(holding)
+							holding += " and \a [C.r_hand]"
+						else
+							holding = "They are holding \a [C.r_hand]"
 
 			if(!mob_detail)
 				mob_detail = "You can see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "

@@ -10,11 +10,11 @@
 
 //Monkeys can not take the muzzle off of themself! Call PETA!
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
-	if (src == user.wear_mask)
-		return
-	else
-		..()
-	return
+	if(ismonkey(user))
+		var/mob/living/carbon/monkey/M = user
+		if (src == M.wear_mask)
+			return
+	..()
 
 
 /obj/item/clothing/mask/surgical
@@ -126,7 +126,7 @@
 		else
 			src.icon_state += "_up"
 			to_chat(usr, "You tie the bandana around your head.")
-		usr.update_inv_wear_mask()
+		update_inv_item()
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)

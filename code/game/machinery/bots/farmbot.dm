@@ -436,10 +436,10 @@
 
 			src.visible_message("\red <B>[src] [attackVerb] [human]!</B>")
 			var/damage = 5
-			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-			var/datum/organ/external/affecting = human.get_organ(ran_zone(dam_zone))
-			var/armor = human.run_armor_check(affecting, "melee")
-			human.apply_damage(damage,BRUTE,affecting,armor,sharp=1,edge=1)
+			var/dam_zone = pick(BP_CHEST, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
+			var/obj/item/bodypart/BP = human.get_bodypart(ran_zone(dam_zone))
+			var/armor = human.run_armor_check(BP, "melee")
+			human.apply_damage(damage, BRUTE, BP, armor, (DAM_SHARP|DAM_EDGE))
 
 	else // warning, plants infested with weeds!
 		mode = FARMBOT_MODE_WAITING

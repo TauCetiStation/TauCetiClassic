@@ -338,11 +338,7 @@ Auto Patrol: []"},
 			if(!target) //All will be cleared in /process()
 				return
 			if(Adjacent(target))
-				if(iscarbon(target))
-					var/mob/living/carbon/mob_carbon = target
-					if(!mob_carbon.handcuffed)
-						mob_carbon.handcuffed = new /obj/item/weapon/handcuffs(target)
-						mob_carbon.update_inv_handcuffed()	//update the handcuffs overlay
+				target.equip_to_slot_or_del(new /obj/item/weapon/handcuffs, slot_handcuffed)
 				forgetCurrentTarget()
 				playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 			else if(mode == SECBOT_ARREST)
@@ -670,7 +666,6 @@ Auto Patrol: []"},
 	var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 	user.put_in_hands(A)
 	to_chat(user, "You add the signaler to the helmet.")
-	user.drop_from_inventory(src)
 	qdel(src)
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W, mob/user)

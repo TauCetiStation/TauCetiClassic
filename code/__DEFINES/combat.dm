@@ -1,13 +1,17 @@
 //Damage things
 //Way to waste perfectly good damagetype names (BRUTE) on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc...
-#define CUT 		"cut"
-#define BRUISE		"bruise"
+
 #define BRUTE		"brute"
 #define BURN		"fire"
 #define TOX			"tox"
 #define OXY			"oxy"
 #define CLONE		"clone"
 #define HALLOSS		"halloss"
+
+#define CUT			"cut"
+#define BRUISE		"bruise"
+#define PIERCE		"pierce"
+#define LASER		"laser"
 
 #define STUN		"stun"
 #define WEAKEN		"weaken"
@@ -18,6 +22,20 @@
 #define SLUR 		"slur"
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
+
+// Damage flags
+#define DAM_SHARP 1
+#define DAM_EDGE 2
+#define DAM_LASER 4
+
+#define DROPLIMB_EDGE 0
+#define DROPLIMB_BLUNT 1
+#define DROPLIMB_BURN 2
+
+//These control the damage thresholds for the various ways of removing limbs
+#define DROPLIMB_THRESHOLD_EDGE 5
+#define DROPLIMB_THRESHOLD_TEAROFF 2
+#define DROPLIMB_THRESHOLD_DESTROY 1
 
 //I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
 #define BRUTELOSS	1

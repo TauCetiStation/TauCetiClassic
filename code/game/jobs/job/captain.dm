@@ -48,9 +48,9 @@
 	L.imp_in = H
 	L.implanted = 1
 	to_chat(world, "<b>[H.real_name] is the captain!</b>")
-	var/datum/organ/external/affected = H.organs_by_name["head"]
-	affected.implants += L
-	L.part = affected
+	var/obj/item/bodypart/BP = H.bodyparts_by_name[BP_HEAD]
+	BP.implants += L
+	L.part = BP
 	return 1
 
 /datum/job/captain/get_access()

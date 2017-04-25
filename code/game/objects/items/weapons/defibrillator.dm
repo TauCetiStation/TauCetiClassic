@@ -52,7 +52,7 @@
 		force = initial(force)
 		charges--
 
-	attack(mob/M, mob/user)
+	attack(mob/M, mob/user) // TODO update defibs
 		if(charged == 2 && istype(M,/mob/living/carbon))
 			var/mob/living/carbon/C = M
 			playsound(src, 'sound/items/defib_zap.ogg', 50, 1, 1)
@@ -60,31 +60,34 @@
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> Shock [M.name] ([M.ckey]) with [src.name]</font>"
 			msg_admin_attack("[user.name] ([user.ckey]) shock [M.name] ([M.ckey]) with [src.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-			if((world.time - C.timeofdeath) < 3600 || C.stat != DEAD)	//if he is dead no more than 6 minutes
-				if(!(NOCLONE in C.mutations))
-					if(C.health<=config.health_threshold_crit || prob(10))
-						var/suff = min(C.getOxyLoss(), 20)
-						C.adjustOxyLoss(-suff)
-					else
-						C.adjustFireLoss(5)
-					C.updatehealth()
-					if(C.stat == DEAD && C.health > config.health_threshold_dead)
-						C.stat = UNCONSCIOUS
-						return_to_body_dialog(C)
-						reanimate_body(C)
+			if(C.should_have_organ(BP_HEART))
+				var/obj/item/organ/heart/heart = C.organs_by_name[BP_HEART]
+				if(heart && C.get_effective_blood_volume() >= BLOOD_VOLUME_SURVIVE)
+					if((world.time - C.timeofdeath) < 3600 || C.stat != DEAD)	//if he is dead no more than 6 minutes
+						if(!(C.disabilities & NOCLONE))
+							if(C.health<=config.health_threshold_crit || prob(10))
+								var/suff = min(C.getOxyLoss(), 20)
+								C.adjustOxyLoss(-suff)
+							else
+								C.adjustFireLoss(5)
+							C.updatehealth()
+							if(C.stat == DEAD && C.health > config.health_threshold_dead)
+								C.stat = UNCONSCIOUS
+								return_to_body_dialog(C)
+								reanimate_body(C)
 
-				if(wet)
-					var/turf/T = get_turf(src)
-					T.visible_message("<span class='wet'>Some wet device has been discharged!</span>")
-					var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
-					if(W)
-						W.electrocute_act(150)
-					else if(istype(loc, /mob/living))
-						var/mob/living/L = loc
-						L.Weaken(6)
-						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-						s.set_up(3, 1, src)
-						s.start()
+			if(wet)
+				var/turf/T = get_turf(src)
+				T.visible_message("<span class='wet'>Some wet device has been discharged!</span>")
+				var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+				if(W)
+					W.electrocute_act(150)
+				else if(istype(loc, /mob/living))
+					var/mob/living/L = loc
+					L.Weaken(6)
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(3, 1, src)
+					s.start()
 
 			discharge()
 			C.apply_effect(4, STUN, 0)

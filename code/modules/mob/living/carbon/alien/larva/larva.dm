@@ -15,13 +15,10 @@
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
-
-	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
-	var/obj/item/weapon/r_store = null
-	var/obj/item/weapon/l_store = null
+	var/chestburster = FALSE
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/larva/New()
+/mob/living/carbon/alien/larva/New(loc, new_species = S_XENO_LARVA)
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src

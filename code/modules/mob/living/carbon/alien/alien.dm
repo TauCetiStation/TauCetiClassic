@@ -16,7 +16,6 @@
 	var/storedPlasma = 250
 	var/max_plasma = 500
 
-	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 
 	var/move_delay_add = 0 // movement delay to add
@@ -59,7 +58,7 @@
 		//toxloss isn't used for aliens, its actually used as alien powers!!
 		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
-/mob/living/carbon/alien/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in loc)
@@ -117,7 +116,7 @@
 	else
 		clear_alert("alien_fire")
 
-/mob/living/carbon/alien/proc/handle_mutations_and_radiation()
+/mob/living/carbon/alien/handle_mutations_and_radiation()
 
 	// Aliens love radiation nom nom nom
 	if (radiation)
@@ -276,8 +275,8 @@ Hit Procs
 /mob/living/carbon/alien/emp_act(severity)
 	return
 
-/mob/living/carbon/alien/attack_ui(slot_id)
-	return
+//mob/living/carbon/alien/attack_ui(slot_id)
+//	return
 
 /mob/living/carbon/alien/restrained()
 	return 0
@@ -321,7 +320,7 @@ Des: Removes all infected images from the alien.
 			if(dd_hasprefix_case(I.icon_state, "infected"))
 				qdel(I)
 	return
-
+/*
 /mob/living/carbon/alien/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
@@ -336,7 +335,7 @@ Des: Removes all infected images from the alien.
 			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
 		else
 			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
+			hud_used.r_hand_hud_object.icon_state = "hand_r_active"*/
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
 	else

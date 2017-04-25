@@ -46,29 +46,13 @@
 		if (do_surgery(M,user,src))
 			return 0
 
-	// Knifing
-	if(edge)
-		for(var/obj/item/weapon/grab/G in M.grabbed_by)
-			if(G.assailant == user && G.state >= GRAB_NECK && world.time >= (G.last_action + 20) && user.zone_sel.selecting == "head")
-				var/protected = 0
-				if(ishuman(M))
-					var/mob/living/carbon/human/AH = M
-					if(AH.is_in_space_suit())
-						protected = 1
-				if(!protected)
-					//TODO: better alternative for applying damage multiple times? Nice knifing sound?
-					M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
-					M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
-					M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
-					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
-					playsound(loc, 'sound/effects/throat_cutting.ogg', 50, 1, 1)
-					flick(G.hud.icon_state, G.hud)
-					G.last_action = world.time
-					user.visible_message("<span class='danger'>[user] slit [M]'s throat open with \the [name]!</span>")
-					user.attack_log += "\[[time_stamp()]\]<font color='red'> Knifed [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Got knifed by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-					msg_admin_attack("[key_name(user)] knifed [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])" )
-					return
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.check_attack_throat(src, user))
+			return
+
+		if(C.check_attack_tendons(src, user))
+			return
 
 	if (istype(M,/mob/living/carbon/brain))
 		messagesource = M:container
@@ -187,14 +171,14 @@
 
 				else
 
-					M.take_organ_damage(power)
+					M.take_bodypart_damage(power)
 					if (prob(33)) // Added blood for whacking non-humans too
 						var/turf/location = M.loc
 						if (istype(location, /turf/simulated))
 							location:add_blood_floor(M)
 			if("fire")
 				if (!(COLD_RESISTANCE in M.mutations))
-					M.take_organ_damage(0, power)
+					M.take_bodypart_damage(0, power)
 					to_chat(M, "Aargh it burns!")
 		M.updatehealth()
 	add_fingerprint(user)

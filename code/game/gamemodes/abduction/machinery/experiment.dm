@@ -40,7 +40,7 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H) // Broken now - TODO refactor this.
 	var/icon/preview_icon = null
 
 	var/g = "m"
@@ -56,16 +56,17 @@
 	temp = new /icon(icobase, "head_[g]")
 	preview_icon.Blend(temp, ICON_OVERLAY)
 
-	for(var/datum/organ/external/E in H.organs)
-		if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
-		temp = new /icon(icobase, "[E.name]")
-		if(E.status & ORGAN_ROBOT)
+	for(var/obj/item/bodypart/BP in H.bodyparts)
+		if(BP.is_stump())
+			continue
+		temp = new /icon(icobase, "[BP.name]")
+		if(BP.status & ORGAN_ROBOT)
 			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	//Tail
-	if(H.species.tail && H.species.flags[HAS_TAIL])
-		temp = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[H.species.tail]_s")
+	if(H.species.tail)
+		temp = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[H.species.tail]")
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone
@@ -80,7 +81,7 @@
 		if(!H.species || H.species.flags[HAS_SKIN_COLOR])
 			preview_icon.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
-	var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = H.species ? H.species.eyes : "eyes_s")
+	var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = H.species ? H.species.eyes_icon : "eyes")
 
 	eyes_s.Blend(rgb(H.r_eyes, H.g_eyes, H.b_eyes), ICON_ADD)
 
@@ -214,7 +215,6 @@
 		A = teleportlocs[pick(teleportlocs)]
 	TeleportToArea(H,A)
 	var/obj/item/weapon/handcuffs/alien/handcuffs = H.handcuffed
-	H.drop_from_inventory(handcuffs)
 	qdel(handcuffs)
 	return
 

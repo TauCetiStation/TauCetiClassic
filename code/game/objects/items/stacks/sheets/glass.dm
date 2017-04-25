@@ -341,15 +341,16 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 
-			if(H.species.flags[IS_SYNTHETIC])
+			if(H.species.flags[IS_SYNTHETIC] || H.species.flags[NO_EMBED])
 				return
 
 			if(!H.shoes && (!H.wear_suit || !(H.wear_suit.body_parts_covered & FEET)))
-				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
-				if(affecting.status & ORGAN_ROBOT)
+				var/obj/item/bodypart/BP = H.get_bodypart(pick(BP_L_LEG, BP_R_LEG))
+				if(BP.status & ORGAN_ROBOT)
 					return
-				H.Weaken(3)
-				affecting.take_damage(5, 0)
+				BP.take_damage(5, 0)
+				if(BP.can_feel_pain())
+					H.Weaken(3)
 				H.updatehealth()
 	..()
 

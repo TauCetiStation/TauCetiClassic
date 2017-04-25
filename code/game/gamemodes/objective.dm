@@ -455,15 +455,16 @@ datum/objective/harm
 				return 0
 
 			var/mob/living/carbon/human/H = target.current
-			for(var/datum/organ/external/E in H.organs)
-				if(E.status & ORGAN_BROKEN)
-					already_completed = 1
-					return 1
-				if(E.status & ORGAN_DESTROYED && !E.amputated)
+			for(var/obj/item/bodypart/BP in H.bodyparts)
+				if(BP.status & ORGAN_BROKEN)
 					already_completed = 1
 					return 1
 
-			var/datum/organ/external/head/head = H.get_organ("head")
+				if(BP.is_stump())
+					already_completed = 1
+					return 1
+
+			var/obj/item/bodypart/head/head = H.get_bodypart(BP_HEAD)
 			if(head.disfigured)
 				return 1
 		return 0

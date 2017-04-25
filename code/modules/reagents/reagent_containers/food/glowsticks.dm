@@ -58,9 +58,7 @@
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
-		usr.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
-	return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_self(mob/user)
 	// Usual checks

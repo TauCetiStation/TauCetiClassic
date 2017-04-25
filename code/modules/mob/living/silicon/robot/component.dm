@@ -39,7 +39,7 @@
 	installed = -1
 	uninstall()
 
-/datum/robot_component/proc/take_damage(brute, electronics, sharp, edge)
+/datum/robot_component/proc/take_damage(brute, electronics, damage_flags, used_weapon)
 	if(installed != 1) return
 
 	brute_damage += brute

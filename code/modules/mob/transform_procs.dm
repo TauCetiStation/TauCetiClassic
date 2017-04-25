@@ -1,12 +1,14 @@
-/mob/living/carbon/human/proc/monkeyize()
+/mob/living/carbon/human/proc/monkeyize() // this proc works old way (spawning new mob and transfering user into it), for new - use gene monkeyizing.
 	if (notransform)
 		return
 	if (monkeyizing)
 		return
+	if(!species.backward_form) //If the creature in question has no backward_form set, do nothing.
+		return
 	for(var/obj/item/W in src)
 		if (W==w_uniform) // will be torn
 			continue
-		drop_from_inventory(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
@@ -14,7 +16,7 @@
 	icon = null
 	invisibility = 101
 	alpha = 0
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
 	animation.icon_state = "blank"
@@ -22,15 +24,10 @@
 	animation.master = src
 	flick("h2monkey", animation)
 	sleep(48)
-	//animation = null
-
-	if(!species.primitive) //If the creature in question has no primitive set, this is going to be messy.
-		gib()
-		return
 
 	var/mob/living/carbon/monkey/O = null
 
-	O = new species.primitive(loc)
+	O = new (loc, species.backward_form)
 
 	O.dna = dna.Clone()
 	O.dna.SetSEState(MONKEYBLOCK,1)
@@ -42,15 +39,12 @@
 	for(var/datum/disease/D in O.viruses)
 		D.affected_mob = O
 
-	//if (client) //#Z2.1 fix Players can't get back in the body,
-	//	client.mob = O//when we transform them back to human using genetics. So they forever ghosts, if someone un_monkeyize them.
 	if(mind)
 		mind.transfer_to(O)
 
 	to_chat(O, "<B>You are now [O]. </B>")
 
-	spawn(0)//To prevent the proc from returning null.
-		qdel(src)
+	qdel(src)
 	qdel(animation)
 
 	return O
@@ -62,7 +56,7 @@
 /mob/living/carbon/human/AIize(move=1) // 'move' argument needs defining here too because BYOND is dumb
 	if (monkeyizing)
 		return
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	return ..(move)
@@ -71,7 +65,7 @@
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		dropItemToGround(W)
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -137,13 +131,13 @@
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
@@ -193,13 +187,13 @@
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
@@ -224,13 +218,13 @@
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/mob/living/carbon/slime/new_slime
@@ -260,13 +254,13 @@
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)	//this really should not be necessary
+	for(var/t in bodyparts)	//this really should not be necessary
 		qdel(t)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
@@ -290,7 +284,7 @@
 	if(monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_inventory(W)
+		dropItemToGround(W)
 
 	regenerate_icons()
 	monkeyizing = 1
@@ -298,7 +292,7 @@
 	icon = null
 	invisibility = 101
 
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/mob/new_mob = new mobpath(src.loc)

@@ -83,12 +83,12 @@
 	return ..()
 
 /obj/item/weapon/stool/attack_self(mob/user)
-	user.drop_from_inventory(src)
+	user.dropItemToGround(src)
 	user.visible_message("<span class='notice'>[user] dropped [src].</span>", "<span class='notice'>You dropped [src].</span>")
 
 /obj/item/weapon/stool/dropped(mob/user)
 	if(origin_stool)
-		origin_stool.loc = src.loc
+		origin_stool.forceMove(loc)
 		origin_stool = null
 	qdel(src)
 

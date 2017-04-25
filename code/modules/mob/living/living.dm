@@ -42,7 +42,7 @@
 				return 1
 
 		//Fat
-		if(FAT in M.mutations)
+		if(M.disabilities & FAT)
 			var/ran = 40
 			if(isrobot(src))
 				ran = 20
@@ -86,9 +86,9 @@
 	if(!(M.status_flags & CANPUSH) )
 		return 1
 	//anti-riot equipment is also anti-push
-	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
+	if(istype(M.get_active_hand(), /obj/item/weapon/shield/riot))
 		return 1
-	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
+	if(istype(M.get_inactive_hand(), /obj/item/weapon/shield/riot))
 		return 1
 
 //Called when we bump onto an obj
@@ -195,11 +195,11 @@
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
-		var/divided_damage = (burn_amount)/(H.organs.len)
-		var/extradam = 0	//added to when organ is at max dam
-		for(var/datum/organ/external/affecting in H.organs)
-			if(!affecting)	continue
-			affecting.take_damage(0, divided_damage+extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
+		var/divided_damage = (burn_amount)/(H.bodyparts.len)
+		var/extradam = 0	//added to when bodypart is at max dam
+		for(var/obj/item/bodypart/BP in H.bodyparts)
+			if(!BP)	continue
+			BP.take_damage(0, divided_damage+extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
@@ -274,15 +274,13 @@
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/getCloneLoss()
-	return cloneloss
+	return
 
 /mob/living/proc/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
+	return
 
 /mob/living/proc/setCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	cloneloss = amount
+	return
 
 /mob/living/proc/getBrainLoss()
 	return brainloss
@@ -296,15 +294,13 @@
 	brainloss = amount
 
 /mob/living/proc/getHalLoss()
-	return halloss
+	return 0
 
 /mob/living/proc/adjustHalLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = min(max(halloss + amount, 0),(maxHealth*2))
+	adjustBruteLoss(amount * 0.5)
 
 /mob/living/proc/setHalLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = amount
+	adjustBruteLoss((amount * 0.5)-getBruteLoss())
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -387,59 +383,48 @@
 /mob/living/proc/can_inject()
 	return 1
 
-/mob/living/proc/get_organ_target()
+/mob/living/proc/get_bodypart_target()
 	var/mob/shooter = src
 	var/t = shooter:zone_sel.selecting
-	if ((t in list( "eyes", "mouth" )))
-		t = "head"
-	var/datum/organ/external/def_zone = ran_zone(t)
-	return def_zone
+	if ((t in list( BP_EYES, BP_MOUTH )))
+		t = BP_HEAD
+	var/obj/item/bodypart/BP = ran_zone(t)
+	return BP
 
 
-// heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_organ_damage(brute, burn)
+// heal ONE bodypart, bodypart gets randomly selected from damaged ones.
+/mob/living/proc/heal_bodypart_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
-// damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_organ_damage(brute, burn)
+// damage ONE bodypart, bodypart gets randomly selected from damaged ones.
+/mob/living/proc/take_bodypart_damage(brute, burn, damage_flags, used_weapon)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
 
-// heal MANY external organs, in random order
+// heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
-// damage MANY external organs, in random order
-/mob/living/proc/take_overall_damage(brute, burn, used_weapon = null)
+// damage MANY bodyparts, in random order
+/mob/living/proc/take_overall_damage(brute, burn, damage_flags, used_weapon)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
 
-/mob/living/proc/restore_all_organs()
+/mob/living/proc/restore_all_bodyparts()
 	return
-
-
 
 /mob/living/proc/revive()
 	rejuvenate()
 	buckled = initial(src.buckled)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-
-		if (C.handcuffed && !initial(C.handcuffed))
-			C.drop_from_inventory(C.handcuffed)
-		C.handcuffed = initial(C.handcuffed)
-
-		if (C.legcuffed && !initial(C.legcuffed))
-			C.drop_from_inventory(C.legcuffed)
-		C.legcuffed = initial(C.legcuffed)
+	uncuff()
 	update_health_hud()
 
 /mob/living/proc/rejuvenate()
@@ -463,7 +448,6 @@
 	radiation = 0
 	nutrition = 400
 	bodytemperature = T20C
-	sdisabilities = 0
 	disabilities = 0
 	ExtinguishMob()
 	fire_stacks = 0
@@ -481,8 +465,8 @@
 		var/mob/living/carbon/human/human_mob = src
 		human_mob.restore_blood()
 
-	// fix all of our organs
-	restore_all_organs()
+	// fix all of our bodyparts
+	restore_all_bodyparts()
 
 	// remove the character from the list of the dead
 	if(stat == DEAD)
@@ -500,8 +484,8 @@
 	stat = CONSCIOUS
 
 	// make the icons look correct
-	if(HUSK in mutations)
-		mutations.Remove(HUSK)
+	if(disabilities & HUSK)
+		disabilities &= ~HUSK
 	regenerate_icons()
 	update_health_hud()
 	return
@@ -509,10 +493,6 @@
 /mob/living/proc/update_health_hud()
 	hud_updateflag |= 1 << HEALTH_HUD
 	hud_updateflag |= 1 << STATUS_HUD
-
-/mob/living/proc/UpdateDamageIcon()
-	return
-
 
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
@@ -614,7 +594,7 @@
 		stop_pulling()
 		. = ..()
 
-	if (s_active && !( s_active in contents ) && get_turf(s_active) != get_turf(src))	//check !( s_active in contents ) first so we hopefully don't have to call get_turf() so much.
+	if (s_active && !(s_active.ClickAccessible(src, depth = STORAGE_VIEW_DEPTH) || s_active.Adjacent(src))) // tgstation version
 		s_active.close(src)
 
 	if(update_slimes)
@@ -669,9 +649,9 @@
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!isliving(usr) || !canClick())
 		return
-	usr.next_move = world.time + 20
+	setClickCooldown(20)
 
 	var/mob/living/L = usr
 
@@ -682,7 +662,7 @@
 		var/mob/M = H.loc                      //Get our mob holder (if any).
 
 		if(istype(M))
-			M.drop_from_inventory(H)
+			M.dropItemToGround(H)
 			to_chat(M, "<span class='notice'>[H] wriggles out of your grip!</span>")
 			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
 		else if(istype(H.loc,/obj/item))
@@ -729,30 +709,14 @@
 
 			return
 
-	//resisting grabs (as if it helps anyone...)
-	if (!L.stat && !L.restrained())
-		if(L.stunned > 2 || L.weakened)
-			return
-		var/resisting = 0
+
+	if (!incapacitated(INCAPACITATION_KNOCKOUT)) // TODO update resist properly
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
 			qdel(O)
-			resisting++
-		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
-			resisting++
-			switch(G.state)
-				if(GRAB_PASSIVE)
-					qdel(G)
-				if(GRAB_AGGRESSIVE)
-					if(prob(60)) //same chance of breaking the grab as disarm
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
-						qdel(G)
-				if(GRAB_NECK)
-					if(prob(5 - L.stunned * 2))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
-						qdel(G)
-		if(resisting)
-			L.visible_message("<span class='danger'>[L] resists!</span>")
+
+		resist_grab()
+
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))
 		var/obj/structure/pit/P = loc
@@ -801,25 +765,22 @@
 					"<span class='notice'>You extinguish yourself.</span>")
 				ExtinguishMob()
 			return
-		if(CM.handcuffed && (CM.last_special <= world.time))
-			if(!CM.canmove && !CM.resting)	return
+		if(CM.is_busy())
+			return
+		if(CM.handcuffed && (CM.last_special <= world.time)) // TODO this block is very messy
+			if(!CM.canmove && !CM.resting)
+				return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				to_chat(usr, "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message(text("<span class='danger'>[] is trying to break the handcuffs!</span>", CM), 1)
-				spawn(0)
-					if(do_after(CM, 50, target = usr))
-						if(!CM.handcuffed || CM.buckled)
-							return
-						for(var/mob/O in viewers(CM))
-							O.show_message(text("<span class='danger'>[] manages to break the handcuffs!</span>", CM), 1)
-						to_chat(CM, "<span class='notice'>You successfully break your handcuffs.</span>")
-						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						qdel(CM.handcuffed)
-						CM.handcuffed = null
-						CM.update_inv_handcuffed()
+			if(isalienadult(CM) || (HULK in CM.mutations))//Don't want to do a lot of logic gating here.
+				CM.visible_message("<span class='danger'>[CM] is trying to break the handcuffs!</span>",
+					"<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
+				if(do_after(CM, 50, target = CM, incapacitation_flags = INCAPACITATION_DEFAULT & ~INCAPACITATION_RESTRAINED))
+					if(!CM.handcuffed || CM.buckled)
+						return
+					CM.visible_message("<span class='danger'>[] manages to break the handcuffs!</span>", "<span class='notice'>You successfully break your handcuffs.</span>")
+					CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+					qdel(CM.handcuffed)
 			else
 				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
 				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
@@ -827,45 +788,37 @@
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
-				to_chat(CM, "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
-				spawn(0)
-					if(do_after(CM, breakouttime, target = usr))
-						if(!CM.handcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
-						if(istype(HC, /obj/item/weapon/handcuffs/alien))
-							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
-							"<span class='notice'>You successfully break in a discharge of energy!</span>")
-							var/datum/effect/effect/system/spark_spread/S = new
-							S.set_up(4,0,CM.loc)
-							S.start()
-							CM.drop_from_inventory(CM.handcuffed)
-							qdel(HC)
-						else
-							CM.visible_message("<span class='danger'>[CM] manages to remove the handcuffs!</span>", \
-								"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
-							CM.drop_from_inventory(CM.handcuffed)
+				CM.visible_message("<span class='danger'>[CM] attempts to remove \the [HC]!</span>",
+					"<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
+				if(do_after(CM, breakouttime, target = CM, incapacitation_flags = INCAPACITATION_DEFAULT & ~INCAPACITATION_RESTRAINED))
+					if(!CM.handcuffed || CM.buckled)
+						return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
+					if(istype(HC, /obj/item/weapon/handcuffs/alien)) // DROPDEL in flags inv, so they will be qdel'd when unequipped.
+						CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
+						"<span class='notice'>You successfully break in a discharge of energy!</span>")
+						var/datum/effect/effect/system/spark_spread/S = new
+						S.set_up(4,0,CM.loc)
+						S.start()
+					else
+						CM.visible_message("<span class='danger'>[CM] manages to remove the handcuffs!</span>", \
+							"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
+					CM.dropItemToGround(CM.handcuffed)
 
 		else if(CM.legcuffed && (CM.last_special <= world.time))
-			if(!CM.canmove && !CM.resting)	return
+			if(!CM.canmove && !CM.resting)
+				return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
-			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				to_chat(usr, "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message(text("<span class='danger'>[] is trying to break the legcuffs!</span>", CM), 1)
-				spawn(0)
-					if(do_after(CM, 50, target = usr))
-						if(!CM.legcuffed || CM.buckled)
-							return
-						for(var/mob/O in viewers(CM))
-							O.show_message(text("<span class='danger'>[] manages to break the legcuffs!</span>", CM), 1)
-						to_chat(CM, "<span class='notice'>You successfully break your legcuffs.")
-						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						qdel(CM.legcuffed)
-						CM.legcuffed = null
-						CM.update_inv_legcuffed()
+			if(isalienadult(CM) || (HULK in CM.mutations))//Don't want to do a lot of logic gating here.
+				to_chat(CM, "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
+				CM.visible_message("<span class='danger'>[CM] is trying to break the legcuffs!</span>")
+				if(do_after(CM, 50, target = CM, incapacitation_flags = INCAPACITATION_DEFAULT & ~INCAPACITATION_RESTRAINED))
+					if(!CM.legcuffed || CM.buckled)
+						return
+					visible_message("<span class='danger'>[CM] manages to break the legcuffs!</span>")
+					to_chat(CM, "<span class='notice'>You successfully break your legcuffs.")
+					CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+					qdel(CM.legcuffed)
 			else
 				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
 				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
@@ -874,28 +827,28 @@
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
 				to_chat(CM, "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
-				spawn(0)
-					if(do_after(CM, breakouttime, target = usr))
-						if(!CM.legcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
-						if(istype(HC, /obj/item/weapon/handcuffs/alien))
-							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
-							"<span class='notice'>You successfully break in a discharge of energy!</span>")
-							var/datum/effect/effect/system/spark_spread/S = new
-							S.set_up(4,0,CM.loc)
-							S.start()
-							CM.drop_from_inventory(CM.legcuffed)
-							CM.legcuffed = null
-							CM.update_inv_legcuffed()
-							qdel(HC)
-						else
-							CM.visible_message("<span class='danger'>[CM] manages to remove the legcuffs!</span>", \
-								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
-							CM.drop_from_inventory(CM.legcuffed)
-							CM.legcuffed = null
-							CM.update_inv_legcuffed()
+				visible_message("<span class='danger'>[CM] attempts to remove \the [HC]!</span>")
+				if(do_after(CM, breakouttime, target = CM, incapacitation_flags = INCAPACITATION_DEFAULT & ~INCAPACITATION_RESTRAINED))
+					if(!CM.legcuffed || CM.buckled)
+						return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
+					if(istype(HC, /obj/item/weapon/handcuffs/alien)) // wut? handcuffs-legcuffs?
+						CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
+						"<span class='notice'>You successfully break in a discharge of energy!</span>")
+						var/datum/effect/effect/system/spark_spread/S = new
+						S.set_up(4,0,CM.loc)
+						S.start()
+					else
+						CM.visible_message("<span class='danger'>[CM] manages to remove the legcuffs!</span>", \
+							"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
+					CM.dropItemToGround(CM.legcuffed)
+
+/mob/living/proc/resist_grab()
+	var/resisting = 0
+	for(var/obj/item/weapon/grab/G in grabbed_by)
+		resisting++
+		G.handle_resist()
+	if(resisting)
+		visible_message("<span class='danger'>[src] resists!</span>")
 
 /mob/living/verb/lay_down()
 	set name = "Rest"
@@ -985,6 +938,8 @@
 	var/final_pixel_y = get_standard_pixel_y_offset(lying_current)
 	..(A, final_pixel_y)
 
+/mob/living/carbon/do_attack_animation(atom/A)
+	..()
 	//Show an image of the wielded weapon over the person who got dunked.
 	var/image/I
 	if(hand)

@@ -12,7 +12,7 @@
 		environment = loc.return_air()
 
 	if (stat != DEAD)
-		if(!istype(src,/mob/living/carbon/monkey/diona)) //still breathing
+		if(!istype(src,/mob/living/carbon/alien/diona)) //still breathing
 			//First, resolve location and get a breath
 			if(SSmob.times_fired%4==2)
 				//Only try to take a breath every 4 seconds, unless suffocating
@@ -81,7 +81,7 @@
 
 /mob/living/carbon/monkey
 
-	proc/handle_disabilities()
+	handle_disabilities()
 
 		if (disabilities & EPILEPSY)
 			if ((prob(1) && paralysis < 10))
@@ -103,7 +103,7 @@
 			if (prob(10))
 				stuttering = max(10, stuttering)
 
-	proc/handle_mutations_and_radiation()
+	handle_mutations_and_radiation()
 
 		if(getFireLoss())
 			if((COLD_RESISTANCE in mutations) || prob(50))
@@ -121,7 +121,7 @@
 
 		if (radiation)
 
-			if(istype(src,/mob/living/carbon/monkey/diona)) //Filthy check. Dionaea don't take rad damage.
+			if(istype(src,/mob/living/carbon/alien/diona)) //Filthy check. Dionaea don't take rad damage.
 				var/rads = radiation/25
 				radiation -= rads
 				nutrition += rads
@@ -162,7 +162,7 @@
 						domutcheck(src,null)
 						emote("gasp")
 
-	proc/handle_virus_updates()
+	handle_virus_updates()
 		if(status_flags & GODMODE)	return 0	//godmode
 		if(bodytemperature > 406)
 			for(var/datum/disease/D in viruses)
@@ -203,7 +203,7 @@
 
 		return
 
-	proc/breathe()
+	breathe()
 		if(reagents)
 
 			if(reagents.has_reagent("lexorin")) return
@@ -278,7 +278,7 @@
 			loc.assume_air(breath)
 
 
-	proc/get_breath_from_internal(volume_needed)
+	get_breath_from_internal(volume_needed)
 		if(internal)
 			if (!contents.Find(internal))
 				internal = null
@@ -293,7 +293,7 @@
 					internals.icon_state = "internal0"
 		return null
 
-	proc/handle_breath(datum/gas_mixture/breath)
+	handle_breath(datum/gas_mixture/breath)
 		if(status_flags & GODMODE)
 			return
 
@@ -390,7 +390,7 @@
 
 		return 1
 
-	proc/handle_environment(datum/gas_mixture/environment)
+	handle_environment(datum/gas_mixture/environment)
 		if(!environment)
 			return
 
@@ -450,7 +450,7 @@
 		else
 			adjustFireLoss(5.0*discomfort)
 
-	proc/handle_chemicals_in_body()
+	handle_chemicals_in_body()
 
 		if(alien) //Diona nymphs are the only alien monkey currently.
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -488,7 +488,7 @@
 
 		return //TODO: DEFERRED
 
-	proc/handle_regular_status_updates()
+	handle_regular_status_updates()
 
 		if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 			blinded = 1
@@ -542,7 +542,7 @@
 					adjustHalLoss(-1)
 
 			//Eyes
-			if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
+			if(disabilities & BLIND)	//disabled-blind, doesn't get better on its own
 				blinded = 1
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
@@ -551,7 +551,7 @@
 				eye_blurry = max(eye_blurry-1, 0)
 
 			//Ears
-			if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
+			if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
 				ear_deaf = max(ear_deaf, 1)
 			else if(ear_deaf)			//deafness, heals slowly over time
 				ear_deaf = max(ear_deaf-1, 0)
@@ -627,14 +627,14 @@
 
 		return 1
 
-	proc/handle_random_events()
+	handle_random_events()
 		if (prob(1) && prob(2))
 			spawn(0)
 				emote("scratch")
 				return
 
 
-	proc/handle_changeling()
+	handle_changeling()
 		if(mind && mind.changeling)
 			mind.changeling.regenerate()
 			//hud_used.lingchemdisplay.invisibility = 0

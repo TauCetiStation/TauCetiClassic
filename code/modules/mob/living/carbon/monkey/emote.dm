@@ -32,7 +32,7 @@
 			return custom_emote(m_type, message)
 
 		if ("chirp")
-			if(istype(src,/mob/living/carbon/monkey/diona))
+			if(istype(src,/mob/living/carbon/alien/diona))
 				message = "<B>The [src.name]</B> chirps!"
 				playsound(src.loc, 'sound/misc/nymphchirp.ogg', 50, 0)
 				m_type = 2
@@ -119,7 +119,7 @@
 			message = "<b>The [src.name]</b> lets out a faint chimper as it collapses and stops moving..."
 			m_type = 1
 		if("cough")
-			if(istype(src,/mob/living/carbon/monkey/diona))
+			if(istype(src,/mob/living/carbon/alien/diona))
 				message = "<B>The [src.name]</B> shrinks and twitches slightly"
 				m_type = 1
 			else
@@ -127,7 +127,7 @@
 				m_type = 2
 		if("help")
 			var/text = "choke, "
-			if(istype(src,/mob/living/carbon/monkey/diona))
+			if(istype(src,/mob/living/carbon/alien/diona))
 				text += "chirp, "
 			text += "collapse, cough, dance, deathgasp, drool, gasp, shiver, gnarl, jump, paw, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
 			to_chat(src, text)

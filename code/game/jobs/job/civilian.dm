@@ -349,9 +349,9 @@
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
-	var/datum/organ/external/affected = H.organs_by_name["head"]
-	affected.implants += L
-	L.part = affected
+	var/obj/item/bodypart/BP = H.bodyparts_by_name[BP_HEAD]
+	BP.implants += L
+	L.part = BP
 	return 1
 
 
@@ -386,7 +386,7 @@
 	H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/crayons(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/toy/waterflower(H), slot_in_backpack)
-	H.mutations.Add(CLUMSY)
+	H.disabilities |= CLUMSY
 	return 1
 
 

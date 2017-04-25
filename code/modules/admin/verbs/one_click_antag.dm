@@ -523,7 +523,7 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/create_vox_raider(obj/spawn_location, leader_chosen = 0)
 
-	var/mob/living/carbon/human/new_vox = new(spawn_location.loc, "Vox")
+	var/mob/living/carbon/human/new_vox = new(spawn_location.loc, S_VOX)
 
 	new_vox.gender = pick(MALE, FEMALE)
 	new_vox.h_style = "Short Vox Quills"
@@ -542,25 +542,25 @@ client/proc/one_click_antag()
 	new_vox.age = rand(12,20)
 
 	new_vox.dna.ready_dna(new_vox) // Creates DNA.
-	new_vox.dna.mutantrace = "vox"
+	new_vox.dna.mutantrace = S_VOX
 	new_vox.mind_initialize()
 	new_vox.mind.assigned_role = "MODE"
 	new_vox.mind.special_role = "Vox Raider"
-	new_vox.mutations |= NOCLONE //Stops the station crew from messing around with their DNA.
+	new_vox.disabilities |= NOCLONE //Stops the station crew from messing around with their DNA.
 
 	//Now apply cortical stack.
-	var/datum/organ/external/affected = new_vox.get_organ("head")
+	var/obj/item/bodypart/BP = new_vox.get_bodypart(BP_HEAD)
 
 	//To avoid duplicates.
 	for(var/obj/item/weapon/implant/cortical/imp in new_vox.contents)
-		affected.implants -= imp
+		BP.implants -= imp
 		qdel(imp)
 
 	var/obj/item/weapon/implant/cortical/I = new(new_vox)
 	I.imp_in = new_vox
 	I.implanted = 1
-	affected.implants += I
-	I.part = affected
+	BP.implants += I
+	I.part = BP
 
 	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist ) ) )
 		var/datum/game_mode/heist/M = ticker.mode

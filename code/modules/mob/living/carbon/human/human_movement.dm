@@ -22,12 +22,15 @@
 	if(!has_gravity(src))
 		return -1 // It's hard to be slowed down in space by... anything
 
-	if(embedded_flag)
-		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
+	if(embedded_flag || (stomach_contents && stomach_contents.len))
+		handle_embedded_and_stomach_objects() //Moving with objects stuck in you can cause bad times.
 
-	var/health_deficiency = (100 - health + halloss)
+	var/health_deficiency = (maxHealth - health)
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
+
+	if(can_feel_pain() && getHalLoss() >= 10)
+		tally += (getHalLoss() / 10) //halloss shouldn't slow you down if you can't even feel it
 
 	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
 	if (hungry >= 70)
@@ -37,13 +40,13 @@
 		tally += wear_suit.slowdown
 
 	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
-		for(var/organ_name in list("l_hand","r_hand","l_arm","r_arm"))
-			var/datum/organ/external/E = get_organ(organ_name)
-			if(!E || (E.status & ORGAN_DESTROYED))
+		for(var/bodypart_name in list(BP_L_ARM, BP_R_ARM))
+			var/obj/item/bodypart/BP = get_bodypart(bodypart_name)
+			if(!BP || BP.is_stump())
 				tally += 4
-			else if(E.status & ORGAN_SPLINTED)
+			else if(BP.status & ORGAN_SPLINTED)
 				tally += 0.5
-			else if(E.status & ORGAN_BROKEN)
+			else if(BP.status & ORGAN_BROKEN)
 				tally += 1.5
 	else
 		if(shoes)
@@ -55,13 +58,13 @@
 		if(buckled)	//so, if we buckled we have large debuff
 			tally += 5.5
 
-		for(var/organ_name in list("l_foot","r_foot","l_leg","r_leg"))
-			var/datum/organ/external/E = get_organ(organ_name)
-			if(!E || (E.status & ORGAN_DESTROYED))
+		for(var/bodypart_name in list(BP_L_LEG, BP_R_LEG))
+			var/obj/item/bodypart/BP = get_bodypart(bodypart_name)
+			if(!BP || BP.is_stump())
 				tally += 4
-			else if(E.status & ORGAN_SPLINTED)
+			else if(BP.status & ORGAN_SPLINTED)
 				tally += 0.5
-			else if(E.status & ORGAN_BROKEN)
+			else if(BP.status & ORGAN_BROKEN)
 				tally += 1.5
 
 	if(shock_stage >= 10)
@@ -70,7 +73,7 @@
 	if(pull_debuff)
 		tally += pull_debuff
 
-	if(FAT in src.mutations)
+	if(src.disabilities & FAT)
 		tally += 1.5
 	if (bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75

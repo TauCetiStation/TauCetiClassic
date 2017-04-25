@@ -13,6 +13,7 @@
 #define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
 #define CLAMP01(x) (Clamp(x, 0, 1))
 
+#define ceil(x) (-round(-(x))) // I know that we have /proc/Ceiling(x), but renaming procs that uses Ceiling(x) not in my current plans.
 
 //"fancy" math for calculating time in ms from tick_usage percentage and the length of ticks
 //percent_of_tick_used * (ticklag * 100(to convert to ms)) / 100(percent ratio)

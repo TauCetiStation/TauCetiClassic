@@ -60,25 +60,17 @@
 				var/status = organ_data[name]
 				var/organ_name = null
 				switch(name)
-					if("l_arm")
+					if(BP_L_ARM)
 						organ_name = "left arm"
-					if("r_arm")
+					if(BP_R_ARM)
 						organ_name = "right arm"
-					if("l_leg")
+					if(BP_L_LEG)
 						organ_name = "left leg"
-					if("r_leg")
+					if(BP_R_LEG)
 						organ_name = "right leg"
-					if("l_foot")
-						organ_name = "left foot"
-					if("r_foot")
-						organ_name = "right foot"
-					if("l_hand")
-						organ_name = "left hand"
-					if("r_hand")
-						organ_name = "right hand"
-					if("heart")
+					if(BP_HEART)
 						organ_name = "heart"
-					if("eyes")
+					if(BP_EYES)
 						organ_name = "eyes"
 
 				if(status == "cyborg")
@@ -195,6 +187,7 @@
 				var/dflag=text2num(href_list["disability"])
 				if(dflag >= 0)
 					disabilities ^= text2num(href_list["disability"]) //MAGIC
+					//update_preview_icon(user) // TODO check if this really needed here, but as i know, there is disability that adds glasses for example.
 
 		if("records")
 			switch(href_list["task"])
@@ -255,6 +248,7 @@
 					backbag = rand(1,4)
 				if("all")
 					randomize_appearance_for()	//no params needed
+			update_preview_icon(user)
 		if("input")
 			switch(href_list["preference"])
 				if("name")
@@ -270,7 +264,7 @@
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("species")
-					var/list/new_species = list("Human")
+					var/list/new_species = list(S_HUMAN)
 					var/prev_species = species
 					var/whitelisted = 0
 
@@ -289,6 +283,7 @@
 					if(prev_species != species)
 						f_style = random_facial_hair_style(gender, species)
 						h_style = random_hair_style(gender, species)
+						update_preview_icon(user)
 
 				if("language")
 					var/languages_available
@@ -323,12 +318,13 @@
 						b_type = new_b_type
 
 				if("hair")
-					if(species == "Human" || species == "Unathi" || species == "Tajaran" || species == "Skrell")
+					if(species == S_HUMAN || species == S_UNATHI || species == S_TAJARAN || species == S_SKRELL)
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
 						if(new_hair)
 							r_hair = hex2num(copytext(new_hair, 2, 4))
 							g_hair = hex2num(copytext(new_hair, 4, 6))
 							b_hair = hex2num(copytext(new_hair, 6, 8))
+							update_preview_icon(user)
 
 				if("h_style")
 					var/list/valid_hairstyles = list()
@@ -347,6 +343,7 @@
 					var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in valid_hairstyles
 					if(new_h_style)
 						h_style = new_h_style
+						update_preview_icon(user)
 
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as color|null
@@ -354,6 +351,7 @@
 						r_facial = hex2num(copytext(new_facial, 2, 4))
 						g_facial = hex2num(copytext(new_facial, 4, 6))
 						b_facial = hex2num(copytext(new_facial, 6, 8))
+						update_preview_icon(user)
 
 				if("f_style")
 					var/list/valid_facialhairstyles = list()
@@ -371,6 +369,7 @@
 					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in valid_facialhairstyles
 					if(new_f_style)
 						f_style = new_f_style
+						update_preview_icon(user)
 
 				if("underwear")
 					var/list/underwear_options
@@ -382,6 +381,7 @@
 					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
 					if(new_underwear)
 						underwear = underwear_options.Find(new_underwear)
+						update_preview_icon(user)
 
 				if("undershirt")
 					var/list/undershirt_options
@@ -396,6 +396,7 @@
 					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_options
 					if(new_socks)
 						socks = socks_options.Find(new_socks)
+						update_preview_icon(user)
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
@@ -403,26 +404,30 @@
 						r_eyes = hex2num(copytext(new_eyes, 2, 4))
 						g_eyes = hex2num(copytext(new_eyes, 4, 6))
 						b_eyes = hex2num(copytext(new_eyes, 6, 8))
+						update_preview_icon(user)
 
 				if("s_tone")
-					if(species != "Human")
+					if(species != S_HUMAN)
 						return
 					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
 					if(new_s_tone)
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
+						update_preview_icon(user)
 
 				if("skin")
-					if(species == "Unathi" || species == "Tajaran" || species == "Skrell")
+					if(species == S_UNATHI || species == S_TAJARAN || species == S_SKRELL)
 						var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference") as color|null
 						if(new_skin)
 							r_skin = hex2num(copytext(new_skin, 2, 4))
 							g_skin = hex2num(copytext(new_skin, 4, 6))
 							b_skin = hex2num(copytext(new_skin, 6, 8))
+							update_preview_icon(user)
 
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
 					if(new_backbag)
 						backbag = backbaglist.Find(new_backbag)
+						update_preview_icon(user)
 
 				if("nt_relation")
 					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Character Preference")  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
@@ -485,37 +490,19 @@
 
 					switch(menu_type)
 						if("Limbs")
-							var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
+							var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm")
 							if(!limb_name) return
 
 							var/limb = null
-							var/second_limb = null // if you try to change the arm, the hand should also change
-							var/third_limb = null  // if you try to unchange the hand, the arm should also change
 							switch(limb_name)
 								if("Left Leg")
-									limb = "l_leg"
-									second_limb = "l_foot"
+									limb = BP_L_LEG
 								if("Right Leg")
-									limb = "r_leg"
-									second_limb = "r_foot"
+									limb = BP_R_LEG
 								if("Left Arm")
-									limb = "l_arm"
-									second_limb = "l_hand"
+									limb = BP_L_ARM
 								if("Right Arm")
-									limb = "r_arm"
-									second_limb = "r_hand"
-								if("Left Foot")
-									limb = "l_foot"
-									third_limb = "l_leg"
-								if("Right Foot")
-									limb = "r_foot"
-									third_limb = "r_leg"
-								if("Left Hand")
-									limb = "l_hand"
-									third_limb = "l_arm"
-								if("Right Hand")
-									limb = "r_hand"
-									third_limb = "r_arm"
+									limb = BP_R_ARM
 
 							var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
 							if(!new_state) return
@@ -523,16 +510,11 @@
 							switch(new_state)
 								if("Normal")
 									organ_data[limb] = null
-									if(third_limb)
-										organ_data[third_limb] = null
 								if("Amputated")
 									organ_data[limb] = "amputated"
-									if(second_limb)
-										organ_data[second_limb] = "amputated"
 								if("Prothesis")
 									organ_data[limb] = "cyborg"
-									if(second_limb)
-										organ_data[second_limb] = "cyborg"
+							update_preview_icon(user)
 
 						if("Internal Organs")
 							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
@@ -541,9 +523,9 @@
 							var/organ = null
 							switch(organ_name)
 								if("Heart")
-									organ = "heart"
+									organ = BP_HEART
 								if("Eyes")
-									organ = "eyes"
+									organ = BP_EYES
 
 							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
 							if(!new_state) return
@@ -555,10 +537,11 @@
 									organ_data[organ] = "assisted"
 								if("Mechanical")
 									organ_data[organ] = "mechanical"
+							update_preview_icon(user)
 
 				if("skin_style")
 					var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
-					if(!skin_style_name) return
+					if(!skin_style_name) return // TODO check if this really needed (i have feeling about this feature, that we don't use this)
 
 		else
 			switch(href_list["preference"])
@@ -570,6 +553,7 @@
 
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species)
+					update_preview_icon(user)
 
 				if("disabilities")				//please note: current code only allows nearsightedness as a disability
 					disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here

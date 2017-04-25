@@ -181,7 +181,7 @@
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the urinal.</span>")
 					return
 				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
-				GM.apply_damage(8,BRUTE,"head")
+				GM.apply_damage(8, BRUTE, BP_HEAD)
 				playsound(src, 'sound/weapons/smash.ogg', 50, 1, 1)
 				return
 			else
@@ -230,9 +230,9 @@
 		sleep(60)
 		var/mob/living/carbon/C = user
 		if(C.r_hand)
-			C.apply_damage(25,BURN,"r_hand")
+			C.apply_damage(25, BURN, BP_R_ARM)
 		if(C.l_hand)
-			C.apply_damage(25,BURN,"l_hand")
+			C.apply_damage(25, BURN, BP_L_ARM)
 		to_chat(C, "<span class='danger'>The dryer is burning!</span>")
 		new /obj/effect/decal/cleanable/ash(C.loc)
 		qdel(O)
@@ -395,105 +395,11 @@
 	..()
 
 //Yes, showers are super powerful as far as washing goes.
-/obj/machinery/shower/proc/wash(atom/movable/O)
-	if(!on) return
+/obj/machinery/shower/proc/wash(atom/movable/AM)
+	if(!on)
+		return
 
-	if(isliving(O))
-		var/mob/living/L = O
-		L.ExtinguishMob()
-		L.fire_stacks = -20 //Douse ourselves with water to avoid fire more easily
-		to_chat(L, "<span class='warning'>You've been drenched in water!</span>")
-	if(iscarbon(O))
-		var/mob/living/carbon/M = O
-		if(M.r_hand)
-			M.r_hand.make_wet(1) //<= wet
-			M.r_hand.clean_blood()
-		if(M.l_hand)
-			M.l_hand.make_wet(1) //<= wet
-			M.l_hand.clean_blood()
-		if(M.back)
-			M.back.make_wet(1) //<= wet
-			if(M.back.clean_blood())
-				M.update_inv_back()
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			var/washgloves = 1
-			var/washshoes = 1
-			var/washmask = 1
-			var/washears = 1
-			var/washglasses = 1
-
-			if(H.wear_suit)
-				washgloves = !(H.wear_suit.flags_inv & HIDEGLOVES)
-				washshoes = !(H.wear_suit.flags_inv & HIDESHOES)
-
-			if(H.head)
-				washmask = !(H.head.flags_inv & HIDEMASK)
-				washglasses = !(H.head.flags_inv & HIDEEYES)
-				washears = !(H.head.flags_inv & HIDEEARS)
-
-			if(H.wear_mask)
-				if (washears)
-					washears = !(H.wear_mask.flags_inv & HIDEEARS)
-				if (washglasses)
-					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
-			else
-				H.lip_style = null
-				H.update_body()
-
-			if(H.head)
-				H.head.make_wet(1) //<= wet
-				if(H.head.clean_blood())
-					H.update_inv_head()
-			if(H.wear_suit)
-				H.wear_suit.make_wet(1) //<= wet
-				if(H.wear_suit.clean_blood())
-					H.update_inv_wear_suit()
-			else if(H.w_uniform)
-				H.w_uniform.make_wet(1) //<= wet
-				if(H.w_uniform.clean_blood())
-					H.update_inv_w_uniform()
-			if(H.gloves && washgloves)
-				H.gloves.make_wet(1) //<= wet
-				if(H.gloves.clean_blood())
-					H.update_inv_gloves()
-			if(H.shoes && washshoes)
-				H.shoes.make_wet(1) //<= wet
-				if(H.shoes.clean_blood())
-					H.update_inv_shoes()
-			if(H.wear_mask && washmask)
-				H.wear_mask.make_wet(1) //<= wet
-				if(H.wear_mask.clean_blood())
-					H.update_inv_wear_mask()
-			if(H.glasses && washglasses)
-				H.glasses.make_wet(1) //<= wet
-				if(H.glasses.clean_blood())
-					H.update_inv_glasses()
-			if(H.l_ear && washears)
-				if(H.l_ear.clean_blood())
-					H.update_inv_ears()
-			if(H.r_ear && washears)
-				if(H.r_ear.clean_blood())
-					H.update_inv_ears()
-			if(H.belt)
-				H.belt.make_wet(1) //<= wet
-				if(H.belt.clean_blood())
-					H.update_inv_belt()
-			H.clean_blood(washshoes)
-		else
-			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
-				if(M.wear_mask.clean_blood())
-					M.update_inv_wear_mask()
-			M.clean_blood()
-	else
-		O.clean_blood()
-
-	if(isturf(loc))
-		var/turf/tile = loc
-		loc.clean_blood()
-		for(var/obj/effect/E in tile)
-			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay)) && !istype(E, /obj/effect/decal/cleanable/water))
-				qdel(E)
+	AM.do_wash()
 
 /obj/machinery/shower/process()
 	if(!on) return
@@ -546,12 +452,12 @@
 	var/busy = 0 	//Something's being washed at the moment
 
 /obj/structure/sink/attack_hand(mob/user)
-	if (hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
+	if (hasbodyparts(user))
+		var/obj/item/bodypart/BP = user:bodyparts_by_name[BP_R_ARM]
 		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
+			BP = user:bodyparts_by_name[BP_L_ARM]
+		if(BP && !BP.is_usable())
+			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return
 
 	if(isrobot(user) || isAI(user))
@@ -575,8 +481,8 @@
 	if(!Adjacent(user)) return		//Person has moved away from the sink
 
 	user.clean_blood()
-	if(ishuman(user))
-		user:update_inv_gloves()
+	//if(ishuman(user))
+	//	user:update_inv_gloves() deal with clean_blood on limbs
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [user] washes their hands using \the [src].")
 

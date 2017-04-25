@@ -1,6 +1,5 @@
 /mob/living/carbon/alien/facehugger/regenerate_icons()
 	overlays = list()
-	update_inv_r_hand(0)
 	update_hud()
 	update_icons()
 

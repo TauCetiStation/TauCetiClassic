@@ -1182,8 +1182,8 @@
 		locker.locked = 1
 
 		//strip their stuff and stick it in the crate
-		for(var/obj/item/I in M)
-			M.drop_from_inventory(I, locker)
+		for(var/obj/item/I in M.contents)
+			M.transferItemToLoc(I, locker)
 		M.update_icons()
 
 		//so they black out before warping
@@ -1216,7 +1216,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.drop_from_inventory(I)
+			M.dropItemToGround(I)
 
 		M.Paralyse(5)
 		sleep(5)
@@ -1241,7 +1241,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.drop_from_inventory(I)
+			M.dropItemToGround(I)
 
 		M.Paralyse(5)
 		sleep(5)
@@ -1288,7 +1288,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.drop_from_inventory(I)
+			M.dropItemToGround(I)
 
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/observer = M
@@ -1506,10 +1506,7 @@
 				log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 				message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 				return
-			else
-				H.update_inv_r_hand()//To ensure the icon appears in the HUD
-		else
-			H.update_inv_l_hand()
+
 		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)
@@ -1954,15 +1951,12 @@
 								security++
 					if(!security)
 						//strip their stuff before they teleport into a cell :downs:
-						for(var/obj/item/weapon/W in H)
-							if(istype(W, /datum/organ/external))
-								continue
-								//don't strip organs
-							H.drop_from_inventory(W)
+						for(var/obj/item/weapon/W in H.contents)
+							H.dropItemToGround(W)
 						//teleport person to cell
 						H.loc = pick(prisonwarp)
-						H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(H), slot_w_uniform)
-						H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), slot_shoes)
+						H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange, slot_w_uniform)
+						H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange, slot_shoes)
 					else
 						//teleport security person
 						H.loc = pick(prisonsecuritywarp)

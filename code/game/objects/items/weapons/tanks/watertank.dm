@@ -26,44 +26,51 @@
 /obj/item/weapon/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
-	var/mob/M = usr
-	if (M.back != src)
-		to_chat(usr, "<span class='warning'>The watertank must be worn properly to use!</span>")
+
+	var/mob/living/carbon/human/H = usr
+	if(!istype(H))
+		to_chat(H, "<span class='warning'>You can't do that!</span>")
 		return
+	if (H.get_equipped_item(slot_back) != src)
+		to_chat(H, "<span class='warning'>The watertank must be worn properly to use!</span>")
+		return
+	if(H.incapacitated())
+		return
+
 	on = !on
 
-	var/mob/living/carbon/human/user = usr
 	if(on)
 		if(noz == null)
 			noz = make_noz()
 
 		//Detach the nozzle into the user's hands
-		if(!user.put_in_hands(noz))
+		if(!H.put_in_hands(noz))
 			on = 0
-			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
+			to_chat(H, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
-		noz.loc = user
+		noz.loc = H
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
-	return
 
 /obj/item/weapon/watertank/proc/make_noz()
 	return new /obj/item/weapon/reagent_containers/spray/mister(src)
 
 /obj/item/weapon/watertank/equipped(mob/user, slot)
-	if (slot != slot_back)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if (src != C.get_equipped_item(slot_back))
+			remove_noz()
+	else
 		remove_noz()
 
 /obj/item/weapon/watertank/proc/remove_noz()
 	if(ismob(noz.loc))
 		var/mob/M = noz.loc
-		M.unEquip(noz, 1)
-	return
+		M.temporarilyRemoveItemFromInventory(noz, TRUE)
 
 /obj/item/weapon/watertank/Destroy()
 	if (on)
-		remove_noz()
 		qdel(noz)
 		noz = null
 	return ..()
@@ -74,32 +81,12 @@
 		return
 	..()
 
-/obj/item/weapon/watertank/MouseDrop(obj/over_object)
-	var/mob/H = src.loc
-	if(istype(H))
-		switch(over_object.name)
-			if("r_hand")
-				if(H.r_hand)
-					return
-				if(!H.unEquip(src))
-					return
-				H.put_in_r_hand(src)
-			if("l_hand")
-				if(H.l_hand)
-					return
-				if(!H.unEquip(src))
-					return
-				H.put_in_l_hand(src)
-	return
-
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
 		remove_noz()
-		return
-	..()
-
-/mob/proc/getWatertankSlot()
-	return slot_back
+		return TRUE
+	else
+		return ..()
 
 /obj/item/weapon/watertank/examine(mob/user)
 	..()
@@ -127,27 +114,23 @@
 		tank = parent_tank
 		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
 		loc = tank
-	return
 
 // Here is some magic. Problems with drop, no problems with throw. Too wierd for me - Smalltasty
 /obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user)
+	..()
 	to_chat(user, "<span class='notice'>The mister snaps back onto the watertank.</span>")
 	tank.on = 0
-	spawn(1) loc = tank
-
+	loc = tank
 
 /obj/item/weapon/reagent_containers/spray/mister/attack_self()
 	return
 
 /obj/item/weapon/reagent_containers/spray/mister/proc/check_tank_exists(parent_tank)
 	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
-		if(ismob(loc))
-			var/mob/M = loc
-			M.unEquip(src)
 		qdel(src)
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away

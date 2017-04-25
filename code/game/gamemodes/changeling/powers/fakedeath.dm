@@ -34,7 +34,7 @@
 		//	user.emote("deathgasp")
 		//	user.tod = worldtime2text()
 
-	if(NOCLONE in user.mutations)
+	if(user.disabilities & NOCLONE)
 		to_chat(user, "<span class='notice'>We could not begin our stasis, something damaged all our DNA.</span>")
 		user.mind.changeling.instatis = 0
 		user.fake_death = 0
@@ -50,7 +50,7 @@
 				to_chat(user, "<span class='notice'>Our stasis was interrupted.</span>")
 				return
 			else
-				if(NOCLONE in user.mutations)
+				if(user.disabilities & NOCLONE)
 					to_chat(user, "<span class='notice'>We could not regenerate. something wrong with our DNA.</span>")
 				else
 					to_chat(user, "<span class='notice'>We are ready to regenerate.</span>")

@@ -12,9 +12,11 @@
 	var/code = 2
 
 /obj/item/device/radio/electropack/attack_hand(mob/user)
-	if(src == user.back)
-		to_chat(user, "<span class='notice'>You need help taking this off!</span>")
-		return
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(src == C.back)
+			to_chat(user, "<span class='notice'>You need help taking this off!</span>")
+			return
 	..()
 
 /obj/item/device/radio/electropack/attackby(obj/item/weapon/W, mob/user)
@@ -23,16 +25,14 @@
 		if(!b_stat)
 			to_chat(user, "<span class='notice'>[src] is not ready to be attached!</span>")
 			return
-		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
+		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user.loc)
 		A.icon = 'icons/obj/assemblies.dmi'
 
-		user.drop_from_inventory(W)
-		W.loc = A
+		user.transferItemToLoc(W, A)
 		W.master = A
 		A.part1 = W
 
-		user.drop_from_inventory(src)
-		loc = A
+		user.transferItemToLoc(src, A)
 		master = A
 		A.part2 = src
 

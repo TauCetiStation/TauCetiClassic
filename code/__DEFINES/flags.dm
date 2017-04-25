@@ -28,6 +28,7 @@
 #define BLOCK_GAS_SMOKE_EFFECT  2048    // Blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
 #define ONESIZEFITSALL          2048
 #define PHORONGUARD             4096    // Does not get contaminated by phoron.
+#define DROPDEL                 8192    // When dropped, it calls qdel on itself
 
 #define	NOREACT  4096    //Reagents dont' react inside this container.
 
@@ -36,11 +37,11 @@
 #define NO_BREATHE         "no_breathe"
 #define NO_SCAN            "no_scan"
 #define NO_PAIN            "no_pain"
+#define HAS_GENDERED_ICONS "has_gendered_icons" // TODO implement this for bodyparts.
 #define HAS_SKIN_TONE      "has_skin_tone"
 #define HAS_SKIN_COLOR     "has_skin_color"
 #define HAS_LIPS           "has_lips"
 #define HAS_UNDERWEAR      "has_underwear"
-#define HAS_TAIL           "has_tail"
 #define IS_PLANT           "is_plant"
 #define IS_WHITELISTED     "is_whitelisted"
 #define RAD_ABSORB         "rad_absorb"
@@ -50,6 +51,8 @@
 #define VIRUS_IMMUNE       "virus_immune"
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define HAS_HAIR           "has_hair"
+#define NO_EMBED           "no_embed"
+#define NO_SLIP            "no_slip"
 
 //bitflags for door switches.
 #define OPEN     1
@@ -85,3 +88,4 @@
 #define SLOT_DENYPOCKET   4096    // This is to deny items with a w_class of 2 or 1 to fit in pockets.
 #define SLOT_TWOEARS      8192
 #define SLOT_LEGS        16384
+#define SLOT_UNDERWEAR   32768    // Socks, underwear, undershirt.

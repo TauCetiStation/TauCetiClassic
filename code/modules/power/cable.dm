@@ -422,10 +422,10 @@ By design, d1 is the smallest direction and d2 is the highest
 
 //you can use wires to heal robotics
 /obj/item/weapon/cable_coil/attack(mob/M, mob/user)
-	if(hasorgans(M))
+	if(hasbodyparts(M))
 
-		var/datum/organ/external/S = M:get_organ(user.zone_sel.selecting)
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
+		var/obj/item/bodypart/BP = M:get_bodypart(user.zone_sel.selecting)
+		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 
 		if(istype(M,/mob/living/carbon/human))
@@ -435,10 +435,10 @@ By design, d1 is the smallest direction and d2 is the highest
 					to_chat(user, "<span class='alert'>You can't repair damage to your own body - it's against OH&S.</span>")
 					return
 
-		if(S.burn_dam > 0)
+		if(BP.burn_dam > 0)
 			if(use(1))
-				S.heal_damage(0,15,0,1)
-				user.visible_message("<span class='alert'>\The [user] repairs some burn damage on \the [M]'s [S.display_name] with \the [src].</span>")
+				BP.heal_damage(0,15,0,1)
+				user.visible_message("<span class='alert'>\The [user] repairs some burn damage on \the [M]'s [BP.name] with \the [src].</span>")
 				return
 			else
 				to_chat(user, "Need more cable!")

@@ -44,8 +44,7 @@
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.update_hair(0)	//only human type has hair
-	usr.update_inv_head(0)
-	usr.update_inv_wear_suit()
+	update_inv_item(list(slot_head, slot_wear_suit))
 
 /obj/item/clothing/suit/wintercoat
 	name = "winter coat"

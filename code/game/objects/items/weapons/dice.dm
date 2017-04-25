@@ -78,9 +78,9 @@
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
 /obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
-	if(istype(H) && !H.shoes)
+	if(istype(H) && !H.shoes && !H.species.flags[NO_EMBED])
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
-		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
+		H.apply_damage(4, BRUTE, pick(BP_L_LEG, BP_R_LEG))
 		H.Weaken(3)
 
 //bag

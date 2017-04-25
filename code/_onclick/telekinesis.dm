@@ -65,7 +65,7 @@ var/const/tk_maxrange = 15
 	desc = "Magic."
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
-	flags = NOBLUDGEON | ABSTRACT
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	//item_state = null
 	w_class = 10.0
 	layer = ABOVE_HUD_LAYER
@@ -80,9 +80,7 @@ var/const/tk_maxrange = 15
 	if(focus && user && loc != user && loc != user.loc) // drop_item() gets called when you tk-attack a table/closet with an item
 		if(focus.Adjacent(loc))
 			focus.loc = loc
-
-	qdel(src)
-	return
+	..()
 
 
 	//stops TK grabs being equipped anywhere but into hands

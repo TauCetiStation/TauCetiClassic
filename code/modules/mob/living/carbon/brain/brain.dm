@@ -9,12 +9,6 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain1"
 
-	New()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
-		..()
-
 	Destroy()
 		if(key)				//If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
 			if(stat!=DEAD)	//If not dead.
@@ -54,5 +48,6 @@
 	if(in_contents_of(/obj/mecha))
 		canmove = 1
 		use_me = 1 //If it can move, let it emote
-	else							canmove = 0
+	else
+		canmove = 0
 	return canmove

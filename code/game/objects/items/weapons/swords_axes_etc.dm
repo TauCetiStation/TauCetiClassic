@@ -27,9 +27,9 @@
 	item_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((user.disabilities & CLUMSY) && prob(50))
 		to_chat(user, "\red You accidentally cut yourself with [src].")
-		user.take_organ_damage(5,5)
+		user.take_bodypart_damage(5,5)
 	active = !active
 	if (active)
 		force = 30
@@ -51,14 +51,8 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		to_chat(user, "\blue [src] can now be concealed.")
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_item()
 	add_fingerprint(user)
-	return
-
 
 /*
  * Classic Baton
@@ -73,14 +67,14 @@
 	force = 10
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((user.disabilities & CLUMSY) && prob(50))
 		to_chat(user, "\red You club yourself over the head.")
 		user.Weaken(3 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, "head")
+			H.apply_damage(2*force, BRUTE, BP_HEAD)
 		else
-			user.take_organ_damage(2*force)
+			user.take_bodypart_damage(2*force)
 		return
 /*this is already called in ..()
 	src.add_fingerprint(user)
@@ -144,11 +138,7 @@
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_item()
 	playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)
 
@@ -166,14 +156,14 @@
 
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
-		if ((CLUMSY in user.mutations) && prob(50))
+		if ((user.disabilities & CLUMSY) && prob(50))
 			to_chat(user, "\red You club yourself over the head.")
 			user.Weaken(3 * force)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				H.apply_damage(2*force, BRUTE, "head")
+				H.apply_damage(2*force, BRUTE, BP_HEAD)
 			else
-				user.take_organ_damage(2*force)
+				user.take_bodypart_damage(2*force)
 			return
 		if(..())
 			playsound(src.loc, "swing_hit", 50, 1, -1)
@@ -215,14 +205,6 @@
 	spark_system.attach(src)
 	return
 
-/obj/item/weapon/melee/energy/blade/dropped()
-	qdel(src)
-	return
-
-/obj/item/weapon/melee/energy/blade/proc/throw_held()
-	qdel(src)
-	return
-
 /*
  * Energy Axe
  */
@@ -253,9 +235,9 @@
 		return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if ((user.disabilities & CLUMSY) && prob(50))
 		to_chat(user, "\red You beat yourself in the head with [src].")
-		user.take_organ_damage(5)
+		user.take_bodypart_damage(5)
 	active = !active
 	if (active)
 		force = 10
@@ -271,10 +253,5 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		to_chat(user, "\blue [src] can now be concealed.")
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_item()
 	add_fingerprint(user)
-	return

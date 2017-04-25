@@ -94,9 +94,8 @@
 
 /client/verb/drop_item()
 	set hidden = 1
-	if(!isrobot(mob) && mob.stat == CONSCIOUS && isturf(mob.loc))
-		return mob.drop_item()
-	return
+	if(mob && mob.stat == CONSCIOUS)
+		mob.drop_item()
 
 
 /client/Center()
@@ -156,8 +155,7 @@
 					if(s.zoom)
 						s.zoom()
 
-	if(Process_Grab())
-		return
+	mob.Process_Grab()
 
 	if(istype(mob.buckled, /obj/vehicle))
 		//manually set move_delay for vehicles so we don't inherit any mob movement penalties
@@ -215,9 +213,9 @@
 			else if(istype(mob.buckled, /obj/structure/stool/bed/chair/wheelchair))
 				if(ishuman(mob.buckled))
 					var/mob/living/carbon/human/driver = mob.buckled
-					var/datum/organ/external/l_hand = driver.get_organ("l_hand")
-					var/datum/organ/external/r_hand = driver.get_organ("r_hand")
-					if((!l_hand || (l_hand.status & ORGAN_DESTROYED)) && (!r_hand || (r_hand.status & ORGAN_DESTROYED)))
+					var/obj/item/bodypart/l_arm = driver.get_bodypart(BP_L_ARM)
+					var/obj/item/bodypart/r_arm = driver.get_bodypart(BP_R_ARM)
+					if( (!l_arm || l_arm.is_stump()) && (!r_arm || r_arm.is_stump()) )
 						return // No hands to drive your chair? Tough luck!
 				move_delay += 2
 				return mob.buckled.relaymove(mob,direct)
@@ -279,16 +277,6 @@
 
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)
-
-///Process_Grab()
-///Called by client/Move()
-///Checks to see if you are grabbing anything and if moving will affect your grab.
-/client/proc/Process_Grab()
-	for(var/obj/item/weapon/grab/G in list(mob.l_hand, mob.r_hand))
-		if(G.state == GRAB_KILL) //no wandering across the station/asteroid while choking someone
-			mob.visible_message("<span class='warning'>[mob] lost \his tight grip on [G.affecting]'s neck!</span>")
-			G.hud.icon_state = "kill"
-			G.state = GRAB_NECK
 
 ///Process_Incorpmove
 ///Called by client/Move()

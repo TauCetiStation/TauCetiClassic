@@ -441,18 +441,17 @@
 		var/power_calculated = power
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
-			//var/rnd_foot = pick("l_foot","r_foot")
 			if(istype(H) && (istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags&NOSLIP))
 				power_calculated = 0
 				continue
 			if(istype(H) && (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags&NOSLIP))
 				power_calculated = 0
 				continue
-			var/datum/organ/external/select_area = H.get_organ("chest")
-			if(H.check_thickmaterial(select_area))
+			var/obj/item/bodypart/BP = H.get_bodypart(BP_CHEST)
+			if(H.check_thickmaterial(BP))
 				power_calculated = 0
 			else
-				power_calculated *= H.get_siemens_coefficient_organ(select_area)
+				power_calculated *= H.get_siemens_coefficient_bodypart(BP)
 		if(power_calculated)
 			L.apply_effect(power_calculated,AGONY,0)
 

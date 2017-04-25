@@ -76,8 +76,8 @@
 				H.drip(10)
 				return 1
 	if(ishuman(target))
-		var/datum/organ/external/affecting = target:get_organ(user.zone_sel.selecting)
-		if(target:check_thickmaterial(affecting))
+		var/obj/item/bodypart/BP = target:get_bodypart(user.zone_sel.selecting)
+		if(target:check_thickmaterial(BP))
 			to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [user.zone_sel.selecting]!</span>")
 			to_chat(target, "<span class='warning'>You feel a tiny push in your [user.zone_sel.selecting]!</span>")
 			unset_sting(user)
@@ -149,7 +149,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	if((HUSK in target.mutations) || (NOCLONE in target.mutations))
+	if(target.disabilities & (HUSK|NOCLONE))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
@@ -211,8 +211,9 @@ obj/effect/proc_holder/changeling/sting/silence
 	if(sting_fail(user,target))
 		return 0
 	to_chat(target, "<span class='danger'>Your ears pop and begin ringing loudly!</span>")
-	target.sdisabilities |= DEAF
-	spawn(300)	target.sdisabilities &= ~DEAF
+	target.disabilities |= DEAF
+	spawn(300)
+		target.disabilities &= ~DEAF
 	target.silent += 30
 	feedback_add_details("changeling_powers","MS")
 	return 1
@@ -289,7 +290,7 @@ obj/effect/proc_holder/changeling/sting/unfat
 /obj/effect/proc_holder/changeling/sting/unfat/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
-	if(FAT in target.mutations)
+	if(target.disabilities & FAT)
 		target.overeatduration = 0
 		target.nutrition -= 100
 		to_chat(target, "<span class='danger'>You feel a small prick as stomach churns violently and you become to feel skinnier.</span>")

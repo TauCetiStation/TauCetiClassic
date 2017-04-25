@@ -98,16 +98,11 @@
 		if(W.flags&USEDELAY)
 			next_move += 5
 		W.attack_self(src)
-		if(hand)
-			update_inv_l_hand()
-		else
-			update_inv_r_hand()
-
+		W.update_inv_item()
 		return
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
-	var/sdepth = A.storage_depth(src)
-	if(A == loc || (A in loc) || (sdepth != -1 && sdepth <= 1))
+	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
 
 		// faster access to objects already on you
 		if(A in contents)
@@ -119,7 +114,8 @@
 		if(W)
 			if(W.flags&USEDELAY)
 				next_move += 5
-
+			if(lying) // items no longer dropped in lying state, instead we prevent action with items from that state.
+				return
 			var/resolved = A.attackby(W,src,params)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
@@ -131,15 +127,15 @@
 		return
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
-	sdepth = A.storage_depth_turf()
-	if(isturf(A) || isturf(A.loc) || (sdepth != -1 && sdepth <= 1))
+	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc))) // (tgstation version)
 		next_move = world.time + 10
 
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
 				if(W.flags&USEDELAY)
 					next_move += 5
-
+				if(lying)
+					return
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 				var/resolved = A.attackby(W,src,params)
 				if(!resolved && A && W)
@@ -149,11 +145,21 @@
 			return
 		else // non-adjacent click
 			if(W)
+				if(lying)
+					return
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
 
 	return
+
+/mob/proc/setClickCooldown(timeout)
+	next_move = max(world.time + timeout, next_move)
+
+/mob/proc/canClick()
+	if(next_move <= world.time)
+		return TRUE
+	return FALSE
 
 // Default behavior: ignore double clicks, consider them normal clicks instead
 /mob/proc/DblClickOn(atom/A, params)
@@ -183,7 +189,7 @@
 */
 /mob/proc/RangedAttack(atom/A, params)
 	if(!mutations.len) return
-	if((LASER in mutations) && a_intent == "hurt")
+	if((LASER_EYES in mutations) && a_intent == "hurt")
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
 		switch(get_dist(src,A))
@@ -282,6 +288,20 @@
 	return
 
 /*
+	Helper to check can the mob click/access an item.
+	Used by mob inventory and storage items.
+*/
+/atom/proc/ClickAccessible(mob/user, depth=1)
+	if(src == user.loc || (src in user.contents))
+		return TRUE
+
+	if(loc && depth > 1)
+		return loc.ClickAccessible(user, depth-1)
+
+/turf/ClickAccessible(mob/user, depth=1)
+	return
+
+/*
 	Misc helpers
 
 	Laser Eyes: as the name implies, handles this since nothing else does currently
@@ -299,7 +319,7 @@
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
 	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 
-	LE.def_zone = get_organ_target()
+	LE.def_zone = get_bodypart_target()
 	LE.starting = T
 	LE.original = A
 	LE.current = T

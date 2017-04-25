@@ -23,7 +23,7 @@
 
 /obj/item/gland/proc/Inject(mob/living/carbon/human/target)
 	host = target
-	target.internal_organs += src
+	target.organs += src
 	src.loc = target
 
 /obj/item/gland/process()
@@ -136,8 +136,8 @@ obj/item/gland/slime/activate()
 
 /obj/item/gland/pop/activate()
 	to_chat(host, "<span class='notice'>You feel unlike yourself.</span>")
-	var/species = pick(list(/datum/species/vox,/datum/species/diona,/datum/species/tajaran,/datum/species/unathi,/datum/species/human))
-	host.species = new species()
+	var/species = pick(S_HUMAN, S_UNATHI, S_TAJARAN, S_DIONA, S_VOX)
+	host.set_species(species)
 	host.regenerate_icons()
 	return
 
@@ -238,13 +238,17 @@ obj/item/gland/slime/activate()
 
 	for(var/turf/T in oview(2,host)) //Make this respect walls and such
 		T.add_blood(host)
-	for(var/mob/living/carbon/human/H in oview(3,host)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
-		if(H.wear_suit)
-			H.wear_suit.add_blood(host)
-			H.update_inv_wear_suit()
-		else if(H.w_uniform)
-			H.w_uniform.add_blood(host)
-			H.update_inv_w_uniform()
+
+	for(var/mob/living/carbon/C in oview(3,host)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
+		var/obj/item/I = C.get_equipped_item(slot_wear_suit)
+		if(I)
+			I.add_blood(host)
+			continue
+
+		I = C.get_equipped_item(slot_w_uniform)
+		if(I)
+			I.add_blood(host)
+
 
 
 //BODYSNATCH
@@ -261,7 +265,7 @@ obj/item/gland/slime/activate()
 
 	host.ghostize()
 	host.revive()
-	host.mutations |= NOCLONE
+	host.disabilities |= NOCLONE
 	host.adjustBrainLoss(100)
 	host.loc = C
 

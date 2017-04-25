@@ -53,7 +53,6 @@
 	var/other_mobs = null
 	var/memory = ""
 	var/poll_answer = 0.0
-	var/sdisabilities = 0	//Carbon
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
 	var/next_move = null
@@ -90,7 +89,7 @@
 	var/unacidable = 0
 	var/small = 0
 	var/list/pinned = list()            // List of things pinning this creature to walls (see living_defense.dm)
-	var/list/embedded = list()          // Embedded items, since simple mobs don't have organs.
+	var/list/embedded = list()          // Embedded items, since simple mobs don't have bodyparts.
 	var/list/languages = list()         // For speaking/listening.
 	var/list/abilities = list()         // For species-derived or admin-given powers.
 	var/list/speak_emote = list("says") // Verbs used when speaking. Defaults to 'say' if speak_emote is null.
@@ -124,12 +123,8 @@
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
-	var/obj/item/l_hand = null//Living
-	var/obj/item/r_hand = null//Living
-	var/obj/item/weapon/back = null//Human/Monkey
 	var/obj/item/weapon/tank/internal = null//Human/Monkey
 	var/obj/item/weapon/storage/s_active = null//Carbon
-	var/obj/item/clothing/mask/wear_mask = null//Carbon
 
 	var/seer = 0 //for cult//Carbon, probably Human
 
@@ -227,6 +222,10 @@
 	var/turf/listed_turf = null  //the current turf being examined in the stat panel
 	var/list/shouldnt_see = list()	//list of objects that this mob shouldn't see in the stat panel. this silliness is needed because of AI alt+click and cult blood runes
 
+	var/mob_size = MOB_MEDIUM
+
 	var/list/active_genes=list()
 
 	var/fake_death = 0 //New changeling statis
+	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, check on this var can be used to prevent user do something multiple time.
+	var/busy_slot = null // used as arg in do_mob() and is_busy(), will prevent players to interact with slot if is_busy() passes the checks.

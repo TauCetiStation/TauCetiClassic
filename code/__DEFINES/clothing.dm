@@ -10,33 +10,6 @@
 #define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
 #define HIDEFACE	8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
 
-//slots
-#define slot_back			1
-#define slot_wear_mask 		2
-#define slot_handcuffed 	3
-#define slot_l_hand 		4
-#define slot_r_hand 		5
-#define slot_belt 			6
-#define slot_wear_id 		7
-#define slot_l_ear 			8
-#define slot_glasses 		9
-#define slot_gloves 		10
-#define slot_head 			11
-#define slot_shoes 			12
-#define slot_wear_suit 		13
-#define slot_w_uniform 		14
-#define slot_l_store 		15
-#define slot_r_store 		16
-#define slot_s_store 		17
-#define slot_in_backpack	18
-#define slot_legcuffed 		19
-#define slot_r_ear 			20
-#define slot_legs 			21
-
-//Sol translation for dog slots.
-#define slot_mouth slot_wear_mask  // 2
-#define slot_neck  slot_handcuffed // 3 (Ian actually is a cat! ~if you know what i mean)
-
 //Cant seem to find a mob bitflags area other than the powers one
 
 // bitflags for clothing parts
@@ -74,6 +47,14 @@
 #define THERMAL_PROTECTION_ARM_RIGHT	0.075
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
+
+#define TEMPERATURE_DAMAGE_COEFFICIENT  1.5 // This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
+#define BODYTEMP_AUTORECOVERY_DIVISOR   12  // This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
+#define BODYTEMP_AUTORECOVERY_MINIMUM   1   // Minimum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 50.
+#define BODYTEMP_COLD_DIVISOR           6   // Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
+#define BODYTEMP_HEAT_DIVISOR           6   // Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
+#define BODYTEMP_COOLING_MAX           -30  // The maximum number of degrees that your body can cool down in 1 tick, when in a cold area.
+#define BODYTEMP_HEATING_MAX            30  // The maximum number of degrees that your body can heat up in 1 tick,   when in a hot  area.
 
 // Suit sensor levels
 #define SUIT_SENSOR_OFF      0

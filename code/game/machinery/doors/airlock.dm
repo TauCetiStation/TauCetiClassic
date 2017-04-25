@@ -180,8 +180,8 @@ About the new airlock wires panel:
 				return
 		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
 			to_chat(user, "\red <B>You feel a powerful shock course through your body!</B>")
-			user.halloss += 10
-			user.stunned += 10
+			user.adjustHalLoss(10)
+			user.Stun(10)
 			return
 	..(user)
 
@@ -887,10 +887,10 @@ About the new airlock wires panel:
 			playsound(src, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("\red [user] headbutts the airlock.")
-				var/datum/organ/external/affecting = H.get_organ("head")
+				var/obj/item/bodypart/BP = H.get_bodypart(BP_HEAD)
 				H.Stun(8)
 				H.Weaken(5)
-				affecting.take_damage(10, 0)
+				BP.take_damage(10, 0)
 			else
 				visible_message("\red [user] headbutts the airlock. Good thing they're wearing a helmet.")
 			return
@@ -1376,6 +1376,10 @@ About the new airlock wires panel:
 				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				M.SetStunned(5)
 				M.SetWeakened(5)
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					if(C.can_feel_pain())
+						C.emote("scream",,, 1)
 			M.visible_message("<span class='red'>[M] was crushed by the [src] door.</span>",
 			                  "<span class='danger'>[src] door crushed you.</span>")
 

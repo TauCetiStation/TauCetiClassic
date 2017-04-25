@@ -66,8 +66,8 @@
 			name = "mangled [name]"
 			desc = "[desc]<br>They have had the fingertips cut off of them."
 			if("exclude" in species_restricted)
-				species_restricted -= "Unathi"
-				species_restricted -= "Tajaran"
+				species_restricted -= S_UNATHI
+				species_restricted -= S_TAJARAN
 			return
 		else
 			to_chat(user, "<span class='notice'>The [src] have already been clipped!</span>")
@@ -92,6 +92,4 @@
 			item_state = "stungloves"
 	else
 		item_state = initial(item_state)
-	if(ishuman(src.loc)) // Update item_state if src in gloves slot
-		var/mob/living/carbon/human/H = src.loc
-		H.update_inv_gloves()
+	update_inv_item()

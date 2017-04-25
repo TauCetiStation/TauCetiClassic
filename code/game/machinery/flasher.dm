@@ -81,10 +81,10 @@
 		O.Weaken(strength)
 		if (istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
-			var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
-			if ((E.damage > E.min_bruised_damage && prob(E.damage + 50)))
+			var/obj/item/organ/eyes/IO = H.organs_by_name[BP_EYES]
+			if ((IO.damage > IO.min_bruised_damage && prob(IO.damage + 50)))
 				H.flash_eyes()
-				E.damage += rand(1, 5)
+				IO.damage += rand(1, 5)
 		else
 			if(!O.blinded && istype(O,/mob/living))
 				var/mob/living/L = O

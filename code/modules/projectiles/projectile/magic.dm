@@ -71,7 +71,7 @@
 			//		else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
 			//	new_mob.universal_speak = 1
 			if("human")
-				new_mob = new /mob/living/carbon/human(M.loc, pick(all_species))
+				new_mob = new /mob/living/carbon/human(M.loc, pick(S_HUMAN, S_UNATHI, S_TAJARAN, S_DIONA, S_IPC))
 				if(M.gender == MALE)
 					new_mob.gender = MALE
 					new_mob.name = pick(first_names_male)

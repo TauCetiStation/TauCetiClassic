@@ -101,7 +101,7 @@
 					if(istype(F, /obj/item/device/flashlight)) //More survival!
 						var/obj/item/device/flashlight/FL = F
 						if(FL.on)
-							H.drop_from_inventory(FL)
+							H.dropItemToGround(FL)
 							if(prob(45)) //Poooof
 								qdel(FL)
 				H.set_light(0) //This is required with the object-based lighting

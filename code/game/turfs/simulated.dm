@@ -131,7 +131,7 @@
 					spawn(2) step(M, M.dir)
 					spawn(3) step(M, M.dir)
 					spawn(4) step(M, M.dir)
-					M.take_organ_damage(2) // Was 5 -- TLE
+					M.take_bodypart_damage(2) // Was 5 -- TLE
 					to_chat(M, "\blue You slipped on the floor!")
 					playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
 					M.Weaken(10)

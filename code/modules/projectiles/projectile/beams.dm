@@ -4,6 +4,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 40
 	damage_type = BURN
+	sharp = 1 // concentrated burns
 	flag = "laser"
 	eyeblur = 4
 	var/frequency = 1
@@ -147,6 +148,7 @@
 	agony = 40
 	damage_type = HALLOSS
 	stutter = 5
+	sharp = 0 // not a laser
 
 	muzzle_type = /obj/effect/projectile/stun/muzzle
 	tracer_type = /obj/effect/projectile/stun/tracer

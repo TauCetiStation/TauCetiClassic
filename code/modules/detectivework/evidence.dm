@@ -39,12 +39,8 @@
 			var/obj/item/weapon/storage/U = I.loc
 			user.client.screen -= I
 			U.contents.Remove(I)
-		else if(user.l_hand == I)					//in a hand
-			user.drop_l_hand()
-		else if(user.r_hand == I)					//in a hand
-			user.drop_r_hand()
-		else
-			return
+		if(user.get_active_hand() == I || user.get_inactive_hand() == I)
+			user.dropItemToGround(I)
 
 	user.visible_message(
 		"[user] puts [I] into [src]",

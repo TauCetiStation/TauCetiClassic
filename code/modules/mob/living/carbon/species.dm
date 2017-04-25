@@ -2,19 +2,40 @@
 	Datum-based species. Should make for much cleaner and easier to maintain mutantrace code.
 */
 
+var/list/male_scream_sound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg')
+var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
+
 /datum/species
 	var/name                     // Species name.
 
+	// Icon/appearance vars.
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
-	var/damage_mask = TRUE
-	var/eyes = "eyes_s"                                  // Icon for eyes.
 
-	var/primitive                // Lesser form, if any (ie. monkey for humans)
+	// Damage overlay and masks.
+	var/damage_overlays = 'icons/mob/human_races/masks/human_damage_overlays.dmi'
+	var/blood_overlays = 'icons/mob/human_races/masks/human_blood_overlays.dmi'
+	var/stump_overlays = null // used by monkeys
+
+	var/has_screamSound = FALSE
+
+	var/eyes_icon = "eyes"                                  // Icon for eyes.
+
+	var/backward_form            // Mostly used in genetic (human <-> monkey), if null - gibs user when transformation happens.
 	var/tail                     // Name of tail image in species effects icon file.
 	var/language                 // Default racial language, if any.
-	var/unarmed                  //For empty hand harm-intent attack
-	var/unarmed_type = /datum/unarmed_attack
+
+	// Combat vars.
+	var/total_health = 100                   // Point at which the mob will enter crit.
+	var/list/unarmed_types = list(           // Possible unarmed attacks that the mob will use in combat,
+		/datum/unarmed_attack,
+		/datum/unarmed_attack/bite
+		)
+	var/list/unarmed_attacks = null          // For empty hand harm-intent attack
+
+	// Death vars.
+	var/knockout_message = "has been knocked unconscious!"
+
 	var/secondary_langs = list() // The names of secondary languages that are available to this species.
 	var/attack_verb = "punch"    // Empty hand hurt intent verb.
 	var/punch_damage = 0		 // Extra empty hand attack damage.
@@ -52,6 +73,7 @@
 
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
+	var/blood_volume = 560 // Initial blood volume.
 	var/blood_color = "#A10808" //Red.
 	var/flesh_color = "#FFC896" //Pink.
 	var/base_color      //Used when setting species.
@@ -63,99 +85,146 @@
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
 	sprite_sheets = list(
-		"held" = 'icons/mob/path',
-		"uniform" = 'icons/mob/path',
-		"suit" = 'icons/mob/path',
-		"belt" = 'icons/mob/path'
-		"head" = 'icons/mob/path',
-		"back" = 'icons/mob/path',
-		"mask" = 'icons/mob/path',
-		"ears" = 'icons/mob/path',
-		"eyes" = 'icons/mob/path',
-		"feet" = 'icons/mob/path',
-		"gloves" = 'icons/mob/path'
+		slot_wear_suit = 'icons/mob/path',
+		slot_belt = 'icon_mob/path'
 		)
 	If index term exists and icon_override is not set, this sprite sheet will be used.
 	*/
 
 	var/list/sprite_sheets = list()
 
+	//This is default bodyparts & organs set which is mostly used upon mob creation.
+	var/list/has_bodypart = list( // Keep in mind that this list also acts as priority for creating bodyparts/organs inside spawned mob.
+		BP_CHEST = /obj/item/bodypart/chest // If chest is a main bodypart, it must be on top of the list, since everything else depends on it.
+		,BP_GROIN = /obj/item/bodypart/groin
+		,BP_HEAD  = /obj/item/bodypart/head
+		,BP_L_ARM = /obj/item/bodypart/l_arm
+		,BP_R_ARM = /obj/item/bodypart/r_arm
+		,BP_L_LEG = /obj/item/bodypart/l_leg
+		,BP_R_LEG = /obj/item/bodypart/r_leg
+		)
+
+	var/list/has_organ = list(
+		BP_HEART   = /obj/item/organ/heart
+		,BP_BRAIN   = /obj/item/organ/brain
+		,BP_EYES    = /obj/item/organ/eyes
+		,BP_LUNGS   = /obj/item/organ/lungs
+		,BP_LIVER   = /obj/item/organ/liver
+		,BP_KIDNEYS = /obj/item/organ/kidneys
+		)
+
+	var/breathing_sound = 'sound/voice/monkey.ogg'
+
 /datum/species/New()
-	unarmed = new unarmed_type()
+	unarmed_attacks = list()
 
-/datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
+	for(var/u_type in unarmed_types)
+		unarmed_attacks += new u_type()
+
+/datum/species/proc/create_organs(mob/living/carbon/C, list/organ_data) //Handles creation of mob bodyparts and organs.
 	//This is a basic humanoid limb setup.
-	H.organs = list()
-	H.organs_by_name["chest"] = new/datum/organ/external/chest()
-	H.organs_by_name["groin"] = new/datum/organ/external/groin(H.organs_by_name["chest"])
-	H.organs_by_name["head"] = new/datum/organ/external/head(H.organs_by_name["chest"])
-	H.organs_by_name["l_arm"] = new/datum/organ/external/l_arm(H.organs_by_name["chest"])
-	H.organs_by_name["r_arm"] = new/datum/organ/external/r_arm(H.organs_by_name["chest"])
-	H.organs_by_name["r_leg"] = new/datum/organ/external/r_leg(H.organs_by_name["groin"])
-	H.organs_by_name["l_leg"] = new/datum/organ/external/l_leg(H.organs_by_name["groin"])
-	H.organs_by_name["l_hand"] = new/datum/organ/external/l_hand(H.organs_by_name["l_arm"])
-	H.organs_by_name["r_hand"] = new/datum/organ/external/r_hand(H.organs_by_name["r_arm"])
-	H.organs_by_name["l_foot"] = new/datum/organ/external/l_foot(H.organs_by_name["l_leg"])
-	H.organs_by_name["r_foot"] = new/datum/organ/external/r_foot(H.organs_by_name["r_leg"])
+	C.make_blood()
 
-	H.internal_organs = list()
-	H.internal_organs_by_name["heart"] = new/datum/organ/internal/heart(H)
-	H.internal_organs_by_name["lungs"] = new/datum/organ/internal/lungs(H)
-	H.internal_organs_by_name["liver"] = new/datum/organ/internal/liver(H)
-	H.internal_organs_by_name["kidney"] = new/datum/organ/internal/kidney(H)
-	H.internal_organs_by_name["brain"] = new/datum/organ/internal/brain(H)
-	H.internal_organs_by_name["eyes"] = new/datum/organ/internal/eyes(H)
+	if(!organ_data || !organ_data.len)
+		for(var/type in has_bodypart)
+			var/path = has_bodypart[type]
+			new path(null, C)
+	else
+		for(var/type in has_bodypart)
+			var/status = organ_data[type]
+			if(status)
+				if(status == "amputated")
+					var/obj/item/bodypart/path = has_bodypart[type]
+					var/obj/item/bodypart/stump/stump = new (null, C, path)
+					stump.status |= ORGAN_CUT_AWAY
+					continue
 
-	for(var/name in H.organs_by_name)
-		H.organs += H.organs_by_name[name]
+			var/path = has_bodypart[type]
+			new path(null, C)
 
-	for(var/datum/organ/external/O in H.organs)
-		O.owner = H
+	for(var/type in has_organ)
+		var/path = has_organ[type]
+		new path(null, C)
 
-	if(flags[IS_SYNTHETIC])
-		for(var/datum/organ/external/E in H.organs)
-			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
-			E.status |= ORGAN_ROBOT
-		for(var/datum/organ/internal/I in H.internal_organs)
-			I.mechanize()
-
-/datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
+/datum/species/proc/handle_post_spawn(mob/living/carbon/C) //Handles anything not already covered by basic species assignment.
 	return
 
-/datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
+/datum/species/proc/handle_death(mob/living/carbon/C) //Handles any species-specific death events (such nymph spawns).
 	if(flags[IS_SYNTHETIC])
  //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
-		H.h_style = ""
+		C.h_style = ""
 		spawn(100)
 			//H.is_jittery = 0
 			//H.jitteriness = 0
-			H.update_hair()
-	return
+			C.update_hair()
+
+/datum/species/monkey
+	name = S_MONKEY
+	backward_form = S_HUMAN
+	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
+	icobase = 'icons/mob/human_races/monkeys/r_monkey.dmi'
+	deform = 'icons/mob/human_races/monkeys/r_monkey.dmi'
+	damage_overlays = 'icons/mob/human_races/masks/monkey_damage_overlays.dmi'
+	blood_overlays = 'icons/mob/human_races/masks/monkey_blood_overlays.dmi'
+	stump_overlays = "_monkey"
+
+	tail = "chimptail"
+
+	has_bodypart = list(
+		BP_CHEST  = /obj/item/bodypart/chest/monkey // <-
+		,BP_GROIN = /obj/item/bodypart/groin
+		,BP_HEAD  = /obj/item/bodypart/head
+		,BP_L_ARM = /obj/item/bodypart/l_arm
+		,BP_R_ARM = /obj/item/bodypart/r_arm
+		,BP_L_LEG = /obj/item/bodypart/l_leg
+		,BP_R_LEG = /obj/item/bodypart/r_leg
+		)
+
+	has_organ = list(
+		BP_HEART    = /obj/item/organ/heart
+		,BP_BRAIN   = /obj/item/organ/brain/monkey // <-
+		,BP_EYES    = /obj/item/organ/eyes
+		,BP_LUNGS   = /obj/item/organ/lungs
+		,BP_LIVER   = /obj/item/organ/liver
+		,BP_KIDNEYS = /obj/item/organ/kidneys
+		)
 
 /datum/species/human
-	name = "Human"
+	name = S_HUMAN
 	language = "Sol Common"
-	primitive = /mob/living/carbon/monkey
-	unarmed_type = /datum/unarmed_attack/punch
+	backward_form = S_MONKEY
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite)
+
+	has_screamSound = TRUE
 
 	flags = list(
 	 HAS_SKIN_TONE = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_HAIR = TRUE
+	,HAS_GENDERED_ICONS = TRUE
 	)
 
 	//If you wanted to add a species-level ability:
 	/*abilities = list(/client/proc/test_ability)*/
 
+/datum/species/monkey/stok
+	name = S_MONKEY_U
+	backward_form = S_UNATHI
+
+	icobase = 'icons/mob/human_races/monkeys/r_stok.dmi'
+	deform = 'icons/mob/human_races/monkeys/r_stok.dmi'
+
+	tail = "stoktail"
+
 /datum/species/unathi
-	name = "Unathi"
+	name = S_UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
 	language = "Sinta'unathi"
 	tail = "sogtail"
-	unarmed_type = /datum/unarmed_attack/claws
-	primitive = /mob/living/carbon/monkey/unathi
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/bite/sharp)
+	backward_form = S_MONKEY_U
 	darksight = 3
 
 	cold_level_1 = 280 //Default 260 - Lower is better
@@ -174,8 +243,8 @@
 	 IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
-	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,HAS_GENDERED_ICONS = TRUE
 	)
 
 	flesh_color = "#34AF10"
@@ -183,14 +252,25 @@
 	reagent_tag = IS_UNATHI
 	base_color = "#066000"
 
+	breathing_sound = 'sound/voice/lizard.ogg'
+
+/datum/species/monkey/farwa
+	name = S_MONKEY_T
+	backward_form = S_TAJARAN
+
+	icobase = 'icons/mob/human_races/monkeys/r_farwa.dmi'
+	deform = 'icons/mob/human_races/monkeys/r_farwa.dmi'
+
+	tail = "farwatail"
+
 /datum/species/tajaran
-	name = "Tajaran"
+	name = S_TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = "Siik'maas"
 	secondary_langs = list("Siik'tajr")
 	tail = "tajtail"
-	unarmed_type = /datum/unarmed_attack/claws
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/bite/sharp)
 	darksight = 8
 	nighteyes = 1
 
@@ -202,7 +282,7 @@
 	heat_level_2 = 380 //Default 400
 	heat_level_3 = 800 //Default 1000
 
-	primitive = /mob/living/carbon/monkey/tajara
+	backward_form = S_MONKEY_T
 
 	brute_mod = 1.20
 	burn_mod = 1.20
@@ -212,21 +292,30 @@
 	 IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
-	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_HAIR = TRUE
+	,HAS_GENDERED_ICONS = TRUE
 	)
 
 	flesh_color = "#AFA59E"
 	base_color = "#333333"
 
+/datum/species/monkey/neaera
+	name = S_MONKEY_S
+	backward_form = S_SKRELL
+
+	icobase = 'icons/mob/human_races/monkeys/r_neaera.dmi'
+	deform = 'icons/mob/human_races/monkeys/r_neaera.dmi'
+
+	tail = null
+
 /datum/species/skrell
-	name = "Skrell"
+	name = S_SKRELL
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
 	deform = 'icons/mob/human_races/r_def_skrell.dmi'
 	language = "Skrellian"
-	primitive = /mob/living/carbon/monkey/skrell
-	unarmed_type = /datum/unarmed_attack/punch
+	backward_form = S_MONKEY_S
+	unarmed_types = list(/datum/unarmed_attack/punch)
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -235,112 +324,44 @@
 	,HAS_SKIN_COLOR = TRUE
 	)
 
-	eyes = "skrell_eyes_s"
+	eyes_icon = "skrell_eyes"
 
 	flesh_color = "#8CD7A3"
 
 	reagent_tag = IS_SKRELL
 
-/datum/species/vox
-	name = "Vox"
-	icobase = 'icons/mob/human_races/r_vox.dmi'
-	deform = 'icons/mob/human_races/r_def_vox.dmi'
-	language = "Vox-pidgin"
-	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
+/datum/species/monkey/nymph
+	name = S_MONKEY_D
+	icobase = null
+	deform = null
 
-	warning_low_pressure = 50
-	hazard_low_pressure = 0
+	tail = null
 
-	cold_level_1 = 80
-	cold_level_2 = 50
-	cold_level_3 = 0
+	//backward_form = S_DIONA
+	unarmed_types = list(/datum/unarmed_attack/bite)
 
-	eyes = "vox_eyes_s"
-
-	breath_type = "nitrogen"
-	poison_type = "oxygen"
-
-	flags = list(
-	 NO_SCAN = TRUE
-	,NO_BLOOD = TRUE
-	)
-
-	blood_color = "#2299FC"
-	flesh_color = "#808D11"
-	reagent_tag = IS_VOX
-
-	sprite_sheets = list(
-		"suit" = 'icons/mob/species/vox/suit.dmi',
-		"head" = 'icons/mob/species/vox/head.dmi',
-		"mask" = 'icons/mob/species/vox/masks.dmi',
-		"feet" = 'icons/mob/species/vox/shoes.dmi',
-		"gloves" = 'icons/mob/species/vox/gloves.dmi'
+	has_bodypart = list(
+		BP_CHEST = /obj/item/bodypart/chest/nymph
 		)
 
-/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
-
-	H.verbs += /mob/living/carbon/human/proc/leap
-	..()
-
-/datum/species/vox/armalis/handle_post_spawn(mob/living/carbon/human/H)
-
-	H.verbs += /mob/living/carbon/human/proc/gut
-	..()
-
-/datum/species/vox/armalis
-	name = "Vox Armalis"
-	icobase = 'icons/mob/human_races/r_armalis.dmi'
-	deform = 'icons/mob/human_races/r_armalis.dmi'
-	damage_mask = FALSE
-	language = "Vox-pidgin"
-	unarmed_type = /datum/unarmed_attack/claws/armalis
-
-	warning_low_pressure = 50
-	hazard_low_pressure = 0
-
-	cold_level_1 = 80
-	cold_level_2 = 50
-	cold_level_3 = 0
-
-	heat_level_1 = 2000
-	heat_level_2 = 3000
-	heat_level_3 = 4000
-
-	brute_mod = 0.2
-	burn_mod = 0.2
-
-	eyes = "blank_eyes"
-	breath_type = "nitrogen"
-	poison_type = "oxygen"
-
-	flags = list(
-	 NO_SCAN = TRUE
-	,NO_BLOOD = TRUE
-	,HAS_TAIL = TRUE
-	,NO_PAIN = TRUE
-	)
-
-	blood_color = "#2299FC"
-	flesh_color = "#808D11"
-	reagent_tag = IS_VOX
-	tail = "armalis_tail"
-	icon_template = 'icons/mob/human_races/r_armalis.dmi'
-
-	sprite_sheets = list(
-		"suit" = 'icons/mob/species/armalis/suit.dmi',
-		"gloves" = 'icons/mob/species/armalis/gloves.dmi',
-		"feet" = 'icons/mob/species/armalis/feet.dmi',
-		"head" = 'icons/mob/species/armalis/head.dmi',
-		"held" = 'icons/mob/species/armalis/held.dmi'
+	has_organ = list(
+		BP_BRAIN = /obj/item/organ/brain/monkey/nymph
 		)
+
+	//abilities = list(
+	//	 /mob/living/carbon/alien/diona/proc/merge
+	//	,/mob/living/carbon/alien/diona/proc/fertilize_plant
+	//	,/mob/living/carbon/alien/diona/proc/eat_weeds
+	//	,/mob/living/carbon/alien/diona/proc/evolve
+	//	,/mob/living/carbon/alien/diona/proc/steal_blood)
 
 /datum/species/diona
-	name = "Diona"
+	name = S_DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
 	language = "Rootspeak"
-	unarmed_type = /datum/unarmed_attack/diona
-	primitive = /mob/living/carbon/monkey/diona
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/diona)
+	//backward_form = S_MONKEY_D
 
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
@@ -366,6 +387,7 @@
 	,RAD_ABSORB = TRUE
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
+	,NO_SLIP = TRUE
 	)
 
 	blood_color = "#004400"
@@ -373,34 +395,125 @@
 
 	reagent_tag = IS_DIONA
 
-/datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
-	H.gender = NEUTER
+/datum/species/diona/handle_post_spawn(mob/living/carbon/C)
+	C.gender = NEUTER
 
 	return ..()
 
-/datum/species/diona/handle_death(mob/living/carbon/human/H)
+/datum/species/diona/handle_death(mob/living/carbon/C)
 
-	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
+	var/mob/living/carbon/alien/diona/S = new(get_turf(C))
 
-	if(H.mind)
-		H.mind.transfer_to(S)
+	if(C.mind)
+		C.mind.transfer_to(S)
 
-	for(var/mob/living/carbon/monkey/diona/D in H.contents)
+	for(var/mob/living/carbon/alien/diona/D in C.contents)
 		if(D.client)
-			D.loc = H.loc
+			D.loc = C.loc
 		else
 			qdel(D)
 
-	H.visible_message("\red[H] splits apart with a wet slithering noise!")
+	C.visible_message("\red[C] splits apart with a wet slithering noise!")
+
+/datum/species/vox
+	name = S_VOX
+	icobase = 'icons/mob/human_races/r_vox.dmi'
+	deform = 'icons/mob/human_races/r_def_vox.dmi'
+	language = "Vox-pidgin"
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick,  /datum/unarmed_attack/claws/strong, /datum/unarmed_attack/bite/strong)
+
+	warning_low_pressure = 50
+	hazard_low_pressure = 0
+
+	cold_level_1 = 80
+	cold_level_2 = 50
+	cold_level_3 = 0
+
+	eyes_icon = "vox_eyes"
+
+	breath_type = "nitrogen"
+	poison_type = "oxygen"
+
+	flags = list(
+	 NO_SCAN = TRUE
+	,NO_BLOOD = TRUE
+	)
+
+	blood_color = "#2299FC"
+	flesh_color = "#808D11"
+	reagent_tag = IS_VOX
+
+	sprite_sheets = list(
+		slot_wear_suit = 'icons/mob/species/vox/suit.dmi',
+		slot_head = 'icons/mob/species/vox/head.dmi',
+		slot_wear_mask = 'icons/mob/species/vox/masks.dmi',
+		slot_shoes = 'icons/mob/species/vox/shoes.dmi',
+		slot_gloves = 'icons/mob/species/vox/gloves.dmi'
+		)
+
+/datum/species/vox/handle_post_spawn(mob/living/carbon/C)
+	C.verbs += /mob/living/carbon/human/proc/leap
+	..()
+
+/datum/species/vox/armalis/handle_post_spawn(mob/living/carbon/C)
+	C.verbs += /mob/living/carbon/human/proc/gut
+	..()
+
+/datum/species/armalis
+	name = S_VOX_ARMALIS
+	icobase = 'icons/mob/human_races/r_armalis.dmi'
+	deform = 'icons/mob/human_races/r_armalis.dmi'
+	damage_overlays = null
+	language = "Vox-pidgin"
+
+	warning_low_pressure = 50
+	hazard_low_pressure = 0
+
+	cold_level_1 = 80
+	cold_level_2 = 50
+	cold_level_3 = 0
+
+	heat_level_1 = 2000
+	heat_level_2 = 3000
+	heat_level_3 = 4000
+
+	brute_mod = 0.2
+	burn_mod = 0.2
+
+	eyes_icon = null
+	breath_type = "nitrogen"
+	poison_type = "oxygen"
+
+	flags = list(
+	 NO_SCAN = TRUE
+	,NO_BLOOD = TRUE
+	,NO_PAIN = TRUE
+	,NO_EMBED = TRUE
+	)
+
+	blood_color = "#2299FC"
+	flesh_color = "#808D11"
+	reagent_tag = IS_VOX
+	tail = "armalis_tail"
+	icon_template = 'icons/mob/human_races/r_armalis.dmi'
+
+	sprite_sheets = list(
+		slot_wear_suit = 'icons/mob/species/armalis/suit.dmi',
+		slot_gloves = 'icons/mob/species/armalis/gloves.dmi',
+		slot_shoes = 'icons/mob/species/armalis/feet.dmi',
+		slot_head = 'icons/mob/species/armalis/head.dmi',
+		slot_r_hand = 'icons/mob/species/armalis/held.dmi',
+		slot_l_hand = 'icons/mob/species/armalis/held.dmi'
+		)
 
 /datum/species/machine
-	name = "Machine"
+	name = S_IPC
 	icobase = 'icons/mob/human_races/r_machine.dmi'
 	deform = 'icons/mob/human_races/r_machine.dmi'
 	language = "Tradeband"
-	unarmed_type = /datum/unarmed_attack/punch
+	unarmed_types = list(/datum/unarmed_attack/punch)
 
-	eyes = "blank_eyes"
+	eyes_icon = null
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -433,7 +546,7 @@
 	flesh_color = "#575757"
 
 /datum/species/abductor
-	name = "Abductor"
+	name = S_ABDUCTOR
 	darksight = 3
 
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
@@ -448,55 +561,121 @@
 
 	blood_color = "#BCBCBC"
 
-/datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
-	H.gender = NEUTER
+/datum/species/abductor/handle_post_spawn(mob/living/carbon/C)
+	C.gender = NEUTER
 
 	return ..()
 
 /datum/species/skeleton
-	name = "Skeleton"
+	name = S_SKELETON
 
 	icobase = 'icons/mob/human_races/r_skeleton.dmi'
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
-	damage_mask = FALSE
+	damage_overlays = null
 
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_EMBED = TRUE
 	)
 
-/datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
-	H.gender = NEUTER
+/datum/species/skeleton/handle_post_spawn(mob/living/carbon/C)
+	C.gender = NEUTER
 
 	return ..()
 
-//Species unarmed attacks
+/datum/species/shadowling
+	name = S_SHADOWLING
+	icobase = 'icons/mob/human_races/r_shadowling.dmi'
+	deform = 'icons/mob/human_races/r_def_shadowling.dmi'
+	language = "Sol Common"
+	unarmed_types = list(/datum/unarmed_attack/claws/strong, /datum/unarmed_attack/bite/sharp)
 
-/datum/unarmed_attack
-	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
-	var/damage = 0						// Extra empty hand attack damage.
-	var/attack_sound = "punch"
-	var/miss_sound = 'sound/weapons/punchmiss.ogg'
-	var/sharp = 0
-	var/edge = 0
+	warning_low_pressure = 50
+	hazard_low_pressure = -1
 
-/datum/unarmed_attack/punch
-	attack_verb = list("punch")
+	cold_level_1 = 50
+	cold_level_2 = -1
+	cold_level_3 = -1
 
-/datum/unarmed_attack/diona
-	attack_verb = list("lash", "bludgeon")
-	damage = 5
+	heat_level_1 = 2000
+	heat_level_2 = 3000
+	heat_level_3 = 4000
 
-/datum/unarmed_attack/claws
-	attack_verb = list("scratch", "claw")
-	attack_sound = 'sound/weapons/slice.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
-	damage = 5
-	sharp = 1
-	edge = 1
+	blood_color = "#000000"
+	darksight = 8
 
-/datum/unarmed_attack/claws/armalis
-	attack_verb = list("slash", "claw")
-	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,NO_EMBED = TRUE
+	,NO_SLIP = TRUE
+	)
+	burn_mod = 2 //2x burn damage lel
+
+
+/datum/species/shadowling/handle_post_spawn(mob/living/carbon/C)
+	C.gender = NEUTER
+	return ..()
+
+/datum/species/slime
+	name = S_SLIME
+
+	has_bodypart = list()
+	has_organ = list()
+
+	flags = list(
+	 NO_EMBED = TRUE
+	)
+
+/datum/species/alien
+	has_bodypart = list()
+	has_organ = list()
+
+	flags = list(
+	 NO_EMBED = TRUE
+	,NO_SLIP = TRUE
+	)
+
+/datum/species/alien/facehugger
+	name = S_XENO_FACE
+
+/datum/species/alien/larva
+	name = S_XENO_LARVA
+	backward_form = S_XENO_FACE
+
+/datum/species/alien/adult
+	name = S_XENO_ADULT
+	unarmed_types = list(/datum/unarmed_attack/claws/strong, /datum/unarmed_attack/bite/strong)
+	backward_form = S_XENO_LARVA
+
+/datum/species/alien/adult/queen
+	name = S_XENO_QUEEN
+	//backward_form = /mob/living/carbon/alien/humanoid/drone
+
+/datum/species/dog
+	name = S_DOG
+
+	has_bodypart = list()
+	has_organ = list()
+
+// Called when using the shredding behavior.
+/datum/species/proc/can_shred(var/mob/living/carbon/human/H, var/ignore_intent)
+
+	if(!ignore_intent && H.a_intent != I_HURT)
+		return 0
+
+	for(var/datum/unarmed_attack/attack in unarmed_attacks)
+		if(!attack.is_usable(H))
+			continue
+		if(attack.shredding)
+			return 1
+
+	return 0
+
+/datum/species/proc/get_knockout_message(mob/living/carbon/C)
+	return ((C && C.species.flags[IS_SYNTHETIC]) ? "encounters a hardware fault and suddenly reboots!" : knockout_message)

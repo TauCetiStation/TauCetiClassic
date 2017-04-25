@@ -74,10 +74,6 @@
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
 	if(bcell && bcell.rigged)
 		bcell.explode()
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
 		qdel(src)
 		return
 	update_icon()
@@ -126,7 +122,7 @@
 	return
 
 /obj/item/weapon/melee/cattleprod/attack(mob/M, mob/user)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+	if(status && (user.disabilities & CLUMSY) && prob(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with [src]!</span>")
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)

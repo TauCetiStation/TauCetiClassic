@@ -91,7 +91,7 @@
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.species.name == "Shadowling")
+			if(H.species.name == S_SHADOWLING)
 				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
 				return
 
@@ -105,14 +105,14 @@
 
 			if(clumsy_check) //it should be AFTER hulk or monkey check.
 				var/going_to_explode = 0
-				if ((CLUMSY in H.mutations) && prob(50))
+				if ((H.disabilities & CLUMSY) && prob(50))
 					going_to_explode = 1
 				if(chambered && chambered.crit_fail && prob(10))
 					going_to_explode = 1
 				if(going_to_explode)
 					explosion(user.loc, 0, 0, 1, 1)
 					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
-					H.take_organ_damage(0,20)
+					H.take_bodypart_damage(0,20)
 					H.drop_item()
 					qdel(src)
 					return
@@ -136,11 +136,7 @@
 	process_chamber()
 	user.newtonian_move(get_dir(target, user))
 	update_icon()
-
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	update_inv_item()
 
 
 /obj/item/weapon/gun/proc/can_fire()
@@ -162,7 +158,7 @@
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
-	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
+	if (M == user && user.zone_sel.selecting == BP_MOUTH && !mouthshoot)
 		if(isrobot(user))
 			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it.</span>")
 			return
@@ -192,7 +188,7 @@
 
 			chambered.BB.on_hit(M)
 			if (chambered.BB.damage_type != HALLOSS)
-				user.apply_damage(chambered.BB.damage*2.5, chambered.BB.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [chambered.BB]", sharp=1)
+				user.apply_damage(chambered.BB.damage*2.5, chambered.BB.damage_type, BP_HEAD, 0, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
 				user.death()
 			else
 				to_chat(user, "<span class = 'notice'>Ow...</span>")

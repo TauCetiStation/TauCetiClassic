@@ -44,7 +44,7 @@
 
 	action_icon_state = "mutate"
 
-	mutations = list(LASER, HULK)
+	mutations = list(LASER_EYES, HULK)
 	duration = 300
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate

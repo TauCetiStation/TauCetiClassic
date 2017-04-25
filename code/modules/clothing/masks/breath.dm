@@ -27,7 +27,7 @@
 			flags |= MASKCOVERSMOUTH | MASKINTERNALS
 			icon_state = "breath"
 			to_chat(usr, "You pull the mask up to cover your face.")
-		usr.update_inv_wear_mask()
+		update_inv_item()
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
@@ -42,9 +42,9 @@
 	icon_state = "voxmask"
 	item_state = "voxmask"
 	permeability_coefficient = 0.01
-	species_restricted = list("Vox","Vox Armalis")
+	species_restricted = list(S_VOX, S_VOX_ARMALIS)
 	sprite_sheets = list(
-		"Vox Armalis" = 'icons/mob/species/armalis/mask.dmi'
+		S_VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi'
 		)
 
 /obj/item/clothing/mask/breath/vox/attack_self()

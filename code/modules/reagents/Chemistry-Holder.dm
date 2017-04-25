@@ -481,9 +481,12 @@ var/const/INGEST = 2
 	return 1
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety = 0)//Added a safety check for the trans_id_to
-	if(!isnum(amount)) return 1
-	if(amount < 0) return 0
-	if(amount > 2000) return
+	if(!isnum(amount))
+		return FALSE
+	if(amount < 0)
+		return FALSE
+	if(amount > 2000)
+		return FALSE
 
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
@@ -493,9 +496,9 @@ var/const/INGEST = 2
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
 			my_atom.on_reagent_change()
-			return 0
+			return TRUE
 
-	return 1
+	return FALSE
 
 /datum/reagents/proc/has_reagent(reagent, amount = -1)
 

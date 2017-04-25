@@ -133,9 +133,9 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-		var/datum/organ/external/affecting = H.get_organ(ran_zone(dam_zone))
-		H.apply_damage(damage, BRUTE, affecting, H.run_armor_check(affecting, "melee"), sharp=1, edge=1)
+		var/dam_zone = pick(BP_CHEST, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
+		var/obj/item/bodypart/BP = H.get_bodypart(ran_zone(dam_zone))
+		H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, "melee"), damage_flags = (DAM_SHARP|DAM_EDGE))
 		return H
 	else if(isliving(target))
 		var/mob/living/L = target

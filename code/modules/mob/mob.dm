@@ -53,19 +53,19 @@
 		return
 
 	if(type)
-		if((type & 1) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
+		if((type & 1) && is_blind()) // Vision related
 			if(!alt)
 				return
 			else
 				msg = alt
 				type = alt_type
-		if((type & 2) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
+		if((type & 2) && is_deaf()) // Hearing related
 			if (!alt)
 				return
 			else
 				msg = alt
 				type = alt_type
-				if (((type & 1) && (sdisabilities & BLIND)))
+				if ((type & 1) && is_blind())
 					return
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
@@ -138,8 +138,48 @@
 	set waitfor = 0
 	return
 
-/mob/proc/incapacitated()
-	return
+#define UNBUCKLED 0
+#define PARTIALLY_BUCKLED 1
+#define FULLY_BUCKLED 2
+/mob/proc/buckled()
+	// Preliminary work for a future buckle rewrite,
+	// where one might be fully restrained (like an elecrical chair), or merely secured (shuttle chair, keeping you safe but not otherwise restrained from acting)
+	if(!buckled)
+		return UNBUCKLED
+	return restrained() ? FULLY_BUCKLED : PARTIALLY_BUCKLED
+
+/mob/proc/is_blind()
+	return ((disabilities & BLIND) || blinded || incapacitated(INCAPACITATION_KNOCKOUT))
+
+/mob/proc/is_deaf()
+	return ((disabilities & DEAF) || ear_deaf || incapacitated(INCAPACITATION_KNOCKOUT))
+
+/mob/proc/incapacitated(incapacitation_flags = INCAPACITATION_DEFAULT)
+
+	if ((incapacitation_flags & INCAPACITATION_STUNNED) && stunned)
+		return 1
+
+	if ((incapacitation_flags & INCAPACITATION_FORCELYING) && (weakened || resting))
+		return 1
+
+	if ((incapacitation_flags & INCAPACITATION_KNOCKOUT) && (stat || paralysis || sleeping || (status_flags & FAKEDEATH)))
+		return 1
+
+	if((incapacitation_flags & INCAPACITATION_RESTRAINED) && restrained())
+		return 1
+
+	if((incapacitation_flags & (INCAPACITATION_BUCKLED_PARTIALLY|INCAPACITATION_BUCKLED_FULLY)))
+		var/buckling = buckled()
+		if(buckling >= PARTIALLY_BUCKLED && (incapacitation_flags & INCAPACITATION_BUCKLED_PARTIALLY))
+			return 1
+		if(buckling == FULLY_BUCKLED && (incapacitation_flags & INCAPACITATION_BUCKLED_FULLY))
+			return 1
+
+	return 0
+
+#undef UNBUCKLED
+#undef PARTIALLY_BUCKLED
+#undef FULLY_BUCKLED
 
 /mob/proc/restrained()
 	return
@@ -160,24 +200,12 @@
 
 
 /mob/proc/show_inv(mob/user)
-	user.set_machine(src)
-	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR>
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand&&!(l_hand.flags&ABSTRACT)) 	? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand&&!(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
-	<BR>"}
-	user << browse(dat, text("window=mob[];size=325x500", name))
-	onclose(user, "mob[name]")
 	return
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
+	return
+
+/mob/living/carbon/ret_grab(obj/effect/list_container/mobl/L, flag)
 	if(!(istype(l_hand, /obj/item/weapon/grab) || istype(r_hand, /obj/item/weapon/grab)))
 		if(!L)
 			return null
@@ -209,7 +237,6 @@
 				return temp
 			else
 				return L.container
-	return
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -220,15 +247,15 @@
 		return
 
 	if(hand)
-		var/obj/item/W = l_hand
+		var/obj/item/W = get_active_hand()
 		if(W)
 			W.attack_self(src)
-			update_inv_l_hand()
+			W.update_inv_item()
 	else
-		var/obj/item/W = r_hand
+		var/obj/item/W = get_inactive_hand()
 		if(W)
 			W.attack_self(src)
-			update_inv_r_hand()
+			W.update_inv_item()
 	if(next_move < world.time)
 		next_move = world.time + 2
 	return
@@ -308,7 +335,7 @@
 	set name = "Examine"
 	set category = "IC"
 
-	if(sdisabilities & BLIND || blinded || stat == UNCONSCIOUS)
+	if(is_blind(src))
 		to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
@@ -468,23 +495,28 @@
 
 
 /mob/proc/pull_damage()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if((H.health - H.halloss) <= config.health_threshold_softcrit)
-			for(var/name in H.organs_by_name)
-				var/datum/organ/external/e = H.organs_by_name[name]
-				if(H.lying)
-					if((((e.status & ORGAN_BROKEN) && !(e.status & ORGAN_SPLINTED)) || (e.status & ORGAN_BLEEDING)) && ((H.getBruteLoss() + H.getFireLoss()) >= 100))
-						return 1
-						break
-		return 0
+	return FALSE
 
-/mob/MouseDrop(mob/M as mob)
+/mob/living/carbon/pull_damage()
+	var/mob/living/carbon/C = src
+	if((C.health - C.getHalLoss()) <= config.health_threshold_softcrit)
+		for(var/name in C.bodyparts_by_name)
+			var/obj/item/bodypart/BP = C.bodyparts_by_name[name]
+			if(C.lying)
+				if((((BP.status & ORGAN_BROKEN) && !(BP.status & ORGAN_SPLINTED)) || (BP.status & ORGAN_BLEEDING)) && ((C.getBruteLoss() + C.getFireLoss()) >= 100))
+					return TRUE
+	return FALSE
+
+/mob/MouseDrop(mob/M)
 	..()
-	if(M != usr) return
-	if(usr == src) return
-	if(!Adjacent(usr)) return
-	if(istype(M, /mob/living/silicon/ai)) return
+	if(M != usr)
+		return
+	if(usr == src)
+		return
+	if(!Adjacent(usr))
+		return
+	if(istype(M, /mob/living/silicon/ai))
+		return
 	show_inv(usr)
 
 //this and stop_pulling really ought to be /mob/living procs
@@ -548,10 +580,10 @@
 /mob/proc/is_mechanical()
 	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
 		return 1
-	return istype(src, /mob/living/silicon) || get_species() == "Machine"
+	return istype(src, /mob/living/silicon) || get_species() == S_IPC
 
 /mob/proc/is_ready()
-	return client && !!mind
+	return client && mind
 
 /mob/proc/get_gender()
 	return gender
@@ -722,37 +754,34 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 /mob/proc/update_canmove()
-	if(!ismob(src))
-		return
-	if(istype(buckled, /obj/vehicle))
-		var/obj/vehicle/V = buckled
-		if(incapacitated())
-			V.unload(src)
-			lying = 1
-			canmove = 0
-		else
-			if(buckled.buckle_lying != -1)
-				lying = buckled.buckle_lying
-			canmove = 1
-			pixel_y = V.mob_offset_y
-	else if(buckled)
-		if(buckled.buckle_lying != -1)
-			lying = buckled.buckle_lying
-		if(istype(buckled, /obj/structure/stool/bed/chair))
-			var/obj/structure/stool/bed/chair/C = buckled
-			if(C.flipped)
+
+	if(buckled)
+		if(istype(buckled, /obj/vehicle))
+			var/obj/vehicle/V = buckled
+			if(incapacitated())
+				V.unload(src)
 				lying = 1
-		if(!buckled.buckle_movable)
-			anchored = 1
-			canmove = 0
+				canmove = 0
+			else
+				if(buckled.buckle_lying != -1)
+					lying = buckled.buckle_lying
+				canmove = 1
+				pixel_y = V.mob_offset_y
 		else
-			anchored = 0
-			canmove = 1
-	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
-		lying = 1
-		canmove = 0
-	else if(stunned)
-		canmove = 0
+			if(buckled.buckle_lying == -1)
+				lying = incapacitated(INCAPACITATION_KNOCKDOWN)
+			else
+				lying = buckled.buckle_lying
+			if(istype(buckled, /obj/structure/stool/bed/chair))
+				var/obj/structure/stool/bed/chair/C = buckled
+				if(C.flipped)
+					lying = 1
+			if(!buckled.buckle_movable)
+				anchored = 1
+				canmove = 0
+			else
+				anchored = 0
+				canmove = 1
 	else if(captured)
 		anchored = 1
 		canmove = 0
@@ -760,16 +789,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else if (crawling)
 		lying = 1
 		canmove = 1
-	else if(!buckled)
-		lying = !can_stand
-		canmove = has_limbs
+	else
+		lying = incapacitated(INCAPACITATION_KNOCKDOWN)
+		canmove = !incapacitated(INCAPACITATION_DISABLED)
 
 	if(lying)
 		density = 0
-		if((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove) )
-			if(!isalien(src))
-				drop_l_hand()
-				drop_r_hand()
 	else
 		density = 1
 
@@ -910,15 +935,18 @@ note dizziness decrements automatically in the mob's Life() proc.
 			visible_implants += O
 	return visible_implants
 
+/mob/proc/embedded_needs_process()
+	return (embedded.len > 0)
+
 mob/proc/yank_out_object()
 	set category = "Object"
 	set name = "Yank out object"
 	set desc = "Remove an embedded item at the cost of bleeding and pain."
 	set src in view(1)
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!isliving(usr) || !usr.canClick())
 		return
-	usr.next_move = world.time + 20
+	usr.setClickCooldown(20)
 
 	if(usr.stat == UNCONSCIOUS)
 		to_chat(usr, "You are unconcious and cannot do that!")
@@ -936,7 +964,7 @@ mob/proc/yank_out_object()
 	if(S == U)
 		self = TRUE // Removing object from yourself.
 
-	valid_objects = get_visible_implants(1)
+	valid_objects = get_visible_implants(0)
 	if(!valid_objects.len)
 		if(self)
 			to_chat(src, "You have nothing stuck in your body that is large enough to remove.")
@@ -951,7 +979,7 @@ mob/proc/yank_out_object()
 	else
 		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
 
-	if(!do_after(U, 80, target = S))
+	if(!do_mob(U, S, 80))
 		return
 	if(!selection || !S || !U)
 		return
@@ -965,26 +993,36 @@ mob/proc/yank_out_object()
 		src.verbs -= /mob/proc/yank_out_object
 		clear_alert("embeddedobject")
 
-	if(istype(src, /mob/living/carbon/human))
-
+	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		var/datum/organ/external/affected
+		var/obj/item/bodypart/BP
 
-		for(var/datum/organ/external/organ in H.organs) //Grab the organ holding the implant.
-			for(var/obj/item/weapon/O in organ.implants)
+		for(var/obj/item/bodypart/bodypart in H.bodyparts) //Grab the bodypart holding the implant.
+			for(var/obj/item/weapon/O in bodypart.implants)
 				if(O == selection)
-					affected = organ
+					BP = bodypart
 
-		affected.implants -= selection
-		H.shock_stage += 10
-		H.bloody_hands(S)
+		BP.implants -= selection
+		for(var/datum/wound/W in BP.wounds)
+			W.embedded_objects -= selection
 
-		if(prob(10)) //I'M SO ANEMIC I COULD JUST -DIE-.
-			var/datum/wound/internal_bleeding/I = new (15)
-			affected.wounds += I
-			H.custom_pain("Something tears wetly in your [affected] as [selection] is pulled free!", 1)
+		H.shock_stage += 20
+		BP.take_damage((selection.w_class * 3), 0, DAM_EDGE, "Embedded object extraction")
 
-	selection.loc = get_turf(src)
+		if(prob(selection.w_class * 5) && BP.sever_artery()) //I'M SO ANEMIC I COULD JUST -DIE-.
+			H.custom_pain("Something tears wetly in your [BP] as [selection] is pulled free!", 50, BP = BP)
+
+		if(ishuman(U))
+			var/mob/living/carbon/human/human_user = U
+			human_user.bloody_hands(H)
+
+	else if(issilicon(src))
+		var/mob/living/silicon/robot/R = src
+		R.embedded -= selection
+		R.adjustBruteLoss(5)
+		R.adjustFireLoss(10)
+
+	U.put_in_hands(selection)
 
 	for(var/obj/item/weapon/O in pinned)
 		if(O == selection)

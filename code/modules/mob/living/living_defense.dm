@@ -23,20 +23,28 @@
 	//Being hit while using a deadman switch
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
-		if(signaler.deadman && prob(80))
+		if(signaler.deadman)
+			attack_log += "\[[time_stamp()]\]<font color='orange'>triggers their deadman's switch!</font>"
+			message_admins("\blue [key_name_admin(src)] triggers their deadman's switch! ([ADMIN_JMP(src)])")
+			log_game("\blue [key_name(src)] triggers their deadman's switch!")
 			src.visible_message("\red [src] triggers their deadman's switch!")
 			signaler.signal()
 
+	//Armor
+	var/damage = P.damage
+	var/flags = P.damage_flags()
 	var/absorb = run_armor_check(def_zone, P.flag)
-	var/proj_sharp = is_sharp(P)
-	var/proj_edge = has_edge(P)
-	if ((proj_sharp || proj_edge) && prob(getarmor(def_zone, P.flag)))
-		proj_sharp = 0
-		proj_edge = 0
+	if (prob(absorb))
+		if(flags & DAM_LASER)
+			//the armour causes the heat energy to spread out, which reduces the damage (and the blood loss)
+			//this is mostly so that armour doesn't cause people to lose MORE fluid from lasers than they would otherwise
+			damage *= FLUIDLOSS_CONC_BURN/FLUIDLOSS_WIDE_BURN
+		flags &= ~(DAM_SHARP|DAM_EDGE|DAM_LASER)
 
 	if(!P.nodamage)
-		apply_damage(P.damage, P.damage_type, def_zone, absorb, 0, P, sharp=proj_sharp, edge=proj_edge)
+		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
 	P.on_hit(src, absorb, def_zone)
+
 	return absorb
 
 //this proc handles being hit by a thrown atom
@@ -61,7 +69,7 @@
 		src.visible_message("<span class='warning'>[src] has been hit by [O].</span>")
 		var/armor = run_armor_check(null, "melee")
 
-		apply_damage(throw_damage, dtype, null, armor, is_sharp(O), has_edge(O), O)
+		apply_damage(throw_damage, dtype, null, armor, O.damage_flags(), O)
 
 		if(ismob(O.thrower))
 			var/mob/M = O.thrower
@@ -100,7 +108,7 @@
 //This is called when the mob is thrown into a dense turf
 /mob/living/proc/turf_collision(turf/T)
 	visible_message("<span class='warning'>[src] crashed into \the [T]!</span>","<span class='danger'>You are crashed into \the [T]!</span>")
-	take_organ_damage(fly_speed * 5)
+	take_bodypart_damage(fly_speed * 5)
 
 /mob/living/proc/near_wall(direction,distance=1)
 	var/turf/T = get_step(get_turf(src),direction)
@@ -217,7 +225,3 @@
 			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
 			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
 		client.screen += hud_used.hide_actions_toggle
-
-/mob/living/incapacitated()
-	if(stat || paralysis || stunned || weakened || restrained())
-		return 1

@@ -128,7 +128,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if (changeling.current.mind)
 		if (changeling.current.mind.assigned_role == "Clown")
 			to_chat(changeling.current, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
-			changeling.current.mutations.Remove(CLUMSY)
+			changeling.current.disabilities &= ~CLUMSY
 
 	if (!config.objectives_disabled)
 		var/obj_count = 1
@@ -308,27 +308,3 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			chosen_dna = DNA
 			break
 	return chosen_dna
-/*
-//Checks if the target DNA is valid and absorbable.
-/datum/changeling/proc/can_absorb_dna(mob/living/carbon/T, mob/living/carbon/U)
-	if(T)
-		if(NOCLONE in T.mutations || HUSK in T.mutations)
-			to_chat(U, "<span class='warning'>DNA of [T] is ruined beyond usability!</span>")
-			return 0
-
-		if(T:species.flags[IS_SYNTHETIC] || T:species.flags[IS_PLANT])
-			to_chat(U, "<span class='warning'>[T] is not compatible with our biology.</span>")
-			return 0
-
-		if(T:species.flags[NO_SCAN])
-			to_chat(src, "<span class='warning'>We do not know how to parse this creature's DNA!</span>")
-			return 0
-
-		for(var/datum/dna/D in absorbed_dna)
-			if(T.dna.uni_identity == D.uni_identity)
-				if(T.dna.struc_enzymes == D.struc_enzymes)
-					if(T.dna.real_name == D.real_name)
-						if(T.dna.mutantrace == D.mutantrace)
-							to_chat(U, "<span class='warning'>We already have that DNA in storage.</span>")
-							return 0
-	return 1 */
