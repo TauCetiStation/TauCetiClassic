@@ -24,9 +24,9 @@
 	..()
 	update_hud()
 	//lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
-	overlays.Cut()
-	for(var/image/I in overlays_standing)
-		overlays += I
+	//overlays.Cut()
+	//for(var/image/I in overlays_standing)
+	//	overlays += I
 
 
 

@@ -100,19 +100,23 @@ There are several things that need to be remembered:
 	apply_bodypart_overlay(body_zone)
 
 /mob/living/carbon/proc/update_bloody_bodypart(body_zone)
-	remove_bodypart_overlay(body_zone + "bld")
+	remove_bodypart_overlay(body_zone + "_bld")
 
 	var/obj/item/bodypart/BP = bodyparts_by_name[body_zone]
 
-	if(!BP || !BP.bld_overlay)
+	if(!BP || !BP.bld_overlay || BP.is_stump())
 		return
 
-	overlays_bodypart[body_zone + "bld"] = BP.bld_overlay
-	apply_bodypart_overlay(body_zone + "bld")
+	overlays_bodypart[body_zone + "_bld"] = BP.bld_overlay
+	apply_bodypart_overlay(body_zone + "_bld")
 
 /mob/living/carbon/proc/update_bodyparts()
 	for(var/obj/item/bodypart/BP in bodyparts)
 		update_bodypart(BP.body_zone)
+
+/mob/living/carbon/proc/update_bloody_bodyparts()
+	for(var/obj/item/bodypart/BP in bodyparts)
+		update_bloody_bodypart(BP.body_zone)
 
 //BASE MOB SPRITE
 /mob/living/carbon/proc/update_body()
@@ -284,6 +288,7 @@ There are several things that need to be remembered:
 	update_mutantrace()
 	update_bandage()
 	update_bodyparts()
+	update_bloody_bodyparts()
 	update_icons()
 	update_transform()
 	//Hud Stuff
@@ -412,9 +417,9 @@ There are several things that need to be remembered:
 			var/image/bloodsies
 			if(i_blood == "by_type")
 				var/obj/item/clothing/suit/S = O
-				bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = "[S.blood_overlay_type]blood", layer = i_layer + 0.2)
+				bloodsies = image(icon = species.blood_overlays, icon_state = "[S.blood_overlay_type]blood", layer = i_layer + 0.2)
 			else
-				bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = i_blood, layer = i_layer + 0.2)
+				bloodsies = image(icon = species.blood_overlays, icon_state = i_blood, layer = i_layer + 0.2)
 			bloodsies.color = O.blood_color
 			standing += bloodsies
 
@@ -889,10 +894,10 @@ There are several things that need to be remembered:
 		return
 	remove_overlay(TAIL_LAYER)
 
-	if(species.tail && species.flags[HAS_TAIL])
+	if(species.tail)
 		var/obj/item/clothing/S = get_equipped_item(slot_wear_suit)
 		if(!S || !(S.flags_inv & HIDETAIL) && !istype(S, /obj/item/clothing/suit/space)) // why we shouldn't hide tail under space suit? it is drawn above tail anyway... and there is a flag that controls tail visibility too...
-			var/image/tail_s = image(icon = 'icons/effects/species.dmi', icon_state = "[species.tail]_s", layer = -TAIL_LAYER)
+			var/image/tail_s = image(icon = 'icons/effects/species.dmi', icon_state = "[species.tail]", layer = -TAIL_LAYER)
 			tail_s.color = list(1,0,0, 0,1,0, 0,0,1, r_skin/255,g_skin/255,b_skin/255)
 			overlays_standing[TAIL_LAYER] = tail_s
 

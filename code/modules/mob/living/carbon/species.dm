@@ -2,12 +2,23 @@
 	Datum-based species. Should make for much cleaner and easier to maintain mutantrace code.
 */
 
+var/list/male_scream_sound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg')
+var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
+
 /datum/species
 	var/name                     // Species name.
 
+	// Icon/appearance vars.
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
-	var/damage_mask = TRUE
+
+	// Damage overlay and masks.
+	var/damage_overlays = 'icons/mob/human_races/masks/human_damage_overlays.dmi'
+	var/blood_overlays = 'icons/mob/human_races/masks/human_blood_overlays.dmi'
+	var/stump_overlays = null // used by monkeys
+
+	var/has_screamSound = FALSE
+
 	var/eyes_icon = "eyes"                                  // Icon for eyes.
 
 	var/backward_form            // Mostly used in genetic (human <-> monkey), if null - gibs user when transformation happens.
@@ -149,17 +160,42 @@
 
 /datum/species/monkey
 	name = S_MONKEY
-	backward_form = /mob/living/carbon/human
+	backward_form = S_HUMAN
 	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
+	icobase = 'icons/mob/human_races/monkeys/r_monkey.dmi'
+	deform = 'icons/mob/human_races/monkeys/r_monkey.dmi'
+	damage_overlays = 'icons/mob/human_races/masks/monkey_damage_overlays.dmi'
+	blood_overlays = 'icons/mob/human_races/masks/monkey_blood_overlays.dmi'
+	stump_overlays = "_monkey"
 
-	has_bodypart = list()
-	has_organ = list()
+	tail = "chimptail"
+
+	has_bodypart = list(
+		BP_CHEST  = /obj/item/bodypart/chest/monkey // <-
+		,BP_GROIN = /obj/item/bodypart/groin
+		,BP_HEAD  = /obj/item/bodypart/head
+		,BP_L_ARM = /obj/item/bodypart/l_arm
+		,BP_R_ARM = /obj/item/bodypart/r_arm
+		,BP_L_LEG = /obj/item/bodypart/l_leg
+		,BP_R_LEG = /obj/item/bodypart/r_leg
+		)
+
+	has_organ = list(
+		BP_HEART    = /obj/item/organ/heart
+		,BP_BRAIN   = /obj/item/organ/brain/monkey // <-
+		,BP_EYES    = /obj/item/organ/eyes
+		,BP_LUNGS   = /obj/item/organ/lungs
+		,BP_LIVER   = /obj/item/organ/liver
+		,BP_KIDNEYS = /obj/item/organ/kidneys
+		)
 
 /datum/species/human
 	name = S_HUMAN
 	language = "Sol Common"
-	backward_form = /mob/living/carbon/monkey
+	backward_form = S_MONKEY
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite)
+
+	has_screamSound = TRUE
 
 	flags = list(
 	 HAS_SKIN_TONE = TRUE
@@ -172,13 +208,14 @@
 	//If you wanted to add a species-level ability:
 	/*abilities = list(/client/proc/test_ability)*/
 
-/datum/species/stok
+/datum/species/monkey/stok
 	name = S_MONKEY_U
-	backward_form = /mob/living/carbon/human/unathi
-	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
+	backward_form = S_UNATHI
 
-	has_bodypart = list()
-	has_organ = list()
+	icobase = 'icons/mob/human_races/monkeys/r_stok.dmi'
+	deform = 'icons/mob/human_races/monkeys/r_stok.dmi'
+
+	tail = "stoktail"
 
 /datum/species/unathi
 	name = S_UNATHI
@@ -187,7 +224,7 @@
 	language = "Sinta'unathi"
 	tail = "sogtail"
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/bite/sharp)
-	backward_form = /mob/living/carbon/monkey/unathi
+	backward_form = S_MONKEY_U
 	darksight = 3
 
 	cold_level_1 = 280 //Default 260 - Lower is better
@@ -206,7 +243,6 @@
 	 IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
-	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_GENDERED_ICONS = TRUE
 	)
@@ -218,15 +254,16 @@
 
 	breathing_sound = 'sound/voice/lizard.ogg'
 
-/datum/species/farwa
+/datum/species/monkey/farwa
 	name = S_MONKEY_T
-	backward_form = /mob/living/carbon/human/tajaran
-	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
+	backward_form = S_TAJARAN
 
-	has_bodypart = list()
-	has_organ = list()
+	icobase = 'icons/mob/human_races/monkeys/r_farwa.dmi'
+	deform = 'icons/mob/human_races/monkeys/r_farwa.dmi'
 
-/datum/species/farwa/tajaran
+	tail = "farwatail"
+
+/datum/species/tajaran
 	name = S_TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
@@ -245,7 +282,7 @@
 	heat_level_2 = 380 //Default 400
 	heat_level_3 = 800 //Default 1000
 
-	backward_form = /mob/living/carbon/monkey/tajara
+	backward_form = S_MONKEY_T
 
 	brute_mod = 1.20
 	burn_mod = 1.20
@@ -255,7 +292,6 @@
 	 IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
-	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_HAIR = TRUE
 	,HAS_GENDERED_ICONS = TRUE
@@ -264,20 +300,21 @@
 	flesh_color = "#AFA59E"
 	base_color = "#333333"
 
-/datum/species/neaera
+/datum/species/monkey/neaera
 	name = S_MONKEY_S
-	backward_form = /mob/living/carbon/human/skrell
-	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
+	backward_form = S_SKRELL
 
-	has_bodypart = list()
-	has_organ = list()
+	icobase = 'icons/mob/human_races/monkeys/r_neaera.dmi'
+	deform = 'icons/mob/human_races/monkeys/r_neaera.dmi'
+
+	tail = null
 
 /datum/species/skrell
 	name = S_SKRELL
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
 	deform = 'icons/mob/human_races/r_def_skrell.dmi'
 	language = "Skrellian"
-	backward_form = /mob/living/carbon/monkey/skrell
+	backward_form = S_MONKEY_S
 	unarmed_types = list(/datum/unarmed_attack/punch)
 
 	flags = list(
@@ -292,6 +329,91 @@
 	flesh_color = "#8CD7A3"
 
 	reagent_tag = IS_SKRELL
+
+/datum/species/monkey/nymph
+	name = S_MONKEY_D
+	icobase = null
+	deform = null
+
+	tail = null
+
+	//backward_form = S_DIONA
+	unarmed_types = list(/datum/unarmed_attack/bite)
+
+	has_bodypart = list(
+		BP_CHEST = /obj/item/bodypart/chest/nymph
+		)
+
+	has_organ = list(
+		BP_BRAIN = /obj/item/organ/brain/monkey/nymph
+		)
+
+	//abilities = list(
+	//	 /mob/living/carbon/alien/diona/proc/merge
+	//	,/mob/living/carbon/alien/diona/proc/fertilize_plant
+	//	,/mob/living/carbon/alien/diona/proc/eat_weeds
+	//	,/mob/living/carbon/alien/diona/proc/evolve
+	//	,/mob/living/carbon/alien/diona/proc/steal_blood)
+
+/datum/species/diona
+	name = S_DIONA
+	icobase = 'icons/mob/human_races/r_diona.dmi'
+	deform = 'icons/mob/human_races/r_def_plant.dmi'
+	language = "Rootspeak"
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/diona)
+	//backward_form = S_MONKEY_D
+
+	warning_low_pressure = 50
+	hazard_low_pressure = -1
+
+	cold_level_1 = 50
+	cold_level_2 = -1
+	cold_level_3 = -1
+
+	heat_level_1 = 2000
+	heat_level_2 = 3000
+	heat_level_3 = 4000
+
+	speed_mod = 7
+
+	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
+
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,NO_BREATHE = TRUE
+	,REQUIRE_LIGHT = TRUE
+	,NO_SCAN = TRUE
+	,IS_PLANT = TRUE
+	,RAD_ABSORB = TRUE
+	,NO_BLOOD = TRUE
+	,NO_PAIN = TRUE
+	,NO_SLIP = TRUE
+	)
+
+	blood_color = "#004400"
+	flesh_color = "#907E4A"
+
+	reagent_tag = IS_DIONA
+
+/datum/species/diona/handle_post_spawn(mob/living/carbon/C)
+	C.gender = NEUTER
+
+	return ..()
+
+/datum/species/diona/handle_death(mob/living/carbon/C)
+
+	var/mob/living/carbon/alien/diona/S = new(get_turf(C))
+
+	if(C.mind)
+		C.mind.transfer_to(S)
+
+	for(var/mob/living/carbon/alien/diona/D in C.contents)
+		if(D.client)
+			D.loc = C.loc
+		else
+			qdel(D)
+
+	C.visible_message("\red[C] splits apart with a wet slithering noise!")
 
 /datum/species/vox
 	name = S_VOX
@@ -341,7 +463,7 @@
 	name = S_VOX_ARMALIS
 	icobase = 'icons/mob/human_races/r_armalis.dmi'
 	deform = 'icons/mob/human_races/r_armalis.dmi'
-	damage_mask = FALSE
+	damage_overlays = null
 	language = "Vox-pidgin"
 
 	warning_low_pressure = 50
@@ -365,7 +487,6 @@
 	flags = list(
 	 NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
-	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
 	,NO_EMBED = TRUE
 	)
@@ -384,74 +505,6 @@
 		slot_r_hand = 'icons/mob/species/armalis/held.dmi',
 		slot_l_hand = 'icons/mob/species/armalis/held.dmi'
 		)
-
-/datum/species/nymph
-	name = S_MONKEY_D
-	backward_form = /mob/living/carbon/human/diona
-	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
-
-	has_bodypart = list()
-	has_organ = list()
-
-/datum/species/diona
-	name = S_DIONA
-	icobase = 'icons/mob/human_races/r_diona.dmi'
-	deform = 'icons/mob/human_races/r_def_plant.dmi'
-	language = "Rootspeak"
-	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/diona)
-	backward_form = /mob/living/carbon/monkey/diona
-
-	warning_low_pressure = 50
-	hazard_low_pressure = -1
-
-	cold_level_1 = 50
-	cold_level_2 = -1
-	cold_level_3 = -1
-
-	heat_level_1 = 2000
-	heat_level_2 = 3000
-	heat_level_3 = 4000
-
-	speed_mod = 7
-
-	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
-
-	flags = list(
-	 IS_WHITELISTED = TRUE
-	,NO_BREATHE = TRUE
-	,REQUIRE_LIGHT = TRUE
-	,NO_SCAN = TRUE
-	,IS_PLANT = TRUE
-	,RAD_ABSORB = TRUE
-	,NO_BLOOD = TRUE
-	,NO_PAIN = TRUE
-	,NO_SLIP = TRUE
-	)
-
-	blood_color = "#004400"
-	flesh_color = "#907E4A"
-
-	reagent_tag = IS_DIONA
-
-/datum/species/diona/handle_post_spawn(mob/living/carbon/C)
-	C.gender = NEUTER
-
-	return ..()
-
-/datum/species/diona/handle_death(mob/living/carbon/C)
-
-	var/mob/living/carbon/monkey/diona/S = new(get_turf(C))
-
-	if(C.mind)
-		C.mind.transfer_to(S)
-
-	for(var/mob/living/carbon/monkey/diona/D in C.contents)
-		if(D.client)
-			D.loc = C.loc
-		else
-			qdel(D)
-
-	C.visible_message("\red[C] splits apart with a wet slithering noise!")
 
 /datum/species/machine
 	name = S_IPC
@@ -518,7 +571,7 @@
 
 	icobase = 'icons/mob/human_races/r_skeleton.dmi'
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
-	damage_mask = FALSE
+	damage_overlays = null
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -593,16 +646,16 @@
 
 /datum/species/alien/larva
 	name = S_XENO_LARVA
-	backward_form = /mob/living/carbon/alien/facehugger
+	backward_form = S_XENO_FACE
 
 /datum/species/alien/adult
 	name = S_XENO_ADULT
 	unarmed_types = list(/datum/unarmed_attack/claws/strong, /datum/unarmed_attack/bite/strong)
-	backward_form = /mob/living/carbon/alien/larva
+	backward_form = S_XENO_LARVA
 
 /datum/species/alien/adult/queen
 	name = S_XENO_QUEEN
-	backward_form = /mob/living/carbon/alien/humanoid/drone
+	//backward_form = /mob/living/carbon/alien/humanoid/drone
 
 /datum/species/dog
 	name = S_DOG

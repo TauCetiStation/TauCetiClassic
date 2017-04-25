@@ -2,7 +2,7 @@
 	name = "unknown"
 	real_name = "unknown"
 	voice_name = "unknown"
-	icon = 'icons/mob/human.dmi'
+	//icon = 'icons/mob/human.dmi'
 	//icon_state = "body_m_s"
 	var/dog_owner
 
@@ -59,11 +59,6 @@
 	//hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
 
 	..()
-
-	if(dna)
-		dna.real_name = real_name
-
-	verbs += /mob/living/carbon/proc/crawl
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -711,10 +706,6 @@
 
 	return 1
 
-/mob/living/carbon/human/IsAdvancedToolUser()
-	return 1//Humans can use guns and such
-
-
 /mob/living/carbon/human/abiotic(var/full_body = 0)
 	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.l_ear || src.r_ear || src.gloves)))
 		return 1
@@ -930,10 +921,11 @@
 	var/obj/item/bodypart/check_head = bodyparts_by_name[BP_HEAD]
 	if(check_head && check_head.is_stump())
 		for (var/obj/item/bodypart/head/head in world) // in world... TODO deal with that.
-			head.replace_stump(src)
-			head.disfigured = FALSE
-			if(head.brainmob.mind)
-				head.brainmob.mind.transfer_to(src) // TODO remove this
+			if(head.brainmob && head.brainmob.real_name == src.real_name)
+				head.replace_stump(src)
+				head.disfigured = FALSE
+				if(head.brainmob.mind)
+					head.brainmob.mind.transfer_to(src) // TODO remove this
 
 	for (var/obj/item/bodypart/BP in bodyparts)
 		BP.status &= ~ORGAN_BROKEN

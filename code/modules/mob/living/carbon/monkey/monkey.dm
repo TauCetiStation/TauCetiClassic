@@ -2,15 +2,14 @@
 	name = "monkey"
 	voice_name = "monkey"
 	speak_emote = list("chimpers")
-	icon_state = "monkey1"
-	icon = 'icons/mob/monkey.dmi'
+	//icon_state = "monkey1"
+	//icon = 'icons/mob/monkey.dmi'
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 
 	var/greaterform = S_HUMAN                  // Used when humanizing a monkey.
-	icon_state = "monkey1"
 	//var/uni_append = "12C4E2"                // Small appearance modifier for different species.
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
 	var/update_muts = 1                        // Monkey gene must be set at start.
@@ -22,7 +21,7 @@
 	name = "farwa"
 	voice_name = "farwa"
 	speak_emote = list("mews")
-	icon_state = "tajkey1"
+	//icon_state = "tajkey1"
 	uni_append = list(0x0A0,0xE00) // 0A0E00
 	holder_type = /obj/item/weapon/holder/monkey/farwa
 
@@ -30,7 +29,7 @@
 	name = "neaera"
 	voice_name = "neaera"
 	speak_emote = list("squicks")
-	icon_state = "skrellkey1"
+	//icon_state = "skrellkey1"
 	uni_append = list(0x01C,0xC92) // 01CC92
 	holder_type = /obj/item/weapon/holder/monkey/neaera
 
@@ -38,14 +37,14 @@
 	name = "stok"
 	voice_name = "stok"
 	speak_emote = list("hisses")
-	icon_state = "stokkey1"
+	//icon_state = "stokkey1"
 	uni_append = list(0x044,0xC5D) // 044C5D
 	holder_type = /obj/item/weapon/holder/monkey/stok
 
 /mob/living/carbon/monkey/New(loc, new_species = S_MONKEY)
-	if(name == initial(name)) //To stop Pun-Pun becoming generic.
-		name = "[name] ([rand(1, 1000)])"
-		real_name = name
+	//if(name == initial(name)) //To stop Pun-Pun becoming generic.
+		//name = "[name] ([rand(1, 1000)])"
+	real_name = name
 
 	if (!dna)
 		if(gender == NEUTER)
@@ -75,44 +74,57 @@
 		update_muts=1
 
 	..()
-	update_icons()
-	return
 
+	//update_icons()
+	//return
+
+/mob/living/carbon/monkey/tajara/New()
+	..(new_species = S_MONKEY_T)
+
+/mob/living/carbon/monkey/skrell/New()
+	..(new_species = S_MONKEY_S)
+
+/mob/living/carbon/monkey/unathi/New()
+	..(new_species = S_MONKEY_U)
+
+/mob/living/carbon/alien/diona/New()
+	gender = NEUTER
+	..(new_species = S_MONKEY_D)
+/*
 /mob/living/carbon/monkey/unathi/New(loc, new_species = S_MONKEY_U)
 
 	..()
 	dna.mutantrace = S_UNATHI
 	greaterform = S_UNATHI
-	add_language("Sinta'unathi")
+	add_language("Sinta'unathi")*/
 
-/mob/living/carbon/monkey/skrell/New(loc, new_species = S_MONKEY_S)
+/*/mob/living/carbon/monkey/skrell/New(loc, new_species = S_MONKEY_S)
 
 	..()
 	dna.mutantrace = S_SKRELL
 	greaterform = S_SKRELL
-	add_language("Skrellian")
+	add_language("Skrellian")*/
 
-/mob/living/carbon/monkey/tajara/New(loc, new_species = S_MONKEY_T)
+/*/mob/living/carbon/monkey/tajara/New(loc, new_species = S_MONKEY_T)
 
 	..()
 	dna.mutantrace = S_TAJARAN
 	greaterform = S_TAJARAN
-	add_language("Siik'tajr")
+	add_language("Siik'tajr")*/
 
-/mob/living/carbon/monkey/diona/New(loc, new_species = S_MONKEY_D)
+/*/mob/living/carbon/alien/diona/New(loc, new_species = S_MONKEY_D)
 	..()
 	alien = 1
 	gender = NEUTER
 	dna.mutantrace = S_DIONA
 	greaterform = S_DIONA
-	add_language("Rootspeak")
-	src.verbs += /mob/living/carbon/monkey/diona/proc/merge
+	add_language("Rootspeak")*/
 
 
-/mob/living/carbon/monkey/diona/movement_delay()
-	return ..(tally = 3.5)
+//mob/living/carbon/alien/diona/movement_delay()
+//	return ..(tally = 3.5)
 
-/mob/living/carbon/monkey/movement_delay(tally = 0)
+/*/mob/living/carbon/monkey/movement_delay(tally = 0)
 	if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
 
@@ -124,9 +136,9 @@
 
 	if (bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
-	return tally+config.monkey_delay
+	return tally+config.monkey_delay*/
 
-/mob/living/carbon/monkey/Topic(href, href_list)
+/*/mob/living/carbon/monkey/Topic(href, href_list)
 	..()
 	if (href_list["mach_close"])
 		var/t1 = text("window=[]", href_list["mach_close"])
@@ -145,9 +157,9 @@
 			O.process()
 			return
 	..()
-	return
+	return*/
 
-/mob/living/carbon/monkey/meteorhit(obj/O)
+/*/mob/living/carbon/monkey/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
@@ -156,12 +168,12 @@
 		if ((O.icon_state == "flaming" && !( shielded )))
 			adjustFireLoss(40)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-	return
+	return*/
 
 //mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)taken care of in living
 
 
-/mob/living/carbon/monkey/attack_paw(mob/M)
+/*/mob/living/carbon/monkey/attack_paw(mob/M)
 	..()
 
 	if (M.a_intent == "help")
@@ -182,9 +194,9 @@
 			else
 				for(var/mob/O in viewers(src, null))
 					O.show_message("\red <B>[M.name] has attempted to bite [name]!</B>", 1)
-	return
+	return*/
 
-/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
+/*/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -271,9 +283,9 @@
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
-	return
+	return*/
 
-/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
+/*/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -339,9 +351,9 @@
 						O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
 			adjustBruteLoss(damage)
 			updatehealth()
-	return
+	return*/
 
-/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
+/*/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -353,10 +365,10 @@
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
-		updatehealth()
+		updatehealth()*/
 
 
-/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M)
+/*/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -414,9 +426,9 @@
 
 		updatehealth()
 
-	return
+	return*/
 
-/mob/living/carbon/monkey/Stat()
+/*/mob/living/carbon/monkey/Stat()
 	..()
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
@@ -426,20 +438,20 @@
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Genetic Damage Time", mind.changeling.geneticdamage)
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
-	return
+	return*/
 
 
-/mob/living/carbon/monkey/verb/removeinternal()
+/*/mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"
 	set category = "IC"
 	internal = null
-	return
+	return*/
 
-/mob/living/carbon/monkey/emp_act(severity)
+/*/mob/living/carbon/monkey/emp_act(severity)
 	if(wear_id) wear_id.emp_act(severity)
-	..()
+	..()*/
 
-/mob/living/carbon/monkey/ex_act(severity)
+/*/mob/living/carbon/monkey/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
 
@@ -460,9 +472,9 @@
 			if (prob(50))
 				Paralyse(10)
 		else
-	return
+	return*/
 
-/mob/living/carbon/monkey/blob_act()
+/*/mob/living/carbon/monkey/blob_act()
 	if (stat != DEAD)
 		adjustFireLoss(60)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
@@ -474,13 +486,9 @@
 	if (stat == DEAD && !client)
 		gibs(loc, viruses)
 		qdel(src)
-		return
+		return*/
 
-
-/mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
-	return 0
-
-/mob/living/carbon/monkey/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list())
+/*/mob/living/carbon/monkey/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list())
         if(stat)
                 return
 
@@ -495,4 +503,4 @@
 
         message = capitalize(trim_left(message))
 
-        ..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+        ..(message, speaking, verb, alt_name, italics, message_range, used_radios)*/

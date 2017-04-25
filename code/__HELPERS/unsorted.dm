@@ -1409,31 +1409,33 @@ var/mob/dview/dview_mob = new
  */
 /*
 /mob/verb/generate_damage_overlays_dmi()
-	spawn()
-		//if limb names will ever be changed or procs that use names of limbs,
-		//you must adjust names of body_parts according to the current that server uses or mobs will be missing some icon_states.
-		var/list/body_parts = list(BP_HEAD , BP_CHEST , BP_L_ARM , BP_R_ARM , BP_GROIN , BP_L_LEG , BP_R_LEG)
-		//Same rules for damage states.. must be exactly same as other code uses...
-		var/list/damage_states = list("01","10","11","12","13","02","20","21","22","23","03","30","31","32","33")
 
-		var/icon/master = new()
-		var/total = body_parts.len * damage_states.len
-		var/count = 0
+	var/race = alert(src, "Select:",,"human","monkey")
 
-		//Use different dam_human.dmi and dam_mask_gen.dmi files, if you need something else.
+	//if limb names will ever be changed or procs that use names of limbs,
+	//you must adjust names of body_parts according to the current that server uses or mobs will be missing some icon_states.
+	var/list/body_parts = list(BP_HEAD , BP_CHEST , BP_L_ARM , BP_R_ARM , BP_GROIN , BP_L_LEG , BP_R_LEG)
+	//Same rules for damage states.. must be exactly same as other code uses...
+	var/list/damage_states = list("01","10","11","12","13","02","20","21","22","23","03","30","31","32","33")
 
-		for(var/body_part in body_parts)
-			for(var/damage_state in damage_states)
-				var/icon/DI = new /icon('icons/mob/human_races/masks/dam_human.dmi', damage_state)
-				DI.Blend(new /icon('icons/mob/human_races/masks/dam_mask_gen.dmi', body_part), ICON_MULTIPLY)
-				master.Insert(DI, "[body_part]_[damage_state]")
+	var/icon/master = new()
+	var/total = body_parts.len * damage_states.len
+	var/count = 0
 
-				count += 1
-				var/pct = round(100 * count / total)
-				to_chat(world, "[pct]%")
-				sleep(world.tick_lag)
+	//Use different dam_human.dmi and dam_mask_gen.dmi files, if you need something else.
 
-		world << ftp(master, "damage_overlays.dmi")
+	for(var/body_part in body_parts)
+		for(var/damage_state in damage_states)
+			var/icon/DI = new /icon("icons/mob/human_races/masks/dam_" + race + ".dmi", damage_state) // dam_human.dmi
+			DI.Blend(new /icon("icons/mob/human_races/masks/dam_mask_" + race + ".dmi", body_part), ICON_MULTIPLY) // dam_mask_human.dmi
+			master.Insert(DI, "[body_part]_[damage_state]")
+
+			count += 1
+			var/pct = round(100 * count / total)
+			to_chat(world, "[pct]%")
+			sleep(world.tick_lag)
+
+	world << ftp(master, race + "_damage_overlays.dmi")
 */
 
 /proc/find_loc(obj/R)

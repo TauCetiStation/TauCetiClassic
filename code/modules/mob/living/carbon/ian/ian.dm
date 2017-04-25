@@ -283,9 +283,6 @@
 	client.images -= I
 
 //Standard procs, etc.
-/mob/living/carbon/ian/IsAdvancedToolUser()
-	return FALSE
-
 /mob/living/carbon/ian/movement_delay(tally = 0)
 	if(crawling)
 		tally += 5

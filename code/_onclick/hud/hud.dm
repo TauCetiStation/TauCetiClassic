@@ -40,12 +40,12 @@
 	var/action_buttons_hidden = 0
 	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
 
-/datum/hud/New(mob/owner)
+/datum/hud/New(mob/owner, hud_style, inv_shown)
 	mymob = owner
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
 		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
-	instantiate()
+	instantiate(hud_style, inv_shown)
 	..()
 
 /datum/hud/Destroy()
@@ -104,7 +104,7 @@
 					else
 						I.screen_loc = null
 
-/datum/hud/proc/instantiate()
+/datum/hud/proc/instantiate(hud_style, inv_shown)
 	if(!ismob(mymob))
 		return 0
 	if(!mymob.client)
@@ -114,20 +114,16 @@
 	var/ui_color = mymob.client.prefs.UI_style_color
 	var/ui_alpha = mymob.client.prefs.UI_style_alpha
 
-	if(ishuman(mymob))
-		human_hud(ui_style, ui_color, ui_alpha) // Pass the player the UI style chosen in preferences
-	else if(isIAN(mymob))
-		ian_hud()
-	else if(ismonkey(mymob))
-		monkey_hud(ui_style)
-	else if(isbrain(mymob))
+	if(isbrain(mymob))
 		brain_hud(ui_style)
-	else if(isfacehugger(mymob))
-		facehugger_hud()
-	else if(islarva(mymob))
-		larva_hud()
-	else if(isalien(mymob))
-		alien_hud()
+	//else if(isfacehugger(mymob))
+	//	facehugger_hud()
+	//else if(islarva(mymob))
+	//	larva_hud()
+	//else if(isalien(mymob))
+	//	alien_hud()
+	else if(iscarbon(mymob))
+		human_hud(ui_style, ui_color, ui_alpha) // Pass the player the UI style chosen in preferences
 	else if(isAI(mymob))
 		ai_hud()
 	else if(isrobot(mymob))
@@ -139,6 +135,9 @@
 
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
+	else if(hud_style)
+		inventory_shown = inv_shown
+		show_hud(hud_style)
 
 	if(plane_masters.len)
 		for(var/thing in plane_masters)

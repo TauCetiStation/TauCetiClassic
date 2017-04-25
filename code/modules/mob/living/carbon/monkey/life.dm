@@ -12,7 +12,7 @@
 		environment = loc.return_air()
 
 	if (stat != DEAD)
-		if(!istype(src,/mob/living/carbon/monkey/diona)) //still breathing
+		if(!istype(src,/mob/living/carbon/alien/diona)) //still breathing
 			//First, resolve location and get a breath
 			if(SSmob.times_fired%4==2)
 				//Only try to take a breath every 4 seconds, unless suffocating
@@ -121,7 +121,7 @@
 
 		if (radiation)
 
-			if(istype(src,/mob/living/carbon/monkey/diona)) //Filthy check. Dionaea don't take rad damage.
+			if(istype(src,/mob/living/carbon/alien/diona)) //Filthy check. Dionaea don't take rad damage.
 				var/rads = radiation/25
 				radiation -= rads
 				nutrition += rads

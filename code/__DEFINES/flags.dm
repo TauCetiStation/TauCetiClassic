@@ -42,7 +42,6 @@
 #define HAS_SKIN_COLOR     "has_skin_color"
 #define HAS_LIPS           "has_lips"
 #define HAS_UNDERWEAR      "has_underwear"
-#define HAS_TAIL           "has_tail"
 #define IS_PLANT           "is_plant"
 #define IS_WHITELISTED     "is_whitelisted"
 #define RAD_ABSORB         "rad_absorb"

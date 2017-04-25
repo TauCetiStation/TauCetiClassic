@@ -89,6 +89,7 @@
 	var/list/inv_slots_data // this list will be automatically created and filled upon bodypart creation (no need to touch this).
 	var/list/inv_box_data // this list contains hud element information like slot name, id, icon_state, etc, see other bodyparts if you need to create new unique bodypart.
 	                      // also acts as information on which items can be equipped into that bodypart.
+	var/image/lmb_overlay // limb's overlay
 	var/image/dmg_overlay // damage overlays
 	var/image/bld_overlay // blood overlays (this ones come from combat - that blood may even be someone's else)
 	var/image/srg_overlay // surgery overlays
@@ -107,6 +108,11 @@
 
 		owner.bodyparts += src
 		owner.bodyparts_by_name[body_zone] = src
+
+		if(can_grasp)
+			owner.bodypart_hands += src
+		if(can_stand)
+			owner.bodypart_legs += src
 
 		if(parent_bodypart)
 			parent = owner.bodyparts_by_name[parent_bodypart]
@@ -175,6 +181,11 @@
 /obj/item/bodypart/proc/removed(mob/living/user) // TODO implement this proc properly
 	if(!istype(owner))
 		return
+
+	if(can_grasp)
+		owner.bodypart_hands -= src
+	if(can_stand)
+		owner.bodypart_legs -= src
 
 	remove_hud_data()
 	drop_linked_items()
@@ -267,6 +278,11 @@
 
 		owner.bodyparts += src
 		owner.bodyparts_by_name[body_zone] = src
+
+		if(can_grasp)
+			owner.bodypart_hands += src
+		if(can_stand)
+			owner.bodypart_legs += src
 
 		if(parent_bodypart)
 			parent = owner.bodyparts_by_name[parent_bodypart]
@@ -841,17 +857,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	var/n_is = damage_state_text()
 	if(n_is != damage_state)
 		damage_state = n_is
-
-		if(dmg_overlay)
-			overlays -= dmg_overlay
-
-		// Damage overlays
-		if( (status & ORGAN_ROBOT) || damage_state == "00")
-			dmg_overlay = null
-		else
-			dmg_overlay = image(icon = 'icons/mob/human_races/damage_overlays.dmi', icon_state = "[body_zone]_[damage_state]", layer = -DAMAGE_LAYER + limb_layer_priority)
-			dmg_overlay.color = species.blood_color
-
 		return TRUE
 	return FALSE
 
@@ -1357,6 +1362,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "aorta"
 	dislocated = -1
 
+/obj/item/bodypart/chest/nymph
+	max_damage = 200
+	cannot_break = TRUE
+	can_grasp = TRUE
+	can_stand = TRUE
+
 /obj/item/bodypart/groin
 	name = "groin"
 	icon_state = "groin"
@@ -1430,6 +1441,14 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			visible_message("\red [name] melts away, turning into mangled mess!")
 	disfigured = 1
 
+/obj/item/bodypart/proc/initialize_hand()
+	if(can_grasp && owner)
+		if(!owner.active_hand)
+			owner.activate_hand(src)
+		else
+			owner.inactive_hands += src
+		update_swapped_hand_hud()
+
 /obj/item/bodypart/l_arm
 	name = "left arm"
 	icon_state = "l_arm"
@@ -1450,19 +1469,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "basilic vein"
 	arterial_bleed_severity = 0.75
 
-/obj/item/bodypart/l_arm/New(loc, mob/living/carbon/C)
-	..()
-
-	if(owner)
-		if(!owner.active_hand)
-			owner.active_hand = src
-			var/obj/screen/S = inv_slots_data[inv_slots_data[1]]
-			S.icon_state = body_zone + "_active"
-		else
-			owner.inactive_hands += src
-			var/obj/screen/S = inv_slots_data[inv_slots_data[1]]
-			S.icon_state = body_zone + "_inactive"
-
 /obj/item/bodypart/r_arm
 	name = "right arm"
 	icon_state = "r_arm"
@@ -1482,19 +1488,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	joint = "right elbow"
 	artery_name = "basilic vein"
 	arterial_bleed_severity = 0.75
-
-/obj/item/bodypart/r_arm/New(loc, mob/living/carbon/C)
-	..()
-
-	if(owner)
-		if(!owner.active_hand)
-			owner.active_hand = src
-			var/obj/screen/S = inv_slots_data[inv_slots_data[1]]
-			S.icon_state = body_zone + "_active"
-		else
-			owner.inactive_hands += src
-			var/obj/screen/S = inv_slots_data[inv_slots_data[1]]
-			S.icon_state = body_zone + "_inactive"
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
@@ -1584,7 +1577,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	if(status & ORGAN_ROBOT)
 		icon_state = body_zone + "_robot_stump"
 	else
-		icon_state = body_zone + "_stump"
+		icon_state = body_zone + species.stump_overlays + "_stump"
 	return
 
 /obj/item/bodypart/stump/get_icon()

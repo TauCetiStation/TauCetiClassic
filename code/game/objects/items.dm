@@ -497,10 +497,13 @@
 		blood_DNA = null
 		. = TRUE
 
-		if(bld_overlay)
-			bld_overlay = null
-			if(owner)
-				owner.update_bloody_bodypart(body_zone)
+	if(blood_overlay)
+		overlays -= blood_overlay
+
+	if(bld_overlay)
+		bld_overlay = null
+		if(owner)
+			owner.update_bloody_bodypart(body_zone)
 
 /obj/item/add_blood(mob/living/carbon/C)
 	if (!..())
@@ -530,7 +533,7 @@
 		return FALSE
 
 	if(body_zone != BP_GROIN)
-		bld_overlay = image(icon = 'icons/effects/blood.dmi', icon_state = "bloody_" + body_zone, layer = -DAMAGE_LAYER + limb_layer_priority + 0.1)
+		bld_overlay = image(icon = species.blood_overlays, icon_state = "bloody_" + body_zone, layer = -DAMAGE_LAYER + limb_layer_priority + 0.1)
 		bld_overlay.color = blood_color
 		if(owner)
 			owner.update_bloody_bodypart(body_zone)

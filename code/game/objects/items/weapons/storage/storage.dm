@@ -35,7 +35,7 @@
 	if(!canremove || !over_object)
 		return
 
-	if (ishuman(usr) || ismonkey(usr) || isIAN(usr)) //so monkeys can take off their backpacks -- Urist
+	if (iscarbon(usr))
 
 		var/mob/M = usr
 

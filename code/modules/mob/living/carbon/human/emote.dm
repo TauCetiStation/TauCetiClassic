@@ -530,13 +530,14 @@
 				m_type = 1
 			else
 				if (!muzzled)
-					if (auto == 1)
-						if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
-							message = "<B>[src]</B> screams in agony!"
-							var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
-							if (src.gender == FEMALE) //Females have their own screams. Trannys be damned.
-								screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
-							var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
+					if (auto == 1 && species.has_screamSound) // species specific sounds?
+						message = "<B>[src]</B> screams in agony!"
+						if(world.time-lastScream >= 30)//prevent scream sound spam with things like poly spray
+							var/scream
+							if(gender == MALE)
+								scream = pick(male_scream_sound)
+							else
+								scream = pick(female_scream_sound)
 							playsound(get_turf(src), scream, 50, 0)
 							m_type = 2
 							lastScream = world.time

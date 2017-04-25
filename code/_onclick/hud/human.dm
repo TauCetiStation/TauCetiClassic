@@ -1,12 +1,21 @@
 /*
 	Creates inventory on-screen hud objects, no need to do this more than once per bodypart.
 */
-/obj/item/bodypart/proc/generate_hud_data() // bodypart/New() uses this.
-	if(!inv_box_data)
+/obj/item/bodypart/proc/generate_hud_data(datum/species/specie) // bodypart/New() uses this.
+	if(specie)
+		remove_hud_data(TRUE)
+		inv_box_data = specie.get_hud_data(body_zone)
+	else
+		inv_box_data = species.get_hud_data(body_zone)
+
+	if(!inv_box_data || !inv_box_data.len)
 		return
 
-	if(!inv_slots_data)
-		inv_slots_data = list()
+	if(inv_slots_data && !specie)
+		CRASH("Someone tried to create bodypart hud data again for [src].")
+	else
+		if(!inv_slots_data)
+			inv_slots_data = list()
 
 		for(var/slot_name in inv_box_data)
 			if(!inv_box_data[slot_name]["no_hud"])
@@ -21,13 +30,12 @@
 				inv_box.layer = inv_box_data[slot_name]["hud_layer"] ? inv_box_data[slot_name]["hud_layer"] : HUD_LAYER
 				inv_box.plane = HUD_PLANE
 				inv_slots_data[slot_name] = inv_box
+				initialize_hand()
 			else
 				inv_slots_data[slot_name] = null
 			item_in_slot["[slot_name]"] = null
 			if(owner)
 				owner.bodyparts_slot_by_name[slot_name] = body_zone
-	else
-		CRASH("Someone tried to create bodypart hud data again for [src].")
 
 /*
 	Makes inventory hud to actually appear on players screen (used when player logins into the mob).
@@ -63,16 +71,17 @@
 	if(BP.inv_slots_data)
 		for(var/slot_name in BP.inv_slots_data)
 			var/obj/screen/inventory/S = BP.inv_slots_data[slot_name]
-			if(client) // if no client - this will be done upon mob login with datum/hud initialization proc.
-				S.icon = ui_style2icon(client.prefs.UI_style)
-				S.color = client.prefs.UI_style_color
-				S.alpha = client.prefs.UI_style_alpha
-			if(S.other)
-				hud_used.other += S
-			else
-				hud_used.adding += S
-			if(S.visible_when_hud_reduced)
-				hud_used.visible_elements_while_reduced += S
+			if(S)
+				if(client) // if no client - this will be done upon mob login with datum/hud initialization proc.
+					S.icon = ui_style2icon(client.prefs.UI_style)
+					S.color = client.prefs.UI_style_color
+					S.alpha = client.prefs.UI_style_alpha
+				if(S.other)
+					hud_used.other += S
+				else
+					hud_used.adding += S
+				if(S.visible_when_hud_reduced)
+					hud_used.visible_elements_while_reduced += S
 			bodyparts_slot_by_name[slot_name] = BP.body_zone
 	BP.update_inv_hud()
 
@@ -106,6 +115,13 @@
 		if(owner.client)
 			owner.client.screen -= removing
 
+		if(can_grasp)
+			if(owner.active_hand == src)
+				owner.active_hand = null
+				owner.swap_hand()
+			else
+				owner.inactive_hands -= src
+
 		if(owner.hud_used)
 			owner.hud_used.adding -= removing
 			owner.hud_used.other -= removing
@@ -128,218 +144,286 @@
 
 	In our build, we use associative list called inv_box_data with code below.
 */
-/obj/item/bodypart/head
-	inv_box_data = list(
-		slot_head = list(
-			"name" = "head"
-			,"icon_state" = "hair"
-			,"screen_loc" = ui_head
-			,"slot_layer" = -HEAD_LAYER
-			,"mob_icon_path" = 'icons/mob/head.dmi'
-			,"other" = TRUE
-			,"mob_blood_overlay" = "helmetblood"
-			)
-		,slot_glasses = list(
-			"name" = "eyes"
-			,"icon_state" = "glasses"
-			,"screen_loc" = ui_glasses
-			,"slot_layer" = -GLASSES_LAYER
-			,"mob_icon_path" = 'icons/mob/eyes.dmi'
-			,"other" = TRUE
-			)
-		,slot_l_ear = list(
-			"name" = "l_ear"
-			,"icon_state" = "ears"
-			,"screen_loc" = ui_l_ear
-			,"slot_layer" = -EARS_LAYER
-			,"mob_icon_path" = 'icons/mob/ears.dmi'
-			,"other" = TRUE
-			)
-		,slot_r_ear = list(
-			"name" = "r_ear"
-			,"icon_state" = "ears"
-			,"screen_loc" = ui_r_ear
-			,"slot_layer" = -EARS_LAYER
-			,"mob_icon_path" = 'icons/mob/ears.dmi'
-			,"other" = TRUE
-			)
-		,slot_wear_mask = list(
-			"name" = "mask"
-			,"icon_state" = "mask"
-			,"screen_loc" = ui_mask
-			,"slot_layer" = -FACEMASK_LAYER
-			,"mob_icon_path" = 'icons/mob/mask.dmi'
-			,"other" = TRUE
-			,"mob_blood_overlay" = "maskblood"
-			)
-		)
 
-/obj/item/bodypart/chest
-	inv_box_data = list(
-		slot_back = list(
-			"name" = "back"
-			,"icon_state" = "back"
-			,"screen_loc" = ui_back
-			,"slot_layer" = -BACK_LAYER
-			,"mob_icon_path" = 'icons/mob/back.dmi'
-			,"persistent_hud" = TRUE
-			)
-		,slot_w_uniform = list(
-			"name" = "i_clothing"
-			,"icon_state" = "center"
-			,"screen_loc" = ui_iclothing
-			,"slot_layer" = -UNIFORM_LAYER
-			,"mob_icon_path" = 'icons/mob/uniform.dmi'
-			,"other" = TRUE
-			,"icon_state_as_color" = TRUE  // uniform may use item_color var for icon_states, so for now, i need working code... TODO deal with this?
-			,"support_fat_people" = TRUE
-			,"mob_blood_overlay" = "uniformblood"
-			,"has_tie" = TRUE // TODO add this into uniform itself?
-			)
-		,slot_undershirt = list(
-			"name" = "undershirt"
-			,"icon_state" = "center_u"
-			,"screen_loc" = ui_iclothing
-			,"no_item_on_screen" = TRUE // So item won't block uniform slot with uniform, since this slot is somekind sub slot for uniforms.
-			,"hud_layer" = HUD_LAYER + 0.1
-			,"slot_layer" = -BODY_LAYER
-			,"mob_icon_path" = 'icons/mob/human_undershirt.dmi'
-			,"other" = TRUE
-			,"mob_blood_overlay" = "armorblood"
-			)
-		,slot_underwear = list(
-			"name" = "underwear"
-			,"icon_state" = "center_w"
-			,"screen_loc" = ui_iclothing
-			,"no_item_on_screen" = TRUE // So item won't block uniform slot with uniform, since this slot is somekind sub slot for uniforms.
-			,"hud_layer" = HUD_LAYER + 0.1
-			,"slot_layer" = -BODY_LAYER
-			,"mob_icon_path" = 'icons/mob/human_underwear.dmi'
-			,"other" = TRUE
-			,"mob_blood_overlay" = "wearblood"
-			)
-		,slot_wear_suit = list(
-			"name" = "o_clothing"
-			,"icon_state" = "suit"
-			,"screen_loc" = ui_oclothing
-			,"slot_layer" = -SUIT_LAYER
-			,"mob_icon_path" = 'icons/mob/suit.dmi'
-			,"other" = TRUE
-			,"mob_blood_overlay" = "by_type"
-			)
-		,slot_wear_id = list(
-			"name" = "id"
-			,"icon_state" = "id"
-			,"screen_loc" = ui_id
-			,"slot_layer" = -ID_LAYER
-			,"mob_icon_path" = 'icons/mob/mob.dmi'
-			,"simple_overlays" = TRUE
-			,"mob_icon_state" = "id"
-			,"persistent_hud" = TRUE // used in persistent_inventory_update() proc (_onclick\hud\hud.dm)
-			)
-		,slot_l_store = list(
-			"name" = "storage1"
-			,"icon_state" = "pocket"
-			,"screen_loc" = ui_storage1
-			,"persistent_hud" = TRUE
-			)
-		,slot_r_store = list(
-			"name" = "storage2"
-			,"icon_state" = "pocket"
-			,"screen_loc" = ui_storage2
-			,"persistent_hud" = TRUE
-			)
-		,slot_s_store = list(
-			"name" = "suit storage"
-			,"icon_state" = "suitstorage"
-			,"screen_loc" = ui_sstore1
-			,"slot_layer" = -SUIT_STORE_LAYER
-			,"mob_icon_path" = 'icons/mob/belt_mirror.dmi'
-			,"icon_state_as_item_state" = TRUE
-			,"simple_overlays" = TRUE
-			,"persistent_hud" = TRUE
-			)
-		,slot_belt = list(
-			"name" = "belt"
-			,"icon_state" = "belt"
-			,"screen_loc" = ui_belt
-			,"slot_layer" = -BELT_LAYER
-			,"mob_icon_path" = 'icons/mob/belt.dmi'
-			,"icon_state_as_item_state" = TRUE
-			,"persistent_hud" = TRUE
-			)
-		,slot_gloves = list(
-			"name" = "gloves"
-			,"icon_state" = "gloves"
-			,"screen_loc" = ui_gloves
-			,"slot_layer" = -GLOVES_LAYER
-			,"mob_icon_path" = 'icons/mob/hands.dmi'
-			,"other" = TRUE
-			,"icon_state_as_item_state" = TRUE
-			,"mob_blood_overlay" = "bloodyhands"
-			)
-		,slot_shoes = list( // should be moved into legs later (if separated)
-			"name" = "shoes"
-			,"icon_state" = "shoes"
-			,"screen_loc" = ui_shoes
-			,"slot_layer" = -SHOES_LAYER
-			,"mob_icon_path" = 'icons/mob/feet.dmi'
-			,"other" = TRUE
-			,"mob_blood_overlay" = "shoeblood"
-			)
-		,slot_socks = list( // should be moved into legs later
-			"name" = "socks"
-			,"icon_state" = "center_s"
-			,"screen_loc" = ui_shoes
-			,"no_item_on_screen" = TRUE // So item won't block uniform slot with uniform, since this slot is somekind sub slot for uniforms.
-			,"hud_layer" = HUD_LAYER + 0.1
-			,"slot_layer" = -BODY_LAYER
-			,"mob_icon_path" = 'icons/mob/human_socks.dmi'
-			,"other" = TRUE
-			,"mob_blood_overlay" = "shoeblood"
-			)
-		,slot_handcuffed = list(
-			"no_hud" = TRUE
-			,"slot_layer" = -HANDCUFF_LAYER
-			,"mob_icon_path" = 'icons/mob/mob.dmi'
-			,"mob_icon_state" = "handcuff1"
-			)
-		,slot_legcuffed = list(
-			"no_hud" = TRUE
-			,"slot_layer" = -LEGCUFF_LAYER
-			,"mob_icon_path" = 'icons/mob/mob.dmi'
-			,"mob_icon_state" = "legcuff1"
-			)
-		,slot_in_backpack = list(
-			"no_hud" = TRUE
-			)
-		)
+/datum/species/proc/get_hud_data(body_zone)
+	switch(body_zone)
+		if(BP_HEAD) // this bodypart totally compatible with monkeys.
+			return list(
+				slot_head = list(
+					"name" = "head"
+					,"icon_state" = "hair"
+					,"screen_loc" = ui_head
+					,"slot_layer" = -HEAD_LAYER
+					,"mob_icon_path" = 'icons/mob/head.dmi'
+					,"other" = TRUE
+					,"mob_blood_overlay" = "helmetblood"
+					)
+				,slot_glasses = list(
+					"name" = "eyes"
+					,"icon_state" = "glasses"
+					,"screen_loc" = ui_glasses
+					,"slot_layer" = -GLASSES_LAYER
+					,"mob_icon_path" = 'icons/mob/eyes.dmi'
+					,"other" = TRUE
+					)
+				,slot_l_ear = list(
+					"name" = "l_ear"
+					,"icon_state" = "ears"
+					,"screen_loc" = ui_l_ear
+					,"slot_layer" = -EARS_LAYER
+					,"mob_icon_path" = 'icons/mob/ears.dmi'
+					,"other" = TRUE
+					)
+				,slot_r_ear = list(
+					"name" = "r_ear"
+					,"icon_state" = "ears"
+					,"screen_loc" = ui_r_ear
+					,"slot_layer" = -EARS_LAYER
+					,"mob_icon_path" = 'icons/mob/ears.dmi'
+					,"other" = TRUE
+					)
+				,slot_wear_mask = list(
+					"name" = "mask"
+					,"icon_state" = "mask"
+					,"screen_loc" = ui_mask
+					,"slot_layer" = -FACEMASK_LAYER
+					,"mob_icon_path" = 'icons/mob/mask.dmi'
+					,"other" = TRUE
+					,"mob_blood_overlay" = "maskblood"
+					)
+				)
+		if(BP_CHEST)
+			return list(
+				slot_back = list(
+					"name" = "back"
+					,"icon_state" = "back"
+					,"screen_loc" = ui_back
+					,"slot_layer" = -BACK_LAYER
+					,"mob_icon_path" = 'icons/mob/back.dmi'
+					,"persistent_hud" = TRUE
+					)
+				,slot_w_uniform = list(
+					"name" = "i_clothing"
+					,"icon_state" = "center"
+					,"screen_loc" = ui_iclothing
+					,"slot_layer" = -UNIFORM_LAYER
+					,"mob_icon_path" = 'icons/mob/uniform.dmi'
+					,"other" = TRUE
+					,"icon_state_as_color" = TRUE  // uniform may use item_color var for icon_states, so for now, i need working code... TODO deal with this?
+					,"support_fat_people" = TRUE
+					,"mob_blood_overlay" = "uniformblood"
+					,"has_tie" = TRUE // TODO add this into uniform itself?
+					)
+				,slot_undershirt = list(
+					"name" = "undershirt"
+					,"icon_state" = "center_u"
+					,"screen_loc" = ui_iclothing
+					,"no_item_on_screen" = TRUE // So item won't block uniform slot with uniform, since this slot is somekind sub slot for uniforms.
+					,"hud_layer" = HUD_LAYER + 0.1
+					,"slot_layer" = -BODY_LAYER
+					,"mob_icon_path" = 'icons/mob/human_undershirt.dmi'
+					,"other" = TRUE
+					,"mob_blood_overlay" = "armorblood"
+					)
+				,slot_underwear = list(
+					"name" = "underwear"
+					,"icon_state" = "center_w"
+					,"screen_loc" = ui_iclothing
+					,"no_item_on_screen" = TRUE // So item won't block uniform slot with uniform, since this slot is somekind sub slot for uniforms.
+					,"hud_layer" = HUD_LAYER + 0.1
+					,"slot_layer" = -BODY_LAYER
+					,"mob_icon_path" = 'icons/mob/human_underwear.dmi'
+					,"other" = TRUE
+					,"mob_blood_overlay" = "wearblood"
+					)
+				,slot_wear_suit = list(
+					"name" = "o_clothing"
+					,"icon_state" = "suit"
+					,"screen_loc" = ui_oclothing
+					,"slot_layer" = -SUIT_LAYER
+					,"mob_icon_path" = 'icons/mob/suit.dmi'
+					,"other" = TRUE
+					,"mob_blood_overlay" = "by_type"
+					)
+				,slot_wear_id = list(
+					"name" = "id"
+					,"icon_state" = "id"
+					,"screen_loc" = ui_id
+					,"slot_layer" = -ID_LAYER
+					,"mob_icon_path" = 'icons/mob/mob.dmi'
+					,"simple_overlays" = TRUE
+					,"mob_icon_state" = "id"
+					,"persistent_hud" = TRUE // used in persistent_inventory_update() proc (_onclick\hud\hud.dm)
+					)
+				,slot_l_store = list(
+					"name" = "storage1"
+					,"icon_state" = "pocket"
+					,"screen_loc" = ui_storage1
+					,"persistent_hud" = TRUE
+					)
+				,slot_r_store = list(
+					"name" = "storage2"
+					,"icon_state" = "pocket"
+					,"screen_loc" = ui_storage2
+					,"persistent_hud" = TRUE
+					)
+				,slot_s_store = list(
+					"name" = "suit storage"
+					,"icon_state" = "suitstorage"
+					,"screen_loc" = ui_sstore1
+					,"slot_layer" = -SUIT_STORE_LAYER
+					,"mob_icon_path" = 'icons/mob/belt_mirror.dmi'
+					,"icon_state_as_item_state" = TRUE
+					,"simple_overlays" = TRUE
+					,"persistent_hud" = TRUE
+					)
+				,slot_belt = list(
+					"name" = "belt"
+					,"icon_state" = "belt"
+					,"screen_loc" = ui_belt
+					,"slot_layer" = -BELT_LAYER
+					,"mob_icon_path" = 'icons/mob/belt.dmi'
+					,"icon_state_as_item_state" = TRUE
+					,"persistent_hud" = TRUE
+					)
+				,slot_gloves = list(
+					"name" = "gloves"
+					,"icon_state" = "gloves"
+					,"screen_loc" = ui_gloves
+					,"slot_layer" = -GLOVES_LAYER
+					,"mob_icon_path" = 'icons/mob/hands.dmi'
+					,"other" = TRUE
+					,"icon_state_as_item_state" = TRUE
+					,"mob_blood_overlay" = "bloodyhands"
+					)
+				,slot_shoes = list( // should be moved into legs later (if separated)
+					"name" = "shoes"
+					,"icon_state" = "shoes"
+					,"screen_loc" = ui_shoes
+					,"slot_layer" = -SHOES_LAYER
+					,"mob_icon_path" = 'icons/mob/feet.dmi'
+					,"other" = TRUE
+					,"mob_blood_overlay" = "shoeblood"
+					)
+				,slot_socks = list( // should be moved into legs later
+					"name" = "socks"
+					,"icon_state" = "center_s"
+					,"screen_loc" = ui_shoes
+					,"no_item_on_screen" = TRUE // So item won't block uniform slot with uniform, since this slot is somekind sub slot for uniforms.
+					,"hud_layer" = HUD_LAYER + 0.1
+					,"slot_layer" = -BODY_LAYER
+					,"mob_icon_path" = 'icons/mob/human_socks.dmi'
+					,"other" = TRUE
+					,"mob_blood_overlay" = "shoeblood"
+					)
+				,slot_handcuffed = list(
+					"no_hud" = TRUE
+					,"slot_layer" = -HANDCUFF_LAYER
+					,"mob_icon_path" = 'icons/mob/mob.dmi'
+					,"mob_icon_state" = "handcuff1"
+					)
+				,slot_legcuffed = list(
+					"no_hud" = TRUE
+					,"slot_layer" = -LEGCUFF_LAYER
+					,"mob_icon_path" = 'icons/mob/mob.dmi'
+					,"mob_icon_state" = "legcuff1"
+					)
+				,slot_in_backpack = list(
+					"no_hud" = TRUE
+					)
+				)
+		if(BP_L_ARM)
+			return list(
+				slot_l_hand = list( // !IMPORTANT! put hands slots ALWAYS first.
+					"name" = "l_hand"
+					,"icon_state" = "l_arm"
+					,"screen_loc" = ui_lhand
+					,"slot_layer" = -L_HAND_LAYER
+					,"mob_icon_path" = null
+					,"reduced" = TRUE
+					,"icon_state_as_item_state" = TRUE
+					)
+				)
+		if(BP_R_ARM)
+			return list(
+				slot_r_hand = list(
+					"name" = "r_hand"
+					,"icon_state" = "r_arm"
+					,"screen_loc" = ui_rhand
+					,"slot_layer" = -R_HAND_LAYER
+					,"mob_icon_path" = null
+					,"reduced" = TRUE
+					,"icon_state_as_item_state" = TRUE
+					)
+				)
 
-/obj/item/bodypart/l_arm
-	inv_box_data = list(
-		slot_l_hand = list(
-			"name" = "l_hand"
-			,"icon_state" = null
-			,"screen_loc" = ui_lhand
-			,"slot_layer" = -L_HAND_LAYER
-			,"mob_icon_path" = null
-			,"reduced" = TRUE
-			,"icon_state_as_item_state" = TRUE
-			)
-		)
+/datum/species/monkey/get_hud_data(body_zone)
+	switch(body_zone)
+		if(BP_CHEST)
+			return list(
+				slot_back = list(
+					"name" = "back"
+					,"icon_state" = "back"
+					,"screen_loc" = ui_back
+					,"slot_layer" = -BACK_LAYER
+					,"mob_icon_path" = 'icons/mob/back.dmi'
+					,"persistent_hud" = TRUE
+					)
+				,slot_undershirt = list(
+					"name" = "undershirt"
+					,"icon_state" = "center_u"
+					,"screen_loc" = ui_iclothing
+					,"no_item_on_screen" = TRUE
+					,"hud_layer" = HUD_LAYER + 0.1
+					,"slot_layer" = -BODY_LAYER
+					,"mob_icon_path" = 'icons/mob/monkey_undershirt.dmi'
+					,"other" = TRUE
+					,"mob_blood_overlay" = "armorblood"
+					)
+				,slot_handcuffed = list(
+					"no_hud" = TRUE
+					,"slot_layer" = -HANDCUFF_LAYER
+					,"mob_icon_path" = 'icons/mob/mob.dmi'
+					,"mob_icon_state" = "handcuff1"
+					)
+				,slot_legcuffed = list(
+					"no_hud" = TRUE
+					,"slot_layer" = -LEGCUFF_LAYER
+					,"mob_icon_path" = 'icons/mob/mob.dmi'
+					,"mob_icon_state" = "legcuff2"
+					)
+				,slot_in_backpack = list(
+					"no_hud" = TRUE
+					)
+				)
+		else
+			return ..()
 
-/obj/item/bodypart/r_arm
-	inv_box_data = list(
-		slot_r_hand = list(
-			"name" = "r_hand"
-			,"icon_state" = null
-			,"screen_loc" = ui_rhand
-			,"slot_layer" = -R_HAND_LAYER
-			,"mob_icon_path" = null
-			,"reduced" = TRUE
-			,"icon_state_as_item_state" = TRUE
-			)
-		)
+/datum/species/monkey/nymph/get_hud_data(body_zone)
+	switch(body_zone)
+		if(BP_CHEST)
+			return list(
+				slot_r_hand = list(
+					"name" = "r_hand"
+					,"icon_state" = "r_arm"
+					,"screen_loc" = ui_rhand
+					,"slot_layer" = -R_HAND_LAYER
+					,"mob_icon_path" = null
+					,"reduced" = TRUE
+					,"icon_state_as_item_state" = TRUE
+					)
+				,slot_back = list(
+					"name" = "back"
+					,"icon_state" = "back"
+					,"screen_loc" = ui_back
+					,"slot_layer" = -BACK_LAYER
+					,"mob_icon_path" = 'icons/mob/back.dmi'
+					,"persistent_hud" = TRUE
+					)
+				,slot_in_backpack = list(
+					"no_hud" = TRUE
+					)
+				)
 
 /datum/hud/proc/human_hud(ui_style='icons/mob/screen1_White.dmi', ui_color = "#ffffff", ui_alpha = 255)
 

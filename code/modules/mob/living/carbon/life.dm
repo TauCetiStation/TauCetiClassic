@@ -413,8 +413,11 @@
 	if(!species || (status_flags & GODMODE))
 		return
 
+	if(!should_have_organ(BP_LUNGS))
+		return
+
 	var/obj/item/organ/lungs/L = organs_by_name[BP_LUNGS]
-	if(!L && should_have_organ(BP_LUNGS))
+	if(!L)
 		failed_last_breath = TRUE
 	else
 		failed_last_breath = L.handle_breath(breath) //if breath is null or vacuum, the lungs will handle it for us

@@ -23,6 +23,8 @@
 
 	..()
 
+	verbs += /mob/living/carbon/proc/crawl
+
 	//make_blood()
 	regenerate_icons()
 
@@ -174,7 +176,7 @@
 
 /mob/living/carbon/proc/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
+	if(item_in_hand) //this segment checks if the item in your hand is twohanded. TODO check if this needs to be updated.
 		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	//OOP? Generics? Hue hue hue hue ...
 			if(item_in_hand:wielded)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
@@ -183,45 +185,37 @@
 	if(!active_hand && inactive_hands.len)
 		active_hand = inactive_hands[1]
 		inactive_hands -= active_hand
-		var/obj/screen/S = active_hand.inv_slots_data[active_hand.inv_slots_data[1]]
-		S.icon_state = active_hand.body_zone + "_active"
+		active_hand.update_swapped_hand_hud()
 	else if(active_hand && inactive_hands.len)
-		var/obj/item/bodypart/BP = active_hand
+		var/obj/item/bodypart/BP = active_hand // save active hand ref for later
 		active_hand = null
-		inactive_hands += BP
-		var/obj/screen/S = BP.inv_slots_data[BP.inv_slots_data[1]]
-		S.icon_state = BP.body_zone + "_inactive"
-		active_hand = inactive_hands[1]
+		inactive_hands += BP // add current active hand to the end of the list and then ...
+		BP.update_swapped_hand_hud()
+
+		active_hand = inactive_hands[1] // ... pick inactive hand from first position in the list (useful if mob has more than two hands).
 		inactive_hands -= active_hand
-		BP = active_hand
-		S = active_hand.inv_slots_data[BP.inv_slots_data[1]]
-		S.icon_state = BP.body_zone + "_active"
+		active_hand.update_swapped_hand_hud()
 
-	/*src.hand = !( src.hand )
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)	//This being 1 means the left hand is in use
-			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
-		else
-			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"*/
-	/*if (!( src.hand ))
-		src.hands.dir = NORTH
-	else
-		src.hands.dir = SOUTH*/
-
-/mob/living/carbon/proc/activate_hand(obj/item/bodypart/selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
+/mob/living/carbon/proc/activate_hand(obj/item/bodypart/selhand) // helps player to select exact hand when clicking hand box on the hud.
 	if(active_hand != selhand)
 		if(active_hand)
 			var/obj/item/bodypart/BP = active_hand
 			active_hand = null
 			inactive_hands += BP
-			var/obj/screen/S = BP.inv_slots_data[BP.inv_slots_data[1]]
-			S.icon_state = BP.body_zone + "_inactive"
+			BP.update_swapped_hand_hud()
+
 		active_hand = selhand
 		inactive_hands -= active_hand
-		var/obj/screen/S = active_hand.inv_slots_data[selhand.inv_slots_data[1]]
-		S.icon_state = selhand.body_zone + "_active"
+		active_hand.update_swapped_hand_hud()
+
+/obj/item/bodypart/proc/update_swapped_hand_hud()
+	var/obj/screen/S = inv_slots_data[inv_slots_data[1]]
+	if(S)
+		if(owner.active_hand == src)
+			S.icon_state = inv_box_data[inv_box_data[1]]["icon_state"] + "_active"
+		else
+			S.icon_state = inv_box_data[inv_box_data[1]]["icon_state"] + "_inactive"
+
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M) // TODO check Bay12 version of this proc.
 	if (src.health >= config.health_threshold_crit)
@@ -639,7 +633,10 @@
 
 	return TRUE
 
-/mob/living/carbon/proc/uncuff() // maybe separated or arg?
+/mob/living/proc/uncuff()
+	return
+
+/mob/living/carbon/uncuff() // maybe separated or arg?
 	if(handcuffed)
 		dropItemToGround(handcuffed)
 	if(legcuffed)
@@ -923,6 +920,16 @@ This function restores the subjects blood to max.
 
 	if(force_organs || !bodyparts || !bodyparts.len)
 		species.create_organs(src, organ_data)
+	else if(!force_organs) // when changing one specie into another (without recreating organs), we need to regenerate inventory and hud data.
+		for(var/obj/item/bodypart/BP in bodyparts)
+			BP.generate_hud_data(species)
+		var/hud_style
+		var/inv_shown
+		if(hud_used)
+			hud_style = hud_used.hud_version
+			inv_shown = hud_used.inventory_shown
+			qdel(hud_used)
+		hud_used = new /datum/hud(src, hud_style, inv_shown)// rebuild hud (can be optimized)
 
 	if(species.language)
 		add_language(species.language)
@@ -945,6 +952,12 @@ This function restores the subjects blood to max.
 		return 1
 	else
 		return 0
+
+/mob/living/carbon/IsAdvancedToolUser()
+	var/obj/item/organ/brain/BRAIN = organs_by_name[BP_BRAIN]
+	if(BRAIN)
+		return BRAIN.is_advanced_tool_user
+	return FALSE
 
 /mob/living/carbon/on_varedit(modified_var)
 	switch(modified_var) // TODO: better implementation..

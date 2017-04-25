@@ -421,21 +421,10 @@
 /mob/living/proc/restore_all_bodyparts()
 	return
 
-
-
 /mob/living/proc/revive()
 	rejuvenate()
 	buckled = initial(src.buckled)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-
-		if (C.handcuffed && !initial(C.handcuffed))
-			C.dropItemToGround(C.handcuffed)
-		C.handcuffed = initial(C.handcuffed)
-
-		if (C.legcuffed && !initial(C.legcuffed))
-			C.dropItemToGround(C.legcuffed)
-		C.legcuffed = initial(C.legcuffed)
+	uncuff()
 	update_health_hud()
 
 /mob/living/proc/rejuvenate()

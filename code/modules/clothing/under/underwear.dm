@@ -76,3 +76,35 @@
 	name = "socks"
 	icon_state = "socks1_s"
 	item_color = "socks1_s"
+
+/obj/item/clothing/under/monkey
+	icon = 'icons/mob/monkey_undershirt.dmi'
+	name = "undershirt"
+	item_state = "gy_suit"
+	body_parts_covered = UPPER_TORSO
+	permeability_coefficient = 0.90
+	slot_flags = SLOT_UNDERWEAR
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	w_class = 3
+
+	has_sensor = 0
+	sensor_mode = 0
+
+	hastie = null
+	displays_id = 0
+	rolled_down = 0
+
+/obj/item/clothing/under/monkey/punpun
+	name = "waiter costume for monkey" // better name?
+	icon_state = "punpun"
+	item_color = "punpun"
+
+/obj/item/clothing/under/monkey/santa
+	name = "santa costume for monkey"
+	icon_state = "punpun_santa"
+	item_color = "punpun_santa"
+
+/obj/item/clothing/under/monkey/robust
+	name = "robust costume for monkey"
+	icon_state = "robust"
+	item_color = "robust"

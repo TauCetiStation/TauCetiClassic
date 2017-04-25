@@ -926,6 +926,16 @@
 	icon_state = "brain"
 	organ_tag = BP_BRAIN
 	parent_bodypart = BP_HEAD
+	var/is_advanced_tool_user = TRUE
+
+/obj/item/organ/brain/monkey
+	is_advanced_tool_user = FALSE
+
+/obj/item/organ/brain/monkey/nymph
+	parent_bodypart = BP_CHEST
+
+/obj/item/organ/brain/monkey/New(loc, mob/living/carbon/C)
+	..()
 
 /obj/item/organ/brain/process()
 	if(!owner || !owner.should_have_organ(BP_HEART))

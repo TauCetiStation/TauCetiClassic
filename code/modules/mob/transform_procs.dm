@@ -1,7 +1,9 @@
-/mob/living/carbon/human/proc/monkeyize()
+/mob/living/carbon/human/proc/monkeyize() // this proc works old way (spawning new mob and transfering user into it), for new - use gene monkeyizing.
 	if (notransform)
 		return
 	if (monkeyizing)
+		return
+	if(!species.backward_form) //If the creature in question has no backward_form set, do nothing.
 		return
 	for(var/obj/item/W in src)
 		if (W==w_uniform) // will be torn
@@ -22,15 +24,10 @@
 	animation.master = src
 	flick("h2monkey", animation)
 	sleep(48)
-	//animation = null
-
-	if(!species.backward_form) //If the creature in question has no backward_form set, this is going to be messy.
-		gib()
-		return
 
 	var/mob/living/carbon/monkey/O = null
 
-	O = new species.backward_form(loc)
+	O = new (loc, species.backward_form)
 
 	O.dna = dna.Clone()
 	O.dna.SetSEState(MONKEYBLOCK,1)
@@ -42,15 +39,12 @@
 	for(var/datum/disease/D in O.viruses)
 		D.affected_mob = O
 
-	//if (client) //#Z2.1 fix Players can't get back in the body,
-	//	client.mob = O//when we transform them back to human using genetics. So they forever ghosts, if someone un_monkeyize them.
 	if(mind)
 		mind.transfer_to(O)
 
 	to_chat(O, "<B>You are now [O]. </B>")
 
-	spawn(0)//To prevent the proc from returning null.
-		qdel(src)
+	qdel(src)
 	qdel(animation)
 
 	return O

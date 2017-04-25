@@ -283,7 +283,7 @@
 	return TRUE
 
 /obj/item/bodypart/head/can_hold(obj/item/I, slot, disable_warning = FALSE)
-	if(!..())
+	if(!I || !slot || item_in_slot[slot])
 		return FALSE
 
 	var/flags = I.slot_flags
@@ -321,7 +321,7 @@
 			return FALSE
 
 /obj/item/bodypart/chest/can_hold(obj/item/I, slot, disable_warning = FALSE)
-	if(!..())
+	if(!I || !slot || item_in_slot[slot])
 		return FALSE
 
 	var/flags = I.slot_flags
@@ -448,6 +448,25 @@
 			return FALSE
 		else
 			return FALSE
+
+/obj/item/bodypart/chest/nymph/can_hold(obj/item/I, slot, disable_warning = FALSE)
+	if(!I || !slot || item_in_slot[slot])
+		return FALSE
+
+	switch(slot)
+		if(slot_r_hand)
+			return TRUE
+	return ..()
+
+/obj/item/bodypart/chest/monkey/can_hold(obj/item/I, slot, disable_warning = FALSE)
+	if(!I || !slot || item_in_slot[slot])
+		return FALSE
+
+	if(slot == slot_undershirt)
+		if(istype(I, /obj/item/clothing/under/monkey))
+			return TRUE
+		return FALSE
+	return ..()
 
 /*
 	MouseDrop human inventory menu

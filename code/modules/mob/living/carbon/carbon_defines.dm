@@ -1,4 +1,7 @@
 /mob/living/carbon
+	icon = 'icons/mob/human.dmi'
+	icon_state = "blank"
+
 	gender = MALE
 
 	var/list/hud_list[9]
@@ -107,3 +110,6 @@
 	var/underwear = 1	//Which underwear the player wants
 	var/undershirt = 0	//Which undershirt the player wants.
 	var/socks = 0	//Which socks the player wants.
+
+	var/list/bodypart_hands = list() // any bodypart with can_grasp=TRUE added in this list ...
+	var/list/bodypart_legs = list() // ... and with can_stand=TRUE.

@@ -275,8 +275,8 @@ Hit Procs
 /mob/living/carbon/alien/emp_act(severity)
 	return
 
-/mob/living/carbon/alien/attack_ui(slot_id)
-	return
+//mob/living/carbon/alien/attack_ui(slot_id)
+//	return
 
 /mob/living/carbon/alien/restrained()
 	return 0
