@@ -97,6 +97,9 @@
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
+			if(telepad)
+				telepad.computer = null
+				close_wormhole()
 			telepad = M.buffer
 			telepad.computer = src
 			M.buffer = null
