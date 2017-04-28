@@ -63,7 +63,6 @@
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
-	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
@@ -218,9 +217,6 @@
 
 				if ("use_ingame_minutes_restriction_for_jobs")
 					config.use_ingame_minutes_restriction_for_jobs = 1
-
-				if ("jobs_have_minimal_access")
-					config.jobs_have_minimal_access = 1
 
 				if ("log_ooc")
 					config.log_ooc = 1
