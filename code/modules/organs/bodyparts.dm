@@ -103,24 +103,9 @@
 		pain_disability_threshold = (max_damage * 0.75)
 
 	if(istype(C))
-		owner = C
+		inserted(C, TRUE)
+
 		w_class = max(w_class + mob_size_difference(owner.mob_size, MOB_MEDIUM), 1) //smaller mobs have smaller bodyparts.
-
-		owner.bodyparts += src
-		owner.bodyparts_by_name[body_zone] = src
-
-		if(can_grasp)
-			owner.bodypart_hands += src
-		if(can_stand)
-			owner.bodypart_legs += src
-
-		if(parent_bodypart)
-			parent = owner.bodyparts_by_name[parent_bodypart]
-			if(!parent)
-				CRASH("[src] spawned in [owner] without a parent bodypart: [parent].")
-
-			parent.children += src
-
 		species = owner.species
 
 		if(species.flags[IS_SYNTHETIC])
@@ -132,6 +117,45 @@
 	reagents.add_reagent("nutriment", reagents.maximum_volume) // Bay12: protein
 
 	return ..()
+
+/obj/item/bodypart/proc/inserted(mob/living/carbon/C, on_new = FALSE)
+	if(!istype(C))
+		return FALSE
+
+	STOP_PROCESSING(SSobj, src)
+
+	loc = null
+	owner = C
+
+	owner.bodyparts += src
+	owner.bodyparts_by_name[body_zone] = src
+
+	if(can_grasp)
+		owner.bodypart_hands += src
+		owner.num_of_hands++
+	if(can_stand)
+		owner.bodypart_legs += src
+		owner.num_of_legs++
+
+	if(parent_bodypart)
+		parent = owner.bodyparts_by_name[parent_bodypart]
+		if(!parent)
+			CRASH("[src] spawned in [owner] without a parent bodypart: [parent].")
+
+		parent.children += src
+
+	if(!on_new)
+		for(var/obj/item/organ/IO in organs)
+			IO.inserted(C)
+
+		owner.add_hud_data(src)
+		owner.update_body() // TODO check if this procs are necessary
+		owner.updatehealth()
+		owner.update_bodypart(src.body_zone)
+		owner.update_bloody_bodypart(body_zone)
+		update_inv_limb(multi = TRUE)
+
+	return TRUE
 
 /obj/item/bodypart/Destroy() // TODO proper Destroy for bodyparts.
 	if(inv_slots_data)
@@ -175,7 +199,7 @@
 /obj/item/bodypart/head/New(loc, mob/living/carbon/C)
 	..()
 
-	if(species.eyes_icon)
+	if(species.has_organ[BP_EYES])
 		eyes_overlay = image(icon = 'icons/mob/human_face.dmi', layer = -BODY_LAYER)
 
 /obj/item/bodypart/proc/removed(mob/living/user) // TODO implement this proc properly
@@ -273,38 +297,7 @@
 		src.transform = matrix()
 		src.dir = target.dir
 
-		loc = null
-		owner = target
-
-		owner.bodyparts += src
-		owner.bodyparts_by_name[body_zone] = src
-
-		if(can_grasp)
-			owner.bodypart_hands += src
-		if(can_stand)
-			owner.bodypart_legs += src
-
-		if(parent_bodypart)
-			parent = owner.bodyparts_by_name[parent_bodypart]
-			if(!parent)
-				CRASH("[src] attached to [owner] without a parent bodypart: [parent].")
-
-			parent.children += src
-			//Remove all stump wounds since limb is not missing anymore
-			for(var/datum/wound/lost_limb/W in parent.wounds)
-				parent.wounds -= W
-				qdel(W)
-				break
-			parent.update_damages()
-
-		owner.add_hud_data(src)
-		owner.update_body() // TODO check if this procs are necessary
-		owner.updatehealth()
-		owner.update_bodypart(src.body_zone)
-		owner.update_bloody_bodypart(body_zone)
-		update_inv_limb(multi = TRUE)
-		return TRUE
-	return FALSE
+		return inserted(target)
 
 /obj/item/bodypart/head/replace_stump(mob/living/carbon/target)
 	. = ..()
@@ -1368,6 +1361,14 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	can_grasp = TRUE
 	can_stand = TRUE
 
+/obj/item/bodypart/chest/unbreakable
+	cannot_break = 1
+	dislocated = -1
+
+/obj/item/bodypart/chest/unbreakable/facehugger
+	can_grasp = TRUE
+	can_stand = TRUE
+
 /obj/item/bodypart/groin
 	name = "groin"
 	icon_state = "groin"
@@ -1386,6 +1387,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	amputation_point = "lumbar"
 	joint = "hip"
 	artery_name = "iliac artery"
+	dislocated = -1
+
+/obj/item/bodypart/groin/unbreakable
+	cannot_break = 1
 	dislocated = -1
 
 /obj/item/bodypart/head
@@ -1412,6 +1417,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	var/brain_op_stage = 0
 
 	var/image/eyes_overlay
+
+/obj/item/bodypart/head/unbreakable
+	cannot_break = 1
+	dislocated = -1
 
 /obj/item/bodypart/head/take_damage(brute, burn, damage_flags, used_weapon = null)
 	. = ..()
@@ -1469,6 +1478,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "basilic vein"
 	arterial_bleed_severity = 0.75
 
+/obj/item/bodypart/l_arm/unbreakable
+	cannot_break = 1
+	dislocated = -1
+
 /obj/item/bodypart/r_arm
 	name = "right arm"
 	icon_state = "r_arm"
@@ -1488,6 +1501,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	joint = "right elbow"
 	artery_name = "basilic vein"
 	arterial_bleed_severity = 0.75
+
+/obj/item/bodypart/r_arm/unbreakable
+	cannot_break = 1
+	dislocated = -1
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
@@ -1509,6 +1526,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "femoral artery"
 	arterial_bleed_severity = 0.75
 
+/obj/item/bodypart/l_leg/unbreakable
+	cannot_break = 1
+	dislocated = -1
+
 /obj/item/bodypart/r_leg
 	name = "right leg"
 	icon_state = "r_leg"
@@ -1528,6 +1549,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	joint = "right knee"
 	artery_name = "femoral artery"
 	arterial_bleed_severity = 0.75
+
+/obj/item/bodypart/r_leg/unbreakable
+	cannot_break = 1
+	dislocated = -1
 
 /****************************************************
 	RIPPED, MISSED, AMPUTATED LIMB

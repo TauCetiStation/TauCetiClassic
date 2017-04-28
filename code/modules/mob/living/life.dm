@@ -8,7 +8,7 @@
 		return
 
 	if(stat != DEAD)
-		handle_actions()
+		//handle_actions()
 		add_ingame_age()
 
 	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'

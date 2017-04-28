@@ -458,6 +458,19 @@
 			return TRUE
 	return ..()
 
+/obj/item/bodypart/chest/unbreakable/facehugger/can_hold(obj/item/I, slot, disable_warning = FALSE)
+	if(!I || !slot || item_in_slot[slot])
+		return FALSE
+
+	switch(slot)
+		if(slot_r_hand)
+			if(istype(I, /obj/item/weapon/fh_grab))
+				return TRUE
+	return FALSE
+
+/obj/item/bodypart/chest/unbreakable/larva/can_hold(obj/item/I, slot, disable_warning = FALSE)
+	return FALSE
+
 /obj/item/bodypart/chest/monkey/can_hold(obj/item/I, slot, disable_warning = FALSE)
 	if(!I || !slot || item_in_slot[slot])
 		return FALSE

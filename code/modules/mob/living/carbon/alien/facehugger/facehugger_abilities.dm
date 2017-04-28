@@ -130,7 +130,6 @@ Helpers for leaping at face.
 	put_in_active_hand(G)
 	L.grabbed_by += G
 	G.last_upgrade = world.time
-	G.synch()
 	L.LAssailant = src
 	G.state = GRAB_AGGRESSIVE
 	G.hud.icon_state = "grab/neck"
@@ -318,26 +317,11 @@ This is facehugger Attach procs
 	return
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target, mob/living/FH)
-	if(!target || target.stat == DEAD) //was taken off or something
-		return
+	if(!target || !FH || FH.stat == DEAD || target.stat == DEAD) //was taken off or something
+		return FALSE
 
-	var/target_slot
-	if(iscorgi(target))
-		var/mob/living/simple_animal/corgi/dog = target
-		target_slot = dog.facehugger
-
-	if(isIAN(target))
-		var/mob/living/carbon/ian/IAN = target
-		target_slot = IAN.head
-	else if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		target_slot = C.wear_mask
-
-	if(target_slot != src)
-		return
-
-	if(!FH || FH.stat == DEAD)
-		return
+	if(target.get_equipped_item(slot_wear_mask) != src)
+		return FALSE
 
 	if(!sterile)
 		var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(target)
@@ -348,29 +332,18 @@ This is facehugger Attach procs
 		new_embryo.baby = new_xeno
 		qdel(FH)
 
-		target.remove_from_mob(target_slot)
-		if(ismonkey(target))
-			for(var/obj/item/clothing/mask/facehugger/FH_mask in target.contents)
-				FH_mask.forceMove(get_turf(target))
-		if(iscorgi(target))
-			var/mob/living/simple_animal/corgi/dog = target
-			dog.facehugger.forceMove(get_turf(target))
-			dog.facehugger = null
-
 		STOP_PROCESSING(SSobj, src)
 
+		target.dropItemToGround(src)
 		target.status_flags |= XENO_HOST
 		target.visible_message("\red \b [src] falls limp after violating [target]'s face!")
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
-
-		if(iscorgi(target))
-			var/mob/living/simple_animal/corgi/C = target
-			src.loc = get_turf(C)
-			C.facehugger = null
+		return TRUE
 	else
 		target.visible_message("\red \b [src] violates [target]'s face!")
+		return FALSE
 
 /obj/item/clothing/mask/facehugger/proc/Die()
 	if(stat == DEAD)
@@ -430,6 +403,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	hud = new /obj/screen/fh_grab(src)
 	hud.icon = 'icons/mob/screen1_xeno.dmi'
 	hud.icon_state = "grab/neck"
+	hud.screen_loc = ui_rhand
 	hud.name = "grab around neck"
 	hud.master = src
 	START_PROCESSING(SSobj, src)
@@ -456,11 +430,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(M == affecting)
 		s_click(hud)
 		return
-
-/obj/item/weapon/fh_grab/proc/synch()
-	if(affecting)
-		if(assailant.r_hand == src)
-			hud.screen_loc = ui_rhand
 
 /obj/item/weapon/fh_grab/process()
 	if(!confirm())
@@ -574,7 +543,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 						assailant.visible_message("\red \b [assailant] falls limp after violating [affecting]'s face!")
 						var/obj/item/clothing/mask/facehugger/FH_mask = assailant.loc
 						FH_mask.canremove = 1
-						FH_mask.Impregnate(affecting, assailant)
+						if(!FH_mask.Impregnate(affecting, assailant))
+							qdel(src)
 			else
 				state = GRAB_AGGRESSIVE
 				hud.icon_state = "grab/neck"

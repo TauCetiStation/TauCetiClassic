@@ -13,19 +13,19 @@
 
 		//First, resolve location and get a breath
 
-		if(SSmob.times_fired%4==2)
-			//Only try to take a breath every 4 seconds, unless suffocating
-			INVOKE_ASYNC(src, .proc/breathe)
+		//if(SSmob.times_fired%4==2)
+		//	//Only try to take a breath every 4 seconds, unless suffocating
+		//	INVOKE_ASYNC(src, .proc/breathe)
 
-		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
+		//else //Still give containing object the chance to interact
+		//	if(istype(loc, /obj/))
+		//		var/obj/location_as_object = loc
+		//		location_as_object.handle_internal_lifeform(src, 0)
 
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
-		update_icons()
+		//update_icons()
 
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
@@ -56,109 +56,6 @@
 
 
 /mob/living/carbon/alien
-	breathe()
-		if(reagents)
-			if(reagents.has_reagent("lexorin")) return
-
-		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
-
-		var/datum/gas_mixture/environment = loc.return_air()
-		var/datum/gas_mixture/breath
-		// HACK NEED CHANGING LATER
-		if(health < 0)
-			losebreath++
-
-		if(losebreath>0) //Suffocating so do not take a breath
-			losebreath--
-			if (prob(75)) //High chance of gasping for air
-				INVOKE_ASYNC(src, .proc/emote, "gasp")
-			if(istype(loc, /obj/))
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
-		else
-			//First, check for air from internal atmosphere (using an air tank and mask generally)
-			breath = get_breath_from_internal(BREATH_VOLUME)
-
-			//No breath from internal atmosphere so get breath from location
-			if(!breath)
-				if(istype(loc, /obj/))
-					var/obj/location_as_object = loc
-					breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
-				else if(istype(loc, /turf/))
-					var/breath_moles = 0
-					/*if(environment.return_pressure() > ONE_ATMOSPHERE)
-						// Loads of air around (pressure effect will be handled elsewhere), so lets just take a enough to fill our lungs at normal atmos pressure (using n = Pv/RT)
-						breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
-					else*/
-						// Not enough air around, take a percentage of what's there to model this properly
-					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
-
-					breath = loc.remove_air(breath_moles)
-
-					// Handle chem smoke effect  -- Doohl
-					for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
-						if(smoke.reagents.total_volume)
-							smoke.reagents.reaction(src, INGEST)
-							addtimer(CALLBACK(smoke.reagents, /datum/reagents.proc/copy_to, src, 10), 5) // I dunno, maybe the reagents enter the blood stream through the lungs?
-							break // If they breathe in the nasty stuff once, no need to continue checking
-
-
-			else //Still give containing object the chance to interact
-				if(istype(loc, /obj/))
-					var/obj/location_as_object = loc
-					location_as_object.handle_internal_lifeform(src, 0)
-
-		handle_breath(breath)
-
-		if(breath)
-			loc.assume_air(breath)
-
-
-	get_breath_from_internal(volume_needed)
-		if(internal)
-			if (!contents.Find(internal))
-				internal = null
-			if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
-				internal = null
-			if(internal)
-				if (internals)
-					internals.icon_state = "internal1"
-				return internal.remove_air_volume(volume_needed)
-			else
-				if (internals)
-					internals.icon_state = "internal0"
-		return null
-
-	handle_breath(datum/gas_mixture/breath)
-		if(status_flags & GODMODE)
-			return
-
-		if(!breath || (breath.total_moles == 0))
-			//Aliens breathe in vaccuum
-			return 0
-
-		var/phoron_used = 0
-		var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
-
-		//Partial pressure of the phoron in our breath
-		var/Toxins_pp = (breath.phoron/breath.total_moles())*breath_pressure
-
-		if(Toxins_pp) // Detect phoron in air
-
-			adjustToxLoss(breath.phoron*250)
-			throw_alert("alien_tox")
-			phoron_used = breath.phoron
-
-		else
-			clear_alert("alien_tox")
-
-		//Breathe in phoron and out oxygen
-		breath.phoron -= phoron_used
-		breath.oxygen += phoron_used
-
-		return 1
-
-
 
 	proc/adjust_body_temperature(current, loc_temp, boost)
 		var/temperature = current
@@ -215,7 +112,7 @@
 		return fire_prot
 	*/
 
-	handle_regular_status_updates()
+	/*handle_regular_status_updates()
 		updatehealth()
 
 		if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -250,10 +147,10 @@
 				stat = UNCONSCIOUS
 			//CONSCIOUS
 			else
-				stat = CONSCIOUS
+				stat = CONSCIOUS*/
 
 			/*	What in the living hell is this?*/
-			if(move_delay_add > 0)
+			/*if(move_delay_add > 0)
 				move_delay_add = max(0, move_delay_add - rand(1, 2))
 
 			//Eyes
@@ -290,7 +187,7 @@
 
 			if(druggy)
 				druggy = 0
-		return 1
+		return 1*/
 
 
 	handle_regular_hud_updates()
@@ -361,7 +258,7 @@
 	handle_fire()
 		if(..())
 			return
-		adjustFireLoss(6)
+		//adjustFireLoss(6)
 		return
 //END FIRE CODE
 

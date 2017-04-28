@@ -25,13 +25,13 @@
 	if(T)
 		T.fire(A)*/
 
-/obj/screen/alien/neurotoxin
-	name = "toggle neurotoxin"
-	icon_state = "neurotoxin0"
+//obj/screen/alien/neurotoxin
+//	name = "toggle neurotoxin"
+//	icon_state = "neurotoxin0"
 
-/obj/screen/alien/neurotoxin/Click()
-	var/mob/living/carbon/alien/humanoid/AH = usr
-	AH.toggle_neurotoxin()
+//obj/screen/alien/neurotoxin/Click()
+//	var/mob/living/carbon/alien/humanoid/AH = usr
+//	AH.toggle_neurotoxin()
 
 /datum/hud/proc/alien_hud()
 
@@ -171,9 +171,9 @@
 	using.plane = HUD_PLANE
 	src.adding += using
 
-	mymob.nightvisionicon = new /obj/screen/alien/nightvision()
-	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
-	src.adding += mymob.nightvisionicon
+	//mymob.nightvisionicon = new /obj/screen/alien/nightvision()
+	//mymob.nightvisionicon.screen_loc = ui_alien_nightvision
+	//src.adding += mymob.nightvisionicon
 
 	using = new /obj/screen()
 	using.name = "resist"
@@ -184,15 +184,15 @@
 	using.plane = HUD_PLANE
 	src.adding += using
 
-	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))
-		mymob.leap_icon = new /obj/screen/alien/leap()
-		mymob.leap_icon.screen_loc = ui_storage2
-		src.adding += mymob.leap_icon
+	//if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))
+	//	mymob.leap_icon = new /obj/screen/alien/leap()
+	//	mymob.leap_icon.screen_loc = ui_storage2
+	//	src.adding += mymob.leap_icon
 
-	if(locate(/mob/living/carbon/alien/humanoid/proc/neurotoxin) in mymob.verbs)
-		mymob.neurotoxin_icon = new /obj/screen/alien/neurotoxin()
-		mymob.neurotoxin_icon.screen_loc = ui_storage1
-		src.adding += mymob.neurotoxin_icon
+	//if(locate(/datum/species/adult/proc/neurotoxin) in mymob.verbs)
+	//	mymob.neurotoxin_icon = new /obj/screen/alien/neurotoxin()
+	//	mymob.neurotoxin_icon.screen_loc = ui_storage1
+	//	src.adding += mymob.neurotoxin_icon
 
 	mymob.throw_icon = new /obj/screen()
 	mymob.throw_icon.icon = 'icons/mob/screen1_xeno.dmi'
@@ -200,11 +200,11 @@
 	mymob.throw_icon.name = "throw"
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
-	mymob.alien_plasma_display = new /obj/screen()
-	mymob.alien_plasma_display.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.alien_plasma_display.icon_state = "power_display3"
-	mymob.alien_plasma_display.name = "plasma stored"
-	mymob.alien_plasma_display.screen_loc = ui_alienplasmadisplay
+	//mymob.alien_plasma_display = new /obj/screen()
+	//mymob.alien_plasma_display.icon = 'icons/mob/screen1_xeno.dmi'
+	//mymob.alien_plasma_display.icon_state = "power_display3"
+	//mymob.alien_plasma_display.name = "plasma stored"
+	//mymob.alien_plasma_display.screen_loc = ui_alienplasmadisplay
 
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'
@@ -224,6 +224,6 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.alien_plasma_display, mymob.pullin) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, /*mymob.alien_plasma_display,*/ mymob.pullin) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 	mymob.client.screen += mymob.client.void

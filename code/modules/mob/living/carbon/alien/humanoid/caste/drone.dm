@@ -3,17 +3,16 @@
 	caste = "d"
 	maxHealth = 120
 	health = 120
-	icon_state = "aliend_s"
-	plasma_rate = 15
+	//icon_state = "aliend_s"
 
-/mob/living/carbon/alien/humanoid/drone/New()
+/mob/living/carbon/alien/humanoid/drone/New(loc, new_species = S_XENO_DRONE)
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
 	if(src.name == "alien drone")
 		src.name = text("alien drone ([rand(1, 1000)])")
 	src.real_name = src.name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
+	//verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
 	..()
 
 /mob/living/carbon/alien/humanoid/drone/handle_hud_icons_health()
@@ -39,7 +38,7 @@
 
 //Drones use the same base as generic humanoids.
 //Drone verbs
-/mob/living/carbon/alien/humanoid/drone/verb/evolve() // -- TLE
+/*/mob/living/carbon/alien/humanoid/drone/verb/evolve() // -- TLE
 	set name = "Evolve (500)"
 	set desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
 	set category = "Alien"
@@ -70,4 +69,4 @@
 			qdel(src)
 		else
 			to_chat(src, "<span class='notice'>We already have an alive queen.</span>")
-	return
+	return*/

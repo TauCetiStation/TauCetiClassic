@@ -11,13 +11,13 @@
 //mob/living/carbon/alien/humanoid
 //	var/list/overlays_standing[X_TOTAL_LAYERS]
 
-/mob/living/carbon/alien/humanoid/update_icons()
-	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
-	for(var/image/I in overlays_standing)
-		overlays += I
+//mob/living/carbon/alien/humanoid/update_icons()
+	//update_hud()		//TODO: remove the need for this to be here
+	//overlays.Cut()
+	//for(var/image/I in overlays_standing)
+	//	overlays += I
 
-	if(stat == DEAD)
+	/*if(stat == DEAD)
 		//If we mostly took damage from fire
 		if(fireloss > 125)
 			icon_state = "alien[caste]_husked"
@@ -32,9 +32,9 @@
 	else if(m_intent == "run")
 		icon_state = "alien[caste]_running"
 	else
-		icon_state = "alien[caste]_s"
+		icon_state = "alien[caste]_s"*/
 
-	if(leaping)
+	/*if(leaping)
 		if(alt_icon == initial(alt_icon))
 			var/old_icon = icon
 			icon = alt_icon
@@ -48,29 +48,29 @@
 			icon = alt_icon
 			alt_icon = old_icon
 		pixel_x = get_standard_pixel_x_offset(lying)
-		pixel_y = get_standard_pixel_y_offset(lying)
+		pixel_y = get_standard_pixel_y_offset(lying)*/
 
-/mob/living/carbon/alien/humanoid/regenerate_icons()
-	..()
-	if (monkeyizing)	return
+//mob/living/carbon/alien/humanoid/regenerate_icons()
+//	..()
+//	if (monkeyizing)	return
 
-	update_hud()
+//	update_hud()
 //	update_icons() //Handled in update_transform(), leaving this here as a reminder
-	update_transform()
+//	update_transform()
 
-/mob/living/carbon/alien/humanoid/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
-	if(lying > 0)
-		lying = 90 //Anything else looks retarded
-	update_icons()
-	..()
+//mob/living/carbon/alien/humanoid/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
+//	if(lying > 0)
+//		lying = 90 //Anything else looks retarded
+//	update_icons()
+//	..()
 
 
-/mob/living/carbon/alien/humanoid/update_hud()
+//mob/living/carbon/alien/humanoid/update_hud()
 	//TODO
-	if (client)
+//	if (client)
 //		if(other)	client.screen |= hud_used.other		//Not used
 //		else		client.screen -= hud_used.other		//Not used
-		client.screen |= contents
+//		client.screen |= contents
 
 
 

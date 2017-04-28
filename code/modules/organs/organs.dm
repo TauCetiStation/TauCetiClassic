@@ -37,8 +37,8 @@
 		max_damage = min_broken_damage * 2
 
 	if(istype(C))
-		owner = C
-		species = owner.species
+		inserted(C)
+
 		w_class = max(w_class + mob_size_difference(owner.mob_size, MOB_MEDIUM), 1) //smaller mobs have smaller organs.
 
 		if(owner.dna)
@@ -48,16 +48,7 @@
 			species = all_species[S_HUMAN]
 			CRASH("[src] spawned in [owner] without a proper DNA.") // log_debug()
 
-		owner.organs += src
-		owner.organs_by_name[organ_tag] = src
-
-		var/obj/item/bodypart/BP = owner.bodyparts_by_name[parent_bodypart]
-		if(!BP)
-			CRASH("[src] spawned in [owner] without a parent bodypart: [parent_bodypart].")
-
-		BP.organs += src
-		BP.organs_by_name[organ_tag] = src
-		if(BP.species.flags[IS_SYNTHETIC])
+		if(species.flags[IS_SYNTHETIC])
 			src.mechanize()
 
 	if(dna)
@@ -92,6 +83,9 @@
 	if(!istype(owner))
 		return
 
+	on_remove()
+	remove_hud_data()
+
 	owner.organs_by_name[organ_tag] = null
 	owner.organs_by_name -= organ_tag
 	owner.organs -= src
@@ -118,6 +112,42 @@
 		owner.death()
 
 	owner = null
+
+/obj/item/organ/proc/inserted(mob/living/carbon/C)
+	if(!istype(C))
+		return FALSE
+
+	STOP_PROCESSING(SSobj, src)
+
+	loc = null
+	owner = C
+
+	owner.organs += src
+	owner.organs_by_name[organ_tag] = src
+
+	var/obj/item/bodypart/BP = owner.bodyparts_by_name[parent_bodypart]
+	if(!BP)
+		CRASH("[src] inserted into [owner] without a parent bodypart: [parent_bodypart].")
+
+	BP.organs += src
+	BP.organs_by_name[organ_tag] = src
+
+	add_hud_data()
+	on_insert()
+
+	return TRUE
+
+/obj/item/organ/proc/on_insert()
+	return
+
+/obj/item/organ/proc/on_remove()
+	return
+
+/obj/item/organ/proc/add_hud_data()
+	return
+
+/obj/item/organ/proc/remove_hud_data(destroy = FALSE)
+	return
 
 /obj/item/organ/process()
 	//dead already, no need for more processing
@@ -339,7 +369,7 @@
 /mob/living/carbon/proc/handle_stance()
 	// Don't need to process any of this if they aren't standing anyways
 	// unless their stance is damaged, and we want to check if they should stay down
-	if (!stance_damage && (lying || resting) && (life_tick % 4) != 0)
+	if (num_of_legs == 0 || !stance_damage && (lying || resting) && (life_tick % 4) != 0)
 		return
 
 	stance_damage = 0
@@ -349,36 +379,38 @@
 		return
 
 	var/limb_pain
-	for(var/limb_tag in list(BP_L_LEG, BP_R_LEG))
-		var/obj/item/bodypart/BP = bodyparts_by_name[limb_tag]
-		if(!BP || !BP.is_usable())
-			stance_damage += 2 // let it fail even if just foot&leg
-		else if (BP.is_malfunctioning())
-			//malfunctioning only happens intermittently so treat it as a missing limb when it procs
-			stance_damage += 2
-			if(prob(10))
-				visible_message("\The [src]'s [BP.name] [pick("twitches", "shudders")] and sparks!")
-				var/datum/effect/effect/system/spark_spread/spark_system = new ()
-				spark_system.set_up(5, 0, src)
-				spark_system.attach(src)
-				spark_system.start()
-				spawn(10)
-					qdel(spark_system)
-		else if (BP.is_broken())
-			stance_damage += 1
-		else if (BP.is_dislocated())
-			stance_damage += 0.5
+	for(var/i = 1 to num_of_legs)
+		if(i <= bodypart_legs.len)
+			var/obj/item/bodypart/BP = bodypart_legs[i]
+			if(!BP.is_usable())
+				stance_damage += 4 // let it fail even if just foot&leg
+			else if (BP.is_malfunctioning())
+				//malfunctioning only happens intermittently so treat it as a missing limb when it procs
+				stance_damage += 4
+				if(prob(10))
+					visible_message("\The [src]'s [BP.name] [pick("twitches", "shudders")] and sparks!")
+					var/datum/effect/effect/system/spark_spread/spark_system = new ()
+					spark_system.set_up(5, 0, src)
+					spark_system.attach(src)
+					spark_system.start()
+					spawn(10)
+						qdel(spark_system)
+			else if (BP.is_broken())
+				stance_damage += 2
+			else if (BP.is_dislocated())
+				stance_damage += 1
 
-		if(BP)
-			limb_pain = BP.can_feel_pain()
+			if(BP)
+				limb_pain = BP.can_feel_pain()
+		else
+			stance_damage += 4
 
 	// Canes and crutches help you stand (if the latter is ever added)
 	// One cane mitigates a broken leg+foot, or a missing foot.
 	// Two canes are needed for a lost leg. If you are missing both legs, canes aren't gonna help you.
-	if (l_hand && istype(l_hand, /obj/item/weapon/cane))
-		stance_damage -= 2
-	if (r_hand && istype(r_hand, /obj/item/weapon/cane))
-		stance_damage -= 2
+	for(var/obj/item/bodypart/BP in bodypart_hands)
+		if(istype(BP.item_in_slot[1], /obj/item/weapon/cane))
+			stance_damage -= 2
 
 	// standing is poor
 	if(stance_damage >= 4 || (stance_damage >= 2 && prob(5)))
@@ -389,47 +421,15 @@
 		Weaken(5) //can't emote while weakened, apparently.
 
 /mob/living/carbon/proc/handle_grasp() // TODO check this proc
-	var/obj/item/i_left = get_equipped_item(slot_l_hand)
-	var/obj/item/i_right = get_equipped_item(slot_r_hand)
-
-	if(!i_left && !i_right)
+	if(num_of_hands == 0)
 		return
 
-	// You should not be able to pick anything up, but stranger things have happened.
-	if(i_left)
-		var/obj/item/bodypart/BP = get_bodypart(BP_L_ARM)
-		if(!BP)
-			dropItemToGround(i_left, TRUE)
-			visible_message("<span class='danger'>Lacking a functioning left hand, \the [src] drops \the [l_hand].</span>")
-
-	if(i_right)
-		var/obj/item/bodypart/BP = get_bodypart(BP_R_ARM)
-		if(!BP)
-			dropItemToGround(i_right, TRUE)
-			visible_message("<span class='danger'>Lacking a functioning right hand, \the [src] drops \the [r_hand].</span>")
-
-	// Check again...
-	if(!i_left && !i_right)
-		return
-
-	for (var/obj/item/bodypart/BP in bodyparts)
-		if(!BP || !BP.can_grasp)
-			continue
+	for (var/obj/item/bodypart/BP in bodypart_hands)
 		if(((BP.is_broken() || BP.is_dislocated()) && !(BP.status & ORGAN_SPLINTED)) || BP.is_malfunctioning())
 			grasp_damage_disarm(BP)
 
 /mob/living/carbon/proc/grasp_damage_disarm(obj/item/bodypart/BP)
-	var/disarm_slot
-	switch(BP.body_part)
-		if(HAND_LEFT, ARM_LEFT)
-			disarm_slot = slot_l_hand
-		if(HAND_RIGHT, ARM_RIGHT)
-			disarm_slot = slot_r_hand
-
-	if(!disarm_slot)
-		return
-
-	var/obj/item/thing = get_equipped_item(disarm_slot)
+	var/obj/item/thing = BP.item_in_slot[1]
 
 	if(!thing)
 		return
@@ -447,22 +447,17 @@
 			qdel(spark_system)
 
 	else
-		var/grasp_name = BP.name
-		if((BP.body_part in list(ARM_LEFT, ARM_RIGHT)) && BP.children.len)
-			var/obj/item/bodypart/hand = pick(BP.children)
-			grasp_name = hand.name
-
 		if(BP.can_feel_pain())
 			var/emote_scream = pick("screams in pain", "lets out a sharp cry", "cries out")
 			var/emote_scream_alt = pick("scream in pain", "let out a sharp cry", "cry out")
 			visible_message(
-				"<B>\The [src]</B> [emote_scream] and drops what they were holding in their [grasp_name]!",
+				"<B>\The [src]</B> [emote_scream] and drops what they were holding in their [BP.name]!",
 				null,
 				"You hear someone [emote_scream_alt]!"
 			)
 			custom_pain("The sharp pain in your [BP.name] forces you to drop [thing]!", 30)
 		else
-			visible_message("<B>\The [src]</B> drops what they were holding in their [grasp_name]!")
+			visible_message("<B>\The [src]</B> drops what they were holding in their [BP.name]!")
 
 
 /****************************************************
@@ -830,6 +825,57 @@
 
 	return failed_breath
 
+/obj/item/organ/lungs/xeno
+	name = "lungs"
+	icon_state = "lungs-x"
+	organ_tag = BP_LUNGS
+	parent_bodypart = BP_CHEST
+
+	var/oxygen_reserve = 240     // starts with enough oxygen for about one minute.
+	var/oxygen_reserve_max = 720 // lungs looses 16 every 4 ticks when there is not enough oxygen (holds oxygen at max for three minutes or so).
+
+/obj/item/organ/lungs/xeno/handle_breath(datum/gas_mixture/breath)
+	if(!owner)
+		return TRUE
+
+	var/safe_pressure_min = 16
+	var/failed_inhale = FALSE
+
+	if(!breath)
+		oxygen_reserve = max(0, oxygen_reserve - safe_pressure_min)
+		owner.clear_alert("alien_tox")
+	else
+		var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+		if(breath.total_moles() == 0)
+			oxygen_reserve = max(0, oxygen_reserve - safe_pressure_min)
+		else
+			var/inhaling = breath.oxygen
+			var/poison = breath.phoron
+
+			var/inhale_pp = (inhaling/breath.total_moles())*breath_pressure
+			var/toxins_pp = (poison/breath.total_moles())*breath_pressure
+
+			// Not enough to breathe
+			if(inhale_pp < safe_pressure_min)
+				oxygen_reserve = max(0, oxygen_reserve - safe_pressure_min)
+			else
+				oxygen_reserve = min(oxygen_reserve + inhale_pp, oxygen_reserve_max)
+
+			if(toxins_pp)
+				owner.throw_alert("alien_tox")
+				owner.adjustToxLoss(toxins_pp * 250)
+			else
+				owner.clear_alert("alien_tox")
+
+	if(oxygen_reserve == 0)
+		failed_inhale = TRUE
+
+	// Were we able to breathe?
+	if (!failed_inhale)
+		owner.adjustOxyLoss(-5)
+
+	return failed_inhale
+
 /obj/item/organ/liver
 	name = "liver"
 	icon_state = "liver"
@@ -934,8 +980,56 @@
 /obj/item/organ/brain/monkey/nymph
 	parent_bodypart = BP_CHEST
 
-/obj/item/organ/brain/monkey/New(loc, mob/living/carbon/C)
+/obj/item/organ/brain/xeno
+	name = "thinkpan"
+	desc = "It looks kind of like an enormous wad of purple bubblegum."
+	icon_state = "chitin"
+
+	var/obj/screen/alien/nightvision/nightvisionicon
+
+/obj/item/organ/brain/xeno/child
+	name = "brain"
+	icon_state = "brain-x"
+	parent_bodypart = BP_CHEST
+
+/obj/item/organ/brain/xeno/add_hud_data()
+	if(!nightvisionicon)
+		nightvisionicon = new
+		nightvisionicon.screen_loc = ui_alien_nightvision
+
+	if(owner && owner.client)
+		owner.client.screen += nightvisionicon
+
+/obj/item/organ/brain/xeno/remove_hud_data(destroy = FALSE)
+	if(owner && owner.client)
+		owner.client.screen -= nightvisionicon
+
+	if(destroy)
+		qdel(nightvisionicon)
+		nightvisionicon = null
+
+
+/obj/item/organ/brain/xeno/hunter
+	var/obj/screen/alien/leap/leap_icon
+
+/obj/item/organ/brain/xeno/hunter/add_hud_data()
 	..()
+	if(!leap_icon)
+		leap_icon = new
+		leap_icon.screen_loc = ui_storage2
+
+	if(owner && owner.client)
+		owner.client.screen += leap_icon
+
+/obj/item/organ/brain/xeno/hunter/remove_hud_data(destroy = FALSE)
+	if(owner && owner.client)
+		owner.client.screen -= leap_icon
+
+	if(destroy)
+		qdel(leap_icon)
+		leap_icon = null
+	..()
+
 
 /obj/item/organ/brain/process()
 	if(!owner || !owner.should_have_organ(BP_HEART))
@@ -992,3 +1086,150 @@
 	icon_state = "tonguenormal"
 	organ_tag = BP_MOUTH
 	parent_bodypart = BP_HEAD
+
+/obj/item/organ/tongue/xeno
+	icon_state = "tonguexeno"
+
+//XENOMORPH ORGANS
+/obj/item/organ/xenos
+	name = "xeno organ"
+	desc = "It smells like an accident in a chemical factory."
+	var/list/alien_powers = list()
+
+/obj/item/organ/xenos/New()
+	for(var/A in alien_powers)
+		if(ispath(A))
+			alien_powers -= A
+			alien_powers += new A(src)
+	..()
+
+/obj/item/organ/xenos/on_insert()
+	..()
+	for(var/obj/effect/proc_holder/alien/P in alien_powers)
+		owner.AddAbility(P)
+
+/obj/item/organ/xenos/on_remove()
+	..()
+	for(var/obj/effect/proc_holder/alien/P in alien_powers)
+		owner.RemoveAbility(P)
+
+/obj/item/organ/xenos/eggsac
+	name = "egg sac"
+	icon_state = "eggsac"
+
+	organ_tag = BP_EGG
+	parent_bodypart = BP_GROIN
+	alien_powers = list(/obj/effect/proc_holder/alien/lay_egg)
+
+/obj/item/organ/xenos/plasmavessel
+	name = "large plasma vessel"
+	icon_state = "plasma_large"
+
+	organ_tag = BP_PLASMA
+	parent_bodypart = BP_CHEST
+	alien_powers = list(/obj/effect/proc_holder/alien/plant, /obj/effect/proc_holder/alien/transfer)
+
+	var/obj/screen/alien_plasma_display
+	var/stored_plasma = 125
+	var/max_plasma = 500
+	var/heal_rate = 5
+	var/plasma_rate = 15
+
+/obj/item/organ/xenos/plasmavessel/add_hud_data()
+	if(!alien_plasma_display)
+		alien_plasma_display = new /obj/screen()
+		alien_plasma_display.icon = 'icons/mob/screen1_xeno.dmi'
+		alien_plasma_display.icon_state = "power_display3"
+		alien_plasma_display.name = "plasma stored"
+		alien_plasma_display.screen_loc = ui_alienplasmadisplay
+
+	if(owner && owner.client)
+		owner.client.screen += alien_plasma_display
+		owner.updatePlasmaDisplay()
+
+/obj/item/organ/xenos/plasmavessel/remove_hud_data(destroy = FALSE)
+	if(owner && owner.client)
+		owner.client.screen -= alien_plasma_display
+
+	if(destroy)
+		qdel(alien_plasma_display)
+		alien_plasma_display = null
+
+/obj/item/organ/xenos/plasmavessel/process()
+	if(owner)
+		//If there are alien weeds on the ground then heal if needed or give some plasma
+		if(locate(/obj/structure/alien/weeds) in owner.loc)
+			if(owner.health >= owner.maxHealth)
+				owner.adjustPlasma(plasma_rate)
+			else
+				var/heal_amt = heal_rate
+				if(!isalien(owner))
+					..()
+					heal_amt *= 0.2
+				owner.adjustPlasma(plasma_rate*0.5)
+				owner.adjustBruteLoss(-heal_amt)
+				owner.adjustFireLoss(-heal_amt)
+				owner.adjustOxyLoss(-heal_amt)
+				owner.adjustCloneLoss(-heal_amt)
+
+/obj/item/organ/xenos/plasmavessel/queen
+	name = "bloated plasma vessel"
+	icon_state = "plasma_large"
+
+	max_plasma = 500
+	plasma_rate = 20
+
+/obj/item/organ/xenos/plasmavessel/sentinel
+	name = "plasma vessel"
+	icon_state = "plasma"
+
+	max_plasma = 250
+	plasma_rate = 10
+
+/obj/item/organ/xenos/plasmavessel/hunter
+	name = "small plasma vessel"
+	icon_state = "plasma_small"
+
+	max_plasma = 150
+	plasma_rate = 5
+
+/obj/item/organ/xenos/neurotoxin
+	name = "neurotoxin gland"
+	icon_state = "neurotox"
+
+	organ_tag = BP_NEURO
+	parent_bodypart = BP_HEAD
+	alien_powers = list(/obj/effect/proc_holder/alien/neurotoxin)
+
+/obj/item/organ/xenos/acidgland
+	name = "acid gland"
+	icon_state = "acid"
+
+	organ_tag = BP_ACID
+	parent_bodypart = BP_HEAD
+	alien_powers = list(/obj/effect/proc_holder/alien/acid)
+
+/obj/item/organ/xenos/hivenode
+	name = "hive node"
+	icon_state = "hivenode"
+
+	organ_tag = BP_HIVE
+	parent_bodypart = BP_CHEST
+	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
+
+/obj/item/organ/xenos/hivenode/on_insert()
+	..()
+	owner.faction = "alien" // TODO faction as list.
+
+/obj/item/organ/xenos/hivenode/on_remove()
+	if(owner.faction == "alien")
+		owner.faction = null
+	..()
+
+/obj/item/organ/xenos/resinspinner
+	name = "resin spinner"
+	icon_state = "stomach-x"
+
+	organ_tag = BP_RESIN
+	parent_bodypart = BP_HEAD
+	alien_powers = list(/obj/effect/proc_holder/alien/resin)

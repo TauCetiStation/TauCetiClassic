@@ -23,7 +23,7 @@
 
 	..()
 
-	verbs += /mob/living/carbon/proc/crawl
+	verbs += /mob/living/carbon/proc/crawl // TODO deal with !mob! brain.
 
 	//make_blood()
 	regenerate_icons()
@@ -985,3 +985,15 @@ This function restores the subjects blood to max.
 			update_bodyparts()
 			update_tail_showing()
 
+/mob/living/carbon/proc/AddAbility(obj/effect/proc_holder/alien/A)
+	abilities.Add(A)
+	A.on_gain(src)
+	if(A.has_action)
+		A.action.Grant(src)
+	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
+
+/mob/living/carbon/proc/RemoveAbility(obj/effect/proc_holder/alien/A)
+	abilities.Remove(A)
+	A.on_lose(src)
+	if(A.action)
+		A.action.Remove(src)

@@ -91,6 +91,15 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	If index term exists and icon_override is not set, this sprite sheet will be used.
 	*/
 
+	var/has_a_intent = TRUE  // Set to draw intent box.
+	var/has_m_intent = TRUE  // Set to draw move intent box.
+	var/has_hands = TRUE     // Set to draw hands.
+	var/has_drop = TRUE      // Set to draw drop button.
+	var/has_throw = TRUE     // Set to draw throw button.
+	var/has_resist = TRUE    // Set to draw resist button.
+	var/has_internals = TRUE // Set to draw the internals toggle button.
+	var/has_gun_aim_control = TRUE // Set to draw gun setting button.
+
 	var/list/sprite_sheets = list()
 
 	//This is default bodyparts & organs set which is mostly used upon mob creation.
@@ -625,52 +634,174 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 /datum/species/slime
 	name = S_SLIME
 
-	has_bodypart = list()
-	has_organ = list()
+	icobase = null
+	deform = null
 
 	flags = list(
 	 NO_EMBED = TRUE
 	)
 
-/datum/species/alien
 	has_bodypart = list()
 	has_organ = list()
 
+/*
+	Aliens aka xenomorphs
+*/
+/datum/species/xenos
 	flags = list(
 	 NO_EMBED = TRUE
 	,NO_SLIP = TRUE
 	)
 
-/datum/species/alien/facehugger
-	name = S_XENO_FACE
-
-/datum/species/alien/larva
-	name = S_XENO_LARVA
-	backward_form = S_XENO_FACE
-
-/datum/species/alien/adult
-	name = S_XENO_ADULT
-	unarmed_types = list(/datum/unarmed_attack/claws/strong, /datum/unarmed_attack/bite/strong)
-	backward_form = S_XENO_LARVA
-
-/datum/species/alien/adult/queen
-	name = S_XENO_QUEEN
-	//backward_form = /mob/living/carbon/alien/humanoid/drone
-
-/datum/species/dog
-	name = S_DOG
+	has_gun_aim_control = FALSE
 
 	has_bodypart = list()
 	has_organ = list()
 
-// Called when using the shredding behavior.
-/datum/species/proc/can_shred(var/mob/living/carbon/human/H, var/ignore_intent)
+/datum/species/xenos/facehugger
+	name = S_XENO_FACE
 
-	if(!ignore_intent && H.a_intent != I_HURT)
+	icobase = null
+	deform = null
+
+	has_a_intent = FALSE
+	has_m_intent = FALSE
+	has_hands = FALSE
+	//has_drop = FALSE
+	has_throw = FALSE
+	has_resist = FALSE
+	has_internals = FALSE
+
+	has_bodypart = list(
+		BP_CHEST = /obj/item/bodypart/chest/unbreakable/facehugger
+		)
+
+	has_organ = list(
+		BP_BRAIN = /obj/item/organ/brain/xeno/child
+		)
+
+/datum/species/xenos/larva
+	name = S_XENO_LARVA
+
+	icobase = null
+	deform = null
+
+	has_a_intent = FALSE
+	has_m_intent = FALSE
+	has_hands = FALSE
+	has_drop = FALSE
+	has_throw = FALSE
+	has_resist = FALSE
+	has_internals = FALSE
+
+	has_bodypart = list(
+		BP_CHEST = /obj/item/bodypart/chest/unbreakable/larva
+		)
+
+	has_organ = list(
+		BP_BRAIN = /obj/item/organ/brain/xeno/child
+		)
+
+/datum/species/xenos/adult
+	unarmed_types = list(/datum/unarmed_attack/claws/strong, /datum/unarmed_attack/bite/strong)
+
+	has_internals = FALSE
+
+	has_bodypart = list(
+		 BP_CHEST = /obj/item/bodypart/chest/unbreakable
+		,BP_GROIN = /obj/item/bodypart/groin/unbreakable
+		,BP_HEAD = /obj/item/bodypart/head/unbreakable
+		,BP_L_ARM = /obj/item/bodypart/l_arm/unbreakable
+		,BP_R_ARM = /obj/item/bodypart/r_arm/unbreakable
+		,BP_L_LEG = /obj/item/bodypart/l_leg/unbreakable
+		,BP_R_LEG = /obj/item/bodypart/r_leg/unbreakable
+		)
+
+	has_organ = list(
+		 BP_HEART = /obj/item/organ/heart
+		,BP_BRAIN = /obj/item/organ/brain/xeno
+		,BP_LUNGS = /obj/item/organ/lungs/xeno
+		,BP_TONGUE = /obj/item/organ/tongue/xeno
+		,BP_HIVE = /obj/item/organ/xenos/hivenode
+		)
+
+	//abilities = list()
+
+/datum/species/xenos/adult/drone
+	name = S_XENO_DRONE
+	tail = "xenos_drone_tail"
+
+	icobase = 'icons/mob/human_races/xenos/r_xenos_drone.dmi'
+	deform  = 'icons/mob/human_races/xenos/r_xenos_drone.dmi'
+
+/datum/species/xenos/adult/drone/New()
+	..()
+
+	has_organ[BP_PLASMA] = /obj/item/organ/xenos/plasmavessel
+	has_organ[BP_RESIN] = /obj/item/organ/xenos/resinspinner
+	has_organ[BP_ACID] = /obj/item/organ/xenos/acidgland
+
+	//abilities += list(
+	//	/datum/species/xenos/adult/drone/proc/evolve
+	//	)
+
+/datum/species/xenos/adult/hunter
+	name = S_XENO_HUNTER
+	tail = "xenos_hunter_tail"
+
+	icobase = 'icons/mob/human_races/xenos/r_xenos_hunter.dmi'
+	deform  = 'icons/mob/human_races/xenos/r_xenos_hunter.dmi'
+
+/datum/species/xenos/adult/hunter/New()
+	..()
+
+	has_organ[BP_BRAIN] = /obj/item/organ/brain/xeno/hunter
+	has_organ[BP_PLASMA] = /obj/item/organ/xenos/plasmavessel/hunter
+
+/datum/species/xenos/adult/sentinel
+	name = S_XENO_SENTINEL
+	tail = "xenos_sentinel_tail"
+
+	icobase = 'icons/mob/human_races/xenos/r_xenos_sentinel.dmi'
+	deform  = 'icons/mob/human_races/xenos/r_xenos_sentinel.dmi'
+
+/datum/species/xenos/adult/sentinel/New()
+	..()
+
+	has_organ[BP_PLASMA] = /obj/item/organ/xenos/plasmavessel/sentinel
+	has_organ[BP_NEURO] = /obj/item/organ/xenos/neurotoxin
+	has_organ[BP_ACID] = /obj/item/organ/xenos/acidgland
+
+/datum/species/xenos/adult/queen
+	name = S_XENO_QUEEN
+	tail = "xenos_queen_tail"
+
+	icobase = 'icons/mob/human_races/xenos/r_xenos_queen.dmi'
+	deform  = 'icons/mob/human_races/xenos/r_xenos_queen.dmi'
+
+/datum/species/xenos/adult/queen/New()
+	..()
+
+	has_organ[BP_EGG] = /obj/item/organ/xenos/eggsac
+	has_organ[BP_PLASMA] = /obj/item/organ/xenos/plasmavessel/queen
+	has_organ[BP_RESIN] = /obj/item/organ/xenos/resinspinner
+	has_organ[BP_NEURO] = /obj/item/organ/xenos/neurotoxin
+	has_organ[BP_ACID] = /obj/item/organ/xenos/acidgland
+
+/datum/species/dog
+	name = S_DOG
+
+	icobase = null
+	deform = null
+
+// Called when using the shredding behavior.
+/datum/species/proc/can_shred(mob/living/carbon/C, ignore_intent)
+
+	if(!ignore_intent && C.a_intent != I_HURT)
 		return 0
 
 	for(var/datum/unarmed_attack/attack in unarmed_attacks)
-		if(!attack.is_usable(H))
+		if(!attack.is_usable(C))
 			continue
 		if(attack.shredding)
 			return 1

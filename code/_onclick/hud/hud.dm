@@ -120,8 +120,8 @@
 	//	facehugger_hud()
 	//else if(islarva(mymob))
 	//	larva_hud()
-	//else if(isalien(mymob))
-	//	alien_hud()
+	else if(isalien(mymob))
+		human_hud('icons/mob/screen1_xeno.dmi', null, 255)
 	else if(iscarbon(mymob))
 		human_hud(ui_style, ui_color, ui_alpha) // Pass the player the UI style chosen in preferences
 	else if(isAI(mymob))

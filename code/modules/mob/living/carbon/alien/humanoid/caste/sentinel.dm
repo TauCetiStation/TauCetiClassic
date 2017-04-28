@@ -3,19 +3,20 @@
 	caste = "s"
 	maxHealth = 150
 	health = 150
-	storedPlasma = 100
-	max_plasma = 250
-	icon_state = "aliens_s"
-	plasma_rate = 10
 
-/mob/living/carbon/alien/humanoid/sentinel/New()
+	//icon_state = "aliens_s"
+
+/mob/living/carbon/alien/humanoid/sentinel/New(loc, new_species = S_XENO_SENTINEL)
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
 	if(name == "alien sentinel")
 		name = text("alien sentinel ([rand(1, 1000)])")
 	real_name = name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
+
+	AddAbility(new /obj/effect/proc_holder/alien/sneak)
+
+	//verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
 	..()
 
 /mob/living/carbon/alien/humanoid/sentinel/handle_hud_icons_health()

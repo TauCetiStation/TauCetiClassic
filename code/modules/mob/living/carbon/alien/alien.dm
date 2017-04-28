@@ -5,7 +5,7 @@
 /mob/living/carbon/alien
 	name = "alien"
 	voice_name = "alien"
-	icon = 'icons/mob/xenomorph.dmi'
+	//icon = 'icons/mob/xenomorph.dmi'
 	gender = NEUTER
 	dna = null
 	faction = "alien"
@@ -13,25 +13,23 @@
 	alien_talk_understand = 1
 	speak_emote = list("hisses")
 	var/nightvision = 1
-	var/storedPlasma = 250
-	var/max_plasma = 500
+	//var/storedPlasma = 250
+	//var/max_plasma = 500
 
 	var/has_fine_manipulation = 0
 
 	var/move_delay_add = 0 // movement delay to add
 
 	status_flags = CANPARALYSE|CANPUSH
-	var/heal_rate = 1
-	var/plasma_rate = 5
+	//var/heal_rate = 1
+	//var/plasma_rate = 5
 
 	var/heat_protection = 0.5
 	var/leaping = 0
 	ventcrawler = 2
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
-	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
-	updatePlasmaDisplay()
-	return
+	return FALSE
 
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
 	if(amount > 0)
@@ -40,8 +38,8 @@
 		..(amount)
 	return
 
-/mob/living/carbon/alien/proc/getPlasma()
-	return storedPlasma
+//mob/living/carbon/alien/proc/getPlasma()
+//	return storedPlasma
 
 /mob/living/carbon/alien/eyecheck()
 	return 2
@@ -59,16 +57,6 @@
 		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
-
-	//If there are alien weeds on the ground then heal if needed or give some plasma
-	if(locate(/obj/structure/alien/weeds) in loc)
-		if(health >= maxHealth)
-			adjustToxLoss(plasma_rate)
-		else
-			adjustBruteLoss(-heal_rate)
-			adjustFireLoss(-heal_rate)
-			adjustOxyLoss(-heal_rate)
-			adjustCloneLoss(-heal_rate)
 
 	if(!environment)
 		return
@@ -130,17 +118,17 @@
 			if(1 to 49)
 				radiation--
 				if(prob(25))
-					adjustToxLoss(1)
+					adjustPlasma(1)
 
 			if(50 to 74)
 				radiation -= 2
-				adjustToxLoss(1)
+				adjustPlasma(1)
 				if(prob(5))
 					radiation -= 5
 
 			if(75 to 100)
 				radiation -= 3
-				adjustToxLoss(3)
+				adjustPlasma(3)
 
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation

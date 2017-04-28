@@ -37,9 +37,9 @@
 	inv_box.slot_id = slot_r_hand
 	src.adding += inv_box
 
-	mymob.nightvisionicon = new /obj/screen/alien/nightvision()
-	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
-	src.adding += mymob.nightvisionicon
+	//mymob.nightvisionicon = new /obj/screen/alien/nightvision()
+	//mymob.nightvisionicon.screen_loc = ui_alien_nightvision
+	//src.adding += mymob.nightvisionicon
 
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'

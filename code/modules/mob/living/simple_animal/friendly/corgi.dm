@@ -20,6 +20,15 @@
 	see_in_dark = 5
 	var/obj/item/clothing/mask/facehugger/facehugger
 
+/mob/living/simple_animal/corgi/u_equip(obj/item/W)
+	if (W == facehugger)
+		facehugger = null
+
+/mob/living/simple_animal/corgi/get_equipped_item(slot)
+	if(slot == slot_wear_mask)
+		return facehugger
+	return null
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "Corgi meat"
 	desc = "Tastes like... well you know..."

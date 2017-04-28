@@ -2,7 +2,7 @@
 	if(stat == DEAD)	return
 	if(healths)			healths.icon_state = "health6"
 	stat = DEAD
-	icon_state = "facehugger_dead"
+	//icon_state = "facehugger_dead"
 
 	if(!gibbed)
 		update_canmove()

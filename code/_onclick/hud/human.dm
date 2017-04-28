@@ -22,6 +22,7 @@
 				var/obj/screen/inventory/inv_box = new() // could be transfered into initialize proc(), so we dont make object hud for mobs that will not get any client.
 				inv_box.master = src                     // Also, could be made as a child from inventory objects with all needed code instead of inv_box_data[] list.
 				inv_box.name = inv_box_data[slot_name]["name"]
+				inv_box.icon = inv_box_data[slot_name]["icon"]
 				inv_box.icon_state = inv_box_data[slot_name]["icon_state"]
 				inv_box.screen_loc = inv_box_data[slot_name]["screen_loc"]
 				inv_box.slot_id = slot_name
@@ -47,7 +48,7 @@
 			for(var/slot_name in BP.inv_slots_data)
 				var/obj/screen/inventory/S = BP.inv_slots_data[slot_name]
 				if(S)
-					if(ui_style)
+					if(ui_style && !S.icon)
 						S.icon = ui_style
 					if(ui_color)
 						S.color = ui_color
@@ -62,6 +63,14 @@
 		BP.update_inv_hud()
 
 /*
+	Organs hud objects if any.
+*/
+/mob/living/carbon/proc/initialize_organs_hud()
+	for(var/obj/item/organ/IO in organs)
+		IO.add_hud_data()
+
+
+/*
 	This proc should be used, when we attach this limb to the mob.
 */
 /mob/living/carbon/proc/add_hud_data(obj/item/bodypart/BP)
@@ -73,7 +82,8 @@
 			var/obj/screen/inventory/S = BP.inv_slots_data[slot_name]
 			if(S)
 				if(client) // if no client - this will be done upon mob login with datum/hud initialization proc.
-					S.icon = ui_style2icon(client.prefs.UI_style)
+					if(!S.icon)
+						S.icon = ui_style2icon(client.prefs.UI_style)
 					S.color = client.prefs.UI_style_color
 					S.alpha = client.prefs.UI_style_alpha
 				if(S.other)
@@ -425,8 +435,49 @@
 					)
 				)
 
+/datum/species/xenos/get_hud_data(body_zone)
+	switch(body_zone)
+		if(BP_R_ARM, BP_L_ARM)
+			return ..()
+
+/datum/species/xenos/facehugger/get_hud_data(body_zone)
+	switch(body_zone)
+		if(BP_CHEST)
+			return list(
+				slot_r_hand = list(
+					"name" = "tail"
+					//,"icon" = 'icons/mob/screen_corgi.dmi'
+					,"icon_state" = "hand_tail"
+					,"screen_loc" = ui_rhand
+					,"slot_layer" = -R_HAND_LAYER
+					,"mob_icon_path" = null
+					,"reduced" = TRUE
+					,"icon_state_as_item_state" = TRUE
+					)
+				)
+
+/datum/species/xenos/larva/get_hud_data(body_zone)
+	return
+
+/datum/species/dog/get_hud_data(body_zone)
+	switch(body_zone)
+		if(BP_HEAD)
+			return list(
+				slot_r_hand = list(
+					"name" = "mouth"
+					,"icon" = 'icons/mob/screen_corgi.dmi'
+					,"icon_state" = "mouth"
+					,"screen_loc" = ui_rhand
+					,"slot_layer" = -R_HAND_LAYER
+					,"mob_icon_path" = null
+					,"reduced" = TRUE
+					,"icon_state_as_item_state" = TRUE
+					)
+				)
+
 /datum/hud/proc/human_hud(ui_style='icons/mob/screen1_White.dmi', ui_color = "#ffffff", ui_alpha = 255)
 
+	var/list/temp_list = list() // anything that doesn't get into lists below.
 	src.adding = list()
 	src.other = list()
 	src.hotkeybuttons = list() //These can be disabled for hotkey usersx
@@ -436,101 +487,107 @@
 
 	var/mob/living/carbon/C = mymob
 	C.initialize_bodyparts_hud(ui_style, ui_color, ui_alpha, adding, other, visible_elements_while_reduced)
+	C.initialize_organs_hud()
 
 	var/obj/screen/using // TODO transfer code below into bodypart too?
 
-	using = new /obj/screen()
-	using.name = "act_intent"
-	using.icon = ui_style
-	using.icon_state = "intent_"+mymob.a_intent
-	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
-	using.plane = ABOVE_HUD_PLANE
-	src.adding += using
-	action_intent = using
+	if(C.species.has_a_intent)
+		if(!action_intent)
+			action_intent = new /obj/screen()
+			action_intent.name = "act_intent"
+			action_intent.icon = ui_style
+			action_intent.icon_state = "intent_"+mymob.a_intent
+			action_intent.screen_loc = ui_acti
+			action_intent.layer = ABOVE_HUD_LAYER
+			action_intent.plane = ABOVE_HUD_PLANE
+		src.adding += action_intent
 
-//intent small hud objects
-	var/icon/ico
-	for(var/intent in list("help", "disarm", "grab", "harm"))
-		using = new /obj/screen( src )
-		ico = new(ui_style, "black")
-		ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
-		switch(intent)
-			if("help")
-				ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
-				help_intent = using
-			if("disarm")
-				ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
-				disarm_intent = using
-			if("grab")
-				ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
-				grab_intent = using
-			if("harm")
-				ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
-				hurt_intent = using
-		using.name = intent
-		using.icon = ico
-		using.screen_loc = ui_acti
-		using.layer = ABOVE_HUD_LAYER
-		using.plane = ABOVE_HUD_PLANE
+		//intent small hud objects
+		var/icon/ico
+		for(var/intent in list("help", "disarm", "grab", "harm"))
+			using = new /obj/screen( src )
+			ico = new(ui_style, "black")
+			ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+			switch(intent)
+				if("help")
+					ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
+					help_intent = using
+				if("disarm")
+					ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
+					disarm_intent = using
+				if("grab")
+					ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
+					grab_intent = using
+				if("harm")
+					ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
+					hurt_intent = using
+			using.name = intent
+			using.icon = ico
+			using.screen_loc = ui_acti
+			using.layer = ABOVE_HUD_LAYER
+			using.plane = ABOVE_HUD_PLANE
+			src.adding += using
+		//end intent small hud objects
+
+	if(C.species.has_m_intent)
+		if(!move_intent)
+			move_intent = new /obj/screen()
+			move_intent.name = "mov_intent"
+			move_intent.icon = ui_style
+			move_intent.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+			move_intent.screen_loc = ui_movi
+			move_intent.layer = ABOVE_HUD_LAYER
+			move_intent.plane = ABOVE_HUD_PLANE
+			move_intent.color = ui_color
+			move_intent.alpha = ui_alpha
+		src.adding += move_intent
+
+	if(C.species.has_drop)
+		using = new /obj/screen()
+		using.name = "drop"
+		using.icon = ui_style
+		using.icon_state = "act_drop"
+		using.screen_loc = ui_drop_throw
+		using.layer = HUD_LAYER
+		using.plane = HUD_PLANE
+		using.color = ui_color
+		using.alpha = ui_alpha
+		src.hotkeybuttons += using
+
+	if(C.species.has_hands)
+		using = new /obj/screen/inventory()
+		using.name = "hand"
+		using.icon = ui_style
+		using.icon_state = "hand1"
+		using.screen_loc = ui_swaphand1
+		using.layer = HUD_LAYER
+		using.plane = HUD_PLANE
+		using.color = ui_color
+		using.alpha = ui_alpha
 		src.adding += using
-//end intent small hud objects
 
-	using = new /obj/screen()
-	using.name = "mov_intent"
-	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
-	using.layer = ABOVE_HUD_LAYER
-	using.plane = ABOVE_HUD_PLANE
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-	move_intent = using
+		using = new /obj/screen/inventory()
+		using.name = "hand"
+		using.icon = ui_style
+		using.icon_state = "hand2"
+		using.screen_loc = ui_swaphand2
+		using.layer = HUD_LAYER
+		using.plane = HUD_PLANE
+		using.color = ui_color
+		using.alpha = ui_alpha
+		src.adding += using
 
-	using = new /obj/screen()
-	using.name = "drop"
-	using.icon = ui_style
-	using.icon_state = "act_drop"
-	using.screen_loc = ui_drop_throw
-	using.layer = HUD_LAYER
-	using.plane = HUD_PLANE
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.hotkeybuttons += using
-
-	using = new /obj/screen/inventory()
-	using.name = "hand"
-	using.icon = ui_style
-	using.icon_state = "hand1"
-	using.screen_loc = ui_swaphand1
-	using.layer = HUD_LAYER
-	using.plane = HUD_PLANE
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-
-	using = new /obj/screen/inventory()
-	using.name = "hand"
-	using.icon = ui_style
-	using.icon_state = "hand2"
-	using.screen_loc = ui_swaphand2
-	using.layer = HUD_LAYER
-	using.plane = HUD_PLANE
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-
-	using = new /obj/screen()
-	using.name = "resist"
-	using.icon = ui_style
-	using.icon_state = "act_resist"
-	using.screen_loc = ui_pull_resist
-	using.layer = HUD_LAYER
-	using.plane = HUD_PLANE
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.hotkeybuttons += using
+	if(C.species.has_resist)
+		using = new /obj/screen()
+		using.name = "resist"
+		using.icon = ui_style
+		using.icon_state = "act_resist"
+		using.screen_loc = ui_pull_resist
+		using.layer = HUD_LAYER
+		using.plane = HUD_PLANE
+		using.color = ui_color
+		using.alpha = ui_alpha
+		src.hotkeybuttons += using
 
 	using = new /obj/screen()
 	using.name = "toggle"
@@ -554,88 +611,113 @@
 	using.alpha = ui_alpha
 	src.adding += using
 
-	mymob.throw_icon = new /obj/screen()
-	mymob.throw_icon.icon = ui_style
-	mymob.throw_icon.icon_state = "act_throw_off"
-	mymob.throw_icon.name = "throw"
-	mymob.throw_icon.screen_loc = ui_drop_throw
-	mymob.throw_icon.color = ui_color
-	mymob.throw_icon.alpha = ui_alpha
-	src.hotkeybuttons += mymob.throw_icon
+	if(C.species.has_throw)
+		if(!mymob.throw_icon)
+			mymob.throw_icon = new /obj/screen()
+			mymob.throw_icon.icon = ui_style
+			mymob.throw_icon.icon_state = "act_throw_off"
+			mymob.throw_icon.name = "throw"
+			mymob.throw_icon.screen_loc = ui_drop_throw
+			mymob.throw_icon.color = ui_color
+			mymob.throw_icon.alpha = ui_alpha
+		src.hotkeybuttons += mymob.throw_icon
 
-	mymob.internals = new /obj/screen()
-	mymob.internals.icon = ui_style
-	mymob.internals.icon_state = "internal0"
-	mymob.internals.name = "internal"
-	mymob.internals.screen_loc = ui_internal
+	if(C.species.has_internals)
+		if(!mymob.internals)
+			mymob.internals = new /obj/screen()
+			mymob.internals.icon = ui_style
+			mymob.internals.icon_state = "internal0"
+			mymob.internals.name = "internal"
+			mymob.internals.screen_loc = ui_internal
+		temp_list += mymob.internals
 
-	mymob.healths = new /obj/screen()
-	mymob.healths.icon = 'icons/mob/screen_gen.dmi'
-	mymob.healths.icon_state = "health0"
-	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_health
+	if(!mymob.healths)
+		mymob.healths = new /obj/screen()
+		mymob.healths.icon = 'icons/mob/screen_gen.dmi'
+		mymob.healths.icon_state = "health0"
+		mymob.healths.name = "health"
+		mymob.healths.screen_loc = ui_health
+	temp_list += mymob.healths
 
-	mymob.healthdoll = new /obj/screen()
-	mymob.healthdoll.icon = 'icons/mob/screen_gen.dmi'
-	mymob.healthdoll.name = "health doll"
-	mymob.healthdoll.screen_loc = ui_healthdoll
+	if(!mymob.healthdoll)
+		mymob.healthdoll = new /obj/screen()
+		mymob.healthdoll.icon = 'icons/mob/screen_gen.dmi'
+		mymob.healthdoll.name = "health doll"
+		mymob.healthdoll.screen_loc = ui_healthdoll
+	temp_list += mymob.healthdoll
 
-	mymob.pullin = new /obj/screen/pull()
-	mymob.pullin.icon = ui_style
-	mymob.pullin.update_icon(mymob)
-	mymob.pullin.screen_loc = ui_pull_resist
+	if(!mymob.pullin)
+		mymob.pullin = new /obj/screen/pull()
+		mymob.pullin.icon = ui_style
+		mymob.pullin.update_icon(mymob)
+		mymob.pullin.screen_loc = ui_pull_resist
 	src.hotkeybuttons += mymob.pullin
 
-	lingchemdisplay = new /obj/screen()
-	lingchemdisplay.icon = 'icons/mob/screen_gen.dmi'
-	lingchemdisplay.name = "chemical storage"
-	lingchemdisplay.icon_state = "power_display"
-	lingchemdisplay.screen_loc = ui_lingchemdisplay
-	lingchemdisplay.layer = ABOVE_HUD_LAYER
-	lingchemdisplay.plane = ABOVE_HUD_PLANE
-	lingchemdisplay.invisibility = 101
+	if(!lingchemdisplay)
+		lingchemdisplay = new /obj/screen()
+		lingchemdisplay.icon = 'icons/mob/screen_gen.dmi'
+		lingchemdisplay.name = "chemical storage"
+		lingchemdisplay.icon_state = "power_display"
+		lingchemdisplay.screen_loc = ui_lingchemdisplay
+		lingchemdisplay.layer = ABOVE_HUD_LAYER
+		lingchemdisplay.plane = ABOVE_HUD_PLANE
+		lingchemdisplay.invisibility = 101
+	temp_list += lingchemdisplay
 
-	lingstingdisplay = new /obj/screen()
-	lingstingdisplay.icon = 'icons/mob/screen_gen.dmi'
-	lingstingdisplay.name = "current sting"
-	lingstingdisplay.screen_loc = ui_lingstingdisplay
-	lingstingdisplay.layer = ABOVE_HUD_LAYER
-	lingstingdisplay.plane = ABOVE_HUD_PLANE
-	lingstingdisplay.invisibility = 101
+	if(!lingstingdisplay)
+		lingstingdisplay = new /obj/screen()
+		lingstingdisplay.icon = 'icons/mob/screen_gen.dmi'
+		lingstingdisplay.name = "current sting"
+		lingstingdisplay.screen_loc = ui_lingstingdisplay
+		lingstingdisplay.layer = ABOVE_HUD_LAYER
+		lingstingdisplay.plane = ABOVE_HUD_PLANE
+		lingstingdisplay.invisibility = 101
+	temp_list += lingstingdisplay
 
-	mymob.pain = new /obj/screen( null )
+	if(!mymob.pain)
+		mymob.pain = new /obj/screen( null )
 
-	mymob.zone_sel = new /obj/screen/zone_sel( null )
-	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.color = ui_color
-	mymob.zone_sel.alpha = ui_alpha
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+	if(!mymob.zone_sel)
+		mymob.zone_sel = new /obj/screen/zone_sel( null )
+		mymob.zone_sel.icon = ui_style
+		mymob.zone_sel.color = ui_color
+		mymob.zone_sel.alpha = ui_alpha
+		mymob.zone_sel.overlays.Cut()
+		mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+	temp_list += mymob.zone_sel
 
-	//Handle the gun settings buttons
-	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
-	if (mymob.client)
-		if (mymob.client.gun_mode) // If in aim mode, correct the sprite
-			mymob.gun_setting_icon.icon_state = "gun1"
-	for(var/obj/item/weapon/gun/G in mymob) // If targeting someone, display other buttons
-		if (G.target)
-			mymob.item_use_icon = new /obj/screen/gun/item(null)
-			if (mymob.client.target_can_click)
-				mymob.item_use_icon.icon_state = "gun0"
-			src.adding += mymob.item_use_icon
-			mymob.gun_move_icon = new /obj/screen/gun/move(null)
-			if (mymob.client.target_can_move)
-				mymob.gun_move_icon.icon_state = "gun0"
-				mymob.gun_run_icon = new /obj/screen/gun/run(null)
-				if (mymob.client.target_can_run)
-					mymob.gun_run_icon.icon_state = "gun0"
-				src.adding += mymob.gun_run_icon
-			src.adding += mymob.gun_move_icon
+	if(C.species.has_gun_aim_control)
+		//Handle the gun settings buttons
+		if(!mymob.gun_setting_icon)
+			mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
+		if (mymob.client)
+			if (mymob.client.gun_mode) // If in aim mode, correct the sprite
+				mymob.gun_setting_icon.icon_state = "gun1"
+		temp_list += mymob.gun_setting_icon
 
+		for(var/obj/item/weapon/gun/G in mymob.contents) // If targeting someone, display other buttons
+			if (G.target)
+				if(!mymob.item_use_icon)
+					mymob.item_use_icon = new /obj/screen/gun/item(null)
+				if (mymob.client.target_can_click)
+					mymob.item_use_icon.icon_state = "gun0"
+				src.adding += mymob.item_use_icon
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
-	mymob.client.screen += src.adding + src.hotkeybuttons
+				if(!mymob.gun_move_icon)
+					mymob.gun_move_icon = new /obj/screen/gun/move(null)
+				if (mymob.client.target_can_move)
+					mymob.gun_move_icon.icon_state = "gun0"
+					if(!mymob.gun_run_icon)
+						mymob.gun_run_icon = new /obj/screen/gun/run(null)
+					if (mymob.client.target_can_run)
+						mymob.gun_run_icon.icon_state = "gun0"
+					src.adding += mymob.gun_run_icon
+				src.adding += mymob.gun_move_icon
+
+	mymob.client.screen += src.adding + src.hotkeybuttons + temp_list
 	mymob.client.screen += mymob.client.void
+	temp_list.Cut()
+
 	inventory_shown = 0
 
 

@@ -113,3 +113,10 @@
 
 	var/list/bodypart_hands = list() // any bodypart with can_grasp=TRUE added in this list ...
 	var/list/bodypart_legs = list() // ... and with can_stand=TRUE.
+	var/num_of_hands = 0
+	var/num_of_legs = 0
+
+	var/neurotoxin_on_click = 0 // TODO deal with that
+	var/neurotoxin_delay = 15
+	var/neurotoxin_next_shot = 0
+	var/last_neurotoxin = 0

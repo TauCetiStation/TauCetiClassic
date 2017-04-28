@@ -3,12 +3,10 @@
 	caste = "h"
 	maxHealth = 180
 	health = 180
-	storedPlasma = 100
-	max_plasma = 150
-	icon_state = "alienh_s"
-	plasma_rate = 5
+	//icon_state = "alienh_s"
 
-/mob/living/carbon/alien/humanoid/hunter/New()
+
+/mob/living/carbon/alien/humanoid/hunter/New(loc, new_species = S_XENO_HUNTER)
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -17,12 +15,12 @@
 	real_name = name
 	..()
 
-/mob/living/carbon/alien/humanoid/hunter
-	handle_environment()
-		if(m_intent == "run" || resting)
-			..()
-		else
-			adjustToxLoss(-heal_rate)
+//mob/living/carbon/alien/humanoid/hunter
+//	handle_environment()
+//		if(m_intent == "run" || resting)
+//			..()
+//		else
+//			adjustToxLoss(-heal_rate)
 
 /mob/living/carbon/alien/humanoid/hunter/handle_hud_icons_health()
 	if (healths)
@@ -75,13 +73,13 @@
 
 
 /mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
-	leap_on_click = !leap_on_click
-	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
-	update_icons()
-	if(message)
-		to_chat(src, "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>")
-	else
-		return
+	var/obj/item/organ/brain/xeno/hunter/BRAIN = organs_by_name[BP_BRAIN]
+	if(BRAIN)
+		leap_on_click = !leap_on_click
+		BRAIN.leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
+		update_icons()
+		if(message)
+			to_chat(src, "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>")
 
 
 /mob/living/carbon/alien/humanoid/hunter/ClickOn(atom/A, params)

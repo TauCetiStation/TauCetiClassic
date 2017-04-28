@@ -7,13 +7,12 @@ var/const/LEAP_AT_FACE_COOLDOWN = 100
 	desc = "It has some sort of a tube at the end of its tail."
 	real_name = "alien facehugger"
 
+	icon = 'icons/mob/xenomorph.dmi'
 	icon_state = "facehugger"
 	pass_flags = PASSTABLE | PASSMOB
 
 	maxHealth = 25
 	health = 25
-	storedPlasma = 50
-	max_plasma = 50
 
 	density = 0
 	small = 1
@@ -28,15 +27,12 @@ var/const/LEAP_AT_FACE_COOLDOWN = 100
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "alien facehugger")
-		name = "alien facehugger ([rand(1, 1000)])"
+	//if(name == "alien facehugger")
+	//	name = "alien facehugger ([rand(1, 1000)])"
 	real_name = name
-	regenerate_icons()
+	//regenerate_icons()
 	a_intent = "grab"
 	..()
-
-/mob/living/carbon/alien/facehugger/adjustToxLoss(amount)
-	..(amount)
 
 /mob/living/carbon/alien/facehugger/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")

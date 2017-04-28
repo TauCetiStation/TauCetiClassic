@@ -1,13 +1,12 @@
 /mob/living/carbon/alien/larva
 	name = "alien larva"
 	real_name = "alien larva"
+	icon = 'icons/mob/xenomorph.dmi'
 	icon_state = "larva0"
 	pass_flags = PASSTABLE | PASSMOB
 
 	maxHealth = 25
 	health = 25
-	storedPlasma = 50
-	max_plasma = 50
 
 	density = 0
 	small = 1

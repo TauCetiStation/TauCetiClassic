@@ -3,12 +3,10 @@
 	caste = "q"
 	maxHealth = 300
 	health = 300
-	icon = 'icons/mob/alienqueen.dmi'
-	icon_state = "queen_s"
-	pixel_x = -16
+	//icon = 'icons/mob/alienqueen.dmi'
+	//icon_state = "queen_s"
+	//pixel_x = -16
 	status_flags = CANPARALYSE
-	heal_rate = 5
-	plasma_rate = 20
 	ventcrawler = 0
 
 
@@ -26,7 +24,7 @@
 			break
 
 	real_name = src.name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
+	//verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
 	..()
 
 
@@ -53,24 +51,7 @@
 
 
 //Queen verbs
-/mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
-
-	set name = "Lay Egg (75)"
-	set desc = "Lay an egg to produce huggers to impregnate prey with."
-	set category = "Alien"
-
-	if(locate(/obj/effect/alien/egg) in get_turf(src))
-		to_chat(src, "There's already an egg here.")
-		return
-
-	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
-		adjustToxLoss(-75)
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
-		new /obj/effect/alien/egg(loc)
-	return
-
-/mob/living/carbon/alien/humanoid/queen/update_icons()
+/*/mob/living/carbon/alien/humanoid/queen/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
 	overlays.Cut()
 	if(stat == DEAD)
@@ -80,7 +61,7 @@
 	else
 		icon_state = "queen_s"
 	for(var/image/I in overlays_standing)
-		overlays += I
+		overlays += I*/
 
 
 /mob/living/carbon/alien/humanoid/queen/large
@@ -88,7 +69,7 @@
 	icon_state = "queen_s-old"
 	pixel_x = -16
 
-/mob/living/carbon/alien/humanoid/queen/large/update_icons()
+/*/mob/living/carbon/alien/humanoid/queen/large/update_icons()
 	update_hud()		//TODO: remove the need for this to be here
 	overlays.Cut()
 	if(stat == DEAD)
@@ -98,4 +79,19 @@
 	else
 		icon_state = "queen_s-old"
 	for(var/image/I in overlays_standing)
-		overlays += I
+		overlays += I*/
+
+/obj/effect/proc_holder/alien/lay_egg
+	name = "Lay Egg"
+	desc = "Lay an egg to produce huggers to impregnate prey with."
+	plasma_cost = 75
+	check_turf = 1
+	action_icon_state = "alien_egg"
+
+/obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
+	if(locate(/obj/effect/alien/egg) in get_turf(user))
+		user << "There's already an egg here."
+		return 0
+	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
+	new /obj/effect/alien/egg(user.loc)
+	return 1
