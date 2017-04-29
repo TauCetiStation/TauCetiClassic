@@ -107,10 +107,10 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 		BP_CHEST = /obj/item/bodypart/chest // If chest is a main bodypart, it must be on top of the list, since everything else depends on it.
 		,BP_GROIN = /obj/item/bodypart/groin
 		,BP_HEAD  = /obj/item/bodypart/head
-		,BP_L_ARM = /obj/item/bodypart/l_arm
-		,BP_R_ARM = /obj/item/bodypart/r_arm
-		,BP_L_LEG = /obj/item/bodypart/l_leg
-		,BP_R_LEG = /obj/item/bodypart/r_leg
+		,BP_L_ARM = /obj/item/bodypart/arm
+		,BP_R_ARM = /obj/item/bodypart/arm/right
+		,BP_L_LEG = /obj/item/bodypart/leg
+		,BP_R_LEG = /obj/item/bodypart/leg/right
 		)
 
 	var/list/has_organ = list(
@@ -183,10 +183,10 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 		BP_CHEST  = /obj/item/bodypart/chest/monkey // <-
 		,BP_GROIN = /obj/item/bodypart/groin
 		,BP_HEAD  = /obj/item/bodypart/head
-		,BP_L_ARM = /obj/item/bodypart/l_arm
-		,BP_R_ARM = /obj/item/bodypart/r_arm
-		,BP_L_LEG = /obj/item/bodypart/l_leg
-		,BP_R_LEG = /obj/item/bodypart/r_leg
+		,BP_L_ARM = /obj/item/bodypart/arm
+		,BP_R_ARM = /obj/item/bodypart/arm/right
+		,BP_L_LEG = /obj/item/bodypart/leg
+		,BP_R_LEG = /obj/item/bodypart/leg/right
 		)
 
 	has_organ = list(
@@ -651,6 +651,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	flags = list(
 	 NO_EMBED = TRUE
 	,NO_SLIP = TRUE
+	,DROPLIMB_WHEN_DEAD = TRUE
 	)
 
 	has_gun_aim_control = FALSE
@@ -711,10 +712,10 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 		 BP_CHEST = /obj/item/bodypart/chest/unbreakable
 		,BP_GROIN = /obj/item/bodypart/groin/unbreakable
 		,BP_HEAD = /obj/item/bodypart/head/unbreakable
-		,BP_L_ARM = /obj/item/bodypart/l_arm/unbreakable
-		,BP_R_ARM = /obj/item/bodypart/r_arm/unbreakable
-		,BP_L_LEG = /obj/item/bodypart/l_leg/unbreakable
-		,BP_R_LEG = /obj/item/bodypart/r_leg/unbreakable
+		,BP_L_ARM = /obj/item/bodypart/arm/unbreakable
+		,BP_R_ARM = /obj/item/bodypart/arm/right/unbreakable
+		,BP_L_LEG = /obj/item/bodypart/leg/unbreakable
+		,BP_R_LEG = /obj/item/bodypart/leg/right/unbreakable
 		)
 
 	has_organ = list(
@@ -793,6 +794,21 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 
 	icobase = null
 	deform = null
+
+	has_bodypart = list(
+		 BP_CHEST = /obj/item/bodypart/chest/unbreakable
+		,BP_GROIN = /obj/item/bodypart/groin/unbreakable
+		,BP_HEAD = /obj/item/bodypart/head/unbreakable/dog
+		,BP_L_ARM = /obj/item/bodypart/leg/unbreakable/dog
+		,BP_R_ARM = /obj/item/bodypart/leg/right/unbreakable/dog
+		,BP_L_LEG = /obj/item/bodypart/leg/unbreakable/dog
+		,BP_R_LEG = /obj/item/bodypart/leg/right/unbreakable/dog
+		)
+
+/datum/species/dog/New()
+	..()
+
+	has_organ[BP_BRAIN] = /obj/item/organ/brain/dog
 
 // Called when using the shredding behavior.
 /datum/species/proc/can_shred(mob/living/carbon/C, ignore_intent)

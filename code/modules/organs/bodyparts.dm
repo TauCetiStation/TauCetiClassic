@@ -887,6 +887,9 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	if(cannot_amputate || !owner)
 		return
 
+	if(species.flags[DROPLIMB_WHEN_DEAD] && owner.stat != DEAD)
+		return
+
 	if(disintegrate == DROPLIMB_EDGE && nonsolid)
 		disintegrate = DROPLIMB_BLUNT //splut
 
@@ -1355,17 +1358,16 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "aorta"
 	dislocated = -1
 
-/obj/item/bodypart/chest/nymph
-	max_damage = 200
+/obj/item/bodypart/chest/unbreakable
 	cannot_break = TRUE
+
+/obj/item/bodypart/chest/unbreakable/facehugger
 	can_grasp = TRUE
 	can_stand = TRUE
 
-/obj/item/bodypart/chest/unbreakable
-	cannot_break = 1
-	dislocated = -1
+/obj/item/bodypart/chest/unbreakable/nymph
+	max_damage = 200
 
-/obj/item/bodypart/chest/unbreakable/facehugger
 	can_grasp = TRUE
 	can_stand = TRUE
 
@@ -1390,8 +1392,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	dislocated = -1
 
 /obj/item/bodypart/groin/unbreakable
-	cannot_break = 1
-	dislocated = -1
+	cannot_break = TRUE
 
 /obj/item/bodypart/head
 	name = "head"
@@ -1418,9 +1419,17 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 	var/image/eyes_overlay
 
+/mob/living/carbon/human/alien/New(loc, new_specie = S_XENO_QUEEN)
+	..()
+
 /obj/item/bodypart/head/unbreakable
-	cannot_break = 1
+	cannot_break = TRUE
 	dislocated = -1
+
+/obj/item/bodypart/head/unbreakable/dog // sprites.
+	cannot_amputate = TRUE
+	cannot_break = TRUE
+	can_grasp = TRUE
 
 /obj/item/bodypart/head/take_damage(brute, burn, damage_flags, used_weapon = null)
 	. = ..()
@@ -1458,12 +1467,12 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			owner.inactive_hands += src
 		update_swapped_hand_hud()
 
-/obj/item/bodypart/l_arm
+/obj/item/bodypart/arm
 	name = "left arm"
 	icon_state = "l_arm"
 	w_class = ITEM_SIZE_NORMAL
 
-	body_part = ARM_LEFT
+	body_part = ARM_LEFT | HAND_LEFT
 	body_zone = BP_L_ARM
 	parent_bodypart = BP_CHEST
 
@@ -1478,40 +1487,30 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "basilic vein"
 	arterial_bleed_severity = 0.75
 
-/obj/item/bodypart/l_arm/unbreakable
-	cannot_break = 1
+/obj/item/bodypart/arm/unbreakable
+	cannot_break = TRUE
 	dislocated = -1
 
-/obj/item/bodypart/r_arm
+/obj/item/bodypart/arm/right
 	name = "right arm"
 	icon_state = "r_arm"
-	w_class = ITEM_SIZE_NORMAL
 
-	body_part = ARM_RIGHT
+	body_part = ARM_RIGHT | HAND_RIGHT
 	body_zone = BP_R_ARM
-	parent_bodypart = BP_CHEST
 
-	max_damage = 80
-	min_broken_damage = 35
-
-	can_grasp = TRUE
-	has_tendon = TRUE
-	tendon_name = "palmaris longus tendon"
 	amputation_point = "right shoulder"
 	joint = "right elbow"
-	artery_name = "basilic vein"
-	arterial_bleed_severity = 0.75
 
-/obj/item/bodypart/r_arm/unbreakable
-	cannot_break = 1
+/obj/item/bodypart/arm/right/unbreakable
+	cannot_break = TRUE
 	dislocated = -1
 
-/obj/item/bodypart/l_leg
+/obj/item/bodypart/leg
 	name = "left leg"
 	icon_state = "l_leg"
 	w_class = ITEM_SIZE_NORMAL
 
-	body_part = LEG_LEFT
+	body_part = LEG_LEFT | FOOT_LEFT
 	body_zone = BP_L_LEG
 	parent_bodypart = BP_GROIN
 
@@ -1526,33 +1525,29 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "femoral artery"
 	arterial_bleed_severity = 0.75
 
-/obj/item/bodypart/l_leg/unbreakable
-	cannot_break = 1
+/obj/item/bodypart/leg/unbreakable
+	cannot_break = TRUE
 	dislocated = -1
 
-/obj/item/bodypart/r_leg
+/obj/item/bodypart/leg/unbreakable/dog
+	cannot_amputate = TRUE
+
+/obj/item/bodypart/leg/right
 	name = "right leg"
 	icon_state = "r_leg"
-	w_class = ITEM_SIZE_NORMAL
 
-	body_part = LEG_RIGHT
+	body_part = LEG_RIGHT | FOOT_RIGHT
 	body_zone = BP_R_LEG
-	parent_bodypart = BP_GROIN
 
-	max_damage = 80
-	min_broken_damage = 35
-
-	can_stand = TRUE
-	has_tendon = TRUE
-	tendon_name = "cruciate ligament"
 	amputation_point = "right hip"
 	joint = "right knee"
-	artery_name = "femoral artery"
-	arterial_bleed_severity = 0.75
 
-/obj/item/bodypart/r_leg/unbreakable
-	cannot_break = 1
+/obj/item/bodypart/leg/right/unbreakable
+	cannot_break = TRUE
 	dislocated = -1
+
+/obj/item/bodypart/leg/right/unbreakable/dog
+	cannot_amputate = TRUE
 
 /****************************************************
 	RIPPED, MISSED, AMPUTATED LIMB

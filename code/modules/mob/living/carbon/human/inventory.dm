@@ -256,20 +256,11 @@
 /obj/item/bodypart/proc/drop_linked_items()
 	return
 
-/obj/item/bodypart/r_arm/drop_linked_items()
+/obj/item/bodypart/arm/drop_linked_items()
 	owner.dropSlotToGround(slot_handcuffed, TRUE)
 	owner.dropSlotToGround(slot_gloves, TRUE)
 
-/obj/item/bodypart/l_arm/drop_linked_items()
-	owner.dropSlotToGround(slot_handcuffed, TRUE)
-	owner.dropSlotToGround(slot_gloves, TRUE)
-
-/obj/item/bodypart/r_leg/drop_linked_items()
-	owner.dropSlotToGround(slot_legcuffed, TRUE)
-	owner.dropSlotToGround(slot_shoes, TRUE)
-	owner.dropSlotToGround(slot_socks, TRUE)
-
-/obj/item/bodypart/l_leg/drop_linked_items()
+/obj/item/bodypart/leg/drop_linked_items()
 	owner.dropSlotToGround(slot_legcuffed, TRUE)
 	owner.dropSlotToGround(slot_shoes, TRUE)
 	owner.dropSlotToGround(slot_socks, TRUE)

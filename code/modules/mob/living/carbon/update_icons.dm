@@ -456,11 +456,11 @@ There are several things that need to be remembered:
 /obj/item/bodypart/proc/get_item_icon_for_mob(SLOT, obj/item/O) // Should be used only in update_inv_limb() proc.
 	return inv_box_data[SLOT]["mob_icon_path"]
 
-/obj/item/bodypart/r_arm/get_item_icon_for_mob(SLOT, obj/item/O)
-	return O.righthand_file
-
-/obj/item/bodypart/l_arm/get_item_icon_for_mob(SLOT, obj/item/O)
+/obj/item/bodypart/arm/get_item_icon_for_mob(SLOT, obj/item/O)
 	return O.lefthand_file
+
+/obj/item/bodypart/arm/right/get_item_icon_for_mob(SLOT, obj/item/O)
+	return O.righthand_file
 
 /*/mob/living/carbon/update_inv_w_uniform()
 	remove_overlay(UNIFORM_LAYER)

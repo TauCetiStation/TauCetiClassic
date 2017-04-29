@@ -980,6 +980,9 @@
 /obj/item/organ/brain/monkey/nymph
 	parent_bodypart = BP_CHEST
 
+/obj/item/organ/brain/dog
+	is_advanced_tool_user = FALSE
+
 /obj/item/organ/brain/xeno
 	name = "thinkpan"
 	desc = "It looks kind of like an enormous wad of purple bubblegum."
