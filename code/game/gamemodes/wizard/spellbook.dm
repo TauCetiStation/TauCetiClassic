@@ -74,6 +74,7 @@
 	name = "Rod Form"
 	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
 	log_name = "RF"
+	cost = 3
 
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
@@ -202,7 +203,6 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
 	log_name = "TT"
 	category = "Offensive"
-	cost = 1
 
 /datum/spellbook_entry/item
 	name = "Buy Item"
@@ -250,7 +250,6 @@
 	desc = "An altruistic staff that can heal the lame and raise the dead."
 	item_path = /obj/item/weapon/gun/magic/staff/healing
 	log_name = "SH"
-	cost = 1
 	category = "Defensive"
 
 /datum/spellbook_entry/item/scryingorb
@@ -288,6 +287,7 @@
 	item_path = /obj/item/device/necromantic_stone
 	log_name = "NS"
 	category = "Assistance"
+	cost = 3
 
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
@@ -308,6 +308,7 @@
 	item_path = /obj/item/weapon/contract
 	log_name = "CT"
 	category = "Assistance"
+	cost = 4
 
 /datum/spellbook_entry/item/contract/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	var/obj/item/weapon/contract/contract = new(get_turf(user))

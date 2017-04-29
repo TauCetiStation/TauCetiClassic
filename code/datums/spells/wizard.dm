@@ -3,7 +3,7 @@
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
 
 	school = "evocation"
-	charge_max = 250
+	charge_max = 300
 	clothes_req = 1
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
@@ -26,9 +26,18 @@
 	action_icon_state = "magicm"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
+	desc = "Some kind of Blasphemy"
 	amt_weakened = 5
 	amt_dam_fire = 10
 	sound = 'sound/magic/MAGIC_MISSILE.ogg'
+
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/Click()
+	if(loc && in_range(usr,src))
+		qdel(src)
+	else if(cast_check())
+		choose_targets()
+	return 1
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"

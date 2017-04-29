@@ -74,7 +74,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	if(ishuman(usr) || ismonkey(usr))
 		if(istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
-			to_chat(usr, "Mmmf mrrfff!")
+			usr.say("Mmmf mrrfff!")
 			return 0
 
 	if(clothes_req) //clothes check
@@ -85,7 +85,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(!is_type_in_typecache(H.wear_suit, casting_clothes))
 			to_chat(user, "I don't feel strong enough without my robe.")
 			return 0
-		if(!is_type_in_typecache(H.shoes, casting_clothes))
+		if(!istype(H.shoes,/obj/item/clothing/shoes/sandal))
 			to_chat(user, "I don't feel strong enough without my sandals.")
 			return 0
 		if(!is_type_in_typecache(H.head, casting_clothes))
@@ -123,7 +123,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	..()
 	charge_counter = charge_max
 	if(!casting_clothes)
-		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,/obj/item/clothing/suit/space/rig/wizard,/obj/item/clothing/shoes/sandal,/obj/item/clothing/head/wizard,/obj/item/clothing/head/helmet/space/rig/wizard))
+		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,/obj/item/clothing/suit/space/rig/wizard,/obj/item/clothing/head/wizard,/obj/item/clothing/head/helmet/space/rig/wizard))
 
 /obj/effect/proc_holder/spell/Click()
 	if(cast_check())

@@ -15,19 +15,18 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	throwforce = 100
 	density = 1
 	anchored = 1
-	var/z_original = 0
-	var/turf/destination
 
-/obj/effect/immovablerod/New(atom/start, atom/end)
+/obj/effect/immovablerod/New(turf/start, turf/end)
 	..()
-	z_original = z
-	destination = get_turf(end)
+	var/z_original = z
 	if(end && end.z==z_original)
-		walk_towards(src, destination, 1)
-	QDEL_IN(src,20)
-
+		walk_towards(src, end, 1)
+	spawn while(src)
+		if(loc == end || z != z_original)
+			qdel(src)
+		sleep(1)
 /obj/effect/immovablerod/Bump(atom/clong)
-	if(istype(clong, /turf/simulated/shuttle)) //Skip shuttles without actually deleting the rod
+	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
 		return
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	visible_message("<span class='danger'>CLANG</span>")
@@ -36,9 +35,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	else if(ismob(clong))
 		var/mob/living/M = clong
 		M.adjustBruteLoss(rand(10,40))
-	if(clong && prob(50))
-		x = clong.x
-		y = clong.y
+		if(prob(50))
+			step(src,get_dir(src,M))
 
 /obj/effect/immovablerod/ex_act(severity, target)
 	return 0

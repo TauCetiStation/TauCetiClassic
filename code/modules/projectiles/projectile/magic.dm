@@ -191,7 +191,7 @@
 	var/max_door_counter = 4
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
-	if(door_counter >= max_door_counter)
+	if(door_counter >= max_door_counter || getOPressureDifferential(target) >= FIREDOOR_MAX_PRESSURE_DIFF)
 		paused = TRUE
 		qdel(src)
 		return

@@ -12,18 +12,19 @@
 
 /obj/effect/proc_holder/spell/targeted/rod_form/cast(list/targets)
 	for(var/mob/living/M in targets)
-		var/turf/start = get_turf(M)
-		var/obj/effect/immovablerod/wizard/W = new(start, get_ranged_target_turf(M, M.dir, 13))
-		W.wizard = M
-		W.start_turf = start
-		M.forceMove(W)
-		M.status_flags |= GODMODE
+		new /obj/effect/immovablerod/wizard(get_turf(M), get_ranged_target_turf(M, M.dir, 13), M)
 
 //Wizard Version of the Immovable Rod
 
 /obj/effect/immovablerod/wizard
 	var/mob/living/wizard
-	var/turf/start_turf
+
+/obj/effect/immovablerod/wizard/New(turf/start, turf/end, mob/living/wiz)
+	..()
+	if(wiz)
+		wizard = wiz
+		wizard.forceMove(src)
+		wizard.status_flags |= GODMODE
 
 /obj/effect/immovablerod/wizard/Destroy()
 	if(wizard)
