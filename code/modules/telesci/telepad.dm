@@ -26,6 +26,7 @@
 	if(computer)
 		computer.close_wormhole()
 		computer.telepad = null
+		computer = null
 	return ..()
 
 /obj/machinery/telepad/RefreshParts()

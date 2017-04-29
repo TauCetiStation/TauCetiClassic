@@ -43,6 +43,7 @@
 		inserted_gps = null
 	if(telepad)
 		telepad.computer = null
+		telepad = null
 	close_wormhole()
 	return ..()
 
