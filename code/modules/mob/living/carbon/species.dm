@@ -15,7 +15,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	// Damage overlay and masks.
 	var/damage_overlays = 'icons/mob/human_races/masks/human_damage_overlays.dmi'
 	var/blood_overlays = 'icons/mob/human_races/masks/human_blood_overlays.dmi'
-	var/stump_overlays = null // used by monkeys
+	var/stump_overlays = "_human" // used by monkeys
 
 	var/has_screamSound = FALSE
 
@@ -473,6 +473,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	icobase = 'icons/mob/human_races/r_armalis.dmi'
 	deform = 'icons/mob/human_races/r_armalis.dmi'
 	damage_overlays = null
+	stump_overlays = null
 	language = "Vox-pidgin"
 
 	warning_low_pressure = 50
@@ -581,6 +582,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	icobase = 'icons/mob/human_races/r_skeleton.dmi'
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_overlays = null
+	stump_overlays = null
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -637,6 +639,11 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	icobase = null
 	deform = null
 
+	damage_overlays = null
+	blood_overlays = null
+	stump_overlays = null
+
+
 	flags = list(
 	 NO_EMBED = TRUE
 	)
@@ -648,6 +655,10 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	Aliens aka xenomorphs
 */
 /datum/species/xenos
+	damage_overlays = null
+	blood_overlays = null
+	stump_overlays = null
+
 	flags = list(
 	 NO_EMBED = TRUE
 	,NO_SLIP = TRUE
@@ -668,7 +679,6 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	has_a_intent = FALSE
 	has_m_intent = FALSE
 	has_hands = FALSE
-	//has_drop = FALSE
 	has_throw = FALSE
 	has_resist = FALSE
 	has_internals = FALSE
@@ -795,14 +805,21 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	icobase = null
 	deform = null
 
+	damage_overlays = null
+	blood_overlays = null
+	stump_overlays = null
+
+	has_hands = FALSE
+	has_throw = FALSE
+
 	has_bodypart = list(
-		 BP_CHEST = /obj/item/bodypart/chest/unbreakable
+		 BP_CHEST = /obj/item/bodypart/chest/unbreakable/dog
 		,BP_GROIN = /obj/item/bodypart/groin/unbreakable
 		,BP_HEAD = /obj/item/bodypart/head/unbreakable/dog
-		,BP_L_ARM = /obj/item/bodypart/leg/unbreakable/dog
-		,BP_R_ARM = /obj/item/bodypart/leg/right/unbreakable/dog
-		,BP_L_LEG = /obj/item/bodypart/leg/unbreakable/dog
-		,BP_R_LEG = /obj/item/bodypart/leg/right/unbreakable/dog
+		,BP_L_ARM = /obj/item/bodypart/leg/unbreakable/front
+		,BP_R_ARM = /obj/item/bodypart/leg/right/unbreakable/front
+		,BP_L_LEG = /obj/item/bodypart/leg/unbreakable
+		,BP_R_LEG = /obj/item/bodypart/leg/right/unbreakable
 		)
 
 /datum/species/dog/New()

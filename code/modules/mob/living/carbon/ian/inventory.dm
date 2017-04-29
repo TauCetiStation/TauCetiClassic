@@ -48,16 +48,16 @@
 			un_equip_or_action(usr, add_to, item_to_add)
 
 //Returns the thing in our active hand (errr... mouth!)
-/mob/living/carbon/ian/get_active_hand()
-	return mouth
+//mob/living/carbon/ian/get_active_hand()
+//	return mouth
 
 //Returns the thing in our inactive hand (errr... mouth!)
-/mob/living/carbon/ian/get_inactive_hand()
-	return mouth
+//mob/living/carbon/ian/get_inactive_hand()
+//	return mouth
 
 //Drops the item in our active hand (errr... mouth!)
-/mob/living/carbon/ian/drop_item()
-	return dropItemToGround(mouth)
+//mob/living/carbon/ian/drop_item()
+//	return dropItemToGround(mouth)
 
 /mob/living/carbon/ian/restrained()
 	if(handcuffed || facehugger) // Oh wow, whats this on my faaaaaaace?
@@ -184,6 +184,7 @@
 		if("Back")
 			return slot_back
 
+/*
 /mob/living/carbon/ian/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
 	if(!slot)
 		return
@@ -220,10 +221,10 @@
 
 	W.layer = ABOVE_HUD_LAYER
 	W.plane = ABOVE_HUD_PLANE
-	W.appearance_flags = APPEARANCE_UI
+	W.appearance_flags = APPEARANCE_UI*/
 
 //Puts the item into our active hand (errr... mouth!) if possible. returns 1 on success.
-/mob/living/carbon/ian/put_in_active_hand(obj/item/W)
+/*/mob/living/carbon/ian/put_in_active_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))
 		return FALSE
 	if(!istype(W))
@@ -244,12 +245,12 @@
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
 		return TRUE
-	return FALSE
+	return FALSE*/
 
-/mob/living/carbon/ian/put_in_inactive_hand(obj/item/W)
-	return put_in_active_hand(W)
+//mob/living/carbon/ian/put_in_inactive_hand(obj/item/W)
+//	return put_in_active_hand(W)
 
-/mob/living/carbon/ian/put_in_hands(obj/item/W)
+/*/mob/living/carbon/ian/put_in_hands(obj/item/W)
 	if(!W)
 		return FALSE
 	if(put_in_active_hand(W))
@@ -260,9 +261,9 @@
 		W.plane = initial(W.plane)
 		W.appearance_flags = 0
 		W.dropped()
-		return FALSE
+		return FALSE*/
 
-/mob/living/carbon/ian/u_equip(obj/W)
+/*/mob/living/carbon/ian/u_equip(obj/W)
 	if (W == head)
 		facehugger = FALSE
 		head = null
@@ -272,7 +273,7 @@
 	else if (W == mouth)
 		mouth = null
 	else if (W == back)
-		back = null
+		back = null*/
 
 /mob/living/carbon/ian/proc/update_corgi_ability()
 	name = real_name

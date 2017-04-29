@@ -94,6 +94,7 @@
 	var/image/bld_overlay // blood overlays (this ones come from combat - that blood may even be someone's else)
 	var/image/srg_overlay // surgery overlays
 	var/list/inv_overlays = list()
+	var/static/list/special_inv_icon = list()
 
 /obj/item/bodypart/New(loc, mob/living/carbon/C)
 	if(!max_damage)
@@ -1371,6 +1372,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	can_grasp = TRUE
 	can_stand = TRUE
 
+/obj/item/bodypart/chest/unbreakable/dog
+
 /obj/item/bodypart/groin
 	name = "groin"
 	icon_state = "groin"
@@ -1529,7 +1532,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	cannot_break = TRUE
 	dislocated = -1
 
-/obj/item/bodypart/leg/unbreakable/dog
+/obj/item/bodypart/leg/unbreakable/front
+	body_zone = BP_L_ARM
 	cannot_amputate = TRUE
 
 /obj/item/bodypart/leg/right
@@ -1546,7 +1550,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	cannot_break = TRUE
 	dislocated = -1
 
-/obj/item/bodypart/leg/right/unbreakable/dog
+/obj/item/bodypart/leg/right/unbreakable/front
+	body_zone = BP_R_ARM
 	cannot_amputate = TRUE
 
 /****************************************************
@@ -1589,8 +1594,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	..()
 	qdel(src)
 
-/obj/item/bodypart/stump/update_limb() // TODO: separate stump icons from body.
-	if(status & ORGAN_CUT_AWAY)
+/obj/item/bodypart/stump/update_limb()
+	if(!species.stump_overlays || (status & ORGAN_CUT_AWAY))
 		icon_state = null
 		return
 
@@ -1598,7 +1603,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		icon_state = body_zone + "_robot_stump"
 	else
 		icon_state = body_zone + species.stump_overlays + "_stump"
-	return
 
 /obj/item/bodypart/stump/get_icon()
 	return image(icon = src.icon, icon_state = src.icon_state, layer = -BODYPARTS_LAYER + limb_layer_priority)

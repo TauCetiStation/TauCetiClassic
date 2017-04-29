@@ -473,6 +473,77 @@
 					,"reduced" = TRUE
 					,"icon_state_as_item_state" = TRUE
 					)
+				,slot_head = list(
+					"name" = "head"
+					,"icon_state" = "hair"
+					,"screen_loc" = ui_head
+					,"slot_layer" = -HEAD_LAYER
+					,"mob_icon_path" = 'icons/mob/head.dmi'
+					,"other" = TRUE
+					,"mob_blood_overlay" = "helmetblood"
+					)
+				,slot_glasses = list(
+					"name" = "eyes"
+					,"icon_state" = "glasses"
+					,"screen_loc" = ui_glasses
+					,"slot_layer" = -GLASSES_LAYER
+					,"mob_icon_path" = 'icons/mob/eyes.dmi'
+					,"other" = TRUE
+					)
+				,slot_l_ear = list(
+					"name" = "l_ear"
+					,"icon_state" = "ears"
+					,"screen_loc" = ui_l_ear
+					,"slot_layer" = -EARS_LAYER
+					,"mob_icon_path" = 'icons/mob/ears.dmi'
+					,"other" = TRUE
+					)
+				,slot_r_ear = list(
+					"name" = "r_ear"
+					,"icon_state" = "ears"
+					,"screen_loc" = ui_r_ear
+					,"slot_layer" = -EARS_LAYER
+					,"mob_icon_path" = 'icons/mob/ears.dmi'
+					,"other" = TRUE
+					)
+				,slot_wear_mask = list(
+					"name" = "mask"
+					,"icon_state" = "mask"
+					,"screen_loc" = ui_mask
+					,"slot_layer" = -FACEMASK_LAYER
+					,"mob_icon_path" = 'icons/mob/mask.dmi'
+					,"other" = TRUE
+					,"mob_blood_overlay" = "maskblood"
+					)
+				)
+		if(BP_CHEST)
+			return list(
+				slot_back = list(
+					"name" = "back"
+					,"icon_state" = "back"
+					,"screen_loc" = ui_back
+					,"slot_layer" = -BACK_LAYER
+					,"mob_icon_path" = 'icons/mob/corgi_back.dmi'
+					,"persistent_hud" = TRUE
+					)
+				,slot_wear_id = list(
+					"name" = "id"
+					,"icon_state" = "id"
+					,"screen_loc" = ui_id
+					,"no_mob_overlay" = TRUE
+					,"persistent_hud" = TRUE
+					)
+				,slot_handcuffed = list(
+					"no_hud" = TRUE
+					,"slot_layer" = -HANDCUFF_LAYER
+					)
+				,slot_legcuffed = list(
+					"no_hud" = TRUE
+					,"slot_layer" = -LEGCUFF_LAYER
+					)
+				,slot_in_backpack = list(
+					"no_hud" = TRUE
+					)
 				)
 
 /datum/hud/proc/human_hud(ui_style='icons/mob/screen1_White.dmi', ui_color = "#ffffff", ui_alpha = 255)

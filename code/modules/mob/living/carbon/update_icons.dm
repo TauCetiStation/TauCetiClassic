@@ -357,14 +357,7 @@ There are several things that need to be remembered:
 	var/obj/item/O = item_in_slot[SLOT]
 	if(O)
 		var/i_icon = get_item_icon_for_mob(SLOT, O) // hands uses separate files for mob icons.
-		var/i_state = inv_box_data[SLOT]["icon_state_as_item_state"] // item_state will be used for mob overlay instead of icon_state.
-		var/i_locked_state = inv_box_data[SLOT]["mob_icon_state"] // if set, passed string will be used for mob overlay icon_state (has top priority over other "icon_state" vars).
 		var/i_fat = inv_box_data[SLOT]["support_fat_people"] // only uniforms actually support this, so if possible, its better to to do something about this.
-		var/i_blood = inv_box_data[SLOT]["mob_blood_overlay"] // whenever this item can become bloody.
-		var/i_tie = inv_box_data[SLOT]["has_tie"] // again, mostly for uniforms.. accessories like captain medals or holster.
-		var/i_simple = inv_box_data[SLOT]["simple_overlays"] // whenever we wan't to check sprite sheets, icon_override or not. used by simple item slots like id, belt, etc.
-		var/i_color = inv_box_data[SLOT]["icon_state_as_color"] // some clothes uses icon_color var instead of icon_state.
-		var/i_layer = inv_box_data[SLOT]["slot_layer"] // who should be displayer over who.
 
 		if(owner)
 			if(i_fat && (owner.disabilities & FAT))
@@ -375,6 +368,16 @@ There are several things that need to be remembered:
 					owner.dropItemToGround(O)
 					return
 			update_inv_hud(SLOT)
+			if(inv_box_data[SLOT]["no_mob_overlay"])
+				return
+
+		var/i_state = inv_box_data[SLOT]["icon_state_as_item_state"] // item_state will be used for mob overlay instead of icon_state.
+		var/i_locked_state = inv_box_data[SLOT]["mob_icon_state"] // if set, passed string will be used for mob overlay icon_state (has top priority over other "icon_state" vars).
+		var/i_blood = inv_box_data[SLOT]["mob_blood_overlay"] // whenever this item can become bloody.
+		var/i_tie = inv_box_data[SLOT]["has_tie"] // again, mostly for uniforms.. accessories like captain medals or holster.
+		var/i_simple = inv_box_data[SLOT]["simple_overlays"] // whenever we wan't to check sprite sheets, icon_override or not. used by simple item slots like id, belt, etc.
+		var/i_color = inv_box_data[SLOT]["icon_state_as_color"] // some clothes uses icon_color var instead of icon_state.
+		var/i_layer = inv_box_data[SLOT]["slot_layer"] // who should be displayer over who.
 
 		var/t_state = O.icon_state
 		if(i_locked_state)
@@ -387,15 +390,17 @@ There are several things that need to be remembered:
 
 		var/list/standing = list()
 
-		var/image/I
-		if(!i_simple)
-			if(!O.icon_custom || O.icon_override || species.sprite_sheets[SLOT])
-				I = image(icon = (O.icon_override ? O.icon_override : (species.sprite_sheets[SLOT] ? species.sprite_sheets[SLOT] : i_icon)), icon_state = t_state, layer = i_layer)
+		var/image/I = construct_special_inv_icon(O, SLOT, i_icon, t_state, i_simple)
+		if(!I)
+			if(!i_simple)
+				if(!O.icon_custom || O.icon_override || species.sprite_sheets[SLOT])
+					I = image(icon = (O.icon_override ? O.icon_override : (species.sprite_sheets[SLOT] ? species.sprite_sheets[SLOT] : i_icon)), icon_state = t_state)
+				else
+					I = image(icon = O.icon_custom, icon_state = "[t_state]_mob")
 			else
-				I = image(icon = O.icon_custom, icon_state = "[t_state]_mob", layer = i_layer)
-		else
-			I = image(icon = i_icon, icon_state = t_state, layer = i_layer)
+				I = image(icon = i_icon, icon_state = t_state)
 
+		I.layer = i_layer
 		I.color = O.color
 		standing += I
 
@@ -430,6 +435,133 @@ There are several things that need to be remembered:
 	else if(inv_overlays[SLOT])
 		overlays += inv_overlays[SLOT]
 
+/obj/item/bodypart/proc/construct_special_inv_icon()
+	return
+
+/obj/item/bodypart/chest/unbreakable/dog/construct_special_inv_icon(obj/item/O, SLOT, i_icon, t_state, i_simple)
+	var/image/body_icon
+	switch(SLOT)
+		if(slot_handcuffed)
+			body_icon = image("icon" = i_icon, "icon_state" = "handcuff1")
+		if(slot_legcuffed)
+			body_icon = image("icon" = i_icon, "icon_state" = "legcuff1")
+		if(slot_back)
+			var/i_state = "backpack"
+
+			if(istype(O, /obj/item/clothing/suit/armor))
+				i_state = "armor"
+			else if(istype(O, /obj/item/weapon/storage/backpack/satchel))
+				i_state = "satchel"
+			else if(istype(O, /obj/item/weapon/storage/backpack/dufflebag))
+				i_state = "duffbag"
+
+			body_icon = image("icon" = i_icon, "icon_state" = i_state)
+
+			if(owner)
+				if(owner.lying || owner.crawling)
+					body_icon.icon_state = i_state + "_lie"
+				else if(owner.resting)
+					body_icon.icon_state = i_state + "_sit"
+
+	return body_icon
+
+/obj/item/bodypart/head/unbreakable/dog/construct_special_inv_icon(obj/item/O, SLOT, i_icon, t_state, i_simple)
+	var/lie
+	var/rest
+	var/hand
+	if(owner)
+		hand = SLOT == slot_r_hand
+		lie = owner.lying || owner.crawling
+		if(!lie)
+			rest = owner.resting
+
+	var/list/has_corgi_icons = list(
+	/obj/item/clothing/head/helmet,                 /obj/item/clothing/glasses/sunglasses,
+	/obj/item/clothing/head/caphat,                 /obj/item/clothing/head/collectable/captain,
+	/obj/item/clothing/head/that,                   /obj/item/clothing/head/kitty,
+	/obj/item/clothing/head/collectable/kitty,      /obj/item/clothing/head/rabbitears,
+	/obj/item/clothing/head/collectable/rabbitears, /obj/item/clothing/head/beret,
+	/obj/item/clothing/head/collectable/beret,      /obj/item/clothing/head/det_hat,
+	/obj/item/clothing/head/nursehat,               /obj/item/clothing/head/pirate,
+	/obj/item/clothing/head/collectable/pirate,     /obj/item/clothing/head/ushanka,
+	/obj/item/clothing/head/chefhat,                /obj/item/clothing/head/collectable/chef,
+	/obj/item/clothing/head/collectable/police,     /obj/item/clothing/head/wizard/fake,
+	/obj/item/clothing/head/wizard,                 /obj/item/clothing/head/collectable/wizard,
+	/obj/item/clothing/head/hardhat/yellow,         /obj/item/clothing/head/collectable/hardhat,
+	/obj/item/clothing/head/hardhat/white,          /obj/item/clothing/head/helmet/space/santahat,
+	/obj/item/clothing/head/collectable/paper,      /obj/item/clothing/head/soft)
+
+	if(!hand && SLOT == slot_head && (O.type in has_corgi_icons))
+		return image(icon = 'icons/mob/corgi_head.dmi', icon_state = "[O.icon_state][lie ? "_lie" : ""]")
+
+	var/cache_key = "[O.type]_[hand]_[t_state]_[i_simple]_[lie]_[rest]"
+	var/image/body_icon = special_inv_icon[cache_key]
+	if(!body_icon)
+		var/prepared_icon
+		var/prepared_icon_state
+		if(!i_simple)
+			if(!O.icon_custom || O.icon_override || species.sprite_sheets[SLOT])
+				prepared_icon = O.icon_override ? O.icon_override : species.sprite_sheets[SLOT] ? species.sprite_sheets[SLOT] : i_icon
+				prepared_icon_state = t_state
+			else
+				prepared_icon = O.icon_custom
+				prepared_icon_state = "[t_state]_mob"
+		else
+			prepared_icon = i_icon
+			prepared_icon_state = t_state
+
+		if(!(prepared_icon_state in icon_states(prepared_icon)))
+			return
+
+		body_icon = image(icon = prepared_icon, icon_state = prepared_icon_state)
+
+		var/icon/I = new(body_icon.icon, t_state)
+
+		var/icon/temp_icon
+		if(hand)
+			var/icon/mask_stand = icon('icons/mob/corgi.dmi', "corgi_mask")
+
+			temp_icon = icon(I, t_state, SOUTH)
+			temp_icon.Shift(WEST, 6)
+			temp_icon.Shift(NORTH, 3)
+			I.Insert(icon(temp_icon, dir = SOUTH), dir = SOUTH)
+
+			temp_icon.Blend(icon(mask_stand, icon_state, dir = NORTH), ICON_MULTIPLY)
+			I.Insert(icon(temp_icon, dir = SOUTH), dir = NORTH)
+
+			temp_icon = icon(I, t_state, WEST)
+			temp_icon.Shift(EAST, 14)
+			temp_icon.Shift(NORTH, 3)
+			//temp_icon.Blend(icon(mask_stand, icon_state, dir = EAST), ICON_MULTIPLY)
+			I.Insert(icon(temp_icon, dir = WEST), dir = EAST)
+
+			temp_icon.Flip(WEST)
+			I.Insert(icon(temp_icon, dir = WEST), dir = WEST)
+		else
+			temp_icon = icon(I, t_state, EAST)
+			temp_icon.Shift(EAST, 5)
+			I.Insert(icon(temp_icon, dir = EAST), dir = EAST)
+
+			temp_icon = icon(I, t_state, WEST)
+			temp_icon.Shift(WEST, 7)
+			I.Insert(icon(temp_icon, dir = WEST), dir = WEST)
+
+			I.Shift(EAST, 1)
+			I.Shift(SOUTH, 7)
+
+		if(lie)
+			var/icon/mask_lie = icon('icons/mob/corgi.dmi', "corgi_mask_lie")
+			temp_icon = icon(I)
+			temp_icon.Shift(SOUTH, 13) //lying state
+			temp_icon.Blend(icon(mask_lie, icon_state, dir = NORTH), ICON_MULTIPLY)
+			I.Insert(icon(temp_icon), t_state)
+
+		//corgi_icons[cached_icon_string] =
+		special_inv_icon[cache_key] = image("icon" = I, "icon_state" = t_state)
+		body_icon = special_inv_icon[cache_key]
+
+	return body_icon
+
 /obj/item/bodypart/proc/update_inv_hud(SLOT) // Don't call this proc directly (only if you know exactly, why you need that).
 	if(!owner)
 		return
@@ -454,13 +586,16 @@ There are several things that need to be remembered:
 				owner.client.screen += O
 
 /obj/item/bodypart/proc/get_item_icon_for_mob(SLOT, obj/item/O) // Should be used only in update_inv_limb() proc.
+	if(can_grasp)
+		switch(body_zone)
+			if(BP_L_ARM)
+				return O.lefthand_file
+			if(BP_R_ARM)
+				return O.righthand_file
+			else
+				if(SLOT == slot_r_hand) // current creatures that technically has only one hand, uses right hand slot.
+					return O.lefthand_file // <- yes, left hand file for right hand slot!
 	return inv_box_data[SLOT]["mob_icon_path"]
-
-/obj/item/bodypart/arm/get_item_icon_for_mob(SLOT, obj/item/O)
-	return O.lefthand_file
-
-/obj/item/bodypart/arm/right/get_item_icon_for_mob(SLOT, obj/item/O)
-	return O.righthand_file
 
 /*/mob/living/carbon/update_inv_w_uniform()
 	remove_overlay(UNIFORM_LAYER)

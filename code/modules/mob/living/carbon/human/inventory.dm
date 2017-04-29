@@ -472,6 +472,34 @@
 		return FALSE
 	return ..()
 
+/obj/item/bodypart/head/unbreakable/dog/can_hold(obj/item/I, slot, disable_warning = FALSE)
+	if(!I || !slot || item_in_slot[slot])
+		return FALSE
+
+	switch(slot)
+		if(slot_r_hand)
+			return TRUE
+	return ..()
+
+/obj/item/bodypart/chest/unbreakable/dog/can_hold(obj/item/I, slot, disable_warning = FALSE)
+	if(!I || !slot || item_in_slot[slot])
+		return FALSE
+
+	var/flags = I.slot_flags
+
+	switch(slot)
+		if(slot_back)
+			if(istype(I, /obj/item/clothing/suit/armor/vest))
+				return TRUE
+			if( !(flags & SLOT_BACK) )
+				return FALSE
+			return TRUE
+		if(slot_wear_id)
+			if( !(flags & SLOT_ID) )
+				return FALSE
+			return TRUE
+	return ..()
+
 /*
 	MouseDrop human inventory menu
 */

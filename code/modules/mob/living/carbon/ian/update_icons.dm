@@ -255,6 +255,11 @@
 		if(POSE_STAT)
 			icon_state = "corgi_stat"
 
+	var/obj/item/bodypart/BP = bodyparts_by_name[BP_HEAD]
+	BP.update_inv_limb(multi = TRUE)
+
+	BP = bodyparts_by_name[BP_CHEST]
+	BP.update_inv_limb(multi = TRUE)
 	//update_inv_head()
 	//update_inv_mouth()
 	//update_inv_back()
