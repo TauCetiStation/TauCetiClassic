@@ -565,7 +565,17 @@
 	icon_state = "scrap_bloodied"
 
 /obj/item/weapon/paper/wires
-	name = "Wires"
-	icon_state = "paper_words"
-	New()
-		info = identify_wire()
+	name = "paper - 'Airlock wires documentation'"
+
+/obj/item/weapon/paper/wires/New()
+	..()
+	identify_wires()
+
+/obj/item/weapon/paper/wires/proc/identify_wires()
+	info = get_airlock_wires_identification()
+
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "This paper has been stamped by the Centcomm Engineer Department.")
+
+	update_icon()
+	updateinfolinks()

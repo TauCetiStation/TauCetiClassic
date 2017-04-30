@@ -21,24 +21,23 @@
 
 /obj/item/device/assembly/signaler/New()
 	..()
-	spawn(40)
-		set_frequency(frequency)
+	addtimer(CALLBACK(src, .proc/set_frequency, frequency), 40)
 	return
 
 /obj/item/device/assembly/signaler/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	frequency = 0
+	connected = null
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()
-	if(cooldown > 0)	return 0
+	if(cooldown > 0)
+		return FALSE
 	cooldown = 2
-	spawn(10)
-		process_cooldown()
-
+	addtimer(CALLBACK(src, .proc/process_cooldown), 10)
 	signal()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/signaler/update_icon()
 	if(holder)
@@ -139,9 +138,8 @@ Code:
 
 
 /obj/item/device/assembly/signaler/pulse(radio = 0)
-	if(istype(src.loc, /obj/machinery/door/airlock) && src.airlock_wire && src.wires)
-		var/obj/machinery/door/airlock/A = src.loc
-		A.pulse(src.airlock_wire)
+	if(connected && wires)
+		connected.pulse_signaler(src)
 	else if(holder)
 		holder.process_activation(src, 1, 0)
 	else
