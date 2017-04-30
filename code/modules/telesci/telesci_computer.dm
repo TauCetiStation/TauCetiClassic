@@ -41,6 +41,10 @@
 	if(inserted_gps)
 		inserted_gps.loc = loc
 		inserted_gps = null
+	if(telepad)
+		telepad.computer = null
+		telepad = null
+	close_wormhole()
 	return ..()
 
 /obj/machinery/computer/telescience/examine(mob/user)
@@ -94,7 +98,11 @@
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
+			if(telepad)
+				telepad.computer = null
+				close_wormhole()
 			telepad = M.buffer
+			telepad.computer = src
 			M.buffer = null
 			to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
 	else
