@@ -49,17 +49,20 @@
 	..()
 	to_chat(user, "It has number [id].")
 
-/obj/vehicle/space/spacebike/load(atom/movable/C)
-	var/mob/living/M = C
+/obj/vehicle/space/spacebike/load(mob/living/M)
 	if(!istype(M))
 		return FALSE
-	if(M.buckled || M.restrained() || !Adjacent(M) || !M.Adjacent(src))
+	if(M.buckled || M.incapacitated() || M.lying || !Adjacent(M) || !M.Adjacent(src))
 		return FALSE
 	return ..(M)
 
-/obj/vehicle/space/spacebike/MouseDrop_T(atom/movable/C, mob/user)
-	if(!load(C))
-		to_chat(user, "<span class='warning'>You were unable to load \the [C] onto \the [src].</span>")
+/obj/vehicle/space/spacebike/MouseDrop_T(mob/living/M, mob/living/user)
+	if(!istype(user) || !istype(M))
+		return
+	if(user.incapacitated() || user.lying)
+		return
+	if(!load(M))
+		to_chat(user, "<span class='warning'>You were unable to load \the [M] onto \the [src].</span>")
 		return
 
 /obj/vehicle/space/spacebike/attack_hand(mob/user)
