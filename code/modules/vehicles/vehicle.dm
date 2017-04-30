@@ -275,9 +275,6 @@
 	load.layer = initial(load.layer)
 	load.plane = initial(load.plane)
 
-	if(ismob(load))
-		unbuckle_mob(load)
-
 	load = null
 
 	return 1
