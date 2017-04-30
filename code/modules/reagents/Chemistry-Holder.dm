@@ -497,16 +497,13 @@ var/const/INGEST = 2
 
 	return 1
 
-/datum/reagents/proc/has_reagent(reagent, amount = -1)
-
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
-		if (R.id == reagent)
-			if(!amount) return R
-			else
-				if(R.volume >= amount) return R
-				else return 0
-
+/datum/reagents/proc/has_reagent(reagent, amount = 0)
+	for(var/datum/reagent/R in reagent_list)
+		if(R.id == reagent)
+			if(!amount)
+				return R
+			else if(R.volume >= amount)
+				return R
 	return 0
 
 /datum/reagents/proc/get_reagent_amount(reagent)
