@@ -98,7 +98,7 @@ var/specops_shuttle_timeleft = 0
 	qdel(announcer)
 
 /proc/specops_process()
-	var/area/centcom/specops/special_ops = locate()//Where is the specops area located?
+	//var/area/centcom/specops/special_ops = locate()//Where is the specops area located?
 	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
 	announcer.config(list("Response Team" = 0))
 
@@ -140,6 +140,7 @@ var/specops_shuttle_timeleft = 0
 		to_chat(usr, "\red The Special Operations shuttle is unable to leave.")
 		return
 
+/* TOTALLY BROKEN
 	//Begin Marauder launchpad.
 	spawn(0)//So it parallel processes it.
 		for(var/obj/machinery/door/poddoor/M in special_ops)
@@ -206,7 +207,7 @@ var/specops_shuttle_timeleft = 0
 						M.close()
 		special_ops.readyreset()//Reset firealarm after the team launched.
 	//End Marauder launchpad.
-
+*/
 	var/area/start_location = locate(/area/shuttle/specops/centcom)
 	var/area/end_location = locate(/area/shuttle/specops/station)
 

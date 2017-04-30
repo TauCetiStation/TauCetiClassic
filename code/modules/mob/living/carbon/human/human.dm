@@ -971,6 +971,10 @@
 	var/list/creatures = list()
 	var/list/namecounts = list()
 
+	var/turf/src_turf = get_turf(src)
+	if(!src_turf)
+		return
+
 	for(var/mob/living/carbon/M in world)
 		var/name = M.real_name
 		if(name in names)
@@ -980,12 +984,12 @@
 			names.Add(name)
 			namecounts[name] = 1
 		var/turf/temp_turf = get_turf(M)
-		if(temp_turf.z != src.z)
+		if(!temp_turf || temp_turf.z != src_turf.z)
 			continue
 		creatures[name] += M
 
 	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
-	if (isnull(target))
+	if(isnull(target))
 		return
 
 	var/say = input ("What do you wish to say")

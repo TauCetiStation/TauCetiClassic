@@ -62,7 +62,6 @@
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
-		src.directwired = 1
 
 /obj/machinery/power/emitter/Destroy()
 	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
@@ -210,7 +209,6 @@
 						state = 2
 						to_chat(user, "You weld the [src] to the floor.")
 						connect_to_network()
-						src.directwired = 1
 				else
 					to_chat(user, "\red You need more welding fuel to complete this task.")
 			if(2)
@@ -224,7 +222,6 @@
 						state = 1
 						to_chat(user, "You cut the [src] free from the floor.")
 						disconnect_from_network()
-						src.directwired = 0
 				else
 					to_chat(user, "\red You need more welding fuel to complete this task.")
 		return

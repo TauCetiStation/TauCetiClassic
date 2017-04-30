@@ -49,7 +49,7 @@ This is what happens, when alien attack.
 		if ("help")
 			visible_message(text("\blue [M] caresses [src] with its scythe like arm."))
 		if ("grab")
-			if(M == src || anchored)
+			if(M == src || anchored || M.lying)
 				return
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)

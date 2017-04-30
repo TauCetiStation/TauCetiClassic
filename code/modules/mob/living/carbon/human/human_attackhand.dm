@@ -111,7 +111,7 @@
 			return 1
 
 		if("grab")
-			if(M == src || anchored)
+			if(M == src || anchored || M.lying)
 				return 0
 			for(var/obj/item/weapon/grab/G in src.grabbed_by)
 				if(G.assailant == M)

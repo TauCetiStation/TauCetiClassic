@@ -454,7 +454,7 @@ var/list/forbidden_varedit_object_types = list(
 			return .(O.vars[variable])
 
 		if("text")
-			var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|text
+			var/var_new = sanitize(input("Enter new text:","Text",O.vars[variable])) as null|text
 			if(var_new==null) return
 			O.vars[variable] = var_new
 

@@ -61,8 +61,10 @@
 	if(affecting)
 		if(assailant.r_hand == src)
 			hud.screen_loc = ui_rhand
-		else
+		else if(assailant.l_hand == src)
 			hud.screen_loc = ui_lhand
+		else
+			qdel(src)
 
 
 /obj/item/weapon/grab/process()
