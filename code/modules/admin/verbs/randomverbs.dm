@@ -913,6 +913,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
 		return
 
+	if(SSshuttle.always_fake_recall)
+		var/choice = input("The shuttle will just return if you call it. What you want to do?") in list(
+					"Cancel shuttle call",
+					"Call it anyway",
+					"Call and allow it to fly to station")
+		switch(choice)
+			if("Cancel shuttle call")
+				return
+			if("Call and allow it to fly to station")
+				SSshuttle.always_fake_recall = FALSE
+				SSshuttle.fake_recall = 0
+				log_admin("[key_name(usr)] disabled shuttle fake recall.")
+				message_admins("<span class='info'>[key_name_admin(usr)] disabled shuttle fake recall.</span>")
+
 	var/type = alert(src, "It's emergency shuttle or crew transfer?", "Confirm", "Emergency", "Crew transfer")
 
 	if(type == "Crew transfer")
