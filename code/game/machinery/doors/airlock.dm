@@ -632,10 +632,6 @@ var/list/airlock_overlays = list()
 		close()
 
 /obj/machinery/door/airlock/attack_hand(mob/user)
-	if(!(istype(user, /mob/living/silicon) || IsAdminGhost(user)))
-		if(src.isElectrified())
-			if(src.shock(user, 100))
-				return
 	if(HULK in user.mutations)
 		hulk_break_reaction(user)
 		return
