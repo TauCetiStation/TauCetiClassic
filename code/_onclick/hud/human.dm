@@ -31,12 +31,9 @@
 				inv_box.layer = inv_box_data[slot_name]["hud_layer"] ? inv_box_data[slot_name]["hud_layer"] : HUD_LAYER
 				inv_box.plane = HUD_PLANE
 				inv_slots_data[slot_name] = inv_box
-				initialize_hand()
 			else
 				inv_slots_data[slot_name] = null
 			item_in_slot["[slot_name]"] = null
-			if(owner)
-				owner.bodyparts_slot_by_name[slot_name] = body_zone
 
 /*
 	Makes inventory hud to actually appear on players screen (used when player logins into the mob).

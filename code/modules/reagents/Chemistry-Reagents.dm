@@ -305,10 +305,14 @@ datum
 					return
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if(H.dna && !H.dna.mutantrace)
-						to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
-						H.dna.mutantrace = "slime"
-						H.update_mutantrace()
+					if(H.species.name == S_PROMETHEAN)
+						return
+					H.set_species(S_PROMETHEAN, TRUE)
+					to_chat(H, "<span class='warning'>Your flesh rapidly mutates!</span>")
+					//if(H.dna && !H.dna.mutantrace)
+					//	to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
+						//H.dna.mutantrace = "slime"
+						//H.update_mutantrace()
 
 		aslimetoxin
 			name = "Advanced Mutation Toxin"

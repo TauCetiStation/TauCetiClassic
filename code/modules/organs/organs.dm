@@ -62,6 +62,8 @@
 	return ..()
 
 /obj/item/organ/Destroy()
+	STOP_PROCESSING(SSobj, src)
+
 	if(owner)
 		var/obj/item/bodypart/BP = owner.bodyparts_by_name[parent_bodypart]
 		if(BP)
@@ -369,7 +371,7 @@
 /mob/living/carbon/proc/handle_stance()
 	// Don't need to process any of this if they aren't standing anyways
 	// unless their stance is damaged, and we want to check if they should stay down
-	if (num_of_legs == 0 || !stance_damage && (lying || resting) && (life_tick % 4) != 0)
+	if (species.num_of_legs == 0 || !stance_damage && (lying || resting) && (life_tick % 4) != 0)
 		return
 
 	stance_damage = 0
@@ -379,7 +381,7 @@
 		return
 
 	var/limb_pain
-	for(var/i = 1 to num_of_legs)
+	for(var/i = 1 to species.num_of_legs)
 		if(i <= bodypart_legs.len)
 			var/obj/item/bodypart/BP = bodypart_legs[i]
 			if(!BP.is_usable())
@@ -421,7 +423,7 @@
 		Weaken(5) //can't emote while weakened, apparently.
 
 /mob/living/carbon/proc/handle_grasp() // TODO check this proc
-	if(num_of_hands == 0)
+	if(species.num_of_hands == 0)
 		return
 
 	for (var/obj/item/bodypart/BP in bodypart_hands)
@@ -982,6 +984,21 @@
 
 /obj/item/organ/brain/dog
 	is_advanced_tool_user = FALSE
+
+/obj/item/organ/brain/core
+	name = "slime extract"
+	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "grey slime extract"
+
+	parent_bodypart = BP_CHEST
+	is_advanced_tool_user = FALSE
+
+	var/cores = 1 // size of brain :D
+
+/obj/item/organ/brain/core/promethean
+	parent_bodypart = BP_HEAD
+	is_advanced_tool_user = TRUE
 
 /obj/item/organ/brain/xeno
 	name = "thinkpan"

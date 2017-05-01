@@ -898,9 +898,6 @@ This function restores the subjects blood to max.
 	if(!new_species)
 		return 0
 
-	if(dna)
-		dna.species = new_species
-
 	//if(!dna)
 	//	if(!new_species)
 	//		new_species = S_HUMAN
@@ -911,7 +908,10 @@ This function restores the subjects blood to max.
 	//		dna.species = new_species
 
 	if(species && (species.name && species.name == new_species))
-		return
+		return 0
+
+	if(dna)
+		dna.species = new_species
 
 	if(species && species.language)
 		remove_language(species.language)
@@ -919,16 +919,15 @@ This function restores the subjects blood to max.
 	species = all_species[new_species]
 
 	if(force_organs || !bodyparts || !bodyparts.len)
-		species.create_organs(src, organ_data)
+		species.create_organs(src, organ_data, force_organs)
 	else if(!force_organs) // when changing one specie into another (without recreating organs), we need to regenerate inventory and hud data.
 		for(var/obj/item/bodypart/BP in bodyparts)
 			BP.generate_hud_data(species)
-		var/hud_style
-		var/inv_shown
-		if(hud_used)
-			hud_style = hud_used.hud_version
-			inv_shown = hud_used.inventory_shown
-			qdel(hud_used)
+
+	if(hud_used)
+		var/hud_style = hud_used.hud_version
+		var/inv_shown = hud_used.inventory_shown
+		qdel(hud_used)
 		hud_used = new /datum/hud(src, hud_style, inv_shown)// rebuild hud (can be optimized)
 
 	if(species.language)

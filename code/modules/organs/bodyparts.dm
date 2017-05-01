@@ -96,30 +96,38 @@
 	var/list/inv_overlays = list()
 	var/static/list/special_inv_icon = list()
 
-/obj/item/bodypart/New(loc, mob/living/carbon/C)
+/obj/item/bodypart/New(loc, mob/living/carbon/C, specie) // arg C or specie or both must always exist.
+
+
 	if(!max_damage)
 		max_damage = min_broken_damage * 2
 
 	if(isnull(pain_disability_threshold))
 		pain_disability_threshold = (max_damage * 0.75)
 
-	if(istype(C))
-		inserted(C, TRUE)
+	if(specie)
+		species = all_species[specie]
+	else
+		species = C.species
 
-		w_class = max(w_class + mob_size_difference(owner.mob_size, MOB_MEDIUM), 1) //smaller mobs have smaller bodyparts.
-		species = owner.species
+	if(!species)
+		CRASH("[src] created without specie.")
+
+	generate_hud_data()
+
+	if(C)
+		w_class = max(w_class + mob_size_difference(C.mob_size, MOB_MEDIUM), 1) //smaller mobs have smaller bodyparts.
+		inserted(C)
 
 		if(species.flags[IS_SYNTHETIC])
 			status |= ORGAN_ROBOT
-
-	generate_hud_data()
 
 	create_reagents(5 * (w_class-1)**2)
 	reagents.add_reagent("nutriment", reagents.maximum_volume) // Bay12: protein
 
 	return ..()
 
-/obj/item/bodypart/proc/inserted(mob/living/carbon/C, on_new = FALSE)
+/obj/item/bodypart/proc/inserted(mob/living/carbon/C)
 	if(!istype(C))
 		return FALSE
 
@@ -133,10 +141,13 @@
 
 	if(can_grasp)
 		owner.bodypart_hands += src
-		owner.num_of_hands++
+		if(!owner.active_hand)
+			owner.activate_hand(src)
+		else
+			owner.inactive_hands += src
+		update_swapped_hand_hud()
 	if(can_stand)
 		owner.bodypart_legs += src
-		owner.num_of_legs++
 
 	if(parent_bodypart)
 		parent = owner.bodyparts_by_name[parent_bodypart]
@@ -145,20 +156,21 @@
 
 		parent.children += src
 
-	if(!on_new)
-		for(var/obj/item/organ/IO in organs)
-			IO.inserted(C)
+	for(var/obj/item/organ/IO in organs)
+		IO.inserted(C)
 
-		owner.add_hud_data(src)
-		owner.update_body() // TODO check if this procs are necessary
-		owner.updatehealth()
-		owner.update_bodypart(src.body_zone)
-		owner.update_bloody_bodypart(body_zone)
-		update_inv_limb(multi = TRUE)
+	owner.add_hud_data(src)
+	owner.update_body() // TODO check if this procs are necessary
+	owner.updatehealth()
+	owner.update_bodypart(src.body_zone)
+	owner.update_bloody_bodypart(body_zone)
+	update_inv_limb(multi = TRUE)
 
 	return TRUE
 
 /obj/item/bodypart/Destroy() // TODO proper Destroy for bodyparts.
+	STOP_PROCESSING(SSobj, src)
+
 	if(inv_slots_data)
 		remove_hud_data(TRUE)
 
@@ -182,7 +194,13 @@
 	species = null // species are global, don't do anything to them.
 
 	if(owner)
+		if(can_grasp)
+			owner.bodypart_hands -= src
+		if(can_stand)
+			owner.bodypart_legs -= src
+
 		owner.bodyparts -= src
+		owner.bad_bodyparts -= src
 		owner.bodyparts_by_name[body_zone] = null
 		owner.bodyparts_by_name -= body_zone
 		while(null in owner.bodyparts)
@@ -1374,6 +1392,13 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/chest/unbreakable/dog
 
+/obj/item/bodypart/chest/unbreakable/slime
+	can_stand = TRUE
+
+/obj/item/bodypart/chest/unbreakable/promethean
+	nonsolid = 1
+	max_damage = 50
+
 /obj/item/bodypart/groin
 	name = "groin"
 	icon_state = "groin"
@@ -1396,6 +1421,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/groin/unbreakable
 	cannot_break = TRUE
+
+/obj/item/bodypart/groin/unbreakable/promethean
+	nonsolid = 1
+	max_damage = 30
 
 /obj/item/bodypart/head
 	name = "head"
@@ -1434,6 +1463,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	cannot_break = TRUE
 	can_grasp = TRUE
 
+/obj/item/bodypart/head/unbreakable/promethean
+	nonsolid = 1
+	max_damage = 15
+
 /obj/item/bodypart/head/take_damage(brute, burn, damage_flags, used_weapon = null)
 	. = ..()
 	if(!disfigured)
@@ -1462,14 +1495,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			visible_message("\red [name] melts away, turning into mangled mess!")
 	disfigured = 1
 
-/obj/item/bodypart/proc/initialize_hand()
-	if(can_grasp && owner)
-		if(!owner.active_hand)
-			owner.activate_hand(src)
-		else
-			owner.inactive_hands += src
-		update_swapped_hand_hud()
-
 /obj/item/bodypart/arm
 	name = "left arm"
 	icon_state = "l_arm"
@@ -1494,6 +1519,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	cannot_break = TRUE
 	dislocated = -1
 
+/obj/item/bodypart/arm/unbreakable/promethean
+	nonsolid = 1
+	max_damage = 20
+
 /obj/item/bodypart/arm/right
 	name = "right arm"
 	icon_state = "r_arm"
@@ -1507,6 +1536,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/arm/right/unbreakable
 	cannot_break = TRUE
 	dislocated = -1
+
+/obj/item/bodypart/arm/right/unbreakable/promethean
+	nonsolid = 1
+	max_damage = 20
 
 /obj/item/bodypart/leg
 	name = "left leg"
@@ -1536,6 +1569,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	body_zone = BP_L_ARM
 	cannot_amputate = TRUE
 
+/obj/item/bodypart/leg/unbreakable/promethean
+	nonsolid = 1
+	max_damage = 20
+
 /obj/item/bodypart/leg/right
 	name = "right leg"
 	icon_state = "r_leg"
@@ -1553,6 +1590,10 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/leg/right/unbreakable/front
 	body_zone = BP_R_ARM
 	cannot_amputate = TRUE
+
+/obj/item/bodypart/leg/right/unbreakable/promethean
+	nonsolid = 1
+	max_damage = 20
 
 /****************************************************
 	RIPPED, MISSED, AMPUTATED LIMB

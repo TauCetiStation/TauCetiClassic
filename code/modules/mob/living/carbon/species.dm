@@ -15,7 +15,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	// Damage overlay and masks.
 	var/damage_overlays = 'icons/mob/human_races/masks/human_damage_overlays.dmi'
 	var/blood_overlays = 'icons/mob/human_races/masks/human_blood_overlays.dmi'
-	var/stump_overlays = "_human" // used by monkeys
+	var/stump_overlays = "_human"
 
 	var/has_screamSound = FALSE
 
@@ -100,6 +100,9 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	var/has_internals = TRUE // Set to draw the internals toggle button.
 	var/has_gun_aim_control = TRUE // Set to draw gun setting button.
 
+	var/num_of_hands = 2
+	var/num_of_legs = 2
+
 	var/list/sprite_sheets = list()
 
 	//This is default bodyparts & organs set which is mostly used upon mob creation.
@@ -130,9 +133,15 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	for(var/u_type in unarmed_types)
 		unarmed_attacks += new u_type()
 
-/datum/species/proc/create_organs(mob/living/carbon/C, list/organ_data) //Handles creation of mob bodyparts and organs.
+/datum/species/proc/create_organs(mob/living/carbon/C, list/organ_data, force_rebuild) //Handles creation of mob bodyparts and organs.
 	//This is a basic humanoid limb setup.
 	C.make_blood()
+
+	if(force_rebuild)
+		for(var/obj/item/bodypart/BP in C.bodyparts)
+			qdel(BP)
+		for(var/obj/item/organ/IO in C.organs)
+			qdel(IO)
 
 	if(!organ_data || !organ_data.len)
 		for(var/type in has_bodypart)
@@ -648,8 +657,47 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	 NO_EMBED = TRUE
 	)
 
-	has_bodypart = list()
-	has_organ = list()
+	has_hands = FALSE
+	has_drop = FALSE
+	has_throw = FALSE
+	has_internals = FALSE
+	has_gun_aim_control = FALSE
+
+	num_of_hands = 0
+	num_of_legs = 0
+
+	has_bodypart = list(
+		BP_CHEST = /obj/item/bodypart/chest/unbreakable/slime
+		)
+
+	has_organ = list(
+		BP_BRAIN = /obj/item/organ/brain/core
+		)
+
+/datum/species/shapeshifter/promethean
+	name = S_PROMETHEAN
+
+	icobase = 'icons/mob/human_races/r_slime.dmi'
+	deform = 'icons/mob/human_races/r_slime.dmi'
+
+	stump_overlays = null
+	eyes_icon = null
+
+	unarmed_types = list(/datum/unarmed_attack/slime_glomp)
+
+	has_bodypart = list(
+		BP_CHEST = /obj/item/bodypart/chest/unbreakable/promethean
+		,BP_GROIN = /obj/item/bodypart/groin/unbreakable/promethean
+		,BP_HEAD = /obj/item/bodypart/head/unbreakable/promethean
+		,BP_L_ARM = /obj/item/bodypart/arm/unbreakable/promethean
+		,BP_R_ARM = /obj/item/bodypart/arm/right/unbreakable/promethean
+		,BP_L_LEG = /obj/item/bodypart/leg/unbreakable/promethean
+		,BP_R_LEG = /obj/item/bodypart/leg/right/unbreakable/promethean
+		)
+
+	has_organ = list(
+		BP_BRAIN = /obj/item/organ/brain/core/promethean
+		)
 
 /*
 	Aliens aka xenomorphs
@@ -683,6 +731,9 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	has_resist = FALSE
 	has_internals = FALSE
 
+	num_of_hands = 0
+	num_of_legs = 0
+
 	has_bodypart = list(
 		BP_CHEST = /obj/item/bodypart/chest/unbreakable/facehugger
 		)
@@ -704,6 +755,9 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	has_throw = FALSE
 	has_resist = FALSE
 	has_internals = FALSE
+
+	num_of_hands = 0
+	num_of_legs = 0
 
 	has_bodypart = list(
 		BP_CHEST = /obj/item/bodypart/chest/unbreakable/larva
@@ -811,6 +865,9 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 
 	has_hands = FALSE
 	has_throw = FALSE
+
+	num_of_hands = 1
+	num_of_legs = 4
 
 	has_bodypart = list(
 		 BP_CHEST = /obj/item/bodypart/chest/unbreakable/dog

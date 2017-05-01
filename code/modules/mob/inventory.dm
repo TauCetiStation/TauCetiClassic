@@ -228,6 +228,8 @@ var/list/slot_equipment_priority = list( \
 	return
 
 /mob/living/carbon/put_in_active_hand(obj/item/W)
+	if(!active_hand)
+		return
 	var/obj/item/bodypart/BP = active_hand
 	var/slot_hand = BP.inv_slots_data[1]
 	return equip_to_slot_if_possible(W, slot_hand)
