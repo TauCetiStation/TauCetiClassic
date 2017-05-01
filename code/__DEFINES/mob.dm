@@ -107,6 +107,7 @@
 #define S_MONKEY_D      "Diona Nymph"
 #define S_SLIME         "Slime"
 #define S_PROMETHEAN    "Promethean"
+#define S_GOLEM         "Golem"
 #define S_XENO_FACE     "Alien Facehugger"
 #define S_XENO_LARVA    "Alien Larva"
 #define S_XENO_DRONE    "Xenomorph Drone"

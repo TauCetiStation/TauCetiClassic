@@ -71,13 +71,13 @@
 	This proc should be used, when we attach this limb to the mob.
 */
 /mob/living/carbon/proc/add_hud_data(obj/item/bodypart/BP)
-	if(!BP || !hud_used)
+	if(!BP)
 		return
 
 	if(BP.inv_slots_data)
 		for(var/slot_name in BP.inv_slots_data)
 			var/obj/screen/inventory/S = BP.inv_slots_data[slot_name]
-			if(S)
+			if(S && hud_used)
 				if(client) // if no client - this will be done upon mob login with datum/hud initialization proc.
 					if(!S.icon)
 						S.icon = ui_style2icon(client.prefs.UI_style)

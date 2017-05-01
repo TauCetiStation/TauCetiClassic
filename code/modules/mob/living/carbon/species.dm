@@ -699,6 +699,17 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 		BP_BRAIN = /obj/item/organ/brain/core/promethean
 		)
 
+/datum/species/golem
+	name = S_GOLEM
+
+	icobase = 'icons/mob/human_races/r_golem.dmi'
+	deform = 'icons/mob/human_races/r_golem.dmi'
+
+	flags = list(
+		 NO_PAIN = TRUE
+		,NO_SCAN = TRUE
+		)
+
 /*
 	Aliens aka xenomorphs
 */

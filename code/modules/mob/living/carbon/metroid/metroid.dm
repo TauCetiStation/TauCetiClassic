@@ -997,9 +997,9 @@
 		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
 		return
 
-	var/mob/living/carbon/human/G = new /mob/living/carbon/human
-	G.dna.mutantrace = "adamantine"
-	G.update_mutantrace()
+	var/mob/living/carbon/human/G = new /mob/living/carbon/human(loc, S_GOLEM)
+	//G.dna.mutantrace = "adamantine"
+	//G.update_mutantrace()
 	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 	G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
 	G.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem(G), slot_head)
@@ -1008,7 +1008,7 @@
 	G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
 	G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
 	G.status_flags &= ~(CANSTUN|CANWEAKEN|CANPARALYSE)
-	G.forceMove(loc)
+	//G.forceMove(loc)
 	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
 	G.key = spirit.key
