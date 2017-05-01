@@ -96,9 +96,12 @@
 	var/list/inv_overlays = list()
 	var/static/list/special_inv_icon = list()
 
+	// IPC limbs appearance
+	var/robot_has_skin = FALSE // fake human skin (damage will set this to FALSE).
+	var/robot_manufacturer_name = null
+	var/robot_manufacturer_icon = null // cyberlimbs appearance.
+
 /obj/item/bodypart/New(loc, mob/living/carbon/C, specie) // arg C or specie or both must always exist.
-
-
 	if(!max_damage)
 		max_damage = min_broken_damage * 2
 
@@ -384,6 +387,8 @@
 	if((brute <= 0) && (burn <= 0))
 		return 0
 
+	var/force_update = FALSE
+
 	var/sharp = (damage_flags & DAM_SHARP)
 	var/edge  = (damage_flags & DAM_EDGE)
 	var/laser = (damage_flags & DAM_LASER)
@@ -402,6 +407,10 @@
 			brute /= 2
 			if(laser)
 				burn /= 2
+
+	if(species.name == S_IPC && robot_has_skin && (prob(damage_amt / 2) || !is_usable()))
+		robot_has_skin = FALSE
+		force_update = TRUE
 
 	if((status & ORGAN_BROKEN) && brute)
 		jostle_bone(brute)
@@ -475,7 +484,7 @@
 			else if(brute >= max_damage / DROPLIMB_THRESHOLD_TEAROFF && prob(brute/3))
 				droplimb(0, DROPLIMB_EDGE)
 
-	if(owner && update_damstate())
+	if(owner && (update_damstate() || force_update))
 		owner.update_bodypart(src.body_zone)
 
 	return created_wound

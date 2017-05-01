@@ -49,6 +49,11 @@
 			. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
 			. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
 
+			if(species == S_IPC)
+				. += "<br>Cyberlimbs Manufacturer: <a href='byond://?src=\ref[user];preference=machine_man;task=input'>[cyberlimb_manufacturer]</a>"
+				. += "<br>Use Fake Skin: <a href='byond://?src=\ref[user];preference=machine_skin;task=input'>[cyberlimb_has_skin ? "Yes" : "No"]</a>"
+				. += "<br>Alt Head Look: <a href='byond://?src=\ref[user];preference=machine_head;task=input'>[cyberlimb_alt_head]"
+
 		//Organs
 		if("organs")
 			. += "Limbs & Internal Organs: <a href='byond://?src=\ref[user];preference=organs;task=input'>Adjust</a>"
@@ -284,6 +289,26 @@
 						f_style = random_facial_hair_style(gender, species)
 						h_style = random_hair_style(gender, species)
 						update_preview_icon(user)
+
+				if("machine_man")
+					var/man = input("Please select a manufacturer", "Cyberlimbs Manufacturer Selection", null) as null|anything in cyberlimb_manufacturers
+					if(!man || man == cyberlimb_manufacturer)
+						return
+
+					cyberlimb_manufacturer = man
+					update_preview_icon(user)
+
+				if("machine_skin")
+					cyberlimb_has_skin = !cyberlimb_has_skin
+					update_preview_icon(user)
+
+				if("machine_head")
+					var/ipc_alt_head = alert(user, "Please select head type", "Head Type", "Standard", "Alt", "Monitor")
+					if(ipc_alt_head == cyberlimb_alt_head) // no need to update if there is no change.
+						return
+
+					cyberlimb_alt_head = ipc_alt_head
+					update_preview_icon(user)
 
 				if("language")
 					var/languages_available

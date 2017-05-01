@@ -176,6 +176,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
 	S["b_type"]				>> b_type
+	S["cyberlimb_manufacturer"]	>> cyberlimb_manufacturer
+	S["cyberlimb_has_skin"]		>> cyberlimb_has_skin
+	S["cyberlimb_alt_head"]		>> cyberlimb_alt_head
 
 	//Jobs
 	S["alternate_option"]	>> alternate_option
@@ -258,6 +261,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
+
+	if(isnull(cyberlimb_manufacturer)) cyberlimb_manufacturer = "Bishop"
+	if(isnull(cyberlimb_alt_head)) cyberlimb_alt_head = "Standard"
+	cyberlimb_has_skin = sanitize_integer(cyberlimb_has_skin, 0, 1, initial(cyberlimb_has_skin))
 
 	if(isnull(disabilities)) disabilities = 0
 	if(!player_alt_titles) player_alt_titles = new()
@@ -351,6 +358,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				<< socks
 	S["backbag"]			<< backbag
 	S["b_type"]				<< b_type
+	S["cyberlimb_manufacturer"]	<< cyberlimb_manufacturer
+	S["cyberlimb_has_skin"]		<< cyberlimb_has_skin
+	S["cyberlimb_alt_head"]		<< cyberlimb_alt_head
 
 	//Jobs
 	S["alternate_option"]	<< alternate_option

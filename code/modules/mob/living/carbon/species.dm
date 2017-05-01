@@ -527,8 +527,8 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 
 /datum/species/machine
 	name = S_IPC
-	icobase = 'icons/mob/human_races/r_machine.dmi'
-	deform = 'icons/mob/human_races/r_machine.dmi'
+	//icobase = 'icons/mob/human_races/r_machine.dmi'
+	//deform = 'icons/mob/human_races/r_machine.dmi'
 	language = "Tradeband"
 	unarmed_types = list(/datum/unarmed_attack/punch)
 
@@ -563,6 +563,25 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 
 	blood_color = "#1F181F"
 	flesh_color = "#575757"
+
+	has_bodypart = list(
+		BP_CHEST = /obj/item/bodypart/chest
+		,BP_GROIN = /obj/item/bodypart/groin
+		,BP_HEAD  = /obj/item/bodypart/head
+		,BP_L_ARM = /obj/item/bodypart/arm
+		,BP_R_ARM = /obj/item/bodypart/arm/right
+		,BP_L_LEG = /obj/item/bodypart/leg
+		,BP_R_LEG = /obj/item/bodypart/leg/right
+		)
+
+	has_organ = list(
+		BP_HEART   = /obj/item/organ/heart
+		,BP_BRAIN   = /obj/item/organ/brain
+		,BP_EYES    = /obj/item/organ/eyes
+		//,BP_LUNGS   = /obj/item/organ/lungs
+		//,BP_LIVER   = /obj/item/organ/liver
+		//,BP_KIDNEYS = /obj/item/organ/kidneys
+		)
 
 /datum/species/abductor
 	name = S_ABDUCTOR

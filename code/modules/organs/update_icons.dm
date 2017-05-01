@@ -1,5 +1,5 @@
 /obj/item/bodypart/proc/update_limb()
-	if(!species.icobase)
+	if(!species.icobase && species.name != S_IPC)
 		return
 
 	var/list/remove_overlays = list()
@@ -15,40 +15,10 @@
 	if(remove_overlays.len)
 		overlays -= remove_overlays
 
-	if(owner)
-		var/has_gender = owner.species.flags[HAS_GENDERED_ICONS]
-		var/has_color = TRUE
-		var/husk = (owner.disabilities & HUSK)
-
+	if(species.name == S_IPC)
 		lmb_overlay = image(layer = -BODYPARTS_LAYER + limb_layer_priority)
-
-		if(owner.species.flags[IS_SYNTHETIC]) // TODO: bodyparts for this and ROBOT.
-			lmb_overlay.icon = owner.species.icobase
-			//icon = owner.species.icobase
-			has_gender = FALSE
-			has_color = FALSE
-		else if(status & ORGAN_ROBOT)
-			lmb_overlay.icon = 'icons/mob/human_races/robotic.dmi'
-			//icon = 'icons/mob/human_races/robotic.dmi'
-			has_gender = FALSE
-			has_color = FALSE
-		else if(husk) // TODO implement this for exact bodyparts.
-			overlays.Cut()
-			lmb_overlay.icon = icon = 'icons/mob/human_races/bad_limb.dmi'
-			//icon = 'icons/mob/human_races/bad_limb.dmi'
-			lmb_overlay.icon_state = body_zone + "_husk"
-			//icon_state = body_zone + "_husk"
-			has_gender = FALSE
-			has_color = FALSE
-			return
-		else if(status & ORGAN_MUTATED)
-			lmb_overlay.icon = owner.species.deform
-			//icon = owner.species.deform
-		else
-			lmb_overlay.icon = owner.species.icobase
-			//icon = owner.species.icobase
-
-		if(has_gender)
+		if(robot_has_skin)
+			lmb_overlay.icon = 'icons/mob/human_races/r_human.dmi'
 			var/g = (owner.gender == FEMALE ? "_f" : "_m")
 			switch(body_zone)
 				if(BP_CHEST)
@@ -59,26 +29,74 @@
 					//icon_state = body_zone + g
 				else
 					lmb_overlay.icon_state = body_zone
-					//icon_state = body_zone
-			if(owner.species.name == S_HUMAN && (owner.disabilities & FAT))
-				lmb_overlay.icon_state += "_fat"
-				//icon_state += "_fat"
 		else
+			lmb_overlay.icon = robot_manufacturer_icon
 			lmb_overlay.icon_state = body_zone
-			//icon_state = body_zone
+	else
+		if(owner)
+			var/has_gender = owner.species.flags[HAS_GENDERED_ICONS]
+			var/has_color = TRUE
+			var/husk = (owner.disabilities & HUSK)
 
-		if(has_color)
-			if(status & ORGAN_DEAD)
-				lmb_overlay.color = list(0.03,0,0, 0,0.2,0, 0,0,0, 0.3,0.3,0.3)
-			else if(HULK in owner.mutations)
-				lmb_overlay.color = list(0.18,0,0, 0,0.87,0, 0,0,0.15, 0,0,0)
+			lmb_overlay = image(layer = -BODYPARTS_LAYER + limb_layer_priority)
+
+			if(owner.species.flags[IS_SYNTHETIC]) // TODO: bodyparts for this and ROBOT.
+				lmb_overlay.icon = owner.species.icobase
+				//icon = owner.species.icobase
+				has_gender = FALSE
+				has_color = FALSE
+			else if(status & ORGAN_ROBOT)
+				lmb_overlay.icon = 'icons/mob/human_races/robotic.dmi'
+				//icon = 'icons/mob/human_races/robotic.dmi'
+				has_gender = FALSE
+				has_color = FALSE
+			else if(husk) // TODO implement this for exact bodyparts.
+				overlays.Cut()
+				lmb_overlay.icon = icon = 'icons/mob/human_races/bad_limb.dmi'
+				//icon = 'icons/mob/human_races/bad_limb.dmi'
+				lmb_overlay.icon_state = body_zone + "_husk"
+				//icon_state = body_zone + "_husk"
+				has_gender = FALSE
+				has_color = FALSE
+				return
+			else if(status & ORGAN_MUTATED)
+				lmb_overlay.icon = owner.species.deform
+				//icon = owner.species.deform
 			else
-				if(owner.species.flags[HAS_SKIN_TONE])
-					lmb_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.s_tone/255,owner.s_tone/255,owner.s_tone/255)
-				if(owner.species.flags[HAS_SKIN_COLOR])
-					lmb_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_skin/255,owner.g_skin/255,owner.b_skin/255)
-		//else
-		//	color = null
+				lmb_overlay.icon = owner.species.icobase
+				//icon = owner.species.icobase
+
+			if(has_gender)
+				var/g = (owner.gender == FEMALE ? "_f" : "_m")
+				switch(body_zone)
+					if(BP_CHEST)
+						lmb_overlay.icon_state = body_zone + g
+						//icon_state = body_zone + g
+					if(BP_GROIN, BP_HEAD)
+						lmb_overlay.icon_state = body_zone + g
+						//icon_state = body_zone + g
+					else
+						lmb_overlay.icon_state = body_zone
+						//icon_state = body_zone
+				if(owner.species.name == S_HUMAN && (owner.disabilities & FAT))
+					lmb_overlay.icon_state += "_fat"
+					//icon_state += "_fat"
+			else
+				lmb_overlay.icon_state = body_zone
+				//icon_state = body_zone
+
+			if(has_color)
+				if(status & ORGAN_DEAD)
+					lmb_overlay.color = list(0.03,0,0, 0,0.2,0, 0,0,0, 0.3,0.3,0.3)
+				else if(HULK in owner.mutations)
+					lmb_overlay.color = list(0.18,0,0, 0,0.87,0, 0,0,0.15, 0,0,0)
+				else
+					if(owner.species.flags[HAS_SKIN_TONE])
+						lmb_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.s_tone/255,owner.s_tone/255,owner.s_tone/255)
+					if(owner.species.flags[HAS_SKIN_COLOR])
+						lmb_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_skin/255,owner.g_skin/255,owner.b_skin/255)
+			//else
+			//	color = null
 
 	// Damage overlays
 	if( (status & ORGAN_ROBOT) || damage_state == "00")
@@ -108,6 +126,9 @@
 
 	overlays -= eyes_overlay
 
+	if(!species.eyes_icon)
+		return
+
 	var/obj/item/organ/eyes/IO = get_organ(BP_EYES)
 	if(!IO)
 		eyes_overlay.icon_state = "eyes_missing"
@@ -132,8 +153,65 @@
 
 /obj/item/bodypart/head/get_icon()
 	. = ..()
-	if(eyes_overlay)
+	if(species.eyes_icon && eyes_overlay)
 		. += eyes_overlay
+
+var/list/cyberlimb_manufacturers = list("Bishop", "Hephaestus Industries", "Morpheus", "NanoTrasen", "Ward-Takahashi", "Xion")
+/mob/living/carbon/human/proc/set_manufacturer_icons(man_name, alt_head, has_skin)
+	for(var/obj/item/bodypart/BP in bodyparts)
+		switch(man_name)
+			if("Bishop")
+				if(BP.body_zone == BP_HEAD && alt_head != "Standard")
+					if(alt_head == "Monitor")
+						BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/bishop/bishop_monitor.dmi'
+						h_style = "Monitor"
+					else
+						BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/bishop/bishop_alt.dmi'
+				else
+					BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/bishop/bishop_main.dmi'
+			if("Hephaestus Industries")
+				if(BP.body_zone == BP_HEAD && alt_head != "Standard")
+					if(alt_head == "Monitor")
+						BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/hephaestus/hephaestus_monitor.dmi'
+						h_style = "Monitor"
+					else
+						BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/hephaestus/hephaestus_alt.dmi'
+				else
+					BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/hephaestus/hephaestus_main.dmi'
+			if("Morpheus")
+				if(BP.body_zone == BP_HEAD)
+					if(alt_head == "Alt")
+						BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/morpheus/morpheus_alt.dmi'
+					else
+						BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/morpheus/morpheus_main.dmi'
+						h_style = "Monitor"
+				else
+					BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/morpheus/morpheus_main.dmi'
+			if("NanoTrasen")
+				BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/nanotrasen/nanotrasen_main.dmi'
+			if("Ward-Takahashi")
+				if(BP.body_zone == BP_HEAD && alt_head != "Standard")
+					if(alt_head == "Monitor")
+						BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_monitor.dmi'
+						h_style = "Monitor"
+					else
+						BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_alt.dmi'
+				else
+					BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_main.dmi'
+			if("Xion")
+				if(BP.body_zone == BP_HEAD && alt_head != "Standard")
+					if(alt_head == "Monitor")
+						BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/xion/xion_monitor.dmi'
+						h_style = "Monitor"
+					else
+						BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/xion/xion_alt.dmi'
+				else
+					BP.robot_manufacturer_icon = 'icons/mob/human_races/cyberlimbs/xion/xion_main.dmi'
+			else
+				CRASH("something tried to set for [src] non existent cyberlimb manufacturer: [man_name]")
+
+		BP.robot_has_skin = has_skin
+		BP.robot_manufacturer_name = man_name
 
 /*
 	For test purpose

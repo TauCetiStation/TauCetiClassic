@@ -73,6 +73,9 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/b_eyes = 0						//Eye color
 	var/species = S_HUMAN
 	var/language = "None"				//Secondary language
+	var/cyberlimb_manufacturer = "Bishop"
+	var/cyberlimb_has_skin = FALSE
+	var/cyberlimb_alt_head = "Standard"
 
 	//Some faction information.
 	var/home_system = "None"            //System of birth.
@@ -269,8 +272,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(character.species.flags[HAS_SKIN_TONE])
 		character.s_tone = s_tone
 
-	character.h_style = h_style
-	character.f_style = f_style
+
 
 	if(disabilities & DISABILITY_FATNESS)
 		character.disabilities |= FAT
@@ -289,6 +291,14 @@ var/const/MAX_SAVE_SLOTS = 10
 		socks = 0
 
 	character.socks = socks
+
+	if(character.species.name == S_IPC)
+		character.set_manufacturer_icons(cyberlimb_manufacturer, cyberlimb_alt_head, cyberlimb_has_skin)
+		if(!cyberlimb_has_skin && character.h_style == "Monitor")
+			character.h_style = h_style
+	else
+		character.h_style = h_style
+		character.f_style = f_style
 
 	character.update_bodyparts()
 	character.update_tail_showing()
