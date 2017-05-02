@@ -239,22 +239,6 @@ var/list/ghostteleportlocs = list()
 		for (var/obj/machinery/computer/station_alert/a in machines)
 			a.cancelAlarm("Fire", src, src)
 
-/area/proc/readyalert()
-	/*if(name == "Space")
-		return
-	for(var/obj/machinery/light/L in contents)
-		L.red_alert = 1
-		L.update()*/
-	return
-
-/area/proc/readyreset()
-	/*if(red_alert_code) return
-	if(red_alert_evac) return
-	for(var/obj/machinery/light/L in contents)
-		L.red_alert = 0
-		L.update()*/
-	return
-
 /area/proc/partyalert()
 	if(name == "Space") //no parties in space!!!
 		return
@@ -279,28 +263,8 @@ var/list/ghostteleportlocs = list()
 	return
 
 /area/proc/updateicon()
-	//if ((fire || eject || party) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
-	//if ((fire || eject || party) && (!requires_power||power_environ) && !istype(src, /area/space))//If it doesn't require power, can still activate this proc.
-	//	if(fire && !eject && !party)
-	//		icon_state = "blue"
-	//	/*else if(atmosalm && !fire && !eject && !party)
-	//		icon_state = "bluenew"*/
-	//	else if(!fire && eject && !party)
-	//		icon_state = "red"
-	//	else if(party && !fire && !eject)
-	//		icon_state = "party"
-	//	else
-	//		icon_state = "blue-red"
-	//else
-	//	new lighting behaviour with obj lights
 	icon_state = null
 
-
-/*
-#define EQUIP 1
-#define LIGHT 2
-#define ENVIRON 3
-*/
 
 /area/proc/powered(chan)		// return true if the area has power to given channel
 
@@ -319,7 +283,6 @@ var/list/ghostteleportlocs = list()
 	return 0
 
 // called when power status changes
-
 /area/proc/power_change()
 	master.powerupdate = 2
 	for(var/area/RA in related)
