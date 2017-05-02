@@ -4,9 +4,88 @@
 
 // ===
 /area
+	level = null
+	name = "Space"
+	icon = 'icons/turf/areas.dmi'
+	icon_state = "unknown"
+	layer = 10
+	mouse_opacity = 0
+
 	var/global/global_uid = 0
 	var/uid
+
 	var/parallax_movedir = 0
+
+	var/fire = null
+	var/atmos = 1
+	var/atmosalm = 0
+	var/poweralm = 1
+	var/party = null
+	var/lightswitch = 1
+	var/valid_territory = 1 //If it's a valid territory for gangs to claim
+
+	var/eject = null
+
+	var/debug = 0
+	var/powerupdate = 10	//We give everything 10 ticks to settle out it's power usage.
+	var/requires_power = 1
+	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
+
+	var/power_equip = 1
+	var/power_light = 1
+	var/power_environ = 1
+	var/music = null
+	var/used_equip = 0
+	var/used_light = 0
+	var/used_environ = 0
+	var/static_equip
+	var/static_light = 0
+	var/static_environ
+
+	var/has_gravity = 1
+	var/obj/machinery/power/apc/apc = null
+	var/no_air = null
+	var/area/master				// master area used for power calcluations
+								// (original area before splitting due to sd_DAL)
+	var/list/related			// the other areas of the same type as this
+	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
+	var/air_doors_activated = 0
+
+
+/*Adding a wizard area teleport list because motherfucking lag -- Urist*/
+/*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
+var/list/teleportlocs = list()
+
+/proc/process_teleport_locs()
+	for(var/area/AR in all_areas)
+		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station) || istype(AR, /area/engine/singularity))
+			continue
+		if(teleportlocs.Find(AR.name))
+			continue
+		var/turf/picked = pick(get_area_turfs(AR.type))
+		if (picked.z == ZLEVEL_STATION)
+			teleportlocs += AR.name
+			teleportlocs[AR.name] = AR
+	teleportlocs = sortAssoc(teleportlocs)
+	return 1
+
+
+var/list/ghostteleportlocs = list()
+
+/proc/process_ghost_teleport_locs()
+	for(var/area/AR in all_areas)
+		if(ghostteleportlocs.Find(AR.name))
+			continue
+		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
+			ghostteleportlocs += AR.name
+			ghostteleportlocs[AR.name] = AR
+		var/turf/picked = pick(get_area_turfs(AR.type))
+		if (picked.z == ZLEVEL_STATION || picked.z == ZLEVEL_ASTEROID || picked.z == ZLEVEL_TELECOMMS)
+			ghostteleportlocs += AR.name
+			ghostteleportlocs[AR.name] = AR
+	ghostteleportlocs = sortAssoc(ghostteleportlocs)
+	return 1
+
 
 /area/New()
 	icon_state = ""
@@ -17,13 +96,12 @@
 	all_areas += src
 
 	if(!requires_power)
-		power_light = 0			//rastaf0
-		power_equip = 0			//rastaf0
-		power_environ = 0		//rastaf0
+		power_light = 0
+		power_equip = 0
+		power_environ = 0
 
 	..()
 
-//	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
 
 
@@ -54,9 +132,6 @@
 	return
 
 /area/proc/atmosalert(danger_level)
-//	if(type==/area) //No atmos alarms in space
-//		return 0 //redudant
-
 	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.
 	for (var/area/RA in related)
 		for (var/obj/machinery/alarm/AA in RA)
@@ -80,7 +155,6 @@
 		if (danger_level >= 2 && atmosalm < 2)
 			var/list/cameras = list()
 			for(var/area/RA in related)
-				//updateicon()
 				for(var/obj/machinery/camera/C in RA)
 					cameras += C
 					C.network.Add("Atmosphere Alarms")
