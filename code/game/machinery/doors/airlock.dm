@@ -632,9 +632,6 @@ var/list/airlock_overlays = list()
 		close()
 
 /obj/machinery/door/airlock/attack_hand(mob/user)
-	if(HULK in user.mutations)
-		hulk_break_reaction(user)
-		return
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
@@ -655,6 +652,9 @@ var/list/airlock_overlays = list()
 		if(isElectrified() && !issilicon(user) && !IsAdminGhost(user))
 			if(shock(user, 100))
 				return
+		if(HULK in user.mutations)
+			hulk_break_reaction(user)
+			return
 		..()
 
 
