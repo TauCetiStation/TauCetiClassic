@@ -757,9 +757,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Theatre"
 	icon_state = "Theatre"
 
+
 /area/library
  	name = "Library"
  	icon_state = "library"
+
 
 /area/chapel/main
 	name = "Chapel"
@@ -769,9 +771,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chapel Office"
 	icon_state = "chapeloffice"
 
+
 /area/lawoffice
 	name = "Internal Affairs"
 	icon_state = "law"
+
 
 /area/holodeck
 	name = "Holodeck"
@@ -833,78 +837,73 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Engineering
 
 /area/engine
+	icon_state = "engine"
 
-	drone_fabrication
-		name = "Drone Fabrication"
-		icon_state = "engine"
+/area/engine/drone_fabrication
+	name = "Drone Fabrication"
 
-	engine_smes
-		name = "Engineering SMES"
-		icon_state = "engine_smes"
+/area/engine/engine_smes
+	name = "Engineering SMES"
+	icon_state = "engine_smes"
 
-	engine_room
-		name = "Engine Room"
-		icon_state = "engine"
+/area/engine/engine_room
+	name = "Engine Room"
 
-	engine_airlock
-		name = "Engine Room Airlock"
-		icon_state = "engine"
+/area/engine/engine_airlock
+	name = "Engine Room Airlock"
 
-	engine_monitoring
-		name = "Engine Monitoring Room"
-		icon_state = "engine_monitoring"
+/area/engine/engine_monitoring
+	name = "Engine Monitoring Room"
+	icon_state = "engine_monitoring"
 
-	engineering_monitoring
-		name = "Engineering Monitoring Room"
-		icon_state = "engine_monitoring"
+/area/engine/engineering_monitoring
+	name = "Engineering Monitoring Room"
+	icon_state = "engine_monitoring"
 
-	atmos_monitoring
-		name = "Atmospherics Monitoring Room"
-		icon_state = "engine_monitoring"
+/area/engine/atmos_monitoring
+	name = "Atmospherics Monitoring Room"
+	icon_state = "engine_monitoring"
 
-	engineering
-		name = "Engineering"
-		icon_state = "engine_smes"
+/area/engine/engineering
+	name = "Engineering"
+	icon_state = "engine_smes"
 
-	singularity
-		name = "Singularity Area"
-		icon_state = "engine"
+/area/engine/singularity
+	name = "Singularity Area"
 
-	engineering_foyer
-		name = "Engineering Foyer"
-		icon_state = "engine"
+/area/engine/engineering_foyer
+	name = "Engineering Foyer"
 
-	break_room
-		name = "Engineering Break Room"
-		icon_state = "engine"
+/area/engine/break_room
+	name = "Engineering Break Room"
 
-	chiefs_office
-		name = "Chief Engineer's office"
-		icon_state = "engine_control"
+/area/engine/chiefs_office
+	name = "Chief Engineer's office"
+	icon_state = "engine_control"
 
-	hallway
-		name = "Engineering Hallway"
-		icon_state = "engine_hallway"
+/area/engine/hallway
+	name = "Engineering Hallway"
+	icon_state = "engine_hallway"
 
-	engine_hallway
-		name = "Engine Room Hallway"
-		icon_state = "engine_hallway"
+/area/engine/engine_hallway
+	name = "Engine Room Hallway"
+	icon_state = "engine_hallway"
 
-	engine_eva
-		name = "Engine EVA"
-		icon_state = "engine_eva"
+/area/engine/engine_eva
+	name = "Engine EVA"
+	icon_state = "engine_eva"
 
-	engine_eva_maintenance
-		name = "Engine EVA Maintenance"
-		icon_state = "engine_eva"
+/area/engine/engine_eva_maintenance
+	name = "Engine EVA Maintenance"
+	icon_state = "engine_eva"
 
-	workshop
-		name = "Engineering Workshop"
-		icon_state = "engine_storage"
+/area/engine/workshop
+	name = "Engineering Workshop"
+	icon_state = "engine_storage"
 
-	locker_room
-		name = "Engineering Locker Room"
-		icon_state = "engine_storage"
+/area/engine/locker_room
+	name = "Engineering Locker Room"
+	icon_state = "engine_storage"
 
 
 //Solars
@@ -913,29 +912,30 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	requires_power = 0
 	valid_territory = 0
 
-	auxport
-		name = "Fore Port Solar Array"
-		icon_state = "panelsA"
+/area/solar/auxport
+	name = "Fore Port Solar Array"
+	icon_state = "panelsA"
 
-	auxstarboard
-		name = "Fore Starboard Solar Array"
-		icon_state = "panelsA"
+/area/solar/auxstarboard
+	name = "Fore Starboard Solar Array"
+	icon_state = "panelsA"
 
-	fore
-		name = "Fore Solar Array"
-		icon_state = "yellow"
+/area/solar/fore
+	name = "Fore Solar Array"
+	icon_state = "yellow"
 
-	aft
-		name = "Aft Solar Array"
-		icon_state = "aft"
+/area/solar/aft
+	name = "Aft Solar Array"
+	icon_state = "aft"
 
-	starboard
-		name = "Aft Starboard Solar Array"
-		icon_state = "panelsS"
+/area/solar/starboard
+	name = "Aft Starboard Solar Array"
+	icon_state = "panelsS"
 
-	port
-		name = "Aft Port Solar Array"
-		icon_state = "panelsP"
+/area/solar/port
+	name = "Aft Port Solar Array"
+	icon_state = "panelsP"
+
 
 /area/maintenance/auxsolarport
 	name = "Fore Port Solar Maintenance"
@@ -1169,24 +1169,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/range
 	name = "Firing Range"
 	icon_state = "firingrange"
-
-
-/*
-	New()
-		..()
-
-		spawn(10) //let objects set up first
-			for(var/turf/turfToGrayscale in src)
-				if(turfToGrayscale.icon)
-					var/icon/newIcon = icon(turfToGrayscale.icon)
-					newIcon.GrayScale()
-					turfToGrayscale.icon = newIcon
-				for(var/obj/objectToGrayscale in turfToGrayscale) //1 level deep, means tables, apcs, locker, etc, but not locker contents
-					if(objectToGrayscale.icon)
-						var/icon/newIcon = icon(objectToGrayscale.icon)
-						newIcon.GrayScale()
-						objectToGrayscale.icon = newIcon
-*/
 
 /area/security/nuke_storage
 	name = "Vault"
@@ -1578,10 +1560,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "storage"
 
 
-
 //Misc
-
-
 
 /area/wreck/ai
 	name = "AI Chamber"
@@ -1602,7 +1581,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/generic
 	name = "Unknown"
 	icon_state = "storage"
-
 
 
 // Telecommunications Satellite
@@ -1638,7 +1616,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat/lounge
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
-
 
 
 // Away Missions
@@ -1781,6 +1758,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Derelict Mining Common Area"
 	icon_state = "dms-com"
 
+
 /area/awaymission/beach
 	name = "Beach"
 	icon_state = "null"
@@ -1788,53 +1766,51 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	requires_power = 0
 	var/sound/mysound = null
 
-	New()
-		..()
-		var/sound/S = new/sound()
-		mysound = S
-		S.file = 'sound/ambience/shore.ogg'
-		S.repeat = 1
-		S.wait = 0
-		S.channel = 123
-		S.volume = 100
-		S.priority = 255
-		S.status = SOUND_UPDATE
-		process()
-
-	Entered(atom/movable/Obj,atom/OldLoc)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_UPDATE
-				Obj << mysound
-		return
-
-	Exited(atom/movable/Obj)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_PAUSED | SOUND_UPDATE
-				Obj << mysound
-
+/area/awaymission/beach/New()
+	..()
+	var/sound/S = new/sound()
+	mysound = S
+	S.file = 'sound/ambience/shore.ogg'
+	S.repeat = 1
+	S.wait = 0
+	S.channel = 123
+	S.volume = 100
+	S.priority = 255
+	S.status = SOUND_UPDATE
 	process()
-		//set background = 1
 
-		var/sound/S = null
-		var/sound_delay = 0
-		if(prob(25))
-			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
-			sound_delay = rand(0, 50)
+/area/awaymission/beach/Entered(atom/movable/Obj,atom/OldLoc)
+	if(ismob(Obj))
+		if(Obj:client)
+			mysound.status = SOUND_UPDATE
+			Obj << mysound
+	return
 
-		for(var/mob/living/carbon/human/H in src)
-			if(H.s_tone > -55)
-				H.s_tone--
-				H.update_body()
-			if(H.client)
-				mysound.status = SOUND_UPDATE
-				H << mysound
-				if(S)
-					spawn(sound_delay)
-						H << S
+/area/awaymission/beach/Exited(atom/movable/Obj)
+	if(ismob(Obj))
+		if(Obj:client)
+			mysound.status = SOUND_PAUSED | SOUND_UPDATE
+			Obj << mysound
 
-		spawn(60) .()
+/area/awaymission/beach/process()
+	var/sound/S = null
+	var/sound_delay = 0
+	if(prob(25))
+		S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
+		sound_delay = rand(0, 50)
+
+	for(var/mob/living/carbon/human/H in src)
+		if(H.s_tone > -55)
+			H.s_tone--
+			H.update_body()
+		if(H.client)
+			mysound.status = SOUND_UPDATE
+			H << mysound
+			if(S)
+				spawn(sound_delay)
+					H << S
+
+	spawn(60) .()
 
 /////////////////////////////////////////////////////////////////////
 /*
@@ -1896,7 +1872,6 @@ var/list/the_station_areas = list (
 
 
 
-
 /area/beach
 	name = "Keelin's private beach"
 	icon_state = "null"
@@ -1904,50 +1879,45 @@ var/list/the_station_areas = list (
 	requires_power = 0
 	var/sound/mysound = null
 
-	New()
-		..()
-		var/sound/S = new/sound()
-		mysound = S
-		S.file = 'sound/ambience/shore.ogg'
-		S.repeat = 1
-		S.wait = 0
-		S.channel = 123
-		S.volume = 100
-		S.priority = 255
-		S.status = SOUND_UPDATE
-		process()
-
-	Entered(atom/movable/Obj,atom/OldLoc)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_UPDATE
-				Obj << mysound
-		return
-
-	Exited(atom/movable/Obj)
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_PAUSED | SOUND_UPDATE
-				Obj << mysound
-
+/area/beach/New()
+	..()
+	var/sound/S = new/sound()
+	mysound = S
+	S.file = 'sound/ambience/shore.ogg'
+	S.repeat = 1
+	S.wait = 0
+	S.channel = 123
+	S.volume = 100
+	S.priority = 255
+	S.status = SOUND_UPDATE
 	process()
-		//set background = 1
 
-		var/sound/S = null
-		var/sound_delay = 0
-		if(prob(25))
-			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
-			sound_delay = rand(0, 50)
+/area/beach/Entered(atom/movable/Obj,atom/OldLoc)
+	if(ismob(Obj))
+		if(Obj:client)
+			mysound.status = SOUND_UPDATE
+			Obj << mysound
+	return
 
-		for(var/mob/living/carbon/human/H in src)
-//			if(H.s_tone > -55)	//ugh...nice/novel idea but please no.
-//				H.s_tone--
-//				H.update_body()
-			if(H.client)
-				mysound.status = SOUND_UPDATE
-				H << mysound
-				if(S)
-					spawn(sound_delay)
-						H << S
+/area/beach/Exited(atom/movable/Obj)
+	if(ismob(Obj))
+		if(Obj:client)
+			mysound.status = SOUND_PAUSED | SOUND_UPDATE
+			Obj << mysound
 
-		spawn(60) .()
+/area/beach/process()
+	var/sound/S = null
+	var/sound_delay = 0
+	if(prob(25))
+		S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
+		sound_delay = rand(0, 50)
+
+	for(var/mob/living/carbon/human/H in src)
+		if(H.client)
+			mysound.status = SOUND_UPDATE
+			H << mysound
+			if(S)
+				spawn(sound_delay)
+					H << S
+
+	spawn(60) .()
