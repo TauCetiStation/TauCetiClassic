@@ -28,6 +28,8 @@
 #define BP_BRAIN   "brain"
 #define BP_LIVER   "liver"
 #define BP_KIDNEYS "kidneys"
+#define BP_CELL    "cell"
+#define BP_OPTICS  "optics"
 //Xenos
 #define BP_EGG      "egg sac"
 #define BP_PLASMA   "plasma vessel"

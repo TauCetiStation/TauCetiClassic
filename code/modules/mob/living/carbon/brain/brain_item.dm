@@ -1,9 +1,9 @@
 /obj/item/brain
-	name = "brain"
-	desc = "A piece of juicy meat found in a persons head."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "brain2"
-	force = 1.0
+	//name = "brain"
+	//desc = "A piece of juicy meat found in a persons head."
+	//icon = 'icons/obj/surgery.dmi'
+	//icon_state = "brain2"
+	/*force = 1.0
 	w_class = 2.0
 	throwforce = 1.0
 	throw_speed = 3
@@ -11,7 +11,7 @@
 	origin_tech = "biotech=3"
 	attack_verb = list("attacked", "slapped", "whacked")
 
-	var/mob/living/carbon/brain/brainmob = null
+	var/mob/living/brain/brainmob = null
 
 	New()
 		..()
@@ -35,14 +35,14 @@
 			to_chat(brainmob, "\blue You feel slightly disoriented. That's normal when you're just a brain.")
 			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 			if(mode)
-				mode.debrain_directive(src)
+				mode.debrain_directive(src)*/
 
-/obj/item/brain/examine(mob/user) // -- TLE
-	..()
-	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
-		to_chat(user, "You can feel the small spark of life still left in this one.")
-	else
-		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
+//obj/item/brain/examine(mob/user) // -- TLE
+//	..()
+//	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
+//		to_chat(user, "You can feel the small spark of life still left in this one.")
+//	else
+//		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
 
 /obj/item/brain/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M, /mob))

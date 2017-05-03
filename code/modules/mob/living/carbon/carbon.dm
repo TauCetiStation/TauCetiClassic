@@ -733,7 +733,7 @@
 
 	if(IO && !IO.is_bruised())
 		custom_pain("You feel a stabbing pain in your chest!", 50, BP = get_bodypart(IO.parent_bodypart))
-		IO.damage = IO.min_bruised_damage
+		IO.bruise()
 
 /mob/living/carbon/get_visible_implants(class = 0)
 	var/list/visible_implants = list()

@@ -256,7 +256,6 @@
 		var/turf/pos = get_turf(food)
 		if(pos.z != src.z)
 			continue
-		if(istype(food, /mob/living/carbon/brain)) continue
 
 		if(iscultist(food))
 			cultists += food

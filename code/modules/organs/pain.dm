@@ -82,7 +82,7 @@
 
 	// Damage to internal organs hurts a lot.
 	for(var/obj/item/organ/IO in organs)
-		if((IO.status & ORGAN_DEAD) || IO.robotic >= ORGAN_ROBOT) continue
+		if((IO.status & ORGAN_DEAD) || IO.robotic >= 2) continue
 		if(IO.damage > 2) if(prob(2))
 			var/obj/item/bodypart/parent = get_bodypart(IO.parent_bodypart)
 			src.custom_pain("You feel a sharp pain in your [parent.name]", 50, BP = parent)

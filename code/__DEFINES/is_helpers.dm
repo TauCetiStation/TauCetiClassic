@@ -14,7 +14,7 @@
 
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
 
-#define isbrain(A) (istype(A, /mob/living/carbon/brain))
+#define isbrain(A) (istype(A, /mob/living/brain))
 
 #define isslimeadult(A) (istype(A, /mob/living/carbon/slime/adult))
 

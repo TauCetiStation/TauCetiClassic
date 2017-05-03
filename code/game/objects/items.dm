@@ -370,7 +370,7 @@
 		return
 	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
 		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
+	if(!iscarbon(usr))
 		to_chat(usr, "\red You can't pick things up!")
 		return
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained

@@ -920,12 +920,13 @@
 
 	var/obj/item/bodypart/check_head = bodyparts_by_name[BP_HEAD]
 	if(check_head && check_head.is_stump())
-		for (var/obj/item/bodypart/head/head in world) // in world... TODO deal with that.
-			if(head.brainmob && head.brainmob.real_name == src.real_name)
-				head.replace_stump(src)
-				head.disfigured = FALSE
-				if(head.brainmob.mind)
-					head.brainmob.mind.transfer_to(src) // TODO remove this
+		for (var/obj/item/bodypart/BP in world) // in world... TODO deal with that.
+			var/obj/item/organ/brain/BRAIN = BP.organs_by_name[BP_BRAIN]
+			if(BRAIN.brainmob && BRAIN.brainmob.real_name == src.real_name)
+				BP.replace_stump(src)
+				if(istype(BP, /obj/item/bodypart/head))
+					var/obj/item/bodypart/head/head = BP
+					head.disfigured = FALSE
 
 	for (var/obj/item/bodypart/BP in bodyparts)
 		BP.status &= ~ORGAN_BROKEN

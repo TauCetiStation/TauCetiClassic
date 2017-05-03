@@ -575,12 +575,9 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 		)
 
 	has_organ = list(
-		BP_HEART   = /obj/item/organ/heart
-		,BP_BRAIN   = /obj/item/organ/brain
-		,BP_EYES    = /obj/item/organ/eyes
-		//,BP_LUNGS   = /obj/item/organ/lungs
-		//,BP_LIVER   = /obj/item/organ/liver
-		//,BP_KIDNEYS = /obj/item/organ/kidneys
+		BP_BRAIN = /obj/item/organ/brain/mmi_holder
+		,BP_CELL = /obj/item/organ/cell
+		,BP_OPTICS    = /obj/item/organ/eyes/optics
 		)
 
 /datum/species/abductor

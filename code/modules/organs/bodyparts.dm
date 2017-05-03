@@ -54,6 +54,7 @@
 	// Joint/state stuff.
 	var/can_grasp = FALSE// It would be more appropriate if these two were named "affects_grasp" and "affects_stand" at this point
 	var/can_stand = FALSE// Modifies stance tally/ability to stand.
+	var/disfigured = 0 // Scarred/burned beyond recognition.
 	var/cannot_amputate = FALSE // Impossible to amputate.
 	var/cannot_break = FALSE // Impossible to fracture.
 	var/artery_name = "artery" // Flavour text for cartoid artery, aorta, etc.
@@ -271,7 +272,8 @@
 
 	// Grab all the internal giblets too.
 	for(var/obj/item/organ/IO in organs)
-		IO.removed(null, FALSE) // Organ stays inside and connected
+		IO.removed(null, FALSE, FALSE) // Organ stays inside and connected
+		IO.forceMove(src)
 
 	// Remove parent references
 	if(parent)
@@ -302,10 +304,6 @@
 	owner = null
 	update_inv_limb(multi = TRUE)
 
-/obj/item/bodypart/head/removed(mob/living/user)
-	transfer_identity(owner)
-	..()
-
 // Used in surgery, replaces amputated limb with this one.
 /obj/item/bodypart/proc/replace_stump(mob/living/carbon/target)
 	if(istype(target))
@@ -320,12 +318,6 @@
 		src.dir = target.dir
 
 		return inserted(target)
-
-/obj/item/bodypart/head/replace_stump(mob/living/carbon/target)
-	. = ..()
-
-	if(. && brainmob && brainmob.mind)
-		brainmob.mind.transfer_to(target)
 
 /obj/item/bodypart/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
@@ -1331,36 +1323,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		H.dropItemToGround(W)
 	W.forceMove(owner)
 
-/obj/item/bodypart/head/proc/transfer_identity(mob/living/carbon/C) // with new bodyparts system, this should be removed for head, since we have brain in head and identity must be there.
-	brainmob = new(src)
-	brainmob.name = C.real_name
-	brainmob.real_name = C.real_name
-	brainmob.dna = C.dna.Clone()
-	if(C.mind)
-		C.mind.transfer_to(brainmob)
-	brainmob.container = src
-
-	//after transfer_identity as it was before.
-
-	name = "[C.real_name]'s [body_zone]"
-
-	//C.regenerate_icons()
-	//C.stat = DEAD
-	//C.death()
-	brainmob.stat = DEAD
-	brainmob.death()
-	if(brainmob && brainmob.mind && brainmob.mind.changeling)
-		var/datum/changeling/Host = brainmob.mind.changeling
-		if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
-			for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
-				if(istype(crab))
-					crab.sting_action(brainmob)
-					C.gib()
-
-	spawn(5)
-		if(brainmob && brainmob.client)
-			brainmob.client.screen.len = null //clear the hud
-
 /****************************************************
 			   BODYPART DEFINES
 ****************************************************/
@@ -1454,8 +1416,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	encased = "skull"
 	artery_name = "cartoid artery"
 
-	var/disfigured = 0
-	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
 
 	var/image/eyes_overlay
@@ -1668,59 +1628,6 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/stump/is_usable()
 	return FALSE
-
-/* UNUSED CODE, will be removed later.
-/obj/item/weapon/organ/head/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/scalpel))
-		switch(brain_op_stage)
-			if(0)
-				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("\red [brainmob] is beginning to have \his head cut open with [W] by [user].", 1)
-				to_chat(brainmob, "\red [user] begins to cut open your head with [W]!")
-				to_chat(user, "\red You cut [brainmob]'s head open with [W]!")
-
-				brain_op_stage = 1
-
-			if(2)
-				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("\red [brainmob] is having \his connections to the brain delicately severed with [W] by [user].", 1)
-				to_chat(brainmob, "\red [user] begins to cut open your head with [W]!")
-				to_chat(user, "\red You cut [brainmob]'s head open with [W]!")
-
-				brain_op_stage = 3.0
-			else
-				..()
-	else if(istype(W,/obj/item/weapon/circular_saw))
-		switch(brain_op_stage)
-			if(1)
-				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("\red [brainmob] has \his head sawed open with [W] by [user].", 1)
-				to_chat(brainmob, "\red [user] begins to saw open your head with [W]!")
-				to_chat(user, "\red You saw [brainmob]'s head open with [W]!")
-
-				brain_op_stage = 2
-			if(3)
-				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("\red [brainmob] has \his spine's connection to the brain severed with [W] by [user].", 1)
-				to_chat(brainmob, "\red [user] severs your brain's connection to the spine with [W]!")
-				to_chat(user, "\red You sever [brainmob]'s brain's connection to the spine with [W]!")
-
-				user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
-				brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
-				msg_admin_attack("[user.name] ([user.ckey]) debrained [brainmob.name] ([brainmob.ckey]) (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-
-				if(istype(src,/obj/item/weapon/organ/head/posi))
-					var/obj/item/device/mmi/posibrain/B = new(loc)
-					B.transfer_identity(brainmob)
-				else
-					var/obj/item/brain/B = new(loc)
-					B.transfer_identity(brainmob)
-
-				brain_op_stage = 4.0
-			else
-				..()
-	else
-		..()*/
 
 /obj/item/bodypart/proc/jostle_bone(force)
 	if(!(status & ORGAN_BROKEN)) //intact bones stay still

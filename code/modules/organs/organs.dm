@@ -9,6 +9,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	var/dead_icon // Icon to use when the organ has died.
 	germ_level = 0 // INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
+	var/surface_accessible = FALSE
 
 	// Strings.
 	var/organ_tag = null // Unique identifier
@@ -81,38 +82,51 @@
 
 	return ..()
 
-/obj/item/organ/proc/removed(mob/living/user, detach = TRUE)
-	if(!istype(owner))
-		return
+/obj/item/organ/proc/removed(mob/living/user, detach = TRUE, drop_organ = TRUE)
+
+	if(owner)
+		if(vital)
+			if(user)
+				user.attack_log += "\[[time_stamp()]\]<font color='red'>Removed a vital organ ([src]) from [owner.name] ([owner.ckey])</font>"
+				owner.attack_log += "\[[time_stamp()]\]<font color='orange'>Had a vital organ ([src]) removed by [user.name] ([user.ckey])</font>"
+				msg_admin_attack("[user.name] ([user.ckey]) removed a vital organ ([src]) from [owner.name] ([owner.ckey]) [ADMIN_JMP(user)]")
+			owner.death()
+
+		if(drop_organ)
+			forceMove(owner.loc)
+		else
+			forceMove(owner)
+
+		owner.organs_by_name[organ_tag] = null
+		owner.organs_by_name -= organ_tag
+		owner.organs -= src
+
+		if(robotic < 2)
+			var/datum/reagent/blood/organ_blood = locate(/datum/reagent/blood) in reagents.reagent_list //TODO fix this and all other occurences of locate(/datum/reagent/blood) horror
+			if(!organ_blood || !organ_blood.data["blood_DNA"])
+				owner.vessel.trans_to(src, 5, 1, 1)
 
 	on_remove()
 	remove_hud_data()
 
-	owner.organs_by_name[organ_tag] = null
-	owner.organs_by_name -= organ_tag
-	owner.organs -= src
-
 	if(detach)
-		var/obj/item/bodypart/BP = owner.get_bodypart(parent_bodypart)
+		var/obj/item/bodypart/BP
+		if(owner)
+			BP = owner.get_bodypart(parent_bodypart)
+			if(BP.body_zone != parent_bodypart)
+				BP = null
+		else if(istype(loc, /obj/item/bodypart))
+			BP = loc
+			if(BP.body_zone != parent_bodypart)
+				BP = null
 		if(BP)
+			BP.organs_by_name[organ_tag] = null
+			BP.organs_by_name -= organ_tag
 			BP.organs -= src
 			status |= ORGAN_CUT_AWAY
-		forceMove(owner.loc)
 
 	START_PROCESSING(SSobj, src)
 	rejecting = null
-	if(robotic < ORGAN_ROBOT)
-		var/datum/reagent/blood/organ_blood = locate(/datum/reagent/blood) in reagents.reagent_list //TODO fix this and all other occurences of locate(/datum/reagent/blood) horror
-		if(!organ_blood || !organ_blood.data["blood_DNA"])
-			owner.vessel.trans_to(src, 5, 1, 1)
-
-	if(vital)
-		if(user)
-			user.attack_log += "\[[time_stamp()]\]<font color='red'>Removed a vital organ ([src]) from [owner.name] ([owner.ckey])</font>"
-			owner.attack_log += "\[[time_stamp()]\]<font color='orange'>Had a vital organ ([src]) removed by [user.name] ([user.ckey])</font>"
-			msg_admin_attack("[user.name] ([user.ckey]) removed a vital organ ([src]) from [owner.name] ([owner.ckey]) ([ADMIN_JMP(user)])")
-		owner.death()
-
 	owner = null
 
 /obj/item/organ/proc/inserted(mob/living/carbon/C)
@@ -144,6 +158,9 @@
 
 /obj/item/organ/proc/on_remove()
 	return
+
+/obj/item/organ/proc/extracted() // used in surgery (when we extract organ from body).
+	return src
 
 /obj/item/organ/proc/add_hud_data()
 	return
@@ -244,7 +261,7 @@
 			take_damage(1,silent=prob(30))
 
 /obj/item/organ/proc/can_feel_pain()
-	return (robotic < ORGAN_ROBOT && (!species || !(species.flags[NO_PAIN] || species.flags[IS_SYNTHETIC])))
+	return (robotic < 2 && (!species || !(species.flags[NO_PAIN] || species.flags[IS_SYNTHETIC])))
 
 /obj/item/organ/proc/receive_chem(chemical)
 	return 0
@@ -293,6 +310,9 @@
 					take_damage(15)
 				if(3)
 					take_damage(10)
+
+/obj/item/organ/proc/bruise()
+	damage = max(damage, min_bruised_damage)
 
 /obj/item/organ/proc/mechanize() //Being used to make robutt hearts, etc
 	robotic = 2
@@ -971,16 +991,120 @@
 
 /obj/item/organ/brain
 	name = "brain"
+	desc = "A piece of juicy meat found in a persons head."
 	icon_state = "brain"
 	organ_tag = BP_BRAIN
 	parent_bodypart = BP_HEAD
+	attack_verb = list("attacked", "slapped", "whacked")
+	vital = TRUE
+	var/mob/living/brain/brainmob = null
+	var/obj/item/device/mmi/posibrain/posibrain = null
 	var/is_advanced_tool_user = TRUE
+
+/obj/item/organ/brain/on_insert()
+	if(owner.key)
+		owner.ghostize()
+
+	if(brainmob)
+		if(brainmob.mind)
+			brainmob.mind.transfer_to(owner)
+		else
+			owner.key = brainmob.key
+		brainmob.container = null
+		brainmob = null
+		qdel(brainmob)
+	owner.brain_op_stage = 0
+
+/obj/item/organ/brain/on_remove()
+	transfer_identity(owner)
+	var/mob/living/simple_animal/borer/borer = owner.has_brain_worms()
+	if(borer)
+		borer.detatch()
+	owner.brain_op_stage = 4
+
+/obj/item/organ/brain/proc/transfer_identity(mob/living/H)
+	//name = "[H]'s brain"
+	brainmob = new(src)
+	brainmob.name = H.real_name
+	brainmob.real_name = H.real_name
+	brainmob.dna = H.dna.Clone()
+	brainmob.timeofhostdeath = H.timeofdeath
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
+	brainmob.container = src
+
+	//brainmob.stat = DEAD
+	//brainmob.death()
+	if(brainmob && brainmob.mind && brainmob.mind.changeling)
+		var/datum/changeling/Host = brainmob.mind.changeling
+		if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
+			for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
+				if(istype(crab))
+					crab.sting_action(brainmob)
+					owner.gib()
+
+	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+	if(mode)
+		mode.debrain_directive(src)
+
+	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
+
+	//spawn(5)
+	//	if(brainmob && brainmob.client)
+	//		brainmob.client.screen.len = null //clear the hud
+
+/obj/item/organ/brain/examine(mob/user)
+	..()
+	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
+		to_chat(user, "You can feel the small spark of life still left in this one.")
+	else
+		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
 
 /obj/item/organ/brain/monkey
 	is_advanced_tool_user = FALSE
 
 /obj/item/organ/brain/monkey/nymph
 	parent_bodypart = BP_CHEST
+
+/obj/item/organ/brain/mmi_holder
+	name = "positronic brain"
+	//desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
+	icon = 'icons/obj/assemblies.dmi'
+	icon_state = "posibrain-occupied"
+	parent_bodypart = BP_CHEST
+	robotic = 2
+
+/obj/item/organ/brain/mmi_holder/New(loc, mob/living/carbon/C, posibrain)
+	if(posibrain)
+		src.posibrain = posibrain
+	..()
+
+/obj/item/organ/brain/mmi_holder/extracted()
+	forceMove(posibrain)
+	posibrain.brain_item = src
+	return posibrain
+
+/obj/item/organ/brain/mmi_holder/on_insert()
+	if(owner.key)
+		owner.ghostize()
+
+	if(posibrain && posibrain.brainmob)
+		if(posibrain.brainmob.mind)
+			posibrain.brainmob.mind.transfer_to(owner)
+		else
+			owner.key = posibrain.brainmob.key
+		posibrain.brainmob.container = null
+		qdel(posibrain.brainmob)
+		posibrain.brainmob = null
+		//posibrain.loc = src
+
+	owner.brain_op_stage = 0
+
+/obj/item/organ/brain/mmi_holder/on_remove()
+	if(!posibrain)
+		posibrain = new(src)
+	posibrain.transfer_identity(owner)
+	owner.brain_op_stage = 4
 
 /obj/item/organ/brain/dog
 	is_advanced_tool_user = FALSE
@@ -1092,6 +1216,11 @@
 	icon_state = "eyeballs"
 	organ_tag = BP_EYES
 	parent_bodypart = BP_HEAD
+	surface_accessible = TRUE
+
+/obj/item/organ/eyes/optics
+	organ_tag = BP_OPTICS
+	robotic = 2
 
 /obj/item/organ/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()
@@ -1109,6 +1238,22 @@
 
 /obj/item/organ/tongue/xeno
 	icon_state = "tonguexeno"
+
+/obj/item/organ/cell
+	name = "microbattery"
+	desc = "A small, powerful cell for use in fully prosthetic bodies."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "scell"
+	organ_tag = BP_CELL
+	parent_bodypart = BP_CHEST
+	vital = 1
+	robotic = 2
+
+/obj/item/organ/cell/on_insert()
+	// This is very ghetto way of rebooting an IPC. TODO better way.
+	if(owner && owner.stat == DEAD && owner.organs_by_name[BP_BRAIN])
+		owner.reanimate_body(CONSCIOUS)
+		owner.visible_message("<span class='danger'>\The [owner] twitches visibly!</span>")
 
 //XENOMORPH ORGANS
 /obj/item/organ/xenos

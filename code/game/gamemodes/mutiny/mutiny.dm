@@ -286,12 +286,12 @@ datum/game_mode/mutiny
 		if(D.accounts_to_revoke && D.accounts_to_revoke.Find("[account.account_number]"))
 			D.accounts_to_revoke["[account.account_number]"] = 1
 
-	proc/debrain_directive(obj/item/brain/B)
+	proc/debrain_directive(obj/item/organ/brain/BRAIN)
 		var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
 		if (!D) return
 
-		if(D.brains_to_enslave.Find(B.brainmob.mind))
-			D.brains_to_enslave.Remove(B.brainmob.mind)
+		if(D.brains_to_enslave.Find(BRAIN.brainmob.mind))
+			D.brains_to_enslave.Remove(BRAIN.brainmob.mind)
 
 	proc/infected_killed(mob/living/carbon/human/deceased)
 		var/datum/directive/bluespace_contagion/D = get_directive("bluespace_contagion")

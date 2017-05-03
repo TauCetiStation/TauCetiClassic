@@ -1370,8 +1370,8 @@ datum
 				var/list/all_items = owner.current.get_contents()
 				for(var/obj/item/device/mmi/mmi in all_items)
 					if(mmi.brainmob&&mmi.brainmob.mind==target)	return 1
-				for(var/obj/item/brain/brain in all_items)
-					if(brain.brainmob&&brain.brainmob.mind==target)	return 1
+				for(var/obj/item/organ/brain/BRAIN in all_items)
+					if(BRAIN.brainmob && BRAIN.brainmob.mind==target)	return 1
 				return 0
 
 		mutiny

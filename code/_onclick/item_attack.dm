@@ -54,7 +54,7 @@
 		if(C.check_attack_tendons(src, user))
 			return
 
-	if (istype(M,/mob/living/carbon/brain))
+	if (istype(M,/mob/living/brain))
 		messagesource = M:container
 	if (hitsound)
 		playsound(loc, hitsound, 50, 1, -1)

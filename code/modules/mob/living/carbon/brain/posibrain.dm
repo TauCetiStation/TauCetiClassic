@@ -8,7 +8,7 @@
 
 	var/searching = 0
 	var/askDelay = 10 * 60 * 1
-	mob/living/carbon/brain/brainmob = null
+
 	req_access = list(access_robotics)
 	locked = 0
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
@@ -48,8 +48,8 @@
 			C.prefs.ignore_question += "posibrain"
 
 
-	transfer_identity(mob/living/carbon/H)
-		name = "positronic brain ([H])"
+	transfer_identity(mob/living/H)
+		//name = "positronic brain ([H])"
 		brainmob.name = H.real_name
 		brainmob.real_name = H.real_name
 		brainmob.dna = H.dna

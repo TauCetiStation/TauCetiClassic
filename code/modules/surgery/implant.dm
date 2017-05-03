@@ -13,7 +13,7 @@
 	if(!ishuman(target))
 		return 0
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	return BP.open >= 2 && !(BP.status & ORGAN_BLEEDING) && (target_zone != BP_CHEST || target.op_stage.ribcage == 2)
+	return BP.open >= (BP.encased ? 3 : 2) && !(BP.status & ORGAN_BLEEDING)
 
 /datum/surgery_step/cavity/proc/get_max_wclass(obj/item/bodypart/BP)
 	switch (BP.body_zone)

@@ -593,9 +593,9 @@ var/list/sacrificed = list()
 					if(!(iscultist(V)))
 						victims += V//Checks for cult status and mob type
 			for(var/obj/item/I in src.loc)//Checks for MMIs/brains/Intellicards
-				if(istype(I,/obj/item/brain))
-					var/obj/item/brain/B = I
-					victims += B.brainmob
+				if(istype(I,/obj/item/organ/brain))
+					var/obj/item/organ/brain/BRAIN = I
+					victims += BRAIN.brainmob
 				else if(istype(I,/obj/item/device/mmi))
 					var/obj/item/device/mmi/B = I
 					victims += B.brainmob

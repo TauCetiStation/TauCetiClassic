@@ -29,21 +29,28 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
 
-		if (BP && (BP.status & ORGAN_ROBOT))
-			if(BP.get_damage())
-				if(!use(1))
-					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
-					return
-				BP.heal_damage(15, 15, robo_repair = 1)
-				H.updatehealth()
-				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][BP.name] with \the [src].</span>",\
-				"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [BP.name].</span>")
-			else
-				to_chat(user, "<span class='notice'>Nothing to fix here.</span>")
+		if(!BP || BP.is_stump())
+			to_chat(user, "<span class='warning'>\The [H] is missing that body part.</span>")
+			return
 
-		else
-			if (can_operate(H))
-				if (do_surgery(H,user,src))
-					return
+		if(BP.open >= 2 && (BP.status & ORGAN_ROBOT))
+			if(can_operate(H))
+				if(use(1))
+					do_surgery(H,user,src)
+					//	return
+				else
+					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
 			else
 				to_chat(user, "<span class='notice'>Nothing to fix in here.</span>")
+
+			//if(BP.get_damage())
+			//	if(!use(1))
+			//		to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
+			//		return
+			//	BP.heal_damage(15, 15, robo_repair = 1)
+			//	H.updatehealth()
+			//	user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][BP.name] with \the [src].</span>",\
+			//	"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [BP.name].</span>")
+			//else
+			//	to_chat(user, "<span class='notice'>Nothing to fix here.</span>")
+
