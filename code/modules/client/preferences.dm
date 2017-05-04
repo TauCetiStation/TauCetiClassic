@@ -382,3 +382,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	//	if(isliving(src)) //Ghosts get neuter by default
 	//		message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 	//		character.gender = MALE
+
+	if(!character.isSynthetic())
+		character.nutrition = rand(140, 360)

@@ -495,7 +495,7 @@
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()
-			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+			if(health < config.health_threshold_dead || (should_have_organ(BP_BRAIN) && !has_brain()))
 				death()
 				blinded = 1
 				stat = DEAD

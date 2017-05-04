@@ -11,7 +11,6 @@
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
 	var/list/stomach_contents = list()
-	var/brain_op_stage = 0.0
 	var/list/datum/disease2/disease/virus2 = list()
 	var/antibodies = 0
 	var/last_eating = 0 	//Not sure what this does... I found it hidden in food.dm
@@ -118,3 +117,6 @@
 	var/neurotoxin_delay = 15
 	var/neurotoxin_next_shot = 0
 	var/last_neurotoxin = 0
+
+	var/full_prosthetic // We are a robutt.
+	var/robolimb_count = 0 // Number of robot limbs.

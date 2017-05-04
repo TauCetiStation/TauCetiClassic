@@ -358,22 +358,29 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
-	if ((isnull(subject)) || (!(ishuman(subject))) || (!subject.dna))
+	if (isnull(subject) || !ishuman(subject) || !subject.dna)
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
-	if (subject.brain_op_stage == 4.0)
-		scantemp = "Error: No signs of intelligence detected."
+	if (!subject.has_brain())
+		if(subject.should_have_organ(BP_BRAIN))
+			scantemp = "Error: No signs of intelligence detected."
+			return
+	if (!subject.ckey || !subject.client)
+		scantemp = "Error: Mental interface failure."
+		return
+	if(subject.isSynthetic())
+		scantemp = "Error: Subject is not organic."
 		return
 	if (subject.suiciding == 1)
 		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
 		return
-	if ((!subject.ckey) || (!subject.client))
-		scantemp = "Error: Mental interface failure."
-		return
 	if (subject.disabilities & NOCLONE)
-		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
+		scantemp = "Error: Major genetic degradation."
 		return
-	if (!isnull(find_record(subject.ckey)))
+	if (subject.species && subject.species.flags[NO_SCAN])
+		scantemp = "Error: Incompatible species."
+		return
+	if (subject.ckey && !isnull(find_record(subject.ckey)))
 		scantemp = "Subject already in database."
 		return
 

@@ -23,6 +23,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/has_enabled_antagHUD = 0
 	var/medHUD = 0
 	var/antagHUD = 0
+	var/admin_ghosted = 0
 	universal_speak = 1
 	var/golem_rune = null //Used to check, if we already queued as a golem.
 
@@ -179,6 +180,11 @@ Works together with spawning an observer, noted above.
 	return 1
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
+	// Are we the body of an aghosted admin? If so, don't make a ghost.
+	if(teleop && istype(teleop, /mob/dead/observer))
+		var/mob/dead/observer/G = teleop
+		if(G.admin_ghosted)
+			return
 	if(key)
 		if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
 			var/mob/M = mousize()
@@ -290,6 +296,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			return
 	mind.current.ajourn=0
 	mind.current.key = key
+	mind.current.teleop = null
 	return 1
 
 /mob/dead/observer/verb/toggle_medHUD()

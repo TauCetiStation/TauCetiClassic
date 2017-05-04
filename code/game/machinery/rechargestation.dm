@@ -154,18 +154,31 @@
 
 /obj/machinery/recharge_station/close_machine()
 	if(!panel_open)
-		for(var/mob/living/silicon/robot/R in loc)
-			if(R.client)
-				R.client.eye = src
-				R.client.perspective = EYE_PERSPECTIVE
-			R.forceMove(src)
-			occupant = R
+		for(var/mob/living/L in loc)
+			if(!hascell(L))
+				continue
+			if(L.client)
+				L.client.eye = src
+				L.client.perspective = EYE_PERSPECTIVE
+			L.forceMove(src)
+			occupant = L
 			use_power = 2
-			add_fingerprint(R)
+			add_fingerprint(L)
 			break
 		open = 0
 		density = 1
 		build_icon()
+
+/obj/machinery/recharge_station/proc/hascell(mob/M)
+	if(isrobot(M))
+		var/mob/living/silicon/robot/R = M
+		return R.cell
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.isSynthetic()) // FBPs and IPCs
+			return TRUE
+		return C.organs_by_name[BP_CELL]
+	return FALSE
 
 /obj/machinery/recharge_station/update_icon()
 	..()
@@ -197,21 +210,39 @@
 		icon_state = "borgcharger0"
 
 /obj/machinery/recharge_station/proc/process_occupant()
-	if(src.occupant)
-		if (istype(occupant, /mob/living/silicon/robot))
-			var/mob/living/silicon/robot/R = occupant
-			if(R.module)
-				R.module.respawn_consumable(R)
-			if(repairs)
-				R.heal_bodypart_damage(repairs, repairs - 1)
-			if(!R.cell)
-				return
-			else if(R.cell.charge >= R.cell.maxcharge)
-				var/diff = min(R.cell.maxcharge - R.cell.charge, 250) 	// Capped at 250 charge / tick
-				diff = min(diff, current_internal_charge) 				// No over-discharging
-				R.cell.give(diff)
-				current_internal_charge -= diff
-				return
-			else
-				R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
-				return
+	if(!src.occupant)
+		return
+
+	if(!isliving(occupant))
+		return
+
+	if (istype(occupant, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = occupant
+		if(R.module)
+			R.module.respawn_consumable(R)
+		if(repairs)
+			R.heal_bodypart_damage(repairs, repairs - 1)
+		if(!R.cell)
+			return
+		else if(R.cell.charge >= R.cell.maxcharge)
+			var/diff = min(R.cell.maxcharge - R.cell.charge, 250) 	// Capped at 250 charge / tick
+			diff = min(diff, current_internal_charge) 				// No over-discharging
+			R.cell.give(diff)
+			current_internal_charge -= diff
+			return
+		else
+			R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
+			return
+
+	if (ishuman(occupant))
+		var/mob/living/carbon/human/H = occupant
+
+		if(repairs)
+			if(H.getBruteLoss())
+				H.adjustBruteLoss(-repairs)
+			if(H.getFireLoss())
+				H.adjustFireLoss(-repairs)
+
+		// Recharge mechanical human mobs. Assuming 1 nutrition = 1 KJ of energy.
+		//if(H.nutrition < 450)
+		//	H.nutrition += (cell.use(10 KILOWATTS * CELLRATE) / CELLRATE) / (1 KILOWATTS)

@@ -280,25 +280,42 @@
 				var/mob/living/carbon/human/H = src
 				H.w_uniform.add_fingerprint(M)
 
-			if(lying)
+			var/show_ssd
+			var/mob/living/carbon/H = src
+			if(istype(H))
+				show_ssd = H.species.show_ssd
+			if(show_ssd && !client && !teleop)
+				M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>",
+					              "<span class='notice'>You shake [src], but they do not respond... Maybe they have S.S.D?</span>")
+
+			else if(lying || src.sleeping)
 				src.sleeping = max(0,src.sleeping-5)
-				if(!src.sleeping)
+				if(src.sleeping == 0)
 					src.resting = 0
 				if(src.crawling)
 					if(crawl_can_use() && src.pass_flags & PASSCRAWL)
 						src.pass_flags ^= PASSCRAWL
 						src.crawling = 0
-				M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
-									"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
+				M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>",
+					              "<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 			else
-				M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
+				var/mob/living/carbon/human/hugger = M
+				if(istype(hugger))
+					hugger.species.hug(hugger,src)
+				else
+					M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>",
 								"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
+				if(M.fire_stacks >= (src.fire_stacks + 3))
+					src.fire_stacks += 1
+					M.fire_stacks -= 1
+				if(M.on_fire)
+					src.IgniteMob()
 
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
 
-			playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			playsound(src, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 /mob/living/carbon/proc/crawl_can_use()
 	var/turf/T = get_turf(src)
@@ -354,16 +371,26 @@
 	if(eyecheck() < intensity || override_blindness_check)
 		return ..()
 
-// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
-// Stop! ... Hammertime! ~Carn
-
 /mob/living/carbon/proc/getDNA()
+	if(species.flags[NO_SCAN])
+		return null
+	if(isSynthetic())
+		return null
 	return dna
 
 /mob/living/carbon/proc/setDNA(datum/dna/newDNA)
+	if(species.flags[NO_SCAN])
+		return
+	if(isSynthetic())
+		return
 	dna = newDNA
 
-// ++++ROCKDTBEN++++ MOB PROCS //END
+/mob/living/carbon/has_brain()
+	if(organs_by_name[BP_BRAIN])
+		var/obj/item/organ/brain = organs_by_name[BP_BRAIN]
+		if(brain && istype(brain))
+			return 1
+	return 0
 
 /mob/living/carbon/clean_blood()
 	. = ..()
@@ -688,10 +715,21 @@
 	dna.check_integrity(src)
 	return
 
-/mob/living/carbon/proc/vomit()
+/mob/living/proc/check_has_mouth()
+	return 1
 
-	if(species.flags[IS_SYNTHETIC])
-		return //Machines don't throw up.
+/mob/living/carbon/human/check_has_mouth()
+	// Todo, check stomach organ when implemented.
+	var/obj/item/bodypart/head/H = get_bodypart(BP_HEAD)
+	if(!istype(H) || !H.can_intake_reagents)
+		return 0
+	return 1
+
+/mob/living/carbon/proc/vomit()
+	if(!check_has_mouth() || isSynthetic())
+		return
+	if(stat == DEAD)
+		return
 
 	if(!lastpuke)
 		lastpuke = 1
@@ -946,6 +984,8 @@ This function restores the subjects blood to max.
 	species.handle_post_spawn(src)
 
 	update_icons()
+
+	full_prosthetic = null
 
 	if(species)
 		return 1

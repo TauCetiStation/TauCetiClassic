@@ -105,8 +105,10 @@
 		if ((M.stat != DEAD) || (!M.client))
 			continue
 		//They need a brain!
-		if ((istype(M, /mob/living/carbon/human)) && (M:brain_op_stage >= 4.0))
-			continue
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(H.should_have_organ(BP_BRAIN) && !H.has_brain())
+				continue
 
 		if (M.ckey == find_key)
 			selected = M

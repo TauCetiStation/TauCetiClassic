@@ -464,6 +464,7 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/human_mob = src
 		human_mob.restore_blood()
+		human_mob.full_prosthetic = null
 
 	// fix all of our bodyparts
 	restore_all_bodyparts()
@@ -571,10 +572,13 @@
 						//this is the gay blood on floor shit -- Added back -- Skie
 						if(M.lying && (prob(M.getBruteLoss() / 2)))
 							makeTrail(T, M)
+							if(prob(25))
+								M.adjustBruteLoss(1)
+								visible_message("<span class='danger'>\The [M]'s [M.isSynthetic() ? "state worsens": "wounds open more"] from being dragged!</span>")
 						if(M.pull_damage())
 							if(prob(25))
 								M.adjustBruteLoss(2)
-								visible_message("<span class='warning'>[M]'s wounds worsen terribly from being dragged!</span>")
+								visible_message("<span class='danger'>\The [M]'s [M.isSynthetic() ? "state" : "wounds"] worsen terribly from being dragged!</span>")
 								var/turf/location = M.loc
 								if (istype(location, /turf/simulated))
 									if(ishuman(M))
@@ -889,6 +893,9 @@
 			if(src)
 				clear_fullscreen("flash", 25)
 		return 1
+
+/mob/living/proc/has_brain()
+	return 1
 
 /mob/living/proc/has_eyes()
 	return 1

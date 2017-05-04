@@ -146,7 +146,7 @@
 			for(var/mob/living/carbon/alien/A in living_mob_list)
 				if(istype(A, /mob/living/carbon/alien/humanoid/queen))
 					continue
-				if(!A.key && A.brain_op_stage != 4)
+				if(!A.key || (A.should_have_organ(BP_BRAIN) && !A.has_brain()))
 					continue
 				if(istype(A, /mob/living/carbon/alien/facehugger) || istype(A, /mob/living/carbon/alien/larva))
 					baby++
@@ -165,7 +165,7 @@
 			var/no_queen = 1
 			var/mob/living/carbon/alien/queen
 			for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-				if(!Q.key && Q.brain_op_stage != 4)
+				if(!Q.key || (Q.should_have_organ(BP_BRAIN) && !Q.has_brain()))
 					continue
 				no_queen = 0
 				queen = Q

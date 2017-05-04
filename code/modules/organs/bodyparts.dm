@@ -1187,7 +1187,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/proc/robotize()
 	if(status & ORGAN_ROBOT)
-		return
+		return FALSE
 
 	src.status &= ~ORGAN_BROKEN
 	src.status &= ~ORGAN_BLEEDING
@@ -1200,6 +1200,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			BP.robotize()
 
 	dislocated = -1
+	return TRUE
 
 // Geneloss/cloneloss.
 /obj/item/bodypart/proc/get_genetic_damage()
@@ -1416,9 +1417,13 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	encased = "skull"
 	artery_name = "cartoid artery"
 
-	var/brain_op_stage = 0
-
+	var/can_intake_reagents = TRUE
 	var/image/eyes_overlay
+
+/obj/item/bodypart/head/robotize()
+	. = ..()
+	if(.)
+		can_intake_reagents = FALSE
 
 /mob/living/carbon/human/alien/New(loc, new_specie = S_XENO_QUEEN)
 	..()

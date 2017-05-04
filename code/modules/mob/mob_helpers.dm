@@ -5,8 +5,23 @@
 /proc/mob_size_difference(mob_size_A, mob_size_B)
 	return round(log(2, mob_size_A/mob_size_B), 1)
 
-/proc/hasbodyparts(A)
-	return ishuman(A)
+/proc/hasbodyparts(A) // !!!!!
+	return ishuman(A) // ?????
+
+/mob/living/proc/isSynthetic()
+	return FALSE
+
+/mob/living/carbon/isSynthetic()
+	if(isnull(full_prosthetic))
+		robolimb_count = 0
+		for(var/obj/item/bodypart/BP in bodyparts)
+			if(BP.status & ORGAN_ROBOT)
+				robolimb_count++
+		full_prosthetic = (robolimb_count == bodyparts.len)
+	return full_prosthetic
+
+/mob/living/silicon/isSynthetic()
+	return TRUE
 
 /proc/hsl2rgb(h, s, l)
 	return
@@ -441,3 +456,6 @@ var/list/intents = list("help","disarm","grab","hurt")
 	return FALSE
 
 #undef SAFE_PERP
+
+/mob/proc/ssd_check()
+	return !client && !teleop

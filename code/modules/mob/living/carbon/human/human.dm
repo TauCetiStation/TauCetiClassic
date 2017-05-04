@@ -1198,15 +1198,13 @@
 	return (species && species.has_organ[organ_check])
 
 /mob/living/carbon/proc/can_feel_pain(obj/item/bodypart/check_bodypart)
-	if(!species)
-		return 0
-	if(species.flags[IS_SYNTHETIC])
-		return 0
+	if(isSynthetic())
+		return FALSE
 	if(check_bodypart)
 		if(!istype(check_bodypart))
 			return FALSE
 		return check_bodypart.can_feel_pain()
-	return !species.flags[NO_PAIN]
+	return !(species && species.flags[NO_PAIN])
 
 //Putting a couple of procs here that I don't know where else to dump.
 //Mostly going to be used for Vox and Vox Armalis, but other human mobs might like them (for adminbuse).
@@ -1340,3 +1338,20 @@
 		if(M.client)
 			viewing += M.client
 	flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+
+//Get species or synthetic temp if the mob is a FBP. Used when a synthetic type human mob is exposed to a temp check.
+//Essentially, used when a synthetic human mob should act diffferently than a normal type mob.
+/mob/living/carbon/proc/getSpeciesOrSynthTemp(temptype)
+	switch(temptype)
+		if(COLD_LEVEL_1)
+			return isSynthetic()? SYNTH_COLD_LEVEL_1 : species.cold_level_1
+		if(COLD_LEVEL_2)
+			return isSynthetic()? SYNTH_COLD_LEVEL_2 : species.cold_level_2
+		if(COLD_LEVEL_3)
+			return isSynthetic()? SYNTH_COLD_LEVEL_3 : species.cold_level_3
+		if(HEAT_LEVEL_1)
+			return isSynthetic()? SYNTH_HEAT_LEVEL_1 : species.heat_level_1
+		if(HEAT_LEVEL_2)
+			return isSynthetic()? SYNTH_HEAT_LEVEL_2 : species.heat_level_2
+		if(HEAT_LEVEL_3)
+			return isSynthetic()? SYNTH_HEAT_LEVEL_3 : species.heat_level_3

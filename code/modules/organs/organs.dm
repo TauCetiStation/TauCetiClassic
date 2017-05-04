@@ -928,10 +928,10 @@
 			if (src.damage < min_broken_damage)
 				src.damage += 0.2 * process_accuracy
 			//Damaged one shares the fun
-			else
+			else if(!owner.isSynthetic())
 				var/obj/item/organ/IO = pick(owner.organs)
 				if(IO && IO.robotic < 2)
-					IO.take_damage(0.2 * process_accuracy)
+					IO.take_damage(0.2)
 
 		//Detox can heal small amounts of damage
 		if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
@@ -1013,14 +1013,12 @@
 		brainmob.container = null
 		brainmob = null
 		qdel(brainmob)
-	owner.brain_op_stage = 0
 
 /obj/item/organ/brain/on_remove()
 	transfer_identity(owner)
 	var/mob/living/simple_animal/borer/borer = owner.has_brain_worms()
 	if(borer)
 		borer.detatch()
-	owner.brain_op_stage = 4
 
 /obj/item/organ/brain/proc/transfer_identity(mob/living/H)
 	//name = "[H]'s brain"
@@ -1098,13 +1096,10 @@
 		posibrain.brainmob = null
 		//posibrain.loc = src
 
-	owner.brain_op_stage = 0
-
 /obj/item/organ/brain/mmi_holder/on_remove()
 	if(!posibrain)
 		posibrain = new(src)
 	posibrain.transfer_identity(owner)
-	owner.brain_op_stage = 4
 
 /obj/item/organ/brain/dog
 	is_advanced_tool_user = FALSE

@@ -76,8 +76,12 @@
 				H.drip(10)
 				return 1
 	if(ishuman(target))
-		var/obj/item/bodypart/BP = target:get_bodypart(user.zone_sel.selecting)
-		if(target:check_thickmaterial(BP))
+		var/mob/living/carbon/human/H = target
+		if(H.isSynthetic())
+			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
+			return 1
+		var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
+		if(H.check_thickmaterial(BP))
 			to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [user.zone_sel.selecting]!</span>")
 			to_chat(target, "<span class='warning'>You feel a tiny push in your [user.zone_sel.selecting]!</span>")
 			unset_sting(user)

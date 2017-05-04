@@ -244,10 +244,12 @@
 	else if(getBrainLoss() >= 60)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-	if(!key && brain_op_stage != 4 && stat != DEAD)
-		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-	else if(!client && brain_op_stage != 4 && stat != DEAD)
-		msg += "[t_He] [t_has] suddenly fallen asleep.\n"
+	var/ssd_msg = species.get_ssd(src)
+	if(ssd_msg && (!should_have_organ(BP_BRAIN) || has_brain()) && stat != DEAD)
+		if(!key)
+			msg += "<span class='deadsay'>[t_He] [t_is] [ssd_msg]. It doesn't look like [t_He] [t_is] waking up anytime soon.</span>\n"
+		else if(!client)
+			msg += "<span class='deadsay'>[t_He] [t_is] [ssd_msg].</span>\n"
 
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()

@@ -90,7 +90,7 @@ REAGENT SCANNER
 		return
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s vitals.","<span class='notice'> You have analyzed [M]'s vitals.")
 
-	if (!istype(M, /mob/living/carbon) || (ishuman(M) && (M:species.flags[IS_SYNTHETIC])))
+	if (!istype(M, /mob/living/carbon) || M.isSynthetic())
 		//these sensors are designed for organic life
 		user.show_message("\blue Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR")
 		user.show_message("&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
@@ -155,9 +155,9 @@ REAGENT SCANNER
 		user.show_message("\blue Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.")
 	if (M.has_brain_worms())
 		user.show_message("\red Subject suffering from aberrant brain activity. Recommend further scanning.")
-	else if (M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
+	else if (M.getBrainLoss() >= 60 || !M.has_brain())
 		user.show_message("\red Subject is brain dead.")
-	else if (M.getBrainLoss() >= 60)
+	else if (M.getBrainLoss() >= 25)
 		user.show_message("\red Severe brain damage detected. Subject likely to have mental retardation.")
 	else if (M.getBrainLoss() >= 10)
 		user.show_message("\red Significant brain damage detected. Subject may have had a concussion.")

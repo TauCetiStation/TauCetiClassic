@@ -218,6 +218,10 @@
 
 	var/immune_to_ssd = 0
 
+	//If set, indicates that the client "belonging" to this (clientless) mob is currently controlling some other mob
+	//so don't treat them as being SSD even though their client var is null.
+	var/mob/teleop = null
+
 	var/turf/listed_turf = null  //the current turf being examined in the stat panel
 	var/list/shouldnt_see = list()	//list of objects that this mob shouldn't see in the stat panel. this silliness is needed because of AI alt+click and cult blood runes
 

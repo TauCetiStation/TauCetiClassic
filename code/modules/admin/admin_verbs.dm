@@ -371,9 +371,12 @@ var/list/admin_verbs_hideable = list(
 	else
 		//ghostize
 		var/mob/body = mob
-		body.ghostize(can_reenter_corpse = TRUE)
-		if(body && !body.key)
-			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
+		var/mob/dead/observer/ghost = body.ghostize(can_reenter_corpse = TRUE)
+		ghost.admin_ghosted = 1
+		if(body)
+			body.teleop = ghost
+			if(!body.key)
+				body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

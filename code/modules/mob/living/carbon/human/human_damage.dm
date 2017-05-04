@@ -160,6 +160,35 @@
 			amount -= BP.add_genetic_damage(amount)
 	hud_updateflag |= 1 << HEALTH_HUD
 
+/mob/living/carbon/human/adjustOxyLoss(amount)
+	if(!should_have_organ(BP_LUNGS))
+		oxyloss = 0
+	else
+		..(amount)
+
+/mob/living/carbon/human/setOxyLoss(amount)
+	if(!should_have_organ(BP_LUNGS))
+		oxyloss = 0
+	else
+		..()
+
+/mob/living/carbon/human/getToxLoss()
+	if(isSynthetic())
+		toxloss = 0
+	return ..()
+
+/mob/living/carbon/human/adjustToxLoss(amount)
+	if(isSynthetic())
+		toxloss = 0
+	else
+		..(amount)
+
+/mob/living/carbon/human/setToxLoss(amount)
+	if(isSynthetic())
+		toxloss = 0
+	else
+		..()
+
 ////////////////////////////////////////////
 
 //Returns a list of damaged bodyparts

@@ -5,7 +5,7 @@
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/alert = null
-	var/brain_op_stage = 0
+
 	use_me = 0 //Can't use the me verb, it's a freaking immobile brain
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain1"
@@ -52,3 +52,9 @@
 	else
 		canmove = 0
 	return canmove
+
+/mob/living/brain/isSynthetic()
+	return istype(loc, /obj/item/device/mmi/posibrain)
+
+/mob/living/brain/binarycheck()
+	return isSynthetic()

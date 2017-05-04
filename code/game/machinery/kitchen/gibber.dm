@@ -181,10 +181,12 @@
 	if(!src.occupant)
 		visible_message("<span class='danger'>You hear a loud metallic grinding sound.</span>")
 		return
+
 	use_power(1000)
-	visible_message("<span class='danger'>You hear a loud squelchy grinding sound.</span>")
+	visible_message("<span class='danger'>You hear a loud [occupant.isSynthetic() ? "metallic" : "squelchy"] grinding sound.</span>")
 	src.operating = 1
 	update_icon()
+
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = gibtime / 100, loop = gibtime) //start shaking
 	playsound(src.loc, 'sound/effects/gibber.ogg', 100, 1)
@@ -202,8 +204,10 @@
 		if(critter.meat_type)
 			slab_type = critter.meat_type
 	else if(istype(src.occupant,/mob/living/carbon/human))
-		slab_name = src.occupant.real_name
-		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/human
+		var/mob/living/carbon/human/H = occupant
+		if(H.butcher_results && H.butcher_results.len)
+			slab_name = src.occupant.real_name
+			slab_type = H.isSynthetic() ? /obj/item/stack/sheet/plasteel : pick(H.butcher_results)//H.species.meat_type
 	else if(istype(src.occupant, /mob/living/carbon/monkey))
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 

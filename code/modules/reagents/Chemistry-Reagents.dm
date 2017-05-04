@@ -1565,8 +1565,12 @@ datum
 			toxpwr = 0
 
 			reaction_mob(mob/living/carbon/M, method=TOUCH, volume)
-				if(!..())	return
-				if(!istype(M) || !M.dna)	return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
+				if(!..())
+					return
+				if(!istype(M) || !M.dna || M.isSynthetic())
+					return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
+				if(M.species.flags[NO_SCAN])
+					return
 				src = null
 				if((method==TOUCH && prob(33)) || method==INGEST)
 					randmuti(M)

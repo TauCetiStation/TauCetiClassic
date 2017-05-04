@@ -21,6 +21,8 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 
 	var/eyes_icon = "eyes"                                  // Icon for eyes.
 
+	var/show_ssd = "fast asleep"
+
 	var/backward_form            // Mostly used in genetic (human <-> monkey), if null - gibs user when transformation happens.
 	var/tail                     // Name of tail image in species effects icon file.
 	var/language                 // Default racial language, if any.
@@ -185,6 +187,8 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	damage_overlays = 'icons/mob/human_races/masks/monkey_damage_overlays.dmi'
 	blood_overlays = 'icons/mob/human_races/masks/monkey_blood_overlays.dmi'
 	stump_overlays = "_monkey"
+
+	show_ssd = null
 
 	tail = "chimptail"
 
@@ -380,6 +384,8 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	language = "Rootspeak"
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/diona)
 	//backward_form = S_MONKEY_D
+
+	show_ssd = "completely quiescent"
 
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
@@ -701,6 +707,8 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 
 	unarmed_types = list(/datum/unarmed_attack/slime_glomp)
 
+	show_ssd = "totally quiescent"
+
 	has_bodypart = list(
 		BP_CHEST = /obj/item/bodypart/chest/unbreakable/promethean
 		,BP_GROIN = /obj/item/bodypart/groin/unbreakable/promethean
@@ -927,3 +935,28 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 
 /datum/species/proc/get_knockout_message(mob/living/carbon/C)
 	return ((C && C.species.flags[IS_SYNTHETIC]) ? "encounters a hardware fault and suddenly reboots!" : knockout_message)
+
+/datum/species/proc/get_ssd(var/mob/living/carbon/C)
+	return ((C && C.isSynthetic()) ? "flashing a 'system offline' glyph on their monitor" : show_ssd)
+
+/datum/species/proc/hug(mob/living/carbon/C, mob/living/target)
+
+	var/t_him = "them"
+	switch(target.gender)
+		if(MALE)
+			t_him = "him"
+		if(FEMALE)
+			t_him = "her"
+
+	C.visible_message("<span class='notice'>[C] hugs [target] to make [t_him] feel better!</span>",
+		               "<span class='notice'>You hug [target] to make [t_him] feel better!</span>")
+
+//datum/species/shapeshifter/promethean/hug(mob/living/carbon/C, mob/living/target)
+//	var/datum/gender/G = gender_datums[target.gender]
+//	C.visible_message("<span class='notice'>\The [C] glomps [target] to make [G.him] feel better!</span>",
+//		                   "<span class='notice'>You glomps [target] to make [G.him] feel better!</span>")
+//	C.apply_stored_shock_to(target)
+
+/datum/species/xenos/hug(mob/living/carbon/C, mob/living/target)
+	C.visible_message("<span class='notice'>[C] caresses [target] with its scythe-like arm.</span>",
+		               "<span class='notice'>You caress [target] with your scythe-like arm.</span>")

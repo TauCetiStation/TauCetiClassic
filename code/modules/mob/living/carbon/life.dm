@@ -454,7 +454,7 @@
 		else
 			loc_temp = environment.temperature
 
-		if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure && abs(loc_temp - bodytemperature) < 20 && bodytemperature < species.heat_level_1 && bodytemperature > species.cold_level_1 && environment.phoron < MOLES_PHORON_VISIBLE)
+		if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure && abs(loc_temp - bodytemperature) < 20 && bodytemperature < getSpeciesOrSynthTemp(HEAT_LEVEL_1) && bodytemperature > getSpeciesOrSynthTemp(COLD_LEVEL_1) && environment.phoron < MOLES_PHORON_VISIBLE)
 			clear_alert("pressure")
 			clear_alert("temp")
 			return // Temperatures are within normal ranges, fuck all this processing. ~Ccomp
@@ -495,12 +495,12 @@
 		return 1	//godmode
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-	if(bodytemperature > species.heat_level_1)
+	if(bodytemperature >= getSpeciesOrSynthTemp(HEAT_LEVEL_1))
 		//Body temperature is too hot.
-		if(bodytemperature > species.heat_level_3)
+		if(bodytemperature > getSpeciesOrSynthTemp(HEAT_LEVEL_3))
 			throw_alert("temp","hot",3)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
-		else if(bodytemperature > species.heat_level_2)
+		else if(bodytemperature > getSpeciesOrSynthTemp(HEAT_LEVEL_2))
 			if(on_fire)
 				throw_alert("temp","hot",3)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
@@ -510,12 +510,12 @@
 		else
 			throw_alert("temp","hot",1)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
-	else if(bodytemperature < species.cold_level_1)
+	else if(bodytemperature <= getSpeciesOrSynthTemp(COLD_LEVEL_1))
 		if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-			if(bodytemperature < species.cold_level_3)
+			if(bodytemperature < getSpeciesOrSynthTemp(COLD_LEVEL_3))
 				throw_alert("temp","cold",3)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
-			else if(bodytemperature < species.cold_level_2)
+			else if(bodytemperature < getSpeciesOrSynthTemp(COLD_LEVEL_2))
 				throw_alert("temp","cold",2)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
 			else
@@ -591,24 +591,28 @@
 		bodytemperature += species.synth_temp_gain		//just keep putting out heat.
 		return
 
+	// Robolimbs cause overheating too.
+	if(robolimb_count)
+		bodytemperature += round(robolimb_count/2)
+
 	var/body_temperature_difference = species.body_temperature - bodytemperature
 
 	if (abs(body_temperature_difference) < 0.5)
 		return //fuck this precision
 
-	if(bodytemperature < species.cold_level_1) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
+	if(bodytemperature < getSpeciesOrSynthTemp(COLD_LEVEL_1)) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
 		if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
 			nutrition -= 2
 		var/recovery_amt = max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 		//world << "Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
 //				log_debug("Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
 		bodytemperature += recovery_amt
-	else if(species.cold_level_1 <= bodytemperature && bodytemperature <= species.heat_level_1)
+	else if(getSpeciesOrSynthTemp(COLD_LEVEL_1) <= bodytemperature && bodytemperature <= getSpeciesOrSynthTemp(HEAT_LEVEL_1))
 		var/recovery_amt = body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR
 		//world << "Norm. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
 //				log_debug("Norm. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
 		bodytemperature += recovery_amt
-	else if(bodytemperature > species.heat_level_1) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
+	else if(bodytemperature > getSpeciesOrSynthTemp(HEAT_LEVEL_1)) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 		//We totally need a sweat system cause it totally makes sense...~
 		var/recovery_amt = min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 		//world << "Hot. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
@@ -936,7 +940,7 @@
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_organs()	//Optimized.
 
-		if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
+		if(health <= config.health_threshold_dead || (should_have_organ(BP_BRAIN) && !has_brain()))
 			death()
 			blinded = 1
 			silent = 0
