@@ -90,7 +90,7 @@ var/list/ghostteleportlocs = list()
 /area/New()
 	icon_state = ""
 	layer = 10
-	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references loc.loc.master ~Carn
+	master = src
 	uid = ++global_uid
 	related = list(src)
 	all_areas += src
@@ -176,23 +176,21 @@ var/list/ghostteleportlocs = list()
 	if(!src.master.air_doors_activated)
 		src.master.air_doors_activated = 1
 		for(var/obj/machinery/door/firedoor/E in src.master.all_doors)
-			if(!E:blocked)
+			if(!E.blocked)
 				if(E.operating)
-					E:nextstate = CLOSED
+					E.nextstate = CLOSED
 				else if(!E.density)
-					spawn(0)
-						E.close()
+					INVOKE_ASYNC(E, /obj/machinery/door/firedoor.proc/close)
 
 /area/proc/air_doors_open()
 	if(src.master.air_doors_activated)
 		src.master.air_doors_activated = 0
 		for(var/obj/machinery/door/firedoor/E in src.master.all_doors)
-			if(!E:blocked)
+			if(!E.blocked)
 				if(E.operating)
-					E:nextstate = OPEN
+					E.nextstate = OPEN
 				else if(E.density)
-					spawn(0)
-						E.open()
+					INVOKE_ASYNC(E, /obj/machinery/door/firedoor.proc/open)
 
 
 /area/proc/firealert()
@@ -207,8 +205,7 @@ var/list/ghostteleportlocs = list()
 				if(D.operating)
 					D.nextstate = CLOSED
 				else if(!D.density)
-					spawn()
-						D.close()
+					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/close)
 		var/list/cameras = list()
 		for(var/area/RA in related)
 			for (var/obj/machinery/camera/C in RA)
@@ -220,7 +217,7 @@ var/list/ghostteleportlocs = list()
 			a.triggerAlarm("Fire", src, cameras, src)
 
 /area/proc/firereset()
-	if (fire)
+	if(fire)
 		fire = 0
 		master.fire = 0		//used for firedoor checks
 		mouse_opacity = 0
@@ -229,8 +226,7 @@ var/list/ghostteleportlocs = list()
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					spawn(0)
-					D.open()
+					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 		for(var/area/RA in related)
 			for (var/obj/machinery/camera/C in RA)
 				C.network.Remove("Fire Alarms")
@@ -242,14 +238,14 @@ var/list/ghostteleportlocs = list()
 /area/proc/partyalert()
 	if(name == "Space") //no parties in space!!!
 		return
-	if (!( party ))
+	if(!party)
 		party = 1
 		updateicon()
 		mouse_opacity = 0
 	return
 
 /area/proc/partyreset()
-	if (party)
+	if(party)
 		party = 0
 		mouse_opacity = 0
 		updateicon()
@@ -258,8 +254,7 @@ var/list/ghostteleportlocs = list()
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					spawn(0)
-					D.open()
+					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 	return
 
 /area/proc/updateicon()
@@ -267,7 +262,6 @@ var/list/ghostteleportlocs = list()
 
 
 /area/proc/powered(chan)		// return true if the area has power to given channel
-
 	if(!master.requires_power)
 		return 1
 	if(master.always_unpowered)
@@ -357,7 +351,8 @@ var/list/ghostteleportlocs = list()
 		thunk(L)
 
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
+	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
+		return
 
 	if(!L.client.ambience_playing)
 		L.client.ambience_playing = 1
@@ -387,10 +382,12 @@ var/list/ghostteleportlocs = list()
 
 		if(!L.client.played)
 			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
-			L.client.played = 1
-			spawn(600)			//ewww - this is very very bad
-				if(L.&& L.client)
-					L.client.played = 0
+			L.client.played = TRUE
+			addtimer(CALLBACK(src, .proc/set_played_false, L), 600)
+
+/area/proc/set_played_false(mob/living/L)
+	if(L && L.client)
+		L.client.played = FALSE
 
 /area/proc/gravitychange(gravitystate = 0, area/A)
 

@@ -1807,10 +1807,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 			mysound.status = SOUND_UPDATE
 			H << mysound
 			if(S)
-				spawn(sound_delay)
-					H << S
+				addtimer(CALLBACK(src, .proc/send_sound, H, S), sound_delay)
 
-	spawn(60) .()
+	addtimer(CALLBACK(src, .process), 60)
+
+/area/proc/send_sound(mob/living/carbon/human/target, sound)
+	if(!target || !sound)
+		return
+	target << sound
 
 /////////////////////////////////////////////////////////////////////
 /*
@@ -1917,7 +1921,6 @@ var/list/the_station_areas = list (
 			mysound.status = SOUND_UPDATE
 			H << mysound
 			if(S)
-				spawn(sound_delay)
-					H << S
+				addtimer(CALLBACK(src, .proc/send_sound, H, S), sound_delay)
 
-	spawn(60) .()
+	addtimer(CALLBACK(src, .process), 60)
