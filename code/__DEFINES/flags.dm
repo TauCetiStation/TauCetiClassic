@@ -54,6 +54,8 @@
 #define NO_EMBED           "no_embed"
 #define NO_SLIP            "no_slip"
 #define DROPLIMB_WHEN_DEAD "droplimb_when_dead"
+#define HAS_EARS           "has_ears"
+#define HAS_TAIL           "has_tail"
 
 //bitflags for door switches.
 #define OPEN     1

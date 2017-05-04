@@ -1025,18 +1025,18 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/proc/update_tail_showing() // TODO tail as bodypart or somewhere there.
-	if(!species)
-		return
-	remove_overlay(TAIL_LAYER)
+	//if(!species)
+	//	return
+	//remove_overlay(TAIL_LAYER)
 
-	if(species.tail)
-		var/obj/item/clothing/S = get_equipped_item(slot_wear_suit)
-		if(!S || !(S.flags_inv & HIDETAIL) && !istype(S, /obj/item/clothing/suit/space)) // why we shouldn't hide tail under space suit? it is drawn above tail anyway... and there is a flag that controls tail visibility too...
-			var/image/tail_s = image(icon = 'icons/effects/species.dmi', icon_state = "[species.tail]", layer = -TAIL_LAYER)
-			tail_s.color = list(1,0,0, 0,1,0, 0,0,1, r_skin/255,g_skin/255,b_skin/255)
-			overlays_standing[TAIL_LAYER] = tail_s
+	//if(species.tail)
+	//	var/obj/item/clothing/S = get_equipped_item(slot_wear_suit)
+	//	if(!S || !(S.flags_inv & HIDETAIL) && !istype(S, /obj/item/clothing/suit/space)) // why we shouldn't hide tail under space suit? it is drawn above tail anyway... and there is a flag that controls tail visibility too...
+	//		var/image/tail_s = image(icon = 'icons/effects/species.dmi', icon_state = "[species.tail]", layer = -TAIL_LAYER)
+	//		tail_s.color = list(1,0,0, 0,1,0, 0,0,1, r_skin/255,g_skin/255,b_skin/255)
+	//		overlays_standing[TAIL_LAYER] = tail_s
 
-	apply_overlay(TAIL_LAYER)
+	//apply_overlay(TAIL_LAYER)
 
 
 //Adds a collar overlay above the helmet layer if the suit has one

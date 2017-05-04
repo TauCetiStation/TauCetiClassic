@@ -219,11 +219,17 @@
 
 	return ..()
 
-/obj/item/bodypart/head/New(loc, mob/living/carbon/C)
-	..()
+/obj/item/bodypart/groin/Destroy()
+	if(tail)
+		qdel(tail)
+		tail = null
+	return ..()
 
-	if(species.has_organ[BP_EYES])
-		eyes_overlay = image(icon = 'icons/mob/human_face.dmi', layer = -BODY_LAYER)
+/obj/item/bodypart/head/Destroy()
+	if(ears)
+		qdel(ears)
+		ears = null
+	return ..()
 
 /obj/item/bodypart/proc/removed(mob/living/user) // TODO implement this proc properly
 	if(!istype(owner))
@@ -1406,6 +1412,25 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "iliac artery"
 	dislocated = -1
 
+	var/image/tail_overlay
+	var/obj/item/tail/tail
+
+/obj/item/bodypart/groin/New(loc, mob/living/carbon/C)
+	..()
+
+	if(species.flags[HAS_TAIL] && species.tail)
+		tail = new (src)
+		tail.icon_state = species.tail
+		tail_overlay = image(icon = 'icons/effects/species.dmi', icon_state = "[species.tail]", layer = -TAIL_LAYER)
+
+/obj/item/bodypart/groin/take_damage(brute, burn, damage_flags, used_weapon = null)
+	. = ..()
+	if(brute_dam > 40)
+		if (prob(50))
+			detach_misc_part()
+	if(burn_dam > 40)
+		detach_misc_part()
+
 /obj/item/bodypart/groin/unbreakable
 	cannot_break = TRUE
 
@@ -1434,14 +1459,24 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 	var/can_intake_reagents = TRUE
 	var/image/eyes_overlay
+	var/image/ears_overlay
+	var/obj/item/ears/ears
+
+/obj/item/bodypart/head/New(loc, mob/living/carbon/C)
+	..()
+
+	if(species.has_organ[BP_EYES])
+		eyes_overlay = image(icon = 'icons/mob/human_face.dmi', layer = -BODY_LAYER)
+
+	if(species.flags[HAS_EARS] && species.ears)
+		ears = new (src)
+		ears.icon_state = species.ears
+		ears_overlay = image(icon = 'icons/effects/species.dmi', icon_state = "[species.ears]", layer = -BODY_LAYER + 0.1)
 
 /obj/item/bodypart/head/robotize()
 	. = ..()
 	if(.)
 		can_intake_reagents = FALSE
-
-/mob/living/carbon/human/alien/New(loc, new_specie = S_XENO_QUEEN)
-	..()
 
 /obj/item/bodypart/head/unbreakable
 	cannot_break = TRUE
@@ -1483,6 +1518,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		else
 			visible_message("\red [name] melts away, turning into mangled mess!")
 	disfigured = 1
+	detach_misc_part()
 
 /obj/item/bodypart/arm
 	name = "left arm"
@@ -1724,3 +1760,65 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 				flavor_text += "a ton of [wound]\s"
 
 	return english_list(flavor_text)
+
+//Misc bodyparts
+/obj/item/ears
+	name = "ears"
+	icon = 'icons/effects/species.dmi'
+
+/obj/item/tail
+	name = "tail"
+	icon = 'icons/effects/species.dmi'
+
+/obj/item/bodypart/proc/get_misc_part()
+	return
+
+/obj/item/bodypart/groin/get_misc_part()
+	return tail
+
+/obj/item/bodypart/head/get_misc_part()
+	return ears
+
+/obj/item/bodypart/proc/detach_misc_part(obj/item/part, type = "fly", mob/attacker)
+	if(part)
+		part.forceMove(owner.loc)
+
+		var/matrix/M = matrix()
+		M.Turn(rand(180))
+		part.transform = M
+		dir = 2
+
+		switch(type)
+			if("fly")
+				add_blood(owner)
+
+				owner.visible_message(
+					"<span class='danger'>\The [owner]'s [part.name] flies off in an arc!</span>",
+					"<span class='moderate'><b>Your [part.name] goes flying off!</b></span>")
+
+				if(part && isturf(part.loc))
+					part.throw_at(get_edge_target_turf(part, pick(alldirs)), rand(1,3), 30)
+				dir = 2
+
+			if("rip")
+				add_blood(attacker)
+				add_blood(owner)
+				attacker.put_in_hands(part)
+
+				owner.visible_message(
+					"<span class='danger'>[attacker] rip out [owner]'s [part.name]!</span>",
+					"<span class='moderate'><b>[attacker] rip out your [part.name]!</b></span>")
+
+		owner.custom_pain("You feel something rip in your [name]!", 100, BP = src)
+		owner.update_bodypart(body_zone)
+		return TRUE
+
+/obj/item/bodypart/groin/detach_misc_part(type = "fly", mob/attacker)
+	. = tail
+	tail = null
+	return ..(.)
+
+/obj/item/bodypart/head/detach_misc_part(type = "fly", mob/attacker)
+	. = ears
+	ears = null
+	return ..(.)

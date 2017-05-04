@@ -121,24 +121,52 @@
 /obj/item/bodypart/head/update_limb()
 	..()
 
-	if(!eyes_overlay)
-		return
+	var/list/standing = list()
 
-	overlays -= eyes_overlay
+	if(eyes_overlay)
+		overlays -= eyes_overlay
 
-	if(!species.eyes_icon)
-		return
+		if(!species.eyes_icon)
+			return
 
-	var/obj/item/organ/eyes/IO = get_organ(BP_EYES)
-	if(!IO)
-		eyes_overlay.icon_state = "eyes_missing"
-	else
-		eyes_overlay.icon_state = species.eyes_icon
+		var/obj/item/organ/eyes/IO = get_organ(BP_EYES)
+		if(!IO)
+			eyes_overlay.icon_state = "eyes_missing"
+		else
+			eyes_overlay.icon_state = species.eyes_icon
+			if(owner)
+				eyes_overlay.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+
+		standing += eyes_overlay
+
+	if(ears_overlay)
+		overlays -= ears_overlay
+
+		if(!ears)
+			return
+
 		if(owner)
-			eyes_overlay.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+			ears_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_skin/255, owner.g_skin/255, owner.b_skin/255)
+			ears.color = ears_overlay.color
 
-	if(!owner)
-		overlays += eyes_overlay
+		standing += ears_overlay
+
+	if(!owner && standing.len)
+		overlays += standing
+
+/obj/item/bodypart/groin/update_limb()
+	..()
+
+	overlays -= tail_overlay
+
+	if(!tail || !tail_overlay)
+		return
+
+	if(owner)
+		tail_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_skin/255, owner.g_skin/255, owner.b_skin/255)
+		tail.color = tail_overlay.color
+	else
+		overlays += tail_overlay
 
 /obj/item/bodypart/proc/get_icon()
 	var/list/standing = list()
@@ -155,6 +183,15 @@
 	. = ..()
 	if(species.eyes_icon && eyes_overlay)
 		. += eyes_overlay
+	if(ears && ears_overlay)
+		. += ears_overlay
+
+/obj/item/bodypart/groin/get_icon()
+	. = ..()
+	if(tail && tail_overlay)
+		var/obj/item/clothing/S = owner.get_equipped_item(slot_wear_suit)
+		if(!S || !(S.flags_inv & HIDETAIL) && !istype(S, /obj/item/clothing/suit/space))
+			. += tail_overlay
 
 var/list/cyberlimb_manufacturers = list("Bishop", "Hephaestus Industries", "Morpheus", "NanoTrasen", "Ward-Takahashi", "Xion")
 /mob/living/carbon/human/proc/set_manufacturer_icons(man_name, alt_head, has_skin)

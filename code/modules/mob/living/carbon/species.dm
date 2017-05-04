@@ -25,6 +25,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 
 	var/backward_form            // Mostly used in genetic (human <-> monkey), if null - gibs user when transformation happens.
 	var/tail                     // Name of tail image in species effects icon file.
+	var/ears                     // Name of ears image in species effects icon file.
 	var/language                 // Default racial language, if any.
 
 	// Combat vars.
@@ -193,6 +194,10 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 
 	tail = "chimptail"
 
+	flags = list(
+		HAS_TAIL = TRUE
+		)
+
 	has_bodypart = list(
 		BP_CHEST  = /obj/item/bodypart/chest/monkey // <-
 		,BP_GROIN = /obj/item/bodypart/groin
@@ -268,6 +273,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	,HAS_UNDERWEAR = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_GENDERED_ICONS = TRUE
+	,HAS_TAIL = TRUE
 	)
 
 	flesh_color = "#34AF10"
@@ -293,6 +299,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	language = "Siik'maas"
 	secondary_langs = list("Siik'tajr")
 	tail = "tajtail"
+	ears = "tajears"
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/bite/sharp)
 	darksight = 8
 	nighteyes = 1
@@ -318,6 +325,8 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_HAIR = TRUE
 	,HAS_GENDERED_ICONS = TRUE
+	,HAS_TAIL = TRUE
+	,HAS_EARS = TRUE
 	)
 
 	flesh_color = "#AFA59E"
@@ -515,6 +524,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
 	,NO_EMBED = TRUE
+	,HAS_TAIL = TRUE
 	)
 
 	blood_color = "#2299FC"
@@ -807,6 +817,10 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	unarmed_types = list(/datum/unarmed_attack/claws/strong, /datum/unarmed_attack/bite/strong)
 
 	has_internals = FALSE
+
+	flags = list(
+		HAS_TAIL = TRUE
+		)
 
 	has_bodypart = list(
 		 BP_CHEST = /obj/item/bodypart/chest/unbreakable
