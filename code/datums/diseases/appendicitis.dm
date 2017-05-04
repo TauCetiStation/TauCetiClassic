@@ -1,4 +1,4 @@
-/datum/disease/appendicitis
+/datum/disease/appendicitis // Dunno if we need this disease at all with appendix as organ.
 	form = "Condition"
 	name = "Appendicitis"
 	max_stages = 4
@@ -19,38 +19,8 @@
 
 	if(istype(affected_mob,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = affected_mob
-		if(H.species.name == S_DIONA || H.species.name == S_IPC || H.species.name == S_VOX) src.cure()
-
-	if(stage == 1)
-		if(affected_mob.op_stage.appendix == 2.0)
-			// appendix is removed, can't get infected again
-			src.cure()
-		if(prob(5))
-			to_chat(affected_mob, "\red You feel a stinging pain in your abdomen!")
-			affected_mob.emote("me",1,"winces slightly.")
-	if(stage > 1)
-		if(prob(3))
-			to_chat(affected_mob, "\red You feel a stabbing pain in your abdomen!")
-			affected_mob.emote("me",1,"winces painfully.")
-			affected_mob.adjustToxLoss(1)
-	if(stage > 2)
-		if(prob(1))
-			if (affected_mob.nutrition > 100)
-				var/mob/living/carbon/human/H = affected_mob
-				H.vomit()
-			else
-				to_chat(affected_mob, "\red You gag as you want to throw up, but there's nothing in your stomach!")
-				affected_mob.Weaken(10)
-				affected_mob.adjustToxLoss(3)
-	if(stage > 3)
-		if(prob(1) && ishuman(affected_mob))
-			var/mob/living/carbon/human/H = affected_mob
-			to_chat(H, "\red Your abdomen is a world of pain!")
-			H.Weaken(10)
-			H.op_stage.appendix = 2.0
-
-			var/obj/item/bodypart/BP = H.get_bodypart(BP_GROIN)
-			BP.sever_artery()
-			BP.germ_level = max(INFECTION_LEVEL_TWO, BP.germ_level)
-			H.adjustToxLoss(25)
-			src.cure()
+		if(H.client && H.stat != DEAD)
+			var/obj/item/organ/appendix/A = H.organs_by_name[BP_APPENDIX]
+			A.inflamed = 1
+			A.update_icon()
+	src.cure() // no need to keep disease, because organ will handle everything we need.

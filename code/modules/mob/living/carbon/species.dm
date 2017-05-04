@@ -125,6 +125,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 		,BP_LUNGS   = /obj/item/organ/lungs
 		,BP_LIVER   = /obj/item/organ/liver
 		,BP_KIDNEYS = /obj/item/organ/kidneys
+		,BP_APPENDIX = /obj/item/organ/appendix
 		)
 
 	var/breathing_sound = 'sound/voice/monkey.ogg'

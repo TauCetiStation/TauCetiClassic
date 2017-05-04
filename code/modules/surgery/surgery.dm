@@ -1,7 +1,6 @@
 /datum/surgery_status
 	var/eyes	=	0
 	var/face	=	0
-	var/appendix =	0
 	var/current_organ = "organ"
 	var/list/in_progress = list()
 
