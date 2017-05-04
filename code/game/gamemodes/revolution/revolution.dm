@@ -433,6 +433,7 @@
 
 
 	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
+		text += "<BR>"
 		text += printlogo("rev-logo", "head revolutionaries")
 		var/icon/logo2 = icon('icons/mob/mob.dmi', "rev-logo")
 		end_icons += logo2
@@ -464,7 +465,7 @@
 			text += ")"
 
 
-	text +="<BR>"
+	text += "<BR>"
 	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
 		text += printlogo("nano-logo", "heads of staff")
 
