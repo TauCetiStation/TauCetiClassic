@@ -102,7 +102,7 @@
 	var/robot_manufacturer_name = null
 	var/robot_manufacturer_icon = null // cyberlimbs appearance.
 
-/obj/item/bodypart/New(loc, mob/living/carbon/C, specie) // arg C or specie or both must always exist.
+/obj/item/bodypart/New(loc, mob/living/carbon/C, specie, robotic) // arg C or specie or both must always exist.
 	if(!max_damage)
 		max_damage = min_broken_damage * 2
 
@@ -120,11 +120,11 @@
 	generate_hud_data()
 
 	if(C)
+		if(species.flags[IS_SYNTHETIC] || robotic)
+			status |= ORGAN_ROBOT
+
 		w_class = max(w_class + mob_size_difference(C.mob_size, MOB_MEDIUM), 1) //smaller mobs have smaller bodyparts.
 		inserted(C)
-
-		if(species.flags[IS_SYNTHETIC])
-			status |= ORGAN_ROBOT
 
 	create_reagents(5 * (w_class-1)**2)
 	reagents.add_reagent("nutriment", reagents.maximum_volume) // Bay12: protein
@@ -246,10 +246,10 @@
 
 	var/is_robotic = (status & ORGAN_ROBOT)
 
-	var/obj/item/bodypart/BP = owner.get_bodypart(parent_bodypart)
-	if(BP)
-		status |= ORGAN_CUT_AWAY
-		forceMove(owner.loc)
+	//var/obj/item/bodypart/BP = owner.get_bodypart(parent_bodypart)
+	//if(BP)
+	//	status |= ORGAN_CUT_AWAY
+	//	forceMove(owner.loc)
 
 	START_PROCESSING(SSobj, src)
 	if(is_robotic)
@@ -318,6 +318,21 @@
 		src.dir = target.dir
 
 		return inserted(target)
+
+/obj/item/robot_parts/proc/replace_stump(mob/living/carbon/target, where)
+	if(istype(target))
+		var/obj/item/bodypart/stump = target.get_bodypart(where)
+		if(!stump || !stump.is_stump())
+			return FALSE
+
+		var/path = target.species.has_bodypart[where]
+		if(!path)
+			return FALSE
+
+		qdel(stump)
+
+		new path(null, target, S_HUMAN, TRUE)
+		return TRUE
 
 /obj/item/bodypart/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
@@ -976,7 +991,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			var/matrix/M = matrix()
 			M.Turn(rand(180))
 			src.transform = M
-			forceMove(get_turf(src))
+			forceMove(victim.loc)
 			if(!clean)
 				// Throw limb around.
 				if(src && istype(loc,/turf))
