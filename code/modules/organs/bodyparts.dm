@@ -94,6 +94,7 @@
 	var/image/dmg_overlay // damage overlays
 	var/image/bld_overlay // blood overlays (this ones come from combat - that blood may even be someone's else)
 	var/image/srg_overlay // surgery overlays
+	var/image/bnd_overlay // bandage overlays
 	var/list/inv_overlays = list()
 	var/static/list/special_inv_icon = list()
 

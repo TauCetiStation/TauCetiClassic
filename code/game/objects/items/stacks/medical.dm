@@ -93,7 +93,7 @@
 						to_chat(user, "<span class='warning'>\The [src] is used up.</span>")
 					else
 						to_chat(user, "<span class='warning'>\The [src] is used up, but there are more wounds to treat on \the [BP.name].</span>")
-				H.update_bandage()
+				H.update_bodypart(BP.body_zone)
 				use(used)
 		else
 			if(can_operate(H))        //Checks if mob is lying down on table for surgery
@@ -210,7 +210,7 @@
 						to_chat(user, "<span class='warning'>\The [src] is used up.</span>")
 					else
 						to_chat(user, "<span class='warning'>\The [src] is used up, but there are more wounds to treat on \the [BP.name].</span>")
-				H.update_bandage()
+				H.update_bodypart(BP.body_zone)
 				use(used)
 		else
 			if(can_operate(H))        //Checks if mob is lying down on table for surgery

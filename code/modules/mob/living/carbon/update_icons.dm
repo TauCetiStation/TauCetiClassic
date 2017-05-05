@@ -126,7 +126,7 @@ There are several things that need to be remembered:
 		return*/
 
 	//update_bodyparts() // TODO remove this
-	update_tail_showing() // TODO remove this
+	//update_tail_showing() // TODO remove this
 
 	/*var/hulk = (HULK in src.mutations)
 
@@ -1042,33 +1042,33 @@ There are several things that need to be remembered:
 //Adds a collar overlay above the helmet layer if the suit has one
 //	Suit needs an identically named sprite in icons/mob/collar.dmi
 /mob/living/carbon/proc/update_collar()
-	remove_overlay(COLLAR_LAYER)
+//	remove_overlay(COLLAR_LAYER)
 
-	if(wear_suit)
-		var/icon/C = new('icons/mob/collar.dmi')
-		if(wear_suit.icon_state in C.IconStates())
+//	if(wear_suit)
+//		var/icon/C = new('icons/mob/collar.dmi')
+//		if(wear_suit.icon_state in C.IconStates())
 
-			var/image/standing = image("icon" = C, "icon_state" = "[wear_suit.icon_state]", "layer"=-COLLAR_LAYER)
-			standing.color = wear_suit.color
-			overlays_standing[COLLAR_LAYER]	= standing
+//			var/image/standing = image("icon" = C, "icon_state" = "[wear_suit.icon_state]", "layer"=-COLLAR_LAYER)
+//			standing.color = wear_suit.color
+//			overlays_standing[COLLAR_LAYER]	= standing
 
-	apply_overlay(COLLAR_LAYER)
+//	apply_overlay(COLLAR_LAYER)
 
 
 /mob/living/carbon/proc/update_bandage()
-	remove_overlay(BANDAGE_LAYER)
+//	remove_overlay(BANDAGE_LAYER)
 
-	var/list/standing	= list()
-	for(var/obj/item/bodypart/BP in bodyparts)
-		if(BP.wounds.len)
-			for(var/datum/wound/W in BP.wounds)
-				if(W.bandaged)
-					standing +=	image("icon"='icons/mob/bandages.dmi', "icon_state"="[BP.name]", "layer"=-BANDAGE_LAYER)
+//	var/list/standing	= list()
+//	for(var/obj/item/bodypart/BP in bodyparts)
+//		if(BP.wounds.len)
+//			for(var/datum/wound/W in BP.wounds)
+//				if(W.bandaged)
+//					standing +=	image("icon"='icons/mob/bandages.dmi', "icon_state"="[BP.name]", "layer"=-BANDAGE_LAYER)
 
-	if(standing.len)
-		overlays_standing[BANDAGE_LAYER] = standing
+//	if(standing.len)
+//		overlays_standing[BANDAGE_LAYER] = standing
 
-	apply_overlay(BANDAGE_LAYER)
+//	apply_overlay(BANDAGE_LAYER)
 
 
 /mob/living/carbon/proc/get_overlays_copy()

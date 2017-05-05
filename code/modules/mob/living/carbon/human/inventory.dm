@@ -924,10 +924,13 @@ It can still be worn/put on as normal.
 						W.add_fingerprint(source)
 		if("bandages")
 			for(var/obj/item/bodypart/BP in target.bodyparts)
+				var/update_limb_overlays = FALSE
 				for(var/datum/wound/W in BP.wounds)
 					if(W.bandaged)
 						W.bandaged = 0
-			target.update_bandage()
+						update_limb_overlays = TRUE
+				if(update_limb_overlays)
+					target.update_bodypart(BP.body_zone)
 		if("CPR")
 			if ((target.health > config.health_threshold_dead && target.health < config.health_threshold_crit))
 				var/suff = min(target.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.

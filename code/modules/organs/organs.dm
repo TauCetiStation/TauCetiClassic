@@ -431,7 +431,7 @@
 	// One cane mitigates a broken leg+foot, or a missing foot.
 	// Two canes are needed for a lost leg. If you are missing both legs, canes aren't gonna help you.
 	for(var/obj/item/bodypart/BP in bodypart_hands)
-		if(istype(BP.item_in_slot[1], /obj/item/weapon/cane))
+		if(istype(BP.item_in_slot[BP.inv_box_data[1]], /obj/item/weapon/cane))
 			stance_damage -= 2
 
 	// standing is poor
@@ -451,7 +451,7 @@
 			grasp_damage_disarm(BP)
 
 /mob/living/carbon/proc/grasp_damage_disarm(obj/item/bodypart/BP)
-	var/obj/item/thing = BP.item_in_slot[1]
+	var/obj/item/thing = BP.item_in_slot[BP.inv_box_data[1]]
 
 	if(!thing)
 		return

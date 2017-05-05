@@ -11,6 +11,8 @@
 			remove_overlays += dmg_overlay
 		if(srg_overlay)
 			remove_overlays += srg_overlay
+		if(bnd_overlay)
+			remove_overlays += bnd_overlay
 
 	if(remove_overlays.len)
 		overlays -= remove_overlays
@@ -102,13 +104,27 @@
 	if( (status & ORGAN_ROBOT) || damage_state == "00")
 		dmg_overlay = null
 	else
-		dmg_overlay = image(icon = species.damage_overlays, icon_state = "[body_zone]_[damage_state]", layer = -DAMAGE_LAYER + limb_layer_priority)
+		dmg_overlay = image(icon = species.damage_overlays, icon_state = "[body_zone]_[damage_state]", layer = -DAMAGE_LAYER)
 		dmg_overlay.color = species.blood_color
 
 	if(open)
 		srg_overlay = image(icon = 'icons/mob/surgery.dmi', icon_state = "[body_zone][round(open)]", layer = -SURGERY_LAYER)
 	else
 		srg_overlay = null
+
+	if(wounds.len)
+		var/found_bandaged_wound = FALSE
+		for(var/datum/wound/W in wounds)
+			if(W.bandaged)
+				found_bandaged_wound = TRUE
+				break
+		if(found_bandaged_wound)
+			if(!bnd_overlay)
+				bnd_overlay = image(icon = 'icons/mob/bandages.dmi', icon_state = "[body_zone]", layer = -BANDAGE_LAYER)
+		else
+			bnd_overlay = null
+	else
+		bnd_overlay = null
 
 	if(!owner)
 		if(lmb_overlay)
@@ -117,6 +133,8 @@
 			overlays += dmg_overlay
 		if(srg_overlay)
 			overlays += srg_overlay
+		if(bnd_overlay)
+			overlays += bnd_overlay
 
 /obj/item/bodypart/head/update_limb()
 	..()
@@ -181,6 +199,8 @@
 		standing += dmg_overlay
 	if(srg_overlay)
 		standing += srg_overlay
+	if(bnd_overlay)
+		standing += bnd_overlay
 	return standing
 
 /obj/item/bodypart/head/get_icon()
