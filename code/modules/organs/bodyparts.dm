@@ -1418,10 +1418,9 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 /obj/item/bodypart/groin/New(loc, mob/living/carbon/C)
 	..()
 
-	if(species.flags[HAS_TAIL] && species.tail)
-		tail = new (src)
+	if(species.flags[HAS_TAIL])
+		tail = new
 		tail.icon_state = species.tail
-		tail_overlay = image(icon = 'icons/effects/species.dmi', icon_state = "[species.tail]", layer = -TAIL_LAYER)
 
 /obj/item/bodypart/groin/take_damage(brute, burn, damage_flags, used_weapon = null)
 	. = ..()
@@ -1468,10 +1467,9 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	if(species.has_organ[BP_EYES])
 		eyes_overlay = image(icon = 'icons/mob/human_face.dmi', layer = -BODY_LAYER)
 
-	if(species.flags[HAS_EARS] && species.ears)
-		ears = new (src)
+	if(species.flags[HAS_EARS])
+		ears = new
 		ears.icon_state = species.ears
-		ears_overlay = image(icon = 'icons/effects/species.dmi', icon_state = "[species.ears]", layer = -BODY_LAYER + 0.1)
 
 /obj/item/bodypart/head/robotize()
 	. = ..()
@@ -1780,7 +1778,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	return ears
 
 /obj/item/bodypart/proc/detach_misc_part(obj/item/part, type = "fly", mob/attacker)
-	if(part)
+	if(istype(part))
 		part.forceMove(owner.loc)
 
 		var/matrix/M = matrix()
@@ -1822,3 +1820,18 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	. = ears
 	ears = null
 	return ..(.)
+
+/obj/item/bodypart/proc/attach_misc_part(obj/part)
+	return
+
+/obj/item/bodypart/groin/attach_misc_part(obj/item/tail/part, mob/user)
+	if(!tail && istype(part))
+		user.transferItemToLoc(part, null)
+		tail = part
+		owner.update_bodypart(body_zone)
+
+/obj/item/bodypart/head/attach_misc_part(obj/item/ears/part, mob/user)
+	if(!ears && istype(part))
+		user.transferItemToLoc(part, null)
+		ears = part
+		owner.update_bodypart(body_zone)

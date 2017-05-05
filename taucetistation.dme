@@ -1698,6 +1698,7 @@
 #include "code\modules\surgery\robotics.dm"
 #include "code\modules\surgery\slimes.dm"
 #include "code\modules\surgery\surgery.dm"
+#include "code\modules\surgery\tail_ears_modification.dm"
 #include "code\modules\surgery\~defines.dm"
 #include "code\modules\telesci\bscrystal.dm"
 #include "code\modules\telesci\gps.dm"

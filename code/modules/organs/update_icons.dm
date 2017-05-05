@@ -142,8 +142,9 @@
 	if(ears_overlay)
 		overlays -= ears_overlay
 
-		if(!ears)
-			return
+	if(ears)
+		if(!ears_overlay)
+			ears_overlay = image(icon = 'icons/effects/species.dmi', icon_state = "[ears.icon_state]", layer = -BODY_LAYER + 0.1)
 
 		if(owner)
 			ears_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_skin/255, owner.g_skin/255, owner.b_skin/255)
@@ -159,8 +160,11 @@
 
 	overlays -= tail_overlay
 
-	if(!tail || !tail_overlay)
+	if(!tail)
 		return
+
+	if(!tail_overlay)
+		tail_overlay = image(icon = 'icons/effects/species.dmi', icon_state = "[tail.icon_state]", layer = -TAIL_LAYER)
 
 	if(owner)
 		tail_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_skin/255, owner.g_skin/255, owner.b_skin/255)

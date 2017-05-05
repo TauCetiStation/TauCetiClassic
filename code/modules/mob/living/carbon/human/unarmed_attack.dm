@@ -289,10 +289,10 @@ var/global/list/sparring_attack_cache = list()
 	edge = 1
 
 /datum/unarmed_attack/claws/show_attack(mob/living/carbon/human/user, mob/living/carbon/human/target, zone, attack_damage)
-	var/skill = user.skills["combat"]
+	//var/skill = user.skills["combat"] we have no skills at this moment.
 	var/obj/item/bodypart/BP = target.get_bodypart(zone)
 
-	if(!skill)	skill = 1
+	//if(!skill)	skill = 1
 	attack_damage = Clamp(attack_damage, 1, 5)
 
 	if(target == user)
