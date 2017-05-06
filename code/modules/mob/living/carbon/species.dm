@@ -154,15 +154,14 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 	else
 		for(var/type in has_bodypart)
 			var/status = organ_data[type]
-			if(status)
-				if(status == "amputated")
-					var/obj/item/bodypart/path = has_bodypart[type]
-					var/obj/item/bodypart/stump/stump = new (null, C, path)
-					stump.status |= ORGAN_CUT_AWAY
-					continue
+			if(status == "amputated")
+				var/obj/item/bodypart/path = has_bodypart[type]
+				var/obj/item/bodypart/stump/stump = new (null, C, path)
+				stump.status |= ORGAN_CUT_AWAY
+				continue
 
 			var/path = has_bodypart[type]
-			new path(null, C)
+			new path(null, C, null, status == "cyborg")
 
 	for(var/type in has_organ)
 		var/path = has_organ[type]

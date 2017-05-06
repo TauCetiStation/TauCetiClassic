@@ -390,14 +390,17 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/get_equipped_items()
 	return null
 
-/mob/living/carbon/get_equipped_items(pockets = TRUE)
+/mob/living/carbon/get_equipped_items(include_pockets = TRUE, include_hands = TRUE)
 	var/list/items = list()
 	var/list/pocket_slots = list(slot_l_store, slot_r_store) // pockets should be moved inside uniform itself.
-	if(!pockets)
+	var/list/hand_slots = list(slot_l_hand, slot_r_hand)
+	if(include_pockets)
 		pocket_slots.Cut()
+	if(include_hands)
+		hand_slots.Cut()
 
 	for(var/obj/item/bodypart/BP in bodyparts)
-		for(var/slot in BP.item_in_slot - pocket_slots)
+		for(var/slot in BP.item_in_slot - pocket_slots - hand_slots)
 			if(BP.item_in_slot[slot])
 				items += BP.item_in_slot[slot]
 

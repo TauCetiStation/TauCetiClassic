@@ -3,6 +3,7 @@
 #define STOPS_LOWPRESSUREDMAGE  2    //To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
 #define STOPS_PRESSUREDMAGE     3    //Used against both, high and low pressure.
 
+#define NOLIMB -1 // related to THICKMATERIAL check, thats why this is here.
 //FLAGS BITMASK
 #define NOBLUDGEON        2    // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 #define MASKINTERNALS     4    // Mask allows internals.

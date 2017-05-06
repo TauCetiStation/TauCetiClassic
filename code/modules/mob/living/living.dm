@@ -380,8 +380,8 @@
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
 
-/mob/living/proc/can_inject()
-	return 1
+/mob/living/proc/try_inject()
+	return TRUE
 
 /mob/living/proc/get_bodypart_target()
 	var/mob/shooter = src

@@ -118,11 +118,14 @@ proc/RoundHealth(health)
 			return "health-100"
 	return "0"
 
-/proc/do_mob(mob/user , mob/target, time = 30, target_zone = 0, uninterruptible = FALSE, progress = TRUE, target_slot) // see is_busy() proc for explanation on what is target_slot.
+/proc/do_mob(mob/user , mob/target, time = 30, target_zone = FALSE, uninterruptible = FALSE, progress = TRUE, target_slot) // see is_busy() proc for explanation on what is target_slot.
 	if(!user || !target)
 		return FALSE
 
 	user.busy_with_action = TRUE
+
+	if(target_zone)
+		target_zone = user.zone_sel.selecting
 
 	if(target_slot)
 		target.busy_slot = target_slot

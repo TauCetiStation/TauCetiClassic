@@ -131,10 +131,10 @@
 	onclose(src, "airoster")
 
 //can't inject synths
-/mob/living/silicon/can_inject(mob/user, error_msg)
+/mob/living/silicon/try_inject(mob/user, error_msg)
 	if(error_msg)
 		to_chat(user, "<span class='alert'>The armoured plating is too tough.</span>")
-	return 0
+	return FALSE
 
 
 //Silicon mob language procs

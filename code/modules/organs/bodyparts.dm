@@ -103,7 +103,7 @@
 	var/robot_manufacturer_name = null
 	var/robot_manufacturer_icon = null // cyberlimbs appearance.
 
-/obj/item/bodypart/New(loc, mob/living/carbon/C, specie = S_HUMAN, robotic) // arg C or specie or both must always exist.
+/obj/item/bodypart/New(loc, mob/living/carbon/C, specie, robotic)
 	if(!max_damage)
 		max_damage = min_broken_damage * 2
 
@@ -116,7 +116,8 @@
 		species = C.species
 
 	if(!species)
-		CRASH("[src] created without specie.")
+		species = all_species[S_HUMAN]
+		//CRASH("[src] created without specie.")
 
 	generate_hud_data()
 
