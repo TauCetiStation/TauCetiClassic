@@ -152,6 +152,7 @@ There are several things that need to be remembered:
 
 //HAIR OVERLAY
 /mob/living/carbon/proc/update_hair()
+	/*
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
@@ -185,11 +186,12 @@ There are several things that need to be remembered:
 	if(standing.len)
 		overlays_standing[HAIR_LAYER]	= standing
 
-	apply_overlay(HAIR_LAYER)
+	apply_overlay(HAIR_LAYER)*/
 
 
 /mob/living/carbon/update_mutations()
 	remove_overlay(MUTATIONS_LAYER)
+
 	var/fat
 	if(disabilities & FAT)
 		fat = "fat"
@@ -201,31 +203,16 @@ There are several things that need to be remembered:
 		if(!gene.block)
 			continue
 		if(gene.is_active(src))
-			var/image/underlay = image("icon"='icons/effects/genetics.dmi', "icon_state"=gene.OnDrawUnderlays(src,g,fat), "layer"=-MUTATIONS_LAYER)
+			var/image/underlay = image(icon = 'icons/effects/genetics.dmi', icon_state = gene.OnDrawUnderlays(src,g,fat), layer = -MUTATIONS_LAYER) // unified sprites required i think, so it will look good even on slime.
 			if(underlay)
 				standing += underlay
-	for(var/mut in mutations)
-		switch(mut)
-			/*
-			if(HULK)
-				if(fat)
-					standing.underlays	+= "hulk_[fat]_s"
-				else
-					standing.underlays	+= "hulk_[g]_s"
-			if(COLD_RESISTANCE)
-				standing.underlays	+= "fire[fat]_s"
-			if(TK)
-				standing.underlays	+= "telekinesishead[fat]_s"
-			*/
-			if(LASER_EYES)
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-MUTATIONS_LAYER)
+
 	if(standing.len)
 		overlays_standing[MUTATIONS_LAYER]	= standing
-
-	apply_overlay(MUTATIONS_LAYER)
-
+		apply_overlay(MUTATIONS_LAYER)
 
 /mob/living/carbon/proc/update_mutantrace()
+	/*
 	remove_overlay(MUTANTRACE_LAYER)
 
 	var/fat
@@ -254,7 +241,7 @@ There are several things that need to be remembered:
 
 	update_hair()
 
-	apply_overlay(MUTANTRACE_LAYER)
+	apply_overlay(MUTANTRACE_LAYER)*/
 
 
 //Call when target overlay should be added/removed

@@ -1459,12 +1459,21 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	artery_name = "cartoid artery"
 
 	var/can_intake_reagents = TRUE
+	var/image/h_style_overlay
+	var/image/f_style_overlay
 	var/image/eyes_overlay
 	var/image/ears_overlay
 	var/obj/item/ears/ears
 
 /obj/item/bodypart/head/New(loc, mob/living/carbon/C)
 	..()
+
+	if(owner)
+		if(owner.h_style)
+			h_style_overlay = image(layer = -HAIR_LAYER)
+
+		if(owner.f_style)
+			f_style_overlay = image(layer = -HAIR_LAYER)
 
 	if(species.has_organ[BP_EYES])
 		eyes_overlay = image(icon = 'icons/mob/human_face.dmi', layer = -BODY_LAYER)

@@ -139,14 +139,48 @@
 /obj/item/bodypart/head/update_limb()
 	..()
 
+	var/list/remove_overlays = list()
+
+	if(!owner)
+		if(h_style_overlay)
+			remove_overlays += h_style_overlay
+		if(f_style_overlay)
+			remove_overlays += f_style_overlay
+		if(eyes_overlay)
+			remove_overlays += eyes_overlay
+		if(ears_overlay)
+			remove_overlays += ears_overlay
+
+	if(remove_overlays.len)
+		overlays -= remove_overlays
+
+
 	var/list/standing = list()
 
-	if(eyes_overlay)
-		overlays -= eyes_overlay
+	if(owner)
+		if( !((owner.disabilities & HUSK) || owner.head && (owner.head.flags & BLOCKHAIR) || owner.wear_mask && (owner.wear_mask.flags & BLOCKHAIR) || owner.wear_suit && (owner.wear_suit.flags & BLOCKHAIR)) )
 
-		if(!species.eyes_icon)
-			return
+			if(owner.h_style)
+				if(h_style_overlay)
+					var/datum/sprite_accessory/hair_style = hair_styles_list[owner.h_style]
+					if(hair_style && hair_style.species_allowed && (species.name in hair_style.species_allowed))
+						h_style_overlay.icon = hair_style.icon
+						h_style_overlay.icon_state = hair_style.icon_state + "_s"
+						if(hair_style.do_colouration)
+							h_style_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_hair/255, owner.g_hair/255, owner.b_hair/255)
+						standing += h_style_overlay
 
+			if(owner.f_style)
+				if(f_style_overlay)
+					var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[owner.f_style]
+					if(facial_hair_style && facial_hair_style.species_allowed && (species.name in facial_hair_style.species_allowed))
+						f_style_overlay.icon = facial_hair_style.icon
+						f_style_overlay.icon_state = facial_hair_style.icon_state + "_s"
+						if(facial_hair_style.do_colouration)
+							f_style_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_facial/255, owner.g_facial/255, owner.b_facial/255)
+						standing += f_style_overlay
+
+	if(eyes_overlay && species.eyes_icon)
 		var/obj/item/organ/eyes/IO = get_organ(BP_EYES)
 		if(!IO)
 			eyes_overlay.icon_state = "eyes_missing"
@@ -156,9 +190,6 @@
 				eyes_overlay.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
 
 		standing += eyes_overlay
-
-	if(ears_overlay)
-		overlays -= ears_overlay
 
 	if(ears)
 		if(!ears_overlay)
@@ -205,6 +236,10 @@
 
 /obj/item/bodypart/head/get_icon()
 	. = ..()
+	if(h_style_overlay)
+		. += h_style_overlay
+	if(f_style_overlay)
+		. += f_style_overlay
 	if(species.eyes_icon && eyes_overlay)
 		. += eyes_overlay
 	if(ears && ears_overlay)
