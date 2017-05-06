@@ -483,7 +483,25 @@
 	return
 
 /mob/living/carbon/show_inv(mob/living/carbon/user)
+	var/dat
+
+	for(var/obj/item/bodypart/BP in bodyparts)
+		dat += BP.get_inv_menu(user)
+
+	if(!dat)
+		return
+
+	dat += "<br><br><a href='?src=\ref[src];refresh=1'>Refresh</a>"
+	dat += "<br><a href='?src=\ref[src];mach_close=mob_inventory'>Close</a>"
+
 	user.set_machine(src)
+
+	var/datum/browser/popup = new(user, "mob_inventory", name, 500, 600)
+	popup.set_content(dat)
+	popup.open()
+
+/*
+
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>
@@ -500,7 +518,7 @@
 	user << browse(dat, text("window=mob[];size=325x500", name))
 	onclose(user, "mob[name]")
 	return
-
+*/
 //generates realistic-ish pulse output based on preset levels
 /mob/living/carbon/proc/get_pulse(method)	//method 0 is for hands, 1 is for machines, more accurate
 	var/temp = 0

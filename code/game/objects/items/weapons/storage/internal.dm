@@ -42,17 +42,16 @@
 		return FALSE
 
 	if (ishuman(user) || ismonkey(user) || isIAN(user)) //so monkeys can take off their backpacks -- Urist
-		var/mob/M = user
 
-		if (istype(M.loc, /obj/mecha)) // stops inventory actions in a mech
+		if (istype(user.loc, /obj/mecha)) // stops inventory actions in a mech
 			return FALSE
 
-		if(M.incapacitated())
+		if(user.incapacitated())
 			return FALSE
 
 		// this must come before the screen objects only block
-		if(over_object == M && (src.ClickAccessible(M, depth = STORAGE_VIEW_DEPTH) || Adjacent(M))) // tgstation if(...)
-			src.open(M)
+		if(over_object == user && (src.ClickAccessible(user, depth = STORAGE_VIEW_DEPTH) || Adjacent(user))) // tgstation if(...)
+			src.open(user)
 			return FALSE
 
 		if (!( istype(over_object, /obj/screen) ))
@@ -60,19 +59,21 @@
 
 		//makes sure master_item is equipped before putting it in hand, so that we can't drag it into our hand from miles away.
 		//there's got to be a better way of doing this...
-		if (master_item.loc != M || (master_item.loc && master_item.loc.loc == M))
+		if (master_item.loc != user || (master_item.loc && master_item.loc.loc == user))
 			return FALSE
 
 		switch(over_object.name)
-			if("r_hand", "l_hand", "mouth")
+			if("r_hand", "l_hand")
 				var/obj/screen/inventory/S = over_object
-				if(!M.dropItemToGround(master_item))
+				if(master_item.un_equip_time && !do_mob(user, user, master_item.un_equip_time, target_slot = master_item.slot_equipped))
+					return
+				if(!user.dropItemToGround(master_item))
 					return FALSE
 				if(!isBODYPART(S.master))
 					return FALSE
-				if(!M.equip_to_slot_if_possible(master_item, S.slot_id))
+				if(!user.equip_to_slot_if_possible(master_item, S.slot_id))
 					return FALSE
-		master_item.add_fingerprint(M)
+		master_item.add_fingerprint(user)
 		return TRUE
 	return FALSE
 

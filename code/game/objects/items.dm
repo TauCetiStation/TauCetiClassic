@@ -37,6 +37,7 @@
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 	var/item_color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
+	var/un_equip_time = 0 // unequip / equip delay.
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
@@ -159,7 +160,7 @@
 	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
-	if (!user || user.is_busy())
+	if (!user || user.is_busy(user, slot_equipped, TRUE))
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
@@ -202,25 +203,12 @@
 
 	src.throwing = 0
 	if(src.loc == user)
-		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		//if(!do_after(user, w_class * 15, target = src)) // TODO implement delays for equip/unequip process (leaving this and commented code below here so i don't forget about that.)
-		//	return 0
 		if(!src.canremove)
 			return
-		//if(istype(user,/mob/living/carbon/human))
-		//	var/mob/living/carbon/human/H = user
-		//	if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-		//		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-		//			if(V.stealth_active)
-		//				V.DeactivateStealth()
-		//	if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-		//		if(!user.delay_clothing_u_equip(src))
-		//			return 0
-		//	else
-		//		user.remove_from_mob(src)
-		//else
-		//	user.remove_from_mob(src)
-		user.remove_from_mob(src)
+		if(un_equip_time && !do_mob(user, user, un_equip_time, target_slot = slot_equipped))
+			return
+		if(!remove_from(FALSE, user, FALSE, user))
+			return
 	else
 		if(isliving(src.loc))
 			return
@@ -347,7 +335,7 @@
 /obj/item/proc/equipped(mob/user, slot)
 	return
 
-//the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
+//the mob C is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(mob/living/carbon/C, slot, disable_warning = FALSE)
@@ -355,8 +343,18 @@
 		return FALSE
 
 	if(istype(C))
-		var/obj/item/bodypart/BP = C.get_BP_by_slot(slot)
-		if(BP && BP.can_hold(src, slot, disable_warning = FALSE))
+		return limb_can_equip(C.get_BP_by_slot(slot), slot, disable_warning)
+	return FALSE
+
+/obj/item/proc/limb_can_equip(obj/item/bodypart/BP, slot, disable_warning = FALSE)
+	if(!slot || !BP)
+		return FALSE
+
+	if(istype(BP))
+		if(BP.can_hold(src, slot, disable_warning = FALSE))
+			var/list/obscured = BP.check_obscured_slots()
+			if(obscured && obscured[slot])
+				return FALSE
 			return TRUE
 
 	return FALSE

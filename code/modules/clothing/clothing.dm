@@ -1,8 +1,8 @@
 
 /obj/item/clothing
 	name = "clothing"
+	un_equip_time = 10
 	var/list/species_restricted = null //Only these species can wear this kit.
-	var/equip_time = 0
 	var/equipping = 0
 	var/rig_restrict_helmet = 0 // Stops the user from equipping a rig helmet without attaching it to the suit first.
 	var/gang //Is this a gang outfit?
@@ -288,6 +288,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.9
 	w_class = 3
 	sprite_sheets = list(S_VOX = 'icons/mob/species/vox/suit.dmi')
+	un_equip_time = 15
 
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
@@ -308,6 +309,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", S_DIONA, S_VOX)
 	sprite_sheets = list(S_VOX = 'icons/mob/species/vox/head.dmi')
+	un_equip_time = 30
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -322,13 +324,13 @@ BLIND     // can't see anything
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)
 	slowdown = 3
-	equip_time = 100 // Bone White - time to equip/unequip. see /obj/item/attack_hand (items.dm) and /obj/item/clothing/mob_can_equip (clothing.dm)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", S_DIONA, S_VOX)
+	un_equip_time = 100
 
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
 
@@ -426,8 +428,10 @@ BLIND     // can't see anything
 
 		if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory))
 			switch(over_object.name)
-				if("r_hand", "l_hand", "mouth")
+				if("r_hand", "l_hand")
 					var/obj/screen/inventory/S = over_object
+					if(un_equip_time && !do_mob(M, M, un_equip_time, target_slot = slot_equipped))
+						return
 					if(!M.dropItemToGround(src))
 						return
 					if(!isBODYPART(S.master))

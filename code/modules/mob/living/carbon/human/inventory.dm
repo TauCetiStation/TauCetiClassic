@@ -14,15 +14,15 @@
 	//		src << "\red You must fasten the helmet to a hardsuit first. (Target the head)" // Stop eva helms equipping.
 	//		return 0
 
-		if(istype(I, /obj/item/clothing/suit/space)) // If the item to be equipped is a space suit
-			if(H.wear_suit)
-				to_chat(H, "<span class='warning'>You need to take off [H.wear_suit.name] first.</span>")
-				return
-			else
-				var/obj/item/clothing/suit/space/rig/J = I
-				if(J.equip_time > 0)
-					delay_clothing_equip_to_slot_if_possible(J, 13)  // 13 = suit slot
-					return 0
+		//if(istype(I, /obj/item/clothing/suit/space)) // If the item to be equipped is a space suit
+		//	if(H.wear_suit)
+		//		to_chat(H, "<span class='warning'>You need to take off [H.wear_suit.name] first.</span>")
+		//		return
+		//	else
+		//		var/obj/item/clothing/suit/space/rig/J = I
+		//		if(J.equip_time > 0)
+		//			delay_clothing_equip_to_slot_if_possible(J, 13)  // 13 = suit slot
+		//			return 0
 
 		if(H.equip_to_appropriate_slot(I))
 			// Do nothing (actually, mob overlays update was here and equip proc will do that itself now).
@@ -231,21 +231,33 @@
 	if(!slot || !istype(W))
 		return FALSE
 
-	var/obj/item/bodypart/BP = get_BP_by_slot(slot)
-	if(!BP)
+	W.equip_to_slot(get_BP_by_slot(slot), slot)
+
+/obj/item/bodypart/equip_to_slot(obj/item/W, slot)
+	if(!slot || !istype(W))
+		return
+
+	W.equip_to_slot(src, slot)
+
+/obj/item/proc/equip_to_slot(obj/item/bodypart/BP, slot)
+	if(!slot || !istype(BP))
 		return FALSE
 
-	u_equip(W) // So items actually disappear from hands.
+	u_equip() // So items actually disappear from hands.
 
-	W.loc = src
+	if(BP.owner)
+		loc = BP.owner
+		equipped(BP.owner, slot)
+	else
+		loc = BP
+		equipped(BP, slot)
 
-	BP.item_in_slot[slot] = W
-	W.equipped(src, slot)
-	W.slot_equipped = slot
-	W.slot_bodypart = BP
-	W.layer = ABOVE_HUD_LAYER
-	W.plane = ABOVE_HUD_PLANE
-	W.appearance_flags = APPEARANCE_UI
+	BP.item_in_slot[slot] = src
+	slot_equipped = slot
+	slot_bodypart = BP
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
+	appearance_flags = APPEARANCE_UI
 	BP.update_inv_limb(slot)
 
 /*
@@ -420,13 +432,16 @@
 				return TRUE
 			return FALSE
 		if(slot_handcuffed)
-			if(owner && owner.handcuffed || item_in_slot[slot_handcuffed])
+			if(!owner)
+				return FALSE
+			else if(owner.bodypart_hands.len < 2)
 				return FALSE
 			if(!istype(I, /obj/item/weapon/handcuffs))
 				return FALSE
 			return TRUE
 		if(slot_legcuffed)
-			if(owner && owner.legcuffed || item_in_slot[slot_legcuffed])
+			if(!owner)
+			else if(owner.bodypart_legs.len < 2)
 				return FALSE
 			if(!istype(I, /obj/item/weapon/legcuffs))
 				return FALSE

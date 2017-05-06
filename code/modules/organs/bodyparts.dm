@@ -103,7 +103,7 @@
 	var/robot_manufacturer_name = null
 	var/robot_manufacturer_icon = null // cyberlimbs appearance.
 
-/obj/item/bodypart/New(loc, mob/living/carbon/C, specie, robotic) // arg C or specie or both must always exist.
+/obj/item/bodypart/New(loc, mob/living/carbon/C, specie = S_HUMAN, robotic) // arg C or specie or both must always exist.
 	if(!max_damage)
 		max_damage = min_broken_damage * 2
 
@@ -120,10 +120,10 @@
 
 	generate_hud_data()
 
-	if(C)
-		if(species.flags[IS_SYNTHETIC] || robotic)
-			status |= ORGAN_ROBOT
+	if(species.flags[IS_SYNTHETIC] || robotic)
+		status |= ORGAN_ROBOT
 
+	if(C)
 		w_class = max(w_class + mob_size_difference(C.mob_size, MOB_MEDIUM), 1) //smaller mobs have smaller bodyparts.
 		inserted(C)
 

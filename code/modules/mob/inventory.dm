@@ -1,5 +1,7 @@
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
+	if(is_busy(src, slot, TRUE))
+		return
 	var/obj/item/W = get_active_hand()
 	if(istype(W))
 		//if(isIAN(src))
@@ -12,6 +14,8 @@
 			if(C.rig_restrict_helmet)
 				to_chat(src, "<span class='red'>You must fasten the helmet to a hardsuit first. (Target the head)</span>")// Stop eva helms equipping.
 			else
+				if(W.un_equip_time && !do_mob(src, src, W.un_equip_time, target_slot = slot))
+					return
 				//if(C.equip_time > 0)
 				//	delay_clothing_equip_to_slot_if_possible(C, slot)
 				//else
@@ -36,20 +40,32 @@
 	if(!istype(W))
 		return FALSE
 
-	if(!W.mob_can_equip(src, slot, disable_warning))
-		if(del_on_fail)
-			qdel(W)
-		else
-			if(!disable_warning)
-				to_chat(src, "<span class='red'>You are unable to equip that.</span>")//Only print if del_on_fail is false
+	return W.equip_to_slot_if_possible(src, get_BP_by_slot(slot), slot, del_on_fail, disable_warning, redraw_mob)
+
+/obj/item/bodypart/equip_to_slot_if_possible(mob/user, obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+	if(!istype(W))
 		return FALSE
 
-	if(slot == slot_in_backpack) // Mostly used by datum/job/equip() proc. Also, this slot in reality does not exist, its just a shortcut for special inventory (backpack) manipulation.
-		var/obj/item/I = get_equipped_item(slot_back)
-		W.loc = I
-		return TRUE
+	return W.equip_to_slot_if_possible(user, src, slot, del_on_fail, disable_warning, redraw_mob)
 
-	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+/obj/item/proc/equip_to_slot_if_possible(mob/user, obj/item/bodypart/BP, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+	if(!limb_can_equip(BP, slot, disable_warning))
+		if(del_on_fail)
+			qdel(src)
+		else
+			if(!disable_warning && user)
+				to_chat(user, "<span class='red'>You are unable to equip that.</span>")//Only print if del_on_fail is false
+		return FALSE
+
+	if(slot == slot_in_backpack && user) // Mostly used by datum/job/equip() proc. Also, this slot in reality does not exist, its just a shortcut for special inventory (backpack) manipulation.
+		var/obj/item/backpack = user.get_equipped_item(slot_back)
+		if(backpack)
+			loc = backpack
+			return TRUE
+		else
+			return FALSE
+
+	equip_to_slot(BP, slot, redraw_mob) //This proc should not ever fail.
 	return TRUE
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
@@ -296,19 +312,20 @@ var/list/slot_equipment_priority = list( \
 	As far as I can tell the proc exists so that mobs with different inventory slots can override
 	the search through all the slots, without having to duplicate the rest of the item dropping.
 */
-/mob/proc/u_equip(obj/item/I)
+
+/mob/proc/u_equip()
 	return
 
-/mob/living/carbon/u_equip(obj/item/I) // this proc is only for cleaning references and updating mob/bodypart overlays.
-	if(!I || !I.slot_bodypart)
+/obj/item/proc/u_equip() // this proc is only for cleaning references and updating mob/bodypart overlays.
+	if(!slot_bodypart)
 		return
 
-	I.slot_bodypart.unequip_chain(I.slot_equipped)
-	I.slot_bodypart.item_in_slot[I.slot_equipped] = null
-	I.slot_bodypart.update_inv_limb(I.slot_equipped)
-	I.slot_equipped = null
-	I.slot_bodypart = null
-	I.screen_loc = null
+	slot_bodypart.unequip_chain(slot_equipped)
+	slot_bodypart.item_in_slot[slot_equipped] = null
+	slot_bodypart.update_inv_limb(slot_equipped)
+	slot_equipped = null
+	slot_bodypart = null
+	screen_loc = null
 
 //The following functions are the same save for one small difference
 
@@ -336,19 +353,27 @@ var/list/slot_equipment_priority = list( \
 	if(!I) // If there's nothing to drop, the drop is automatically successful.
 		return TRUE
 
-	if(!I.canremove && !force)
-		return FALSE
+	return I.remove_from(force, newloc, no_move, src)
 
-	u_equip(I)
+/obj/item/proc/remove_from(force, newloc, no_move, mob/user)
+	if(!force)
+		if(!canremove)
+			return FALSE
+		if(slot_bodypart)
+			var/list/obscured = slot_bodypart.check_obscured_slots()
+			if(obscured && obscured[slot_equipped])
+				return FALSE
 
-	if (client)
-		client.screen -= I
-	I.layer = initial(I.layer)
-	I.plane = initial(I.plane)
-	I.appearance_flags = 0
-	if(!no_move && !(I.flags & DROPDEL)) // item may be moved/qdel'd immedietely, don't bother moving it
-		I.forceMove(newloc)
-	I.dropped(src)
+	u_equip()
+
+	if(user && user.client)
+		user.client.screen -= src
+	layer = initial(layer)
+	plane = initial(plane)
+	appearance_flags = 0
+	if(!no_move && !(flags & DROPDEL)) // item may be moved/qdel'd immedietely, don't bother moving it
+		forceMove(newloc)
+	dropped(user)
 	return TRUE
 
 //Returns the item equipped to the specified slot, if any.
@@ -386,93 +411,69 @@ var/list/slot_equipment_priority = list( \
 
 	var/list/items = get_equipped_items()
 	for(var/obj/item/I in items)
-		if(I.slot_equipped == slot_wear_suit)
-			if(I.flags_inv & HIDEGLOVES)
-				obscured[slot_gloves] = TRUE
-			if(I.flags_inv & HIDEJUMPSUIT)
-				obscured[slot_w_uniform] = TRUE
-			if(I.flags_inv & HIDESHOES)
-				obscured[slot_shoes] = TRUE
-
-		if(I.slot_equipped == slot_head)
-			if(I.flags_inv & HIDEMASK)
-				obscured[slot_wear_mask] = TRUE
-			if(I.flags_inv & HIDEEYES)
-				obscured[slot_glasses] = TRUE
-			if(I.flags_inv & HIDEEARS)
-				obscured[slot_l_ear] = TRUE
-				obscured[slot_r_ear] = TRUE
-			if(I.flags_inv & HIDEFACE)
-				obscured["hideface"] = TRUE
-
-		if(I.slot_equipped == slot_wear_mask)
-			if(I.flags_inv & HIDEMASK)
-				obscured[slot_wear_mask] = TRUE
-			if(I.flags_inv & HIDEFACE)
-				obscured["hideface"] = TRUE
-
-		if(I.body_parts_covered)
-			obscured["flags"] |= I.body_parts_covered
+		obscured += I.return_obscured_slots()
 
 	if(obscured.len)
 		return obscured
 	else
 		return null
 
-//Create delay for equipping
-/mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/
-	return
+/obj/item/bodypart/proc/check_obscured_slots()
+	var/list/obscured = list()
 
-/mob/living/carbon/delay_clothing_u_equip(obj/item/clothing/C)
-	if(!istype(C)) return 0
+	for(var/slot in item_in_slot)
+		var/obj/item/I = item_in_slot[slot]
+		if(I)
+			obscured += I.return_obscured_slots()
 
-	if(C.equipping) return 0 // Item is already being (un)equipped
+	if(obscured.len)
+		return obscured
+	else
+		return null
 
-	var/tempX = usr.x
-	var/tempY = usr.y
-	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
-	C.equipping = 1
-	var/equip_time = round(C.equip_time/10)
-	var/i
-	for(i=1; i<=equip_time; i++)
-		sleep (10) // Check if they've moved every 10 time units
-		if ((tempX != usr.x) || (tempY != usr.y))
-			to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
-			C.equipping = 0
-			return 0
-	remove_from_mob(C)
-	to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
-	C.equipping = 0
+/obj/item/proc/return_obscured_slots()
+	var/list/obscured = list()
 
-/mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
-	return
+	switch(slot_equipped)
+		if(slot_wear_suit)
+			if(flags_inv & HIDEGLOVES)
+				obscured[slot_gloves] = TRUE
+			if(flags_inv & HIDEJUMPSUIT)
+				obscured[slot_w_uniform] = TRUE
+				obscured[slot_undershirt] = TRUE
+				obscured[slot_underwear] = TRUE
+			if(flags_inv & HIDESHOES)
+				obscured[slot_shoes] = TRUE
+				obscured[slot_socks] = TRUE
 
-/mob/living/carbon/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
-	if(!istype(C)) return 0
+		if(slot_w_uniform)
+			obscured[slot_undershirt] = TRUE
+			obscured[slot_underwear] = TRUE
 
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		if(H.wear_suit)
-			to_chat(H, "<span class='red'>You need to take off [H.wear_suit.name] first.</span>")
-			return
+		if(slot_shoes)
+			obscured[slot_socks] = TRUE
 
-	if(C.equipping) return 0 // Item is already being equipped
+		if(slot_head)
+			if(flags_inv & HIDEMASK)
+				obscured[slot_wear_mask] = TRUE
+			if(flags_inv & HIDEEYES)
+				obscured[slot_glasses] = TRUE
+			if(flags_inv & HIDEEARS)
+				obscured[slot_l_ear] = TRUE
+				obscured[slot_r_ear] = TRUE
+			if(flags_inv & HIDEFACE)
+				obscured["hideface"] = TRUE
 
-	var/tempX = usr.x
-	var/tempY = usr.y
-	to_chat(usr, "<span class='notice'>You start equipping the [C].</span>")
-	C.equipping = 1
-	var/equip_time = round(C.equip_time/10)
-	var/i
-	for(i=1; i<=equip_time; i++)
-		sleep (10) // Check if they've moved every 10 time units
-		if ((tempX != usr.x) || (tempY != usr.y))
-			to_chat(src, "<span class='red'>\The [C] is too fiddly to fasten whilst moving.</span>")
-			C.equipping = 0
-			return 0
-	equip_to_slot_if_possible(C, slot)
-	to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
-	C.equipping = 0
+		if(slot_wear_mask)
+			if(flags_inv & HIDEMASK)
+				obscured[slot_wear_mask] = TRUE
+			if(flags_inv & HIDEFACE)
+				obscured["hideface"] = TRUE
+
+	if(body_parts_covered)
+		obscured["flags"] |= body_parts_covered
+
+	return obscured
 
 /mob/proc/get_item_by_slot(slot_id)
 	return

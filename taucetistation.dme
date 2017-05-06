@@ -1427,6 +1427,7 @@
 #include "code\modules\orbit\orbit.dm"
 #include "code\modules\organs\blood.dm"
 #include "code\modules\organs\bodyparts.dm"
+#include "code\modules\organs\inventory.dm"
 #include "code\modules\organs\organs.dm"
 #include "code\modules\organs\pain.dm"
 #include "code\modules\organs\update_icons.dm"

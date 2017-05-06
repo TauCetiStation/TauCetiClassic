@@ -35,6 +35,9 @@
 				inv_slots_data[slot_name] = null
 			item_in_slot["[slot_name]"] = null
 
+/obj/item/bodypart/stump/generate_hud_data(datum/species/specie)
+	return
+
 /*
 	Makes inventory hud to actually appear on players screen (used when player logins into the mob).
 */

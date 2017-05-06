@@ -304,6 +304,8 @@
 
 
 /mob/living/carbon/human/show_inv(mob/user)
+	return ..()
+
 	var/obj/item/clothing/under/suit = null
 	if (istype(w_uniform, /obj/item/clothing/under))
 		suit = w_uniform
@@ -372,7 +374,7 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if (href_list["refresh"])
-		if((machine)&&(in_range(src, usr)))
+		if(machine && in_range(src, usr))
 			show_inv(machine)
 
 	if (href_list["mach_close"])
