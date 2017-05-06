@@ -33,9 +33,16 @@
 	var/rejecting // Is this organ already being rejected?
 
 
-/obj/item/organ/New(loc, mob/living/carbon/C)
+/obj/item/organ/New(loc, mob/living/carbon/C, status)
 	if(!max_damage)
 		max_damage = min_broken_damage * 2
+
+	if(status)
+		switch(status)
+			if("Assisted")
+				mechassist()
+			if("Mechanical")
+				mechanize()
 
 	if(istype(C))
 		inserted(C)

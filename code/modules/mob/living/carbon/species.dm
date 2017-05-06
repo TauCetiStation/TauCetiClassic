@@ -151,6 +151,10 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 		for(var/type in has_bodypart)
 			var/path = has_bodypart[type]
 			new path(null, C)
+
+		for(var/type in has_organ)
+			var/path = has_organ[type]
+			new path(null, C)
 	else
 		for(var/type in has_bodypart)
 			var/status = organ_data[type]
@@ -163,9 +167,10 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 			var/path = has_bodypart[type]
 			new path(null, C, null, status == "cyborg")
 
-	for(var/type in has_organ)
-		var/path = has_organ[type]
-		new path(null, C)
+		for(var/type in has_organ)
+			var/path = has_organ[type]
+			new path(null, C, organ_data[type])
+
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/C) //Handles anything not already covered by basic species assignment.
 	return
