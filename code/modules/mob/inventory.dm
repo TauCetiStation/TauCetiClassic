@@ -168,70 +168,12 @@ var/list/slot_equipment_priority = list( \
 
 //Checks if thing in mob's hands
 /mob/living/carbon/proc/is_in_hands(typepath)
-	if(istype(l_hand,typepath))
-		return l_hand
-	if(istype(r_hand,typepath))
-		return r_hand
-	return 0
-
-//Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_l_hand(obj/item/W)
-	return
-
-//Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_r_hand(obj/item/W)
-	return
-
-/*
-/mob/living/carbon/put_in_l_hand(obj/item/W)
-	if(lying && !(W.flags&ABSTRACT))
-		return 0
-	if(!istype(W))
-		return 0
-	if(W.anchored)
-		return 0 // Anchored things shouldn't be picked up because they... anchored?!
-	if(!iscarbon(src)) // TODO actual hands check?
-		return FALSE
-
-	if(!l_hand)
-		W.loc = src		//TODO: move to equipped?
-		l_hand = W
-		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
-		W.plane = ABOVE_HUD_PLANE
-		W.appearance_flags = APPEARANCE_UI
-//		l_hand.screen_loc = ui_lhand
-		W.equipped(src,slot_l_hand)
-		if(client)	client.screen |= W
-		if(pulling == W) stop_pulling()
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
-		return 1
-	return 0
-
-/mob/living/carbon/put_in_r_hand(obj/item/W)
-	if(lying && !(W.flags&ABSTRACT))
-		return 0
-	if(!istype(W))
-		return 0
-	if(W.anchored)
-		return 0 // Anchored things shouldn't be picked up because they... anchored?!
-	if(!iscarbon(src)) // TODO actual hands check?
-		return FALSE
-
-	if(!r_hand)
-		W.loc = src
-		r_hand = W
-		W.layer = ABOVE_HUD_LAYER
-		W.plane = ABOVE_HUD_PLANE
-		W.appearance_flags = APPEARANCE_UI
-//		r_hand.screen_loc = ui_rhand
-		W.equipped(src,slot_r_hand)
-		if(client)	client.screen |= W
-		if(pulling == W) stop_pulling()
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
-		return 1
-	return 0*/
+	for(var/obj/item/bodypart/BP in bodypart_hands)
+		if(BP.item_in_slot.len)
+			var/obj/item/I = BP.item_in_slot[BP.item_in_slot[1]]
+			if(istype(I, typepath))
+				return I
+	return null
 
 //Puts the item into our active hand if possible. returns 1 on success.
 /mob/proc/put_in_active_hand(obj/item/W)
@@ -248,12 +190,15 @@ var/list/slot_equipment_priority = list( \
 	var/slot_hand = BP.inv_slots_data[1]
 	return equip_to_slot_if_possible(W, slot_hand)
 
-	//if(hand)	return put_in_l_hand(W)
-	//else		return put_in_r_hand(W)
-
 /mob/living/carbon/put_in_inactive_hand(obj/item/W)
-	if(hand)	return put_in_r_hand(W)
-	else		return put_in_l_hand(W)
+	if(!inactive_hands.len)
+		return
+
+	for(var/obj/item/bodypart/BP in inactive_hands)
+		if(BP.item_in_slot.len)
+			var/obj/item/I = BP.item_in_slot[BP.item_in_slot[1]]
+			if(!I)
+				return equip_to_slot_if_possible(W, BP.item_in_slot[1])
 
 //Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
 //If both fail it drops it on the floor and returns 0.

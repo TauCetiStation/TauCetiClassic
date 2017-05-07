@@ -1021,14 +1021,14 @@ Owl & Griffin toys
 
 		else if(istype(over_object, /obj/screen))
 			switch(over_object.name)
-				if("r_hand")
-					M.u_equip(src)
-					M.put_in_r_hand(src)
-					to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
-				if("l_hand")
-					M.u_equip(src)
-					M.put_in_l_hand(src)
-					to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
+				if("r_hand", "l_hand")
+					var/obj/screen/inventory/S = over_object
+					if(!M.dropItemToGround(src))
+						return
+					if(!isBODYPART(S.master))
+						return
+					if(M.equip_to_slot_if_possible(src, S.slot_id))
+						to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You can't reach it from here.</span>")
 
