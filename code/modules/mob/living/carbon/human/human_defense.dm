@@ -55,17 +55,10 @@
 
 	if(istype(P, /obj/item/projectile/energy/bolt))
 		var/obj/item/bodypart/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
-		var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes) // What all are we checking?
-		for(var/bp in body_parts) //Make an unregulated var to pass around.
-			if(!bp)
-				continue //Does this thing we're shooting even exist?
-			if(bp && istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
-				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
-				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
-					if(C.flags & THICKMATERIAL )
-						visible_message("<span class='userdanger'> <B>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
-						qdel(P)
-						return
+		if(check_thickmaterial(BP))
+			visible_message("<span class='userdanger'> <B>The [P.name] gets absorbed by [src]'s clothes!</span>")
+			qdel(P)
+			return
 
 		BP = get_bodypart(check_zone(def_zone))
 		var/armorblock = run_armor_check(BP, "energy")
@@ -109,21 +102,10 @@
 	return ..(P, def_zone)
 
 /mob/living/carbon/human/proc/check_reflect(def_zone, hol_dir, hit_dir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
-	if(head && head.IsReflect(def_zone, hol_dir, hit_dir))
-		return TRUE
-	if(wear_suit && wear_suit.IsReflect(def_zone, hol_dir, hit_dir))
-		return TRUE
-	if(l_hand && l_hand.IsReflect(def_zone, hol_dir, hit_dir))
-		return TRUE
-	if(r_hand && r_hand.IsReflect(def_zone, hol_dir, hit_dir))
-		return TRUE
-	return FALSE
-
-/mob/living/carbon/human/proc/is_in_space_suit(only_helmet = FALSE) //Wearing human full space suit (or only space helmet)?
-	if(!head || !(only_helmet || wear_suit))
-		return FALSE
-	if(istype(head, /obj/item/clothing/head/helmet/space) && (only_helmet || istype(wear_suit, /obj/item/clothing/suit/space)))
-		return TRUE
+	for(var/slot in list(slot_head, slot_wear_suit, slot_l_hand, slot_r_hand))
+		var/obj/item/I = get_equipped_item(slot)
+		if(I && I.IsReflect(def_zone, hol_dir, hit_dir))
+			return TRUE
 	return FALSE
 
 /mob/living/carbon/human/getarmor(def_zone, type)
@@ -150,18 +132,16 @@
 
 	var/siemens_coefficient = 1.0
 
-	var/list/clothing_items = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes) // What all are we checking?
-	for(var/obj/item/clothing/C in clothing_items)
-		if(!istype(C))	//is this necessary?
-			continue
-		else if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
-			if(C.wet)
+	for(var/slot in list(slot_head, slot_wear_mask, slot_wear_suit, slot_w_uniform, slot_gloves, slot_shoes))
+		var/obj/item/I = get_equipped_item(slot)
+		if(I && (I.body_parts_covered & BP.body_part))
+			if(I.wet)
 				siemens_coefficient = 3.0
 				var/turf/T = get_turf(src)
 				var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
 				if(W)
 					W.electrocute_act(60)
-			siemens_coefficient *= C.siemens_coefficient
+			siemens_coefficient *= I.siemens_coefficient
 
 	return siemens_coefficient
 
@@ -169,24 +149,20 @@
 /mob/living/carbon/human/proc/getarmor_bodypart(obj/item/bodypart/BP, type)
 	if(!type || !BP) return 0
 	var/protection = 0
-	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
-	for(var/gear in protective_gear)
-		if(gear && istype(gear ,/obj/item/clothing))
-			var/obj/item/clothing/C = gear
-			if(istype(C) && C.body_parts_covered & BP.body_part)
-				protection += C.armor[type]
+
+	for(var/slot in list(slot_head, slot_wear_mask, slot_wear_suit, slot_w_uniform, slot_gloves, slot_shoes))
+		var/obj/item/I = get_equipped_item(slot)
+		if(I && (I.body_parts_covered & BP.body_part))
+			protection += I.armor[type]
+
 	return protection
 
 /mob/living/carbon/human/proc/check_head_coverage()
-
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
-	for(var/bp in body_parts)
-		if(!bp)	continue
-		if(bp && istype(bp ,/obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & HEAD)
-				return 1
-	return 0
+	for(var/slot in list(slot_head, slot_wear_mask, slot_wear_suit, slot_w_uniform))
+		var/obj/item/I = get_equipped_item(slot)
+		if(I && (I.body_parts_covered & HEAD))
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/proc/check_shields(damage = 0, attack_text = "the attack", hit_dir = 0)
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)

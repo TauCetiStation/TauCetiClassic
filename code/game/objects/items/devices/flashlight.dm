@@ -56,9 +56,9 @@
 			to_chat(user, "<span class='notice'>You don't have the dexterity to do this!</span>")
 			return
 
-		var/mob/living/carbon/human/H = M	//mob has protective eyewear
-		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-			to_chat(user, "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
+		var/equipped_flags = M.get_equipped_flags(BP_HEAD)
+		if(equipped_flags & (HEADCOVERSEYES | MASKCOVERSEYES | GLASSESCOVERSEYES)) // mob has protective eyewear
+			to_chat(user, "<span class='notice'>You're going to need to remove that [(equipped_flags & HEADCOVERSEYES) ? "helmet" : (equipped_flags & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
 			return
 
 		if(M == user)	//they're using it on themselves

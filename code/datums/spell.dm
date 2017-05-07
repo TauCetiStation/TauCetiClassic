@@ -77,17 +77,17 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			return 0
 
 	if(clothes_req) //clothes check
-		if(!istype(usr, /mob/living/carbon/human))
-			to_chat(usr, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
+		if(!istype(user, /mob/living/carbon/human))
+			to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
 			return 0
-		if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(user:wear_suit, /obj/item/clothing/suit/space/rig/wizard))
-			to_chat(usr, "I don't feel strong enough without my robe.")
+		if(!istype(user.get_equipped_item(slot_wear_suit), /obj/item/clothing/suit/wizrobe) && !istype(user.get_equipped_item(slot_wear_suit), /obj/item/clothing/suit/space/rig/wizard))
+			to_chat(user, "I don't feel strong enough without my robe.")
 			return 0
-		if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
-			to_chat(usr, "I don't feel strong enough without my sandals.")
+		if(!istype(user.get_equipped_item(slot_shoes), /obj/item/clothing/shoes/sandal))
+			to_chat(user, "I don't feel strong enough without my sandals.")
 			return 0
-		if(!istype(usr:head, /obj/item/clothing/head/wizard) && !istype(user:head, /obj/item/clothing/head/helmet/space/rig/wizard))
-			to_chat(usr, "I don't feel strong enough without my hat.")
+		if(!istype(user.get_equipped_item(slot_head), /obj/item/clothing/head/wizard) && !istype(user.get_equipped_item(slot_head), /obj/item/clothing/head/helmet/space/rig/wizard))
+			to_chat(user, "I don't feel strong enough without my hat.")
 			return 0
 
 	if(!skipcharge)
@@ -312,15 +312,15 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 		var/mob/living/carbon/human/H = user
 
-		if((invocation_type == "whisper" || invocation_type == "shout") && istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+		if((invocation_type == "whisper" || invocation_type == "shout") && istype(H.get_equipped_item(slot_wear_mask), /obj/item/clothing/mask/muzzle))
 			return 0
 
 		if(clothes_req)	//clothes check
-			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(H.wear_suit, /obj/item/clothing/suit/space/rig/wizard))
+			if(!istype(H.get_equipped_item(slot_wear_suit), /obj/item/clothing/suit/wizrobe) && !istype(H.get_equipped_item(slot_wear_suit), /obj/item/clothing/suit/space/rig/wizard))
 				return 0
-			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+			if(!istype(H.get_equipped_item(slot_shoes), /obj/item/clothing/shoes/sandal))
 				return 0
-			if(!istype(H.head, /obj/item/clothing/head/wizard) && !istype(H.head, /obj/item/clothing/head/helmet/space/rig/wizard))
+			if(!istype(H.get_equipped_item(slot_head), /obj/item/clothing/head/wizard) && !istype(H.get_equipped_item(slot_head), /obj/item/clothing/head/helmet/space/rig/wizard))
 				return 0
 	else
 		if(clothes_req)

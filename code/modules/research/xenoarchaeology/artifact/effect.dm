@@ -89,22 +89,25 @@ proc/GetAnomalySusceptibility(mob/living/carbon/human/H)
 
 	var/protected = 0
 
-	//anomaly suits give best protection, but excavation suits are almost as good
-	if(istype(H.wear_suit,/obj/item/clothing/suit/bio_suit/anomaly))
-		protected += 0.6
-	else if(istype(H.wear_suit,/obj/item/clothing/suit/space/anomaly)||istype(H.wear_suit,/obj/item/clothing/suit/space/globose/science))
-		protected += 0.5
-
-	if(istype(H.head,/obj/item/clothing/head/bio_hood/anomaly))
-		protected += 0.3
-	else if(istype(H.head,/obj/item/clothing/head/helmet/space/anomaly)||istype(H.head,/obj/item/clothing/head/helmet/space/globose/science))
-		protected += 0.2
-
-	//latex gloves and science goggles also give a bit of bonus protection
-	if(istype(H.gloves,/obj/item/clothing/gloves/latex))
-		protected += 0.1
-
-	if(istype(H.glasses,/obj/item/clothing/glasses/science))
-		protected += 0.1
+	for(var/slot in list(slot_head, slot_glasses, slot_wear_suit, slot_gloves))
+		var/obj/item/I = H.get_equipped_item(slot)
+		if(I)
+			switch(slot)
+				if(slot_head)
+					if(istype(I,/obj/item/clothing/head/bio_hood/anomaly))
+						protected += 0.3
+					else if(istype(I, /obj/item/clothing/head/helmet/space/anomaly) || istype(I, /obj/item/clothing/head/helmet/space/globose/science))
+						protected += 0.2
+				if(slot_glasses)
+					if(istype(I, /obj/item/clothing/glasses/science))
+						protected += 0.1
+				if(slot_wear_suit) // anomaly suits give best protection, but excavation suits are almost as good
+					if(istype(I, /obj/item/clothing/suit/bio_suit/anomaly))
+						protected += 0.6
+					else if(istype(I, /obj/item/clothing/suit/space/anomaly) || istype(I, /obj/item/clothing/suit/space/globose/science))
+						protected += 0.5
+				if(slot_gloves) // latex gloves and science goggles also give a bit of bonus protection
+					if(istype(I, /obj/item/clothing/gloves/latex))
+						protected += 0.1
 
 	return 1 - protected

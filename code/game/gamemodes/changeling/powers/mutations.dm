@@ -57,10 +57,12 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
+	var/wear_suit = H.get_equipped_item(slot_wear_suit)
+	var/head = H.get_equipped_item(slot_head)
+	if(istype(wear_suit, suit_type) || istype(head, helmet_type))
 		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple][genetic_damage > 0 ? ", temporarily weakening our genomes." : "."]</span>", "<span class='warning'>You hear the organic matter ripping and tearing!</span>")
-		qdel(H.wear_suit)
-		qdel(H.head)
+		qdel(wear_suit)
+		qdel(head)
 
 		if(blood_on_castoff)
 			var/turf/simulated/T = get_turf(H)

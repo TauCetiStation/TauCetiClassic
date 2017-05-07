@@ -39,15 +39,12 @@
 				var/mob/living/carbon/human/victim = target
 
 				var/obj/item/safe_thing = null
-				if( victim.wear_mask )
-					if ( victim.wear_mask.flags & MASKCOVERSEYES )
-						safe_thing = victim.wear_mask
-				if( victim.head )
-					if ( victim.head.flags & MASKCOVERSEYES )
-						safe_thing = victim.head
-				if(victim.glasses)
-					if ( !safe_thing )
-						safe_thing = victim.glasses
+
+				for(var/slot in list(slot_head, slot_wear_mask, slot_glasses))
+					var/obj/item/I = victim.get_equipped_item(slot)
+					if(I && ((I.flags & (MASKCOVERSEYES | MASKCOVERSMOUTH)) || I.slot_equipped == slot_glasses))
+						safe_thing = I
+						break
 
 				if(safe_thing)
 					if(!safe_thing.reagents)

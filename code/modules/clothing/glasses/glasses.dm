@@ -235,7 +235,7 @@
 	name = "Thermoncle"
 	desc = "A monocle thermal."
 	icon_state = "thermoncle"
-	flags = null //doesn't protect eyes because it's a monocle, duh
+	flags = 0 // doesn't protect eyes because it's a monocle, duh
 	body_parts_covered = 0
 	toggleable = 0
 	action_button_name = null

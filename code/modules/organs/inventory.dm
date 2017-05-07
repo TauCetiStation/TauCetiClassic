@@ -56,7 +56,7 @@
 		un_equip_or_action(user, add_to, item_to_add)
 
 /obj/item/bodypart/proc/un_equip_or_action(mob/living/who, where, obj/item/this_item)
-	if(!who || !where || who.incapacitated() || !(ishuman(who) || ismonkey(who) || isrobot(who)))
+	if(!who || !where || who.incapacitated() || is_stump() || !(ishuman(who) || ismonkey(who) || isrobot(who)))
 		return
 
 	if(owner)

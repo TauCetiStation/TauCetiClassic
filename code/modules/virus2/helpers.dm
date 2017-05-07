@@ -5,6 +5,7 @@ proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 		return 0
 
 	if(istype(M, /mob/living/carbon/human))
+		var/obj/item/head = M.get_equipped_item(slot_head)
 
 		if (vector == "Airborne")
 			if(M.internal)	//not breathing infected air helps greatly
@@ -13,17 +14,17 @@ proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 				score += 5
 				if(istype(M:wear_mask, /obj/item/clothing/mask/surgical) && !M.internal)
 					score += 10
-			if(istype(M:wear_suit, /obj/item/clothing/suit/space) && istype(M:head, /obj/item/clothing/head/helmet/space))
+			if(istype(M:wear_suit, /obj/item/clothing/suit/space) && istype(head, /obj/item/clothing/head/helmet/space))
 				score += 20
-			if(istype(M:wear_suit, /obj/item/clothing/suit/bio_suit) && istype(M:head, /obj/item/clothing/head/bio_hood))
+			if(istype(M:wear_suit, /obj/item/clothing/suit/bio_suit) && istype(head, /obj/item/clothing/head/bio_hood))
 				score += 30
 
 
 		if (vector == "Contact")
 			if(M:gloves) score += 15
-			if(istype(M:wear_suit, /obj/item/clothing/suit/space) && istype(M:head, /obj/item/clothing/head/helmet/space))
+			if(istype(M:wear_suit, /obj/item/clothing/suit/space) && istype(head, /obj/item/clothing/head/helmet/space))
 				score += 15
-			if(istype(M:wear_suit, /obj/item/clothing/suit/bio_suit) && istype(M:head, /obj/item/clothing/head/bio_hood))
+			if(istype(M:wear_suit, /obj/item/clothing/suit/bio_suit) && istype(head, /obj/item/clothing/head/bio_hood))
 				score += 15
 
 
@@ -140,16 +141,19 @@ proc/airborne_can_reach(turf/source, turf/target)
 	//contact goes both ways
 	if (victim.virus2.len > 0 && vector == "Contact")
 //		log_debug("Spreading [vector] diseases from [victim] to [src]")
-		var/nudity = 1
+		var/nudity = TRUE
 
 		if (ishuman(victim))
 			var/mob/living/carbon/human/H = victim
 			var/obj/item/bodypart/BP = H.get_bodypart(src.zone_sel.selecting)
-			var/list/clothes = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes)
-			for(var/obj/item/clothing/C in clothes )
-				if(C && istype(C))
-					if(C.body_parts_covered & BP.body_part)
-						nudity = 0
+
+			if(BP && !BP.is_stump())
+				for(var/slot in list(slot_head, slot_wear_mask, slot_wear_suit, slot_w_uniform, slot_gloves, slot_shoes))
+					var/obj/item/I = H.get_equipped_item(slot)
+					if(I && (I.body_parts_covered & BP.body_part))
+						nudity = FALSE
+						break
+
 		if (nudity)
 			for (var/ID in victim.virus2)
 				var/datum/disease2/disease/V = victim.virus2[ID]

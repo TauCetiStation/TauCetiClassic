@@ -1931,40 +1931,29 @@ datum
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-
-						if(H.head)
-							if(prob(meltprob) && !H.head.unacidable)
-								to_chat(H, "<span class='danger'>Your headgear melts away but protects you from the acid!</span>")
-								qdel(H.head)
-							else
-								to_chat(H, "<span class='warning'>Your headgear protects you from the acid.</span>")
-							return
-
-						if(H.wear_mask)
-							if(prob(meltprob) && !H.wear_mask.unacidable)
-								to_chat(H, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
-								qdel(H.wear_mask)
-							else
-								to_chat(H, "<span class='warning'>Your mask protects you from the acid.</span>")
-							return
-
-						if(H.glasses) //Doesn't protect you from the acid but can melt anyways!
-							if(prob(meltprob) && !H.glasses.unacidable)
-								to_chat(H, "<span class='danger'>Your glasses melts away!</span>")
-								qdel(H.glasses)
-
-					else if(ismonkey(M))
-						var/mob/living/carbon/monkey/MK = M
-						if(MK.wear_mask)
-							if(!MK.wear_mask.unacidable)
-								to_chat(MK, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
-								qdel(MK.wear_mask)
-							else
-								to_chat(MK, "<span class='warning'>Your mask protects you from the acid.</span>")
-							return
-
+					if(iscarbon(M))
+						for(var/slot in list(slot_head, slot_wear_mask, slot_glasses))
+							var/obj/item/I = M.get_equipped_item(slot)
+							if(I)
+								switch(slot)
+									if(slot_head)
+										if(prob(meltprob) && !I.unacidable)
+											to_chat(M, "<span class='danger'>Your headgear melts away but protects you from the acid!</span>")
+											qdel(I)
+										else
+											to_chat(M, "<span class='warning'>Your headgear protects you from the acid.</span>")
+										return
+									if(slot_wear_mask)
+										if(prob(meltprob) && !I.unacidable)
+											to_chat(M, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
+											qdel(I)
+										else
+											to_chat(M, "<span class='warning'>Your mask protects you from the acid.</span>")
+										return
+									if(slot_glasses) // Doesn't protect you from the acid but can melt anyways!
+										if(prob(meltprob) && !I.unacidable)
+											to_chat(M, "<span class='danger'>Your glasses melts away!</span>")
+											qdel(I)
 					if(!M.unacidable)
 						if(istype(M, /mob/living/carbon/human) && volume >= 10)
 							var/mob/living/carbon/human/H = M
@@ -2112,36 +2101,35 @@ datum
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)
-					if(istype(M, /mob/living/carbon/human))
-						var/mob/living/carbon/human/victim = M
-						var/mouth_covered = 0
-						var/eyes_covered = 0
+					if(istype(M, /mob/living/carbon))
+						var/mob/living/carbon/victim = M
+						var/mouth_covered = FALSE
+						var/eyes_covered = FALSE
 						var/obj/item/safe_thing = null
-						if( victim.wear_mask )
-							if ( victim.wear_mask.flags & MASKCOVERSEYES )
-								eyes_covered = 1
-								safe_thing = victim.wear_mask
-							if ( victim.wear_mask.flags & MASKCOVERSMOUTH )
-								mouth_covered = 1
-								safe_thing = victim.wear_mask
-						if( victim.head )
-							if ( victim.head.flags & MASKCOVERSEYES )
-								eyes_covered = 1
-								safe_thing = victim.head
-							if ( victim.head.flags & MASKCOVERSMOUTH )
-								mouth_covered = 1
-								safe_thing = victim.head
-						if(victim.glasses)
-							eyes_covered = 1
-							if ( !safe_thing )
-								safe_thing = victim.glasses
+
+						for(var/slot in list(slot_head, slot_wear_mask, slot_glasses))
+							var/obj/item/I = victim.get_equipped_item(slot)
+							if(I)
+								if(I.flags & MASKCOVERSEYES)
+									eyes_covered = TRUE
+									if(!safe_thing)
+										safe_thing = I
+								if(I.flags & MASKCOVERSMOUTH)
+									mouth_covered = TRUE
+									if(!safe_thing)
+										safe_thing = I
+								if(slot == slot_glasses)
+									eyes_covered = TRUE
+									if(!safe_thing)
+										safe_thing = I
+
 						if ( eyes_covered && mouth_covered )
 							to_chat(victim, "\red Your [safe_thing] protects you from the pepperspray!")
 							return
 						else if ( mouth_covered )	// Reduced effects if partially protected
 							to_chat(victim, "\red Your [safe_thing] protect you from most of the pepperspray!")
-							victim.eye_blurry = max(M.eye_blurry, 15)
-							victim.eye_blind = max(M.eye_blind, 5)
+							victim.eye_blurry = max(victim.eye_blurry, 15)
+							victim.eye_blind = max(victim.eye_blind, 5)
 							victim.Stun(5)
 							victim.Weaken(5)
 							//victim.Paralyse(10)
@@ -2150,13 +2138,13 @@ datum
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
 							to_chat(victim, "\red Your [safe_thing] protects your eyes from the pepperspray!")
 							victim.emote("scream",,, 1)
-							victim.eye_blurry = max(M.eye_blurry, 5)
+							victim.eye_blurry = max(victim.eye_blurry, 5)
 							return
 						else // Oh dear :D
 							victim.emote("scream",,, 1)
 							to_chat(victim, "\red You're sprayed directly in the eyes with pepperspray!")
-							victim.eye_blurry = max(M.eye_blurry, 25)
-							victim.eye_blind = max(M.eye_blind, 10)
+							victim.eye_blurry = max(victim.eye_blurry, 25)
+							victim.eye_blind = max(victim.eye_blind, 10)
 							victim.Stun(5)
 							victim.Weaken(5)
 							//victim.Paralyse(10)

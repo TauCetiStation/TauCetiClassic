@@ -135,10 +135,9 @@
 			//Cameras can't track people wearing an agent card or hat with blockTracking.
 			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 				continue
-			if(istype(H.head, /obj/item/clothing/head))
-				var/obj/item/clothing/head/hat = H.head
-				if(hat.blockTracking)
-					continue
+			var/obj/item/clothing/head/hat = H.get_equipped_item(slot_head)
+			if(istype(hat) && hat.blockTracking)
+				continue
 
 		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
 		if(!near_camera(M))
@@ -203,12 +202,11 @@
 					to_chat(U, "Follow camera mode terminated.")
 					U.cameraFollow = null
 					return
-				if(istype(H.head, /obj/item/clothing/head))
-					var/obj/item/clothing/head/hat = H.head
-					if(hat.blockTracking)
-						to_chat(U, "Follow camera mode terminated.")
-						U.cameraFollow = null
-						return
+				var/obj/item/clothing/head/hat = H.get_equipped_item(slot_head)
+				if(istype(hat) && hat.blockTracking)
+					to_chat(U, "Follow camera mode terminated.")
+					U.cameraFollow = null
+					return
 				if(H.digitalcamo)
 					to_chat(U, "Follow camera mode terminated.")
 					U.cameraFollow = null

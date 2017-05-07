@@ -353,7 +353,7 @@
 	throw_speed = 0.5
 	item_state = "ciglit"
 	w_class = 1
-	body_parts_covered = null
+	body_parts_covered = 0
 
 //Strange penlight, Nerezza: Asher Spock
 

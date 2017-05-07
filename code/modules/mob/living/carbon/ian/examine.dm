@@ -1,6 +1,7 @@
 /mob/living/carbon/ian/examine(mob/user)
 	var/skipface = FALSE
 
+	var/obj/item/head = get_equipped_item(slot_head)
 	if(head)
 		skipface = head.flags_inv & HIDEFACE
 

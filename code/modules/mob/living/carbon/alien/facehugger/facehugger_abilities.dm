@@ -55,13 +55,6 @@ Helpers for leaping at face.
 			return fh_at_face
 	return FALSE
 
-/mob/living/carbon/ian/get_facehugger_at_face()
-	if(istype(head, /obj/item/clothing/mask/facehugger))
-		var/obj/item/clothing/mask/facehugger/fh_at_face = head
-		if(fh_at_face.current_hugger && fh_at_face.current_hugger.stat != DEAD)
-			return fh_at_face
-	return FALSE
-
 /mob/living/carbon/alien/facehugger/proc/can_leap_at_face(mob/living/L, attacked = FALSE)
 	if(stat != CONSCIOUS)
 		return
@@ -99,18 +92,10 @@ Helpers for leaping at face.
 	src.loc = FH
 	FH.current_hugger = src
 
-	if(isIAN(L))
-		var/mob/living/carbon/ian/dog = L
-		if(dog.head)
-			qdel(dog.head)
-		dog.equip_to_slot(FH, slot_head)
-	else if(iscarbon(L))
+	if(iscarbon(L))
 		var/mob/living/carbon/C = L
-		if(C.wear_mask)
-			qdel(C.wear_mask)
+		qdel(C.get_equipped_item(slot_wear_mask))
 		C.equip_to_slot(FH, slot_wear_mask)
-		if(ismonkey(C)) // wtf is there in monkeys equip proc, that they need this?! ~zve
-			C.contents += FH // Monkey sanity check - Snapshot
 	else if(iscorgi(L))
 		var/mob/living/simple_animal/corgi/dog = L
 		if(dog.facehugger)

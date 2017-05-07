@@ -550,6 +550,7 @@
 	return
 
 /obj/effect/equip_e/human/process()
+/*
 	if(ismouse(source))
 		return
 	if (item)
@@ -807,7 +808,7 @@
 		done()
 		return
 	return
-
+*/
 /*
 This proc equips stuff (or does something else) when removing stuff manually from the character window when you click and drag.
 It works in conjuction with the process() above.
@@ -818,6 +819,7 @@ The else statement is for equipping stuff to empty slots.
 It can still be worn/put on as normal.
 */
 /obj/effect/equip_e/human/done()	//TODO: And rewrite this :< ~Carn
+/*
 	target.cpr_time = 1
 	if(isanimal(source)) return //animals cannot strip people, except Ian, hes a cat, cats no no animal!
 	if(!source || !target) return		//Target or source no longer exist
@@ -890,6 +892,7 @@ It can still be worn/put on as normal.
 		if("tie")
 			var/obj/item/clothing/under/suit = target.w_uniform
 			//var/obj/item/clothing/tie/tie = suit.hastie
+			*/
 			/*if(tie)
 				if (istype(tie,/obj/item/clothing/tie/storage))
 					var/obj/item/clothing/tie/storage/W = tie
@@ -897,7 +900,7 @@ It can still be worn/put on as normal.
 						W.hold.close(usr)
 				usr.put_in_hands(tie)
 				suit.hastie = null*/
-			suit.hastie.on_removed(usr)
+/*			suit.hastie.on_removed(usr)
 			suit.hastie = null
 			suit.update_inv_item(slot_w_uniform)
 		if("id")
@@ -1031,3 +1034,4 @@ It can still be worn/put on as normal.
 		if(source.machine == target)
 			target.show_inv(source)
 	qdel(src)
+*/

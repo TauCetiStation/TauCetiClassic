@@ -74,7 +74,7 @@
 	var/turf/location = src.loc
 	if(iscarbon(location))
 		var/mob/living/carbon/M = location
-		if(M.l_hand == src || M.r_hand == src || M.head == src || M.mouth == src)
+		if(slot_equipped == slot_head || slot_equipped == slot_l_hand || slot_equipped == slot_r_hand)
 			location = M.loc
 
 	if (istype(location, /turf))

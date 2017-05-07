@@ -359,28 +359,26 @@
 
 
 
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+	if(M.get_equipped_flags(BP_HEAD) & (HEADCOVERSEYES | MASKCOVERSEYES | GLASSESCOVERSEYES))
 		to_chat(M, "\red You get slammed in the face with the tray, against your mask!")
 		if(prob(33))
-			src.add_blood(H)
-			if (H.wear_mask)
-				H.wear_mask.add_blood(H)
-			if (H.head)
-				H.head.add_blood(H)
-			if (H.glasses && prob(33))
-				H.glasses.add_blood(H)
+			src.add_blood(H) // TODO deal with add_blood
+			//if (H.wear_mask)
+			//	H.wear_mask.add_blood(H)
+			//if (H.head)
+			//	H.head.add_blood(H)
+			//if (H.glasses && prob(33))
+			//	H.glasses.add_blood(H)
 			var/turf/location = H.loc
 			if (istype(location, /turf/simulated))     //Addin' blood! At least on the floor and item :v
 				location.add_blood(H)
 
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //sound playin'
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
+		user.visible_message("<span class='danger'>[user] slams [M] with the tray!</span>")
+
 		if(prob(10))
 			M.Stun(rand(1,3))
 			M.take_bodypart_damage(3)

@@ -159,7 +159,7 @@
 
 /mob/living/carbon/ian/breathe()
 	// This is Ian, he knows that every space helmet has infinite breathable air inside!
-	if(!loc || istype(head, /obj/item/clothing/head/helmet/space) || reagents && reagents.has_reagent("lexorin"))
+	if(!loc || istype(get_equipped_item(slot_head), /obj/item/clothing/head/helmet/space) || reagents && reagents.has_reagent("lexorin"))
 		return
 	else
 		..()
@@ -176,7 +176,7 @@
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
-	if(istype(head, /obj/item/clothing/head/helmet/space) || (adjusted_pressure < WARNING_HIGH_PRESSURE && adjusted_pressure > WARNING_LOW_PRESSURE && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5 && environment.phoron < MOLES_PHORON_VISIBLE))
+	if(istype(get_equipped_item(slot_head), /obj/item/clothing/head/helmet/space) || (adjusted_pressure < WARNING_HIGH_PRESSURE && adjusted_pressure > WARNING_LOW_PRESSURE && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5 && environment.phoron < MOLES_PHORON_VISIBLE))
 		clear_alert("pressure")
 		return
 

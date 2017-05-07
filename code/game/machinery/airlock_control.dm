@@ -70,7 +70,7 @@ obj/machinery/door/airlock/Bumped(atom/AM)
 		var/mob/living/carbon/human/H = AM
 		if(H.getBrainLoss() >= 60)
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
-			if(!istype(H.head, /obj/item/clothing/head/helmet))
+			if(!istype(H.get_equipped_item(slot_head), /obj/item/clothing/head/helmet))
 				visible_message("\red [H] headbutts the airlock.")
 				var/obj/item/bodypart/BP = H.get_bodypart(BP_HEAD)
 				H.Stun(8)

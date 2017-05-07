@@ -39,44 +39,18 @@
 		to_chat(user, "\red You need to have a firm grip on [C] before you can put \the [src] on!")
 
 /obj/item/weapon/handcuffs/proc/place_handcuffs(mob/living/carbon/target, mob/user)
-	playsound(src.loc, cuff_sound, 30, 1, -2)
+	playsound(src, cuff_sound, 30, 1, -2)
 
-	if (ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [H.name] ([H.ckey])</font>")
-		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(H)]")
+	if (istype(target))
+		var/obj/item/bodypart/BP = target.get_BP_by_slot(slot_handcuffed)
+		if(!BP)
+			return
 
-		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-		O.source = user
-		O.target = H
-		O.item = user.get_active_hand()
-		O.s_loc = user.loc
-		O.t_loc = H.loc
-		O.place = "handcuff"
-		H.requests += O
-		spawn( 0 )
-			feedback_add_details("handcuffs","H")
-			O.process()
-		return
+		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [target.name] ([target.ckey])</font>")
+		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(target)]")
 
-	if (ismonkey(target))
-		var/mob/living/carbon/monkey/M = target
-		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
-		O.source = user
-		O.target = M
-		O.item = user.get_active_hand()
-		O.s_loc = user.loc
-		O.t_loc = M.loc
-		O.place = "handcuff"
-		M.requests += O
-		spawn( 0 )
-			O.process()
-		return
-
-	if (isIAN(target))
-		var/mob/living/carbon/ian/IAN = target
-		IAN.un_equip_or_action(user, "Neck", user.get_active_hand())
+		BP.un_equip_or_action(user, slot_handcuffed, src)
 
 /obj/item/weapon/handcuffs/equipped(mob/living/carbon/user, slot)
 	if(slot == slot_handcuffed)

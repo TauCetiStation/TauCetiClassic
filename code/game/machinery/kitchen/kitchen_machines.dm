@@ -384,7 +384,7 @@
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	src.visible_message("\red [src] gets covered in muck!")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
-	src.flags = null //So you can't add condiments
+	src.flags = 0 //So you can't add condiments
 	src.icon_state = dirty_icon // Make it look dirty too
 	src.operating = 0 // Turn it off again aferwards
 	src.updateUsrDialog()
@@ -396,7 +396,7 @@
 	src.icon_state = broken_icon // Make it look all busted up and shit
 	src.visible_message("\red [src] breaks!") //Let them know they're stupid
 	src.broken = 2 // Make it broken so it can't be used util fixed
-	src.flags = null //So you can't add condiments
+	src.flags = 0 //So you can't add condiments
 	src.operating = 0 // Turn it off again aferwards
 	src.updateUsrDialog()
 

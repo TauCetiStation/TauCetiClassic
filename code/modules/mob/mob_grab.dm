@@ -554,10 +554,9 @@
 	if(state < GRAB_NECK)
 		to_chat(attacker, "<span class='warning'>You require a better grab to do this.</span>")
 		return
-	for(var/obj/item/protection in list(target.head, target.wear_mask, target.glasses))
-		if(protection && (protection.body_parts_covered & EYES))
-			to_chat(attacker, "<span class='danger'>You're going to need to remove the eye covering first.</span>")
-			return
+	if(target.get_equipped_covered(BP_HEAD) & EYES)
+		to_chat(attacker, "<span class='danger'>You're going to need to remove the eye covering first.</span>")
+		return
 	if(!target.has_eyes())
 		to_chat(attacker, "<span class='danger'>You cannot locate any eyes on [target]!</span>")
 		return
@@ -575,7 +574,7 @@
 		return
 
 	var/damage = 20
-	var/obj/item/clothing/hat = attacker.head
+	var/obj/item/clothing/hat = attacker.get_equipped_item(slot_head)
 	var/damage_flags = 0
 	if(istype(hat))
 		damage += hat.force * 3

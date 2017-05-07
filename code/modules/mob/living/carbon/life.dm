@@ -116,6 +116,7 @@
 /mob/living/carbon/proc/get_pressure_protection(pressure_check = STOPS_PRESSUREDMAGE)
 	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
 
+	var/obj/item/head = get_equipped_item(slot_head)
 	if( (head && (head.flags_pressure & pressure_check)) && (wear_suit && (wear_suit.flags_pressure & pressure_check)) )
 		pressure_adjustment_coefficient = 0
 
@@ -364,6 +365,7 @@
 				if(glasses)
 					if(glasses.flags & BLOCK_GAS_SMOKE_EFFECT)
 						block = 1
+				var/obj/item/head = get_equipped_item(slot_head)
 				if(head)
 					if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
 						block = 1
@@ -486,7 +488,7 @@
 		if(istype(loc, /obj/structure/transit_tube_pod))
 			return
 		var/protected = 0
-		if( (head && istype(head, /obj/item/clothing/head/helmet/space)) && (wear_suit && istype(wear_suit, /obj/item/clothing/suit/space)))
+		if( (istype(get_equipped_item(slot_head), /obj/item/clothing/head/helmet/space)) && (wear_suit && istype(wear_suit, /obj/item/clothing/suit/space)))
 			protected = 1
 		if(!protected && radiation < 100)
 			apply_effect(5, IRRADIATE)
@@ -623,6 +625,7 @@
 /mob/living/carbon/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
+	var/obj/item/head = get_equipped_item(slot_head)
 	if(head)
 		if(head.max_heat_protection_temperature && head.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= head.heat_protection
@@ -683,6 +686,7 @@
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
 
+	var/obj/item/head = get_equipped_item(slot_head)
 	if(head)
 		if(head.min_cold_protection_temperature && head.min_cold_protection_temperature <= temperature)
 			thermal_protection_flags |= head.cold_protection
@@ -1026,7 +1030,7 @@
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
 			blinded = 1
-		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold) || istype(head, /obj/item/weapon/reagent_containers/glass/bucket))	//resting your eyes with a blindfold heals blurry eyes faster
+		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold) || istype(get_equipped_item(slot_head), /obj/item/weapon/reagent_containers/glass/bucket))	//resting your eyes with a blindfold heals blurry eyes faster
 			eye_blurry = max(eye_blurry-3, 0)
 			blinded = 1
 		else if(eye_blurry)	//blurry eyes heal slowly
@@ -1316,6 +1320,7 @@
 			if(G.prescription)
 				nearsighted = 0
 
+		var/obj/item/head = get_equipped_item(slot_head)
 		if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
 			var/obj/item/clothing/head/welding/O = head
 			if(!O.up && tinted_weldhelh)

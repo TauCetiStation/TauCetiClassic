@@ -108,39 +108,45 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 
 	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)//1 - head, 2 - body, 3 - hands, 4- feet
 
-	if(istype(src, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = src
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
 
-		switch(target_zone)
+		switch(target_zone) // TODO properly deal with that.
 			if(1)
-				if(isobj(H.head) && !istype(H.head, /obj/item/weapon/paper))
-					Cl = H.head
+				var/obj/item/head = C.get_equipped_item(slot_head)
+				var/obj/item/wear_mask = C.get_equipped_item(slot_wear_mask)
+				if(isobj(head) && !istype(head, /obj/item/weapon/paper))
+					Cl = head
 					passed = prob((Cl.permeability_coefficient*100) - 1)
-				if(passed && isobj(H.wear_mask))
-					Cl = H.wear_mask
+				if(passed && isobj(wear_mask))
+					Cl = wear_mask
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(2)//arms and legs included
-				if(isobj(H.wear_suit))
-					Cl = H.wear_suit
+				var/obj/item/wear_suit = C.get_equipped_item(slot_wear_suit)
+				var/obj/item/w_uniform = C.get_equipped_item(slot_w_uniform)
+				if(isobj(wear_suit))
+					Cl = wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
-				if(passed && isobj(slot_w_uniform))
-					Cl = slot_w_uniform
+				if(passed && isobj(w_uniform))
+					Cl = w_uniform
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(3)
-				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
-					Cl = H.wear_suit
+				var/obj/item/wear_suit = C.get_equipped_item(slot_wear_suit)
+				var/obj/item/gloves = C.get_equipped_item(slot_gloves)
+				if(isobj(wear_suit) && (wear_suit.body_parts_covered & HANDS))
+					Cl = wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
-
-				if(passed && isobj(H.gloves))
-					Cl = H.gloves
+				if(passed && isobj(gloves))
+					Cl = gloves
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(4)
-				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&FEET)
-					Cl = H.wear_suit
+				var/obj/item/wear_suit = C.get_equipped_item(slot_wear_suit)
+				var/obj/item/shoes = C.get_equipped_item(slot_shoes)
+				if(isobj(wear_suit) && (wear_suit.body_parts_covered & FEET))
+					Cl = wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
-
-				if(passed && isobj(H.shoes))
-					Cl = H.shoes
+				if(passed && isobj(shoes))
+					Cl = shoes
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			else
 				to_chat(src, "Something strange's going on, something's wrong.")
@@ -152,14 +158,6 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 					//
 					to_chat(world, "Shoes pass [passed]")
 			*/		//
-	else if(istype(src, /mob/living/carbon/monkey))
-		var/mob/living/carbon/monkey/M = src
-		switch(target_zone)
-			if(1)
-				if(M.wear_mask && isobj(M.wear_mask))
-					Cl = M.wear_mask
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-					//world << "Mask pass [passed]"
 
 	if(!passed && spread_type == AIRBORNE && !internals)
 		passed = (prob((50*virus.permeability_mod) - 1))

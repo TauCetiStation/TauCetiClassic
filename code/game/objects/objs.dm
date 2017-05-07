@@ -177,41 +177,22 @@
 /obj/proc/reset_shocked()
 	being_shocked = 0
 
-//mob - who is being feed
+//feeded - who is being feed
 //user - who is feeding
 //food - whai is feeded
 //eatverb - take/drink/eat method
-/proc/CanEat(user, mob, food, eatverb = "consume")
-	if(ishuman(mob))
-		var/mob/living/carbon/human/Feeded = mob
-		if(Feeded.head)
-			var/obj/item/Head = Feeded.head
-			if(Head.flags & HEADCOVERSMOUTH)
-				if (Feeded == user)
-					to_chat(user, "You can't [eatverb] [food] through [Head]")
-				else
-					to_chat(user, "You can't feed [Feeded] with [food] through [Head]")
-				return FALSE
-		if(Feeded.wear_mask)
-			var/obj/item/Mask = Feeded.wear_mask
-			if(Mask.flags & MASKCOVERSMOUTH)
-				if (Feeded == user)
-					to_chat(user, "You can't [eatverb] [food] through [Mask]")
-				else
-					to_chat(user, "You can't feed [Feeded] with [food] through [Mask]")
-				return FALSE
-		return TRUE
-	if(isIAN(mob))
-		var/mob/living/carbon/ian/dumdum = mob
-		if(dumdum.head)
-			var/obj/item/Head = dumdum.head
-			if(Head.flags & HEADCOVERSMOUTH)
-				if (dumdum == user)
-					to_chat(user, "You can't [eatverb] [food] through [Head]")
-				else
-					to_chat(user, "You can't feed [dumdum] with [food] through [Head]")
-				return FALSE
-		return TRUE
+/proc/CanEat(mob/user, mob/living/carbon/feeded, food, eatverb = "consume")
+	if(!istype(feeded))
+		return FALSE
+
+	if(feeded.get_equipped_covered(BP_HEAD) & (HEADCOVERSMOUTH | MASKCOVERSMOUTH))
+		if(feeded == user)
+			to_chat(user, "You can't [eatverb] [food] while your mouth is covered.")
+		else
+			to_chat(user, "You can't feed [feeded] while \his mouth is covered.")
+		return FALSE
+
+	return TRUE
 
 /obj/proc/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	return !density

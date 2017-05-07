@@ -34,7 +34,7 @@
 	icon_state = "dermal"
 	item_state = "dermal"
 	siemens_coefficient = 0.6
-	body_parts_covered = 1
+	body_parts_covered = HEAD
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"

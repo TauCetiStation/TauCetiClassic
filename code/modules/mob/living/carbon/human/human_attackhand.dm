@@ -97,14 +97,14 @@
 	switch(M.a_intent)
 		if(I_HELP)
 			if(health < config.health_threshold_crit && health > config.health_threshold_dead)
-				if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
+				if(M.get_equipped_flags(BP_HEAD) & (HEADCOVERSMOUTH | MASKCOVERSMOUTH))
 					to_chat(M, "\blue <B>Remove your mask!</B>")
 					return 0
-				if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
+				if(get_equipped_flags(BP_HEAD) & (HEADCOVERSMOUTH | MASKCOVERSMOUTH))
 					to_chat(M, "\blue <B>Remove his mask!</B>")
 					return 0
 
-				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
+				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human() // TODO deal with CPR
 				O.source = M
 				O.target = src
 				O.s_loc = M.loc

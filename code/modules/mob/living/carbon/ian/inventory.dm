@@ -1,3 +1,4 @@
+/*
 /mob/living/carbon/ian/show_inv(mob/user)
 	if(user.incapacitated() || !Adjacent(usr))
 		return
@@ -19,7 +20,8 @@
 	var/datum/browser/popup = new(user, "dog", name, 325, 500)
 	popup.set_content(dat)
 	popup.open()
-
+*/
+/*
 /mob/living/carbon/ian/Topic(href, href_list)
 	if(href_list["close"])
 		usr << browse(null, "window=dog")
@@ -46,7 +48,7 @@
 			return
 		else
 			un_equip_or_action(usr, add_to, item_to_add)
-
+*/
 //Returns the thing in our active hand (errr... mouth!)
 //mob/living/carbon/ian/get_active_hand()
 //	return mouth
@@ -63,126 +65,6 @@
 	if(handcuffed || facehugger) // Oh wow, whats this on my faaaaaaace?
 		return TRUE
 	return FALSE
-
-/mob/living/carbon/ian/proc/un_equip_or_action(mob/living/who, where, obj/item/this_item)
-	if(!who || !where || isanimal(who))
-		return
-
-	if(who.isHandsBusy)
-		return
-	who.isHandsBusy = TRUE
-
-	if(!Adjacent(who))
-		return
-
-	if(this_item)
-		var/message = "<span class='danger'>[who] is trying to put \a [this_item] on [src].</span>"
-		if(where == "dnainjector")
-			message = "<span class='danger'>[who] is trying to inject [src] with the [this_item]!</span>"
-		this_item.add_fingerprint(who)
-		who.visible_message(message)
-	else
-		if(where == "CPR")
-			if(!cpr_time)
-				return
-			cpr_time = FALSE
-			who.visible_message("<span class='danger'>[who] is trying perform CPR on [src]!</span>")
-		else
-			var/obj/item/slot_ref = get_slot_ref(where)
-			if(slot_ref)
-				who.visible_message(text("<span class='danger'>[] is trying to take off \a [] from []'s []!</span>", who, slot_ref, src, lowertext(where)))
-				slot_ref.add_fingerprint(who)
-			else
-				who.isHandsBusy = FALSE //invalid slot
-				return
-
-	if(do_after(who, HUMAN_STRIP_DELAY, target = src))
-		do_un_equip_or_action(who, where, this_item)
-
-	who.isHandsBusy = FALSE
-	cpr_time = TRUE
-
-/mob/living/carbon/ian/proc/do_un_equip_or_action(mob/living/who, where, obj/item/this_item)
-	if(!who || !where)
-		return
-	if(!Adjacent(who))
-		return
-	if(this_item && who.get_active_hand() != this_item)
-		return
-	if(who.incapacitated())
-		return
-
-	var/obj/item/slot_ref = get_slot_ref(where)
-	if(slot_ref)
-		if(!slot_ref.canremove)
-			who.visible_message(text("<span class='danger'>[] fails to take off \a [] from []'s [lowertext(where)]!</span>", who, slot_ref, src))
-			return
-		else
-			remove_from_mob(slot_ref)
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their [where] ([slot_ref]) removed by [who.name] ([who.ckey])</font>")
-			who.attack_log += text("\[[time_stamp()]\] <font color='red'>Removed [src.name]'s ([src.ckey]) [where] ([slot_ref])</font>")
-	else
-		switch(where)
-			if("CPR")
-				if(src.health > config.health_threshold_dead && src.health < config.health_threshold_crit)
-					var/suff = min(src.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
-					src.adjustOxyLoss(-suff)
-					src.updatehealth()
-					who.visible_message("<span class='warning'>[who] performs CPR on [src]!</span>")
-					to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
-					to_chat(who, "<span class='warning'>Repeat at least every 7 seconds.</span>")
-			if("dnainjector")
-				var/obj/item/weapon/dnainjector/S = this_item
-				if(!istype(S))
-					S.inuse = FALSE
-					return
-				S.inject(src, who)
-				if(S.s_time >= world.time + 30)
-					S.inuse = FALSE
-					return
-				S.s_time = world.time
-				who.visible_message("<span class='warning'>[who] injects [src] with the DNA Injector!</span>")
-				S.inuse = FALSE
-			else
-				if(this_item.mob_can_equip(src, get_slot_id(where)))
-					if(where == "Neck")
-						if(istype(this_item, /obj/item/weapon/handcuffs))
-							var/grabbing = FALSE
-							for (var/obj/item/weapon/grab/G in src.grabbed_by)
-								if (G.loc == who && G.state >= GRAB_AGGRESSIVE)
-									grabbing = TRUE
-							if (!grabbing)
-								to_chat(who, "<span class='warning'>Your grasp was broken before you could restrain [src]!</span>")
-								return
-					who.remove_from_mob(this_item)
-					equip_to_slot_if_possible(this_item, get_slot_id(where))
-					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>[who.name] ([who.ckey]) placed on our [where] ([slot_ref])</font>")
-					who.attack_log += text("\[[time_stamp()]\] <font color='red'>Placed on [src.name]'s ([src.ckey]) [where] ([slot_ref])</font>")
-
-	if(usr.machine == src && in_range(src, usr))
-		show_inv(usr)
-
-/mob/living/carbon/ian/proc/get_slot_ref(slot)
-	switch(slot)
-		if("Head")
-			return head
-		if("Mouth")
-			return mouth
-		if("Neck")
-			return neck
-		if("Back")
-			return back
-
-/mob/living/carbon/ian/proc/get_slot_id(slot)
-	switch(slot)
-		if("Head")
-			return slot_head
-		if("Mouth")
-			return slot_mouth
-		if("Neck")
-			return slot_neck
-		if("Back")
-			return slot_back
 
 /*
 /mob/living/carbon/ian/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
@@ -283,6 +165,7 @@
 	emote_hear = list("barks", "woofs", "yaps","pants")
 	emote_see = list("shakes its head", "shivers")
 
+	var/obj/item/head = get_equipped_item(slot_head)
 	if(!head)
 		return
 

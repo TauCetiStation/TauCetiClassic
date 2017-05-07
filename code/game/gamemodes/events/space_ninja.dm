@@ -524,14 +524,12 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	//ticker.mode.ninjas |= mind
 	return 1
 
-/mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.
+/mob/living/carbon/human/proc/equip_space_ninja(safety = FALSE)//Safety in case you need to unequip stuff for existing characters.
 	if(safety)
-		qdel(w_uniform)
-		qdel(wear_suit)
-		qdel(wear_mask)
-		qdel(head)
-		qdel(shoes)
-		qdel(gloves)
+		var/list/items = get_equipped_items()
+		if(items)
+			for(var/I in items)
+				qdel(I)
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
 	equip_to_slot_or_del(R, slot_l_ear)
@@ -565,38 +563,43 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 //This proc prevents the suit from being taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/U, X = 0)
 	if(X)//If you want to check for icons.
+		var/obj/item/U_gloves = U.get_equipped_item(slot_gloves)
 		if(U.mind.protector_role == 1)
 			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
-			U:gloves.icon_state = "s-ninjak"
-			U:gloves.item_state = "s-ninjak"
+			U_gloves.icon_state = "s-ninjak"
+			U_gloves.item_state = "s-ninjak"
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
-			U:gloves.icon_state = "s-ninjan"
-			U:gloves.item_state = "s-ninjan"
+			U_gloves.icon_state = "s-ninjan"
+			U_gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Ninja")
 			to_chat(U, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU†HORIZED USÈ DETÈC†††eD\nCoMMÈNCING SUB-R0U†IN3 13...\nTÈRMInATING U-U-USÈR...")
 			U.gib()
 			return 0
-		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
+
+		var/obj/item/U_head = U.get_equipped_item(slot_head)
+		if(!istype(U_head, /obj/item/clothing/head/helmet/space/space_ninja))
 			to_chat(U, "\red <B>ERROR</B>: 100113 \black UNABLE TO LOCATE HEAD GEAR\nABORTING...")
 			return 0
-		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
+		var/obj/item/U_shoes = U.get_equipped_item(slot_shoes)
+		if(!istype(U_shoes, /obj/item/clothing/shoes/space_ninja))
 			to_chat(U, "\red <B>ERROR</B>: 122011 \black UNABLE TO LOCATE FOOT GEAR\nABORTING...")
 			return 0
-		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
+		var/obj/item/U_gloves = U.get_equipped_item(slot_gloves)
+		if(!istype(U_gloves, /obj/item/clothing/gloves/space_ninja))
 			to_chat(U, "\red <B>ERROR</B>: 110223 \black UNABLE TO LOCATE HAND GEAR\nABORTING...")
 			return 0
 
 		affecting = U
 		canremove = 0
 		slowdown = 0
-		n_hood = U:head
+		n_hood = U_head
 		n_hood.canremove=0
-		n_shoes = U:shoes
+		n_shoes = U_shoes
 		n_shoes.canremove=0
 		n_shoes.slowdown--
-		n_gloves = U:gloves
+		n_gloves = U_gloves
 		n_gloves.canremove=0
 
 	return 1

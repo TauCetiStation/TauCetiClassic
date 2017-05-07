@@ -1,14 +1,15 @@
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES		1	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDETAIL 		16	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-
-#define HIDEMASK	1	//APPLIES ONLY TO HELMETS/MASKS!!
-#define HIDEEARS	2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
-#define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
-#define HIDEFACE	8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
+//HELMETS/MASKS
+#define HIDEMASK        1
+#define HIDEEARS        2	// Ears means headsets and such
+#define HIDEEYES        4	// Eyes means glasses
+#define HIDEFACE        8	// Dictates whether we appear as unknown.
+//EXTERIOR SUIT
+#define HIDEGLOVES      16
+#define HIDESUITSTORAGE 32
+#define HIDEJUMPSUIT    64
+#define HIDESHOES       128
+#define HIDETAIL        256
 
 //Cant seem to find a mob bitflags area other than the powers one
 

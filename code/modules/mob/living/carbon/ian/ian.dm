@@ -312,7 +312,7 @@
 
 /mob/living/carbon/ian/attackby(obj/item/O, mob/user)
 	var/chance = 0
-	if(head && istype(head,/obj/item/clothing/head/helmet))
+	if(istype(get_equipped_item(slot_head), /obj/item/clothing/head/helmet))
 		chance += 50
 	if(back && istype(back,/obj/item/clothing/suit/armor))
 		chance += 50
@@ -364,13 +364,13 @@
 			if(health >= config.health_threshold_crit)
 				help_shake_act(M)
 				return
-			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
+			if(M.get_equipped_flags(BP_HEAD) & (HEADCOVERSMOUTH | MASKCOVERSMOUTH))
 				to_chat(M, "<span class='notice'>Remove your mask!</span>")
 				return
-			if(head && (head.flags & HEADCOVERSMOUTH))
-				to_chat(M, "<span class='notice'>Remove his [head]!</span>")
+			if(get_equipped_flags(BP_HEAD) & (HEADCOVERSMOUTH | MASKCOVERSMOUTH))
+				to_chat(M, "<span class='notice'>Remove his mask!</span>")
 				return
-			un_equip_or_action(M, "CPR")
+			//un_equip_or_action(M, "CPR") TODO this
 		if ("hurt")
 			M.do_attack_animation(src)
 			if(is_armored(M, 35))
@@ -656,7 +656,7 @@
 		return
 
 	var/chance = 0
-	if(head && istype(head,/obj/item/clothing/head/helmet))
+	if(istype(get_equipped_item(slot_head), /obj/item/clothing/head/helmet))
 		chance += 50
 	if(back && istype(back,/obj/item/clothing/suit/armor))
 		chance += 50
@@ -680,7 +680,7 @@
 
 /mob/living/carbon/ian/proc/is_armored(atom/movable/AM, luck = 50, msg = "dodges")
 	var/chance = 0
-	if(head && istype(head,/obj/item/clothing/head/helmet))
+	if(istype(get_equipped_item(slot_head), /obj/item/clothing/head/helmet))
 		chance += luck
 	if(back && istype(back,/obj/item/clothing/suit/armor))
 		chance += luck

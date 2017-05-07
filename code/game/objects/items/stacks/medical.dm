@@ -21,27 +21,26 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 
-	if(istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/bodypart/BP = H.get_bodypart(user.zone_sel.selecting)
+	var/target_zone = user.zone_sel.selecting
+	var/obj/item/bodypart/BP = M.get_bodypart(target_zone)
+	if(!BP && BP.is_stump())
+		to_chat(user, "<span class='warning'>What [target_zone]?</span>")
+		return 1
 
-		if(BP.body_zone == BP_HEAD)
-			if(H.head && istype(H.head,/obj/item/clothing/head/helmet/space))
-				to_chat(user, "<span class='warning'>You can't apply [src] through [H.head]!</span>")
-				return 1
-		else
-			if(H.wear_suit && istype(H.wear_suit,/obj/item/clothing/suit/space))
-				to_chat(user, "<span class='warning'>You can't apply [src] through [H.wear_suit]!</span>")
-				return 1
-
-		if(BP.status & ORGAN_ROBOT)
-			to_chat(user, "<span class='warning'>This isn't useful at all on a robotic limb..</span>")
+	if(target_zone == BP_HEAD)
+		if(M.get_equipped_covered(BP_HEAD) & HEAD)
+			to_chat(user, "<span class='warning'>You can't apply [src] through clothes on [M]'s [parse_zone(target_zone)]!</span>")
 			return 1
 	else
-		M.heal_bodypart_damage((heal_brute/2), (heal_burn/2))
-		user.visible_message("<span class='notice'>[M] has been applied with [src] by [user].</span>", \
-							"<span class='notice'>You apply \the [src] to [M].</span>")
-		use(1)
+		if(M.get_equipped_covered(BP_CHEST) & (UPPER_TORSO | LOWER_TORSO | LEGS | ARMS))
+			to_chat(user, "<span class='warning'>You can't apply [src] through clothes on [M]'s [parse_zone(target_zone)]!</span>")
+			return 1
+
+	if(M.isSynthetic(target_zone))
+		to_chat(user, "<span class='warning'>This isn't useful at all on a robotic limb..</span>")
+		return 1
+
+	use(1)
 	M.updatehealth()
 
 /obj/item/stack/medical/bruise_pack

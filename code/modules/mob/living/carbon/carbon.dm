@@ -769,7 +769,8 @@
 					lastpuke = 0
 
 /mob/living/carbon/proc/get_visible_gender()
-	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
+	var/equipped_flags = get_equipped_flags_inv(list(BP_HEAD, BP_CHEST))
+	if((equipped_flags & HIDEJUMPSUIT) && ((equipped_flags & HIDEMASK) || get_equipped_item(slot_wear_mask)))
 		return NEUTER
 	return gender
 
@@ -850,7 +851,8 @@ This function restores the subjects blood to max.
 		vessel.add_reagent("blood", species.blood_volume - blood_volume)
 
 /mob/living/carbon/proc/get_bodypart(zone)
-	if(!zone)	zone = BP_CHEST
+	if(!zone)
+		zone = BP_CHEST
 	if (zone in list( BP_EYES, BP_MOUTH ))
 		zone = BP_HEAD
 	return bodyparts_by_name[zone]
@@ -906,10 +908,8 @@ This function restores the subjects blood to max.
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
 /mob/living/carbon/proc/get_visible_name()
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
+	if(get_equipped_flags_inv(BP_HEAD) & HIDEFACE)
 		return get_id_name("Unknown")
-	if( head && (head.flags_inv&HIDEFACE) )
-		return get_id_name("Unknown")		//Likewise for hats
 	if(name_override)
 		return name_override
 	var/face_name = get_face_name()

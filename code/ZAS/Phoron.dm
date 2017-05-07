@@ -98,6 +98,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 	//Burn eyes if exposed.
 	if(vsc.plc.EYE_BURNS)
+		var/obj/item/head = get_equipped_item(slot_head)
 		if(!head)
 			if(!wear_mask)
 				burn_eyes()
@@ -147,13 +148,14 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 /mob/living/carbon/human/proc/pl_head_protected()
 	//Checks if the head is adequately sealed.
-	if(head)
+	var/obj/item/I = get_equipped_item(slot_head)
+	if(I)
 		if(vsc.plc.PHORONGUARD_ONLY)
-			if(head.flags & PHORONGUARD)
-				return 1
-		else if(head.flags & HEADCOVERSEYES)
-			return 1
-	return 0
+			if(I.flags & PHORONGUARD)
+				return TRUE
+		else if(I.flags & HEADCOVERSEYES)
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/pl_suit_protected()
 	//Checks if the suit is adequately sealed.

@@ -124,10 +124,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 40
 					var/blinding = FALSE
 					if(ran_zone() == BP_HEAD)
 						blinding = TRUE
-						for(var/obj/item/I in list(H.head, H.glasses, H.wear_mask))
-							if(I && (I.body_parts_covered & EYES))
-								blinding = FALSE
-								break
+						if(H.get_equipped_covered(BP_HEAD) & EYES)
+							blinding = FALSE
 					if(blinding)
 						H.eye_blurry = max(H.eye_blurry, 10)
 						H.eye_blind = max(H.eye_blind, 5)

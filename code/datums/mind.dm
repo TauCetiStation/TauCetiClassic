@@ -995,17 +995,10 @@
 			if("lair")
 				current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 			if("dressup")
-				qdel(H.belt)
-				qdel(H.back)
-				qdel(H.l_ear)
-				qdel(H.r_ear)
-				qdel(H.gloves)
-				qdel(H.head)
-				qdel(H.shoes)
-				qdel(H.wear_id)
-				qdel(H.wear_suit)
-				qdel(H.w_uniform)
-
+				var/list/items = H.get_equipped_items()
+				if(items)
+					for(var/I in items)
+						qdel(I)
 				if (!ticker.mode.equip_syndicate(current))
 					to_chat(usr, "\red Equipping a syndicate failed!")
 			if("tellcode")
@@ -1360,17 +1353,10 @@
 
 		current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 
-		var/mob/living/carbon/human/H = current
-		qdel(H.belt)
-		qdel(H.back)
-		qdel(H.l_ear)
-		qdel(H.r_ear)
-		qdel(H.gloves)
-		qdel(H.head)
-		qdel(H.shoes)
-		qdel(H.wear_id)
-		qdel(H.wear_suit)
-		qdel(H.w_uniform)
+		var/list/items = current.get_equipped_items()
+		if(items)
+			for(var/I in items)
+				qdel(I)
 
 		ticker.mode.equip_syndicate(current)
 

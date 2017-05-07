@@ -34,7 +34,7 @@
 	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
-	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
+	var/flags_inv = 0 //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 	var/item_color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/un_equip_time = 0 // unequip / equip delay.
@@ -407,24 +407,13 @@
 	return loc
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
-
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-			// you can't stab someone in the eyes wearing a mask!
-			to_chat(user, "\red You're going to need to remove the eye covering first.")
-			return
-
-	var/mob/living/carbon/monkey/Mo = M
-	if(istype(Mo) && ( \
-			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
-		))
-		// you can't stab someone in the eyes wearing a mask!
-		to_chat(user, "\red You're going to need to remove the eye covering first.")
+	if(!M.has_eyes())
+		to_chat(user, "<span class='red'>You cannot locate any eyes on [M]!</span>")
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
-		to_chat(user, "\red You cannot locate any eyes on this creature!")
+	if(M.get_equipped_flags(list(BP_HEAD, BP_CHEST)) & (HEADCOVERSEYES | MASKCOVERSEYES | GLASSESCOVERSEYES)) // NOTE remove BP_CHEST when combined clothes like suit with hoodie becomes separated items.
+		// you can't stab someone in the eyes wearing a mask!
+		to_chat(user, "<span class='red'>You're going to need to remove the eye covering first.</span>")
 		return
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"

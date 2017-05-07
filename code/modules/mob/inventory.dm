@@ -330,10 +330,10 @@ var/list/slot_equipment_priority = list( \
 
 	return BP.item_in_slot[slot]
 
-/mob/proc/get_equipped_items()
+/mob/proc/get_equipped_items(include_pockets = TRUE, include_hands = TRUE, body_zone)
 	return null
 
-/mob/living/carbon/get_equipped_items(include_pockets = TRUE, include_hands = TRUE)
+/mob/living/carbon/get_equipped_items(include_pockets = TRUE, include_hands = TRUE, body_zone)
 	var/list/items = list()
 	var/list/pocket_slots = list(slot_l_store, slot_r_store) // pockets should be moved inside uniform itself.
 	var/list/hand_slots = list(slot_l_hand, slot_r_hand)
@@ -342,15 +342,66 @@ var/list/slot_equipment_priority = list( \
 	if(include_hands)
 		hand_slots.Cut()
 
-	for(var/obj/item/bodypart/BP in bodyparts)
-		for(var/slot in BP.item_in_slot - pocket_slots - hand_slots)
-			if(BP.item_in_slot[slot])
-				items += BP.item_in_slot[slot]
+	if(!body_zone)
+		for(var/obj/item/bodypart/BP in bodyparts)
+			for(var/slot in BP.item_in_slot - pocket_slots - hand_slots)
+				if(BP.item_in_slot[slot])
+					items += BP.item_in_slot[slot]
+	else
+		if(!islist(body_zone))
+			var/obj/item/bodypart/BP = get_bodypart(body_zone)
+			if(BP && BP.item_in_slot.len)
+				for(var/slot in BP.item_in_slot - pocket_slots - hand_slots)
+					if(BP.item_in_slot[slot])
+						items += BP.item_in_slot[slot]
+		else
+			for(var/body_zone_in_list in body_zone)
+				var/obj/item/bodypart/BP = get_bodypart(body_zone_in_list)
+				if(BP && BP.item_in_slot.len)
+					for(var/slot in BP.item_in_slot - pocket_slots - hand_slots)
+						if(BP.item_in_slot[slot])
+							items += BP.item_in_slot[slot]
 
 	if(items.len)
 		return items
 	else
 		return null
+
+// returns flags of all equipped items in specified body_zone (see __DEFINES\flags.dm : FLAGS BITMASK)
+/mob/proc/get_equipped_flags(body_zone)
+	return 0
+
+/mob/living/carbon/get_equipped_flags(body_zone)
+	var/flags = 0
+	var/list/items = get_equipped_items(body_zone = body_zone)
+	if(items)
+		for(var/obj/item/I in items)
+			flags |= I.flags
+	return flags
+
+// Similar to above - returns inventory flags of equipped items (see __DEFINES\clothing.dm : Bit flags for the flags_inv variable)
+/mob/proc/get_equipped_flags_inv(body_zone)
+	return 0
+
+/mob/living/carbon/get_equipped_flags_inv(body_zone)
+	var/flags = 0
+	var/list/items = get_equipped_items(body_zone = body_zone)
+	if(items)
+		for(var/obj/item/I in items)
+			flags |= I.flags_inv
+	return flags
+
+// Similar to above - returns flags that protects (cover) our limb as flags of equipped items (see __DEFINES\clothing.dm : bitflags for clothing parts)
+/mob/proc/get_equipped_covered(body_zone)
+	return 0
+
+/mob/living/carbon/get_equipped_covered(body_zone)
+	var/flags = 0
+	var/list/items = get_equipped_items(body_zone = body_zone)
+	if(items)
+		for(var/obj/item/I in items)
+			flags |= I.body_parts_covered
+	return flags
 
 /mob/living/carbon/proc/check_obscured_slots()
 	var/list/obscured = list()
