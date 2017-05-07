@@ -10,9 +10,6 @@
 /mob/living/carbon/ian/var/list/overlays_inv[LAYERIANS_TOTAL]
 
 /mob/living/carbon/ian/regenerate_icons()
-	//update_inv_head()
-	//update_inv_mouth()
-	//update_inv_back()
 	update_hud()
 	update_transform()
 
@@ -20,86 +17,7 @@
 	if(client)
 		client.screen |= contents
 
-/*/mob/living/carbon/ian/update_inv_head()
-	remove_overlay(LAYERIAN_HEAD)
-
-	update_corgi_ability()
-
-	if(!head)
-		return
-
-	head.screen_loc = ui_ian_head
-	if(client && hud_used && hud_used.hud_shown)
-		client.screen += head
-
-	var/list/has_corgi_icons = list(
-	/obj/item/clothing/head/helmet,                 /obj/item/clothing/glasses/sunglasses,
-	/obj/item/clothing/head/caphat,                 /obj/item/clothing/head/collectable/captain,
-	/obj/item/clothing/head/that,                   /obj/item/clothing/head/kitty,
-	/obj/item/clothing/head/collectable/kitty,      /obj/item/clothing/head/rabbitears,
-	/obj/item/clothing/head/collectable/rabbitears, /obj/item/clothing/head/beret,
-	/obj/item/clothing/head/collectable/beret,      /obj/item/clothing/head/det_hat,
-	/obj/item/clothing/head/nursehat,               /obj/item/clothing/head/pirate,
-	/obj/item/clothing/head/collectable/pirate,     /obj/item/clothing/head/ushanka,
-	/obj/item/clothing/head/chefhat,                /obj/item/clothing/head/collectable/chef,
-	/obj/item/clothing/head/collectable/police,     /obj/item/clothing/head/wizard/fake,
-	/obj/item/clothing/head/wizard,                 /obj/item/clothing/head/collectable/wizard,
-	/obj/item/clothing/head/hardhat/yellow,         /obj/item/clothing/head/collectable/hardhat,
-	/obj/item/clothing/head/hardhat/white,          /obj/item/clothing/head/helmet/space/santahat,
-	/obj/item/clothing/head/collectable/paper,      /obj/item/clothing/head/soft)
-
-	var/image/body_icon
-	if(facehugger)
-		dropItemToGround(mouth)
-		body_icon = image("icon" = 'icons/mob/mask.dmi', "icon_state" = "facehugger_corgi", "layer" = -LAYERIAN_HEAD)
-	else if(head.type in has_corgi_icons)
-		body_icon = image("icon" = 'icons/mob/corgi_head.dmi', "icon_state" = head.icon_state, "layer" = -LAYERIAN_HEAD)
-	else
-		var/cached_icon_string = "H[head.type]_[head.icon_state]"
-
-		if(head.icon_override)
-			cached_icon_string += "_[head.icon_override]"
-		else if(head.icon_custom)
-			cached_icon_string += "_[head.icon_custom]"
-
-		if(cached_icon_string in corgi_icons)
-			body_icon = corgi_icons[cached_icon_string]
-		else
-			var/icon_path = head.icon_override ? head.icon_override : head.icon_custom ? head.icon_custom : 'icons/mob/head.dmi'
-
-			var/i_state = head.icon_custom ? "[head.icon_state]_mob" : head.icon_state
-			var/icon/I = new(icon_path, i_state)
-
-			var/icon/temp_icon = icon(I, i_state, EAST)
-			temp_icon.Shift(EAST, 5)
-			I.Insert(icon(temp_icon, dir = EAST), dir = EAST)
-
-			temp_icon = icon(I, i_state, WEST)
-			temp_icon.Shift(WEST, 7)
-			I.Insert(icon(temp_icon, dir = WEST), dir = WEST)
-
-			I.Shift(EAST, 1)
-			I.Shift(SOUTH, 7)
-
-			var/icon/mask_lie = icon(icon, "[icon_state]_mask_lie")
-			temp_icon = icon(I)
-			temp_icon.Shift(SOUTH, 13) //lying state
-			temp_icon.Blend(icon(mask_lie, icon_state, dir = NORTH), ICON_MULTIPLY)
-			I.Insert(icon(temp_icon), i_state + "_lie")
-
-			corgi_icons[cached_icon_string] = image("icon" = I, "icon_state" = i_state, "layer" = -LAYERIAN_HEAD)
-			body_icon = corgi_icons[cached_icon_string]
-
-	body_icon.color = head.color
-	if(pose_last & (POSE_REST | POSE_STAT))
-		body_icon.icon_state = head.icon_state + "_lie"
-	else
-		body_icon.icon_state = head.icon_state
-
-	overlays_inv[LAYERIAN_HEAD] = body_icon
-
-	apply_overlay(LAYERIAN_HEAD)
-
+/*
 /mob/living/carbon/ian/proc/update_inv_mouth()
 	remove_overlay(LAYERIAN_MOUTH)
 
@@ -181,39 +99,6 @@
 	//apply_overlay(LAYERIAN_NECKCUFF)
 	*/
 
-/*/mob/living/carbon/ian/update_inv_back()
-	remove_overlay(LAYERIAN_BACK)
-
-	if(!back)
-		return
-
-	back.screen_loc = ui_ian_back
-	if(client && hud_used && hud_used.hud_shown)
-		client.screen += back
-
-	var/image/body_icon
-	var/i_state = "backpack"
-
-	if(back.type == /obj/item/clothing/suit/armor/vest)
-		i_state = "armor"
-	else if(istype(back, /obj/item/weapon/storage/backpack/satchel))
-		i_state = "satchel"
-	else if(istype(back, /obj/item/weapon/storage/backpack/dufflebag))
-		i_state = "duffbag"
-
-	body_icon = image("icon" = 'icons/mob/corgi_back.dmi', "icon_state" = i_state, "layer" = -LAYERIAN_BACK)
-	body_icon.color = back.color
-
-	switch(pose_last)
-		if(POSE_SIT)
-			body_icon.icon_state = i_state + "_sit"
-		if(POSE_REST,POSE_STAT)
-			body_icon.icon_state = i_state + "_lie"
-
-	overlays_inv[LAYERIAN_BACK] = body_icon
-
-	apply_overlay(LAYERIAN_BACK)*/
-
 /mob/living/carbon/ian/update_targeted()
 	remove_overlay(LAYERIAN_TARGETED)
 
@@ -260,9 +145,6 @@
 
 	BP = bodyparts_by_name[BP_CHEST]
 	BP.update_inv_limb(multi = TRUE)
-	//update_inv_head()
-	//update_inv_mouth()
-	//update_inv_back()
 
 /mob/living/carbon/ian/update_canmove() // uh oh, i have no other idea, except copypaste this proc as edited version for now.
 	if(!ismob(src))

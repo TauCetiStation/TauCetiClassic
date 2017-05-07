@@ -406,7 +406,7 @@
 
 		if(washface)
 			C.lip_style = null
-			C.update_body()
+			C.update_bodypart(BP_HEAD)
 	else
 		src.clean_blood()
 

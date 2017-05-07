@@ -138,11 +138,9 @@
 	if(h_style)
 		h_style = "Bald"
 
-	update_hair()
 	disabilities |= HUSK
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
-	update_body()
-	update_mutantrace()
+	update_bodyparts()
 	return
 
 /mob/living/carbon/human/proc/Drain()

@@ -150,6 +150,8 @@
 			remove_overlays += eyes_overlay
 		if(ears_overlay)
 			remove_overlays += ears_overlay
+		if(lips_overlay)
+			remove_overlays += lips_overlay
 
 	if(remove_overlays.len)
 		overlays -= remove_overlays
@@ -158,27 +160,55 @@
 	var/list/standing = list()
 
 	if(owner)
-		if( !((owner.disabilities & HUSK) || owner.head && (owner.head.flags & BLOCKHAIR) || owner.wear_mask && (owner.wear_mask.flags & BLOCKHAIR) || owner.wear_suit && (owner.wear_suit.flags & BLOCKHAIR)) )
+		if(!(owner.disabilities & HUSK))
 
-			if(owner.h_style)
-				if(h_style_overlay)
-					var/datum/sprite_accessory/hair_style = hair_styles_list[owner.h_style]
-					if(hair_style && hair_style.species_allowed && (species.name in hair_style.species_allowed))
-						h_style_overlay.icon = hair_style.icon
-						h_style_overlay.icon_state = hair_style.icon_state + "_s"
-						if(hair_style.do_colouration)
-							h_style_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_hair/255, owner.g_hair/255, owner.b_hair/255)
-						standing += h_style_overlay
+			if(owner.h_style || owner.f_style)
+				var/item_blocks_hair = FALSE
+				for(var/slot in list(slot_head, slot_wear_mask, slot_wear_suit))
+					var/obj/item/I = item_in_slot[slot]
+					if(I && (I.flags & BLOCKHAIR))
+						item_blocks_hair = TRUE
+						break
 
-			if(owner.f_style)
-				if(f_style_overlay)
-					var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[owner.f_style]
-					if(facial_hair_style && facial_hair_style.species_allowed && (species.name in facial_hair_style.species_allowed))
-						f_style_overlay.icon = facial_hair_style.icon
-						f_style_overlay.icon_state = facial_hair_style.icon_state + "_s"
-						if(facial_hair_style.do_colouration)
-							f_style_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_facial/255, owner.g_facial/255, owner.b_facial/255)
-						standing += f_style_overlay
+				if(!item_blocks_hair)
+					if(owner.h_style)
+						if(!h_style_overlay)
+							h_style_overlay = image(layer = -HAIR_LAYER)
+						var/datum/sprite_accessory/hair_style = hair_styles_list[owner.h_style]
+						if(hair_style && hair_style.species_allowed && (species.name in hair_style.species_allowed))
+							h_style_overlay.icon = hair_style.icon
+							h_style_overlay.icon_state = hair_style.icon_state + "_s"
+							if(hair_style.do_colouration)
+								h_style_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_hair/255, owner.g_hair/255, owner.b_hair/255)
+							standing += h_style_overlay
+
+					if(owner.f_style)
+						if(!f_style_overlay)
+							f_style_overlay = image(layer = -HAIR_LAYER)
+						var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[owner.f_style]
+						if(facial_hair_style && facial_hair_style.species_allowed && (species.name in facial_hair_style.species_allowed))
+							f_style_overlay.icon = facial_hair_style.icon
+							f_style_overlay.icon_state = facial_hair_style.icon_state + "_s"
+							if(facial_hair_style.do_colouration)
+								f_style_overlay.color = list(1,0,0, 0,1,0, 0,0,1, owner.r_facial/255, owner.g_facial/255, owner.b_facial/255)
+							standing += f_style_overlay
+				else
+					h_style_overlay = null
+					f_style_overlay = null
+			else
+				h_style_overlay = null
+				f_style_overlay = null
+
+
+			if(species.flags[HAS_LIPS])
+				if(owner.lip_style)
+					if(!lips_overlay)
+						lips_overlay = image(icon = 'icons/mob/human_face.dmi', layer = -BODY_LAYER)
+					lips_overlay.icon_state = "lips_[owner.lip_style]_s"
+					lips_overlay.color = owner.lip_color
+					standing += lips_overlay
+				else
+					lips_overlay = null
 
 	if(eyes_overlay && species.eyes_icon)
 		var/obj/item/organ/eyes/IO = get_organ(BP_EYES)
@@ -240,6 +270,8 @@
 		. += h_style_overlay
 	if(f_style_overlay)
 		. += f_style_overlay
+	if(lips_overlay)
+		. += lips_overlay
 	if(species.eyes_icon && eyes_overlay)
 		. += eyes_overlay
 	if(ears && ears_overlay)

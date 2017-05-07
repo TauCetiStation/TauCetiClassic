@@ -999,14 +999,13 @@
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
 
-/mob/living/carbon/human/clean_blood(var/clean_feet)
+/mob/living/carbon/human/clean_blood(var/clean_feet) // TODO deal with blood on limbs
 	. = ..()
 
 	var/obj/item/I = get_equipped_item(slot_shoes)
 	if(clean_feet && !I && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
 		feet_blood_color = null
 		feet_blood_DNA = null
-		//update_inv_shoes() // TODO deal with blood on limbs
 		return 1
 
 /mob/living/carbon/human/verb/pull_punches()

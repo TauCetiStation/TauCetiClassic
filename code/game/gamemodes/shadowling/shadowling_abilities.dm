@@ -247,8 +247,8 @@
 
 /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor/cast(list/targets)
 	for(var/mob/living/user in targets)
-		user.visible_message("<span class='warning'>[user]'s skin suddenly bubbles and begins to shift around their body!</span>", \
-							 "<span class='shadowling'>You regenerate your protective armor and cleanse your form of defects.</span>")
+		user.visible_message("<span class='warning'>[user]'s skin suddenly bubbles and begins to shift around their body!</span>",
+			                 "<span class='shadowling'>You regenerate your protective armor and cleanse your form of defects.</span>")
 		for(var/obj/item/I in user)
 			user.remove_from_mob(I)
 			if(I.flags & ABSTRACT)
@@ -260,8 +260,6 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
 		//var/mob/living/carbon/human/H = usr
 		//H.set_species(S_SHADOWLING)
-		//H.dna.mutantrace = S_SHADOWLING
-		//H.update_mutantrace()
 		//H.regenerate_icons()
 
 /obj/effect/proc_holder/spell/targeted/collective_mind

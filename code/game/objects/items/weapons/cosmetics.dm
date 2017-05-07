@@ -15,12 +15,11 @@
 
 /obj/item/weapon/lipstick/jade
 	name = "jade lipstick"
-	colour = "jade"
+	colour = "green" // because there is no "jade" color that byond know.
 
 /obj/item/weapon/lipstick/black
 	name = "black lipstick"
 	colour = "black"
-
 
 /obj/item/weapon/lipstick/random
 	name = "lipstick"
@@ -53,7 +52,7 @@
 								 "<span class='notice'>You take a moment to apply \the [src]. Perfect!</span>")
 			H.lip_style = "lipstick"
 			H.lip_color = colour
-			H.update_body()
+			H.update_bodypart(BP_HEAD)
 		else
 			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
 								 "<span class='notice'>You begin to apply \the [src].</span>")
@@ -62,7 +61,7 @@
 									 "<span class='notice'>You apply \the [src].</span>")
 				H.lip_style = "lipstick"
 				H.lip_color = colour
-				H.update_body()
+				H.update_bodypart(BP_HEAD)
 	else
 		to_chat(user, "<span class='notice'>Where are the lips on that?</span>")
 
@@ -76,7 +75,7 @@
 			if(H == user)
 				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
 				H.lip_style = null
-				H.update_body()
+				H.update_bodypart(BP_HEAD)
 			else
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
@@ -84,7 +83,7 @@
 					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
 					H.lip_style = null
-					H.update_body()
+					H.update_bodypart(BP_HEAD)
 	else
 		..()
 
@@ -106,7 +105,7 @@
 	if(AH)
 		H.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has been shaved with [src.name] by [AH.name] ([AH.ckey])</font>")
 		AH.attack_log += text("\[[time_stamp()]\] <font color='blue'>Used the [src.name] to shave [H.name] ([H.ckey])</font>")
-	H.update_hair()
+	H.update_bodypart(BP_HEAD)
 	playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
 
 

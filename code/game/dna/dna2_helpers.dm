@@ -164,8 +164,7 @@
 		if((0 < beard) && (beard <= facial_hair_styles_list.len))
 			H.f_style = facial_hair_styles_list[beard]
 
-		H.update_body()
-		H.update_hair()
+		H.update_bodyparts()
 
 		return 1
 	else

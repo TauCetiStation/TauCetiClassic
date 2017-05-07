@@ -123,7 +123,7 @@
 			H.visible_message("[user] begins balding.", \
 									 "<span class='notice'>You become bald from shame.</span>")
 			H.h_style = "Bald"
-			H.update_hair()
+			H.update_bodypart(BP_HEAD)
 		qdel(src)
 		return
 

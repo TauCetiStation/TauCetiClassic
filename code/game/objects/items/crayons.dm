@@ -218,7 +218,7 @@
 		if(iscarbon(target))
 			if(uses-10 > 0)
 				uses = uses - 10
-				var/mob/living/carbon/human/C = target
+				var/mob/living/carbon/C = target
 				user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
 				if(C.client)
 					C.eye_blurry = max(C.eye_blurry, 3)
@@ -230,8 +230,7 @@
 					var/mob/living/carbon/human/H = C
 					C.lip_style = "spray_face"
 					C.lip_color = colour
-					H.update_body()
-				C.update_body()
+					H.update_bodypart(BP_HEAD)
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		..()
 

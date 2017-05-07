@@ -588,7 +588,6 @@ mob/living/parasite/meme/verb/Possession()
 		host_mind.transfer_to(dummy)
 		meme_mind.transfer_to(host)
 		host_mind.current.clearHUD()
-		host.update_body()
 
 		to_chat(dummy, "\blue You feel very drowsy.. Your eyelids become heavy...")
 
@@ -603,7 +602,6 @@ mob/living/parasite/meme/verb/Possession()
 		meme_mind.transfer_to(src)
 		host_mind.transfer_to(host)
 		meme_mind.current.clearHUD()
-		host.update_body()
 		to_chat(src, "\red You lose control..")
 
 		qdel(dummy)

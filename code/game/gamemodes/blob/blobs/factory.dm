@@ -102,7 +102,7 @@
 	icon = H.icon
 	icon_state = "husk_s"
 	H.h_style = null
-	H.update_hair()
+	H.update_bodypart(BP_HEAD)
 	overlays = H.overlays
 	overlays += image('icons/mob/blob.dmi', icon_state = "blob_head")
 	H.loc = src

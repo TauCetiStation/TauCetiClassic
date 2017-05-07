@@ -261,7 +261,7 @@
 				if(prob(5) && prob(radiation) && (h_style != "Bald" || f_style != "Shaved"))
 					h_style = "Bald"
 					f_style = "Shaved"
-					update_hair()
+					update_bodypart(BP_HEAD)
 					to_chat(src, "<span class='notice'>Suddenly you lost your hair!</span>")
 				if(prob(5))
 					radiation -= 5
@@ -868,8 +868,7 @@
 		if(overeatduration < 100)
 			to_chat(src, "\blue You feel fit again!")
 			disabilities &= ~FAT
-			update_body()
-			update_mutantrace()
+			update_bodyparts()
 			update_mutations()
 			var/obj/item/I = get_equipped_item(slot_w_uniform) // TODO deal with that.
 			if(I)
@@ -880,8 +879,7 @@
 	else
 		if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
 			disabilities |= FAT
-			update_body()
-			update_mutantrace()
+			update_bodyparts()
 			update_mutations()
 			var/obj/item/I = get_equipped_item(slot_w_uniform) // TODO deal with that.
 			if(I)

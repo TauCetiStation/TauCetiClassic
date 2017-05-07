@@ -301,8 +301,6 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.f_style = f_style
 
 	character.update_bodyparts()
-	character.update_tail_showing()
-	character.update_hair()
 
 	if(is_preview_copy) // Everything else is not needed for preview icon.
 		return

@@ -480,9 +480,8 @@
 
 	if(!Adjacent(user)) return		//Person has moved away from the sink
 
-	user.clean_blood()
-	//if(ishuman(user))
-	//	user:update_inv_gloves() deal with clean_blood on limbs
+	user.clean_blood() // deal with clean_blood on limbs
+
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [user] washes their hands using \the [src].")
 

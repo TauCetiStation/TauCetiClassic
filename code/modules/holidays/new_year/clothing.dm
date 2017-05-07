@@ -41,10 +41,7 @@
 		src.icon_state = "[initial(icon_state)]_t"
 		to_chat(usr, "You toggle on [src]'s hood.")
 
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.update_hair(0)	//only human type has hair
-	update_inv_item(list(slot_head, slot_wear_suit))
+	update_inv_item(list(slot_head, slot_wear_suit)) // TODO check this item feature properly
 
 /obj/item/clothing/suit/wintercoat
 	name = "winter coat"

@@ -166,7 +166,6 @@
 		IO.inserted(C)
 
 	owner.add_hud_data(src)
-	owner.update_body() // TODO check if this procs are necessary
 	owner.updatehealth()
 	owner.update_bodypart(src.body_zone)
 	owner.update_bloody_bodypart(body_zone)
@@ -705,11 +704,37 @@ This function completely restores a damaged bodypart to perfect condition.
 
 /obj/item/bodypart/proc/die()
 	if(status & ORGAN_ROBOT)
-		return
+		return FALSE
+
+	if(status & ORGAN_DEAD)
+		return FALSE
+
 	status |= ORGAN_DEAD
-	STOP_PROCESSING(SSobj, src)
-	if(owner && vital)
-		owner.death()
+
+	if(owner)
+		if(vital)
+			owner.death()
+		owner.update_bodypart(body_zone)
+	else
+		update_limb()
+
+	return TRUE
+
+/obj/item/bodypart/proc/undie()
+	if(status & ORGAN_ROBOT)
+		return FALSE
+
+	if(!(status & ORGAN_DEAD))
+		return FALSE
+
+	status &= ~ORGAN_DEAD
+
+	if(owner)
+		owner.update_bodypart(body_zone)
+	else
+		update_limb()
+
+	return TRUE
 
 //Updating germ levels. Handles bodypart germ levels and necrosis.
 /*
@@ -815,7 +840,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		if (!(status & ORGAN_DEAD))
 			status |= ORGAN_DEAD
 			to_chat(owner, "<span class='notice'>You can't feel your [name] anymore...</span>")
-			owner.update_body()
+			owner.update_bodypart(body_zone)
 
 		germ_level++
 		owner.adjustToxLoss(1)
@@ -1257,11 +1282,11 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 /obj/item/bodypart/proc/mutate()
 	src.status |= ORGAN_MUTATED
-	owner.update_body()
+	owner.update_bodypart(body_zone)
 
 /obj/item/bodypart/proc/unmutate()
 	src.status &= ~ORGAN_MUTATED
-	owner.update_body()
+	owner.update_bodypart(body_zone)
 
 /obj/item/bodypart/proc/can_feel_pain()
 	return (!(status & ORGAN_ROBOT) && (!species || !(species.flags[NO_PAIN] || species.flags[IS_SYNTHETIC])))
@@ -1463,17 +1488,11 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	var/image/f_style_overlay
 	var/image/eyes_overlay
 	var/image/ears_overlay
+	var/image/lips_overlay
 	var/obj/item/ears/ears
 
 /obj/item/bodypart/head/New(loc, mob/living/carbon/C)
 	..()
-
-	if(owner)
-		if(owner.h_style)
-			h_style_overlay = image(layer = -HAIR_LAYER)
-
-		if(owner.f_style)
-			f_style_overlay = image(layer = -HAIR_LAYER)
 
 	if(species.has_organ[BP_EYES])
 		eyes_overlay = image(icon = 'icons/mob/human_face.dmi', layer = -BODY_LAYER)

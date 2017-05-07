@@ -109,7 +109,7 @@ var/global/list/image/splatter_cache=list()
 	amount = 0
 	STOP_PROCESSING(SSobj, src)
 
-/obj/effect/decal/cleanable/blood/attack_hand(mob/living/carbon/human/user)
+/obj/effect/decal/cleanable/blood/attack_hand(mob/living/carbon/human/user) // TODO deal with add_blood()
 	..()
 	if (amount && istype(user))
 		add_fingerprint(user)
@@ -123,7 +123,6 @@ var/global/list/image/splatter_cache=list()
 		user.blood_DNA |= blood_DNA.Copy()
 		user.bloody_hands += taken
 		user.hand_blood_color = basecolor
-		//user.update_inv_gloves() TODO deal with add_blood()
 		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
 
 /obj/effect/decal/cleanable/blood/splatter

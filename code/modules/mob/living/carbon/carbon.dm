@@ -402,8 +402,7 @@
 			I.germ_level = 0
 		else
 			if(H.bloody_hands)
-				H.bloody_hands = 0
-				//H.update_inv_gloves() TODO deal with blood on limbs.
+				H.bloody_hands = 0 // TODO deal with blood on limbs.
 			H.germ_level = 0
 	update_icons()	//apply the now updated overlays to the mob
 
@@ -1028,19 +1027,16 @@ This function restores the subjects blood to max.
 				return
 			r_skin = Clamp(r_skin, 0, 255)
 			update_bodyparts()
-			update_tail_showing()
 		if("g_skin")
 			if(!species || !species.flags[HAS_SKIN_COLOR])
 				return
 			g_skin = Clamp(g_skin, 0, 255)
 			update_bodyparts()
-			update_tail_showing()
 		if("b_skin")
 			if(!species || !species.flags[HAS_SKIN_COLOR])
 				return
 			b_skin = Clamp(b_skin, 0, 255)
 			update_bodyparts()
-			update_tail_showing()
 
 /mob/living/carbon/proc/AddAbility(obj/effect/proc_holder/alien/A)
 	abilities.Add(A)

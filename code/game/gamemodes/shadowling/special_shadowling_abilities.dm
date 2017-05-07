@@ -84,9 +84,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.faction = "faithless"
 
 			H.set_species(S_SHADOWLING, TRUE)
-			H.dna.mutantrace = S_SHADOWLING
-			H.update_mutantrace()
-			H.regenerate_icons()
+
 			usr.mind.transfer_to(H)
 			ticker.mode.update_all_shadows_icons()
 

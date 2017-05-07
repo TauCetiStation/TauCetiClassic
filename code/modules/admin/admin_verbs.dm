@@ -813,9 +813,9 @@ var/list/admin_verbs_hideable = list(
 			M.gender = MALE
 		else
 			M.gender = FEMALE
-	M.update_hair()
-	M.update_body()
+
 	M.check_dna(M)
+	M.update_bodyparts()
 
 /client/proc/playernotes()
 	set name = "Show Player Info"

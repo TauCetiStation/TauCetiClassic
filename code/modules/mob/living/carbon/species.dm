@@ -175,14 +175,15 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 /datum/species/proc/handle_post_spawn(mob/living/carbon/C) //Handles anything not already covered by basic species assignment.
 	return
 
-/datum/species/proc/handle_death(mob/living/carbon/C) //Handles any species-specific death events (such nymph spawns).
-	if(flags[IS_SYNTHETIC])
- //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
-		C.h_style = ""
-		spawn(100)
+datum/species/proc/handle_death(mob/living/carbon/C) //Handles any species-specific death events (such nymph spawns).
+	return
+//	if(flags[IS_SYNTHETIC]) TODO reimplement this
+//H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
+//		C.h_style = ""
+//		spawn(100)
 			//H.is_jittery = 0
 			//H.jitteriness = 0
-			C.update_hair()
+//			C.update_bodypart(BP_HEAD)
 
 /datum/species/monkey
 	name = S_MONKEY

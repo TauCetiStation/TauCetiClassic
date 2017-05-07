@@ -120,22 +120,17 @@
 			var/mob/living/carbon/human/H = mob
 			var/bodypart = pick(list(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG))
 			var/obj/item/bodypart/BP = H.bodyparts_by_name[bodypart]
-			if (!(BP.status & ORGAN_DEAD))
-				BP.status |= ORGAN_DEAD
+			if (BP.die())
 				to_chat(H, "<span class='notice'>You can't feel your [BP.name] anymore...</span>")
 				for (var/obj/item/bodypart/C in BP.children)
-					C.status |= ORGAN_DEAD
-			H.update_body()
+					C.die()
 		mob.adjustToxLoss(15*multiplier)
 
 	deactivate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
 			for (var/obj/item/bodypart/BP in H.bodyparts)
-				BP.status &= ~ORGAN_DEAD
-				for (var/obj/item/bodypart/C in BP.children)
-					C.status &= ~ORGAN_DEAD
-			H.update_body()
+				BP.undie()
 
 /datum/disease2/effect/immortal
 	name = "Longevity Syndrome"
@@ -297,11 +292,11 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			if(H.species.name == S_HUMAN && !(H.h_style == "Bald") && !(H.h_style == "Balding Hair"))
+			if(H.species.name == S_HUMAN && H.h_style != "Bald")
 				to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
 				spawn(50)
-					H.h_style = "Balding Hair"
-					H.update_hair()
+					H.h_style = "Bald"
+					H.update_bodypart(BP_HEAD)
 
 /datum/disease2/effect/stimulant
 	name = "Adrenaline Extra"

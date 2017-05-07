@@ -309,10 +309,6 @@ datum
 						return
 					H.set_species(S_PROMETHEAN, TRUE)
 					to_chat(H, "<span class='warning'>Your flesh rapidly mutates!</span>")
-					//if(H.dna && !H.dna.mutantrace)
-					//	to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
-						//H.dna.mutantrace = "slime"
-						//H.update_mutantrace()
 
 		aslimetoxin
 			name = "Advanced Mutation Toxin"
@@ -1942,7 +1938,6 @@ datum
 							if(prob(meltprob) && !H.head.unacidable)
 								to_chat(H, "<span class='danger'>Your headgear melts away but protects you from the acid!</span>")
 								qdel(H.head)
-								H.update_hair()
 							else
 								to_chat(H, "<span class='warning'>Your headgear protects you from the acid.</span>")
 							return
@@ -1951,7 +1946,6 @@ datum
 							if(prob(meltprob) && !H.wear_mask.unacidable)
 								to_chat(H, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
 								qdel(H.wear_mask)
-								H.update_hair()
 							else
 								to_chat(H, "<span class='warning'>Your mask protects you from the acid.</span>")
 							return

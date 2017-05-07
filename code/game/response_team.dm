@@ -212,9 +212,8 @@ var/can_call_ert
 		else
 			M.gender = FEMALE
 	//M.rebuild_appearance()
-	M.update_hair()
-	M.update_body()
 	M.check_dna(M)
+	M.update_bodyparts()
 
 	M.real_name = commando_name
 	M.name = commando_name
