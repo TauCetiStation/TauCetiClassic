@@ -27,7 +27,7 @@
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
 
 	spawn(0)
 		var/religion_name = "Christianity"

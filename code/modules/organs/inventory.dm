@@ -21,7 +21,7 @@
 	var/list/obscured = check_obscured_slots()
 
 	var/dat
-	for(var/x in i_slots - slot_in_backpack)
+	for(var/x in i_slots)
 		var/slot_name = parse_slot_name(x)
 		if(obscured && obscured[x])
 			dat += "<br><font color=grey><b>[slot_name]:</b> Obscured</font>"

@@ -545,7 +545,7 @@
 	add_blood(source)
 
 	var/chance = 33
-	var/list/equipped_items = get_equipped_items(FALSE)
+	var/list/equipped_items = get_equipped_items(null, SLOT_POCKETS)
 	var/list/obscured = check_obscured_slots()
 	if(equipped_items)
 		if(obscured)
@@ -574,7 +574,7 @@
 	if(!BP || BP.is_stump())
 		return NOLIMB
 
-	var/list/items = get_equipped_items(FALSE, FALSE)
+	var/list/items = get_equipped_items(null, SLOT_HANDS_POCKETS)
 	for(var/obj/item/clothing/C in items)
 		if((C.flags & THICKMATERIAL) && (C.body_parts_covered & BP.body_part))
 			if(C.flags & PHORONGUARD) // this means, clothes has injection port or smthing like that.

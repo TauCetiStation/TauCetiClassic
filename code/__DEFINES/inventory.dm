@@ -16,29 +16,35 @@
 #define STORAGE_VIEW_DEPTH 2
 
 //Inventory slot defines (don't forget to update /parse_slot_name() proc).
-#define slot_back         "back"
-#define slot_wear_mask    "wear_mask"
-#define slot_handcuffed   "handcuffed"
-#define slot_l_hand       "l_hand"
-#define slot_r_hand       "r_hand"
-#define slot_belt         "belt"
-#define slot_wear_id      "wear_id"
-#define slot_l_ear        "l_ear"
-#define slot_glasses      "glasses"
-#define slot_gloves       "gloves"
-#define slot_head         "head"
-#define slot_shoes        "shoes"
-#define slot_wear_suit    "wear_suit"
-#define slot_w_uniform    "w_uniform"
-#define slot_l_store      "l_store"
-#define slot_r_store      "r_store"
-#define slot_s_store      "s_store"
-#define slot_in_backpack  "18"
-#define slot_legcuffed    "legcuffed"
-#define slot_r_ear        "r_ear"
-#define slot_undershirt   "undershirt"
-#define slot_underwear    "underwear"
-#define slot_socks        "socks"
+#define slot_head          "head"
+#define slot_l_ear         "l_ear"
+#define slot_r_ear         "r_ear"
+#define slot_glasses       "glasses"
+#define slot_wear_mask     "wear_mask"
+#define slot_w_uniform     "w_uniform"
+#define slot_wear_suit     "wear_suit"
+#define slot_gloves        "gloves"
+#define slot_shoes         "shoes"
+#define slot_back          "back"
+#define slot_belt          "belt"
+#define slot_wear_id       "wear_id"
+#define slot_l_hand        "l_hand"
+#define slot_r_hand        "r_hand"
+#define slot_l_store       "l_store"
+#define slot_r_store       "r_store"
+#define slot_s_store       "s_store"
+#define slot_handcuffed    "handcuffed"
+#define slot_legcuffed     "legcuffed"
+#define slot_undershirt    "undershirt"
+#define slot_underwear     "underwear"
+#define slot_socks         "socks"
+
+#define slot_in_backpack   "put_in_backpack"
+
+#define SLOT_HANDS         list(slot_l_hand, slot_r_hand)
+#define SLOT_POCKETS       list(slot_l_store, slot_r_store)
+#define SLOT_HANDS_POCKETS list(SLOT_HANDS, SLOT_POCKETS)
+
 
 //Sol translation for dog slots.
 #define slot_mouth        slot_wear_mask  // 2

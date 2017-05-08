@@ -29,7 +29,7 @@
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
 
 	return 1
 
@@ -61,7 +61,7 @@
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
 
 	return 1
 
@@ -93,12 +93,13 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo (H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/shaftminer(H), slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/weapon/survivalcapsule(H), slot_in_backpack)
+
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/engineer)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/mining_voucher)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/survivalcapsule)
 
 	return 1
 
@@ -130,7 +131,7 @@
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
 
 	return 1
 
@@ -172,11 +173,11 @@
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
+		H.put_in_backpack_if_possible(new /obj/item/ammo_casing/shotgun/beanbag)
+		H.put_in_backpack_if_possible(new /obj/item/ammo_casing/shotgun/beanbag)
+		H.put_in_backpack_if_possible(new /obj/item/ammo_casing/shotgun/beanbag)
+		H.put_in_backpack_if_possible(new /obj/item/ammo_casing/shotgun/beanbag)
 
 	return 1
 
@@ -207,7 +208,7 @@
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
 
 	return 1
 
@@ -242,7 +243,7 @@
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+	H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/botanist(H), slot_belt)
 
 	return 1
@@ -273,7 +274,7 @@
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
 
 	return 1
 
@@ -306,7 +307,7 @@
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
 
 	return 1
 
@@ -345,7 +346,7 @@
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
@@ -379,13 +380,13 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/clown(H), slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/weapon/stamp/clown(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/crayons(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/toy/waterflower(H), slot_in_backpack)
+	H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
+	H.put_in_backpack_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana)
+	H.put_in_backpack_if_possible(new /obj/item/weapon/bikehorn)
+	H.put_in_backpack_if_possible(new /obj/item/weapon/stamp/clown)
+	H.put_in_backpack_if_possible(new /obj/item/toy/crayon/rainbow)
+	H.put_in_backpack_if_possible(new /obj/item/weapon/storage/fancy/crayons)
+	H.put_in_backpack_if_possible(new /obj/item/toy/waterflower)
 	H.disabilities |= CLUMSY
 	return 1
 
@@ -424,9 +425,9 @@
 		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_l_store)
 		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_l_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
+		H.put_in_backpack_if_possible(new /obj/item/toy/crayon/mime)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing)
 	H.verbs += /client/proc/mimespeak
 	H.verbs += /client/proc/mimewall
 	H.mind.special_verbs += /client/proc/mimespeak

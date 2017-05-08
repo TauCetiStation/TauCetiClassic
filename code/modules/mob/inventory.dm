@@ -60,16 +60,21 @@
 				to_chat(user, "<span class='red'>You are unable to equip that.</span>")//Only print if del_on_fail is false
 		return FALSE
 
-	if(slot == slot_in_backpack && user) // Mostly used by datum/job/equip() proc. Also, this slot in reality does not exist, its just a shortcut for special inventory (backpack) manipulation.
-		var/obj/item/backpack = user.get_equipped_item(slot_back)
-		if(backpack)
-			loc = backpack
-			return TRUE
-		else
-			return FALSE
-
 	equip_to_slot(BP, slot, redraw_mob) //This proc should not ever fail.
 	return TRUE
+
+// This proc replaces equip_to_slot_or_del(W, slot_in_backpack) method.
+/mob/proc/put_in_backpack_if_possible(obj/item/I)
+	var/obj/item/weapon/storage/backpack/B = get_equipped_item(slot_back)
+	if(istype(B) && B.contents.len < B.storage_slots && I.w_class <= B.max_w_class)
+		I.forceMove(B)
+		I.layer = ABOVE_HUD_LAYER
+		I.plane = ABOVE_HUD_PLANE
+		I.appearance_flags = APPEARANCE_UI
+		return TRUE
+	else
+		qdel(I)
+		return FALSE
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
 //In most cases you will want to use equip_to_slot_if_possible()
@@ -326,13 +331,6 @@ var/list/slot_equipment_priority = list( \
 	dropped(user)
 	return TRUE
 
-//Returns the item equipped to the specified slot, if any.
-/mob/proc/get_equipped_item(slot)
-	return null
-
-/mob/living/carbon/get_equipped_item(slot)
-	return vars[slot]
-
 // Return proper slot name that you may use in messages or any other place that player may see in-game.
 /proc/parse_slot_name(slot)
 	switch(slot)
@@ -365,35 +363,41 @@ var/list/slot_equipment_priority = list( \
 		else
 			return slot
 
-/mob/proc/get_equipped_items(include_pockets = TRUE, include_hands = TRUE, body_zone)
+//Returns the item equipped to the specified slot, if any.
+/mob/proc/get_equipped_item(slot)
 	return null
 
-/mob/living/carbon/get_equipped_items(include_pockets = TRUE, include_hands = TRUE, body_zone)
+/mob/living/carbon/get_equipped_item(slot)
+	return vars[slot]
+
+//Returns all items equipped by mob. body_zone may be passed if you wan't to get all items in specific limb or limbs (if passed as list).
+/mob/proc/get_equipped_items(body_zone, exclude_slot) // you may pass list of slots in exclude_slot arg.
+	return null
+
+
+/mob/living/carbon/get_equipped_items(body_zone, exclude_slot)
 	var/list/items = list()
-	var/list/pocket_slots = list(slot_l_store, slot_r_store) // pockets should be moved inside uniform itself.
-	var/list/hand_slots = list(slot_l_hand, slot_r_hand)
-	if(include_pockets)
-		pocket_slots.Cut()
-	if(include_hands)
-		hand_slots.Cut()
+	var/list/excluded_slots = list()
+	if(exclude_slot)
+		excluded_slots += exclude_slot
 
 	if(!body_zone)
 		for(var/obj/item/bodypart/BP in bodyparts)
-			for(var/slot in BP.item_in_slot - pocket_slots - hand_slots)
+			for(var/slot in BP.item_in_slot - excluded_slots)
 				if(BP.item_in_slot[slot])
 					items += BP.item_in_slot[slot]
 	else
 		if(!islist(body_zone))
 			var/obj/item/bodypart/BP = get_bodypart(body_zone)
 			if(BP && BP.item_in_slot.len)
-				for(var/slot in BP.item_in_slot - pocket_slots - hand_slots)
+				for(var/slot in BP.item_in_slot - excluded_slots)
 					if(BP.item_in_slot[slot])
 						items += BP.item_in_slot[slot]
 		else
 			for(var/body_zone_in_list in body_zone)
 				var/obj/item/bodypart/BP = get_bodypart(body_zone_in_list)
 				if(BP && BP.item_in_slot.len)
-					for(var/slot in BP.item_in_slot - pocket_slots - hand_slots)
+					for(var/slot in BP.item_in_slot - excluded_slots)
 						if(BP.item_in_slot[slot])
 							items += BP.item_in_slot[slot]
 
@@ -408,7 +412,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/living/carbon/get_equipped_flags(body_zone)
 	var/flags = 0
-	var/list/items = get_equipped_items(body_zone = body_zone)
+	var/list/items = get_equipped_items(body_zone)
 	if(items)
 		for(var/obj/item/I in items)
 			flags |= I.flags
@@ -420,7 +424,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/living/carbon/get_equipped_flags_inv(body_zone)
 	var/flags = 0
-	var/list/items = get_equipped_items(body_zone = body_zone)
+	var/list/items = get_equipped_items(body_zone)
 	if(items)
 		for(var/obj/item/I in items)
 			flags |= I.flags_inv
@@ -432,7 +436,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/living/carbon/get_equipped_covered(body_zone)
 	var/flags = 0
-	var/list/items = get_equipped_items(body_zone = body_zone)
+	var/list/items = get_equipped_items(body_zone)
 	if(items)
 		for(var/obj/item/I in items)
 			flags |= I.body_parts_covered

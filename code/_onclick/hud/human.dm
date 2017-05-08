@@ -339,9 +339,6 @@
 					,"mob_icon_path" = 'icons/mob/mob.dmi'
 					,"mob_icon_state" = "legcuff1"
 					)
-				,slot_in_backpack = list(
-					"no_hud" = TRUE
-					)
 				)
 		if(BP_L_ARM)
 			return list(
@@ -403,9 +400,6 @@
 					,"mob_icon_path" = 'icons/mob/mob.dmi'
 					,"mob_icon_state" = "legcuff2"
 					)
-				,slot_in_backpack = list(
-					"no_hud" = TRUE
-					)
 				)
 		else
 			return ..()
@@ -430,9 +424,6 @@
 					,"slot_layer" = -BACK_LAYER
 					,"mob_icon_path" = 'icons/mob/back.dmi'
 					,"persistent_hud" = TRUE
-					)
-				,slot_in_backpack = list(
-					"no_hud" = TRUE
 					)
 				)
 
@@ -541,9 +532,6 @@
 				,slot_legcuffed = list(
 					"no_hud" = TRUE
 					,"slot_layer" = -LEGCUFF_LAYER
-					)
-				,slot_in_backpack = list(
-					"no_hud" = TRUE
 					)
 				)
 

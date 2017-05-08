@@ -44,8 +44,8 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_store)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/handcuffs)
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
@@ -93,8 +93,8 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/handcuffs)
 
 	return 1
 
@@ -136,9 +136,9 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_l_hand)
 		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_r_store)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/evidence)
+		H.put_in_backpack_if_possible(new /obj/item/device/detective_scanner)
 
 	return 1
 
@@ -165,7 +165,7 @@
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_s_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_r_store)
 	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_l_store)
 
 	if(visualsOnly)
@@ -177,8 +177,8 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/handcuffs)
 
 	return 1
 
@@ -217,8 +217,8 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_l_hand)
 		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_r_store)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/survival)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/evidence)
+		H.put_in_backpack_if_possible(new /obj/item/device/detective_scanner)
 
 	return 1

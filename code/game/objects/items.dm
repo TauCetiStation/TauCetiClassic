@@ -347,15 +347,14 @@
 	return FALSE
 
 /obj/item/proc/limb_can_equip(obj/item/bodypart/BP, slot, disable_warning = FALSE)
-	if(!slot || !BP)
+	if(!slot || !BP || BP.is_stump())
 		return FALSE
 
-	if(istype(BP))
-		if(BP.can_hold(src, slot, disable_warning = FALSE))
-			var/list/obscured = BP.check_obscured_slots()
-			if(obscured && obscured[slot])
-				return FALSE
-			return TRUE
+	if(BP.can_hold(src, slot, disable_warning = FALSE))
+		var/list/obscured = BP.check_obscured_slots()
+		if(obscured && obscured[slot])
+			return FALSE
+		return TRUE
 
 	return FALSE
 

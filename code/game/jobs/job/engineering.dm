@@ -40,7 +40,7 @@
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/engineer)
 
 	return 1
 
@@ -82,7 +82,7 @@
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/engineer)
 
 	return 1
 
@@ -119,7 +119,7 @@
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
+		H.put_in_backpack_if_possible(new /obj/item/weapon/storage/box/engineer)
 
 	return 1
 

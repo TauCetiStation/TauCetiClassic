@@ -382,7 +382,7 @@
 		var/mob/living/carbon/C = src
 		var/washface = TRUE
 
-		var/list/equipped_items = C.get_equipped_items(FALSE)
+		var/list/equipped_items = C.get_equipped_items(null, SLOT_POCKETS)
 		var/list/obscured = C.check_obscured_slots()
 		if(equipped_items)
 			if(obscured)

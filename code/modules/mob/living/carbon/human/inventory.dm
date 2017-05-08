@@ -46,6 +46,8 @@
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, del_on_fail = 1)
 	for (var/slot in slots)
+		if(slot == slot_in_backpack)
+			return put_in_backpack_if_possible(W)
 		if (equip_to_slot_if_possible(W, slots[slot], del_on_fail = 0))
 			return slot
 	if (del_on_fail)
@@ -99,8 +101,6 @@
 			return has_bodypart(BP_CHEST)
 		if(slot_s_store)
 			return has_bodypart(BP_CHEST)
-		if(slot_in_backpack)
-			return 1
 /*
 /mob/living/carbon/human/u_equip(obj/W)
 	if(!W)	return 0
@@ -431,12 +431,6 @@
 			if(!istype(I, /obj/item/weapon/legcuffs))
 				return FALSE
 			return TRUE
-		if(slot_in_backpack)
-			if (istype(item_in_slot[slot_back], /obj/item/weapon/storage/backpack))
-				var/obj/item/weapon/storage/backpack/B = item_in_slot[slot_back]
-				if(B.contents.len < B.storage_slots && I.w_class <= B.max_w_class)
-					return TRUE
-			return FALSE
 		else
 			return FALSE
 

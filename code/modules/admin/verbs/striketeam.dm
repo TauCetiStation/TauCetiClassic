@@ -139,17 +139,17 @@ var/global/sent_strike_team = 0
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), slot_glasses)
 
 	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), slot_back)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), slot_in_backpack)
+	put_in_backpack_if_possible(new /obj/item/weapon/storage/box)
 
-	equip_to_slot_or_del(new /obj/item/ammo_box/a357(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_in_backpack)
+	put_in_backpack_if_possible(new /obj/item/ammo_box/a357)
+	put_in_backpack_if_possible(new /obj/item/weapon/storage/firstaid/regular)
+	put_in_backpack_if_possible(new /obj/item/weapon/storage/box/flashbangs)
+	put_in_backpack_if_possible(new /obj/item/device/flashlight)
 	if (!leader_selected)
-		equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_in_backpack)
+		put_in_backpack_if_possible(new /obj/item/weapon/plastique)
 	else
-		equip_to_slot_or_del(new /obj/item/weapon/pinpointer(src), slot_in_backpack)
-		equip_to_slot_or_del(new /obj/item/weapon/disk/nuclear(src), slot_in_backpack)
+		put_in_backpack_if_possible(new /obj/item/weapon/pinpointer)
+		put_in_backpack_if_possible(new /obj/item/weapon/disk/nuclear)
 
 	equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(src), slot_l_store)
 	equip_to_slot_or_del(new /obj/item/weapon/grenade/flashbang(src), slot_r_store)

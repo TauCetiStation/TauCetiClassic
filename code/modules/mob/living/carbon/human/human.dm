@@ -630,7 +630,7 @@
 		return 2
 
 	var/number = 0
-	var/list/items = get_equipped_items(body_zone = BP_HEAD)
+	var/list/items = get_equipped_items(BP_HEAD)
 	if(items)
 		for(var/obj/item/I in items)
 			if(istype(I, /obj/item/clothing/head/helmet/space))

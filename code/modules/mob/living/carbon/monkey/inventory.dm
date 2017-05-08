@@ -198,8 +198,6 @@
 		if(slot_r_hand)
 			src.r_hand = W
 			equip_to_slot_if_possible(W,slot,0,1)
-		if(slot_in_backpack)
-			W.forceMove(src.back)
 		else
 			to_chat(usr, "<span class='red'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return

@@ -229,21 +229,21 @@
 	if(console!=null)
 		console.vest = V
 	agent.equip_to_slot_or_del(V, slot_wear_suit)
-	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/decloner/alien(agent), slot_belt)
-	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), slot_head)
+	agent.put_in_backpack_if_possible(new /obj/item/device/abductor/silencer)
+	agent.put_in_backpack_if_possible(new /obj/item/weapon/abductor_baton)
 
 /datum/game_mode/abduction/proc/equip_scientist(mob/living/carbon/human/scientist,team_number)
 	if(!team_number)
 		team_number = scientist.team
 
 	var/obj/machinery/abductor/console/console = get_team_console(team_number)
-	var/obj/item/device/abductor/gizmo/G = new /obj/item/device/abductor/gizmo(scientist)
-	if(console!=null)
-		console.gizmo = G
-		G.console = console
-	scientist.equip_to_slot_or_del(G, slot_in_backpack)
+	var/obj/item/device/abductor/gizmo/G = new /obj/item/device/abductor/gizmo
+	if(scientist.put_in_backpack_if_possible(G))
+		if(console!=null)
+			console.gizmo = G
+			G.console = console
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
 	beamplant.imp_in = scientist
 	beamplant.implanted = 1
