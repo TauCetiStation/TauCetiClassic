@@ -300,7 +300,7 @@
 	item_state = "helmet"
 
 /obj/item/clothing/head/fedora
-	name = "\improper fedora"
+	name = "fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
