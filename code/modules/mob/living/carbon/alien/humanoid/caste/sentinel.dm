@@ -7,6 +7,7 @@
 	max_plasma = 250
 	icon_state = "aliens_s"
 	plasma_rate = 10
+	heal_rate = 2
 
 /mob/living/carbon/alien/humanoid/sentinel/New()
 	var/datum/reagents/R = new/datum/reagents(100)

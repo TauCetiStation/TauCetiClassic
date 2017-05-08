@@ -149,6 +149,31 @@ Doesn't work on other aliens/AI.*/
 		A.process()
 	return
 */
+
+/mob/living/carbon/alien/humanoid/proc/screesh()
+	set name = "Screesh"
+	set desc = "Emit a screech that stuns prey."
+	set category = "Alien"
+
+	if(world.time < last_screech + screech_delay)
+		return
+
+	playsound(src, 'sound/effects/screech2.ogg', 100, 1)
+	for(var/mob/living/carbon/human/H in oviewers())
+		if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+			continue
+		to_chat(H, "<font color='red' size='7'>HISSSSSS</font>")
+		H.sleeping = 0
+		H.stuttering += 20
+		H.ear_deaf += 30
+		H.Weaken(3)
+		if(prob(30))
+			H.Stun(10)
+			H.Paralyse(4)
+		else
+			H.Stun(5)
+			H.Paralyse(2)
+	last_screech = world.time
 #define ALIEN_NEUROTOXIN 1
 #define ALIEN_ACID 2
 /mob/living/carbon/alien/humanoid/proc/toggle_neurotoxin(message = 1)
@@ -219,7 +244,7 @@ Doesn't work on other aliens/AI.*/
 			if(!powerc(150))
 				return
 			BB = new /obj/item/projectile/acid_special(usr.loc)
-			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 6)
+			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 4)
 			adjustToxLoss(-150)
 
 	visible_message("\red <B> [src] spits [BB.name] at [target]!</B>")
