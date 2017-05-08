@@ -37,10 +37,13 @@
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+	return FALSE
+
+/mob/living/carbon/equip_to_slot_if_possible(obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W))
 		return FALSE
 
-	return W.equip_to_slot_if_possible(src, get_BP_by_slot(slot), slot, del_on_fail, disable_warning, redraw_mob)
+	return W.equip_to_slot_if_possible(src, bodyparts_slot_by_name[slot], slot, del_on_fail, disable_warning, redraw_mob)
 
 /obj/item/bodypart/equip_to_slot_if_possible(mob/user, obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W))
@@ -263,11 +266,15 @@ var/list/slot_equipment_priority = list( \
 	if(!slot_bodypart)
 		return
 
+	if(slot_bodypart.owner)
+		slot_bodypart.owner.vars[slot_equipped] = null
+
 	slot_bodypart.unequip_chain(slot_equipped)
 	slot_bodypart.item_in_slot[slot_equipped] = null
 	slot_bodypart.update_inv_limb(slot_equipped)
-	slot_equipped = null
 	slot_bodypart = null
+	slot_equipped = null
+
 	screen_loc = null
 
 //The following functions are the same save for one small difference
@@ -324,11 +331,39 @@ var/list/slot_equipment_priority = list( \
 	return null
 
 /mob/living/carbon/get_equipped_item(slot)
-	var/obj/item/bodypart/BP = get_BP_by_slot(slot)
-	if(!BP)
-		return
+	return vars[slot]
 
-	return BP.item_in_slot[slot]
+// Return proper slot name that you may use in messages or any other place that player may see in-game.
+/proc/parse_slot_name(slot)
+	switch(slot)
+		if(slot_wear_mask)
+			return "mask"
+		if(slot_handcuffed)
+			return "handcuffs"
+		if(slot_l_hand)
+			return "left hand"
+		if(slot_r_hand)
+			return "right hand"
+		if(slot_wear_id)
+			return "id"
+		if(slot_l_ear)
+			return "left ear"
+		if(slot_wear_suit)
+			return "suit"
+		if(slot_w_uniform)
+			return "uniform"
+		if(slot_l_store)
+			return "left pocket"
+		if(slot_r_store)
+			return "right pocket"
+		if(slot_s_store)
+			return "suit store"
+		if(slot_legcuffed)
+			return "shackles"
+		if(slot_r_ear)
+			return "right ear"
+		else
+			return slot
 
 /mob/proc/get_equipped_items(include_pockets = TRUE, include_hands = TRUE, body_zone)
 	return null
@@ -439,6 +474,8 @@ var/list/slot_equipment_priority = list( \
 				obscured[slot_w_uniform] = TRUE
 				obscured[slot_undershirt] = TRUE
 				obscured[slot_underwear] = TRUE
+				obscured[slot_l_store] = TRUE
+				obscured[slot_r_store] = TRUE
 			if(flags_inv & HIDESHOES)
 				obscured[slot_shoes] = TRUE
 				obscured[slot_socks] = TRUE

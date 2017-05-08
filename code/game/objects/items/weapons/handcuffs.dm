@@ -42,8 +42,8 @@
 	playsound(src, cuff_sound, 30, 1, -2)
 
 	if (istype(target))
-		var/obj/item/bodypart/BP = target.get_BP_by_slot(slot_handcuffed)
-		if(!BP)
+		var/obj/item/bodypart/BP = target.bodyparts_slot_by_name[slot_handcuffed]
+		if(!BP || BP.is_stump())
 			return
 
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")

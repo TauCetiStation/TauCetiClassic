@@ -441,13 +441,13 @@ var/list/intents = list("help","disarm","grab","hurt")
 	else
 		return 0
 
-/mob/proc/is_busy(mob/target, slot, stripping, show_warning = TRUE) // is_busy is not a proper name for this proc, but i have no other idea on how to call it.
+/mob/proc/is_busy(mob/living/carbon/target, slot, stripping, show_warning = TRUE) // is_busy is not a proper name for this proc, but i have no other idea on how to call it.
 	if(busy_with_action) // do_mob() and do_after() sets this to TRUE while call in progress and resets after it finished with any result.
 		if(show_warning)
 			to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
 		return TRUE
-	if(target && slot)
-		if(!target.get_BP_by_slot(slot)) // checks if player has that slot at all.
+	if(istype(target) && slot)
+		if(!target.bodyparts_slot_by_name[slot]) // checks if player has that slot at all.
 			if(show_warning)
 				to_chat(src, "<span class='warning'>It appears that [target] has no such place with which you want to interact.</span>")
 			return TRUE

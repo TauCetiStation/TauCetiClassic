@@ -92,7 +92,7 @@
 					hud_used.adding += S
 				if(S.visible_when_hud_reduced)
 					hud_used.visible_elements_while_reduced += S
-			bodyparts_slot_by_name[slot_name] = BP.body_zone
+			bodyparts_slot_by_name[slot_name] = BP
 	BP.update_inv_hud()
 
 /*
@@ -108,6 +108,7 @@
 			removing += inv_slots_data[slot_name]
 			removing += item_in_slot[slot_name]
 
+			owner.bodyparts_slot_by_name[slot_name] = null
 			owner.bodyparts_slot_by_name -= slot_name // so the mob will know, that he no longer has this slot anymore.
 
 		if(destroy)

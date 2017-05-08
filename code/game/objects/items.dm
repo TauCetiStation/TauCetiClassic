@@ -343,7 +343,7 @@
 		return FALSE
 
 	if(istype(C))
-		return limb_can_equip(C.get_BP_by_slot(slot), slot, disable_warning)
+		return limb_can_equip(C.bodyparts_slot_by_name[slot], slot, disable_warning)
 	return FALSE
 
 /obj/item/proc/limb_can_equip(obj/item/bodypart/BP, slot, disable_warning = FALSE)

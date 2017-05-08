@@ -735,12 +735,12 @@
 /mob/living/proc/check_has_mouth()
 	return 1
 
-/mob/living/carbon/human/check_has_mouth()
+/mob/living/carbon/check_has_mouth()
 	// Todo, check stomach organ when implemented.
-	var/obj/item/bodypart/head/H = get_bodypart(BP_HEAD)
-	if(!istype(H) || !H.can_intake_reagents)
-		return 0
-	return 1
+	var/obj/item/bodypart/head/H = bodyparts_by_name[BP_HEAD]
+	if(!H || H.is_stump() || !H.can_intake_reagents)
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/proc/vomit()
 	if(!check_has_mouth() || isSynthetic())

@@ -171,7 +171,7 @@ There are several things that need to be remembered:
 
 	remove_inv_overlay(SLOT)
 
-	var/obj/item/bodypart/BP = get_BP_by_slot(SLOT)
+	var/obj/item/bodypart/BP = bodyparts_slot_by_name[SLOT]
 	if(!BP)
 		return
 

@@ -209,29 +209,13 @@
 		//if(slot_legcuffed)
 			//owner.dropItemToGround(item_in_slot[slot_legcuffed])
 
-/*
-	Returns bodypart that supports provided slot as arg. Can return nothing, if we don't have that slot or bodypart.
-*/
-/mob/proc/get_BP_by_slot(slot)
-	return
-
-/mob/living/carbon/get_BP_by_slot(slot)
-	if(!slot)
-		return
-
-	var/bp_slot = bodyparts_slot_by_name[slot]
-	if(!bp_slot)
-		return
-
-	return get_bodypart(bp_slot)
-
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible()
 //if you don't wish the hud to be updated - if you're doing it manually in your own proc.
 /mob/living/carbon/equip_to_slot(obj/item/W, slot)
 	if(!slot || !istype(W))
 		return FALSE
 
-	W.equip_to_slot(get_BP_by_slot(slot), slot)
+	W.equip_to_slot(bodyparts_slot_by_name[slot], slot)
 
 /obj/item/bodypart/equip_to_slot(obj/item/W, slot)
 	if(!slot || !istype(W))
@@ -247,6 +231,7 @@
 
 	if(BP.owner)
 		loc = BP.owner
+		BP.owner.vars[slot] = src
 		equipped(BP.owner, slot)
 	else
 		loc = BP

@@ -20,8 +20,7 @@
 					  // life should decrease this by 1 every tick
 	// total amount of wounds on mob, used to spread out healing and the like over all wounds
 	var/number_wounds = 0
-	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
-	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.
+
 	//Surgery info
 	var/datum/surgery_status/op_stage = new/datum/surgery_status
 	//Active emote/pose
@@ -54,7 +53,7 @@
 	var/name_override //For temporary visible name changes
 
 	// Equipment slots
-	//var/obj/item/head
+	var/obj/item/head = null
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/weapon/back = null
 	var/obj/item/wear_suit = null
@@ -72,6 +71,17 @@
 
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
+
+	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
+	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.
+
+	var/obj/item/undershirt // TODO
+	var/obj/item/underwear // TODO
+	var/obj/item/socks // TODO
+
+	//var/underwear = 1	//Which underwear the player wants
+	//var/undershirt = 0	//Which undershirt the player wants.
+	//var/socks = 0	//Which socks the player wants.
 
 	// Ian
 	var/obj/item/neck
@@ -105,10 +115,6 @@
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"
-
-	var/underwear = 1	//Which underwear the player wants
-	var/undershirt = 0	//Which undershirt the player wants.
-	var/socks = 0	//Which socks the player wants.
 
 	var/list/bodypart_hands = list() // any bodypart with can_grasp=TRUE added in this list ...
 	var/list/bodypart_legs = list() // ... and with can_stand=TRUE.
