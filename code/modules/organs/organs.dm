@@ -1007,6 +1007,7 @@
 	var/mob/living/brain/brainmob = null
 	var/obj/item/device/mmi/posibrain/posibrain = null
 	var/is_advanced_tool_user = TRUE
+	var/brainloss = 0
 
 /obj/item/organ/brain/on_insert()
 	if(owner.key)

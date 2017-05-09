@@ -65,6 +65,22 @@
 				G.adjust_position()
 				dancing = 1
 	adjust_position()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/grab/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	if(affecting)
+		reset_position()
+		if(affecting)
+			affecting.grabbed_by -= src
+			affecting = null
+	if(assailant)
+		if(assailant.client)
+			assailant.client.screen -= hud
+		assailant = null
+	qdel(hud)
+	hud = null
+	return ..()
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/throw_held()
@@ -465,20 +481,6 @@
 //returns the number of size categories between affecting and assailant, rounded. Positive means A is larger than B
 /obj/item/weapon/grab/proc/size_difference(mob/A, mob/B)
 	return mob_size_difference(A.mob_size, B.mob_size)
-
-/obj/item/weapon/grab/Destroy()
-	if(affecting)
-		reset_position()
-		if(affecting)
-			affecting.grabbed_by -= src
-			affecting = null
-	if(assailant)
-		if(assailant.client)
-			assailant.client.screen -= hud
-		assailant = null
-	qdel(hud)
-	hud = null
-	return ..()
 
 /obj/item/weapon/grab/proc/inspect_bodypart(mob/living/carbon/human/H, mob/user, target_zone)
 

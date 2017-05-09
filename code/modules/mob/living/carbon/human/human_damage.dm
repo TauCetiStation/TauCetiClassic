@@ -15,17 +15,33 @@
 		ChangeToHusk()
 	return
 
-/mob/living/carbon/human/getBrainLoss()
-	var/res = brainloss
+/mob/living/carbon/getBrainLoss()
 	var/obj/item/organ/brain/IO = organs_by_name[BP_BRAIN]
 	if(!IO)
 		return 0
+	var/res = IO.brainloss
 	if (IO.is_bruised())
 		res += 20
 	if (IO.is_broken())
 		res += 50
 	res = min(res,maxHealth*2)
 	return res
+
+/mob/living/carbon/setBrainLoss(amount)
+	if(status_flags & GODMODE)
+		return 0
+	var/obj/item/organ/brain/IO = organs_by_name[BP_BRAIN]
+	if(!IO)
+		return 0
+	IO.brainloss = amount
+
+/mob/living/carbon/adjustBrainLoss(amount)
+	if(status_flags & GODMODE)
+		return 0
+	var/obj/item/organ/brain/IO = organs_by_name[BP_BRAIN]
+	if(!IO)
+		return 0
+	IO.brainloss = Clamp(IO.brainloss + amount, 0, maxHealth * 2)
 
 //These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/human/getBruteLoss()

@@ -105,13 +105,6 @@
 	// Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
-	handle_regular_hud_updates()
-
-	// Grabbing
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
-
-
 //Much like get_heat_protection(), this returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 /mob/living/carbon/proc/get_pressure_protection(pressure_check = STOPS_PRESSUREDMAGE)
 	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
@@ -142,72 +135,63 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/proc/handle_disabilities()
-	if (disabilities & EPILEPSY)
-		if ((prob(1) && paralysis < 1))
-			visible_message("<span class'danger'>[src] starts having a seizure!</span>", "<span class='red'>You have a seizure!</span>")
-			Paralyse(10)
-			make_jittery(1000)
-	if (disabilities & COUGHING)
-		if ((prob(5) && paralysis <= 1))
-			drop_item()
-			emote("cough")
-	if (disabilities & TOURETTES)
-		speech_problem_flag = 1
-		if ((prob(10) && paralysis <= 1))
-			Stun(10)
-			spawn( 0 )
-				switch(rand(1, 3))
-					if(1)
-						emote("twitch")
-					if(2 to 3)
-						say("[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
-				var/old_x = pixel_x
-				var/old_y = pixel_y
-				pixel_x += rand(-2,2)
-				pixel_y += rand(-1,1)
-				sleep(2)
-				pixel_x = old_x
-				pixel_y = old_y
-	if (disabilities & NERVOUS)
-		speech_problem_flag = 1
-		if (prob(10))
-			stuttering = max(10, stuttering)
-	if (getBrainLoss() >= 60 && stat != DEAD)
-		if(prob(3))
-			if(config.rus_language)
-				switch(pick(1,2,3))
-					if(1)
-						say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
-					if(2)
-						say(pick("Как мин[LETTER_255]ть руки?","ебучие фурри!", "Подебил", "Прокл[LETTER_255]тые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
-					if(3)
-						emote("drool")
-			else
-				switch(pick(1,2,3))
-					if(1)
-						say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
-					if(2)
-						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
-					if(3)
-						emote("drool")
+	if(disabilities)
+		if(disabilities & EPILEPSY)
+			if (prob(1) && paralysis < 1)
+				visible_message("<span class'danger'>[src] starts having a seizure!</span>", "<span class='red'>You have a seizure!</span>")
+				Paralyse(10)
+				make_jittery(1000)
+		if(disabilities & COUGHING)
+			if (prob(5) && paralysis <= 1)
+				drop_item()
+				emote("cough")
+		if(disabilities & TOURETTES)
+			speech_problem_flag = 1
+			if (prob(10) && paralysis <= 1)
+				Stun(10)
+				spawn( 0 )
+					switch(rand(1, 3))
+						if(1)
+							emote("twitch")
+						if(2 to 3)
+							say("[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+					var/old_x = pixel_x
+					var/old_y = pixel_y
+					pixel_x += rand(-2,2)
+					pixel_y += rand(-1,1)
+					sleep(2)
+					pixel_x = old_x
+					pixel_y = old_y
+		if(disabilities & NERVOUS)
+			speech_problem_flag = 1
+			if (prob(10))
+				stuttering = max(10, stuttering)
 
-	if(stat != DEAD)
-		var/rn = rand(0, 200)
-		if(getBrainLoss() >= 5)
-			if(0 <= rn && rn <= 3)
-				custom_pain("Your head feels numb and painful.",10)
-		if(getBrainLoss() >= 15)
-			if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
+	var/rn = rand(0, 200)
+	var/brain_damage = getBrainLoss()
+	if(brain_damage >= 5)
+		if(rn <= 3)
+			custom_pain("Your head feels numb and painful.", 10)
+		if(brain_damage >= 15)
+			if(rn <= 6 && eye_blurry <= 0)
 				to_chat(src, "<span class='red'>It becomes hard to see for some reason.</span>")
 				eye_blurry = 10
-		if(getBrainLoss() >= 35)
-			if(7 <= rn && rn <= 9) if(get_active_hand())
-				to_chat(src, "<span class='red'>Your hand won't respond properly, you drop what you're holding.</span>")
-				drop_item()
-		if(getBrainLoss() >= 50)
-			if(10 <= rn && rn <= 12) if(!lying)
-				to_chat(src, "<span class='red'>Your legs won't respond properly, you fall down.</span>")
-				resting = 1
+			if(brain_damage >= 35)
+				if(rn <= 9 && get_active_hand())
+					to_chat(src, "<span class='red'>Your hand won't respond properly, you drop what you're holding.</span>")
+					drop_item()
+				if(brain_damage >= 50)
+					if(rn <= 12 && !lying)
+						to_chat(src, "<span class='red'>Your legs won't respond properly, you fall down.</span>")
+						resting = 1
+					if (brain_damage >= 60 && prob(3))
+						switch(pick(1,2,3))
+							if(1)
+								say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
+							if(2)
+								say(pick("Как мин[LETTER_255]ть руки?","ебучие фурри!", "Подебил", "Прокл[LETTER_255]тые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
+							if(3)
+								emote("drool")
 
 /mob/living/carbon/proc/handle_mutations_and_radiation()
 
@@ -625,7 +609,6 @@
 /mob/living/carbon/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
-	var/obj/item/head = get_equipped_item(slot_head)
 	if(head)
 		if(head.max_heat_protection_temperature && head.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= head.heat_protection
@@ -803,6 +786,9 @@
 
 /mob/living/carbon/proc/handle_chemicals_in_body()
 
+	if(status_flags & GODMODE)
+		return 0
+
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
 		var/alien = 0
 		if(species && species.reagent_tag)
@@ -816,7 +802,10 @@
 		if(!(status_flags & GODMODE))
 			adjustToxLoss(total_phoronloss)
 
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(species.flags[REQUIRE_LIGHT])
+		if(nutrition < 200)
+			take_overall_damage(2,0)
+			traumatic_shock++
 
 	if(species.flags[REQUIRE_LIGHT])
 		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -824,8 +813,13 @@
 			var/turf/T = loc
 			light_amount = round((T.get_lumcount()*10)-5)
 
+		if(nutrition < 200)
+			take_overall_damage(2,0)
+			traumatic_shock++
+		else
+			traumatic_shock -= light_amount
+
 		nutrition += light_amount
-		traumatic_shock -= light_amount
 
 		if(species.flags[IS_PLANT])
 			if(nutrition > 500)
@@ -836,18 +830,7 @@
 				adjustOxyLoss(-(light_amount))
 				//TODO: heal wounds, heal broken limbs.
 
-	if(dna && dna.mutantrace == "shadow")
-		var/light_amount = 0
-		if(isturf(loc))
-			var/turf/T = loc
-			light_amount = round(T.get_lumcount()*10)
-
-		if(light_amount > 2) //if there's enough light, start dying
-			take_overall_damage(1,1)
-		else if (light_amount < 2) //heal in the dark
-			heal_overall_damage(1,1)
-
-	if(dna && dna.mutantrace == S_SHADOWLING)
+	if(species.name == S_SHADOWLING)
 		var/light_amount = 0
 		nutrition = 450 //i aint never get hongry
 		if(isturf(loc))
@@ -894,7 +877,7 @@
 
 
 	// nutrition decrease
-	if (nutrition > 0 && stat != DEAD)
+	if (nutrition > 0)
 		nutrition = max (0, nutrition - HUNGER_FACTOR)
 
 	if (nutrition > 450)
@@ -903,11 +886,6 @@
 	else
 		if(overeatduration > 1)
 			overeatduration -= 2 //doubled the unfat rate
-
-	if(species.flags[REQUIRE_LIGHT])
-		if(nutrition < 200)
-			take_overall_damage(2,0)
-			traumatic_shock++
 
 	if (drowsyness)
 		drowsyness--
@@ -954,13 +932,6 @@
 		//UNCONSCIOUS. NO-ONE IS HOME
 		if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
 			Paralyse(3)
-
-			/* Done by handle_breath()
-			if( health <= 20 && prob(1) )
-				spawn(0)
-					emote("gasp")
-			if(!reagents.has_reagent("inaprovaline"))
-				adjustOxyLoss(1)*/
 
 		if(hallucination)
 			if(hallucination >= 20)
@@ -1075,13 +1046,10 @@
 	return 1
 
 /mob/living/carbon/handle_regular_hud_updates()
-	if(hud_updateflag)//? Below ?
-		handle_hud_list()
-
 	if(!client)
 		return 0
 
-	if(hud_updateflag)//Is there any reason for 2nd check? ~Zve
+	if(hud_updateflag)
 		handle_hud_list()
 
 	for(var/image/hud in client.images)
@@ -1303,11 +1271,6 @@
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"
 
-		if(pullin)
-			if(pulling)
-				pullin.icon_state = "pull1"
-			else
-				pullin.icon_state = "pull0"
 		//OH cmon...
 		var/nearsighted = 0
 		var/impaired    = 0
@@ -1475,6 +1438,9 @@
 				V.dead = 1
 
 /mob/living/carbon/proc/handle_stomach()
+	if(stomach_contents.len == 0)
+		return
+
 	for(var/mob/living/M in stomach_contents)
 		if(M.loc != src)
 			stomach_contents.Remove(M)

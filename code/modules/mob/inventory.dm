@@ -331,6 +331,41 @@ var/list/slot_equipment_priority = list( \
 	dropped(user)
 	return TRUE
 
+//This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible()
+/mob/living/carbon/equip_to_slot(obj/item/W, slot)
+	if(!slot || !istype(W))
+		return FALSE
+
+	W.equip_to_slot(bodyparts_slot_by_name[slot], slot)
+
+/obj/item/bodypart/equip_to_slot(obj/item/W, slot)
+	if(!slot || !istype(W))
+		return
+
+	W.equip_to_slot(src, slot)
+
+/obj/item/proc/equip_to_slot(obj/item/bodypart/BP, slot)
+	if(!slot || !istype(BP))
+		return FALSE
+
+	u_equip() // So items actually disappear from hands.
+
+	if(BP.owner)
+		loc = BP.owner
+		BP.owner.vars[slot] = src
+		equipped(BP.owner, slot)
+	else
+		loc = BP
+		equipped(BP, slot)
+
+	BP.item_in_slot[slot] = src
+	slot_equipped = slot
+	slot_bodypart = BP
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
+	appearance_flags = APPEARANCE_UI
+	BP.update_inv_limb(slot)
+
 // Return proper slot name that you may use in messages or any other place that player may see in-game.
 /proc/parse_slot_name(slot)
 	switch(slot)
