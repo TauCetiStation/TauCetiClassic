@@ -1,6 +1,9 @@
 // BEGIN_INTERNALS
 /*
-MAP_ICON_TYPE: 0
+DIR: code code\game 
 AUTO_FILE_DIR: OFF
+MAP_ICON_TYPE: 0
+WINDOW: code\game\response_team.dm
+FILE: code\game\response_team.dm
 */
 // END_INTERNALS
