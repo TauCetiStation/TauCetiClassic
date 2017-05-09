@@ -1009,6 +1009,120 @@ This function restores the subjects blood to max.
 	else
 		return 0
 
+/mob/proc/check_internals()
+	return
+
+/mob/living/carbon/check_internals()
+	if(internal)
+		if(!wear_mask || !(wear_mask.flags & MASKINTERNALS) || internal.loc != src)
+			internal = null
+			if (internals)
+				internals.icon_state = "internal0"
+
+/mob/living/carbon/proc/set_internals(obj/item/weapon/tank/W, mob/user)
+	if(stat || stunned || paralysis || restrained())
+		return
+
+	if(istype(W))
+		if(W == internal)
+			internal = null
+			if (internals)
+				internals.icon_state = "internal0"
+			if(user)
+				W.add_fingerprint(user)
+				attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their internals turned off by [user.name] ([user.ckey]) ([W.name])</font>")
+				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Toggled [name]'s ([ckey]) internals off ([W.name])</font>")
+		else
+			if(!wear_mask || !(wear_mask.flags & MASKINTERNALS))
+				return
+
+			if(internals)
+				internals.icon_state = "internal1"
+
+			internal = W
+			if(user)
+				visible_message("<span class='notice'>[src] is now running on internals.</span>")
+				W.add_fingerprint(user)
+				attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their internals toggled on by [user.name] ([user.ckey]) ([W.name])</font>")
+				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Toggled [name]'s ([ckey]) internals on ([W.name])</font>")
+
+	else // this is unmodified old method used by hud button (should be refactored probably).
+		if(internal)
+			internal = null
+			to_chat(src, "<span class='notice'>No longer running on internals.</span>")
+			if(internals)
+				internals.icon_state = "internal0"
+		else
+			if(!wear_mask || !(wear_mask.flags & MASKINTERNALS))
+				to_chat(src, "<span class='notice'>You are not wearing a mask.</span>")
+				return 1
+			else
+				var/list/nicename = null
+				var/list/tankcheck = null
+				var/breathes = "oxygen"    //default, we'll check later
+				var/list/contents = list()
+
+				breathes = species.breath_type
+				nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
+				tankcheck = list (s_store, back, belt, r_hand, l_hand, l_store, r_store)
+
+				for(var/i=1, i<tankcheck.len+1, ++i)
+					if(istype(tankcheck[i], /obj/item/weapon/tank))
+						var/obj/item/weapon/tank/t = tankcheck[i]
+						if (!isnull(t.manipulated_by) && t.manipulated_by != real_name && findtext(t.desc,breathes))
+							contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
+							continue					//in it, so we're going to believe the tank is what it says it is
+						switch(breathes)
+															//These tanks we're sure of their contents
+							if("nitrogen") 							//So we're a bit more picky about them.
+
+								if(t.air_contents.nitrogen && !t.air_contents.oxygen)
+									contents.Add(t.air_contents.nitrogen)
+								else
+									contents.Add(0)
+
+							if ("oxygen")
+								if(t.air_contents.oxygen && !t.air_contents.phoron)
+									contents.Add(t.air_contents.oxygen)
+								else
+									contents.Add(0)
+
+							// No races breath this, but never know about downstream servers.
+							if ("carbon dioxide")
+								if(t.air_contents.carbon_dioxide && !t.air_contents.phoron)
+									contents.Add(t.air_contents.carbon_dioxide)
+								else
+									contents.Add(0)
+
+
+					else
+						//no tank so we set contents to 0
+						contents.Add(0)
+
+				//Alright now we know the contents of the tanks so we have to pick the best one.
+
+				var/best = 0
+				var/bestcontents = 0
+				for(var/i=1, i <  contents.len + 1 , ++i)
+					if(!contents[i])
+						continue
+					if(contents[i] > bestcontents)
+						best = i
+						bestcontents = contents[i]
+
+
+				//We've determined the best container now we set it as our internals
+
+				if(best)
+					to_chat(src, "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>")
+					internal = tankcheck[best]
+
+				if(internal)
+					if(internals)
+						internals.icon_state = "internal1"
+				else
+					to_chat(src, "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>")
+
 /mob/living/carbon/IsAdvancedToolUser()
 	var/obj/item/organ/brain/BRAIN = organs_by_name[BP_BRAIN]
 	if(BRAIN)

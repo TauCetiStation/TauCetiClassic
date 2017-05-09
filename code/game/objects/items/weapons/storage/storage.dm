@@ -272,16 +272,18 @@
 //The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	if(usr)
-		usr.remove_from_mob(W)
-		usr.update_icons()	//update our overlays
-	W.loc = src
+		if(!usr.transferItemToLoc(W, src))
+			return 0
+	else
+		W.forceMove(src)
 	W.on_enter_storage(src)
 	if(usr)
 		if (usr.client && usr.s_active != src)
 			usr.client.screen -= W
-		W.dropped(usr)
+
 		add_fingerprint(usr)
 
 		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
@@ -296,12 +298,14 @@
 		src.orient2hud(usr)
 		for(var/mob/M in can_see_contents())
 			show_to(M)
+	W.mouse_opacity = 2 //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	update_icon()
 	return 1
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
 /obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 
 	if(istype(src, /obj/item/weapon/storage/fancy))
 		var/obj/item/weapon/storage/fancy/F = src
@@ -311,28 +315,22 @@
 		if(M.client)
 			M.client.screen -= W
 
-	if(new_location)
-		if(ismob(loc))
-			var/mob/M = loc
-			W.dropped(M)
-		if(ismob(new_location))
-			W.layer = ABOVE_HUD_LAYER
-			W.plane = ABOVE_HUD_PLANE
-		else
-			W.layer = initial(W.layer)
-			W.plane = initial(W.plane)
-		W.loc = new_location
-	else
-		W.loc = get_turf(src)
+	if(ismob(loc))
+		var/mob/M = loc
+		W.dropped(M)
+	W.layer = initial(W.layer)
+	W.plane = initial(W.plane)
+	W.forceMove(new_location)
 
-	if(usr)
-		src.orient2hud(usr)
-		if(usr.s_active)
-			usr.s_active.show_to(usr)
+	for(var/mob/M in can_see_contents())
+		orient2hud(M)
+		show_to(M)
+
 	if(W.maptext)
 		W.maptext = ""
 	W.on_exit_storage(src)
 	update_icon()
+	W.mouse_opacity = initial(W.mouse_opacity)
 	return 1
 
 //This proc is called when you want to place an item into the storage item.

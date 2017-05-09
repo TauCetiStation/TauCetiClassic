@@ -42,6 +42,10 @@
 	playsound(src, cuff_sound, 30, 1, -2)
 
 	if (istype(target))
+		if(!isrobot(user) && (HULK in target.mutations) && !(HULK in user.mutations))
+			to_chat(user, "<span class='danger'>[target] is too scary! You dont want to risk your health.</span>")
+			return
+
 		var/obj/item/bodypart/BP = target.bodyparts_slot_by_name[slot_handcuffed]
 		if(!BP || BP.is_stump())
 			return

@@ -40,6 +40,8 @@
 #define slot_socks         "socks"
 
 #define slot_in_backpack   "put_in_backpack"
+#define slot_splints       "splints"
+#define slot_bandages      "bandages"
 
 #define SLOT_HANDS         list(slot_l_hand, slot_r_hand)
 #define SLOT_POCKETS       list(slot_l_store, slot_r_store)

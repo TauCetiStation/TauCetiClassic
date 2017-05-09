@@ -332,29 +332,24 @@
 	if(.)
 		electrocution_animation(40)
 
-/mob/living/carbon/human/Topic(href, href_list)
-	if (href_list["refresh"])
-		if(machine && in_range(src, usr))
-			show_inv(machine)
+/mob/living/carbon/Topic(href, href_list)
+	if(!in_range(src, usr))
+		return
 
 	if (href_list["mach_close"])
 		var/t1 = text("window=[]", href_list["mach_close"])
-		unset_machine()
-		src << browse(null, t1)
+		usr.unset_machine(src)
+		usr << browse(null, t1)
 
-	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
-		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-		O.source = usr
-		O.target = src
-		O.item = usr.get_active_hand()
-		O.s_loc = usr.loc
-		O.t_loc = loc
-		O.place = href_list["item"]
-		requests += O
-		spawn( 0 )
-			O.process()
-			return
+	if(usr.machine != src)
+		return
 
+	if (href_list["refresh"])
+		show_inv(usr)
+
+	..()
+
+/mob/living/carbon/human/Topic(href, href_list)
 	if (href_list["criminal"])
 		if(hasHUD(usr,"security"))
 
@@ -612,15 +607,8 @@
 									var/mob/living/silicon/robot/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 
-	if (href_list["lookitem"])
-		var/obj/item/I = locate(href_list["lookitem"])
-		usr.examinate(I)
-
-	if (href_list["lookmob"])
-		var/mob/M = locate(href_list["lookmob"])
-		usr.examinate(M)
 	..()
-	return
+
 
 
 ///eyecheck()

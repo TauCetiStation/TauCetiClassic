@@ -447,7 +447,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 			to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
 		return TRUE
 	if(istype(target) && slot)
-		if(!target.bodyparts_slot_by_name[slot]) // checks if player has that slot at all.
+		if(!target.bodyparts_slot_by_name[slot] && slot != slot_splints && slot != slot_bandages) // checks if player has that slot at all.
 			if(show_warning)
 				to_chat(src, "<span class='warning'>It appears that [target] has no such place with which you want to interact.</span>")
 			return TRUE

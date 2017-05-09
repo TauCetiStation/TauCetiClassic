@@ -96,7 +96,13 @@
 
 	switch(M.a_intent)
 		if(I_HELP)
-			if(health < config.health_threshold_crit && health > config.health_threshold_dead)
+			if(istype(M) && health < config.health_threshold_crit && health > config.health_threshold_dead)
+				if(!M.check_has_mouth())
+					to_chat(M, "<span class='danger'>You don't have a mouth, you cannot perform CPR!</span>")
+					return
+				if(!check_has_mouth())
+					to_chat(M, "<span class='danger'>They don't have a mouth, you cannot perform CPR!</span>")
+					return
 				if(M.get_equipped_flags(BP_HEAD) & (HEADCOVERSMOUTH | MASKCOVERSMOUTH))
 					to_chat(M, "\blue <B>Remove your mask!</B>")
 					return 0
@@ -104,20 +110,26 @@
 					to_chat(M, "\blue <B>Remove his mask!</B>")
 					return 0
 
-				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human() // TODO deal with CPR
-				O.source = M
-				O.target = src
-				O.s_loc = M.loc
-				O.t_loc = loc
-				O.place = "CPR"
-				requests += O
-				spawn(0)
-					O.process()
-				return 1
+				if (!cpr_time)
+					return 0
 
+				cpr_time = 0
+				spawn(30) // need addtimer() that can work with vars, why we need to make new proc just for setting and unsetting single var?...
+					cpr_time = 1
+
+				M.visible_message("<span class='danger'>\The [M] is trying perform CPR on \the [src]!</span>")
+
+				if(!do_after(M, 30, null, src))
+					return
+
+				adjustOxyLoss(-(min(getOxyLoss(), 5)))
+				updatehealth()
+				M.visible_message("<span class='danger'>\The [M] performs CPR on \the [src]!</span>")
+				to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
+				to_chat(M, "<span class='warning'>Repeat at least every 7 seconds.</span>")
 			else if(!(M == src && apply_pressure(M, M.zone_sel.selecting)))
 				help_shake_act(M)
-				return 1
+			return 1
 
 		if(I_GRAB)
 			if(M == src || anchored)

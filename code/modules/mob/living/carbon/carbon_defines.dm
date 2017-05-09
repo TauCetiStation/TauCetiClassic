@@ -41,6 +41,7 @@
 	var/speech_problem_flag = 0
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
+	var/cpr_time = 1
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
 	var/last_dam = -1	//Used for determining if we need to process all organs or just some or even none.
 	var/list/bad_bodyparts = list()// bodyparts we check until they are good.
@@ -57,7 +58,7 @@
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/weapon/back = null
 	var/obj/item/wear_suit = null
-	var/obj/item/w_uniform = null
+	var/obj/item/clothing/under/w_uniform = null
 	var/obj/item/shoes
 	var/obj/item/belt = null
 	var/obj/item/gloves = null

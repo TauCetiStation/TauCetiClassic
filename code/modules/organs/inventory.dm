@@ -19,18 +19,35 @@
 /obj/item/bodypart/proc/get_inv_menu(user)
 	var/list/i_slots = item_in_slot
 	var/list/obscured = check_obscured_slots()
-
 	var/dat
+
+	var/splinted = (status & ORGAN_SPLINTED)
+	if((splinted || bnd_overlay) && !(obscured && obscured["flags"][body_part]))
+		dat += "<br><b>[name]:</b>"
+		if(splinted)
+			dat += " <a href='?src=\ref[src];remove_inv=[slot_splints]'>Remove Splints</a>"
+		if(bnd_overlay && wounds.len)
+			dat += " <a href='?src=\ref[src];remove_inv=[slot_bandages]'>Remove Bandages</a>"
+
 	for(var/x in i_slots)
 		var/slot_name = parse_slot_name(x)
 		if(obscured && obscured[x])
 			dat += "<br><font color=grey><b>[slot_name]:</b> Obscured</font>"
-		else if(x == slot_l_store || x == slot_r_store) // oh dear, those hardcoded pockets...
+		else if(item_in_slot[slot_w_uniform] && (x == slot_l_store || x == slot_r_store)) // oh dear, those hardcoded pockets...
 			dat += "<br><b>[slot_name]:</b> <a href='?src=\ref[src];remove_inv=[x]'>Check Pocket</a> <a href='?src=\ref[src];add_inv=[x]'>Put in Pocket</a>"
 		else
 			var/obj/item/I = i_slots[x]
-			if(I)
+			if(I && !(I.flags & ABSTRACT))
 				dat += "<br><b>[slot_name]:</b> <a href='?src=\ref[src];remove_inv=[x]'>[I]</a>"
+				if(owner)
+					if(I.slot_equipped == slot_w_uniform)
+						if(owner.w_uniform.has_sensor == 1)
+							dat += " <a href='?src=\ref[src];remove_inv=[x];misc=sensors'>Sensors</a> "
+						if(owner.w_uniform.hastie)
+							dat += " <a href='?src=\ref[src];remove_inv=[x];misc=accessory'>Remove Accessory</a>"
+					if(owner.wear_mask && (owner.wear_mask.flags & MASKINTERNALS) && istype(I, /obj/item/weapon/tank))
+						dat += " <a href='?src=\ref[src];remove_inv=[x];misc=[MASKINTERNALS]'>[I == owner.internal ? "Unset Internal" : "Set Internal"]</a>"
+				dat += " (<a href='?src=\ref[src];remove_inv=[x];misc=examine'>E</a>)"
 			else
 				dat += "<br><b>[slot_name]:</b> <a href='?src=\ref[src];add_inv=[x]'>Nothing</a>"
 
@@ -47,9 +64,8 @@
 	if(href_list["refresh"])
 		show_inv(user)
 
-	else if(href_list["remove_inv"])
-		var/remove_from = href_list["remove_inv"]
-		un_equip_or_action(user, remove_from)
+	if(href_list["remove_inv"])
+		un_equip_or_action(user, href_list["remove_inv"], null, href_list["misc"])
 
 	else if(href_list["add_inv"])
 		var/add_to = href_list["add_inv"]
@@ -59,7 +75,7 @@
 			return
 		un_equip_or_action(user, add_to, item_to_add)
 
-/obj/item/bodypart/proc/un_equip_or_action(mob/living/who, where, obj/item/this_item)
+/obj/item/bodypart/proc/un_equip_or_action(mob/living/who, where, obj/item/this_item, misc)
 	if(!who || !where || who.incapacitated() || is_stump() || !(ishuman(who) || ismonkey(who) || isrobot(who)))
 		return
 
@@ -70,11 +86,24 @@
 		if(!owner.Adjacent(who) || who == owner)
 			return
 	else
-		if(src.loc != who || who.is_busy())
+		if(src.loc != who)
+			return
+
+	if(misc == "examine")
+		var/obj/item/item = item_in_slot[where]
+		if(item)
+			var/list/obscured = check_obscured_slots()
+			if(obscured && obscured[where])
+				return
+			if(owner)
+				who.visible_message("<span class='notice'>[who] examines [owner]'s [parse_slot_name(where)].", "<span class='notice'>You carefully examine [owner]'s [parse_slot_name(where)].")
+			who.examinate(item)
 			return
 
 	var/action_delay = HUMAN_STRIP_DELAY
 	if(this_item)
+		if(istype(this_item, src.type)) // i put yo hand in hand which holds hand which we put in hand.
+			return
 		if(where == slot_l_store || where == slot_r_store)
 			action_delay /= 2
 		else if(!this_item.limb_can_equip(src, where, TRUE))
@@ -86,9 +115,12 @@
 	else
 		var/obj/item/I = who.get_active_hand()
 		if(I && I.w_class >= ITEM_SIZE_NORMAL)
-			to_chat(who, "<span class='warning'>Size of [I] disallows you to strip anything from [owner ? owner : src], remove it.</span>")
+			to_chat(who, "<span class='warning'>Size of [I] disallows you to interact with [owner ? owner : src] inventory, remove it.</span>")
 			return
-		if(where == slot_l_store || where == slot_r_store)
+
+		if(where == slot_splints || where == slot_bandages)
+			who.visible_message("<span class='danger'>[who] is trying to remove [owner ? owner : src]'s [where]!")
+		else if(where == slot_l_store || where == slot_r_store)
 			who.visible_message("<span class='danger'>[who] is trying to empty [owner ? owner : src]'s pocket.</span>")
 			action_delay /= 2
 			var/obj/item/item = item_in_slot[where]
@@ -97,9 +129,20 @@
 		else
 			var/obj/item/item = item_in_slot[where]
 			if(item)
+				if(owner && misc)
+					if(misc == "[MASKINTERNALS]")
+						if(item == owner.internal)
+							who.visible_message("<span class='danger'>[who] is trying to remove [owner]'s internals</span>")
+						else
+							who.visible_message("<span class='danger'>[who] is trying to set on [owner]'s internals.</span>")
+					else if(misc == "sensors")
+						who.visible_message("<span class='danger'>[who] is trying to set [owner]'s suit sensors!</span>")
+					else if(misc == "accessory")
+						who.visible_message("<span class='danger'>[who] is trying to take off \a [owner.w_uniform.hastie] from [owner]'s suit!</span>")
+				else
+					who.visible_message("<span class='danger'>[who] is trying to take off \a [item] from [owner ? owner : src]!</span>")
 				if(item.un_equip_time > action_delay)
 					action_delay = item.un_equip_time
-				who.visible_message("<span class='danger'>[who] is trying to take off \a [item] from [owner ? owner : src]!</span>")
 				item.add_fingerprint(who)
 			else // invalid or nothing in slot
 				return
@@ -110,9 +153,9 @@
 	else if(!do_after(who, action_delay, target = src))
 		return
 
-	do_un_equip_or_action(who, where, this_item)
+	do_un_equip_or_action(who, where, this_item, misc)
 
-/obj/item/bodypart/proc/do_un_equip_or_action(mob/living/who, where, obj/item/this_item)
+/obj/item/bodypart/proc/do_un_equip_or_action(mob/living/who, where, obj/item/this_item, misc)
 	if(!who || !where)
 		return
 	if(this_item)
@@ -152,28 +195,59 @@
 					to_chat(who, "<span class='warning'>Your grasp was broken before you could restrain [owner]!</span>")
 					return
 			if(who.temporarilyRemoveItemFromInventory(this_item))
-				equip_to_slot_if_possible(who, this_item, where)
+				this_item.equip_to_slot_if_possible(who, src, where)
 				if(owner)
-					owner.attack_log += text("\[[time_stamp()]\] <font color='orange'>[who.name] ([who.ckey]) placed on our [where] ([this_item])</font>")
-				who.attack_log += text("\[[time_stamp()]\] <font color='red'>Placed on [owner ? owner.name + "'s" + "([owner.ckey])" : src.name] [where] ([this_item])</font>")
+					owner.attack_log += text("\[[time_stamp()]\] <font color='blue'>[who.name] ([who.ckey]) placed on our (slot: [where]) ([this_item])</font>")
+				who.attack_log += text("\[[time_stamp()]\] <font color='blue'>Placed on [owner ? owner.name + "'s" + "([owner.ckey])" : src.name] (Slot: [where]) ([this_item])</font>")
 		else
 			return
 	else
 		var/obj/item/I = who.get_active_hand()
 		if(I && I.w_class >= ITEM_SIZE_NORMAL)
 			return
-		var/obj/item/item_to_strip = item_in_slot[where]
-		if(item_to_strip)
-			if(item_to_strip.remove_from(FALSE, owner ? owner.loc : who.loc, FALSE, owner))//, force, newloc, no_move)
-				if(owner)
-					owner.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their [where] ([item_to_strip]) removed by [who.name] ([who.ckey])</font>")
-				who.attack_log += text("\[[time_stamp()]\] <font color='red'>Removed [owner ? owner.name + "'s" + "([owner.ckey])" : src.name] [where] ([item_to_strip])</font>")
-			else
-				who.visible_message("<span class='danger'>[who] fails to take off \a [item_to_strip] from [owner ? owner : src]!</span>")
-				return
+		if(where == slot_splints || where == slot_bandages) // TODO make them as real attached items, instead of vars.
+			if(where == slot_splints)
+				if (status & ORGAN_SPLINTED)
+					status &= ~ORGAN_SPLINTED
+					var/obj/item/W = new /obj/item/stack/medical/splint(amount = 1)
+					W.loc = owner ? owner.loc : who.loc
+					W.add_fingerprint(who)
+			if(where == slot_bandages)
+				if(bnd_overlay && wounds.len)
+					for(var/datum/wound/W in wounds)
+						if(W.bandaged)
+							W.bandaged = 0
+					if(owner)
+						owner.update_bodypart(body_zone)
+						owner.attack_log += "\[[time_stamp()]\] <font color='blue'>Has had their [where] removed by [who.name] ([who.ckey])</font>"
+					else
+						update_limb()
+					who.attack_log += "\[[time_stamp()]\] <font color='blue'>Removed [owner ? owner.name + "'s" + "([owner.ckey])" : src.name] [where].</font>"
 		else
-			return
-
+			var/obj/item/item_to_strip = item_in_slot[where]
+			if(item_to_strip)
+				if(owner && misc)
+					var/list/obscured = check_obscured_slots()
+					if(obscured && obscured[where])
+						return
+					if(misc == "[MASKINTERNALS]" && istype(item_to_strip, /obj/item/weapon/tank))
+						owner.set_internals(item_to_strip, who)
+					else if(misc == "sensors")
+						owner.w_uniform.set_sensors(who)
+					else if(misc == "accessory")
+						owner.w_uniform.hastie.on_removed(who)
+						owner.w_uniform.hastie = null
+						owner.w_uniform.update_inv_item(slot_w_uniform)
+				else
+					if(item_to_strip.remove_from(FALSE, (owner ? owner.loc : who.loc), FALSE, owner))
+						if(owner)
+							owner.attack_log += "\[[time_stamp()]\] <font color='blue'>Has had their (slot: [where]) ([item_to_strip]) removed by [who.name] ([who.ckey])</font>"
+						who.attack_log += "\[[time_stamp()]\] <font color='blue'>Removed [owner ? owner.name + "'s" + "([owner.ckey])" : src.name] (slot: [where]) ([item_to_strip])</font>"
+					else
+						who.visible_message("<span class='danger'>[who] fails to take off \a [item_to_strip] from [owner ? owner : src]!</span>")
+						return
+			else
+				return
 
 	if(owner)
 		for(var/mob/M in range(1, get_turf(owner ? owner : src)))

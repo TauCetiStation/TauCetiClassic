@@ -40,9 +40,6 @@
 		to_chat(user, "<span class='warning'>This isn't useful at all on a robotic limb..</span>")
 		return 1
 
-	use(1)
-	M.updatehealth()
-
 /obj/item/stack/medical/bruise_pack
 	name = "roll of gauze"
 	singular_name = "gauze length"

@@ -98,8 +98,6 @@
 	var/name_archive //For admin things like possession
 
 	var/timeofdeath = 0.0//Living
-	var/cpr_time = 1.0//Carbon
-
 
 	var/bodytemperature = 310.055	//98.7 F
 	var/drowsyness = 0.0//Carbon

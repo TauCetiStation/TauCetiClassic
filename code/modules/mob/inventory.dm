@@ -16,10 +16,6 @@
 			else
 				if(W.un_equip_time && !do_mob(src, src, W.un_equip_time, target_slot = slot))
 					return
-				//if(C.equip_time > 0)
-				//	delay_clothing_equip_to_slot_if_possible(C, slot)
-				//else
-				//	equip_to_slot_if_possible(C, slot)
 				equip_to_slot_if_possible(C, slot)
 		else
 			equip_to_slot_if_possible(W, slot)
@@ -40,18 +36,12 @@
 	return FALSE
 
 /mob/living/carbon/equip_to_slot_if_possible(obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
-	if(!istype(W))
-		return FALSE
-
 	return W.equip_to_slot_if_possible(src, bodyparts_slot_by_name[slot], slot, del_on_fail, disable_warning, redraw_mob)
 
-/obj/item/bodypart/equip_to_slot_if_possible(mob/user, obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
-	if(!istype(W))
-		return FALSE
-
-	return W.equip_to_slot_if_possible(user, src, slot, del_on_fail, disable_warning, redraw_mob)
-
 /obj/item/proc/equip_to_slot_if_possible(mob/user, obj/item/bodypart/BP, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+	if(!BP)
+		return
+
 	if(!limb_can_equip(BP, slot, disable_warning))
 		if(del_on_fail)
 			qdel(src)
@@ -138,12 +128,6 @@ var/list/slot_equipment_priority = list( \
 		//Now, B represents a container we can insert W into.
 		B.handle_item_insertion(W,1)
 		return B
-
-
-//These procs handle putting s tuff in your hand. It's probably best to use these rather than setting l_hand = ...etc
-//as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
-
-//Returns the thing in our active hand
 
 
 //Returns the thing in our active hand
@@ -301,7 +285,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE)
 	return remove_from_mob(I, force, null, TRUE)
 
-//DO NOT CALL THIS PROC
+//DO NOT CALL THIS and remove_from PROC
 //use one of the above 3 helper procs
 //you may override it, but do not modify the args
 /mob/proc/remove_from_mob(obj/item/I, force, newloc, no_move)
@@ -321,33 +305,23 @@ var/list/slot_equipment_priority = list( \
 
 	u_equip()
 
-	if(user && user.client)
-		user.client.screen -= src
 	layer = initial(layer)
 	plane = initial(plane)
 	appearance_flags = 0
 	if(!no_move && !(flags & DROPDEL)) // item may be moved/qdel'd immedietely, don't bother moving it
 		forceMove(newloc)
 	dropped(user)
+	if(user)
+		if(user.client)
+			user.client.screen -= src
+		user.check_internals()
 	return TRUE
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible()
 /mob/living/carbon/equip_to_slot(obj/item/W, slot)
-	if(!slot || !istype(W))
-		return FALSE
-
 	W.equip_to_slot(bodyparts_slot_by_name[slot], slot)
 
-/obj/item/bodypart/equip_to_slot(obj/item/W, slot)
-	if(!slot || !istype(W))
-		return
-
-	W.equip_to_slot(src, slot)
-
 /obj/item/proc/equip_to_slot(obj/item/bodypart/BP, slot)
-	if(!slot || !istype(BP))
-		return FALSE
-
 	u_equip() // So items actually disappear from hands.
 
 	if(BP.owner)

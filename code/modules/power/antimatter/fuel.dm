@@ -81,19 +81,25 @@
 	qdel(src)
 	return
 
-/obj/item/weapon/fuel/attack(mob/M, mob/user)
-	if (user != M)
-		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-		O.source = user
-		O.target = M
-		O.item = src
-		O.s_loc = user.loc
-		O.t_loc = M.loc
-		O.place = "fuel"
-		M.requests += O
-		INVOKE_ASYNC(O, /obj/effect/equip_e/human.proc/process)
+/obj/item/weapon/fuel/attack(mob/target, mob/user)
+	if(!CanEat(user, target, src))
 		return
+
+	var/food_name = content ? content : "empty canister"
+
+	if (target == user)
+		user.visible_message("<span class='warning'>[user] ate the [food_name]!</span>",
+			               "<span class='warning'>You ate the [food_name]!</span>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>Ate [food_name]</font>")
+		msg_admin_attack("[user.name] ([user.ckey]) ate [food_name] [ADMIN_JMP(user)]")
 	else
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red [M] ate the [content ? content : "empty canister"]!"), 1)
-		src.injest(M)
+		if(!do_after(user, HUMAN_STRIP_DELAY, null, target))
+			return
+
+		user.visible_message("<span class='warning'>[user] forces [target] to swallow [food_name].</span>")
+
+		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [food_name] by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [target.name] ([target.ckey]) with [food_name]</font>")
+		msg_admin_attack("[user.name] ([user.ckey]) fed [target.name] ([target.ckey]) with [food_name] [ADMIN_JMP(user)]")
+
+	src.injest(target)
