@@ -313,7 +313,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/weapon/gun/tesla/proc/Bolt(mob/origin, mob/living/target, mob/user, jumps)
 	origin.Beam(target, "lightning[rand(1,12)]", 'icons/effects/effects.dmi', time = 5)
-	target.electrocute_act(15 * (jumps + 1), src, , , 1)
+	target.electrocute_act(10 * (jumps + 1), src, , , 1)
 	playsound(target, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	var/list/possible_targets = new
 	for(var/mob/living/M in range(2, target))
