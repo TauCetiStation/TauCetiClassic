@@ -61,7 +61,7 @@
 			to_chat(user, "<span class='notice'>You're going to need to remove that [(equipped_flags & HEADCOVERSEYES) ? "helmet" : (equipped_flags & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
 			return
 
-		if(M == user)	//they're using it on themselves
+		if(M == user)	//they're using it on themselves (but it says below, that robots are unaeffected, and yet we can blind ourself.)
 			if(!M.blinded)
 				M.flash_eyes()
 				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
@@ -74,7 +74,7 @@
 		user.visible_message("<span class='notice'>[user] directs [src] to [M]'s eyes.</span>", \
 							 "<span class='notice'>You direct [src] to [M]'s eyes.</span>")
 
-		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
+		if(M.has_eyes() && istype(M, /mob/living/carbon/human))	//robots and aliens are unaffected
 			if(M.stat == DEAD || (M.disabilities & BLIND))	//mob is dead or fully blind
 				to_chat(user, "<span class='notice'>[M] pupils does not react to the light!</span>")
 			else if(XRAY in M.mutations)	//mob has X-RAY vision

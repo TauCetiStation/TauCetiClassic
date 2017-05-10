@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/emote(act,m_type=1,message = null)
+/mob/living/carbon/human/monkey/emote(act,m_type=1,message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))

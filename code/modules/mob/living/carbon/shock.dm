@@ -62,12 +62,12 @@
 
 	if(analgesic || (species && species.flags[NO_PAIN])) return // analgesic avoids all traumatic shock temporarily
 
-	if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
+	if(health < health_threshold_softcrit)// health 0 makes you immediately collapse
 		shock_stage = max(shock_stage, 61)
 
 	if(traumatic_shock >= 80)
 		shock_stage += 1
-	else if(health < config.health_threshold_softcrit)
+	else if(health < health_threshold_softcrit)
 		shock_stage = max(shock_stage, 61)
 	else
 		shock_stage = min(shock_stage, 160)

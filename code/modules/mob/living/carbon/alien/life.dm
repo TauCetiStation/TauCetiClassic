@@ -116,7 +116,7 @@
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
 			if(isalienadult(src))
-				if(health < config.health_threshold_dead || (should_have_organ(BP_BRAIN) && !has_brain()))
+				if(health < health_threshold_dead || (should_have_organ(BP_BRAIN) && !has_brain()))
 					death()
 					blinded = 1
 					stat = DEAD
@@ -131,7 +131,7 @@
 					return 1
 
 			//UNCONSCIOUS. NO-ONE IS HOME
-			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
+			if( (getOxyLoss() > 50) || (health_threshold_crit > health) )
 				Paralyse(3)
 			if(paralysis)
 				AdjustParalysis(-1)

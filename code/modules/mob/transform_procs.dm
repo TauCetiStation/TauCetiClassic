@@ -25,7 +25,7 @@
 	flick("h2monkey", animation)
 	sleep(48)
 
-	var/mob/living/carbon/monkey/O = null
+	var/mob/living/carbon/human/monkey/O = null
 
 	O = new (loc, species.backward_form)
 

@@ -31,7 +31,7 @@ mob/living/carbon/alien/facehugger/attack_hand(mob/living/carbon/human/H)
 	else
 		..()
 
-mob/living/carbon/alien/facehugger/attack_paw(mob/living/carbon/monkey/M)
+mob/living/carbon/alien/facehugger/attack_paw(mob/living/carbon/human/monkey/M)
 	if(can_leap_at_face(M))
 		src.leap_at_face(M, TRUE)
 	else

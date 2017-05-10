@@ -77,7 +77,7 @@
 						var/mobtype = C.parameters["mobtype"]
 
 						var/list/humans = typesof(/mob/living/carbon/human, /mob/living/brain)
-						var/list/monkeys = typesof(/mob/living/carbon/monkey)
+						var/list/monkeys = typesof(/mob/living/carbon/human/monkey) // NOTE if this ever returned, keep in mind that monkey is a sub of a human.
 						var/list/silicons = typesof(/mob/living/silicon)
 						var/list/slimes = typesof(/mob/living/carbon/slime)
 						var/list/animals = typesof(/mob/living/simple_animal)

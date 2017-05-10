@@ -422,7 +422,7 @@
 		return 0
 
 	//want the dislocation chance to be such that the limb is expected to dislocate after dealing a fraction of the damage needed to break the limb
-	var/dislocate_chance = effective_force/(dislocate_mult * BP.min_broken_damage * config.organ_health_multiplier)*100
+	var/dislocate_chance = effective_force/(dislocate_mult * BP.min_broken_damage * organ_health_multiplier)*100
 	if(prob(dislocate_chance * blocked_mult(blocked)))
 		visible_message("<span class='danger'>[src]'s [BP.joint] [pick("gives way","caves in","crumbles","collapses")]!</span>")
 		BP.dislocate(1)

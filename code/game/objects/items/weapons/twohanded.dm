@@ -58,7 +58,7 @@
 	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
-	if(istype(user,/mob/living/carbon/monkey))
+	if(istype(user,/mob/living/carbon/human/monkey))
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 

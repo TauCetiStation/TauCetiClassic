@@ -648,8 +648,8 @@ var/list/admin_verbs_hideable = list(
 		var/mob/living/carbon/human/H = T
 		if (H.species)
 			D.affected_species = list(H.species.name)
-	//if(istype(T,/mob/living/carbon/monkey))
-	//	var/mob/living/carbon/monkey/M = T
+	//if(istype(T,/mob/living/carbon/human/monkey))
+	//	var/mob/living/carbon/human/monkey/M = T
 	//	D.affected_species = list(M.greaterform)
 	infect_virus2(T,D,1)
 

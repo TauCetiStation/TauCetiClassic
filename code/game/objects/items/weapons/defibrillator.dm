@@ -113,13 +113,13 @@
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Shock [M.name] ([M.ckey]) with [src.name]</font>"
 		msg_admin_attack("[user.name] ([user.ckey]) shock [M.name] ([M.ckey]) with [src.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		if(C.health <= config.health_threshold_crit || prob(10))
+		if(C.health <= health_threshold_crit || prob(10))
 			var/suff = min(C.getOxyLoss(), 20)
 			C.adjustOxyLoss(-suff)
 		else
 			C.adjustFireLoss(5)
 		C.updatehealth()
-		if(C.stat == DEAD && C.health > config.health_threshold_dead)
+		if(C.stat == DEAD && C.health > health_threshold_dead)
 			C.reanimate_body()
 			make_announcement("pings, \"Resuscitation successful.\"", "notice")
 			playsound(src, 'sound/machines/defib_success.ogg', 50, 0)
@@ -233,7 +233,7 @@
 		return "buzzes, \"Resuscitation failed - Excessive neural degeneration. Further attempts futile.\""
 
 	C.updatehealth()
-	if(C.health + C.getOxyLoss() <= config.health_threshold_dead || (C.disabilities & (HUSK | NOCLONE)))
+	if(C.health + C.getOxyLoss() <= health_threshold_dead || (C.disabilities & (HUSK | NOCLONE)))
 		return "buzzes, \"Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.\""
 
 	var/bad_vital_organ = check_vital_organs(C)

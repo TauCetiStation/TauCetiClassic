@@ -101,7 +101,7 @@ This is what happens, when we attack aliens.
 								O.show_message(text("\red <B>[] has attempted to disarm []!</B>", M, src), 1)
 	return
 
-/mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/carbon/alien/attack_paw(mob/living/carbon/human/monkey/M)
 	if(!ismonkey(M))	return//Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)

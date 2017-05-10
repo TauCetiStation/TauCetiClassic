@@ -95,7 +95,7 @@
 		qdel(src)
 
 /obj/item/changeling_egg/proc/Pop()
-	var/mob/living/carbon/monkey/M = new(get_turf(loc))
+	var/mob/living/carbon/human/monkey/M = new(get_turf(loc))
 	if(origin && origin.current && origin.current.stat != DEAD)
 		return
 	origin.transfer_to(M)

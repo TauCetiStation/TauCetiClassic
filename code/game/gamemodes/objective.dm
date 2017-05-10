@@ -638,12 +638,13 @@ datum/objective/capture
 		var/captured_amount = 0
 		var/area/centcom/holding/A = locate()
 		for(var/mob/living/carbon/human/M in A)//Humans.
-			if(M.stat==2)//Dead folks are worth less.
+			if(ismonkey(M)) // Monkeys are almost worthless, you failure.
+				captured_amount+=0.1
+			else if(M.stat==2)//Dead folks are worth less.
 				captured_amount+=0.5
 				continue
-			captured_amount+=1
-		for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
-			captured_amount+=0.1
+			else
+				captured_amount+=1
 		for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
 			if(M.stat==2)
 				captured_amount+=0.5

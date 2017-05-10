@@ -34,7 +34,7 @@
 /mob/living/silicon/robot/price = 36784
 /mob/living/silicon/robot/drone/price = 0
 /mob/living/silicon/ai/price = 150000
-/mob/living/carbon/monkey/price = 50
+/mob/living/carbon/human/monkey/price = 50
 /mob/living/carbon/human/price = 27841
 /mob/living/carbon/human/tajaran/price = 50000
 /mob/living/simple_animal/price = 50

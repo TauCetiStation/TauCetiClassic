@@ -473,7 +473,7 @@
 	owner.updatehealth() //droplimb will call updatehealth() again if it does end up being called
 	//If limb took enough damage, try to cut or tear it off
 	if(owner && !is_stump())
-		if(!cannot_amputate && (brute_dam + burn_dam + brute + burn + spillover) >= (max_damage * config.organ_health_multiplier))
+		if(!cannot_amputate && (brute_dam + burn_dam + brute + burn + spillover) >= (max_damage * organ_health_multiplier))
 			//organs can come off in three cases
 			//1. If the damage source is edge_eligible and the brute damage dealt exceeds the edge threshold, then the organ is cut off.
 			//2. If the damage amount dealt exceeds the disintegrate threshold, the organ is completely obliterated.
@@ -590,7 +590,7 @@ This function completely restores a damaged bodypart to perfect condition.
 				fluid_loss_severity = FLUIDLOSS_WIDE_BURN
 			if(LASER)
 				fluid_loss_severity = FLUIDLOSS_CONC_BURN
-		var/fluid_loss = (damage / (owner.maxHealth - config.health_threshold_dead)) * owner.species.blood_volume * fluid_loss_severity
+		var/fluid_loss = (damage / (owner.maxHealth - health_threshold_dead)) * owner.species.blood_volume * fluid_loss_severity
 		owner.remove_blood(fluid_loss)
 
 	// first check whether we can widen an existing wound
@@ -868,7 +868,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
 		heal_amt = heal_amt * wound_update_accuracy
 		//configurable regen speed woo, no-regen hardcore or instaheal hugbox, choose your destiny
-		heal_amt = heal_amt * config.organ_regeneration_multiplier
+		heal_amt = heal_amt * organ_regeneration_multiplier
 		// amount of healing is spread over all the wounds
 		heal_amt = heal_amt / (wounds.len + 1)
 		// making it look prettier on scanners
@@ -910,7 +910,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 		status |= ORGAN_BLEEDING
 
 	//Bone fractures
-	if(brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
+	if(brute_dam > min_broken_damage * organ_health_multiplier && !(status & ORGAN_ROBOT))
 		src.fracture()
 
 //Returns 1 if damage_state changed, also updates damage overlays (just rebuilding image for later use by procs that actually updates visual part).

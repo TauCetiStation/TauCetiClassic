@@ -9,10 +9,10 @@
 #define M_TOTAL_LAYERS			7
 /////////////////////////////////
 
-//mob/living/carbon/monkey
+//mob/living/carbon/human/monkey
 //	var/list/overlays_standing[M_TOTAL_LAYERS]
 
-/mob/living/carbon/monkey/regenerate_icons()
+/mob/living/carbon/human/monkey/regenerate_icons()
 	..()
 	update_icons()
 	update_transform()
@@ -20,7 +20,7 @@
 	update_hud()
 	return
 
-/mob/living/carbon/monkey/update_icons()
+/mob/living/carbon/human/monkey/update_icons()
 	..()
 	update_hud()
 	//lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
@@ -29,12 +29,12 @@
 	//	overlays += I
 
 
-/mob/living/carbon/monkey/update_hud()
+/mob/living/carbon/human/monkey/update_hud()
 	if (client)
 		client.screen |= contents
 
 //Call when target overlay should be added/removed
-/mob/living/carbon/monkey/update_targeted(var/update_icons=1)
+/mob/living/carbon/human/monkey/update_targeted(var/update_icons=1)
 	if (targeted_by && target_locked)
 		overlays_standing[TARGETED_LAYER]	= target_locked
 	else if (!targeted_by && target_locked)
@@ -43,7 +43,7 @@
 		overlays_standing[TARGETED_LAYER]	= null
 	if(update_icons)		update_icons()
 
-/mob/living/carbon/monkey/update_fire()
+/mob/living/carbon/human/monkey/update_fire()
 	overlays -= overlays_standing[M_FIRE_LAYER]
 	if(on_fire)
 		overlays_standing[M_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")

@@ -1528,7 +1528,7 @@
 	filling_color = "#ADAC7F"
 
 	var/wrapped = 0
-	var/monkey_type = /mob/living/carbon/monkey
+	var/monkey_type = /mob/living/carbon/human/monkey
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/New()
 	..()
@@ -1553,7 +1553,7 @@
 	if (istype(M, /mob/living/carbon/human))
 		//Do not try to understand.
 		var/obj/item/weapon/surprise = new/obj/item/weapon(M)
-		var/mob/living/carbon/monkey/ook = new monkey_type(null) //no other way to get access to the vars, alas
+		var/mob/living/carbon/human/monkey/ook = new monkey_type(null) //no other way to get access to the vars, alas
 		surprise.icon = ook.icon
 		surprise.icon_state = ook.icon_state
 		surprise.name = "malformed [ook.name]"
@@ -1575,7 +1575,7 @@
 			BP.embed(surprise)
 	else if (ismonkey(M))
 		M.visible_message("<span class='danger'>[M] suddenly tears in half!</span>")
-		var/mob/living/carbon/monkey/ook = new monkey_type(M.loc)
+		var/mob/living/carbon/human/monkey/ook = new monkey_type(M.loc)
 		ook.name = "malformed [ook.name]"
 		ook.transform *= 0.6
 		ook.add_blood(M)
@@ -1603,29 +1603,29 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/farwacube
 	name = "farwa cube"
-	monkey_type = /mob/living/carbon/monkey/tajara
+	monkey_type = /mob/living/carbon/human/monkey/tajara
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube
 	name = "farwa cube"
-	monkey_type = /mob/living/carbon/monkey/tajara
+	monkey_type = /mob/living/carbon/human/monkey/tajara
 
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/stokcube
 	name = "stok cube"
-	monkey_type = /mob/living/carbon/monkey/unathi
+	monkey_type = /mob/living/carbon/human/monkey/unathi
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube
 	name = "stok cube"
-	monkey_type = /mob/living/carbon/monkey/unathi
+	monkey_type = /mob/living/carbon/human/monkey/unathi
 
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/neaeracube
 	name = "neaera cube"
-	monkey_type = /mob/living/carbon/monkey/skrell
+	monkey_type = /mob/living/carbon/human/monkey/skrell
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube
 	name = "neaera cube"
-	monkey_type = /mob/living/carbon/monkey/skrell
+	monkey_type = /mob/living/carbon/human/monkey/skrell
 
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger

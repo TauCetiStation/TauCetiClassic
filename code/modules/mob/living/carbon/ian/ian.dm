@@ -361,7 +361,7 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(health >= config.health_threshold_crit)
+			if(health >= health_threshold_crit)
 				help_shake_act(M)
 				return
 			if(M.get_equipped_flags(BP_HEAD) & (HEADCOVERSMOUTH | MASKCOVERSMOUTH))

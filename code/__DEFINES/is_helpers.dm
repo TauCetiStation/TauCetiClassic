@@ -20,7 +20,7 @@
 
 #define isslime(A) (istype(A, /mob/living/carbon/slime))
 
-#define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
+#define ismonkey(A) (istype(A, /mob/living/carbon/human/monkey))
 
 #define isIAN(A) (istype(A, /mob/living/carbon/ian))
 

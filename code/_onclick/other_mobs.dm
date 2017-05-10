@@ -54,7 +54,7 @@
 /*
 	Monkeys
 */
-/mob/living/carbon/monkey/UnarmedAttack(atom/A)
+/mob/living/carbon/human/monkey/UnarmedAttack(atom/A)
 	A.attack_paw(src)
 /atom/proc/attack_paw(mob/user)
 	return
@@ -66,7 +66,7 @@
 	moving it here instead of various hand_p's has simplified
 	things considerably
 */
-/mob/living/carbon/monkey/RestrainedClickOn(atom/A)
+/mob/living/carbon/human/monkey/RestrainedClickOn(atom/A)
 	if(a_intent != "harm" || !ismob(A)) return
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return

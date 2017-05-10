@@ -165,7 +165,7 @@
 
 		//switch(where)
 			//if("CPR")
-			//	if(src.health > config.health_threshold_dead && src.health < config.health_threshold_crit)
+			//	if(src.health > health_threshold_dead && src.health < health_threshold_crit)
 			//		var/suff = min(src.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
 			//		src.adjustOxyLoss(-suff)
 			//		src.updatehealth()

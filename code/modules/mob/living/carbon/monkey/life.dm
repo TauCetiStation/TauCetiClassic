@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/Life()
+/mob/living/carbon/human/monkey/Life()
 	set invisibility = 0
 	//set background = 1
 	if (monkeyizing)	return
@@ -71,11 +71,11 @@
 	updatehealth()
 
 
-/mob/living/carbon/monkey/calculate_affecting_pressure(pressure)
+/mob/living/carbon/human/monkey/calculate_affecting_pressure(pressure)
 	..()
 	return pressure
 
-/mob/living/carbon/monkey
+/mob/living/carbon/human/monkey
 
 	handle_disabilities()
 
@@ -491,7 +491,7 @@
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()
-			if(health < config.health_threshold_dead || (should_have_organ(BP_BRAIN) && !has_brain()))
+			if(health < health_threshold_dead || (should_have_organ(BP_BRAIN) && !has_brain()))
 				death()
 				blinded = 1
 				stat = DEAD
@@ -499,7 +499,7 @@
 				return 1
 
 			//UNCONSCIOUS. NO-ONE IS HOME
-			if( (getOxyLoss() > 25) || (config.health_threshold_crit > health) )
+			if( (getOxyLoss() > 25) || (health_threshold_crit > health) )
 				if( health <= 20 && prob(1) )
 					spawn(0)
 						emote("gasp")

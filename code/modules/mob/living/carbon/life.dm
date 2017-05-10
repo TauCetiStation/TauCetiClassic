@@ -49,7 +49,7 @@
 
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !in_stasis)
-		if(SSmob.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) // First, resolve location and get a breath
+		if(SSmob.times_fired%4==2 || failed_last_breath || (health < health_threshold_crit)) // First, resolve location and get a breath
 			breathe() // Only try to take a breath every 4 ticks, unless suffocating
 
 		else // Still give containing object the chance to interact
@@ -289,7 +289,7 @@
 	var/datum/gas_mixture/breath
 
 	// HACK NEED CHANGING LATER
-	if(health < config.health_threshold_crit && !reagents.has_reagent("inaprovaline"))
+	if(health < health_threshold_crit && !reagents.has_reagent("inaprovaline"))
 		losebreath++
 
 	if(losebreath>0) //Suffocating so do not take a breath
@@ -411,7 +411,7 @@
 	if(failed_last_breath)
 		if(prob(20))
 			emote("gasp")
-		if(health > config.health_threshold_crit)
+		if(health > health_threshold_crit)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 		else
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
@@ -920,7 +920,7 @@
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_organs()	//Optimized.
 
-		if(health <= config.health_threshold_dead || (should_have_organ(BP_BRAIN) && !has_brain()))
+		if(health <= health_threshold_dead || (should_have_organ(BP_BRAIN) && !has_brain()))
 			death()
 			blinded = 1
 			silent = 0
@@ -930,7 +930,7 @@
 		analgesic = max(0, analgesic - 1)
 
 		//UNCONSCIOUS. NO-ONE IS HOME
-		if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
+		if( (getOxyLoss() > 50) || (health_threshold_crit > health) )
 			Paralyse(3)
 
 		if(hallucination)

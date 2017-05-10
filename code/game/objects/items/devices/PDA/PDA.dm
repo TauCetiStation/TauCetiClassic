@@ -1163,7 +1163,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 /obj/item/device/pda/attack(mob/living/C, mob/living/user)
-	if (istype(C, /mob/living/carbon))
+	if (istype(C, /mob/living/carbon/human))
 		switch(scanmode)
 			if(1)
 
@@ -1192,11 +1192,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
 
 			if(2)
-				if (!istype(C:dna, /datum/dna))
+				if (!istype(C:dna, /datum/dna)) // TODO fingerprints on arms.
 					to_chat(user, "\blue No fingerprints found on [C]")
-				else if(!istype(C, /mob/living/carbon/monkey))
-					if(!isnull(C:gloves))
-						to_chat(user, "\blue No fingerprints found on [C]")
+				if(!isnull(C:gloves))
+					to_chat(user, "\blue No fingerprints found on [C]")
 				else
 					to_chat(user, text("\blue [C]'s Fingerprints: [md5(C:dna.uni_identity)]"))
 				if ( !(C:blood_DNA) )

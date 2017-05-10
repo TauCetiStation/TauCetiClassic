@@ -218,7 +218,7 @@
 
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M) // TODO check Bay12 version of this proc.
-	if (src.health >= config.health_threshold_crit)
+	if (src.health >= health_threshold_crit)
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
 			src.visible_message( \

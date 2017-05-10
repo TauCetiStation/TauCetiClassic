@@ -11,7 +11,7 @@
 //Monkeys can not take the muzzle off of themself! Call PETA!
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(ismonkey(user))
-		var/mob/living/carbon/monkey/M = user
+		var/mob/living/carbon/human/monkey/M = user
 		if (src == M.wear_mask)
 			return
 	..()

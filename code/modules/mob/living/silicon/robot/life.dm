@@ -77,7 +77,7 @@
 	if(src.resting)
 		Weaken(5)
 
-	if(health < config.health_threshold_dead && src.stat != DEAD) //die only once
+	if(health < health_threshold_dead && src.stat != DEAD) //die only once
 		death()
 
 	if (src.stat != DEAD) //Alive.
@@ -225,7 +225,7 @@
 						src.healths.icon_state = "health3"
 					if(0 to 50)
 						src.healths.icon_state = "health4"
-					if(config.health_threshold_dead to 0)
+					if(health_threshold_dead to 0)
 						src.healths.icon_state = "health5"
 					else
 						src.healths.icon_state = "health6"

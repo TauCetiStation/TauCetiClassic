@@ -1,22 +1,3 @@
-### HEALTH ###
-
-## level of health at which a mob goes into continual shock (soft crit)
-HEALTH_THRESHOLD_SOFTCRIT 0
-
-## level of health at which a mob becomes unconscious (crit)
-HEALTH_THRESHOLD_CRIT -50
-
-## level of health at which a mob becomes dead
-HEALTH_THRESHOLD_DEAD -100
-
-## multiplier which enables organs to take more damage before bones breaking or limbs being destroyed
-## 100 means normal, 50 means half
-ORGAN_HEALTH_MULTIPLIER 100
-
-## multiplier which influences how fast organs regenerate naturally
-## 100 means normal, 50 means half
-ORGAN_REGENERATION_MULTIPLIER 75
-
 ### REVIVAL ###
 
 ## whether pod plants work or not

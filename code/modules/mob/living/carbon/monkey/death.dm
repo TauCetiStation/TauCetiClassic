@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/gib()
+/mob/living/carbon/human/monkey/gib()
 	death(1)
 	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
@@ -18,7 +18,7 @@
 		if(animation)	qdel(animation)
 		if(src)			qdel(src)
 
-/mob/living/carbon/monkey/dust()
+/mob/living/carbon/human/monkey/dust()
 	death(1)
 	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
@@ -39,7 +39,7 @@
 		if(src)			qdel(src)
 
 
-/mob/living/carbon/monkey/death(gibbed)
+/mob/living/carbon/human/monkey/death(gibbed)
 	if(stat == DEAD)	return
 	if(healths)			healths.icon_state = "health5"
 	stat = DEAD

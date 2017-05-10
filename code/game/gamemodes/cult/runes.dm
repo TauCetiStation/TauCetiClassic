@@ -607,7 +607,28 @@ var/list/sacrificed = list()
 					cultsinrange += C
 					C.say("Barhah hra zar[pick("'","`")]garis!")
 			for(var/mob/H in victims)
-				if (ticker.mode.name == "cult")
+				if(ismonkey(H)) // TODO deal with that.
+					if (ticker.mode.name == "cult")
+						if(H.mind == ticker.mode:sacrifice_target)
+							if(cultsinrange.len >= 3)
+								sacrificed += H.mind
+								to_chat(usr, "<span class='red'>The Geometer of Blood accepts this sacrifice, your objective is now complete.</span>")
+							else
+								to_chat(usr, "<span class='red'>Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual.</span>")
+								continue
+						else
+							if(prob(20))
+								to_chat(usr, "<span class='red'>The Geometer of Blood accepts your meager sacrifice.</span>")
+								ticker.mode:grant_runeword(usr)
+							else
+								to_chat(usr, "<span class='red'>The Geometer of blood accepts this sacrifice.</span>")
+								to_chat(usr, "<span class='red'>However, a mere monkey is not enough to satisfy Him.</span>")
+					else
+						to_chat(usr, "<span class='red'>The Geometer of Blood accepts your meager sacrifice.</span>")
+						if(prob(20))
+							ticker.mode.grant_runeword(usr)
+					H.gib()
+				else if (ticker.mode.name == "cult")
 					if(H.mind == ticker.mode:sacrifice_target)
 						if(cultsinrange.len >= 3)
 							sacrificed += H.mind
@@ -694,27 +715,7 @@ var/list/sacrificed = list()
 								H.dust()//To prevent the MMI from remaining
 							else
 								H.gib()
-			for(var/mob/living/carbon/monkey/M in src.loc)
-				if (ticker.mode.name == "cult")
-					if(M.mind == ticker.mode:sacrifice_target)
-						if(cultsinrange.len >= 3)
-							sacrificed += M.mind
-							to_chat(usr, "<span class='red'>The Geometer of Blood accepts this sacrifice, your objective is now complete.</span>")
-						else
-							to_chat(usr, "<span class='red'>Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual.</span>")
-							continue
-					else
-						if(prob(20))
-							to_chat(usr, "<span class='red'>The Geometer of Blood accepts your meager sacrifice.</span>")
-							ticker.mode:grant_runeword(usr)
-						else
-							to_chat(usr, "<span class='red'>The Geometer of blood accepts this sacrifice.</span>")
-							to_chat(usr, "<span class='red'>However, a mere monkey is not enough to satisfy Him.</span>")
-				else
-					to_chat(usr, "<span class='red'>The Geometer of Blood accepts your meager sacrifice.</span>")
-					if(prob(20))
-						ticker.mode.grant_runeword(usr)
-				M.gib()
+
 /*			for(var/mob/living/carbon/alien/A)
 				for(var/mob/K in cultsinrange)
 					K.say("Barhah hra zar'garis!")
@@ -1086,7 +1087,7 @@ var/list/sacrificed = list()
 //////////////////////////////////////////TWENTY-SIXTH RUNE
 
 		brainswap()
-			var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+			var/list/compatible_mobs = list(/mob/living/carbon/human)
 			var/bdam = rand(2,10)
 			for(var/obj/effect/rune/R in world)
 				if(R.word1==cultwords["travel"] && R.word2==cultwords["blood"] && R.word3==cultwords["other"])

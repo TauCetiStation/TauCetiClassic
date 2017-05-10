@@ -203,13 +203,14 @@
 			slab_count = critter.meat_amount
 		if(critter.meat_type)
 			slab_type = critter.meat_type
+	else if(istype(src.occupant, /mob/living/carbon/human/monkey)) // TODO deal with that
+		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 	else if(istype(src.occupant,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = occupant
 		if(H.butcher_results && H.butcher_results.len)
 			slab_name = src.occupant.real_name
 			slab_type = H.isSynthetic() ? /obj/item/stack/sheet/plasteel : pick(H.butcher_results)//H.species.meat_type
-	else if(istype(src.occupant, /mob/living/carbon/monkey))
-		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
+
 
 	// Small mobs don't give as much nutrition.
 	if(src.occupant.small)

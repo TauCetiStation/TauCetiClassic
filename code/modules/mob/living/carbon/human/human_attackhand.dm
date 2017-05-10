@@ -96,7 +96,7 @@
 
 	switch(M.a_intent)
 		if(I_HELP)
-			if(istype(M) && health < config.health_threshold_crit && health > config.health_threshold_dead)
+			if(istype(M) && health < health_threshold_crit && health > health_threshold_dead)
 				if(!M.check_has_mouth())
 					to_chat(M, "<span class='danger'>You don't have a mouth, you cannot perform CPR!</span>")
 					return

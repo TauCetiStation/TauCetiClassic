@@ -90,7 +90,7 @@
 		return
 
 	var/mob/living/carbon/human/H = target
-	if(H.health >= config.health_threshold_crit)
+	if(H.health >= health_threshold_crit)
 		to_chat(user, "\blue [H.name] is in good condition.")
 		return
 	to_chat(user, "Planting...")

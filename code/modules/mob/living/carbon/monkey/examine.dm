@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/examine()
+/mob/living/carbon/human/monkey/examine()
 	set src in oview()
 
 	if(!usr || !src)	return

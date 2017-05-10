@@ -499,7 +499,7 @@
 
 /mob/living/carbon/pull_damage()
 	var/mob/living/carbon/C = src
-	if((C.health - C.getHalLoss()) <= config.health_threshold_softcrit)
+	if((C.health - C.getHalLoss()) <= health_threshold_softcrit)
 		for(var/name in C.bodyparts_by_name)
 			var/obj/item/bodypart/BP = C.bodyparts_by_name[name]
 			if(C.lying)

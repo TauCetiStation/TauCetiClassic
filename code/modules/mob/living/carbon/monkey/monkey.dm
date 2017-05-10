@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey
+/mob/living/carbon/human/monkey
 	name = "monkey"
 	voice_name = "monkey"
 	speak_emote = list("chimpers")
@@ -17,7 +17,7 @@
 	holder_type = /obj/item/weapon/holder/monkey
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
 
-/mob/living/carbon/monkey/tajara
+/mob/living/carbon/human/monkey/tajara
 	name = "farwa"
 	voice_name = "farwa"
 	speak_emote = list("mews")
@@ -25,7 +25,7 @@
 	uni_append = list(0x0A0,0xE00) // 0A0E00
 	holder_type = /obj/item/weapon/holder/monkey/farwa
 
-/mob/living/carbon/monkey/skrell
+/mob/living/carbon/human/monkey/skrell
 	name = "neaera"
 	voice_name = "neaera"
 	speak_emote = list("squicks")
@@ -33,7 +33,7 @@
 	uni_append = list(0x01C,0xC92) // 01CC92
 	holder_type = /obj/item/weapon/holder/monkey/neaera
 
-/mob/living/carbon/monkey/unathi
+/mob/living/carbon/human/monkey/unathi
 	name = "stok"
 	voice_name = "stok"
 	speak_emote = list("hisses")
@@ -41,7 +41,7 @@
 	uni_append = list(0x044,0xC5D) // 044C5D
 	holder_type = /obj/item/weapon/holder/monkey/stok
 
-/mob/living/carbon/monkey/New(loc, new_species = S_MONKEY)
+/mob/living/carbon/human/monkey/New(loc, new_species = S_MONKEY)
 	//if(name == initial(name)) //To stop Pun-Pun becoming generic.
 		//name = "[name] ([rand(1, 1000)])"
 	real_name = name
@@ -78,34 +78,34 @@
 	//update_icons()
 	//return
 
-/mob/living/carbon/monkey/tajara/New()
+/mob/living/carbon/human/monkey/tajara/New()
 	..(new_species = S_MONKEY_T)
 
-/mob/living/carbon/monkey/skrell/New()
+/mob/living/carbon/human/monkey/skrell/New()
 	..(new_species = S_MONKEY_S)
 
-/mob/living/carbon/monkey/unathi/New()
+/mob/living/carbon/human/monkey/unathi/New()
 	..(new_species = S_MONKEY_U)
 
 /mob/living/carbon/alien/diona/New()
 	gender = NEUTER
 	..(new_species = S_MONKEY_D)
 /*
-/mob/living/carbon/monkey/unathi/New(loc, new_species = S_MONKEY_U)
+/mob/living/carbon/human/monkey/unathi/New(loc, new_species = S_MONKEY_U)
 
 	..()
 	dna.mutantrace = S_UNATHI
 	greaterform = S_UNATHI
 	add_language("Sinta'unathi")*/
 
-/*/mob/living/carbon/monkey/skrell/New(loc, new_species = S_MONKEY_S)
+/*/mob/living/carbon/human/monkey/skrell/New(loc, new_species = S_MONKEY_S)
 
 	..()
 	dna.mutantrace = S_SKRELL
 	greaterform = S_SKRELL
 	add_language("Skrellian")*/
 
-/*/mob/living/carbon/monkey/tajara/New(loc, new_species = S_MONKEY_T)
+/*/mob/living/carbon/human/monkey/tajara/New(loc, new_species = S_MONKEY_T)
 
 	..()
 	dna.mutantrace = S_TAJARAN
@@ -124,7 +124,7 @@
 //mob/living/carbon/alien/diona/movement_delay()
 //	return ..(tally = 3.5)
 
-/*/mob/living/carbon/monkey/movement_delay(tally = 0)
+/*/mob/living/carbon/human/monkey/movement_delay(tally = 0)
 	if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
 
@@ -138,7 +138,7 @@
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 	return tally+config.monkey_delay*/
 
-/*/mob/living/carbon/monkey/meteorhit(obj/O)
+/*/mob/living/carbon/human/monkey/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
@@ -149,10 +149,10 @@
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	return*/
 
-//mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)taken care of in living
+//mob/living/carbon/human/monkey/bullet_act(obj/item/projectile/Proj)taken care of in living
 
 
-/*/mob/living/carbon/monkey/attack_paw(mob/M)
+/*/mob/living/carbon/human/monkey/attack_paw(mob/M)
 	..()
 
 	if (M.a_intent == "help")
@@ -175,7 +175,7 @@
 					O.show_message("\red <B>[M.name] has attempted to bite [name]!</B>", 1)
 	return*/
 
-/*/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
+/*/mob/living/carbon/human/monkey/attack_hand(mob/living/carbon/human/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -264,7 +264,7 @@
 								O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
 	return*/
 
-/*/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
+/*/mob/living/carbon/human/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -332,7 +332,7 @@
 			updatehealth()
 	return*/
 
-/*/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
+/*/mob/living/carbon/human/monkey/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -347,7 +347,7 @@
 		updatehealth()*/
 
 
-/*/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M)
+/*/mob/living/carbon/human/monkey/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -407,7 +407,7 @@
 
 	return*/
 
-/*/mob/living/carbon/monkey/Stat()
+/*/mob/living/carbon/human/monkey/Stat()
 	..()
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
@@ -420,17 +420,17 @@
 	return*/
 
 
-/*/mob/living/carbon/monkey/verb/removeinternal()
+/*/mob/living/carbon/human/monkey/verb/removeinternal()
 	set name = "Remove Internals"
 	set category = "IC"
 	internal = null
 	return*/
 
-/*/mob/living/carbon/monkey/emp_act(severity)
+/*/mob/living/carbon/human/monkey/emp_act(severity)
 	if(wear_id) wear_id.emp_act(severity)
 	..()*/
 
-/*/mob/living/carbon/monkey/ex_act(severity)
+/*/mob/living/carbon/human/monkey/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
 
@@ -453,7 +453,7 @@
 		else
 	return*/
 
-/*/mob/living/carbon/monkey/blob_act()
+/*/mob/living/carbon/human/monkey/blob_act()
 	if (stat != DEAD)
 		adjustFireLoss(60)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
@@ -467,7 +467,7 @@
 		qdel(src)
 		return*/
 
-/*/mob/living/carbon/monkey/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list())
+/*/mob/living/carbon/human/monkey/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list())
         if(stat)
                 return
 

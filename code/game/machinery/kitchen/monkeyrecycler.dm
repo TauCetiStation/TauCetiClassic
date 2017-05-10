@@ -54,7 +54,7 @@
 		var/obj/item/weapon/grab/G = O
 		var/grabbed = G.affecting
 		if(ismonkey(grabbed))
-			var/mob/living/carbon/monkey/target = grabbed
+			var/mob/living/carbon/human/monkey/target = grabbed
 			if(target.stat == CONSCIOUS)
 				to_chat(user, "\red The monkey is struggling far too much to put it in the recycler.")
 			else

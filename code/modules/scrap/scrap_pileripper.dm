@@ -156,11 +156,12 @@
 	var/slab_name = L.name
 	var/slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 
-	if(istype(L,/mob/living/carbon/human))
+	if(istype(L, /mob/living/carbon/human/monkey)) // TODO deal with that meat vars...
+		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
+	else if(istype(L,/mob/living/carbon/human))
 		slab_name = L.real_name
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/human
-	else if(istype(L, /mob/living/carbon/monkey))
-		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
+
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/new_meat = new slab_type(get_turf(get_step(src, 4)))
 	new_meat.name = "[slab_name] [new_meat.name]"
 

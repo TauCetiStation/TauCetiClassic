@@ -156,9 +156,9 @@
 	)
 	var/text = ""
 	var/mob/living/carbon/human/H = current
-	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
+	if (istype(current, /mob/living/carbon/human))
 		/** Impanted**/
-		if(istype(current, /mob/living/carbon/human))
+		if(!istype(current, /mob/living/carbon/human/monkey))
 			if(H.is_loyalty_implanted(H))
 				text = "Loyalty Implant:<a href='?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
 			else
@@ -171,7 +171,7 @@
 		if (ticker.mode.config_tag=="revolution")
 			text += uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/carbon/monkey) || H.is_loyalty_implanted(H))
+		if (H.is_loyalty_implanted(H))
 			text += "<b>LOYAL EMPLOYEE</b>|headrev|rev"
 		else if (src in ticker.mode.head_revolutionaries)
 			text += "<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
@@ -244,7 +244,7 @@
 		if (ticker.mode.config_tag=="cult")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/carbon/monkey) || H.is_loyalty_implanted(H))
+		if (H.is_loyalty_implanted(H))
 			text += "<B>LOYAL EMPLOYEE</B>|cultist"
 		else if (src in ticker.mode.cult)
 			text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
@@ -381,23 +381,21 @@
 	sections["traitor"] = text
 
 	/** MONKEY ***/
-	if (istype(current, /mob/living/carbon))
+	if (istype(current, /mob/living/carbon/human))
 		text = "monkey"
 		if (ticker.mode.config_tag=="monkey")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/carbon/human))
-			text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<b>HUMAN</b>|other"
-		else if (istype(current, /mob/living/carbon/monkey))
+		if (istype(current, /mob/living/carbon/human/monkey))
 			var/found = 0
 			for(var/datum/disease/D in current.viruses)
 				if(istype(D, /datum/disease/jungle_fever)) found = 1
-
 			if(found)
 				text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<b>INFECTED</b>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
 			else
 				text += "<b>HEALTHY</b>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
-
+		else if (istype(current, /mob/living/carbon/human))
+			text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<b>HUMAN</b>|other"
 		else
 			text += "healthy|infected|human|<b>OTHER</b>"
 		sections["monkey"] = text
@@ -1128,34 +1126,35 @@
 			if("healthy")
 				if (usr.client.holder.rights & R_SPAWN)
 					var/mob/living/carbon/human/H = current
-					var/mob/living/carbon/monkey/M = current
-					if (istype(H))
+					var/mob/living/carbon/human/monkey/M = current
+					if (istype(M) && length(M.viruses))
+						for(var/datum/disease/D in M.viruses)
+							D.cure(0)
+						sleep(0) //because deleting of virus is done through spawn(0)
+					else if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
 						message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]")
 						src = null
 						M = H.monkeyize()
 						src = M.mind
 						//world << "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!"
-					else if (istype(M) && length(M.viruses))
-						for(var/datum/disease/D in M.viruses)
-							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
 			if("infected")
 				if (usr.client.holder.rights & R_SPAWN)
 					var/mob/living/carbon/human/H = current
-					var/mob/living/carbon/monkey/M = current
-					if (istype(H))
+					var/mob/living/carbon/human/monkey/M = current
+					if (istype(M))
+						current.contract_disease(new /datum/disease/jungle_fever,1,0)
+					else if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
 						message_admins("\blue [key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]", 1)
 						src = null
 						M = H.monkeyize()
 						src = M.mind
 						current.contract_disease(new /datum/disease/jungle_fever,1,0)
-					else if (istype(M))
-						current.contract_disease(new /datum/disease/jungle_fever,1,0)
+
 			if("human")
 				if (usr.client.holder.rights & R_SPAWN)
-					var/mob/living/carbon/monkey/M = current
+					var/mob/living/carbon/human/monkey/M = current
 					if (istype(M))
 						for(var/datum/disease/D in M.viruses)
 							if (istype(D,/datum/disease/jungle_fever))
@@ -1585,10 +1584,6 @@
 	..()
 	if(!mind.assigned_role)
 		mind.assigned_role = "Test Subject"	//default
-
-//MONKEY
-/mob/living/carbon/monkey/mind_initialize()
-	..()
 
 //slime
 /mob/living/carbon/slime/mind_initialize()

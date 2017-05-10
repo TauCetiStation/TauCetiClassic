@@ -39,7 +39,7 @@
 	sleep(48)
 	qdel(animation)
 
-	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey(user.loc)
+	var/mob/living/carbon/human/monkey/O = new /mob/living/carbon/human/monkey(user.loc)
 	O.dna = user.dna.Clone()
 	user.dna = null
 

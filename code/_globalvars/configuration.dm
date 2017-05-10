@@ -38,3 +38,10 @@ var/blobevent = 0
 
 //Admin call for slack
 var/list/ac_nameholder = list()
+
+// Health things for carbon.
+var/const/health_threshold_softcrit     = 0    // level of health at which a mob goes into continual shock (soft crit)
+var/const/health_threshold_crit         = -50  // level of health at which a mob becomes unconscious (crit)
+var/const/health_threshold_dead         = -100 // level of health at which a mob becomes dead
+var/const/organ_health_multiplier       = 1    // multiplier which enables organs to take more damage before bones breaking or limbs being destroyed (1 means normal, 0.5 means half)
+var/const/organ_regeneration_multiplier = 0.75 // multiplier which influences how fast organs regenerate naturally (1 means normal, 0.5 means half)

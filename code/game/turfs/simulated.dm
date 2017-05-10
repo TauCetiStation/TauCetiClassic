@@ -192,14 +192,7 @@
 
 // Only adds blood on the floor -- Skie
 /turf/simulated/proc/add_blood_floor(mob/living/carbon/M)
-	if(istype(M, /mob/living/carbon/monkey))
-
-		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
-		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		this.basecolor = "#A10808"
-		this.update_icon()
-
-	else if(istype(M,/mob/living/carbon/human))
+	if(istype(M,/mob/living/carbon/human))
 
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
 		var/mob/living/carbon/human/H = M

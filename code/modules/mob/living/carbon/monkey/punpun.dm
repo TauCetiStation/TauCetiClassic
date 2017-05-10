@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
+/mob/living/carbon/human/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
 	name = "Pun Pun" //C A N O N
 	//icon_state = "punpun1"
 	var/ancestor_name
@@ -9,7 +9,7 @@
 	var/list/pet_monkey_names = list("Pun Pun", "Bubbles", "Mojo", "George", "Darwin", "Aldo", "Caeser", "Kanzi", "Kong", "Terk", "Grodd", "Mala", "Bojangles", "Coco", "Able", "Baker", "Scatter", "Norbit", "Travis")
 	var/list/rare_pet_monkey_names = list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky")
 
-/mob/living/carbon/monkey/punpun/New()
+/mob/living/carbon/human/monkey/punpun/New()
 	Read_Memory()
 	if(ancestor_name)
 		name = ancestor_name
@@ -28,23 +28,23 @@
 		equip_to_slot_or_del(new relic_mask, slot_wear_mask)
 	equip_to_slot_or_del(new /obj/item/clothing/under/monkey/punpun, slot_undershirt)
 
-/mob/living/carbon/monkey/punpun/Life()
+/mob/living/carbon/human/monkey/punpun/Life()
 	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(0)
 	..()
 
-/mob/living/carbon/monkey/punpun/death(gibbed)
+/mob/living/carbon/human/monkey/punpun/death(gibbed)
 	if(!memory_saved || gibbed)
 		Write_Memory(1,gibbed)
 	..()
 
-/mob/living/carbon/monkey/punpun/proc/Read_Memory()
+/mob/living/carbon/human/monkey/punpun/proc/Read_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
 	S["ancestor_name"] 		>> ancestor_name
 	S["ancestor_chain"]		>> ancestor_chain
 	S["relic_mask"]			>> relic_mask
 
-/mob/living/carbon/monkey/punpun/proc/Write_Memory(dead, gibbed)
+/mob/living/carbon/human/monkey/punpun/proc/Write_Memory(dead, gibbed)
 	var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
 	if(gibbed)
 		S["ancestor_name"] 		<< null

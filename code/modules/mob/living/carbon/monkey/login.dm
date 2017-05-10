@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/Login()
+/mob/living/carbon/human/monkey/Login()
 	..()
 	update_hud()
 	return
