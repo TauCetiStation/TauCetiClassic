@@ -7,7 +7,8 @@ SUBSYSTEM_DEF(timer)
 	wait          = SS_WAIT_TIMER //SS_TICKER subsystem, so wait is in ticks
 	display_order = SS_DISPLAY_TIMER
 
-	flags = SS_FIRE_IN_LOBBY | SS_TICKER | SS_NO_INIT
+	flags = SS_TICKER | SS_NO_INIT
+	runlevel_min = RUNLEVEL_LOBBY
 
 	var/list/datum/timedevent/processing
 	var/list/hashes

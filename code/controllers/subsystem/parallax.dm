@@ -4,7 +4,8 @@ SUBSYSTEM_DEF(parallax)
 	priority = SS_PRIORITY_PARALLAX
 	wait     = SS_WAIT_PARALLAX
 
-	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND | SS_NO_INIT
+	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
+	runlevel_min = RUNLEVEL_LOBBY
 
 	var/list/currentrun
 	var/planet_x_offset = 128

@@ -157,7 +157,7 @@ SUBSYSTEM_DEF(unit_tests)
 	name = "Unit Tests"
 	wait = SS_WAIT_UNIT_TESTS
 	init_order = SS_INIT_UNIT_TESTS
-	flags = SS_FIRE_IN_LOBBY
+	runlevel_min = RUNLEVEL_LOBBY
 
 	var/list/queue = list()
 	var/list/async_tests = list()

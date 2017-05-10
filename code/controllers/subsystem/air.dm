@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(air)
 	display_order = SS_DISPLAY_AIR
 
 	flags = SS_BACKGROUND
+	runlevel_min = RUNLEVEL_GAME
 
 	var/next_id       = 1 // Used to keep track of zone UIDs.
 

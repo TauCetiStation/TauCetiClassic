@@ -6,7 +6,9 @@ SUBSYSTEM_DEF(ticker)
 
 	priority = SS_PRIORITY_TICKER
 
-	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING
+	runlevel_min = RUNLEVEL_LOBBY
+	runlevel_max = RUNLEVEL_GAME
 
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
@@ -93,11 +95,13 @@ SUBSYSTEM_DEF(ticker)
 
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
+				Master.SetRunLevel(RUNLEVEL_SETUP)
 
 		if(GAME_STATE_SETTING_UP)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
+				Master.SetRunLevel(RUNLEVEL_LOBBY)
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
@@ -105,6 +109,7 @@ SUBSYSTEM_DEF(ticker)
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1)
 			if(!explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
+				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 				declare_completion()
 				spawn(50)
 					for(var/client/C in clients)
@@ -244,7 +249,8 @@ SUBSYSTEM_DEF(ticker)
 
 	spawn_empty_ai()
 
-	Master.RoundStart()
+	current_state = GAME_STATE_PLAYING
+	Master.SetRunLevel(RUNLEVEL_GAME)
 
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),

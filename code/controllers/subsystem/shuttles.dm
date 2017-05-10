@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(shuttle)
 	wait       = SS_WAIT_SHUTTLES
 
 	flags = SS_KEEP_TIMING | SS_NO_TICK_CHECK
+	runlevel_max = RUNLEVEL_GAME
 
 		//emergency shuttle stuff
 	var/alert = 0				//0 = emergency, 1 = crew cycle

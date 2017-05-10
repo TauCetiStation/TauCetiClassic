@@ -1,6 +1,8 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
 	init_order = SS_INIT_EVENTS
+	runlevel_min = RUNLEVEL_GAME
+	runlevel_max = RUNLEVEL_GAME
 	// Report events at the end of the rouund
 	var/report_at_round_end = 0
 

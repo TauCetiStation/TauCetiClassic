@@ -5,7 +5,8 @@ SUBSYSTEM_DEF(garbage)
 	wait          = SS_WAIT_GARBAGE
 	display_order = SS_DISPLAY_GARBAGE
 
-	flags = SS_FIRE_IN_LOBBY | SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
+	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
+	runlevel_min = RUNLEVEL_LOBBY
 
 	var/list/collection_timeout = list(0, 2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
 
