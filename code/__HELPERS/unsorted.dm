@@ -416,9 +416,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	ADD_TO_MOBLIST(/mob/living/carbon/alien)
 	ADD_TO_MOBLIST(/mob/dead/observer)
 	ADD_TO_MOBLIST(/mob/new_player)
-	ADD_TO_MOBLIST(/mob/living/carbon/human/monkey)
 	ADD_TO_MOBLIST(/mob/living/carbon/slime)
-	ADD_TO_MOBLIST(/mob/living/carbon/ian)
 	ADD_TO_MOBLIST(/mob/living/simple_animal)
 
 	return moblist

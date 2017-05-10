@@ -1,4 +1,4 @@
-/mob/living/carbon/ian/emote(act, m_type = 1, message = null)
+/mob/living/carbon/human/ian/emote(act, m_type = 1, message = null)
 	var/param = null
 	if(findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)

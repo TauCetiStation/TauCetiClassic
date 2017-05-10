@@ -1,4 +1,4 @@
-/mob/living/carbon/ian/Life()
+/mob/living/carbon/human/ian/Life()
 	..()
 
 	if(soap_eaten) //Yeshhh, even dead, as long as body exist or timer runs out, its a chemical reaction after all!
@@ -100,7 +100,7 @@
 
 	//handle_regular_hud_updates() mob/living/Life() handles this already. i'l leave this as reminder. need to fix for human, monkey and maybe aliens also.
 
-/mob/living/carbon/ian/handle_regular_hud_updates()
+/mob/living/carbon/human/ian/handle_regular_hud_updates()
 	if(!..())
 		return FALSE
 
@@ -157,7 +157,7 @@
 	return TRUE
 
 
-/mob/living/carbon/ian/breathe()
+/mob/living/carbon/human/ian/breathe()
 	// This is Ian, he knows that every space helmet has infinite breathable air inside!
 	if(!loc || istype(get_equipped_item(slot_head), /obj/item/clothing/head/helmet/space) || reagents && reagents.has_reagent("lexorin"))
 		return
@@ -165,11 +165,11 @@
 		..()
 
 
-/mob/living/carbon/ian/handle_chemicals_in_body()
+/mob/living/carbon/human/ian/handle_chemicals_in_body()
 	stamina = min(stamina + 1, 100) //i don't want a whole new proc just for one variable, so i leave this here.
 	..()
 
-/mob/living/carbon/ian/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/human/ian/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return
 

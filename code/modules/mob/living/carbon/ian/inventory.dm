@@ -1,5 +1,5 @@
 /*
-/mob/living/carbon/ian/show_inv(mob/user)
+/mob/living/carbon/human/ian/show_inv(mob/user)
 	if(user.incapacitated() || !Adjacent(usr))
 		return
 
@@ -22,7 +22,7 @@
 	popup.open()
 */
 /*
-/mob/living/carbon/ian/Topic(href, href_list)
+/mob/living/carbon/human/ian/Topic(href, href_list)
 	if(href_list["close"])
 		usr << browse(null, "window=dog")
 		usr.unset_machine(src)
@@ -50,24 +50,24 @@
 			un_equip_or_action(usr, add_to, item_to_add)
 */
 //Returns the thing in our active hand (errr... mouth!)
-//mob/living/carbon/ian/get_active_hand()
+//mob/living/carbon/human/ian/get_active_hand()
 //	return mouth
 
 //Returns the thing in our inactive hand (errr... mouth!)
-//mob/living/carbon/ian/get_inactive_hand()
+//mob/living/carbon/human/ian/get_inactive_hand()
 //	return mouth
 
 //Drops the item in our active hand (errr... mouth!)
-//mob/living/carbon/ian/drop_item()
+//mob/living/carbon/human/ian/drop_item()
 //	return dropItemToGround(mouth)
 
-/mob/living/carbon/ian/restrained()
+/mob/living/carbon/human/ian/restrained()
 	if(handcuffed || facehugger) // Oh wow, whats this on my faaaaaaace?
 		return TRUE
 	return FALSE
 
 /*
-/mob/living/carbon/ian/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
+/mob/living/carbon/human/ian/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
 	if(!slot)
 		return
 	if(!istype(W))
@@ -106,7 +106,7 @@
 	W.appearance_flags = APPEARANCE_UI*/
 
 //Puts the item into our active hand (errr... mouth!) if possible. returns 1 on success.
-/*/mob/living/carbon/ian/put_in_active_hand(obj/item/W)
+/*/mob/living/carbon/human/ian/put_in_active_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))
 		return FALSE
 	if(!istype(W))
@@ -129,10 +129,10 @@
 		return TRUE
 	return FALSE*/
 
-//mob/living/carbon/ian/put_in_inactive_hand(obj/item/W)
+//mob/living/carbon/human/ian/put_in_inactive_hand(obj/item/W)
 //	return put_in_active_hand(W)
 
-/*/mob/living/carbon/ian/put_in_hands(obj/item/W)
+/*/mob/living/carbon/human/ian/put_in_hands(obj/item/W)
 	if(!W)
 		return FALSE
 	if(put_in_active_hand(W))
@@ -145,7 +145,7 @@
 		W.dropped()
 		return FALSE*/
 
-/*/mob/living/carbon/ian/u_equip(obj/W)
+/*/mob/living/carbon/human/ian/u_equip(obj/W)
 	if (W == head)
 		facehugger = FALSE
 		head = null
@@ -157,7 +157,7 @@
 	else if (W == back)
 		back = null*/
 
-/mob/living/carbon/ian/proc/update_corgi_ability()
+/mob/living/carbon/human/ian/proc/update_corgi_ability()
 	name = real_name
 	desc = initial(desc)
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")

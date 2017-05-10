@@ -6,19 +6,19 @@
 #define LAYERIAN_FIRE     1
 #define LAYERIANS_TOTAL   6
 
-/mob/living/carbon/ian/var/static/list/corgi_icons = list()
-/mob/living/carbon/ian/var/list/overlays_inv[LAYERIANS_TOTAL]
+/mob/living/carbon/human/ian/var/static/list/corgi_icons = list()
+/mob/living/carbon/human/ian/var/list/overlays_inv[LAYERIANS_TOTAL]
 
-/mob/living/carbon/ian/regenerate_icons()
+/mob/living/carbon/human/ian/regenerate_icons()
 	update_hud()
 	update_transform()
 
-/mob/living/carbon/ian/update_hud()
+/mob/living/carbon/human/ian/update_hud()
 	if(client)
 		client.screen |= contents
 
 /*
-/mob/living/carbon/ian/proc/update_inv_mouth()
+/mob/living/carbon/human/ian/proc/update_inv_mouth()
 	remove_overlay(LAYERIAN_MOUTH)
 
 	if(!mouth)
@@ -83,7 +83,7 @@
 
 	apply_overlay(LAYERIAN_MOUTH)
 
-/mob/living/carbon/ian/proc/update_inv_neck()
+/mob/living/carbon/human/ian/proc/update_inv_neck()
 	//remove_overlay(LAYERIAN_NECKCUFF) incase icons ever will be added.
 
 	if(!neck)
@@ -99,7 +99,7 @@
 	//apply_overlay(LAYERIAN_NECKCUFF)
 	*/
 
-/mob/living/carbon/ian/update_targeted()
+/mob/living/carbon/human/ian/update_targeted()
 	remove_overlay(LAYERIAN_TARGETED)
 
 	if(targeted_by && target_locked)
@@ -109,7 +109,7 @@
 
 	apply_overlay(LAYERIAN_TARGETED)
 
-/mob/living/carbon/ian/update_fire()
+/mob/living/carbon/human/ian/update_fire()
 	remove_overlay(LAYERIAN_FIRE)
 
 	if(on_fire)
@@ -125,7 +125,7 @@
 #undef LAYERIAN_FIRE
 #undef LAYERIANS_TOTAL
 
-/mob/living/carbon/ian/update_transform()
+/mob/living/carbon/human/ian/update_transform()
 	if(pose_last == pose_prev)
 		return
 	pose_prev = pose_last
@@ -146,7 +146,7 @@
 	BP = bodyparts_by_name[BP_CHEST]
 	BP.update_inv_limb(multi = TRUE)
 
-/mob/living/carbon/ian/update_canmove() // uh oh, i have no other idea, except copypaste this proc as edited version for now.
+/mob/living/carbon/human/ian/update_canmove() // uh oh, i have no other idea, except copypaste this proc as edited version for now.
 	if(!ismob(src))
 		return
 

@@ -3,7 +3,7 @@
 #define POSE_REST 4
 #define POSE_STAT 8
 
-/mob/living/carbon/ian
+/mob/living/carbon/human/ian
 	name = "Ian"
 	real_name = "Ian"
 	icon = 'icons/mob/corgi.dmi'
@@ -45,7 +45,7 @@
 	var/pose_prev = 0
 	var/pose_last = 0
 
-/mob/living/carbon/ian/New(loc, new_species = S_DOG)
+/mob/living/carbon/human/ian/New(loc, new_species = S_DOG)
 	reagents = new(1000)
 	reagents.my_atom = src
 
@@ -60,7 +60,7 @@
 
 	verbs += /mob/living/carbon/proc/crawl
 
-/mob/living/carbon/ian/UnarmedAttack(atom/A)
+/mob/living/carbon/human/ian/UnarmedAttack(atom/A)
 	if(ian_action)
 		if(isHandsBusy)
 			return
@@ -198,7 +198,7 @@
 	else if(unlock_mouth)
 		A.attack_paw(src)
 
-/mob/living/carbon/ian/proc/ate_mouse()
+/mob/living/carbon/human/ian/proc/ate_mouse()
 	var/mob/living/simple_animal/mouse/M = locate() in src
 	if(!M)
 		return
@@ -207,7 +207,7 @@
 	M.loc = loc
 	M.gib()
 
-/mob/living/carbon/ian/proc/hiccup()
+/mob/living/carbon/human/ian/proc/hiccup()
 	soap_eaten = max(0, soap_eaten - 1)
 	if(prob(33))
 		new /obj/effect/bubble_ian(loc, src)
@@ -249,7 +249,7 @@
 	underlays.Cut()
 	qdel(src)
 
-/mob/living/carbon/ian/proc/sniff_around()
+/mob/living/carbon/human/ian/proc/sniff_around()
 	if(!client)
 		return
 
@@ -276,14 +276,14 @@
 				client.images += I
 				addtimer(CALLBACK(src, .proc/unvisualize_smell, I), rand(30, 60))
 
-/mob/living/carbon/ian/proc/unvisualize_smell(image/I)
+/mob/living/carbon/human/ian/proc/unvisualize_smell(image/I)
 	if(!client)
 		return
 
 	client.images -= I
 
 //Standard procs, etc.
-/mob/living/carbon/ian/movement_delay(tally = 0)
+/mob/living/carbon/human/ian/movement_delay(tally = 0)
 	if(crawling)
 		tally += 5
 	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
@@ -303,14 +303,14 @@
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 	return tally
 
-/mob/living/carbon/ian/SelfMove(turf/n, direct)
+/mob/living/carbon/human/ian/SelfMove(turf/n, direct)
 	if(restrained())
 		to_chat(src, "<span class='red'>I feel something on my neck and cannot move!</span>")
 		return FALSE
 
 	return ..()
 
-/mob/living/carbon/ian/attackby(obj/item/O, mob/user)
+/mob/living/carbon/human/ian/attackby(obj/item/O, mob/user)
 	var/chance = 0
 	if(istype(get_equipped_item(slot_head), /obj/item/clothing/head/helmet))
 		chance += 50
@@ -330,7 +330,7 @@
 		return
 	..()
 
-/mob/living/carbon/ian/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/human/ian/attack_hand(mob/living/carbon/human/M)
 	if (!ticker.mode)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -463,7 +463,7 @@
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 					visible_message("<span class='danger'>[M] attempted to disarm [src]!</span>")
 
-/mob/living/carbon/ian/attack_slime(mob/living/carbon/slime/M)
+/mob/living/carbon/human/ian/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker.mode)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -519,17 +519,17 @@
 
 		updatehealth()
 
-/mob/living/carbon/ian/meteorhit(obj/O)
+/mob/living/carbon/human/ian/meteorhit(obj/O)
 	visible_message("<span class='red'>[src] has been hit by [O].</span>")
 	adjustBruteLoss(30)
 	updatehealth()
 
-/mob/living/carbon/ian/emp_act(severity)
+/mob/living/carbon/human/ian/emp_act(severity)
 	if(neck)
 		neck.emp_act(severity)
 	..()
 
-/mob/living/carbon/ian/ex_act(severity)
+/mob/living/carbon/human/ian/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
 
@@ -548,7 +548,7 @@
 			if (prob(50))
 				Paralyse(10)
 
-/mob/living/carbon/ian/blob_act()
+/mob/living/carbon/human/ian/blob_act()
 	if (stat != DEAD)
 		adjustFireLoss(60)
 		updatehealth()
@@ -557,7 +557,7 @@
 	else
 		gib()
 
-/mob/living/carbon/ian/attack_paw(mob/M)
+/mob/living/carbon/human/ian/attack_paw(mob/M)
 	..()
 	if (M.a_intent == "help")
 		help_shake_act(M)
@@ -586,7 +586,7 @@
 			else
 				visible_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>")
 
-/mob/living/carbon/ian/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/carbon/human/ian/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker.mode)
 		to_chat(M, "<span class='warning'>You cannot attack people before the game has started.</span>")
 		return
@@ -636,7 +636,7 @@
 			adjustBruteLoss(damage)
 			updatehealth()
 
-/mob/living/carbon/ian/attack_animal(mob/living/simple_animal/M)
+/mob/living/carbon/human/ian/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper)
 		M.emote("[M.friendly] [src]")
 	else
@@ -651,7 +651,7 @@
 		adjustBruteLoss(damage)
 		updatehealth()
 
-/mob/living/carbon/ian/bullet_act(obj/item/projectile/Proj)
+/mob/living/carbon/human/ian/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
 
@@ -673,12 +673,12 @@
 		return
 	..()
 
-/mob/living/carbon/ian/hitby(atom/movable/AM)
+/mob/living/carbon/human/ian/hitby(atom/movable/AM)
 	if(is_armored(AM, msg = "armored"))
 		return
 	..()
 
-/mob/living/carbon/ian/proc/is_armored(atom/movable/AM, luck = 50, msg = "dodges")
+/mob/living/carbon/human/ian/proc/is_armored(atom/movable/AM, luck = 50, msg = "dodges")
 	var/chance = 0
 	if(istype(get_equipped_item(slot_head), /obj/item/clothing/head/helmet))
 		chance += luck
@@ -698,16 +698,16 @@
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/ian/toggle_throw_mode()
+/mob/living/carbon/human/ian/toggle_throw_mode()
 	return // nope.avi
 
-/mob/living/carbon/ian/throw_mode_on()
+/mob/living/carbon/human/ian/throw_mode_on()
 	return
 
-/mob/living/carbon/ian/throw_mode_off()
+/mob/living/carbon/human/ian/throw_mode_off()
 	return
 
-/mob/living/carbon/ian/say(message)
+/mob/living/carbon/human/ian/say(message)
 	if(stat)
 		return
 

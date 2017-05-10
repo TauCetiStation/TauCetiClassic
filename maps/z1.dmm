@@ -3807,7 +3807,7 @@
 "bvm" = (/obj/machinery/computer/card,/turf/simulated/floor{icon_state = "blue"; dir = 10},/area/crew_quarters/heads)
 "bvn" = (/turf/simulated/floor,/area/crew_quarters/heads)
 "bvo" = (/obj/machinery/hologram/holopad,/turf/simulated/floor/carpet,/area/crew_quarters/heads)
-"bvp" = (/mob/living/carbon/ian,/turf/simulated/floor/carpet,/area/crew_quarters/heads)
+"bvp" = (/mob/living/carbon/human/ian,/turf/simulated/floor/carpet,/area/crew_quarters/heads)
 "bvq" = (/obj/machinery/alarm{dir = 8; pixel_x = 25; pixel_y = 0},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor,/area/hallway/secondary/entry)
 "bvr" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/wall/r_wall,/area/crew_quarters/heads)
 "bvs" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/wall/r_wall,/area/space)

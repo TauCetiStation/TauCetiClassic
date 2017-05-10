@@ -1,4 +1,4 @@
-/mob/living/carbon/ian/Login()
+/mob/living/carbon/human/ian/Login()
 	..()
 
 	if(!is_alien_whitelisted(src, "ian"))
@@ -9,7 +9,7 @@
 	universal_understand = TRUE
 	unlock_mouth = TRUE
 
-/mob/living/carbon/ian/Logout()
+/mob/living/carbon/human/ian/Logout()
 	..()
 	universal_understand = FALSE
 	unlock_mouth = FALSE

@@ -28,8 +28,8 @@
 		if(isanimal(M)) // Taken from say(). Temporary fix before refactor. Needs to actually pass languages or something like that here and when we see paper or hear audioplayback it depends whenever we can actually understand that language.
 			var/mob/living/simple_animal/S = M
 			msg = pick(S.speak)
-		else if(isIAN(M))
-			var/mob/living/carbon/ian/IAN = M
+		else if(isIAN(M)) // TODO deal with that
+			var/mob/living/carbon/human/ian/IAN = M
 			msg = pick(IAN.speak)
 
 		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[sanitize_plus_popup(msg)]\""//фиксим "я" сразу для принта, да. Записи могут быть большими.

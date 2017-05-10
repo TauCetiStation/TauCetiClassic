@@ -18,8 +18,8 @@
 		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
 			message = pick(S.speak)
-		else if(isIAN(speaker))
-			var/mob/living/carbon/ian/IAN = speaker
+		else if(isIAN(speaker)) // TODO deal with that
+			var/mob/living/carbon/human/ian/IAN = speaker
 			message = pick(IAN.speak)
 		else
 			if(language)
@@ -81,8 +81,8 @@
 		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
 			message = pick(S.speak)
-		else if(isIAN(speaker))
-			var/mob/living/carbon/ian/IAN = speaker
+		else if(isIAN(speaker)) // TODO deal with that
+			var/mob/living/carbon/human/ian/IAN = speaker
 			message = pick(IAN.speak)
 		else
 			if(language)
