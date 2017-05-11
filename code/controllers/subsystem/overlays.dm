@@ -1,9 +1,12 @@
 SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
-	flags = SS_TICKER
+
+	init_order = SS_INIT_ORDER_OVERLAY
 	wait = SS_WAIT_OVERLAYS
 	priority = SS_PRIORITY_OVERLAYS
-	init_order = SS_INIT_ORDER_OVERLAY
+
+	flags = SS_TICKER
+	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_SETUP
 
 	var/list/queue = list()
 	var/list/stats = list()

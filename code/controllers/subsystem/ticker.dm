@@ -7,8 +7,7 @@ SUBSYSTEM_DEF(ticker)
 	priority = SS_PRIORITY_TICKER
 
 	flags = SS_KEEP_TIMING
-	runlevel_min = RUNLEVEL_LOBBY
-	runlevel_max = RUNLEVEL_GAME
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP

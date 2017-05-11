@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(throwing)
 	wait     = SS_WAIT_THROWING
 
 	flags = SS_NO_INIT | SS_KEEP_TIMING | SS_TICKER
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun
 	var/list/processing

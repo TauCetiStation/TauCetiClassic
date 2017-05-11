@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(mobs)
 	display_order = SS_DISPLAY_MOBS
 
 	flags = SS_KEEP_TIMING | SS_NO_INIT
-	runlevel_min = RUNLEVEL_GAME
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
 

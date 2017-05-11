@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(timer)
 	display_order = SS_DISPLAY_TIMER
 
 	flags = SS_TICKER | SS_NO_INIT
-	runlevel_min = RUNLEVEL_LOBBY
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/list/datum/timedevent/processing
 	var/list/hashes

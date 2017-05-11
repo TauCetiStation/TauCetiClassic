@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(tgui)
 	priority = SS_PRIORITY_TGUI
 
 	flags = SS_NO_INIT
-	runlevel_min = RUNLEVEL_LOBBY
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	/// A list of UIs scheduled to process
 	var/list/current_run = list()

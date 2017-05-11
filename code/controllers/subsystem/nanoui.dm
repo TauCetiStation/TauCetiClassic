@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(nanoui)
 	display_order = SS_DISPLAY_NANOUI
 
 	flags = SS_NO_INIT
-	runlevel_min = RUNLEVEL_LOBBY
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/list/currentrun = list()
 	var/list/open_uis   = list() // A list of open UIs, grouped by src_object and ui_key.

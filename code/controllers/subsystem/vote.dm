@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(vote)
 	wait = SS_WAIT_VOTE
 
 	flags = SS_KEEP_TIMING | SS_NO_INIT
-	runlevel_min = RUNLEVEL_LOBBY
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/list/votes = list()  // List of all possible votes (datum/poll)
 	var/list/voters = list() //List of clients with opened vote window
