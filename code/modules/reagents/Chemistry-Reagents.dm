@@ -231,7 +231,7 @@ datum
 					lowertemp.react()
 					T.assume_air(lowertemp)
 					qdel(hotspot)
-				return
+				return 1
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				var/turf/T = get_turf(O)
@@ -259,10 +259,28 @@ datum
 				if(!..())
 					return
 				if(ishuman(M))
-					if((M.mind in ticker.mode.cult) && prob(10))
-						to_chat(M, "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
-						ticker.mode.remove_cultist(M.mind)
-						M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>")
+					if(M.reagents.has_reagent("unholywater"))
+						M.reagents.del_reagent("unholywater")
+					if((M.mind in ticker.mode.cult))
+						M.adjustToxLoss(2, 0)
+						M.adjustFireLoss(2, 0)
+						M.adjustOxyLoss(2, 0)
+						M.adjustBruteLoss(2, 0)
+						if(prob(5))
+							to_chat(M, "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
+							ticker.mode.remove_cultist(M.mind)
+							M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>")
+
+			reaction_turf(turf/simulated/T, volume)
+				if(!..())
+					return
+				for(var/obj/effect/rune/Rune in T.contents)
+					qdel(Rune)
+
+			reaction_obj(obj/O, volume)
+				..()
+				if(istype(O, /obj/effect/rune))
+					qdel(O)
 
 		lube
 			name = "Space Lube"
@@ -4149,5 +4167,28 @@ datum
 	var/datum/preferences/A = new()	//Randomize appearance for the human
 	A.randomize_appearance_for(H)
 
+/datum/reagent/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
+	name = "Unholy Water"
+	id = "unholywater"
+	description = "Something that shouldn't exist on this plane of existance."
+	reagent_state = LIQUID
+
+/datum/reagent/unholywater/on_mob_life(mob/living/M)
+	if(iscultist(M))
+		M.drowsyness = max(M.drowsyness-5, 0)
+		M.AdjustParalysis(-1, 0)
+		M.AdjustStunned(-2, 0)
+		M.AdjustWeakened(-2, 0)
+		M.adjustToxLoss(-2, 0)
+		M.adjustOxyLoss(-2, 0)
+		M.adjustBruteLoss(-2, 0)
+		M.adjustFireLoss(-2, 0)
+	else
+		M.adjustBrainLoss(3)
+		M.adjustToxLoss(2, 0)
+		M.adjustFireLoss(2, 0)
+		M.adjustOxyLoss(2, 0)
+		M.adjustBruteLoss(2, 0)
+	holder.remove_reagent(src.id, 1)
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM

@@ -4,8 +4,9 @@
 		if(M.digitalcamo && M.digitaldisguise)
 			client.images += M.digitaldisguise
 	for(var/obj/effect/rune/rune in world)
-		var/image/blood = image(loc = rune)
+		var/image/blood = image('icons/effects/blood.dmi',rune,"mfloor[rand(1,7)]",2)
 		blood.override = 1
+		blood.color = "#a10808"
 		client.images += blood
 	regenerate_icons()
 
