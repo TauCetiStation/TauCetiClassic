@@ -23,33 +23,33 @@
 
 /mob/living/carbon/human/skrell/New(var/new_loc)
 	h_style = "Skrell Male Tentacles"
-	..(new_loc, "Skrell")
+	..(new_loc, SKRELL)
 
 /mob/living/carbon/human/tajaran/New(var/new_loc)
 	h_style = "Tajaran Ears"
-	..(new_loc, "Tajaran")
+	..(new_loc, TAJARAN)
 
 /mob/living/carbon/human/unathi/New(var/new_loc)
 	h_style = "Unathi Horns"
-	..(new_loc, "Unathi")
+	..(new_loc, UNATHI)
 
 /mob/living/carbon/human/vox/New(var/new_loc)
 	h_style = "Short Vox Quills"
-	..(new_loc, "Vox")
+	..(new_loc, VOX)
 
 /mob/living/carbon/human/voxarmalis/New(var/new_loc)
 	h_style = "Bald"
-	..(new_loc, "Vox Armalis")
+	..(new_loc, VOX_ARMALIS)
 
 /mob/living/carbon/human/diona/New(var/new_loc)
-	..(new_loc, "Diona")
+	..(new_loc, DIONA)
 
 /mob/living/carbon/human/machine/New(var/new_loc)
 	h_style = "blue IPC screen"
-	..(new_loc, "Machine")
+	..(new_loc, IPC)
 
 /mob/living/carbon/human/abductor/New(var/new_loc)
-	..(new_loc, "Abductor")
+	..(new_loc, ABDUCTOR)
 
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null)
 
@@ -1250,7 +1250,7 @@
 
 	if(!dna)
 		if(!new_species)
-			new_species = "Human"
+			new_species = HUMAN
 	else
 		if(!new_species)
 			new_species = dna.species

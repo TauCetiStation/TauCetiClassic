@@ -59,7 +59,7 @@
 	item_state = "rig0-unathi-sec"
 	item_color = "unathi-sec"
 
-	species_restricted = list("Unathi")
+	species_restricted = list(UNATHI)
 
 
 /obj/item/clothing/suit/space/rig/security/unathi_wj
@@ -70,7 +70,7 @@
 	item_state = "rig-unathi-sec"
 	item_color = "unathi-sec"
 
-	species_restricted = list("Unathi")
+	species_restricted = list(UNATHI)
 
 
 /obj/item/clothing/head/helmet/space/rig/engineering/unathi_wj
@@ -81,7 +81,7 @@
 	item_state = "rig0-unathi-engineering"
 	item_color = "unathi-engineering"
 
-	species_restricted = list("Unathi")
+	species_restricted = list(UNATHI)
 
 
 /obj/item/clothing/suit/space/rig/engineering/unathi_wj
@@ -92,4 +92,4 @@
 	item_state = "rig-unathi-engineering"
 	item_color = "unathi-engineering"
 
-	species_restricted = list("Unathi")
+	species_restricted = list(UNATHI)

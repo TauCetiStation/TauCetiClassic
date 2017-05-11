@@ -227,7 +227,7 @@
 	item_state = "zhan_scarf"
 	desc = "White headscarf"
 	body_parts_covered = 0
-	species_restricted = list("Unathi","Tajaran","Human","Diona","Machine")
+	species_restricted = list(UNATHI , TAJARAN , HUMAN , DIONA , IPC)
 
 /obj/item/clothing/head/skrell_headwear
 	name = "skrell yellow headwear"
@@ -235,7 +235,7 @@
 	item_state = "skrell_yellow"
 	desc = "Just two pieces of yellow cloth"
 	body_parts_covered = 0
-	species_restricted = list("Skrell")
+	species_restricted = list(SKRELL)
 
 /obj/item/clothing/head/skrell_headwear/red
 	name = "skrell red headwear"
@@ -243,7 +243,7 @@
 	item_state = "skrell_red"
 	desc = "Just two pieces of red cloth"
 	body_parts_covered = 0
-	species_restricted = list("Skrell")
+	species_restricted = list(SKRELL)
 
 /obj/item/clothing/head/skrell_headwear/blue
 	name = "skrell blue headwear"
@@ -251,7 +251,7 @@
 	item_state = "skrell_blue"
 	desc = "Just two pieces of blue cloth"
 	body_parts_covered = 0
-	species_restricted = list("Skrell")
+	species_restricted = list(SKRELL)
 
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"

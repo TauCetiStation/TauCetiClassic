@@ -1607,7 +1607,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube
 	name = "farwa cube"
-	monkey_type =/mob/living/carbon/monkey/tajara
+	monkey_type = /mob/living/carbon/monkey/tajara
 
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/stokcube
@@ -1616,16 +1616,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube
 	name = "stok cube"
-	monkey_type =/mob/living/carbon/monkey/unathi
+	monkey_type = /mob/living/carbon/monkey/unathi
 
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/neaeracube
 	name = "neaera cube"
-	monkey_type ="skrell"
+	monkey_type = /mob/living/carbon/monkey/skrell
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube
 	name = "neaera cube"
-	monkey_type =/mob/living/carbon/monkey/skrell
+	monkey_type = /mob/living/carbon/monkey/skrell
 
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger

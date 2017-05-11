@@ -133,7 +133,7 @@
 	return
 
 /datum/species/human
-	name = "Human"
+	name = HUMAN
 	language = "Sol Common"
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
@@ -149,7 +149,7 @@
 	/*abilities = list(/client/proc/test_ability)*/
 
 /datum/species/unathi
-	name = "Unathi"
+	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
 	language = "Sinta'unathi"
@@ -184,7 +184,7 @@
 	base_color = "#066000"
 
 /datum/species/tajaran
-	name = "Tajaran"
+	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = "Siik'maas"
@@ -221,7 +221,7 @@
 	base_color = "#333333"
 
 /datum/species/skrell
-	name = "Skrell"
+	name = SKRELL
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
 	deform = 'icons/mob/human_races/r_def_skrell.dmi'
 	language = "Skrellian"
@@ -242,7 +242,7 @@
 	reagent_tag = IS_SKRELL
 
 /datum/species/vox
-	name = "Vox"
+	name = VOX
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
@@ -288,7 +288,7 @@
 	..()
 
 /datum/species/vox/armalis
-	name = "Vox Armalis"
+	name = VOX_ARMALIS
 	icobase = 'icons/mob/human_races/r_armalis.dmi'
 	deform = 'icons/mob/human_races/r_armalis.dmi'
 	damage_mask = FALSE
@@ -335,7 +335,7 @@
 		)
 
 /datum/species/diona
-	name = "Diona"
+	name = DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
 	language = "Rootspeak"
@@ -394,7 +394,7 @@
 	H.visible_message("\red[H] splits apart with a wet slithering noise!")
 
 /datum/species/machine
-	name = "Machine"
+	name = IPC
 	icobase = 'icons/mob/human_races/r_machine.dmi'
 	deform = 'icons/mob/human_races/r_machine.dmi'
 	language = "Tradeband"
@@ -433,7 +433,7 @@
 	flesh_color = "#575757"
 
 /datum/species/abductor
-	name = "Abductor"
+	name = ABDUCTOR
 	darksight = 3
 
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
@@ -454,7 +454,7 @@
 	return ..()
 
 /datum/species/skeleton
-	name = "Skeleton"
+	name = SKELETON
 
 	icobase = 'icons/mob/human_races/r_skeleton.dmi'
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
@@ -500,3 +500,38 @@
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")
 	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
+
+/datum/species/shadowling
+	name = SHADOWLING
+	icobase = 'icons/mob/human_races/r_shadowling.dmi'
+	deform = 'icons/mob/human_races/r_def_shadowling.dmi'
+	language = "Sol Common"
+	unarmed_type = /datum/unarmed_attack/claws
+
+	warning_low_pressure = 50
+	hazard_low_pressure = -1
+
+	cold_level_1 = 50
+	cold_level_2 = -1
+	cold_level_3 = -1
+
+	heat_level_1 = 2000
+	heat_level_2 = 3000
+	heat_level_3 = 4000
+
+	blood_color = "#000000"
+	darksight = 8
+
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)
+	burn_mod = 2
+
+
+/datum/species/shadowling/handle_post_spawn(mob/living/carbon/human/H)
+	H.gender = NEUTER
+
+	return ..()
