@@ -434,7 +434,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(TK)
 				standing.underlays	+= "telekinesishead[fat]_s"
 			*/
-			if(LASER)
+			if(LASEREYES)
 				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-MUTATIONS_LAYER)
 	if(standing.len)
 		overlays_standing[MUTATIONS_LAYER]	= standing

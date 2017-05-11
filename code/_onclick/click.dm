@@ -182,11 +182,12 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(atom/A, params)
-	if(!mutations.len) return
-	if((LASER in mutations) && a_intent == "hurt")
+	if(!mutations.len)
+		return
+	if(a_intent == "hurt" && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
-		switch(get_dist(src,A))
+		switch(get_dist(src, A))
 			if(0)
 				;
 			if(1 to 5) // not adjacent may mean blocked by window
@@ -198,6 +199,10 @@
 			else
 				return
 		A.attack_tk(src)
+
+/mob/proc/try_attack_tk(atom/A)
+
+
 /*
 	Restrained ClickOn
 
