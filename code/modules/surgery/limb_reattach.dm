@@ -39,7 +39,7 @@
 	if(!..())
 		return 0
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	return !(BP.status & ORGAN_CUT_AWAY)
+	return (BP.status & ORGAN_CUT_AWAY)
 
 /datum/surgery_step/limb/cut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -51,7 +51,7 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	user.visible_message("\blue [user] cuts away flesh where [target]'s [BP.name] used to be with \the [tool].",
 		                     "\blue You cut away flesh where [target]'s [BP.name] used to be with \the [tool].")
-	BP.status |= ORGAN_CUT_AWAY
+	BP.status &= ~ORGAN_CUT_AWAY
 	target.update_bodypart(BP.body_zone)
 
 /datum/surgery_step/limb/cut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -76,7 +76,7 @@
 	if(!..())
 		return 0
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	return (BP.status & ORGAN_CUT_AWAY) && (BP.open < 3) && !(BP.status & ORGAN_ATTACHABLE)
+	return !(BP.status & ORGAN_CUT_AWAY) && (BP.open < 3) && !(BP.status & ORGAN_ATTACHABLE)
 
 /datum/surgery_step/limb/mend/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -115,7 +115,7 @@
 	if(!..())
 		return 0
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	return (BP.status & ORGAN_CUT_AWAY) && BP.open == 3 && !(BP.status & ORGAN_ATTACHABLE)
+	return !(BP.status & ORGAN_CUT_AWAY) && BP.open == 3 && !(BP.status & ORGAN_ATTACHABLE)
 
 /datum/surgery_step/limb/connect/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
@@ -149,7 +149,7 @@
 	if (!..())
 		return 0
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	return (BP.status & ORGAN_ATTACHABLE) && (tool.status & ORGAN_ATTACHABLE)
+	return (BP.status & ORGAN_ATTACHABLE) && !(tool.status & ORGAN_CUT_AWAY)
 
 /datum/surgery_step/limb/attach/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = tool
@@ -185,7 +185,7 @@
 		if (target_zone != p.part)
 			return 0
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-	return BP.status & ORGAN_ATTACHABLE
+	return (BP.status & ORGAN_ATTACHABLE)
 
 /datum/surgery_step/limb/mechanize/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)

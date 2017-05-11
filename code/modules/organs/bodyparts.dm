@@ -320,7 +320,6 @@
 
 		qdel(stump)
 
-		status &= ~ORGAN_CUT_AWAY
 		src.transform = matrix()
 		src.dir = target.dir
 
@@ -640,21 +639,19 @@ This function completely restores a damaged bodypart to perfect condition.
 
 /obj/item/bodypart/proc/need_process()
 	if(get_pain())
-		return 1
-	if(status & (ORGAN_BLEEDING|ORGAN_BROKEN|ORGAN_DEAD|ORGAN_MUTATED))
-		return 1
-	if(!(status & ORGAN_CUT_AWAY))
-		return 1
+		return TRUE
+	if(status & (ORGAN_CUT_AWAY | ORGAN_BLEEDING | ORGAN_BROKEN | ORGAN_DEAD | ORGAN_MUTATED))
+		return TRUE
 	if((brute_dam || burn_dam) && !(status & ORGAN_ROBOT)) // Robot limbs don't autoheal and thus don't need to process when damaged
-		return 1
+		return TRUE
 	if(last_dam != brute_dam + burn_dam) // Process when we are fully healed up.
 		last_dam = brute_dam + burn_dam
-		return 1
+		return TRUE
 	else
 		last_dam = brute_dam + burn_dam
 	if(germ_level)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/bodypart/process()
 	if(owner)
@@ -1002,8 +999,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 		if(clean)
 			stump.artery_name = artery_name
-			stump.status |= ORGAN_CUT_AWAY
 		else
+			stump.status |= ORGAN_CUT_AWAY
 			stump.artery_name = "mangled [artery_name]"
 			if(disintegrate != DROPLIMB_BURN)
 				stump.sever_artery()
@@ -1025,6 +1022,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 			M.Turn(rand(180))
 			src.transform = M
 			forceMove(victim.loc)
+			status |= ORGAN_CUT_AWAY
 			if(!clean)
 				// Throw limb around.
 				if(src && istype(loc,/turf))
@@ -1240,8 +1238,8 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	src.status &= ~ORGAN_BROKEN
 	src.status &= ~ORGAN_BLEEDING
 	src.status &= ~ORGAN_SPLINTED
-	//src.status &= ~ORGAN_CUT_AWAY
-	//src.status &= ~ORGAN_ATTACHABLE
+	src.status &= ~ORGAN_CUT_AWAY
+	src.status &= ~ORGAN_ATTACHABLE
 	src.status |= ORGAN_ROBOT
 	for (var/obj/item/bodypart/BP in children)
 		if(BP)
@@ -1293,7 +1291,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 
 // Pain/halloss
 /obj/item/bodypart/proc/get_pain(amount)
-	if(!can_feel_pain() || (status & ORGAN_ROBOT))
+	if((status & ORGAN_ROBOT) || !can_feel_pain())
 		return 0
 	var/lasting_pain = 0
 	lasting_pain += open * 5
@@ -1689,7 +1687,7 @@ Note that amputating the affected bodypart does in fact remove the infection fro
 	qdel(src)
 
 /obj/item/bodypart/stump/update_limb()
-	if(!species.stump_overlays || (status & ORGAN_CUT_AWAY))
+	if(!species.stump_overlays || !(status & ORGAN_CUT_AWAY))
 		icon_state = null
 		return
 

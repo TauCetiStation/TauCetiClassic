@@ -21,11 +21,11 @@
 	var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
 	if(!BP)
 		return 0
+	if(!(BP.status & ORGAN_ROBOT))
+		return 0
 	if(BP.is_stump())
 		return 0
 	if(BP.status & ORGAN_CUT_AWAY)
-		return 0
-	if(!(BP.status & ORGAN_ROBOT))
 		return 0
 
 	return 1

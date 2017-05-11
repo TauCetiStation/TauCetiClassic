@@ -733,7 +733,7 @@
 	return
 
 /mob/living/proc/check_has_mouth()
-	return 1
+	return FALSE
 
 /mob/living/carbon/check_has_mouth()
 	// Todo, check stomach organ when implemented.

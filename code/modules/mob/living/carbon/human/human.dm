@@ -883,7 +883,7 @@
 		BP.status &= ~ORGAN_BLEEDING
 		BP.status &= ~ORGAN_SPLINTED
 		BP.status &= ~ORGAN_CUT_AWAY
-		//BP.status &= ~ORGAN_ATTACHABLE
+		BP.status &= ~ORGAN_ATTACHABLE
 		BP.wounds.Cut()
 		BP.heal_damage(1000,1000,1,1)
 
@@ -1190,14 +1190,16 @@
 
 /mob/living/carbon/should_have_organ(organ_check)
 	var/obj/item/bodypart/BP
-	if(organ_check in list(BP_HEART, BP_LUNGS))
-		BP = bodyparts_by_name[BP_CHEST]
-	else if(organ_check in list(BP_LIVER, BP_KIDNEYS))
-		BP = bodyparts_by_name[BP_GROIN]
+	if(organ_check)
+		if(organ_check in list(BP_HEART, BP_LUNGS))
+			BP = bodyparts_by_name[BP_CHEST]
+		else if(organ_check in list(BP_LIVER, BP_KIDNEYS))
+			BP = bodyparts_by_name[BP_GROIN]
 
 	if(BP && (BP.status & ORGAN_ROBOT))
-		return 0
-	return (species && species.has_organ[organ_check])
+		return FALSE
+
+	return species.has_organ[organ_check]
 
 /mob/living/carbon/proc/can_feel_pain(obj/item/bodypart/check_bodypart)
 	if(isSynthetic())
@@ -1206,7 +1208,7 @@
 		if(!istype(check_bodypart))
 			return FALSE
 		return check_bodypart.can_feel_pain()
-	return !(species && species.flags[NO_PAIN])
+	return !species.flags[NO_PAIN]
 
 //Putting a couple of procs here that I don't know where else to dump.
 //Mostly going to be used for Vox and Vox Armalis, but other human mobs might like them (for adminbuse).

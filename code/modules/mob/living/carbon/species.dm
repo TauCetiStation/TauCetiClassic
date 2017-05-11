@@ -159,9 +159,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 		for(var/type in has_bodypart)
 			var/status = organ_data[type]
 			if(status == "amputated")
-				var/obj/item/bodypart/path = has_bodypart[type]
-				var/obj/item/bodypart/stump/stump = new (null, C, path)
-				stump.status |= ORGAN_CUT_AWAY
+				new /obj/item/bodypart/stump(null, C, has_bodypart[type])
 				continue
 
 			var/path = has_bodypart[type]
@@ -175,7 +173,7 @@ var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/
 /datum/species/proc/handle_post_spawn(mob/living/carbon/C) //Handles anything not already covered by basic species assignment.
 	return
 
-datum/species/proc/handle_death(mob/living/carbon/C) //Handles any species-specific death events (such nymph spawns).
+/datum/species/proc/handle_death(mob/living/carbon/C) //Handles any species-specific death events (such nymph spawns).
 	return
 //	if(flags[IS_SYNTHETIC]) TODO reimplement this
 //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
