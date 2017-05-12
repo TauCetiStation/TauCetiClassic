@@ -383,6 +383,15 @@ datum/design/aifixer
 	build_path = /obj/item/weapon/circuitboard/libraryconsole
 	//category = list("Computer Boards")
 
+/datum/design/minefab
+	name = "Circuit Design (Mining Fabricator)"
+	desc = "Allows for the construction of circuit boards used to build a mining fabricator"
+	id = "minefab"
+	req_tech = list("programming" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/minefab
+
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////
@@ -603,6 +612,7 @@ datum/design/posibrain
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 500, MAT_DIAMOND = 100, MAT_PHORON = 500)
 	build_path = /obj/item/device/mmi/posibrain
+
 
 ///////////////////////////////////
 //////////Mecha Module Disks///////
