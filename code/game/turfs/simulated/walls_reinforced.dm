@@ -28,8 +28,8 @@
 				else
 					organ_name = BP_R_ARM
 				var/mob/living/carbon/human/H = user
-				var/datum/organ/external/E = H.get_organ(organ_name)
-				E.take_damage(rand(5, 15), 0, 0, 0, "Reinforced wall")
+				var/datum/organ/external/BP = H.organs_by_name[organ_name]
+				BP.take_damage(rand(5, 15), used_weapon = "Reinforced wall")
 				to_chat(user, text("\red Ouch!!"))
 			else
 				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)

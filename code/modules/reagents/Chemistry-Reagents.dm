@@ -1285,10 +1285,10 @@ datum
 				M.eye_blind = max(M.eye_blind - 5, 0)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/datum/organ/internal/eyes/E = H.internal_organs_by_name[O_EYES]
-					if(istype(E))
-						if(E.damage > 0)
-							E.damage = max(E.damage - 1, 0)
+					var/datum/organ/internal/eyes/IO = H.internal_organs_by_name[O_EYES]
+					if(istype(IO))
+						if(IO.damage > 0)
+							IO.damage = max(IO.damage - 1, 0)
 
 		peridaxon
 			name = "Peridaxon"
@@ -1305,9 +1305,9 @@ datum
 					var/mob/living/carbon/human/H = M
 
 					//Peridaxon is hard enough to get, it's probably fair to make this all internal organs
-					for(var/datum/organ/internal/I in H.internal_organs)
-						if(I.damage > 0)
-							I.damage = max(I.damage - 0.20, 0)
+					for(var/datum/organ/internal/IO in H.internal_organs)
+						if(IO.damage > 0)
+							IO.damage = max(IO.damage - 0.20, 0)
 
 		kyphotorin
 			name = "Kyphotorin"
@@ -1332,19 +1332,19 @@ datum
 					return
 				H.jitteriness = max(0,H.jitteriness - 100)
 				if(!External)
-					for(var/datum/organ/external/E in H.organs) // find a broken/destroyed limb
-						for(var/datum/wound/W in E.wounds) // remove internal
+					for(var/datum/organ/external/BP in H.organs) // find a broken/destroyed limb
+						for(var/datum/wound/W in BP.wounds) // remove internal
 							if(W.internal)
-								E.wounds -= W
-						if(E.status & ORGAN_DESTROYED)
-							if(E.parent && E.parent.status & ORGAN_DESTROYED)
+								BP.wounds -= W
+						if(BP.status & ORGAN_DESTROYED)
+							if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
 								continue
 							else
 								heal_time = 65
-								External = E
-						else if(E.status & ORGAN_BROKEN || E.status & ORGAN_SPLINTED)
+								External = BP
+						else if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED))
 							heal_time = 30
-							External = E
+							External = BP
 						if(External)
 							break
 				else if(H.bodytemperature >= 170 && H.vessel) // start fixing broken/destroyed limb
@@ -2006,9 +2006,9 @@ datum
 					if(!M.unacidable)
 						if(istype(M, /mob/living/carbon/human) && volume >= 10)
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/external/affecting = H.get_organ(BP_HEAD)
-							if(affecting)
-								affecting.take_damage(4*toxpwr, 2*toxpwr)
+							var/datum/organ/external/BP = H.organs_by_name[BP_HEAD]
+							if(BP)
+								BP.take_damage(4 * toxpwr, 2 * toxpwr)
 								if(prob(meltprob)) //Applies disfigurement
 									H.emote("scream",,, 1)
 									H.status_flags |= DISFIGURED
@@ -3100,9 +3100,9 @@ datum
 					M.drowsyness = max(M.drowsyness, 30)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/datum/organ/internal/liver/L = H.internal_organs_by_name[O_LIVER]
-						if(istype(L))
-							L.take_damage(0.1, 1)
+						var/datum/organ/internal/liver/IO = H.internal_organs_by_name[O_LIVER]
+						if(istype(IO))
+							IO.take_damage(0.1, 1)
 						H.adjustToxLoss(0.1)
 				return TRUE
 
@@ -3358,15 +3358,15 @@ datum
 							M.adjustToxLoss(2)
 						if(prob(5) && ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/L = H.internal_organs_by_name[O_HEART]
-							if(istype(L))
-								L.take_damage(5, 0)
+							var/datum/organ/internal/heart/IO = H.internal_organs_by_name[O_HEART]
+							if(istype(IO))
+								IO.take_damage(5, 0)
 					if(300 to INFINITY)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/L = H.internal_organs_by_name[O_HEART]
-							if(istype(L))
-								L.take_damage(100, 0)
+							var/datum/organ/internal/heart/IO = H.internal_organs_by_name[O_HEART]
+							if(istype(IO))
+								IO.take_damage(100, 0)
 
 		ethanol/deadrum
 			name = "Deadrum"
@@ -3906,9 +3906,9 @@ datum
 		if(H.species.name != "Dionae")
 			switch(volume)
 				if(1 to 5)
-					var/datum/organ/external/affecting = H.get_organ()
-					for(var/datum/wound/W in affecting.wounds)
-						affecting.wounds -= W
+					var/datum/organ/external/BP = H.organs_by_name[BP_CHEST] // it was H.get_organ(????) with nothing as arg, so its always a chest?
+					for(var/datum/wound/W in BP.wounds)
+						BP.wounds -= W
 						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 					if(H.getOxyLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
@@ -3950,9 +3950,9 @@ datum
 						if(D.stage < 1)
 							D.cure()
 				if(5 to 20)		//Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
-					var/datum/organ/external/affecting = H.get_organ()
-					for(var/datum/wound/W in affecting.wounds)
-						affecting.wounds -= W
+					var/datum/organ/external/BP = H.organs_by_name[BP_CHEST]
+					for(var/datum/wound/W in BP.wounds)
+						BP.wounds -= W
 						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 					if(H.getOxyLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
@@ -4116,9 +4116,9 @@ datum
 				M.adjustBrainLoss(2)
 				if(ishuman(M) && prob(5))
 					var/mob/living/carbon/human/H = M
-					var/datum/organ/internal/heart/L = H.internal_organs_by_name[O_HEART]
-					if(istype(L))
-						L.take_damage(10, 0)
+					var/datum/organ/internal/heart/IO = H.internal_organs_by_name[O_HEART]
+					if(istype(IO))
+						IO.take_damage(10, 0)
 	data++
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references

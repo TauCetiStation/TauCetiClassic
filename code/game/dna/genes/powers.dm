@@ -48,17 +48,18 @@
 		if(!istype(M)) return
 		var/datum/organ/external/head/H = M.organs_by_name[BP_HEAD]
 
-		if(H.disfigured) H.disfigured = 0
+		if(H.disfigured)
+			H.disfigured = FALSE
 
 		if(HUSK in M.mutations)
 			M.mutations.Remove(HUSK)
 			M.update_mutations()
 			M.UpdateAppearance()
 
-		var/datum/organ/external/chest/C = M.get_organ(BP_CHEST)
-		for(var/datum/organ/internal/I in C.internal_organs)
-			if(I.damage > 0)
-				I.damage -= 0.25
+		var/datum/organ/external/chest/CHEST = M.organs_by_name[BP_CHEST]
+		for(var/datum/organ/internal/IO in CHEST.internal_organs)
+			if(IO.damage > 0)
+				IO.damage -= 0.25
 
 		if(M.getBrainLoss() > 24)
 			if(M.getBrainLoss() < 76) M.adjustBrainLoss(-0.25)

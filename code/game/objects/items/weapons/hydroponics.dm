@@ -138,8 +138,8 @@
 		to_chat(user, "\red The nettle burns your bare hand!")
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/datum/organ/external/affecting = user.get_organ(organ)
-			affecting.take_damage(0,force)
+			var/datum/organ/external/BP = user.organs_by_name[organ]
+			BP.take_damage(0, force)
 		else
 			user.take_organ_damage(0,force)
 
@@ -164,8 +164,8 @@
 	if(!user.gloves)
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/datum/organ/external/affecting = user.get_organ(organ)
-			affecting.take_damage(0,force)
+			var/datum/organ/external/BP = user.organs_by_name[organ]
+			BP.take_damage(0, force)
 		else
 			user.take_organ_damage(0,force)
 		if(prob(50))

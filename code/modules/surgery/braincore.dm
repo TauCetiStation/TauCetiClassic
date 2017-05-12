@@ -182,9 +182,9 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] mends hematoma in [target]'s brain with \the [tool].",	\
 		"\blue You mend hematoma in [target]'s brain with \the [tool].")
-		var/datum/organ/internal/brain/sponge = target.internal_organs_by_name[O_BRAIN]
-		if (sponge)
-			sponge.damage = 0
+		var/datum/organ/internal/brain/IO = target.internal_organs_by_name[O_BRAIN]
+		if (IO)
+			IO.damage = 0
 
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

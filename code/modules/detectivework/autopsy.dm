@@ -37,11 +37,12 @@
 	W.time_inflicted = time_inflicted
 	return W
 
-/obj/item/weapon/autopsy_scanner/proc/add_data(datum/organ/external/O)
-	if(!O.autopsy_data.len && !O.trace_chemicals.len) return
+/obj/item/weapon/autopsy_scanner/proc/add_data(datum/organ/external/BP)
+	if(!BP.autopsy_data.len && !BP.trace_chemicals.len)
+		return
 
-	for(var/V in O.autopsy_data)
-		var/datum/autopsy_data/W = O.autopsy_data[V]
+	for(var/V in BP.autopsy_data)
+		var/datum/autopsy_data/W = BP.autopsy_data[V]
 
 		if(!W.pretend_weapon)
 			/*
@@ -62,17 +63,17 @@
 			D.weapon = W.weapon
 			wdata[V] = D
 
-		if(!D.organs_scanned[O.body_zone])
+		if(!D.organs_scanned[BP.body_zone])
 			if(D.organ_names == "")
-				D.organ_names = O.name
+				D.organ_names = BP.name
 			else
-				D.organ_names += ", [O.name]"
+				D.organ_names += ", [BP.name]"
 
-		qdel(D.organs_scanned[O.body_zone])
-		D.organs_scanned[O.body_zone] = W.copy()
+		qdel(D.organs_scanned[BP.body_zone])
+		D.organs_scanned[BP.body_zone] = W.copy()
 
-	for(var/V in O.trace_chemicals)
-		if(O.trace_chemicals[V] > 0 && !chemtraces.Find(V))
+	for(var/V in BP.trace_chemicals)
+		if(BP.trace_chemicals[V] > 0 && !chemtraces.Find(V))
 			chemtraces += V
 
 /obj/item/weapon/autopsy_scanner/verb/print_data()
@@ -192,16 +193,16 @@
 
 	src.timeofdeath = M.timeofdeath
 
-	var/datum/organ/external/S = M.get_organ(user.zone_sel.selecting)
-	if(!S)
+	var/datum/organ/external/BP = M.get_organ(user.zone_sel.selecting)
+	if(!BP)
 		to_chat(usr, "<b>You can't scan this body part.</b>")
 		return
-	if(!S.open)
+	if(!BP.open)
 		to_chat(usr, "<b>You have to cut the limb open first!</b>")
 		return
 	for(var/mob/O in viewers(M))
-		O.show_message("\red [user.name] scans the wounds on [M.name]'s [S.name] with \the [src.name]", 1)
+		O.show_message("\red [user.name] scans the wounds on [M.name]'s [BP.name] with \the [src.name]", 1)
 
-	src.add_data(S)
+	src.add_data(BP)
 
 	return 1

@@ -1026,9 +1026,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 			L.imp_in = M
 			L.implanted = 1
-			var/datum/organ/external/affected = M.organs_by_name[BP_HEAD]
-			affected.implants += L
-			L.part = affected
+			var/datum/organ/external/BP = M.organs_by_name[BP_HEAD]
+			BP.implants += L
+			L.part = BP
 		if("hop")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)
@@ -1078,9 +1078,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 			L.imp_in = M
 			L.implanted = 1
-			var/datum/organ/external/affected = M.organs_by_name[BP_HEAD]
-			affected.implants += L
-			L.part = affected
+			var/datum/organ/external/BP = M.organs_by_name[BP_HEAD]
+			BP.implants += L
+			L.part = BP
 		if("cmo")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_medical_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)
@@ -1551,9 +1551,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 			L.imp_in = M
 			L.implanted = 1
-			var/datum/organ/external/affected = M.organs_by_name[BP_HEAD]
-			affected.implants += L
-			L.part = affected
+			var/datum/organ/external/BP = M.organs_by_name[BP_HEAD]
+			BP.implants += L
+			L.part = BP
 		if("assistant")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)

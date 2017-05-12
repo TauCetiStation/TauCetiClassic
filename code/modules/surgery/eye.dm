@@ -10,8 +10,8 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (!hasorgans(target))
 			return 0
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		if (!affected)
+		var/datum/organ/external/BP = target.get_organ(target_zone)
+		if (!BP)
 			return 0
 		return target_zone == O_EYES
 
@@ -41,12 +41,12 @@
 		target.blinded += 1.5
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/internal/eyes/eyes = target.internal_organs_by_name[O_EYES]
-		var/datum/organ/external/affected = target.get_organ(target_zone)
+		var/datum/organ/internal/eyes/IO = target.internal_organs_by_name[O_EYES]
+		var/datum/organ/external/BP = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, slicing [target]'s eyes wth \the [tool]!" , \
 		"\red Your hand slips, slicing [target]'s eyes wth \the [tool]!" )
-		affected.createwound(CUT, 10)
-		eyes.take_damage(5, 0)
+		BP.createwound(CUT, 10)
+		IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/lift_eyes
 	allowed_tools = list(
@@ -73,12 +73,12 @@
 		target.op_stage.eyes = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/internal/eyes/eyes = target.internal_organs_by_name[O_EYES]
-		var/datum/organ/external/affected = target.get_organ(target_zone)
+		var/datum/organ/internal/eyes/IO = target.internal_organs_by_name[O_EYES]
+		var/datum/organ/external/BP = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, damaging [target]'s eyes with \the [tool]!", \
 		"\red Your hand slips, damaging [target]'s eyes with \the [tool]!")
-		target.apply_damage(10, BRUTE, affected)
-		eyes.take_damage(5, 0)
+		target.apply_damage(10, BRUTE, BP)
+		IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/mend_eyes
 	allowed_tools = list(
@@ -107,12 +107,12 @@
 		target.op_stage.eyes = 3
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/internal/eyes/eyes = target.internal_organs_by_name[O_EYES]
-		var/datum/organ/external/affected = target.get_organ(target_zone)
+		var/datum/organ/internal/eyes/IO = target.internal_organs_by_name[O_EYES]
+		var/datum/organ/external/BP = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, stabbing \the [tool] into [target]'s eye!", \
 		"\red Your hand slips, stabbing \the [tool] into [target]'s eye!")
-		target.apply_damage(10, BRUTE, affected, sharp=1)
-		eyes.take_damage(5, 0)
+		target.apply_damage(10, BRUTE, BP, sharp = 1)
+		IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/cauterize
 	allowed_tools = list(
@@ -144,9 +144,9 @@
 		target.op_stage.eyes = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/internal/eyes/eyes = target.internal_organs_by_name[O_EYES]
-		var/datum/organ/external/affected = target.get_organ(target_zone)
+		var/datum/organ/internal/eyes/IO = target.internal_organs_by_name[O_EYES]
+		var/datum/organ/external/BP = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips,  searing [target]'s eyes with \the [tool]!", \
 		"\red Your hand slips, searing [target]'s eyes with \the [tool]!")
-		target.apply_damage(5, BURN, affected)
-		eyes.take_damage(5, 0)
+		target.apply_damage(5, BURN, BP)
+		IO.take_damage(5, 0)

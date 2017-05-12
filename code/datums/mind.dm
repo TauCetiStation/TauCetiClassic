@@ -639,8 +639,8 @@
 		switch(href_list["implant"])
 			if("remove")
 				for(var/obj/item/weapon/implant/loyalty/I in H.contents)
-					for(var/datum/organ/external/organs in H.organs)
-						if(I in organs.implants)
+					for(var/datum/organ/external/BP in H.organs)
+						if(I in BP.implants)
 							I.Destroy()
 							break
 				to_chat(H, "\blue <Font size =3><B>Your loyalty implant has been deactivated.</B></FONT>")
@@ -648,9 +648,9 @@
 				var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 				L.imp_in = H
 				L.implanted = 1
-				var/datum/organ/external/affected = H.organs_by_name[BP_HEAD]
-				affected.implants += L
-				L.part = affected
+				var/datum/organ/external/BP = H.organs_by_name[BP_HEAD]
+				BP.implants += L
+				L.part = BP
 
 				to_chat(H, "\red <Font size =3><B>You somehow have become the recepient of a loyalty transplant, and it just activated!</B></FONT>")
 				if(src in ticker.mode.revolutionaries)

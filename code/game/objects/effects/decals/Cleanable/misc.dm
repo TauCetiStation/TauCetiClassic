@@ -447,11 +447,11 @@
 			if(istype(H) && (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags&NOSLIP))
 				power_calculated = 0
 				continue
-			var/datum/organ/external/select_area = H.get_organ(BP_CHEST)
-			if(H.check_thickmaterial(select_area))
+			var/datum/organ/external/BP = H.organs_by_name[BP_CHEST]
+			if(H.check_thickmaterial(BP))
 				power_calculated = 0
 			else
-				power_calculated *= H.get_siemens_coefficient_organ(select_area)
+				power_calculated *= H.get_siemens_coefficient_organ(BP)
 		if(power_calculated)
 			L.apply_effect(power_calculated,AGONY,0)
 

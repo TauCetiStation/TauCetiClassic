@@ -109,15 +109,16 @@
 	for(var/name in H.organs_by_name)
 		H.organs += H.organs_by_name[name]
 
-	for(var/datum/organ/external/O in H.organs)
-		O.owner = H
+	for(var/datum/organ/external/BP in H.organs)
+		BP.owner = H
 
 	if(flags[IS_SYNTHETIC])
-		for(var/datum/organ/external/E in H.organs)
-			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
-			E.status |= ORGAN_ROBOT
-		for(var/datum/organ/internal/I in H.internal_organs)
-			I.mechanize()
+		for(var/datum/organ/external/BP in H.organs)
+			if(BP.status & (ORGAN_CUT_AWAY | ORGAN_DESTROYED))
+				continue
+			BP.status |= ORGAN_ROBOT
+		for(var/datum/organ/internal/IO in H.internal_organs)
+			IO.mechanize()
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return

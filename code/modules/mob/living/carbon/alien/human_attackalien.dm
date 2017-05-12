@@ -33,11 +33,11 @@ This is what happens, when alien attack.
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
-			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
+			var/datum/organ/external/BP = organs_by_name[ran_zone(M.zone_sel.selecting)]
+			var/armor_block = run_armor_check(BP, "melee")
 			playsound(loc, 'sound/weapons/bite.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] has bitten [src]!</B>")
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BRUTE, BP, armor_block)
 			updatehealth()
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -73,13 +73,13 @@ This is what happens, when alien attack.
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
-			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
+			var/datum/organ/external/BP = organs_by_name[ran_zone(M.zone_sel.selecting)]
+			var/armor_block = run_armor_check(BP, "melee")
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
 
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BRUTE, BP, armor_block)
 			if (damage >= 20)
 				visible_message("\red <B>[M] has wounded [src]!</B>")
 				apply_effect(rand(3,5), WEAKEN, armor_block)

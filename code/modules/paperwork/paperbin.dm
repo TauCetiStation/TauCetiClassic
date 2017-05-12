@@ -27,11 +27,11 @@
 
 /obj/item/weapon/paper_bin/attack_hand(mob/user)
 	if (hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name[BP_R_HAND]
+		var/datum/organ/external/BP = user:organs_by_name[BP_R_HAND]
 		if (user.hand)
-			temp = user:organs_by_name[BP_L_HAND]
-		if(temp && !temp.is_usable())
-			to_chat(user, "<span class='notice'>You try to move your [temp.name], but cannot!")
+			BP = user:organs_by_name[BP_L_HAND]
+		if(BP && !BP.is_usable())
+			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return
 	var/response = ""
 	if(!papers.len > 0)

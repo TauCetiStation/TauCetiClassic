@@ -49,9 +49,9 @@
 
 	// does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
 	proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		if (can_infect && affected)
-			spread_germs_to_organ(affected, user)
+		var/datum/organ/external/BP = target.get_organ(target_zone)
+		if (can_infect && BP)
+			spread_germs_to_organ(BP, user)
 		if (ishuman(user) && prob(60))
 			var/mob/living/carbon/human/H = user
 			if (blood_level)
@@ -68,16 +68,17 @@
 	proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		return null
 
-proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
-	if(!istype(user) || !istype(E)) return
+proc/spread_germs_to_organ(datum/organ/external/BP, mob/living/carbon/human/user)
+	if(!istype(user) || !istype(BP))
+		return
 
 	var/germ_level = user.germ_level
 	if(user.gloves)
 		germ_level = user.gloves.germ_level
 
-	E.germ_level = max(germ_level,E.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
-	if(E.germ_level)
-		E.owner.bad_external_organs |= E
+	BP.germ_level = max(germ_level, BP.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
+	if(BP.germ_level)
+		BP.owner.bad_external_organs |= BP
 proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	if(!istype(M))
 		return 0

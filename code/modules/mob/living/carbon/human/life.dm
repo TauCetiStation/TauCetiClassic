@@ -324,9 +324,9 @@
 				adjustToxLoss(damage)
 				updatehealth()
 				if (organs.len)
-					var/datum/organ/external/O = pick(organs)
-					if(istype(O))
-						O.add_autopsy_data("Radiation Poisoning", damage)
+					var/datum/organ/external/BP = pick(organs)
+					if(istype(BP))
+						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/proc/breathe()
 	if(NO_BREATH in src.mutations)
@@ -1481,9 +1481,9 @@
 				healthdoll.icon_state = "healthdoll_DEAD"
 			else
 				healthdoll.icon_state = "healthdoll_OVERLAY"
-				for(var/datum/organ/external/L in organs)
-					var/damage = L.burn_dam + L.brute_dam
-					var/comparison = (L.max_damage/5)
+				for(var/datum/organ/external/BP in organs)
+					var/damage = BP.burn_dam + BP.brute_dam
+					var/comparison = (BP.max_damage / 5)
 					var/icon_num = 0
 					if(damage)
 						icon_num = 1
@@ -1496,7 +1496,7 @@
 					if(damage > (comparison*4))
 						icon_num = 5
 					if(icon_num)
-						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.body_zone][icon_num]")
+						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
 
 		switch(nutrition)
 			if(NUTRITION_LEVEL_FULL to INFINITY)

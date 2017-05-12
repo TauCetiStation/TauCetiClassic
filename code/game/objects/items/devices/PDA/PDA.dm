@@ -1182,8 +1182,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					var/list/damaged = H.get_damaged_organs(1,1)
 					user.show_message("\blue Localized Damage, Brute/Burn:",1)
 					if(length(damaged)>0)
-						for(var/datum/organ/external/org in damaged)
-							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(org.name),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
+						for(var/datum/organ/external/BP in damaged)
+							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(BP.name),(BP.brute_dam > 0)?"\red [BP.brute_dam]":0,(BP.burn_dam > 0)?"\red [BP.burn_dam]":0),1)
 					else
 						user.show_message("\blue &emsp; Limbs are OK.",1)
 

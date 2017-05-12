@@ -25,11 +25,11 @@
 
 /datum/genetics/side_effect/genetic_burn/finish(mob/living/carbon/human/H)
 	for(var/organ_name in list(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN))
-		var/datum/organ/external/E = H.get_organ(organ_name)
+		var/datum/organ/external/BP = H.organs_by_name[organ_name]
 		if(prob(85))//#Z2 - now 15% chance even for more burn
-			E.take_damage(0, 5, 0)
+			BP.take_damage(0, 5, 0)
 		else
-			E.take_damage(0, 20, 0)
+			BP.take_damage(0, 20, 0)
 
 /datum/genetics/side_effect/bone_snap
 	name = "Bone Snap"
@@ -43,12 +43,12 @@
 
 /datum/genetics/side_effect/bone_snap/finish(mob/living/carbon/human/H)
 	var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
-	var/datum/organ/external/E = H.get_organ(organ_name)
+	var/datum/organ/external/BP = H.organs_by_name[organ_name]
 	if(prob(85))
-		E.take_damage(20)
-		E.fracture()
+		BP.take_damage(20)
+		BP.fracture()
 	else
-		E.take_damage(70)
+		BP.take_damage(70)
 
 /datum/genetics/side_effect/monkey //#Z2 Random monkey transform is back
 	name = "Monkey"

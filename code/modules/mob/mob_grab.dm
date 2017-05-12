@@ -317,10 +317,10 @@
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
-					var/datum/organ/external/organ = affecting:get_organ(check_zone(hit_zone))
-					if(!organ)
+					var/datum/organ/external/BP = affecting:organs_by_name[check_zone(hit_zone)]
+					if(!BP)
 						return
-					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [organ.name] into a jointlock!</span>")
+					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [BP.name] into a jointlock!</span>")
 					var/armor = affecting:run_armor_check(affecting, "melee")
 					if(armor < 2)
 						to_chat(affecting, "<span class='danger'>You feel extreme pain!</span>")
@@ -345,9 +345,9 @@
 						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Pressed fingers into the eyes of [affecting.name] ([affecting.ckey])</font>")
 						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had fingers pressed into their eyes by [assailant.name] ([assailant.ckey])</font>")
 						msg_admin_attack("[key_name(assailant)] has pressed his fingers into [key_name(affecting)]'s eyes.")
-						var/datum/organ/internal/eyes/eyes = affecting:internal_organs_by_name[O_EYES]
-						eyes.damage += rand(3,4)
-						if (eyes.damage >= eyes.min_broken_damage)
+						var/datum/organ/internal/eyes/IO = affecting:internal_organs_by_name[O_EYES]
+						IO.damage += rand(3,4)
+						if (IO.damage >= IO.min_broken_damage)
 							if(affecting.stat != DEAD)
 								to_chat(affecting, "\red You go blind!")
 //					else if(hit_zone != BP_HEAD)
@@ -455,28 +455,28 @@
 
 /obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
 
-	var/datum/organ/external/E = H.get_organ(target_zone)
+	var/datum/organ/external/BP = H.get_organ(target_zone)
 
-	if(!E || E.status & ORGAN_DESTROYED)
+	if(!BP || (BP.status & ORGAN_DESTROYED))
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [E.name] carefully.</span>")
+	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [BP.name] carefully.</span>")
 	if(!do_mob(user,H, 30))
-		to_chat(user, "<span class='notice'>You must stand still to inspect [E] for wounds.</span>")
-	else if(E.wounds.len)
-		to_chat(user, "<span class='warning'>You find [E.get_wounds_desc()]</span>")
+		to_chat(user, "<span class='notice'>You must stand still to inspect [BP] for wounds.</span>")
+	else if(BP.wounds.len)
+		to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
 	else
 		to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
 
 	to_chat(user, "<span class='notice'>Checking bones now...</span>")
 	if(!do_mob(user, H, 60))
-		to_chat(user, "<span class='notice'>You must stand still to feel [E] for fractures.</span>")
-	else if(E.status & ORGAN_BROKEN)
-		to_chat(user, "<span class='warning'>The bone in the [E.name] moves slightly when you poke it!</span>")
-		H.custom_pain("Your [E.name] hurts where it's poked.")
+		to_chat(user, "<span class='notice'>You must stand still to feel [BP] for fractures.</span>")
+	else if(BP.status & ORGAN_BROKEN)
+		to_chat(user, "<span class='warning'>The bone in the [BP.name] moves slightly when you poke it!</span>")
+		H.custom_pain("Your [BP.name] hurts where it's poked.")
 	else
-		to_chat(user, "<span class='notice'>The bones in the [E.name] seem to be fine.</span>")
+		to_chat(user, "<span class='notice'>The bones in the [BP.name] seem to be fine.</span>")
 
 	to_chat(user, "<span class='notice'>Checking skin now...</span>")
 	if(!do_mob(user, H, 30))
@@ -489,8 +489,8 @@
 		if(H.getOxyLoss() >= 20)
 			to_chat(user, "<span class='warning'>[H]'s skin is unusaly pale.</span>")
 			bad = 1
-		if(E.status & ORGAN_DEAD)
-			to_chat(user, "<span class='warning'>[E] is decaying!</span>")
+		if(BP.status & ORGAN_DEAD)
+			to_chat(user, "<span class='warning'>[BP] is decaying!</span>")
 			bad = 1
 		if(!bad)
 			to_chat(user, "<span class='notice'>[H]'s skin is normal.</span>")

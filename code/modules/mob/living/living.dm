@@ -197,9 +197,8 @@
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = (burn_amount)/(H.organs.len)
 		var/extradam = 0	//added to when organ is at max dam
-		for(var/datum/organ/external/affecting in H.organs)
-			if(!affecting)	continue
-			affecting.take_damage(0, divided_damage+extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
+		for(var/datum/organ/external/BP in H.organs)
+			BP.take_damage(0, divided_damage + extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
@@ -391,8 +390,8 @@
 	var/target_zone = zone_sel.selecting
 	if (target_zone in list(O_EYES , O_MOUTH))
 		target_zone = BP_HEAD
-	var/datum/organ/external/def_zone = ran_zone(target_zone)
-	return def_zone
+	var/datum/organ/external/BP = ran_zone(target_zone)
+	return BP
 
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.

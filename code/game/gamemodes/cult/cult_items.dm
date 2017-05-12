@@ -17,9 +17,8 @@
 		user.Paralyse(5)
 		to_chat(user, "\red An unexplicable force powerfully repels the sword from [target]!")
 		var/organ = ((user.hand ? "l_":"r_") + "arm")
-		var/datum/organ/external/affecting = user.get_organ(organ)
-		affecting.take_damage(rand(force/2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
-	return
+		var/datum/organ/external/BP = user.organs_by_name[organ]
+		BP.take_damage(rand(force / 2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
 	if(!iscultist(user))

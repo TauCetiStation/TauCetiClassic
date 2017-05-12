@@ -190,11 +190,11 @@
 			return
 
 		if(isliving(target) && isliving(user))
-			var/datum/organ/external/affecting = user.zone_sel.selecting
-			if(affecting == BP_HEAD)
+			var/target_zone = user.zone_sel.selecting
+			if(target_zone == BP_HEAD)
 				var/obj/item/ammo_casing/AC = chambered
 				if(AC.fire(user, user))
-					user.apply_damage(300, BRUTE, affecting, sharp=1)
+					user.apply_damage(300, BRUTE, target_zone, sharp = 1)
 					playsound(user, fire_sound, 50, 1)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 					return

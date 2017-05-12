@@ -16,8 +16,8 @@
 			H.do_attack_animation(src)
 			if(!H.gloves)
 				var/organ = (H.hand ? "l_" : "r_") + "hand"
-				var/datum/organ/external/affecting = H.get_organ(organ)
-				affecting.take_damage(rand(0,4))
+				var/datum/organ/external/BP = H.organs_by_name[organ]
+				BP.take_damage(rand(0,4))
 			if(!shattered && prob(20))
 				shatter()
 			else

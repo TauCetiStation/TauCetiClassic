@@ -22,34 +22,38 @@
 		if(!hasorgans(target))
 			return 0
 
-		var/datum/organ/external/affected = target.get_organ(target_zone)
+		var/datum/organ/external/BP = target.get_organ(target_zone)
 
 		var/internal_bleeding = 0
-		for(var/datum/wound/W in affected.wounds) if(W.internal)
-			internal_bleeding = 1
-			break
+		for(var/datum/wound/W in BP.wounds)
+			if(W.internal)
+				internal_bleeding = 1
+				break
 
-		return affected.open >= 2 && internal_bleeding
+		return BP.open >= 2 && internal_bleeding
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("[user] starts patching the damaged vein in [target]'s [affected.name] with \the [tool]." , \
-		"You start patching the damaged vein in [target]'s [affected.name] with \the [tool].")
-		target.custom_pain("The pain in [affected.name] is unbearable!",1)
+		var/datum/organ/external/BP = target.get_organ(target_zone)
+		user.visible_message("[user] starts patching the damaged vein in [target]'s [BP.name] with \the [tool]." , \
+		"You start patching the damaged vein in [target]'s [BP.name] with \the [tool].")
+		target.custom_pain("The pain in [BP.name] is unbearable!",1)
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\blue [user] has patched the damaged vein in [target]'s [affected.name] with \the [tool].", \
-			"\blue You have patched the damaged vein in [target]'s [affected.name] with \the [tool].")
+		var/datum/organ/external/BP = target.get_organ(target_zone)
+		user.visible_message("\blue [user] has patched the damaged vein in [target]'s [BP.name] with \the [tool].", \
+			"\blue You have patched the damaged vein in [target]'s [BP.name] with \the [tool].")
 
-		for(var/datum/wound/W in affected.wounds) if(W.internal)
-			affected.wounds -= W
-			affected.update_damages()
-		if (ishuman(user) && prob(40)) user:bloody_hands(target, 0)
+		for(var/datum/wound/W in BP.wounds)
+			if(W.internal)
+				BP.wounds -= W
+				BP.update_damages()
+
+		if (ishuman(user) && prob(40))
+			user:bloody_hands(target, 0)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [affected.name]!" , \
-		"\red Your hand slips, smearing [tool] in the incision in [target]'s [affected.name]!")
-		affected.take_damage(5, 0)
+		var/datum/organ/external/BP = target.get_organ(target_zone)
+		user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!" , \
+		"\red Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!")
+		BP.take_damage(5, 0)

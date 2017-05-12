@@ -280,8 +280,8 @@
 		if(!H.gloves && !(H.dna && H.dna.mutantrace == "adamantine")) //specflags please..
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/organ = (H.hand ? "l_" : "r_") + "hand"
-			var/datum/organ/external/affecting = H.get_organ(organ)
-			affecting.take_damage(force / 2)
+			var/datum/organ/external/BP = H.organs_by_name[organ]
+			BP.take_damage(force / 2)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
 		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")

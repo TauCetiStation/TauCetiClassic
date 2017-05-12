@@ -48,9 +48,9 @@
 	var/limb_layer = 0
 
 
-/datum/organ/external/New(var/datum/organ/external/P)
-	if(P)
-		parent = P
+/datum/organ/external/New(var/datum/organ/external/BP)
+	if(BP)
+		parent = BP
 		if(!parent.children)
 			parent.children = list()
 		parent.children.Add(src)
@@ -96,8 +96,8 @@
 	// High brute damage or sharp objects may damage internal organs
 	if(internal_organs && ( (sharp && brute >= 5) || brute >= 10) && prob(5))
 		// Damage an internal organ
-		var/datum/organ/internal/I = pick(internal_organs)
-		I.take_damage(brute / 2)
+		var/datum/organ/internal/IO = pick(internal_organs)
+		IO.take_damage(brute / 2)
 		brute -= brute / 2
 
 	if((status & ORGAN_BROKEN) && prob(40) && brute)
@@ -143,7 +143,7 @@
 				droplimb(1) //Robot limbs just kinda fail at full damage.
 			else
 				//List organs we can pass it to
-				var/list/datum/organ/external/possible_points = list()
+				var/list/possible_points = list()
 				if(parent)
 					possible_points += parent
 				if(children)
@@ -152,8 +152,8 @@
 					possible_points -= forbidden_limbs
 				if(possible_points.len)
 					//And pass the pain around
-					var/datum/organ/external/target = pick(possible_points)
-					target.take_damage(brute, burn, sharp, edge, used_weapon, forbidden_limbs + src)
+					var/datum/organ/external/BP = pick(possible_points)
+					BP.take_damage(brute, burn, sharp, edge, used_weapon, forbidden_limbs + src)
 
 	// sync the organ's damage with its wounds
 	src.update_damages()
@@ -348,7 +348,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 */
 /datum/organ/external/proc/update_germs()
 
-	if(status & (ORGAN_ROBOT|ORGAN_DESTROYED) || (owner.species && owner.species.flags[IS_PLANT])) //Robotic limbs shouldn't be infected, nor should nonexistant limbs.
+	if((status & (ORGAN_ROBOT|ORGAN_DESTROYED)) || (owner.species && owner.species.flags[IS_PLANT])) //Robotic limbs shouldn't be infected, nor should nonexistant limbs.
 		germ_level = 0
 		return
 
@@ -398,17 +398,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(germ_level >= INFECTION_LEVEL_TWO && antibiotics < 5)
 		//spread the infection to internal organs
 		var/datum/organ/internal/target_organ = null	//make internal organs become infected one at a time instead of all at once
-		for (var/datum/organ/internal/I in internal_organs)
-			if (I.germ_level > 0 && I.germ_level < min(germ_level, INFECTION_LEVEL_TWO))	//once the organ reaches whatever we can give it, or level two, switch to a different one
-				if (!target_organ || I.germ_level > target_organ.germ_level)	//choose the organ with the highest germ_level
-					target_organ = I
+		for (var/datum/organ/internal/IO in internal_organs)
+			if (IO.germ_level > 0 && IO.germ_level < min(germ_level, INFECTION_LEVEL_TWO))	//once the organ reaches whatever we can give it, or level two, switch to a different one
+				if (!target_organ || IO.germ_level > target_organ.germ_level)	//choose the organ with the highest germ_level
+					target_organ = IO
 
 		if (!target_organ)
 			//figure out which organs we can spread germs to and pick one at random
 			var/list/candidate_organs = list()
-			for (var/datum/organ/internal/I in internal_organs)
-				if (I.germ_level < germ_level)
-					candidate_organs += I
+			for (var/datum/organ/internal/IO in internal_organs)
+				if (IO.germ_level < germ_level)
+					candidate_organs += IO
 			if (candidate_organs.len)
 				target_organ = pick(candidate_organs)
 
@@ -417,14 +417,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		//spread the infection to child and parent organs
 		if (children)
-			for (var/datum/organ/external/child in children)
-				if (child.germ_level < germ_level && !(child.status & ORGAN_ROBOT))
-					if (child.germ_level < INFECTION_LEVEL_ONE*2 || prob(30))
-						child.germ_level++
+			for (var/datum/organ/external/BP in children)
+				if (BP.germ_level < germ_level && !(BP.status & ORGAN_ROBOT))
+					if (BP.germ_level < INFECTION_LEVEL_ONE * 2 || prob(30))
+						BP.germ_level++
 
 		if (parent)
 			if (parent.germ_level < germ_level && !(parent.status & ORGAN_ROBOT))
-				if (parent.germ_level < INFECTION_LEVEL_ONE*2 || prob(30))
+				if (parent.germ_level < INFECTION_LEVEL_ONE * 2 || prob(30))
 					parent.germ_level++
 
 	if(germ_level >= INFECTION_LEVEL_THREE && antibiotics < 30)	//overdosing is necessary to stop severe infections
@@ -558,9 +558,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //Recursive setting of all child organs to amputated
 /datum/organ/external/proc/setAmputatedTree()
-	for(var/datum/organ/external/O in children)
-		O.amputated=amputated
-		O.setAmputatedTree()
+	for(var/datum/organ/external/BP in children)
+		BP.amputated = amputated
+		BP.setAmputatedTree()
 
 //Handles dismemberment
 /datum/organ/external/proc/droplimb(override = 0,no_explode = 0)
@@ -582,9 +582,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 			qdel(implant)
 
 		// If any organs are attached to this, destroy them
-		for(var/datum/organ/external/O in owner.organs)
-			if(O.parent == src)
-				O.droplimb(1)
+		for(var/datum/organ/external/BP in owner.organs)
+			if(BP.parent == src)
+				BP.droplimb(1)
 
 		var/obj/organ	//Dropped limb object
 		switch(body_part)
@@ -805,9 +805,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	src.status &= ~ORGAN_DESTROYED
 	src.status |= ORGAN_ROBOT
 	src.destspawn = 0
-	for (var/datum/organ/external/T in children)
-		if(T)
-			T.robotize()
+	for (var/datum/organ/external/BP in children)
+		BP.robotize()
 
 /datum/organ/external/proc/mutate()
 	src.status |= ORGAN_MUTATED

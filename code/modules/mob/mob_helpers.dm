@@ -38,13 +38,16 @@
 	if(zone == BP_CHEST)
 		if(prob(probability))
 			return BP_CHEST
+
 		var/t = rand(1, 9)
 		switch(t)
 			if(1 to 3) return BP_HEAD
 			if(4 to 6) return BP_L_ARM
 			if(7 to 9) return BP_R_ARM
 
-	if(prob(probability * 0.75)) return zone
+	if(prob(probability * 0.75))
+		return zone
+
 	return BP_CHEST
 
 // Emulates targetting a specific body part, and miss chances

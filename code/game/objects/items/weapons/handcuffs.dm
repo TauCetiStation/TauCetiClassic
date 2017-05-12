@@ -90,15 +90,16 @@ var/last_chew = 0
 	if (H.wear_mask) return
 	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket)) return
 
-	var/datum/organ/external/O = H.organs_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
-	if (!O) return
+	var/datum/organ/external/BP = H.organs_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+	if (!BP)
+		return
 
-	var/s = "\red [H.name] chews on \his [O.name]!"
-	H.visible_message(s, "\red You chew on your [O.name]!")
+	var/s = "\red [H.name] chews on \his [BP.name]!"
+	H.visible_message(s, "\red You chew on your [BP.name]!")
 	H.attack_log += text("\[[time_stamp()]\] <font color='red'>[s] ([H.ckey])</font>")
 	log_attack("[s] ([H.ckey])")
 
-	O.take_damage(3,0,1,1,"teeth marks")
+	BP.take_damage(3, 0, 1, 1, "teeth marks")
 
 	last_chew = world.time
 

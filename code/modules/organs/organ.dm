@@ -35,8 +35,8 @@
 /mob/living/carbon/human/proc/handle_trace_chems()
 	//New are added for reagents to random organs.
 	for(var/datum/reagent/A in reagents.reagent_list)
-		var/datum/organ/O = pick(organs)
-		O.trace_chemicals[A.name] = 100
+		var/datum/organ/external/BP = pick(organs)
+		BP.trace_chemicals[A.name] = 100
 
 //Adds autopsy data for used_weapon.
 /datum/organ/proc/add_autopsy_data(used_weapon, damage)
@@ -65,41 +65,41 @@
 	last_dam = damage_this_tick
 	if(force_process)
 		bad_external_organs.Cut()
-		for(var/datum/organ/external/Ex in organs)
-			bad_external_organs += Ex
+		for(var/datum/organ/external/BP in organs)
+			bad_external_organs += BP
 
 	//processing internal organs is pretty cheap, do that first.
-	for(var/datum/organ/internal/I in internal_organs)
-		I.process()
+	for(var/datum/organ/internal/IO in internal_organs)
+		IO.process()
 
 	if(!force_process && !bad_external_organs.len)
 		return
 
-	for(var/datum/organ/external/E in bad_external_organs)
-		if(!E)
+	for(var/datum/organ/external/BP in bad_external_organs)
+		if(!BP)
 			continue
-		if(!E.need_process())
-			bad_external_organs -= E
+		if(!BP.need_process())
+			bad_external_organs -= BP
 			continue
 		else
-			E.process()
-			number_wounds += E.number_wounds
+			BP.process()
+			number_wounds += BP.number_wounds
 
 			if (!lying && world.time - l_move_time < 15)
 			//Moving around with fractured ribs won't do you any good
-				if (E.is_broken() && E.internal_organs && prob(15))
-					var/datum/organ/internal/I = pick(E.internal_organs)
-					custom_pain("You feel broken bones moving in your [E.name]!", 1)
-					I.take_damage(rand(3,5))
+				if (BP.is_broken() && BP.internal_organs && prob(15))
+					var/datum/organ/internal/IO = pick(BP.internal_organs)
+					custom_pain("You feel broken bones moving in your [BP.name]!", 1)
+					IO.take_damage(rand(3, 5))
 
 				//Moving makes open wounds get infected much faster
-				if (E.wounds.len)
-					for(var/datum/wound/W in E.wounds)
+				if (BP.wounds.len)
+					for(var/datum/wound/W in BP.wounds)
 						if (W.infection_check())
 							W.germ_level += 1
 
-			if(E.name in list(BP_L_LEG , BP_L_FOOT , BP_R_LEG , BP_R_FOOT) && !lying)
-				if (!E.is_usable() || E.is_malfunctioning() || (E.is_broken() && !(E.status & ORGAN_SPLINTED)))
+			if((BP.body_zone in list(BP_L_LEG , BP_L_FOOT , BP_R_LEG , BP_R_FOOT)) && !lying)
+				if (!BP.is_usable() || BP.is_malfunctioning() || (BP.is_broken() && !(BP.status & ORGAN_SPLINTED)))
 					leg_tally--			// let it fail even if just foot&leg
 
 	// standing is poor
@@ -111,10 +111,10 @@
 
 	//Check arms and legs for existence
 	can_stand = 2 //can stand on both legs
-	var/datum/organ/external/E = organs_by_name[BP_L_FOOT]
-	if(E.status & ORGAN_DESTROYED)
+	var/datum/organ/external/BP = organs_by_name[BP_L_FOOT]
+	if(BP.status & ORGAN_DESTROYED)
 		can_stand--
 
-	E = organs_by_name[BP_R_FOOT]
-	if(E.status & ORGAN_DESTROYED)
+	BP = organs_by_name[BP_R_FOOT]
+	if(BP.status & ORGAN_DESTROYED)
 		can_stand--

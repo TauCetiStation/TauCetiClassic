@@ -1,5 +1,5 @@
 /obj/item/robot_parts/attack(mob/living/carbon/human/M, mob/living/carbon/user)
-	var/limbloc = null
+	var/child = null
 
 	if(!istype(M))
 		return ..()
@@ -11,52 +11,52 @@
 		return ..()
 
 	if((user.zone_sel.selecting == BP_L_ARM) && (istype(src, /obj/item/robot_parts/l_arm)))
-		limbloc = BP_L_HAND
+		child = BP_L_HAND
 	else if((user.zone_sel.selecting == BP_R_ARM) && (istype(src, /obj/item/robot_parts/r_arm)))
-		limbloc = BP_R_HAND
+		child = BP_R_HAND
 	else if((user.zone_sel.selecting == BP_R_LEG) && (istype(src, /obj/item/robot_parts/r_leg)))
-		limbloc = BP_R_FOOT
+		child = BP_R_FOOT
 	else if((user.zone_sel.selecting == BP_L_LEG) && (istype(src, /obj/item/robot_parts/l_leg)))
-		limbloc = BP_L_FOOT
+		child = BP_L_FOOT
 	else
 		to_chat(user, "\red That doesn't fit there!")
 		return ..()
 
 	var/mob/living/carbon/human/H = M
-	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
-	if(S.status & ORGAN_DESTROYED)
-		if(!(S.status & ORGAN_ATTACHABLE))
+	var/datum/organ/external/BP = H.get_organ(user.zone_sel.selecting)
+	if(BP.status & ORGAN_DESTROYED)
+		if(!(BP.status & ORGAN_ATTACHABLE))
 			to_chat(user, "\red The wound is not ready for a replacement!")
 			return 0
 		if(M != user)
 			M.visible_message( \
-				"\red [user] is beginning to attach \the [src] where [H]'s [S.name] used to be.", \
-				"\red [user] begins to attach \the [src] where your [S.name] used to be.")
+				"\red [user] is beginning to attach \the [src] where [H]'s [BP.name] used to be.", \
+				"\red [user] begins to attach \the [src] where your [BP.name] used to be.")
 		else
 			M.visible_message( \
-				"\red [user] begins to attach a robotic limb where \his [S.name] used to be with [src].", \
-				"\red You begin to attach \the [src] where your [S.name] used to be.")
+				"\red [user] begins to attach a robotic limb where \his [BP.name] used to be with [src].", \
+				"\red You begin to attach \the [src] where your [BP.name] used to be.")
 
 		if(do_mob(user, H, 100))
 			if(M != user)
 				M.visible_message( \
-					"\red [user] finishes attaching [H]'s new [S.name].", \
-					"\red [user] finishes attaching your new [S.name].")
+					"\red [user] finishes attaching [H]'s new [BP.name].", \
+					"\red [user] finishes attaching your new [BP.name].")
 			else
 				M.visible_message( \
-					"\red [user] finishes attaching \his new [S.name].", \
-					"\red You finish attaching your new [S.name].")
+					"\red [user] finishes attaching \his new [BP.name].", \
+					"\red You finish attaching your new [BP.name].")
 
 			if(H == user && prob(25))
 				to_chat(user, "\red You mess up!")
-				S.take_damage(15)
+				BP.take_damage(15)
 
-			S.status &= ~ORGAN_BROKEN
-			S.status &= ~ORGAN_SPLINTED
-			S.status &= ~ORGAN_ATTACHABLE
-			S.status &= ~ORGAN_DESTROYED
-			S.status |= ORGAN_ROBOT
-			var/datum/organ/external/T = H.organs["[limbloc]"]
+			BP.status &= ~ORGAN_BROKEN
+			BP.status &= ~ORGAN_SPLINTED
+			BP.status &= ~ORGAN_ATTACHABLE
+			BP.status &= ~ORGAN_DESTROYED
+			BP.status |= ORGAN_ROBOT
+			var/datum/organ/external/T = H.organs_by_name[child]
 			T.status &= ~ORGAN_BROKEN
 			T.status &= ~ORGAN_SPLINTED
 			T.status &= ~ORGAN_ATTACHABLE
@@ -64,7 +64,7 @@
 			T.status |= ORGAN_ROBOT
 			H.update_body()
 			M.updatehealth()
-			M.UpdateDamageIcon(S)
+			M.UpdateDamageIcon(BP)
 			qdel(src)
 
 			return 1

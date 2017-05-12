@@ -300,20 +300,20 @@ var/const/MAX_SAVE_SLOTS = 10
 	// Destroy/cyborgize organs
 
 	for(var/name in organ_data)
-		var/datum/organ/external/O = character.organs_by_name[name]
-		var/datum/organ/internal/I = character.internal_organs_by_name[name]
+		var/datum/organ/external/BP = character.organs_by_name[name]
+		var/datum/organ/internal/IO = character.internal_organs_by_name[name]
 		var/status = organ_data[name]
 
 		if(status == "amputated")
-			O.amputated = 1
-			O.status |= ORGAN_DESTROYED
-			O.destspawn = 1
+			BP.amputated = 1
+			BP.status |= ORGAN_DESTROYED
+			BP.destspawn = 1
 		if(status == "cyborg")
-			O.status |= ORGAN_ROBOT
+			BP.status |= ORGAN_ROBOT
 		if(status == "assisted")
-			I.mechassist()
+			IO.mechassist()
 		else if(status == "mechanical")
-			I.mechanize()
+			IO.mechanize()
 
 		else continue
 
@@ -335,9 +335,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.overeatduration = 2000
 
 	// Wheelchair necessary?
-	var/datum/organ/external/l_foot = character.get_organ(BP_L_FOOT)
-	var/datum/organ/external/r_foot = character.get_organ(BP_R_FOOT)
-	if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
+	var/datum/organ/external/l_foot = character.organs_by_name[BP_L_FOOT]
+	var/datum/organ/external/r_foot = character.organs_by_name[BP_R_FOOT]
+	if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED)) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
 		character.update_canmove()

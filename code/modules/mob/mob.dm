@@ -472,11 +472,10 @@
 		var/mob/living/carbon/human/H = src
 		if((H.health - H.halloss) <= config.health_threshold_softcrit)
 			for(var/name in H.organs_by_name)
-				var/datum/organ/external/e = H.organs_by_name[name]
+				var/datum/organ/external/BP = H.organs_by_name[name]
 				if(H.lying)
-					if((((e.status & ORGAN_BROKEN) && !(e.status & ORGAN_SPLINTED)) || (e.status & ORGAN_BLEEDING)) && ((H.getBruteLoss() + H.getFireLoss()) >= 100))
+					if((((BP.status & ORGAN_BROKEN) && !(BP.status & ORGAN_SPLINTED)) || (BP.status & ORGAN_BLEEDING)) && ((H.getBruteLoss() + H.getFireLoss()) >= 100))
 						return 1
-						break
 		return 0
 
 /mob/MouseDrop(mob/M as mob)
@@ -968,21 +967,21 @@ mob/proc/yank_out_object()
 	if(istype(src, /mob/living/carbon/human))
 
 		var/mob/living/carbon/human/H = src
-		var/datum/organ/external/affected
+		var/datum/organ/external/BP
 
 		for(var/datum/organ/external/organ in H.organs) //Grab the organ holding the implant.
 			for(var/obj/item/weapon/O in organ.implants)
 				if(O == selection)
-					affected = organ
+					BP = organ
 
-		affected.implants -= selection
+		BP.implants -= selection
 		H.shock_stage += 10
 		H.bloody_hands(S)
 
 		if(prob(10)) //I'M SO ANEMIC I COULD JUST -DIE-.
 			var/datum/wound/internal_bleeding/I = new (15)
-			affected.wounds += I
-			H.custom_pain("Something tears wetly in your [affected.name] as [selection] is pulled free!", 1)
+			BP.wounds += I
+			H.custom_pain("Something tears wetly in your [BP.name] as [selection] is pulled free!", 1)
 
 	selection.loc = get_turf(src)
 

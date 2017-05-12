@@ -63,9 +63,9 @@
 				if(istype(H,/mob/living/carbon/human/))
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 					var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
-					var/datum/organ/external/E = H.get_organ(organ_name)
-					E.take_damage(20, used_weapon = "Hulk Foot")
-					E.fracture()
+					var/datum/organ/external/BP = H.organs_by_name[organ_name]
+					BP.take_damage(20, used_weapon = "Hulk Foot")
+					BP.fracture()
 					H.Stun(5)
 					H.Weaken(5)
 				else
@@ -224,9 +224,9 @@
 						var/mob/living/carbon/human/H = M
 						if(istype(H,/mob/living/carbon/human/))
 							var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
-							var/datum/organ/external/E = H.get_organ(organ_name)
-							E.take_damage(20, used_weapon = "Hulk Shoulder")
-							E.fracture()
+							var/datum/organ/external/BP = H.organs_by_name[organ_name]
+							BP.take_damage(20, used_weapon = "Hulk Shoulder")
+							BP.fracture()
 							M.Weaken(5)
 							M.Stun(5)
 						else
@@ -338,16 +338,16 @@
 				if(istype(H,/mob/living/carbon/human/))
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 					var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
-					var/datum/organ/external/E = H.get_organ(organ_name)
+					var/datum/organ/external/BP = H.organs_by_name[organ_name]
 					if(FAT in usr.mutations)
-						E.take_damage(100, used_weapon = "Hulk Fat Arm")
+						BP.take_damage(100, used_weapon = "Hulk Fat Arm")
 						H.Stun(10)
 						H.Weaken(10)
 					else
-						E.take_damage(50, used_weapon = "Hulk Arm")
+						BP.take_damage(50, used_weapon = "Hulk Arm")
 						H.Stun(5)
 						H.Weaken(5)
-					E.fracture()
+					BP.fracture()
 				else
 					playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 					if(FAT in usr.mutations)
@@ -456,8 +456,8 @@
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
-				var/datum/organ/external/E = H.get_organ(organ_name)
-				E.take_damage(1.5, used_weapon = "Tail")
+				var/datum/organ/external/BP = H.organs_by_name[organ_name]
+				BP.take_damage(1.5, used_weapon = "Tail")
 			else
 				M.take_overall_damage(1.5, used_weapon = "Tail")
 			playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)

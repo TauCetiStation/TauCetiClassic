@@ -27,10 +27,10 @@
 
 /datum/organ/internal/New(mob/living/carbon/human/H)
 	..()
-	var/datum/organ/external/E = H.organs_by_name[src.parent_organ]
-	if(E.internal_organs == null)
-		E.internal_organs = list()
-	E.internal_organs |= src
+	var/datum/organ/external/BP = H.organs_by_name[src.parent_organ]
+	if(BP.internal_organs == null)
+		BP.internal_organs = list()
+	BP.internal_organs |= src
 	H.internal_organs |= src
 	src.owner = H
 
@@ -57,10 +57,10 @@
 				germ_level++
 
 		if (germ_level >= INFECTION_LEVEL_TWO)
-			var/datum/organ/external/parent = owner.get_organ(parent_organ)
+			var/datum/organ/external/BP = owner.organs_by_name[parent_organ]
 			//spread germs
-			if (antibiotics < 5 && parent.germ_level < germ_level && ( parent.germ_level < INFECTION_LEVEL_ONE*2 || prob(30) ))
-				parent.germ_level++
+			if (antibiotics < 5 && BP.germ_level < germ_level && ( BP.germ_level < INFECTION_LEVEL_ONE * 2 || prob(30) ))
+				BP.germ_level++
 
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
@@ -71,9 +71,9 @@
 	else
 		src.damage += amount
 
-	var/datum/organ/external/parent = owner.get_organ(parent_organ)
+	var/datum/organ/external/BP = owner.organs_by_name[parent_organ]
 	if (!silent)
-		owner.custom_pain("Something inside your [parent.name] hurts a lot.", 1)
+		owner.custom_pain("Something inside your [BP.name] hurts a lot.", 1)
 
 /datum/organ/internal/proc/emp_act(severity)
 	switch(robotic)
@@ -165,9 +165,9 @@
 				src.damage += 0.2 * process_accuracy
 			//Damaged one shares the fun
 			else
-				var/datum/organ/internal/O = pick(owner.internal_organs)
-				if(O)
-					O.damage += 0.2  * process_accuracy
+				var/datum/organ/internal/IO = pick(owner.internal_organs)
+				if(IO)
+					IO.damage += 0.2  * process_accuracy
 
 		//Detox can heal small amounts of damage
 		if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))

@@ -92,24 +92,26 @@
 		return
 	var/maxdam = 0
 	var/datum/organ/external/damaged_organ = null
-	for(var/datum/organ/external/E in organs)
+	for(var/datum/organ/external/BP in organs)
 		// amputated limbs don't cause pain
-		if(E.amputated) continue
-		if(E.status & ORGAN_DEAD) continue
-		var/dam = E.get_damage()
+		if(BP.amputated)
+			continue
+		if(BP.status & ORGAN_DEAD)
+			continue
+		var/dam = BP.get_damage()
 		// make the choice of the organ depend on damage,
 		// but also sometimes use one of the less damaged ones
 		if(dam > maxdam && (maxdam == 0 || prob(70)) )
-			damaged_organ = E
+			damaged_organ = BP
 			maxdam = dam
 	if(damaged_organ)
 		pain(damaged_organ.name, maxdam, 0)
 
 	// Damage to internal organs hurts a lot.
-	for(var/datum/organ/internal/I in internal_organs)
-		if(I.damage > 2) if(prob(2))
-			var/datum/organ/external/parent = get_organ(I.parent_organ)
-			src.custom_pain("You feel a sharp pain in your [parent.name]", 1)
+	for(var/datum/organ/internal/IO in internal_organs)
+		if(IO.damage > 2 && prob(2))
+			var/datum/organ/external/BP = organs_by_name[IO.parent_organ]
+			src.custom_pain("You feel a sharp pain in your [BP.name]", 1)
 
 	var/toxDamageMessage = null
 	var/toxMessageProb = 1
