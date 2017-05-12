@@ -61,7 +61,7 @@
 		var/obj/item/changeling_egg/egg = new(victim)
 		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
-			var/datum/organ/external/chest/C = H.get_organ("chest")
+			var/datum/organ/external/chest/C = H.get_organ(BP_CHEST)
 			C.hidden = egg
 		if(origin)
 			egg.origin = origin

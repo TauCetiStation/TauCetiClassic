@@ -118,11 +118,11 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			var/organ = pick(list("r_arm","l_arm","r_leg","r_leg"))
+			var/organ = pick(list(BP_R_ARM , BP_L_ARM , BP_R_LEG , BP_L_LEG))
 			var/datum/organ/external/E = H.organs_by_name[organ]
 			if (!(E.status & ORGAN_DEAD))
 				E.status |= ORGAN_DEAD
-				to_chat(H, "<span class='notice'>You can't feel your [E.display_name] anymore...</span>")
+				to_chat(H, "<span class='notice'>You can't feel your [E.name] anymore...</span>")
 				for (var/datum/organ/external/C in E.children)
 					C.status |= ORGAN_DEAD
 			H.update_body()

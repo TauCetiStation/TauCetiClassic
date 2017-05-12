@@ -982,7 +982,7 @@ mob/proc/yank_out_object()
 		if(prob(10)) //I'M SO ANEMIC I COULD JUST -DIE-.
 			var/datum/wound/internal_bleeding/I = new (15)
 			affected.wounds += I
-			H.custom_pain("Something tears wetly in your [affected] as [selection] is pulled free!", 1)
+			H.custom_pain("Something tears wetly in your [affected.name] as [selection] is pulled free!", 1)
 
 	selection.loc = get_turf(src)
 

@@ -8,7 +8,7 @@
 	blood_level = 1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(!ishuman(target))	return 0
-		return target_zone == "chest"
+		return target_zone == BP_CHEST
 
 /datum/surgery_step/ribcage/saw_ribcage
 	allowed_tools = list(
@@ -119,7 +119,7 @@
 		var/msg = "\red [user]'s hand slips, bending [target]'s ribs the wrong way!"
 		var/self_msg = "\red Your hand slips, bending [target]'s ribs the wrong way!"
 		user.visible_message(msg, self_msg)
-		var/datum/organ/external/chest/affected = target.get_organ("chest")
+		var/datum/organ/external/chest/affected = target.get_organ(BP_CHEST)
 		affected.createwound(BRUISE, 20)
 		affected.fracture()
 		if (prob(40))
@@ -208,7 +208,7 @@
 			return 0
 
 		var/is_chest_organ_damaged = 0
-		var/datum/organ/external/chest/chest = target.get_organ("chest")
+		var/datum/organ/external/chest/chest = target.get_organ(BP_CHEST)
 		for(var/datum/organ/internal/I in chest.internal_organs)
 			if(I.damage > 0)
 				is_chest_organ_damaged = 1
@@ -224,7 +224,7 @@
 				tool_name = "the poultice"
 			else
 				tool_name = "the bandaid"
-		var/datum/organ/external/chest/chest = target.get_organ("chest")
+		var/datum/organ/external/chest/chest = target.get_organ(BP_CHEST)
 		for(var/datum/organ/internal/I in chest.internal_organs)
 			if(I && I.damage > 0)
 				if(I.robotic < 2)
@@ -246,7 +246,7 @@
 				tool_name = "the poultice"
 			else
 				tool_name = "the bandaid"
-		var/datum/organ/external/chest/chest = target.get_organ("chest")
+		var/datum/organ/external/chest/chest = target.get_organ(BP_CHEST)
 		for(var/datum/organ/internal/I in chest.internal_organs)
 			if(I && I.damage > 0)
 				if(I.robotic < 2)
@@ -258,7 +258,7 @@
 				I.damage = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/affected = target.get_organ("chest")
+		var/datum/organ/external/chest/affected = target.get_organ(BP_CHEST)
 		user.visible_message("\red [user]'s hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!", \
 		"\red Your hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!")
 		var/dam_amt = 2
@@ -294,7 +294,7 @@
 
 		var/is_chest_organ_damaged = 0
 		var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
-		var/datum/organ/external/chest/chest = target.get_organ("chest")
+		var/datum/organ/external/chest/chest = target.get_organ(BP_CHEST)
 		for(var/datum/organ/internal/I in chest.internal_organs) if(I.damage > 0)
 			is_chest_organ_damaged = 1
 			break

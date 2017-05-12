@@ -8,7 +8,7 @@
 	var/damage = 0 // amount of damage to the organ
 	var/min_bruised_damage = 10
 	var/min_broken_damage = 30
-	var/parent_organ = "chest"
+	var/parent_organ = BP_CHEST
 	var/robotic = 0 //For being a robot
 
 /datum/organ/internal/proc/rejuvenate()
@@ -70,7 +70,7 @@
 
 	var/datum/organ/external/parent = owner.get_organ(parent_organ)
 	if (!silent)
-		owner.custom_pain("Something inside your [parent.display_name] hurts a lot.", 1)
+		owner.custom_pain("Something inside your [parent.name] hurts a lot.", 1)
 
 /datum/organ/internal/proc/emp_act(severity)
 	switch(robotic)
@@ -113,12 +113,12 @@
 
 /datum/organ/internal/heart
 	name = "heart"
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 
 
 /datum/organ/internal/lungs
 	name = "lungs"
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 
 /datum/organ/internal/lungs/process()
 	..()
@@ -136,7 +136,7 @@
 
 /datum/organ/internal/liver
 	name = "liver"
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 	var/process_accuracy = 10
 
 /datum/organ/internal/liver/process()
@@ -179,15 +179,15 @@
 
 /datum/organ/internal/kidney
 	name = "kidney"
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 
 /datum/organ/internal/brain
 	name = "brain"
-	parent_organ = "head"
+	parent_organ = BP_HEAD
 
 /datum/organ/internal/eyes
 	name = "eyes"
-	parent_organ = "head"
+	parent_organ = BP_HEAD
 
 /datum/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()

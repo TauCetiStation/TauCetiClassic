@@ -309,7 +309,7 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	if(istype(host,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = host
-		var/datum/organ/external/head = H.get_organ("head")
+		var/datum/organ/external/head = H.get_organ(BP_HEAD)
 		head.implants -= src
 
 	src.loc = get_turf(host)
@@ -401,7 +401,7 @@ mob/living/simple_animal/borer/proc/detatch()
 
 		if(istype(M,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			var/datum/organ/external/head = H.get_organ("head")
+			var/datum/organ/external/head = H.get_organ(BP_HEAD)
 			head.implants += src
 
 		host_brain.name = M.name

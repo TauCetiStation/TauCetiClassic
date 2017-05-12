@@ -320,7 +320,7 @@
 					var/datum/organ/external/organ = affecting:get_organ(check_zone(hit_zone))
 					if(!organ)
 						return
-					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [organ.display_name] into a jointlock!</span>")
+					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [organ.name] into a jointlock!</span>")
 					var/armor = affecting:run_armor_check(affecting, "melee")
 					if(armor < 2)
 						to_chat(affecting, "<span class='danger'>You feel extreme pain!</span>")
@@ -350,7 +350,7 @@
 						if (eyes.damage >= eyes.min_broken_damage)
 							if(affecting.stat != DEAD)
 								to_chat(affecting, "\red You go blind!")
-//					else if(hit_zone != "head")
+//					else if(hit_zone != BP_HEAD)
 //						if(state < GRAB_NECK)
 //							assailant << "<span class='warning'>You require a better grab to do this.</span>"
 //							return
@@ -366,8 +366,8 @@
 						if(istype(hat))
 							damage += hat.force * 10
 						var/armor = affecting:run_armor_check(affecting, "melee")
-						affecting.apply_damage(damage*rand(90, 110)/100, BRUTE, "head", armor)
-						assailant.apply_damage(10*rand(90, 110)/100, BRUTE, "head", assailant:run_armor_check("head", "melee"))
+						affecting.apply_damage(damage*rand(90, 110)/100, BRUTE, BP_HEAD, armor)
+						assailant.apply_damage(10*rand(90, 110)/100, BRUTE, BP_HEAD, assailant:run_armor_check(BP_HEAD, "melee"))
 						if(!armor && prob(damage))
 							affecting.apply_effect(20, PARALYZE)
 							affecting.visible_message("<span class='danger'>[affecting] has been knocked unconscious!</span>")
@@ -461,7 +461,7 @@
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [E.display_name] carefully.</span>")
+	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [E.name] carefully.</span>")
 	if(!do_mob(user,H, 30))
 		to_chat(user, "<span class='notice'>You must stand still to inspect [E] for wounds.</span>")
 	else if(E.wounds.len)
@@ -473,10 +473,10 @@
 	if(!do_mob(user, H, 60))
 		to_chat(user, "<span class='notice'>You must stand still to feel [E] for fractures.</span>")
 	else if(E.status & ORGAN_BROKEN)
-		to_chat(user, "<span class='warning'>The bone in the [E.display_name] moves slightly when you poke it!</span>")
-		H.custom_pain("Your [E.display_name] hurts where it's poked.")
+		to_chat(user, "<span class='warning'>The bone in the [E.name] moves slightly when you poke it!</span>")
+		H.custom_pain("Your [E.name] hurts where it's poked.")
 	else
-		to_chat(user, "<span class='notice'>The bones in the [E.display_name] seem to be fine.</span>")
+		to_chat(user, "<span class='notice'>The bones in the [E.name] seem to be fine.</span>")
 
 	to_chat(user, "<span class='notice'>Checking skin now...</span>")
 	if(!do_mob(user, H, 30))

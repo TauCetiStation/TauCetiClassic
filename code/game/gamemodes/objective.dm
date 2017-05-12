@@ -463,7 +463,7 @@ datum/objective/harm
 					already_completed = 1
 					return 1
 
-			var/datum/organ/external/head/head = H.get_organ("head")
+			var/datum/organ/external/head/head = H.get_organ(BP_HEAD)
 			if(head.disfigured)
 				return 1
 		return 0

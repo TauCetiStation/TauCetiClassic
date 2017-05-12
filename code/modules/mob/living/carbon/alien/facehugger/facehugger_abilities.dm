@@ -167,7 +167,7 @@ This is chestburster mechanic for damaging
 
 	if(ishuman(affecting))
 		var/mob/living/carbon/human/H = affecting
-		var/datum/organ/external/chest/C = H.get_organ("chest")
+		var/datum/organ/external/chest/C = H.get_organ(BP_CHEST)
 		if((C.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but organs can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
@@ -182,7 +182,7 @@ This is chestburster mechanic for damaging
 		else
 			last_bite = world.time
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			H.apply_damage(rand(7,14), BRUTE, "chest")
+			H.apply_damage(rand(7,14), BRUTE, BP_CHEST)
 			H.shock_stage = 20
 			H.Weaken(1)
 			H.emote("scream",,, 1)

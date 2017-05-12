@@ -17,7 +17,7 @@
 		if (affected.parent)
 			if (affected.parent.status & ORGAN_DESTROYED)
 				return 0
-		return affected.name == "head"
+		return affected.body_zone == BP_HEAD
 
 
 /datum/surgery_step/head/peel
@@ -50,8 +50,8 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		if (affected.parent)
 			affected = affected.parent
-			user.visible_message("\red [user]'s hand slips, ripping [target]'s [affected.display_name] open!", \
-			"\red Your hand slips,  ripping [target]'s [affected.display_name] open!")
+			user.visible_message("\red [user]'s hand slips, ripping [target]'s [affected.name] open!", \
+			"\red Your hand slips,  ripping [target]'s [affected.name] open!")
 			affected.createwound(CUT, 10)
 
 
@@ -72,7 +72,7 @@
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("[user] is beginning to reshape [target]'s esophagal and vocal region with \the [tool].", \
-		"You start to reshape [target]'s [affected.display_name] esophagal and vocal region with \the [tool].")
+		"You start to reshape [target]'s [affected.name] esophagal and vocal region with \the [tool].")
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -159,7 +159,7 @@
 		if (affected.parent)
 			affected = affected.parent
 			user.visible_message("\red [user]'s hand slips, searing [target]'s neck!", \
-			"\red Your hand slips, searing [target]'s [affected.display_name]!")
+			"\red Your hand slips, searing [target]'s [affected.name]!")
 			target.apply_damage(10, BURN, affected)
 
 

@@ -36,8 +36,8 @@
 					return
 				S.heal_damage(15, 15, robo_repair = 1)
 				H.updatehealth()
-				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][S.display_name] with \the [src].</span>",\
-				"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [S.display_name].</span>")
+				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][S.name] with \the [src].</span>",\
+				"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [S.name].</span>")
 			else
 				to_chat(user, "<span class='notice'>Nothing to fix here.</span>")
 

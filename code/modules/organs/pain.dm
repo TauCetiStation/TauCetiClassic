@@ -103,13 +103,13 @@
 			damaged_organ = E
 			maxdam = dam
 	if(damaged_organ)
-		pain(damaged_organ.display_name, maxdam, 0)
+		pain(damaged_organ.name, maxdam, 0)
 
 	// Damage to internal organs hurts a lot.
 	for(var/datum/organ/internal/I in internal_organs)
 		if(I.damage > 2) if(prob(2))
 			var/datum/organ/external/parent = get_organ(I.parent_organ)
-			src.custom_pain("You feel a sharp pain in your [parent.display_name]", 1)
+			src.custom_pain("You feel a sharp pain in your [parent.name]", 1)
 
 	var/toxDamageMessage = null
 	var/toxMessageProb = 1

@@ -184,7 +184,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/UpdateDamageIcon(datum/organ/external/O)
 	remove_damage_overlay(O.limb_layer)
 	if(species.damage_mask)
-		var/image/standing = image("icon"='icons/mob/human_races/damage_overlays.dmi', "icon_state"="[O.icon_name]_[O.damage_state]", "layer"=-DAMAGE_LAYER)
+		var/image/standing = image("icon"='icons/mob/human_races/damage_overlays.dmi', "icon_state"="[O.body_zone]_[O.damage_state]", "layer"=-DAMAGE_LAYER)
 		standing.color = species.blood_color
 		overlays_damage[O.limb_layer]	= standing
 		apply_damage_overlay(O.limb_layer)
@@ -246,7 +246,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		//Robotic limbs are handled in get_icon() so all we worry about are missing or dead limbs.
 		//No icon stored, so we need to start with a basic one.
-		var/datum/organ/external/chest = get_organ("chest")
+		var/datum/organ/external/chest = get_organ(BP_CHEST)
 		base_icon = chest.get_icon(race_icon,deform_icon,g,fat)
 
 		if(chest.status & ORGAN_DEAD)
@@ -343,10 +343,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	standing	+= image("icon"=stand_icon, "layer"=-BODY_LAYER)
 
 	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
-		if(!fat && organs_by_name["r_foot"] && organs_by_name["l_foot"]) //shit
-			var/datum/organ/external/rfoot = organs_by_name["r_foot"]
-			var/datum/organ/external/lfoot = organs_by_name["l_foot"]
-			if(!rfoot.amputated && !lfoot.amputated)
+		if(!fat && organs_by_name[BP_R_FOOT] && organs_by_name[BP_L_FOOT]) //shit
+			var/datum/organ/external/rfoot = organs_by_name[BP_R_FOOT]
+			var/datum/organ/external/lfoot = organs_by_name[BP_L_FOOT]
+			if(!(rfoot.status & ORGAN_DESTROYED) && !(lfoot.status & ORGAN_DESTROYED))
 				standing += image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-BODY_LAYER)
 
 	if(has_head)
@@ -372,7 +372,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	var/datum/organ/external/head/head_organ = get_organ("head")
+	var/datum/organ/external/head/head_organ = get_organ(BP_HEAD)
 	if(!head_organ || (head_organ.status & ORGAN_DESTROYED))
 		return
 
@@ -995,7 +995,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/standing	= list()
 	for(var/datum/organ/external/O in organs)
 		if(O.open)
-			standing += image("icon"='icons/mob/surgery.dmi', "icon_state"="[O.name][round(O.open)]", "layer"=-SURGERY_LAYER)
+			standing += image("icon"='icons/mob/surgery.dmi', "icon_state"="[O.body_zone][round(O.open)]", "layer"=-SURGERY_LAYER)
 
 	if(standing.len)
 		overlays_standing[SURGERY_LAYER] = standing
@@ -1010,7 +1010,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(E.wounds.len)
 			for(var/datum/wound/W in E.wounds)
 				if(W.bandaged)
-					standing +=	image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.name]", "layer"=-BANDAGE_LAYER)
+					standing +=	image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.body_zone]", "layer"=-BANDAGE_LAYER)
 
 	if(standing.len)
 		overlays_standing[BANDAGE_LAYER] = standing

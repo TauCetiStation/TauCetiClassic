@@ -33,7 +33,7 @@
 	return 0
 
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
-	to_chat(imp_in, "\red You feel something melting inside [part ? "your [part.display_name]" : "you"]!")
+	to_chat(imp_in, "\red You feel something melting inside [part ? "your [part.name]" : "you"]!")
 	if (part)
 		part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
 	else
@@ -169,7 +169,7 @@ Implant Specifics:<BR>"}
 		if(ishuman(imp_in))
 			if (elevel == "Localized Limb")
 				if(part) //For some reason, small_boom() didn't work. So have this bit of working copypaste.
-					imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!")
+					imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!")
 					playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 					sleep(25)
 					if (istype(part,/datum/organ/external/chest) ||	\
@@ -234,7 +234,7 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/proc/small_boom()
 	if (ishuman(imp_in) && part)
-		imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!")
+		imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!")
 		playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 		spawn(25)
 			if (ishuman(imp_in) && part)

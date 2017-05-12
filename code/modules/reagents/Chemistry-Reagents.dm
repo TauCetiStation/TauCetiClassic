@@ -1355,21 +1355,21 @@ datum
 					H.apply_damages(0,0,1,4,0,5) // 1 toxic, 4 oxy and 5 halloss
 					data++
 					if(data == 1)
-						H.visible_message("<span class='notice'>You see oddly moving in [H]'s [External.display_name]...</span>"
-					 	,"<span class='notice'> You feel strange vibration on tips of your [External.display_name]... </span>")
+						H.visible_message("<span class='notice'>You see oddly moving in [H]'s [External.name]...</span>"
+					 	,"<span class='notice'> You feel strange vibration on tips of your [External.name]... </span>")
 					if(data == 10)
-						H.visible_message("<span class='notice'>You hear sickening crunch In [H]'s [External.display_name]...</span>")
+						H.visible_message("<span class='notice'>You hear sickening crunch In [H]'s [External.name]...</span>")
 					if(data == 20)
-						H.visible_message("<span class='notice'>[H]'s [External.display_name] shortly bends...</span>")
+						H.visible_message("<span class='notice'>[H]'s [External.name] shortly bends...</span>")
 					if(data == 30)
 						if(heal_time == 30)
-							H.visible_message("<span class='notice'>[H] stirs his [External.display_name]...</span>","<span class='userdanger'>You feel freedom in moving your [External.display_name]</span>")
+							H.visible_message("<span class='notice'>[H] stirs his [External.name]...</span>","<span class='userdanger'>You feel freedom in moving your [External.name]</span>")
 						else
-							H.visible_message("<span class='notice'>From [H]'s [External.parent.display_name] grow small meaty sprout...</span>")
+							H.visible_message("<span class='notice'>From [H]'s [External.parent.name] grow small meaty sprout...</span>")
 					if(data == 50)
-						H.visible_message("<span class='notice'>You see something resembling [External.display_name] at [H]'s [External.parent.display_name]...</span>")
+						H.visible_message("<span class='notice'>You see something resembling [External.name] at [H]'s [External.parent.name]...</span>")
 					if(data == 65)
-						H.visible_message("<span class='userdanger'>A new [External.display_name] grown from [H]'s [External.parent.display_name]!</span>","<span class='userdanger'>You feel again your [External.display_name]!</span>")
+						H.visible_message("<span class='userdanger'>A new [External.name] grown from [H]'s [External.parent.name]!</span>","<span class='userdanger'>You feel again your [External.name]!</span>")
 					if(prob(50))
 						H.emote("scream",1,null,1)
 					if(data >= heal_time) // recover organ
@@ -2006,7 +2006,7 @@ datum
 					if(!M.unacidable)
 						if(istype(M, /mob/living/carbon/human) && volume >= 10)
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/external/affecting = H.get_organ("head")
+							var/datum/organ/external/affecting = H.get_organ(BP_HEAD)
 							if(affecting)
 								affecting.take_damage(4*toxpwr, 2*toxpwr)
 								if(prob(meltprob)) //Applies disfigurement

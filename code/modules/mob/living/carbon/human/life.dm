@@ -628,17 +628,17 @@
 
 		switch(breath.temperature)
 			if(-INFINITY to species.cold_level_3)
-				apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
+				apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
 			if(species.cold_level_3 to species.cold_level_2)
-				apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Cold")
+				apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Cold")
 			if(species.cold_level_2 to species.cold_level_1)
-				apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
+				apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Cold")
 			if(species.heat_level_1 to species.heat_level_2)
-				apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
+				apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")
 			if(species.heat_level_2 to species.heat_level_3)
-				apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Heat")
+				apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Heat")
 			if(species.heat_level_3 to INFINITY)
-				apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
+				apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Heat")
 
 		//breathing in hot/cold air also heats/cools you a bit
 		var/temp_adj = breath.temperature - bodytemperature
@@ -1002,15 +1002,15 @@
 
 	switch(body_part)
 		if(HEAD)
-			apply_damage(2.5*discomfort, BURN, "head")
+			apply_damage(2.5*discomfort, BURN, BP_HEAD)
 		if(UPPER_TORSO)
-			apply_damage(2.5*discomfort, BURN, "chest")
+			apply_damage(2.5*discomfort, BURN, BP_CHEST)
 		if(LEGS)
-			apply_damage(0.6*discomfort, BURN, "l_leg")
-			apply_damage(0.6*discomfort, BURN, "r_leg")
+			apply_damage(0.6*discomfort, BURN, BP_L_LEG)
+			apply_damage(0.6*discomfort, BURN, BP_R_LEG)
 		if(ARMS)
-			apply_damage(0.4*discomfort, BURN, "l_arm")
-			apply_damage(0.4*discomfort, BURN, "r_arm")
+			apply_damage(0.4*discomfort, BURN, BP_L_ARM)
+			apply_damage(0.4*discomfort, BURN, BP_R_ARM)
 */
 
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
@@ -1496,7 +1496,7 @@
 					if(damage > (comparison*4))
 						icon_num = 5
 					if(icon_num)
-						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
+						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.body_zone][icon_num]")
 
 		switch(nutrition)
 			if(NUTRITION_LEVEL_FULL to INFINITY)

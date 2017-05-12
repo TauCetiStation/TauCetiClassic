@@ -265,7 +265,7 @@ var/can_call_ert
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
 	L.imp_in = src
 	L.implanted = 1
-	var/datum/organ/external/affected = src.organs_by_name["head"]
+	var/datum/organ/external/affected = src.organs_by_name[BP_HEAD]
 	affected.implants += L
 	L.part = affected
 	return 1

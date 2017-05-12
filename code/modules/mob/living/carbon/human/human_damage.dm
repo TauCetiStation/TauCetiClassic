@@ -130,21 +130,21 @@
 			if (candidates.len)
 				var/datum/organ/external/O = pick(candidates)
 				O.mutate()
-				to_chat(src, "<span class = 'notice'>Something is not right with your [O.display_name]...</span>")
+				to_chat(src, "<span class = 'notice'>Something is not right with your [O.name]...</span>")
 				return
 	else
 		if (prob(heal_prob))
 			for (var/datum/organ/external/O in organs)
 				if (O.status & ORGAN_MUTATED)
 					O.unmutate()
-					to_chat(src, "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>")
+					to_chat(src, "<span class = 'notice'>Your [O.name] is shaped normally again.</span>")
 					return
 
 	if (getCloneLoss() < 1)
 		for (var/datum/organ/external/O in organs)
 			if (O.status & ORGAN_MUTATED)
 				O.unmutate()
-				to_chat(src, "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>")
+				to_chat(src, "<span class = 'notice'>Your [O.name] is shaped normally again.</span>")
 	hud_updateflag |= 1 << HEALTH_HUD
 
 ////////////////////////////////////////////
@@ -250,9 +250,10 @@ This function restores all organs.
 
 
 /mob/living/carbon/human/proc/get_organ(zone)
-	if(!zone)	zone = "chest"
-	if (zone in list( "eyes", "mouth" ))
-		zone = "head"
+	if(!zone)
+		zone = BP_CHEST
+	if(zone in list("eyes" , "mouth"))
+		zone = BP_HEAD
 	return organs_by_name[zone]
 
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, sharp = 0, edge = 0, obj/used_weapon = null)

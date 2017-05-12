@@ -10,14 +10,14 @@
 	if(!istype(M, /mob/living/carbon/human))
 		return ..()
 
-	if((user.zone_sel.selecting == "l_arm") && (istype(src, /obj/item/robot_parts/l_arm)))
-		limbloc = "l_hand"
-	else if((user.zone_sel.selecting == "r_arm") && (istype(src, /obj/item/robot_parts/r_arm)))
-		limbloc = "r_hand"
-	else if((user.zone_sel.selecting == "r_leg") && (istype(src, /obj/item/robot_parts/r_leg)))
-		limbloc = "r_foot"
-	else if((user.zone_sel.selecting == "l_leg") && (istype(src, /obj/item/robot_parts/l_leg)))
-		limbloc = "l_foot"
+	if((user.zone_sel.selecting == BP_L_ARM) && (istype(src, /obj/item/robot_parts/l_arm)))
+		limbloc = BP_L_HAND
+	else if((user.zone_sel.selecting == BP_R_ARM) && (istype(src, /obj/item/robot_parts/r_arm)))
+		limbloc = BP_R_HAND
+	else if((user.zone_sel.selecting == BP_R_LEG) && (istype(src, /obj/item/robot_parts/r_leg)))
+		limbloc = BP_R_FOOT
+	else if((user.zone_sel.selecting == BP_L_LEG) && (istype(src, /obj/item/robot_parts/l_leg)))
+		limbloc = BP_L_FOOT
 	else
 		to_chat(user, "\red That doesn't fit there!")
 		return ..()
@@ -30,22 +30,22 @@
 			return 0
 		if(M != user)
 			M.visible_message( \
-				"\red [user] is beginning to attach \the [src] where [H]'s [S.display_name] used to be.", \
-				"\red [user] begins to attach \the [src] where your [S.display_name] used to be.")
+				"\red [user] is beginning to attach \the [src] where [H]'s [S.name] used to be.", \
+				"\red [user] begins to attach \the [src] where your [S.name] used to be.")
 		else
 			M.visible_message( \
-				"\red [user] begins to attach a robotic limb where \his [S.display_name] used to be with [src].", \
-				"\red You begin to attach \the [src] where your [S.display_name] used to be.")
+				"\red [user] begins to attach a robotic limb where \his [S.name] used to be with [src].", \
+				"\red You begin to attach \the [src] where your [S.name] used to be.")
 
 		if(do_mob(user, H, 100))
 			if(M != user)
 				M.visible_message( \
-					"\red [user] finishes attaching [H]'s new [S.display_name].", \
-					"\red [user] finishes attaching your new [S.display_name].")
+					"\red [user] finishes attaching [H]'s new [S.name].", \
+					"\red [user] finishes attaching your new [S.name].")
 			else
 				M.visible_message( \
-					"\red [user] finishes attaching \his new [S.display_name].", \
-					"\red You finish attaching your new [S.display_name].")
+					"\red [user] finishes attaching \his new [S.name].", \
+					"\red You finish attaching your new [S.name].")
 
 			if(H == user && prob(25))
 				to_chat(user, "\red You mess up!")

@@ -1183,7 +1183,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					user.show_message("\blue Localized Damage, Brute/Burn:",1)
 					if(length(damaged)>0)
 						for(var/datum/organ/external/org in damaged)
-							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(org.display_name),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
+							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(org.name),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
 					else
 						user.show_message("\blue &emsp; Limbs are OK.",1)
 

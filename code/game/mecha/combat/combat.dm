@@ -42,7 +42,7 @@
 				var/mob/living/carbon/human/H = target
 	//			if (M.health <= 0) return
 
-				var/datum/organ/external/temp = H.get_organ(pick("chest", "chest", "chest", "head"))
+				var/datum/organ/external/temp = H.get_organ(pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD))
 				if(temp)
 					switch(damtype)
 						if("brute")

@@ -246,9 +246,9 @@
 		if (!affecting)
 			return
 		if(affecting.status & ORGAN_DESTROYED)
-			to_chat(user, "What [affecting.display_name]?")
+			to_chat(user, "What [affecting.name]?")
 			return
-		var/hit_area = affecting.display_name
+		var/hit_area = affecting.name
 
 		if((user != H) && H.check_shields(7, "the [src.name]", get_dir(user,target)))
 			return

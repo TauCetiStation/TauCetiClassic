@@ -66,7 +66,7 @@
 	if(species) species.handle_death(src)
 
 	//Handle brain slugs.
-	var/datum/organ/external/head = get_organ("head")
+	var/datum/organ/external/head = get_organ(BP_HEAD)
 	var/mob/living/simple_animal/borer/B
 
 	for(var/I in head.implants)

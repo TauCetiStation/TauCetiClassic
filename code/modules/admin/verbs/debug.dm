@@ -1026,7 +1026,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 			L.imp_in = M
 			L.implanted = 1
-			var/datum/organ/external/affected = M.organs_by_name["head"]
+			var/datum/organ/external/affected = M.organs_by_name[BP_HEAD]
 			affected.implants += L
 			L.part = affected
 		if("hop")
@@ -1078,7 +1078,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 			L.imp_in = M
 			L.implanted = 1
-			var/datum/organ/external/affected = M.organs_by_name["head"]
+			var/datum/organ/external/affected = M.organs_by_name[BP_HEAD]
 			affected.implants += L
 			L.part = affected
 		if("cmo")
@@ -1551,7 +1551,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 			L.imp_in = M
 			L.implanted = 1
-			var/datum/organ/external/affected = M.organs_by_name["head"]
+			var/datum/organ/external/affected = M.organs_by_name[BP_HEAD]
 			affected.implants += L
 			L.part = affected
 		if("assistant")

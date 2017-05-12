@@ -59,7 +59,7 @@
 	if(!istype(M))
 		return ..()
 
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != BP_HEAD)
 		return ..()
 
 	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
@@ -101,7 +101,7 @@
 	if(!istype(M))
 		return ..()
 
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != BP_HEAD)
 		return ..()
 
 	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
@@ -246,7 +246,7 @@
 	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 	var/t = user:zone_sel.selecting
-	if (t == "head")
+	if (t == BP_HEAD)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.stat < 2 && H.health < 50 && prob(90))
@@ -329,7 +329,7 @@
 	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
 
 
-	if(!(user.zone_sel.selecting == ("eyes" || "head"))) //////////////hitting anything else other than the eyes
+	if(!(user.zone_sel.selecting == ("eyes" || BP_HEAD))) //////////////hitting anything else other than the eyes
 		if(prob(33))
 			src.add_blood(H)
 			var/turf/location = H.loc

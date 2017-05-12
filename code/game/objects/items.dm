@@ -185,11 +185,11 @@
 			return
 
 	if(hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
+		var/datum/organ/external/temp = user:organs_by_name[BP_R_HAND]
 		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
+			temp = user:organs_by_name[BP_L_HAND]
 		if(temp && !temp.is_usable())
-			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
+			to_chat(user, "<span class='notice'>You try to move your [temp.name], but cannot!")
 			return
 
 	if(istype(src.loc, /obj/item/weapon/storage))
@@ -687,7 +687,7 @@
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(H.stat != DEAD)
 					to_chat(H, "\red You go blind!")
-		var/datum/organ/external/affecting = H.get_organ("head")
+		var/datum/organ/external/affecting = H.get_organ(BP_HEAD)
 		affecting.take_damage(7)
 	else
 		M.take_organ_damage(7)

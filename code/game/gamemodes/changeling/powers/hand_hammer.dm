@@ -11,7 +11,7 @@
 	weapon_name_simple = "hammer"
 
 /obj/item/weapon/changeling_hammer
-	name = "Oganic Hammer"
+	name = "oganic hammer"
 	desc = "A mass of tough, boney tissue,reminiscent of hammer."
 	canremove = 0
 	force = 15
@@ -46,7 +46,7 @@
 			var/mob/living/carbon/human/H = target
 			var/datum/organ/external/O = H.get_organ(user.zone_sel.selecting)
 			for(var/datum/organ/external/Org in O.children)
-				H.apply_damage(force/2,BRUTE,Org.name, H.getarmor(Org.name, "melee"))
+				H.apply_damage(force / 2, BRUTE, Org.body_zone, H.getarmor(Org.body_zone, "melee"))
 			if(O.parent)
-				H.apply_damage(force/2,BRUTE,O.parent.name, H.getarmor(O.parent.name, "melee"))
+				H.apply_damage(force / 2, BRUTE, O.parent.body_zone, H.getarmor(O.parent.body_zone, "melee"))
 		return..(target,user)

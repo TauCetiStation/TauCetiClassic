@@ -143,7 +143,7 @@
 											 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
 						shave(H, location, user)
 
-		else if(location == "head")
+		else if(location == BP_HEAD)
 			if(!H.species.flags[HAS_HAIR])
 				to_chat(user, "<span class='warning'>There is no hair!</span>")
 				return

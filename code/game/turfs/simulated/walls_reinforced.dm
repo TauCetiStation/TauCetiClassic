@@ -22,11 +22,11 @@
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			if(prob(5))
 				playsound(user.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-				var/organ_name = pick("l_arm","r_arm")
+				var/organ_name = pick(BP_L_ARM , BP_R_ARM)
 				if(user.hand)
-					organ_name = "l_arm"
+					organ_name = BP_L_ARM
 				else
-					organ_name = "r_arm"
+					organ_name = BP_R_ARM
 				var/mob/living/carbon/human/H = user
 				var/datum/organ/external/E = H.get_organ(organ_name)
 				E.take_damage(rand(5, 15), 0, 0, 0, "Reinforced wall")

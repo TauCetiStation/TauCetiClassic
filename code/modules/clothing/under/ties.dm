@@ -85,7 +85,7 @@
 				else
 					sound_strength = "hear a weak"
 					switch(body_part)
-						if("chest")
+						if(BP_CHEST)
 							if(M.oxyloss < 50)
 								sound_strength = "hear a healthy"
 							sound = "pulse and respiration"

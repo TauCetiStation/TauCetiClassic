@@ -191,7 +191,7 @@
 
 		if(isliving(target) && isliving(user))
 			var/datum/organ/external/affecting = user.zone_sel.selecting
-			if(affecting == "head")
+			if(affecting == BP_HEAD)
 				var/obj/item/ammo_casing/AC = chambered
 				if(AC.fire(user, user))
 					user.apply_damage(300, BRUTE, affecting, sharp=1)

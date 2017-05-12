@@ -211,7 +211,7 @@
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>\The blob attacks you!</span>")
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+	var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
 	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
@@ -221,7 +221,7 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message("\red [src] has been hit by [O]", 1)
 	if (health > 0)
-		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
+		var/datum/organ/external/affecting = get_organ(pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD))
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
 			affecting.take_damage(101, 0)
@@ -243,7 +243,7 @@
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
 		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor)
@@ -275,7 +275,7 @@
 			damage = rand(5, 25)
 
 
-		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
+		var/dam_zone = pick(BP_HEAD , BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG , BP_GROIN)
 
 		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 		var/armor_block = run_armor_check(affecting, "melee")
@@ -441,7 +441,7 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	var/datum/organ/external/head/head = get_organ("head")
+	var/datum/organ/external/head/head = get_organ(BP_HEAD)
 	if( !head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
@@ -471,7 +471,7 @@
 	if(NO_SHOCK in src.mutations)	return 0 //#Z2 no shock with that mutation.
 
 	if(!def_zone)
-		def_zone = pick("l_hand", "r_hand")
+		def_zone = pick(BP_L_HAND , BP_R_HAND)
 
 	var/datum/organ/external/affected_organ = get_organ(check_zone(def_zone))
 
@@ -1093,7 +1093,7 @@
 		O.wounds.Cut()
 		O.heal_damage(1000,1000,1,1)
 
-	var/datum/organ/external/head/h = organs_by_name["head"]
+	var/datum/organ/external/head/h = organs_by_name[BP_HEAD]
 	h.disfigured = 0
 
 	if(species && !species.flags[NO_BLOOD])
@@ -1202,11 +1202,11 @@
 				var/msg = null
 				switch(rand(1,3))
 					if(1)
-						msg ="<span class='warning'>A spike of pain jolts your [organ.display_name] as you bump [O] inside.</span>"
+						msg ="<span class='warning'>A spike of pain jolts your [organ.name] as you bump [O] inside.</span>"
 					if(2)
-						msg ="<span class='warning'>Your movement jostles [O] in your [organ.display_name] painfully.</span>"
+						msg ="<span class='warning'>Your movement jostles [O] in your [organ.name] painfully.</span>"
 					if(3)
-						msg ="<span class='warning'>[O] in your [organ.display_name] twists painfully as you move.</span>"
+						msg ="<span class='warning'>[O] in your [organ.name] twists painfully as you move.</span>"
 				to_chat(src, msg)
 
 				organ.take_damage(rand(1,3), 0, 0)
@@ -1363,12 +1363,12 @@
 	. = 1
 
 	if(!user)
-		target_zone = pick("chest","chest","chest","left leg","right leg","left arm", "right arm", "head")
+		target_zone = pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM , BP_HEAD)
 	else if(!target_zone)
 		target_zone = user.zone_sel.selecting
 
 	switch(target_zone)
-		if("head")
+		if(BP_HEAD)
 			if(head && head.flags & THICKMATERIAL)
 				. = 0
 		else
@@ -1376,7 +1376,7 @@
 				. = 0
 	if(!. && error_msg && user)
  		// Might need re-wording.
-		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [target_zone == "head" ? "on their head" : "on their body"] to inject into.</span>")
+		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [target_zone == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 
 
 //Putting a couple of procs here that I don't know where else to dump.

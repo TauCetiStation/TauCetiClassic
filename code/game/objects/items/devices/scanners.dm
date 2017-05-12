@@ -122,7 +122,7 @@ REAGENT SCANNER
 		if(length(damaged)>0)
 			for(var/datum/organ/external/org in damaged)
 				user.show_message(text("\blue &emsp; []: [][]\blue - []",	\
-				capitalize(org.display_name),					\
+				capitalize(org.name),					\
 				(org.brute_dam > 0)	?	"\red [org.brute_dam]"							:0,		\
 				(org.status & ORGAN_BLEEDING)?"\red <b>\[Bleeding\]</b>":"&emsp;", 		\
 				(org.burn_dam > 0)	?	"<font color='#FFA500'>[org.burn_dam]</font>"	:0),1)
@@ -165,9 +165,9 @@ REAGENT SCANNER
 		var/mob/living/carbon/human/H = M
 		for(var/name in H.organs_by_name)
 			var/datum/organ/external/e = H.organs_by_name[name]
-			var/limb = e.display_name
+			var/limb = e.name
 			if(e.status & ORGAN_BROKEN)
-				if(((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg")) && (!(e.status & ORGAN_SPLINTED)))
+				if(((e.body_zone == BP_L_ARM) || (e.body_zone == BP_R_ARM) || (e.body_zone == BP_L_LEG) || (e.body_zone == BP_R_LEG)) && (!(e.status & ORGAN_SPLINTED)))
 					to_chat(user, "\red Unsecured fracture in subject [limb]. Splinting recommended for transport.")
 			if(e.has_infected_wound())
 				to_chat(user, "\red Infected wound detected in subject [limb]. Disinfection recommended.")

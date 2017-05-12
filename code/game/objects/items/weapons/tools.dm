@@ -83,7 +83,7 @@
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))	return ..()
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != BP_HEAD)
 		return ..()
 	if((CLUMSY in user.mutations) && prob(50))
 		M = user
@@ -500,7 +500,7 @@
 
 		if(S.brute_dam)
 			S.heal_damage(15,0,0,1)
-			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [S.display_name] with \the [src].</span>")
+			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [S.name] with \the [src].</span>")
 			return
 		else
 			to_chat(user, "<span class='info'>Nothing to fix!</span>")

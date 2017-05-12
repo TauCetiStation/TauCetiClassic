@@ -77,7 +77,7 @@
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human/))
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+					var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
 					var/datum/organ/external/E = H.get_organ(organ_name)
 					E.take_damage(20, 0, 0, 0, "Hulk Foot")
 					E.fracture()
@@ -246,7 +246,7 @@
 							target = get_turf(get_step(target,cur_dir))
 						var/mob/living/carbon/human/H = M
 						if(istype(H,/mob/living/carbon/human/))
-							var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+							var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
 							var/datum/organ/external/E = H.get_organ(organ_name)
 							E.take_damage(20, 0, 0, 0, "Hulk Shoulder")
 							E.fracture()
@@ -366,7 +366,7 @@
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human/))
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+					var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
 					var/datum/organ/external/E = H.get_organ(organ_name)
 					if(FAT in usr.mutations)
 						E.take_damage(100, 0, 0, 0, "Hulk Fat Arm")

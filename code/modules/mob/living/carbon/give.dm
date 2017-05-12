@@ -10,9 +10,9 @@
 		return
 	if(ishuman(src) && hasorgans(src))
 		var/mob/living/carbon/human/U = src
-		var/datum/organ/external/temp = U.organs_by_name["r_hand"]
+		var/datum/organ/external/temp = U.organs_by_name[BP_R_HAND]
 		if (U.hand)
-			temp = U.organs_by_name["l_hand"]
+			temp = U.organs_by_name[BP_L_HAND]
 		if(temp && !temp.is_usable())
 			return
 	var/obj/item/I = usr.get_active_hand()

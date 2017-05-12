@@ -388,11 +388,10 @@
 	return 1
 
 /mob/living/proc/get_organ_target()
-	var/mob/shooter = src
-	var/t = shooter:zone_sel.selecting
-	if ((t in list( "eyes", "mouth" )))
-		t = "head"
-	var/datum/organ/external/def_zone = ran_zone(t)
+	var/target_zone = zone_sel.selecting
+	if (target_zone in list("eyes" , "mouth"))
+		target_zone = BP_HEAD
+	var/datum/organ/external/def_zone = ran_zone(target_zone)
 	return def_zone
 
 
