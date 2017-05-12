@@ -5,10 +5,13 @@
 /mob/living/carbon/human/var/list/internal_organs = list()
 
 /datum/organ/internal
+	// Strings.
+	var/organ_tag    = null           // Unique identifier.
+	var/parent_organ = BP_CHEST       // Bodypart holding this object.
+
 	var/damage = 0 // amount of damage to the organ
 	var/min_bruised_damage = 10
 	var/min_broken_damage = 30
-	var/parent_organ = BP_CHEST
 	var/robotic = 0 //For being a robot
 
 /datum/organ/internal/proc/rejuvenate()
@@ -113,11 +116,13 @@
 
 /datum/organ/internal/heart
 	name = "heart"
+	organ_tag = O_HEART
 	parent_organ = BP_CHEST
 
 
 /datum/organ/internal/lungs
 	name = "lungs"
+	organ_tag = O_LUNGS
 	parent_organ = BP_CHEST
 
 /datum/organ/internal/lungs/process()
@@ -136,6 +141,7 @@
 
 /datum/organ/internal/liver
 	name = "liver"
+	organ_tag = O_LIVER
 	parent_organ = BP_CHEST
 	var/process_accuracy = 10
 
@@ -179,14 +185,17 @@
 
 /datum/organ/internal/kidney
 	name = "kidney"
+	organ_tag = O_KIDNEYS
 	parent_organ = BP_CHEST
 
 /datum/organ/internal/brain
 	name = "brain"
+	organ_tag = O_BRAIN
 	parent_organ = BP_HEAD
 
 /datum/organ/internal/eyes
 	name = "eyes"
+	organ_tag = O_EYES
 	parent_organ = BP_HEAD
 
 /datum/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.

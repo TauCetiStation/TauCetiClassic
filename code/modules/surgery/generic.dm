@@ -8,7 +8,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (isslime(target))
 			return 0
-		if (target_zone == "eyes")	//there are specific steps for eye surgery
+		if (target_zone == O_EYES)	//there are specific steps for eye surgery
 			return 0
 		if (!hasorgans(target))
 			return 0
@@ -37,7 +37,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(..())
 			var/datum/organ/external/affected = target.get_organ(target_zone)
-			return affected.open == 0 && target_zone != "mouth"
+			return affected.open == 0 && target_zone != O_MOUTH
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -77,7 +77,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(..())
 			var/datum/organ/external/affected = target.get_organ(target_zone)
-			return affected.open == 0 && target_zone != "mouth"
+			return affected.open == 0 && target_zone != O_MOUTH
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -118,7 +118,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(..())
 			var/datum/organ/external/affected = target.get_organ(target_zone)
-			return affected.open == 0 && target_zone != "mouth"
+			return affected.open == 0 && target_zone != O_MOUTH
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -248,7 +248,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(..())
 			var/datum/organ/external/affected = target.get_organ(target_zone)
-			return affected.open && target_zone != "mouth"
+			return affected.open && target_zone != O_MOUTH
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -281,7 +281,7 @@
 	max_duration = 160
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		if (target_zone == "eyes")	//there are specific steps for eye surgery
+		if (target_zone == O_EYES) // there are specific steps for eye surgery
 			return 0
 		if (!hasorgans(target))
 			return 0

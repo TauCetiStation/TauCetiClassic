@@ -17,7 +17,7 @@
 
 /mob/living/carbon/human/getBrainLoss()
 	var/res = brainloss
-	var/datum/organ/internal/brain/sponge = internal_organs_by_name["brain"]
+	var/datum/organ/internal/brain/sponge = internal_organs_by_name[O_BRAIN]
 	if(!sponge)
 		return 0
 	if (sponge.is_bruised())
@@ -252,7 +252,7 @@ This function restores all organs.
 /mob/living/carbon/human/proc/get_organ(zone)
 	if(!zone)
 		zone = BP_CHEST
-	if(zone in list("eyes" , "mouth"))
+	if(zone in list(O_EYES , O_MOUTH))
 		zone = BP_HEAD
 	return organs_by_name[zone]
 

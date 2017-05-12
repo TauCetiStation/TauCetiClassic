@@ -113,7 +113,7 @@
 			B.transfer_identity(target)
 
 		target.internal_organs -= B
-		target.internal_organs_by_name -= "brain"
+		target.internal_organs_by_name -= O_BRAIN // this is SOOO wrong.
 
 		target:brain_op_stage = 4.0
 		target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
@@ -182,7 +182,7 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] mends hematoma in [target]'s brain with \the [tool].",	\
 		"\blue You mend hematoma in [target]'s brain with \the [tool].")
-		var/datum/organ/internal/brain/sponge = target.internal_organs_by_name["brain"]
+		var/datum/organ/internal/brain/sponge = target.internal_organs_by_name[O_BRAIN]
 		if (sponge)
 			sponge.damage = 0
 

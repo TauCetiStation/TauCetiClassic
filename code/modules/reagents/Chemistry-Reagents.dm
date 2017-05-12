@@ -1285,7 +1285,7 @@ datum
 				M.eye_blind = max(M.eye_blind - 5, 0)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
+					var/datum/organ/internal/eyes/E = H.internal_organs_by_name[O_EYES]
 					if(istype(E))
 						if(E.damage > 0)
 							E.damage = max(E.damage - 1, 0)
@@ -3100,7 +3100,7 @@ datum
 					M.drowsyness = max(M.drowsyness, 30)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
+						var/datum/organ/internal/liver/L = H.internal_organs_by_name[O_LIVER]
 						if(istype(L))
 							L.take_damage(0.1, 1)
 						H.adjustToxLoss(0.1)
@@ -3358,13 +3358,13 @@ datum
 							M.adjustToxLoss(2)
 						if(prob(5) && ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
+							var/datum/organ/internal/heart/L = H.internal_organs_by_name[O_HEART]
 							if(istype(L))
 								L.take_damage(5, 0)
 					if(300 to INFINITY)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
+							var/datum/organ/internal/heart/L = H.internal_organs_by_name[O_HEART]
 							if(istype(L))
 								L.take_damage(100, 0)
 
@@ -4116,7 +4116,7 @@ datum
 				M.adjustBrainLoss(2)
 				if(ishuman(M) && prob(5))
 					var/mob/living/carbon/human/H = M
-					var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
+					var/datum/organ/internal/heart/L = H.internal_organs_by_name[O_HEART]
 					if(istype(L))
 						L.take_damage(10, 0)
 	data++

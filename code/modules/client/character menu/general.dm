@@ -76,9 +76,9 @@
 						organ_name = "left hand"
 					if(BP_R_HAND)
 						organ_name = "right hand"
-					if("heart")
+					if(O_HEART)
 						organ_name = "heart"
-					if("eyes")
+					if(O_EYES)
 						organ_name = "eyes"
 
 				if(status == "cyborg")
@@ -541,9 +541,9 @@
 							var/organ = null
 							switch(organ_name)
 								if("Heart")
-									organ = "heart"
+									organ = O_HEART
 								if("Eyes")
-									organ = "eyes"
+									organ = O_EYES
 
 							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
 							if(!new_state) return

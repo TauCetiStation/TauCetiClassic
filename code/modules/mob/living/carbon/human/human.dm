@@ -1119,11 +1119,11 @@
 	..()
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
-	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
+	var/datum/organ/internal/lungs/L = internal_organs_by_name[O_LUNGS]
 	return L.is_bruised()
 
 /mob/living/carbon/human/proc/rupture_lung()
-	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
+	var/datum/organ/internal/lungs/L = internal_organs_by_name[O_LUNGS]
 
 	if(!L.is_bruised())
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
@@ -1482,8 +1482,8 @@
 			M.gib()
 
 /mob/living/carbon/human/has_eyes()
-	if(internal_organs_by_name["eyes"])
-		var/datum/organ/internal/eyes = internal_organs_by_name["eyes"]
+	if(internal_organs_by_name[O_EYES])
+		var/datum/organ/internal/eyes = internal_organs_by_name[O_EYES]
 		if(eyes && istype(eyes))
 			return 1
 	return 0

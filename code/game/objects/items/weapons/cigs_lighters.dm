@@ -453,7 +453,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!istype(M, /mob))
 		return
 	M.IgniteMob()	//Lighters can ignite mobs splashed with fuel
-	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == O_MOUTH && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
 			cig.attackby(src, user)

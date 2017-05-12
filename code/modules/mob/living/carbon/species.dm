@@ -99,12 +99,12 @@
 	H.organs_by_name[BP_R_FOOT] = new/datum/organ/external/r_foot(H.organs_by_name[BP_R_LEG])
 
 	H.internal_organs = list()
-	H.internal_organs_by_name["heart"] = new/datum/organ/internal/heart(H)
-	H.internal_organs_by_name["lungs"] = new/datum/organ/internal/lungs(H)
-	H.internal_organs_by_name["liver"] = new/datum/organ/internal/liver(H)
-	H.internal_organs_by_name["kidney"] = new/datum/organ/internal/kidney(H)
-	H.internal_organs_by_name["brain"] = new/datum/organ/internal/brain(H)
-	H.internal_organs_by_name["eyes"] = new/datum/organ/internal/eyes(H)
+	H.internal_organs_by_name[O_HEART] = new/datum/organ/internal/heart(H)
+	H.internal_organs_by_name[O_LUNGS] = new/datum/organ/internal/lungs(H)
+	H.internal_organs_by_name[O_LIVER] = new/datum/organ/internal/liver(H)
+	H.internal_organs_by_name[O_KIDNEYS] = new/datum/organ/internal/kidney(H)
+	H.internal_organs_by_name[O_BRAIN] = new/datum/organ/internal/brain(H)
+	H.internal_organs_by_name[O_EYES] = new/datum/organ/internal/eyes(H)
 
 	for(var/name in H.organs_by_name)
 		H.organs += H.organs_by_name[name]

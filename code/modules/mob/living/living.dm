@@ -389,7 +389,7 @@
 
 /mob/living/proc/get_organ_target()
 	var/target_zone = zone_sel.selecting
-	if (target_zone in list("eyes" , "mouth"))
+	if (target_zone in list(O_EYES , O_MOUTH))
 		target_zone = BP_HEAD
 	var/datum/organ/external/def_zone = ran_zone(target_zone)
 	return def_zone

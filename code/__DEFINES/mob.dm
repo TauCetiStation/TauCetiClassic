@@ -24,6 +24,16 @@
 #define BP_L_FOOT "l_foot"
 #define BP_R_FOOT "r_foot"
 
+// Organ defines.
+#define O_MOUTH    "mouth"
+#define O_EYES     "eyes"
+#define O_HEART    "heart"
+#define O_LUNGS    "lungs"
+#define O_BRAIN    "brain"
+#define O_LIVER    "liver"
+#define O_KIDNEYS  "kidneys"
+#define O_APPENDIX "appendix"
+
 #define AGE_MIN 25			//youngest a character can be
 #define AGE_MAX 85			//oldest a character can be
 

@@ -68,7 +68,7 @@
 
 //you can wipe off lipstick with paper!
 /obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.zone_sel.selecting == "mouth")
+	if(user.zone_sel.selecting == O_MOUTH)
 		if(!istype(M, /mob))	return
 
 		if(ishuman(M))
@@ -98,8 +98,8 @@
 	w_class = 1
 
 
-/obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = "mouth", mob/living/carbon/human/AH = null)
-	if(location == "mouth")
+/obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = O_MOUTH, mob/living/carbon/human/AH = null)
+	if(location == O_MOUTH)
 		H.f_style = "Shaved"
 	else
 		H.h_style = "Skinhead"
@@ -115,7 +115,7 @@
 		var/mob/living/carbon/human/H = M
 
 		var/location = user.zone_sel.selecting
-		if(location == "mouth")
+		if(location == O_MOUTH)
 			if(!H.species.flags[HAS_HAIR])
 				to_chat(user, "<span class='warning'>There is no hair!</span>")
 				return

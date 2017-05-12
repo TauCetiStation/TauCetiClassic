@@ -18,9 +18,9 @@
 		return BP_CHEST
 
 	switch(zone)
-		if("eyes")
+		if(O_EYES)
 			zone = BP_HEAD
-		if("mouth")
+		if(O_MOUTH)
 			zone = BP_HEAD
 
 	return zone

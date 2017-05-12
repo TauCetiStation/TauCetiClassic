@@ -100,7 +100,7 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 					if(BP_R_FOOT , BP_L_FOOT)
 						if(T.shoes)
 							return 0
-					if("eyes")
+					if(O_EYES)
 						if(T.glasses)
 							return 0
 					if(BP_R_HAND , BP_L_HAND)

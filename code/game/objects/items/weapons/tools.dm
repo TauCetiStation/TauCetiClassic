@@ -83,7 +83,7 @@
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))	return ..()
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != BP_HEAD)
+	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
 		return ..()
 	if((CLUMSY in user.mutations) && prob(50))
 		M = user
@@ -383,7 +383,7 @@
 	var/safety = user:eyecheck()
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
+		var/datum/organ/internal/eyes/E = H.internal_organs_by_name[O_EYES]
 		if(H.species.flags[IS_SYNTHETIC])
 			return
 		switch(safety)

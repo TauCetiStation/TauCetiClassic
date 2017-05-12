@@ -16,7 +16,7 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		if (!affected)
 			return 0
-		return target_zone == "mouth"
+		return target_zone == O_MOUTH
 
 /datum/surgery_step/plastic_surgery/retract_face
 	allowed_tools = list(

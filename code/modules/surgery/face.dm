@@ -13,7 +13,7 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		if (!affected)
 			return 0
-		return target_zone == "mouth"
+		return target_zone == O_MOUTH
 
 /datum/surgery_step/generic/cut_face
 	allowed_tools = list(
@@ -27,7 +27,7 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(!ishuman(target))	return 0
-		return ..() && target_zone == "mouth" && target.op_stage.face == 0
+		return ..() && target_zone == O_MOUTH && target.op_stage.face == 0
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts to cut open [target]'s face and neck with \the [tool].", \
