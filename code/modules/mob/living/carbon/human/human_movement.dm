@@ -51,6 +51,8 @@
 
 		if(back)
 			tally += back.slowdown
+		if(head)
+			tally += head.slowdown
 
 		if(buckled)	//so, if we buckled we have large debuff
 			tally += 5.5

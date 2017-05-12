@@ -220,21 +220,33 @@
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/weapon/wrench))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			to_chat(user, "\blue Now disassembling the girder")
+			to_chat(user, "<span class='notice'> Now disassembling the girder</span>")
 			if(do_after(user,40,target = src))
-				to_chat(user, "\blue You dissasembled the girder!")
+				to_chat(user, "<span class='notice'> You dissasembled the girder!</span>")
 				new /obj/effect/decal/remains/human(get_turf(src))
 				qdel(src)
+		if(istype(W,/obj/item/stack/sheet/runed_metal))
+			var/obj/item/stack/sheet/runed_metal/M = W
+			if(M.amount >= 3)
+				to_chat(user, "<span class='notice'> Now adding metal to the girder...</span>")
+				if(do_after(user,40,target = src))
+					M.use(3)
+					var/turf/T = loc
+					T.ChangeTurf(/turf/simulated/wall/cult)
+					return
+			else
+				to_chat(user,"<span class='notice'> Not enough metal!</span>")
+				return
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			to_chat(user, "\blue Now slicing apart the girder")
+			to_chat(user, "<span class='notice'> Now slicing apart the girder</span>")
 			if(do_after(user,30,target = src))
-				to_chat(user, "\blue You slice apart the girder!")
+				to_chat(user, "<span class='notice'> You slice apart the girder!</span>")
 			new /obj/effect/decal/remains/human(get_turf(src))
 			qdel(src)
 
 		else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
-			to_chat(user, "\blue You drill through the girder!")
+			to_chat(user, "<span class='notice'> You drill through the girder!</span>")
 			new /obj/effect/decal/remains/human(get_turf(src))
 			qdel(src)
 

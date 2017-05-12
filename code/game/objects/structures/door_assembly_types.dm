@@ -106,3 +106,9 @@
 	icon             = 'icons/obj/doors/airlocks/station/neutral.dmi'
 	airlock_type     = /obj/machinery/door/airlock/neutral
 	can_insert_glass = FALSE
+
+/obj/structure/door_assembly/door_assembly_cult
+	name = "cult airlock assembly"
+	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
+	airlock_type = /obj/machinery/door/airlock/cult

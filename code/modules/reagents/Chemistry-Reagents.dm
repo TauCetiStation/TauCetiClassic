@@ -4149,5 +4149,28 @@ datum
 	var/datum/preferences/A = new()	//Randomize appearance for the human
 	A.randomize_appearance_for(H)
 
+/datum/reagent/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
+	name = "Unholy Water"
+	id = "unholywater"
+	description = "Something that shouldn't exist on this plane of existance."
+	reagent_state = LIQUID
+
+/datum/reagent/unholywater/on_mob_life(mob/living/M)
+	if(iscultist(M))
+		M.drowsyness = max(M.drowsyness-5, 0)
+		M.AdjustParalysis(-1, 0)
+		M.AdjustStunned(-2, 0)
+		M.AdjustWeakened(-2, 0)
+		M.adjustToxLoss(-2, 0)
+		M.adjustOxyLoss(-2, 0)
+		M.adjustBruteLoss(-2, 0)
+		M.adjustFireLoss(-2, 0)
+	else
+		M.adjustBrainLoss(3)
+		M.adjustToxLoss(2, 0)
+		M.adjustFireLoss(2, 0)
+		M.adjustOxyLoss(2, 0)
+		M.adjustBruteLoss(2, 0)
+	holder.remove_reagent(src.id, 1)
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM
