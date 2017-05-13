@@ -292,12 +292,6 @@
 	icon_state = "rosas_hat"
 	item_state = "helmet"
 
-/obj/item/clothing/head/fedora
-	name = "fedora"
-	icon_state = "fedora"
-	item_state = "fedora"
-	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
-
 /obj/item/clothing/head/sombrero
 	name = "sombrero"
 	icon_state = "sombrero"
@@ -317,17 +311,17 @@
 	desc = "You never asked for this."
 
 //Mafia
-/obj/item/clothing/head/fedora_mafia
+/obj/item/clothing/head/fedora/mafia
 	name = "fedora"
 	desc = "Someone wearing this definitely makes them cool."
 	icon_state = "hat_black"
 
-/obj/item/clothing/head/fedora_mafia/white
+/obj/item/clothing/head/fedora/mafia/white
 	name = "white fedora"
 	desc = "Someone wearing this definitely makes them cool."
 	icon_state = "hat_white"
 
-/obj/item/clothing/head/fedora_mafia/brown
+/obj/item/clothing/head/fedora/mafia/brown
  	name = "brown fedora"
  	desc = "Someone wearing this definitely makes them cool."
  	icon_state = "hat_brown"
