@@ -278,6 +278,22 @@
 
 	fedoraproc(usr)
 
+/obj/item/clothing/head/fedora/black
+	name = "fedora"
+	desc = "Someone wearing this definitely makes them cool."
+	icon_state = "hat_black"
+
+/obj/item/clothing/head/fedora/white
+	name = "white fedora"
+	desc = "Someone wearing this definitely makes them cool."
+	icon_state = "hat_white"
+
+/obj/item/clothing/head/fedora/brown
+ 	name = "brown fedora"
+ 	desc = "Someone wearing this definitely makes them cool."
+ 	icon_state = "hat_brown"
+
+
 /obj/item/clothing/head/batman_helmet
 	name = "batman helmet"
 	desc = "It's not who you are underneath, it's what you do that defines you."
@@ -309,22 +325,6 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "You never asked for this."
-
-//Mafia
-/obj/item/clothing/head/fedora/mafia
-	name = "fedora"
-	desc = "Someone wearing this definitely makes them cool."
-	icon_state = "hat_black"
-
-/obj/item/clothing/head/fedora/mafia/white
-	name = "white fedora"
-	desc = "Someone wearing this definitely makes them cool."
-	icon_state = "hat_white"
-
-/obj/item/clothing/head/fedora/mafia/brown
- 	name = "brown fedora"
- 	desc = "Someone wearing this definitely makes them cool."
- 	icon_state = "hat_brown"
 
 /obj/item/clothing/head/western
 	name = "western hat"
