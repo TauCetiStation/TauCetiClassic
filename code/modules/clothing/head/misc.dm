@@ -174,13 +174,6 @@
 	icon_state = "boater_hat"
 	item_state = "boater_hat"
 	desc = "The ultimate in summer fashion."
-/*
-/obj/item/clothing/head/fedora
-	name = "\improper fedora"
-	icon_state = "fedora"
-	item_state = "fedora"
-	desc = "A sharp, stylish hat."
-*/
 
 /obj/item/clothing/head/feathertrilby
 	name = "\improper feather trilby"
