@@ -245,14 +245,22 @@
 
 			if(lying)
 				src.sleeping = max(0,src.sleeping-5)
-				if(!src.sleeping)
-					src.resting = 0
-				if(src.crawling)
-					if(crawl_can_use() && src.pass_flags & PASSCRAWL)
-						src.pass_flags ^= PASSCRAWL
-						src.crawling = 0
-				M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
-									"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
+				if (!M.lying)
+					if(!src.sleeping)
+						src.resting = 0
+					if(src.crawling)
+						if(crawl_can_use() && src.pass_flags & PASSCRAWL)
+							src.pass_flags ^= PASSCRAWL
+							src.crawling = 0
+					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
+										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
+				else
+					if(!src.sleeping)
+						M.visible_message("<span class='notice'>[M] cuddles with [src] to make [t_him] feel better!</span>", \
+								"<span class='notice'>You cuddle with [src] to make [t_him] feel better!</span>")
+					else
+						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
+										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
 			else
 				M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
 								"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")

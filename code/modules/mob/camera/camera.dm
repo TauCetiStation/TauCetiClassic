@@ -1,4 +1,3 @@
-// Camera mob, used by blob.
 /mob/camera
 	name = "camera mob"
 	density = 0

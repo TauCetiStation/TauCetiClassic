@@ -77,6 +77,7 @@ var/global/area/mine_sci_curr_location = null
 /obj/machinery/computer/mine_sci_shuttle/flight_comp
 	name = "Shuttle Console"
 	icon = 'code/modules/locations/shuttles/computer_shuttle_mining.dmi'
+	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle/flight_comp
 	var/area/mine_sci_curr_location
 	var/moving = 0
 	var/lastMove = 0

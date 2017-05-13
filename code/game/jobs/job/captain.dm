@@ -10,7 +10,6 @@
 	idtype = /obj/item/weapon/card/id/gold
 	req_admin_notify = 1
 	access = list() 			//See get_access()
-	minimal_access = list() 	//See get_access()
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
 
@@ -24,7 +23,10 @@
 
 	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
 	if(H.age>49)
-		U.hastie = new /obj/item/clothing/tie/medal/gold/captain(U)
+		var/obj/item/clothing/tie/medal/gold/captain/new_medal = new(U)
+		U.hastie = new_medal
+		new_medal.has_suit = U
+		U.overlays += new_medal.inv_overlay
 	H.equip_to_slot_or_del(U, slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat(H), slot_head)
@@ -67,18 +69,14 @@
 	req_admin_notify = 1
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
-	access = list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
-			            access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
-			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
-			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
-			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
-			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
-			            access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
-			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
-			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
-			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
-			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective)
+	access = list(
+		access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
+		access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
+		access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
+		access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
+		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
+		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective
+	)
 
 
 /datum/job/hop/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

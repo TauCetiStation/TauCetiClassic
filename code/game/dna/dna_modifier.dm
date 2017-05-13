@@ -206,7 +206,6 @@
 
 		var/mob/M = G.affecting
 		M.forceMove(loc)
-		user.stop_pulling()
 		qdel(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)

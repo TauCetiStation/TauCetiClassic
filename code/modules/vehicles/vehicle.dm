@@ -56,8 +56,7 @@
 		//Dummy loads do not have to be moved as they are just an overlay
 		//See load_object() proc in cargo_trains.dm for an example
 		if(load && !istype(load, /datum/vehicle_dummy_load))
-			load.forceMove(loc)
-			load.set_dir(dir)
+			load.Move(loc, dir)
 
 		return 1
 	else
@@ -276,9 +275,6 @@
 	load.layer = initial(load.layer)
 	load.plane = initial(load.plane)
 
-	if(ismob(load))
-		unbuckle_mob(load)
-
 	load = null
 
 	return 1
@@ -309,5 +305,5 @@
 	src.health -= damage
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	spawn(1) healthcheck()
+	healthcheck()
 	return 1

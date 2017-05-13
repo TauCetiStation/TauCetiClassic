@@ -281,6 +281,8 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
 		body += "<option value>---</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
+	if(isatom(D))
+		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
 	if(isobj(D))
 		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
@@ -353,7 +355,7 @@ body
 		html += "[name] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		html += "[name] = <span class='value'>\"[value]\"</span>"
+		html += "[name] = <span class='value'>\"[sanitize_popup(value)]\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON
@@ -571,6 +573,11 @@ body
 
 		if(usr.client)
 			usr.client.cmd_assume_direct_control(M)
+
+	else if(href_list["delthis"])
+		//Rights check are in cmd_admin_delete() proc
+		var/atom/A = locate(href_list["delthis"])
+		cmd_admin_delete(A)
 
 	else if(href_list["delall"])
 		if(!check_rights(R_DEBUG|R_SERVER))	return

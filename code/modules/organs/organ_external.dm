@@ -84,7 +84,7 @@
 		var/brmod = 0.66
 		var/bumod = 0.66
 
-		if(istype(owner,/mob/living/carbon/human))
+		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.species && H.species.flags[IS_SYNTHETIC])
 				brmod = H.species.brute_mod
@@ -602,9 +602,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 					var/obj/item/clothing/suit/space/space_ninja/my_suit = owner.wear_suit
 					if(my_suit.s_initialized)
 						spawn(30)
-							var/location = owner.loc
-							explosion(location, 0, 0, 3, 4)
-							owner.gib()
+							if(owner)
+								var/location = owner.loc
+								explosion(location, 0, 0, 3, 4)
+								owner.gib()
 			if(ARM_RIGHT)
 				if(status & ORGAN_ROBOT)
 					organ = new /obj/item/robot_parts/r_arm(owner.loc)

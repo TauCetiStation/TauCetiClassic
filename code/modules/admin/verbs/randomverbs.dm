@@ -904,20 +904,28 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Call Shuttle"
 
-	if ((!( ticker ) || SSshuttle.location))
+	if(!ticker || SSshuttle.location)
 		return
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes") return
+	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
+		return
 
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
-		var/choice = input("The shuttle will just return if you call it. Call anyway?") in list("Confirm", "Cancel")
-		if(choice == "Confirm")
-			SSshuttle.fake_recall = rand(300,500)
-		else
-			return
+	if(SSshuttle.always_fake_recall)
+		var/choice = input("The shuttle will just return if you call it. What you want to do?") in list(
+					"Cancel shuttle call",
+					"Call it anyway",
+					"Call and allow it to fly to station")
+		switch(choice)
+			if("Cancel shuttle call")
+				return
+			if("Call and allow it to fly to station")
+				SSshuttle.always_fake_recall = FALSE
+				SSshuttle.fake_recall = 0
+				log_admin("[key_name(usr)] disabled shuttle fake recall.")
+				message_admins("<span class='info'>[key_name_admin(usr)] disabled shuttle fake recall.</span>")
 
 	var/type = alert(src, "It's emergency shuttle or crew transfer?", "Confirm", "Emergency", "Crew transfer")
 

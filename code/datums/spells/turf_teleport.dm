@@ -31,6 +31,4 @@
 		if(!picked || !isturf(picked))
 			return
 
-		if(target.buckled)
-			target.buckled.unbuckle_mob()
 		target.forceMove(picked)

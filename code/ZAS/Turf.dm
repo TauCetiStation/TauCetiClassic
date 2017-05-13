@@ -19,11 +19,7 @@
 		//dbg(blocked)
 		return 1
 
-	#ifdef ZLEVELS
-	for(var/d = 1, d < 64, d *= 2)
-	#else
 	for(var/d = 1, d < 16, d *= 2)
-	#endif
 
 		var/turf/unsim = get_step(src, d)
 
@@ -55,10 +51,6 @@
 */
 
 /turf/simulated/proc/can_safely_remove_from_zone()
-	#ifdef ZLEVELS
-	return 1 //not sure how to generalize this to multiz at the moment.
-	#else
-
 	if(!zone) return 0
 
 	var/check_dirs = get_zone_neighbours(src)
@@ -75,8 +67,6 @@
 
 	//it is safe to remove src from the zone if all cardinals are connected by corner turfs
 	return !unconnected_dirs
-
-	#endif
 
 //helper for can_safely_remove_from_zone()
 /turf/simulated/proc/get_zone_neighbours(turf/simulated/T)
@@ -113,11 +103,7 @@
 	open_directions = 0
 
 	var/list/postponed
-	#ifdef ZLEVELS
-	for(var/d = 1, d < 64, d *= 2)
-	#else
 	for(var/d = 1, d < 16, d *= 2)
-	#endif
 
 		var/turf/unsim = get_step(src, d)
 
