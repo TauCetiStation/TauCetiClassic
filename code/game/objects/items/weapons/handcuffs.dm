@@ -90,7 +90,7 @@ var/last_chew = 0
 	if (H.wear_mask) return
 	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket)) return
 
-	var/datum/organ/external/BP = H.organs_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+	var/datum/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
 	if (!BP)
 		return
 

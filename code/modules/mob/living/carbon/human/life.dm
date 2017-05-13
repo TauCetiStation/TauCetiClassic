@@ -247,11 +247,6 @@
 
 	if(species.flags[IS_SYNTHETIC]) //Robots don't suffer from mutations or radloss.
 		return
-//#Z2 healing organs with cold_resist? No, for now!
-		/*if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) || (prob(1)))
-				heal_organ_damage(0,1)*/
-//##Z2
 
 	// DNA2 - Gene processing.
 	// The HULK stuff that was here is now in the hulk gene.
@@ -323,8 +318,8 @@
 			if(damage)
 				adjustToxLoss(damage)
 				updatehealth()
-				if (organs.len)
-					var/datum/organ/external/BP = pick(organs)
+				if (bodyparts.len)
+					var/datum/organ/external/BP = pick(bodyparts)
 					if(istype(BP))
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
@@ -1145,7 +1140,7 @@
 		updatehealth()	//TODO
 		if(!in_stasis)
 			stabilize_body_temperature()	//Body temperature adjusts itself
-			handle_organs()	//Optimized.
+			handle_bodyparts()	//Optimized.
 			handle_blood()
 
 		if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
@@ -1481,7 +1476,7 @@
 				healthdoll.icon_state = "healthdoll_DEAD"
 			else
 				healthdoll.icon_state = "healthdoll_OVERLAY"
-				for(var/datum/organ/external/BP in organs)
+				for(var/datum/organ/external/BP in bodyparts)
 					var/damage = BP.burn_dam + BP.brute_dam
 					var/comparison = (BP.max_damage / 5)
 					var/icon_num = 0

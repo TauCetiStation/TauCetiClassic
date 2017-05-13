@@ -117,7 +117,7 @@ REAGENT SCANNER
 		user.show_message("\blue Time of Death: [M.tod]")
 	if(istype(M, /mob/living/carbon/human) && mode == 1)
 		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_organs(1,1)
+		var/list/damaged = H.get_damaged_bodyparts(1, 1)
 		user.show_message("\blue Localized Damage, Brute/Burn:",1)
 		if(length(damaged)>0)
 			for(var/datum/organ/external/BP in damaged)
@@ -163,8 +163,8 @@ REAGENT SCANNER
 		user.show_message("\red Significant brain damage detected. Subject may have had a concussion.")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		for(var/name in H.organs_by_name)
-			var/datum/organ/external/BP = H.organs_by_name[name]
+		for(var/name in H.bodyparts_by_name)
+			var/datum/organ/external/BP = H.bodyparts_by_name[name]
 			var/limb = BP.name
 			if(BP.status & ORGAN_BROKEN)
 				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && (!(BP.status & ORGAN_SPLINTED)))
@@ -172,12 +172,12 @@ REAGENT SCANNER
 			if(BP.has_infected_wound())
 				to_chat(user, "\red Infected wound detected in subject [limb]. Disinfection recommended.")
 
-		for(var/name in H.organs_by_name)
-			var/datum/organ/external/BP = H.organs_by_name[name]
+		for(var/name in H.bodyparts_by_name)
+			var/datum/organ/external/BP = H.bodyparts_by_name[name]
 			if(BP.status & ORGAN_BROKEN)
 				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
 				break
-		for(var/datum/organ/external/BP in H.organs)
+		for(var/datum/organ/external/BP in H.bodyparts)
 			for(var/datum/wound/W in BP.wounds)
 				if(W.internal)
 					user.show_message(text("\red Internal bleeding detected. Advanced scanner required for location."), 1)

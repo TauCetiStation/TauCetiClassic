@@ -72,7 +72,7 @@ obj/machinery/door/airlock/Bumped(atom/AM)
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("\red [H] headbutts the airlock.")
-				var/datum/organ/external/BP = H.organs_by_name[BP_HEAD]
+				var/datum/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 				H.Stun(8)
 				H.Weaken(5)
 				BP.take_damage(10, 0)

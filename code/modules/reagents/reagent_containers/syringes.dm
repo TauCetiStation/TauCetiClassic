@@ -241,7 +241,7 @@
 		var/mob/living/carbon/human/H = target
 
 		var/target_zone = ran_zone(user.zone_sel.selecting)
-		var/datum/organ/external/BP = H.get_organ(target_zone)
+		var/datum/organ/external/BP = H.get_bodypart(target_zone)
 
 		if (!BP)
 			return
@@ -268,7 +268,7 @@
 	else
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message(text("\red <B>[user] stabs [target] with [src.name]!</B>"), 1)
-		target.take_organ_damage(3)// 7 is the same as crowbar punch
+		target.take_bodypart_damage(3)// 7 is the same as crowbar punch
 
 	src.reagents.reaction(target, INGEST)
 	var/syringestab_amount_transferred = rand(0, (reagents.total_volume - 5)) //nerfed by popular demand

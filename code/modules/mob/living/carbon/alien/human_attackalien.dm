@@ -33,7 +33,7 @@ This is what happens, when alien attack.
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
-			var/datum/organ/external/BP = organs_by_name[ran_zone(M.zone_sel.selecting)]
+			var/datum/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
 			playsound(loc, 'sound/weapons/bite.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] has bitten [src]!</B>")
@@ -73,7 +73,7 @@ This is what happens, when alien attack.
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
-			var/datum/organ/external/BP = organs_by_name[ran_zone(M.zone_sel.selecting)]
+			var/datum/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)

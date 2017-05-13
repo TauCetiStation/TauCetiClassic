@@ -137,11 +137,10 @@
 	if(!user.gloves)
 		to_chat(user, "\red The nettle burns your bare hand!")
 		if(istype(user, /mob/living/carbon/human))
-			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/datum/organ/external/BP = user.organs_by_name[organ]
+			var/datum/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
 			BP.take_damage(0, force)
 		else
-			user.take_organ_damage(0,force)
+			user.take_bodypart_damage(0, force)
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
@@ -163,11 +162,10 @@
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user)
 	if(!user.gloves)
 		if(istype(user, /mob/living/carbon/human))
-			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/datum/organ/external/BP = user.organs_by_name[organ]
+			var/datum/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
 			BP.take_damage(0, force)
 		else
-			user.take_organ_damage(0,force)
+			user.take_bodypart_damage(0, force)
 		if(prob(50))
 			user.Paralyse(5)
 			to_chat(user, "\red You are stunned by the Deathnettle when you try picking it up!")

@@ -59,7 +59,7 @@
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
-				var/datum/organ/external/BP = H.organs_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
+				var/datum/organ/external/BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
 				if(BP.status & ORGAN_ROBOT)
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
@@ -117,8 +117,7 @@
 			return 0
 		if(victim.gloves)
 			return 0
-		var/target_zone = pick(BP_L_HAND , BP_R_HAND)
-		var/datum/organ/external/BP = victim.organs_by_name[target_zone]
+		var/datum/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_HAND , BP_R_HAND)]
 		if(!BP)
 			return 0
 		if(BP.status & ORGAN_ROBOT)

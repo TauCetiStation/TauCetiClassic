@@ -50,7 +50,7 @@
 			H.Weaken(10)
 			H.op_stage.appendix = 2.0
 
-			var/datum/organ/external/BP = H.organs_by_name[BP_GROIN]
+			var/datum/organ/external/BP = H.bodyparts_by_name[BP_GROIN]
 			var/datum/wound/W = new /datum/wound/internal_bleeding(20)
 			H.adjustToxLoss(25)
 			BP.wounds += W

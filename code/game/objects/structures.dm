@@ -120,15 +120,15 @@
 
 			switch(pick(list("ankle","wrist","head","knee","elbow")))
 				if("ankle")
-					BP = H.organs_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
+					BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
 				if("knee")
-					BP = H.organs_by_name[pick(BP_L_LEG , BP_R_LEG)]
+					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if("wrist")
-					BP = H.organs_by_name[pick(BP_L_HAND , BP_R_HAND)]
+					BP = H.bodyparts_by_name[pick(BP_L_HAND , BP_R_HAND)]
 				if("elbow")
-					BP = H.organs_by_name[pick(BP_L_ARM , BP_R_ARM)]
+					BP = H.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 				if("head")
-					BP = H.organs_by_name[BP_HEAD]
+					BP = H.bodyparts_by_name[BP_HEAD]
 
 			if(BP)
 				to_chat(M, "<span class='red'>You land heavily on your [BP.name]!</span>")

@@ -184,10 +184,8 @@
 			to_chat(user, "\red \The [src] is far too small for you to pick up.")
 			return
 
-	if(hasorgans(user))
-		var/datum/organ/external/BP = user:organs_by_name[BP_R_HAND]
-		if (user.hand)
-			BP = user:organs_by_name[BP_L_HAND]
+	if(ishuman(user))
+		var/datum/organ/external/BP = user:bodyparts_by_name[user.hand ? BP_L_HAND : BP_R_HAND]
 		if(BP && !BP.is_usable())
 			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return
@@ -671,7 +669,7 @@
 		)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/internal/eyes/IO = H.internal_organs_by_name[O_EYES]
+		var/datum/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		IO.damage += rand(3,4)
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
@@ -687,10 +685,10 @@
 			if (IO.damage >= IO.min_broken_damage)
 				if(H.stat != DEAD)
 					to_chat(H, "\red You go blind!")
-		var/datum/organ/external/BP = H.organs_by_name[BP_HEAD]
+		var/datum/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 		BP.take_damage(7)
 	else
-		M.take_organ_damage(7)
+		M.take_bodypart_damage(7)
 	M.eye_blurry += rand(3,4)
 	return
 

@@ -31,10 +31,9 @@
 /obj/structure/extinguisher_cabinet/attack_hand(mob/user)
 	if(isrobot(user) || isalien(user))
 		return
-	if (hasorgans(user))
-		var/datum/organ/external/BP = user:organs_by_name[BP_R_HAND]
-		if (user.hand)
-			BP = user:organs_by_name[BP_L_HAND]
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/datum/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_HAND : BP_R_HAND]
 		if(BP && !BP.is_usable())
 			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return

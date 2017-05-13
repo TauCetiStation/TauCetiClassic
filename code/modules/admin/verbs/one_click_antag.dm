@@ -549,7 +549,7 @@ client/proc/one_click_antag()
 	new_vox.mutations |= NOCLONE //Stops the station crew from messing around with their DNA.
 
 	//Now apply cortical stack.
-	var/datum/organ/external/BP = new_vox.organs_by_name[BP_HEAD]
+	var/datum/organ/external/BP = new_vox.bodyparts_by_name[BP_HEAD]
 
 	//To avoid duplicates.
 	for(var/obj/item/weapon/implant/cortical/imp in new_vox.contents)

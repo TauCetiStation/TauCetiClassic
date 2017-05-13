@@ -30,13 +30,11 @@
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
-					var/organ = H.organs_by_name[BP_CHEST]
-					if (istype(organ, /datum/organ/external))
-						var/datum/organ/external/BP = organ
-						BP.take_damage(d, 0)
+					var/datum/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
+					BP.take_damage(d, 0)
 					H.updatehealth()
 				else
-					src.take_organ_damage(d)
+					src.take_bodypart_damage(d)
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
 						M.show_message(text("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
@@ -79,10 +77,8 @@
 
 /mob/living/carbon/attack_hand(mob/M)
 	if(!istype(M, /mob/living/carbon)) return
-	if (hasorgans(M))
-		var/datum/organ/external/BP = M:organs_by_name[BP_R_HAND]
-		if (M.hand)
-			BP = M:organs_by_name[BP_L_HAND]
+	if (ishuman(M))
+		var/datum/organ/external/BP = M:bodyparts_by_name[M.hand ? BP_L_HAND : BP_R_HAND]
 		if(BP && !BP.is_usable())
 			to_chat(M, "<span class='rose'>You can't use your [BP.name].</span>")
 			return
@@ -199,7 +195,7 @@
 				"<span class='notice'>You check yourself for injuries.</span>" \
 				)
 
-			for(var/datum/organ/external/BP in H.organs)
+			for(var/datum/organ/external/BP in H.bodyparts)
 				var/status = ""
 				var/brutedamage = BP.brute_dam
 				var/burndamage = BP.burn_dam
@@ -295,7 +291,7 @@
 				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					var/datum/organ/external/BP = H.organs_by_name[BP_HEAD]
+					var/datum/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 					BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
 				else
 					take_overall_damage(5, used_weapon = "Table")

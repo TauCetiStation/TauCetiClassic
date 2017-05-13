@@ -195,9 +195,9 @@
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
-		var/divided_damage = (burn_amount)/(H.organs.len)
+		var/divided_damage = burn_amount / H.bodyparts.len
 		var/extradam = 0	//added to when organ is at max dam
-		for(var/datum/organ/external/BP in H.organs)
+		for(var/datum/organ/external/BP in H.bodyparts)
 			BP.take_damage(0, divided_damage + extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 		H.updatehealth()
 		return 1
@@ -386,41 +386,33 @@
 /mob/living/proc/can_inject()
 	return 1
 
-/mob/living/proc/get_organ_target()
-	var/target_zone = zone_sel.selecting
-	if (target_zone in list(O_EYES , O_MOUTH))
-		target_zone = BP_HEAD
-	var/datum/organ/external/BP = ran_zone(target_zone)
-	return BP
-
-
-// heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_organ_damage(brute, burn)
+// heal ONE bodypart, bodypart gets randomly selected from damaged ones.
+/mob/living/proc/heal_bodypart_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
-// damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_organ_damage(brute, burn)
+// damage ONE bodypart, bodypart gets randomly selected from damaged ones.
+/mob/living/proc/take_bodypart_damage(brute, burn)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
 
-// heal MANY external organs, in random order
+// heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
-// damage MANY external organs, in random order
+// damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute, burn, used_weapon = null)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
 
-/mob/living/proc/restore_all_organs()
+/mob/living/proc/restore_all_bodyparts()
 	return
 
 
@@ -479,8 +471,8 @@
 		var/mob/living/carbon/human/human_mob = src
 		human_mob.restore_blood()
 
-	// fix all of our organs
-	restore_all_organs()
+	// fix all of our bodyparts
+	restore_all_bodyparts()
 
 	// remove the character from the list of the dead
 	if(stat == DEAD)

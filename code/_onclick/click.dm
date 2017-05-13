@@ -304,7 +304,7 @@
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
 	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 
-	LE.def_zone = get_organ_target()
+	LE.def_zone = ran_zone(zone_sel.selecting)
 	LE.starting = T
 	LE.original = A
 	LE.current = T

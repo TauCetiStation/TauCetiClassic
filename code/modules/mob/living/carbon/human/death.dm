@@ -11,7 +11,7 @@
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
-	for(var/datum/organ/external/BP in organs)
+	for(var/datum/organ/external/BP in bodyparts)
 		if(istype(BP, /datum/organ/external/chest))
 			continue
 		// Only make the limb drop if it's not too damaged
@@ -66,7 +66,7 @@
 	if(species) species.handle_death(src)
 
 	//Handle brain slugs.
-	var/datum/organ/external/BP = organs_by_name[BP_HEAD]
+	var/datum/organ/external/BP = bodyparts_by_name[BP_HEAD]
 	var/mob/living/simple_animal/borer/B
 
 	for(var/I in BP.implants)

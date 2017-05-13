@@ -62,8 +62,8 @@
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human/))
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
-					var/datum/organ/external/BP = H.organs_by_name[organ_name]
+					var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
+					var/datum/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 					BP.take_damage(20, used_weapon = "Hulk Foot")
 					BP.fracture()
 					H.Stun(5)
@@ -223,8 +223,8 @@
 							target = get_turf(get_step(target,cur_dir))
 						var/mob/living/carbon/human/H = M
 						if(istype(H,/mob/living/carbon/human/))
-							var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
-							var/datum/organ/external/BP = H.organs_by_name[organ_name]
+							var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
+							var/datum/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 							BP.take_damage(20, used_weapon = "Hulk Shoulder")
 							BP.fracture()
 							M.Weaken(5)
@@ -337,8 +337,8 @@
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human/))
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
-					var/datum/organ/external/BP = H.organs_by_name[organ_name]
+					var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
+					var/datum/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 					if(FAT in usr.mutations)
 						BP.take_damage(100, used_weapon = "Hulk Fat Arm")
 						H.Stun(10)
@@ -455,8 +455,8 @@
 		for(var/mob/living/M in view(2, usr) - usr - usr.contents)
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				var/organ_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
-				var/datum/organ/external/BP = H.organs_by_name[organ_name]
+				var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
+				var/datum/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 				BP.take_damage(1.5, used_weapon = "Tail")
 			else
 				M.take_overall_damage(1.5, used_weapon = "Tail")

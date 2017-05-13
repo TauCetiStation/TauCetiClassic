@@ -46,7 +46,7 @@
 
 	OnMobLife(mob/living/carbon/human/M)
 		if(!istype(M)) return
-		var/datum/organ/external/head/H = M.organs_by_name[BP_HEAD]
+		var/datum/organ/external/head/H = M.bodyparts_by_name[BP_HEAD]
 
 		if(H.disfigured)
 			H.disfigured = FALSE
@@ -56,8 +56,8 @@
 			M.update_mutations()
 			M.UpdateAppearance()
 
-		var/datum/organ/external/chest/CHEST = M.organs_by_name[BP_CHEST]
-		for(var/datum/organ/internal/IO in CHEST.internal_organs)
+		var/datum/organ/external/chest/BP = M.bodyparts_by_name[BP_CHEST]
+		for(var/datum/organ/internal/IO in BP.bodypart_organs)
 			if(IO.damage > 0)
 				IO.damage -= 0.25
 
@@ -66,8 +66,8 @@
 		else
 			if(prob(20))
 				if(M.getOxyLoss() < 126) M.adjustOxyLoss(-1)
-				if(M.getBruteLoss() < 126) M.heal_organ_damage(1,0)
-				if(M.getFireLoss() < 126) M.heal_organ_damage(0,1)
+				if(M.getBruteLoss() < 126) M.heal_bodypart_damage(1,0)
+				if(M.getFireLoss() < 126) M.heal_bodypart_damage(0,1)
 				if(M.getToxLoss() < 126) M.adjustToxLoss(-1)
 				if(M.getCloneLoss() < 126) M.adjustCloneLoss(-1)
 			if(M.getBrainLoss()) M.adjustBrainLoss(-0.10)

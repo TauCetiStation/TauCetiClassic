@@ -17,8 +17,8 @@
 
 /datum/autopsy_data_scanner
 	var/weapon = null // this is the DEFINITE weapon type that was used
-	var/list/organs_scanned = list() // this maps a number of scanned organs to
-									 // the wounds to those organs with this data's weapon type
+	var/list/bodyparts_scanned = list() // this maps a number of scanned bodyparts to
+									 // the wounds to those bodyparts with this data's weapon type
 	var/organ_names = ""
 
 /datum/autopsy_data
@@ -63,14 +63,14 @@
 			D.weapon = W.weapon
 			wdata[V] = D
 
-		if(!D.organs_scanned[BP.body_zone])
+		if(!D.bodyparts_scanned[BP.body_zone])
 			if(D.organ_names == "")
 				D.organ_names = BP.name
 			else
 				D.organ_names += ", [BP.name]"
 
-		qdel(D.organs_scanned[BP.body_zone])
-		D.organs_scanned[BP.body_zone] = W.copy()
+		qdel(D.bodyparts_scanned[BP.body_zone])
+		D.bodyparts_scanned[BP.body_zone] = W.copy()
 
 	for(var/V in BP.trace_chemicals)
 		if(BP.trace_chemicals[V] > 0 && !chemtraces.Find(V))
@@ -97,8 +97,8 @@
 		var/list/weapon_chances = list() // maps weapon names to a score
 		var/age = 0
 
-		for(var/wound_idx in D.organs_scanned)
-			var/datum/autopsy_data/W = D.organs_scanned[wound_idx]
+		for(var/wound_idx in D.bodyparts_scanned)
+			var/datum/autopsy_data/W = D.bodyparts_scanned[wound_idx]
 			total_hits += W.hits
 
 			var/wname = W.pretend_weapon
@@ -128,7 +128,7 @@
 			if(30 to 1000)
 				damage_desc = "<font color='red'>severe</font>"
 
-		if(!total_score) total_score = D.organs_scanned.len
+		if(!total_score) total_score = D.bodyparts_scanned.len
 
 		scan_data += "<b>Weapon #[n]</b><br>"
 		if(damaging_weapon)
@@ -193,7 +193,7 @@
 
 	src.timeofdeath = M.timeofdeath
 
-	var/datum/organ/external/BP = M.get_organ(user.zone_sel.selecting)
+	var/datum/organ/external/BP = M.get_bodypart(user.zone_sel.selecting)
 	if(!BP)
 		to_chat(usr, "<b>You can't scan this body part.</b>")
 		return

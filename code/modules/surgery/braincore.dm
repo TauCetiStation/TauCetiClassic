@@ -8,7 +8,7 @@
 	priority = 2
 	blood_level = 1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return target_zone == BP_HEAD && hasorgans(target)
+		return target_zone == BP_HEAD && ishuman(target)
 
 /datum/surgery_step/brain/saw_skull
 	allowed_tools = list(
@@ -112,8 +112,8 @@
 			B = new(target.loc)
 			B.transfer_identity(target)
 
-		target.internal_organs -= B
-		target.internal_organs_by_name -= O_BRAIN // this is SOOO wrong.
+		target.organs -= B
+		target.organs_by_name -= O_BRAIN // this is SOOO wrong.
 
 		target:brain_op_stage = 4.0
 		target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
@@ -182,7 +182,7 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] mends hematoma in [target]'s brain with \the [tool].",	\
 		"\blue You mend hematoma in [target]'s brain with \the [tool].")
-		var/datum/organ/internal/brain/IO = target.internal_organs_by_name[O_BRAIN]
+		var/datum/organ/internal/brain/IO = target.organs_by_name[O_BRAIN]
 		if (IO)
 			IO.damage = 0
 

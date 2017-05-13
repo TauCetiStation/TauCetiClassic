@@ -29,11 +29,11 @@
 		switch(type)
 			if("feet")
 				if(!H.shoes)
-					BP = H.organs_by_name[pick(BP_L_LEG , BP_R_LEG)]
+					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 					H.Weaken(3)
 			if(BP_L_HAND, BP_R_HAND)
 				if(!H.gloves)
-					BP = H.organs_by_name[type]
+					BP = H.bodyparts_by_name[type]
 					H.Stun(3)
 		if(BP)
 			BP.take_damage(1, 0)

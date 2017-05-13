@@ -3,9 +3,7 @@
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
-	var/datum/organ/external/BPH = M:organs_by_name[BP_R_HAND]
-	if (M.hand)
-		BPH = M:organs_by_name[BP_L_HAND]
+	var/datum/organ/external/BPH = M:bodyparts_by_name[M.hand ? BP_L_HAND : BP_R_HAND]
 	if(BPH && !BPH.is_usable())
 		to_chat(M, "\red You can't use your [BPH.name].")
 		return
@@ -30,7 +28,7 @@
 					G.cell.use(2500)
 					G.update_icon()
 					var/mob/living/carbon/human/target = src
-					var/datum/organ/external/BP = get_organ(M.zone_sel.selecting) // We're checking the outside, buddy!
+					var/datum/organ/external/BP = get_bodypart(M.zone_sel.selecting) // We're checking the outside, buddy!
 					var/calc_power
 					if((prob(25) && !istype(G, /obj/item/clothing/gloves/yellow)) && (target != M))
 						visible_message("\red <B>[M] accidentally touched \himself with the stun gloves!</B>")
@@ -62,7 +60,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("\red <B>[M] has attempted to punch [src]!</B>")
 				return 0
-			var/datum/organ/external/BP = organs_by_name[ran_zone(M.zone_sel.selecting)]
+			var/datum/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
 
 			if(HULK in M.mutations)			damage += 5
@@ -149,7 +147,7 @@
 				return 0
 
 
-			var/datum/organ/external/BP = organs_by_name[ran_zone(M.zone_sel.selecting)]
+			var/datum/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
 
 			if(HULK in M.mutations)			damage += 5
@@ -176,7 +174,7 @@
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/datum/organ/external/BP = organs_by_name[ran_zone(M.zone_sel.selecting)]
+			var/datum/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 
 			if(istype(r_hand,/obj/item/weapon/gun) || istype(l_hand,/obj/item/weapon/gun))
 				var/obj/item/weapon/gun/W = null

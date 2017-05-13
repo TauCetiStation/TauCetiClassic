@@ -1179,7 +1179,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					user.show_message("\blue &emsp; Time of Death: [C.tod]")
 				if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C
-					var/list/damaged = H.get_damaged_organs(1,1)
+					var/list/damaged = H.get_damaged_bodyparts(1, 1)
 					user.show_message("\blue Localized Damage, Brute/Burn:",1)
 					if(length(damaged)>0)
 						for(var/datum/organ/external/BP in damaged)

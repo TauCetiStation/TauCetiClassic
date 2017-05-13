@@ -49,7 +49,7 @@
 
 	// does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
 	proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/BP = target.get_organ(target_zone)
+		var/datum/organ/external/BP = target.get_bodypart(target_zone)
 		if (can_infect && BP)
 			spread_germs_to_organ(BP, user)
 		if (ishuman(user) && prob(60))
@@ -78,7 +78,7 @@ proc/spread_germs_to_organ(datum/organ/external/BP, mob/living/carbon/human/user
 
 	BP.germ_level = max(germ_level, BP.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
 	if(BP.germ_level)
-		BP.owner.bad_external_organs |= BP
+		BP.owner.bad_bodyparts |= BP
 proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	if(!istype(M))
 		return 0

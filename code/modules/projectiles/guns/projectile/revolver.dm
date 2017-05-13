@@ -63,7 +63,7 @@
 		return 1
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 		to_chat(M, "<span class='danger'>[src] blows up in your face!</span>")
-		M.take_organ_damage(0,20)
+		M.take_bodypart_damage(0, 20)
 		M.drop_item()
 		qdel(src)
 		return 0

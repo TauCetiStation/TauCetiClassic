@@ -383,7 +383,7 @@
 	var/safety = user:eyecheck()
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		var/datum/organ/internal/eyes/IO = H.internal_organs_by_name[O_EYES]
+		var/datum/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(H.species.flags[IS_SYNTHETIC])
 			return
 		switch(safety)
@@ -483,21 +483,19 @@
 
 /obj/item/weapon/weldingtool/attack(mob/M, mob/user)
 
-	if(hasorgans(M))
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
 
-		var/datum/organ/external/BP = M:get_organ(user.zone_sel.selecting)
-
+		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 		if(!BP)
 			return
 		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				if(M == user)
-					to_chat(user, "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>")
-					return
+		if(H.species.flags[IS_SYNTHETIC])
+			if(M == user)
+				to_chat(user, "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>")
+				return
 
 		if(BP.brute_dam)
 			BP.heal_damage(15,0,0,1)

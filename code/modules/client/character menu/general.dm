@@ -480,7 +480,7 @@
 						flavor_text = msg
 
 				if("organs")
-					var/menu_type = input(user, "Menu") as null|anything in list("Limbs", "Internal Organs")
+					var/menu_type = input(user, "Menu") as null|anything in list("Limbs", "Organs")
 					if(!menu_type) return
 
 					switch(menu_type)
@@ -534,7 +534,7 @@
 									if(second_limb)
 										organ_data[second_limb] = "cyborg"
 
-						if("Internal Organs")
+						if("Organs")
 							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
 							if(!organ_name) return
 

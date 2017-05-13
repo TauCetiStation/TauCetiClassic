@@ -422,23 +422,22 @@ By design, d1 is the smallest direction and d2 is the highest
 
 //you can use wires to heal robotics
 /obj/item/weapon/cable_coil/attack(mob/M, mob/user)
-	if(hasorgans(M))
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
 
-		var/datum/organ/external/BP = M:get_organ(user.zone_sel.selecting)
+		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				if(M == user)
-					to_chat(user, "<span class='alert'>You can't repair damage to your own body - it's against OH&S.</span>")
-					return
+		if(H.species.flags[IS_SYNTHETIC])
+			if(H == user)
+				to_chat(user, "<span class='alert'>You can't repair damage to your own body - it's against OH&S.</span>")
+				return
 
 		if(BP.burn_dam > 0)
 			if(use(1))
 				BP.heal_damage(0, 15, 0, 1)
-				user.visible_message("<span class='alert'>\The [user] repairs some burn damage on \the [M]'s [BP.name] with \the [src].</span>")
+				user.visible_message("<span class='alert'>\The [user] repairs some burn damage on \the [H]'s [BP.name] with \the [src].</span>")
 				return
 			else
 				to_chat(user, "Need more cable!")
