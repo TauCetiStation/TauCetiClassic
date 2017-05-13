@@ -32,58 +32,34 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	visible_message("<span class='danger'>CLANG</span>")
 	if((istype(clong, /turf/simulated) || isobj(clong)) && clong.density)
 		clong.ex_act(2)
-	else if(ismob(clong))
+	else if(isliving(clong))
 		var/mob/living/M = clong
 		M.adjustBruteLoss(rand(10,40))
-		if(prob(50))
+		if(prob(60))
 			step(src,get_dir(src,M))
 
 /obj/effect/immovablerod/ex_act(severity, target)
 	return 0
 
 /proc/immovablerod()
-	var/startx = 0
-	var/starty = 0
-	var/endy = 0
-	var/endx = 0
+	var/turf/start
+	var/turf/end
 	var/startside = pick(cardinal)
-
 	switch(startside)
 		if(NORTH)
-			starty = 187
-			startx = rand(41, 199)
-			endy = 38
-			endx = rand(41, 199)
+			start = locate(rand(41, 199), 187, 1)
+			end = locate(rand(41, 199), 38, 1)
 		if(EAST)
-			starty = rand(38, 187)
-			startx = 199
-			endy = rand(38, 187)
-			endx = 41
+			start = locate(199, rand(38, 187), 1)
+			end = locate(41, rand(38, 187), 1)
 		if(SOUTH)
-			starty = 38
-			startx = rand(41, 199)
-			endy = 187
-			endx = rand(41, 199)
+			start = locate(rand(41, 199), 38, 1)
+			end = locate(rand(41, 199), 187, 1)
 		if(WEST)
-			starty = rand(38, 187)
-			startx = 41
-			endy = rand(38, 187)
-			endx = 199
-
+			start = locate(41, rand(38, 187), 1)
+			end = locate(199, rand(38, 187), 1)
 	//rod time!
-	var/obj/effect/immovablerod/immrod = new /obj/effect/immovablerod(locate(startx, starty, 1))
-//	world << "Rod in play, starting at [start.loc.x],[start.loc.y] and going to [end.loc.x],[end.loc.y]"
-	var/end = locate(endx, endy, 1)
-	spawn(0)
-		walk_towards(immrod, end,1)
-	sleep(1)
-	while (immrod)
-		if (immrod.z != ZLEVEL_STATION)
-			immrod.z = ZLEVEL_STATION
-		if(immrod.loc == end)
-			qdel(immrod)
-		sleep(10)
-	for(var/obj/effect/immovablerod/imm in world)
-		return
+	var/obj/effect/immovablerod/Imm = new(start, end)
+	message_admins("Immovable Rod has spawned at [Imm.x],[Imm.y],[Imm.z] [ADMIN_JMP(Imm)] [ADMIN_FLW(Imm)].")
 	sleep(50)
 	command_alert("What the fuck was that?!", "General Alert")

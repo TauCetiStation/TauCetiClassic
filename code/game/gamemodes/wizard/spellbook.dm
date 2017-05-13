@@ -308,7 +308,7 @@
 	item_path = /obj/item/weapon/contract
 	log_name = "CT"
 	category = "Assistance"
-	cost = 4
+	cost = 5
 
 /datum/spellbook_entry/item/contract/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	var/obj/item/weapon/contract/contract = new(get_turf(user))

@@ -3,7 +3,7 @@
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
 
 	school = "evocation"
-	charge_max = 300
+	charge_max = 350
 	clothes_req = 1
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
