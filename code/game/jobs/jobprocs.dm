@@ -23,9 +23,6 @@
 	new /obj/effect/forcefield/magic/mime(get_turf(H), H, 300)
 
 /client/proc/return_mimewall(mob/living/carbon/human/H)
-	to_chat(world,"It's works")
-	if(H)
-		to_chat(world,"Agrument is: [H]")
 	H.verbs += /client/proc/mimewall
 	if(H.mind)
 		H.mind.special_verbs  += /client/proc/mimewall

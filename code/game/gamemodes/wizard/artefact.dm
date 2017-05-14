@@ -145,7 +145,7 @@
 
 /obj/item/weapon/contract/proc/make_apprentice(mob/living/carbon/human/M, type = "")
 	new /obj/effect/effect/smoke(get_turf(src))
-	var/wizard_name = "GOGO"
+	var/wizard_name = "Grand Magus"
 	if(wizard)
 		wizard_name = wizard.name
 	to_chat(M, "<span class='notice'>You are [master]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.</span>")
