@@ -174,13 +174,6 @@
 	icon_state = "boater_hat"
 	item_state = "boater_hat"
 	desc = "The ultimate in summer fashion."
-/*
-/obj/item/clothing/head/fedora
-	name = "\improper fedora"
-	icon_state = "fedora"
-	item_state = "fedora"
-	desc = "A sharp, stylish hat."
-*/
 
 /obj/item/clothing/head/feathertrilby
 	name = "\improper feather trilby"
@@ -285,6 +278,22 @@
 
 	fedoraproc(usr)
 
+/obj/item/clothing/head/fedora/black
+	name = "fedora"
+	desc = "Someone wearing this definitely makes them cool."
+	icon_state = "hat_black"
+
+/obj/item/clothing/head/fedora/white
+	name = "white fedora"
+	desc = "Someone wearing this definitely makes them cool."
+	icon_state = "hat_white"
+
+/obj/item/clothing/head/fedora/brown
+ 	name = "brown fedora"
+ 	desc = "Someone wearing this definitely makes them cool."
+ 	icon_state = "hat_brown"
+
+
 /obj/item/clothing/head/batman_helmet
 	name = "batman helmet"
 	desc = "It's not who you are underneath, it's what you do that defines you."
@@ -298,12 +307,6 @@
 	name = "white beret"
 	icon_state = "rosas_hat"
 	item_state = "helmet"
-
-/obj/item/clothing/head/fedora
-	name = "\improper fedora"
-	icon_state = "fedora"
-	item_state = "fedora"
-	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
 
 /obj/item/clothing/head/sombrero
 	name = "sombrero"
@@ -322,22 +325,6 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "You never asked for this."
-
-//Mafia
-/obj/item/clothing/head/fedora_mafia
-	name = "fedora"
-	desc = "Someone wearing this definitely makes them cool."
-	icon_state = "hat_black"
-
-/obj/item/clothing/head/fedora_mafia/white
-	name = "white fedora"
-	desc = "Someone wearing this definitely makes them cool."
-	icon_state = "hat_white"
-
-/obj/item/clothing/head/fedora_mafia/brown
- 	name = "brown fedora"
- 	desc = "Someone wearing this definitely makes them cool."
- 	icon_state = "hat_brown"
 
 /obj/item/clothing/head/western
 	name = "western hat"
