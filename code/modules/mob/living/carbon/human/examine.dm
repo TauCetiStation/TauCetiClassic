@@ -457,7 +457,7 @@
 	//someone here, but who?
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		if(H.species && H.species.name != "Abductor")
+		if(H.species && H.species.name != ABDUCTOR)
 			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
 				if(V.stealth_active)
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")

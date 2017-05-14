@@ -42,9 +42,9 @@
 	icon_state = "voxmask"
 	item_state = "voxmask"
 	permeability_coefficient = 0.01
-	species_restricted = list("Vox","Vox Armalis")
+	species_restricted = list(VOX , VOX_ARMALIS)
 	sprite_sheets = list(
-		"Vox Armalis" = 'icons/mob/species/armalis/mask.dmi'
+		VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi'
 		)
 
 /obj/item/clothing/mask/breath/vox/attack_self()

@@ -29,6 +29,20 @@
 #define GETPULSE_HAND	0	//less accurate (hand)
 #define GETPULSE_TOOL	1	//more accurate (med scanner, sleeper, etc)
 
+// Species Names (keep in mind, that whitelist and preferences DB depends on this names too, and if anything is renamed, update MYSQL tables or is_alien_whitelisted() proc and preferences).
+#define HUMAN       "Human"
+#define UNATHI      "Unathi"
+#define TAJARAN     "Tajaran"
+#define SKRELL      "Skrell"
+#define DIONA       "Diona"
+#define IPC         "Machine"
+#define VOX         "Vox"
+#define VOX_ARMALIS "Vox Armalis"
+#define ABDUCTOR    "Abductor"
+#define SKELETON    "Skeleton"
+#define SHADOWLING  "Shadowling"
+#define MONKEY      "Monkey"
+
 //Some on_mob_life() procs check for alien races.
 #define IS_DIONA  1
 #define IS_VOX	  2

@@ -9,7 +9,7 @@
 	cure_id = list("copper")
 	cure_chance = 5
 	agent = "R2D2 Nanomachines"
-	affected_species = list("Human")
+	affected_species = list(HUMAN)
 	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
 	severity = "Major"
 	var/gibbed = 0
