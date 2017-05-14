@@ -266,7 +266,7 @@ This function restores all bodyparts.
 
 
 	var/datum/organ/external/BP = null
-	if(isorgan(def_zone))
+	if(isbodypart(def_zone))
 		BP = def_zone
 	else
 		if(!def_zone)

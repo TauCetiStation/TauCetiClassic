@@ -200,9 +200,6 @@
 				return
 		A.attack_tk(src)
 
-/mob/proc/try_attack_tk(atom/A)
-
-
 /*
 	Restrained ClickOn
 
@@ -296,27 +293,25 @@
 /mob/proc/LaserEyes(atom/A)
 	return
 
-/mob/living/LaserEyes(atom/A)
-	next_move = world.time + 6
-	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
+/mob/living/carbon/human/LaserEyes(atom/A)
+	if(nutrition > 0)
+		next_move = world.time + 6
+		var/turf/T = get_turf(src)
+		var/turf/U = get_turf(A)
 
-	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
-	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
+		var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
+		playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 
-	LE.def_zone = ran_zone(zone_sel.selecting)
-	LE.starting = T
-	LE.original = A
-	LE.current = T
-	LE.damage = 20
-	LE.yo = U.y - T.y
-	LE.xo = U.x - T.x
-	spawn( 1 )
-		LE.process()
+		LE.def_zone = ran_zone(zone_sel.selecting)
+		LE.starting = T
+		LE.original = A
+		LE.current = T
+		LE.damage = 20
+		LE.yo = U.y - T.y
+		LE.xo = U.x - T.x
+		spawn( 1 )
+			LE.process()
 
-/mob/living/carbon/human/LaserEyes()
-	if(nutrition>0)
-		..()
 		nutrition = max(nutrition - rand(1,10),0)
 		handle_regular_hud_updates()
 	else

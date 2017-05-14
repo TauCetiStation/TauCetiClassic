@@ -137,7 +137,7 @@
 	var/organnum = 0
 
 	if(def_zone)
-		if(isorgan(def_zone))
+		if(isbodypart(def_zone))
 			return getarmor_organ(def_zone, type)
 		var/datum/organ/external/BP = get_bodypart(def_zone)
 		return getarmor_organ(BP, type)
