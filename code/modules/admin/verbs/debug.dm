@@ -1739,51 +1739,43 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(!M.loc.loc)
 			continue
 
-		if(istype(M.loc.loc,/area/engine/engine_room))
-			if(istype(M,/obj/machinery/power/rad_collector))
-				var/obj/machinery/power/rad_collector/Rad = M
-				Rad.anchored = 1
-				Rad.connect_to_network()
+		if(istype(M,/obj/machinery/power/rad_collector))
+			var/obj/machinery/power/rad_collector/Rad = M
+			Rad.anchored = 1
+			Rad.connect_to_network()
 
-				var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)
+			var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)
 
-				Phoron.air_contents.phoron = 29.1154	//This is a full tank if you filled it from a canister
-				Rad.P = Phoron
+			Phoron.air_contents.phoron = 29.1154	//This is a full tank if you filled it from a canister
+			Rad.P = Phoron
 
-				Phoron.loc = Rad
+			Phoron.loc = Rad
 
-				if(!Rad.active)
-					Rad.toggle_power()
-				Rad.update_icon()
+			if(!Rad.active)
+				Rad.toggle_power()
+			Rad.update_icon()
 
-			else if(istype(M,/obj/machinery/atmospherics/binary/pump))	//Turning on every pump.
-				var/obj/machinery/atmospherics/binary/pump/Pump = M
-				if(Pump.name == "Engine Feed" && response == "Setup Completely")
-					found_the_pump = 1
-					Pump.air2.nitrogen = 3750	//The contents of 2 canisters.
-					Pump.air2.temperature = 50
-					Pump.air2.update_values()
-				Pump.on=1
-				Pump.target_pressure = 4500
-				Pump.update_icon()
+		else if(istype(M,/obj/machinery/atmospherics/binary/pump))	//Turning on every pump.
+			var/obj/machinery/atmospherics/binary/pump/Pump = M
+			if(Pump.name == "Engine Feed" && response == "Setup Completely")
+				found_the_pump = 1
+				Pump.air2.nitrogen = 3750	//The contents of 2 canisters.
+				Pump.air2.temperature = 50
+				Pump.air2.update_values()
+			Pump.on=1
+			Pump.target_pressure = 4500
+			Pump.update_icon()
 
-			else if(istype(M,/obj/machinery/power/supermatter))
-				SM = M
-				spawn(50)
-					SM.power = 320
+		else if(istype(M,/obj/machinery/power/supermatter))
+			SM = M
+			spawn(50)
+				SM.power = 320
 
-			else if(istype(M,/obj/machinery/power/smes))	//This is the SMES inside the engine room.  We don't need much power.
-				var/obj/machinery/power/smes/SMES = M
-				SMES.chargemode = 1
-				SMES.chargelevel = 200000
-				SMES.output = 75000
-
-		else if(istype(M.loc.loc,/area/engine/engine_smes))	//Set every SMES to charge and spit out 300,000 power between the 4 of them.
-			if(istype(M,/obj/machinery/power/smes))
-				var/obj/machinery/power/smes/SMES = M
-				SMES.chargemode = 1
-				SMES.chargelevel = 200000
-				SMES.output = 75000
+		else if(istype(M,/obj/machinery/power/smes))	//This is the SMES inside the engine room.  We don't need much power.
+			var/obj/machinery/power/smes/SMES = M
+			SMES.chargemode = 1
+			SMES.chargelevel = 200000
+			SMES.output = 75000
 
 	if(!found_the_pump && response == "Setup Completely")
 		to_chat(src, "\red Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter")
