@@ -1292,6 +1292,14 @@
 	else
 		return 0
 
+// Unlike set_species(), this proc simply changes owner's specie and thats it.
+/mob/living/carbon/human/proc/set_species_soft(new_species)
+	if(species.name == new_species)
+		return
+
+	species = all_species[new_species]
+	regenerate_icons()
+
 /mob/living/carbon/human/proc/bloody_doodle()
 	set category = "IC"
 	set name = "Write in blood"
