@@ -727,18 +727,21 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	return 1 //we applied blood to the item
 
+var/global/list/items_blood_overlay_by_type = list()
 /obj/item/proc/generate_blood_overlay()
 	if(blood_overlay)
 		return
 
-	var/icon/I = new /icon(icon, icon_state)
-	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
-	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-
-	//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
-	for(var/obj/item/A in world)
-		if(A.type == type && !A.blood_overlay)
-			A.blood_overlay = image(I)
+	var/image/IMG = items_blood_overlay_by_type[type]
+	if(IMG)
+		blood_overlay = IMG
+	else
+		var/icon/ICO = new /icon(icon, icon_state)
+		ICO.Blend(new /icon('icons/effects/blood.dmi', rgb(255, 255, 255)), ICON_ADD) // fills the icon_state with white (except where it's transparent)
+		ICO.Blend(new /icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY)   // adds blood and the remaining white areas become transparant
+		IMG = image("icon" = ICO)
+		items_blood_overlay_by_type[type] = IMG
+		blood_overlay = IMG
 
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))
