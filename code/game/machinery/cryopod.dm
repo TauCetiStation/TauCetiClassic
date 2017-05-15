@@ -180,7 +180,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		if(world.time - time_entered < time_till_despawn)
 			return
 
-		if(!occupant.client && occupant.stat < DEAD) //Occupant is living and has no client.
+		if(!occupant.client && occupant.stat != DEAD) //Occupant is living and has no client.
 
 			//Drop all items into the pod.
 			for(var/obj/item/W in occupant)
@@ -343,7 +343,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	if(usr.stat != CONSCIOUS || !occupant)
 		return
 
-	if(usr != occupant && !occupant.client && occupant.stat < DEAD && !allowed(usr)) //Only heads and security can eject clientless live occupants
+	if(usr != occupant && !occupant.client && occupant.stat != DEAD && !allowed(usr)) //Only heads and security can eject clientless live occupants
 		to_chat(usr, "<span class='red'>You can't eject person from [src], since the preservation procedure has already begun</span>")
 		return
 
