@@ -76,6 +76,8 @@
 		overlays += "r_leg+o"
 	if(head)
 		overlays += "head+o"
+	if(check_completion())
+		w_class = 4
 
 /obj/item/robot_parts/robot_suit/proc/check_completion()
 	if(l_arm && r_arm)
@@ -110,8 +112,9 @@
 			chest = null
 			head = null
 			overlays.Cut()
+			w_class = 3
 		else
-			to_chat(user, "<span class='warring'>Nothing attached to robot frame!</span>")
+			to_chat(user, "<span class='warning'>Nothing attached to robot frame!</span>")
 		return
 
 	if(istype(W, /obj/item/robot_parts/l_leg))
@@ -180,10 +183,10 @@
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
-				to_chat(user, "<span class='warring'>You can't put \the [W] in, the frame has to be standing on the ground to be perfectly precise.</span>")
+				to_chat(user, "<span class='warning'>You can't put \the [W] in, the frame has to be standing on the ground to be perfectly precise.</span>")
 				return
 			if(!M.brainmob)
-				to_chat(user, "<span class='warring'>Sticking an empty [W] into the frame would sort of defeat the purpose.</span>")
+				to_chat(user, "<span class='warning'>Sticking an empty [W] into the frame would sort of defeat the purpose.</span>")
 				return
 			if(!M.brainmob.key)
 				var/ghost_can_reenter = 0
@@ -197,15 +200,15 @@
 					return
 
 			if(M.brainmob.stat == DEAD)
-				to_chat(user, "<span class='warring'>Sticking a dead [W] into the frame would sort of defeat the purpose.</span>")
+				to_chat(user, "<span class='warning'>Sticking a dead [W] into the frame would sort of defeat the purpose.</span>")
 				return
 
 			if((M.brainmob.mind in ticker.mode.head_revolutionaries) || (M.brainmob.mind in ticker.mode.A_bosses) || (M.brainmob.mind in ticker.mode.B_bosses))
-				to_chat(user, "<span class='warring'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [W].</span>")
+				to_chat(user, "<span class='warning'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [W].</span>")
 				return
 
 			if(jobban_isbanned(M.brainmob, "Cyborg"))
-				to_chat(user, "<span class='warring'>This [W] does not seem to fit.</span>")
+				to_chat(user, "<span class='warning'>This [W] does not seem to fit.</span>")
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc), unfinished = 1)
@@ -288,7 +291,7 @@
 			cell.loc = get_turf(src)
 			cell = null
 		else
-			to_chat(user, "<span class='warring'>No cell installed!</span>")
+			to_chat(user, "<span class='warning'>No cell installed!</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/wirecutters))
@@ -297,14 +300,14 @@
 			new /obj/item/weapon/cable_coil(get_turf(src), 1)
 			wires = 0.0
 		else
-			to_chat(user, "<span class='warring'>No wires installed!</span>")
+			to_chat(user, "<span class='warning'>No wires installed!</span>")
 	return
 
 /obj/item/robot_parts/head/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/device/flash))
 		if(istype(user,/mob/living/silicon/robot))
-			to_chat(user, "<span class='warring'>How do you propose to do that?</span>")
+			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
 			return
 		else if(flash1 && flash2)
 			to_chat(user, "<span class='info'>You have already inserted the eyes!</span>")
@@ -329,7 +332,7 @@
 				flash1.loc = get_turf(src)
 				flash1 = null
 		else
-			to_chat(user, "<span class='warring'>No flash installed!</span>")
+			to_chat(user, "<span class='warning'>No flash installed!</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/stock_parts/manipulator))
@@ -344,9 +347,9 @@
 /obj/item/robot_parts/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/card/emag))
 		if(sabotaged)
-			to_chat(user, "<span class='warring'>[src] is already sabotaged!</span>")
+			to_chat(user, "<span class='warning'>[src] is already sabotaged!</span>")
 		else
-			to_chat(user, "<span class='warring'>You slide [W] into the dataport on [src] and short out the safeties.</span>")
+			to_chat(user, "<span class='warning'>You slide [W] into the dataport on [src] and short out the safeties.</span>")
 			sabotaged = 1
 		return
 	..()
