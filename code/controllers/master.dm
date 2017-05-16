@@ -98,6 +98,22 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				else
 					msg += "\t [varname] = [varval]\n"
 	world.log << msg
+
+	var/datum/controller/subsystem/BadBoy = Master.last_type_processed
+	var/FireHim = FALSE
+	if(istype(BadBoy))
+		msg = null
+		switch(++BadBoy.failure_strikes)
+			if(2)
+				msg = "The [BadBoy.name] subsystem was the last to fire for 2 controller restarts. It will be recovered now and disabled if it happens again."
+				FireHim = TRUE
+			if(3)
+				msg = "The [BadBoy.name] subsystem seems to be destabilizing the MC and will be offlined."
+				BadBoy.flags |= SS_NO_FIRE
+		if(msg)
+			to_chat(admins, "<span class='boldannounce'>[msg]</span>")
+			world.log << msg
+
 	if (istype(Master.subsystems))
 		subsystems = Master.subsystems
 		StartProcessing(10)
@@ -158,9 +174,15 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Loop.
 	Master.StartProcessing(0)
 
-/datum/controller/master/proc/SetRunLevel(runlevel)
-	testing("MC: Runlevel changed from [isnull(current_runlevel) ? "NULL" : current_runlevel] to [runlevel]")
-	current_runlevel = runlevel
+/datum/controller/master/proc/SetRunLevel(new_runlevel)
+	var/old_runlevel = current_runlevel
+	if(isnull(old_runlevel))
+		old_runlevel = "NULL"
+
+	testing("MC: Runlevel changed from [old_runlevel] to [new_runlevel]")
+	current_runlevel = log(2, new_runlevel) + 1
+	if(current_runlevel < 1)
+		CRASH("Attempted to set invalid runlevel: [new_runlevel]")
 
 // Starts the mc, and sticks around to restart it if the loop ever ends.
 /datum/controller/master/proc/StartProcessing(delay)
@@ -202,7 +224,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			timer += world.tick_lag * rand(1, 5)
 			SS.next_fire = timer
 			continue
-		
+
 		var/ss_runlevels = SS.runlevels
 		var/added_to_any = FALSE
 		for(var/I in 1 to bitflags.len)
@@ -222,7 +244,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	for(var/I in runlevel_sorted_subsystems)
 		sortTim(runlevel_sorted_subsystems, /proc/cmp_subsystem_priority)
 		I += tickersubsystems
-	
+
 	var/cached_runlevel = current_runlevel
 	var/list/current_runlevel_subsystems = runlevel_sorted_subsystems[cached_runlevel]
 
