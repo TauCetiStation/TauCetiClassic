@@ -107,7 +107,7 @@
 
 	var/can_cut = (prob(brute*2) || sharp) && !(status & ORGAN_ROBOT)
 	// If the limbs can break, make sure we don't exceed the maximum damage a limb can take before breaking
-	if((brute_dam + burn_dam + brute + burn) < max_damage || !config.limbs_can_break)
+	if((brute_dam + burn_dam + brute + burn) < max_damage)
 		if(brute)
 			if(can_cut)
 				createwound( CUT, brute )
@@ -160,7 +160,7 @@
 
 	//If limb took enough damage, try to cut or tear it off
 	if(body_part != UPPER_TORSO && body_part != LOWER_TORSO) //as hilarious as it is, getting hit on the chest too much shouldn't effectively gib you.
-		if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
+		if(brute_dam >= max_damage * config.organ_health_multiplier)
 			if( (edge && prob(5 * brute)) || (brute > 20 && prob(2 * brute)) )
 				droplimb(1)
 				return
@@ -309,7 +309,7 @@ This function completely restores a damaged organ to perfect condition.
 
 	//Dismemberment
 	if(status & ORGAN_DESTROYED)
-		if(!destspawn && config.limbs_can_break)
+		if(!destspawn)
 			droplimb()
 		return
 	if(parent)
@@ -319,7 +319,7 @@ This function completely restores a damaged organ to perfect condition.
 			return
 
 	//Bone fracurtes
-	if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
+	if(brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
 		src.fracture()
 	if(!(status & ORGAN_BROKEN))
 		perma_injury = 0
