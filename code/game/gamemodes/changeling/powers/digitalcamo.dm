@@ -21,10 +21,9 @@
 				AI.client.images += user.digitaldisguise
 	user.digitalcamo = !user.digitalcamo
 
-	spawn(0)
-		while(user && user.digitalcamo && user.mind && user.mind.changeling)
-			user.mind.changeling.chem_charges = max(user.mind.changeling.chem_charges - 1, 0)
-			sleep(40)
+	spawn while(user && user.digitalcamo && user.mind && user.mind.changeling)
+		user.mind.changeling.chem_charges = max(user.mind.changeling.chem_charges - 2, 0)
+		sleep(40)
 
 	feedback_add_details("changeling_powers","CAM")
 	return 1

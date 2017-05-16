@@ -36,9 +36,9 @@
 		return
 	if(next_click > world.time)
 		return
-	if(!use_charge(user, 2))
+	if(!use_charge(user))
 		return
-	next_click = world.time + 10
+	next_click = world.time + 12
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(T)
@@ -48,8 +48,6 @@
 		LE.weaken = 5
 	else if(user.a_intent == "hurt")
 		LE.damage = 30
-	else
-		LE.agony = 25
 	LE.host = user
 	LE.firer = user
 	LE.def_zone = check_zone(user.zone_sel.selecting)

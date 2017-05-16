@@ -14,7 +14,7 @@
 	if(user.has_brain_worms())
 		to_chat(user, "<span class='warning'>We cannot perform this ability at the present time!</span>")
 		return
-	if(user.restrained())
+	if(user.incapacitated())
 		to_chat(user,"<span class='warning'>We cannot perform this ability as you restrained!</span>")
 		return
 

@@ -46,7 +46,7 @@
 			var/mob/living/carbon/human/H = target
 			var/datum/organ/external/O = H.get_organ(user.zone_sel.selecting)
 			for(var/datum/organ/external/Org in O.children)
-				H.apply_damage(force/2,BRUTE,Org.name, H.getarmor(Org.name, "melee"))
+				H.apply_damage(force/3,BRUTE,Org.name, H.getarmor(Org.name, "melee"))
 			if(O.parent)
-				H.apply_damage(force/2,BRUTE,O.parent.name, H.getarmor(O.parent.name, "melee"))
-		return..(target,user)
+				H.apply_damage(force/3,BRUTE,O.parent.name, H.getarmor(O.parent.name, "melee"))
+		return..()
