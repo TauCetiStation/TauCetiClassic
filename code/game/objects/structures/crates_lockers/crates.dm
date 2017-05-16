@@ -281,7 +281,7 @@
 	icon_opened = "medicalcrateopen"
 	icon_closed = "medicalcrate"
 
-/obj/structure/closet/crate/secure/medicalseccrate
+/obj/structure/closet/crate/secure/medical
 	desc = "A crate with a lock on it"
 	name = "Secured medical crate"
 	icon_state = "medicalseccrate"

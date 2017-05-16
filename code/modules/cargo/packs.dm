@@ -749,7 +749,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/virusdish/random,
 					/obj/item/weapon/virusdish/random)
 	cost = 2500
-	crate_type = /obj/structure/closet/crate/secure/medicalseccrate
+	crate_type = /obj/structure/closet/crate/secure/medical
 	crate_name = "Virus sample crate"
 	access = access_cmo
 	group = "Medical / Science"
@@ -796,7 +796,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/bonesetter,
 					/obj/item/weapon/circular_saw)
 	cost = 2500
-	crate_type = /obj/structure/closet/crate/secure/medicalseccrate
+	crate_type = /obj/structure/closet/crate/secure/medical
 	crate_name = "Surgery crate"
 	access = access_medical
 	group = "Medical / Science"
