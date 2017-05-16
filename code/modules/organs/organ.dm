@@ -1,18 +1,48 @@
+/mob/living/carbon/human/var/list/bodyparts = list()
+/mob/living/carbon/human/var/list/bodyparts_by_name = list()
+/mob/living/carbon/human/var/list/organs = list()
+/mob/living/carbon/human/var/list/organs_by_name = list()
+
 /obj/item/organ
 	name = "organ"
-	var/mob/living/carbon/human/owner = null
+	germ_level = 0
 
-	var/list/datum/autopsy_data/autopsy_data = list()
-	var/list/trace_chemicals = list() // traces of chemicals in the organ,
-									  // links chemical IDs to number of ticks for which they'll stay in the blood
+	// Strings.
+	var/parent_bodypart                   // Bodypart holding this object.
 
-	germ_level = 0		// INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
+	// Status tracking.
+	var/status = 0                     // Various status flags (such as robotic)
+	var/vital                          // Lose a vital organ, die immediately.
 
-	process()
-		return 0
+	// Reference data.
+	var/mob/living/carbon/human/owner  // Current mob owning the organ.
+	var/list/autopsy_data = list()     // Trauma data for forensics.
+	var/list/trace_chemicals = list()  // Traces of chemicals in the organ.
+	var/obj/item/organ/external/parent // Master-limb.
 
-	proc/receive_chem(chemical)
-		return 0
+	// Damage vars.
+	var/min_broken_damage = 30         // Damage before becoming broken
+
+/obj/item/organ/New(loc, mob/living/carbon/human/H)
+	if(istype(H))
+		insert_organ(H)
+
+	return ..()
+
+/obj/item/organ/proc/insert_organ(mob/living/carbon/human/H)
+	STOP_PROCESSING(SSobj, src)
+
+	loc = null
+	owner = H
+
+	if(parent_bodypart)
+		parent = owner.bodyparts_by_name[parent_bodypart]
+
+/obj/item/organ/process()
+	return 0
+
+/obj/item/organ/proc/receive_chem(chemical)
+	return 0
 
 /obj/item/organ/proc/get_icon(icon/race_icon, icon/deform_icon)
 	return icon('icons/mob/human.dmi',"blank")
@@ -49,11 +79,6 @@
 	W.hits += 1
 	W.damage += damage
 	W.time_inflicted = world.time
-
-/mob/living/carbon/human/var/list/bodyparts = list()
-/mob/living/carbon/human/var/list/bodyparts_by_name = list() // map bodypart names to bodyparts
-/mob/living/carbon/human/var/list/organs = list()
-/mob/living/carbon/human/var/list/organs_by_name = list() // so organs have less ickiness too
 
 // Takes care of bodypart and their organs related updates, such as broken and missing limbs
 /mob/living/carbon/human/proc/handle_bodyparts()

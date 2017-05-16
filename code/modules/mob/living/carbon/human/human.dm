@@ -1247,7 +1247,7 @@
 	else
 		to_chat(usr, "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].")
 
-/mob/living/carbon/human/proc/set_species(new_species, force_bodyparts, default_colour)
+/mob/living/carbon/human/proc/set_species(new_species, force_organs, default_colour)
 
 	if(!dna)
 		if(!new_species)
@@ -1266,8 +1266,8 @@
 
 	species = all_species[new_species]
 
-	if(force_bodyparts || !bodyparts || !bodyparts.len)
-		species.create_bodyparts(src)
+	if(force_organs || !bodyparts.len)
+		species.create_organs(src)
 
 	if(species.language)
 		add_language(species.language)

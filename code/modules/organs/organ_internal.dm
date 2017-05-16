@@ -2,17 +2,30 @@
 				INTERNAL ORGANS
 ****************************************************/
 /obj/item/organ/internal
-	// Strings.
-	var/organ_tag    = null           // Unique identifier.
-	var/parent_bodypart = BP_CHEST       // Bodypart holding this object.
+	parent_bodypart = BP_CHEST
 
-	var/damage = 0 // amount of damage to the organ
-	var/min_bruised_damage = 10
-	var/min_broken_damage = 30
-	var/robotic = 0 //For being a robot
+	// Strings.
+	var/organ_tag   = null      // Unique identifier.
+
+	// Damage vars.
+	var/min_bruised_damage = 10 // Damage before considered bruised
+	var/damage = 0              // Amount of damage to the organ
+
+	// Will be moved, removed or refactored.
+	var/robotic = 0             // For being a robot
+
+/obj/item/organ/internal/insert_organ()
+	..()
+
+	owner.organs += src
+	owner.organs_by_name[organ_tag] = src
+
+	if(parent)
+		parent.bodypart_organs += src
+
 
 /obj/item/organ/internal/proc/rejuvenate()
-	damage=0
+	damage = 0
 
 /obj/item/organ/internal/proc/is_bruised()
 	return damage >= min_bruised_damage
@@ -20,16 +33,6 @@
 /obj/item/organ/internal/proc/is_broken()
 	return damage >= min_broken_damage
 
-
-
-/obj/item/organ/internal/New(mob/living/carbon/human/H)
-	var/obj/item/organ/external/BP = H.bodyparts_by_name[src.parent_bodypart]
-	if(BP.bodypart_organs == null)
-		BP.bodypart_organs = list()
-	BP.bodypart_organs |= src
-	H.organs |= src
-	src.owner = H
-	return ..()
 
 /obj/item/organ/internal/process()
 	//Process infections
@@ -180,8 +183,8 @@
 				if(istype(R, /datum/reagent/toxin))
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
-/obj/item/organ/internal/kidney
-	name = "kidney"
+/obj/item/organ/internal/kidneys
+	name = "kidneys"
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_CHEST
 

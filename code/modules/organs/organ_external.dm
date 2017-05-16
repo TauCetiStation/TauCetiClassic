@@ -4,57 +4,51 @@
 /obj/item/organ/external
 	name = "external"
 
-	var/body_part = null
-	var/body_zone = null
-	var/icon_position = 0
+	// Strings
+	var/broken_description            // fracture string if any.
+	var/damage_state = "00"           // Modifier used for generating the on-mob damage overlay for this limb.
 
-	var/damage_state = "00"
-	var/brute_dam = 0
-	var/burn_dam = 0
-	var/max_damage = 0
-	var/max_size = 0
-	var/last_dam = -1
+	// Damage vars.
+	var/brute_dam = 0                 // Actual current brute damage.
+	var/burn_dam = 0                  // Actual current burn damage.
+	var/last_dam = -1                 // used in healing/processing calculations.
+	var/max_damage = 0                // Damage cap
 
-	var/list/wounds = list()
-	var/number_wounds = 0 // cache the number of wounds, which is NOT wounds.len!
+	// Appearance vars.
+	var/body_part = null              // Part flag
+	var/body_zone = null              // Unique identifier of this limb.
+	var/icon_position = 0             // Used in mob overlay layering calculations.
 
-	var/tmp/perma_injury = 0
-	var/tmp/destspawn = 0 //Has it spawned the broken limb?
-	var/tmp/amputated = 0 //Whether this has been cleanly amputated, thus causing no pain
-	var/min_broken_damage = 30
+	// Wound and structural data.
+	var/wound_update_accuracy = 1     // how often wounds should be updated, a higher number means less often
+	var/list/wounds = list()          // wound datum list.
+	var/number_wounds = 0             // number of wounds, which is NOT wounds.len!
+	var/list/children = list()        // Sub-limbs.
+	var/list/bodypart_organs = list() // Internal organs of this body part
+	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
+	var/list/implants = list()        // Currently implanted objects.
 
-	var/obj/item/organ/external/parent
-	var/list/obj/item/organ/external/children
-
-	// Organs of this body part
-	var/list/obj/item/organ/internal/bodypart_organs
-
-	var/damage_msg = "\red You feel an intense pain"
-	var/broken_description
-
-	var/vital //Lose a vital limb, die immediately.
-	var/status = 0
+	// Surgery vars.
 	var/open = 0
 	var/stage = 0
 	var/cavity = 0
-	var/sabotaged = 0 //If a prosthetic limb is emagged, it will detonate when it fails.
 
-	var/obj/item/hidden = null
-	var/list/implants = list()
-
-	// how often wounds should be updated, a higher number means less often
-	var/wound_update_accuracy = 1
-
+	// Will be removed, moved or refactored.
+	var/obj/item/hidden = null // relation with cavity
+	var/tmp/perma_injury = 0
+	var/tmp/destspawn = 0 //Has it spawned the broken limb?
+	var/tmp/amputated = 0 //Whether this has been cleanly amputated, thus causing no pain
 	var/limb_layer = 0
+	var/damage_msg = "\red You feel an intense pain"
 
+/obj/item/organ/external/insert_organ()
+	..()
 
-/obj/item/organ/external/New(var/obj/item/organ/external/BP)
-	if(BP)
-		parent = BP
-		if(!parent.children)
-			parent.children = list()
-		parent.children.Add(src)
-	return ..()
+	owner.bodyparts += src
+	owner.bodyparts_by_name[body_zone] = src
+
+	if(parent)
+		parent.children += src
 
 /****************************************************
 			   DAMAGE PROCS
@@ -94,7 +88,7 @@
 		burn *= bumod //~2/3 damage for ROBOLIMBS
 
 	// High brute damage or sharp objects may damage organs
-	if(bodypart_organs && ( (sharp && brute >= 5) || brute >= 10) && prob(5))
+	if(bodypart_organs.len && ( (sharp && brute >= 5) || brute >= 10) && prob(5))
 		// Damage an internal organ
 		var/obj/item/organ/internal/IO = pick(bodypart_organs)
 		IO.take_damage(brute / 2)
@@ -897,6 +891,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	body_part = LOWER_TORSO
 	body_zone = BP_GROIN
+	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_GROIN_LAYER
 
 	max_damage = 50
@@ -909,6 +904,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	body_part = HEAD
 	body_zone = BP_HEAD
+	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_HEAD_LAYER
 
 	max_damage = 75
@@ -923,6 +919,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	body_part = ARM_LEFT
 	body_zone = BP_L_ARM
+	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_L_ARM_LAYER
 
 	max_damage = 50
@@ -938,6 +935,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	body_part = ARM_RIGHT
 	body_zone = BP_R_ARM
+	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_R_ARM_LAYER
 
 	max_damage = 50
@@ -953,6 +951,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	body_part = HAND_LEFT
 	body_zone = BP_L_HAND
+	parent_bodypart = BP_L_ARM
 	limb_layer = LIMB_L_HAND_LAYER
 
 	max_damage = 30
@@ -968,6 +967,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	body_part = HAND_RIGHT
 	body_zone = BP_R_HAND
+	parent_bodypart = BP_R_ARM
 	limb_layer = LIMB_R_HAND_LAYER
 
 	max_damage = 30
@@ -983,6 +983,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	body_part = LEG_LEFT
 	body_zone = BP_L_LEG
+	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_L_LEG_LAYER
 	icon_position = LEFT
 
@@ -995,6 +996,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	body_part = LEG_RIGHT
 	body_zone = BP_R_LEG
+	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_R_LEG_LAYER
 	icon_position = RIGHT
 
@@ -1007,6 +1009,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	body_part = FOOT_LEFT
 	body_zone = BP_L_FOOT
+	parent_bodypart = BP_L_LEG
 	limb_layer = LIMB_L_FOOT_LAYER
 	icon_position = LEFT
 
@@ -1019,6 +1022,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	body_part = FOOT_RIGHT
 	body_zone = BP_R_FOOT
+	parent_bodypart = BP_R_LEG
 	limb_layer = LIMB_R_FOOT_LAYER
 	icon_position = RIGHT
 

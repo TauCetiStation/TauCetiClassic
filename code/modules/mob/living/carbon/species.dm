@@ -80,37 +80,44 @@
 
 	var/list/sprite_sheets = list()
 
+	// This is default organs set which is mostly used upon mob creation.
+	// Keep in mind that position of organ is important in those lists.
+	// If hand connects to chest, then chest should go first.
+	var/list/has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_L_HAND = /obj/item/organ/external/l_hand
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_R_HAND = /obj/item/organ/external/r_hand
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_L_FOOT = /obj/item/organ/external/l_foot
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		,BP_R_FOOT = /obj/item/organ/external/r_foot
+		)
+
+	var/list/has_organ = list(
+		 BP_HEART   = /obj/item/organ/internal/heart
+		,BP_BRAIN   = /obj/item/organ/internal/brain
+		,BP_EYES    = /obj/item/organ/internal/eyes
+		,BP_LUNGS   = /obj/item/organ/internal/lungs
+		,BP_LIVER   = /obj/item/organ/internal/liver
+		,BP_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
+
 /datum/species/New()
 	unarmed = new unarmed_type()
 
-/datum/species/proc/create_bodyparts(mob/living/carbon/human/H) //Handles creation of mob bodyparts and their organs.
-	//This is a basic humanoid limb setup.
-	H.bodyparts = list()
-	H.bodyparts_by_name[BP_CHEST] = new/obj/item/organ/external/chest()
-	H.bodyparts_by_name[BP_GROIN] = new/obj/item/organ/external/groin(H.bodyparts_by_name[BP_CHEST])
-	H.bodyparts_by_name[BP_HEAD] = new/obj/item/organ/external/head(H.bodyparts_by_name[BP_CHEST])
-	H.bodyparts_by_name[BP_L_ARM] = new/obj/item/organ/external/l_arm(H.bodyparts_by_name[BP_CHEST])
-	H.bodyparts_by_name[BP_R_ARM] = new/obj/item/organ/external/r_arm(H.bodyparts_by_name[BP_CHEST])
-	H.bodyparts_by_name[BP_R_LEG] = new/obj/item/organ/external/r_leg(H.bodyparts_by_name[BP_GROIN])
-	H.bodyparts_by_name[BP_L_LEG] = new/obj/item/organ/external/l_leg(H.bodyparts_by_name[BP_GROIN])
-	H.bodyparts_by_name[BP_L_HAND] = new/obj/item/organ/external/l_hand(H.bodyparts_by_name[BP_L_ARM])
-	H.bodyparts_by_name[BP_R_HAND] = new/obj/item/organ/external/r_hand(H.bodyparts_by_name[BP_R_ARM])
-	H.bodyparts_by_name[BP_L_FOOT] = new/obj/item/organ/external/l_foot(H.bodyparts_by_name[BP_L_LEG])
-	H.bodyparts_by_name[BP_R_FOOT] = new/obj/item/organ/external/r_foot(H.bodyparts_by_name[BP_R_LEG])
+/datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
 
-	H.organs = list()
-	H.organs_by_name[O_HEART] = new/obj/item/organ/internal/heart(H)
-	H.organs_by_name[O_LUNGS] = new/obj/item/organ/internal/lungs(H)
-	H.organs_by_name[O_LIVER] = new/obj/item/organ/internal/liver(H)
-	H.organs_by_name[O_KIDNEYS] = new/obj/item/organ/internal/kidney(H)
-	H.organs_by_name[O_BRAIN] = new/obj/item/organ/internal/brain(H)
-	H.organs_by_name[O_EYES] = new/obj/item/organ/internal/eyes(H)
+	for(var/type in has_bodypart)
+		var/path = has_bodypart[type]
+		new path(null, H)
 
-	for(var/bodypart_name in H.bodyparts_by_name)
-		H.bodyparts += H.bodyparts_by_name[bodypart_name]
-
-	for(var/obj/item/organ/external/BP in H.bodyparts)
-		BP.owner = H
+	for(var/type in has_organ)
+		var/path = has_organ[type]
+		new path(null, H)
 
 	if(flags[IS_SYNTHETIC])
 		for(var/obj/item/organ/external/BP in H.bodyparts)
