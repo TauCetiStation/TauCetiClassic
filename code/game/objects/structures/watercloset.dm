@@ -548,7 +548,7 @@
 /obj/structure/sink/attack_hand(mob/user)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/datum/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_HAND : BP_R_HAND]
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_HAND : BP_R_HAND]
 		if(BP && !BP.is_usable())
 			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return

@@ -124,7 +124,7 @@
 		vox.add_language("Gutter")
 		vox.h_style = "Skinhead"
 		vox.f_style = "Shaved"
-		//for(var/datum/organ/external/BP in vox.bodyparts)
+		//for(var/obj/item/organ/external/BP in vox.bodyparts)
 		//	BP.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
 		vox.equip_raider()
 		vox.regenerate_icons()

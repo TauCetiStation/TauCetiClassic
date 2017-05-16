@@ -6,7 +6,7 @@
 		return
 	var/total_burn	= 0
 	var/total_brute	= 0
-	for(var/datum/organ/external/BP in bodyparts)	//hardcoded to streamline things a bit
+	for(var/obj/item/organ/external/BP in bodyparts)	//hardcoded to streamline things a bit
 		total_brute	+= BP.brute_dam
 		total_burn	+= BP.burn_dam
 	health = 100 - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
@@ -17,7 +17,7 @@
 
 /mob/living/carbon/human/getBrainLoss()
 	var/res = brainloss
-	var/datum/organ/internal/brain/IO = organs_by_name[O_BRAIN]
+	var/obj/item/organ/internal/brain/IO = organs_by_name[O_BRAIN]
 	if(!IO)
 		return 0
 	if (IO.is_bruised())
@@ -30,13 +30,13 @@
 //These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
 		amount += BP.brute_dam
 	return amount
 
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
 		amount += BP.burn_dam
 	return amount
 
@@ -66,7 +66,7 @@
 		amount = amount*species.brute_mod
 
 	if (bodypart_name in bodyparts_by_name)
-		var/datum/organ/external/BP = bodyparts_by_name[bodypart_name]
+		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
 
 		if(amount > 0)
 			BP.take_damage(amount, 0, sharp = is_sharp(damage_source), edge = has_edge(damage_source), used_weapon = damage_source)
@@ -81,7 +81,7 @@
 		amount = amount*species.burn_mod
 
 	if (bodypart_name in bodyparts_by_name)
-		var/datum/organ/external/BP = bodyparts_by_name[bodypart_name]
+		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
 
 		if(amount > 0)
 			BP.take_damage(0, amount, sharp = is_sharp(damage_source), edge = has_edge(damage_source), used_weapon = damage_source)
@@ -124,24 +124,24 @@
 	if (amount > 0)
 		if (prob(mut_prob))
 			var/list/candidates = list()
-			for (var/datum/organ/external/BP in bodyparts)
+			for (var/obj/item/organ/external/BP in bodyparts)
 				if(!(BP.status & ORGAN_MUTATED))
 					candidates += BP
 			if (candidates.len)
-				var/datum/organ/external/BP = pick(candidates)
+				var/obj/item/organ/external/BP = pick(candidates)
 				BP.mutate()
 				to_chat(src, "<span class = 'notice'>Something is not right with your [BP.name]...</span>")
 				return
 	else
 		if (prob(heal_prob))
-			for (var/datum/organ/external/BP in bodyparts)
+			for (var/obj/item/organ/external/BP in bodyparts)
 				if (BP.status & ORGAN_MUTATED)
 					BP.unmutate()
 					to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
 					return
 
 	if (getCloneLoss() < 1)
-		for (var/datum/organ/external/BP in bodyparts)
+		for (var/obj/item/organ/external/BP in bodyparts)
 			if (BP.status & ORGAN_MUTATED)
 				BP.unmutate()
 				to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
@@ -152,7 +152,7 @@
 //Returns a list of damaged bodyparts
 /mob/living/carbon/human/proc/get_damaged_bodyparts(brute, burn)
 	var/list/parts = list()
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam))
 			parts += BP
 	return parts
@@ -160,7 +160,7 @@
 //Returns a list of damageable bodyparts
 /mob/living/carbon/human/proc/get_damageable_bodyparts()
 	var/list/parts = list()
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.brute_dam + BP.burn_dam < BP.max_damage)
 			parts += BP
 	return parts
@@ -172,7 +172,7 @@
 	var/list/parts = get_damaged_bodyparts(brute, burn)
 	if(!parts.len)
 		return
-	var/datum/organ/external/BP = pick(parts)
+	var/obj/item/organ/external/BP = pick(parts)
 	if(BP.heal_damage(brute, burn))
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
@@ -184,7 +184,7 @@
 	var/list/parts = get_damageable_bodyparts()
 	if(!parts.len)
 		return
-	var/datum/organ/external/BP = pick(parts)
+	var/obj/item/organ/external/BP = pick(parts)
 	if(BP.take_damage(brute, burn, sharp, edge))
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
@@ -195,7 +195,7 @@
 /mob/living/carbon/human/heal_overall_damage(brute, burn)
 	var/list/parts = get_damaged_bodyparts(brute, burn)
 	while(parts.len && (brute > 0 || burn > 0))
-		var/datum/organ/external/BP = pick(parts)
+		var/obj/item/organ/external/BP = pick(parts)
 		var/brute_was = BP.brute_dam
 		var/burn_was = BP.burn_dam
 		BP.heal_damage(brute, burn)
@@ -213,7 +213,7 @@
 		return // godmode
 	var/list/parts = get_damageable_bodyparts()
 	while(parts.len && (brute > 0 || burn > 0) )
-		var/datum/organ/external/BP = pick(parts)
+		var/obj/item/organ/external/BP = pick(parts)
 		var/brute_was = BP.brute_dam
 		var/burn_was = BP.burn_dam
 		BP.take_damage(brute, burn, sharp, edge, used_weapon)
@@ -239,12 +239,12 @@ This function restores the subjects blood to max.
 This function restores all bodyparts.
 */
 /mob/living/carbon/human/restore_all_bodyparts()
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
 		BP.rejuvenate()
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
-	var/datum/organ/external/BP = get_bodypart(zone)
-	if(istype(BP, /datum/organ/external))
+	var/obj/item/organ/external/BP = get_bodypart(zone)
+	if(istype(BP, /obj/item/organ/external))
 		if(BP.heal_damage(brute, burn))
 			hud_updateflag |= 1 << HEALTH_HUD
 	else
@@ -265,7 +265,7 @@ This function restores all bodyparts.
 
 
 
-	var/datum/organ/external/BP = null
+	var/obj/item/organ/external/BP = null
 	if(isbodypart(def_zone))
 		BP = def_zone
 	else

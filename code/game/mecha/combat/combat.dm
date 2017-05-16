@@ -42,7 +42,7 @@
 				var/mob/living/carbon/human/H = target
 	//			if (M.health <= 0) return
 
-				var/datum/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
 				if(BP)
 					switch(damtype)
 						if("brute")

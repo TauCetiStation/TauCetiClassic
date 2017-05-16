@@ -9,10 +9,10 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(!ishuman(target))
 			return 0
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		return BP.open >= 2 && !(BP.status & ORGAN_BLEEDING) && (target_zone != BP_CHEST || target.op_stage.ribcage == 2)
 
-	proc/get_max_wclass(datum/organ/external/BP)
+	proc/get_max_wclass(obj/item/organ/external/BP)
 		switch (BP.body_zone)
 			if (BP_HEAD)
 				return 1
@@ -22,7 +22,7 @@
 				return 2
 		return 0
 
-	proc/get_cavity(datum/organ/external/BP)
+	proc/get_cavity(obj/item/organ/external/BP)
 		switch (BP.body_zone)
 			if (BP_HEAD)
 				return "cranial"
@@ -43,11 +43,11 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(..())
-			var/datum/organ/external/BP = target.get_bodypart(target_zone)
+			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 			return !BP.cavity && !BP.hidden
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		user.visible_message("[user] starts making some space inside [target]'s [get_cavity(BP)] cavity with \the [tool].", \
 		"You start making some space inside [target]'s [get_cavity(BP)] cavity with \the [tool]." )
 		target.custom_pain("The pain in your chest is living hell!",1)
@@ -55,12 +55,12 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 		user.visible_message("\blue [user] makes some space inside [target]'s [get_cavity(BP)] cavity with \the [tool].", \
 		"\blue You make some space inside [target]'s [get_cavity(BP)] cavity with \the [tool]." )
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
 		"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
 		BP.createwound(CUT, 20)
@@ -79,11 +79,11 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(..())
-			var/datum/organ/external/BP = target.get_bodypart(target_zone)
+			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 			return BP.cavity
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		user.visible_message("[user] starts mending [target]'s [get_cavity(BP)] cavity wall with \the [tool].", \
 		"You start mending [target]'s [get_cavity(BP)] cavity wall with \the [tool]." )
 		target.custom_pain("The pain in your chest is living hell!",1)
@@ -91,12 +91,12 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 		user.visible_message("\blue [user] mends [target]'s [get_cavity(BP)] cavity walls with \the [tool].", \
 		"\blue You mend [target]'s [get_cavity(BP)] cavity walls with \the [tool]." )
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
 		"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
 		BP.createwound(CUT, 20)
@@ -110,18 +110,18 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(..())
-			var/datum/organ/external/BP = target.get_bodypart(target_zone)
+			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 			return !BP.hidden && BP.cavity && tool.w_class <= get_max_wclass(BP)
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		user.visible_message("[user] starts putting \the [tool] inside [target]'s [get_cavity(BP)] cavity.", \
 		"You start putting \the [tool] inside [target]'s [get_cavity(BP)] cavity." )
 		target.custom_pain("The pain in your chest is living hell!",1)
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 
 		user.visible_message("\blue [user] puts \the [tool] inside [target]'s [get_cavity(BP)] cavity.", \
 		"\blue You put \the [tool] inside [target]'s [get_cavity(BP)] cavity." )
@@ -145,7 +145,7 @@
 		BP.cavity = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
 		"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
 		BP.createwound(CUT, 20)
@@ -166,18 +166,18 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(..())
-			var/datum/organ/external/BP = target.get_bodypart(target_zone)
+			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 			return ((BP.open == 3 && BP.body_zone == BP_CHEST) || (BP.open == 2))
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		user.visible_message("[user] starts poking around inside the incision on [target]'s [BP.name] with \the [tool].", \
 		"You start poking around inside the incision on [target]'s [BP.name] with \the [tool]" )
 		target.custom_pain("The pain in your chest is living hell!",1)
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 
 		var/find_prob = 0
 
@@ -236,7 +236,7 @@
 			"\blue You could not find anything inside [target]'s [BP.name]." )
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
 		"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
 		BP.createwound(CUT, 20)

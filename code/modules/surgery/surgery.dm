@@ -49,7 +49,7 @@
 
 	// does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
 	proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		if (can_infect && BP)
 			spread_germs_to_organ(BP, user)
 		if (ishuman(user) && prob(60))
@@ -68,7 +68,7 @@
 	proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		return null
 
-proc/spread_germs_to_organ(datum/organ/external/BP, mob/living/carbon/human/user)
+proc/spread_germs_to_organ(obj/item/organ/external/BP, mob/living/carbon/human/user)
 	if(!istype(user) || !istype(BP))
 		return
 

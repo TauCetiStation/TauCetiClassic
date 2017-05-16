@@ -241,7 +241,7 @@
 		var/mob/living/carbon/human/H = target
 
 		var/target_zone = ran_zone(user.zone_sel.selecting)
-		var/datum/organ/external/BP = H.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 
 		if (!BP)
 			return

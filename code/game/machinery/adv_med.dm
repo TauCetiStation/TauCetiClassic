@@ -302,7 +302,7 @@
 					storedinfo += "<th>Other Wounds</th>"
 					storedinfo += "</tr>"
 
-					for(var/datum/organ/external/BP in occupant.bodyparts)
+					for(var/obj/item/organ/external/BP in occupant.bodyparts)
 
 						dat += "<tr>"
 						storedinfo += "<tr>"
@@ -318,7 +318,7 @@
 						for(var/datum/wound/W in BP.wounds) if(W.internal)
 							internal_bleeding = "<br>Internal bleeding"
 							break
-						if(istype(BP, /datum/organ/external/chest) && occupant.is_lung_ruptured())
+						if(istype(BP, /obj/item/organ/external/chest) && occupant.is_lung_ruptured())
 							lung_ruptured = "Lung ruptured:"
 						if(BP.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
@@ -365,7 +365,7 @@
 							storedinfo += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"
 						storedinfo += "</tr>"
-					for(var/datum/organ/internal/IO in occupant.organs)
+					for(var/obj/item/organ/internal/IO in occupant.organs)
 						var/mech = ""
 						if(IO.robotic == 1)
 							mech = "Assisted:"

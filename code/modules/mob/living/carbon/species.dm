@@ -86,38 +86,38 @@
 /datum/species/proc/create_bodyparts(mob/living/carbon/human/H) //Handles creation of mob bodyparts and their organs.
 	//This is a basic humanoid limb setup.
 	H.bodyparts = list()
-	H.bodyparts_by_name[BP_CHEST] = new/datum/organ/external/chest()
-	H.bodyparts_by_name[BP_GROIN] = new/datum/organ/external/groin(H.bodyparts_by_name[BP_CHEST])
-	H.bodyparts_by_name[BP_HEAD] = new/datum/organ/external/head(H.bodyparts_by_name[BP_CHEST])
-	H.bodyparts_by_name[BP_L_ARM] = new/datum/organ/external/l_arm(H.bodyparts_by_name[BP_CHEST])
-	H.bodyparts_by_name[BP_R_ARM] = new/datum/organ/external/r_arm(H.bodyparts_by_name[BP_CHEST])
-	H.bodyparts_by_name[BP_R_LEG] = new/datum/organ/external/r_leg(H.bodyparts_by_name[BP_GROIN])
-	H.bodyparts_by_name[BP_L_LEG] = new/datum/organ/external/l_leg(H.bodyparts_by_name[BP_GROIN])
-	H.bodyparts_by_name[BP_L_HAND] = new/datum/organ/external/l_hand(H.bodyparts_by_name[BP_L_ARM])
-	H.bodyparts_by_name[BP_R_HAND] = new/datum/organ/external/r_hand(H.bodyparts_by_name[BP_R_ARM])
-	H.bodyparts_by_name[BP_L_FOOT] = new/datum/organ/external/l_foot(H.bodyparts_by_name[BP_L_LEG])
-	H.bodyparts_by_name[BP_R_FOOT] = new/datum/organ/external/r_foot(H.bodyparts_by_name[BP_R_LEG])
+	H.bodyparts_by_name[BP_CHEST] = new/obj/item/organ/external/chest()
+	H.bodyparts_by_name[BP_GROIN] = new/obj/item/organ/external/groin(H.bodyparts_by_name[BP_CHEST])
+	H.bodyparts_by_name[BP_HEAD] = new/obj/item/organ/external/head(H.bodyparts_by_name[BP_CHEST])
+	H.bodyparts_by_name[BP_L_ARM] = new/obj/item/organ/external/l_arm(H.bodyparts_by_name[BP_CHEST])
+	H.bodyparts_by_name[BP_R_ARM] = new/obj/item/organ/external/r_arm(H.bodyparts_by_name[BP_CHEST])
+	H.bodyparts_by_name[BP_R_LEG] = new/obj/item/organ/external/r_leg(H.bodyparts_by_name[BP_GROIN])
+	H.bodyparts_by_name[BP_L_LEG] = new/obj/item/organ/external/l_leg(H.bodyparts_by_name[BP_GROIN])
+	H.bodyparts_by_name[BP_L_HAND] = new/obj/item/organ/external/l_hand(H.bodyparts_by_name[BP_L_ARM])
+	H.bodyparts_by_name[BP_R_HAND] = new/obj/item/organ/external/r_hand(H.bodyparts_by_name[BP_R_ARM])
+	H.bodyparts_by_name[BP_L_FOOT] = new/obj/item/organ/external/l_foot(H.bodyparts_by_name[BP_L_LEG])
+	H.bodyparts_by_name[BP_R_FOOT] = new/obj/item/organ/external/r_foot(H.bodyparts_by_name[BP_R_LEG])
 
 	H.organs = list()
-	H.organs_by_name[O_HEART] = new/datum/organ/internal/heart(H)
-	H.organs_by_name[O_LUNGS] = new/datum/organ/internal/lungs(H)
-	H.organs_by_name[O_LIVER] = new/datum/organ/internal/liver(H)
-	H.organs_by_name[O_KIDNEYS] = new/datum/organ/internal/kidney(H)
-	H.organs_by_name[O_BRAIN] = new/datum/organ/internal/brain(H)
-	H.organs_by_name[O_EYES] = new/datum/organ/internal/eyes(H)
+	H.organs_by_name[O_HEART] = new/obj/item/organ/internal/heart(H)
+	H.organs_by_name[O_LUNGS] = new/obj/item/organ/internal/lungs(H)
+	H.organs_by_name[O_LIVER] = new/obj/item/organ/internal/liver(H)
+	H.organs_by_name[O_KIDNEYS] = new/obj/item/organ/internal/kidney(H)
+	H.organs_by_name[O_BRAIN] = new/obj/item/organ/internal/brain(H)
+	H.organs_by_name[O_EYES] = new/obj/item/organ/internal/eyes(H)
 
 	for(var/bodypart_name in H.bodyparts_by_name)
 		H.bodyparts += H.bodyparts_by_name[bodypart_name]
 
-	for(var/datum/organ/external/BP in H.bodyparts)
+	for(var/obj/item/organ/external/BP in H.bodyparts)
 		BP.owner = H
 
 	if(flags[IS_SYNTHETIC])
-		for(var/datum/organ/external/BP in H.bodyparts)
+		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & (ORGAN_CUT_AWAY | ORGAN_DESTROYED))
 				continue
 			BP.status |= ORGAN_ROBOT
-		for(var/datum/organ/internal/IO in H.organs)
+		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.

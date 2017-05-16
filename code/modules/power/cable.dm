@@ -425,7 +425,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
-		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 

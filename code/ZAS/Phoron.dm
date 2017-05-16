@@ -138,7 +138,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	//The proc that handles eye burning.
 	if(prob(20))
 		to_chat(src, "\red Your eyes burn!")
-	var/datum/organ/internal/eyes/IO = organs_by_name[O_EYES]
+	var/obj/item/organ/internal/eyes/IO = organs_by_name[O_EYES]
 	IO.damage += 2.5
 	eye_blurry = min(eye_blurry+1.5,50)
 	if (prob(max(0, IO.damage - 15) + 1) && !eye_blind)

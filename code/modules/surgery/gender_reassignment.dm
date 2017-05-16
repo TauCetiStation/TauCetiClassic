@@ -11,7 +11,7 @@
 			return 0
 		if (target_zone != BP_GROIN)
 			return 0
-		var/datum/organ/external/groin = target.get_bodypart(BP_GROIN)
+		var/obj/item/organ/external/groin = target.get_bodypart(BP_GROIN)
 		if (!groin)
 			return 0
 		if (groin.open < 1)
@@ -30,7 +30,7 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(!ishuman(target))	return 0
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		return ..() && BP.open == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -56,7 +56,7 @@
 		target.regenerate_icons()
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
+		var/obj/item/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
 		user.visible_message("\red [user]'s hand slips, slicing [target]'s genitals with \the [tool]!", \
 		"\red Your hand slips, slicing [target]'s genitals with \the [tool]!")
 		BP.createwound(CUT, 20, 1)

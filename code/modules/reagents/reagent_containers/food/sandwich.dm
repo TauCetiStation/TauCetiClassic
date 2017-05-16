@@ -98,7 +98,7 @@
 		to_chat(L, "<span class='red'>You lacerate your mouth on a [shard.name] in the sandwich!</span>")
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
-			var/datum/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 			if(!BP) //Impossible, but...
 				H.adjustBruteLoss(5)
 			else

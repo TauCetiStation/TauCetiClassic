@@ -31,7 +31,7 @@
 	// broken or ripped off bodyparts will add quite a bit of pain
 	if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
-		for(var/datum/organ/external/BP in M.bodyparts)
+		for(var/obj/item/organ/external/BP in M.bodyparts)
 			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
 				src.traumatic_shock += 60
 			else if((BP.status & ORGAN_BROKEN) || BP.open)

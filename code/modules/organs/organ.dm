@@ -1,12 +1,12 @@
-/datum/organ
-	var/name = "organ"
+/obj/item/organ
+	name = "organ"
 	var/mob/living/carbon/human/owner = null
 
 	var/list/datum/autopsy_data/autopsy_data = list()
 	var/list/trace_chemicals = list() // traces of chemicals in the organ,
 									  // links chemical IDs to number of ticks for which they'll stay in the blood
 
-	var/germ_level = 0		// INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
+	germ_level = 0		// INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
 
 	process()
 		return 0
@@ -14,11 +14,11 @@
 	proc/receive_chem(chemical)
 		return 0
 
-/datum/organ/proc/get_icon(icon/race_icon, icon/deform_icon)
+/obj/item/organ/proc/get_icon(icon/race_icon, icon/deform_icon)
 	return icon('icons/mob/human.dmi',"blank")
 
 //Germs
-/datum/organ/proc/handle_antibiotics()
+/obj/item/organ/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 
 	if (!germ_level || antibiotics < 5)
@@ -35,11 +35,11 @@
 /mob/living/carbon/human/proc/handle_trace_chems()
 	//New are added for reagents to random bodyparts.
 	for(var/datum/reagent/A in reagents.reagent_list)
-		var/datum/organ/external/BP = pick(bodyparts)
+		var/obj/item/organ/external/BP = pick(bodyparts)
 		BP.trace_chemicals[A.name] = 100
 
 //Adds autopsy data for used_weapon.
-/datum/organ/proc/add_autopsy_data(used_weapon, damage)
+/obj/item/organ/proc/add_autopsy_data(used_weapon, damage)
 	var/datum/autopsy_data/W = autopsy_data[used_weapon]
 	if(!W)
 		W = new()
@@ -66,17 +66,17 @@
 	last_dam = damage_this_tick
 	if(force_process)
 		bad_bodyparts.Cut()
-		for(var/datum/organ/external/BP in bodyparts)
+		for(var/obj/item/organ/external/BP in bodyparts)
 			bad_bodyparts += BP
 
 	//processing organs is pretty cheap, do that first.
-	for(var/datum/organ/internal/IO in organs)
+	for(var/obj/item/organ/internal/IO in organs)
 		IO.process()
 
 	if(!force_process && !bad_bodyparts.len)
 		return
 
-	for(var/datum/organ/external/BP in bad_bodyparts)
+	for(var/obj/item/organ/external/BP in bad_bodyparts)
 		if(!BP)
 			continue
 		if(!BP.need_process())
@@ -89,7 +89,7 @@
 			if (!lying && world.time - l_move_time < 15)
 			//Moving around with fractured ribs won't do you any good
 				if (BP.is_broken() && BP.bodypart_organs && prob(15))
-					var/datum/organ/internal/IO = pick(BP.bodypart_organs)
+					var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 					custom_pain("You feel broken bones moving in your [BP.name]!", 1)
 					IO.take_damage(rand(3, 5))
 
@@ -112,7 +112,7 @@
 
 	//Check arms and legs for existence
 	can_stand = 2 //can stand on both legs
-	var/datum/organ/external/BP = bodyparts_by_name[BP_L_FOOT]
+	var/obj/item/organ/external/BP = bodyparts_by_name[BP_L_FOOT]
 	if(BP.status & ORGAN_DESTROYED)
 		can_stand--
 

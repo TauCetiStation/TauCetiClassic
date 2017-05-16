@@ -383,7 +383,7 @@
 	var/safety = user:eyecheck()
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		var/datum/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(H.species.flags[IS_SYNTHETIC])
 			return
 		switch(safety)
@@ -486,7 +486,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
-		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 		if(!BP)
 			return
 		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")

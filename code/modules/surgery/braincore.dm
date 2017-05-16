@@ -182,7 +182,7 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] mends hematoma in [target]'s brain with \the [tool].",	\
 		"\blue You mend hematoma in [target]'s brain with \the [tool].")
-		var/datum/organ/internal/brain/IO = target.organs_by_name[O_BRAIN]
+		var/obj/item/organ/internal/brain/IO = target.organs_by_name[O_BRAIN]
 		if (IO)
 			IO.damage = 0
 

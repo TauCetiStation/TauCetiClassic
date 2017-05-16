@@ -10,7 +10,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (!ishuman(target))
 			return 0
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		if (!BP)
 			return 0
 		return target_zone == O_MOUTH
@@ -40,7 +40,7 @@
 		target.op_stage.face = 1
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		user.visible_message("\red [user]'s hand slips, slicing [target]'s throat wth \the [tool]!" , \
 		"\red Your hand slips, slicing [target]'s throat wth \the [tool]!" )
 		BP.createwound(CUT, 60)
@@ -102,7 +102,7 @@
 		target.op_stage.face = 3
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		user.visible_message("\red [user]'s hand slips, tearing skin on [target]'s face with \the [tool]!", \
 		"\red Your hand slips, tearing skin on [target]'s face with \the [tool]!")
 		target.apply_damage(10, BRUTE, BP, sharp = 1, sharp = 1)
@@ -128,18 +128,18 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		user.visible_message("\blue [user] cauterizes the incision on [target]'s face and neck with \the [tool].", \
 		"\blue You cauterize the incision on [target]'s face and neck with \the [tool].")
 		BP.open = 0
 		BP.status &= ~ORGAN_BLEEDING
 		if (target.op_stage.face == 3)
-			var/datum/organ/external/head/H = BP
+			var/obj/item/organ/external/head/H = BP
 			H.disfigured = 0
 		target.op_stage.face = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		user.visible_message("\red [user]'s hand slips, leaving a small burn on [target]'s face with \the [tool]!", \
 		"\red Your hand slips, leaving a small burn on [target]'s face with \the [tool]!")
 		target.apply_damage(4, BURN, BP)
