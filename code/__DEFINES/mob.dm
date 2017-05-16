@@ -1,15 +1,13 @@
 ///////////////////ORGAN STATUS DEFINES///////////////////
-#define ORGAN_CUT_AWAY		1
-#define ORGAN_GAUZED 		2
-#define ORGAN_ATTACHABLE 	4
-#define ORGAN_BLEEDING 		8
-#define ORGAN_BROKEN 		32
-#define ORGAN_DESTROYED 	64
-#define ORGAN_ROBOT 		128
-#define ORGAN_SPLINTED 		256
-#define SALVED 				512
-#define ORGAN_DEAD 			1024
-#define ORGAN_MUTATED 		2048
+#define ORGAN_CUT_AWAY   1
+#define ORGAN_ATTACHABLE 2
+#define ORGAN_BLEEDING   4
+#define ORGAN_BROKEN     8
+#define ORGAN_DESTROYED  16
+#define ORGAN_ROBOT      32
+#define ORGAN_SPLINTED   64
+#define ORGAN_DEAD       128
+#define ORGAN_MUTATED    256
 
 // Bodypart defines
 #define BP_CHEST  "chest"

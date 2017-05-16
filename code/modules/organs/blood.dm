@@ -128,7 +128,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			for(var/datum/wound/W in BP.wounds)
 				if(W.bleeding())
 					blood_max += W.damage / 4
-			if((BP.status & ORGAN_DESTROYED) && !(BP.status & ORGAN_GAUZED) && !BP.amputated)
+			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
 				blood_max += 20 //Yer missing a fucking limb.
 			if (BP.open)
 				blood_max += 2  //Yer stomach is cut open
