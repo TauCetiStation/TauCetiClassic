@@ -144,7 +144,7 @@
 	breaktape(W = null, user = null, forced = TRUE)
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
-	if((user && user.a_intent == "help") && (W && !can_puncture(W) && src.allowed(user)) && !forced)
+	if((user && user.a_intent == "help") && (W && !W.can_puncture() && src.allowed(user)) && !forced)
 		to_chat(user, "You can't break the [src] with that!")
 		return
 	if(user)

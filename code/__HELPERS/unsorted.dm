@@ -1161,33 +1161,49 @@ var/global/list/common_tools = list(
 
 	return 0
 
-//Whether or not the given item counts as sharp in terms of dealing damage
+// Whether or not the given item counts as sharp in terms of dealing damage
 /proc/is_sharp(obj/O)
-	if (!O) return 0
-	if (O.sharp) return 1
-	if (O.edge) return 1
+	if(!O)
+		return 0
+	if(O.sharp)
+		return 1
+	if(O.edge)
+		return 1
 	return 0
 
-//Whether or not the given item counts as cutting with an edge in terms of removing limbs
+// Whether or not the given item counts as cutting with an edge in terms of removing limbs
 /proc/has_edge(obj/O)
-	if (!O) return 0
-	if (O.edge) return 1
+	if(!O)
+		return 0
+	if(O.edge)
+		return 1
 	return 0
 
-//Returns 1 if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
-/proc/can_puncture(obj/item/W)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	if(!W) return 0
-	if(W.sharp) return 1
-	return ( \
-		W.sharp													  || \
-		istype(W, /obj/item/weapon/screwdriver)                   || \
-		istype(W, /obj/item/weapon/pen)                           || \
-		istype(W, /obj/item/weapon/weldingtool)					  || \
-		istype(W, /obj/item/weapon/lighter/zippo)				  || \
-		istype(W, /obj/item/weapon/match)            		      || \
-		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
-		istype(W, /obj/item/weapon/shovel) \
-	)
+// For items that can puncture e.g. thick plastic but aren't necessarily sharp
+// Returns 1 if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
+/obj/item/proc/can_puncture()
+	return sharp
+
+/obj/item/weapon/screwdriver/can_puncture()
+	return TRUE
+
+/obj/item/weapon/pen/can_puncture()
+	return TRUE
+
+/obj/item/weapon/weldingtool/can_puncture()
+	return TRUE
+
+/obj/item/weapon/lighter/zippo/can_puncture()
+	return TRUE
+
+/obj/item/weapon/match/can_puncture()
+	return TRUE
+
+/obj/item/clothing/mask/cigarette/can_puncture()
+	return TRUE
+
+/obj/item/weapon/shovel/can_puncture()
+	return TRUE
 
 /proc/is_surgery_tool(obj/item/W)
 	return (	\
