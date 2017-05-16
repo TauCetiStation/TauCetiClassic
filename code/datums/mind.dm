@@ -1514,7 +1514,7 @@
 	objectives += O
 	var/mob/living/carbon/human/abductor/H = current
 	var/datum/mind/M = H.mind
-	H.set_species("Abductor")
+	H.set_species(ABDUCTOR)
 	switch(role)
 		if("Agent")
 			H.agent = 1

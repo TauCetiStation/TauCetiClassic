@@ -210,7 +210,7 @@
 		M.playsound_local(source, file(soundfile), 100, falloff = 5)
 
 
-/obj/structure/device/piano/proc/playsong()
+/obj/structure/device/piano/proc/playsong(mob/living/musician)
 	do
 		var/cur_oct[7]
 		var/cur_acc[7]
@@ -244,6 +244,10 @@
 						else
 							cur_oct[cur_note] = ni
 					playnote(uppertext(copytext(note,1,2)) + cur_acc[cur_note] + cur_oct[cur_note])
+					if(!in_range(src, musician))
+						playing = 0
+						updateUsrDialog()
+						return
 				if(notes.len >= 2 && text2num(notes[2]))
 					sleep(song.tempo / text2num(notes[2]))
 				else
@@ -334,7 +338,7 @@
 		else if(href_list["play"])
 			if(song)
 				playing = 1
-				spawn() playsong()
+				INVOKE_ASYNC(src, .proc/playsong, usr)
 
 		else if(href_list["newline"])
 			var/newline = html_encode(input("Enter your line: ", "Piano") as text|null)

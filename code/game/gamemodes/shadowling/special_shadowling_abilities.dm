@@ -91,8 +91,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
 			H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
-			//hardset_dna(usr, null, null, null, null, /datum/species/shadow/ling) //can't be a shadowling without being a shadowling
-			H.set_species("Shadowling")
+			H.set_species(SHADOWLING)
 			H.dna.mutantrace = "shadowling"
 			H.update_mutantrace()
 			H.regenerate_icons()

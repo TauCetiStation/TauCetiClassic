@@ -8,7 +8,7 @@ datum/directive/tau_ceti_needs_women
 
 	proc/is_target_gender(mob/M)
 		var/species = M.get_species()
-		return species != "Diona" && M.get_gender() == get_target_gender()
+		return species != DIONA && M.get_gender() == get_target_gender()
 
 	proc/get_crew_of_target_gender()
 		var/list/targets[0]
@@ -28,7 +28,7 @@ datum/directive/tau_ceti_needs_women
 		var/list/aliens[0]
 		for(var/mob/M in get_crew_of_target_gender())
 			var/species = M.get_species()
-			if(species == "Tajaran" || species == "Unathi" || species == "Skrell")
+			if(species == TAJARAN || species == UNATHI || species == SKRELL)
 				aliens.Add(M)
 		return aliens
 
@@ -63,7 +63,7 @@ datum/directive/tau_ceti_needs_women/meets_prerequisites()
 	var/females = 0
 	var/males = 0
 	for(var/mob/M in player_list)
-		if(M.is_ready() && !M.is_mechanical() && M.get_species() != "Diona")
+		if(M.is_ready() && !M.is_mechanical() && M.get_species() != DIONA)
 			var/gender = M.get_gender()
 			if(gender == MALE)
 				males++

@@ -84,7 +84,7 @@
 				if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
 					if (E.damage >= E.min_broken_damage)
 						to_chat(M, "\red You can't see anything!")
-			if(H.species.name == "Shadowling") // BBQ from shadowling ~Zve
+			if(H.species.name == SHADOWLING) // BBQ from shadowling ~Zve
 				H.adjustFireLoss(rand(15,25))
 		if (M.ear_damage >= 15)
 			to_chat(M, "\red Your ears start to ring badly!")
