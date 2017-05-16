@@ -9,6 +9,22 @@
 	damtype = BURN
 	force = 15
 	hitsound = 'sound/items/welder2.ogg'
+	var/cooldown = 0
+
+/obj/item/weapon/scrying/attack_self(mob/living/user)
+	if(cooldown >= world.time)
+		to_chat(user, "<span class='userdanger' It's still charging</span>")
+		return
+	to_chat(user, "<span class='notice'>You can see...everything!</span>")
+	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
+	cooldown = world.time + 1200
+	var/mob/dead/observer/ghost = user.ghostize(FALSE)
+	addtimer(CALLBACK(src, .proc/reenter, user, ghost), 300)
+
+/obj/item/weapon/scrying/proc/reenter(mob/living/body, mob/dead/observer/ghost)
+	if(body && body.stat != DEAD && ghost && ghost.key)
+		body.key = ghost.key
+		qdel(ghost)
 
 /obj/item/device/necromantic_stone
 	name = "necromantic stone"
@@ -23,12 +39,6 @@
 
 /obj/item/device/necromantic_stone/unlimited
 	unlimited = 1
-
-/obj/item/weapon/scrying/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>You can see...everything!</span>")
-	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
-	user.ghostize(1)
-	return
 
 /obj/item/device/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	if(!istype(M))
@@ -52,7 +62,7 @@
 	if(spooky_scaries.len >= 3 && !unlimited)
 		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
 		return
-	M.set_species("Skeleton")
+	//M.set_species(SKELETON)
 	M.revive()
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
@@ -126,11 +136,11 @@
 		return 1
 	var/mob/living/carbon/human/H = usr
 	if(H.mind == wizard)
-		to_chat(H,"<span class='danger'>Your school years have long passed.</span>")
+		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")
 		return
 	for(var/datum/mind/mind in previous_users)
 		if(H.mind == mind)
-			to_chat(H,"<span class='notice'>Not so fast, self-confident fulmar</span>")
+			to_chat(H, "<span class='notice'>Not so fast, self-confident fulmar</span>")
 			return
 	if(H.stat || H.incapacitated())
 		return

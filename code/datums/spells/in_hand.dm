@@ -14,7 +14,7 @@
 /obj/effect/proc_holder/spell/in_hand/cast(mob/living/carbon/human/user = usr)
 	if(!istype(user))
 		return
-	if(!istype(summon_path,user.is_in_hands(summon_path)))
+	if(!istype(summon_path, user.is_in_hands(summon_path)))
 		user.drop_item()
 		var/obj/GUN = new summon_path(src)
 		user.put_in_active_hand(GUN)
@@ -86,7 +86,7 @@
 		var/mob/living/M = target
 		M.fire_act()
 		M.adjust_fire_stacks(5)
-	explosion(get_turf(target),1)
+	explosion(get_turf(target), 1)
 	return ..()
 
 //////////////////////////////////////////////////////////////
@@ -116,7 +116,7 @@
 
 /obj/item/projectile/magic/lightning/on_hit(atom/target)
 	..()
-	tesla_zap(src, 5, 20000)
+	tesla_zap(src, 5, 15000)
 	qdel(src)
 
 /////////////////////////////////////////////////////////////////////////
@@ -149,6 +149,7 @@
 		Arcane.uses = uses - 1
 		C.drop_item()
 		C.swap_hand()
+		C.drop_item()
 		C.put_in_hands(Arcane)
 		user.next_click = world.time + 4
 		user.next_move = world.time + 4

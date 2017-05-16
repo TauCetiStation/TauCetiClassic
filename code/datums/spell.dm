@@ -85,7 +85,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(!is_type_in_typecache(H.wear_suit, casting_clothes))
 			to_chat(user, "I don't feel strong enough without my robe.")
 			return 0
-		if(!istype(H.shoes,/obj/item/clothing/shoes/sandal))
+		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
 			to_chat(user, "I don't feel strong enough without my sandals.")
 			return 0
 		if(!is_type_in_typecache(H.head, casting_clothes))
@@ -117,13 +117,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			else
 				user.whisper(replacetext(invocation," ","`"))
 	if(sound)
-		playsound(user,sound, 100, 1)
+		playsound(user, sound, 100, 1)
 
 /obj/effect/proc_holder/spell/New()
 	..()
 	charge_counter = charge_max
 	if(!casting_clothes)
-		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,/obj/item/clothing/suit/space/rig/wizard,/obj/item/clothing/head/wizard,/obj/item/clothing/head/helmet/space/rig/wizard))
+		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/suit/space/rig/wizard, /obj/item/clothing/head/wizard, /obj/item/clothing/head/helmet/space/rig/wizard))
 
 /obj/effect/proc_holder/spell/Click()
 	if(cast_check())
@@ -162,7 +162,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.icon_state = overlay_icon_state
 			spell.anchored = 1
 			spell.density = 0
-			QDEL_IN(spell,overlay_lifespan)
+			QDEL_IN(spell, overlay_lifespan)
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)

@@ -49,7 +49,7 @@ var/global/numbers_of_timestop = 0
 				stopped_atoms |= P
 
 		for(var/mob/living/M in stopped_atoms)
-			if(get_dist(get_turf(M),get_turf(src)) > freezerange) //If they lagged/ran past the timestop somehow, just ignore them
+			if(get_dist(get_turf(M), get_turf(src)) > freezerange) //If they lagged/ran past the timestop somehow, just ignore them
 				unfreeze_mob(M)
 				stopped_atoms -= M
 		stoplag()

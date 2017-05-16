@@ -19,7 +19,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/New(turf/start, turf/end)
 	..()
 	var/z_original = z
-	if(end && end.z==z_original)
+	if(end && end.z == z_original)
 		walk_towards(src, end, 1)
 	spawn while(src)
 		if(loc == end || z != z_original)
@@ -36,7 +36,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		var/mob/living/M = clong
 		M.adjustBruteLoss(rand(10,40))
 		if(prob(60))
-			step(src,get_dir(src,M))
+			step(src, get_dir(src, M))
 
 /obj/effect/immovablerod/ex_act(severity, target)
 	return 0

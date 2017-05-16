@@ -29,5 +29,5 @@
 /obj/effect/proc_holder/spell/targeted/genetic/proc/remove_mutations(mob/living/target, list/mutations)
 	for(var/x in mutations)
 		target.mutations.Remove(x)
-		target.disabilities &= ~disabilities
-		target.update_mutations()
+	target.disabilities &= ~disabilities
+	target.update_mutations()

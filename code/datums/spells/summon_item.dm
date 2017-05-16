@@ -14,27 +14,27 @@
 /obj/effect/proc_holder/spell/targeted/summonitem/cast(list/targets,mob/user = usr)
 	if(!iscarbon(user))
 		to_chat(user,"<span class='userdanger'>Where is your hands?</span>")
-	var/list/hand_items = list(user.get_active_hand(),user.get_inactive_hand())
+	var/list/hand_items = list(user.get_active_hand(), user.get_inactive_hand())
 	if(!marked_item) //linking item to the spell
 		for(var/obj/item in hand_items)
 			if(item.flags & ABSTRACT)
 				continue
 			marked_item = item
-			to_chat(user,"<span class='notice'>You mark [item] for recall.</span>")
+			to_chat(user, "<span class='notice'>You mark [item] for recall.</span>")
 			name = "Recall [item]"
 		if(!marked_item)
 			if(hand_items)
-				to_chat(user,"<span class='caution'>You aren't holding anything that can be marked for recall.</span>")
+				to_chat(user, "<span class='caution'>You aren't holding anything that can be marked for recall.</span>")
 			else
-				to_chat(user,"<span class='notice'>You must hold the desired item in your hands to mark it for recall.</span>")
+				to_chat(user, "<span class='notice'>You must hold the desired item in your hands to mark it for recall.</span>")
 		return
 
 	else if(marked_item in hand_items) //unlinking item to the spell
-		to_chat(user,"<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>")
+		to_chat(user, "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>")
 		name = initial(name)
 		marked_item = null
-	else if(marked_item && QDELETED(marked_item) || !marked_item.loc) //the item was destroyed at some point
-		to_chat(user,"<span class='warning'>You sense your marked item has been destroyed!</span>")
+	else if(marked_item && (QDELETED(marked_item) || !marked_item.loc)) //the item was destroyed at some point
+		to_chat(user, "<span class='warning'>You sense your marked item has been destroyed!</span>")
 		name = initial(name)
 		marked_item = null
 	else	//Getting previously marked item

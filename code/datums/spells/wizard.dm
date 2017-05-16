@@ -33,7 +33,7 @@
 
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/Click()
-	if(loc && in_range(usr,src))
+	if(loc && in_range(usr, src))
 		qdel(src)
 	else if(cast_check())
 		choose_targets()
@@ -160,14 +160,14 @@
 	action_icon_state = "shield"
 	var/summon_path = /obj/effect/forcefield/magic
 
-/obj/effect/proc_holder/spell/targeted/forcewall/cast(list/targets,mob/living/user = usr)
-	new summon_path(get_turf(user),user)
+/obj/effect/proc_holder/spell/targeted/forcewall/cast(list/targets, mob/living/user = usr)
+	new summon_path(get_turf(user), user)
 	if(user.dir == SOUTH || user.dir == NORTH)
-		new summon_path(get_step(user, EAST),user)
-		new summon_path(get_step(user, WEST),user)
+		new summon_path(get_step(user, EAST), user)
+		new summon_path(get_step(user, WEST), user)
 	else
-		new summon_path(get_step(user, NORTH),user)
-		new summon_path(get_step(user, SOUTH),user)
+		new summon_path(get_step(user, NORTH), user)
+		new summon_path(get_step(user, SOUTH), user)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"

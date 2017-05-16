@@ -70,12 +70,6 @@
 	spell_type = /obj/effect/proc_holder/spell/in_hand/fireball
 	log_name = "FB"
 
-/datum/spellbook_entry/rod_form
-	name = "Rod Form"
-	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
-	log_name = "RF"
-	cost = 3
-
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
 	spell_type = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
@@ -87,7 +81,6 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
 	log_name = "DT"
 	category = "Defensive"
-	cost = 1
 
 /datum/spellbook_entry/repulse
 	name = "Repulse"
@@ -100,6 +93,7 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	log_name = "TS"
 	category = "Defensive"
+	cost = 3
 
 /datum/spellbook_entry/smoke
 	name = "Smoke"
@@ -112,7 +106,6 @@
 	name = "Blind"
 	spell_type = /obj/effect/proc_holder/spell/targeted/trigger/blind
 	log_name = "BD"
-	cost = 1
 
 /datum/spellbook_entry/mindswap
 	name = "Mindswap"
@@ -236,13 +229,13 @@
 	item_path = /obj/item/weapon/gun/magic/staff/animate
 	log_name = "SA"
 	category = "Assistance"
+	cost = 4
 
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
 	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
 	item_path = /obj/item/weapon/gun/magic/staff/doorcreation
 	log_name = "SD"
-	cost = 1
 	category = "Mobility"
 
 /datum/spellbook_entry/item/staffhealing
@@ -360,49 +353,6 @@
 		return 0
 	return 1
 
-/*datum/spellbook_entry/summon/ghosts
-	name = "Summon Ghosts"
-	desc = "Spook the crew out by making them see dead people. Be warned, ghosts are capricious and occasionally vindicative, and some will use their incredibly minor abilties to frustrate you."
-	log_name = "SGH"
-
-/datum/spellbook_entry/summon/ghosts/IsAvailible()
-	if(!ticker.mode)
-		return FALSE
-	else
-		return TRUE*/
-
-/datum/spellbook_entry/summon/guns
-	name = "Summon Guns"
-	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
-	log_name = "SG"
-
-/datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned",log_name)
-	rightandwrong(0, user)
-	active = 1
-	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
-	return 1
-
-/datum/spellbook_entry/summon/magic
-	name = "Summon Magic"
-	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
-	log_name = "SU"
-
-/datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned",log_name)
-	rightandwrong(1, user)
-	active = 1
-	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
-	return 1
-
-/*datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", log_name)
-	new /datum/round_event/wizard/ghost()
-	active = TRUE
-	to_chat(user, "<span class='notice'>You have cast summon ghosts!</span>")
-	playsound(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
-	return TRUE*/
-
 /obj/item/weapon/spellbook
 	name = "spell book"
 	desc = "An unearthly tome that glows with power."
@@ -464,11 +414,6 @@
 			dat += "Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilties.<BR><BR>"
 			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-		if("Challenges")
-			dat += "The Wizard Federation typically has hard limits on the potency and number of spells brought to the station based on risk.<BR>"
-			dat += "Arming the station against you will increases the risk, but will grant you one more charge for your spellbook.<BR>"
-		if("Rituals")
-			dat += "These powerful spells change the very fabric of reality. Not always in your favour.<BR>"
 	return dat
 
 /obj/item/weapon/spellbook/proc/wrap(content)

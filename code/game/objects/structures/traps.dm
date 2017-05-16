@@ -76,6 +76,7 @@
 	to_chat(L, "<span class='danger'>You're frozen solid!</span>")
 	L.Weaken(1)
 	L.bodytemperature -= 300
+	L.reagents.add_reagent("frostoil", 15)
 
 /obj/structure/trap/damage
 	name = "earth trap"
@@ -101,7 +102,7 @@
 
 /obj/structure/rock/New()
 	..()
-	icon_state += pick("1","2","3")
+	icon_state += pick("1", "2", "3")
 
 /obj/structure/trap/ward
 	name = "divine ward"

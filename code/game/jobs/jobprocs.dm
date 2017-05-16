@@ -49,7 +49,7 @@
 		H.miming = 0
 	else
 		to_chat(H, "You'll have to wait if you want to atone for your sins.")
-		addtimer(CALLBACK(GLOBAL_PROC, /client/proc/return_speech,H),3000)
+		addtimer(CALLBACK(GLOBAL_PROC, /client/proc/return_speech, H), 3000)
 
 /client/proc/return_speech(mob/living/carbon/human/H)
 	H.miming = 1

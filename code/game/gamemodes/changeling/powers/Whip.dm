@@ -49,7 +49,7 @@
 	else
 		LE.agony = 25
 	LE.host = user
-	LE.Fire(A,user)
+	LE.Fire(A, user)
 
 /obj/item/projectile/changeling_whip
 	name = "Whip"

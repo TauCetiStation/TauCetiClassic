@@ -15,7 +15,7 @@
 		return
 	var/mob/living/carbon/C = user
 	var/bad_charge = (user.a_intent == "hurt")
-	var/list/hand_items = list(C.get_active_hand(),C.get_inactive_hand())
+	var/list/hand_items = list(C.get_active_hand(), C.get_inactive_hand())
 	var/charged_item = null
 	if(C.pulling && isliving(C.pulling))
 		var/mob/living/M = C.pulling
@@ -32,9 +32,9 @@
 				else
 					S.charge_counter = S.charge_max
 				break
-			to_chat(M,"<span class='notice'>You feel raw magic flowing through you. It feels [bad_charge ? "bad" : "good"]!</span>")
+			to_chat(M, "<span class='notice'>You feel raw magic flowing through you. It feels [bad_charge ? "bad" : "good"]!</span>")
 		else
-			to_chat(M,"<span class='notice'>you feel very strange for a moment, but then it passes.</span>")
+			to_chat(M, "<span class='notice'>you feel very strange for a moment, but then it passes.</span>")
 	if(!charged_item)
 		for(var/obj/item in hand_items)
 			if(istype(item, /obj/item/weapon/spellbook))
@@ -60,10 +60,7 @@
 		for(var/obj/machinery/MACH in range(1,C))
 			if(istype(MACH,/obj/machinery/power/smes))
 				var/obj/machinery/power/smes/SMES = MACH
-				if(bad_charge)
-					SMES.charge = 0
-				else
-					SMES.charge = SMES.capacity
+				SMES.charge = bad_charge ? 0 : SMES.capacity
 				charged_item = SMES.name
 				break
 			var/passed = 0
@@ -84,8 +81,5 @@
 /obj/effect/proc_holder/spell/targeted/charge/proc/cell_charge(obj/item/weapon/stock_parts/cell/Cell, bad_charge)
 	if(prob(50))
 		Cell.maxcharge = max(0, Cell.maxcharge - 200)
-	if(bad_charge)
-		Cell.charge = 0
-	else
-		Cell.charge = Cell.maxcharge
+	Cell.charge = bad_charge ? 0 : Cell.maxcharge
 	Cell.updateicon()

@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
-	charge_max = 150
+	charge_max = 200
 	clothes_req = 1
 	invocation = "GITTAH WEIGH"
 	invocation_type = "shout"

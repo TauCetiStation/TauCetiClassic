@@ -195,17 +195,17 @@
 		paused = TRUE
 		qdel(src)
 		return
-	if(istype(target,/turf/simulated/wall))
+	if(istype(target, /turf/simulated/wall))
 		var/turf/place = target
 		place.ChangeTurf(/turf/simulated/floor/plating)
 		var/pickedtype = pick(doors)
 		new pickedtype(place)
 		door_counter++
-	else if(istype(target,/obj/machinery/door))
+	else if(istype(target, /obj/machinery/door))
 		var/obj/machinery/door/D = target
 		D.open()
 		door_counter++
-	else if(istype(target,/obj/structure/mineral_door))
+	else if(istype(target, /obj/structure/mineral_door))
 		var/obj/structure/mineral_door/D = target
 		D.Open()
 		door_counter++

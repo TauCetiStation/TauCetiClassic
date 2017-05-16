@@ -28,7 +28,7 @@
 
 	var/area/thearea = teleportlocs[A]
 	playsound(usr,'sound/magic/Teleport_diss.ogg',100,2)
-	if(do_after(usr,50,target=usr))
+	if(do_after(usr, 50, target = usr))
 		return thearea
 	else
 		return FALSE
