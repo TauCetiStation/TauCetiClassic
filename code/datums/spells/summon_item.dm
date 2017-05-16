@@ -17,11 +17,12 @@
 	var/list/hand_items = list(user.get_active_hand(), user.get_inactive_hand())
 	if(!marked_item) //linking item to the spell
 		for(var/obj/item in hand_items)
-			if(item.flags & ABSTRACT)
+			if(item && item.flags & ABSTRACT)
 				continue
 			marked_item = item
 			to_chat(user, "<span class='notice'>You mark [item] for recall.</span>")
 			name = "Recall [item]"
+			break
 		if(!marked_item)
 			if(hand_items)
 				to_chat(user, "<span class='caution'>You aren't holding anything that can be marked for recall.</span>")

@@ -222,6 +222,7 @@
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/weapon/gun/magic/staff/change
 	log_name = "ST"
+	cost = 4
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
@@ -229,7 +230,7 @@
 	item_path = /obj/item/weapon/gun/magic/staff/animate
 	log_name = "SA"
 	category = "Assistance"
-	cost = 4
+	cost = 3
 
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"

@@ -44,7 +44,7 @@
 		if(P.agony) // No effect against full protection.
 			if(prob(max(P.agony, 20)))
 				var/obj/item/hand = get_active_hand()
-				if(!(hand.flags & ABSTRACT))
+				if(hand && !(hand.flags & ABSTRACT))
 					drop_item()
 		P.on_hit(src)
 		flash_pain()
