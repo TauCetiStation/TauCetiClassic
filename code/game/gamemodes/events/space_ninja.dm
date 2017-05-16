@@ -548,6 +548,12 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_r_store)
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_l_store)
 	equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen(src), slot_s_store)
+	var/obj/item/weapon/implant/dexplosive/L = new/obj/item/weapon/implant/dexplosive(src)
+	L.imp_in = src
+	L.implanted = 1
+	var/datum/organ/external/affected = src.organs_by_name["head"]
+	affected.implants += L
+	L.part = affected
 	return 1
 
 //=======//HELPER PROCS//=======//
