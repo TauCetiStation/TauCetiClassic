@@ -65,7 +65,7 @@
 
 /obj/item/weapon/gun/energy/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = Ceiling(ratio*4) * 25
+	ratio = ceil(ratio * 4) * 25
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	switch(modifystate)
 		if (0)

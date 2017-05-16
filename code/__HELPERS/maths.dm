@@ -9,9 +9,6 @@ var/const/Sqrt2	= 1.41421356
 	var/a = arccos(x / sqrt(x*x + y*y))
 	return y >= 0 ? a : -a
 
-/proc/Ceiling(x)
-	return -round(-x)
-
 // cotangent
 /proc/Cot(x)
 	return 1 / Tan(x)

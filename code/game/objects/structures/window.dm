@@ -443,7 +443,7 @@
 		icon_state = "[basestate][junction]"
 
 		var/ratio = health / maxhealth
-		ratio = Ceiling(ratio*4) * 25
+		ratio = ceil(ratio * 4) * 25
 
 		overlays -= crack_overlay
 		if(ratio > 75)
