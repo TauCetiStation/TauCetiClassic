@@ -63,7 +63,7 @@ REAGENT SCANNER
 
 		var/mob/living/M = locate() in T
 		if(M && M.invisibility == INVISIBILITY_LEVEL_TWO)
-			M.invisibility = 1
+			M.invisibility = 0
 			addtimer(CALLBACK(src, .proc/rehide_lmob, M), 10)
 
 
