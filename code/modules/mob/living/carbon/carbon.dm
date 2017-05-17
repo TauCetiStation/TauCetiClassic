@@ -78,9 +78,10 @@
 /mob/living/carbon/attack_hand(mob/M)
 	if(!istype(M, /mob/living/carbon)) return
 	if (ishuman(M))
-		var/datum/organ/external/BP = M:bodyparts_by_name[M.hand ? BP_L_HAND : BP_R_HAND]
+		var/mob/living/carbon/human/H = M
+		var/datum/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
 		if(BP && !BP.is_usable())
-			to_chat(M, "<span class='rose'>You can't use your [BP.name].</span>")
+			to_chat(H, "<span class='rose'>You can't use your [BP.name].</span>")
 			return
 
 	for(var/datum/disease/D in viruses)

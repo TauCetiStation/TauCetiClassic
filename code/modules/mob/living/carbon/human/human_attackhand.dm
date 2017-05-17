@@ -3,7 +3,7 @@
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
-	var/datum/organ/external/BPH = M:bodyparts_by_name[M.hand ? BP_L_HAND : BP_R_HAND]
+	var/datum/organ/external/BPH = M.bodyparts_by_name[M.hand ? BP_L_HAND : BP_R_HAND]
 	if(BPH && !BPH.is_usable())
 		to_chat(M, "\red You can't use your [BPH.name].")
 		return

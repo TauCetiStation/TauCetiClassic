@@ -302,6 +302,7 @@
 
 	if(M == affecting)
 		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
 			last_action = world.time
 			var/hit_zone = assailant.zone_sel.selecting
 			flick(hud.icon_state, hud)
@@ -317,14 +318,14 @@
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
-					var/datum/organ/external/BP = affecting:bodyparts_by_name[check_zone(hit_zone)]
+					var/datum/organ/external/BP = H.bodyparts_by_name[check_zone(hit_zone)]
 					if(!BP)
 						return
-					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [BP.name] into a jointlock!</span>")
-					var/armor = affecting:run_armor_check(affecting, "melee")
+					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [H]'s [BP.name] into a jointlock!</span>")
+					var/armor = H.run_armor_check(H, "melee")
 					if(armor < 2)
-						to_chat(affecting, "<span class='danger'>You feel extreme pain!</span>")
-						affecting.adjustHalLoss(Clamp(0, 40-affecting.halloss, 40)) //up to 40 halloss
+						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
+						H.adjustHalLoss(Clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
 					return
 				if("hurt")
 
