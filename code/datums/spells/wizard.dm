@@ -54,7 +54,7 @@
 	sound = 'sound/magic/Mutate.ogg'
 	action_icon_state = "mutate"
 
-	mutations = list(LASER, HULK)
+	mutations = list(LASEREYES, HULK)
 	duration = 300
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate

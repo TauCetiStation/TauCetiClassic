@@ -13,7 +13,7 @@
 /obj/item/device/harmonica/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M) || M != user)
 		return ..()
-	if(user.zone_sel.selecting == "mouth" && last_played <= world.time)
+	if(user.zone_sel.selecting == O_MOUTH && last_played <= world.time)
 		play(user)
 
 

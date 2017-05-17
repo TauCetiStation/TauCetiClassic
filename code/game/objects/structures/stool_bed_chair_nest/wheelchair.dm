@@ -148,7 +148,7 @@
 			victim.apply_effect(6, STUN, 0)
 			victim.apply_effect(6, WEAKEN, 0)
 			victim.apply_effect(6, STUTTER, 0)
-			victim.take_organ_damage(10)
+			victim.take_bodypart_damage(10)
 		if(pulling)
 			occupant.visible_message("<span class='danger'>[pulling] has thrusted \the [name] into \the [A], throwing \the [occupant] out of it!</span>")
 

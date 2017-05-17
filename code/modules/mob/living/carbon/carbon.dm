@@ -30,13 +30,11 @@
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
-					var/organ = H.get_organ("chest")
-					if (istype(organ, /datum/organ/external))
-						var/datum/organ/external/temp = organ
-						temp.take_damage(d, 0)
+					var/datum/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
+					BP.take_damage(d, 0)
 					H.updatehealth()
 				else
-					src.take_organ_damage(d)
+					src.take_bodypart_damage(d)
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
 						M.show_message(text("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
@@ -79,12 +77,11 @@
 
 /mob/living/carbon/attack_hand(mob/M)
 	if(!istype(M, /mob/living/carbon)) return
-	if (hasorgans(M))
-		var/datum/organ/external/temp = M:organs_by_name["r_hand"]
-		if (M.hand)
-			temp = M:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			to_chat(M, "<span class='rose'>You can't use your [temp.display_name].</span>")
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/datum/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+		if(BP && !BP.is_usable())
+			to_chat(H, "<span class='rose'>You can't use your [BP.name].</span>")
 			return
 
 	for(var/datum/disease/D in viruses)
@@ -199,10 +196,10 @@
 				"<span class='notice'>You check yourself for injuries.</span>" \
 				)
 
-			for(var/datum/organ/external/org in H.organs)
+			for(var/datum/organ/external/BP in H.bodyparts)
 				var/status = ""
-				var/brutedamage = org.brute_dam
-				var/burndamage = org.burn_dam
+				var/brutedamage = BP.brute_dam
+				var/burndamage = BP.burn_dam
 				if(halloss > 0)
 					if(prob(30))
 						brutedamage += halloss
@@ -224,13 +221,13 @@
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
-				if(org.status & ORGAN_DESTROYED)
+				if(BP.status & ORGAN_DESTROYED)
 					status = "MISSING!"
-				if(org.status & ORGAN_MUTATED)
+				if(BP.status & ORGAN_MUTATED)
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.display_name,status),1)
+				src.show_message(text("\t []My [] is [].", status == "OK" ? "\blue " : "\red ", BP.name,status), 1)
 			if(H.species && (H.species.name == SKELETON) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
@@ -295,8 +292,8 @@
 				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					var/datum/organ/external/E = H.get_organ("head")
-					E.take_damage(5, 0, 0, 0, "Facepalm") // what?.. that guy was insane anyway.
+					var/datum/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+					BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
 				else
 					take_overall_damage(5, used_weapon = "Table")
 				Stun(1)

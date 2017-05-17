@@ -378,7 +378,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			M.Stun(3)
 	else
 		to_chat(M, "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>")
-		M.heal_organ_damage(2,2)
+		M.heal_bodypart_damage(2, 2)
 		M.adjustOxyLoss(-2)
 		M.adjustToxLoss(-2)
 	..()
@@ -446,7 +446,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			nearbyTargets.Add(M)
 		for(var/mob/living/carbon/M in nearbyTargets)
 			nearbyTargets.Remove(M) //To prevent someone dying like a zillion times
-			U.heal_organ_damage(10, 10)
+			U.heal_bodypart_damage(10, 10)
 			U.adjustToxLoss(-10)
 			U.adjustOxyLoss(-10)
 			U.AdjustWeakened(-1)
@@ -642,7 +642,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			target.Weaken(15)
 			if(target.bodytemperature)
 				target.bodytemperature -= INFINITY //:^)
-			target.take_organ_damage(0,80)
+			target.take_bodypart_damage(0, 80)
 
 
 

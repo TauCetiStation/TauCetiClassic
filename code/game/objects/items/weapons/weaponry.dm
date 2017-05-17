@@ -43,7 +43,7 @@
 
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red The rod slips out of your hand and hits your head.")
-		user.take_organ_damage(10)
+		user.take_bodypart_damage(10)
 		user.Paralyse(20)
 		return
 

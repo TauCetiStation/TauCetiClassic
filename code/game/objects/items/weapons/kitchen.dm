@@ -59,7 +59,7 @@
 	if(!istype(M))
 		return ..()
 
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
 		return ..()
 
 	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
@@ -101,7 +101,7 @@
 	if(!istype(M))
 		return ..()
 
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
 		return ..()
 
 	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
@@ -142,7 +142,7 @@
 /obj/item/weapon/kitchen/utensil/knife/attack(target, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red You accidentally cut yourself with the [src].")
-		user.take_organ_damage(20)
+		user.take_bodypart_damage(20)
 		return
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
@@ -158,7 +158,7 @@
 /obj/item/weapon/kitchen/utensil/pknife/attack(target, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red You somehow managed to cut yourself with the [src].")
-		user.take_organ_damage(20)
+		user.take_bodypart_damage(20)
 		return
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
@@ -237,7 +237,7 @@
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red The [src] slips out of your hand and hits your head.")
-		user.take_organ_damage(10)
+		user.take_bodypart_damage(10)
 		user.Paralyse(2)
 		return
 
@@ -246,7 +246,7 @@
 	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 	var/t = user:zone_sel.selecting
-	if (t == "head")
+	if (t == BP_HEAD)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.stat < 2 && H.health < 50 && prob(90))
@@ -318,7 +318,7 @@
 	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
 		to_chat(M, "\red You accidentally slam yourself with the [src]!")
 		M.Weaken(1)
-		user.take_organ_damage(2)
+		user.take_bodypart_damage(2)
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			return
@@ -329,7 +329,7 @@
 	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
 
 
-	if(!(user.zone_sel.selecting == ("eyes" || "head"))) //////////////hitting anything else other than the eyes
+	if(!(user.zone_sel.selecting == (O_EYES || BP_HEAD))) //////////////hitting anything else other than the eyes
 		if(prob(33))
 			src.add_blood(H)
 			var/turf/location = H.loc
@@ -342,9 +342,9 @@
 
 		if(prob(15))
 			M.Weaken(3)
-			M.take_organ_damage(3)
+			M.take_bodypart_damage(3)
 		else
-			M.take_organ_damage(5)
+			M.take_bodypart_damage(5)
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
@@ -383,10 +383,10 @@
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		if(prob(10))
 			M.Stun(rand(1,3))
-			M.take_organ_damage(3)
+			M.take_bodypart_damage(3)
 			return
 		else
-			M.take_organ_damage(5)
+			M.take_bodypart_damage(5)
 			return
 
 	else //No eye or head protection, tough luck!
@@ -407,10 +407,10 @@
 				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		if(prob(30))
 			M.Stun(rand(2,4))
-			M.take_organ_damage(4)
+			M.take_bodypart_damage(4)
 			return
 		else
-			M.take_organ_damage(8)
+			M.take_bodypart_damage(8)
 			if(prob(30))
 				M.Weaken(2)
 				return

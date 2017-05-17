@@ -348,8 +348,8 @@ BLIND     // can't see anything
 		return
 
 	// Otherwise, remove the splints.
-	for(var/datum/organ/external/E in supporting_limbs)
-		E.status &= ~ ORGAN_SPLINTED
+	for(var/datum/organ/external/BP in supporting_limbs)
+		BP.status &= ~ORGAN_SPLINTED
 	supporting_limbs = list()
 
 //Under clothing

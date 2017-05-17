@@ -50,7 +50,7 @@
 
 	add_fingerprint(user)
 
-	if(!(user.zone_sel.selecting == ("head")) || !istype(M, /mob/living/carbon/human))
+	if(!(user.zone_sel.selecting == BP_HEAD) || !istype(M, /mob/living/carbon/human))
 		return ..()
 
 	if(	!(locate(/obj/machinery/optable, M.loc) && M.resting) && ( !(locate(/obj/structure/table/, M.loc) && M.lying) && prob(50) ) )

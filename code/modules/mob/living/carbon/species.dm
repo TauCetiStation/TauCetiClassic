@@ -83,41 +83,42 @@
 /datum/species/New()
 	unarmed = new unarmed_type()
 
-/datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
+/datum/species/proc/create_bodyparts(mob/living/carbon/human/H) //Handles creation of mob bodyparts and their organs.
 	//This is a basic humanoid limb setup.
+	H.bodyparts = list()
+	H.bodyparts_by_name[BP_CHEST] = new/datum/organ/external/chest()
+	H.bodyparts_by_name[BP_GROIN] = new/datum/organ/external/groin(H.bodyparts_by_name[BP_CHEST])
+	H.bodyparts_by_name[BP_HEAD] = new/datum/organ/external/head(H.bodyparts_by_name[BP_CHEST])
+	H.bodyparts_by_name[BP_L_ARM] = new/datum/organ/external/l_arm(H.bodyparts_by_name[BP_CHEST])
+	H.bodyparts_by_name[BP_R_ARM] = new/datum/organ/external/r_arm(H.bodyparts_by_name[BP_CHEST])
+	H.bodyparts_by_name[BP_R_LEG] = new/datum/organ/external/r_leg(H.bodyparts_by_name[BP_GROIN])
+	H.bodyparts_by_name[BP_L_LEG] = new/datum/organ/external/l_leg(H.bodyparts_by_name[BP_GROIN])
+	H.bodyparts_by_name[BP_L_HAND] = new/datum/organ/external/l_hand(H.bodyparts_by_name[BP_L_ARM])
+	H.bodyparts_by_name[BP_R_HAND] = new/datum/organ/external/r_hand(H.bodyparts_by_name[BP_R_ARM])
+	H.bodyparts_by_name[BP_L_FOOT] = new/datum/organ/external/l_foot(H.bodyparts_by_name[BP_L_LEG])
+	H.bodyparts_by_name[BP_R_FOOT] = new/datum/organ/external/r_foot(H.bodyparts_by_name[BP_R_LEG])
+
 	H.organs = list()
-	H.organs_by_name["chest"] = new/datum/organ/external/chest()
-	H.organs_by_name["groin"] = new/datum/organ/external/groin(H.organs_by_name["chest"])
-	H.organs_by_name["head"] = new/datum/organ/external/head(H.organs_by_name["chest"])
-	H.organs_by_name["l_arm"] = new/datum/organ/external/l_arm(H.organs_by_name["chest"])
-	H.organs_by_name["r_arm"] = new/datum/organ/external/r_arm(H.organs_by_name["chest"])
-	H.organs_by_name["r_leg"] = new/datum/organ/external/r_leg(H.organs_by_name["groin"])
-	H.organs_by_name["l_leg"] = new/datum/organ/external/l_leg(H.organs_by_name["groin"])
-	H.organs_by_name["l_hand"] = new/datum/organ/external/l_hand(H.organs_by_name["l_arm"])
-	H.organs_by_name["r_hand"] = new/datum/organ/external/r_hand(H.organs_by_name["r_arm"])
-	H.organs_by_name["l_foot"] = new/datum/organ/external/l_foot(H.organs_by_name["l_leg"])
-	H.organs_by_name["r_foot"] = new/datum/organ/external/r_foot(H.organs_by_name["r_leg"])
+	H.organs_by_name[O_HEART] = new/datum/organ/internal/heart(H)
+	H.organs_by_name[O_LUNGS] = new/datum/organ/internal/lungs(H)
+	H.organs_by_name[O_LIVER] = new/datum/organ/internal/liver(H)
+	H.organs_by_name[O_KIDNEYS] = new/datum/organ/internal/kidney(H)
+	H.organs_by_name[O_BRAIN] = new/datum/organ/internal/brain(H)
+	H.organs_by_name[O_EYES] = new/datum/organ/internal/eyes(H)
 
-	H.internal_organs = list()
-	H.internal_organs_by_name["heart"] = new/datum/organ/internal/heart(H)
-	H.internal_organs_by_name["lungs"] = new/datum/organ/internal/lungs(H)
-	H.internal_organs_by_name["liver"] = new/datum/organ/internal/liver(H)
-	H.internal_organs_by_name["kidney"] = new/datum/organ/internal/kidney(H)
-	H.internal_organs_by_name["brain"] = new/datum/organ/internal/brain(H)
-	H.internal_organs_by_name["eyes"] = new/datum/organ/internal/eyes(H)
+	for(var/bodypart_name in H.bodyparts_by_name)
+		H.bodyparts += H.bodyparts_by_name[bodypart_name]
 
-	for(var/name in H.organs_by_name)
-		H.organs += H.organs_by_name[name]
-
-	for(var/datum/organ/external/O in H.organs)
-		O.owner = H
+	for(var/datum/organ/external/BP in H.bodyparts)
+		BP.owner = H
 
 	if(flags[IS_SYNTHETIC])
-		for(var/datum/organ/external/E in H.organs)
-			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
-			E.status |= ORGAN_ROBOT
-		for(var/datum/organ/internal/I in H.internal_organs)
-			I.mechanize()
+		for(var/datum/organ/external/BP in H.bodyparts)
+			if(BP.status & (ORGAN_CUT_AWAY | ORGAN_DESTROYED))
+				continue
+			BP.status |= ORGAN_ROBOT
+		for(var/datum/organ/internal/IO in H.organs)
+			IO.mechanize()
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return

@@ -1,4 +1,4 @@
-///////////////////ORGAN DEFINES///////////////////
+///////////////////ORGAN STATUS DEFINES///////////////////
 #define ORGAN_CUT_AWAY		1
 #define ORGAN_GAUZED 		2
 #define ORGAN_ATTACHABLE 	4
@@ -10,6 +10,29 @@
 #define SALVED 				512
 #define ORGAN_DEAD 			1024
 #define ORGAN_MUTATED 		2048
+
+// Bodypart defines
+#define BP_CHEST  "chest"
+#define BP_GROIN  "groin"
+#define BP_HEAD   "head"
+#define BP_L_ARM  "l_arm"
+#define BP_R_ARM  "r_arm"
+#define BP_L_HAND "l_hand"
+#define BP_R_HAND "r_hand"
+#define BP_L_LEG  "l_leg"
+#define BP_R_LEG  "r_leg"
+#define BP_L_FOOT "l_foot"
+#define BP_R_FOOT "r_foot"
+
+// Organ defines.
+#define O_MOUTH    "mouth"
+#define O_EYES     "eyes"
+#define O_HEART    "heart"
+#define O_LUNGS    "lungs"
+#define O_BRAIN    "brain"
+#define O_LIVER    "liver"
+#define O_KIDNEYS  "kidneys"
+#define O_APPENDIX "appendix"
 
 #define AGE_MIN 25			//youngest a character can be
 #define AGE_MAX 85			//oldest a character can be

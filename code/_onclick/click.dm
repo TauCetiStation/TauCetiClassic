@@ -182,11 +182,12 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(atom/A, params)
-	if(!mutations.len) return
-	if((LASER in mutations) && a_intent == "hurt")
+	if(!mutations.len)
+		return
+	if(a_intent == "hurt" && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
-		switch(get_dist(src,A))
+		switch(get_dist(src, A))
 			if(0)
 				;
 			if(1 to 5) // not adjacent may mean blocked by window
@@ -198,6 +199,7 @@
 			else
 				return
 		A.attack_tk(src)
+
 /*
 	Restrained ClickOn
 
@@ -291,16 +293,14 @@
 /mob/proc/LaserEyes(atom/A)
 	return
 
-/mob/living/LaserEyes(atom/A)
-	next_move = world.time + 6
-	var/obj/item/projectile/beam/LE = new(loc)
-	LE.damage = 20
-	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
-	LE.Fire(A, src)
-
-/mob/living/carbon/human/LaserEyes()
+/mob/living/carbon/human/LaserEyes(atom/A)
 	if(nutrition > 300)
 		..()
+		next_move = world.time + 6
+		var/obj/item/projectile/beam/LE = new(loc)
+		LE.damage = 20
+		playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
+		LE.Fire(A, src)
 		nutrition = max(nutrition - rand(10,40), 0)
 		handle_regular_hud_updates()
 	else

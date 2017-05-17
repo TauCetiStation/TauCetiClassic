@@ -1,14 +1,14 @@
 /****************************************************
 				INTERNAL ORGANS
 ****************************************************/
-
-/mob/living/carbon/human/var/list/internal_organs = list()
-
 /datum/organ/internal
+	// Strings.
+	var/organ_tag    = null           // Unique identifier.
+	var/parent_bodypart = BP_CHEST       // Bodypart holding this object.
+
 	var/damage = 0 // amount of damage to the organ
 	var/min_bruised_damage = 10
 	var/min_broken_damage = 30
-	var/parent_organ = "chest"
 	var/robotic = 0 //For being a robot
 
 /datum/organ/internal/proc/rejuvenate()
@@ -24,17 +24,17 @@
 
 /datum/organ/internal/New(mob/living/carbon/human/H)
 	..()
-	var/datum/organ/external/E = H.organs_by_name[src.parent_organ]
-	if(E.internal_organs == null)
-		E.internal_organs = list()
-	E.internal_organs |= src
-	H.internal_organs |= src
+	var/datum/organ/external/BP = H.bodyparts_by_name[src.parent_bodypart]
+	if(BP.bodypart_organs == null)
+		BP.bodypart_organs = list()
+	BP.bodypart_organs |= src
+	H.organs |= src
 	src.owner = H
 
 /datum/organ/internal/process()
 	//Process infections
 
-	if (robotic >= 2 || (owner.species && owner.species.flags[IS_PLANT]))	//TODO make robotic internal and external organs separate types of organ instead of a flag
+	if (robotic >= 2 || (owner.species && owner.species.flags[IS_PLANT]))	//TODO make robotic organs and bodyparts separate types instead of a flag
 		germ_level = 0
 		return
 
@@ -54,10 +54,10 @@
 				germ_level++
 
 		if (germ_level >= INFECTION_LEVEL_TWO)
-			var/datum/organ/external/parent = owner.get_organ(parent_organ)
+			var/datum/organ/external/BP = owner.bodyparts_by_name[parent_bodypart]
 			//spread germs
-			if (antibiotics < 5 && parent.germ_level < germ_level && ( parent.germ_level < INFECTION_LEVEL_ONE*2 || prob(30) ))
-				parent.germ_level++
+			if (antibiotics < 5 && BP.germ_level < germ_level && ( BP.germ_level < INFECTION_LEVEL_ONE * 2 || prob(30) ))
+				BP.germ_level++
 
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
@@ -68,9 +68,9 @@
 	else
 		src.damage += amount
 
-	var/datum/organ/external/parent = owner.get_organ(parent_organ)
+	var/datum/organ/external/BP = owner.bodyparts_by_name[parent_bodypart]
 	if (!silent)
-		owner.custom_pain("Something inside your [parent.display_name] hurts a lot.", 1)
+		owner.custom_pain("Something inside your [BP.name] hurts a lot.", 1)
 
 /datum/organ/internal/proc/emp_act(severity)
 	switch(robotic)
@@ -108,17 +108,19 @@
 	min_broken_damage = 35
 
 /****************************************************
-				INTERNAL ORGANS DEFINES
+				ORGANS DEFINES
 ****************************************************/
 
 /datum/organ/internal/heart
 	name = "heart"
-	parent_organ = "chest"
+	organ_tag = O_HEART
+	parent_bodypart = BP_CHEST
 
 
 /datum/organ/internal/lungs
 	name = "lungs"
-	parent_organ = "chest"
+	organ_tag = O_LUNGS
+	parent_bodypart = BP_CHEST
 
 /datum/organ/internal/lungs/process()
 	..()
@@ -136,7 +138,8 @@
 
 /datum/organ/internal/liver
 	name = "liver"
-	parent_organ = "chest"
+	organ_tag = O_LIVER
+	parent_bodypart = BP_CHEST
 	var/process_accuracy = 10
 
 /datum/organ/internal/liver/process()
@@ -159,9 +162,9 @@
 				src.damage += 0.2 * process_accuracy
 			//Damaged one shares the fun
 			else
-				var/datum/organ/internal/O = pick(owner.internal_organs)
-				if(O)
-					O.damage += 0.2  * process_accuracy
+				var/datum/organ/internal/IO = pick(owner.organs)
+				if(IO)
+					IO.damage += 0.2  * process_accuracy
 
 		//Detox can heal small amounts of damage
 		if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
@@ -179,15 +182,18 @@
 
 /datum/organ/internal/kidney
 	name = "kidney"
-	parent_organ = "chest"
+	organ_tag = O_KIDNEYS
+	parent_bodypart = BP_CHEST
 
 /datum/organ/internal/brain
 	name = "brain"
-	parent_organ = "head"
+	organ_tag = O_BRAIN
+	parent_bodypart = BP_HEAD
 
 /datum/organ/internal/eyes
 	name = "eyes"
-	parent_organ = "head"
+	organ_tag = O_EYES
+	parent_bodypart = BP_HEAD
 
 /datum/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()
