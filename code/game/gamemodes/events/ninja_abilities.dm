@@ -61,7 +61,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		smoke.start()
 		playsound(U.loc, 'sound/effects/bamf.ogg', 50, 2)
 		s_bombs--
-		to_chat(U, "\blue There are <B>[s_bombs]</B> smoke bombs remaining.")
+		to_chat(U, "<span class='info'>There are <B>[s_bombs]</B> smoke bombs remaining.</span>")
 		s_coold = 1
 	return
 
