@@ -25,6 +25,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
 	var/maxf = 1499
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
+	var/grid = FALSE // protect from EMP
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throw_speed = 2
@@ -656,21 +657,34 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		to_chat(user, "<span class='notice'>\the [src] can[b_stat ? "" : " not"] be attached or modified!</span>")
 
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/device/radio_grid))
+		to_chat(user, "<span class='notice'>You attach [W] to [src]!</span>")
+		user.drop_item()
+		grid = TRUE
+		qdel(W)
+		on = 1
+	else if(istype(W, /obj/item/weapon/wirecutters) && grid)
+		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
+		playsound(user, 'sound/items/Wirecutter.ogg', 50, 1)
+		new /obj/item/device/radio_grid(get_turf(loc))
+		grid = FALSE
+	else if (istype(W, /obj/item/weapon/screwdriver))
 		b_stat = !b_stat
 		add_fingerprint(user)
+		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(!istype(src, /obj/item/device/radio/beacon))
-			to_chat(user, "<span class='notice'>The radio can [b_stat ? "now" : "no longer"] be attached and modified!")
+			to_chat(user, "<span class='notice'>The radio can [b_stat ? "now" : "no longer"] be attached and modified!</span>")
 	else
 		..()
 
 /obj/item/device/radio/emp_act(severity)
-	on = 0
+	if(!grid)
+		on = 0
+		..()
 /*	broadcasting = 0
 	listening = 0
 	for (var/ch_name in channels)
 	channels[ch_name] = 0 */
-	..()
 
 
 ///////////////////////////////
@@ -812,3 +826,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/off
 	listening = 0
+
+/obj/item/device/radio_grid
+	name = "Shielded grid"
+	desc = "A metal grid, attached to circuit to protect it from emitting."
+	w_class = 2
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "radio_grid"

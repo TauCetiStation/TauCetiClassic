@@ -2202,6 +2202,15 @@ datum/design/cart_janitor
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/weapon/cartridge/janitor
 
+/datum/design/radio_grid
+	name = "Radio Grid"
+	desc = "A metal grid, attached to circuit to protect it from emitting."
+	id = "radio_grid"
+	req_tech = list("engineering" = 4, "powerstorage" = 3, "magnets" = 3, "programming" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 250, MAT_GLASS = 50)
+	build_path = /obj/item/device/radio_grid
+
 /*
 datum/design/cart_clown
 	name = "Honkworks 5.0 Cartridge"
