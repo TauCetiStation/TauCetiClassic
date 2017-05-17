@@ -8,14 +8,14 @@
 	can_infect = 1
 	blood_level = 1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		if (!hasorgans(target))
+		if (!ishuman(target))
 			return 0
-		if (target_zone != "groin")
+		if (target_zone != BP_GROIN)
 			return 0
-		var/datum/organ/external/groin = target.get_organ("groin")
-		if (!groin)
+		var/datum/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
+		if (!BP)
 			return 0
-		if (groin.open < 2)
+		if (BP.open < 2)
 			return 0
 		return 1
 
@@ -45,10 +45,10 @@
 		target.op_stage.appendix = 1
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/groin = target.get_organ("groin")
+		var/datum/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
 		user.visible_message("\red [user]'s hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!", \
 		"\red Your hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!")
-		groin.createwound(CUT, 50, 1)
+		BP.createwound(CUT, 50, 1)
 
 /datum/surgery_step/appendectomy/remove_appendix
 	allowed_tools = list(
@@ -85,7 +85,7 @@
 		target.op_stage.appendix = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, nicking internal organs in [target]'s abdomen with \the [tool]!", \
-		"\red Your hand slips, nicking internal organs in [target]'s abdomen with \the [tool]!")
-		affected.createwound(BRUISE, 20)
+		var/datum/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
+		user.visible_message("\red [user]'s hand slips, nicking organs in [target]'s abdomen with \the [tool]!", \
+		"\red Your hand slips, nicking organs in [target]'s abdomen with \the [tool]!")
+		BP.createwound(BRUISE, 20)

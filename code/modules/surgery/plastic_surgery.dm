@@ -11,12 +11,10 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(!ishuman(target))
 			return 0
-		if (!hasorgans(target))
+		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		if (!BP)
 			return 0
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		if (!affected)
-			return 0
-		return target_zone == "mouth"
+		return target_zone == O_MOUTH
 
 /datum/surgery_step/plastic_surgery/retract_face
 	allowed_tools = list(
@@ -42,10 +40,10 @@
 		target.op_stage.plasticsur = 1
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
+		var/datum/organ/external/BP = target.get_bodypart(target_zone)
 		user.visible_message("\red [user]'s hand slips, tearing skin on [target]'s face with \the [tool]!", \
 		"\red Your hand slips, tearing skin on [target]'s face with \the [tool]!")
-		target.apply_damage(10, BRUTE, affected, sharp=1, sharp=1)
+		target.apply_damage(10, BRUTE, BP, sharp = 1, sharp = 1)
 
 /datum/surgery_step/plastic_surgery/adjust_vocal
 	allowed_tools = list(
@@ -63,9 +61,9 @@
 		return ..() && target.op_stage.plasticsur == 1 && target.op_stage.face == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		var/datum/organ/external/head/h = affected
-		if (h.disfigured == 1)
+		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/datum/organ/external/head/H = BP
+		if (H.disfigured == 1)
 			user.visible_message("[user] starts mending [target]'s vocal cords with \the [tool].", \
 			"You start mending [target]'s vocal cords with \the [tool].")
 		else
@@ -74,12 +72,12 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		var/datum/organ/external/head/h = affected
-		if (h.disfigured == 1)
+		var/datum/organ/external/BP = target.get_bodypart(target_zone)
+		var/datum/organ/external/head/H = BP
+		if (H.disfigured == 1)
 			user.visible_message("\blue [user] mends [target]'s vocal cords with \the [tool].", \
 			"\blue You mend [target]'s vocal cords with \the [tool].")
-			h.disfigured = 0
+			H.disfigured = 0
 		else
 			user.visible_message("\blue [user] adjusts [target]'s vocal cords with \the [tool].", \
 			"\blue You adjust [target]'s vocal cords with \the [tool].")
@@ -128,7 +126,7 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, tearing skin on [target]'s face with \the [tool]!", \
 		"\red Your hand slips, tearing skin on [target]'s face with \the [tool]!")
-		target.apply_damage(20, BRUTE, "head", 1, sharp=1)
+		target.apply_damage(20, BRUTE, BP_HEAD, 1, sharp=1)
 
 /datum/surgery_step/plastic_surgery/cauterize
 	allowed_tools = list(
@@ -150,19 +148,19 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
+		var/datum/organ/external/BP = target.get_bodypart(target_zone)
 		user.visible_message("\blue [user] cauterizes the incision on [target]'s face and neck with \the [tool].", \
 		"\blue You cauterize theon [target]'s face and neck with \the [tool].")
-		affected.open = 0
-		affected.status &= ~ORGAN_BLEEDING
+		BP.open = 0
+		BP.status &= ~ORGAN_BLEEDING
 		if (target.op_stage.plasticsur == 2)
-			var/datum/organ/external/head/h = affected
-			h.disfigured = 0
+			var/datum/organ/external/head/H = BP
+			H.disfigured = 0
 		target.op_stage.plasticsur = 0
 		target.op_stage.face = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
+		var/datum/organ/external/BP = target.get_bodypart(target_zone)
 		user.visible_message("\red [user]'s hand slips, leaving a small burn on [target]'s face with \the [tool]!", \
 		"\red Your hand slips, leaving a small burn on [target]'s face with \the [tool]!")
-		target.apply_damage(4, BURN, affected)
+		target.apply_damage(4, BURN, BP)

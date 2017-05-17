@@ -182,11 +182,12 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(atom/A, params)
-	if(!mutations.len) return
-	if((LASER in mutations) && a_intent == "hurt")
+	if(!mutations.len)
+		return
+	if(a_intent == "hurt" && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
-		switch(get_dist(src,A))
+		switch(get_dist(src, A))
 			if(0)
 				;
 			if(1 to 5) // not adjacent may mean blocked by window
@@ -198,6 +199,7 @@
 			else
 				return
 		A.attack_tk(src)
+
 /*
 	Restrained ClickOn
 
@@ -291,27 +293,25 @@
 /mob/proc/LaserEyes(atom/A)
 	return
 
-/mob/living/LaserEyes(atom/A)
-	next_move = world.time + 6
-	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
+/mob/living/carbon/human/LaserEyes(atom/A)
+	if(nutrition > 0)
+		next_move = world.time + 6
+		var/turf/T = get_turf(src)
+		var/turf/U = get_turf(A)
 
-	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
-	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
+		var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
+		playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 
-	LE.def_zone = get_organ_target()
-	LE.starting = T
-	LE.original = A
-	LE.current = T
-	LE.damage = 20
-	LE.yo = U.y - T.y
-	LE.xo = U.x - T.x
-	spawn( 1 )
-		LE.process()
+		LE.def_zone = ran_zone(zone_sel.selecting)
+		LE.starting = T
+		LE.original = A
+		LE.current = T
+		LE.damage = 20
+		LE.yo = U.y - T.y
+		LE.xo = U.x - T.x
+		spawn( 1 )
+			LE.process()
 
-/mob/living/carbon/human/LaserEyes()
-	if(nutrition>0)
-		..()
 		nutrition = max(nutrition - rand(1,10),0)
 		handle_regular_hud_updates()
 	else

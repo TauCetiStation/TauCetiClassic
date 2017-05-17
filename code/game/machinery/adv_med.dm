@@ -285,24 +285,24 @@
 						if(!D.hidden[SCANNER])
 							dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
 
-					dat += "<HR><A href='?src=\ref[src];print=1'>Print organs report</A><BR>"
+					dat += "<HR><A href='?src=\ref[src];print=1'>Print body parts report</A><BR>"
 					storedinfo = null
 					dat += "<HR><table border='1'>"
 					dat += "<tr>"
-					dat += "<th>Organ</th>"
+					dat += "<th>Body Part</th>"
 					dat += "<th>Burn Damage</th>"
 					dat += "<th>Brute Damage</th>"
 					dat += "<th>Other Wounds</th>"
 					dat += "</tr>"
 					storedinfo += "<HR><table border='1'>"
 					storedinfo += "<tr>"
-					storedinfo += "<th>Organ</th>"
+					storedinfo += "<th>Body Part</th>"
 					storedinfo += "<th>Burn Damage</th>"
 					storedinfo += "<th>Brute Damage</th>"
 					storedinfo += "<th>Other Wounds</th>"
 					storedinfo += "</tr>"
 
-					for(var/datum/organ/external/e in occupant.organs)
+					for(var/datum/organ/external/BP in occupant.bodyparts)
 
 						dat += "<tr>"
 						storedinfo += "<tr>"
@@ -315,22 +315,22 @@
 						var/splint = ""
 						var/internal_bleeding = ""
 						var/lung_ruptured = ""
-						for(var/datum/wound/W in e.wounds) if(W.internal)
+						for(var/datum/wound/W in BP.wounds) if(W.internal)
 							internal_bleeding = "<br>Internal bleeding"
 							break
-						if(istype(e, /datum/organ/external/chest) && occupant.is_lung_ruptured())
+						if(istype(BP, /datum/organ/external/chest) && occupant.is_lung_ruptured())
 							lung_ruptured = "Lung ruptured:"
-						if(e.status & ORGAN_SPLINTED)
+						if(BP.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
-						if(e.status & ORGAN_BLEEDING)
+						if(BP.status & ORGAN_BLEEDING)
 							bled = "Bleeding:"
-						if(e.status & ORGAN_BROKEN)
-							AN = "[e.broken_description]:"
-						if(e.status & ORGAN_ROBOT)
+						if(BP.status & ORGAN_BROKEN)
+							AN = "[BP.broken_description]:"
+						if(BP.status & ORGAN_ROBOT)
 							robot = "Prosthetic:"
-						if(e.open)
+						if(BP.open)
 							open = "Open:"
-						switch (e.germ_level)
+						switch (BP.germ_level)
 							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infected = "Mild Infection:"
 							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
@@ -347,33 +347,33 @@
 								infected = "Septic:"
 
 						var/unknown_body = 0
-						for(var/I in e.implants)
+						for(var/I in BP.implants)
 							if(is_type_in_list(I,known_implants))
 								imp += "[I] implanted:"
 							else
 								unknown_body++
 
-						if(unknown_body || e.hidden)
+						if(unknown_body || BP.hidden)
 							imp += "Unknown body present:"
 						if(!AN && !open && !infected & !imp)
 							AN = "None:"
-						if(!(e.status & ORGAN_DESTROYED))
-							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
-							storedinfo += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
+						if(!(BP.status & ORGAN_DESTROYED))
+							dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
+							storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
 						else
-							dat += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
-							storedinfo += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
+							dat += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
+							storedinfo += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"
 						storedinfo += "</tr>"
-					for(var/datum/organ/internal/i in occupant.internal_organs)
+					for(var/datum/organ/internal/IO in occupant.organs)
 						var/mech = ""
-						if(i.robotic == 1)
+						if(IO.robotic == 1)
 							mech = "Assisted:"
-						if(i.robotic == 2)
+						if(IO.robotic == 2)
 							mech = "Mechanical:"
 
 						var/infection = "None"
-						switch (i.germ_level)
+						switch (IO.germ_level)
 							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infection = "Mild Infection:"
 							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
@@ -390,10 +390,10 @@
 								infection = "Necrotic:"
 
 						dat += "<tr>"
-						dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"
+						dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
 						dat += "</tr>"
 						storedinfo += "<tr>"
-						storedinfo += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"
+						storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
 						storedinfo += "</tr>"
 					dat += "</table>"
 					storedinfo += "</table>"
