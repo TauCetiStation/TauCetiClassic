@@ -74,8 +74,7 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/Destroy()
 	QDEL_NULL(wires)
-	if(electronics)
-		QDEL_NULL(electronics)
+	QDEL_NULL(electronics)
 	closeOther = null
 	return ..()
 

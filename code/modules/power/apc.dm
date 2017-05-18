@@ -137,8 +137,7 @@
 	/*if(occupier)
 		malfvacate(1)*/
 	QDEL_NULL(wires)
-	if(cell)
-		QDEL_NULL(cell)
+	QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
 	return ..()
