@@ -22,7 +22,7 @@
 /**
  * Delete `item` and nullify var, where it was.
  */
-#define QDEL_NULL(item) qdel(item); item = null
+#define QDEL_NULL(item) if(item) { qdel(item); item = null }
 
 /**
  * Return `TRUE` if `X` already passed `Destroy()` phase.

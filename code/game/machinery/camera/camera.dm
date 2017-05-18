@@ -54,8 +54,7 @@
 /obj/machinery/camera/Destroy()
 	disconnect_viewers()
 	QDEL_NULL(wires)
-	if(assembly)
-		QDEL_NULL(assembly)
+	QDEL_NULL(assembly)
 	if(bug)
 		bug.bugged_cameras -= c_tag
 		if(bug.current == src)
