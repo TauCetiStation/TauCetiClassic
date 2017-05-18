@@ -19,7 +19,7 @@
 				new /obj/item/weapon/card/id/syndicate(src)
 				new /obj/item/clothing/gloves/black/strip(src)
 
-		    if("screwed")
+			if("screwed")
 				new /obj/item/weapon/grenade/syndieminibomb(src)
 				new /obj/item/weapon/grenade/syndieminibomb(src)
 				new /obj/item/device/powersink(src)
