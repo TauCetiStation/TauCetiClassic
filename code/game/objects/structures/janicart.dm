@@ -31,11 +31,10 @@
 	if(floorbuffer)
 		var/turf/tile = loc
 		if(isturf(tile))
-			tile.clean_blood()
-			for(var/A in tile)
+			for(var/obj/effect/A in tile)
 				if(istype(A,/obj/effect/rune) || istype(A,/obj/effect/decal/cleanable) || istype(A,/obj/effect/overlay))
 					qdel(A)
-	. = ..()
+	..()
 
 /obj/structure/janitorialcart/examine(mob/user)
 	..()

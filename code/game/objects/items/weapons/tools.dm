@@ -41,8 +41,8 @@
 	action_button_name = "Change mode"
 
 /obj/item/weapon/wrench/power/attack_self(mob/user)
-	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
-	var/obj/item/weapon/wirecutters/power/s_drill = new /obj/item/weapon/screwdriver/power
+	playsound((user),'sound/items/change_drill.ogg',50,1)
+	var/obj/item/weapon/screwdriver/power/s_drill = new
 	to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(s_drill)
@@ -54,7 +54,7 @@
 	name = "screwdriver"
 	desc = "You can be totally screwwy with this."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "screwdriver"
+	icon_state = null
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5.0
@@ -71,29 +71,12 @@
 							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 		return(BRUTELOSS)
 
-/obj/item/weapon/screwdriver/New()
-	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
-		if ("red")
-			icon_state = "screwdriver2"
-			item_state = "screwdriver"
-		if ("blue")
-			icon_state = "screwdriver"
-			item_state = "screwdriver_blue"
-		if ("purple")
-			icon_state = "screwdriver3"
-			item_state = "screwdriver_purple"
-		if ("brown")
-			icon_state = "screwdriver4"
-			item_state = "screwdriver_brown"
-		if ("green")
-			icon_state = "screwdriver5"
-			item_state = "screwdriver_green"
-		if ("cyan")
-			icon_state = "screwdriver6"
-			item_state = "screwdriver_cyan"
-		if ("yellow")
-			icon_state = "screwdriver7"
-			item_state = "screwdriver_yellow"
+/obj/item/weapon/screwdriver/New(loc, var/param_color = null)
+	..()
+	if(!icon_state)
+		if(!param_color)
+			param_color = pick("red","blue","purple","brown","green","cyan","yellow")
+		icon_state = "screwdriver_[param_color]"
 
 	src.pixel_y = rand(-6, 6)
 	src.pixel_x = rand(-4, 4)
@@ -123,15 +106,11 @@
 	action_button_name = "Change mode"
 
 /obj/item/weapon/screwdriver/power/attack_self(mob/user)
-	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
-	var/obj/item/weapon/wrench/power/b_drill = new /obj/item/weapon/wrench/power
+	playsound((user),'sound/items/change_drill.ogg',50,1)
+	var/obj/item/weapon/wrench/power/b_drill = new
 	to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(b_drill)
-
-/obj/item/weapon/screwdriver/power/New()
-	return
-
 /*
  * Wirecutters
  */
@@ -139,7 +118,7 @@
 	name = "wirecutters"
 	desc = "This cuts wires."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "cutters"
+	icon_state = null
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 6.0
@@ -152,10 +131,12 @@
 	sharp = 1
 	edge = 1
 
-/obj/item/weapon/wirecutters/New()
-	if(prob(50))
-		icon_state = "cutters-y"
-		item_state = "cutters_yellow"
+/obj/item/weapon/wirecutters/New(loc, var/param_color = null)
+	..()
+	if(!icon_state)
+		if(!param_color)
+			param_color = pick("yellow","red")
+		icon_state = "cutters_[param_color]"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if((C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
@@ -181,14 +162,11 @@
 	action_button_name = "Change mode"
 
 /obj/item/weapon/wirecutters/power/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
-	var/obj/item/weapon/crowbar/power/pryjaws = new /obj/item/weapon/crowbar/power
+	playsound((user), 'sound/items/change_jaws.ogg', 50, 1)
+	var/obj/item/weapon/crowbar/power/pryjaws = new
 	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(pryjaws)
-
-/obj/item/weapon/wirecutters/power/New()
-	return
 
 /*
  * Welding Tool
@@ -555,8 +533,8 @@
 	action_button_name = "Change mode"
 
 /obj/item/weapon/crowbar/power/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
-	var/obj/item/weapon/wirecutters/power/cutjaws = new /obj/item/weapon/wirecutters/power
+	playsound((user), 'sound/items/change_jaws.ogg', 50, 1)
+	var/obj/item/weapon/wirecutters/power/cutjaws = new
 	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(cutjaws)
