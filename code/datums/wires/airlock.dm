@@ -21,8 +21,9 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 	return A.p_open
 
 /datum/wires/airlock/additional_checks_and_effects(mob/living/user)
+	if(HULK in user.mutations)
+		return TRUE
 	var/obj/machinery/door/airlock/A = holder
-
 	if(A.isElectrified() && !issilicon(user) && !IsAdminGhost(user))
 		if(A.shock(user, 100))
 			return TRUE

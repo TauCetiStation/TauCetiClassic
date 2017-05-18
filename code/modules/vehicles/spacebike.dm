@@ -54,7 +54,7 @@
 		return FALSE
 	if(M.buckled || M.incapacitated() || M.lying || !Adjacent(M) || !M.Adjacent(src))
 		return FALSE
-	return ..(M)
+	return ..()
 
 /obj/vehicle/space/spacebike/MouseDrop_T(mob/living/M, mob/living/user)
 	if(!istype(user) || !istype(M))
@@ -152,6 +152,8 @@
 /obj/vehicle/space/spacebike/can_move()
 	. = ..()
 	if(kickstand)
+		return 0
+	if(buckled_mob && (buckled_mob.stat || buckled_mob.lying))
 		return 0
 
 /obj/vehicle/space/spacebike/turn_on()

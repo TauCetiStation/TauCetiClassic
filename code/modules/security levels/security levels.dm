@@ -1,10 +1,5 @@
 /var/security_level = 0
-//0 = code green
-//1 = code blue
-//2 = code red
-//3 = code delta
 
-//config.alert_desc_blue_downto
 
 /proc/set_security_level(level)
 	switch(level)
@@ -66,16 +61,6 @@
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_delta")
-		/*if(security_level == SEC_LEVEL_RED)
-			red_alert_code = 1
-			for(var/area/A in world)
-				if(istype(A, /area/hallway))
-					A.readyalert()
-		else
-			red_alert_code = 0
-			for(var/area/A in world)
-				if(istype(A, /area/hallway))
-					A.readyreset()*/
 	else
 		return
 
@@ -111,15 +96,3 @@
 			return SEC_LEVEL_RED
 		if("delta")
 			return SEC_LEVEL_DELTA
-
-
-/*DEBUG
-/mob/verb/set_thing0()
-	set_security_level(0)
-/mob/verb/set_thing1()
-	set_security_level(1)
-/mob/verb/set_thing2()
-	set_security_level(2)
-/mob/verb/set_thing3()
-	set_security_level(3)
-*/

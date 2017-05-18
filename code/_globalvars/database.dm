@@ -42,4 +42,4 @@ var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the
 // Xeno/role whitelist database ( code/modules/admin/whitelist.dm )
 //
 var/list/role_whitelist   // cache of all ckeys and their roles
-var/list/whitelisted_roles = list("unathi", "tajaran", "skrell", "diona", "machine", "ian") //must be in lowercase
+var/list/whitelisted_roles = list(UNATHI, TAJARAN, SKRELL, DIONA, IPC, "ian") // Case not important, whitelist_DB_add/edit proc corrects that, but specie names !! ARE !!.

@@ -263,11 +263,11 @@
 	if(synd_mob.species)
 		var/race = synd_mob.species.name
 
-		if(race == "Unathi")
+		if(race == UNATHI)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/unathi(synd_mob), slot_in_backpack)
-		else if(race == "Tajaran")
+		else if(race == TAJARAN)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/tajaran(synd_mob), slot_in_backpack)
-		else if(race == "Skrell")
+		else if(race == SKRELL)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), slot_in_backpack)
 	//	else
 	//		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/syndi/human(synd_mob), slot_wear_suit)

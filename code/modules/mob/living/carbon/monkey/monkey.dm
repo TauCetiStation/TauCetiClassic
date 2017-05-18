@@ -10,7 +10,7 @@
 	ventcrawler = 1
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
-	var/greaterform = "Human"                  // Used when humanizing a monkey.
+	var/greaterform = HUMAN                  // Used when humanizing a monkey.
 	icon_state = "monkey1"
 	//var/uni_append = "12C4E2"                // Small appearance modifier for different species.
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
@@ -87,21 +87,21 @@
 
 	..()
 	dna.mutantrace = "lizard"
-	greaterform = "Unathi"
+	greaterform = UNATHI
 	add_language("Sinta'unathi")
 
 /mob/living/carbon/monkey/skrell/New()
 
 	..()
 	dna.mutantrace = "skrell"
-	greaterform = "Skrell"
+	greaterform = SKRELL
 	add_language("Skrellian")
 
 /mob/living/carbon/monkey/tajara/New()
 
 	..()
 	dna.mutantrace = "tajaran"
-	greaterform = "Tajaran"
+	greaterform = TAJARAN
 	add_language("Siik'tajr")
 
 /mob/living/carbon/monkey/diona/New()
@@ -110,7 +110,7 @@
 	alien = 1
 	gender = NEUTER
 	dna.mutantrace = "plant"
-	greaterform = "Diona"
+	greaterform = DIONA
 	add_language("Rootspeak")
 
 /mob/living/carbon/monkey/diona/movement_delay()

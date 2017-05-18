@@ -6,7 +6,7 @@
 	cure_id = "spaceacillin"
 	cure_chance = 10
 	agent = "1nqu1s1t10n flu virion"
-	affected_species = list("Human")
+	affected_species = list(HUMAN)
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will burn to death for being a heretic."
 	severity = "Serious"

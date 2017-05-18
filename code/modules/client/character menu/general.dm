@@ -270,7 +270,7 @@
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("species")
-					var/list/new_species = list("Human")
+					var/list/new_species = list(HUMAN)
 					var/prev_species = species
 					var/whitelisted = 0
 
@@ -323,7 +323,7 @@
 						b_type = new_b_type
 
 				if("hair")
-					if(species == "Human" || species == "Unathi" || species == "Tajaran" || species == "Skrell")
+					if(species == HUMAN || species == UNATHI || species == TAJARAN || species == SKRELL)
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
 						if(new_hair)
 							r_hair = hex2num(copytext(new_hair, 2, 4))
@@ -405,14 +405,14 @@
 						b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
 				if("s_tone")
-					if(species != "Human")
+					if(species != HUMAN)
 						return
 					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
 					if(new_s_tone)
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 				if("skin")
-					if(species == "Unathi" || species == "Tajaran" || species == "Skrell")
+					if(species == UNATHI || species == TAJARAN || species == SKRELL)
 						var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference") as color|null
 						if(new_skin)
 							r_skin = hex2num(copytext(new_skin, 2, 4))

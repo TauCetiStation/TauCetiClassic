@@ -121,19 +121,21 @@
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!species || (species.name == "Skeleton")) return
+	if(!species || (species.name == SKELETON))
+		return
 	if(f_style)
 		f_style = "Shaved"
 	if(h_style)
 		h_style = "Bald"
 
-	set_species("Skeleton")
+	set_species(SKELETON)
 	status_flags |= DISFIGURED
 	regenerate_icons()
 	return
 
 /mob/living/carbon/human/proc/ChangeToHusk()
-	if(HUSK in mutations)	return
+	if(HUSK in mutations)
+		return
 	if(f_style)
 		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
 	if(h_style)

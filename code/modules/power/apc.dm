@@ -838,7 +838,7 @@
 	else if (href_list["eqp"])
 		var/val = text2num(href_list["eqp"])
 
-		equipment = (val==1) ? 0 : val
+		equipment = setsubsystem(val)
 
 		update_icon()
 		update()
@@ -846,14 +846,14 @@
 	else if (href_list["lgt"])
 		var/val = text2num(href_list["lgt"])
 
-		lighting = (val==1) ? 0 : val
+		lighting = setsubsystem(val)
 
 		update_icon()
 		update()
 	else if (href_list["env"])
 		var/val = text2num(href_list["env"])
 
-		environ = (val==1) ? 0 :val
+		environ = setsubsystem(val)
 
 		update_icon()
 		update()
@@ -1261,5 +1261,9 @@
 		return 1
 	else
 		return 0
-
+/obj/machinery/power/apc/proc/setsubsystem(val)
+	if(cell && cell.charge > 0)
+		return (val==1) ? 0 : val
+	else
+		return (val == 3)
 #undef APC_UPDATE_ICON_COOLDOWN

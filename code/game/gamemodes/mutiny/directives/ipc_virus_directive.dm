@@ -16,7 +16,7 @@ datum/directive/ipc_virus
 	proc/get_ipcs()
 		var/list/machines[0]
 		for(var/mob/M in player_list)
-			if (M.is_ready() && M.get_species() == "Machine")
+			if (M.is_ready() && M.get_species() == IPC)
 				machines.Add(M)
 		return machines
 
