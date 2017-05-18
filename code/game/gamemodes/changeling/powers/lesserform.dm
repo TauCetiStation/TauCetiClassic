@@ -15,7 +15,7 @@
 		to_chat(user, "<span class='warning'>We cannot perform this ability at the present time!</span>")
 		return
 	if(user.incapacitated())
-		to_chat(user,"<span class='warning'>We cannot perform this ability as you restrained!</span>")
+		to_chat(user,"<span class='warning'>We cannot perform this ability in your condition!</span>")
 		return
 
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
