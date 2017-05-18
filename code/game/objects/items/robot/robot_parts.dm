@@ -57,12 +57,13 @@
 	var/obj/item/robot_parts/chest/chest = null
 	var/obj/item/robot_parts/head/head = null
 	var/created_name = ""
+	w_class = 3
 
 /obj/item/robot_parts/robot_suit/New()
 	..()
-	updateicon()
+	update_icon()
 
-/obj/item/robot_parts/robot_suit/proc/updateicon()
+/obj/item/robot_parts/robot_suit/update_icon()
 	overlays.Cut()
 	if(l_arm)
 		overlays += "l_arm+o"
@@ -76,8 +77,6 @@
 		overlays += "r_leg+o"
 	if(head)
 		overlays += "head+o"
-	if(check_completion())
-		w_class = 4
 
 /obj/item/robot_parts/robot_suit/proc/check_completion()
 	if(l_arm && r_arm)
@@ -112,7 +111,7 @@
 			chest = null
 			head = null
 			overlays.Cut()
-			w_class = 3
+			w_class = initial(w_class)
 		else
 			to_chat(user, "<span class='warning'>Nothing attached to robot frame!</span>")
 		return
@@ -123,7 +122,8 @@
 		user.drop_item()
 		W.loc = src
 		l_leg = W
-		updateicon()
+		w_class = 4
+		update_icon()
 		return
 
 	if(istype(W, /obj/item/robot_parts/r_leg))
@@ -132,7 +132,8 @@
 		user.drop_item()
 		W.loc = src
 		r_leg = W
-		updateicon()
+		w_class = 4
+		update_icon()
 		return
 
 	if(istype(W, /obj/item/robot_parts/l_arm))
@@ -141,7 +142,8 @@
 		user.drop_item()
 		W.loc = src
 		l_arm = W
-		updateicon()
+		w_class = 4
+		update_icon()
 		return
 
 	if(istype(W, /obj/item/robot_parts/r_arm))
@@ -150,7 +152,8 @@
 		user.drop_item()
 		W.loc = src
 		r_arm = W
-		updateicon()
+		w_class = 4
+		update_icon()
 		return
 
 	if(istype(W, /obj/item/robot_parts/chest))
@@ -160,7 +163,8 @@
 			user.drop_item()
 			W.loc = src
 			chest = W
-			updateicon()
+			w_class = 4
+			update_icon()
 		else if(!W:wires)
 			to_chat(user, "<span class='info'>You need to attach wires to it first!</span>")
 		else
@@ -174,7 +178,8 @@
 			user.drop_item()
 			W.loc = src
 			head = W
-			updateicon()
+			w_class = 4
+			update_icon()
 		else
 			to_chat(user, "<span class='info'>You need to attach a flash to it first!</span>")
 		return
