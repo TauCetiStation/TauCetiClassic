@@ -8,7 +8,7 @@
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
 	var/damage_mask = TRUE
-	var/eyes = "eyes_s"                                  // Icon for eyes.
+	var/eyes = "eyes"                                  // Icon for eyes.
 
 	var/primitive                // Lesser form, if any (ie. monkey for humans)
 	var/tail                     // Name of tail image in species effects icon file.
@@ -236,7 +236,7 @@
 	,HAS_SKIN_COLOR = TRUE
 	)
 
-	eyes = "skrell_eyes_s"
+	eyes = "skrell_eyes"
 
 	flesh_color = "#8CD7A3"
 
@@ -256,7 +256,7 @@
 	cold_level_2 = 50
 	cold_level_3 = 0
 
-	eyes = "vox_eyes_s"
+	eyes = "vox_eyes"
 
 	breath_type = "nitrogen"
 	poison_type = "oxygen"

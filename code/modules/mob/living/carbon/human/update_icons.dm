@@ -381,23 +381,23 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 
 	//base icons
-	var/list/standing	= list()
+	var/list/standing = list()
 
 	if(f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
 		if(facial_hair_style && facial_hair_style.species_allowed && (species.name in facial_hair_style.species_allowed))
-			var/image/facial_s = image("icon"=facial_hair_style.icon, "icon_state"="[facial_hair_style.icon_state]_s", "layer"=-HAIR_LAYER)
+			var/image/facial_s = image("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
 			if(facial_hair_style.do_colouration)
-				facial_s.color = rgb(r_facial, g_facial, b_facial)
-			standing	+= facial_s
+				facial_s.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
+			standing += facial_s
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style && hair_style.species_allowed && (species.name in hair_style.species_allowed))
-			var/image/hair_s = image("icon"=hair_style.icon, "icon_state"="[hair_style.icon_state]_s", "layer"=-HAIR_LAYER)
+			var/image/hair_s = image("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
 			if(hair_style.do_colouration)
-				hair_s.color = rgb(r_hair,g_hair,b_hair)
-			standing	+= hair_s
+				hair_s.color = RGB_CONTRAST(r_hair, g_hair, b_hair)
+			standing += hair_s
 
 	if(standing.len)
 		overlays_standing[HAIR_LAYER]	= standing
@@ -965,10 +965,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(species.tail && species.flags[HAS_TAIL])
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			var/icon/tail_s = new/icon("icon"='icons/effects/species.dmi', "icon_state"="[species.tail]_s")
-			tail_s.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
+			var/image/tail_s = image("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
+			tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
 
-			overlays_standing[TAIL_LAYER]	= image("icon"=tail_s, "layer"=-TAIL_LAYER)
+			overlays_standing[TAIL_LAYER] = image("icon" = tail_s, "layer" = -TAIL_LAYER)
 
 	apply_overlay(TAIL_LAYER)
 
