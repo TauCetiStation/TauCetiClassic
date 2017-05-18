@@ -184,12 +184,11 @@
 			to_chat(user, "\red \The [src] is far too small for you to pick up.")
 			return
 
-	if(hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
-		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/datum/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+		if(BP && !BP.is_usable())
+			to_chat(H, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return
 
 	if(istype(src.loc, /obj/item/weapon/storage))
@@ -671,11 +670,11 @@
 		)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/internal/eyes/eyes = H.internal_organs_by_name["eyes"]
-		eyes.damage += rand(3,4)
-		if(eyes.damage >= eyes.min_bruised_damage)
+		var/datum/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		IO.damage += rand(3,4)
+		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
-				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
+				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
 					to_chat(H, "\red Your eyes start to bleed profusely!")
 			if(prob(50))
 				if(H.stat != DEAD)
@@ -684,13 +683,13 @@
 				H.eye_blurry += 10
 				H.Paralyse(1)
 				H.Weaken(4)
-			if (eyes.damage >= eyes.min_broken_damage)
+			if (IO.damage >= IO.min_broken_damage)
 				if(H.stat != DEAD)
 					to_chat(H, "\red You go blind!")
-		var/datum/organ/external/affecting = H.get_organ("head")
-		affecting.take_damage(7)
+		var/datum/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+		BP.take_damage(7)
 	else
-		M.take_organ_damage(7)
+		M.take_bodypart_damage(7)
 	M.eye_blurry += rand(3,4)
 	return
 

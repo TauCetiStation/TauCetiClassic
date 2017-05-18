@@ -3,13 +3,22 @@
 	desc = "A folded membrane which rapidly expands into a large cubical shape on activation."
 	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "folded_wall"
-	w_class = 3.0
+	w_class = 3
+	var/inflatable_type = /obj/structure/inflatable
 
-	attack_self(mob/user)
+/obj/item/inflatable/attack_self(mob/user)
+	user.visible_message(
+		"<span class='notice'>[user] starts inflating \the [src]...</span>",
+		"<span class='notice'>You start inflating \the [src]...</span>"
+	)
+	if(do_after(user, 40, target = user))
 		playsound(loc, 'sound/items/zip.ogg', 75, 1)
-		to_chat(user, "\blue You inflate [src].")
-		var/obj/structure/inflatable/R = new /obj/structure/inflatable(user.loc)
-		src.transfer_fingerprints_to(R)
+		user.visible_message(
+			"<span class='notice'>[user] inflated \the [src].</span>",
+			"<span class='notice'>You inflate \the [src].</span>"
+		)
+		var/obj/structure/inflatable/R = new inflatable_type(user.loc)
+		transfer_fingerprints_to(R)
 		R.add_fingerprint(user)
 		qdel(src)
 
@@ -151,19 +160,12 @@
 
 		deflate()
 
-/obj/item/inflatable/door/
+/obj/item/inflatable/door
 	name = "inflatable door"
 	desc = "A folded membrane which rapidly expands into a simple door on activation."
 	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "folded_door"
-
-	attack_self(mob/user)
-		playsound(loc, 'sound/items/zip.ogg', 75, 1)
-		to_chat(user, "\blue You inflate [src].")
-		var/obj/structure/inflatable/door/R = new /obj/structure/inflatable/door(user.loc)
-		src.transfer_fingerprints_to(R)
-		R.add_fingerprint(user)
-		qdel(src)
+	inflatable_type = /obj/structure/inflatable/door
 
 /obj/structure/inflatable/door //Based on mineral door code
 	name = "inflatable door"

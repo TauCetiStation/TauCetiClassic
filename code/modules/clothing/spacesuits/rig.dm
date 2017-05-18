@@ -189,7 +189,7 @@
 
 		var/target_zone = user.zone_sel.selecting
 
-		if(target_zone == "head")
+		if(target_zone == BP_HEAD)
 
 			//Installing a component into or modifying the contents of the helmet.
 			if(!attached_helmet)
@@ -216,7 +216,7 @@
 			else
 				return ..()
 
-		else if(target_zone == "l_leg" || target_zone == "r_leg" || target_zone == "l_foot" || target_zone == "r_foot")
+		else if(target_zone == BP_L_LEG || target_zone == BP_R_LEG || target_zone == BP_L_FOOT || target_zone == BP_R_FOOT)
 
 			//Installing a component into or modifying the contents of the feet.
 			if(!attached_boots)

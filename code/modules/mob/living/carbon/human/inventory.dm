@@ -57,52 +57,52 @@
 	return null
 
 
-/mob/living/carbon/human/proc/has_organ(name)
-	var/datum/organ/external/O = organs_by_name[name]
+/mob/living/carbon/human/proc/has_bodypart(name)
+	var/datum/organ/external/BP = bodyparts_by_name[name]
 
-	return (O && !(O.status & ORGAN_DESTROYED) )
+	return (BP && !(BP.status & ORGAN_DESTROYED) )
 
-/mob/living/carbon/human/proc/has_organ_for_slot(slot)
+/mob/living/carbon/human/proc/has_bodypart_for_slot(slot)
 	switch(slot)
 		if(slot_back)
-			return has_organ("chest")
+			return has_bodypart(BP_CHEST)
 		if(slot_wear_mask)
-			return has_organ("head")
+			return has_bodypart(BP_HEAD)
 		if(slot_handcuffed)
-			return has_organ("l_hand") || has_organ("r_hand")
+			return has_bodypart(BP_L_HAND) || has_bodypart(BP_R_HAND)
 		if(slot_legcuffed)
-			return has_organ("l_leg") || has_organ("r_leg")
+			return has_bodypart(BP_L_LEG) || has_bodypart(BP_R_LEG)
 		if(slot_l_hand)
-			return has_organ("l_hand")
+			return has_bodypart(BP_L_HAND)
 		if(slot_r_hand)
-			return has_organ("r_hand")
+			return has_bodypart(BP_R_HAND)
 		if(slot_belt)
-			return has_organ("chest")
+			return has_bodypart(BP_CHEST)
 		if(slot_wear_id)
 			// the only relevant check for this is the uniform check
 			return 1
 		if(slot_l_ear)
-			return has_organ("head")
+			return has_bodypart(BP_HEAD)
 		if(slot_r_ear)
-			return has_organ("head")
+			return has_bodypart(BP_HEAD)
 		if(slot_glasses)
-			return has_organ("head")
+			return has_bodypart(BP_HEAD)
 		if(slot_gloves)
-			return has_organ("l_hand") || has_organ("r_hand")
+			return has_bodypart(BP_L_HAND) || has_bodypart(BP_R_HAND)
 		if(slot_head)
-			return has_organ("head")
+			return has_bodypart(BP_HEAD)
 		if(slot_shoes)
-			return has_organ("r_foot") || has_organ("l_foot")
+			return has_bodypart(BP_R_FOOT) || has_bodypart(BP_L_FOOT)
 		if(slot_wear_suit)
-			return has_organ("chest")
+			return has_bodypart(BP_CHEST)
 		if(slot_w_uniform)
-			return has_organ("chest")
+			return has_bodypart(BP_CHEST)
 		if(slot_l_store)
-			return has_organ("chest")
+			return has_bodypart(BP_CHEST)
 		if(slot_r_store)
-			return has_organ("chest")
+			return has_bodypart(BP_CHEST)
 		if(slot_s_store)
-			return has_organ("chest")
+			return has_bodypart(BP_CHEST)
 		if(slot_in_backpack)
 			return 1
 
@@ -220,7 +220,7 @@
 /mob/living/carbon/human/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
 	if(!slot) return
 	if(!istype(W)) return
-	if(!has_organ_for_slot(slot)) return
+	if(!has_bodypart_for_slot(slot)) return
 
 	if(W == src.l_hand)
 		src.l_hand = null
@@ -421,9 +421,9 @@
 					qdel(src)
 			if("splints")
 				var/count = 0
-				for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
-					var/datum/organ/external/o = target.organs_by_name[organ]
-					if(o.status & ORGAN_SPLINTED)
+				for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM))
+					var/datum/organ/external/BP = target.bodyparts_by_name[bodypart_name]
+					if(BP.status & ORGAN_SPLINTED)
 						count = 1
 						break
 				if(count == 0)
@@ -756,19 +756,19 @@ It can still be worn/put on as normal.
 			if (target.legcuffed)
 				strip_item = target.legcuffed
 		if("splints")
-			for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
-				var/datum/organ/external/o = target.get_organ(organ)
-				if (o && o.status & ORGAN_SPLINTED)
-					var/obj/item/W = new /obj/item/stack/medical/splint(amount=1)
-					o.status &= ~ORGAN_SPLINTED
+			for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM))
+				var/datum/organ/external/BP = target.bodyparts_by_name[bodypart_name]
+				if (BP && (BP.status & ORGAN_SPLINTED))
+					var/obj/item/W = new /obj/item/stack/medical/splint(amount = 1)
+					BP.status &= ~ORGAN_SPLINTED
 					if (W)
 						W.loc = target.loc
 						W.layer = initial(W.layer)
 						W.appearance_flags = 0
 						W.add_fingerprint(source)
 		if("bandages")
-			for(var/datum/organ/external/External in target.organs)
-				for(var/datum/wound/W in External.wounds)
+			for(var/datum/organ/external/BP in target.bodyparts)
+				for(var/datum/wound/W in BP.wounds)
 					if(W.bandaged)
 						W.bandaged = 0
 			target.update_bandage()
@@ -848,7 +848,7 @@ It can still be worn/put on as normal.
 						target.remove_from_mob(target.r_store) //At this stage l_store is already processed by the code above, we only need to process r_store.
 			W.add_fingerprint(source)
 		else
-			if(item && target.has_organ_for_slot(slot_to_process)) //Placing an item on the mob
+			if(item && target.has_bodypart_for_slot(slot_to_process)) //Placing an item on the mob
 				if(item.mob_can_equip(target, slot_to_process, 0))
 					source.remove_from_mob(item)
 					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 1)

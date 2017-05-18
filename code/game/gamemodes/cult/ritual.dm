@@ -349,7 +349,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return ..()
 		if(iscultist(M))
 			return
-		M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
+		M.take_bodypart_damage(0, rand(5, 20)) //really lucky - 5 hits for a crit
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] beats [] with the arcane tome!</B>", user, M), 1)
 		to_chat(M, "\red You feel searing heat inside!")

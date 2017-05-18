@@ -83,7 +83,7 @@
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))	return ..()
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
 		return ..()
 	if((CLUMSY in user.mutations) && prob(50))
 		M = user
@@ -383,33 +383,33 @@
 	var/safety = user:eyecheck()
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
+		var/datum/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(H.species.flags[IS_SYNTHETIC])
 			return
 		switch(safety)
 			if(1)
 				to_chat(usr, "<span class='warning'>Your eyes sting a little.</span>")
-				E.damage += rand(1, 2)
-				if(E.damage > 12)
+				IO.damage += rand(1, 2)
+				if(IO.damage > 12)
 					user.eye_blurry += rand(3,6)
 			if(0)
 				to_chat(usr, "<span class='warning'>Your eyes burn.</span>")
-				E.damage += rand(2, 4)
-				if(E.damage > 10)
-					E.damage += rand(4,10)
+				IO.damage += rand(2, 4)
+				if(IO.damage > 10)
+					IO.damage += rand(4,10)
 			if(-1)
 				to_chat(usr, "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>")
 				user.eye_blurry += rand(12,20)
-				E.damage += rand(12, 16)
+				IO.damage += rand(12, 16)
 		if(safety<2)
 
-			if(E.damage > 10)
+			if(IO.damage > 10)
 				to_chat(user, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
 
-			if (E.damage >= E.min_broken_damage)
+			if (IO.damage >= IO.min_broken_damage)
 				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.sdisabilities |= BLIND
-			else if (E.damage >= E.min_bruised_damage)
+			else if (IO.damage >= IO.min_bruised_damage)
 				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.eye_blind = 5
 				user.eye_blurry = 5
@@ -483,25 +483,23 @@
 
 /obj/item/weapon/weldingtool/attack(mob/M, mob/user)
 
-	if(hasorgans(M))
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
 
-		var/datum/organ/external/S = M:organs_by_name[user.zone_sel.selecting]
-
-		if (!S) return
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
+		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		if(!BP)
+			return
+		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				if(M == user)
-					to_chat(user, "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>")
-					return
+		if(H.species.flags[IS_SYNTHETIC])
+			if(M == user)
+				to_chat(user, "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>")
+				return
 
-		if(S.brute_dam)
-			S.heal_damage(15,0,0,1)
-			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [S.display_name] with \the [src].</span>")
-			return
+		if(BP.brute_dam)
+			BP.heal_damage(15,0,0,1)
+			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [BP.name] with \the [src].</span>")
 		else
 			to_chat(user, "<span class='info'>Nothing to fix!</span>")
 

@@ -181,7 +181,7 @@
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the urinal.</span>")
 					return
 				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
-				GM.apply_damage(8,BRUTE,"head")
+				GM.apply_damage(8, BRUTE, BP_HEAD)
 				playsound(src, 'sound/weapons/smash.ogg', 50, 1, 1)
 				return
 			else
@@ -230,9 +230,9 @@
 		sleep(60)
 		var/mob/living/carbon/C = user
 		if(C.r_hand)
-			C.apply_damage(25,BURN,"r_hand")
+			C.apply_damage(25, BURN, BP_R_HAND)
 		if(C.l_hand)
-			C.apply_damage(25,BURN,"l_hand")
+			C.apply_damage(25, BURN, BP_L_HAND)
 		to_chat(C, "<span class='danger'>The dryer is burning!</span>")
 		new /obj/effect/decal/cleanable/ash(C.loc)
 		qdel(O)
@@ -546,12 +546,11 @@
 	var/busy = 0 	//Something's being washed at the moment
 
 /obj/structure/sink/attack_hand(mob/user)
-	if (hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
-		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/datum/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_HAND : BP_R_HAND]
+		if(BP && !BP.is_usable())
+			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return
 
 	if(isrobot(user) || isAI(user))
