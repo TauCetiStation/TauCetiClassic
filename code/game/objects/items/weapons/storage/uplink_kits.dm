@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate/
 	New()
 		..()
-		var/tagname = pickweight(list("bloodyspai" = 1, "stealth" = 1,"screwed"=1, "ninja" = 1, "guns" = 1, "implant" = 1, "hacker" = 1,"smoothoperator" = 1, "poisons" = 1, "gadgets" = 1))
+		var/tagname = pickweight(list("bloodyspai" = 1, "stealth" = 1,"screwed"=1, "ninja" = 1, "guns" = 1, "implant" = 1, "hacker" = 1, "smoothoperator" = 1, "poisons" = 1, "gadgets" = 1))
 		switch (tagname)
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
@@ -54,7 +54,7 @@
 			if("smoothoperator")
 				new /obj/item/weapon/gun/projectile/automatic/pistol(src)
 				new /obj/item/weapon/silencer(src)
-				new /obj/item/ammo_box/magazine/m9mm
+				new /obj/item/ammo_box/magazine/m9mm(src)
 				new /obj/item/weapon/soap/syndie(src)
 				new /obj/item/weapon/storage/bag/trash(src)
 				new /obj/item/bodybag(src)
