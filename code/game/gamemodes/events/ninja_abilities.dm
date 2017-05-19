@@ -171,8 +171,10 @@ This could be a lot better but I'm too tired atm.*/
 				return
 			if (targloc == curloc)
 				return
-			var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(U.loc)
+			var/obj/item/projectile/energy/dart/A = new(curloc)
+			A.starting = get_turf(affecting)
 			A.current = curloc
+			A.original = targloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
 			cell.use(C*10)
