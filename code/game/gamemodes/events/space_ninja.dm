@@ -581,7 +581,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			U:gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Ninja")
-			to_chat(U, "\red <B>fTaL RRoR</B>: 382200-*#00CDE <B>RED</B>\nUNAUHORIZED US DETCeD\nCoMMNCING SUB-R0UIN3 13...\nTRMInATING U-U-USR...")
+			to_chat(U, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU?HORIZED USÈ DETÈC???eD\nCoMMÈNCING SUB-R0U?IN3 13...\nTÈRMInATING U-U-USÈR...")
 			U.gib()
 			return 0
 		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
