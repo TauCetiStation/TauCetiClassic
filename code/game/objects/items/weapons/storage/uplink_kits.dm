@@ -54,6 +54,7 @@
 			if("smoothoperator")
 				new /obj/item/weapon/gun/projectile/automatic/pistol(src)
 				new /obj/item/weapon/silencer(src)
+				new /obj/item/ammo_box/magazine/m9mm
 				new /obj/item/weapon/soap/syndie(src)
 				new /obj/item/weapon/storage/bag/trash(src)
 				new /obj/item/bodybag(src)
