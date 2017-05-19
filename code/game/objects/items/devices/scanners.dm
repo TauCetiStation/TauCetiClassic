@@ -33,13 +33,14 @@ REAGENT SCANNER
 		if(U.intact)
 			O.invisibility = 101
 
-/obj/item/device/t_scanner/proc/rehide_lmob(mob/living/M)
+/obj/item/device/t_scanner/proc/rehide_mob(mob/living/M)
 	if(M)
-		var/mob/living/carbon/human/H = M
-		if(H)
-			var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
-			if(S && !S.s_active)
-				return
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+				var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
+				if(!S.s_active)
+					return
 		M.invisibility = INVISIBILITY_LEVEL_TWO
 
 /obj/item/device/t_scanner/process()
@@ -64,7 +65,7 @@ REAGENT SCANNER
 		var/mob/living/M = locate() in T
 		if(M && M.invisibility == INVISIBILITY_LEVEL_TWO)
 			M.invisibility = 0
-			addtimer(CALLBACK(src, .proc/rehide_lmob, M), 10)
+			addtimer(CALLBACK(src, .proc/rehide_mob, M), 10)
 
 
 /obj/item/device/healthanalyzer

@@ -548,12 +548,12 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_r_store)
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_l_store)
 	equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen(src), slot_s_store)
-	var/obj/item/weapon/implant/dexplosive/L = new/obj/item/weapon/implant/dexplosive(src)
+	var/obj/item/weapon/implant/dexplosive/L = new(src)
 	L.imp_in = src
-	L.implanted = 1
-	var/datum/organ/external/affected = src.organs_by_name["head"]
-	affected.implants += L
-	L.part = affected
+	L.implanted = TRUE
+	var/datum/organ/external/BP = bodyparts_by_name[BP_HEAD]
+	BP.implants += L
+	L.part = BP
 	return 1
 
 //=======//HELPER PROCS//=======//
@@ -581,7 +581,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			U:gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Ninja")
-			to_chat(U, "\red <B>fƒTaL »»RRoR</B>: 382200-*#00C÷DE <B>RED</B>\nUNAUÜHORIZED US» DET»CÜÜÜeD\nCoMM»NCING SUB-R0UÜIN3 13...\nT»RMInATING U-U-US»R...")
+			to_chat(U, "\red <B>fùTaL ùùRRoR</B>: 382200-*#00CùDE <B>RED</B>\nUNAUùHORIZED USù DETùCùùùeD\nCoMMùNCING SUB-R0UùIN3 13...\nTùRMInATING U-U-USùR...")
 			U.gib()
 			return 0
 		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
