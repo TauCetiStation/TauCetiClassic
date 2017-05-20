@@ -286,7 +286,6 @@
 /obj/machinery/mining/drill/attackby(obj/item/O, mob/user)
 	if(wires_shocked)
 		shock(user)
-	cut_hand(user)
 	if(active && wires_protector_disable)
 		cut_hand(user)
 	if(!active)
@@ -381,10 +380,6 @@
 
 	var/mob/living/carbon/human/H = user
 	H.attack_by_machine(src)
-
-
-
-
 
 /obj/machinery/mining/drill/update_icon()
 	if(need_player_check)
