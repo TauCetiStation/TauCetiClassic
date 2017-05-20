@@ -30,6 +30,7 @@
 		)
 
 	//Upgrades
+	damage_to_user = 20
 	var/harvest_speed
 	var/capacity
 	var/charge_use
@@ -48,6 +49,7 @@
 	var/wires_radio_disable = 0
 	var/wires_power_disable = 0
 	var/wires_protector_disable = 0
+
 
 
 
@@ -256,6 +258,7 @@
 
 /obj/machinery/mining/drill/RefreshParts()
 	..()
+	damage_to_user = 20
 	harvest_speed = 0
 	capacity = 0
 	charge_use = 50
@@ -277,10 +280,15 @@
 		radius = min (radius + 1, 4)
 		charge_use = charge_use * 2
 
+	damage_to_user = damage_to_user * harvest_speed
+
 
 /obj/machinery/mining/drill/attackby(obj/item/O, mob/user)
 	if(wires_shocked)
 		shock(user)
+	cut_hand(user)
+	if(active && wires_protector_disable)
+		cut_hand(user)
 	if(!active)
 		if(default_deconstruction_screwdriver(user,"mining_drill","mining_drill", O))
 			return
@@ -288,6 +296,8 @@
 			return
 		if(exchange_parts(user, O))
 			return
+
+
 	if(!panel_open || active) return ..()
 
 	if(istype(O, /obj/item/weapon/stock_parts/cell))
@@ -300,6 +310,7 @@
 			component_parts += O
 			to_chat(user, "You install \the [O].")
 		return
+
 	if(istype(O, /obj/item/weapon/wirecutters) || istype(O, /obj/item/device/multitool))
 		wires.interact(user)
 		return
@@ -362,6 +373,18 @@
 		return 1
 	else
 		return 0
+
+/obj/machinery/mining/drill/proc/cut_hand(mob/user)
+	if(!ishuman(user)) // no hand no cut
+		to_chat(user, "<span class='danger'> You feel, that [src] want to cut your arm")
+		return 0
+
+	var/mob/living/carbon/human/H = user
+	H.attack_by_machine(src)
+
+
+
+
 
 /obj/machinery/mining/drill/update_icon()
 	if(need_player_check)

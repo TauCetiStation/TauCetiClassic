@@ -239,6 +239,34 @@
 			IO.emp_act(severity)
 	..()
 
+/mob/living/carbon/human/proc/attack_by_machine(/obj/machinery/machine)
+
+	var/organ_list = list("l_hand","r_hand")
+	var/datum/organ/external/BP = get_external_organ_from_def_zone_list(organ_list)
+
+	apply_damage(machine.damage_to_user, BRUTE, BP ,run_armor_check(BP, "melee"), 1)
+	BP.add_autopsy_data(machine, machine.damage_to_user)
+	to_chat(src, "You feel, that [src] cut your [BP]!")
+
+	if(BP.status & ORGAN_DESTROYED)
+		return
+
+
+	if(BP.body_zone == "l_hand")
+		BP = get_organ("l_arm")
+	if(BP.body_zone == "r_hand")
+		BP = get_organ("r_arm")
+
+
+	apply_damage(machine.damage_to_user, BRUTE, BP ,run_armor_check(BP, "melee"), 1)
+	BP.add_autopsy_data(machine, machine.damage_to_user)
+	to_chat(src, "You feel, that [src] cut your [BP]!")
+
+	if(BP.status & ORGAN_DESTROYED)
+		return
+
+	gib()
+
 
 /mob/living/carbon/human/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(!I || !user)	return 0
