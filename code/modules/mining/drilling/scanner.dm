@@ -43,7 +43,7 @@
 
 			if(ore_type) metals[ore_type] += T.resources[metal]
 
-	to_chat(user, "[bicon(src)] \blue The scanner beeps and displays a readout.")
+	to_chat(user, "[bicon(src)] <span class='notice'>The scanner beeps and displays a readout.</span>")
 
 	for(var/ore_type in metals)
 
@@ -87,4 +87,3 @@
 	desc = "A complex device used to locate ore deep underground."
 	speed = 10
 	modes = list("3x3" = 1, "5x5" = 2, "7x7" = 3, "9x9" = 4, "11x11" = 5)
-

@@ -125,5 +125,5 @@
 
 	msg = sanitize_plus_chat(msg)
 	for(var/mob/M in listening)
-		to_chat(M, "[bicon(holder_atom)] <b>[holder_atom]</b> reverberates, \blue\"[msg]\"")
+		to_chat(M, "[bicon(holder_atom)] <b>[holder_atom]</b> reverberates, <span class='notice'>\"[msg]\"</span>")
 	last_talk_time = world.time
