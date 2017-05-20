@@ -63,14 +63,16 @@
 	var/busy = FALSE
 	var/sound
 	var/walks_left = 50 //prevents the game from hanging in extreme cases (such as minigun fire)
-	var/list/guitar_notes = list("Fn3","F#3","Gb3","Gn3","G#3","Ab3","An3","A#3","Bb3","Bn3","B#3","Cb4","Cn4","C#4","Db4","Dn4",
+	var/static/list/guitar_notes = null
+
+/obj/effect/cross_action/spacetime_dist/New()
+	..()
+	if(!guitar_notes)
+		guitar_notes = list("Fn3","F#3","Gb3","Gn3","G#3","Ab3","An3","A#3","Bb3","Bn3","B#3","Cb4","Cn4","C#4","Db4","Dn4",
 							"D#4","Eb4","En4","E#4","Fb4","Fn4","F#4","Gb4","Gn4","G#4","Ab4","An4","A#4","Bb4","Bn4","B#4",
 							"Cb5","Cn5","C#5","Db5","Dn5","D#5","Eb5","En5","E#5","Fb5","Fn5","F#5","Gb5","Gn5","G#5","Ab5",
 							"An5","A#5","Bb5","Bn5","B#5","Cb6","Cn6","C#6","Db6","Dn6","D#6","Eb6","En6","E#6","Fb6","Fn6",
 							"F#6","Gb6","Gn6","G#6","Ab6","An6","A#6","Bb6","Bn6","Cb7")
-
-/obj/effect/cross_action/spacetime_dist/New()
-	..()
 	sound = file("code/modules/musical_instruments/sound/guitar/[safepick(guitar_notes)].ogg")
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
@@ -83,7 +85,7 @@
 	busy = TRUE
 	flick("purplesparkles", src)
 	AM.forceMove(get_turf(src))
-	playsound(AM,sound,100,1)
+	playsound(AM, sound, 100, 1)
 	busy = FALSE
 
 /obj/effect/cross_action/spacetime_dist/Crossed(atom/movable/AM)

@@ -28,7 +28,7 @@
 				charged_item = S.name
 				if(bad_charge)
 					S.charge_counter = 0
-					S.start_recharge()
+					INVOKE_ASYNC(S, .obj/effect/proc_holder/spell/proc/start_recharge)
 				else
 					S.charge_counter = S.charge_max
 				break

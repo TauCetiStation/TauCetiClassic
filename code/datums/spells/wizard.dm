@@ -382,7 +382,7 @@
 		/obj/structure/trap/chill,
 		/obj/structure/trap/damage,
 					)
-	summon_lifespan = 0
+	summon_lifespan = 3000
 	summon_amt = 5
 
 	action_icon_state = "the_traps"
