@@ -234,7 +234,7 @@
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
 			for(var/mob/O in viewers(user, 4))
-				O.show_message("<span class='notice'>[src] was sliced apart by [user]!</span>", 1, "\red You hear [src] coming apart.", 2)
+				O.show_message("<span class='notice'>[src] was sliced apart by [user]!</span>", 1, "<span class=warning'>You hear [src] coming apart.</span>", 2)
 			new /obj/item/stack/sheet/wood(src.loc)
 			qdel(src)
 	else

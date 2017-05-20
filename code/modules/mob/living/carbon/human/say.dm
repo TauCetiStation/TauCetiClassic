@@ -6,12 +6,12 @@
 
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (Muted).")
+			to_chat(src, "<span class=warning'>You cannot speak in IC (Muted).</span>")
 			return
 
 	//Meme stuff
 	if((!speech_allowed && usr == src) || (src.miming))
-		to_chat(usr, "\red You can't speak.")
+		to_chat(usr, "<span class=warning'>You can't speak.</span>")
 		return
 
 	message =  trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))

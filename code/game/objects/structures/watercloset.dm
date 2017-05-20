@@ -132,7 +132,7 @@
 		return
 
 	if(busy)
-		to_chat(user, "\red Someone's already drying here.")
+		to_chat(user, "<span class=warning'>Someone's already drying here.</span>")
 		return
 
 	to_chat(usr, "<span class='notice'>You start drying your hands.</span>")
@@ -161,7 +161,7 @@
 
 	if (istype(O, /obj/item/weapon/card/emag))
 		if (emagged)
-			to_chat(user, "\red [src] is already cracked.")
+			to_chat(user, "<span class=warning'>[src] is already cracked.</span>")
 			return
 		else
 			add_fingerprint(user)
@@ -169,7 +169,7 @@
 			flick("dryer-broken",src)
 			playsound(src, 'sound/effects/sparks3.ogg', 50, 1, 1)
 			icon_state = "dryer-emag"
-			to_chat(user, "\red You swipe near [O] and crack it to be hot.")
+			to_chat(user, "<span class=warning'>You swipe near [O] and crack it to be hot.</span>")
 			return
 
 	if((istype(O, /obj/item/weapon/grab)) && !emagged)
@@ -189,7 +189,7 @@
 				return
 
 	if(busy)
-		to_chat(user, "\red Someone's already drying here.")
+		to_chat(user, "<span class=warning'>Someone's already drying here.</span>")
 		return
 
 	var/turf/location = user.loc
@@ -560,7 +560,7 @@
 		return
 
 	if(busy)
-		to_chat(user, "\red Someone's already washing here.")
+		to_chat(user, "<span class=warning'>Someone's already washing here.</span>")
 		return
 
 	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
@@ -581,7 +581,7 @@
 
 /obj/structure/sink/attackby(obj/item/O, mob/user)
 	if(busy)
-		to_chat(user, "\red Someone's already washing here.")
+		to_chat(user, "<span class=warning'>Someone's already washing here.</span>")
 		return
 
 	if (istype(O, /obj/item/weapon/reagent_containers))
@@ -604,7 +604,7 @@
 				B.charges--
 			user.visible_message( \
 				"[user] was stunned by his wet [O].", \
-				"\red You have wet \the [O], it shocks you!")
+				"<span class=warning'>You have wet \the [O], it shocks you!</span>")
 			return
 
 	var/turf/location = user.loc

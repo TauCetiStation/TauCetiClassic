@@ -160,28 +160,28 @@
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee/))
 			if(src.w_class < 4)
-				to_chat(user, "\red \The [src] is far too small for you to pick up.")
+				to_chat(user, "<span class=warning'>\The [src] is far too small for you to pick up.</span>")
 				return
 		else if(istype(src, /obj/item/weapon/gun/))
 			if(prob(20))
 				user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("<span class='notice'>[user] crushes \a [src] with hands.</span>", "<span class='notice'>You crush the [src].</span>")
 			qdel(src)
-			//user << "\red \The [src] is far too small for you to pick up."
+			//user << "<span class=warning'>\The [src] is far too small for you to pick up.</span>"
 			return
 		else if(istype(src, /obj/item/clothing/))
 			if(prob(20))
-				to_chat(user, "\red [pick("You are not interested in [src].", "This is nothing.", "Humans stuff...", "A cat? A scary cat...",
+				to_chat(user, "<span class=warning'>[pick(</span>"You are not interested in [src].", "This is nothing.", "Humans stuff...", "A cat? A scary cat...",
 				"A Captain? Let's smash his skull! I don't like Captains!",
 				"Awww! Such lovely doggy! BUT I HATE DOGGIES!!", "A woman... A lying woman! I love womans! Fuck womans...")]")
 			return
 		else if(istype(src, /obj/item/weapon/book/))
-			to_chat(user, "\red A book! I LOVE BOOKS!!")
+			to_chat(user, "<span class=warning'>A book! I LOVE BOOKS!!</span>")
 		else if(istype(src, /obj/item/weapon/reagent_containers/food))
 			if(prob(20))
-				to_chat(user, "\red I LOVE FOOD!!")
+				to_chat(user, "<span class=warning'>I LOVE FOOD!!</span>")
 		else if(src.w_class < 4)
-			to_chat(user, "\red \The [src] is far too small for you to pick up.")
+			to_chat(user, "<span class=warning'>\The [src] is far too small for you to pick up.</span>")
 			return
 
 	if(ishuman(user))
@@ -356,7 +356,7 @@
 				//testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
-						to_chat(H, "\red You're too fat to wear the [name].")
+						to_chat(H, "<span class=warning'>You're too fat to wear the [name].</span>")
 					return 0
 
 		switch(slot)
@@ -403,7 +403,7 @@
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
+						to_chat(H, "<span class=warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_BELT) )
 					return
@@ -451,7 +451,7 @@
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
+						to_chat(H, "<span class=warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_ID) )
 					return 0
@@ -461,7 +461,7 @@
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
+						to_chat(H, "<span class=warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return 0
@@ -472,7 +472,7 @@
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
+						to_chat(H, "<span class=warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return 0
@@ -484,7 +484,7 @@
 					return 0
 				if(!H.wear_suit)
 					if(!disable_warning)
-						to_chat(H, "\red You need a suit before you can attach this [name].")
+						to_chat(H, "<span class=warning'>You need a suit before you can attach this [name].</span>")
 					return 0
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
@@ -584,22 +584,22 @@
 	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
 		return
 	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
-		to_chat(usr, "\red You can't pick things up!")
+		to_chat(usr, "<span class=warning'>You can't pick things up!</span>")
 		return
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
-		to_chat(usr, "\red You can't pick things up!")
+		to_chat(usr, "<span class=warning'>You can't pick things up!</span>")
 		return
 	if(src.anchored) //Object isn't anchored
-		to_chat(usr, "\red You can't pick that up!")
+		to_chat(usr, "<span class=warning'>You can't pick that up!</span>")
 		return
 	if(!usr.hand && usr.r_hand) //Right hand is not full
-		to_chat(usr, "\red Your right hand is full.")
+		to_chat(usr, "<span class=warning'>Your right hand is full.</span>")
 		return
 	if(usr.hand && usr.l_hand) //Left hand is not full
-		to_chat(usr, "\red Your left hand is full.")
+		to_chat(usr, "<span class=warning'>Your left hand is full.</span>")
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf
-		to_chat(usr, "\red You can't pick that up!")
+		to_chat(usr, "<span class=warning'>You can't pick that up!</span>")
 		return
 	//All checks are done, time to pick it up!
 	usr.UnarmedAttack(src)
@@ -630,7 +630,7 @@
 		var/mob/living/carbon/human/H = M
 		if(((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask!
-			to_chat(user, "\red You're going to need to remove the eye covering first.")
+			to_chat(user, "<span class=warning'>You're going to need to remove the eye covering first.</span>")
 			return
 
 	var/mob/living/carbon/monkey/Mo = M
@@ -638,11 +638,11 @@
 			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		to_chat(user, "\red You're going to need to remove the eye covering first.")
+		to_chat(user, "<span class=warning'>You're going to need to remove the eye covering first.</span>")
 		return
 
 	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
-		to_chat(user, "\red You cannot locate any eyes on this creature!")
+		to_chat(user, "<span class=warning'>You cannot locate any eyes on this creature!</span>")
 		return
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -653,20 +653,20 @@
 	//if((CLUMSY in user.mutations) && prob(50))
 	//	M = user
 		/*
-		to_chat(M, "\red You stab yourself in the eye.")
+		to_chat(M, "<span class=warning'>You stab yourself in the eye.</span>")
 		M.sdisabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)
 		*/
 	if(M != user)
 		for(var/mob/O in (viewers(M) - user - M))
-			O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
-		to_chat(M, "\red [user] stabs you in the eye with [src]!")
-		to_chat(user, "\red You stab [M] in the eye with [src]!")
+			O.show_message("<span class=warning'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
+		to_chat(M, "<span class=warning'>[user] stabs you in the eye with [src]!</span>")
+		to_chat(user, "<span class=warning'>You stab [M] in the eye with [src]!</span>")
 	else
 		user.visible_message( \
-			"\red [user] has stabbed themself with [src]!", \
-			"\red You stab yourself in the eyes with [src]!" \
+			"<span class=warning'>[user] has stabbed themself with [src]!</span>", \
+			"<span class=warning'>You stab yourself in the eyes with [src]!</span>" \
 		)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -675,17 +675,17 @@
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
 				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
-					to_chat(H, "\red Your eyes start to bleed profusely!")
+					to_chat(H, "<span class=warning'>Your eyes start to bleed profusely!</span>")
 			if(prob(50))
 				if(H.stat != DEAD)
-					to_chat(H, "\red You drop what you're holding and clutch at your eyes!")
+					to_chat(H, "<span class=warning'>You drop what you're holding and clutch at your eyes!</span>")
 					H.drop_item()
 				H.eye_blurry += 10
 				H.Paralyse(1)
 				H.Weaken(4)
 			if (IO.damage >= IO.min_broken_damage)
 				if(H.stat != DEAD)
-					to_chat(H, "\red You go blind!")
+					to_chat(H, "<span class=warning'>You go blind!</span>")
 		var/datum/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 		BP.take_damage(7)
 	else

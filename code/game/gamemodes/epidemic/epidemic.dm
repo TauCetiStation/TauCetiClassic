@@ -72,7 +72,7 @@
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command, any crew member with loyalty implant. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
 	for(var/mob/living/silicon/ai/M in living_mob_list)
 		M.add_ion_law(extra_law)
-		to_chat(M, "\red " + extra_law)
+		to_chat(M, "<span class=warning'></span>" + extra_law)
 
 /datum/game_mode/epidemic/proc/announce_to_kill_crew()
 	var/intercepttext = "<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</FONT><HR>"
@@ -102,8 +102,8 @@
 		crew += H
 
 	if(crew.len < 2)
-		to_chat(world, "\red There aren't enough players for this mode!")
-		to_chat(world, "\red Rebooting world in 5 seconds.")
+		to_chat(world, "<span class=warning'>There aren't enough players for this mode!</span>")
+		to_chat(world, "<span class=warning'>Rebooting world in 5 seconds.</span>")
 
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
@@ -210,9 +210,9 @@
 /datum/game_mode/epidemic/declare_completion()
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - epidemic cured")
-		to_chat(world, "\red <FONT size = 3><B> The virus outbreak was contained! The crew wins!</B></FONT>")
+		to_chat(world, "<span class=warning'><FONT size = 3><B> The virus outbreak was contained! The crew wins!</B></FONT></span>")
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
-		to_chat(world, "\red <FONT size = 3><B> The crew succumbed to the epidemic!</B></FONT>")
+		to_chat(world, "<span class=warning'><FONT size = 3><B> The crew succumbed to the epidemic!</B></FONT></span>")
 	..()
 	return 1

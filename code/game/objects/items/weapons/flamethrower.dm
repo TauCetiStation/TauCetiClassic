@@ -131,7 +131,7 @@
 			to_chat(user, "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>")
 			to_chat(user, "<span class='notice'>Phoron: [round(phoron_concentration*100)]%</span>")
 			if(unknown_concentration>0.01)
-				to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
+				to_chat(user, "<span class=warning'>Unknown: [round(unknown_concentration*100)]%</span>")
 			to_chat(user, "<span class='notice'>Temperature: [round(ptank.air_contents.temperature-T0C)]&deg;C</span>")
 		else
 			to_chat(user, "<span class='notice'>Tank is empty!</span>")

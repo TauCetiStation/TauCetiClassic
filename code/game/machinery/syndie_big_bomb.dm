@@ -134,7 +134,7 @@
 				src.loc.visible_message("<span class='notice'>[bicon(src)] Device error: User intervention required</span>")
 			return
 		else
-			src.loc.visible_message("\red [bicon(src)] [timer] seconds until detonation, please clear the area.")
+			src.loc.visible_message("<span class=warning'>[bicon(src)] [timer] seconds until detonation, please clear the area.</span>")
 			playsound(loc, 'sound/machines/click.ogg', 30, 1)
 			if(!open_panel)
 				icon_state = "syndicate-bomb-active"

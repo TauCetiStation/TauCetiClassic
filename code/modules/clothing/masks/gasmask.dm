@@ -80,10 +80,10 @@
 				to_chat(user, "<span class='notice'>You set the restrictor to the first position.</span>")
 				aggressiveness = 1
 			if(4)
-				to_chat(user, "\red You adjust the restrictor but nothing happens, probably because its broken.")
+				to_chat(user, "<span class=warning'>You adjust the restrictor but nothing happens, probably because its broken.</span>")
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(aggressiveness != 4)
-			to_chat(user, "\red You broke it!")
+			to_chat(user, "<span class=warning'>You broke it!</span>")
 			aggressiveness = 4
 	else
 		..()

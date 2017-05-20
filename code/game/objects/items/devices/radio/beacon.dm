@@ -86,7 +86,7 @@
 					found = 1
 					break
 	if(!found)
-		to_chat(user, "\red No beacon located in medical treatment centre.")
+		to_chat(user, "<span class=warning'>No beacon located in medical treatment centre.</span>")
 		return
 
 	var/mob/living/carbon/human/H = target
@@ -95,7 +95,7 @@
 		return
 	to_chat(user, "Planting...")
 
-	user.visible_message("\red [user.name] is trying to plant some kind of device on [target.name]!")
+	user.visible_message("<span class=warning'>[user.name] is trying to plant some kind of device on [target.name]!</span>")
 
 	if(do_after(user, 50, target = target) && in_range(user, H))
 		user.drop_item()
@@ -104,7 +104,7 @@
 		//var/location
 		H.attack_log += "\[[time_stamp()]\]<font color='blue'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 		playsound(H.loc, 'sound/items/timer.ogg', 5, 0)
-		user.visible_message("\red [user.name] finished planting an [name] on [H.name]!")
+		user.visible_message("<span class=warning'>[user.name] finished planting an [name] on [H.name]!</span>")
 		var/I = image('icons/obj/device.dmi', "medicon")
 		H.overlays += I
 		to_chat(user, "Device has been planted. Timer counting down from [timer].")

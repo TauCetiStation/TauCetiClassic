@@ -35,8 +35,8 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!" , \
-		"\red Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!")
+		user.visible_message("<span class=warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>" , \
+		"<span class=warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>")
 
 /datum/surgery_step/set_bone
 	allowed_tools = list(
@@ -66,14 +66,14 @@
 				"<span class='notice'>You set the bone in [target]'s [BP.name] in place with \the [tool].</span>")
 			BP.stage = 2
 		else
-			user.visible_message("<span class='notice'>[user] sets the bone in [target]'s [BP.name]\red in the WRONG place with \the [tool].</span>", \
-				"<span class='notice'>You set the bone in [target]'s [BP.name]\red in the WRONG place with \the [tool].</span>")
+			user.visible_message("<span class='notice'>[user] sets the bone in [target]'s [BP.name]<span class=warning'>in the WRONG place with \the [tool].</span></span>", \
+				"<span class='notice'>You set the bone in [target]'s [BP.name]<span class=warning'>in the WRONG place with \the [tool].</span></span>")
 			BP.fracture()
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, damaging the bone in [target]'s [BP.name] with \the [tool]!" , \
-			"\red Your hand slips, damaging the bone in [target]'s [BP.name] with \the [tool]!")
+		user.visible_message("<span class=warning'>[user]'s hand slips, damaging the bone in [target]'s [BP.name] with \the [tool]!</span>" , \
+			"<span class=warning'>Your hand slips, damaging the bone in [target]'s [BP.name] with \the [tool]!</span>")
 		BP.createwound(BRUISE, 5)
 
 /datum/surgery_step/mend_skull
@@ -103,8 +103,8 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, damaging [target]'s face with \the [tool]!"  , \
-			"\red Your hand slips, damaging [target]'s face with \the [tool]!")
+		user.visible_message("<span class=warning'>[user]'s hand slips, damaging [target]'s face with \the [tool]!</span>"  , \
+			"<span class=warning'>Your hand slips, damaging [target]'s face with \the [tool]!</span>")
 		var/datum/organ/external/head/H = BP
 		H.createwound(BRUISE, 10)
 		H.disfigured = 1
@@ -141,5 +141,5 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!" , \
-		"\red Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!")
+		user.visible_message("<span class=warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>" , \
+		"<span class=warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>")

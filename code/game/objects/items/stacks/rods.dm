@@ -28,7 +28,7 @@
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
 			new_item.add_to_stacks(usr)
 			for (var/mob/M in viewers(src))
-				M.show_message("<span class='danger'>[src] is shaped into metal by [user.name] with the weldingtool.</span>", 3, "\red You hear welding.", 2)
+				M.show_message("<span class='danger'>[src] is shaped into metal by [user.name] with the weldingtool.</span>", 3, "<span class=warning'>You hear welding.</span>", 2)
 		return
 
 /obj/item/stack/rods/attack_self(mob/user)

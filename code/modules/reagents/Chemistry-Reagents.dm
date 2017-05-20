@@ -1690,7 +1690,7 @@ datum
 				if(!..())
 					return
 				if(prob(10))
-					to_chat(M, "\red Your insides are burning!")
+					to_chat(M, "<span class=warning'>Your insides are burning!</span>")
 					M.adjustToxLoss(rand(20,60) * REM)
 				else if(prob(40))
 					M.heal_bodypart_damage(5 * REM, 0)
@@ -2024,7 +2024,7 @@ datum
 						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
-							to_chat(M, "\red \the [O] melts.")
+							to_chat(M, "<span class=warning'>\the [O] melts.</span>")
 						qdel(O)
 
 		toxin/acid/polyacid
@@ -2173,10 +2173,10 @@ datum
 							if ( !safe_thing )
 								safe_thing = victim.glasses
 						if ( eyes_covered && mouth_covered )
-							to_chat(victim, "\red Your [safe_thing] protects you from the pepperspray!")
+							to_chat(victim, "<span class=warning'>Your [safe_thing] protects you from the pepperspray!</span>")
 							return
 						else if ( mouth_covered )	// Reduced effects if partially protected
-							to_chat(victim, "\red Your [safe_thing] protect you from most of the pepperspray!")
+							to_chat(victim, "<span class=warning'>Your [safe_thing] protect you from most of the pepperspray!</span>")
 							victim.eye_blurry = max(M.eye_blurry, 15)
 							victim.eye_blind = max(M.eye_blind, 5)
 							victim.Stun(5)
@@ -2185,13 +2185,13 @@ datum
 							//victim.drop_item()
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
-							to_chat(victim, "\red Your [safe_thing] protects your eyes from the pepperspray!")
+							to_chat(victim, "<span class=warning'>Your [safe_thing] protects your eyes from the pepperspray!</span>")
 							victim.emote("scream",,, 1)
 							victim.eye_blurry = max(M.eye_blurry, 5)
 							return
 						else // Oh dear :D
 							victim.emote("scream",,, 1)
-							to_chat(victim, "\red You're sprayed directly in the eyes with pepperspray!")
+							to_chat(victim, "<span class=warning'>You're sprayed directly in the eyes with pepperspray!</span>")
 							victim.eye_blurry = max(M.eye_blurry, 25)
 							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Stun(5)

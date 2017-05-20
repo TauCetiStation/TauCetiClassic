@@ -217,7 +217,7 @@
 /obj/machinery/door/window/hitby(AM)
 
 	..()
-	visible_message("\red <B>The glass door was hit by [AM].</B>", 1)
+	visible_message("<span class=warning'><B>The glass door was hit by [AM].</B></span>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -280,7 +280,7 @@
 	if( istype(I,/obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/W = I
 		if(W.use_charge(user,6))
-			visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+			visible_message("<span class=warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
 			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			shatter()
 		return
@@ -381,7 +381,7 @@
 			return
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("\red <B>[src] was hit by [I].</B>")
+		visible_message("<span class=warning'><B>[src] was hit by [I].</B></span>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			take_damage(aforce)
 		return

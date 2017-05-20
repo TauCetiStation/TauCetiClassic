@@ -25,13 +25,13 @@
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/M, mob/user)
 	if(!reagents.total_volume)
-		to_chat(user, "\red [src] is empty.")
+		to_chat(user, "<span class=warning'>[src] is empty.</span>")
 		return
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
 		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
-		to_chat(M, "\red You feel a tiny prick!")
+		to_chat(M, "<span class=warning'>You feel a tiny prick!</span>")
 
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)

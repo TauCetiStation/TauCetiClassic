@@ -324,11 +324,11 @@
 			if(stat & (BROKEN))
 				return
 			if(H.a_intent == "hurt")
-				H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
+				H.visible_message("<span class=warning'>[H.name] smashes [src] with \his mighty arms!</span>")
 				set_broken()
 				return
 			else
-				H.visible_message("\red [H.name] stares cluelessly at [src] and drools.")
+				H.visible_message("<span class=warning'>[H.name] stares cluelessly at [src] and drools.</span>")
 				return//##Z2
 	ui_interact(user)
 

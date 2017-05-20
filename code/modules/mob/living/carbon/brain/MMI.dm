@@ -20,7 +20,7 @@
 	attackby(obj/item/O, mob/user)
 		if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
 			if(!O:brainmob)
-				to_chat(user, "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain.")
+				to_chat(user, "<span class=warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>")
 				return
 			for(var/mob/V in viewers(src, null))
 				V.show_message(text("<span class='notice'>[user] sticks \a [O] into \the [src].</span>"))
@@ -50,7 +50,7 @@
 				locked = !locked
 				to_chat(user, "<span class='notice'>You [locked ? </span>"lock" : "unlock"] the brain holder.")
 			else
-				to_chat(user, "\red Access denied.")
+				to_chat(user, "<span class=warning'>Access denied.</span>")
 			return
 		if(brainmob)
 			O.attack(brainmob, user)//Oh noooeeeee
@@ -59,9 +59,9 @@
 
 	attack_self(mob/user)
 		if(!brainmob)
-			to_chat(user, "\red You upend the MMI, but there's nothing in it.")
+			to_chat(user, "<span class=warning'>You upend the MMI, but there's nothing in it.</span>")
 		else if(locked)
-			to_chat(user, "\red You upend the MMI, but the brain is clamped into place.")
+			to_chat(user, "<span class=warning'>You upend the MMI, but the brain is clamped into place.</span>")
 		else
 			to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
 			var/obj/item/brain/brain = new(user.loc)

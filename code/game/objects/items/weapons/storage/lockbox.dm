@@ -20,20 +20,20 @@
 	attackby(obj/item/weapon/W, mob/user)
 		if (istype(W, /obj/item/weapon/card/id))
 			if(src.broken)
-				to_chat(user, "\red It appears to be broken.")
+				to_chat(user, "<span class=warning'>It appears to be broken.</span>")
 				return
 			if(src.allowed(user))
 				src.locked = !( src.locked )
 				if(src.locked)
 					src.icon_state = src.icon_locked
-					to_chat(user, "\red You lock the [src.name]!")
+					to_chat(user, "<span class=warning'>You lock the [src.name]!</span>")
 					return
 				else
 					src.icon_state = src.icon_closed
-					to_chat(user, "\red You unlock the [src.name]!")
+					to_chat(user, "<span class=warning'>You unlock the [src.name]!</span>")
 					return
 			else
-				to_chat(user, "\red Access Denied")
+				to_chat(user, "<span class=warning'>Access Denied</span>")
 		else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
 			broken = 1
 			locked = 0
@@ -46,7 +46,7 @@
 				playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 				playsound(src.loc, "sparks", 50, 1)
 				for(var/mob/O in viewers(user, 3))
-					O.show_message(text("<span class='notice'>The locker has been sliced open by [] with an energy blade!</span>", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+					O.show_message(text("<span class='notice'>The locker has been sliced open by [] with an energy blade!</span>", user), 1, text("<span class=warning'>You hear metal being sliced and sparks flying.</span>"), 2)
 			else
 				for(var/mob/O in viewers(user, 3))
 					O.show_message(text("<span class='notice'>The locker has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
@@ -54,13 +54,13 @@
 		if(!locked)
 			..()
 		else
-			to_chat(user, "\red Its locked!")
+			to_chat(user, "<span class=warning'>Its locked!</span>")
 		return
 
 
 	show_to(mob/user)
 		if(locked)
-			to_chat(user, "\red Its locked!")
+			to_chat(user, "<span class=warning'>Its locked!</span>")
 		else
 			..()
 		return

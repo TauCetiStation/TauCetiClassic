@@ -57,6 +57,6 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
-		user.visible_message("\red [user]'s hand slips, slicing [target]'s genitals with \the [tool]!", \
-		"\red Your hand slips, slicing [target]'s genitals with \the [tool]!")
+		user.visible_message("<span class=warning'>[user]'s hand slips, slicing [target]'s genitals with \the [tool]!</span>", \
+		"<span class=warning'>Your hand slips, slicing [target]'s genitals with \the [tool]!</span>")
 		BP.createwound(CUT, 20, 1)

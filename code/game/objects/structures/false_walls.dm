@@ -84,13 +84,13 @@
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
 	if(opening)
-		to_chat(user, "\red You must wait until the door has stopped moving.")
+		to_chat(user, "<span class=warning'>You must wait until the door has stopped moving.</span>")
 		return
 
 	if(density)
 		var/turf/T = get_turf(src)
 		if(T.density)
-			to_chat(user, "\red The wall is blocked!")
+			to_chat(user, "<span class=warning'>The wall is blocked!</span>")
 			return
 		if(istype(W, /obj/item/weapon/screwdriver))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
@@ -225,7 +225,7 @@
 
 /obj/structure/falserwall/attackby(obj/item/weapon/W, mob/user)
 	if(opening)
-		to_chat(user, "\red You must wait until the door has stopped moving.")
+		to_chat(user, "<span class=warning'>You must wait until the door has stopped moving.</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))

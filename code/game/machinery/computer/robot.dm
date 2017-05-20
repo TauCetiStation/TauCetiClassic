@@ -21,7 +21,7 @@
 	if(..())
 		return
 	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+		to_chat(user, "<span class=warning'><b>Unable to establish a connection</b>: \black You're too far away from the station!</span>")
 		return
 	user.set_machine(src)
 	var/dat
@@ -119,7 +119,7 @@
 					src.temp = null
 
 			else
-				to_chat(usr, "\red Access Denied.")
+				to_chat(usr, "<span class=warning'>Access Denied.</span>")
 
 	else if (href_list["stop"])
 		src.temp = {"
@@ -161,7 +161,7 @@
 							log_game("<span class='notice'>[key_name_admin(usr)] detonated [R.name]!</span>")
 							R.self_destruct()
 		else
-			to_chat(usr, "\red Access Denied.")
+			to_chat(usr, "<span class=warning'>Access Denied.</span>")
 
 	else if (href_list["stopbot"])
 		if(src.allowed(usr))
@@ -185,7 +185,7 @@
 							to_chat(R, "You have been locked down!")
 
 		else
-			to_chat(usr, "\red Access Denied.")
+			to_chat(usr, "<span class=warning'>Access Denied.</span>")
 
 	else if (href_list["magbot"])
 		if(src.allowed(usr))

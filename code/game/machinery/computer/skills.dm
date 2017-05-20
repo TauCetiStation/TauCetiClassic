@@ -42,7 +42,7 @@
 	if(..())
 		return
 	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+		to_chat(user, "<span class=warning'><b>Unable to establish a connection</b>: \black You're too far away from the station!</span>")
 		return
 	var/dat
 

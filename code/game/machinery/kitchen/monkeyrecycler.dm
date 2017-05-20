@@ -56,7 +56,7 @@
 		if(ismonkey(grabbed))
 			var/mob/living/carbon/monkey/target = grabbed
 			if(target.stat == CONSCIOUS)
-				to_chat(user, "\red The monkey is struggling far too much to put it in the recycler.")
+				to_chat(user, "<span class=warning'>The monkey is struggling far too much to put it in the recycler.</span>")
 			else
 				user.drop_item()
 				qdel(target)
@@ -70,7 +70,7 @@
 				pixel_x = initial(pixel_x)
 				to_chat(user, "<span class='notice'>The machine now has [grinded] monkeys worth of material stored.</span>")
 		else
-			to_chat(user, "\red The machine only accepts monkeys!")
+			to_chat(user, "<span class=warning'>The machine only accepts monkeys!</span>")
 	return
 
 /obj/machinery/monkey_recycler/attack_hand(mob/user)

@@ -50,8 +50,8 @@
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
 		if (BP.parent)
 			BP = BP.parent
-			user.visible_message("\red [user]'s hand slips, cutting [target]'s [BP.name] open!", \
-			"\red Your hand slips, cutting [target]'s [BP.name] open!")
+			user.visible_message("<span class=warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>", \
+			"<span class=warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
 			BP.createwound(CUT, 10)
 
 
@@ -86,8 +86,8 @@
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
 		if (BP.parent)
 			BP = BP.parent
-			user.visible_message("\red [user]'s hand slips, tearing flesh on [target]'s [BP.name]!", \
-			"\red Your hand slips, tearing flesh on [target]'s [BP.name]!")
+			user.visible_message("<span class=warning'>[user]'s hand slips, tearing flesh on [target]'s [BP.name]!</span>", \
+			"<span class=warning'>Your hand slips, tearing flesh on [target]'s [BP.name]!</span>")
 			target.apply_damage(10, BRUTE, BP, sharp = 1)
 
 
@@ -126,8 +126,8 @@
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
 		if (BP.parent)
 			BP = BP.parent
-			user.visible_message("\red [user]'s hand slips, searing [target]'s [BP.name]!", \
-			"\red Your hand slips, searing [target]'s [BP.name]!")
+			user.visible_message("<span class=warning'>[user]'s hand slips, searing [target]'s [BP.name]!</span>", \
+			"<span class=warning'>Your hand slips, searing [target]'s [BP.name]!</span>")
 			target.apply_damage(10, BURN, BP)
 
 
@@ -169,6 +169,6 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, damaging connectors on [target]'s [BP.name]!", \
-		"\red Your hand slips, damaging connectors on [target]'s [BP.name]!")
+		user.visible_message("<span class=warning'>[user]'s hand slips, damaging connectors on [target]'s [BP.name]!</span>", \
+		"<span class=warning'>Your hand slips, damaging connectors on [target]'s [BP.name]!</span>")
 		target.apply_damage(10, BRUTE, BP, sharp = 1)

@@ -68,12 +68,12 @@
 /obj/item/weapon/spikethrower/attack(mob/living/M, mob/living/user, def_zone)
 
 	if (M == user && user.zone_sel.selecting == O_MOUTH)
-		M.visible_message("\red [user] attempts without success to fit [src] into their mouth.")
+		M.visible_message("<span class=warning'>[user] attempts without success to fit [src] into their mouth.</span>")
 		return
 
 	if (spikes > 0)
 		if(user.a_intent == "hurt")
-			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
+			user.visible_message("<span class=warning'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			Fire(M,user)
 			return
 		else if(target && M in target)
@@ -94,14 +94,14 @@
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.species && H.species.name != VOX)
-			to_chat(user, "\red The weapon does not respond to you!")
+			to_chat(user, "<span class=warning'>The weapon does not respond to you!</span>")
 			return
 	else
-		to_chat(user, "\red The weapon does not respond to you!")
+		to_chat(user, "<span class=warning'>The weapon does not respond to you!</span>")
 		return
 
 	if(spikes <= 0)
-		to_chat(user, "\red The weapon has nothing to fire!")
+		to_chat(user, "<span class=warning'>The weapon has nothing to fire!</span>")
 		return
 
 	if(!spike)
@@ -109,7 +109,7 @@
 		spike.add_fingerprint(user)
 		spikes--
 
-	user.visible_message("\red [user] fires [src]!", "\red You fire [src]!")
+	user.visible_message("<span class=warning'>[user] fires [src]!</span>", "<span class=warning'>You fire [src]!</span>")
 	spike.loc = get_turf(src)
 	spike.throw_at(target,10,fire_force,user)
 	spike = null
@@ -141,7 +141,7 @@
 			if(H.species.name == VOX_ARMALIS)
 				..()
 				return
-		to_chat(user, "\red \The [src] is far too large for you to pick up.")
+		to_chat(user, "<span class=warning'>\The [src] is far too large for you to pick up.</span>")
 		return
 /*
 /obj/item/weapon/gun/energy/noisecannon/load_into_chamber() //Does not have ammo.

@@ -96,7 +96,7 @@ var/list/airlock_overlays = list()
 			else /*if(src.justzap)*/
 				return
 		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
-			to_chat(user, "\red <B>You feel a powerful shock course through your body!</B>")
+			to_chat(user, "<span class=warning'><B>You feel a powerful shock course through your body!</B></span>")
 			user.halloss += 10
 			user.stunned += 10
 			return
@@ -543,7 +543,7 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	if(istype(user, /mob/living/carbon/alien/humanoid))
 		if(welded || locked)
-			to_chat(user, "\red The door is sealed, it cannot be pried open.")
+			to_chat(user, "<span class=warning'>The door is sealed, it cannot be pried open.</span>")
 			return
 		else if(!density)
 			return
@@ -956,7 +956,7 @@ var/list/airlock_overlays = list()
 					if(F:wielded)
 						spawn(0)	open(1)
 					else
-						to_chat(user, "\red You need to be wielding the Fire axe to do that.")
+						to_chat(user, "<span class=warning'>You need to be wielding the Fire axe to do that.</span>")
 				else
 					spawn(0)	open(1)
 			else
@@ -965,7 +965,7 @@ var/list/airlock_overlays = list()
 					if(F:wielded)
 						spawn(0)	close(1)
 					else
-						to_chat(user, "\red You need to be wielding the Fire axe to do that.")
+						to_chat(user, "<span class=warning'>You need to be wielding the Fire axe to do that.</span>")
 				else
 					spawn(0)	close(1)
 

@@ -92,7 +92,7 @@
 	activate(mob/living/carbon/mob,multiplier)
 		mob.suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		to_chat(viewers(mob), "\red <b>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</b>")
+		to_chat(viewers(mob), "<span class=warning'><b>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</b></span>")
 		mob.adjustOxyLoss(175 - mob.getToxLoss() - mob.getFireLoss() - mob.getBruteLoss() - mob.getOxyLoss())
 		mob.updatehealth()
 		spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
@@ -333,7 +333,7 @@
 	name = "Flemmingtons"
 	stage = 1
 	activate(mob/living/carbon/mob,multiplier)
-		to_chat(mob, "\red Mucous runs down the back of your throat.")
+		to_chat(mob, "<span class=warning'>Mucous runs down the back of your throat.</span>")
 
 /datum/disease2/effect/drool
 	name = "Saliva Effect"

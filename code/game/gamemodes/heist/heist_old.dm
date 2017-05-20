@@ -161,7 +161,7 @@ VOX HEIST ROUNDTYPE
 	to_chat(raider.current, "<span class='notice'>The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.</span>")
 	to_chat(raider.current, "<span class='notice'>Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.</span>")
 	to_chat(raider.current, "<span class='notice'>Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!</span>")
-	to_chat(raider.current, "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http://baystation12.net/forums/viewtopic.php?f=6&t=8657.")
+	to_chat(raider.current, "<span class=warning'>IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http://baystation12.net/forums/viewtopic.php?f=6&t=8657.</span>")
 	var/obj_count = 1
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in raider.objectives)
@@ -222,7 +222,7 @@ VOX HEIST ROUNDTYPE
 		else
 			win_msg += "<B>The Vox Raiders were repelled!</B>"
 
-	to_chat(world, "\red <FONT size = 3><B>[win_type] [win_group] victory!</B></FONT>")
+	to_chat(world, "<span class=warning'><FONT size = 3><B>[win_type] [win_group] victory!</B></FONT></span>")
 	to_chat(world, "[win_msg]")
 	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
 

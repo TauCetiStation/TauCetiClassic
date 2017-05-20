@@ -33,13 +33,13 @@
 /obj/item/device/core_sampler/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/evidencebag))
 		if(W.contents.len)
-			to_chat(user, "\red This bag has something inside it!")
+			to_chat(user, "<span class=warning'>This bag has something inside it!</span>")
 		else if(num_stored_bags < 10)
 			qdel(W)
 			num_stored_bags += 1
 			to_chat(user, "<span class='notice'>You insert the [W] into the core sampler.</span>")
 		else
-			to_chat(user, "\red The core sampler can not fit any more bags!")
+			to_chat(user, "<span class=warning'>The core sampler can not fit any more bags!</span>")
 	else
 		return ..()
 
@@ -55,9 +55,9 @@
 
 	if(geo_data)
 		if(filled_bag)
-			to_chat(user, "\red The core sampler is full!")
+			to_chat(user, "<span class=warning'>The core sampler is full!</span>")
 		else if(num_stored_bags < 1)
-			to_chat(user, "\red The core sampler is out of sample bags!")
+			to_chat(user, "<span class=warning'>The core sampler is out of sample bags!</span>")
 		else
 			icon_state = "sampler1"
 
@@ -72,7 +72,7 @@
 
 			to_chat(user, "<span class='notice'>You take a core sample of the [item_to_sample].</span>")
 	else
-		to_chat(user, "\red You are unable to take a sample of [item_to_sample].")
+		to_chat(user, "<span class=warning'>You are unable to take a sample of [item_to_sample].</span>")
 
 /obj/item/device/core_sampler/attack_self()
 	if(filled_bag)
@@ -86,4 +86,4 @@
 		filled_bag = null
 		icon_state = "sampler0"
 	else
-		to_chat(usr, "\red The core sampler is empty.")
+		to_chat(usr, "<span class=warning'>The core sampler is empty.</span>")

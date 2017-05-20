@@ -33,7 +33,7 @@
 	return 0
 
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
-	to_chat(imp_in, "\red You feel something melting inside [part ? "your [part.name]" : "you"]!")
+	to_chat(imp_in, "<span class=warning'>You feel something melting inside [part ? </span>"your [part.name]" : "you"]!")
 	if (part)
 		part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
 	else
@@ -169,7 +169,7 @@ Implant Specifics:<BR>"}
 		if(ishuman(imp_in))
 			if (elevel == "Localized Limb")
 				if(part) //For some reason, small_boom() didn't work. So have this bit of working copypaste.
-					imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!")
+					imp_in.visible_message("<span class=warning'>Something beeps inside [imp_in][part ? </span>"'s [part.name]" : ""]!")
 					playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 					sleep(25)
 					if (istype(part,/datum/organ/external/chest) ||	\
@@ -234,7 +234,7 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/proc/small_boom()
 	if (ishuman(imp_in) && part)
-		imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!")
+		imp_in.visible_message("<span class=warning'>Something beeps inside [imp_in][part ? </span>"'s [part.name]" : ""]!")
 		playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 		spawn(25)
 			if (ishuman(imp_in) && part)
@@ -353,7 +353,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	if(prob(50))
 		H.visible_message("[H] suddenly goes very red and starts writhing. There is a strange smell in the air...", \
-			"\red Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!")
+			"<span class=warning'>Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!</span>")
 		H.adjustBrainLoss(80)
 
 	START_PROCESSING(SSobj, src)

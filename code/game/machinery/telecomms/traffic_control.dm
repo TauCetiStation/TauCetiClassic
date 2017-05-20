@@ -129,7 +129,7 @@
 			return
 
 		if(!src.allowed(usr) && !emagged)
-			to_chat(usr, "\red ACCESS DENIED.")
+			to_chat(usr, "<span class=warning'>ACCESS DENIED.</span>")
 			return
 
 		if(href_list["viewserver"])

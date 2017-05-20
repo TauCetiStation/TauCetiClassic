@@ -159,11 +159,11 @@
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY)
 		if ((prob(1) && paralysis < 1))
-			to_chat(src, "\red You have a seizure!")
+			to_chat(src, "<span class=warning'>You have a seizure!</span>")
 			for(var/mob/O in viewers(src, null))
 				if(O == src)
 					continue
-				O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
+				O.show_message(text("<span class=warning'><B>[src] starts having a seizure!</span>"), 1)
 			Paralyse(10)
 			make_jittery(1000)
 	if (disabilities & COUGHING)
@@ -222,15 +222,15 @@
 				custom_pain("Your head feels numb and painful.")
 		if(getBrainLoss() >= 15)
 			if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
-				to_chat(src, "\red It becomes hard to see for some reason.")
+				to_chat(src, "<span class=warning'>It becomes hard to see for some reason.</span>")
 				eye_blurry = 10
 		if(getBrainLoss() >= 35)
 			if(7 <= rn && rn <= 9) if(get_active_hand())
-				to_chat(src, "\red Your hand won't respond properly, you drop what you're holding.")
+				to_chat(src, "<span class=warning'>Your hand won't respond properly, you drop what you're holding.</span>")
 				drop_item()
 		if(getBrainLoss() >= 50)
 			if(10 <= rn && rn <= 12) if(!lying)
-				to_chat(src, "\red Your legs won't respond properly, you fall down.")
+				to_chat(src, "<span class=warning'>Your legs won't respond properly, you fall down.</span>")
 				resting = 1
 
 /mob/living/carbon/human/proc/handle_stasis_bag()
@@ -269,7 +269,7 @@
 			if(!species.flags[RAD_ABSORB])
 				Weaken(10)
 				if(!lying)
-					to_chat(src, "\red You feel weak.")
+					to_chat(src, "<span class=warning'>You feel weak.</span>")
 					emote("collapse")
 
 		if (radiation < 0)
@@ -304,13 +304,13 @@
 					radiation -= 5
 					Weaken(3)
 					if(!lying)
-						to_chat(src, "\red You feel weak.")
+						to_chat(src, "<span class=warning'>You feel weak.</span>")
 						emote("collapse")
 			if(radiation > 75)
 				radiation--
 				damage = 3
 				if(prob(1))
-					to_chat(src, "\red You mutate!")
+					to_chat(src, "<span class=warning'>You mutate!</span>")
 					randmutb(src)
 					domutcheck(src,null)
 					emote("gasp")

@@ -47,7 +47,7 @@
 		return
 
 	if(!allowed(user))
-		to_chat(user, "\red Access denied.")
+		to_chat(user, "<span class=warning'>Access denied.</span>")
 		return
 
 	user.set_machine(src)

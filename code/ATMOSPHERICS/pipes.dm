@@ -86,7 +86,7 @@
 		return ..()
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		to_chat(user, "\red You must remove the plating first.")
+		to_chat(user, "<span class=warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
@@ -181,7 +181,7 @@
 	else return 1
 
 /obj/machinery/atmospherics/pipe/simple/proc/burst()
-	src.visible_message("\red \bold [src] bursts!");
+	src.visible_message("<span class=warning'>\bold [src] bursts!</span>");
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 	var/datum/effect/effect/system/smoke_spread/smoke = new
 	smoke.set_up(1,0, src.loc, 0)
@@ -960,7 +960,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 /obj/machinery/atmospherics/pipe/tank/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
 		for (var/mob/O in viewers(user, null))
-			to_chat(O, "\red [user] has used the analyzer on [bicon(icon)]")
+			to_chat(O, "<span class=warning'>[user] has used the analyzer on [bicon(icon)]</span>")
 
 		var/pressure = parent.air.return_pressure()
 		var/total_moles = parent.air.total_moles()
@@ -980,7 +980,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 			to_chat(user, "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>")
 			to_chat(user, "<span class='notice'>Phoron: [round(phoron_concentration*100)]%</span>")
 			if(unknown_concentration>0.01)
-				to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
+				to_chat(user, "<span class=warning'>Unknown: [round(unknown_concentration*100)]%</span>")
 			to_chat(user, "<span class='notice'>Temperature: [round(parent.air.temperature-T0C)]&deg;C</span>")
 		else
 			to_chat(user, "<span class='notice'>Tank is empty!</span>")

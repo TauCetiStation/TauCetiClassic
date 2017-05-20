@@ -77,7 +77,7 @@
 				src.registered_name = I.registered_name
 				src.desc = "Owned by [I.registered_name]."
 		else
-			to_chat(user, "\red Access Denied")
+			to_chat(user, "<span class=warning'>Access Denied</span>")
 	else if( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
 		broken = 1
 		locked = 0
@@ -90,9 +90,9 @@
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
 			for(var/mob/O in viewers(user, 3))
-				O.show_message("<span class='notice'>The locker has been sliced open by [user] with an [W.name]!</span>", 1, "\red You hear metal being sliced and sparks flying.", 2)
+				O.show_message("<span class='notice'>The locker has been sliced open by [user] with an [W.name]!</span>", 1, "<span class=warning'>You hear metal being sliced and sparks flying.</span>", 2)
 	else
-		to_chat(user, "\red Access Denied")
+		to_chat(user, "<span class=warning'>Access Denied</span>")
 	return
 
 /obj/structure/closet/secure_closet/personal/verb/reset()
@@ -104,9 +104,9 @@
 	if(ishuman(usr))
 		src.add_fingerprint(usr)
 		if (src.locked || !src.registered_name)
-			to_chat(usr, "\red You need to unlock it first.")
+			to_chat(usr, "<span class=warning'>You need to unlock it first.</span>")
 		else if (src.broken)
-			to_chat(usr, "\red It appears to be broken.")
+			to_chat(usr, "<span class=warning'>It appears to be broken.</span>")
 		else
 			if (src.opened)
 				if(!src.close())
