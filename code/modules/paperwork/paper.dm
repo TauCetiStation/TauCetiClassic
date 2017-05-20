@@ -382,13 +382,6 @@
 		if((!in_range(src, usr) && loc != usr && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
 			return
 
-		/*t = checkhtml(t)
-
-		var/index = findtext(t, LETTER_255)
-		while(index)
-			t = copytext(t, 1, index) + "&#1103;" + copytext(t, index+8)
-			index = findtext(t, LETTER_255)*/
-
 		var last_fields_value = fields
 
 		t = sanitize_alt(t, list("\n"="\[br\]","ÿ"=LETTER_255))
