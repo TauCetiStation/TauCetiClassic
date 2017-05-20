@@ -217,7 +217,7 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class=warning'><B>[M]</B> [M.attacktext] [src]!</span>", 1)
+			O.show_message("<span class='warning'><B>[M]</B> [M.attacktext] [src]!</span>", 1)
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -255,14 +255,14 @@
 
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class=warning'>[] has grabbed [] passively!</span>", M, src), 1)
+					O.show_message(text("<span class='warning'>[] has grabbed [] passively!</span>", M, src), 1)
 
 		if("hurt", "disarm")
 			M.do_attack_animation(src)
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message("<span class=warning'>[M] [response_harm] [src]</span>")
+					O.show_message("<span class='warning'>[M] [response_harm] [src]</span>")
 
 	return
 
@@ -292,11 +292,11 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class=warning'>[] has grabbed [] passively!</span>", M, src), 1)
+					O.show_message(text("<span class='warning'>[] has grabbed [] passively!</span>", M, src), 1)
 
 		if("hurt", "disarm")
 			var/damage = rand(15, 30)
-			visible_message("<span class=warning'><B>[M] has slashed at [src]!</B></span>")
+			visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
 			adjustBruteLoss(damage)
 
 	return
@@ -311,7 +311,7 @@
 		else
 
 			var/damage = rand(5, 10)
-			visible_message("<span class=warning'><B>[L] bites [src]!</B></span>")
+			visible_message("<span class='warning'><B>[L] bites [src]!</B></span>")
 
 			if(stat != DEAD)
 				adjustBruteLoss(damage)
@@ -325,7 +325,7 @@
 
 	if(M.Victim) return // can't attack while eating!
 
-	visible_message("<span class=warning'><B>The [M.name] glomps [src]!</B></span>")
+	visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
 
 	var/damage = rand(1, 3)
 

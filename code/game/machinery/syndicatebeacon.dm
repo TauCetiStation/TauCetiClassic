@@ -159,14 +159,14 @@
 	if(stat & SCREWED)
 		return active ? Deactivate(user) : Activate(user)
 	else
-		to_chat(user, "<span class=warning'>You need to screw the beacon to the floor first!</span>")
+		to_chat(user, "<span class='warning'>You need to screw the beacon to the floor first!</span>")
 		return
 
 
 /obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(active)
-			to_chat(user, "<span class=warning'>You need to deactivate the beacon first!</span>")
+			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
 			return
 
 		if(stat & SCREWED)

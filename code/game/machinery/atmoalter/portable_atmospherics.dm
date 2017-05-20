@@ -114,7 +114,7 @@
 				return
 
 	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
-		visible_message("<span class=warning'>[user] has used [W] on [bicon(icon)]</span>")
+		visible_message("<span class='warning'>[user] has used [W] on [bicon(icon)]</span>")
 		if(air_contents)
 			var/pressure = air_contents.return_pressure()
 			var/total_moles = air_contents.total_moles()
@@ -134,7 +134,7 @@
 				to_chat(user, "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>")
 				to_chat(user, "<span class='notice'>Phoron: [round(phoron_concentration*100)]%</span>")
 				if(unknown_concentration>0.01)
-					to_chat(user, "<span class=warning'>Unknown: [round(unknown_concentration*100)]%</span>")
+					to_chat(user, "<span class='warning'>Unknown: [round(unknown_concentration*100)]%</span>")
 				to_chat(user, "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)]&deg;C</span>")
 			else
 				to_chat(user, "<span class='notice'>Tank is empty!</span>")

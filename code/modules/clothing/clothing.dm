@@ -42,7 +42,7 @@
 					wearable = 1
 
 			if(!wearable && (slot != 15 && slot != 16)) //Pockets.
-				to_chat(M, "<span class=warning'>Your species cannot wear [src].</span>")
+				to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")
 				return 0
 
 	return 1
@@ -475,7 +475,7 @@ BLIND     // can't see anything
 		switch(sensor_mode)
 			if(0)
 				for(var/mob/V in viewers(usr, 1))
-					V.show_message("<span class=warning'>[usr] disables [src.loc]'s remote sensing equipment.</span>", 1)
+					V.show_message("<span class='warning'>[usr] disables [src.loc]'s remote sensing equipment.</span>", 1)
 			if(1)
 				for(var/mob/V in viewers(usr, 1))
 					V.show_message("[usr] turns [src.loc]'s remote sensors to binary.", 1)

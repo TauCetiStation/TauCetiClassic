@@ -106,7 +106,7 @@
 
 /obj/machinery/shield/hitby(AM)
 	//Let everyone know we've been hit!
-	visible_message("<span class=warning'><B>[src] was hit by [AM].</B></span>")
+	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
 
 	//Super realistic, resource-intensive, real-time damage calculations.
 	var/tforce = 0
@@ -303,7 +303,7 @@
 			src.locked = !src.locked
 			to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			to_chat(user, "<span class=warning'>Access denied.</span>")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else
 		..()
@@ -369,13 +369,13 @@
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
 	if(state != 1)
-		to_chat(user, "<span class=warning'>The shield generator needs to be firmly secured to the floor first.</span>")
+		to_chat(user, "<span class='warning'>The shield generator needs to be firmly secured to the floor first.</span>")
 		return 1
 	if(src.locked && !istype(user, /mob/living/silicon))
-		to_chat(user, "<span class=warning'>The controls are locked!</span>")
+		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return 1
 	if(power != 1)
-		to_chat(user, "<span class=warning'>The shield generator needs to be powered by wire underneath.</span>")
+		to_chat(user, "<span class='warning'>The shield generator needs to be powered by wire underneath.</span>")
 		return 1
 
 	if(src.active >= 1)
@@ -421,7 +421,7 @@
 		src.active = 2
 	if(src.active >= 1)
 		if(src.power == 0)
-			src.visible_message("<span class=warning'>The [src.name] shuts down due to lack of power!</span>", \
+			src.visible_message("<span class='warning'>The [src.name] shuts down due to lack of power!</span>", \
 				"You hear heavy droning fade out")
 			icon_state = "Shield_Gen"
 			src.active = 0
@@ -497,11 +497,11 @@
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			to_chat(user, "<span class=warning'>Access denied.</span>")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else
 		src.add_fingerprint(user)
-		visible_message("<span class=warning'>The [src.name] has been hit with \the [W.name] by [user.name]!</span>")
+		visible_message("<span class='warning'>The [src.name] has been hit with \the [W.name] by [user.name]!</span>")
 
 /obj/machinery/shieldwallgen/proc/cleanup(NSEW)
 	var/obj/machinery/shieldwall/F

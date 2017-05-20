@@ -96,7 +96,7 @@
 /obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		locked = !locked
-		to_chat(user, "<span class='notice'>You [locked ? </span>"lock" : "unlock"] the mulebot's controls!")
+		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>")
 		flick("mulebot-emagged", src)
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
 	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
@@ -124,7 +124,7 @@
 		if (src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
-				"<span class=warning'>[user] repairs [src]!</span>",
+				"<span class='warning'>[user] repairs [src]!</span>",
 				"<span class='notice'>You repair [src]!</span>"
 			)
 		else
@@ -132,7 +132,7 @@
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
-			user.visible_message("<span class=warning'>[user] knocks [load] off [src] with \the [I]!</span>", "<span class=warning'>You knock [load] off [src] with \the [I]!</span>")
+			user.visible_message("<span class='warning'>[user] knocks [load] off [src] with \the [I]!</span>", "<span class='warning'>You knock [load] off [src] with \the [I]!</span>")
 		else
 			to_chat(user, "You hit [src] with \the [I] but to no effect.")
 	else
@@ -247,14 +247,14 @@
 			if(src.allowed(usr))
 				locked = !locked
 			else
-				to_chat(usr, "<span class=warning'>Access denied.</span>")
+				to_chat(usr, "<span class='warning'>Access denied.</span>")
 				return FALSE
 		if("power")
 			if (src.on)
 				turn_off()
 			else if (cell && !open)
 				if (!turn_on())
-					to_chat(usr, "<span class=warning'>You can't switch on [src].</span>")
+					to_chat(usr, "<span class='warning'>You can't switch on [src].</span>")
 					return FALSE
 			else
 				return FALSE
@@ -671,9 +671,9 @@
 		var/mob/M = obs
 		if(ismob(M))
 			if(istype(M,/mob/living/silicon/robot))
-				src.visible_message("<span class=warning'>[src] bumps into [M]!</span>")
+				src.visible_message("<span class='warning'>[src] bumps into [M]!</span>")
 			else
-				src.visible_message("<span class=warning'>[src] knocks over [M]!</span>")
+				src.visible_message("<span class='warning'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
@@ -687,7 +687,7 @@
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	src.visible_message("<span class=warning'>[src] drives over [H]!</span>")
+	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)

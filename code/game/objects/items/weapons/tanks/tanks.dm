@@ -86,7 +86,7 @@
 
 	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		for (var/mob/O in viewers(user, null))
-			to_chat(O, "<span class=warning'>[user] has used [W] on [bicon(icon)] [src]</span>")
+			to_chat(O, "<span class='warning'>[user] has used [W] on [bicon(icon)] [src]</span>")
 
 		var/pressure = air_contents.return_pressure()
 		manipulated_by = user.real_name			//This person is aware of the contents of the tank.
@@ -107,7 +107,7 @@
 			to_chat(user, "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>")
 			to_chat(user, "<span class='notice'>Phoron: [round(phoron_concentration*100)]%</span>")
 			if(unknown_concentration>0.01)
-				to_chat(user, "<span class=warning'>Unknown: [round(unknown_concentration*100)]%</span>")
+				to_chat(user, "<span class='warning'>Unknown: [round(unknown_concentration*100)]%</span>")
 			to_chat(user, "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)]&deg;C</span>")
 		else
 			to_chat(user, "<span class='notice'>Tank is empty!</span>")

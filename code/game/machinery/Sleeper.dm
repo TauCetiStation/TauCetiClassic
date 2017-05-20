@@ -98,7 +98,7 @@
 			src.updateUsrDialog()
 			return
 		else
-			to_chat(user, "<span class=warning'>The sleeper has a beaker already.</span>")
+			to_chat(user, "<span class='warning'>The sleeper has a beaker already.</span>")
 			return
 
 	if(!state_open && !occupant)

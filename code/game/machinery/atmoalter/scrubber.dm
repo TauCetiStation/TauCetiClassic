@@ -56,7 +56,7 @@
 
 			anchored = !anchored
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			to_chat(user, "<span class='notice'>You [anchored ? </span>"wrench" : "unwrench"] \the [src].")
+			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 			return
 

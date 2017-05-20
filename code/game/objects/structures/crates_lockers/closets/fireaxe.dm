@@ -27,7 +27,7 @@
 
 		if (isrobot(usr) || src.locked)
 			if(istype(O, /obj/item/device/multitool))
-				to_chat(user, "<span class=warning'>Resetting circuitry...</span>")
+				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 				playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
 				sleep(50) // Sleeping time~
 				src.locked = 0
@@ -59,7 +59,7 @@
 		if (istype(O, /obj/item/weapon/twohanded/fireaxe) && src.localopened)
 			if(!fireaxe)
 				if(O:wielded)
-					to_chat(user, "<span class=warning'>Unwield the axe first.</span>")
+					to_chat(user, "<span class='warning'>Unwield the axe first.</span>")
 					return
 				fireaxe = O
 				user.drop_item()
@@ -87,7 +87,7 @@
 					spawn(10) update_icon()
 					return
 				else
-					to_chat(user, "<span class=warning'>Resetting circuitry...</span>")
+					to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 					sleep(50)
 					src.locked = 1
 					to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
@@ -112,7 +112,7 @@
 			hasaxe = 1
 
 		if(src.locked)
-			to_chat(user, "<span class=warning'>The cabinet won't budge!</span>")
+			to_chat(user, "<span class='warning'>The cabinet won't budge!</span>")
 			return
 		if(localopened)
 			if(fireaxe)
@@ -157,7 +157,7 @@
 
 		if (isrobot(usr) || src.locked || src.smashed)
 			if(src.locked)
-				to_chat(usr, "<span class=warning'>The cabinet won't budge!</span>")
+				to_chat(usr, "<span class='warning'>The cabinet won't budge!</span>")
 			else if(src.smashed)
 				to_chat(usr, "<span class='notice'>The protective glass is broken!</span>")
 			return
@@ -189,12 +189,12 @@
 
 	attack_ai(mob/user)
 		if(src.smashed)
-			to_chat(user, "<span class=warning'>The security of the cabinet is compromised.</span>")
+			to_chat(user, "<span class='warning'>The security of the cabinet is compromised.</span>")
 			return
 		else
 			locked = !locked
 			if(locked)
-				to_chat(user, "<span class=warning'>Cabinet locked.</span>")
+				to_chat(user, "<span class='warning'>Cabinet locked.</span>")
 			else
 				to_chat(user, "<span class='notice'>Cabinet unlocked.</span>")
 			return

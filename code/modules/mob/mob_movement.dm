@@ -41,18 +41,18 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		to_chat(usr, "<span class=warning'>This mob type cannot throw items.</span>")
+		to_chat(usr, "<span class='warning'>This mob type cannot throw items.</span>")
 	return
 
 /client/Northwest()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(!C.get_active_hand())
-			to_chat(usr, "<span class=warning'>You have nothing to drop in your hand.</span>")
+			to_chat(usr, "<span class='warning'>You have nothing to drop in your hand.</span>")
 			return
 		drop_item()
 	else
-		to_chat(usr, "<span class=warning'>This mob type cannot drop items.</span>")
+		to_chat(usr, "<span class='warning'>This mob type cannot drop items.</span>")
 	return
 
 //This gets called when you press the delete button.

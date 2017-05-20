@@ -71,7 +71,7 @@
 		if(L.reagents)
 			L.reagents.add_reagent("toxin", poison_per_bite)
 			if(prob(poison_per_bite))
-				to_chat(L, "<span class=warning'>You feel a tiny prick.</span>")
+				to_chat(L, "<span class='warning'>You feel a tiny prick.</span>")
 				L.reagents.add_reagent(poison_type, 5)
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
@@ -173,7 +173,7 @@
 										continue
 									large_cocoon = 1
 									fed++
-									src.visible_message("<span class=warning'>\the [src] sticks a proboscis into \the [cocoon_target] and sucks a viscous substance out.</span>")
+									src.visible_message("<span class='warning'>\the [src] sticks a proboscis into \the [cocoon_target] and sucks a viscous substance out.</span>")
 									M.loc = C
 									C.pixel_x = M.pixel_x
 									C.pixel_y = M.pixel_y

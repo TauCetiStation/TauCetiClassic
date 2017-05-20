@@ -21,7 +21,7 @@
 	if(..())
 		return
 	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "<span class=warning'><b>Unable to establish a connection</b>: \black You're too far away from the station!</span>")
+		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>: \black You're too far away from the station!</span>")
 		return
 	user.set_machine(src)
 	var/dat
@@ -119,7 +119,7 @@
 					src.temp = null
 
 			else
-				to_chat(usr, "<span class=warning'>Access Denied.</span>")
+				to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 	else if (href_list["stop"])
 		src.temp = {"
@@ -161,7 +161,7 @@
 							log_game("<span class='notice'>[key_name_admin(usr)] detonated [R.name]!</span>")
 							R.self_destruct()
 		else
-			to_chat(usr, "<span class=warning'>Access Denied.</span>")
+			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 	else if (href_list["stopbot"])
 		if(src.allowed(usr))
@@ -170,7 +170,7 @@
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					if(R && istype(R))
-						message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) [R.canmove ? </span>"locked down" : "released"] [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
+						message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) [R.canmove ? "locked down" : "released"] [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)</span>")
 						log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 						R.canmove = !R.canmove
 						if (R.lockcharge)
@@ -185,7 +185,7 @@
 							to_chat(R, "You have been locked down!")
 
 		else
-			to_chat(usr, "<span class=warning'>Access Denied.</span>")
+			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 	else if (href_list["magbot"])
 		if(src.allowed(usr))

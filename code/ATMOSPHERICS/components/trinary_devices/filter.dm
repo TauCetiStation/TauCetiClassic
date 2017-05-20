@@ -162,7 +162,7 @@ Filter types:
 		return
 
 	if(!src.allowed(user))
-		to_chat(user, "<span class=warning'>Access denied.</span>")
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
 	var/dat

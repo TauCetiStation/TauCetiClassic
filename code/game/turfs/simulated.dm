@@ -30,7 +30,7 @@
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "<span class=warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 
 	if (istype(A, /mob/living/simple_animal/hulk))

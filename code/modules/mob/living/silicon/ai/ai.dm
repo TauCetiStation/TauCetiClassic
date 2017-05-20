@@ -521,7 +521,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class=warning'>[] has been hit by []</span>", src, O), 1)
+		M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
 		//Foreach goto(19)
 	if (health > 0)
 		adjustBruteLoss(30)
@@ -557,7 +557,7 @@ var/list/ai_verbs_default = list(
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class=warning'><B>[] has slashed at []!</B></span>", M, src), 1)
+						O.show_message(text("<span class='warning'><B>[] has slashed at []!</B></span>", M, src), 1)
 				if(prob(8))
 					flash_eyes(affect_silicon = 1)
 				adjustBruteLoss(damage)
@@ -566,7 +566,7 @@ var/list/ai_verbs_default = list(
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class=warning'><B>[] took a swipe at []!</B></span>", M, src), 1)
+						O.show_message(text("<span class='warning'><B>[] took a swipe at []!</B></span>", M, src), 1)
 	return
 
 /mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M)
@@ -576,7 +576,7 @@ var/list/ai_verbs_default = list(
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class=warning'><B>[M]</B> [M.attacktext] [src]!</span>", 1)
+			O.show_message("<span class='warning'><B>[M]</B> [M.attacktext] [src]!</span>", 1)
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -851,14 +851,14 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/check_unable(flags = 0)
 	if(stat == DEAD)
-		to_chat(usr, "<span class=warning'>You are dead!</span>")
+		to_chat(usr, "<span class='warning'>You are dead!</span>")
 		return 1
 
 	if((flags & AI_CHECK_WIRELESS) && src.control_disabled)
-		to_chat(usr, "<span class=warning'>Wireless control is disabled!</span>")
+		to_chat(usr, "<span class='warning'>Wireless control is disabled!</span>")
 		return 1
 	if((flags & AI_CHECK_RADIO) && src.aiRadio.disabledAi)
-		to_chat(src, "<span class=warning'>System Error - Transceiver Disabled!</span>")
+		to_chat(src, "<span class='warning'>System Error - Transceiver Disabled!</span>")
 		return 1
 	return 0
 

@@ -310,7 +310,7 @@
 
 /obj/machinery/atmospherics/tvalve/digital/attack_hand(mob/user)
 	if(!src.allowed(user))
-		to_chat(user, "<span class=warning'>Access denied.</span>")
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	..()
 
@@ -402,7 +402,7 @@
 
 /obj/machinery/atmospherics/tvalve/mirrored/digital/attack_hand(mob/user)
 	if(!src.allowed(user))
-		to_chat(user, "<span class=warning'>Access denied.</span>")
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	..()
 

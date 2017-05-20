@@ -69,15 +69,15 @@
 			if(O == (user || M))
 				continue
 			if(M == user)
-				O.show_message(text("<span class=warning'>[user] inserts [src] into his head!</span>"), 1)
+				O.show_message(text("<span class='warning'>[user] inserts [src] into his head!</span>"), 1)
 			else
-				O.show_message(text("<span class=warning'>[M] has [src] inserted into his head by [user].</span>"), 1)
+				O.show_message(text("<span class='warning'>[M] has [src] inserted into his head by [user].</span>"), 1)
 
 		if(M != user)
-			to_chat(M, "<span class=warning'>[user] inserts [src] into your head!</span>")
-			to_chat(user, "<span class=warning'>You insert [src] into [M]'s head!</span>")
+			to_chat(M, "<span class='warning'>[user] inserts [src] into your head!</span>")
+			to_chat(user, "<span class='warning'>You insert [src] into [M]'s head!</span>")
 		else
-			to_chat(user, "<span class=warning'>You insert [src] into your head!</span>")
+			to_chat(user, "<span class='warning'>You insert [src] into your head!</span>")
 
 		//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
 		if(M.key)//Revised. /N

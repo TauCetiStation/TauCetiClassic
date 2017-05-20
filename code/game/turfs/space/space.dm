@@ -34,7 +34,7 @@
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			if(R.amount < 2)
-				to_chat(user, "<span class=warning'>You don't have enough rods to do that.</span>")
+				to_chat(user, "<span class='warning'>You don't have enough rods to do that.</span>")
 				return
 			to_chat(user, "<span class='notice'>You begin to build a catwalk.</span>")
 			if(do_after(user,30,target = src))
@@ -63,7 +63,7 @@
 			S.build(src)
 			return
 		else
-			to_chat(user, "<span class=warning'>The plating is going to need some support.</span>")
+			to_chat(user, "<span class='warning'>The plating is going to need some support.</span>")
 	return
 
 
@@ -71,7 +71,7 @@
 
 /turf/space/Entered(atom/movable/A as mob|obj)
 	if(movement_disabled)
-		to_chat(usr, "<span class=warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 	..()
 	if ((!(A) || src != A.loc))	return
@@ -95,7 +95,7 @@
 				if(istype(A, /mob/living))
 					var/mob/living/MM = A
 					if(MM.client && !MM.stat)
-						to_chat(MM, "<span class=warning'>Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is.</span>")
+						to_chat(MM, "<span class='warning'>Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is.</span>")
 						if(MM.x <= TRANSITIONEDGE)
 							MM.inertia_dir = 4
 						else if(MM.x >= world.maxx -TRANSITIONEDGE)

@@ -234,13 +234,13 @@
 				src.visible_message("<span class='notice'>[bicon(src)] buzzes unhappily. It has failed mid-scan!</span>", 2)
 
 			if(prob(5))
-				src.visible_message("<span class='notice'>[bicon(src)] [pick(</span>"whirrs","chuffs","clicks")][pick(" excitedly"," energetically"," busily")].", 2)
+				src.visible_message("<span class='notice'>[bicon(src)] [pick("whirrs","chuffs","clicks")][pick(" excitedly"," energetically"," busily")].</span>", 2)
 	else
 		//gradually cool down over time
 		if(scanner_temperature > 0)
 			scanner_temperature = max(scanner_temperature - 5 - 10 * rand(), 0)
 		if(prob(0.75))
-			src.visible_message("<span class='notice'>[bicon(src)] [pick(</span>"plinks","hisses")][pick(" quietly"," softly"," sadly"," plaintively")].", 2)
+			src.visible_message("<span class='notice'>[bicon(src)] [pick("plinks","hisses")][pick(" quietly"," softly"," sadly"," plaintively")].</span>", 2)
 	last_process_worldtime = world.time
 
 /obj/machinery/radiocarbon_spectrometer/proc/stop_scanning()

@@ -186,7 +186,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	if (shocked)
 		shock(user,50)
 	if (disabled)
-		to_chat(user, "<span class=warning'>You press the button, but nothing happens.</span>")
+		to_chat(user, "<span class='warning'>You press the button, but nothing happens.</span>")
 		return
 	if(wires.interact(user))
 		return
@@ -195,7 +195,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
 	if (busy)
-		to_chat(user, "<span class=warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
+		to_chat(user, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return 1
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", I))
@@ -223,13 +223,13 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return 1
 
 	if (src.m_amount + I.m_amt > max_m_amount)
-		to_chat(user, "<span class=warning'>The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>")
+		to_chat(user, "<span class='warning'>The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>")
 		return 1
 	if (src.g_amount + I.g_amt > max_g_amount)
-		to_chat(user, "<span class=warning'>The autolathe is full. Please remove glass from the autolathe in order to insert more.</span>")
+		to_chat(user, "<span class='warning'>The autolathe is full. Please remove glass from the autolathe in order to insert more.</span>")
 		return 1
 	if (I.m_amt == 0 && I.g_amt == 0)
-		to_chat(user, "<span class=warning'>This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>")
+		to_chat(user, "<span class='warning'>This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>")
 		return 1
 
 	var/amount = 1
@@ -274,7 +274,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return
 
 	if(busy)
-		to_chat(usr, "<span class=warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
+		to_chat(usr, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return FALSE
 
 	if(href_list["make"])

@@ -12,7 +12,7 @@
 /obj/machinery/bunsen_burner/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/reagent_containers))
 		if(held_container)
-			to_chat(user, "<span class=warning'>You must remove the [held_container] first.</span>")
+			to_chat(user, "<span class='warning'>You must remove the [held_container] first.</span>")
 		else
 			user.drop_item(src)
 			held_container = W
@@ -24,7 +24,7 @@
 				spawn(heat_time)
 					try_heating()
 	else
-		to_chat(user, "<span class=warning'>You can't put the [W] onto the [src].</span>")
+		to_chat(user, "<span class='warning'>You can't put the [W] onto the [src].</span>")
 
 /obj/machinery/bunsen_burner/attack_hand(mob/user)
 	if(held_container)
@@ -34,7 +34,7 @@
 		held_container.attack_hand(user)
 		held_container = null
 	else
-		to_chat(user, "<span class=warning'>There is nothing on the [src].</span>")
+		to_chat(user, "<span class='warning'>There is nothing on the [src].</span>")
 
 /obj/machinery/bunsen_burner/proc/try_heating()
 	src.visible_message("<span class='notice'>[bicon(src)] [src] hisses.</span>")

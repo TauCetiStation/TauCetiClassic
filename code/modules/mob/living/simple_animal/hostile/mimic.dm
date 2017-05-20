@@ -43,7 +43,7 @@
 
 /mob/living/simple_animal/hostile/mimic/death()
 	..()
-	visible_message("<span class=warning'><b>[src]</b> stops moving!</span>")
+	visible_message("<span class='warning'><b>[src]</b> stops moving!</span>")
 	qdel(src)
 
 

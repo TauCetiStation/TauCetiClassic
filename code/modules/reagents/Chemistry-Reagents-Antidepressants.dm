@@ -13,7 +13,7 @@
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			to_chat(M, "<span class=warning'>You lose focus..</span>")
+			to_chat(M, "<span class='warning'>You lose focus..</span>")
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
@@ -41,7 +41,7 @@
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			to_chat(M, "<span class=warning'>Your mind feels a little less stable..</span>")
+			to_chat(M, "<span class='warning'>Your mind feels a little less stable..</span>")
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
@@ -70,14 +70,14 @@
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			to_chat(M, "<span class=warning'>Your mind feels much less stable..</span>")
+			to_chat(M, "<span class='warning'>Your mind feels much less stable..</span>")
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
 				if(prob(90))
 					to_chat(M, "<span class='notice'>Your mind feels much more stable.</span>")
 				else
-					to_chat(M, "<span class=warning'>Your mind breaks apart..</span>")
+					to_chat(M, "<span class='warning'>Your mind breaks apart..</span>")
 					M.hallucination += 200
 		..()
 		return

@@ -165,7 +165,7 @@
 
 					master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
 					if(master.buildmode.varholder in fully_locked)
-						to_chat(usr, "<span class=warning'>It is forbidden to edit this variable.</span>")
+						to_chat(usr, "<span class='warning'>It is forbidden to edit this variable.</span>")
 						return
 					if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
 						return 1
@@ -260,13 +260,13 @@
 					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
 					object.vars[holder.buildmode.varholder] = holder.buildmode.valueholder
 				else
-					to_chat(usr, "<span class=warning'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>")
+					to_chat(usr, "<span class='warning'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>")
 			if(pa.Find("right"))
 				if(object.vars.Find(holder.buildmode.varholder))
 					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
 					object.vars[holder.buildmode.varholder] = initial(object.vars[holder.buildmode.varholder])
 				else
-					to_chat(usr, "<span class=warning'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>")
+					to_chat(usr, "<span class='warning'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>")
 
 		if(4)
 			if(pa.Find("left"))

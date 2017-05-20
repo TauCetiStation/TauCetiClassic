@@ -22,9 +22,9 @@
 
 /obj/effect/spider/attackby(obj/item/weapon/W, mob/user)
 	if(W.attack_verb.len)
-		visible_message("<span class=warning'><B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? </span>" by [user]." : ".")]")
+		visible_message("<span class='warning'><B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
 	else
-		visible_message("<span class=warning'><B>\The [src] have been attacked with \the [W][(user ? </span>" by [user]." : ".")]")
+		visible_message("<span class='warning'><B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
 
 	var/damage = W.force / 4.0
 
@@ -64,7 +64,7 @@
 		return 1
 	else if(istype(mover, /mob/living))
 		if(prob(50))
-			to_chat(mover, "<span class=warning'>You get stuck in \the [src] for a moment.</span>")
+			to_chat(mover, "<span class='warning'>You get stuck in \the [src] for a moment.</span>")
 			return 0
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
@@ -172,7 +172,7 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom, 5)
 			if(prob(25))
-				src.visible_message("<span class='notice'>\the [src] skitters[pick(</span>" away"," around","")].")
+				src.visible_message("<span class='notice'>\the [src] skitters[pick(" away"," around","")].</span>")
 	else if(prob(5))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
@@ -218,7 +218,7 @@
 		qdel(src)
 
 /obj/effect/spider/cocoon/Destroy()
-	src.visible_message("<span class=warning'>\the [src] splits open.</span>")
+	src.visible_message("<span class='warning'>\the [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	return ..()

@@ -55,7 +55,7 @@
 
 		//slowly grow a mob
 		if(prob(5))
-			src.visible_message("<span class='notice'>[bicon(src)] [src] [pick(</span>"gloops","glugs","whirrs","whooshes","hisses","purrs","hums","gushes")].")
+			src.visible_message("<span class='notice'>[bicon(src)] [src] [pick("gloops","glugs","whirrs","whooshes","hisses","purrs","hums","gushes")].</span>")
 
 		//if we've finished growing...
 		if(time_spent_spawning >= time_per_spawn)

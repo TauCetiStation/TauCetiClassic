@@ -37,7 +37,7 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	var/t = "<span class='notice'>Coordinates: [x],[y] \n</span>"
-	t+= "<span class=warning'>Temperature: [environment.temperature] \n</span>"
+	t+= "<span class='warning'>Temperature: [environment.temperature] \n</span>"
 	t+= "<span class='notice'>Nitrogen: [environment.nitrogen] \n</span>"
 	t+= "<span class='notice'>Oxygen: [environment.oxygen] \n</span>"
 	t+= "<span class='notice'>Phoron : [environment.phoron] \n</span>"

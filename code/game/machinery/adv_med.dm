@@ -223,7 +223,7 @@
 	if(..())
 		return
 	if(!ishuman(connected.occupant))
-		to_chat(user, "<span class=warning'>This device can only scan compatible lifeforms.</span>")
+		to_chat(user, "<span class='warning'>This device can only scan compatible lifeforms.</span>")
 		return
 	var/dat
 	if (src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
@@ -430,7 +430,7 @@
 					if(1)
 						t1 += "Status: <B>Unconscious</B>"
 					else
-						t1 += "Status: <B><span class=warning'>*dead*</span></B>"
+						t1 += "Status: <B><span class='warning'>*dead*</span></B>"
 				t1 += storedinfo
 				P.info = t1
 				P.name = "[occupant.name]'s scanner report"

@@ -135,7 +135,7 @@
 		for(var/zone/Z in SSair.zones)
 			if(Z.air == air && Z != src)
 				var/turf/zloc = pick(Z.contents)
-				to_chat(client, "<span class=warning'>Illegal air datum shared by: [zloc.loc.name]</span>")*/
+				to_chat(client, "<span class='warning'>Illegal air datum shared by: [zloc.loc.name]</span>")*/
 
 
 /*client/proc/TestZASRebuild()

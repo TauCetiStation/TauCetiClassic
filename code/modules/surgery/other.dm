@@ -52,6 +52,6 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("<span class=warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>" , \
-		"<span class=warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>" , \
+		"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>")
 		BP.take_damage(5, 0)

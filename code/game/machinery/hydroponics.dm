@@ -723,7 +723,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		update_icon()
 	else if(istype(O, /obj/item/apiary))
 		if(planted)
-			to_chat(user, "<span class=warning'>The hydroponics tray is already occupied!</span>")
+			to_chat(user, "<span class='warning'>The hydroponics tray is already occupied!</span>")
 		else
 			user.remove_from_mob()
 			qdel(O)

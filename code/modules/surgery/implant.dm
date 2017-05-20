@@ -61,8 +61,8 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
-		user.visible_message("<span class=warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
-		"<span class=warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 		BP.createwound(CUT, 20)
 
 /datum/surgery_step/cavity/close_space
@@ -97,8 +97,8 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
-		user.visible_message("<span class=warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
-		"<span class=warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 		BP.createwound(CUT, 20)
 
 /datum/surgery_step/cavity/place_item
@@ -126,7 +126,7 @@
 		user.visible_message("<span class='notice'>[user] puts \the [tool] inside [target]'s [get_cavity(BP)] cavity.</span>", \
 		"<span class='notice'>You put \the [tool] inside [target]'s [get_cavity(BP)] cavity.</span>" )
 		if (tool.w_class > get_max_wclass(BP)/2 && prob(50))
-			to_chat(user, "<span class=warning'>You tear some blood vessels trying to fit such a big object in this cavity.</span>")
+			to_chat(user, "<span class='warning'>You tear some blood vessels trying to fit such a big object in this cavity.</span>")
 			var/datum/wound/internal_bleeding/I = new (15)
 			BP.wounds += I
 			BP.owner.custom_pain("You feel something rip in your [BP.name]!", 1)
@@ -146,8 +146,8 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
-		user.visible_message("<span class=warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
-		"<span class=warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 		BP.createwound(CUT, 20)
 
 //////////////////////////////////////////////////////////////////
@@ -237,15 +237,15 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
-		user.visible_message("<span class=warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
-		"<span class=warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 		BP.createwound(CUT, 20)
 		if (BP.implants.len)
 			var/fail_prob = 10
 			fail_prob += 100 - tool_quality(tool)
 			if (prob(fail_prob))
 				var/obj/item/weapon/implant/imp = BP.implants[1]
-				user.visible_message("<span class=warning'>Something beeps inside [target]'s [BP.name]!</span>")
+				user.visible_message("<span class='warning'>Something beeps inside [target]'s [BP.name]!</span>")
 				playsound(imp.loc, 'sound/items/countdown.ogg', 75, 1, -3)
 				spawn(25)
 					imp.activate()

@@ -325,7 +325,7 @@ var/global/vs_control/vsc = new
 			plc.N2O_HALLUCINATION 			= initial(plc.N2O_HALLUCINATION)
 
 
-	to_chat(world, "<span class='notice'><b>[key_name(user)] changed the global phoron/ZAS settings to \</span>"[def]\"</b>")
+	to_chat(world, "<span class='notice'><b>[key_name(user)] changed the global phoron/ZAS settings to \"[def]\"</b></span>")
 
 /pl_control/var/list/settings = list()
 

@@ -43,8 +43,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("<span class=warning'>[user]'s hand slips, slicing [target]'s eyes wth \the [tool]!</span>" , \
-		"<span class=warning'>Your hand slips, slicing [target]'s eyes wth \the [tool]!</span>" )
+		user.visible_message("<span class='warning'>[user]'s hand slips, slicing [target]'s eyes wth \the [tool]!</span>" , \
+		"<span class='warning'>Your hand slips, slicing [target]'s eyes wth \the [tool]!</span>" )
 		BP.createwound(CUT, 10)
 		IO.take_damage(5, 0)
 
@@ -75,8 +75,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("<span class=warning'>[user]'s hand slips, damaging [target]'s eyes with \the [tool]!</span>", \
-		"<span class=warning'>Your hand slips, damaging [target]'s eyes with \the [tool]!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips, damaging [target]'s eyes with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, damaging [target]'s eyes with \the [tool]!</span>")
 		target.apply_damage(10, BRUTE, BP)
 		IO.take_damage(5, 0)
 
@@ -109,8 +109,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("<span class=warning'>[user]'s hand slips, stabbing \the [tool] into [target]'s eye!</span>", \
-		"<span class=warning'>Your hand slips, stabbing \the [tool] into [target]'s eye!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips, stabbing \the [tool] into [target]'s eye!</span>", \
+		"<span class='warning'>Your hand slips, stabbing \the [tool] into [target]'s eye!</span>")
 		target.apply_damage(10, BRUTE, BP, sharp = 1)
 		IO.take_damage(5, 0)
 
@@ -146,7 +146,7 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("<span class=warning'>[user]'s hand slips,  searing [target]'s eyes with \the [tool]!</span>", \
-		"<span class=warning'>Your hand slips, searing [target]'s eyes with \the [tool]!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips,  searing [target]'s eyes with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, searing [target]'s eyes with \the [tool]!</span>")
 		target.apply_damage(5, BURN, BP)
 		IO.take_damage(5, 0)

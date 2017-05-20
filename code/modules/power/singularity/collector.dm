@@ -43,7 +43,7 @@ var/global/list/rad_collectors = list()
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.phoron/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
-			to_chat(user, "<span class=warning'>The controls are locked!</span>")
+			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 			return
 ..()
 
@@ -54,10 +54,10 @@ var/global/list/rad_collectors = list()
 		return 1
 	else if(istype(W, /obj/item/weapon/tank/phoron))
 		if(!src.anchored)
-			to_chat(user, "<span class=warning'>The [src] needs to be secured to the floor first.</span>")
+			to_chat(user, "<span class='warning'>The [src] needs to be secured to the floor first.</span>")
 			return 1
 		if(src.P)
-			to_chat(user, "<span class=warning'>There's already a phoron tank loaded.</span>")
+			to_chat(user, "<span class='warning'>There's already a phoron tank loaded.</span>")
 			return 1
 		user.drop_item()
 		src.P = W
@@ -87,9 +87,9 @@ var/global/list/rad_collectors = list()
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				to_chat(user, "<span class=warning'>The controls can only be locked when the [src] is active</span>")
+				to_chat(user, "<span class='warning'>The controls can only be locked when the [src] is active</span>")
 		else
-			to_chat(user, "<span class=warning'>Access denied!</span>")
+			to_chat(user, "<span class='warning'>Access denied!</span>")
 			return 1
 	else
 		..()

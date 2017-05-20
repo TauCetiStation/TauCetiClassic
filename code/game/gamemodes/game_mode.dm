@@ -253,10 +253,10 @@ Implants;
 				var/extra = 8
 				suplink.uses += extra
 				if(man.mind) man.mind.total_TC += extra
-				to_chat(man, "<span class=warning'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>")
+				to_chat(man, "<span class='warning'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>")
 			else
 				// Give them a warning!
-				to_chat(man, "<span class=warning'>They are on to you!</span>")
+				to_chat(man, "<span class='warning'>They are on to you!</span>")
 
 		// Some poor people who were just in the wrong place at the wrong time..
 		else if(prob(10))

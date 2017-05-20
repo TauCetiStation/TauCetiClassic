@@ -390,21 +390,21 @@ var/global/floorIsLava = 0
 		if(6)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name=="")
-				dat+="<FONT COLOR='maroon'>ùInvalid receiving channel name.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ÔøΩInvalid receiving channel name.</FONT><BR>"
 			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>ùInvalid message body.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ÔøΩInvalid message body.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[3]'>Return</A><BR>"
 		if(7)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name =="" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>ùInvalid channel name.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ÔøΩInvalid channel name.</FONT><BR>"
 			var/check = 0
 			for(var/datum/feed_channel/FC in news_network.network_channels)
 				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 					check = 1
 					break
 			if(check)
-				dat+="<FONT COLOR='maroon'>ùChannel name already in use.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ÔøΩChannel name already in use.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[2]'>Return</A><BR>"
 		if(9)
 			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT>\]</FONT><HR>"
@@ -518,9 +518,9 @@ var/global/floorIsLava = 0
 		if(16)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_message.author =="" || src.admincaster_feed_message.author == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>ùInvalid name for person wanted.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ÔøΩInvalid name for person wanted.</FONT><BR>"
 			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>ùInvalid description.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ÔøΩInvalid description.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		if(17)
 			dat+={"
@@ -698,7 +698,7 @@ var/global/floorIsLava = 0
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		to_chat(world, "<span class=warning'><b>Restarting world!</b> <span class='notice'>Initiated by </span>[usr.client.holder.fakekey ? </span>"Admin" : usr.key]!")
+		to_chat(world, "<span class='warning'><b>Restarting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span></span>")
 		log_admin("[key_name(usr)] initiated a reboot.")
 
 		feedback_set_details("end_error","admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
@@ -719,12 +719,12 @@ var/global/floorIsLava = 0
 		return
 
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
-	message = sanitize(message, list("ù"=LETTER_255))
+	message = sanitize(message, list("ÔøΩ"=LETTER_255))
 
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
-		to_chat(world, "<span class='notice'><b>[usr.client.holder.fakekey ? </span>"Administrator" : usr.key] Announces:</b>\n &emsp; [message]")
+		to_chat(world, "<span class='notice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n &emsp; [message]</span>")
 		log_admin("Announce: [key_name(usr)] : [message]")
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -840,7 +840,7 @@ var/global/floorIsLava = 0
 		to_chat(world, "<B>You may now respawn.</B>")
 	else
 		to_chat(world, "<B>You may no longer respawn :(</B>")
-	message_admins("<span class='notice'>[key_name_admin(usr)] toggled respawn to [abandon_allowed ? </span>"On" : "Off"].")
+	message_admins("<span class='notice'>[key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>")
 	log_admin("[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
 	world.update_status()
 	feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -929,7 +929,7 @@ var/global/floorIsLava = 0
 	if(!usr.client.holder)	return
 	if( alert("Reboot server?",,"Yes","No") == "No")
 		return
-	to_chat(world, "<span class=warning'><b>Rebooting world!</b> <span class='notice'>Initiated by </span>[usr.client.holder.fakekey ? </span>"Admin" : usr.key]!")
+	to_chat(world, "<span class='warning'><b>Rebooting world!</b> <span class='notice'>Initiated by </span>[usr.client.holder.fakekey ? "Admin" : usr.key]!</span>")
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
 
 	feedback_set_details("end_error","immediate admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
@@ -1092,7 +1092,7 @@ var/global/floorIsLava = 0
 	else
 		to_chat(world, "<B>Guests may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
-	message_admins("<span class='notice'>[key_name_admin(usr)] toggled guests game entering [guests_allowed?</span>"":"dis"]allowed.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.</span>")
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/output_ai_laws()

@@ -20,7 +20,7 @@
 	attackby(obj/item/W, mob/user)
 		if(istype (W,/obj/item/weapon/changeling_hammer))
 			var/obj/item/weapon/changeling_hammer/C = W
-			visible_message("<span class=warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
+			visible_message("<span class='warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
 			user.do_attack_animation(src)
 			if(C.use_charge(user, 1) && prob(40))
 				playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)

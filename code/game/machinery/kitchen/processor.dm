@@ -132,7 +132,7 @@
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user)
 	if(src.processing)
-		to_chat(user, "<span class=warning'>The processor is in the process of processing.</span>")
+		to_chat(user, "<span class='warning'>The processor is in the process of processing.</span>")
 		return 1
 	if(default_deconstruction_screwdriver(user, "processor1", "processor", O))
 		return
@@ -149,7 +149,7 @@
 	default_deconstruction_crowbar(O)
 
 	if(src.contents.len > 0) //TODO: several items at once? several different items?
-		to_chat(user, "<span class=warning'>Something is already in the processing chamber.</span>")
+		to_chat(user, "<span class='warning'>Something is already in the processing chamber.</span>")
 		return 1
 	var/what = O
 	if (istype(O, /obj/item/weapon/grab))
@@ -158,7 +158,7 @@
 
 	var/datum/food_processor_process/P = select_recipe(what)
 	if (!P)
-		to_chat(user, "<span class=warning'>That probably won't blend.</span>")
+		to_chat(user, "<span class='warning'>That probably won't blend.</span>")
 		return 1
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
@@ -170,10 +170,10 @@
 	if (src.stat != CONSCIOUS) //NOPOWER etc
 		return
 	if(src.processing)
-		to_chat(user, "<span class=warning'>The processor is in the process of processing.</span>")
+		to_chat(user, "<span class='warning'>The processor is in the process of processing.</span>")
 		return 1
 	if(src.contents.len == 0)
-		to_chat(user, "<span class=warning'>The processor is empty.</span>")
+		to_chat(user, "<span class='warning'>The processor is empty.</span>")
 		return 1
 	src.processing = 1
 	user.visible_message("[user] turns on [src].", \

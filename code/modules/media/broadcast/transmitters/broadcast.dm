@@ -136,7 +136,7 @@
 				media_frequency = newfreq
 				connect_frequency()
 			else
-				to_chat(usr, "<span class=warning'>Invalid FM frequency. (90.0, 200.0)</span>")
+				to_chat(usr, "<span class='warning'>Invalid FM frequency. (90.0, 200.0)</span>")
 
 	updateUsrDialog()
 

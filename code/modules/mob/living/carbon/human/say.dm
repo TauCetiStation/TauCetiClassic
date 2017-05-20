@@ -6,12 +6,12 @@
 
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "<span class=warning'>You cannot speak in IC (Muted).</span>")
+			to_chat(src, "<span class='warning'>You cannot speak in IC (Muted).</span>")
 			return
 
 	//Meme stuff
 	if((!speech_allowed && usr == src) || (src.miming))
-		to_chat(usr, "<span class=warning'>You can't speak.</span>")
+		to_chat(usr, "<span class='warning'>You can't speak.</span>")
 		return
 
 	message =  trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
@@ -46,12 +46,12 @@
 	else
 		switch(species.name)
 			if(TAJARAN)
-				message = replacetext(message, "р", pick(list("ррр" , "рр")))
-				message = replacetext(message, "Р", pick(list("Ррр" , "Рр")))
+				message = replacetext(message, "пїЅ", pick(list("пїЅпїЅпїЅ" , "пїЅпїЅ")))
+				message = replacetext(message, "пїЅ", pick(list("пїЅпїЅпїЅ" , "пїЅпїЅ")))
 			if(UNATHI)
-				message = replacetext(message, "с", pick(list("ссс" , "сс")))
-				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetext(message, "С", pick(list("Ссс" , "Сс")))
+				message = replacetext(message, "пїЅ", pick(list("пїЅпїЅпїЅ" , "пїЅпїЅ")))
+				//пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ... пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+				message = replacetext(message, "пїЅ", pick(list("пїЅпїЅпїЅ" , "пїЅпїЅ")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				for(var/mob/living/carbon/human/H in mob_list)
@@ -66,7 +66,7 @@
 				for(var/mob/M in dead_mob_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team))
 					if(!isobserver(M) && (M.stat != DEAD))
-						to_chat(M, "<hr><span class='warning'>Если вы видите это сообщение, значит что-то сломалось. Пожалуйста, свЯжитесь со мной <b>SpaiR</b> на форуме (http://tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь менЯ позвать. Пожалуйста, <u>запомните</u> что произошло в раунде, эта информациЯ очень <b>важна</b>. Чтобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>")
+						to_chat(M, "<hr><span class='warning'>пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ <b>SpaiR</b> пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (http://tauceti.ru/forums/index.php?action=profile;u=1929) пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, <u>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</u> пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ <b>пїЅпїЅпїЅпїЅпїЅ</b>. пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.</span><hr>")
 				return ""
 
 	message = capitalize(trim(message))

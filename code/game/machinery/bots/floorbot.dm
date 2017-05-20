@@ -264,7 +264,7 @@
 				F.break_tile_to_plating()
 			else
 				F.ReplaceWithLattice()
-			visible_message("<span class=warning'>[src] makes an excited booping sound.</span>")
+			visible_message("<span class='warning'>[src] makes an excited booping sound.</span>")
 			spawn(50)
 				src.amount ++
 				src.anchored = 0
@@ -287,7 +287,7 @@
 	src.anchored = 1
 	src.icon_state = "floorbot-c"
 	if(istype(target, /turf/space/))
-		visible_message("<span class=warning'>[src] begins to repair the hole</span>")
+		visible_message("<span class='warning'>[src] begins to repair the hole</span>")
 		var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
 		src.repairing = 1
 		spawn(50)
@@ -298,7 +298,7 @@
 			src.anchored = 0
 			src.target = null
 	else
-		visible_message("<span class=warning'>[src] begins to improve the floor.</span>")
+		visible_message("<span class='warning'>[src] begins to improve the floor.</span>")
 		src.repairing = 1
 		spawn(50)
 			src.loc.icon_state = "floor"
@@ -311,7 +311,7 @@
 /obj/machinery/bot/floorbot/proc/eattile(obj/item/stack/tile/plasteel/T)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		return
-	visible_message("<span class=warning'>[src] begins to collect tiles.</span>")
+	visible_message("<span class='warning'>[src] begins to collect tiles.</span>")
 	src.repairing = 1
 	spawn(20)
 		if(isnull(T))
@@ -334,7 +334,7 @@
 		return
 	if(M.amount > 1)
 		return
-	visible_message("<span class=warning'>[src] begins to create tiles.</span>")
+	visible_message("<span class='warning'>[src] begins to create tiles.</span>")
 	src.repairing = 1
 	spawn(20)
 		if(isnull(M))
@@ -356,7 +356,7 @@
 
 /obj/machinery/bot/floorbot/explode()
 	src.on = 0
-	src.visible_message("<span class=warning'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/storage/toolbox/mechanical/N = new /obj/item/weapon/storage/toolbox/mechanical(Tsec)

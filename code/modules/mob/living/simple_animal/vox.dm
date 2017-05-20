@@ -28,7 +28,7 @@
 	living_mob_list -= src
 	dead_mob_list += src
 	stat = DEAD
-	visible_message("<span class=warning'><B>[src] shudders violently and explodes!</B></span>","<span class=warning'><B>You feel your body rupture!</B></span>")
+	visible_message("<span class='warning'><B>[src] shudders violently and explodes!</B></span>","<span class='warning'><B>You feel your body rupture!</B></span>")
 	explosion(get_turf(loc), -1, -1, 3, 5)
 	src.gib()
 	return
@@ -42,16 +42,16 @@
 			health -= damage
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class=warning'>\b [src] has been attacked with the [O] by [user]. </span>")
+					M.show_message("<span class='warning'>\b [src] has been attacked with the [O] by [user]. </span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class=warning'>\b The [O] bounces harmlessly off of [src]. </span>")
+					M.show_message("<span class='warning'>\b The [O] bounces harmlessly off of [src]. </span>")
 	else
-		to_chat(usr, "<span class=warning'>This weapon is ineffective, it does no damage.</span>")
+		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("<span class=warning'>[user] gently taps [src] with the [O]. </span>")
+				M.show_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
 
 /mob/living/simple_animal/vox/armalis/verb/fire_quill(mob/target as mob in oview())
 
@@ -62,10 +62,10 @@
 	if(quills<=0)
 		return
 
-	to_chat(src, "<span class=warning'>You launch a razor-sharp quill at [target]!</span>")
+	to_chat(src, "<span class='warning'>You launch a razor-sharp quill at [target]!</span>")
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
-			to_chat(O, "<span class=warning'>[src] launches a razor-sharp quill at [target]!</span>")
+			to_chat(O, "<span class='warning'>[src] launches a razor-sharp quill at [target]!</span>")
 
 	var/obj/item/weapon/arrow/quill/Q = new(loc)
 	Q.fingerprintslast = src.ckey
@@ -73,7 +73,7 @@
 	quills--
 
 	spawn(100)
-		to_chat(src, "<span class=warning'>You feel a fresh quill slide into place.</span>")
+		to_chat(src, "<span class='warning'>You feel a fresh quill slide into place.</span>")
 		quills++
 
 /mob/living/simple_animal/vox/armalis/verb/message_mob()
@@ -103,7 +103,7 @@
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == VOX)
 			return
-		to_chat(H, "<span class=warning'>Your nose begins to bleed...</span>")
+		to_chat(H, "<span class='warning'>Your nose begins to bleed...</span>")
 		H.drip(1)
 
 /mob/living/simple_animal/vox/armalis/verb/shriek()

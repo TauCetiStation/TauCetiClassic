@@ -6,7 +6,7 @@ var/global/normal_ooc_colour = "#002eb8"
 	set category = "OOC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class=warning'>Speech is currently admin-disabled.</span>")
+		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
 	if(!mob)	return
@@ -18,19 +18,19 @@ var/global/normal_ooc_colour = "#002eb8"
 	if(!msg)	return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
-		to_chat(src, "<span class=warning'>You have OOC muted.</span>")
+		to_chat(src, "<span class='warning'>You have OOC muted.</span>")
 		return
 
 	if(prefs.muted & MUTE_OOC)
-		to_chat(src, "<span class=warning'>You cannot use OOC (muted).</span>")
+		to_chat(src, "<span class='warning'>You cannot use OOC (muted).</span>")
 		return
 
 	if(!holder)
 		if(!ooc_allowed)
-			to_chat(src, "<span class=warning'>OOC is globally muted</span>")
+			to_chat(src, "<span class='warning'>OOC is globally muted</span>")
 			return
 		if(!dooc_allowed && (mob.stat == DEAD))
-			to_chat(usr, "<span class=warning'>OOC for dead mobs has been turned off.</span>")
+			to_chat(usr, "<span class='warning'>OOC for dead mobs has been turned off.</span>")
 			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
@@ -93,7 +93,7 @@ var/global/normal_ooc_colour = "#002eb8"
 	set category = "OOC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class=warning'>Speech is currently admin-disabled.</span>")
+		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
 	if(!mob)	return
@@ -105,18 +105,18 @@ var/global/normal_ooc_colour = "#002eb8"
 	if(!msg)	return
 
 	if(!(prefs.chat_toggles & CHAT_LOOC))
-		to_chat(src, "<span class=warning'>You have LOOC muted.</span>")
+		to_chat(src, "<span class='warning'>You have LOOC muted.</span>")
 		return
 
 	if(!holder)
 		if(!looc_allowed)
-			to_chat(src, "<span class=warning'>LOOC is globally muted</span>")
+			to_chat(src, "<span class='warning'>LOOC is globally muted</span>")
 			return
 		if(!dooc_allowed && (mob.stat == DEAD))
-			to_chat(usr, "<span class=warning'>OOC for dead mobs has been turned off.</span>")
+			to_chat(usr, "<span class='warning'>OOC for dead mobs has been turned off.</span>")
 			return
 		if(prefs.muted & MUTE_OOC)
-			to_chat(src, "<span class=warning'>You cannot use OOC (muted).</span>")
+			to_chat(src, "<span class='warning'>You cannot use OOC (muted).</span>")
 			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return

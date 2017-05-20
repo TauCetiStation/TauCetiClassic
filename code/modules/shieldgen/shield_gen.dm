@@ -54,7 +54,7 @@
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		else
-			to_chat(user, "<span class=warning'>Access denied.</span>")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if(istype(W, /obj/item/weapon/card/emag))
 		if(prob(75))
 			src.locked = !src.locked
@@ -66,7 +66,7 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		src.anchored = !src.anchored
-		src.visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored?</span>"bolted to the floor":"unbolted from the floor"] by [user].")
+		src.visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].</span>")
 
 		if(active)
 			toggle()

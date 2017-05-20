@@ -94,7 +94,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 			frozen_items -= I
 
 	else if(href_list["crew"])
-		to_chat(user, "<span class=warning'>Functionality unavailable at this time.</span>")
+		to_chat(user, "<span class='warning'>Functionality unavailable at this time.</span>")
 
 	src.updateUsrDialog()
 
@@ -217,7 +217,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 				else if(O.target && istype(O.target,/datum/mind))
 					if(O.target == occupant.mind)
 						if(O.owner && O.owner.current)
-							to_chat(O.owner.current, "<span class=warning'>You get the feeling your target is no longer within your reach. Time for Plan [pick(list(</span>"A","B","C","D","X","Y","Z"))]...")
+							to_chat(O.owner.current, "<span class='warning'>You get the feeling your target is no longer within your reach. Time for Plan [pick(list("A","B","C","D","X","Y","Z"))]...</span>")
 						O.target = null
 						spawn(1) //This should ideally fire after the occupant is deleted.
 							if(!O) return

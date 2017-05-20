@@ -3,7 +3,7 @@
 	set name = "Pray"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class=warning'>Speech is currently admin-disabled.</span>")
+		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
 	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
@@ -11,7 +11,7 @@
 
 	if(usr.client)
 		if(usr.client.prefs.muted & MUTE_PRAY)
-			to_chat(usr, "<span class=warning'>You cannot pray (muted).</span>")
+			to_chat(usr, "<span class='warning'>You cannot pray (muted).</span>")
 			return
 		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
 			return
@@ -30,7 +30,7 @@
 /proc/Centcomm_announce(text , mob/Sender , iamessage)
 	var/msg = sanitize(copytext(text, 1, MAX_MESSAGE_LEN))
 	send2slack_custommsg("[key_name(Sender)] has made an Centcomm announcement", msg, ":job_cap:")
-	msg = "<span class='notice'><b><font color=orange>CENTCOMM[iamessage ? </span>" IA" : ""]:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [msg]"
+	msg = "<span class='notice'><b><font color=orange>CENTCOMM[iamessage ? " IA" : ""]:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [msg]</span>"
 	for(var/client/C in admins)
 		to_chat(C, msg)
 

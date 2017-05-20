@@ -115,7 +115,7 @@ var/centcom_barriers_stat = 1
 		B.density = centcom_barriers_stat
 
 	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
-	message_admins("<span class='notice'>[key_name_admin(src)] switched [centcom_barriers_stat? </span>"on" : "off"] centcomm barriers")
+	message_admins("<span class='notice'>[key_name_admin(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers</span>")
 
 /obj/effect/landmark/trololo
 	name = "Rickroll"

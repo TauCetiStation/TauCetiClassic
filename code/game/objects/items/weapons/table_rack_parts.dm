@@ -24,7 +24,7 @@
 			W:use(4)
 			qdel(src)
 		else if (W:amount < 4)
-			to_chat(user, "<span class=warning'>You need at least four rods to do this.</span>")
+			to_chat(user, "<span class='warning'>You need at least four rods to do this.</span>")
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
 	new /obj/structure/table( user.loc )

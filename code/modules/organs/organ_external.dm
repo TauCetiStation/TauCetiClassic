@@ -29,7 +29,7 @@
 	// Organs of this body part
 	var/list/datum/organ/internal/bodypart_organs
 
-	var/damage_msg = "<span class=warning'>You feel an intense pain</span>"
+	var/damage_msg = "<span class='warning'>You feel an intense pain</span>"
 	var/broken_description
 
 	var/vital //Lose a vital limb, die immediately.
@@ -255,8 +255,8 @@ This function completely restores a damaged organ to perfect condition.
 				W.open_wound(damage)
 				if(prob(25))
 					//maybe have a separate message for BRUISE type damage?
-					owner.visible_message("<span class=warning'>The wound on [owner.name]'s [name] widens with a nasty ripping voice.</span>",\
-					"<span class=warning'>The wound on your [name] widens with a nasty ripping voice.</span>",\
+					owner.visible_message("<span class='warning'>The wound on [owner.name]'s [name] widens with a nasty ripping voice.</span>",\
+					"<span class='warning'>The wound on your [name] widens with a nasty ripping voice.</span>",\
 					"You hear a nasty ripping noise, as if flesh is being torn apart.")
 				return
 
@@ -646,8 +646,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 			destspawn = 1
 			//Robotic limbs explode if sabotaged.
 			if(status & ORGAN_ROBOT && !no_explode && sabotaged)
-				owner.visible_message("<span class=warning'>\The [owner]'s [name] explodes violently!</span>",\
-				"<span class=warning'><b>Your [name] explodes!</b></span>",\
+				owner.visible_message("<span class='warning'>\The [owner]'s [name] explodes violently!</span>",\
+				"<span class='warning'><b>Your [name] explodes!</b></span>",\
 				"You hear an explosion followed by a scream!")
 				explosion(get_turf(owner),-1,-1,2,3)
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -657,7 +657,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				spawn(10)
 					qdel(spark_system)
 
-			owner.visible_message("<span class=warning'>[owner.name]'s [name] flies off in an arc.</span>",\
+			owner.visible_message("<span class='warning'>[owner.name]'s [name] flies off in an arc.</span>",\
 			"<span class='moderate'><b>Your [name] goes flying off!</b></span>",\
 			"You hear a terrible sound of ripping tendons and flesh.")
 
@@ -762,8 +762,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return
 
 	owner.visible_message(\
-		"<span class=warning'>You hear a loud cracking sound coming from \the [owner].</span>",\
-		"<span class=warning'><b>Something feels like it shattered in your [name]!</b></span>",\
+		"<span class='warning'>You hear a loud cracking sound coming from \the [owner].</span>",\
+		"<span class='warning'><b>Something feels like it shattered in your [name]!</b></span>",\
 		"You hear a sickening crack.")
 
 	if(owner.species && !owner.species.flags[NO_PAIN])
@@ -1050,13 +1050,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if (disfigured)
 		return
 	if(type == "brute")
-		owner.visible_message("<span class=warning'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
-		"<span class=warning'><b>Your face becomes unrecognizible mangled mess!</b></span>",	\
-		"<span class=warning'>You hear a sickening crack.</span>")
+		owner.visible_message("<span class='warning'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
+		"<span class='warning'><b>Your face becomes unrecognizible mangled mess!</b></span>",	\
+		"<span class='warning'>You hear a sickening crack.</span>")
 	else
-		owner.visible_message("<span class=warning'>[owner]'s face melts away, turning into mangled mess!</span>",	\
-		"<span class=warning'><b>Your face melts off!</b></span>",	\
-		"<span class=warning'>You hear a sickening sizzle.</span>")
+		owner.visible_message("<span class='warning'>[owner]'s face melts away, turning into mangled mess!</span>",	\
+		"<span class='warning'><b>Your face melts off!</b></span>",	\
+		"<span class='warning'>You hear a sickening sizzle.</span>")
 	disfigured = 1
 
 /****************************************************
@@ -1198,17 +1198,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 		switch(brain_op_stage)
 			if(0)
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class=warning'>[brainmob] is beginning to have \his head cut open with [W] by [user].</span>", 1)
-				to_chat(brainmob, "<span class=warning'>[user] begins to cut open your head with [W]!</span>")
-				to_chat(user, "<span class=warning'>You cut [brainmob]'s head open with [W]!</span>")
+					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [W] by [user].</span>", 1)
+				to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
+				to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
 
 				brain_op_stage = 1
 
 			if(2)
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class=warning'>[brainmob] is having \his connections to the brain delicately severed with [W] by [user].</span>", 1)
-				to_chat(brainmob, "<span class=warning'>[user] begins to cut open your head with [W]!</span>")
-				to_chat(user, "<span class=warning'>You cut [brainmob]'s head open with [W]!</span>")
+					O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [W] by [user].</span>", 1)
+				to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
+				to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
 
 				brain_op_stage = 3.0
 			else
@@ -1217,16 +1217,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class=warning'>[brainmob] has \his head sawed open with [W] by [user].</span>", 1)
-				to_chat(brainmob, "<span class=warning'>[user] begins to saw open your head with [W]!</span>")
-				to_chat(user, "<span class=warning'>You saw [brainmob]'s head open with [W]!</span>")
+					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [W] by [user].</span>", 1)
+				to_chat(brainmob, "<span class='warning'>[user] begins to saw open your head with [W]!</span>")
+				to_chat(user, "<span class='warning'>You saw [brainmob]'s head open with [W]!</span>")
 
 				brain_op_stage = 2
 			if(3)
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class=warning'>[brainmob] has \his spine's connection to the brain severed with [W] by [user].</span>", 1)
-				to_chat(brainmob, "<span class=warning'>[user] severs your brain's connection to the spine with [W]!</span>")
-				to_chat(user, "<span class=warning'>You sever [brainmob]'s brain's connection to the spine with [W]!</span>")
+					O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [W] by [user].</span>", 1)
+				to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [W]!</span>")
+				to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [W]!</span>")
 
 				user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
 				brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"

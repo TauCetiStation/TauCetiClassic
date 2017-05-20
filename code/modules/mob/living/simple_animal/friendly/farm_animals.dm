@@ -60,7 +60,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
-	src.visible_message("<span class=warning'>[src] gets an evil-looking gleam in their eye.</span>")
+	src.visible_message("<span class='warning'>[src] gets an evil-looking gleam in their eye.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
@@ -77,9 +77,9 @@
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
-			to_chat(user, "<span class=warning'>The [O] is full.</span>")
+			to_chat(user, "<span class='warning'>The [O] is full.</span>")
 		if(!transfered)
-			to_chat(user, "<span class=warning'>The udder is dry. Wait a bit longer...</span>")
+			to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")
 	else
 		..()
 //cow
@@ -117,9 +117,9 @@
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
-			to_chat(user, "<span class=warning'>The [O] is full.</span>")
+			to_chat(user, "<span class='warning'>The [O] is full.</span>")
 		if(!transfered)
-			to_chat(user, "<span class=warning'>The udder is dry. Wait a bit longer...</span>")
+			to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")
 	else
 		..()
 

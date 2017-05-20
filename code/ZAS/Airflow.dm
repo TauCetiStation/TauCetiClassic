@@ -259,7 +259,7 @@ var/tick_multiplier = 2
 
 /mob/living/carbon/human/airflow_hit(atom/A)
 //	for(var/mob/M in hearers(src))
-//		M.show_message("<span class=warning'><B>[src] slams into [A]!</B></span>",1,"<span class=warning'>You hear a loud slam!</span>",2)
+//		M.show_message("<span class='warning'><B>[src] slams into [A]!</B></span>",1,"<span class='warning'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "punch", 25, 1, -1)
 	if (prob(33))
 		loc:add_blood(src)

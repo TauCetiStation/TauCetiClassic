@@ -56,7 +56,7 @@
 	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	if(!powernet)
-		t += "<span class=warning'>No connection</span>"
+		t += "<span class='warning'>No connection</span>"
 	else
 
 		var/list/L = list()

@@ -572,7 +572,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(U.flags & ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
-				to_chat(src, "<span class=warning'>You burst out of \the [U]!</span>")
+				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
 				drop_from_inventory(U)
 				return
 
@@ -807,7 +807,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		if(FAT in mutations)
 			if(!(wear_suit.flags & ONESIZEFITSALL))
-				to_chat(src, "<span class=warning'>You burst out of \the [wear_suit]!</span>")
+				to_chat(src, "<span class='warning'>You burst out of \the [wear_suit]!</span>")
 				drop_from_inventory(wear_suit)
 				return
 

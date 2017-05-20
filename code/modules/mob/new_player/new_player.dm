@@ -136,7 +136,7 @@
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			to_chat(usr, "<span class=warning'>The round is either not ready, or has already finished...</span>")
+			to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
 
 		if(client.prefs.species != HUMAN)
@@ -275,7 +275,7 @@
 	if (src != usr)
 		return 0
 	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-		to_chat(usr, "<span class=warning'>The round is either not ready, or has already finished...</span>")
+		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 		return 0
 	if(!enter_allowed)
 		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")

@@ -721,13 +721,13 @@ var/list/sacrificed = list()
 				A.dust()      /// A.gib() doesnt work for some reason, and dust() leaves that skull and bones thingy which we dont really need.
 				if (ticker.mode.name == "cult")
 					if(prob(75))
-						to_chat(usr, "<span class=warning'>The Geometer of Blood accepts your exotic sacrifice.</span>")
+						to_chat(usr, "<span class='warning'>The Geometer of Blood accepts your exotic sacrifice.</span>")
 						ticker.mode:grant_runeword(usr)
 					else
-						to_chat(usr, "<span class=warning'>The Geometer of Blood accepts your exotic sacrifice.</span>")
-						to_chat(usr, "<span class=warning'>However, this alien is not enough to gain His favor.</span>")
+						to_chat(usr, "<span class='warning'>The Geometer of Blood accepts your exotic sacrifice.</span>")
+						to_chat(usr, "<span class='warning'>However, this alien is not enough to gain His favor.</span>")
 				else
-					to_chat(usr, "<span class=warning'>The Geometer of Blood accepts your exotic sacrifice.</span>")
+					to_chat(usr, "<span class='warning'>The Geometer of Blood accepts your exotic sacrifice.</span>")
 				return
 			return fizzle() */
 

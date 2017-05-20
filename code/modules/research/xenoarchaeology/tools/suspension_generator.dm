@@ -31,14 +31,14 @@
 				M.weakened = max(M.weakened, 3)
 				cell.charge -= power_use
 				if(prob(5))
-					to_chat(M, "<span class='notice'>[pick(</span>"You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
+					to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
 
 		if(field_type == "iron")
 			for(var/mob/living/silicon/M in T)
 				M.weakened = max(M.weakened, 3)
 				cell.charge -= power_use
 				if(prob(5))
-					to_chat(M, "<span class='notice'>[pick(</span>"You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
+					to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
 
 		for(var/obj/item/I in T)
 			if(!suspension_field.contents.len)
@@ -50,7 +50,7 @@
 			M.weakened = max(M.weakened, 3)
 			cell.charge -= power_use
 			if(prob(5))
-				to_chat(M, "<span class='notice'>[pick(</span>"You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
+				to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
 
 		if(cell.charge <= 0)
 			deactivate()
@@ -296,7 +296,7 @@
 	if(collected)
 		suspension_field.icon_state = "energynet"
 		suspension_field.overlays += "shield2"
-		src.visible_message("<span class='notice'>[bicon(suspension_field)] [suspension_field] gently absconds [collected > 1 ? </span>"something" : "several things"].")
+		src.visible_message("<span class='notice'>[bicon(suspension_field)] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].</span>")
 	else
 		if(istype(T,/turf/simulated/mineral) || istype(T,/turf/simulated/wall))
 			suspension_field.icon_state = "shieldsparkles"
@@ -328,7 +328,7 @@
 	set category = "Object"
 
 	if(anchored)
-		to_chat(usr, "<span class=warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
+		to_chat(usr, "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
 	else
 		dir = turn(dir, 90)
 
@@ -338,7 +338,7 @@
 	set category = "Object"
 
 	if(anchored)
-		to_chat(usr, "<span class=warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
+		to_chat(usr, "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
 	else
 		dir = turn(dir, -90)
 

@@ -384,7 +384,7 @@ var/list/admin_verbs_hideable = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			to_chat(mob, "<span class=warning'><b>Invisimin off. Invisibility reset.</b></span>")
+			to_chat(mob, "<span class='warning'><b>Invisimin off. Invisibility reset.</b></span>")
 			mob.alpha = max(mob.alpha + 100, 255)
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
@@ -652,7 +652,7 @@ var/list/admin_verbs_hideable = list(
 
 	feedback_add_details("admin_verb","GD2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] a [(greater)? "greater":"lesser"] disease2 with infection chance [D.infectionchance].")
-	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] a [(greater)? </span>"greater":"lesser"] disease2 with infection chance [D.infectionchance].")
+	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] a [(greater)? "greater":"lesser"] disease2 with infection chance [D.infectionchance].</span>")
 
 /client/proc/make_sound(obj/O in world) // -- TLE
 	set category = "Special Verbs"
@@ -759,7 +759,7 @@ var/list/admin_verbs_hideable = list(
 	if(!check_rights(R_FUN))	return
 
 	if(!istype(M, /mob/living/carbon/human))
-		to_chat(usr, "<span class=warning'>You can only do this to humans!</span>")
+		to_chat(usr, "<span class='warning'>You can only do this to humans!</span>")
 		return
 	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",,"Yes","No"))
 		if("No")

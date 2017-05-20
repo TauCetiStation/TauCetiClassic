@@ -3,7 +3,7 @@ proc/createRandomZlevel()
 		return
 
 	var/list/potentialRandomZlevels = list()
-	to_chat(world, "<span class=warning'>\b Searching for away missions...</span>")
+	to_chat(world, "<span class='warning'>\b Searching for away missions...</span>")
 	var/list/Lines = file2list("maps/RandomZLevels/fileList.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
@@ -35,7 +35,7 @@ proc/createRandomZlevel()
 
 
 	if(potentialRandomZlevels.len)
-		to_chat(world, "<span class=warning'>\b Loading away mission...</span>")
+		to_chat(world, "<span class='warning'>\b Loading away mission...</span>")
 
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
@@ -47,8 +47,8 @@ proc/createRandomZlevel()
 				continue
 			awaydestinations.Add(L)
 
-		to_chat(world, "<span class=warning'>\b Away mission loaded.</span>")
+		to_chat(world, "<span class='warning'>\b Away mission loaded.</span>")
 
 	else
-		to_chat(world, "<span class=warning'>\b No away missions found.</span>")
+		to_chat(world, "<span class='warning'>\b No away missions found.</span>")
 		return

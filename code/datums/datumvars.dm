@@ -10,7 +10,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 
 
 	if(!usr.client || !usr.client.holder)
-		to_chat(usr, "<span class=warning'>You need to be an administrator to access this.</span>")
+		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
 		return
 
 
@@ -931,7 +931,7 @@ body
 		var/mob/C = locate(href_list["setckey"])
 		if(C.ckey)
 			if(copytext(C.ckey, 1, 2) != "@")
-				to_chat(usr, "<span class=warning'>This mob already controlled by [C.ckey].</span>")
+				to_chat(usr, "<span class='warning'>This mob already controlled by [C.ckey].</span>")
 				return
 
 		var/list/clients_list = clients + "Cancel"

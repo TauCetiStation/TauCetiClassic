@@ -99,7 +99,7 @@
 
 	if(charges >= 0.1)
 		if(prob(5))
-			src.visible_message("<span class=warning'>[bicon(src)] [src]'s eyes glow ruby red for a moment!</span>")
+			src.visible_message("<span class='warning'>[bicon(src)] [src]'s eyes glow ruby red for a moment!</span>")
 			charges -= 0.1
 
 	//check on our shadow wights
@@ -129,7 +129,7 @@
 
 		var/target = pick(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_L_HAND , BP_R_HAND , BP_L_FOOT , BP_R_FOOT)
 		M.apply_damage(rand(5, 10), BRUTE, target)
-		to_chat(M, "<span class=warning'>The skin on your [parse_zone(target)] feels like it's ripping apart, and a stream of blood flies out.</span>")
+		to_chat(M, "<span class='warning'>The skin on your [parse_zone(target)] feels like it's ripping apart, and a stream of blood flies out.</span>")
 		var/obj/effect/decal/cleanable/blood/splatter/animated/B = new(M.loc)
 		B.target_turf = pick(range(1, src))
 		B.blood_DNA = list()
@@ -200,4 +200,4 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/effect/shadow_wight/Bump(var/atom/obstacle)
-	to_chat(obstacle, "<span class=warning'>You feel a chill run down your spine!</span>")
+	to_chat(obstacle, "<span class='warning'>You feel a chill run down your spine!</span>")

@@ -189,6 +189,6 @@
 					pass.reason = reason
 					pass.name = "guest pass #[number]"
 				else
-					to_chat(usr, "<span class=warning'>Cannot issue pass without issuing ID.</span>")
+					to_chat(usr, "<span class='warning'>Cannot issue pass without issuing ID.</span>")
 
 	updateUsrDialog()

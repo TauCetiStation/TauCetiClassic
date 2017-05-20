@@ -40,13 +40,13 @@
 				var/tmp_label = ""
 				var/label_text = sanitize(copytext(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription",tmp_label), 1, MAX_NAME_LEN))
 				if(length(label_text) > 20)
-					to_chat(user, "<span class=warning'>The inscription can be at most 20 characters long.</span>")
+					to_chat(user, "<span class='warning'>The inscription can be at most 20 characters long.</span>")
 				else
 					if(label_text == "")
 						to_chat(user, "<span class='notice'>You scratch the inscription off of [initial(BB)].</span>")
 						BB.name = initial(BB.name)
 					else
-						to_chat(user, "<span class='notice'>You inscribe \</span>"[label_text]\" into \the [initial(BB.name)].")
+						to_chat(user, "<span class='notice'>You inscribe \"[label_text]\" into \the [initial(BB.name)].</span>")
 						BB.name = "[initial(BB.name)] \"[label_text]\""
 			else
 				to_chat(user, "<span class='notice'>You can only inscribe a metal bullet.</span>")//because inscribing beanbags is silly

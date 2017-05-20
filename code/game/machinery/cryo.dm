@@ -225,7 +225,7 @@
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/weapon/G, mob/user)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			to_chat(user, "<span class=warning'>A beaker is already loaded into the machine.</span>")
+			to_chat(user, "<span class='warning'>A beaker is already loaded into the machine.</span>")
 			return
 
 		beaker =  G

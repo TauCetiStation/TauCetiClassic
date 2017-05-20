@@ -86,7 +86,7 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 		return 0
 	var/target_zone = user.zone_sel.selecting
 	if(target_zone in M.op_stage.in_progress)		//Can't operate on someone repeatedly.
-		to_chat(user, "<span class=warning'>You can't operate on the patient while surgery is already in progress.</span>")
+		to_chat(user, "<span class='warning'>You can't operate on the patient while surgery is already in progress.</span>")
 		return 1
 
 	for(var/datum/surgery_step/S in surgery_steps)
@@ -118,7 +118,7 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 			else if((tool in user.contents) && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
 			else	// this failing silently was a pain.
-				to_chat(user, "<span class=warning'>You must remain close to your patient to conduct surgery.</span>")
+				to_chat(user, "<span class='warning'>You must remain close to your patient to conduct surgery.</span>")
 			M.op_stage.in_progress -= target_zone						//end step
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M

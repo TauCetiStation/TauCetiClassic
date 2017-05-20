@@ -65,7 +65,7 @@
 			positive_locations.Add(D)
 
 			for(var/mob/L in range(src, 1))
-				to_chat(L, "<span class='notice'>[bicon(src)] [src] pings [pick(</span>"madly","wildly","excitedly","crazily")]!.")
+				to_chat(L, "<span class='notice'>[bicon(src)] [src] pings [pick("madly","wildly","excitedly","crazily")]!.</span>")
 
 /obj/item/device/depth_scanner/attack_self(mob/user)
 	return src.interact(user)

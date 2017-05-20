@@ -71,13 +71,13 @@ obj/machinery/door/airlock/Bumped(atom/AM)
 		if(H.getBrainLoss() >= 60)
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				visible_message("<span class=warning'>[H] headbutts the airlock.</span>")
+				visible_message("<span class='warning'>[H] headbutts the airlock.</span>")
 				var/datum/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 				H.Stun(8)
 				H.Weaken(5)
 				BP.take_damage(10, 0)
 			else
-				visible_message("<span class=warning'>[H] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+				visible_message("<span class='warning'>[H] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 				H.Stun(8)
 				H.Weaken(5)
 			return
@@ -231,7 +231,7 @@ obj/machinery/access_button/update_icon()
 obj/machinery/access_button/attack_hand(mob/user)
 	add_fingerprint(usr)
 	if(!allowed(user))
-		to_chat(user, "<span class=warning'>Access Denied</span>")
+		to_chat(user, "<span class='warning'>Access Denied</span>")
 
 	else if(radio_connection)
 		var/datum/signal/signal = new

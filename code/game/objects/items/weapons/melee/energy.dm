@@ -4,8 +4,8 @@
 	can_embed = 0
 
 	suicide_act(mob/user)
-		to_chat(viewers(user), pick("<span class=warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>", \
-							"<span class=warning'><b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b></span>"))
+		to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>", \
+							"<span class='warning'><b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b></span>"))
 		return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/axe
@@ -24,7 +24,7 @@
 	edge = 1
 
 	suicide_act(mob/user)
-		to_chat(viewers(user), "<span class=warning'><b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b></span>")
+		to_chat(viewers(user), "<span class='warning'><b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b></span>")
 		return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword

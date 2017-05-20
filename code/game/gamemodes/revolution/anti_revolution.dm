@@ -151,9 +151,9 @@
 
 	var/text = ""
 	if(finished == 2)
-		to_chat(world, "<span class=warning'><FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT></span>")
+		to_chat(world, "<span class='warning'><FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT></span>")
 	else if(finished == 1)
-		to_chat(world, "<span class=warning'><FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT></span>")
+		to_chat(world, "<span class='warning'><FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT></span>")
 
 
 
@@ -215,4 +215,4 @@
 
 	src.verbs -= /mob/proc/ResignFromHeadPosition
 
-	to_chat(src, "<span class=warning'>You resigned from your position, now you have the consequences.</span>")
+	to_chat(src, "<span class='warning'>You resigned from your position, now you have the consequences.</span>")

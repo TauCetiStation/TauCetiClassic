@@ -31,9 +31,9 @@
 				to_chat(user, "<span class='notice'>You put the syringe in [src].</span>")
 				to_chat(user, "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>")
 			else
-				to_chat(usr, "<span class=warning'>[src] cannot hold more syringes.</span>")
+				to_chat(usr, "<span class='warning'>[src] cannot hold more syringes.</span>")
 		else
-			to_chat(usr, "<span class=warning'>This syringe is broken!</span>")
+			to_chat(usr, "<span class='warning'>This syringe is broken!</span>")
 
 
 /obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
@@ -50,7 +50,7 @@
 	if(syringes.len)
 		fire_syringe(target, user)
 	else
-		to_chat(usr, "<span class=warning'>[src] is empty.</span>")
+		to_chat(usr, "<span class='warning'>[src] is empty.</span>")
 
 /obj/item/weapon/gun/syringe/proc/fire_syringe(atom/target, mob/user)
 	set waitfor = FALSE

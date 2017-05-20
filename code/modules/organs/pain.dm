@@ -28,13 +28,13 @@
 	if(burning)
 		switch(amount)
 			if(1 to 10)
-				msg = "<span class=warning'><b>Your [partname] burns.</b></span>"
+				msg = "<span class='warning'><b>Your [partname] burns.</b></span>"
 			if(11 to 90)
 				flash_weak_pain()
-				msg = "<span class=warning'><b><font size=2>Your [partname] burns badly!</font></b></span>"
+				msg = "<span class='warning'><b><font size=2>Your [partname] burns badly!</font></b></span>"
 			if(91 to 10000)
 				flash_pain()
-				msg = "<span class=warning'><b><font size=3>OH GOD! Your [partname] is on fire!</font></b></span>"
+				msg = "<span class='warning'><b><font size=3>OH GOD! Your [partname] is on fire!</font></b></span>"
 	else
 		switch(amount)
 			if(1 to 10)
@@ -66,9 +66,9 @@
 		return
 	if(analgesic)
 		return
-	var/msg = "<span class=warning'><b>[message]</b></span>"
+	var/msg = "<span class='warning'><b>[message]</b></span>"
 	if(flash_strength >= 1)
-		msg = "<span class=warning'><font size=3><b>[message]</b></font></span>"
+		msg = "<span class='warning'><font size=3><b>[message]</b></font></span>"
 
 	// Anti message spam checks
 	if(msg && ((msg != last_pain_message) || (world.time >= next_pain_time)))

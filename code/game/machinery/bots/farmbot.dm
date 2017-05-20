@@ -164,7 +164,7 @@
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			src.updateUsrDialog()
 		else
-			to_chat(user, "<span class=warning'>Access denied.</span>")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else if (istype(W, /obj/item/nutrient))
 		if ( get_total_ferts() >= Max_Fertilizers )
@@ -183,10 +183,10 @@
 /obj/machinery/bot/farmbot/Emag(mob/user)
 	..()
 	if(user)
-		to_chat(user, "<span class=warning'>You short out [src]'s plant identifier circuits.</span>")
+		to_chat(user, "<span class='warning'>You short out [src]'s plant identifier circuits.</span>")
 	spawn(0)
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class=warning'><B>[src] buzzes oddly!</B></span>", 1)
+			O.show_message("<span class='warning'><B>[src] buzzes oddly!</B></span>", 1)
 	flick("farmbot_broke", src)
 	src.emagged = 1
 	src.on = 1
@@ -198,7 +198,7 @@
 
 /obj/machinery/bot/farmbot/explode()
 	src.on = 0
-	visible_message("<span class=warning'><B>[src] blows apart!</B></span>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/minihoe(Tsec)
@@ -393,7 +393,7 @@
 		spawn(0)
 			fert.loc = src.loc
 			fert.throw_at(target, 16, 3, src)
-		src.visible_message("<span class=warning'><b>[src] launches [fert.name] at [target.name]!</b></span>")
+		src.visible_message("<span class='warning'><b>[src] launches [fert.name] at [target.name]!</b></span>")
 		flick("farmbot_broke", src)
 		spawn (FARMBOT_EMAG_DELAY)
 			mode = 0
@@ -428,13 +428,13 @@
 			mode = 0
 
 		if ( prob(50) ) // better luck next time little guy
-			src.visible_message("<span class=warning'><b>[src] swings wildly at [target] with a minihoe, missing completely!</b></span>")
+			src.visible_message("<span class='warning'><b>[src] swings wildly at [target] with a minihoe, missing completely!</b></span>")
 
 		else // yayyy take that weeds~
 			var/attackVerb = pick("slashed", "sliced", "cut", "clawed")
 			var /mob/living/carbon/human/human = target
 
-			src.visible_message("<span class=warning'><B>[src] [attackVerb] [human]!</B></span>")
+			src.visible_message("<span class='warning'><B>[src] [attackVerb] [human]!</B></span>")
 			var/damage = 5
 			var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
 			var/datum/organ/external/BP = human.bodyparts_by_name[ran_zone(dam_zone)]
@@ -462,7 +462,7 @@
 
 	if ( emagged ) // warning, humans are thirsty!
 		var splashAmount = min(70,tank.reagents.total_volume)
-		src.visible_message("<span class=warning'>[src] splashes [target] with a bucket of water!</span>")
+		src.visible_message("<span class='warning'>[src] splashes [target] with a bucket of water!</span>")
 		playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)
 		if ( prob(50) )
 			tank.reagents.reaction(target, TOUCH) //splash the human!

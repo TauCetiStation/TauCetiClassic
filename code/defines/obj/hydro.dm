@@ -1256,7 +1256,7 @@
 		force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/deathnettle // -- Skie
-	desc = "The <span class=warning'>glowing</span> \black nettle incites <span class=warning'><B>rage</B></span>\black in you just from looking at it!"
+	desc = "The <span class='warning'>glowing</span> \black nettle incites <span class='warning'><B>rage</B></span>\black in you just from looking at it!"
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"
@@ -1279,7 +1279,7 @@
 		force = round((5+potency/2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class=warning'><b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS|TOXLOSS)
 
 // *************************************
@@ -1350,7 +1350,7 @@
 	var/WeedKillStr = 2
 
 /obj/item/weapon/weedspray/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class=warning'><b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/pestspray // -- Skie
@@ -1369,7 +1369,7 @@
 	var/PestKillStr = 2
 
 /obj/item/weapon/pestspray/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class=warning'><b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers

@@ -652,7 +652,7 @@ steam.start() -- spawns the effect
 			to_chat(user, "<span class='notice'>You smash through the metal foam wall.</span>")
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
-					to_chat(O, "<span class=warning'>[user] smashes through the foamed metal.</span>")
+					to_chat(O, "<span class='warning'>[user] smashes through the foamed metal.</span>")
 
 			qdel(src)
 		else
@@ -667,7 +667,7 @@ steam.start() -- spawns the effect
 			G.affecting.loc = src.loc
 			for(var/mob/O in viewers(src))
 				if (O.client)
-					to_chat(O, "<span class=warning'>[G.assailant] smashes [G.affecting] through the foamed metal wall.</span>")
+					to_chat(O, "<span class='warning'>[G.assailant] smashes [G.affecting] through the foamed metal wall.</span>")
 			qdel(I)
 			qdel(src)
 			return
@@ -676,7 +676,7 @@ steam.start() -- spawns the effect
 			to_chat(user, "<span class='notice'>You smash through the foamed metal with \the [I].</span>")
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
-					to_chat(O, "<span class=warning'>[user] smashes through the foamed metal.</span>")
+					to_chat(O, "<span class='warning'>[user] smashes through the foamed metal.</span>")
 			qdel(src)
 		else
 			to_chat(user, "<span class='notice'>You hit the metal foam to no effect.</span>")
@@ -718,10 +718,10 @@ steam.start() -- spawns the effect
 			s.start()
 
 			for(var/mob/M in viewers(5, location))
-				to_chat(M, "<span class=warning'>The solution violently explodes.</span>")
+				to_chat(M, "<span class='warning'>The solution violently explodes.</span>")
 			for(var/mob/M in viewers(1, location))
 				if (prob (50 * amount))
-					to_chat(M, "<span class=warning'>The explosion knocks you down.</span>")
+					to_chat(M, "<span class='warning'>The explosion knocks you down.</span>")
 					M.Weaken(rand(1,5))
 			return
 		else

@@ -125,7 +125,7 @@ Doesn't work on other aliens/AI.*/
 		to_chat(src, "\green You spit neurotoxin at [target].")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				to_chat(O, "<span class=warning'>[src] spits neurotoxin at [target]!</span>")
+				to_chat(O, "<span class='warning'>[src] spits neurotoxin at [target]!</span>")
 		//I'm not motivated enough to revise this. Prjectile code in general needs update.
 		var/turf/T = loc
 		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
@@ -222,7 +222,7 @@ Doesn't work on other aliens/AI.*/
 			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 6)
 			adjustToxLoss(-150)
 
-	visible_message("<span class=warning'><B> [src] spits [BB.name] at [target]!</B></span>")
+	visible_message("<span class='warning'><B> [src] spits [BB.name] at [target]!</B></span>")
 
 	//prepare "bullet"
 	BB.original = target
@@ -253,7 +253,7 @@ Doesn't work on other aliens/AI.*/
 		adjustToxLoss(-75)
 		to_chat(src, "\green You shape a [choice].")
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("<span class=warning'><B>[src] vomits up a thick purple substance and begins to shape it!</B></span>"), 1)
+			O.show_message(text("<span class='warning'><B>[src] vomits up a thick purple substance and begins to shape it!</B></span>"), 1)
 		switch(choice)
 			if("resin door")
 				new /obj/structure/mineral_door/resin(loc)

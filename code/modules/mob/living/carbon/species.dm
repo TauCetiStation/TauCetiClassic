@@ -392,7 +392,7 @@
 		else
 			qdel(D)
 
-	H.visible_message("<span class=warning'>[H] splits apart with a wet slithering noise!</span>")
+	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/machine
 	name = IPC

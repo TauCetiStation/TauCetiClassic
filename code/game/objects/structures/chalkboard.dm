@@ -23,7 +23,7 @@
 		return
 
 	if(!ishuman(usr))
-		to_chat(usr, "<span class=warning'>You want, but you don't. You try, but you can't.</span>")
+		to_chat(usr, "<span class='warning'>You want, but you don't. You try, but you can't.</span>")
 		return
 
 	if(content)
@@ -45,7 +45,7 @@
 
 
 	if(!ishuman(usr))
-		to_chat(usr, "<span class=warning'>You want, but you don't. You try, but you can't.</span>")
+		to_chat(usr, "<span class='warning'>You want, but you don't. You try, but you can't.</span>")
 		return
 
 	if(content)
@@ -60,12 +60,12 @@
 		return
 
 	//t = checkhtml(t)
-	t = sanitize(t, list("\n"="\[br\]","ÿ"=LETTER_255))
+	t = sanitize(t, list("\n"="\[br\]","ï¿½"=LETTER_255))
 
 	// check for exploits
 	for(var/bad in paper_blacklist)
 		if(findtext(t,bad))
-			to_chat(usr, "<span class='notice'>You think to yourself, \</span>"Hm.. this is only chalkboard...\"")
+			to_chat(usr, "<span class='notice'>You think to yourself, \"Hm.. this is only chalkboard...\"</span>")
 			log_admin("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			message_admins("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			return
@@ -97,7 +97,7 @@
 		return
 
 	if(!ishuman(usr))
-		to_chat(usr, "<span class=warning'>You want, but you don't. You try, but you can't.</span>")
+		to_chat(usr, "<span class='warning'>You want, but you don't. You try, but you can't.</span>")
 		return
 
 	if(status != CB_WET)

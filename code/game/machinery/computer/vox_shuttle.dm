@@ -22,14 +22,14 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 
 /obj/machinery/computer/vox_stealth/attack_hand(mob/user)
 	if(!allowed(user))
-		to_chat(user, "<span class=warning'>Access Denied</span>")
+		to_chat(user, "<span class='warning'>Access Denied</span>")
 		return
 
 	if(announce_vox_departure)
-		to_chat(user, "<span class=warning'>Shuttle stealth systems have been activated. The Exodus will not be warned of our arrival.</span>")
+		to_chat(user, "<span class='warning'>Shuttle stealth systems have been activated. The Exodus will not be warned of our arrival.</span>")
 		announce_vox_departure = 0
 	else
-		to_chat(user, "<span class=warning'>Shuttle stealth systems have been deactivated. The Exodus will be warned of our arrival.</span>")
+		to_chat(user, "<span class='warning'>Shuttle stealth systems have been deactivated. The Exodus will be warned of our arrival.</span>")
 		announce_vox_departure = 1
 
 

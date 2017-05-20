@@ -91,26 +91,26 @@ mob/living/parasite/meme/Life()
 
 	if (meme_death == "bdam")
 		if(host.brainloss > 60)
-			to_chat(src, "<span class=warning'><b>Something in your host's brain makes you lose consciousness.. you fade away..</b></span>")
+			to_chat(src, "<span class='warning'><b>Something in your host's brain makes you lose consciousness.. you fade away..</b></span>")
 			src.death()
 			return
 	else if (meme_death == "burns")
 		if(host.on_fire)
-			to_chat(src, "<span class=warning'><b>Something on your host's skin makes you unstable.. you fade away..</b></span>")
+			to_chat(src, "<span class='warning'><b>Something on your host's skin makes you unstable.. you fade away..</b></span>")
 			src.death()
 			return
 	else if(host.reagents.has_reagent(meme_death))
-		to_chat(src, "<span class=warning'><b>Something in your host's blood makes you lose consciousness.. you fade away..</b></span>")
+		to_chat(src, "<span class='warning'><b>Something in your host's blood makes you lose consciousness.. you fade away..</b></span>")
 		src.death()
 		return
 
 	// a host without brain is no good
 	else if(!host.mind)
-		to_chat(src, "<span class=warning'><b>Your host has no mind.. you fade away..</b></span>")
+		to_chat(src, "<span class='warning'><b>Your host has no mind.. you fade away..</b></span>")
 		src.death()
 		return
 	else if(host.stat == DEAD)
-		to_chat(src, "<span class=warning'><b>Your host has died.. you fade away..</b></span>")
+		to_chat(src, "<span class='warning'><b>Your host has died.. you fade away..</b></span>")
 		src.death()
 		return
 
@@ -130,10 +130,10 @@ mob/living/parasite/meme/death()
 // When a meme speaks, it speaks through its host
 mob/living/parasite/meme/say(message as text)
 	if(dormant)
-		to_chat(usr, "<span class=warning'>You're dormant!</span>")
+		to_chat(usr, "<span class='warning'>You're dormant!</span>")
 		return
 	if(!host)
-		to_chat(usr, "<span class=warning'>You can't speak without host!</span>")
+		to_chat(usr, "<span class='warning'>You can't speak without host!</span>")
 		return
 
 	return host.say(message)
@@ -141,10 +141,10 @@ mob/living/parasite/meme/say(message as text)
 // Same as speak, just with whisper
 mob/living/parasite/meme/whisper(message as text)
 	if(dormant)
-		to_chat(usr, "<span class=warning'>You're dormant!</span>")
+		to_chat(usr, "<span class='warning'>You're dormant!</span>")
 		return
 	if(!host)
-		to_chat(usr, "<span class=warning'>You can't speak without host!</span>")
+		to_chat(usr, "<span class='warning'>You can't speak without host!</span>")
 		return
 
 	return host.whisper(message)
@@ -155,11 +155,11 @@ mob/living/parasite/meme/me_verb(message as text)
 
 
 	if(dormant)
-		to_chat(usr, "<span class=warning'>You're dormant!</span>")
+		to_chat(usr, "<span class='warning'>You're dormant!</span>")
 		return
 
 	if(!host)
-		to_chat(usr, "<span class=warning'>You can't emote without host!</span>")
+		to_chat(usr, "<span class='warning'>You can't emote without host!</span>")
 		return
 
 	return host.custom_emote(1, message)
@@ -174,7 +174,7 @@ mob/living/parasite/meme/say_understands(mob/other)
 // Try to use amount points, return 1 if successful
 mob/living/parasite/meme/proc/use_points(amount)
 	if(dormant)
-		to_chat(usr, "<span class=warning'>You're dormant!</span>")
+		to_chat(usr, "<span class='warning'>You're dormant!</span>")
 		return
 	if(src.meme_points < amount)
 		to_chat(src, "<b>* You don't have enough meme points(need [amount]).</b>")
@@ -190,7 +190,7 @@ mob/living/parasite/meme/proc/select_indoctrinated(title, message)
 	// Can only affect other mobs thant he host if not blinded
 	if(blinded)
 		candidates = list()
-		to_chat(src, "<span class=warning'>You are blinded, so you can not affect mobs other than your host.</span>")
+		to_chat(src, "<span class='warning'>You are blinded, so you can not affect mobs other than your host.</span>")
 	else
 		candidates = indoctrinated.Copy()
 
@@ -267,7 +267,7 @@ mob/living/parasite/meme/verb/Mute()
 
 	if(!src.host) return
 	if(!host.speech_allowed)
-		to_chat(usr, "<span class=warning'>Your host already can't speak..</span>")
+		to_chat(usr, "<span class='warning'>Your host already can't speak..</span>")
 		return
 	if(!use_points(250))
 		return
@@ -276,16 +276,16 @@ mob/living/parasite/meme/verb/Mute()
 		// backup the host incase we switch hosts after using the verb
 		var/mob/host = src.host
 
-		to_chat(host, "<span class=warning'>Your tongue feels numb.. You lose your ability to speak.</span>")
-		to_chat(usr, "<span class=warning'>Your host can't speak anymore.</span>")
+		to_chat(host, "<span class='warning'>Your tongue feels numb.. You lose your ability to speak.</span>")
+		to_chat(usr, "<span class='warning'>Your host can't speak anymore.</span>")
 
 		host.speech_allowed = 0
 
 		sleep(1200)
 
 		host.speech_allowed = 1
-		to_chat(host, "<span class=warning'>Your tongue has feeling again..</span>")
-		to_chat(usr, "<span class=warning'>[host] can speak again.</span>")
+		to_chat(host, "<span class='warning'>Your tongue has feeling again..</span>")
+		to_chat(usr, "<span class='warning'>[host] can speak again.</span>")
 
 // Makes the host unable to emote
 mob/living/parasite/meme/verb/Paralyze()
@@ -296,7 +296,7 @@ mob/living/parasite/meme/verb/Paralyze()
 	if(!src.host)
 		return
 	if(!host.use_me)
-		to_chat(usr, "<span class=warning'>Your host already can't use body language..</span>")
+		to_chat(usr, "<span class='warning'>Your host already can't use body language..</span>")
 		return
 	if(!use_points(250))
 		return
@@ -305,16 +305,16 @@ mob/living/parasite/meme/verb/Paralyze()
 		// backup the host incase we switch hosts after using the verb
 		var/mob/host = src.host
 
-		to_chat(host, "<span class=warning'>Your body feels numb.. You lose your ability to use body language.</span>")
-		to_chat(usr, "<span class=warning'>Your host can't use body language anymore.</span>")
+		to_chat(host, "<span class='warning'>Your body feels numb.. You lose your ability to use body language.</span>")
+		to_chat(usr, "<span class='warning'>Your host can't use body language anymore.</span>")
 
 		host.use_me = 0
 
 		sleep(1200)
 
 		host.use_me = 1
-		to_chat(host, "<span class=warning'>Your body has feeling again..</span>")
-		to_chat(usr, "<span class=warning'>[host] can use body language again.</span>")
+		to_chat(host, "<span class='warning'>Your body has feeling again..</span>")
+		to_chat(usr, "<span class='warning'>[host] can use body language again.</span>")
 
 
 
@@ -336,7 +336,7 @@ mob/living/parasite/meme/verb/Agony()
 		host.paralysis = max(host.paralysis, 2)
 
 		host.flash_weak_pain()
-		to_chat(host, "<span class=warning'><font size=5>You feel excrutiating pain all over your body! It is so bad you can't think or articulate yourself properly..</font></span>")
+		to_chat(host, "<span class='warning'><font size=5>You feel excrutiating pain all over your body! It is so bad you can't think or articulate yourself properly..</font></span>")
 
 		to_chat(usr, "<b>You send a jolt of agonizing pain through [host], they should be unable to concentrate on anything else for half a minute.</b>")
 
@@ -357,9 +357,9 @@ mob/living/parasite/meme/verb/Agony()
 				host.emote("collapse")
 
 			if(i == 10)
-				to_chat(host, "<span class=warning'>THE PAIN! AGHH, THE PAIN! MAKE IT STOP! ANYTHING TO MAKE IT STOP!</span>")
+				to_chat(host, "<span class='warning'>THE PAIN! AGHH, THE PAIN! MAKE IT STOP! ANYTHING TO MAKE IT STOP!</span>")
 
-		to_chat(host, "<span class=warning'>The pain subsides..</span>")
+		to_chat(host, "<span class='warning'>The pain subsides..</span>")
 
 // Cause great joy with the host, used for conditioning the host
 mob/living/parasite/meme/verb/Joy()
@@ -379,12 +379,12 @@ mob/living/parasite/meme/verb/Joy()
 
 		to_chat(usr, "<b>You stimulate [host.name]'s brain, injecting waves of endorphines and dopamine into the tissue. They should now forget all their worries, particularly relating to you, for around a minute.")
 
-		to_chat(host, "<span class=warning'>You are feeling wonderful! Your head is numb and drowsy, and you can't help forgetting all the worries in the world.</span>")
+		to_chat(host, "<span class='warning'>You are feeling wonderful! Your head is numb and drowsy, and you can't help forgetting all the worries in the world.</span>")
 
 		while(host.druggy > 0)
 			sleep(10)
 
-		to_chat(host, "<span class=warning'>You are feeling clear-headed again..</span>")
+		to_chat(host, "<span class='warning'>You are feeling clear-headed again..</span>")
 
 // Cause the target to hallucinate.
 mob/living/parasite/meme/verb/Hallucinate()
@@ -529,7 +529,7 @@ mob/living/parasite/meme/verb/Attune()
 	src.indoctrinated.Add(host)
 
 	to_chat(usr, "<b>You successfully indoctrinated [host].")
-	to_chat(host, "<span class=warning'>Your head feels a bit roomier..</span>")
+	to_chat(host, "<span class='warning'>Your head feels a bit roomier..</span>")
 
 	log_admin("[src.key] has attuned [host]")
 	message_admins("[src.key] has attuned [host] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
@@ -543,17 +543,17 @@ mob/living/parasite/meme/verb/Analgesic()
 	if(!host)
 		return
 	if(!(host in indoctrinated))
-		to_chat(usr, "<span class=warning'>You need to attune the host first.</span>")
+		to_chat(usr, "<span class='warning'>You need to attune the host first.</span>")
 		return
 	if(!use_points(500))
 		return
 
 	to_chat(usr, "<b>You inject drugs into [host].")
-	to_chat(host, "<span class=warning'>You feel your body strengthen and your pain subside..</span>")
+	to_chat(host, "<span class='warning'>You feel your body strengthen and your pain subside..</span>")
 	host.analgesic = 60
 	while(host.analgesic > 0)
 		sleep(10)
-	to_chat(host, "<span class=warning'>The dizziness wears off, and you can feel pain again..</span>")
+	to_chat(host, "<span class='warning'>The dizziness wears off, and you can feel pain again..</span>")
 
 
 mob/proc/clearHUD()
@@ -569,13 +569,13 @@ mob/living/parasite/meme/verb/Possession()
 	if(!host)
 		return
 	if(!(host in indoctrinated))
-		to_chat(usr, "<span class=warning'>You need to attune the host first.</span>")
+		to_chat(usr, "<span class='warning'>You need to attune the host first.</span>")
 		return
 	if(!use_points(500))
 		return
 
 	to_chat(usr, "<b>You take control of [host]!</b>")
-	to_chat(host, "<span class=warning'>Everything goes black..</span>")
+	to_chat(host, "<span class='warning'>Everything goes black..</span>")
 
 	spawn
 		var/mob/dummy = new()
@@ -604,7 +604,7 @@ mob/living/parasite/meme/verb/Possession()
 		host_mind.transfer_to(host)
 		meme_mind.current.clearHUD()
 		host.update_body()
-		to_chat(src, "<span class=warning'>You lose control..</span>")
+		to_chat(src, "<span class='warning'>You lose control..</span>")
 
 		qdel(dummy)
 
@@ -628,7 +628,7 @@ mob/living/parasite/meme/verb/Dormant()
 
 	dormant = 0
 
-	to_chat(usr, "<span class=warning'>You have regained all points and exited dormant mode!</span>")
+	to_chat(usr, "<span class='warning'>You have regained all points and exited dormant mode!</span>")
 
 mob/living/parasite/meme/verb/Show_Points()
 	set category = "Meme"
