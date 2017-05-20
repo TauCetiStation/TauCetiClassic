@@ -39,8 +39,8 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("\blue [user] has patched the damaged vein in [target]'s [BP.name] with \the [tool].", \
-			"\blue You have patched the damaged vein in [target]'s [BP.name] with \the [tool].")
+		user.visible_message("<span class='notice'>[user] has patched the damaged vein in [target]'s [BP.name] with \the [tool].</span>", \
+			"<span class='notice'>You have patched the damaged vein in [target]'s [BP.name] with \the [tool].</span>")
 
 		for(var/datum/wound/W in BP.wounds)
 			if(W.internal)

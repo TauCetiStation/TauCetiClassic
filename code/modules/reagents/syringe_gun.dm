@@ -28,8 +28,8 @@
 				user.drop_item()
 				I.loc = src
 				syringes += I
-				to_chat(user, "\blue You put the syringe in [src].")
-				to_chat(user, "\blue [syringes.len] / [max_syringes] syringes.")
+				to_chat(user, "<span class='notice'>You put the syringe in [src].</span>")
+				to_chat(user, "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>")
 			else
 				to_chat(usr, "\red [src] cannot hold more syringes.")
 		else

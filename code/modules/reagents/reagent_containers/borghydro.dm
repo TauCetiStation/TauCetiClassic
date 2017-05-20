@@ -76,13 +76,13 @@
 		return
 
 	if (R.total_volume && M.can_inject(user,1))
-		to_chat(user, "\blue You inject [M] with the injector.")
+		to_chat(user, "<span class='notice'>You inject [M] with the injector.</span>")
 		to_chat(M, "\red You feel a tiny prick!")
 
 		R.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
-			to_chat(user, "\blue [trans] units injected. [R.total_volume] units remaining.")
+			to_chat(user, "<span class='notice'>[trans] units injected. [R.total_volume] units remaining.</span>")
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
@@ -93,7 +93,7 @@
 
 	charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.
 	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
-	to_chat(user, "\blue Synthesizer is now producing '[R.name]'.")
+	to_chat(user, "<span class='notice'>Synthesizer is now producing '[R.name]'.</span>")
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/examine(mob/user)

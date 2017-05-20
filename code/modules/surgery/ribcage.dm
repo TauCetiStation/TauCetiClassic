@@ -31,8 +31,8 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] has cut [target]'s ribcage open with \the [tool].",		\
-		"\blue You have cut [target]'s ribcage open with \the [tool].")
+		user.visible_message("<span class='notice'>[user] has cut [target]'s ribcage open with \the [tool].</span>",		\
+		"<span class='notice'>You have cut [target]'s ribcage open with \the [tool].</span>")
 		target.op_stage.ribcage = 1
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -64,8 +64,8 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/msg = "\blue [user] forces open [target]'s ribcage with \the [tool]."
-		var/self_msg = "\blue You force open [target]'s ribcage with \the [tool]."
+		var/msg = "<span class='notice'>[user] forces open [target]'s ribcage with \the [tool].</span>"
+		var/self_msg = "<span class='notice'>You force open [target]'s ribcage with \the [tool].</span>"
 		user.visible_message(msg, self_msg)
 		target.op_stage.ribcage = 2
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
@@ -105,8 +105,8 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/msg = "\blue [user] bends [target]'s ribcage back into place with \the [tool]."
-		var/self_msg = "\blue You bend [target]'s ribcage back into place with \the [tool]."
+		var/msg = "<span class='notice'>[user] bends [target]'s ribcage back into place with \the [tool].</span>"
+		var/self_msg = "<span class='notice'>You bend [target]'s ribcage back into place with \the [tool].</span>"
 		user.visible_message(msg, self_msg)
 
 		target.op_stage.ribcage = 1
@@ -144,8 +144,8 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/msg = "\blue [user] applied \the [tool] to [target]'s ribcage."
-		var/self_msg = "\blue You applied \the [tool] to [target]'s ribcage."
+		var/msg = "<span class='notice'>[user] applied \the [tool] to [target]'s ribcage.</span>"
+		var/self_msg = "<span class='notice'>You applied \the [tool] to [target]'s ribcage.</span>"
 		user.visible_message(msg, self_msg)
 
 		target.op_stage.ribcage = 0
@@ -226,8 +226,8 @@
 					user.visible_message("[user] starts treating damage to [target]'s [IO.name] with [tool_name].", \
 					"You start treating damage to [target]'s [IO.name] with [tool_name]." )
 				else
-					user.visible_message("\blue [user] attempts to repair [target]'s mechanical [IO.name] with [tool_name]...", \
-					"\blue You attempt to repair [target]'s mechanical [IO.name] with [tool_name]...")
+					user.visible_message("<span class='notice'>[user] attempts to repair [target]'s mechanical [IO.name] with [tool_name]...</span>", \
+					"<span class='notice'>You attempt to repair [target]'s mechanical [IO.name] with [tool_name]...</span>")
 
 		target.custom_pain("The pain in your chest is living hell!",1)
 		..()
@@ -246,10 +246,10 @@
 			if(IO && IO.damage > 0)
 				if(IO.robotic < 2)
 					user.visible_message("[user] treats damage to [target]'s [IO.name] with [tool_name].", \
-					"\blue You treat damage to [target]'s [IO.name] with [tool_name]." )
+					"<span class='notice'>You treat damage to [target]'s [IO.name] with [tool_name].</span>" )
 				else
-					user.visible_message("\blue [user] pokes [target]'s mechanical [IO.name] with [tool_name]...", \
-					"\blue You poke [target]'s mechanical [IO.name] with [tool_name]... \red For no effect, since it's robotic.")
+					user.visible_message("<span class='notice'>[user] pokes [target]'s mechanical [IO.name] with [tool_name]...</span>", \
+					"<span class='notice'>You poke [target]'s mechanical [IO.name] with [tool_name]... \red For no effect, since it's robotic.</span>")
 				IO.damage = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -305,8 +305,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/internal/heart/IO = target.organs_by_name[O_HEART]
 		if(IO.damage > 0)
-			user.visible_message("\blue [user] repairs [target]'s heart with \the [tool].", \
-			"\blue You repair [target]'s heart with \the [tool]." )
+			user.visible_message("<span class='notice'>[user] repairs [target]'s heart with \the [tool].</span>", \
+			"<span class='notice'>You repair [target]'s heart with \the [tool].</span>" )
 			IO.damage = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

@@ -35,8 +35,8 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] pulls the skin on [target]'s face with \the [tool].",	\
-		"\blue You pull the skin on [target]'s face with \the [tool].")
+		user.visible_message("<span class='notice'>[user] pulls the skin on [target]'s face with \the [tool].</span>",	\
+		"<span class='notice'>You pull the skin on [target]'s face with \the [tool].</span>")
 		target.op_stage.plasticsur = 1
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -75,12 +75,12 @@
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
 		var/datum/organ/external/head/H = BP
 		if (H.disfigured == 1)
-			user.visible_message("\blue [user] mends [target]'s vocal cords with \the [tool].", \
-			"\blue You mend [target]'s vocal cords with \the [tool].")
+			user.visible_message("<span class='notice'>[user] mends [target]'s vocal cords with \the [tool].</span>", \
+			"<span class='notice'>You mend [target]'s vocal cords with \the [tool].</span>")
 			H.disfigured = 0
 		else
-			user.visible_message("\blue [user] adjusts [target]'s vocal cords with \the [tool].", \
-			"\blue You adjust [target]'s vocal cords with \the [tool].")
+			user.visible_message("<span class='notice'>[user] adjusts [target]'s vocal cords with \the [tool].</span>", \
+			"<span class='notice'>You adjust [target]'s vocal cords with \the [tool].</span>")
 		target.op_stage.plasticsur = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -108,8 +108,8 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] alters [target]'s appearance with \the [tool].",		\
-		"\blue You alter [target]'s appearance with \the [tool].")
+		user.visible_message("<span class='notice'>[user] alters [target]'s appearance with \the [tool].</span>",		\
+		"<span class='notice'>You alter [target]'s appearance with \the [tool].</span>")
 		var/i
 		while (!i)
 			var/randomname
@@ -149,8 +149,8 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("\blue [user] cauterizes the incision on [target]'s face and neck with \the [tool].", \
-		"\blue You cauterize theon [target]'s face and neck with \the [tool].")
+		user.visible_message("<span class='notice'>[user] cauterizes the incision on [target]'s face and neck with \the [tool].</span>", \
+		"<span class='notice'>You cauterize theon [target]'s face and neck with \the [tool].</span>")
 		BP.open = 0
 		BP.status &= ~ORGAN_BLEEDING
 		if (target.op_stage.plasticsur == 2)

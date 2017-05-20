@@ -57,14 +57,14 @@
 					if (S.contents.len < S.capacity)
 						S.contents += G
 					else
-						to_chat(user, "\blue The plant bag is full.")
+						to_chat(user, "<span class='notice'>The plant bag is full.</span>")
 						return
-			to_chat(user, "\blue You pick up all the plants and seeds.")
+			to_chat(user, "<span class='notice'>You pick up all the plants and seeds.</span>")
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
 			else
-				to_chat(user, "\blue The plant bag is full.")*/
+				to_chat(user, "<span class='notice'>The plant bag is full.</span>")*/
 	return
 
 /*/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -76,14 +76,14 @@
 					if (S.contents.len < S.capacity)
 						S.contents += G
 					else
-						to_chat(user, "\blue The plant bag is full.")
+						to_chat(user, "<span class='notice'>The plant bag is full.</span>")
 						return
-			to_chat(user, "\blue You pick up all the plants and seeds.")
+			to_chat(user, "<span class='notice'>You pick up all the plants and seeds.</span>")
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
 			else
-				to_chat(user, "\blue The plant bag is full.")
+				to_chat(user, "<span class='notice'>The plant bag is full.</span>")
 	return*/
 
 /obj/item/weapon/grown/attackby(obj/item/O, mob/user)
@@ -722,7 +722,7 @@
 			return
 
 		M.stop_pulling()
-		to_chat(M, "\blue You slipped on the [name]!")
+		to_chat(M, "<span class='notice'>You slipped on the [name]!</span>")
 		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(8)
 		M.Weaken(5)

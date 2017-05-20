@@ -35,7 +35,7 @@
 			user.visible_message("\red <b>[user] begins clearing away [src].</b>","\red <b>You begin clearing away [src].</b>")
 			spawn(rand(15,30))
 				if(get_dist(user,src) < 2)
-					to_chat(user, "\blue You clear away [src].")
+					to_chat(user, "<span class='notice'>You clear away [src].</span>")
 					var/obj/item/stack/sheet/wood/W = new(src.loc)
 					W.amount = rand(3,15)
 					if(prob(50))
@@ -103,7 +103,7 @@ var/jungle_plants_init = 0
 /obj/structure/jungle_plant/attack_hand(mob/user)
 	if(fruits_left > 0)
 		fruits_left--
-		to_chat(user, "\blue You pick a fruit off [src].")
+		to_chat(user, "<span class='notice'>You pick a fruit off [src].</span>")
 
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/jungle_fruit/J = new (src.loc)
 		J.potency = plant_strength

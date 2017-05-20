@@ -65,7 +65,7 @@
 
 /obj/item/weapon/nullrod/afterattack(atom/A, mob/user)
 	if (istype(A, /turf/simulated/floor))
-		to_chat(user, "\blue You hit the floor with the [src].")
+		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
 		call(/obj/effect/rune/proc/revealrunes)(src)
 
 /obj/item/weapon/sord

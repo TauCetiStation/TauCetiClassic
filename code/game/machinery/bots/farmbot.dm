@@ -502,9 +502,9 @@
 
 	mode = FARMBOT_MODE_WAITING
 	playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)
-	src.visible_message("\blue [src] starts filling it's tank from [target].")
+	src.visible_message("<span class='notice'>[src] starts filling it's tank from [target].</span>")
 	spawn(300)
-		src.visible_message("\blue [src] finishes filling it's tank.")
+		src.visible_message("<span class='notice'>[src] finishes filling it's tank.</span>")
 		src.mode = 0
 		tank.reagents.add_reagent("water", tank.reagents.maximum_volume - tank.reagents.total_volume )
 		playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)

@@ -186,7 +186,7 @@
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
-				to_chat(usr, "\blue Message transmitted.")
+				to_chat(usr, "<span class='notice'>Message transmitted.</span>")
 				log_say("[key_name(usr)] has made an IA Centcomm announcement: [input]")
 				CM.cooldown = 55
 
@@ -201,7 +201,7 @@
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
-				to_chat(usr, "\blue Message transmitted.")
+				to_chat(usr, "<span class='notice'>Message transmitted.</span>")
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				CM.cooldown = 55 //about one minute
 

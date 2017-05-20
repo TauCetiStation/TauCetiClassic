@@ -40,7 +40,7 @@
 		if(!use_multi(user, resources_to_use))
 			return
 
-		to_chat(user, "\blue You attach wire to the [name].")
+		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
 		new /obj/item/stack/light_w(user.loc)
 	else if(istype(W, /obj/item/stack/rods))
 

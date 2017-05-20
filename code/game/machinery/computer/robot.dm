@@ -112,8 +112,8 @@
 		if (istype(I))
 			if(src.check_access(I))
 				if (!status)
-					message_admins("\blue [key_name_admin(usr)] has initiated the global cyborg killswitch! <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>")
-					log_game("\blue [key_name(usr)] has initiated the global cyborg killswitch!")
+					message_admins("<span class='notice'>[key_name_admin(usr)] has initiated the global cyborg killswitch! <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a></span>")
+					log_game("<span class='notice'>[key_name(usr)] has initiated the global cyborg killswitch!</span>")
 					src.status = 1
 					src.start_sequence()
 					src.temp = null
@@ -157,8 +157,8 @@
 							R.ResetSecurityCodes()
 
 						else
-							message_admins("\blue [key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) detonated [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
-							log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
+							message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) detonated [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)</span>")
+							log_game("<span class='notice'>[key_name_admin(usr)] detonated [R.name]!</span>")
 							R.self_destruct()
 		else
 			to_chat(usr, "\red Access Denied.")
@@ -170,7 +170,7 @@
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					if(R && istype(R))
-						message_admins("\blue [key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) [R.canmove ? "locked down" : "released"] [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
+						message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) [R.canmove ? </span>"locked down" : "released"] [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
 						log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 						R.canmove = !R.canmove
 						if (R.lockcharge)
@@ -194,7 +194,7 @@
 				var/choice = input("Are you certain you wish to hack [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					if(R && istype(R))
-//							message_admins("\blue [key_name_admin(usr)] emagged [R.name] using robotic console!")
+//							message_admins("<span class='notice'>[key_name_admin(usr)] emagged [R.name] using robotic console!</span>")
 						log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 						R.emagged = 1
 						if(R.mind.special_role)

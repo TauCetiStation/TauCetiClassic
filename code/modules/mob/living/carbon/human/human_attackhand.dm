@@ -91,10 +91,10 @@
 //			if(M.health < -75)	return 0
 
 			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				to_chat(M, "\blue <B>Remove your mask!</B>")
+				to_chat(M, "<span class='notice'><B>Remove your mask!</B></span>")
 				return 0
 			if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-				to_chat(M, "\blue <B>Remove his mask!</B>")
+				to_chat(M, "<span class='notice'><B>Remove his mask!</B></span>")
 				return 0
 
 			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()

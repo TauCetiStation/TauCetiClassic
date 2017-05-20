@@ -96,7 +96,7 @@
 /obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		locked = !locked
-		to_chat(user, "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!")
+		to_chat(user, "<span class='notice'>You [locked ? </span>"lock" : "unlock"] the mulebot's controls!")
 		flick("mulebot-emagged", src)
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
 	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
@@ -107,16 +107,16 @@
 		updateDialog()
 	else if(istype(I,/obj/item/weapon/screwdriver))
 		if(locked)
-			to_chat(user, "\blue The maintenance hatch cannot be opened or closed while the controls are locked.")
+			to_chat(user, "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>")
 			return
 
 		open = !open
 		if(open)
-			src.visible_message("[user] opens the maintenance hatch of [src]", "\blue You open [src]'s maintenance hatch.")
+			src.visible_message("[user] opens the maintenance hatch of [src]", "<span class='notice'>You open [src]'s maintenance hatch.</span>")
 			on = 0
 			icon_state="mulebot-hatch"
 		else
-			src.visible_message("[user] closes the maintenance hatch of [src]", "\blue You close [src]'s maintenance hatch.")
+			src.visible_message("[user] closes the maintenance hatch of [src]", "<span class='notice'>You close [src]'s maintenance hatch.</span>")
 			icon_state = "mulebot0"
 
 		updateDialog()
@@ -125,10 +125,10 @@
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
 				"\red [user] repairs [src]!",
-				"\blue You repair [src]!"
+				"<span class='notice'>You repair [src]!</span>"
 			)
 		else
-			to_chat(user, "\blue [src] does not need a repair!")
+			to_chat(user, "<span class='notice'>[src] does not need a repair!</span>")
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
@@ -268,7 +268,7 @@
 				cell.add_fingerprint(usr)
 				cell = null
 
-				usr.visible_message("\blue [usr] removes the power cell from [src].", "\blue You remove the power cell from [src].")
+				usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
 
 		if("cellinsert")
 			if(open && !cell)
@@ -279,7 +279,7 @@
 					C.loc = src
 					C.add_fingerprint(usr)
 
-					usr.visible_message("\blue [usr] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
+					usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 
 
 		if("stop")

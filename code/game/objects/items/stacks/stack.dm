@@ -131,7 +131,7 @@
 			usr << browse(null, "window=stack")
 			return
 		if (R.time)
-			to_chat(usr, "\blue Building [R.title] ...")
+			to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
 			if (!do_after(usr, R.time, target = usr))
 				return
 		if(!src.use(R.req_amount*multiplier))

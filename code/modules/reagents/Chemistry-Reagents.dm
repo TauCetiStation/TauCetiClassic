@@ -1787,7 +1787,7 @@ datum
 						for(var/obj/effect/E in W) if(E.name == "Wallrot") qdel(E)
 
 						for(var/mob/O in viewers(W, null))
-							O.show_message(text("\blue The fungi are completely dissolved by the solution!"), 1)
+							O.show_message(text("<span class='notice'>The fungi are completely dissolved by the solution!</span>"), 1)
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/structure/alien/weeds))

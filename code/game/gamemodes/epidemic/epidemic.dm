@@ -189,10 +189,10 @@
 	for(var/mob/M in mob_list)
 		if(M.client)
 			M << 'sound/machines/Alarm.ogg'
-	to_chat(world, "\blue<b>Incoming missile detected.. Impact in 10..</b>")
+	to_chat(world, "<span class='notice'><b>Incoming missile detected.. Impact in 10..</b></span>")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
-		to_chat(world, "\blue<b>[i]..</b>")
+		to_chat(world, "<span class='notice'><b>[i]..</b></span>")
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)

@@ -126,12 +126,12 @@
 /obj/effect/alien/resin/attack_hand()
 	usr.do_attack_animation(src)
 	if (HULK in usr.mutations)
-		to_chat(usr, "\blue You easily destroy the [name].")
+		to_chat(usr, "<span class='notice'>You easily destroy the [name].</span>")
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] destroys the [name]!", 1)
 		health = 0
 	else
-		to_chat(usr, "\blue You claw at the [name].")
+		to_chat(usr, "<span class='notice'>You claw at the [name].</span>")
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] claws at the [name]!", 1)
 		health -= rand(5,10)

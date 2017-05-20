@@ -42,7 +42,7 @@
 
 /obj/item/device/radio/beacon/syndicate/attack_self(mob/user)
 	if(user)
-		to_chat(user, "\blue Locked In")
+		to_chat(user, "<span class='notice'>Locked In</span>")
 		new /obj/machinery/singularity_beacon/syndicate( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		qdel(src)
@@ -73,7 +73,7 @@
 	if (!flag)
 		return
 	if (!ishuman(target))
-		to_chat(user, "\blue Can only be planted on human.")
+		to_chat(user, "<span class='notice'>Can only be planted on human.</span>")
 		return
 	var/found = 0
 	var/target_beacon
@@ -91,7 +91,7 @@
 
 	var/mob/living/carbon/human/H = target
 	if(H.health >= config.health_threshold_crit)
-		to_chat(user, "\blue [H.name] is in good condition.")
+		to_chat(user, "<span class='notice'>[H.name] is in good condition.</span>")
 		return
 	to_chat(user, "Planting...")
 

@@ -52,7 +52,7 @@ proc/admin_call_cooldown(value1)
 
 	if(!mob)	return						//this doesn't happen
 
-	msg = "\blue <b><font color=red>ADMINCALL: </font>[get_options_bar(mob, 2, 1, 1)]:</b> [msg]"
+	msg = "<span class='notice'><b><font color=red>ADMINCALL: </font>[get_options_bar(mob, 2, 1, 1)]:</b> [msg]</span>"
 
 	//send this msg to all admins
 	var/admin_number_afk = 0

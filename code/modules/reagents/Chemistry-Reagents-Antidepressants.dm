@@ -17,7 +17,7 @@
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
-				to_chat(M, "\blue Your mind feels focused and undivided.")
+				to_chat(M, "<span class='notice'>Your mind feels focused and undivided.</span>")
 		..()
 		return
 
@@ -45,7 +45,7 @@
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
-				to_chat(M, "\blue Your mind feels stable.. a little stable.")
+				to_chat(M, "<span class='notice'>Your mind feels stable.. a little stable.</span>")
 		..()
 		return
 
@@ -75,7 +75,7 @@
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
 				if(prob(90))
-					to_chat(M, "\blue Your mind feels much more stable.")
+					to_chat(M, "<span class='notice'>Your mind feels much more stable.</span>")
 				else
 					to_chat(M, "\red Your mind breaks apart..")
 					M.hallucination += 200

@@ -78,7 +78,7 @@ var/list/admin_verbs_event = list(
 			O.icon = newIcon
 
 	log_admin("[key_name(src)] started noir event!", 1)
-	message_admins("\blue [key_name_admin(src)] started noir event!", 1)
+	message_admins("<span class='notice'>[key_name_admin(src)] started noir event!</span>", 1)
 */
 //////////////////////////////
 // Gateway
@@ -94,7 +94,7 @@ var/list/admin_verbs_event = list(
 		G.initialize()
 
 	log_admin("[key_name(src)] connected gates")
-	message_admins("\blue [key_name_admin(src)] connected gates")
+	message_admins("<span class='notice'>[key_name_admin(src)] connected gates</span>")
 
 //////////////////////////////
 // Velocity\Centcomm barriers
@@ -115,7 +115,7 @@ var/centcom_barriers_stat = 1
 		B.density = centcom_barriers_stat
 
 	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
-	message_admins("\blue [key_name_admin(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
+	message_admins("<span class='notice'>[key_name_admin(src)] switched [centcom_barriers_stat? </span>"on" : "off"] centcomm barriers")
 
 /obj/effect/landmark/trololo
 	name = "Rickroll"

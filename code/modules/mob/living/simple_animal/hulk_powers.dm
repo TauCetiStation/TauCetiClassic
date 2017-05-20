@@ -415,12 +415,12 @@
 	if(istype(user, /mob/living/simple_animal/hulk))
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if (prob(75))
-			to_chat(user, text("\blue You destroy that girder!"))
+			to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))
 			user.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
 		else
-			to_chat(user, text("\blue You punch the girder."))
+			to_chat(user, text("<span class='notice'>You punch the girder.</span>"))
 	return
 
 ///////////////////////////////////////////////////////
@@ -540,7 +540,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_eat/cast_check()
-	to_chat(usr, "\blue Target someone, then alt+click.")
+	to_chat(usr, "<span class='notice'>Target someone, then alt+click.</span>")
 	return 0
 
 /mob/living/simple_animal/hulk/unathi/AltClickOn(atom/A)
@@ -635,7 +635,7 @@
 /obj/item/weapon/organ/attack_animal(mob/user)
 	if(istype(user, /mob/living/simple_animal/hulk))
 		if(istype(src, /obj/item/weapon/organ/head))
-			to_chat(usr, "\blue Head? Ewww..")
+			to_chat(usr, "<span class='notice'>Head? Ewww..</span>")
 			return
 		var/mob/living/simple_animal/hulk/Hulk = user
 		playsound(user.loc, 'sound/weapons/zilla_eat.ogg', 50, 2)

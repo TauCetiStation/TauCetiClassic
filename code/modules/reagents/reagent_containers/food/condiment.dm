@@ -29,7 +29,7 @@
 			return 0
 
 		if(M == user)
-			to_chat(M, "\blue You swallow some of contents of the [src].")
+			to_chat(M, "<span class='notice'>You swallow some of contents of the [src].</span>")
 			if(reagents.total_volume)
 				reagents.trans_to_ingest(M, 10)
 
@@ -70,7 +70,7 @@
 				return
 
 			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
+			to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 		//Something like a glass or a food item. Player probably wants to transfer TO it.
 		else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
@@ -81,7 +81,7 @@
 				to_chat(user, "\red you can't add anymore to [target].")
 				return
 			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			to_chat(user, "\blue You transfer [trans] units of the condiment to [target].")
+			to_chat(user, "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>")
 
 	on_reagent_change()
 		if(icon_state == "saltshakersmall" || icon_state == "peppermillsmall")

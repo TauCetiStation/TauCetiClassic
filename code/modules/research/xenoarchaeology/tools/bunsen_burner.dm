@@ -17,7 +17,7 @@
 			user.drop_item(src)
 			held_container = W
 			held_container.loc = src
-			to_chat(user, "\blue You put the [held_container] onto the [src].")
+			to_chat(user, "<span class='notice'>You put the [held_container] onto the [src].</span>")
 			var/image/I = image("icon"=W, "layer"=FLOAT_LAYER)
 			underlays += I
 			if(heating)
@@ -29,7 +29,7 @@
 /obj/machinery/bunsen_burner/attack_hand(mob/user)
 	if(held_container)
 		underlays = null
-		to_chat(user, "\blue You remove the [held_container] from the [src].")
+		to_chat(user, "<span class='notice'>You remove the [held_container] from the [src].</span>")
 		held_container.loc = src.loc
 		held_container.attack_hand(user)
 		held_container = null
@@ -37,7 +37,7 @@
 		to_chat(user, "\red There is nothing on the [src].")
 
 /obj/machinery/bunsen_burner/proc/try_heating()
-	src.visible_message("\blue [bicon(src)] [src] hisses.")
+	src.visible_message("<span class='notice'>[bicon(src)] [src] hisses.</span>")
 	if(held_container && heating)
 		heated = 1
 		held_container.reagents.handle_reactions()

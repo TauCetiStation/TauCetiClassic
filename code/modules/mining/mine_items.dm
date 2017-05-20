@@ -791,7 +791,7 @@ obj/item/projectile/kinetic/New()
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
 		if(istype(O,/obj/item/weapon/wrench))
-			to_chat(user, "\blue You start to disassemble the storage unit...")
+			to_chat(user, "<span class='notice'>You start to disassemble the storage unit...</span>")
 			if(do_after(user,20,target = src))
 				if(!src)
 					return

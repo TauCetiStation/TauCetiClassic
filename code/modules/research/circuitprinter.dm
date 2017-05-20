@@ -124,7 +124,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	busy = 1
 	use_power(max(1000, (3750*amount/10)))
 	spawn(16)
-		to_chat(user, "\blue You add [amount] sheets to the [src.name].")
+		to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
 		if(istype(stack, /obj/item/stack/sheet/glass))
 			g_amount += amount * 3750
 		else if(istype(stack, /obj/item/stack/sheet/mineral/gold))

@@ -137,7 +137,7 @@
 		helmet.canremove = 1
 		H.drop_from_inventory(helmet)
 		helmet.loc = src
-		to_chat(H, "\blue You retract your hardsuit helmet.")
+		to_chat(H, "<span class='notice'>You retract your hardsuit helmet.</span>")
 	else
 		if(H.head)
 			to_chat(H, "\red You cannot deploy your helmet while wearing another helmet.")
@@ -146,7 +146,7 @@
 		helmet.loc = H
 		H.equip_to_slot(helmet, slot_head)
 		helmet.canremove = 0
-		to_chat(H, "\blue You deploy your hardsuit helmet, sealing you off from the world.")
+		to_chat(H, "<span class='notice'>You deploy your hardsuit helmet, sealing you off from the world.</span>")
 
 /obj/item/clothing/suit/space/rig/verb/toggle_magboots()
 
@@ -330,7 +330,7 @@
 		camera.replace_networks(list("NUKE"))
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
-		to_chat(user, "\blue User scanned as [camera.c_tag]. Camera activated.")
+		to_chat(user, "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>")
 
 /obj/item/clothing/head/helmet/space/rig/syndi/examine(mob/user)
 	..()

@@ -549,7 +549,7 @@ steam.start() -- spawns the effect
 			return
 
 		M.stop_pulling()
-		to_chat(M, "\blue You slipped on the foam!")
+		to_chat(M, "<span class='notice'>You slipped on the foam!</span>")
 		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(5)
 		M.Weaken(2)
@@ -649,14 +649,14 @@ steam.start() -- spawns the effect
 
 	attack_hand(mob/user)
 		if ((HULK in user.mutations) || (prob(75 - metal*25)))
-			to_chat(user, "\blue You smash through the metal foam wall.")
+			to_chat(user, "<span class='notice'>You smash through the metal foam wall.</span>")
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
 					to_chat(O, "\red [user] smashes through the foamed metal.")
 
 			qdel(src)
 		else
-			to_chat(user, "\blue You hit the metal foam but bounce off it.")
+			to_chat(user, "<span class='notice'>You hit the metal foam but bounce off it.</span>")
 		return
 
 
@@ -673,13 +673,13 @@ steam.start() -- spawns the effect
 			return
 
 		if(prob(I.force*20 - metal*25))
-			to_chat(user, "\blue You smash through the foamed metal with \the [I].")
+			to_chat(user, "<span class='notice'>You smash through the foamed metal with \the [I].</span>")
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
 					to_chat(O, "\red [user] smashes through the foamed metal.")
 			qdel(src)
 		else
-			to_chat(user, "\blue You hit the metal foam to no effect.")
+			to_chat(user, "<span class='notice'>You hit the metal foam to no effect.</span>")
 
 	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 		if(air_group) return 0

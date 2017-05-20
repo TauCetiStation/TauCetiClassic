@@ -365,7 +365,7 @@
 
 		helm_cam.hidden = 1
 		blockTracking = 1
-		to_chat(user, "\blue Abductor detected. Camera activated.")
+		to_chat(user, "<span class='notice'>Abductor detected. Camera activated.</span>")
 		return
 
 /obj/item/clothing/head/helmet/abductor/proc/IsAbductor(mob/living/user)

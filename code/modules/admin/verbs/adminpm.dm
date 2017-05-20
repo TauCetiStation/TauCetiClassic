@@ -179,7 +179,7 @@
 
 	if(length(msg) > 400) // TODO: if message length is over 400, divide it up into seperate messages, the message length restriction is based on IRC limitations.  Probably easier to do this on the bots ends.
 		to_chat(src, "\red Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting")
-		to_chat(src, "\blue [msg]")
+		to_chat(src, "<span class='notice'>[msg]</span>")
 		return
 
 	to_chat(src, "<font color='blue'>IRC PM to-<b>IRC-Admins</b>: [msg]</font>")

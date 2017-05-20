@@ -56,7 +56,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 
 	if(!ninjacost(,2))
 		var/mob/living/carbon/human/U = affecting
-		to_chat(U, "\blue There are <B>[s_bombs]</B> smoke bombs remaining.")
+		to_chat(U, "<span class='notice'>There are <B>[s_bombs]</B> smoke bombs remaining.</span>")
 		var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
@@ -270,10 +270,10 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 	var/mob/living/carbon/human/U = affecting
 	if(!U.incorporeal_move)
 		U.incorporeal_move = 2
-		to_chat(U, "\blue You will now phase through solid matter.")
+		to_chat(U, "<span class='notice'>You will now phase through solid matter.</span>")
 	else
 		U.incorporeal_move = 0
-		to_chat(U, "\blue You will no-longer phase through solid matter.")
+		to_chat(U, "<span class='notice'>You will no-longer phase through solid matter.</span>")
 	return
 
 //=======//5 TILE TELEPORT/GIB//=======//

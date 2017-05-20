@@ -37,7 +37,7 @@
 		else if(num_stored_bags < 10)
 			qdel(W)
 			num_stored_bags += 1
-			to_chat(user, "\blue You insert the [W] into the core sampler.")
+			to_chat(user, "<span class='notice'>You insert the [W] into the core sampler.</span>")
 		else
 			to_chat(user, "\red The core sampler can not fit any more bags!")
 	else
@@ -70,13 +70,13 @@
 			filled_bag.put_item_in(R)
 			num_stored_bags--
 
-			to_chat(user, "\blue You take a core sample of the [item_to_sample].")
+			to_chat(user, "<span class='notice'>You take a core sample of the [item_to_sample].</span>")
 	else
 		to_chat(user, "\red You are unable to take a sample of [item_to_sample].")
 
 /obj/item/device/core_sampler/attack_self()
 	if(filled_bag)
-		to_chat(usr, "\blue You eject the full sample bag.")
+		to_chat(usr, "<span class='notice'>You eject the full sample bag.</span>")
 		var/success = 0
 		if(istype(src.loc, /mob))
 			var/mob/M = src.loc

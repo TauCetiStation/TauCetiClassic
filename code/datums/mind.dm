@@ -643,7 +643,7 @@
 						if(I in BP.implants)
 							I.Destroy()
 							break
-				to_chat(H, "\blue <Font size =3><B>Your loyalty implant has been deactivated.</B></FONT>")
+				to_chat(H, "<span class='notice'><Font size =3><B>Your loyalty implant has been deactivated.</B></FONT></span>")
 			if("add")
 				var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 				L.imp_in = H
@@ -718,7 +718,7 @@
 					to_chat(current, "\red <FONT size = 3><B>You have proved your devotion to revoltion! You are a head revolutionary now!</B></FONT>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 				else if(!(src in ticker.mode.head_revolutionaries))
-					to_chat(current, "\blue You are a member of the revolutionaries' leadership now!")
+					to_chat(current, "<span class='notice'>You are a member of the revolutionaries' leadership now!</span>")
 				else
 					return
 				if (ticker.mode.head_revolutionaries.len>0)
@@ -741,7 +741,7 @@
 			if("autoobjectives")
 				ticker.mode.forge_revolutionary_objectives(src)
 				ticker.mode.greet_revolutionary(src,0)
-				to_chat(usr, "\blue The objectives for revolution have been generated and shown to [key]")
+				to_chat(usr, "<span class='notice'>The objectives for revolution have been generated and shown to [key]</span>")
 
 			if("flash")
 				if (!ticker.mode.equip_revolutionary(current))
@@ -920,7 +920,7 @@
 			if("autoobjectives")
 				if(!config.objectives_disabled)
 					ticker.mode.forge_wizard_objectives(src)
-					to_chat(usr, "\blue The objectives for wizard [key] have been generated. You can edit them and anounce manually.")
+					to_chat(usr, "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if (href_list["changeling"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -947,7 +947,7 @@
 			if("autoobjectives")
 				if(!config.objectives_disabled)
 					ticker.mode.forge_changeling_objectives(src)
-				to_chat(usr, "\blue The objectives for changeling [key] have been generated. You can edit them and anounce manually.")
+				to_chat(usr, "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>")
 
 			if("initialdna")
 				if( !changeling || !changeling.absorbed_dna.len )
@@ -984,7 +984,7 @@
 						current.real_name = "Gorlex Maradeurs Operative #[ticker.mode.syndicates.len-1]"
 					special_role = "Syndicate"
 					current.faction = "syndicate"
-					to_chat(current, "\blue You are a Gorlex Maradeurs agent!")
+					to_chat(current, "<span class='notice'>You are a Gorlex Maradeurs agent!</span>")
 
 					if(config.objectives_disabled)
 						to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
@@ -1051,7 +1051,7 @@
 			if("autoobjectives")
 				if (!config.objectives_disabled)
 					ticker.mode.forge_traitor_objectives(src)
-					to_chat(usr, "\blue The objectives for traitor [key] have been generated. You can edit them and anounce manually.")
+					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["shadowling"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -1138,7 +1138,7 @@
 					var/mob/living/carbon/monkey/M = current
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
-						message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]")
+						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]</span>")
 						src = null
 						M = H.monkeyize()
 						src = M.mind
@@ -1153,7 +1153,7 @@
 					var/mob/living/carbon/monkey/M = current
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
-						message_admins("\blue [key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]", 1)
+						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>", 1)
 						src = null
 						M = H.monkeyize()
 						src = M.mind
@@ -1169,7 +1169,7 @@
 								D.cure(0)
 								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
-						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
+						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						var/obj/item/weapon/dnainjector/m2h/m2h = new
 						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
 						src = null
@@ -1271,7 +1271,7 @@
 
 	else if (href_list["obj_announce"])
 		var/obj_count = 1
-		to_chat(current, "\blue Your current objectives:")
+		to_chat(current, "<span class='notice'>Your current objectives:</span>")
 		for(var/datum/objective/objective in objectives)
 			to_chat(current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
@@ -1354,7 +1354,7 @@
 		special_role = "Syndicate"
 		current.faction = "syndicate"
 		assigned_role = "MODE"
-		to_chat(current, "\blue You are a Gorlex Maradeurs agent!")
+		to_chat(current, "<span class='notice'>You are a Gorlex Maradeurs agent!</span>")
 		ticker.mode.forge_syndicate_objectives(src)
 		ticker.mode.greet_syndicate(src)
 

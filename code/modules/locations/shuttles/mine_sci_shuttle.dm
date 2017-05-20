@@ -55,7 +55,7 @@ var/global/area/mine_sci_curr_location = null
 		to_chat(usr, "\red Shuttle not found!")
 		return FALSE
 	if(autopilot.moving)
-		to_chat(usr, "\blue Shuttle is already moving.")
+		to_chat(usr, "<span class='notice'>Shuttle is already moving.</span>")
 		return FALSE
 
 	var/result = FALSE
@@ -66,7 +66,7 @@ var/global/area/mine_sci_curr_location = null
 	else if(href_list["station"])
 		result = autopilot.mine_sci_move_to(STATION_DOCK)
 	if(result)
-		to_chat(usr, "\blue Shuttle recieved message and will be sent shortly.")
+		to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 
 	updateUsrDialog()
 

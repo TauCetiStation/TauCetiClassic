@@ -65,11 +65,11 @@
 			return FALSE
 
 		drone_call_area = t_area
-		to_chat(usr, "\blue You set the area selector to [drone_call_area].")
+		to_chat(usr, "<span class='notice'>You set the area selector to [drone_call_area].</span>")
 
 	else if (href_list["ping"])
 
-		to_chat(usr, "\blue You issue a maintenance request for all active drones, highlighting [drone_call_area].")
+		to_chat(usr, "<span class='notice'>You issue a maintenance request for all active drones, highlighting [drone_call_area].</span>")
 		for(var/mob/living/silicon/robot/drone/D in world)
 			if(D.client && D.stat == CONSCIOUS)
 				to_chat(D, "-- Maintenance drone presence requested in: [drone_call_area].")
@@ -102,7 +102,7 @@
 				continue
 
 			dronefab = fab
-			to_chat(usr, "\blue Drone fabricator located.")
+			to_chat(usr, "<span class='notice'>Drone fabricator located.</span>")
 			return
 
 		to_chat(usr, "\red Unable to locate drone fabricator.")
@@ -118,6 +118,6 @@
 			return
 
 		dronefab.produce_drones = !dronefab.produce_drones
-		to_chat(usr, "\blue You [dronefab.produce_drones ? "enable" : "disable"] drone production in the nearby fabricator.")
+		to_chat(usr, "<span class='notice'>You [dronefab.produce_drones ? </span>"enable" : "disable"] drone production in the nearby fabricator.")
 
 	src.updateUsrDialog()

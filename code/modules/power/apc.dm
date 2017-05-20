@@ -523,7 +523,7 @@
 	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
-			to_chat(user, "\blue You need more welding fuel to complete this task.")
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		to_chat(user, "You start welding the APC frame...")
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
@@ -619,13 +619,13 @@
 						H.nutrition += src.cell.charge/10
 						src.cell.charge = 0
 
-					to_chat(user, "\blue You slot your fingers into the APC interface and siphon off some of the stored charge for your own use.")
+					to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and siphon off some of the stored charge for your own use.</span>")
 					if(src.cell.charge < 0) src.cell.charge = 0
 					if(H.nutrition > 500) H.nutrition = 500
 					src.charging = 1
 
 				else
-					to_chat(user, "\blue You are already fully charged.")
+					to_chat(user, "<span class='notice'>You are already fully charged.</span>")
 			else
 				to_chat(user, "There is no charge to draw from that APC.")
 			return
@@ -653,7 +653,7 @@
 	if(!user)
 		return
 	user.do_attack_animation(src)
-	user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
+	user.visible_message("\red [user.name] slashes at the [src.name]!", "<span class='notice'>You slash at the [src.name]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
 	if(beenhit >= pick(3, 4) && wiresexposed != 1)

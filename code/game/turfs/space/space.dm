@@ -36,10 +36,10 @@
 			if(R.amount < 2)
 				to_chat(user, "\red You don't have enough rods to do that.")
 				return
-			to_chat(user, "\blue You begin to build a catwalk.")
+			to_chat(user, "<span class='notice'>You begin to build a catwalk.</span>")
 			if(do_after(user,30,target = src))
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				to_chat(user, "\blue You build a catwalk!")
+				to_chat(user, "<span class='notice'>You build a catwalk!</span>")
 				R.use(2)
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
 				qdel(L)
@@ -47,7 +47,7 @@
 
 		if(!R.use(1))
 			return
-		to_chat(user, "\blue Constructing support lattice ...")
+		to_chat(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
 		return

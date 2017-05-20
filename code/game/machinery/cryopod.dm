@@ -67,16 +67,16 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	else if(href_list["item"])
 
 		if(frozen_items.len == 0)
-			to_chat(user, "\blue There is nothing to recover from storage.")
+			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
 			return
 
 		var/obj/item/I = input(usr, "Please choose which object to retrieve.","Object recovery",null) as obj in frozen_items
 
 		if(!I || frozen_items.len == 0)
-			to_chat(user, "\blue There is nothing to recover from storage.")
+			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
 			return
 
-		visible_message("\blue The console beeps happily as it disgorges \the [I].", 3)
+		visible_message("<span class='notice'>The console beeps happily as it disgorges \the [I].</span>", 3)
 
 		I.loc = get_turf(src)
 		frozen_items -= I
@@ -84,10 +84,10 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	else if(href_list["allitems"])
 
 		if(frozen_items.len == 0)
-			to_chat(user, "\blue There is nothing to recover from storage.")
+			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
 			return
 
-		visible_message("\blue The console beeps happily as it disgorges the desired objects.", 3)
+		visible_message("<span class='notice'>The console beeps happily as it disgorges the desired objects.</span>", 3)
 
 		for(var/obj/item/I in frozen_items)
 			I.loc = get_turf(src)
@@ -274,7 +274,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 				frozen_crew += "[occupant.real_name]"
 
 				announce.autosay("[occupant.real_name] has entered long-term storage.", "Cryogenic Oversight")
-			visible_message("\blue The crypod hums and hisses as it moves [occupant.real_name] into storage.", 3)
+			visible_message("<span class='notice'>The crypod hums and hisses as it moves [occupant.real_name] into storage.</span>", 3)
 
 			// Delete the mob.
 			qdel(occupant)
@@ -289,7 +289,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	if(istype(G, /obj/item/weapon/grab))
 
 		if(occupant)
-			to_chat(user, "\blue The cryo pod is in use.")
+			to_chat(user, "<span class='notice'>The cryo pod is in use.</span>")
 			return
 
 		if(!ismob(G:affecting))
@@ -323,14 +323,14 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 				else
 					icon_state = "cryosleeper_left_cl"
 
-				to_chat(M, "\blue You feel cool air surround you. You go numb as your senses turn inward.")
-				to_chat(M, "\blue <b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>")
+				to_chat(M, "<span class='notice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
+				to_chat(M, "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
 				occupant = M
 				time_entered = world.time
 
 				// Book keeping!
 				log_admin("[key_name_admin(M)] has entered a stasis pod.")
-				message_admins("\blue [key_name_admin(M)] has entered a stasis pod.")
+				message_admins("<span class='notice'>[key_name_admin(M)] has entered a stasis pod.</span>")
 
 				//Despawning occurs when process() is called with an occupant without a client.
 				src.add_fingerprint(M)
@@ -360,7 +360,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		return
 
 	if(src.occupant)
-		to_chat(usr, "\blue <B>The cryo pod is in use.</B>")
+		to_chat(usr, "<span class='notice'><B>The cryo pod is in use.</B></span>")
 		return
 
 	for(var/mob/living/carbon/slime/M in range(1,usr))
@@ -376,7 +376,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 			return
 
 		if(src.occupant)
-			to_chat(usr, "\blue <B>The cryo pod is in use.</B>")
+			to_chat(usr, "<span class='notice'><B>The cryo pod is in use.</B></span>")
 			return
 
 		usr.stop_pulling()
@@ -390,8 +390,8 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		else
 			icon_state = "cryosleeper_left_cl"
 
-		to_chat(usr, "\blue You feel cool air surround you. You go numb as your senses turn inward.")
-		to_chat(usr, "\blue <b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>")
+		to_chat(usr, "<span class='notice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
+		to_chat(usr, "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
 		occupant = usr
 		time_entered = world.time
 

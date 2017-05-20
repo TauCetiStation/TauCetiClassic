@@ -46,10 +46,10 @@
 	if (usr.stat != CONSCIOUS)
 		return
 	if (src.occupant)
-		to_chat(usr, "\blue <B>The scanner is already occupied!</B>")
+		to_chat(usr, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 		return
 	if (usr.abiotic())
-		to_chat(usr, "\blue <B>Subject cannot have abiotic items on.</B>")
+		to_chat(usr, "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
 		return
 	usr.client.perspective = EYE_PERSPECTIVE
 	usr.client.eye = src
@@ -81,10 +81,10 @@
 	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
 	if (src.occupant)
-		to_chat(user, "\blue <B>The scanner is already occupied!</B>")
+		to_chat(user, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 		return
 	if (G.affecting.abiotic())
-		to_chat(user, "\blue <B>Subject cannot have abiotic items on.</B>")
+		to_chat(user, "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
 		return
 	var/mob/M = G.affecting
 	if (M.client)

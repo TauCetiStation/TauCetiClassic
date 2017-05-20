@@ -80,10 +80,10 @@ REAGENT SCANNER
 		to_chat(user, text("\red You try to analyze the floor's vitals!"))
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)
-		user.show_message(text("\blue Analyzing Results for The floor:\n&emsp; Overall Status: Healthy"), 1)
-		user.show_message(text("\blue &emsp; Damage Specifics: [0]-[0]-[0]-[0]"), 1)
-		user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
-		user.show_message("\blue Body Temperature: ???", 1)
+		user.show_message(text("<span class='notice'>Analyzing Results for The floor:\n&emsp; Overall Status: Healthy</span>"), 1)
+		user.show_message(text("<span class='notice'>&emsp; Damage Specifics: [0]-[0]-[0]-[0]</span>"), 1)
+		user.show_message("<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span>", 1)
+		user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(usr, "\red You don't have the dexterity to do this!")
@@ -92,12 +92,12 @@ REAGENT SCANNER
 
 	if (!istype(M, /mob/living/carbon) || (ishuman(M) && (M:species.flags[IS_SYNTHETIC])))
 		//these sensors are designed for organic life
-		user.show_message("\blue Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR")
+		user.show_message("<span class='notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span>")
 		user.show_message("&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
 		user.show_message("&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font>")
-		user.show_message("\blue Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
+		user.show_message("<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
 		user.show_message("\red <b>Warning: Blood Level ERROR: --% --cl.\blue Type: ERROR")
-		user.show_message("\blue Subject's pulse: <font color='red'>-- bpm.</font>")
+		user.show_message("<span class='notice'>Subject's pulse: <font color='red'>-- bpm.</font></span>")
 		return
 
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
@@ -107,27 +107,27 @@ REAGENT SCANNER
 	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
-		user.show_message("\blue Analyzing Results for [M]:\n&emsp; Overall Status: dead")
+		user.show_message("<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: dead</span>")
 	else
-		user.show_message("\blue Analyzing Results for [M]:\n&emsp; Overall Status: [M.stat > 1 ? "dead" : "[M.health - M.halloss]% healthy"]")
+		user.show_message("<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: [M.stat > 1 ? </span>"dead" : "[M.health - M.halloss]% healthy"]")
 	user.show_message("&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
 	user.show_message("&emsp; Damage Specifics: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font>")
-	user.show_message("\blue Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
+	user.show_message("<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
-		user.show_message("\blue Time of Death: [M.tod]")
+		user.show_message("<span class='notice'>Time of Death: [M.tod]</span>")
 	if(istype(M, /mob/living/carbon/human) && mode == 1)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
-		user.show_message("\blue Localized Damage, Brute/Burn:",1)
+		user.show_message("<span class='notice'>Localized Damage, Brute/Burn:</span>",1)
 		if(length(damaged)>0)
 			for(var/datum/organ/external/BP in damaged)
-				user.show_message(text("\blue &emsp; []: [][]\blue - []",	\
+				user.show_message(text("<span class='notice'>&emsp; []: [][]\blue - []</span>",	\
 				capitalize(BP.name),					\
 				(BP.brute_dam > 0)	?	"\red [BP.brute_dam]"							:0,		\
 				(BP.status & ORGAN_BLEEDING)?"\red <b>\[Bleeding\]</b>":"&emsp;", 		\
 				(BP.burn_dam > 0)	?	"<font color='#FFA500'>[BP.burn_dam]</font>"	:0),1)
 		else
-			user.show_message("\blue &emsp; Limbs are OK.",1)
+			user.show_message("<span class='notice'>&emsp; Limbs are OK.</span>",1)
 
 	OX = M.getOxyLoss() > 50 ? 	"<font color='blue'><b>Severe oxygen deprivation detected</b></font>" 		: 	"Subject bloodstream oxygen level normal"
 	TX = M.getToxLoss() > 50 ? 	"<font color='green'><b>Dangerous amount of toxins detected</b></font>" 	: 	"Subject bloodstream toxin level minimal"
@@ -152,7 +152,7 @@ REAGENT SCANNER
 		if(!D.hidden[SCANNER])
 			user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
 	if (M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
-		user.show_message("\blue Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.")
+		user.show_message("<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount(</span>"inaprovaline")] units of rejuvenation chemicals.")
 	if (M.has_brain_worms())
 		user.show_message("\red Subject suffering from aberrant brain activity. Recommend further scanning.")
 	else if (M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
@@ -192,8 +192,8 @@ REAGENT SCANNER
 			else if(blood_volume <= 336)
 				user.show_message("\red <b>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.\blue Type: [blood_type]")
 			else
-				user.show_message("\blue Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]")
-		user.show_message("\blue Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font>")
+				user.show_message("<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span>")
+		user.show_message("<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? </span>"red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font>")
 	src.add_fingerprint(user)
 	return
 
@@ -319,9 +319,9 @@ REAGENT SCANNER
 	var/pressure = environment.return_pressure()
 	var/total_moles = environment.total_moles()
 
-	user.show_message("\blue <B>Results:</B>", 1)
+	user.show_message("<span class='notice'><B>Results:</B></span>", 1)
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		user.show_message("\blue Pressure: [round(pressure,0.1)] kPa", 1)
+		user.show_message("<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>", 1)
 	else
 		user.show_message("\red Pressure: [round(pressure,0.1)] kPa", 1)
 	if(total_moles)
@@ -332,19 +332,19 @@ REAGENT SCANNER
 
 		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 		if(abs(n2_concentration - N2STANDARD) < 20)
-			user.show_message("\blue Nitrogen: [round(n2_concentration*100)]%", 1)
+			user.show_message("<span class='notice'>Nitrogen: [round(n2_concentration*100)]%</span>", 1)
 		else
 			user.show_message("\red Nitrogen: [round(n2_concentration*100)]%", 1)
 
 		if(abs(o2_concentration - O2STANDARD) < 2)
-			user.show_message("\blue Oxygen: [round(o2_concentration*100)]%", 1)
+			user.show_message("<span class='notice'>Oxygen: [round(o2_concentration*100)]%</span>", 1)
 		else
 			user.show_message("\red Oxygen: [round(o2_concentration*100)]%", 1)
 
 		if(co2_concentration > 0.01)
 			user.show_message("\red CO2: [round(co2_concentration*100)]%", 1)
 		else
-			user.show_message("\blue CO2: [round(co2_concentration*100)]%", 1)
+			user.show_message("<span class='notice'>CO2: [round(co2_concentration*100)]%</span>", 1)
 
 		if(phoron_concentration > 0.01)
 			user.show_message("\red Phoron: [round(phoron_concentration*100)]%", 1)
@@ -352,7 +352,7 @@ REAGENT SCANNER
 		if(unknown_concentration > 0.01)
 			user.show_message("\red Unknown: [round(unknown_concentration*100)]%", 1)
 
-		user.show_message("\blue Temperature: [round(environment.temperature-T0C)]&deg;C", 1)
+		user.show_message("<span class='notice'>Temperature: [round(environment.temperature-T0C)]&deg;C</span>", 1)
 
 	src.add_fingerprint(user)
 	return
@@ -474,11 +474,11 @@ REAGENT SCANNER
 				else
 					recent_fail = 1
 		if(dat)
-			to_chat(user, "\blue Chemicals found: [dat]")
+			to_chat(user, "<span class='notice'>Chemicals found: [dat]</span>")
 		else
-			to_chat(user, "\blue No active chemical agents found in [O].")
+			to_chat(user, "<span class='notice'>No active chemical agents found in [O].</span>")
 	else
-		to_chat(user, "\blue No significant chemical agents found in [O].")
+		to_chat(user, "<span class='notice'>No significant chemical agents found in [O].</span>")
 
 	return
 
@@ -507,11 +507,11 @@ REAGENT SCANNER
 		if(!active)
 			active = 1
 			search()
-			to_chat(usr, "\blue You activate the [src.name]")
+			to_chat(usr, "<span class='notice'>You activate the [src.name]</span>")
 		else
 			active = 0
 			icon_state = "locoff"
-			to_chat(usr, "\blue You deactivate the [src.name]")
+			to_chat(usr, "<span class='notice'>You deactivate the [src.name]</span>")
 
 	proc/search()
 		if(!active) return
@@ -547,6 +547,6 @@ REAGENT SCANNER
 /obj/item/device/occult_scanner/afterattack(mob/M, mob/user)
 	if(user && user.client)
 		if(ishuman(M) && M.stat == DEAD)
-			user.visible_message("\blue [user] scans [M], the air around them humming gently.")
-			user.show_message("\blue [M] was [pick("possessed", "devoured", "destroyed", "murdered", "captured")] by [pick("Cthulhu", "Mi-Go", "Elder God", "dark spirit", "Outsider", "unknown alien creature")]", 1)
+			user.visible_message("<span class='notice'>[user] scans [M], the air around them humming gently.</span>")
+			user.show_message("<span class='notice'>[M] was [pick(</span>"possessed", "devoured", "destroyed", "murdered", "captured")] by [pick("Cthulhu", "Mi-Go", "Elder God", "dark spirit", "Outsider", "unknown alien creature")]", 1)
 		else	return

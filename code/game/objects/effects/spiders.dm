@@ -150,7 +150,7 @@
 							return
 
 						if(prob(50))
-							src.visible_message("\blue You hear something squeezing through the ventilation ducts.",2)
+							src.visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
 						sleep(travel_time)
 
 						if(!exit_vent || exit_vent.welded)
@@ -172,7 +172,7 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom, 5)
 			if(prob(25))
-				src.visible_message("\blue \the [src] skitters[pick(" away"," around","")].")
+				src.visible_message("<span class='notice'>\the [src] skitters[pick(</span>" away"," around","")].")
 	else if(prob(5))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
@@ -182,7 +182,7 @@
 				break
 
 	if(prob(1))
-		src.visible_message("\blue \the [src] chitters.")
+		src.visible_message("<span class='notice'>\the [src] chitters.</span>")
 	if(isturf(loc) && amount_grown > 0)
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)

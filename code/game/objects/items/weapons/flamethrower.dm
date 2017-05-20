@@ -116,7 +116,7 @@
 		var/pressure = ptank.air_contents.return_pressure()
 		var/total_moles = ptank.air_contents.total_moles()
 
-		to_chat(user, "\blue Results of analysis of [bicon(icon)]")
+		to_chat(user, "<span class='notice'>Results of analysis of [bicon(icon)]</span>")
 		if(total_moles>0)
 			var/o2_concentration = ptank.air_contents.oxygen/total_moles
 			var/n2_concentration = ptank.air_contents.nitrogen/total_moles
@@ -125,16 +125,16 @@
 
 			var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 
-			to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
-			to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
-			to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
-			to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
-			to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
+			to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
+			to_chat(user, "<span class='notice'>Nitrogen: [round(n2_concentration*100)]%</span>")
+			to_chat(user, "<span class='notice'>Oxygen: [round(o2_concentration*100)]%</span>")
+			to_chat(user, "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>")
+			to_chat(user, "<span class='notice'>Phoron: [round(phoron_concentration*100)]%</span>")
 			if(unknown_concentration>0.01)
 				to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
-			to_chat(user, "\blue Temperature: [round(ptank.air_contents.temperature-T0C)]&deg;C")
+			to_chat(user, "<span class='notice'>Temperature: [round(ptank.air_contents.temperature-T0C)]&deg;C</span>")
 		else
-			to_chat(user, "\blue Tank is empty!")
+			to_chat(user, "<span class='notice'>Tank is empty!</span>")
 		return
 	..()
 	return

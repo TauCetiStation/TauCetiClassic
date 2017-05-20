@@ -16,7 +16,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
-					to_chat(user, "\blue You wrench the frame into place.")
+					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = 1
 					state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
@@ -27,31 +27,31 @@
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					if(!src || !WT.remove_fuel(0, user)) return
-					to_chat(user, "\blue You deconstruct the frame.")
+					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 					new /obj/item/stack/sheet/plasteel( loc, 4)
 					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
-					to_chat(user, "\blue You unfasten the frame.")
+					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
 				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				to_chat(user, "\blue You place the circuit board inside the frame.")
+				to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				icon_state = "1"
 				circuit = P
 				user.drop_item()
 				P.loc = src
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				to_chat(user, "\blue You screw the circuit board into place.")
+				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				state = 2
 				icon_state = "2"
 			if(istype(P, /obj/item/weapon/crowbar) && circuit)
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-				to_chat(user, "\blue You remove the circuit board.")
+				to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				state = 1
 				icon_state = "0"
 				circuit.loc = loc
@@ -59,7 +59,7 @@
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				to_chat(user, "\blue You unfasten the circuit board.")
+				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				state = 1
 				icon_state = "1"
 			if(istype(P, /obj/item/weapon/cable_coil))
@@ -68,7 +68,7 @@
 					if(do_after(user, 20, target = src))
 						P:amount -= 5
 						if(!P:amount) qdel(P)
-						to_chat(user, "\blue You add cables to the frame.")
+						to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 						state = 3
 						icon_state = "3"
 		if(3)
@@ -77,7 +77,7 @@
 					to_chat(user, "Get that brain out of there first")
 				else
 					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
-					to_chat(user, "\blue You remove the cables.")
+					to_chat(user, "<span class='notice'>You remove the cables.</span>")
 					state = 2
 					icon_state = "2"
 					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil/red(loc)
@@ -90,7 +90,7 @@
 						if (P)
 							P:amount -= 2
 							if(!P:amount) qdel(P)
-							to_chat(user, "\blue You put in the glass panel.")
+							to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
 							state = 4
 							icon_state = "4"
 
@@ -142,7 +142,7 @@
 
 			if(istype(P, /obj/item/weapon/crowbar) && brain)
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-				to_chat(user, "\blue You remove the brain.")
+				to_chat(user, "<span class='notice'>You remove the brain.</span>")
 				brain.loc = loc
 				brain = null
 				icon_state = "3"
@@ -150,7 +150,7 @@
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-				to_chat(user, "\blue You remove the glass panel.")
+				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				state = 3
 				if (brain)
 					icon_state = "3b"
@@ -161,7 +161,7 @@
 
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				to_chat(user, "\blue You connect the monitor.")
+				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				if(!brain)
 					var/open_for_latejoin = alert(user, "Would you like this core to be open for latejoining AIs?", "Latejoin", "Yes", "Yes", "No") == "Yes"
 					var/obj/structure/AIcore/deactivated/D = new(loc)
@@ -225,7 +225,7 @@ That prevents a few funky behaviors.
 								C.icon_state = "aicard-full"
 							T.cancel_camera()
 							to_chat(T, "You have been downloaded to a mobile storage device. Remote device connection severed.")
-							to_chat(U, "\blue <b>Transfer successful</b>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+							to_chat(U, "<span class='notice'><b>Transfer successful</b>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.</span>")
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(C.AI)//If there is an AI on card.
@@ -248,7 +248,7 @@ That prevents a few funky behaviors.
 								C.AI = T
 								T.cancel_camera()
 								to_chat(T, "You have been downloaded to a mobile storage device. Remote device connection severed.")
-								to_chat(U, "\blue <b>Transfer successful</b>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+								to_chat(U, "<span class='notice'><b>Transfer successful</b>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.</span>")
 
 			if("INACTIVE")//Inactive AI object.
 				var/obj/structure/AIcore/deactivated/T = target
@@ -265,7 +265,7 @@ That prevents a few funky behaviors.
 							C.overlays.Cut()
 							A.cancel_camera()
 							to_chat(A, "You have been uploaded to a stationary terminal. Remote device connection restored.")
-							to_chat(U, "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed.")
+							to_chat(U, "<span class='notice'><b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed.</span>")
 							qdel(T)
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
@@ -276,7 +276,7 @@ That prevents a few funky behaviors.
 							A.loc = T.loc
 							A.cancel_camera()
 							to_chat(A, "You have been uploaded to a stationary terminal. Remote device connection restored.")
-							to_chat(U, "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+							to_chat(U, "<span class='notice'><b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.</span>")
 							qdel(T)
 			if("AIFIXER")//AI Fixer terminal.
 				var/obj/machinery/computer/aifixer/T = target
@@ -300,7 +300,7 @@ That prevents a few funky behaviors.
 								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
 								A.cancel_camera()
 								to_chat(A, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
-								to_chat(U, "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+								to_chat(U, "<span class='notice'><b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.</span>")
 						else
 							if(!C.contents.len && T.occupant && !T.active)
 								C.name = "inteliCard - [T.occupant.name]"
@@ -312,7 +312,7 @@ That prevents a few funky behaviors.
 									C.icon_state = "aicard-full"
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
 								to_chat(T.occupant, "You have been downloaded to a mobile storage device. Still no remote access.")
-								to_chat(U, "\blue <b>Transfer successful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+								to_chat(U, "<span class='notice'><b>Transfer successful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.</span>")
 								T.occupant.loc = C
 								T.occupant.cancel_camera()
 								T.occupant = null
@@ -337,7 +337,7 @@ That prevents a few funky behaviors.
 								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
 								A.cancel_camera()
 								to_chat(A, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
-								to_chat(U, "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+								to_chat(U, "<span class='notice'><b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.</span>")
 						else
 							if(!C.AI && T.occupant && !T.active)
 								if (T.occupant.stat)
@@ -346,7 +346,7 @@ That prevents a few funky behaviors.
 									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
 									to_chat(T.occupant, "You have been downloaded to a mobile storage device. Still no remote access.")
-									to_chat(U, "\blue <b>Transfer successful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+									to_chat(U, "<span class='notice'><b>Transfer successful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.</span>")
 									T.occupant.loc = C
 									T.occupant.cancel_camera()
 									T.occupant = null
@@ -376,7 +376,7 @@ That prevents a few funky behaviors.
 									T.AI = null
 									A.cancel_camera()
 									to_chat(A, "You have been uploaded to a mobile storage device.")
-									to_chat(U, "\blue <b>SUCCESS</b>: \black [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory.")
+									to_chat(U, "<span class='notice'><b>SUCCESS</b>: \black [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory.</span>")
 							else//If host AI is empty.
 								if(C.flush)//If the other card is flushing.
 									to_chat(U, "\red <b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol.")
@@ -389,7 +389,7 @@ That prevents a few funky behaviors.
 										T.AI = A_T
 										A_T.cancel_camera()
 										to_chat(A_T, "You have been uploaded to a mobile storage device.")
-										to_chat(U, "\blue <b>SUCCESS</b>: \black [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host.")
+										to_chat(U, "<span class='notice'><b>SUCCESS</b>: \black [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host.</span>")
 									else if(A_T)//If the target AI is dead. Else just go to return since nothing would happen if both are empty.
 										to_chat(U, "\red <b>ERROR</b>: \black [A_T.name] data core is corrupted. Unable to install.")
 	else

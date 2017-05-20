@@ -20,7 +20,7 @@
 	if (istype(W, /obj/item/stack/rods))
 		if (W:amount >= 4)
 			new /obj/item/weapon/table_parts/reinforced( user.loc )
-			to_chat(user, "\blue You reinforce the [name].")
+			to_chat(user, "<span class='notice'>You reinforce the [name].</span>")
 			W:use(4)
 			qdel(src)
 		else if (W:amount < 4)

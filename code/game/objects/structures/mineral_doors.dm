@@ -124,12 +124,12 @@
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
 				if(do_after(user, 60, target = src))
-					to_chat(user, "\blue You dissasembled [src]!")
+					to_chat(user, "<span class='notice'>You dissasembled [src]!</span>")
 					Dismantle()
 				else
 					return
 			else
-				to_chat(user, "\blue You need more welding fuel.")
+				to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
 				return
 		else if (istype(W, /obj/item/weapon/wrench))
 			if(!istype(src, /obj/structure/mineral_door/wood))
@@ -139,7 +139,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
 			if(do_after(user, 40, target = src))
-				to_chat(user, "\blue You dissasembled [src]!")
+				to_chat(user, "<span class='notice'>You dissasembled [src]!</span>")
 				Dismantle()
 			else
 				return

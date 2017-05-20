@@ -35,12 +35,12 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (target.overeatduration > 0)
-			user.visible_message("\blue [user] cuts [target]'s excess fat loose with \the [tool].",		\
-			"\blue You have cut [target]'s excess fat loose with \the [tool].")
+			user.visible_message("<span class='notice'>[user] cuts [target]'s excess fat loose with \the [tool].</span>",		\
+			"<span class='notice'>You have cut [target]'s excess fat loose with \the [tool].</span>")
 			target.op_stage.lipoplasty = 1
 		else
-			user.visible_message("\blue Unfortunately, there is nothing to cut on [target] with \the [tool].",		\
-			"\blue Unfortunately, there is nothing to cut on [target] with \the [tool].")
+			user.visible_message("<span class='notice'>Unfortunately, there is nothing to cut on [target] with \the [tool].</span>",		\
+			"<span class='notice'>Unfortunately, there is nothing to cut on [target] with \the [tool].</span>")
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cutting [target]'s chest with \the [tool]!" , \
@@ -72,8 +72,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		target.op_stage.lipoplasty = 0
 		if (target.overeatduration > 0)
-			user.visible_message("\blue [user] extracts [target]'s fat with \the [tool].",		\
-			"\blue You have removed [target]'s fat loose with \the [tool].")
+			user.visible_message("<span class='notice'>[user] extracts [target]'s fat with \the [tool].</span>",		\
+			"<span class='notice'>You have removed [target]'s fat loose with \the [tool].</span>")
 			var/removednutriment = max(75, (target.nutrition + target.overeatduration) - 450)
 			target.nutrition = 450
 			target.overeatduration = 0
@@ -89,8 +89,8 @@
 			meatslab.loc = get_turf(target)
 			playsound(target.loc, 'sound/effects/splat.ogg', 50, 1)
 		else
-			user.visible_message("\blue Unfortunately, there is nothing to extract of [target]'s with \the [tool].",		\
-			"\blue Unfortunately, there is nothing to extract of [target] with \the [tool].")
+			user.visible_message("<span class='notice'>Unfortunately, there is nothing to extract of [target]'s with \the [tool].</span>",		\
+			"<span class='notice'>Unfortunately, there is nothing to extract of [target] with \the [tool].</span>")
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cutting [target]'s belly with \the [tool]!" , \
