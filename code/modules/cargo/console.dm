@@ -228,7 +228,7 @@
 
 /obj/machinery/computer/cargo/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !hacked)
-		to_chat(user, "\blue Special supplies unlocked.")
+		to_chat(user, "<span class='notice'>Special supplies unlocked.</span>")
 		hacked = TRUE
 		contraband = TRUE
 		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!",

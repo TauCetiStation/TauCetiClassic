@@ -192,7 +192,7 @@
 	if(cult_mind in cult)
 		cult -= cult_mind
 		cult_mind.current.Paralyse(5)
-		to_chat(cult_mind.current, "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>")
+		to_chat(cult_mind.current, "<span class='warning'><FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT></span>")
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
 		if(show_message)

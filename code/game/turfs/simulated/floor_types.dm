@@ -63,7 +63,7 @@
 	if(!user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		to_chat(user, "\blue Removing rods...")
+		to_chat(user, "<span class='notice'>Removing rods...</span>")
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30, target = src))
 			new /obj/item/stack/rods(src, 2)

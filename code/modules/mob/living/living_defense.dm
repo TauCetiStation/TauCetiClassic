@@ -24,7 +24,7 @@
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
-			src.visible_message("\red [src] triggers their deadman's switch!")
+			src.visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
 			signaler.signal()
 
 	var/absorb = run_armor_check(def_zone, P.flag)

@@ -35,14 +35,14 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] has cut open [target]'s face and neck with \the [tool]." , \
-		"\blue You have cut open [target]'s face and neck with \the [tool].",)
+		user.visible_message("<span class='notice'>[user] has cut open [target]'s face and neck with \the [tool].</span>" , \
+		"<span class='notice'>You have cut open [target]'s face and neck with \the [tool].</span>",)
 		target.op_stage.face = 1
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, slicing [target]'s throat wth \the [tool]!" , \
-		"\red Your hand slips, slicing [target]'s throat wth \the [tool]!" )
+		user.visible_message("<span class='warning'>[user]'s hand slips, slicing [target]'s throat wth \the [tool]!</span>" , \
+		"<span class='warning'>Your hand slips, slicing [target]'s throat wth \the [tool]!</span>" )
 		BP.createwound(CUT, 60)
 		target.losebreath += 10
 
@@ -68,13 +68,13 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] mends [target]'s vocal cords with \the [tool].", \
-		"\blue You mend [target]'s vocal cords with \the [tool].")
+		user.visible_message("<span class='notice'>[user] mends [target]'s vocal cords with \the [tool].</span>", \
+		"<span class='notice'>You mend [target]'s vocal cords with \the [tool].</span>")
 		target.op_stage.face = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, clamping [target]'s trachea shut for a moment with \the [tool]!", \
-		"\red Your hand slips, clamping [user]'s trachea shut for a moment with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, clamping [target]'s trachea shut for a moment with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, clamping [user]'s trachea shut for a moment with \the [tool]!</span>")
 		target.losebreath += 10
 
 /datum/surgery_step/face/fix_face
@@ -97,14 +97,14 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] pulls the skin on [target]'s face back in place with \the [tool].",	\
-		"\blue You pull the skin on [target]'s face back in place with \the [tool].")
+		user.visible_message("<span class='notice'>[user] pulls the skin on [target]'s face back in place with \the [tool].</span>",	\
+		"<span class='notice'>You pull the skin on [target]'s face back in place with \the [tool].</span>")
 		target.op_stage.face = 3
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, tearing skin on [target]'s face with \the [tool]!", \
-		"\red Your hand slips, tearing skin on [target]'s face with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, tearing skin on [target]'s face with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, tearing skin on [target]'s face with \the [tool]!</span>")
 		target.apply_damage(10, BRUTE, BP, sharp = 1, sharp = 1)
 
 /datum/surgery_step/face/cauterize
@@ -129,8 +129,8 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("\blue [user] cauterizes the incision on [target]'s face and neck with \the [tool].", \
-		"\blue You cauterize the incision on [target]'s face and neck with \the [tool].")
+		user.visible_message("<span class='notice'>[user] cauterizes the incision on [target]'s face and neck with \the [tool].</span>", \
+		"<span class='notice'>You cauterize the incision on [target]'s face and neck with \the [tool].</span>")
 		BP.open = 0
 		BP.status &= ~ORGAN_BLEEDING
 		if (target.op_stage.face == 3)
@@ -140,6 +140,6 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, leaving a small burn on [target]'s face with \the [tool]!", \
-		"\red Your hand slips, leaving a small burn on [target]'s face with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, leaving a small burn on [target]'s face with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, leaving a small burn on [target]'s face with \the [tool]!</span>")
 		target.apply_damage(4, BURN, BP)

@@ -36,14 +36,14 @@
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	var/t = "\blue Coordinates: [x],[y] \n"
-	t+= "\red Temperature: [environment.temperature] \n"
-	t+= "\blue Nitrogen: [environment.nitrogen] \n"
-	t+= "\blue Oxygen: [environment.oxygen] \n"
-	t+= "\blue Phoron : [environment.phoron] \n"
-	t+= "\blue Carbon Dioxide: [environment.carbon_dioxide] \n"
+	var/t = "<span class='notice'>Coordinates: [x],[y] \n</span>"
+	t+= "<span class='warning'>Temperature: [environment.temperature] \n</span>"
+	t+= "<span class='notice'>Nitrogen: [environment.nitrogen] \n</span>"
+	t+= "<span class='notice'>Oxygen: [environment.oxygen] \n</span>"
+	t+= "<span class='notice'>Phoron : [environment.phoron] \n</span>"
+	t+= "<span class='notice'>Carbon Dioxide: [environment.carbon_dioxide] \n</span>"
 	for(var/datum/gas/trace_gas in environment.trace_gases)
-		to_chat(usr, "\blue [trace_gas.type]: [trace_gas.moles] \n")
+		to_chat(usr, "<span class='notice'>[trace_gas.type]: [trace_gas.moles] \n</span>")
 
 	usr.show_message(t, 1)
 
@@ -299,9 +299,9 @@
 	if(flavor_text && flavor_text != "")
 		var/msg = flavor_text
 		if(lentext(msg) <= 40)
-			return "\blue [msg]"
+			return "<span class='notice'>[msg]</span>"
 		else
-			return "\blue [copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>"
+			return "<span class='notice'>[copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a></span>"
 
 //mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view())
@@ -352,20 +352,20 @@
 	set category = "OOC"
 
 	if(!abandon_allowed)
-		to_chat(usr, "\blue Respawn is disabled.")
+		to_chat(usr, "<span class='notice'>Respawn is disabled.</span>")
 		return
 	if(stat != DEAD || !ticker)
-		to_chat(usr, "\blue <B>You must be dead to use this!</B>")
+		to_chat(usr, "<span class='notice'><B>You must be dead to use this!</B></span>")
 		return
 	if(ticker && istype(ticker.mode, /datum/game_mode/meteor))
-		to_chat(usr, "\blue Respawn is disabled for this roundtype.")
+		to_chat(usr, "<span class='notice'>Respawn is disabled for this roundtype.</span>")
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
 		if(istype(src,/mob/dead/observer))
 			var/mob/dead/observer/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-				to_chat(usr, "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>")
+				to_chat(usr, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
 				return
 		var/deathtimeminutes = round(deathtime / 600)
 		var/pluralcheck = "minute"
@@ -386,7 +386,7 @@
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
-	to_chat(usr, "\blue <B>Make sure to play a different character, and please roleplay correctly!</B>")
+	to_chat(usr, "<span class='notice'><B>Make sure to play a different character, and please roleplay correctly!</B></span>")
 
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
@@ -415,7 +415,7 @@
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = TRUE
 	else if(stat != DEAD || istype(src, /mob/new_player) || jobban_isbanned(src, "Observer"))
-		to_chat(usr, "\blue You must be observing to use this!")
+		to_chat(usr, "<span class='notice'>You must be observing to use this!</span>")
 		return
 
 	if(is_admin && stat == DEAD)

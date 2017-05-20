@@ -153,7 +153,7 @@
 	if(user.environment_smash)
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		user.do_attack_animation(src)
-		visible_message("\red [user] destroys the [src]. ")
+		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
 		for(var/atom/movable/A as mob|obj in src)
 			A.forceMove(src.loc)
 		qdel(src)

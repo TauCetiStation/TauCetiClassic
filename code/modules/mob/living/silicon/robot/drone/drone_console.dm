@@ -25,7 +25,7 @@
 		return
 
 	if(!allowed(user) || istype(user, /mob/living/silicon/robot/drone))
-		to_chat(user, "\red Access denied.")
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
 	user.set_machine(src)
@@ -53,7 +53,7 @@
 		return
 
 	if(!allowed(usr))
-		to_chat(usr, "\red Access denied.")
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE
 
 	if (href_list["setarea"])
@@ -65,11 +65,11 @@
 			return FALSE
 
 		drone_call_area = t_area
-		to_chat(usr, "\blue You set the area selector to [drone_call_area].")
+		to_chat(usr, "<span class='notice'>You set the area selector to [drone_call_area].</span>")
 
 	else if (href_list["ping"])
 
-		to_chat(usr, "\blue You issue a maintenance request for all active drones, highlighting [drone_call_area].")
+		to_chat(usr, "<span class='notice'>You issue a maintenance request for all active drones, highlighting [drone_call_area].</span>")
 		for(var/mob/living/silicon/robot/drone/D in world)
 			if(D.client && D.stat == CONSCIOUS)
 				to_chat(D, "-- Maintenance drone presence requested in: [drone_call_area].")
@@ -79,7 +79,7 @@
 		var/mob/living/silicon/robot/drone/D = locate(href_list["resync"])
 
 		if(D.stat != DEAD)
-			to_chat(usr, "\red You issue a law synchronization directive for the drone.")
+			to_chat(usr, "<span class='warning'>You issue a law synchronization directive for the drone.</span>")
 			D.law_resync()
 
 	else if (href_list["shutdown"])
@@ -87,7 +87,7 @@
 		var/mob/living/silicon/robot/drone/D = locate(href_list["shutdown"])
 
 		if(D.stat != DEAD)
-			to_chat(usr, "\red You issue a kill command for the unfortunate drone.")
+			to_chat(usr, "<span class='warning'>You issue a kill command for the unfortunate drone.</span>")
 			message_admins("[key_name_admin(usr)] issued kill order for drone [key_name_admin(D)] from control console.")
 			log_game("[key_name(usr)] issued kill order for [key_name(src)] from control console.")
 			D.shut_down()
@@ -102,10 +102,10 @@
 				continue
 
 			dronefab = fab
-			to_chat(usr, "\blue Drone fabricator located.")
+			to_chat(usr, "<span class='notice'>Drone fabricator located.</span>")
 			return
 
-		to_chat(usr, "\red Unable to locate drone fabricator.")
+		to_chat(usr, "<span class='warning'>Unable to locate drone fabricator.</span>")
 
 	else if (href_list["toggle_fab"])
 
@@ -114,10 +114,10 @@
 
 		if(get_dist(src,dronefab) > 3)
 			dronefab = null
-			to_chat(usr, "\red Unable to locate drone fabricator.")
+			to_chat(usr, "<span class='warning'>Unable to locate drone fabricator.</span>")
 			return
 
 		dronefab.produce_drones = !dronefab.produce_drones
-		to_chat(usr, "\blue You [dronefab.produce_drones ? "enable" : "disable"] drone production in the nearby fabricator.")
+		to_chat(usr, "<span class='notice'>You [dronefab.produce_drones ? "enable" : "disable"] drone production in the nearby fabricator.</span>")
 
 	src.updateUsrDialog()

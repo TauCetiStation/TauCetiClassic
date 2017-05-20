@@ -711,7 +711,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(!isnull(P))
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
-						U.show_message("\blue Virus sent!", 1)
+						U.show_message("<span class='notice'>Virus sent!</span>", 1)
 						P.honkamt = (rand(15,20))
 				else
 					to_chat(U, "PDA not found.")
@@ -724,7 +724,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(!isnull(P))
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
-						U.show_message("\blue Virus sent!", 1)
+						U.show_message("<span class='notice'>Virus sent!</span>", 1)
 						P.message_silent = 1
 						P.ttone = "silence"
 				else
@@ -768,10 +768,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 				if(!(useMS && useTC))
-					U.show_message("\red An error flashes on your [src]: Connection unavailable", 1)
+					U.show_message("<span class='warning'>An error flashes on your [src]: Connection unavailable</span>", 1)
 					return
 				if(useTC != 2) // Does our recepient have a broadcaster on their level?
-					U.show_message("\red An error flashes on your [src]: Recipient unavailable", 1)
+					U.show_message("<span class='warning'>An error flashes on your [src]: Recipient unavailable</span>", 1)
 					return
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				if(!isnull(P))
@@ -790,15 +790,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 								difficulty += 3
 
 						if(prob(difficulty))
-							U.show_message("\red An error flashes on your [src].", 1)
+							U.show_message("<span class='warning'>An error flashes on your [src].</span>", 1)
 						else if (prob(difficulty * 7))
-							U.show_message("\red Energy feeds back into your [src]!", 1)
+							U.show_message("<span class='warning'>Energy feeds back into your [src]!</span>", 1)
 							ui.close()
 							detonate_act(src)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[U.x];Y=[U.y];Z=[U.z]'>JMP</a>)")
 						else
-							U.show_message("\blue Success!", 1)
+							U.show_message("<span class='notice'>Success!</span>", 1)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[U.x];Y=[U.y];Z=[U.z]'>JMP</a>)")
 							detonate_act(P)
@@ -922,7 +922,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			message += "Your [P] shatters in a thousand pieces!"
 
 	if(M && isliving(M))
-		message = "\red" + message
+		message = "<span class='warning'></span>" + message
 		M.show_message(message, 1)
 
 /obj/item/device/pda/proc/remove_id()
@@ -1168,56 +1168,56 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if(1)
 
 				for (var/mob/O in viewers(C, null))
-					O.show_message("\red [user] has analyzed [C]'s vitals!", 1)
+					O.show_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>", 1)
 
-				user.show_message("\blue Analyzing Results for [C]:")
-				user.show_message("\blue &emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]", 1)
-				user.show_message("\blue &emsp; Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
-				user.show_message("\blue &emsp; Key: Suffocation/Toxin/Burns/Brute", 1)
-				user.show_message("\blue &emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
+				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
+				user.show_message("<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>", 1)
+				user.show_message("<span class='notice'>&emsp; Damage Specifics: [C.getOxyLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getOxyLoss()]</span>-[C.getToxLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getToxLoss()]</span>-[C.getFireLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getFireLoss()]</span>-[C.getBruteLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getBruteLoss()]</span></span>", 1)
+				user.show_message("<span class='notice'>&emsp; Key: Suffocation/Toxin/Burns/Brute</span>", 1)
+				user.show_message("<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
-					user.show_message("\blue &emsp; Time of Death: [C.tod]")
+					user.show_message("<span class='notice'>&emsp; Time of Death: [C.tod]</span>")
 				if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C
 					var/list/damaged = H.get_damaged_bodyparts(1, 1)
-					user.show_message("\blue Localized Damage, Brute/Burn:",1)
+					user.show_message("<span class='notice'>Localized Damage, Brute/Burn:</span>",1)
 					if(length(damaged)>0)
 						for(var/datum/organ/external/BP in damaged)
-							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(BP.name),(BP.brute_dam > 0)?"\red [BP.brute_dam]":0,(BP.burn_dam > 0)?"\red [BP.burn_dam]":0),1)
+							user.show_message(text("<span class='notice'>&emsp; []: []-[]",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span></span>":0),1)
 					else
-						user.show_message("\blue &emsp; Limbs are OK.",1)
+						user.show_message("<span class='notice'>&emsp; Limbs are OK.</span>",1)
 
 				for(var/datum/disease/D in C.viruses)
 					if(!D.hidden[SCANNER])
-						user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
+						user.show_message(text("<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"))
 
 			if(2)
 				if (!istype(C:dna, /datum/dna))
-					to_chat(user, "\blue No fingerprints found on [C]")
+					to_chat(user, "<span class='notice'>No fingerprints found on [C]</span>")
 				else if(!istype(C, /mob/living/carbon/monkey))
 					if(!isnull(C:gloves))
-						to_chat(user, "\blue No fingerprints found on [C]")
+						to_chat(user, "<span class='notice'>No fingerprints found on [C]</span>")
 				else
-					to_chat(user, text("\blue [C]'s Fingerprints: [md5(C:dna.uni_identity)]"))
+					to_chat(user, text("<span class='notice'>[C]'s Fingerprints: [md5(C:dna.uni_identity)]</span>"))
 				if ( !(C:blood_DNA) )
-					to_chat(user, "\blue No blood found on [C]")
+					to_chat(user, "<span class='notice'>No blood found on [C]</span>")
 					if(C:blood_DNA)
 						C:blood_DNA = null
 				else
-					to_chat(user, "\blue Blood found on [C]. Analysing...")
+					to_chat(user, "<span class='notice'>Blood found on [C]. Analysing...</span>")
 					spawn(15)
 						for(var/blood in C:blood_DNA)
-							to_chat(user, "\blue Blood type: [C:blood_DNA[blood]]\nDNA: [blood]")
+							to_chat(user, "<span class='notice'>Blood type: [C:blood_DNA[blood]]\nDNA: [blood]</span>")
 
 			if(4)
 				for (var/mob/O in viewers(C, null))
-					O.show_message("\red [user] has analyzed [C]'s radiation levels!", 1)
+					O.show_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>", 1)
 
-				user.show_message("\blue Analyzing Results for [C]:")
+				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
 				if(C.radiation)
-					user.show_message("\green Radiation Level: \black [C.radiation]")
+					user.show_message("<span class='green'>Radiation Level: \black [C.radiation]</span>")
 				else
-					user.show_message("\blue No radiation detected.")
+					user.show_message("<span class='notice'>No radiation detected.</span>")
 
 /obj/item/device/pda/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
@@ -1229,24 +1229,24 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
-					to_chat(user, "\blue [reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.")
+					to_chat(user, "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>")
 					for (var/re in A.reagents.reagent_list)
-						to_chat(user, "\blue &emsp; [re]")
+						to_chat(user, "<span class='notice'>&emsp; [re]</span>")
 				else
-					to_chat(user, "\blue No active chemical agents found in [A].")
+					to_chat(user, "<span class='notice'>No active chemical agents found in [A].</span>")
 			else
-				to_chat(user, "\blue No significant chemical agents found in [A].")
+				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
 
 		if(5)
 			if((istype(A, /obj/item/weapon/tank)) || (istype(A, /obj/machinery/portable_atmospherics)))
 				var/obj/icon = A
 				for (var/mob/O in viewers(user, null))
-					to_chat(O, "\red [user] has used [src] on [bicon(icon)] [A]")
+					to_chat(O, "<span class='warning'>[user] has used [src] on [bicon(icon)] [A]</span>")
 				var/pressure = A:air_contents.return_pressure()
 
 				var/total_moles = A:air_contents.total_moles()
 
-				to_chat(user, "\blue Results of analysis of [bicon(icon)]")
+				to_chat(user, "<span class='notice'>Results of analysis of [bicon(icon)]</span>")
 				if (total_moles>0)
 					var/o2_concentration = A:air_contents.oxygen/total_moles
 					var/n2_concentration = A:air_contents.nitrogen/total_moles
@@ -1255,27 +1255,27 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 
-					to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
-					to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
-					to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
-					to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
-					to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
+					to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
+					to_chat(user, "<span class='notice'>Nitrogen: [round(n2_concentration*100)]%</span>")
+					to_chat(user, "<span class='notice'>Oxygen: [round(o2_concentration*100)]%</span>")
+					to_chat(user, "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>")
+					to_chat(user, "<span class='notice'>Phoron: [round(phoron_concentration*100)]%</span>")
 					if(unknown_concentration>0.01)
-						to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
-					to_chat(user, "\blue Temperature: [round(A:air_contents.temperature-T0C)]&deg;C")
+						to_chat(user, "<span class='warning'>Unknown: [round(unknown_concentration*100)]%</span>")
+					to_chat(user, "<span class='notice'>Temperature: [round(A:air_contents.temperature-T0C)]&deg;C</span>")
 				else
-					to_chat(user, "\blue Tank is empty!")
+					to_chat(user, "<span class='notice'>Tank is empty!</span>")
 
 			if (istype(A, /obj/machinery/atmospherics/pipe/tank))
 				var/obj/icon = A
 				for (var/mob/O in viewers(user, null))
-					to_chat(O, "\red [user] has used [src] on [bicon(icon)] [A]")
+					to_chat(O, "<span class='warning'>[user] has used [src] on [bicon(icon)] [A]</span>")
 
 				var/obj/machinery/atmospherics/pipe/tank/T = A
 				var/pressure = T.parent.air.return_pressure()
 				var/total_moles = T.parent.air.total_moles()
 
-				to_chat(user, "\blue Results of analysis of [bicon(icon)]")
+				to_chat(user, "<span class='notice'>Results of analysis of [bicon(icon)]</span>")
 				if (total_moles>0)
 					var/o2_concentration = T.parent.air.oxygen/total_moles
 					var/n2_concentration = T.parent.air.nitrogen/total_moles
@@ -1284,20 +1284,20 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 
-					to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
-					to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
-					to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
-					to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
-					to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
+					to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
+					to_chat(user, "<span class='notice'>Nitrogen: [round(n2_concentration*100)]%</span>")
+					to_chat(user, "<span class='notice'>Oxygen: [round(o2_concentration*100)]%</span>")
+					to_chat(user, "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>")
+					to_chat(user, "<span class='notice'>Phoron: [round(phoron_concentration*100)]%</span>")
 					if(unknown_concentration>0.01)
-						to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
-					to_chat(user, "\blue Temperature: [round(T.parent.air.temperature-T0C)]&deg;C")
+						to_chat(user, "<span class='warning'>Unknown: [round(unknown_concentration*100)]%</span>")
+					to_chat(user, "<span class='notice'>Temperature: [round(T.parent.air.temperature-T0C)]&deg;C</span>")
 				else
-					to_chat(user, "\blue Tank is empty!")
+					to_chat(user, "<span class='notice'>Tank is empty!</span>")
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info
-		to_chat(user, "\blue Paper scanned.")//concept of scanning paper copyright brainoblivion 2009
+		to_chat(user, "<span class='notice'>Paper scanned.</span>")//concept of scanning paper copyright brainoblivion 2009
 
 
 /obj/item/device/pda/proc/explode() //This needs tuning. //Sure did.
@@ -1325,7 +1325,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				src.cartridge.charges++
 
 		M.stop_pulling()
-		to_chat(M, "\blue You slipped on the PDA!")
+		to_chat(M, "<span class='notice'>You slipped on the PDA!</span>")
 		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(8)
 		M.Weaken(5)

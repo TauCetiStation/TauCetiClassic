@@ -49,17 +49,17 @@
 	if(istype(W,/obj/item/weapon/cable_coil) )
 		var/obj/item/weapon/cable_coil/CC = W
 		if(string_attached)
-			to_chat(user, "\blue There already is a string attached to this coin.")
+			to_chat(user, "<span class='notice'>There already is a string attached to this coin.</span>")
 			return
 
 		if(CC.amount <= 0)
-			to_chat(user, "\blue This cable coil appears to be empty.")
+			to_chat(user, "<span class='notice'>This cable coil appears to be empty.</span>")
 			qdel(CC)
 			return
 
 		overlays += image('icons/obj/items.dmi',"coin_string_overlay")
 		string_attached = 1
-		to_chat(user, "\blue You attach a string to the coin.")
+		to_chat(user, "<span class='notice'>You attach a string to the coin.</span>")
 		CC.use(1)
 	else if(istype(W,/obj/item/weapon/wirecutters) )
 		if(!string_attached)
@@ -71,7 +71,7 @@
 		CC.update_icon()
 		overlays = list()
 		string_attached = null
-		to_chat(user, "\blue You detach the string from the coin.")
+		to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
 	else ..()
 
 /obj/item/weapon/coin/attack_self(mob/user)

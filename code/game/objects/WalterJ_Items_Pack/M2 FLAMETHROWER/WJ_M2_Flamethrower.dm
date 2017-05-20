@@ -16,7 +16,7 @@
 		if(T.welding)
 			message_admins("[key_name_admin(user)] triggered a flamethrower back explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			log_game("[key_name(user)] triggered a flamethrower back explosion.")
-			to_chat(user, "\red That was stupid of you.")
+			to_chat(user, "<span class='warning'>That was stupid of you.</span>")
 		if(Connected_Flamethrower)
 			Connected_Flamethrower.unequip(user)
 			//explosion(get_turf(src),-1,0,2)

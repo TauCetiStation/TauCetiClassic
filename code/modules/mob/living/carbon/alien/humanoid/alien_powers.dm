@@ -8,13 +8,13 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/alien/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
 	if(stat)
-		to_chat(src, "\green You must be conscious to do this.")
+		to_chat(src, "<span class='green'>You must be conscious to do this.</span>")
 		return 0
 	else if(X && getPlasma() < X)
-		to_chat(src, "\green Not enough plasma stored.")
+		to_chat(src, "<span class='green'>Not enough plasma stored.</span>")
 		return 0
 	else if(Y && (!isturf(src.loc) || istype(src.loc, /turf/space)))
-		to_chat(src, "\green Bad place for a garden!")
+		to_chat(src, "<span class='green'>Bad place for a garden!</span>")
 		return 0
 	else	return 1
 
@@ -26,7 +26,7 @@ Doesn't work on other aliens/AI.*/
 	if(powerc(50,1))
 		adjustToxLoss(-50)
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
+			O.show_message(text("<span class='green'><B>[src] has planted some alien weeds!</B></span>"), 1)
 		new /obj/structure/alien/weeds/node(loc)
 	return
 
@@ -53,8 +53,8 @@ Doesn't work on other aliens/AI.*/
 		var/msg = sanitize_alt(copytext(input("Message:", "Alien Whisper") as text|null, 1, MAX_MESSAGE_LEN))
 		if(msg)
 			log_say("AlienWhisper: [key_name(src)]->[M.key] : [msg]")
-			to_chat(M, "\green You hear a strange, alien voice in your head... \italic [msg]")
-			to_chat(src, {"\green You said: "[msg]" to [M]"})
+			to_chat(M, "<span class='green'>You hear a strange, alien voice in your head... \italic [msg]</span>")
+			to_chat(src, {"<span class='green'>You said: </span>"[msg]" to [M]"})
 	return
 
 /mob/living/carbon/alien/humanoid/verb/transfer_plasma(mob/living/carbon/alien/M as mob in oview())
@@ -70,10 +70,10 @@ Doesn't work on other aliens/AI.*/
 				if (get_dist(src,M) <= 1)
 					M.adjustToxLoss(amount)
 					adjustToxLoss(-amount)
-					to_chat(M, "\green [src] has transfered [amount] plasma to you.")
-					to_chat(src, {"\green You have trasferred [amount] plasma to [M]"})
+					to_chat(M, "<span class='green'>[src] has transfered [amount] plasma to you.</span>")
+					to_chat(src, {"<span class='green'>You have trasferred [amount] plasma to [M]</span>"})
 				else
-					to_chat(src, "\green You need to be closer.")
+					to_chat(src, "<span class='green'>You need to be closer.</span>")
 	return
 
 
@@ -88,27 +88,27 @@ Doesn't work on other aliens/AI.*/
 			if(isobj(O))
 				var/obj/I = O
 				if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
-					to_chat(src, "\green You cannot dissolve this object.")
+					to_chat(src, "<span class='green'>You cannot dissolve this object.</span>")
 					return
 			// TURF CHECK
 			else if(istype(O, /turf/simulated))
 				var/turf/T = O
 				// R WALL
 				if(istype(T, /turf/simulated/wall/r_wall))
-					to_chat(src, "\green You cannot dissolve this object.")
+					to_chat(src, "<span class='green'>You cannot dissolve this object.</span>")
 					return
 				// R FLOOR
 				if(istype(T, /turf/simulated/floor/engine))
-					to_chat(src, "\green You cannot dissolve this object.")
+					to_chat(src, "<span class='green'>You cannot dissolve this object.</span>")
 					return
 			else// Not a type we can acid.
 				return
 
 			adjustToxLoss(-200)
 			new /obj/effect/alien/acid(get_turf(O), O)
-			visible_message("\green <B>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</B>")
+			visible_message("<span class='green'><B>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</B></span>")
 		else
-			to_chat(src, "\green Target is too far away.")
+			to_chat(src, "<span class='green'>Target is too far away.</span>")
 	return
 
 /*
@@ -119,13 +119,13 @@ Doesn't work on other aliens/AI.*/
 
 	if(powerc(50))
 		if(isalien(target))
-			to_chat(src, "\green Your allies are not a valid target.")
+			to_chat(src, "<span class='green'>Your allies are not a valid target.</span>")
 			return
 		adjustToxLoss(-50)
-		to_chat(src, "\green You spit neurotoxin at [target].")
+		to_chat(src, "<span class='green'>You spit neurotoxin at [target].</span>")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				to_chat(O, "\red [src] spits neurotoxin at [target]!")
+				to_chat(O, "<span class='warning'>[src] spits neurotoxin at [target]!</span>")
 		//I'm not motivated enough to revise this. Prjectile code in general needs update.
 		var/turf/T = loc
 		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
@@ -222,7 +222,7 @@ Doesn't work on other aliens/AI.*/
 			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 6)
 			adjustToxLoss(-150)
 
-	visible_message("\red <B> [src] spits [BB.name] at [target]!</B>")
+	visible_message("<span class='warning'><B> [src] spits [BB.name] at [target]!</B></span>")
 
 	//prepare "bullet"
 	BB.original = target
@@ -251,9 +251,9 @@ Doesn't work on other aliens/AI.*/
 		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
 		if(!choice || !powerc(75))	return
 		adjustToxLoss(-75)
-		to_chat(src, "\green You shape a [choice].")
+		to_chat(src, "<span class='green'>You shape a [choice].</span>")
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\red <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
+			O.show_message(text("<span class='warning'><B>[src] vomits up a thick purple substance and begins to shape it!</B></span>"), 1)
 		switch(choice)
 			if("resin door")
 				new /obj/structure/mineral_door/resin(loc)
@@ -278,5 +278,5 @@ Doesn't work on other aliens/AI.*/
 					M.loc = loc
 					//M.update_pipe_vision()
 					//Paralyse(10)
-			src.visible_message("\green <B>[src] hurls out the contents of their stomach!</B>")
+			src.visible_message("<span class='green'><B>[src] hurls out the contents of their stomach!</B></span>")
 	return

@@ -56,13 +56,13 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
-		user.visible_message("\blue [user] makes some space inside [target]'s [get_cavity(BP)] cavity with \the [tool].", \
-		"\blue You make some space inside [target]'s [get_cavity(BP)] cavity with \the [tool]." )
+		user.visible_message("<span class='notice'>[user] makes some space inside [target]'s [get_cavity(BP)] cavity with \the [tool].</span>", \
+		"<span class='notice'>You make some space inside [target]'s [get_cavity(BP)] cavity with \the [tool].</span>" )
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
-		"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 		BP.createwound(CUT, 20)
 
 /datum/surgery_step/cavity/close_space
@@ -92,13 +92,13 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
-		user.visible_message("\blue [user] mends [target]'s [get_cavity(BP)] cavity walls with \the [tool].", \
-		"\blue You mend [target]'s [get_cavity(BP)] cavity walls with \the [tool]." )
+		user.visible_message("<span class='notice'>[user] mends [target]'s [get_cavity(BP)] cavity walls with \the [tool].</span>", \
+		"<span class='notice'>You mend [target]'s [get_cavity(BP)] cavity walls with \the [tool].</span>" )
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
-		"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 		BP.createwound(CUT, 20)
 
 /datum/surgery_step/cavity/place_item
@@ -123,10 +123,10 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
 
-		user.visible_message("\blue [user] puts \the [tool] inside [target]'s [get_cavity(BP)] cavity.", \
-		"\blue You put \the [tool] inside [target]'s [get_cavity(BP)] cavity." )
+		user.visible_message("<span class='notice'>[user] puts \the [tool] inside [target]'s [get_cavity(BP)] cavity.</span>", \
+		"<span class='notice'>You put \the [tool] inside [target]'s [get_cavity(BP)] cavity.</span>" )
 		if (tool.w_class > get_max_wclass(BP)/2 && prob(50))
-			to_chat(user, "\red You tear some blood vessels trying to fit such a big object in this cavity.")
+			to_chat(user, "<span class='warning'>You tear some blood vessels trying to fit such a big object in this cavity.</span>")
 			var/datum/wound/internal_bleeding/I = new (15)
 			BP.wounds += I
 			BP.owner.custom_pain("You feel something rip in your [BP.name]!", 1)
@@ -146,8 +146,8 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
-		"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 		BP.createwound(CUT, 20)
 
 //////////////////////////////////////////////////////////////////
@@ -195,8 +195,8 @@
 				find_prob +=50
 
 			if (prob(find_prob))
-				user.visible_message("\blue [user] takes something out of incision on [target]'s [BP.name] with \the [tool].", \
-				"\blue You take [obj] out of incision on [target]'s [BP.name]s with \the [tool]." )
+				user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
+				"<span class='notice'>You take [obj] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 				BP.implants -= obj
 
 				target.hud_updateflag |= 1 << IMPLOYAL_HUD
@@ -219,11 +219,11 @@
 							var/obj/item/weapon/implant/storage/Simp = imp
 							Simp.removed()
 			else
-				user.visible_message("\blue [user] removes \the [tool] from [target]'s [BP.name].", \
-				"\blue There's something inside [target]'s [BP.name], but you just missed it this time." )
+				user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
+				"<span class='notice'>There's something inside [target]'s [BP.name], but you just missed it this time.</span>" )
 		else if (BP.hidden)
-			user.visible_message("\blue [user] takes something out of incision on [target]'s [BP.name] with \the [tool].", \
-			"\blue You take something out of incision on [target]'s [BP.name]s with \the [tool]." )
+			user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
+			"<span class='notice'>You take something out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 			BP.hidden.loc = get_turf(target)
 			if(!BP.hidden.blood_DNA)
 				BP.hidden.blood_DNA = list()
@@ -232,20 +232,20 @@
 			BP.hidden = null
 
 		else
-			user.visible_message("\blue [user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.", \
-			"\blue You could not find anything inside [target]'s [BP.name]." )
+			user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
+			"<span class='notice'>You could not find anything inside [target]'s [BP.name].</span>" )
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/BP = target.get_bodypart(target_zone)
-		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
-		"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 		BP.createwound(CUT, 20)
 		if (BP.implants.len)
 			var/fail_prob = 10
 			fail_prob += 100 - tool_quality(tool)
 			if (prob(fail_prob))
 				var/obj/item/weapon/implant/imp = BP.implants[1]
-				user.visible_message("\red Something beeps inside [target]'s [BP.name]!")
+				user.visible_message("<span class='warning'>Something beeps inside [target]'s [BP.name]!</span>")
 				playsound(imp.loc, 'sound/items/countdown.ogg', 75, 1, -3)
 				spawn(25)
 					imp.activate()

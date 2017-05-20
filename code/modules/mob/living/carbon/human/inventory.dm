@@ -11,7 +11,7 @@
 			return
 
 	//	if(istype(I, /obj/item/clothing/head/helmet/space/rig)) // If the item to be equipped is a rigid suit helmet
-	//		src << "\red You must fasten the helmet to a hardsuit first. (Target the head)" // Stop eva helms equipping.
+	//		src << "<span class='warning'>You must fasten the helmet to a hardsuit first. (Target the head)</span>" // Stop eva helms equipping.
 	//		return 0
 
 		if(istype(I, /obj/item/clothing/suit/space)) // If the item to be equipped is a space suit

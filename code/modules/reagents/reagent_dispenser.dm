@@ -70,7 +70,7 @@
 /obj/structure/reagent_dispensers/watertank/examine(mob/user)
 	..()
 	if(src in oview(2, user) && modded)
-		to_chat(user, "\red Water faucet is wrenched open, leaking the water!")
+		to_chat(user, "<span class='warning'>Water faucet is wrenched open, leaking the water!</span>")
 
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W,/obj/item/weapon/wrench))
@@ -136,7 +136,7 @@
 	if (rig)
 		usr.visible_message("[usr] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
 		if(do_after(usr, 20, target = src))
-			usr.visible_message("\blue [usr] detaches [rig] from \the [src].", "\blue  You detach [rig] from \the [src]")
+			usr.visible_message("<span class='notice'>[usr] detaches [rig] from \the [src].</span>", "<span class='notice'> You detach [rig] from \the [src]</span>")
 			rig.loc = get_turf(usr)
 			rig = null
 			overlays = new/list()
@@ -150,11 +150,11 @@
 			leak_fuel(amount_per_transfer_from_this)
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
-			to_chat(user, "\red There is another device in the way.")
+			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
 			return ..()
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
 		if(do_after(user, 20, target = src))
-			user.visible_message("\blue [user] rigs [W] to \the [src].", "\blue  You rig [W] to \the [src]")
+			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].</span>", "<span class='notice'> You rig [W] to \the [src]</span>")
 
 			var/obj/item/device/assembly_holder/H = W
 			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))

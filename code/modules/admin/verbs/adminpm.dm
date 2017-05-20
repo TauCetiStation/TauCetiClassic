@@ -158,12 +158,12 @@
 		if(X == C || X == src)
 			continue
 		if(X.key!=key && X.key!=C.key)
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>")//inform X
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> <span class='notice'>[msg]</span></font>")//inform X
 	for(var/client/X in mentors)
 		if(X == C || X == src)
 			continue
 		if(X.key!=key && X.key!=C.key && !C.holder && !src.holder)
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0, 0)]-&gt;[key_name(C, X, 0, 0)]:</B> \blue [msg]</font>")//inform X
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0, 0)]-&gt;[key_name(C, X, 0, 0)]:</B> <span class='notice'>msg]</span></font>")//inform X
 
 /client/proc/cmd_admin_irc_pm()
 	if(prefs.muted & MUTE_ADMINHELP)
@@ -178,8 +178,8 @@
 	sanitize(msg)
 
 	if(length(msg) > 400) // TODO: if message length is over 400, divide it up into seperate messages, the message length restriction is based on IRC limitations.  Probably easier to do this on the bots ends.
-		to_chat(src, "\red Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting")
-		to_chat(src, "\blue [msg]")
+		to_chat(src, "<span class='warning'>Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting</span>")
+		to_chat(src, "<span class='notice'>[msg]</span>")
 		return
 
 	to_chat(src, "<font color='blue'>IRC PM to-<b>IRC-Admins</b>: [msg]</font>")
@@ -189,5 +189,4 @@
 		if(X == src)
 			continue
 		if(X.holder.rights & R_ADMIN)
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC-Admins:</B> \blue [msg]</font>")
-
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC-Admins:</B> <span class='notice'>[msg]</span></font>")

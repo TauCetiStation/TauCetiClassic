@@ -48,7 +48,7 @@
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
 	else
 		used = FALSE
-		visible_message("\blue Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.")
+		visible_message("<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")
 
 /obj/item/weapon/antag_spawner/borg_tele/spawn_antag(client/C, turf/T, type = "")
 	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread

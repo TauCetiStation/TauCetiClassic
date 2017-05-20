@@ -37,13 +37,13 @@
 /obj/item/seeds/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		to_chat(user, "*** <B>[plantname]</B> ***")
-		to_chat(user, "-Plant Endurance: \blue [endurance]")
-		to_chat(user, "-Plant Lifespan: \blue [lifespan]")
+		to_chat(user, "-Plant Endurance: <span class='notice'>[endurance]</span>")
+		to_chat(user, "-Plant Lifespan: <span class='notice'>[lifespan]</span>")
 		if(yield != -1)
-			to_chat(user, "-Plant Yield: \blue [yield]")
-		to_chat(user, "-Plant Production: \blue [production]")
+			to_chat(user, "-Plant Yield: <span class='notice'>[yield]</span>")
+		to_chat(user, "-Plant Production: <span class='notice'>[production]</span>")
 		if(potency != -1)
-			to_chat(user, "-Plant Potency: \blue [potency]")
+			to_chat(user, "-Plant Potency: <span class='notice'>[potency]</span>")
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
@@ -1256,7 +1256,7 @@
 		force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/deathnettle // -- Skie
-	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
+	desc = "The <span class='warning'>glowing</span> \black nettle incites <span class='warning'><B>rage</B></span>\black in you just from looking at it!"
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"
@@ -1279,7 +1279,7 @@
 		force = round((5+potency/2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS|TOXLOSS)
 
 // *************************************
@@ -1350,7 +1350,7 @@
 	var/WeedKillStr = 2
 
 /obj/item/weapon/weedspray/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/pestspray // -- Skie
@@ -1369,7 +1369,7 @@
 	var/PestKillStr = 2
 
 /obj/item/weapon/pestspray/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers
@@ -1465,5 +1465,3 @@
 /obj/item/nutrient/rh/New()
 	src.pixel_x = rand(-5.0, 5)
 	src.pixel_y = rand(-5.0, 5)
-
-

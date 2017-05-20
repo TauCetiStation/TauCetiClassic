@@ -132,10 +132,10 @@
 		return
 
 	if(busy)
-		to_chat(user, "\red Someone's already drying here.")
+		to_chat(user, "<span class='warning'>Someone's already drying here.</span>")
 		return
 
-	to_chat(usr, "\blue You start drying your hands.")
+	to_chat(usr, "<span class='notice'>You start drying your hands.</span>")
 	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 	add_fingerprint(user)
 	busy = 1
@@ -155,13 +155,13 @@
 	if(!Adjacent(user)) return		//Person has moved away from the dryer
 
 	for(var/mob/V in viewers(src, null))
-		V.show_message("\blue [user] dried their hands using \the [src].")
+		V.show_message("<span class='notice'>[user] dried their hands using \the [src].</span>")
 
 /obj/structure/dryer/attackby(obj/item/O, mob/user)
 
 	if (istype(O, /obj/item/weapon/card/emag))
 		if (emagged)
-			to_chat(user, "\red [src] is already cracked.")
+			to_chat(user, "<span class='warning'>[src] is already cracked.</span>")
 			return
 		else
 			add_fingerprint(user)
@@ -169,7 +169,7 @@
 			flick("dryer-broken",src)
 			playsound(src, 'sound/effects/sparks3.ogg', 50, 1, 1)
 			icon_state = "dryer-emag"
-			to_chat(user, "\red You swipe near [O] and crack it to be hot.")
+			to_chat(user, "<span class='warning'>You swipe near [O] and crack it to be hot.</span>")
 			return
 
 	if((istype(O, /obj/item/weapon/grab)) && !emagged)
@@ -189,7 +189,7 @@
 				return
 
 	if(busy)
-		to_chat(user, "\red Someone's already drying here.")
+		to_chat(user, "<span class='warning'>Someone's already drying here.</span>")
 		return
 
 	var/turf/location = user.loc
@@ -225,7 +225,7 @@
 					return
 
 		busy = 1
-		to_chat(usr, "\blue You start drying \the [I].")
+		to_chat(usr, "<span class='notice'>You start drying \the [I].</span>")
 		playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 		sleep(60)
 		var/mob/living/carbon/C = user
@@ -240,7 +240,7 @@
 		return
 
 	busy = 1
-	to_chat(usr, "\blue You start drying \the [I].")
+	to_chat(usr, "<span class='notice'>You start drying \the [I].</span>")
 	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 	sleep(60)
 	busy = 0
@@ -251,8 +251,8 @@
 
 	O.wet = 0
 	user.visible_message( \
-		"\blue [user] drying \a [I] using \the [src].", \
-		"\blue You dry \a [I] using \the [src].")
+		"<span class='notice'>[user] drying \a [I] using \the [src].</span>", \
+		"<span class='notice'>You dry \a [I] using \the [src].</span>")
 
 /obj/machinery/shower
 	name = "shower"
@@ -560,12 +560,12 @@
 		return
 
 	if(busy)
-		to_chat(user, "\red Someone's already washing here.")
+		to_chat(user, "<span class='warning'>Someone's already washing here.</span>")
 		return
 
 	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
 
-	to_chat(usr, "\blue You start washing your hands.")
+	to_chat(usr, "<span class='notice'>You start washing your hands.</span>")
 
 	busy = 1
 	sleep(40)
@@ -577,17 +577,17 @@
 	if(ishuman(user))
 		user:update_inv_gloves()
 	for(var/mob/V in viewers(src, null))
-		V.show_message("\blue [user] washes their hands using \the [src].")
+		V.show_message("<span class='notice'>[user] washes their hands using \the [src].</span>")
 
 /obj/structure/sink/attackby(obj/item/O, mob/user)
 	if(busy)
-		to_chat(user, "\red Someone's already washing here.")
+		to_chat(user, "<span class='warning'>Someone's already washing here.</span>")
 		return
 
 	if (istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user.visible_message("\blue [user] fills \the [RG] using \the [src].","\blue You fill \the [RG] using \the [src].")
+		user.visible_message("<span class='notice'>[user] fills \the [RG] using \the [src].</span>","<span class='notice'>You fill \the [RG] using \the [src].</span>")
 		return
 
 	else if (istype(O, /obj/item/weapon/melee/baton))
@@ -604,7 +604,7 @@
 				B.charges--
 			user.visible_message( \
 				"[user] was stunned by his wet [O].", \
-				"\red You have wet \the [O], it shocks you!")
+				"<span class='warning'>You have wet \the [O], it shocks you!</span>")
 			return
 
 	var/turf/location = user.loc
@@ -613,7 +613,7 @@
 	var/obj/item/I = O
 	if(!I || !istype(I,/obj/item)) return
 
-	to_chat(usr, "\blue You start washing \the [I].")
+	to_chat(usr, "<span class='notice'>You start washing \the [I].</span>")
 
 	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
 	busy = 1
@@ -627,8 +627,8 @@
 	O.clean_blood()
 	O.make_wet()
 	user.visible_message( \
-		"\blue [user] washes \a [I] using \the [src].", \
-		"\blue You wash \a [I] using \the [src].")
+		"<span class='notice'>[user] washes \a [I] using \the [src].</span>", \
+		"<span class='notice'>You wash \a [I] using \the [src].</span>")
 
 
 /obj/structure/sink/kitchen

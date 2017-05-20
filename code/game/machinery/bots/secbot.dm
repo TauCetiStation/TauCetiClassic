@@ -296,7 +296,7 @@ Auto Patrol: []"},
 				if(!C.handcuffed && !arrest_type)
 					playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
-					visible_message("\red <B>[src] is trying to put handcuffs on [target]!</B>")
+					visible_message("<span class='warning'><B>[src] is trying to put handcuffs on [target]!</B></span>")
 					addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PREP_ARREST), 60)
 
 			else
@@ -631,7 +631,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/secbot/explode()
 	walk_to(src,0)
-	visible_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)

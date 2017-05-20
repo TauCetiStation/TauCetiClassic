@@ -107,7 +107,7 @@
 	if (get_dist(usr, src) <= 3 || istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/dead))
 		t += status()
 	else
-		to_chat(usr, "\blue <B>You are too far away.</B>")
+		to_chat(usr, "<span class='notice'><B>You are too far away.</B></span>")
 		return 1
 
 	to_chat(usr, t)
@@ -117,11 +117,11 @@
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	to_chat(user, "\blue You begin to unfasten \the [src]...")
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
-			"\blue You have unfastened \the [src].", \
+			"<span class='notice'>You have unfastened \the [src].</span>", \
 			"You hear ratchet.")
 		new /obj/item/pipe_meter(src.loc)
 		qdel(src)

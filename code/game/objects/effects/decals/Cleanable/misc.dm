@@ -357,7 +357,7 @@
 						I.make_wet()
 
 			C.stop_pulling()
-			to_chat(C, "\blue You slipped on the wet floor!")
+			to_chat(C, "<span class='notice'>You slipped on the wet floor!</span>")
 			playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 			C.Stun(5)
 			C.Weaken(2)

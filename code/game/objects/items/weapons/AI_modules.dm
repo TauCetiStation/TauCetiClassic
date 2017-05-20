@@ -457,7 +457,7 @@ AI MODULES
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
 	lawchanges.Add("The law is '[newFreeFormLaw]'")
-	to_chat(target, "\red BZZZZT")
+	to_chat(target, "<span class='warning'>BZZZZT</span>")
 	var/law = "[newFreeFormLaw]"
 	target.add_ion_law(law)
 

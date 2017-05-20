@@ -126,21 +126,21 @@ var/datum/subsystem/ticker/ticker
 					if (mode.station_was_nuked)
 						feedback_set_details("end_proper","nuke")
 						if(!delay_end)
-							to_chat(world, "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>")
+							to_chat(world, "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>")
 					else
 						feedback_set_details("end_proper","proper completion")
 						if(!delay_end)
-							to_chat(world, "\blue <B>Restarting in [restart_timeout/10] seconds</B>")
+							to_chat(world, "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>")
 
 					if(!delay_end)
 						sleep(restart_timeout)
 						if(!delay_end)
 							world.Reboot() //Can be upgraded to remove unneded sleep here.
 						else
-							to_chat(world, "\blue <B>An admin has delayed the round end</B>")
+							to_chat(world, "<span class='notice'><B>An admin has delayed the round end</B></span>")
 							send2slack_service("An admin has delayed the round end")
 					else
-						to_chat(world, "\blue <B>An admin has delayed the round end</B>")
+						to_chat(world, "<span class='notice'><B>An admin has delayed the round end</B></span>")
 						send2slack_service("An admin has delayed the round end")
 
 /datum/subsystem/ticker/proc/setup()
@@ -160,7 +160,7 @@ var/datum/subsystem/ticker/ticker
 		if(secret_force_mode != "secret")
 			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
 			if(!smode.can_start())
-				message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
+				message_admins("<span class='notice'>Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>")
 			else
 				mode = smode
 

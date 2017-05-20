@@ -381,7 +381,7 @@
 	if (istype(W, /obj/item/weapon/crowbar) && opened)
 		if (has_electronics==1)
 			if (terminal)
-				to_chat(user, "\red Disconnect wires first.")
+				to_chat(user, "<span class='warning'>Disconnect wires first.</span>")
 				return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			to_chat(user, "You are trying to remove the power control board...")//lpeters - fixed grammar issues
@@ -389,13 +389,13 @@
 				has_electronics = 0
 				if ((stat & BROKEN) || malfhack)
 					user.visible_message(\
-						"\red [user.name] has broken the power control board inside [src.name]!",\
+						"<span class='warning'>[user.name] has broken the power control board inside [src.name]!</span>",\
 						"You broke the charred power control board and remove the remains.",
 						"You hear a crack!")
 					//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 				else
 					user.visible_message(\
-						"\red [user.name] has removed the power control board from [src.name]!",\
+						"<span class='warning'>[user.name] has removed the power control board from [src.name]!</span>",\
 						"You remove the power control board.")
 					new /obj/item/weapon/module/power_control(loc)
 		else if (opened!=2) //cover isn't removed
@@ -403,7 +403,7 @@
 			update_icon()
 	else if (istype(W, /obj/item/weapon/crowbar) && !((stat & BROKEN) || malfhack) )
 		if(coverlocked && !(stat & MAINT))
-			to_chat(user, "\red The cover is locked and cannot be opened.")
+			to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
 			return
 		else
 			opened = 1
@@ -414,20 +414,20 @@
 			return
 		else
 			if (stat & MAINT)
-				to_chat(user, "\red There is no connector for your power cell.")
+				to_chat(user, "<span class='warning'>There is no connector for your power cell.</span>")
 				return
 			user.drop_item()
 			W.loc = src
 			cell = W
 			user.visible_message(\
-				"\red [user.name] has inserted the power cell to [src.name]!",\
+				"<span class='warning'>[user.name] has inserted the power cell to [src.name]!</span>",\
 				"You insert the power cell.")
 			chargecount = 0
 			update_icon()
 	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
 		if(opened)
 			if (cell)
-				to_chat(user, "\red Close the APC first.")//Less hints more mystery!
+				to_chat(user, "<span class='warning'>Close the APC first.</span>")//Less hints more mystery!
 				return
 			else
 				if (has_electronics==1 && terminal)
@@ -441,7 +441,7 @@
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					to_chat(user, "You unfasten the electronics.")
 				else /* has_electronics==0 */
-					to_chat(user, "\red There is nothing to secure.")
+					to_chat(user, "<span class='warning'>There is nothing to secure.</span>")
 					return
 				update_icon()
 		else if(emagged)
@@ -466,7 +466,7 @@
 				to_chat(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				update_icon()
 			else
-				to_chat(user, "\red Access denied.")
+				to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if (istype(W, /obj/item/weapon/card/emag) && !(emagged || malfhack))		// trying to unlock with an emag card
 		if(opened)
 			to_chat(user, "You must close the cover to swipe an ID card.")
@@ -486,11 +486,11 @@
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
 	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
-			to_chat(user, "\red You must remove the floor plating in front of the APC first.")
+			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first.</span>")
 			return
 		var/obj/item/weapon/cable_coil/C = W
 		if(C.amount < 10)
-			to_chat(user, "\red You need more wires.")
+			to_chat(user, "<span class='warning'>You need more wires.</span>")
 			return
 		to_chat(user, "You start adding cables to the APC frame...")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -504,7 +504,7 @@
 				return
 			C.use(10)
 			user.visible_message(\
-				"\red [user.name] has added cables to the APC frame!",\
+				"<span class='warning'>[user.name] has added cables to the APC frame!</span>",\
 				"You add cables to the APC frame.")
 			make_terminal()
 			terminal.connect_to_network()
@@ -518,12 +518,12 @@
 			to_chat(user, "You place the power control board inside the frame.")
 			qdel(W)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
-		to_chat(user, "\red You cannot put the board inside, the frame is damaged.")
+		to_chat(user, "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>")
 		return
 	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
-			to_chat(user, "\blue You need more welding fuel to complete this task.")
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		to_chat(user, "You start welding the APC frame...")
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
@@ -532,15 +532,15 @@
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
-					"\red [src] has been cut apart by [user.name] with the weldingtool.",\
+					"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
 					"You disassembled the broken APC frame.",\
-					"\red You hear welding.")
+					"<span class='warning'>You hear welding.</span>")
 			else
 				new /obj/item/apc_frame(loc)
 				user.visible_message(\
-					"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
+					"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
 					"You cut the APC frame from the wall.",\
-					"\red You hear welding.")
+					"<span class='warning'>You hear welding.</span>")
 			qdel(src)
 			return
 	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
@@ -548,7 +548,7 @@
 		if (opened==2)
 			opened = 1
 		user.visible_message(\
-			"\red [user.name] has replaced the damaged APC frontal panel with a new one.",\
+			"<span class='warning'>[user.name] has replaced the damaged APC frontal panel with a new one.</span>",\
 			"You replace the damaged APC frontal panel with a new one.")
 		qdel(W)
 		update_icon()
@@ -559,7 +559,7 @@
 		to_chat(user, "You begin to replace the damaged APC frame...")
 		if(do_after(user, 50, target = src))
 			user.visible_message(\
-				"\red [user.name] has replaced the damaged APC frame with new one.",\
+				"<span class='warning'>[user.name] has replaced the damaged APC frame with new one.</span>",\
 				"You replace the damaged APC frame with new one.")
 			qdel(W)
 			stat &= ~BROKEN
@@ -575,8 +575,8 @@
 				&& W.w_class >= 3.0 \
 				&& prob(20) )
 			opened = 2
-			user.visible_message("\red The APC cover was knocked down with the [W.name] by [user.name]!", \
-				"\red You knock down the APC cover with your [W.name]!", \
+			user.visible_message("<span class='warning'>The APC cover was knocked down with the [W.name] by [user.name]!</span>", \
+				"<span class='warning'>You knock down the APC cover with your [W.name]!</span>", \
 				"You hear bang")
 			update_icon()
 		else
@@ -586,8 +586,8 @@
 				(istype(W, /obj/item/device/multitool) || \
 				istype(W, /obj/item/weapon/wirecutters)))
 				return src.attack_hand(user)
-			user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
-				"\red You hit the [src.name] with your [W.name]!", \
+			user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
+				"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
 				"You hear bang")
 
 // attack with hand - remove cell (if cover open) or interact with the APC
@@ -607,7 +607,7 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				to_chat(H, "\red The APC power currents surge eratically, damaging your chassis!")
+				to_chat(H, "<span class='warning'>The APC power currents surge eratically, damaging your chassis!</span>")
 				H.adjustFireLoss(10,0)
 			else if(src.cell && src.cell.charge > 0)
 				if(H.nutrition < 450)
@@ -619,13 +619,13 @@
 						H.nutrition += src.cell.charge/10
 						src.cell.charge = 0
 
-					to_chat(user, "\blue You slot your fingers into the APC interface and siphon off some of the stored charge for your own use.")
+					to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and siphon off some of the stored charge for your own use.</span>")
 					if(src.cell.charge < 0) src.cell.charge = 0
 					if(H.nutrition > 500) H.nutrition = 500
 					src.charging = 1
 
 				else
-					to_chat(user, "\blue You are already fully charged.")
+					to_chat(user, "<span class='notice'>You are already fully charged.</span>")
 			else
 				to_chat(user, "There is no charge to draw from that APC.")
 			return
@@ -637,7 +637,7 @@
 			cell.updateicon()
 
 			src.cell = null
-			user.visible_message("\red [user.name] removes the power cell from [src.name]!", "You remove the power cell.")
+			user.visible_message("<span class='warning'>[user.name] removes the power cell from [src.name]!</span>", "You remove the power cell.")
 			//user << "You remove the power cell."
 			charging = 0
 			src.update_icon()
@@ -653,18 +653,18 @@
 	if(!user)
 		return
 	user.do_attack_animation(src)
-	user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
+	user.visible_message("<span class='warning'>[user.name] slashes at the [src.name]!</span>", "<span class='notice'>You slash at the [src.name]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
 	if(beenhit >= pick(3, 4) && wiresexposed != 1)
 		wiresexposed = 1
 		src.update_icon()
-		src.visible_message("\red The [src.name]'s cover flies open, exposing the wires!")
+		src.visible_message("<span class='warning'>The [src.name]'s cover flies open, exposing the wires!</span>")
 
 	else if(wiresexposed && !wires.is_all_cut())
 		wires.cut_all()
 		src.update_icon()
-		src.visible_message("\red The [src.name]'s wires are shredded!")
+		src.visible_message("<span class='warning'>The [src.name]'s wires are shredded!</span>")
 	else
 		beenhit += 1
 	return
@@ -792,7 +792,7 @@
 			)                                                            \
 		)
 			if(!loud)
-				to_chat(user, "\red \The [src] have AI control disabled!")
+				to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
 				nanomanager.close_user_uis(user, src)
 
 			return 0
@@ -932,7 +932,7 @@
 		qdel(src.occupier)
 
 	else
-		to_chat(src.occupier, "\red Primary core damaged, unable to return core processes.")
+		to_chat(src.occupier, "<span class='warning'>Primary core damaged, unable to return core processes.</span>")
 		if(forced)
 			src.occupier.loc = src.loc
 			src.occupier.death()
@@ -945,7 +945,7 @@
 		if(prob(3))
 			src.locked = 1
 			if (src.cell.charge > 0)
-//				world << "\red blew APC in [src.loc.loc]"
+//				world << "<span class='warning'>blew APC in [src.loc.loc]</span>"
 				src.cell.charge = 0
 				cell.corrupt()
 				src.malfhack = 1
@@ -958,7 +958,7 @@
 				s.set_up(3, 1, src)
 				s.start()
 				for(var/mob/M in viewers(src))
-					M.show_message("\red The [src.name] suddenly lets out a blast of smoke and some sparks!", 3, "\red You hear sizzling electronics.", 2)
+					M.show_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", 3, "<span class='warning'>You hear sizzling electronics.</span>", 2)
 
 
 /obj/machinery/power/apc/surplus()

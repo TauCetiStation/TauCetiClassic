@@ -37,7 +37,7 @@
 		return
 
 	if(!allowed(user))
-		to_chat(user, "\red Access Denied")
+		to_chat(user, "<span class='warning'>Access Denied</span>")
 		flick("doorctrl-denied",src)
 		return
 

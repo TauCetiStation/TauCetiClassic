@@ -100,7 +100,7 @@
 /obj/item/device/assembly/attach_assembly(obj/item/device/assembly/A, mob/user)
 	holder = new/obj/item/device/assembly_holder(get_turf(src))
 	if(holder.attach(A,src,user))
-		to_chat(user, "\blue You attach \the [A] to \the [src]!")
+		to_chat(user, "<span class='notice'>You attach \the [A] to \the [src]!</span>")
 		return 1
 	return 0
 
@@ -113,9 +113,9 @@
 			return
 	if(isscrewdriver(W))
 		if(toggle_secure())
-			to_chat(user, "\blue \The [src] is ready!")
+			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 		else
-			to_chat(user, "\blue \The [src] can now be attached!")
+			to_chat(user, "<span class='notice'>\The [src] can now be attached!</span>")
 		return
 	..()
 	return

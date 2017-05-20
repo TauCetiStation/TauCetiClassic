@@ -8,7 +8,7 @@ proc/admin_call_cooldown(value1)
 	set name = "Admin Call"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
+		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
 	//handle muting and automuting
@@ -17,16 +17,16 @@ proc/admin_call_cooldown(value1)
 		return
 
 	if(key_name(src) in ac_nameholder)
-		to_chat(src, "<font color='blue'>Можно использовать не чаще 1-го раза в 5 минут.</font>")
+		to_chat(src, "<font color='blue'>пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ 1-пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ 5 пїЅпїЅпїЅпїЅпїЅ.</font>")
 		return
 
 	admin_call_cooldown(key_name(src))
 
 	var/output_text = {"<font color='red'>============ADMINCALL============</font><BR>
-<font color='red'>[sanitize_alt("1) Сообщение длинной не более 140 символов.")]</font><BR>
-<font color='red'>[sanitize_alt("2) Описать коротко и внятно причину по которой нужен админ.")]</font><BR>
-<font color='red'>[sanitize_alt("3) Ожидать.")]</font><BR>
-<font color='red'>[sanitize_alt("4) Если и таким образом не выйдет вызвать админа, то в крайнем случае сообщение будет сохранено и не потеряется.")]</font><BR>
+<font color='red'>[sanitize_alt("1) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 140 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.")]</font><BR>
+<font color='red'>[sanitize_alt("2) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.")]</font><BR>
+<font color='red'>[sanitize_alt("3) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.")]</font><BR>
+<font color='red'>[sanitize_alt("4) пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.")]</font><BR>
 <font color='red'>=================================</font><BR>
 "}
 
@@ -52,7 +52,7 @@ proc/admin_call_cooldown(value1)
 
 	if(!mob)	return						//this doesn't happen
 
-	msg = "\blue <b><font color=red>ADMINCALL: </font>[get_options_bar(mob, 2, 1, 1)]:</b> [msg]"
+	msg = "<span class='notice'><b><font color=red>ADMINCALL: </font>[get_options_bar(mob, 2, 1, 1)]:</b> [msg]</span>"
 
 	//send this msg to all admins
 	var/admin_number_afk = 0

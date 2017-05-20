@@ -96,30 +96,30 @@
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(connected_port)
 			disconnect()
-			to_chat(user, "\blue You disconnect [name] from the port.")
+			to_chat(user, "<span class='notice'>You disconnect [name] from the port.</span>")
 			update_icon()
 			return
 		else
 			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 			if(possible_port)
 				if(connect(possible_port))
-					to_chat(user, "\blue You connect [name] to the port.")
+					to_chat(user, "<span class='notice'>You connect [name] to the port.</span>")
 					update_icon()
 					return
 				else
-					to_chat(user, "\blue [name] failed to connect to the port.")
+					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
 			else
-				to_chat(user, "\blue Nothing happens.")
+				to_chat(user, "<span class='notice'>Nothing happens.</span>")
 				return
 
 	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
-		visible_message("\red [user] has used [W] on [bicon(icon)]")
+		visible_message("<span class='warning'>[user] has used [W] on [bicon(icon)]</span>")
 		if(air_contents)
 			var/pressure = air_contents.return_pressure()
 			var/total_moles = air_contents.total_moles()
 
-			to_chat(user, "\blue Results of analysis of [bicon(icon)]")
+			to_chat(user, "<span class='notice'>Results of analysis of [bicon(icon)]</span>")
 			if (total_moles>0)
 				var/o2_concentration = air_contents.oxygen/total_moles
 				var/n2_concentration = air_contents.nitrogen/total_moles
@@ -128,18 +128,18 @@
 
 				var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 
-				to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
-				to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
-				to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
-				to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
-				to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
+				to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
+				to_chat(user, "<span class='notice'>Nitrogen: [round(n2_concentration*100)]%</span>")
+				to_chat(user, "<span class='notice'>Oxygen: [round(o2_concentration*100)]%</span>")
+				to_chat(user, "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>")
+				to_chat(user, "<span class='notice'>Phoron: [round(phoron_concentration*100)]%</span>")
 				if(unknown_concentration>0.01)
-					to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
-				to_chat(user, "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C")
+					to_chat(user, "<span class='warning'>Unknown: [round(unknown_concentration*100)]%</span>")
+				to_chat(user, "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)]&deg;C</span>")
 			else
-				to_chat(user, "\blue Tank is empty!")
+				to_chat(user, "<span class='notice'>Tank is empty!</span>")
 		else
-			to_chat(user, "\blue Tank is empty!")
+			to_chat(user, "<span class='notice'>Tank is empty!</span>")
 		return
 
 	return

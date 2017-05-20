@@ -103,7 +103,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						to_chat(user, "\red You need more fuel to complete this task.")
+						to_chat(user, "<span class='warning'>You need more fuel to complete this task.</span>")
 						return
 
 					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
@@ -130,7 +130,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						to_chat(user, "\red You need more fuel to complete this task.")
+						to_chat(user, "<span class='warning'>You need more fuel to complete this task.</span>")
 						return
 
 					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
@@ -169,7 +169,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						to_chat(user, "\red You need more fuel to complete this task.")
+						to_chat(user, "<span class='warning'>You need more fuel to complete this task.</span>")
 						return
 
 					user.visible_message("[user] starts cutting loose the anchoring bolt covers on [src].", "You start cutting loose the anchoring bolt covers with [O]...")
@@ -196,7 +196,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						to_chat(user, "\red You need more fuel to complete this task.")
+						to_chat(user, "<span class='warning'>You need more fuel to complete this task.</span>")
 						return
 
 					user.visible_message("[user] starts cutting apart the anchoring system sealant on [src].", "You start cutting apart the anchoring system's sealant with [O]...")
@@ -237,11 +237,11 @@ var/bomb_set
 /obj/machinery/nuclearbomb/attack_hand(mob/user)
 	if (src.extended)
 		if (!ishuman(user))
-			to_chat(usr, "\red You don't have the dexterity to do this!")
+			to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return 1
 
 		if (!ishuman(user))
-			to_chat(usr, "\red You don't have the dexterity to do this!")
+			to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return 1
 		user.set_machine(src)
 		var/dat = text("<TT><B>Nuclear Fission Explosive</B><BR>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (src.auth ? "++++++++++" : "----------"))
@@ -266,9 +266,9 @@ var/bomb_set
 	else if (src.deployable)
 		if(removal_stage < 5)
 			src.anchored = 1
-			visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring!")
+			visible_message("<span class='warning'>With a steely snap, bolts slide out of [src] and anchor it to the flooring!</span>")
 		else
-			visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
+			visible_message("<span class='warning'>\The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.</span>")
 		if(!src.lighthack)
 			flick("nuclearbombc", src)
 			src.icon_state = "nuclearbomb1"
@@ -283,14 +283,14 @@ var/bomb_set
 	if (!usr.canmove || usr.stat || usr.restrained())
 		return
 	if (!ishuman(usr))
-		to_chat(usr, "\red You don't have the dexterity to do this!")
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 
 	if (src.deployable)
-		to_chat(usr, "\red You close several panels to make [src] undeployable.")
+		to_chat(usr, "<span class='warning'>You close several panels to make [src] undeployable.</span>")
 		src.deployable = 0
 	else
-		to_chat(usr, "\red You adjust some panels to make [src] deployable.")
+		to_chat(usr, "<span class='warning'>You adjust some panels to make [src] deployable.</span>")
 		src.deployable = 1
 	return
 
@@ -344,7 +344,7 @@ var/bomb_set
 				if (src.timing == -1.0)
 					return FALSE
 				if (src.safety)
-					to_chat(usr, "\red The safety is still on.")
+					to_chat(usr, "<span class='warning'>The safety is still on.</span>")
 					return FALSE
 				src.timing = !( src.timing )
 				if (src.timing)
@@ -368,14 +368,14 @@ var/bomb_set
 
 			//if(removal_stage == 5)
 			//	src.anchored = 0
-			//	visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
+			//	visible_message("<span class='warning'>\The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.</span>")
 			//	return
 
 			src.anchored = !( src.anchored )
 			if(src.anchored)
-				visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring.")
+				visible_message("<span class='warning'>With a steely snap, bolts slide out of [src] and anchor it to the flooring.</span>")
 			else
-				visible_message("\red The anchoring bolts slide back into the depths of [src].")
+				visible_message("<span class='warning'>The anchoring bolts slide back into the depths of [src].</span>")
 
 	updateUsrDialog()
 

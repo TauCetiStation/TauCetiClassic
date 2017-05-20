@@ -111,7 +111,7 @@
 /obj/effect/alien/resin/hitby(AM)
 	..()
 	for(var/mob/O in viewers(src, null))
-		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
+		O.show_message("<span class='warning'><B>[src] was hit by [AM].</B></span>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
@@ -126,14 +126,14 @@
 /obj/effect/alien/resin/attack_hand()
 	usr.do_attack_animation(src)
 	if (HULK in usr.mutations)
-		to_chat(usr, "\blue You easily destroy the [name].")
+		to_chat(usr, "<span class='notice'>You easily destroy the [name].</span>")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] destroys the [name]!", 1)
+			O.show_message("<span class='warning'>[usr] destroys the [name]!</span>", 1)
 		health = 0
 	else
-		to_chat(usr, "\blue You claw at the [name].")
+		to_chat(usr, "<span class='notice'>You claw at the [name].</span>")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] claws at the [name]!", 1)
+			O.show_message("<span class='warning'>[usr] claws at the [name]!</span>", 1)
 		health -= rand(5,10)
 	healthcheck()
 	return
@@ -145,15 +145,15 @@
 	usr.do_attack_animation(src)
 	if (islarva(usr) || isfacehugger(usr))//Safety check for larva. /N
 		return
-	to_chat(usr, "\green You claw at the [name].")
+	to_chat(usr, "<span class='green'>You claw at the [name].</span>")
 	for(var/mob/O in oviewers(src))
-		O.show_message("\red [usr] claws at the resin!", 1)
+		O.show_message("<span class='warning'>[usr] claws at the resin!</span>", 1)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	health -= rand(40, 60)
 	if(health <= 0)
-		to_chat(usr, "\green You slice the [name] to pieces.")
+		to_chat(usr, "<span class='green'>You slice the [name] to pieces.</span>")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] slices the [name] apart!", 1)
+			O.show_message("<span class='warning'>[usr] slices the [name] apart!</span>", 1)
 	healthcheck()
 	return
 
@@ -289,9 +289,9 @@
 
 /obj/structure/alien/weeds/attackby(obj/item/weapon/W, mob/user)
 	if(W.attack_verb.len)
-		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='warning'><B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
 	else
-		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='warning'><B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
 
 	var/damage = W.force / 4.0
 
@@ -375,7 +375,7 @@
 	if(ticks >= target_strength)
 
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\green <B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B>", 1)
+			O.show_message("<span class='green'><B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>", 1)
 
 		if(istype(target, /turf/simulated/wall)) // I hate turf code.
 			var/turf/simulated/wall/W = target
@@ -391,13 +391,13 @@
 
 	switch(target_strength - ticks)
 		if(6)
-			visible_message("\green <B>[src.target] is holding up against the acid!</B>")
+			visible_message("<span class='green'><B>[src.target] is holding up against the acid!</B></span>")
 		if(4)
-			visible_message("\green <B>[src.target]\s structure is being melted by the acid!</B>")
+			visible_message("<span class='green'><B>[src.target]\s structure is being melted by the acid!</B></span>")
 		if(2)
-			visible_message("\green <B>[src.target] is struggling to withstand the acid!</B>")
+			visible_message("<span class='green'><B>[src.target] is struggling to withstand the acid!</B></span>")
 		if(0 to 1)
-			visible_message("\green <B>[src.target] begins to crumble under the acid!</B>")
+			visible_message("<span class='green'><B>[src.target] begins to crumble under the acid!</B></span>")
 	spawn(rand(150, 200)) tick()
 
 /*
@@ -432,7 +432,7 @@
 		if(isalien(user))
 			switch(status)
 				if(GROWING)
-					to_chat(user, "\red The child is not developed yet.")
+					to_chat(user, "<span class='warning'>The child is not developed yet.</span>")
 					return
 		else
 			return attack_hand(user)
@@ -464,13 +464,13 @@
 		return
 	switch(status)
 		if(GROWING)
-			to_chat(user, "\red The child is not developed yet.")
+			to_chat(user, "<span class='warning'>The child is not developed yet.</span>")
 			return
 		if(GROWN)
 			used = 1
 			var/mob/living/carbon/alien/facehugger/FH = new /mob/living/carbon/alien/facehugger(get_turf(src))
 			FH.key = user.key
-			to_chat(FH, "\green You are now a facehugger, go hug some human faces <3")
+			to_chat(FH, "<span class='green'>You are now a facehugger, go hug some human faces <3</span>")
 			icon_state = "egg_hatched"
 			flick("egg_opening", src)
 			status = BURSTING
@@ -488,9 +488,9 @@
 	if(health <= 0)
 		return
 	if(W.attack_verb.len)
-		src.visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		src.visible_message("<span class='warning'><B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
 	else
-		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
+		src.visible_message("<span class='warning'><B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
 	var/damage = W.force / 4.0
 
 	if(istype(W, /obj/item/weapon/weldingtool))

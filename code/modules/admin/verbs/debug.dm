@@ -229,7 +229,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M:Alienize()
 			feedback_add_details("admin_verb","MKAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
-		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into an alien.")
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [key_name(M)] into an alien.</span>")
 	else
 		alert("Invalid mob")
 
@@ -246,7 +246,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M:slimeize()
 			feedback_add_details("admin_verb","MKMET") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
-		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a slime.")
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [key_name(M)] into a slime.</span>")
 	else
 		alert("Invalid mob")
 
@@ -328,28 +328,28 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return
 		else
 			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
-				to_chat(M, "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground.")
+				to_chat(M, "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground.</span>")
 				new /obj/item/weapon/book/tome(M.loc)
 			else
-				to_chat(M, "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.")
+				to_chat(M, "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>")
 			var/glimpse=pick("1","2","3","4","5","6","7","8")
 			switch(glimpse)
 				if("1")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["travel"]] is travel...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords[</span>"travel"]] is travel...")
 				if("2")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["blood"]] is blood...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords[</span>"blood"]] is blood...")
 				if("3")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["join"]] is join...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords[</span>"join"]] is join...")
 				if("4")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["hell"]] is Hell...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords[</span>"hell"]] is Hell...")
 				if("5")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords[</span>"destroy"]] is destroy...")
 				if("6")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["technology"]] is technology...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords[</span>"technology"]] is technology...")
 				if("7")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["self"]] is self...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords[</span>"self"]] is self...")
 				if("8")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["see"]] is see...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords[</span>"see"]] is see...")
 
 			if(M.mind)
 				M.mind.special_role = "Cultist"
@@ -438,7 +438,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Invalid mob")
 	feedback_add_details("admin_verb","GFA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(src)] has granted [M.key] full access.")
-	message_admins("\blue [key_name_admin(usr)] has granted [M.key] full access.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
 
 /client/proc/cmd_assume_direct_control(mob/M in mob_list)
 	set category = "Admin"
@@ -452,7 +452,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		else
 			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
 			ghost.ckey = M.ckey
-	message_admins("\blue [key_name_admin(usr)] assumed direct control of [M].")
+	message_admins("<span class='notice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
 	log_admin("[key_name(usr)] assumed direct control of [M].")
 	var/mob/adminmob = src.mob
 	M.ckey = src.ckey
@@ -1662,7 +1662,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	M.regenerate_icons()
 
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
-	message_admins("\blue [key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..")
+	message_admins("<span class='notice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..</span>")
 	return
 
 /client/proc/startSinglo()
@@ -1778,7 +1778,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			SMES.output = 75000
 
 	if(!found_the_pump && response == "Setup Completely")
-		to_chat(src, "\red Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter")
+		to_chat(src, "<span class='warning'>Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter</span>")
 		var/turf/simulated/T = SM.loc
 		T.zone.air.nitrogen += 450
 		T.zone.air.temperature = 50
@@ -1786,7 +1786,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 
 	log_admin("[key_name(usr)] setup the supermatter engine [response == "Setup except coolant" ? "without coolant" : ""]")
-	message_admins("\blue [key_name_admin(usr)] setup the supermatter engine  [response == "Setup except coolant" ? "without coolant": ""]")
+	message_admins("<span class='notice'>[key_name_admin(usr)] setup the supermatter engine  [response == "Setup except coolant" ? "without coolant": ""]</span>")
 	return
 
 

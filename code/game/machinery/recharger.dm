@@ -39,10 +39,10 @@ obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 		// Checks to make sure he's not in space doing it, and that the area got proper power.
 		var/area/a = get_area(src)
 		if(!isarea(a))
-			to_chat(user, "\red The [name] blinks red as you try to insert the item!")
+			to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the item!</span>")
 			return
 		if(!a.power_equip && a.requires_power)
-			to_chat(user, "\red The [name] blinks red as you try to insert the item!")
+			to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the item!</span>")
 			return
 
 		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
@@ -57,7 +57,7 @@ obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 		update_icon()
 	else if(istype(G, /obj/item/weapon/wrench))
 		if(charging)
-			to_chat(user, "\red Remove the weapon first!")
+			to_chat(user, "<span class='warning'>Remove the weapon first!</span>")
 			return
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attached" : "detached"] the recharger.")
