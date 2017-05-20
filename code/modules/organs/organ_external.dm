@@ -28,6 +28,10 @@
 	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
 	var/list/implants = list()        // Currently implanted objects.
 
+	// Joint/state stuff.
+	var/artery_name = "artery"        // Flavour text for cartoid artery, aorta, etc.
+	var/arterial_bleed_severity = 1   // Multiplier for bleeding in a limb.
+
 	// Surgery vars.
 	var/open = 0
 	var/stage = 0
@@ -199,7 +203,7 @@ This function completely restores a damaged organ to perfect condition.
 */
 /obj/item/organ/external/proc/rejuvenate()
 	damage_state = "00"
-	if(status & ORGAN_ROBOT)	//Robotic body parts stay robotic.  Fix because right click rejuvinate makes IPC's body parts organic.
+	if(status & ORGAN_ROBOT) // Robotic body parts stay robotic.  Fix because right click rejuvinate makes IPC's body parts organic.
 		status = ORGAN_ROBOT
 	else
 		status = 0
@@ -225,15 +229,19 @@ This function completely restores a damaged organ to perfect condition.
 
 
 /obj/item/organ/external/proc/createwound(type = CUT, damage)
-	if(damage == 0) return
+	if(damage == 0)
+		return
 
-	//moved this before the open_wound check so that having many small wounds for example doesn't somehow protect you from taking internal damage
-	//Possibly trigger an internal wound, too.
+	//moved this before the open_wound check so that having many small wounds for example doesn't somehow protect you from taking internal damage (because of the return)
+	//Brute damage can possibly trigger an internal wound, too.
 	var/local_damage = brute_dam + burn_dam + damage
-	if(damage > 15 && type != BURN && local_damage > 30 && prob(damage) && !(status & ORGAN_ROBOT))
-		var/datum/wound/internal_bleeding/I = new (15)
-		wounds += I
-		owner.custom_pain("You feel something rip in your [name]!", 1)
+	if( (type in list(CUT , BRUISE)) && damage > 15 && local_damage > 30)
+
+		var/internal_damage
+		if(prob(damage) && sever_artery())
+			internal_damage = TRUE
+		if(internal_damage)
+			owner.custom_pain("You feel something rip in your [name]!", 1)
 
 	// first check whether we can widen an existing wound
 	if(wounds.len > 0 && prob(max(50+(number_wounds-1)*10,90)))
@@ -248,10 +256,18 @@ This function completely restores a damaged organ to perfect condition.
 				var/datum/wound/W = pick(compatible_wounds)
 				W.open_wound(damage)
 				if(prob(25))
-					//maybe have a separate message for BRUISE type damage?
-					owner.visible_message("\red The wound on [owner.name]'s [name] widens with a nasty ripping voice.",\
-					"\red The wound on your [name] widens with a nasty ripping voice.",\
-					"You hear a nasty ripping noise, as if flesh is being torn apart.")
+					if(status & ORGAN_ROBOT)
+						owner.visible_message(
+							"<span class='danger'>The damage to [owner.name]'s [name] worsens.</span>",
+							"<span class='danger'>The damage to your [name] worsens.</span>",
+							"<span class='danger'>You hear the screech of abused metal.</span>"
+							)
+					else
+						owner.visible_message(
+							"<span class='danger'>The wound on [owner.name]'s [name] widens with a nasty ripping voice.</span>",
+							"<span class='danger'>The wound on your [name] widens with a nasty ripping voice.</span>",
+							"<span class='danger'>You hear a nasty ripping noise, as if flesh is being torn apart.</span>"
+							)
 				return
 
 	//Creating wound
@@ -443,19 +459,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 			continue
 			// let the GC handle the deletion of the wound
 
-		// Internal wounds get worse over time. Low temperatures (cryo) stop them.
-		if(W.internal && owner.bodytemperature >= 170)
-			var/bicardose = owner.reagents.get_reagent_amount("bicaridine")
-			var/inaprovaline = owner.reagents.get_reagent_amount("inaprovaline")
-			if(!(W.can_autoheal() || (bicardose && inaprovaline)))	//bicaridine and inaprovaline stop internal wounds from growing bigger with time
-				W.open_wound(0.1 * wound_update_accuracy)
-			if(bicardose >= 30)	//overdose of bicaridine begins healing IB
-				W.damage = max(0, W.damage - 0.2) // Bug: doesn't update W.current_stage
-
-			owner.vessel.remove_reagent("blood",0.05 * W.damage * wound_update_accuracy)
-			if(prob(1 * wound_update_accuracy))
-				owner.custom_pain("You feel a stabbing pain in your [name]!",1)
-
 		// slow healing
 		var/heal_amt = 0
 
@@ -491,11 +494,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	status &= ~ORGAN_BLEEDING
 	var/clamped = 0
 	for(var/datum/wound/W in wounds)
-		if (!W.internal)
-			if(W.damage_type == CUT || W.damage_type == BRUISE)
-				brute_dam += W.damage
-			else if(W.damage_type == BURN)
-				burn_dam += W.damage
+		if(W.damage_type == CUT || W.damage_type == BRUISE)
+			brute_dam += W.damage
+		else if(W.damage_type == BURN)
+			burn_dam += W.damage
 
 		if(!(status & ORGAN_ROBOT) && W.bleeding())
 			W.bleed_timer--
@@ -558,13 +560,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //Handles dismemberment
 /obj/item/organ/external/proc/droplimb(override = 0,no_explode = 0)
-	if(destspawn) return
+	if(destspawn)
+		return
+
 	if(override)
 		status |= ORGAN_DESTROYED
-	for(var/datum/wound/W in wounds)
-		if(W.internal)
-			wounds -= W
-			update_damages()
+
 	if(status & ORGAN_DESTROYED)
 		if(body_part == UPPER_TORSO)
 			return
@@ -662,6 +663,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(update_icon())
 			owner.UpdateDamageIcon(src)
 
+/obj/item/organ/external/proc/sever_artery()
+	if(!(status & (ORGAN_ARTERY_CUT | ORGAN_ROBOT)) && owner.organs_by_name[O_HEART])
+		status |= ORGAN_ARTERY_CUT
+		return TRUE
+	return FALSE
+
 /****************************************************
 			   HELPERS
 ****************************************************/
@@ -684,7 +691,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 // checks if all wounds on the organ are bandaged
 /obj/item/organ/external/proc/is_bandaged()
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		if(!W.bandaged)
 			return 0
 	return 1
@@ -692,7 +698,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 // checks if all wounds on the organ are salved
 /obj/item/organ/external/proc/is_salved()
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		if(!W.salved)
 			return 0
 	return 1
@@ -700,7 +705,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 // checks if all wounds on the organ are disinfected
 /obj/item/organ/external/proc/is_disinfected()
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		if(!W.disinfected)
 			return 0
 	return 1
@@ -709,7 +713,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/rval = 0
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		rval |= !W.bandaged
 		W.bandaged = 1
 	return rval
@@ -717,7 +720,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/disinfect()
 	var/rval = 0
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		rval |= !W.disinfected
 		W.disinfected = 1
 		W.germ_level = 0
@@ -727,7 +729,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/rval = 0
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
 		rval |= !W.clamped
 		W.clamped = 1
 	return rval
@@ -868,6 +869,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/chest
 	name = "chest"
+	artery_name = "aorta"
 
 	body_part = UPPER_TORSO
 	body_zone = BP_CHEST
@@ -880,6 +882,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/groin
 	name = "groin"
+	artery_name = "iliac artery"
 
 	body_part = LOWER_TORSO
 	body_zone = BP_GROIN
@@ -893,6 +896,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/head
 	name = "head"
+	artery_name = "cartoid artery"
 
 	body_part = HEAD
 	body_zone = BP_HEAD
@@ -908,12 +912,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm
 	name = "left arm"
+	artery_name = "basilic vein"
 
 	body_part = ARM_LEFT
 	body_zone = BP_L_ARM
 	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_L_ARM_LAYER
 
+	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 20
 
@@ -924,12 +930,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_arm
 	name = "right arm"
+	artery_name = "basilic vein"
 
 	body_part = ARM_RIGHT
 	body_zone = BP_R_ARM
 	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_R_ARM_LAYER
 
+	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 20
 
@@ -946,6 +954,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	parent_bodypart = BP_L_ARM
 	limb_layer = LIMB_L_HAND_LAYER
 
+	arterial_bleed_severity = 0.5
 	max_damage = 30
 	min_broken_damage = 15
 
@@ -962,6 +971,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	parent_bodypart = BP_R_ARM
 	limb_layer = LIMB_R_HAND_LAYER
 
+	arterial_bleed_severity = 0.5
 	max_damage = 30
 	min_broken_damage = 15
 
@@ -972,6 +982,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_leg
 	name = "left leg"
+	artery_name = "femoral artery"
 
 	body_part = LEG_LEFT
 	body_zone = BP_L_LEG
@@ -979,12 +990,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_L_LEG_LAYER
 	icon_position = LEFT
 
+	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 20
 
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
+	artery_name = "femoral artery"
 
 	body_part = LEG_RIGHT
 	body_zone = BP_R_LEG
@@ -992,6 +1005,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_R_LEG_LAYER
 	icon_position = RIGHT
 
+	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 20
 
@@ -1005,6 +1019,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_L_FOOT_LAYER
 	icon_position = LEFT
 
+	arterial_bleed_severity = 0.5
 	max_damage = 30
 	min_broken_damage = 15
 
@@ -1018,6 +1033,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_R_FOOT_LAYER
 	icon_position = RIGHT
 
+	arterial_bleed_severity = 0.5
 	max_damage = 30
 	min_broken_damage = 15
 
@@ -1271,14 +1287,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 	else if (open)
 		wound_descriptors["an incision"] = 1
 	for(var/datum/wound/W in wounds)
-		if(W.internal && !open) continue // can't see internal wounds
 		var/this_wound_desc = W.desc
 
 		if(W.damage_type == BURN && W.salved)
 			this_wound_desc = "salved [this_wound_desc]"
 
 		if(W.bleeding())
-			this_wound_desc = "bleeding [this_wound_desc]"
+			if(W.wound_damage() > W.bleed_threshold)
+				this_wound_desc = "<b>bleeding</b> [this_wound_desc]"
+			else
+				this_wound_desc = "bleeding [this_wound_desc]"
 		else if(W.bandaged)
 			this_wound_desc = "bandaged [this_wound_desc]"
 

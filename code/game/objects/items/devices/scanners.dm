@@ -163,29 +163,31 @@ REAGENT SCANNER
 		user.show_message("\red Significant brain damage detected. Subject may have had a concussion.")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		for(var/name in H.bodyparts_by_name)
-			var/obj/item/organ/external/BP = H.bodyparts_by_name[name]
-			var/limb = BP.name
-			if(BP.status & ORGAN_BROKEN)
-				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && (!(BP.status & ORGAN_SPLINTED)))
-					to_chat(user, "\red Unsecured fracture in subject [limb]. Splinting recommended for transport.")
-			if(BP.has_infected_wound())
-				to_chat(user, "\red Infected wound detected in subject [limb]. Disinfection recommended.")
 
-		for(var/name in H.bodyparts_by_name)
-			var/obj/item/organ/external/BP = H.bodyparts_by_name[name]
-			if(BP.status & ORGAN_BROKEN)
-				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
-				break
+		var/found_bleed
+		var/found_broken
 		for(var/obj/item/organ/external/BP in H.bodyparts)
-			for(var/datum/wound/W in BP.wounds)
-				if(W.internal)
-					user.show_message(text("\red Internal bleeding detected. Advanced scanner required for location."), 1)
-					break
-		if(M:vessel)
-			var/blood_volume = round(M:vessel.get_reagent_amount("blood"))
+			if(BP.status & ORGAN_BROKEN)
+				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
+					to_chat(user, "<span class='warning'>Unsecured fracture in subject [BP.name]. Splinting recommended for transport.</span>")
+				if(!found_broken)
+					found_broken = TRUE
+
+			if(!found_bleed && (BP.status & ORGAN_ARTERY_CUT))
+				found_bleed = TRUE
+
+			if(BP.has_infected_wound())
+				to_chat(user, "<span class='warning'>Infected wound detected in subject [BP.name]. Disinfection recommended.</span>")
+
+		if(found_bleed)
+			user.show_message("<span class='warning'>Arterial bleeding detected. Advanced scanner required for location.</span>", 1)
+		if(found_broken)
+			user.show_message("<span class='warning'>Bone fractures detected. Advanced scanner required for location.</span>", 1)
+
+		if(H.vessel)
+			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 			var/blood_percent =  blood_volume / 560
-			var/blood_type = M.dna.b_type
+			var/blood_type = H.dna.b_type
 			blood_percent *= 100
 			if(blood_volume <= 500 && blood_volume > 336)
 				user.show_message("\red <b>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.\blue Type: [blood_type]")

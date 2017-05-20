@@ -8,6 +8,7 @@
 #define ORGAN_SPLINTED   64
 #define ORGAN_DEAD       128
 #define ORGAN_MUTATED    256
+#define ORGAN_ARTERY_CUT 512
 
 // Bodypart defines
 #define BP_CHEST  "chest"

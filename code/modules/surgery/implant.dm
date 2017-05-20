@@ -126,10 +126,8 @@
 
 	user.visible_message("\blue [user] puts \the [tool] inside [target]'s [get_cavity(BP)] cavity.", \
 	"\blue You put \the [tool] inside [target]'s [get_cavity(BP)] cavity." )
-	if (tool.w_class > get_max_wclass(BP)/2 && prob(50))
+	if (tool.w_class > get_max_wclass(BP)/2 && prob(50) && BP.sever_artery())
 		to_chat(user, "\red You tear some blood vessels trying to fit such a big object in this cavity.")
-		var/datum/wound/internal_bleeding/I = new (15)
-		BP.wounds += I
 		BP.owner.custom_pain("You feel something rip in your [BP.name]!", 1)
 	if(istype(tool, /obj/item/gland))	//Abductor surgery integration
 		if(target_zone != BP_CHEST)
@@ -219,6 +217,7 @@
 					if(istype(imp,/obj/item/weapon/implant/storage))
 						var/obj/item/weapon/implant/storage/Simp = imp
 						Simp.removed()
+			playsound(target, 'sound/effects/squelch1.ogg', 50, 1)
 		else
 			user.visible_message("\blue [user] removes \the [tool] from [target]'s [BP.name].", \
 			"\blue There's something inside [target]'s [BP.name], but you just missed it this time." )

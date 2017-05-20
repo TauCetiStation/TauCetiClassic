@@ -975,12 +975,11 @@ mob/proc/yank_out_object()
 					BP = limb
 
 		BP.implants -= selection
-		H.shock_stage += 10
+		H.shock_stage += 20
+		BP.take_damage((selection.w_class * 3), 0, 0, 1, "Embedded object extraction")
 		H.bloody_hands(S)
 
-		if(prob(10)) //I'M SO ANEMIC I COULD JUST -DIE-.
-			var/datum/wound/internal_bleeding/I = new (15)
-			BP.wounds += I
+		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.
 			H.custom_pain("Something tears wetly in your [BP.name] as [selection] is pulled free!", 1)
 
 	selection.loc = get_turf(src)

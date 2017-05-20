@@ -13,6 +13,10 @@
 	var/damage = 0
 	// ticks of bleeding left.
 	var/bleed_timer = 0
+
+	// Above this amount wounds you will need to treat the wound to stop bleeding, regardless of bleed_timer
+	var/bleed_threshold = 30
+
 	// amount of damage the current wound type requires(less means we need to apply the next healing stage)
 	var/min_damage = 0
 
@@ -34,8 +38,6 @@
 
 	// stages such as "cut", "deep cut", etc.
 	var/list/stages
-	// internal wounds can only be fixed through surgery
-	var/internal = 0
 	// maximum stage at which bleeding should still happen, counted from the right rather than the left of the list
 	// 1 means all stages except the last should bleed
 	var/max_bleeding_stage = 1
@@ -156,10 +158,6 @@
 // than what needed to be healed, return how much heal was left
 // set @heals_internal to also heal internal organ damage
 /datum/wound/proc/heal_damage(amount, heals_internal = 0)
-	if(src.internal && !heals_internal)
-		// heal nothing
-		return amount
-
 	var/healed_damage = min(src.damage, amount)
 	amount -= healed_damage
 	src.damage -= healed_damage
@@ -202,19 +200,9 @@
 	return 1
 
 /datum/wound/proc/bleeding()
-	if (src.internal)
-		return 0	// internal wounds don't bleed in the sense of this function
-
-	if (current_stage > max_bleeding_stage)
-		return 0
-
-	if (bandaged||clamped)
-		return 0
-
-	if (wound_damage() <= 30 && bleed_timer <= 0)
-		return 0	//Bleed timer has run out. Wounds with more than 30 damage don't stop bleeding on their own.
-
-	return (damage_type == BRUISE && wound_damage() >= 20 || damage_type == CUT && wound_damage() >= 5)
+	if(bandaged || clamped)
+		return FALSE
+	return (bleed_timer > 0 && wound_damage() > bleed_threshold)
 
 /** WOUND DEFINITIONS **/
 
@@ -255,6 +243,9 @@
 	return null //no wound
 
 /** CUTS **/
+/datum/wound/cut
+	bleed_threshold = 5
+
 /datum/wound/cut/small
 	// link wound descriptions to amounts of damage
 	max_bleeding_stage = 2
@@ -290,6 +281,8 @@ datum/wound/cut/massive
 /datum/wound/bruise
 	stages = list("monumental bruise" = 80, "huge bruise" = 50, "large bruise" = 30,\
 				  "moderate bruise" = 20, "small bruise" = 10, "tiny bruise" = 5)
+
+	bleed_threshold = 20
 	max_bleeding_stage = 3
 	autoheal_cutoff = 30
 	damage_type = BRUISE
@@ -314,10 +307,3 @@ datum/wound/cut/massive
 /datum/wound/burn/carbonised
 	stages = list("carbonised area" = 50, "healing carbonised area" = 20, "massive burn scar" = 0)
 	damage_type = BURN
-
-/** INTERNAL BLEEDING **/
-/datum/wound/internal_bleeding
-	internal = 1
-	stages = list("severed vein" = 30, "cut vein" = 20, "damaged vein" = 10, "bruised vein" = 5)
-	autoheal_cutoff = 5
-	max_bleeding_stage = 0	//all stages bleed. It's called internal bleeding after all.

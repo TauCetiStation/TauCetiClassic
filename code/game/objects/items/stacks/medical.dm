@@ -68,8 +68,6 @@
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
 				var/used = 0
 				for(var/datum/wound/W in BP.wounds)
-					if(W.internal)
-						continue
 					if(W.bandaged)
 						continue
 					if(used == amount)
@@ -186,8 +184,6 @@
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
 				var/used = 0
 				for(var/datum/wound/W in BP.wounds)
-					if(W.internal)
-						continue
 					if(W.bandaged && W.disinfected)
 						continue
 					if(used == amount)

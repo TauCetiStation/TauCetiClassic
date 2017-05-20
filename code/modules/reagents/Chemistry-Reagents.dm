@@ -1333,9 +1333,6 @@ datum
 				H.jitteriness = max(0,H.jitteriness - 100)
 				if(!External)
 					for(var/obj/item/organ/external/BP in H.bodyparts) // find a broken/destroyed limb
-						for(var/datum/wound/W in BP.wounds) // remove internal
-							if(W.internal)
-								BP.wounds -= W
 						if(BP.status & ORGAN_DESTROYED)
 							if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
 								continue
