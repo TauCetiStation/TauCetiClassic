@@ -96,7 +96,7 @@ REAGENT SCANNER
 		user.show_message("&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
 		user.show_message("&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font>")
 		user.show_message("<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
-		user.show_message("<span class='warning'><b>Warning: Blood Level ERROR: --% --cl.\blue Type: ERROR</span>")
+		user.show_message("<span class='warning'><b>Warning: Blood Level ERROR: --% --cl.<span class='notice'>Type: ERROR</span></span>")
 		user.show_message("<span class='notice'>Subject's pulse: <font color='red'>-- bpm.</font></span>")
 		return
 
@@ -121,7 +121,7 @@ REAGENT SCANNER
 		user.show_message("<span class='notice'>Localized Damage, Brute/Burn:</span>",1)
 		if(length(damaged)>0)
 			for(var/datum/organ/external/BP in damaged)
-				user.show_message(text("<span class='notice'>&emsp; []: [][]\blue - []</span>",	\
+				user.show_message(text("<span class='notice'>&emsp; []: [][] - []</span>",	\
 				capitalize(BP.name),					\
 				(BP.brute_dam > 0)	?	"<span class='warning'>[BP.brute_dam]</span>"							:0,		\
 				(BP.status & ORGAN_BLEEDING)?"<span class='warning'><b>\[Bleeding\]</b></span>":"&emsp;", 		\
@@ -134,7 +134,7 @@ REAGENT SCANNER
 	BU = M.getFireLoss() > 50 ? 	"<font color='#FFA500'><b>Severe burn damage detected</b></font>" 			:	"Subject burn injury status O.K"
 	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Severe anatomical damage detected</b></font>" 		: 	"Subject brute-force injury status O.K"
 	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected\blue</span>" 	: 	"Subject bloodstream oxygen level normal"
+		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected</span>" 	: 	"Subject bloodstream oxygen level normal"
 	user.show_message("[OX] | [TX] | [BU] | [BR]")
 	if (istype(M, /mob/living/carbon))
 		if(M:reagents.total_volume > 0)
@@ -188,9 +188,9 @@ REAGENT SCANNER
 			var/blood_type = M.dna.b_type
 			blood_percent *= 100
 			if(blood_volume <= 500 && blood_volume > 336)
-				user.show_message("<span class='warning'><b>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.\blue Type: [blood_type]</span>")
+				user.show_message("<span class='warning'><b>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.<span class='notice'>Type: [blood_type]</span></span>")
 			else if(blood_volume <= 336)
-				user.show_message("<span class='warning'><b>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.\blue Type: [blood_type]</span>")
+				user.show_message("<span class='warning'><b>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.<span class='notice'>Type: [blood_type]</span></span>")
 			else
 				user.show_message("<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span>")
 		user.show_message("<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span>")
@@ -465,7 +465,7 @@ REAGENT SCANNER
 			var/one_percent = O.reagents.total_volume / 100
 			for (var/datum/reagent/R in O.reagents.reagent_list)
 				if(prob(reliability))
-					dat += "\n &emsp; \blue [R][details ? ": [R.volume / one_percent]%" : ""]"
+					dat += "\n &emsp; <span class='notice'>[R][details ? ": [R.volume / one_percent]%" : ""]</span>"
 					recent_fail = 0
 				else if(recent_fail)
 					crit_fail = 1
