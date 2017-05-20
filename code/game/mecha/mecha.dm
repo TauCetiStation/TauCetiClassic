@@ -432,7 +432,7 @@
 	else
 		src.log_append_to_last("Armor saved.")
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
-		to_chat(user, "\green Your claws had no effect!")
+		to_chat(user, "<span class='green'>Your claws had no effect!</span>")
 		src.occupant_message("<span class='notice'>The [user]'s claws are stopped by the armor.</span>")
 		visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
 	return
@@ -589,7 +589,7 @@
 	else
 		src.log_append_to_last("Armor saved.")
 		playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1, -1)
-		to_chat(user, "\green Your attack had no effect!")
+		to_chat(user, "<span class='green'>Your attack had no effect!</span>")
 		src.occupant_message("<span class='notice'>The [user]'s attack is stopped by the armor.</span>")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))

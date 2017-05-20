@@ -466,7 +466,7 @@
 		if(src.health <= 0)
 			src.die()
 	else
-		to_chat(M, "\green That object is useless to you.")
+		to_chat(M, "<span class='green'>That object is useless to you.</span>")
 	return
 
 /obj/machinery/turretid/is_operational_topic()

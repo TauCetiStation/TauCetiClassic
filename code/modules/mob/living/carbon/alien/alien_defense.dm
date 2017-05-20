@@ -181,7 +181,7 @@ This is what happens, when we attack aliens.
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				to_chat(M, "\green <B>[name] is too injured for that.</B>")
+				to_chat(M, "<span class='green'><B>[name] is too injured for that.</B></span>")
 	return
 
 /mob/living/carbon/alien/attack_slime(mob/living/carbon/slime/M)
