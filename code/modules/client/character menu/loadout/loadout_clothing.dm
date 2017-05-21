@@ -52,6 +52,11 @@
 	path = /obj/item/clothing/suit/fluff/kung
 	cost = 1
 
+/datum/gear/suit/serifcoat
+	display_name = "Serif coat"
+	path = /obj/item/clothing/suit/serifcoat
+	cost = 1
+
 
 
 /datum/gear/under

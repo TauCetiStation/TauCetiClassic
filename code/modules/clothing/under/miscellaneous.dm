@@ -251,6 +251,13 @@
 	item_state = "white_suit"
 	item_color = "white_suit"
 
+/obj/item/clothing/under/suit_jacket/rouge
+	name = "rogue jacket"
+	desc = "A  suit and jacket with a jeans. For the bad guy!"
+	icon_state = "rogue_jacket"
+	item_state = "rogue_jacket_s"
+	item_color = "rogue_jacket"
+
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
