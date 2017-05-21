@@ -166,16 +166,7 @@ Deep minerals:
 						target_turf.resources["carbonaceous rock"] = rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
 
 						switch(map[MAP_CELL])
-							if(0 to 130) 	// ~50% chance
-								target_turf.resources["iron"] =       rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
-								//target_turf.resources["gold"] =       0
-								target_turf.resources["silver"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
-								//target_turf.resources["uranium"] =    0
-								//target_turf.resources["diamond"] =    0
-								target_turf.resources["phoron"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
-								//target_turf.resources["osmium"] =     0
-								//target_turf.resources["hydrogen"] =   0
-							if(131 to 200) // ~27% chance
+							if(0 to 70)
 								target_turf.resources["iron"] =       rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["gold"] =       rand(RESOURCE_LOW_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["silver"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
@@ -184,7 +175,16 @@ Deep minerals:
 								//target_turf.resources["phoron"] =     o
 								//target_turf.resources["osmium"] =     0
 								//target_turf.resources["hydrogen"] =   0
-							if(201 to 255)// ~21 % chanse
+							if(71 to 125)
+								target_turf.resources["iron"] =       rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
+								//target_turf.resources["gold"] =       0
+								target_turf.resources["silver"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
+								//target_turf.resources["uranium"] =    0
+								//target_turf.resources["diamond"] =    0
+								target_turf.resources["phoron"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
+								//target_turf.resources["osmium"] =     0
+								//target_turf.resources["hydrogen"] =   0
+							if(126 to 255)
 								//target_turf.resources["iron"] =       0
 								//target_turf.resources["gold"] =       0
 								//target_turf.resources["silver"] =     0
