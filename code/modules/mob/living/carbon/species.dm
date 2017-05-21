@@ -98,12 +98,12 @@
 		)
 
 	var/list/has_organ = list(
-		 BP_HEART   = /obj/item/organ/internal/heart
-		,BP_BRAIN   = /obj/item/organ/internal/brain
-		,BP_EYES    = /obj/item/organ/internal/eyes
-		,BP_LUNGS   = /obj/item/organ/internal/lungs
-		,BP_LIVER   = /obj/item/organ/internal/liver
-		,BP_KIDNEYS = /obj/item/organ/internal/kidneys
+		 O_HEART   = /obj/item/organ/internal/heart
+		,O_BRAIN   = /obj/item/organ/internal/brain
+		,O_EYES    = /obj/item/organ/internal/eyes
+		,O_LUNGS   = /obj/item/organ/internal/lungs
+		,O_LIVER   = /obj/item/organ/internal/liver
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
 /datum/species/New()
