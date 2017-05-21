@@ -1530,7 +1530,7 @@ var/list/WALLITEMS = typecacheof(list(
 		. += CEILING(i * DELTA_CALC, 1)
 		sleep(i*world.tick_lag * DELTA_CALC)
 		i *= 2
-	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
 

@@ -1,12 +1,12 @@
-#define MC_TICK_CHECK ( ( world.tick_usage > CURRENT_TICKLIMIT || src.state != SS_RUNNING ) ? pause() : 0 )
+#define MC_TICK_CHECK ( ( world.tick_usage > Master.current_ticklimit || src.state != SS_RUNNING ) ? pause() : 0 )
 
-#define MC_SPLIT_TICK_INIT(phase_count) var/original_tick_limit = CURRENT_TICKLIMIT; var/split_tick_phases = ##phase_count
+#define MC_SPLIT_TICK_INIT(phase_count) var/original_tick_limit = Master.current_ticklimit; var/split_tick_phases = ##phase_count
 #define MC_SPLIT_TICK \
     if(split_tick_phases > 1){\
-        CURRENT_TICKLIMIT = ((original_tick_limit - TICK_USAGE) / split_tick_phases) + TICK_USAGE;\
+        Master.current_ticklimit = ((original_tick_limit - TICK_USAGE) / split_tick_phases) + TICK_USAGE;\
         --split_tick_phases;\
     } else {\
-        CURRENT_TICKLIMIT = original_tick_limit;\
+        Master.current_ticklimit = original_tick_limit;\
     }
 
 
