@@ -1596,7 +1596,7 @@
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 
-		var/input = sanitize_alt(input(src.owner, "Please enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null)
+		var/input = sanitize_alt(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null)
 		if(!input)
 			return
 
@@ -1604,7 +1604,7 @@
 
 		var/obj/item/weapon/paper/P = new
 		P.name = "[command_name()]- [customname]"
-		P.info = input
+		P.info = checkhtml(html_decode(input))
 
 		var/obj/item/weapon/stamp/centcomm/S = new
 		S.stamp_paper(P, use_stamp_by_message = TRUE)
