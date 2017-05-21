@@ -250,22 +250,6 @@ This function restores all bodyparts.
 	else
 		return 0
 
-/mob/living/carbon/human/proc/get_external_organ_from_def_zone_list(list/def_zone_list)
-	var/datum/organ/external/BP = null
-	while(def_zone_list)
-		var/def_zone = pick(def_zone_list)
-
-		BP = get_bodypart(def_zone)
-
-		if(BP.status & ORGAN_DESTROYED)
-			def_zone_list -= def_zone
-		else
-			break
-	if(!BP)
-		return 0
-	else
-		return BP
-
 /mob/living/carbon/human/proc/get_bodypart(zone)
 	if(!zone)
 		zone = BP_CHEST

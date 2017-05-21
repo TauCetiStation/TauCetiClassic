@@ -241,33 +241,25 @@
 
 /mob/living/carbon/human/proc/attack_by_machine(obj/machinery/M)
 
-	var/organ_list = list(BP_R_HAND,BP_L_HAND)
-	var/datum/organ/external/BP = get_external_organ_from_def_zone_list(organ_list)
+	var/datum/organ/external/BP = bodyparts_by_name[hand ? BP_L_HAND : BP_R_HAND]
 
+	if(!BP || !BP.is_usable())
+		return
 
-	apply_damage(M.damage_to_user, BRUTE, BP ,run_armor_check(BP, "melee"), 1)
-	BP.add_autopsy_data(M, M.damage_to_user)
-	to_chat(src, "<span class='danger'> You feel, that [src] cut your [BP]!")
+	apply_damage(M.damage_to_user, BRUTE, BP ,run_armor_check(BP, "melee")/2, 1)
+	to_chat(src, "<span class='danger'> You feel, that [M] try to cut your [BP]!")
 
 	if(BP.status & ORGAN_DESTROYED)
 		return
 
 	switch(BP.body_zone)
 		if(BP_L_HAND)
-			BP = get_bodypart(BP_L_ARM)
+			BP = bodyparts_by_name[BP_L_ARM]
 		if(BP_R_HAND)
-			BP = get_bodypart(BP_R_ARM)
+			BP = bodyparts_by_name[BP_R_ARM]
 
-
-	apply_damage(M.damage_to_user, BRUTE, BP ,run_armor_check(BP, "melee"), 1)
-	BP.add_autopsy_data(M, M.damage_to_user)
-	to_chat(src, "<span class='danger'> You feel, that [src] cut your [BP]!")
-
-	if(BP.status & ORGAN_DESTROYED)
-		return
-
-	//gib()
-
+	apply_damage(M.damage_to_user, BRUTE, BP ,run_armor_check(BP, "melee")/2, 1)
+	to_chat(src, "<span class='danger'> You feel, that [M] try to cut your [BP]!")
 
 /mob/living/carbon/human/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(!I || !user)	return 0

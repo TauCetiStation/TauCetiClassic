@@ -30,7 +30,7 @@
 		)
 
 	//Upgrades
-	damage_to_user = 20
+	damage_to_user = 30
 	var/harvest_speed
 	var/capacity
 	var/charge_use
