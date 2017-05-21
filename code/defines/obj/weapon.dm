@@ -279,7 +279,7 @@
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves && !(H.dna && H.dna.mutantrace == "adamantine")) //specflags please..
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
-			var/datum/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
 			BP.take_damage(force / 2)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user

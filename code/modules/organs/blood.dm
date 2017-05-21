@@ -62,7 +62,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 		// Damaged heart virtually reduces the blood volume, as the blood isn't
 		// being pumped properly anymore.
-		var/datum/organ/internal/heart/IO = organs_by_name[O_HEART]
+		var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
 
 		if(IO.damage > 1 && IO.damage < IO.min_bruised_damage)
 			blood_volume *= 0.8
@@ -122,13 +122,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 		//Bleeding out
 		var/blood_max = 0
-		for(var/datum/organ/external/BP in bodyparts)
+		for(var/obj/item/organ/external/BP in bodyparts)
 			if(!(BP.status & ORGAN_BLEEDING) || (BP.status & ORGAN_ROBOT))
 				continue
 			for(var/datum/wound/W in BP.wounds)
 				if(W.bleeding())
 					blood_max += W.damage / 4
-			if((BP.status & ORGAN_DESTROYED) && !(BP.status & ORGAN_GAUZED) && !BP.amputated)
+			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
 				blood_max += 20 //Yer missing a fucking limb.
 			if (BP.open)
 				blood_max += 2  //Yer stomach is cut open

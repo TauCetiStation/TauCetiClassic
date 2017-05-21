@@ -27,7 +27,7 @@
 
 	if (istype(M,/mob/living/carbon/human))		//Repairing robolimbs
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if (BP && (BP.status & ORGAN_ROBOT))
 			if(BP.get_damage())

@@ -91,8 +91,8 @@
 	if(analgesic)
 		return
 	var/maxdam = 0
-	var/datum/organ/external/damaged_organ = null
-	for(var/datum/organ/external/BP in bodyparts)
+	var/obj/item/organ/external/damaged_organ = null
+	for(var/obj/item/organ/external/BP in bodyparts)
 		// amputated limbs don't cause pain
 		if(BP.amputated)
 			continue
@@ -108,9 +108,9 @@
 		pain(damaged_organ.name, maxdam, 0)
 
 	// Damage to organs hurts a lot.
-	for(var/datum/organ/internal/IO in organs)
+	for(var/obj/item/organ/internal/IO in organs)
 		if(IO.damage > 2 && prob(2))
-			var/datum/organ/external/BP = bodyparts_by_name[IO.parent_bodypart]
+			var/obj/item/organ/external/BP = bodyparts_by_name[IO.parent_bodypart]
 			src.custom_pain("You feel a sharp pain in your [BP.name]", 1)
 
 	var/toxDamageMessage = null

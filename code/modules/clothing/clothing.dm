@@ -332,7 +332,7 @@ BLIND     // can't see anything
 // Some space suits are equipped with reactive membranes that support
 // broken limbs - at the time of writing, only the ninja suit, but
 // I can see it being useful for other suits as we expand them. ~ Z
-// The actual splinting occurs in /datum/organ/external/proc/fracture()
+// The actual splinting occurs in /obj/item/organ/external/proc/fracture()
 /obj/item/clothing/suit/space/proc/check_limb_support()
 
 	// If this isn't set, then we don't need to care.
@@ -346,7 +346,7 @@ BLIND     // can't see anything
 		return
 
 	// Otherwise, remove the splints.
-	for(var/datum/organ/external/BP in supporting_limbs)
+	for(var/obj/item/organ/external/BP in supporting_limbs)
 		BP.status &= ~ORGAN_SPLINTED
 	supporting_limbs = list()
 

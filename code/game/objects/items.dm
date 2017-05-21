@@ -186,7 +186,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/datum/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
 		if(BP && !BP.is_usable())
 			to_chat(H, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return
@@ -670,7 +670,7 @@
 		)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		IO.damage += rand(3,4)
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
@@ -686,7 +686,7 @@
 			if (IO.damage >= IO.min_broken_damage)
 				if(H.stat != DEAD)
 					to_chat(H, "\red You go blind!")
-		var/datum/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 		BP.take_damage(7)
 	else
 		M.take_bodypart_damage(7)
@@ -727,18 +727,21 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	return 1 //we applied blood to the item
 
+var/global/list/items_blood_overlay_by_type = list()
 /obj/item/proc/generate_blood_overlay()
 	if(blood_overlay)
 		return
 
-	var/icon/I = new /icon(icon, icon_state)
-	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
-	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-
-	//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
-	for(var/obj/item/A in world)
-		if(A.type == type && !A.blood_overlay)
-			A.blood_overlay = image(I)
+	var/image/IMG = items_blood_overlay_by_type[type]
+	if(IMG)
+		blood_overlay = IMG
+	else
+		var/icon/ICO = new /icon(icon, icon_state)
+		ICO.Blend(new /icon('icons/effects/blood.dmi', rgb(255, 255, 255)), ICON_ADD) // fills the icon_state with white (except where it's transparent)
+		ICO.Blend(new /icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY)   // adds blood and the remaining white areas become transparant
+		IMG = image("icon" = ICO)
+		items_blood_overlay_by_type[type] = IMG
+		blood_overlay = IMG
 
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))

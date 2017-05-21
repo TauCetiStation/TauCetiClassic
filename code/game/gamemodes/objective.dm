@@ -455,7 +455,7 @@ datum/objective/harm
 				return 0
 
 			var/mob/living/carbon/human/H = target.current
-			for(var/datum/organ/external/BP in H.bodyparts)
+			for(var/obj/item/organ/external/BP in H.bodyparts)
 				if(BP.status & ORGAN_BROKEN)
 					already_completed = 1
 					return 1
@@ -463,7 +463,7 @@ datum/objective/harm
 					already_completed = 1
 					return 1
 
-			var/datum/organ/external/head/BP = H.bodyparts_by_name[BP_HEAD]
+			var/obj/item/organ/external/head/BP = H.bodyparts_by_name[BP_HEAD]
 			if(BP.disfigured)
 				return 1
 		return 0

@@ -23,7 +23,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if(BP.body_zone == BP_HEAD)
 			if(H.head && istype(H.head,/obj/item/clothing/head/helmet/space))
@@ -57,7 +57,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if(BP.open == 0)
 			if(BP.is_bandaged())
@@ -119,7 +119,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if(BP.open == 0)
 			if(BP.is_salved())
@@ -175,7 +175,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if(BP.open == 0)
 			if(BP.is_bandaged() && BP.is_disinfected())
@@ -237,7 +237,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if(BP.open == 0)
 			if(BP.is_salved())
@@ -277,7 +277,7 @@
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 		var/limb = BP.name
 		if(!((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)))
 			to_chat(user, "<span class='danger'>You can't apply a splint there!</span>")

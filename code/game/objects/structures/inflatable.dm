@@ -119,7 +119,7 @@
 	attackby(obj/item/weapon/W, mob/user)
 		if(!istype(W)) return
 
-		if (can_puncture(W))
+		if(W.can_puncture())
 			visible_message("\red <b>[user] pierces [src] with [W]!</b>")
 			deflate(1)
 		if(W.damtype == BRUTE || W.damtype == BURN)

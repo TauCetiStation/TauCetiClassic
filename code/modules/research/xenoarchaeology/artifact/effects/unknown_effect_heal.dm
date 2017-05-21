@@ -13,7 +13,7 @@
 
 			if(ishuman(toucher))
 				var/mob/living/carbon/human/H = toucher
-				for(var/datum/organ/external/BP in H.bodyparts)
+				for(var/obj/item/organ/external/BP in H.bodyparts)
 					BP.heal_damage(25 * weakness, 25 * weakness)
 				//H:heal_bodypart_damage(25, 25)
 				H.vessel.add_reagent("blood",5)

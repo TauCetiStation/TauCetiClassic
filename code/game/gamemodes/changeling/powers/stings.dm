@@ -77,7 +77,7 @@
 				return 1
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/datum/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 		if(H.check_thickmaterial(BP))
 			to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [BP.name]!</span>")
 			to_chat(target, "<span class='warning'>You feel a tiny push in your [BP.name]!</span>")

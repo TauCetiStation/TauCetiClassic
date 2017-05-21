@@ -203,7 +203,7 @@
 
 	//splints
 	for(var/bodypart in list(BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM))
-		var/datum/organ/external/BP = bodyparts_by_name[bodypart]
+		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart]
 		if(BP && BP.status & ORGAN_SPLINTED)
 			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [BP.name]!</span>\n"
 
@@ -252,7 +252,7 @@
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()
 	var/list/is_bleeding = list()
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP)
 			if(BP.status & ORGAN_DESTROYED)
 				is_destroyed["[BP.name]"] = 1

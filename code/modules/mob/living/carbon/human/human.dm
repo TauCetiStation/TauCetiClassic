@@ -174,7 +174,7 @@
 				Paralyse(10)
 
 	// focus most of the blast on one organ
-	var/datum/organ/external/BP = pick(bodyparts)
+	var/obj/item/organ/external/BP = pick(bodyparts)
 	BP.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
 
 	// distribute the remaining 10% on all limbs equally
@@ -212,7 +212,7 @@
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>\The blob attacks you!</span>")
 	var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
-	var/datum/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
+	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
 	return
 
@@ -221,7 +221,7 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message("\red [src] has been hit by [O]", 1)
 	if (health > 0)
-		var/datum/organ/external/BP = bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
+		var/obj/item/organ/external/BP = bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
 		if(!BP)
 			return
 		if (istype(O, /obj/effect/immovablerod))
@@ -245,7 +245,7 @@
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
-		var/datum/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
+		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 		var/armor = run_armor_check(BP, "melee")
 		apply_damage(damage, BRUTE, BP, armor)
 		if(armor >= 2)	return
@@ -254,7 +254,7 @@
 /mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
 	for(var/L in M.contents)
 		if(istype(L, /obj/item/weapon/implant/loyalty))
-			for(var/datum/organ/external/BP in M.bodyparts)
+			for(var/obj/item/organ/external/BP in M.bodyparts)
 				if(L in BP.implants)
 					return 1
 	return 0
@@ -278,7 +278,7 @@
 
 		var/dam_zone = pick(BP_HEAD , BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG , BP_GROIN)
 
-		var/datum/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
+		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 		var/armor_block = run_armor_check(BP, "melee")
 		apply_damage(damage, BRUTE, BP, armor_block)
 
@@ -442,7 +442,7 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	var/datum/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
+	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
 	if( !BP || BP.disfigured || (BP.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
@@ -474,7 +474,7 @@
 	if(!def_zone)
 		def_zone = pick(BP_L_HAND , BP_R_HAND)
 
-	var/datum/organ/external/BP = get_bodypart(check_zone(def_zone))
+	var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 
 	if(tesla_shock)
 		var/total_coeff = 1
@@ -1082,7 +1082,7 @@
 		germ_level += n
 
 /mob/living/carbon/human/revive()
-	for (var/datum/organ/external/BP in bodyparts)
+	for (var/obj/item/organ/external/BP in bodyparts)
 		BP.status &= ~ORGAN_BROKEN
 		BP.status &= ~ORGAN_BLEEDING
 		BP.status &= ~ORGAN_SPLINTED
@@ -1094,7 +1094,7 @@
 		BP.wounds.Cut()
 		BP.heal_damage(1000,1000,1,1)
 
-	var/datum/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
+	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
 	BP.disfigured = 0
 
 	if(species && !species.flags[NO_BLOOD])
@@ -1108,7 +1108,7 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 
-	for(var/datum/organ/internal/IO in organs)
+	for(var/obj/item/organ/internal/IO in organs)
 		IO.damage = 0
 
 	for (var/datum/disease/virus in viruses)
@@ -1120,11 +1120,11 @@
 	..()
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
-	var/datum/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
+	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 	return IO.is_bruised()
 
 /mob/living/carbon/human/proc/rupture_lung()
-	var/datum/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
+	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 
 	if(!IO.is_bruised())
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
@@ -1185,7 +1185,7 @@
 /mob/living/carbon/human/get_visible_implants(class = 0)
 
 	var/list/visible_implants = list()
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
 		for(var/obj/item/weapon/O in BP.implants)
 			if(!istype(O,/obj/item/weapon/implant) && O.w_class > class)
 				visible_implants += O
@@ -1194,7 +1194,7 @@
 
 /mob/living/carbon/human/proc/handle_embedded_objects()
 
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.status & ORGAN_SPLINTED) //Splints prevent movement.
 			continue
 		for(var/obj/item/weapon/O in BP.implants)
@@ -1247,7 +1247,7 @@
 	else
 		to_chat(usr, "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].")
 
-/mob/living/carbon/human/proc/set_species(new_species, force_bodyparts, default_colour)
+/mob/living/carbon/human/proc/set_species(new_species, force_organs, default_colour)
 
 	if(!dna)
 		if(!new_species)
@@ -1266,8 +1266,8 @@
 
 	species = all_species[new_species]
 
-	if(force_bodyparts || !bodyparts || !bodyparts.len)
-		species.create_bodyparts(src)
+	if(force_organs || !bodyparts.len)
+		species.create_organs(src)
 
 	if(species.language)
 		add_language(species.language)
@@ -1291,6 +1291,14 @@
 		return 1
 	else
 		return 0
+
+// Unlike set_species(), this proc simply changes owner's specie and thats it.
+/mob/living/carbon/human/proc/set_species_soft(new_species)
+	if(species.name == new_species)
+		return
+
+	species = all_species[new_species]
+	regenerate_icons()
 
 /mob/living/carbon/human/proc/bloody_doodle()
 	set category = "IC"
@@ -1484,7 +1492,7 @@
 
 /mob/living/carbon/human/has_eyes()
 	if(organs_by_name[O_EYES])
-		var/datum/organ/internal/IO = organs_by_name[O_EYES]
+		var/obj/item/organ/internal/IO = organs_by_name[O_EYES]
 		if(istype(IO))
 			return 1
 	return 0
