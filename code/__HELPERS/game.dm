@@ -502,7 +502,12 @@ proc/isInSight(atom/A, atom/B)
 		var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
 		var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
 
-		message_admins("<b>New player notify:</b> [M.ckey] join to the game as [M.mind.name][player_assigned_role] - <a href='[player_byond_profile]'>Byond Profile</a>, [M.ckey] ip: [M.lastKnownIP] [ADMIN_FLW(M)]")
+		var/msg = {"New player notify
+					Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
+					Byond profile: <a href='[player_byond_profile]'>open</a>
+					IP: [M.lastKnownIP]"}
+
+		message_admins(msg)
 
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)
