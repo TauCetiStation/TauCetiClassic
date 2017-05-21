@@ -659,8 +659,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/radio_grid) && !grid)
 		to_chat(user, "<span class='notice'>You attach [W] to [src]!</span>")
+		user.drop_item()
 		var/obj/item/device/radio_grid/grid = W
-		grid.attach(src, user)
+		grid.attach(src)
 	else if(istype(W, /obj/item/weapon/wirecutters) && grid)
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
 		var/obj/item/device/radio_grid/grid = new(get_turf(loc))
@@ -831,8 +832,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio_grid"
 
-/obj/item/device/radio_grid/proc/attach(obj/item/device/radio/radio, mob/living/user)
-	user.drop_item()
+/obj/item/device/radio_grid/proc/attach(obj/item/device/radio/radio)
 	radio.on = TRUE
 	radio.grid = TRUE
 	qdel(src)

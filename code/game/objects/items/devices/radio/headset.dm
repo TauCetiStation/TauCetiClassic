@@ -216,8 +216,9 @@
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/radio_grid) && !grid)
 		to_chat(user, "<span class='notice'>You attach [W] to [src]!</span>")
+		user.drop_item()
 		var/obj/item/device/radio_grid/grid = W
-		grid.attach(src, user)
+		grid.attach(src)
 	else if(istype(W, /obj/item/weapon/wirecutters) && grid)
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
 		var/obj/item/device/radio_grid/grid = new(get_turf(loc))
