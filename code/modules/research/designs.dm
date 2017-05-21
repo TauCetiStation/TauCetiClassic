@@ -1867,6 +1867,24 @@ datum/design/large_grenade
 	reliability = 79
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 
+/datum/design/l10
+	name = "L10-c"
+	desc = "A basic energy-based carbine with fast rate of fire."
+	id = "l10"
+	req_tech = list("combat" = 5, "materials" = 6, "magnets" = 4, "powerstorage" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 4500, MAT_DIAMOND = 500, MAT_URANIUM = 1000)
+	build_path = /obj/item/weapon/gun/projectile/automatic/l10c
+
+/datum/design/l10_mag
+	name = "L10-c battery"
+	desc = "A special battery with protection from EM pulse."
+	id = "l10_mag"
+	req_tech = list("combat" = 4, "materials" = 5, "magnets" = 4, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_GOLD = 2000, MAT_SILVER = 1500)
+	build_path = /obj/item/ammo_casing/l10
+
 datum/design/smg
 	name = "Submachine Gun"
 	desc = "A lightweight, fast firing gun."
