@@ -955,6 +955,28 @@
 			log_admin("[key_name(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
 			message_admins("[key_name_admin(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
 
+	else if(href_list["related_info"])
+		var/mob/M = locate(href_list["related_info"])
+		if (ismob(M))
+			if(!M.client)
+				return
+			var/client/C = M.client
+
+			var/info_type = href_list["info_type"]
+			var/show_info = null
+
+			switch(info_type)
+				if("cid")
+					show_info = C.related_accounts_cid
+				if("ip")
+					show_info = C.related_accounts_ip
+
+			var/dat = "<html><head><title>[C.key] related accounts by [info_type]</title></head>"
+			dat += "<center><b>Ckey:</b> [C.ckey]</center>"
+			dat += "[show_info]"
+
+			usr << browse(dat, "window=[C.ckey]_related_info_[info_type]")
+
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
 		if (ismob(M))
