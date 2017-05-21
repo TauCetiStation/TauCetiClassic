@@ -657,17 +657,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		to_chat(user, "<span class='notice'>\the [src] can[b_stat ? "" : " not"] be attached or modified!</span>")
 
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/radio_grid))
+	if(istype(W, /obj/item/device/radio_grid) && !grid)
 		to_chat(user, "<span class='notice'>You attach [W] to [src]!</span>")
-		user.drop_item()
-		grid = TRUE
-		qdel(W)
-		on = 1
+		var/obj/item/device/radio_grid/grid = W
+		grid.attach(src, user)
 	else if(istype(W, /obj/item/weapon/wirecutters) && grid)
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
-		playsound(user, 'sound/items/Wirecutter.ogg', 50, 1)
-		new /obj/item/device/radio_grid(get_turf(loc))
-		grid = FALSE
+		var/obj/item/device/radio_grid/grid = new(get_turf(loc))
+		grid.dettach(src)
 	else if (istype(W, /obj/item/weapon/screwdriver))
 		b_stat = !b_stat
 		add_fingerprint(user)
@@ -833,3 +830,15 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	w_class = 2
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio_grid"
+
+/obj/item/device/radio_grid/proc/attach(obj/item/device/radio/radio, mob/living/user)
+	user.drop_item()
+	radio.on = TRUE
+	radio.grid = TRUE
+	qdel(src)
+
+/obj/item/device/radio_grid/proc/dettach(obj/item/device/radio/radio)
+	playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+	if(prob(30))
+		radio.on = FALSE
+	radio.grid = FALSE

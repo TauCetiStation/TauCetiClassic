@@ -214,17 +214,14 @@
 	grid = TRUE
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/radio_grid))
+	if(istype(W, /obj/item/device/radio_grid) && !grid)
 		to_chat(user, "<span class='notice'>You attach [W] to [src]!</span>")
-		user.drop_item()
-		grid = TRUE
-		qdel(W)
-		on = 1
+		var/obj/item/device/radio_grid/grid = W
+		grid.attach(src, user)
 	else if(istype(W, /obj/item/weapon/wirecutters) && grid)
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
-		playsound(user, 'sound/items/Wirecutter.ogg', 50, 1)
-		new /obj/item/device/radio_grid(get_turf(loc))
-		grid = FALSE
+		var/obj/item/device/radio_grid/grid = new(get_turf(loc))
+		grid.dettach(src)
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(!keyslot1 && !keyslot2)
 			to_chat(user, "<span class='notice'>This headset doesn't have any encryption keys!  How useless...</span>")
