@@ -252,11 +252,7 @@
 	if(BP.status & ORGAN_DESTROYED)
 		return
 
-	switch(BP.body_zone)
-		if(BP_L_HAND)
-			BP = bodyparts_by_name[BP_L_ARM]
-		if(BP_R_HAND)
-			BP = bodyparts_by_name[BP_R_ARM]
+	BP = BP.parent
 
 	apply_damage(M.damage_to_user, BRUTE, BP ,run_armor_check(BP, "melee")/2, 1)
 	to_chat(src, "<span class='danger'> You feel, that [M] try to cut your [BP]!")
