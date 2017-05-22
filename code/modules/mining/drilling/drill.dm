@@ -30,7 +30,7 @@
 		)
 
 	//Upgrades
-	damage_to_user = 30
+	var/damage_to_user
 	var/harvest_speed
 	var/capacity
 	var/charge_use
@@ -258,7 +258,7 @@
 
 /obj/machinery/mining/drill/RefreshParts()
 	..()
-	damage_to_user = 20
+	damage_to_user = 30
 	harvest_speed = 0
 	capacity = 0
 	charge_use = 50
@@ -319,9 +319,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/mining/drill/attack_hand(mob/user)
-	var/d = get_dist(src, user)
-	if(d >= 2)
-		to_chat(user,"You must stay close")
+	if(in_range(src, user))
 		return
 	if(wires_shocked)
 		shock(user)
@@ -379,7 +377,21 @@
 		return 0
 
 	var/mob/living/carbon/human/H = user
-	H.attack_by_machine(src)
+	var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+
+	if(!BP || !BP.is_usable())
+		return
+
+	H.apply_damage(damage_to_user, BRUTE, BP ,H.run_armor_check(BP, "melee")/2, 1)
+	to_chat(H, "<span class='danger'> You feel, that [src] try to cut your [BP]!")
+
+	if(BP.status & ORGAN_DESTROYED)
+		return
+
+	BP = BP.parent
+
+	H.apply_damage(damage_to_user, BRUTE, BP ,H.run_armor_check(BP, "melee")/2, 1)
+	to_chat(H, "<span class='danger'> You feel, that [src] try to cut your [BP]!")
 
 /obj/machinery/mining/drill/update_icon()
 	if(need_player_check)

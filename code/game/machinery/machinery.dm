@@ -115,7 +115,6 @@ Class Procs:
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
-	var/damage_to_user = 0
 
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection

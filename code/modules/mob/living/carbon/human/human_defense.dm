@@ -239,24 +239,6 @@
 			IO.emp_act(severity)
 	..()
 
-/mob/living/carbon/human/proc/attack_by_machine(obj/machinery/M)
-
-	var/datum/organ/external/BP = bodyparts_by_name[hand ? BP_L_HAND : BP_R_HAND]
-
-	if(!BP || !BP.is_usable())
-		return
-
-	apply_damage(M.damage_to_user, BRUTE, BP ,run_armor_check(BP, "melee")/2, 1)
-	to_chat(src, "<span class='danger'> You feel, that [M] try to cut your [BP]!")
-
-	if(BP.status & ORGAN_DESTROYED)
-		return
-
-	BP = BP.parent
-
-	apply_damage(M.damage_to_user, BRUTE, BP ,run_armor_check(BP, "melee")/2, 1)
-	to_chat(src, "<span class='danger'> You feel, that [M] try to cut your [BP]!")
-
 /mob/living/carbon/human/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(!I || !user)	return 0
 
