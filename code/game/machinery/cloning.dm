@@ -40,17 +40,34 @@
 	RefreshParts()
 
 /obj/machinery/clonepod/attack_ghost(mob/dead/observer/user)
-	if(!in_range(user, src))
-		return
 	if(stat & NOPOWER)
+		to_chat(user, "<span class='userdanger'>No power source found.</span>")
 		return
-	if(occupant || mess || !connected || (connected && !connected.autoprocess) || efficiency < 6)
+	if(!connected)
+		to_chat(user, "<span class='userdanger'>No console found.</span>")
 		return
+	if(!connected.autoprocess)
+		to_chat(user, "<span class='userdanger'>Autoprocess is turned off.</span>")
+		return
+	if(efficiency < 6)
+		to_chat(user, "<span class='userdanger'>Not enough technical level to autoclone.</span>")
+		return
+	if(occupant || mess)
+		to_chat(user, "<span class='userdanger'>[src] is busy.</span>")
+		return
+
 	for(var/datum/dna2/record/R in connected.records)
-		if(user.mind == locate(R.mind) && (user.mind.current && user.mind.current.stat == DEAD) && user.can_reenter_corpse && growclone(R))
-			connected.records.Remove(R)
-			qdel(R)
-			return 1
+		if(user.mind == locate(R.mind) && R.ckey == user.ckey)
+			if(user.timeofdeath + 6000 < world.time || !user.can_reenter_corpse)
+				to_chat(user, "<span class='userdanger'>Not enough data, autocloning is impossible</span>")
+				return
+			if(user.mind && user.mind.current && user.mind.current.stat == DEAD && growclone(R))
+				connected.records.Remove(R)
+				qdel(R)
+				return 1
+			else
+				to_chat(user, "<span class='userdanger'>Data is corrupted, autocloning is impossible</span>")
+				return
 
 /obj/machinery/clonepod/RefreshParts()
 	speed_coeff = 0
