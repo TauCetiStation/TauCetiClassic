@@ -300,7 +300,7 @@
 	name = "serif coat"
 	desc = "A old coat"
 	icon_state = "serif_coat"
-	item_state = "serif_coat"
+	item_state = "det_suit"
 
 //stripper
 /obj/item/clothing/under/stripper

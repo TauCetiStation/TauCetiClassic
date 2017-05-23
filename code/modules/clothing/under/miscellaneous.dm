@@ -255,8 +255,9 @@
 	name = "rogue jacket"
 	desc = "A  suit and jacket with a jeans. For the bad guy!"
 	icon_state = "rogue_jacket"
-	item_state = "rogue_jacket_s"
+	item_state = "rogue_jacket"
 	item_color = "rogue_jacket"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
