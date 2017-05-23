@@ -1,7 +1,7 @@
 /obj/machinery/mining
 	icon = 'icons/obj/mining_drill.dmi'
 	anchored = 0
-	use_power = 0 //The drill takes power directly from a cell.
+	use_power = 0         //The drill takes power directly from a cell.
 	density = 1
 	layer = MOB_LAYER+0.1 //So it draws over mobs in the tile north of it.
 
@@ -251,7 +251,7 @@
 /obj/machinery/mining/drill/proc/critical_brace_lost()
 	if(wires_overload)
 		system_error("WARNING: The brace have lost. The drill may be destroy")
-		explosion(src.loc,1,2,4)
+		explosion(src.loc, 1, 2, 4)
 
 	else
 		system_error("WARNING: The brace have lost. Start emergency stop")
@@ -289,7 +289,7 @@
 	if(active && wires_protector_disable)
 		cut_hand(user)
 	if(!active)
-		if(default_deconstruction_screwdriver(user,"mining_drill","mining_drill", O))
+		if(default_deconstruction_screwdriver(user, "mining_drill", "mining_drill", O))
 			return
 		if(default_deconstruction_crowbar(O, 1))
 			return
@@ -359,14 +359,14 @@
 
 	var/mob/living/carbon/C = user
 
-	if(!cell.use(cell.maxcharge/10))
+	if(!cell.use(cell.maxcharge / 10))
 		return 0
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 
-	if(C.electrocute_act(cell.maxcharge/400))
+	if(C.electrocute_act(cell.maxcharge / 400))
 		return 1
 	else
 		return 0
