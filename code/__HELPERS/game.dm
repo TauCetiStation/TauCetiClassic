@@ -504,8 +504,7 @@ proc/isInSight(atom/A, atom/B)
 
 		var/msg = {"New player notify
 					Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
-					Byond profile: <a href='[player_byond_profile]'>open</a>
-					IP: [M.lastKnownIP]"}
+					Byond profile: <a href='[player_byond_profile]'>open</a>"}
 
 		message_admins(msg)
 
