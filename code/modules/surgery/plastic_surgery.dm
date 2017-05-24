@@ -44,7 +44,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("\red [user]'s hand slips, tearing skin on [target]'s face with \the [tool]!", \
 	"\red Your hand slips, tearing skin on [target]'s face with \the [tool]!")
-	target.apply_damage(10, BRUTE, BP, sharp = 1, sharp = 1)
+	target.apply_damage(10, BRUTE, BP, null, DAM_SHARP | DAM_EDGE)
 
 /datum/surgery_step/plastic_surgery/adjust_vocal
 	allowed_tools = list(
@@ -127,7 +127,7 @@
 /datum/surgery_step/plastic_surgery/reshape_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("\red [user]'s hand slips, tearing skin on [target]'s face with \the [tool]!", \
 	"\red Your hand slips, tearing skin on [target]'s face with \the [tool]!")
-	target.apply_damage(20, BRUTE, BP_HEAD, 1, sharp=1)
+	target.apply_damage(20, BRUTE, BP_HEAD, 1, DAM_SHARP)
 
 /datum/surgery_step/plastic_surgery/cauterize
 	allowed_tools = list(

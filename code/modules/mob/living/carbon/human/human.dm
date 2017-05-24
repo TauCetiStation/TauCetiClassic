@@ -1520,3 +1520,15 @@
 		if(M.client)
 			viewing += M.client
 	flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+
+/mob/living/carbon/human/proc/should_have_organ(organ_check)
+
+	var/obj/item/organ/external/BP
+	if(organ_check in list(O_HEART, O_LUNGS))
+		BP = bodyparts_by_name[BP_CHEST]
+	else if(organ_check in list(O_LIVER, O_KIDNEYS))
+		BP = bodyparts_by_name[BP_GROIN]
+
+	if(BP && (BP.status & ORGAN_ROBOT))
+		return FALSE
+	return species.has_organ[organ_check]

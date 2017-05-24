@@ -8,7 +8,7 @@
 	germ_level = 0
 
 	// Strings.
-	var/parent_bodypart                   // Bodypart holding this object.
+	var/parent_bodypart                // Bodypart holding this object.
 
 	// Status tracking.
 	var/status = 0                     // Various status flags (such as robotic)

@@ -33,7 +33,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 							"resistances"=null,"trace_chem"=null, "virus2" = null, "antibodies" = null)
 
 // Takes care blood loss and regeneration
-/mob/living/carbon/var/tmp/next_blood_squirt = 0 // until this moved to heart...
 /mob/living/carbon/human/proc/handle_blood()
 
 	if(species && species.flags[NO_BLOOD])
@@ -121,57 +120,78 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			else if(nutrition >= 200)
 				nutrition -= 3
 
-		//Bleeding out
-		var/blood_max = 0
-		var/list/do_spray = list()
-		for(var/obj/item/organ/external/BP in bodyparts)
-			if(BP.status & ORGAN_ROBOT)
-				continue
+/mob/living/carbon/var/tmp/next_blood_squirt = 0 // until this moved to heart or not...
+/mob/living/carbon/human/proc/handle_bleeding()
+	if(species && species.flags[NO_BLOOD])
+		return
 
-			var/open_wound
-			if(BP.status & ORGAN_BLEEDING)
-				if(BP.open)
-					blood_max += 2 // Yer stomach is cut open
+	if(bodytemperature < 170 || in_stasis) // this should be refactored into mob statuses or flags.
+		return
 
-				for(var/datum/wound/W in BP.wounds)
-					if(!open_wound && W.damage_type == CUT && W.damage && !W.is_treated())
-						open_wound = TRUE
+	var/blood_volume = round(vessel.get_reagent_amount("blood"))
+	if(blood_volume <= 0)
+		return
 
-					if(W.bleeding())
+	//Bleeding out
+	var/blood_max = 0
+	var/list/do_spray = list()
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.status & ORGAN_ROBOT)
+			continue
+
+		var/open_wound
+		if(BP.status & ORGAN_BLEEDING)
+			if(BP.open)
+				blood_max += 2 // Yer stomach is cut open
+
+			for(var/datum/wound/W in BP.wounds)
+				if(!open_wound && (W.damage_type == CUT || W.damage_type == PIERCE) && W.damage && !W.is_treated())
+					open_wound = TRUE
+
+				if(W.bleeding())
+					if(BP.applied_pressure)
+						if(ishuman(BP.applied_pressure))
+							var/mob/living/carbon/human/H = BP.applied_pressure
+							H.bloody_hands(src, 0)
+						//somehow you can apply pressure to every wound on the organ at the same time
+						//you're basically forced to do nothing at all, so let's make it pretty effective
+						var/min_eff_damage = max(0, W.damage - 10) / 6 //still want a little bit to drip out, for effect
+						blood_max += max(min_eff_damage, W.damage - 30) / 40
+					else
 						blood_max += W.damage / 40
 
-			if(BP.status & ORGAN_ARTERY_CUT)
-				var/bleed_amount = Floor((vessel.total_volume / 250) * BP.arterial_bleed_severity)
-				if(bleed_amount)
-					if(open_wound)
-						blood_max += bleed_amount
-						do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
-					else
-						vessel.remove_reagent("blood", bleed_amount)
+		if(BP.status & ORGAN_ARTERY_CUT)
+			var/bleed_amount = Floor((vessel.total_volume / (BP.applied_pressure ? 400 : 250)) * BP.arterial_bleed_severity)
+			if(bleed_amount)
+				if(open_wound)
+					blood_max += bleed_amount
+					do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
+				else
+					vessel.remove_reagent("blood", bleed_amount)
 
-		switch(pulse)
-			if(PULSE_SLOW)
-				blood_max *= 0.8
-			if(PULSE_FAST)
-				blood_max *= 1.25
-			if(PULSE_2FAST, PULSE_THREADY)
-				blood_max *= 1.5
-
-		if(reagents.has_reagent("inaprovaline"))
+	switch(pulse)
+		if(PULSE_SLOW)
 			blood_max *= 0.8
+		if(PULSE_FAST)
+			blood_max *= 1.25
+		if(PULSE_2FAST, PULSE_THREADY)
+			blood_max *= 1.5
 
-		if(world.time >= next_blood_squirt && isturf(loc) && do_spray.len) // It becomes very spammy otherwise. Arterial bleeding will still happen outside of this block, just not the squirt effect.
-			if(prob(50)) // added 50 prob for message and halved delay between squit effects (difference between us and Bay12), lets see how this will be on live server.
-				visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
-			next_blood_squirt = world.time + 50
-			var/turf/sprayloc = get_turf(src)
-			blood_max -= drip(ceil(blood_max / 3), sprayloc)
+	if(reagents.has_reagent("inaprovaline"))
+		blood_max *= 0.8
+
+	if(world.time >= next_blood_squirt && isturf(loc) && do_spray.len) // It becomes very spammy otherwise. Arterial bleeding will still happen outside of this block, just not the squirt effect.
+		if(prob(50)) // added 50 prob for message and halved delay between squit effects (difference between us and Bay12), lets see how this will be on live server.
+			visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
+		next_blood_squirt = world.time + 50
+		var/turf/sprayloc = get_turf(src)
+		blood_max -= drip(ceil(blood_max / 3), sprayloc)
+		if(blood_max > 0)
+			blood_max -= blood_squirt(blood_max, sprayloc)
 			if(blood_max > 0)
-				blood_max -= blood_squirt(blood_max, sprayloc)
-				if(blood_max > 0)
-					drip(blood_max, get_turf(src))
-		else
-			drip(blood_max)
+				drip(blood_max, get_turf(src))
+	else
+		drip(blood_max)
 
 //Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
@@ -377,16 +397,20 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		reagents.update_total()
 		return
 
+	if(!injected)
+		return
+
 	var/datum/reagent/blood/our = get_blood(vessel)
 
-	if (!injected || !our)
-		return
+	vessel.add_reagent("blood", amount, injected.data)
+	if(!our)
+		fixblood()
+		our = get_blood(vessel)
+	vessel.update_total()
+
 	if(blood_incompatible(injected.data["blood_type"],our.data["blood_type"]) )
 		reagents.add_reagent("toxin",amount * 0.5)
 		reagents.update_total()
-	else
-		vessel.add_reagent("blood", amount, injected.data)
-		vessel.update_total()
 	..()
 
 //Gets human's own blood.

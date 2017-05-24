@@ -57,9 +57,10 @@
 						protected = 1
 				if(!protected)
 					//TODO: better alternative for applying damage multiple times? Nice knifing sound?
-					M.apply_damage(20, BRUTE, BP_HEAD, 0, sharp=sharp, edge=edge)
-					M.apply_damage(20, BRUTE, BP_HEAD, 0, sharp=sharp, edge=edge)
-					M.apply_damage(20, BRUTE, BP_HEAD, 0, sharp=sharp, edge=edge)
+					var/damage_flags = damage_flags()
+					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
 					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
 					playsound(loc, 'sound/effects/throat_cutting.ogg', 50, 1, 1)
 					flick(G.hud.icon_state, G.hud)

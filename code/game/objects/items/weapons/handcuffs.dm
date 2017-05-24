@@ -99,7 +99,7 @@ var/last_chew = 0
 	H.attack_log += text("\[[time_stamp()]\] <font color='red'>[s] ([H.ckey])</font>")
 	log_attack("[s] ([H.ckey])")
 
-	BP.take_damage(3, 0, 1, 1, "teeth marks")
+	BP.take_damage(3, null, DAM_EDGE | DAM_SHARP, "teeth marks")
 
 	last_chew = world.time
 

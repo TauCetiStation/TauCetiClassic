@@ -197,6 +197,10 @@
 			user.visible_message("\blue [user] takes something out of incision on [target]'s [BP.name] with \the [tool].", \
 			"\blue You take [obj] out of incision on [target]'s [BP.name]s with \the [tool]." )
 			BP.implants -= obj
+			for(var/datum/wound/W in BP.wounds)
+				if(obj in W.embedded_objects)
+					W.embedded_objects -= obj
+					break
 
 			target.hud_updateflag |= 1 << IMPLOYAL_HUD
 

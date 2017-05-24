@@ -490,6 +490,9 @@
 	var/sharp = 0
 	var/edge = 0
 
+/datum/unarmed_attack/proc/damage_flags()
+	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
+
 /datum/unarmed_attack/punch
 	attack_verb = list("punch")
 
@@ -533,6 +536,7 @@
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
+	,NO_EMBED = TRUE
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	)

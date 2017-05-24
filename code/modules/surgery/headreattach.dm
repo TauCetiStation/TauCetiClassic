@@ -198,4 +198,4 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("\red [user]'s hand slips, damaging connectors on [target]'s neck!", \
 	"\red Your hand slips, damaging connectors on [target]'s neck!")
-	target.apply_damage(10, BRUTE, BP, sharp = 1)
+	target.apply_damage(10, BRUTE, BP, null, DAM_SHARP)

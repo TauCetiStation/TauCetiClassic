@@ -1,4 +1,9 @@
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
+
+	def_zone = check_zone(def_zone)
+	if(!has_bodypart(def_zone))
+		return PROJECTILE_FORCE_MISS //if they don't have the body part in question then the projectile just passes by.
+
 	if(P.impact_force)
 		for(var/i=1, i<=P.impact_force, i++)
 			step_to(src, get_step(loc, P.dir))
@@ -66,7 +71,7 @@
 
 		BP = bodyparts_by_name[check_zone(def_zone)]
 		var/armorblock = run_armor_check(BP, "energy")
-		apply_damage(P.damage, P.damage_type, BP, armorblock, P, 0, 0)
+		apply_damage(P.damage, P.damage_type, BP, armorblock, P.damage_flags(), P)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		flash_pain()
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
@@ -95,7 +100,7 @@
 			else if(force <= 40)
 				apply_effects(B.stoping_power,B.stoping_power,0,0,B.stoping_power,0,0,armor)
 
-		if((P.embed && prob(20 + max(P.damage - armor, -20))) && P.damage_type == BRUTE)
+		if(!species.flags[NO_EMBED] && P.embed && prob(20 + max(P.damage - armor, -20)) && P.damage_type == BRUTE)
 			var/obj/item/weapon/shard/shrapnel/SP = new()
 			SP.name = "[P.name] shrapnel"
 			SP.desc = "[SP.desc] It looks like it was fired from [P.shot_from]."
@@ -241,7 +246,8 @@
 
 
 /mob/living/carbon/human/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
-	if(!I || !user)	return 0
+	if(!I || !user)
+		return FALSE
 
 	var/target_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.zone_sel.selecting, src)
 
@@ -249,14 +255,14 @@
 		target_zone = user.zone_sel.selecting
 	if(!target_zone)
 		visible_message("<span class='userdanger'>[user] misses [src] with \the [I]!</span>")
-		return 0
+		return FALSE
 
 	var/obj/item/organ/external/BP = get_bodypart(target_zone)
 	if (!BP)
-		return 0
+		return FALSE
 	if(BP.status & ORGAN_DESTROYED)
 		to_chat(user, "What [BP.name]?")
-		return 0
+		return FALSE
 	var/hit_area = BP.name
 
 	if(user != src)
@@ -275,7 +281,7 @@
 			var/obj/item/weapon/card/emag/emag = I
 			emag.uses--
 			BP.sabotaged = 1
-		return 1
+		return TRUE
 
 	if(I.attack_verb.len)
 		visible_message("<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</span>")
@@ -283,16 +289,30 @@
 		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>")
 
 	var/armor = run_armor_check(BP, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
-	var/weapon_sharp = is_sharp(I)
-	var/weapon_edge = has_edge(I)
-	if ((weapon_sharp || weapon_edge) && prob(getarmor(target_zone, "melee")))
-		weapon_sharp = 0
-		weapon_edge = 0
+	if(armor >= 100 || !I.force)
+		return FALSE
 
-	if(armor >= 100)	return 0
-	if(!I.force)	return 0
+	//Apply weapon damage
+	var/damage_flags = I.damage_flags()
+	if(prob(armor))
+		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
 
-	apply_damage(I.force, I.damtype, BP, armor, sharp = weapon_sharp, edge = weapon_edge, used_weapon = I)
+	var/datum/wound/created_wound = apply_damage(I.force, I.damtype, BP, armor, damage_flags, I)
+
+	//Melee weapon embedded object code.
+	if(I.damtype == BRUTE && !I.anchored && I.can_embed && !I.is_robot_module())
+		var/weapon_sharp = (damage_flags & DAM_SHARP)
+		var/damage = I.force // just the effective damage used for sorting out embedding, no further damage is applied here
+		if (armor)
+			damage *= blocked_mult(armor)
+
+		//blunt objects should really not be embedding in things unless a huge amount of force is involved
+		var/embed_chance = weapon_sharp ? (damage / (I.w_class / 2)) : (damage / (I.w_class * 3))
+		var/embed_threshold = weapon_sharp ? (5 * I.w_class) : (15 * I.w_class)
+
+		//Sharp objects will always embed if they do enough damage.
+		if((weapon_sharp && damage > (10 * I.w_class)) || (damage > embed_threshold && prob(embed_chance)))
+			BP.embed(I, null, null, created_wound)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
@@ -338,7 +358,7 @@
 
 				if(bloody)
 					bloody_body(src)
-	return 1
+	return TRUE
 
 //this proc handles being hit by a thrown atom
 /mob/living/carbon/human/hitby(atom/movable/AM)
@@ -372,12 +392,16 @@
 
 		var/obj/item/organ/external/BP = get_bodypart(zone)
 		var/hit_area = BP.name
+		var/datum/wound/created_wound
 
 		src.visible_message("<span class='warning'>[src] has been hit in the [hit_area] by [O].</span>")
 		var/armor = run_armor_check(BP, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess "melee" is the best fit here
 
 		if(armor < 100)
-			apply_damage(throw_damage, dtype, zone, armor, is_sharp(O), has_edge(O), O)
+			var/damage_flags = O.damage_flags()
+			if(prob(armor))
+				damage_flags &= ~(DAM_SHARP | DAM_EDGE)
+			created_wound = apply_damage(throw_damage, dtype, zone, armor, damage_flags, O)
 
 		if(ismob(O.thrower))
 			var/mob/M = O.thrower
@@ -387,6 +411,27 @@
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
 				if(!istype(src,/mob/living/simple_animal/mouse))
 					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [M.name] ([assailant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+
+		//thrown weapon embedded object code.
+		if(dtype == BRUTE && istype(O, /obj/item))
+			var/obj/item/I = O
+			if(!I.can_embed)
+				return
+			if(!I.is_robot_module())
+				var/sharp = is_sharp(I)
+
+				var/damage = throw_damage //the effective damage used for embedding purposes, no actual damage is dealt here
+				if (armor)
+					damage *= blocked_mult(armor)
+
+				//blunt objects should really not be embedding in things unless a huge amount of force is involved
+				var/embed_chance = sharp ? (damage / (I.w_class / 2)) : (damage / (I.w_class * 3))
+				var/embed_threshold = sharp ? 5 * I.w_class : 15 * I.w_class
+
+				//Sharp objects will always embed if they do enough damage.
+				//Thrown sharp objects have some momentum already and have a small chance to embed even if the damage is below the threshold
+				if((sharp && prob(damage / (10 * I.w_class) * 100)) || (damage > embed_threshold && prob(embed_chance)))
+					BP.embed(I, null, null, created_wound)
 
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && AM.fly_speed >= 15)

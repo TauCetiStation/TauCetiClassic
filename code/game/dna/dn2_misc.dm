@@ -78,7 +78,7 @@
 				if(istype(H,/mob/living/carbon/human/))
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
-					BP.take_damage(20, 0, 0, 0, "Hulk Foot")
+					BP.take_damage(20, null, null, "Hulk Foot")
 					BP.fracture()
 					H.Stun(5)
 					H.Weaken(5)
@@ -246,7 +246,7 @@
 						var/mob/living/carbon/human/H = M
 						if(istype(H,/mob/living/carbon/human/))
 							var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
-							BP.take_damage(20, 0, 0, 0, "Hulk Shoulder")
+							BP.take_damage(20, null, null, "Hulk Shoulder")
 							BP.fracture()
 							M.Weaken(5)
 							M.Stun(5)
@@ -366,11 +366,11 @@
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
 					if(FAT in usr.mutations)
-						BP.take_damage(100, 0, 0, 0, "Hulk Fat Arm")
+						BP.take_damage(100, null, null, "Hulk Fat Arm")
 						H.Stun(10)
 						H.Weaken(10)
 					else
-						BP.take_damage(50, 0, 0, 0, "Hulk Arm")
+						BP.take_damage(50, null, null, "Hulk Arm")
 						H.Stun(5)
 						H.Weaken(5)
 					BP.fracture()

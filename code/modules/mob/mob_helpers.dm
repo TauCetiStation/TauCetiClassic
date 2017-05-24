@@ -428,10 +428,17 @@ var/list/intents = list("help","disarm","grab","hurt")
 		threatcount += 4
 	return threatcount
 
+#undef SAFE_PERP
+
 /proc/IsAdminGhost(var/mob/user)
 	if(check_rights(R_ADMIN, 0) && istype(user, /mob/dead/observer) && user.client.AI_Interact)
 		return 1
 	else
 		return 0
 
-#undef SAFE_PERP
+/mob/proc/is_busy(show_warning = TRUE)
+	if(busy_with_action)
+		if(show_warning)
+			to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
+		return TRUE
+	return FALSE

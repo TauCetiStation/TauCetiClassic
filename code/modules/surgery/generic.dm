@@ -233,7 +233,7 @@
 		msg = "\red [user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]"
 		self_msg = "\red Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!"
 	user.visible_message(msg, self_msg)
-	target.apply_damage(12, BRUTE, BP, sharp = 1)
+	target.apply_damage(12, BRUTE, BP, null, DAM_SHARP)
 
 /datum/surgery_step/generic/cauterize
 	allowed_tools = list(
@@ -304,7 +304,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("\blue [user] cuts off [target]'s [BP.name] with \the [tool].", \
 	"\blue You cut off [target]'s [BP.name] with \the [tool].")
-	BP.droplimb(1, 0)
+	BP.droplimb(null, TRUE)
 
 /datum/surgery_step/generic/cut_limb/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)

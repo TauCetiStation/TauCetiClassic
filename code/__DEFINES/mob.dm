@@ -10,6 +10,10 @@
 #define ORGAN_MUTATED    256
 #define ORGAN_ARTERY_CUT 512
 
+#define DROPLIMB_EDGE  0
+#define DROPLIMB_BLUNT 1
+#define DROPLIMB_BURN  2
+
 // Bodypart defines
 #define BP_CHEST  "chest"
 #define BP_GROIN  "groin"

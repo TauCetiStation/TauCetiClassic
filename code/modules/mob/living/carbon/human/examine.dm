@@ -252,12 +252,19 @@
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()
 	var/list/is_bleeding = list()
+	var/applying_pressure = ""
+
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP)
 			if(BP.status & ORGAN_DESTROYED)
 				is_destroyed["[BP.name]"] = 1
 				wound_flavor_text["[BP.name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [BP.name].</b></span>\n"
 				continue
+			if(BP.applied_pressure)
+				if(BP.applied_pressure == src)
+					applying_pressure = "<span class='info'>[t_He] is applying pressure to [t_his] [BP.name].</span><br>"
+				else
+					applying_pressure = "<span class='info'>[BP.applied_pressure] is applying pressure to [t_his] [BP.name].</span><br>"
 			if(BP.status & ORGAN_ROBOT)
 				if(!(BP.brute_dam + BP.burn_dam))
 					if(!species.flags[IS_SYNTHETIC])
@@ -449,7 +456,11 @@
 
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
-	msg += "*---------*</span>"
+	msg += "*---------*</span><br>"
+	if(applying_pressure)
+		msg += applying_pressure
+	else if(busy_with_action)
+		msg += "<span class='info'>[t_He] is busy with something!</span><br>"
 	if (pose)
 		if( findtext(pose,".",lentext(pose)) == 0 && findtext(pose,"!",lentext(pose)) == 0 && findtext(pose,"?",lentext(pose)) == 0 )
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
