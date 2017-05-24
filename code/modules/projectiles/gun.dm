@@ -117,6 +117,21 @@
 					qdel(src)
 					return
 
+		var/base_spell_loss_chance = 20
+		var/spell_loss_chance_modifier = 10
+		var/spell_loss_amount = 1
+
+		if(user.spell_list.len && user.mind.special_role == "Wizard")
+			for(var/i=spell_loss_amount,(i>0&&user.spell_list),i--)
+				for(var/j=user.spell_list.len,(j>0&&user.spell_list),j--)
+					if(prob(base_spell_loss_chance))
+						user.spell_list -= pick(user.spell_list)
+						spawn(10)
+							user << "you feel that your power has abandoned you."
+						break
+					else
+						base_spell_loss_chance += spell_loss_chance_modifier
+
 	add_fingerprint(user)
 
 	if(!special_check(user, target))
