@@ -551,7 +551,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	var/obj/item/weapon/implant/dexplosive/L = new(src)
 	L.imp_in = src
 	L.implanted = TRUE
-	var/datum/organ/external/BP = bodyparts_by_name[BP_HEAD]
+	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
 	BP.implants += L
 	L.part = BP
 	return 1
