@@ -65,14 +65,11 @@
 			tank = new /obj/structure/reagent_dispensers/watertank(src)
 
 /obj/machinery/bot/farmbot/Bump(atom/M) //Leave no door unopened!
-	spawn(0)
-		if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
-			var/obj/machinery/door/D = M
-			if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
-				D.open()
-				src.frustration = 0
-		return
-	return
+	if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
+		var/obj/machinery/door/D = M
+		if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
+			D.open()
+			src.frustration = 0
 
 /obj/machinery/bot/farmbot/turn_on()
 	. = ..()

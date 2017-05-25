@@ -289,15 +289,11 @@
  * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 /obj/item/weapon/shard/Bump()
-
-	spawn(0)
-		if(prob(20))
-			src.force = 15
-		else
-			src.force = 4
-		..()
-		return
-	return
+	if(prob(20))
+		force = 15
+	else
+		force = 4
+	..()
 
 /obj/item/weapon/shard/New()
 
