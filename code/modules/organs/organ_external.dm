@@ -624,9 +624,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 				"<span class='moderate'><b>Your [name] explodes[gore]!</b></span>",
 				"<span class='danger'>You hear the [gore_sound].</span>")
 
-	src.status &= ~ORGAN_BROKEN
-	src.status &= ~ORGAN_BLEEDING
-	src.status &= ~ORGAN_SPLINTED
+	status &= ~ORGAN_BROKEN
+	status &= ~ORGAN_BLEEDING
+	status &= ~ORGAN_SPLINTED
+	status &= ~ORGAN_ARTERY_CUT
 	for(var/implant in implants)
 		qdel(implant)
 
@@ -635,11 +636,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(BP.parent == src)
 			BP.droplimb(null, clean, disintegrate)
 
-	if(parent)
+	if(parent && disintegrate != DROPLIMB_BURN)
 		if(clean)
 			if(prob(10))
 				parent.sever_artery()
-		else if(disintegrate != DROPLIMB_BURN)
+		else
 			parent.sever_artery()
 
 	destspawn = TRUE
@@ -732,11 +733,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 				gore.update_icon()
 
 			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), 30)
-
-			//for(var/obj/item/organ/I in bodypart_organs)
-			//	I.removed()
-			//	if(istype(loc,/turf))
-			//		I.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), 30)
 
 			for(var/obj/item/I in src)
 				I.loc = get_turf(src)
@@ -1168,7 +1164,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	else
 		. = new /icon(race_icon, "[body_zone]_[g]")
 
-/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon = null, list/forbidden_limbs = list())
+/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)
 		if(brute_dam > 40)
 			if (prob(50))

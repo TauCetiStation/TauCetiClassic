@@ -169,13 +169,20 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				else
 					vessel.remove_reagent("blood", bleed_amount)
 
+	if(blood_max == 0) // so... there is no blood loss, lets stop right here.
+		return
+
 	switch(pulse)
+		if(PULSE_NONE)
+			blood_max *= 0.2 // simulates passive blood loss.
 		if(PULSE_SLOW)
 			blood_max *= 0.8
 		if(PULSE_FAST)
 			blood_max *= 1.25
-		if(PULSE_2FAST, PULSE_THREADY)
+		if(PULSE_2FAST)
 			blood_max *= 1.5
+		if(PULSE_THREADY)
+			blood_max *= 1.8
 
 	if(reagents.has_reagent("inaprovaline"))
 		blood_max *= 0.8
@@ -273,7 +280,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			break
 		var/hit_mob
 		var/CantPass
-		//var/cant_pass
 		for(var/thing in sprayloc)
 			var/atom/A = thing
 			if(!A.simulated)
