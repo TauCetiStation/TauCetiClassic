@@ -993,7 +993,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	max_damage = 75
 	min_broken_damage = 35
-	vital = 1
+	vital = TRUE
 
 
 /obj/item/organ/external/groin
@@ -1004,6 +1004,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_zone = BP_GROIN
 	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_GROIN_LAYER
+
+	cannot_amputate = TRUE
 
 	max_damage = 50
 	min_broken_damage = 35
