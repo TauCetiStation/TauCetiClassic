@@ -49,6 +49,9 @@
 	if(!connected.autoprocess)
 		to_chat(user, "<span class='userdanger'>Autoprocess is turned off.</span>")
 		return
+	if(biomass < CLONE_BIOMASS)
+		to_chat(user, "<span class='userdanger'>Not enough biomass.</span>")
+		return
 	if(efficiency < 6)
 		to_chat(user, "<span class='userdanger'>Not enough technical level to autoclone.</span>")
 		return
