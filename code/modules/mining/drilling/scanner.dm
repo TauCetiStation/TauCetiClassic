@@ -27,7 +27,7 @@
 
 	to_chat(user, "You begin sweeping \the [src] about, scanning for metal deposits.")
 
-	if(!do_after(user,speed,target = user)) return
+	if(!do_after(user, speed, target = user)) return
 	if(!user || !src) return
 
 	find_ore(user)

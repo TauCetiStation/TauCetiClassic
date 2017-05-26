@@ -40,7 +40,7 @@
 			connect()
 		else
 			disconnect()
-			if(connected.active && connected.wires_protector_disable)
+			if(connected && connected.active && connected.wires_protector_disable)
 				connected.cut_hand(user)
 
 /obj/machinery/mining/brace/proc/connect()
