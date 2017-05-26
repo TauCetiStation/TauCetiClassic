@@ -1883,7 +1883,7 @@ datum/design/large_grenade
 	req_tech = list("combat" = 4, "materials" = 5, "magnets" = 4, "powerstorage" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_GOLD = 2000, MAT_SILVER = 1500)
-	build_path = /obj/item/ammo_casing/l10
+	build_path = /obj/item/ammo_box/magazine/l10mag
 
 datum/design/smg
 	name = "Submachine Gun"

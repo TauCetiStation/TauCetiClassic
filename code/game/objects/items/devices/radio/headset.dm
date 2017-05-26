@@ -214,15 +214,21 @@
 	grid = TRUE
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/radio_grid) && !grid)
+	if(istype(W, /obj/item/device/radio_grid))
+		if(grid)
+			to_chat(user, "<span class='userdanger'>There is already installed Shielded grid!</span>")
+			return
 		to_chat(user, "<span class='notice'>You attach [W] to [src]!</span>")
 		user.drop_item()
-		var/obj/item/device/radio_grid/grid = W
-		grid.attach(src)
-	else if(istype(W, /obj/item/weapon/wirecutters) && grid)
+		var/obj/item/device/radio_grid/new_grid = W
+		new_grid.attach(src)
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(!grid)
+			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
+			return
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
-		var/obj/item/device/radio_grid/grid = new(get_turf(loc))
-		grid.dettach(src)
+		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
+		new_grid.dettach(src)
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(!keyslot1 && !keyslot2)
 			to_chat(user, "<span class='notice'>This headset doesn't have any encryption keys!  How useless...</span>")
