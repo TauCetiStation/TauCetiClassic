@@ -321,11 +321,11 @@
 		if(src.OCCUPANT)
 			if(src.issuperUV)
 				var/burndamage = rand(28,35)
-				OCCUPANT.take_organ_damage(0,burndamage)
+				OCCUPANT.take_bodypart_damage(0, burndamage)
 				OCCUPANT.emote("scream",,, 1)
 			else
 				var/burndamage = rand(6,10)
-				OCCUPANT.take_organ_damage(0,burndamage)
+				OCCUPANT.take_bodypart_damage(0, burndamage)
 				OCCUPANT.emote("scream",,, 1)
 		if(i==3) //End of the cycle
 			if(!src.issuperUV)
@@ -368,10 +368,10 @@
 		spawn(50)
 			if(src.OCCUPANT)
 				if(src.issuperUV)
-					OCCUPANT.take_organ_damage(0,40)
+					OCCUPANT.take_bodypart_damage(0, 40)
 					to_chat(user, "Test. You gave him 40 damage")
 				else
-					OCCUPANT.take_organ_damage(0,8)
+					OCCUPANT.take_bodypart_damage(0, 8)
 					to_chat(user, "Test. You gave him 8 damage")
 	return*/
 

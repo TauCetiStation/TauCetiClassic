@@ -209,4 +209,5 @@
 	name = "military belt"
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
+	item_state = "militarybelt"
 	can_hold = list()

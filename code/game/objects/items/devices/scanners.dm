@@ -117,15 +117,15 @@ REAGENT SCANNER
 		user.show_message("\blue Time of Death: [M.tod]")
 	if(istype(M, /mob/living/carbon/human) && mode == 1)
 		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_organs(1,1)
+		var/list/damaged = H.get_damaged_bodyparts(1, 1)
 		user.show_message("\blue Localized Damage, Brute/Burn:",1)
 		if(length(damaged)>0)
-			for(var/datum/organ/external/org in damaged)
+			for(var/obj/item/organ/external/BP in damaged)
 				user.show_message(text("\blue &emsp; []: [][]\blue - []",	\
-				capitalize(org.display_name),					\
-				(org.brute_dam > 0)	?	"\red [org.brute_dam]"							:0,		\
-				(org.status & ORGAN_BLEEDING)?"\red <b>\[Bleeding\]</b>":"&emsp;", 		\
-				(org.burn_dam > 0)	?	"<font color='#FFA500'>[org.burn_dam]</font>"	:0),1)
+				capitalize(BP.name),					\
+				(BP.brute_dam > 0)	?	"\red [BP.brute_dam]"							:0,		\
+				(BP.status & ORGAN_BLEEDING)?"\red <b>\[Bleeding\]</b>":"&emsp;", 		\
+				(BP.burn_dam > 0)	?	"<font color='#FFA500'>[BP.burn_dam]</font>"	:0),1)
 		else
 			user.show_message("\blue &emsp; Limbs are OK.",1)
 
@@ -163,24 +163,25 @@ REAGENT SCANNER
 		user.show_message("\red Significant brain damage detected. Subject may have had a concussion.")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		for(var/name in H.organs_by_name)
-			var/datum/organ/external/e = H.organs_by_name[name]
-			var/limb = e.display_name
-			if(e.status & ORGAN_BROKEN)
-				if(((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg")) && (!(e.status & ORGAN_SPLINTED)))
+		for(var/name in H.bodyparts_by_name)
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[name]
+			var/limb = BP.name
+			if(BP.status & ORGAN_BROKEN)
+				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && (!(BP.status & ORGAN_SPLINTED)))
 					to_chat(user, "\red Unsecured fracture in subject [limb]. Splinting recommended for transport.")
-			if(e.has_infected_wound())
+			if(BP.has_infected_wound())
 				to_chat(user, "\red Infected wound detected in subject [limb]. Disinfection recommended.")
 
-		for(var/name in H.organs_by_name)
-			var/datum/organ/external/e = H.organs_by_name[name]
-			if(e.status & ORGAN_BROKEN)
+		for(var/name in H.bodyparts_by_name)
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[name]
+			if(BP.status & ORGAN_BROKEN)
 				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
 				break
-		for(var/datum/organ/external/e in H.organs)
-			for(var/datum/wound/W in e.wounds) if(W.internal)
-				user.show_message(text("\red Internal bleeding detected. Advanced scanner required for location."), 1)
-				break
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			for(var/datum/wound/W in BP.wounds)
+				if(W.internal)
+					user.show_message(text("\red Internal bleeding detected. Advanced scanner required for location."), 1)
+					break
 		if(M:vessel)
 			var/blood_volume = round(M:vessel.get_reagent_amount("blood"))
 			var/blood_percent =  blood_volume / 560

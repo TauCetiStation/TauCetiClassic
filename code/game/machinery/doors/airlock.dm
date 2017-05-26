@@ -74,8 +74,7 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/Destroy()
 	QDEL_NULL(wires)
-	if(electronics)
-		QDEL_NULL(electronics)
+	QDEL_NULL(electronics)
 	closeOther = null
 	return ..()
 
@@ -638,10 +637,10 @@ var/list/airlock_overlays = list()
 			playsound(src, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
-				var/datum/organ/external/affecting = H.get_organ("head")
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 				H.Stun(8)
 				H.Weaken(5)
-				affecting.take_damage(10, 0)
+				BP.take_damage(10, 0)
 			else
 				visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 			return

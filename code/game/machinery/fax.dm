@@ -31,10 +31,8 @@ var/list/alldepartments = list("Central Command")
 
 /obj/machinery/faxmachine/Destroy()
 	allfaxes -= src
-	if(scan)
-		QDEL_NULL(scan)
-	if(tofax)
-		QDEL_NULL(tofax)
+	QDEL_NULL(scan)
+	QDEL_NULL(tofax)
 	return ..()
 
 /obj/machinery/faxmachine/attack_ai(mob/user)

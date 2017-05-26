@@ -1,9 +1,6 @@
 // see _DEFINES/is_helpers.dm for mob type checks
 #define SAFE_PERP -50
 
-/proc/hasorgans(A)
-	return ishuman(A)
-
 /proc/hsl2rgb(h, s, l)
 	return
 
@@ -14,23 +11,15 @@
 	return 0
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)
+		return BP_CHEST
+
 	switch(zone)
-		if("eyes")
-			zone = "head"
-		if("mouth")
-			zone = "head"
-/*		if("l_hand")
-			zone = "l_arm"
-		if("r_hand")
-			zone = "r_arm"
-		if("l_foot")
-			zone = "l_leg"
-		if("r_foot")
-			zone = "r_leg"
-		if("groin")
-			zone = "chest"
-*/
+		if(O_EYES)
+			zone = BP_HEAD
+		if(O_MOUTH)
+			zone = BP_HEAD
+
 	return zone
 
 // Returns zone with a certain probability.
@@ -43,16 +32,20 @@
 	if(probability == 100)
 		return zone
 
-	if(zone == "chest")
-		if(prob(probability))	return "chest"
+	if(zone == BP_CHEST)
+		if(prob(probability))
+			return BP_CHEST
+
 		var/t = rand(1, 9)
 		switch(t)
-			if(1 to 3)	return "head"
-			if(4 to 6)	return "l_arm"
-			if(7 to 9)	return "r_arm"
+			if(1 to 3) return BP_HEAD
+			if(4 to 6) return BP_L_ARM
+			if(7 to 9) return BP_R_ARM
 
-	if(prob(probability * 0.75))	return zone
-	return "chest"
+	if(prob(probability * 0.75))
+		return zone
+
+	return BP_CHEST
 
 // Emulates targetting a specific body part, and miss chances
 // May return null if missed
@@ -64,23 +57,23 @@
 	if(!target.buckled && !target.lying)
 		var/miss_chance = 10
 		switch(zone)
-			if("head")
+			if(BP_HEAD)
 				miss_chance = 30
-			if("l_leg")
+			if(BP_L_LEG)
 				miss_chance = 40
-			if("r_leg")
+			if(BP_R_LEG)
 				miss_chance = 40
-			if("l_arm")
+			if(BP_L_ARM)
 				miss_chance = 40
-			if("r_arm")
+			if(BP_R_ARM)
 				miss_chance = 40
-			if("l_hand")
+			if(BP_L_HAND)
 				miss_chance = 60
-			if("r_hand")
+			if(BP_R_HAND)
 				miss_chance = 60
-			if("l_foot")
+			if(BP_L_FOOT)
 				miss_chance = 60
-			if("r_foot")
+			if(BP_R_FOOT)
 				miss_chance = 60
 		if(prob(max(miss_chance + miss_chance_mod, 0)))
 			if(prob(max(20, (miss_chance/2))))
@@ -89,27 +82,27 @@
 				var/t = rand(1, 100)
 				switch(t)
 					if(1 to 50)
-						return "chest"
+						return BP_CHEST
 					if(51 to 61)
-						return "head"
+						return BP_HEAD
 					if(62 to 66)
-						return "l_arm"
+						return BP_L_ARM
 					if(67 to 71)
-						return "r_arm"
+						return BP_R_ARM
 					if(72 to 76)
-						return "r_leg"
+						return BP_R_LEG
 					if(77 to 81)
-						return "l_leg"
+						return BP_L_LEG
 					if(82 to 87)
-						return "groin"
+						return BP_GROIN
 					if(88 to 91)
-						return "l_foot"
+						return BP_L_FOOT
 					if(92 to 94)
-						return "r_foot"
+						return BP_R_FOOT
 					if(95 to 97)
-						return "l_hand"
+						return BP_L_HAND
 					if(98 to 100)
-						return "r_hand"
+						return BP_R_HAND
 
 	return zone
 
@@ -122,12 +115,12 @@
 
 	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
-		if(1)		 return "head"
-		if(2)		 return "chest"
-		if(3 to 6)	 return "l_arm"
-		if(7 to 10)	 return "r_arm"
-		if(11 to 14) return "l_leg"
-		if(15 to 18) return "r_leg"
+		if(1)        return BP_HEAD
+		if(2)        return BP_CHEST
+		if(3 to 6)   return BP_L_ARM
+		if(7 to 10)  return BP_R_ARM
+		if(11 to 14) return BP_L_LEG
+		if(15 to 18) return BP_R_LEG
 
 	return zone
 

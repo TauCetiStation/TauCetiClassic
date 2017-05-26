@@ -588,7 +588,7 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				M.take_organ_damage(1 * REM, 0)
+				M.take_bodypart_damage(1 * REM, 0)
 
 		fluorine
 			name = "Fluorine"
@@ -1045,7 +1045,7 @@ datum
 				if(M.stat == DEAD)
 					return
 				//This needs a diona check but if one is added they won't be able to heal burn damage at all.
-				M.heal_organ_damage(0,2 * REM)
+				M.heal_bodypart_damage(0,2 * REM)
 
 		dermaline
 			name = "Dermaline"
@@ -1061,7 +1061,7 @@ datum
 				if(M.stat == DEAD) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
 					return
 				if(!alien || alien != IS_DIONA)
-					M.heal_organ_damage(0,3 * REM)
+					M.heal_bodypart_damage(0,3 * REM)
 
 		dexalin
 			name = "Dexalin"
@@ -1122,9 +1122,9 @@ datum
 					if(M.getOxyLoss())
 						M.adjustOxyLoss(-1 * REM)
 					if(M.getBruteLoss() && prob(80))
-						M.heal_organ_damage(1 * REM, 0)
+						M.heal_bodypart_damage(1 * REM, 0)
 					if(M.getFireLoss() && prob(80))
-						M.heal_organ_damage(0, 1 * REM)
+						M.heal_bodypart_damage(0, 1 * REM)
 					if(M.getToxLoss() && prob(80))
 						M.adjustToxLoss(-1 * REM)
 
@@ -1158,7 +1158,7 @@ datum
 				M.setCloneLoss(0)
 				M.setOxyLoss(0)
 				M.radiation = 0
-				M.heal_organ_damage(5,5)
+				M.heal_bodypart_damage(5,5)
 				M.adjustToxLoss(-5)
 				M.hallucination = 0
 				M.setBrainLoss(0)
@@ -1254,7 +1254,7 @@ datum
 				M.radiation = max(M.radiation - 7 * REM, 0)
 				M.adjustToxLoss(-1 * REM)
 				if(prob(15))
-					M.take_organ_damage(1, 0)
+					M.take_bodypart_damage(1, 0)
 
 		alkysine
 			name = "Alkysine"
@@ -1285,15 +1285,15 @@ datum
 				M.eye_blind = max(M.eye_blind - 5, 0)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
-					if(istype(E))
-						if(E.damage > 0)
-							E.damage = max(E.damage - 1, 0)
+					var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+					if(istype(IO))
+						if(IO.damage > 0)
+							IO.damage = max(IO.damage - 1, 0)
 
 		peridaxon
 			name = "Peridaxon"
 			id = "peridaxon"
-			description = "Used to encourage recovery of internal organs and nervous systems. Medicate cautiously."
+			description = "Used to encourage recovery of organs and nervous systems. Medicate cautiously."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = 10
@@ -1304,21 +1304,21 @@ datum
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 
-					//Peridaxon is hard enough to get, it's probably fair to make this all internal organs
-					for(var/datum/organ/internal/I in H.internal_organs)
-						if(I.damage > 0)
-							I.damage = max(I.damage - 0.20, 0)
+					//Peridaxon is hard enough to get, it's probably fair to make this all organs
+					for(var/obj/item/organ/internal/IO in H.organs)
+						if(IO.damage > 0)
+							IO.damage = max(IO.damage - 0.20, 0)
 
 		kyphotorin
 			name = "Kyphotorin"
 			id = "kyphotorin"
-			description = "Used nanites to encourage recovery of external organs and bones. Medicate cautiously."
+			description = "Used nanites to encourage recovery of body parts and bones. Medicate cautiously."
 			reagent_state = LIQUID
 			color = "#551a8b" // rgb: 85, 26, 139
 			overdose = 5.1
 			custom_metabolism = 0.07
 			var/heal_time = 0
-			var/datum/organ/external/External
+			var/obj/item/organ/external/External
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1332,19 +1332,19 @@ datum
 					return
 				H.jitteriness = max(0,H.jitteriness - 100)
 				if(!External)
-					for(var/datum/organ/external/E in H.organs) // find a broken/destroyed limb
-						for(var/datum/wound/W in E.wounds) // remove internal
+					for(var/obj/item/organ/external/BP in H.bodyparts) // find a broken/destroyed limb
+						for(var/datum/wound/W in BP.wounds) // remove internal
 							if(W.internal)
-								E.wounds -= W
-						if(E.status & ORGAN_DESTROYED)
-							if(E.parent && E.parent.status & ORGAN_DESTROYED)
+								BP.wounds -= W
+						if(BP.status & ORGAN_DESTROYED)
+							if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
 								continue
 							else
 								heal_time = 65
-								External = E
-						else if(E.status & ORGAN_BROKEN || E.status & ORGAN_SPLINTED)
+								External = BP
+						else if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED))
 							heal_time = 30
-							External = E
+							External = BP
 						if(External)
 							break
 				else if(H.bodytemperature >= 170 && H.vessel) // start fixing broken/destroyed limb
@@ -1355,21 +1355,21 @@ datum
 					H.apply_damages(0,0,1,4,0,5) // 1 toxic, 4 oxy and 5 halloss
 					data++
 					if(data == 1)
-						H.visible_message("<span class='notice'>You see oddly moving in [H]'s [External.display_name]...</span>"
-					 	,"<span class='notice'> You feel strange vibration on tips of your [External.display_name]... </span>")
+						H.visible_message("<span class='notice'>You see oddly moving in [H]'s [External.name]...</span>"
+					 	,"<span class='notice'> You feel strange vibration on tips of your [External.name]... </span>")
 					if(data == 10)
-						H.visible_message("<span class='notice'>You hear sickening crunch In [H]'s [External.display_name]...</span>")
+						H.visible_message("<span class='notice'>You hear sickening crunch In [H]'s [External.name]...</span>")
 					if(data == 20)
-						H.visible_message("<span class='notice'>[H]'s [External.display_name] shortly bends...</span>")
+						H.visible_message("<span class='notice'>[H]'s [External.name] shortly bends...</span>")
 					if(data == 30)
 						if(heal_time == 30)
-							H.visible_message("<span class='notice'>[H] stirs his [External.display_name]...</span>","<span class='userdanger'>You feel freedom in moving your [External.display_name]</span>")
+							H.visible_message("<span class='notice'>[H] stirs his [External.name]...</span>","<span class='userdanger'>You feel freedom in moving your [External.name]</span>")
 						else
-							H.visible_message("<span class='notice'>From [H]'s [External.parent.display_name] grow small meaty sprout...</span>")
+							H.visible_message("<span class='notice'>From [H]'s [External.parent.name] grow small meaty sprout...</span>")
 					if(data == 50)
-						H.visible_message("<span class='notice'>You see something resembling [External.display_name] at [H]'s [External.parent.display_name]...</span>")
+						H.visible_message("<span class='notice'>You see something resembling [External.name] at [H]'s [External.parent.name]...</span>")
 					if(data == 65)
-						H.visible_message("<span class='userdanger'>A new [External.display_name] grown from [H]'s [External.parent.display_name]!</span>","<span class='userdanger'>You feel again your [External.display_name]!</span>")
+						H.visible_message("<span class='userdanger'>A new [External.name] grown from [H]'s [External.parent.name]!</span>","<span class='userdanger'>You feel again your [External.name]!</span>")
 					if(prob(50))
 						H.emote("scream",1,null,1)
 					if(data >= heal_time) // recover organ
@@ -1392,7 +1392,7 @@ datum
 				if(M.stat == DEAD)
 					return
 				if(!alien || alien != IS_DIONA)
-					M.heal_organ_damage(2 * REM, 0)
+					M.heal_bodypart_damage(2 * REM, 0)
 
 		hyperzine
 			name = "Hyperzine"
@@ -1423,7 +1423,7 @@ datum
 				if(M.bodytemperature < 170)
 					M.adjustCloneLoss(-1)
 					M.adjustOxyLoss(-1)
-					M.heal_organ_damage(1, 1)
+					M.heal_bodypart_damage(1, 1)
 					M.adjustToxLoss(-1)
 
 		clonexadone
@@ -1439,7 +1439,7 @@ datum
 				if(M.bodytemperature < 170)
 					M.adjustCloneLoss(-3)
 					M.adjustOxyLoss(-3)
-					M.heal_organ_damage(3, 3)
+					M.heal_bodypart_damage(3, 3)
 					M.adjustToxLoss(-3)
 
 		rezadone
@@ -1459,10 +1459,10 @@ datum
 				switch(data)
 					if(1 to 15)
 						M.adjustCloneLoss(-1)
-						M.heal_organ_damage(1, 1)
+						M.heal_bodypart_damage(1, 1)
 					if(15 to 35)
 						M.adjustCloneLoss(-2)
-						M.heal_organ_damage(2, 1)
+						M.heal_bodypart_damage(2, 1)
 						M.status_flags &= ~DISFIGURED
 					if(35 to INFINITY)
 						M.adjustToxLoss(1)
@@ -1673,7 +1673,7 @@ datum
 				if(M.stat == DEAD)
 					return
 				if(prob(33))
-					M.take_organ_damage(1 * REM, 0)
+					M.take_bodypart_damage(1 * REM, 0)
 				M.adjustOxyLoss(3)
 				if(prob(20))
 					M.emote("gasp")
@@ -1693,7 +1693,7 @@ datum
 					to_chat(M, "\red Your insides are burning!")
 					M.adjustToxLoss(rand(20,60) * REM)
 				else if(prob(40))
-					M.heal_organ_damage(5 * REM, 0)
+					M.heal_bodypart_damage(5 * REM, 0)
 
 		toxin/cyanide //Fast and Lethal
 			name = "Cyanide"
@@ -1957,7 +1957,7 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				M.take_organ_damage(0, 1 * REM)
+				M.take_bodypart_damage(0, 1 * REM)
 
 			reaction_mob(mob/living/M, method=TOUCH, volume)//magic numbers everywhere
 				if(!istype(M, /mob/living))
@@ -2006,17 +2006,17 @@ datum
 					if(!M.unacidable)
 						if(istype(M, /mob/living/carbon/human) && volume >= 10)
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/external/affecting = H.get_organ("head")
-							if(affecting)
-								affecting.take_damage(4*toxpwr, 2*toxpwr)
+							var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+							if(BP)
+								BP.take_damage(4 * toxpwr, 2 * toxpwr)
 								if(prob(meltprob)) //Applies disfigurement
 									H.emote("scream",,, 1)
 									H.status_flags |= DISFIGURED
 						else
-							M.take_organ_damage(min(6*toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
+							M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 				else
 					if(!M.unacidable)
-						M.take_organ_damage(min(6*toxpwr, volume * toxpwr))
+						M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr))
 
 			reaction_obj(var/obj/O, var/volume)
 				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
@@ -2051,7 +2051,7 @@ datum
 				if(!..())
 					return
 				if(prob(50))
-					M.heal_organ_damage(1,0)
+					M.heal_bodypart_damage(1, 0)
 				M.nutrition += nutriment_factor	// For hunger and fatness
 /*
 				// If overeaten - vomit and fall down
@@ -2323,7 +2323,7 @@ datum
 				M.nutrition += nutriment_factor
 				/*if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
 					if(!M) M = holder.my_atom
-					M.heal_organ_damage(1,1)
+					M.heal_bodypart_damage(1, 1)
 					M.nutrition += nutriment_factor
 					..()
 					return
@@ -2342,7 +2342,7 @@ datum
 				if(istype(M, /mob/living/carbon/human) && M.mind)
 					if(M.mind.special_role)
 						if(!M) M = holder.my_atom
-						M.heal_organ_damage(1,1)
+						M.heal_bodypart_damage(1, 1)
 						M.nutrition += nutriment_factor
 						..()
 						return
@@ -2524,7 +2524,7 @@ datum
 				if(!..())
 					return
 				if(M.getFireLoss() && prob(20))
-					M.heal_organ_damage(0, 1)
+					M.heal_bodypart_damage(0, 1)
 
 		drink/limejuice
 			name = "Lime Juice"
@@ -2628,7 +2628,7 @@ datum
 				if(!..())
 					return
 				if(M.getBruteLoss() && prob(20))
-					M.heal_organ_damage(1, 0)
+					M.heal_bodypart_damage(1, 0)
 				if(holder.has_reagent("capsaicin"))
 					holder.remove_reagent("capsaicin", 10 * REAGENTS_METABOLISM)
 
@@ -2696,7 +2696,7 @@ datum
 					return
 				M.sleeping = 0
 				if(M.getBruteLoss() && prob(20))
-					M.heal_organ_damage(1, 0)
+					M.heal_bodypart_damage(1, 0)
 
 		drink/coffee/cafe_latte
 			name = "Cafe Latte"
@@ -2711,7 +2711,7 @@ datum
 					return
 				M.sleeping = 0
 				if(M.getBruteLoss() && prob(20))
-					M.heal_organ_damage(1, 0)
+					M.heal_bodypart_damage(1, 0)
 
 		drink/tea
 			name = "Tea"
@@ -2893,9 +2893,9 @@ datum
 				if(M.getOxyLoss() && prob(50))
 					M.adjustOxyLoss(-2)
 				if(M.getBruteLoss() && prob(60))
-					M.heal_organ_damage(2, 0)
+					M.heal_bodypart_damage(2, 0)
 				if(M.getFireLoss() && prob(50))
-					M.heal_organ_damage(0, 2)
+					M.heal_bodypart_damage(0, 2)
 				if(M.getToxLoss() && prob(50))
 					M.adjustToxLoss(-2)
 				if(M.dizziness !=0)
@@ -3100,9 +3100,9 @@ datum
 					M.drowsyness = max(M.drowsyness, 30)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
-						if(istype(L))
-							L.take_damage(0.1, 1)
+						var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
+						if(istype(IO))
+							IO.take_damage(0.1, 1)
 						H.adjustToxLoss(0.1)
 				return TRUE
 
@@ -3358,15 +3358,15 @@ datum
 							M.adjustToxLoss(2)
 						if(prob(5) && ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
-							if(istype(L))
-								L.take_damage(5, 0)
+							var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+							if(istype(IO))
+								IO.take_damage(5, 0)
 					if(300 to INFINITY)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
-							if(istype(L))
-								L.take_damage(100, 0)
+							var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+							if(istype(IO))
+								IO.take_damage(100, 0)
 
 		ethanol/deadrum
 			name = "Deadrum"
@@ -3906,9 +3906,9 @@ datum
 		if(H.species.name != "Dionae")
 			switch(volume)
 				if(1 to 5)
-					var/datum/organ/external/affecting = H.get_organ()
-					for(var/datum/wound/W in affecting.wounds)
-						affecting.wounds -= W
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST] // it was H.get_bodypart(????) with nothing as arg, so its always a chest?
+					for(var/datum/wound/W in BP.wounds)
+						BP.wounds -= W
 						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 					if(H.getOxyLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
@@ -3917,12 +3917,12 @@ datum
 
 					if(H.getBruteLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
-							H.heal_organ_damage(5, 0)
+							H.heal_bodypart_damage(5, 0)
 							holder.remove_reagent("mednanobots", 0.125)
 
 					if(H.getFireLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
-							H.heal_organ_damage(0, 5)
+							H.heal_bodypart_damage(0, 5)
 							holder.remove_reagent("mednanobots", 0.125)
 
 					if(H.getToxLoss() > 0 && prob(50))
@@ -3950,9 +3950,9 @@ datum
 						if(D.stage < 1)
 							D.cure()
 				if(5 to 20)		//Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
-					var/datum/organ/external/affecting = H.get_organ()
-					for(var/datum/wound/W in affecting.wounds)
-						affecting.wounds -= W
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
+					for(var/datum/wound/W in BP.wounds)
+						BP.wounds -= W
 						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 					if(H.getOxyLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
@@ -3964,7 +3964,7 @@ datum
 
 					if(H.getBruteLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
-							H.heal_organ_damage(5, 0)
+							H.heal_bodypart_damage(5, 0)
 							holder.remove_reagent("mednanobots", 0.125)
 							percent_machine += 0.5
 							if(prob(20))
@@ -3972,7 +3972,7 @@ datum
 
 					if(H.getFireLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
-							H.heal_organ_damage(0, 5)
+							H.heal_bodypart_damage(0, 5)
 							holder.remove_reagent("mednanobots", 0.125)
 							percent_machine += 0.5
 							if(prob(20))
@@ -4116,9 +4116,9 @@ datum
 				M.adjustBrainLoss(2)
 				if(ishuman(M) && prob(5))
 					var/mob/living/carbon/human/H = M
-					var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
-					if(istype(L))
-						L.take_damage(10, 0)
+					var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+					if(istype(IO))
+						IO.take_damage(10, 0)
 	data++
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references

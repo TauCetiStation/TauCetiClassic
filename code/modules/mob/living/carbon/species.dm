@@ -8,7 +8,7 @@
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
 	var/damage_mask = TRUE
-	var/eyes = "eyes_s"                                  // Icon for eyes.
+	var/eyes = "eyes"                                  // Icon for eyes.
 
 	var/primitive                // Lesser form, if any (ie. monkey for humans)
 	var/tail                     // Name of tail image in species effects icon file.
@@ -80,44 +80,52 @@
 
 	var/list/sprite_sheets = list()
 
+	// This is default organs set which is mostly used upon mob creation.
+	// Keep in mind that position of organ is important in those lists.
+	// If hand connects to chest, then chest should go first.
+	var/list/has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_L_HAND = /obj/item/organ/external/l_hand
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_R_HAND = /obj/item/organ/external/r_hand
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_L_FOOT = /obj/item/organ/external/l_foot
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		,BP_R_FOOT = /obj/item/organ/external/r_foot
+		)
+
+	var/list/has_organ = list(
+		 O_HEART   = /obj/item/organ/internal/heart
+		,O_BRAIN   = /obj/item/organ/internal/brain
+		,O_EYES    = /obj/item/organ/internal/eyes
+		,O_LUNGS   = /obj/item/organ/internal/lungs
+		,O_LIVER   = /obj/item/organ/internal/liver
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
+
 /datum/species/New()
 	unarmed = new unarmed_type()
 
 /datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
-	//This is a basic humanoid limb setup.
-	H.organs = list()
-	H.organs_by_name["chest"] = new/datum/organ/external/chest()
-	H.organs_by_name["groin"] = new/datum/organ/external/groin(H.organs_by_name["chest"])
-	H.organs_by_name["head"] = new/datum/organ/external/head(H.organs_by_name["chest"])
-	H.organs_by_name["l_arm"] = new/datum/organ/external/l_arm(H.organs_by_name["chest"])
-	H.organs_by_name["r_arm"] = new/datum/organ/external/r_arm(H.organs_by_name["chest"])
-	H.organs_by_name["r_leg"] = new/datum/organ/external/r_leg(H.organs_by_name["groin"])
-	H.organs_by_name["l_leg"] = new/datum/organ/external/l_leg(H.organs_by_name["groin"])
-	H.organs_by_name["l_hand"] = new/datum/organ/external/l_hand(H.organs_by_name["l_arm"])
-	H.organs_by_name["r_hand"] = new/datum/organ/external/r_hand(H.organs_by_name["r_arm"])
-	H.organs_by_name["l_foot"] = new/datum/organ/external/l_foot(H.organs_by_name["l_leg"])
-	H.organs_by_name["r_foot"] = new/datum/organ/external/r_foot(H.organs_by_name["r_leg"])
 
-	H.internal_organs = list()
-	H.internal_organs_by_name["heart"] = new/datum/organ/internal/heart(H)
-	H.internal_organs_by_name["lungs"] = new/datum/organ/internal/lungs(H)
-	H.internal_organs_by_name["liver"] = new/datum/organ/internal/liver(H)
-	H.internal_organs_by_name["kidney"] = new/datum/organ/internal/kidney(H)
-	H.internal_organs_by_name["brain"] = new/datum/organ/internal/brain(H)
-	H.internal_organs_by_name["eyes"] = new/datum/organ/internal/eyes(H)
+	for(var/type in has_bodypart)
+		var/path = has_bodypart[type]
+		new path(null, H)
 
-	for(var/name in H.organs_by_name)
-		H.organs += H.organs_by_name[name]
-
-	for(var/datum/organ/external/O in H.organs)
-		O.owner = H
+	for(var/type in has_organ)
+		var/path = has_organ[type]
+		new path(null, H)
 
 	if(flags[IS_SYNTHETIC])
-		for(var/datum/organ/external/E in H.organs)
-			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
-			E.status |= ORGAN_ROBOT
-		for(var/datum/organ/internal/I in H.internal_organs)
-			I.mechanize()
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			if(BP.status & (ORGAN_CUT_AWAY | ORGAN_DESTROYED))
+				continue
+			BP.status |= ORGAN_ROBOT
+		for(var/obj/item/organ/internal/IO in H.organs)
+			IO.mechanize()
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
@@ -235,7 +243,7 @@
 	,HAS_SKIN_COLOR = TRUE
 	)
 
-	eyes = "skrell_eyes_s"
+	eyes = "skrell_eyes"
 
 	flesh_color = "#8CD7A3"
 
@@ -255,7 +263,7 @@
 	cold_level_2 = 50
 	cold_level_3 = 0
 
-	eyes = "vox_eyes_s"
+	eyes = "vox_eyes"
 
 	breath_type = "nitrogen"
 	poison_type = "oxygen"

@@ -49,17 +49,18 @@
 
 	var/icon/icobase = H.species.icobase
 
-	preview_icon = new /icon(icobase, "torso_[g]")
+	preview_icon = new /icon(icobase, "[BP_CHEST]_[g]")
 	var/icon/temp
-	temp = new /icon(icobase, "groin_[g]")
+	temp = new /icon(icobase, "[BP_GROIN]_[g]")
 	preview_icon.Blend(temp, ICON_OVERLAY)
-	temp = new /icon(icobase, "head_[g]")
+	temp = new /icon(icobase, "[BP_HEAD]_[g]")
 	preview_icon.Blend(temp, ICON_OVERLAY)
 
-	for(var/datum/organ/external/E in H.organs)
-		if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
-		temp = new /icon(icobase, "[E.name]")
-		if(E.status & ORGAN_ROBOT)
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if((BP.status & ORGAN_CUT_AWAY) || (BP.status & ORGAN_DESTROYED))
+			continue
+		temp = new /icon(icobase, "[BP.body_zone]")
+		if(BP.status & ORGAN_ROBOT)
 			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		preview_icon.Blend(temp, ICON_OVERLAY)
 

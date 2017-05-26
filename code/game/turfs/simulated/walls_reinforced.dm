@@ -22,14 +22,9 @@
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			if(prob(5))
 				playsound(user.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-				var/organ_name = pick("l_arm","r_arm")
-				if(user.hand)
-					organ_name = "l_arm"
-				else
-					organ_name = "r_arm"
 				var/mob/living/carbon/human/H = user
-				var/datum/organ/external/E = H.get_organ(organ_name)
-				E.take_damage(rand(5, 15), 0, 0, 0, "Reinforced wall")
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
+				BP.take_damage(rand(5, 15), used_weapon = "Reinforced wall")
 				to_chat(user, text("\red Ouch!!"))
 			else
 				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)

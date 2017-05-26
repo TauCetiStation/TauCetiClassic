@@ -955,6 +955,28 @@
 			log_admin("[key_name(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
 			message_admins("[key_name_admin(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
 
+	else if(href_list["related_info"])
+		var/mob/M = locate(href_list["related_info"])
+		if (ismob(M))
+			if(!M.client)
+				return
+			var/client/C = M.client
+
+			var/info_type = href_list["info_type"]
+			var/show_info = null
+
+			switch(info_type)
+				if("cid")
+					show_info = C.related_accounts_cid
+				if("ip")
+					show_info = C.related_accounts_ip
+
+			var/dat = "<html><head><title>[C.key] related accounts by [info_type]</title></head>"
+			dat += "<center><b>Ckey:</b> [C.ckey]</center>"
+			dat += "[show_info]"
+
+			usr << browse(dat, "window=[C.ckey]_related_info_[info_type]")
+
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
 		if (ismob(M))
@@ -1596,7 +1618,7 @@
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 
-		var/input = sanitize_alt(input(src.owner, "Please enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null)
+		var/input = sanitize_alt(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null)
 		if(!input)
 			return
 
@@ -1604,7 +1626,7 @@
 
 		var/obj/item/weapon/paper/P = new
 		P.name = "[command_name()]- [customname]"
-		P.info = input
+		P.info = checkhtml(html_decode(input))
 
 		var/obj/item/weapon/stamp/centcomm/S = new
 		S.stamp_paper(P, use_stamp_by_message = TRUE)
@@ -1955,7 +1977,7 @@
 					if(!security)
 						//strip their stuff before they teleport into a cell :downs:
 						for(var/obj/item/weapon/W in H)
-							if(istype(W, /datum/organ/external))
+							if(istype(W, /obj/item/organ/external))
 								continue
 								//don't strip organs
 							H.drop_from_inventory(W)

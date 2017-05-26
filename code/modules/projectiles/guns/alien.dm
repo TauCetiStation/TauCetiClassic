@@ -67,7 +67,7 @@
 
 /obj/item/weapon/spikethrower/attack(mob/living/M, mob/living/user, def_zone)
 
-	if (M == user && user.zone_sel.selecting == "mouth")
+	if (M == user && user.zone_sel.selecting == O_MOUTH)
 		M.visible_message("\red [user] attempts without success to fit [src] into their mouth.")
 		return
 
