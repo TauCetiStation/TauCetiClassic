@@ -10,26 +10,27 @@
 		mutiny = null
 	..()
 
-/obj/item/weapon/pinpointer/advpinpointer/auth_key/attack_self()
+/obj/item/weapon/pinpointer/advpinpointer/auth_key/attack_self(mob/user)
 	if(!mutiny)
-		to_chat(usr, "<span class='danger'>[src] buzzes rudely.</span>")
+		to_chat(user, "<span class='danger'>[src] buzzes rudely.</span>")
 		return
 	switch(mode)
 		if (0)
 			mode = 1
 			active = 1
 			target = mutiny.captains_key
-			workobj()
+			START_PROCESSING(SSobj, src)
 			to_chat(usr, "<span class='notice'>You calibrate \the [src] to locate the Captain's Authentication Key.</span>")
 		if (1)
 			mode = 2
 			target = mutiny.secondary_key
-			to_chat(usr, "<span class='notice'>You calibrate \the [src] to locate the Emergency Secondary Authentication Key.</span>")
+			to_chat(user, "<span class='notice'>You calibrate \the [src] to locate the Emergency Secondary Authentication Key.</span>")
 		else
 			mode = 0
 			active = 0
+			STOP_PROCESSING(SSobj, src)
 			icon_state = "pinoff"
-			to_chat(usr, "<span class='notice'>You switch \the [src] off.</span>")
+			to_chat(user, "<span class='notice'>You switch \the [src] off.</span>")
 
 /obj/item/weapon/pinpointer/advpinpointer/auth_key/examine(mob/user)
 	..()
