@@ -16,11 +16,10 @@
 	display_name = "Monocle"
 	path = /obj/item/clothing/glasses/monocle
 
-/datum/gear/eyes/glasses/sunglasses
-	display_name = "Sunglasses"
-	cost = 2
-	path = /obj/item/clothing/glasses/sunglasses
-
 /datum/gear/eyes/glasses/threedglasses
 	display_name = "Glasses, 3D"
 	path = /obj/item/clothing/glasses/threedglasses
+
+/datum/gear/eyes/glasses/aviator
+	display_name = "Aviator glasses"
+	path = /obj/item/clothing/glasses/aviator

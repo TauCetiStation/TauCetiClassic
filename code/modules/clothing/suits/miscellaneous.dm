@@ -296,6 +296,12 @@
 	icon_state = "neocoat"
 	item_state = "neocoat"
 
+/obj/item/clothing/suit/serifcoat
+	name = "serif coat"
+	desc = "A old coat"
+	icon_state = "serif_coat"
+	item_state = "det_suit"
+
 //stripper
 /obj/item/clothing/under/stripper
 	body_parts_covered = 0

@@ -95,6 +95,12 @@
 	action_button_name = "Toggle Goggles"
 	vision_flags = SEE_OBJS
 
+/obj/item/clothing/glasses/aviator
+	name = "Aviator glasses"
+	desc = "Stylish glasses with orange lenses"
+	icon_state = "orange_aviators"
+	item_state = "orange_aviators"
+
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
 	desc = "Made by Nerd. Co."
