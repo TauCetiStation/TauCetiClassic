@@ -18,15 +18,16 @@
 		"silicates" = 0,
 		"carbonaceous rock" = 0
 		)
-
+	var/working = 0
 	//matter = list("metal" = 3000)
 
 	origin_tech = "magnets=1;engineering=1"
 
 /obj/item/weapon/mining_scanner/attack_self(mob/user)
-
+	if(working)
+		return
 	to_chat(user, "You begin sweeping \the [src] about, scanning for metal deposits.")
-
+	working = 1
 	if(!do_after(user, speed, target = user)) return
 	if(!user || !src) return
 
@@ -35,21 +36,11 @@
 	to_chat(user, "[bicon(src)] \blue The scanner beeps and displays a readout.")
 
 	show_ore_count(user)
-
+	working = 0
 
 /obj/item/weapon/mining_scanner/proc/find_ore(mob/user)
-	ore_list = list(
-		"iron" = 0,
-		"uranium" = 0,
-		"gold" = 0,
-		"silver" = 0,
-		"diamond" = 0,
-		"phoron" = 0,
-		"osmium" = 0,
-		"hydrogen" = 0,
-		"silicates" = 0,
-		"carbonaceous rock" = 0
-		)
+	for(var/metal in ore_list)
+		ore_list[metal] = 0
 
 	for(var/turf/T in oview(range,get_turf(user)))
 		if(!T.has_resources)
