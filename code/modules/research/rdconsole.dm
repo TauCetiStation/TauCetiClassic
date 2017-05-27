@@ -252,7 +252,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						break
 				if(!cancontinue)
 					var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?") in list("Proceed", "Cancel")
-					if(choice == "Cancel")
+					if(choice == "Cancel" || !linked_destroy)
 						return
 
 				linked_destroy.busy = 1
