@@ -121,7 +121,7 @@
 	return 0
 
 /obj/machinery/mining/drill/proc/check_supports()
-	if(!supports || !supports.len)
+	if(!supports || supports.len < braces_needed)
 		return 0
 
 	if(supports && supports.len >= braces_needed)
