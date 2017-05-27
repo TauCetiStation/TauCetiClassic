@@ -27,6 +27,21 @@ REAGENT SCANNER
 	if(on)
 		START_PROCESSING(SSobj, src)
 
+/obj/item/device/t_scanner/proc/rehide_obj(obj/O)
+	if(O)
+		var/turf/U = O.loc
+		if(U.intact)
+			O.invisibility = 101
+
+/obj/item/device/t_scanner/proc/rehide_mob(mob/living/M)
+	if(M)
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+				var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
+				if(!S.s_active)
+					return
+		M.invisibility = INVISIBILITY_LEVEL_TWO
 
 /obj/item/device/t_scanner/process()
 	if(!on)
@@ -45,18 +60,12 @@ REAGENT SCANNER
 
 			if(O.invisibility == 101)
 				O.invisibility = 0
-				spawn(10)
-					if(O)
-						var/turf/U = O.loc
-						if(U.intact)
-							O.invisibility = 101
+				addtimer(CALLBACK(src, .proc/rehide_obj, O), 10)
 
 		var/mob/living/M = locate() in T
-		if(M && M.invisibility == 2)
+		if(M && M.invisibility == INVISIBILITY_LEVEL_TWO)
 			M.invisibility = 0
-			spawn(2)
-				if(M)
-					M.invisibility = INVISIBILITY_LEVEL_TWO
+			addtimer(CALLBACK(src, .proc/rehide_mob, M), 10)
 
 
 /obj/item/device/healthanalyzer
