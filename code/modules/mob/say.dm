@@ -35,16 +35,16 @@
 	var/alt_name = ""
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
+		to_chat(usr, "<span class='red'> Speech is currently admin-disabled.</span>")
 		return
 
 	if(!src.client.holder)
 		if(!dsay_allowed)
-			to_chat(src, "\red Deadchat is globally muted")
+			to_chat(src, "<span class='red'> Deadchat is globally muted.</span>")
 			return
 
 	if(client && !(client.prefs.chat_toggles & CHAT_DEAD))
-		to_chat(usr, "\red You have deadchat muted.")
+		to_chat(usr, "<span class='red'> You have deadchat muted.</span>")
 		return
 
 	if(mind && mind.name)
@@ -53,6 +53,8 @@
 		name = real_name
 	if(name != real_name)
 		alt_name = " (died as [real_name])"
+	if(client.prefs.chat_toggles & CHAT_CKEY)
+		name += " ([key])"
 
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] [pick("complains","moans","whines","laments","blubbers")], <span class='message'>\"[sanitize_plus_chat(message)]\"</span></span>"
 
