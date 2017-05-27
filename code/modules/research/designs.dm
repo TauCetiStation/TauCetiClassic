@@ -1883,7 +1883,7 @@ datum/design/large_grenade
 	req_tech = list("combat" = 4, "materials" = 5, "magnets" = 4, "powerstorage" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_GOLD = 2000, MAT_SILVER = 1500)
-	build_path = /obj/item/ammo_casing/l10
+	build_path = /obj/item/ammo_box/magazine/l10mag
 
 datum/design/smg
 	name = "Submachine Gun"
@@ -2219,6 +2219,15 @@ datum/design/cart_janitor
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/weapon/cartridge/janitor
+
+/datum/design/radio_grid
+	name = "Radio Grid"
+	desc = "A metal grid, attached to circuit to protect it from emitting."
+	id = "radio_grid"
+	req_tech = list("engineering" = 4, "powerstorage" = 3, "magnets" = 3, "programming" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 250, MAT_GLASS = 50)
+	build_path = /obj/item/device/radio_grid
 
 /*
 datum/design/cart_clown
