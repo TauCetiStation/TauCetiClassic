@@ -33,7 +33,7 @@
 	desc ="A simple powered drill with a bolt bit"
 	icon_state = "drill_bolt"
 	item_state = "drill"
-	materials = list(MAT_METAL=150,MAT_SILVER=50)
+	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	throwforce = 8
@@ -41,7 +41,7 @@
 	action_button_name = "Change mode"
 
 /obj/item/weapon/wrench/power/attack_self(mob/user)
-	playsound((user),'sound/items/change_drill.ogg',50,1)
+	playsound(user, 'sound/items/change_drill.ogg', 50, 1)
 	var/obj/item/weapon/screwdriver/power/s_drill = new
 	to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
 	qdel(src)
@@ -71,11 +71,11 @@
 							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 		return(BRUTELOSS)
 
-/obj/item/weapon/screwdriver/New(loc, var/param_color = null)
+/obj/item/weapon/screwdriver/New(loc, var/param_color)
 	..()
 	if(!icon_state)
 		if(!param_color)
-			param_color = pick("red","blue","purple","brown","green","cyan","yellow")
+			param_color = pick("red", "blue", "purple", "brown", "green", "cyan", "yellow")
 		icon_state = "screwdriver_[param_color]"
 
 	src.pixel_y = rand(-6, 6)
@@ -95,7 +95,7 @@
 	desc = "A simple hand drill with a screwdriver bit attached."
 	icon_state = "drill_screw"
 	item_state = "drill"
-	materials = list(MAT_METAL=150,MAT_SILVER=50)
+	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	throwforce = 8
@@ -106,7 +106,7 @@
 	action_button_name = "Change mode"
 
 /obj/item/weapon/screwdriver/power/attack_self(mob/user)
-	playsound((user),'sound/items/change_drill.ogg',50,1)
+	playsound(user, 'sound/items/change_drill.ogg', 50, 1)
 	var/obj/item/weapon/wrench/power/b_drill = new
 	to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
 	qdel(src)
@@ -131,7 +131,7 @@
 	sharp = 1
 	edge = 1
 
-/obj/item/weapon/wirecutters/New(loc, var/param_color = null)
+/obj/item/weapon/wirecutters/New(loc, var/param_color)
 	..()
 	if(!icon_state)
 		if(!param_color)
@@ -158,11 +158,11 @@
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
 	origin_tech = "materials=2;engineering=2"
-	materials = list(MAT_METAL=150,MAT_SILVER=50)
+	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	action_button_name = "Change mode"
 
 /obj/item/weapon/wirecutters/power/attack_self(mob/user)
-	playsound((user), 'sound/items/change_jaws.ogg', 50, 1)
+	playsound(user, 'sound/items/change_jaws.ogg', 50, 1)
 	var/obj/item/weapon/crowbar/power/pryjaws = new
 	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	qdel(src)
@@ -527,13 +527,13 @@
 	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a prying head"
 	icon_state = "jaws_pry"
 	item_state = "jawsoflife"
-	materials = list(MAT_METAL=150,MAT_SILVER=50)
+	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2"
 	force = 15
 	action_button_name = "Change mode"
 
 /obj/item/weapon/crowbar/power/attack_self(mob/user)
-	playsound((user), 'sound/items/change_jaws.ogg', 50, 1)
+	playsound(user, 'sound/items/change_jaws.ogg', 50, 1)
 	var/obj/item/weapon/wirecutters/power/cutjaws = new
 	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 	qdel(src)

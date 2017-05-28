@@ -2413,12 +2413,3 @@ datum/design/holosign
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/holosign_creator
-
-/datum/design/buffer
-	name = "Floor Buffer Upgrade"
-	desc = "A floor buffer that can be attached to janitorial cart."
-	id = "buffer"
-	req_tech = list("materials" = 4, "engineering" = 4)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 200)
-	build_path = /obj/item/janiupgrade
