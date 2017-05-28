@@ -317,8 +317,8 @@
 		use_power(step_energy_drain)
 	return result
 
-/obj/mecha/Bump(var/atom/obstacle, yes)
-	if(yes)
+/obj/mecha/Bump(var/atom/obstacle, non_native_bump)
+	if(non_native_bump)
 		if(throwing)
 			..()
 			return
