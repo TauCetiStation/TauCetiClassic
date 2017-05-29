@@ -65,6 +65,7 @@
 	projectile_type = /obj/item/projectile/energy/electrode
 	select_name = "stun - electrode"
 	fire_sound = 'sound/weapons/taser.ogg'
+	e_cost = 50
 
 /obj/item/ammo_casing/energy/stun
 	projectile_type = /obj/item/projectile/beam/stun
