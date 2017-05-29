@@ -71,6 +71,10 @@
 		to_chat(src, "\red You cannot send deadchat emotes (muted).")
 		return
 
+	if(src.client && src.client.holder && !(src.client.holder.rights & R_PERMISSIONS))
+		src << "<span class='red'>Just no.</span>"
+		return
+
 	if(!(client.prefs.chat_toggles & CHAT_DEAD))
 		to_chat(src, "\red You have deadchat muted.")
 		return

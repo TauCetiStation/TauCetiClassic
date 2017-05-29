@@ -7,6 +7,11 @@
 		return
 	if(!src.mob)
 		return
+
+	if(!(holder.rights & R_PERMISSIONS))
+		src << "<span class='red'>You cannot use DSAY, now go and do your duty.</span>"
+		return
+
 	if(prefs.muted & MUTE_DEADCHAT)
 		to_chat(src, "\red You cannot send DSAY messages (muted).")
 		return

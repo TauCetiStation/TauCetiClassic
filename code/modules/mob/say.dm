@@ -38,6 +38,10 @@
 		to_chat(usr, "<span class='red'> Speech is currently admin-disabled.</span>")
 		return
 
+	if(src.client && src.client.holder && !(src.client.holder.rights & R_PERMISSIONS))
+		src << "<span class='red'>Deadchat is for elite, you're not allowed.</span>"
+		return
+
 	if(!src.client.holder)
 		if(!dsay_allowed)
 			to_chat(src, "<span class='red'> Deadchat is globally muted.</span>")

@@ -21,6 +21,10 @@ var/global/normal_ooc_colour = "#002eb8"
 		to_chat(src, "\red You have OOC muted.")
 		return
 
+	if(holder && !(holder.rights & R_PERMISSIONS))
+		src << "<span class='red'>You cannot use OOC, now go and do your duty.</span>"
+		return
+
 	if(prefs.muted & MUTE_OOC)
 		to_chat(src, "\red You cannot use OOC (muted).")
 		return
