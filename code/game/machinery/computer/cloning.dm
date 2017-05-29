@@ -20,50 +20,21 @@
 	..()
 	spawn(5)
 		updatemodules()
-		return
-	return
-
-/obj/machinery/computer/cloning/process()
-	if(!(scanner && pod1 && autoprocess))
-		return
-
-	if(scanner.occupant && (scanner.scan_level > 2))
-		scan_mob(scanner.occupant)
 
 /obj/machinery/computer/cloning/proc/updatemodules()
-	src.scanner = findscanner()
-	src.pod1 = findcloner()
-
-	if (!isnull(src.pod1))
-		src.pod1.connected = src // Some variable the pod needs
-
-/obj/machinery/computer/cloning/proc/findscanner()
-	var/obj/machinery/dna_scannernew/scannerf = null
-
-	// Loop through every direction
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-
-		// Try to find a scanner in that direction
-		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
-
-		// If found, then we break, and return the scanner
-		if (!isnull(scannerf))
-			break
-
-	// If no scanner was found, it will return null
-	return scannerf
-
-/obj/machinery/computer/cloning/proc/findcloner()
-	var/obj/machinery/clonepod/podf = null
-
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-
-		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
-
-		if (!isnull(podf))
-			break
-
-	return podf
+	scanner = null
+	if(pod1)
+		pod1.connected = null
+		pod1 = null
+	for(var/dir in cardinal)
+		for(var/mach in get_step(src, dir))
+			if(!scanner && istype(mach, /obj/machinery/dna_scannernew))
+				scanner = mach
+				continue
+			if(!pod1 && istype(mach, /obj/machinery/clonepod))
+				pod1 = mach
+				pod1.connected = src
+				continue
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
