@@ -6,10 +6,6 @@
 
 #define AALARM_REPORT_TIMEOUT 100
 
-#define RCON_NO		1
-#define RCON_AUTO	2
-#define RCON_YES	3
-
 //1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
 #define MAX_ENERGY_CHANGE 1000
 
@@ -38,9 +34,7 @@
 	frequency = 1439
 	//var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = 1437
-	var/remote_control = FALSE
-	var/rcon_setting = 2
-	var/rcon_time = 0
+	var/remote_control = TRUE
 	var/locked = TRUE
 	var/wiresexposed = FALSE // If it's been screwdrivered open.
 	var/aidisabled = FALSE
@@ -201,19 +195,6 @@
 	if (mode==AALARM_MODE_CYCLE && environment.return_pressure()<ONE_ATMOSPHERE*0.05)
 		mode=AALARM_MODE_FILL
 		apply_mode()
-
-
-	//atmos computer remote controll stuff
-	switch(rcon_setting)
-		if(RCON_NO)
-			remote_control = 0
-		if(RCON_AUTO)
-			if(danger_level == 2)
-				remote_control = 1
-			else
-				remote_control = 0
-		if(RCON_YES)
-			remote_control = 1
 
 	updateDialog()
 	return
@@ -586,20 +567,15 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 
 /obj/machinery/alarm/proc/rcon_text()
 	var/dat = "<table width=\"100%\"><td align=\"center\"><b>Remote Control:</b><br>"
-	if(rcon_setting == RCON_NO)
+	if(remote_control == FALSE)
 		dat += "<b>Off</b>"
 	else
-		dat += "<a href='?src=\ref[src];rcon=[RCON_NO]'>Off</a>"
+		dat += "<a href='?src=\ref[src];rcon=0'>Off</a>"
 	dat += " | "
-	if(rcon_setting == RCON_AUTO)
-		dat += "<b>Auto</b>"
-	else
-		dat += "<a href='?src=\ref[src];rcon=[RCON_AUTO]'>Auto</a>"
-	dat += " | "
-	if(rcon_setting == RCON_YES)
+	if(remote_control == TRUE)
 		dat += "<b>On</b>"
 	else
-		dat += "<a href='?src=\ref[src];rcon=[RCON_YES]'>On</a></td>"
+		dat += "<a href='?src=\ref[src];rcon=1'>On</a></td>"
 
 	//Hackish, I know.  I didn't feel like bothering to rework all of this.
 	dat += "<td align=\"center\"><b>Thermostat:</b><br><a href='?src=\ref[src];temperature=1'>[target_temperature - T0C]C</a></td>"
@@ -780,14 +756,10 @@ table tr:first-child th:first-child { border: none;}
 		var/attempted_rcon_setting = text2num(href_list["rcon"])
 
 		switch(attempted_rcon_setting)
-			if(RCON_NO)
-				rcon_setting = RCON_NO
-			if(RCON_AUTO)
-				rcon_setting = RCON_AUTO
-			if(RCON_YES)
-				rcon_setting = RCON_YES
+			if(TRUE)
+				remote_control = TRUE
 			else
-				return FALSE
+				remote_control = FALSE
 
 	if(href_list["temperature"])
 		var/list/selected = TLV["temperature"]
