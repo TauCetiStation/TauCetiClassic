@@ -77,6 +77,7 @@
 		if(!param_color)
 			param_color = pick("red", "blue", "purple", "brown", "green", "cyan", "yellow")
 		icon_state = "screwdriver_[param_color]"
+		item_state = "screwdriver_[param_color]"
 
 	src.pixel_y = rand(-6, 6)
 	src.pixel_x = rand(-4, 4)
@@ -137,6 +138,7 @@
 		if(!param_color)
 			param_color = pick("yellow","red")
 		icon_state = "cutters_[param_color]"
+		item_state = "cutters_[param_color]"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if((C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
