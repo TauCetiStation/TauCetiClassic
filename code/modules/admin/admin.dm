@@ -93,7 +93,7 @@ var/global/floorIsLava = 0
 	if (M.client)
 		if(!isnewplayer(M))
 			body += "<br><br>"
-			body += "<b>Transformation:</b>"
+			body += "<b>Transformations:</b>"
 			body += "<br>"
 
 			//Monkey
@@ -115,15 +115,15 @@ var/global/floorIsLava = 0
 				body += {"<A href='?src=\ref[src];makeai=\ref[M]'>Make AI</A> |
 					<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> |
 					<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> |
-					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A>
+					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A> |
 					<A href='?src=\ref[src];makeblob=\ref[M]'>Make Blob</A> |
 				"}
 
 			//Simple Animals
 			if(isanimal(M))
-				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Re-Animalize</A> | "
+				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Re-Animalize</A> "
 			else
-				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> | "
+				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> "
 
 			// DNA2 - Admin Hax
 			if(M.dna && iscarbon(M))
@@ -145,7 +145,7 @@ var/global/floorIsLava = 0
 				body += "</tr></table>"
 
 			body += {"<br><br>
-				<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
+				<b>Rudimentary transformations:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
 				<A href='?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> |
 				\[ Alien: <A href='?src=\ref[src];simplemake=drone;mob=\ref[M]'>Drone</A>,
 				<A href='?src=\ref[src];simplemake=hunter;mob=\ref[M]'>Hunter</A>,
@@ -153,7 +153,7 @@ var/global/floorIsLava = 0
 				<A href='?src=\ref[src];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>,
 				<A href='?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A> \]
 				<A href='?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A>
-				\[ slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>,
+				\[ Slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>,
 				<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A> \]
 				<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> |
 				<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> |
