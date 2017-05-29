@@ -5,11 +5,14 @@
  *		Bike Horns
  */
 
-/obj/item/weapon/proc/slip_on_me(mob/living/carbon/victim)
+// return 0 if not slipped, 1 if mob slipped, 2 if human slipped
+/obj/item/proc/slip_on_me(mob/living/carbon/victim)
+	var/s = 1
 	if(ishuman(victim))
+		s = 2
 		var/mob/living/carbon/human/human_victim = victim
 		if(isobj(human_victim.shoes) && (human_victim.shoes.flags & NOSLIP))
-			return
+			return 0
 
 	victim.stop_pulling()
 	to_chat(victim, "<span class='notice'>You slipped on the [src]!</span>")
@@ -17,6 +20,7 @@
 	victim.Stun(4)
 	victim.Weaken(2)
 	Move(get_step(get_turf(src), pick(cardinal)))
+	return s
 
 /*
  * Banana Peals
