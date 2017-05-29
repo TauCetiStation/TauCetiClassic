@@ -54,7 +54,7 @@ var/global/floorIsLava = 0
 		<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> -
 		<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
-		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
+		<a href='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</a>\] </b><br>
 		<b>Mob type</b> = [M.type]<br><br>
 		<b>GeoIP:</b> <A href='?src=\ref[src];geoip=\ref[M]'>Get</A> |
 		<b>List of CIDs:</b> <A href='?src=\ref[src];cid_list=\ref[M]'>Get</A> (<A href='?src=\ref[src];cid_ignore=\ref[M]'>Ignore Warning</A>)<br>
