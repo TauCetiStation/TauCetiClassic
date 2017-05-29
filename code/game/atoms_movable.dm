@@ -21,6 +21,8 @@
 
 	var/list/client_mobs_in_contents
 
+	glide_size = 8
+
 /atom/movable/New()
 	. = ..()
 
