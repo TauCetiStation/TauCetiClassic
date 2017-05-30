@@ -1145,6 +1145,7 @@
 #include "code\modules\jungle\jungle_turfs.dm"
 #include "code\modules\jungle\misc_helpers.dm"
 #include "code\modules\l10n\procs_text.dm"
+#include "code\modules\l10n\utf8.dm"
 #include "code\modules\library\lib_items.dm"
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\lib_readme.dm"
