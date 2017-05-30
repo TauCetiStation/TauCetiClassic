@@ -20,6 +20,7 @@
 	var/inertia_move_delay = 5
 
 	var/list/client_mobs_in_contents
+	appearance_flags = TILE_BOUND
 
 /atom/movable/New()
 	. = ..()
