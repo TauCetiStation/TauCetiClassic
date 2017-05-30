@@ -1,3 +1,6 @@
+#define SEARCH_FOR_DISK 0
+#define SEARCH_FOR_OBJECT 1
+
 /obj/item/weapon/pinpointer
 	name = "pinpointer"
 	icon_state = "pinoff"
@@ -40,7 +43,7 @@
 	if(target_turf.z != self_turf.z)
 		icon_state = "pinonalert"
 		return
-	switch(get_dist(src, target))
+	switch(get_dist(target_turf, self_turf))
 		if(0)
 			icon_state = "pinondirect"
 		if(1 to 8)
@@ -58,6 +61,7 @@
 
 /obj/item/weapon/pinpointer/Destroy()
 	active = 0
+	target = null
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -78,9 +82,9 @@
 	switch(alert("Please select the mode you want to put the pinpointer in.", "Pinpointer Mode Select", "Location", "Disk Recovery", "Other Signature"))
 
 		if("Disk Recovery")
-			mode = 0
+			mode = SEARCH_FOR_DISK
 		if("Location")
-			mode = 1
+			mode = SEARCH_FOR_OBJECT
 			var/locationx = input(usr, "Please input the x coordinate to search for.", "Location?" , "") as num
 			if(!locationx || !(usr in view(1, src)))
 				return
@@ -96,7 +100,7 @@
 				to_chat(usr, "No area located at [locationx],[locationy]")
 
 		if("Other Signature")
-			mode = 1
+			mode = SEARCH_FOR_OBJECT
 			switch(alert("Search for item signature or DNA fragment?" , "Signature Mode Select" , "" , "Item" , "DNA"))
 				if("Item")
 					var/datum/objective/steal/itemlist
@@ -122,15 +126,11 @@
 
 	return attack_self(usr)
 
-///////////////////////
-//nuke op pinpointers//
-///////////////////////
-
 /obj/item/weapon/pinpointer/nukeop
 
 /obj/item/weapon/pinpointer/nukeop/attack_self(mob/user)
 	..()
-	if(!mode)
+	if(SEARCH_FOR_OBJECT)
 		to_chat(user, "<span class='notice'>Authentication Disk Locator active.</span>")
 	else
 		to_chat(user, "<span class='notice'>Shuttle Locator active.</span>")
@@ -138,7 +138,7 @@
 /obj/item/weapon/pinpointer/nukeop/process()
 	..()
 	if(bomb_set)
-		mode = 1
+		mode = SEARCH_FOR_OBJECT
 		if(!istype(target, /obj/machinery/computer/syndicate_station))
 			target = locate(/obj/machinery/computer/syndicate_station)
 			if(!target)
@@ -147,8 +147,11 @@
 			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)	//Plays a beep
 			visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
 	else
-		mode = 0
+		mode = SEARCH_FOR_DISK
 		if(istype(target, /obj/machinery/computer/syndicate_station))
 			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 			visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
 			target = null
+
+#undef SEARCH_FOR_DISK
+#undef SEARCH_FOR_OBJECT
