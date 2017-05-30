@@ -76,18 +76,15 @@
 			if("Emergency Physician")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/fr_jacket(H), slot_wear_suit)
-				access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels)
 
 			if("Surgeon")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/blue(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/blue(H), slot_head)
-				access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels)
 
 			if("Medical Doctor")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
-				access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels)
 
 			if("Nurse")
 				if(H.gender == FEMALE)
@@ -98,7 +95,6 @@
 					H.equip_to_slot_or_del(new /obj/item/clothing/head/nursehat(H), slot_head)
 				else
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/purple(H), slot_w_uniform)
-				access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels)
 
 	else
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
