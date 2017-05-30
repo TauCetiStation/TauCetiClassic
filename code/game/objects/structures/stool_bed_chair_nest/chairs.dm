@@ -159,22 +159,28 @@
 	set name = "Rotate Chair"
 	set category = "Object"
 	set src in oview(1)
-
-	if(config.ghost_interaction)
-		src.dir = turn(src.dir, 90)
-		handle_rotation()
-		return
+	
+	if(!istype(src, /obj/structure/stool/bed/chair/schair/wagon))
+		if(config.ghost_interaction)
+			src.dir = turn(src.dir, 90)
+			handle_rotation()
+			return
+		else
+			if(ismouse(usr))
+				return
+			if(!usr || !isturf(usr.loc))
+				return
+			if(usr.incapacitated())
+				return
+			src.dir = turn(src.dir, 90)
+			handle_rotation()
+			return
 	else
-		if(ismouse(usr))
+		if(istype(src, /obj/structure/stool/bed/chair/schair/wagon))
+			usr <<"It's useless"
 			return
-		if(!usr || !isturf(usr.loc))
-			return
-		if(usr.incapacitated())
-			return
-
-		src.dir = turn(src.dir, 90)
-		handle_rotation()
 		return
+	return
 
 /obj/structure/stool/bed/chair/proc/can_flip(mob/living/carbon/human/user)
 	if(!user || !isturf(user.loc) || user.incapacitated() || user.lying || user.a_intent != "hurt"|| !can_flipped)
