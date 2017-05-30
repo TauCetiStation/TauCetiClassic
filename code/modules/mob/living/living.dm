@@ -931,7 +931,7 @@
 	return 1
 
 /mob/living/proc/slip(slipped_on, stun_duration=4, weaken_duration=2)
-	return 0
+	return FALSE
 
 //-TG Port for smooth standing/lying animations
 /mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)

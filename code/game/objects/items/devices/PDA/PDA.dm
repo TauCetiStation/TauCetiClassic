@@ -1314,10 +1314,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		src.id.loc = get_turf(src.loc)
 	return ..()
 
-/obj/item/device/pda/clown/Crossed(mob/AM) //Clown PDA is slippery.
-	if(iscarbon(AM))
-		var/mob/living/carbon/C = AM
-		if (C.slip("the PDA", 4) == 2 && src.cartridge.charges < 5)
+/obj/item/device/pda/clown/Crossed(mob/living/carbon/C) //Clown PDA is slippery.
+	if(istype(C))
+		if (C.slip("the PDA", 4, 2) && ishuman(C) && src.cartridge.charges < 5)
 			cartridge.charges++
 
 /obj/item/device/pda/proc/available_pdas()

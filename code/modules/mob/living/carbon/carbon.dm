@@ -494,7 +494,7 @@
 
 /mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
 	if(buckled || sleeping || weakened || paralysis || stunned || resting || crawling)
-		return 0
+		return FALSE
 	stop_pulling()
 	to_chat(src, "<span class='warning'>You slipped on [slipped_on]!</span>")
 	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
@@ -502,7 +502,7 @@
 		Stun(stun_duration)
 	if(weaken_duration > 0)
 		Weaken(weaken_duration)
-	return 1
+	return TRUE
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()

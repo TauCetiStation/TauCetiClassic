@@ -782,4 +782,4 @@
 	else return 200
 
 /mob/living/carbon/slime/slip()
-	return 0
+	return FALSE

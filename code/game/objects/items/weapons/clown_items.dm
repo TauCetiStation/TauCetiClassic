@@ -11,7 +11,7 @@
 /obj/item/weapon/bananapeel/Crossed(mob/AM)
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
-		C.slip("the [src]", 4)
+		C.slip("the [src]", 4, 2)
 
 /*
  * Soap
@@ -19,7 +19,7 @@
 /obj/item/weapon/soap/Crossed(mob/AM) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
-		C.slip("the [src]", 4)
+		C.slip("the [src]", 4, 2)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
