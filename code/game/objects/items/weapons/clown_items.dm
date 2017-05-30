@@ -8,17 +8,15 @@
 /*
  * Banana Peals
  */
-/obj/item/weapon/bananapeel/Crossed(mob/AM)
-	if(iscarbon(AM))
-		var/mob/living/carbon/C = AM
+/obj/item/weapon/bananapeel/Crossed(mob/living/carbon/C)
+	if(istype(C))
 		C.slip("the [src]", 4, 2)
 
 /*
  * Soap
  */
-/obj/item/weapon/soap/Crossed(mob/AM) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
-	if(iscarbon(AM))
-		var/mob/living/carbon/C = AM
+/obj/item/weapon/soap/Crossed(mob/living/carbon/C) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
+	if(istype(C))
 		C.slip("the [src]", 4, 2)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
