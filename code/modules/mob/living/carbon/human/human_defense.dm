@@ -239,6 +239,7 @@
 			IO.emp_act(severity)
 	..()
 
+
 /mob/living/carbon/human/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(!I || !user)	return 0
 
