@@ -201,3 +201,6 @@
 //Wet floor states/severity
 #define WATER_FLOOR 1
 #define LUBE_FLOOR  2
+
+// (Bay12 = -2), but we don't have that projectile code, so...
+#define PROJECTILE_FORCE_MISS -1

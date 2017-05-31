@@ -294,16 +294,24 @@
 
 
 /obj/item/weapon/grab/attack(mob/M, mob/living/user)
+	if(QDELETED(src))
+		return
+
 	if(!affecting)
 		return
 
 	if(world.time < (last_action + 20))
 		return
 
+	if(!M.Adjacent(user))
+		qdel(src)
+		return
+
+	last_action = world.time
+
 	if(M == affecting)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			last_action = world.time
 			var/hit_zone = assailant.zone_sel.selecting
 			flick(hud.icon_state, hud)
 			switch(assailant.a_intent)
@@ -311,9 +319,11 @@
 					if(force_down)
 						to_chat(assailant, "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>")
 						force_down = 0
+						return
+					if(state >= GRAB_AGGRESSIVE)
+						H.apply_pressure(assailant, hit_zone)
 					else
 						inspect_organ(affecting, assailant, hit_zone)
-						return
 				if("grab")
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")

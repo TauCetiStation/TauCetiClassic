@@ -119,6 +119,7 @@
 	name = get_visible_name()
 
 	handle_regular_hud_updates()
+	handle_bleeding() // bleed when dead? why not.
 
 	pulse = handle_pulse()
 

@@ -313,11 +313,10 @@
 						var/bled = ""
 						var/robot = ""
 						var/splint = ""
-						var/internal_bleeding = ""
+						var/arterial_bleeding = ""
 						var/lung_ruptured = ""
-						for(var/datum/wound/W in BP.wounds) if(W.internal)
-							internal_bleeding = "<br>Internal bleeding"
-							break
+						if(BP.status & ORGAN_ARTERY_CUT)
+							arterial_bleeding = "<br>Arterial bleeding"
 						if(istype(BP, /obj/item/organ/external/chest) && occupant.is_lung_ruptured())
 							lung_ruptured = "Lung ruptured:"
 						if(BP.status & ORGAN_SPLINTED)
@@ -358,8 +357,8 @@
 						if(!AN && !open && !infected & !imp)
 							AN = "None:"
 						if(!(BP.status & ORGAN_DESTROYED))
-							dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
-							storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
+							dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured]</td>"
+							storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured]</td>"
 						else
 							dat += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
 							storedinfo += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"

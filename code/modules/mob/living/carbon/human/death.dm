@@ -12,12 +12,10 @@
 	animation.master = src
 
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(istype(BP, /obj/item/organ/external/chest))
-			continue
 		// Only make the limb drop if it's not too damaged
 		if(prob(100 - BP.get_damage()))
 			// Override the current limb status and don't cause an explosion
-			BP.droplimb(1, 1)
+			BP.droplimb(TRUE, null, DROPLIMB_EDGE)
 
 	flick("gibbed-h", animation)
 	if(species)

@@ -112,6 +112,15 @@
 		if(!ai_in_use && !is_in_use)
 			in_use = 0
 
+/obj/proc/damage_flags()
+	. = 0
+	if(has_edge(src))
+		. |= DAM_EDGE
+	if(is_sharp(src))
+		. |= DAM_SHARP
+		if(damtype == BURN)
+			. |= DAM_LASER
+
 /obj/proc/interact(mob/user)
 	return
 

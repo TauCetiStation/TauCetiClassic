@@ -655,6 +655,13 @@
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
 	return null
 
+/mob/living/carbon/getTrail()
+	return "trails_1"
+
+/mob/living/carbon/human/getTrail()
+	if(!species.flags[NO_BLOOD] && round(vessel.get_reagent_amount("blood")) > 0)
+		return ..()
+
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"

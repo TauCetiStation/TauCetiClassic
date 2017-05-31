@@ -617,9 +617,6 @@
 	else
 		return initial(pixel_x)
 
-/mob/living/carbon/getTrail()
-	return "trails_1"
-
 /mob/living/carbon/proc/bloody_hands(mob/living/source, amount = 2)
 	return
 

@@ -120,61 +120,214 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			else if(nutrition >= 200)
 				nutrition -= 3
 
-		//Bleeding out
-		var/blood_max = 0
-		for(var/obj/item/organ/external/BP in bodyparts)
-			if(!(BP.status & ORGAN_BLEEDING) || (BP.status & ORGAN_ROBOT))
-				continue
+/mob/living/carbon/var/tmp/next_blood_squirt = 0 // until this moved to heart or not...
+/mob/living/carbon/human/proc/handle_bleeding()
+	if(species && species.flags[NO_BLOOD])
+		return
+
+	if(bodytemperature < 170 || in_stasis) // this should be refactored into mob statuses or flags.
+		return
+
+	var/blood_volume = round(vessel.get_reagent_amount("blood"))
+	if(blood_volume <= 0)
+		return
+
+	//Bleeding out
+	var/blood_max = 0
+	var/list/do_spray = list()
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.status & ORGAN_ROBOT)
+			continue
+
+		var/open_wound
+		if(BP.status & ORGAN_BLEEDING)
+			if(BP.open)
+				blood_max += 2 // Yer stomach is cut open
+
 			for(var/datum/wound/W in BP.wounds)
+				if(!open_wound && (W.damage_type == CUT || W.damage_type == PIERCE) && W.damage && !W.is_treated())
+					open_wound = TRUE
+
 				if(W.bleeding())
-					blood_max += W.damage / 4
-			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
-				blood_max += 20 //Yer missing a fucking limb.
-			if (BP.open)
-				blood_max += 2  //Yer stomach is cut open
+					if(BP.applied_pressure)
+						if(ishuman(BP.applied_pressure))
+							var/mob/living/carbon/human/H = BP.applied_pressure
+							H.bloody_hands(src, 0)
+						//somehow you can apply pressure to every wound on the organ at the same time
+						//you're basically forced to do nothing at all, so let's make it pretty effective
+						var/min_eff_damage = max(0, W.damage - 10) / 6 //still want a little bit to drip out, for effect
+						blood_max += max(min_eff_damage, W.damage - 30) / 40
+					else
+						blood_max += W.damage / 40
+
+		if(BP.status & ORGAN_ARTERY_CUT)
+			var/bleed_amount = Floor((vessel.total_volume / (BP.applied_pressure ? 400 : 250)) * BP.arterial_bleed_severity)
+			if(bleed_amount)
+				if(open_wound)
+					blood_max += bleed_amount
+					do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
+				else
+					vessel.remove_reagent("blood", bleed_amount)
+
+	if(blood_max == 0) // so... there is no blood loss, lets stop right here.
+		return
+
+	switch(pulse)
+		if(PULSE_NONE)
+			blood_max *= 0.2 // simulates passive blood loss.
+		if(PULSE_SLOW)
+			blood_max *= 0.8
+		if(PULSE_FAST)
+			blood_max *= 1.25
+		if(PULSE_2FAST)
+			blood_max *= 1.5
+		if(PULSE_THREADY)
+			blood_max *= 1.8
+
+	if(reagents.has_reagent("inaprovaline"))
+		blood_max *= 0.8
+
+	if(world.time >= next_blood_squirt && isturf(loc) && do_spray.len) // It becomes very spammy otherwise. Arterial bleeding will still happen outside of this block, just not the squirt effect.
+		if(prob(50)) // added 50 prob for message and halved delay between squit effects (difference between us and Bay12), lets see how this will be on live server.
+			visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
+		next_blood_squirt = world.time + 50
+		var/turf/sprayloc = get_turf(src)
+		blood_max -= drip(ceil(blood_max / 3), sprayloc)
+		if(blood_max > 0)
+			blood_max -= blood_squirt(blood_max, sprayloc)
+			if(blood_max > 0)
+				drip(blood_max, get_turf(src))
+	else
 		drip(blood_max)
 
 //Makes a blood drop, leaking certain amount of blood from the mob
-/mob/living/carbon/human/proc/drip(amt)
+/mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
+	if(remove_blood(amt))
+		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, s_blood_color = species.blood_color)
+		return amt
+	return 0
 
-	if(!isturf(loc))	//No drips, if we are in closet, or disposal pipe or anywhere else, but not on the floor
+/proc/blood_splatter(target, datum/reagent/blood/source, large, spray_dir, s_blood_color = "#C80000")
+	var/obj/effect/decal/cleanable/blood/B
+	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
+	var/turf/T = get_turf(target)
+
+	if(istype(source, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = source
+		source = M.get_blood(M.vessel)
+
+	// Are we dripping or splattering?
+	var/list/drips = list()
+	// Only a certain number of drips (or one large splatter) can be on a given turf.
+	for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
+		drips |= drop.drips
+		qdel(drop)
+	if(!large && drips.len < 3)
+		decal_type = /obj/effect/decal/cleanable/blood/drip
+
+	// Find a blood decal or create a new one.
+	B = locate(decal_type) in T
+	if(!B)
+		B = new decal_type(T)
+
+	var/obj/effect/decal/cleanable/blood/drip/drop = B
+	if(istype(drop) && drips && drips.len && !large)
+		drop.overlays |= drips
+		drop.drips |= drips
+
+	// If there's no data to copy, call it quits here.
+	if(!source)
+		return B
+
+	// Update appearance.
+	B.basecolor = s_blood_color // source.data["blood_colour"] <- leaving this pointer, could be important for later.
+	B.update_icon()
+	if(spray_dir)
+		B.icon_state = "squirt"
+		B.dir = spray_dir
+
+	// Update blood information.
+	if(source.data["blood_DNA"])
+		B.blood_DNA = list()
+		if(source.data["blood_type"])
+			B.blood_DNA[source.data["blood_DNA"]] = source.data["blood_type"]
+		else
+			B.blood_DNA[source.data["blood_DNA"]] = "O+"
+
+	// Update virus information.
+	if(source.data["virus2"])
+		B.virus2 = virus_copylist(source.data["virus2"])
+
+	//B.fluorescent = 0
+	B.invisibility = 0
+	return B
+
+#define BLOOD_SPRAY_DISTANCE 2
+/mob/living/carbon/human/proc/blood_squirt(amt, turf/sprayloc)
+	set waitfor = FALSE
+
+	if(amt <= 0 || !istype(sprayloc))
 		return
 
-	if(istype(loc, /turf/space))	//No drips in space
-		return
+	var/spraydir = pick(alldirs)
+	amt = ceil(amt / BLOOD_SPRAY_DISTANCE)
+	var/bled = 0
 
-	if(species && species.flags[NO_BLOOD]) //TODO: Make drips come from the reagents instead.
-		return
+	var/turf/old_sprayloc = sprayloc
+	for(var/i = 1 to BLOOD_SPRAY_DISTANCE)
+		sprayloc = get_step(sprayloc, spraydir)
+		if(!istype(sprayloc) || sprayloc.density)
+			break
+		var/hit_mob
+		var/CantPass
+		for(var/thing in sprayloc)
+			var/atom/A = thing
+			if(!A.simulated)
+				continue
 
+			if(ishuman(A))
+				var/mob/living/carbon/human/H = A
+				if(!H.lying)
+					H.bloody_body(src)
+					H.bloody_hands(src)
+					var/blinding = FALSE
+					if(ran_zone() == BP_HEAD)
+						blinding = TRUE
+						for(var/obj/item/I in list(H.head, H.glasses, H.wear_mask))
+							if(I && (I.body_parts_covered & EYES))
+								blinding = FALSE
+								break
+					if(blinding)
+						H.eye_blurry = max(H.eye_blurry, 10)
+						H.eye_blind = max(H.eye_blind, 5)
+						to_chat(H, "<span class='danger'>You are blinded by a spray of blood!</span>")
+					else
+						to_chat(H, "<span class='danger'>You are hit by a spray of blood!</span>")
+					hit_mob = TRUE
+
+			if(hit_mob || !A.CanPass(src, sprayloc))
+				CantPass = TRUE // this is mostly for DOORS, because Adjacent() test thinks they are passable, which is actually true for click purpose... ~ZVe (I really HATE pass checks in ss13 or missing something...)
+				break
+
+		if(CantPass || !old_sprayloc.Adjacent(sprayloc, src)) // so we don't spray blood thru windows or something similar, because CanPass() above fails with that task and i don't know why.
+			drip(amt, old_sprayloc) // current realization removes old one which looks awful, so lets drop normal drips instead (that doesn't fully fix this issue, but sometimes looks right).
+			sprayloc = old_sprayloc // pass check failed, need to reset current spray loc to a previous state and try again (because we want to spray all blood that for() is going to squirt anyway).
+		else
+			drip(amt, sprayloc, spraydir)
+		bled += amt
+		if(hit_mob) // came from bay12 and i'l leave that "as is" for now. (this is actually makes us loose less blood than we should because of earlier break that could happen)
+			break
+		old_sprayloc = sprayloc // this is on purpose, we don't care about pass check and its result, just need to save our previous location, before sprayloc gets new ref with get_step().
+		sleep(1)
+	return bled
+#undef BLOOD_SPRAY_DISTANCE
+
+/mob/living/carbon/human/proc/remove_blood(amt)
+	if(!organs_by_name[O_HEART] || species.flags[NO_BLOOD]) //TODO: Make drips come from the reagents instead (Bay12 TODO).
+		return 0
 	if(!amt)
-		return
-
-	var/amm = 0.1 * amt
-	var/turf/T = get_turf(src)
-	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()
-	var/list/iconL = list("1","2","3","4","5")
-
-	vessel.remove_reagent("blood",amm)
-
-	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
-		nums += G
-		iconL.Remove(G.icon_state)
-
-	if (nums.len < 5)
-		var/obj/effect/decal/cleanable/blood/drip/this = new(T)
-		this.icon_state = pick(iconL)
-		this.blood_DNA = list()
-		this.blood_DNA[dna.unique_enzymes] = dna.b_type
-		for (var/ID in virus2)
-			var/datum/disease2/disease/V = virus2[ID]
-			this.virus2[ID] = V.getcopy()
-		if (species) this.basecolor = species.blood_color
-		this.update_icon()
-
-	else
-		for(var/obj/effect/decal/cleanable/blood/drip/G in nums)
-			qdel(G)
-		T.add_blood(src)
+		return 0
+	return vessel.remove_reagent("blood", amt)
 
 /****************************************************
 				BLOOD TRANSFERS
@@ -250,16 +403,20 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		reagents.update_total()
 		return
 
+	if(!injected)
+		return
+
 	var/datum/reagent/blood/our = get_blood(vessel)
 
-	if (!injected || !our)
-		return
+	vessel.add_reagent("blood", amount, injected.data)
+	if(!our)
+		fixblood()
+		our = get_blood(vessel)
+	vessel.update_total()
+
 	if(blood_incompatible(injected.data["blood_type"],our.data["blood_type"]) )
 		reagents.add_reagent("toxin",amount * 0.5)
 		reagents.update_total()
-	else
-		vessel.add_reagent("blood", amount, injected.data)
-		vessel.update_total()
 	..()
 
 //Gets human's own blood.
