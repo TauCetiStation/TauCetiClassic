@@ -54,6 +54,7 @@
 				message = replacetext(message, "—", pick(list("—сс" , "—с")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
+				var/sm = sanitize(message)
 				for(var/mob/living/carbon/human/H in mob_list)
 					if(H.species.name != ABDUCTOR)
 						continue
@@ -61,12 +62,13 @@
 						if(user.team != H.team)
 							continue
 						else
-							to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team))
+							to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
 							//return - technically you can add more aliens to a team
 				for(var/mob/M in dead_mob_list)
-					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team))
+					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
 					if(!isobserver(M) && (M.stat != DEAD))
 						to_chat(M, "<hr><span class='warning'>≈сли вы видите это сообщение, значит что-то сломалось. ѕожалуйста, свяжитесь со мной <b>SpaiR</b> на форуме (http://tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь меня позвать. ѕожалуйста, <u>запомните</u> что произошло в раунде, эта информация очень <b>важна</b>. „тобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>")
+				log_say("Abductor: [name]/[key] : [sm]")
 				return ""
 
 	message = capitalize(trim(message))
