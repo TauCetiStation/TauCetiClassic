@@ -1497,6 +1497,11 @@
 			return 1
 	return 0
 
+/mob/living/carbon/human/slip(slipped_on, stun_duration=4, weaken_duration=2)
+	if(shoes && (shoes.flags & NOSLIP))
+		return FALSE
+	return ..(slipped_on,stun_duration, weaken_duration)
+
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
