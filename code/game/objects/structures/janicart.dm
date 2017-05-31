@@ -18,12 +18,10 @@
 /obj/structure/janitorialcart/New()
 	create_reagents(100)
 
-
 /obj/structure/janitorialcart/examine(mob/user)
 	..()
 	if(src in user)
 		to_chat(user, "[src] contains [reagents.total_volume] unit\s of liquid!")
-
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/storage/bag/trash) && !mybag)
