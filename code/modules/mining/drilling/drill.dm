@@ -143,16 +143,12 @@
 	need_update_field = 0
 
 	var/turf/T = get_turf(src)
-	if(!istype(T)) return
+	if(!istype(T))
+		return
 
-	var/tx = T.x - radius
-	var/ty = T.y - radius
-	var/turf/simulated/mine_turf
-	for(var/iy = 0,iy < (1 + (radius * 2)), iy++)
-		for(var/ix = 0, ix < (1 + (radius * 2)), ix++)
-			mine_turf = locate(tx + ix, ty + iy, T.z)
-			if(mine_turf && mine_turf.has_resources)
-				resource_field += mine_turf
+	for(var/turf/mine_truf in range(T, radius))
+		if(mine_truf.has_resources)
+			resource_field += mine_truf
 
 	if(!resource_field.len)
 		system_error("resources depleted")
@@ -382,7 +378,7 @@
 	if(!BP || !BP.is_usable())
 		return
 
-	H.apply_damage(damage_to_user, BRUTE, BP ,H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
 	to_chat(H, "<span class='danger'> You feel, that [src] try to cut your [BP]!")
 
 	if(BP.status & ORGAN_DESTROYED)
@@ -390,7 +386,7 @@
 
 	BP = BP.parent
 
-	H.apply_damage(damage_to_user, BRUTE, BP ,H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
 	to_chat(H, "<span class='danger'> You feel, that [src] try to cut your [BP]!")
 
 /obj/machinery/mining/drill/update_icon()

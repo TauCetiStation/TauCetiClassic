@@ -28,8 +28,7 @@
 		return
 	to_chat(user, "You begin sweeping \the [src] about, scanning for metal deposits.")
 	working = 1
-	if(!do_after(user, speed, target = user)) return
-	if(!user || !src) return
+	if(!do_after(user, speed, target = src)) return
 
 	find_ore(user)
 
@@ -42,7 +41,7 @@
 	for(var/metal in ore_list)
 		ore_list[metal] = 0
 
-	for(var/turf/T in oview(range,get_turf(user)))
+	for(var/turf/T in range(user, range))
 		if(!T.has_resources)
 			continue
 
