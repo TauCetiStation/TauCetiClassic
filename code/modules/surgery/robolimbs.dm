@@ -141,9 +141,8 @@
 /datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/robot_parts/p = tool
-		if (p.part)
-			if (!(target_zone in p.part))
-				return 0
+		if (p.part != target_zone)
+			return FALSE
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		return (BP.status & ORGAN_ATTACHABLE)
 
@@ -154,7 +153,7 @@
 
 /datum/surgery_step/limb/attach/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/robot_parts/L = tool
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	var/obj/item/organ/external/BP = L.part
 	user.visible_message("\blue [user] has attached \the [tool] where [target]'s [BP.name] used to be.",	\
 	"\blue You have attached \the [tool] where [target]'s [BP.name] used to be.")
 	BP.germ_level = 0

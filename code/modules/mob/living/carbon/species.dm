@@ -8,13 +8,22 @@
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
 	var/damage_mask = TRUE
-	var/eyes = "eyes"                                  // Icon for eyes.
+	var/eyes = "eyes"                                    // Icon for eyes.
+
+	// Combat vars.
+	var/total_health = 100                               // Point at which the mob will enter crit.
+	var/unarmed                                          // For empty hand harm-intent attack
+	var/unarmed_type = /datum/unarmed_attack
+	var/brute_mod = 1                                    // Physical damage multiplier (0 == immunity).
+	var/burn_mod = 1                                     // Burn damage multiplier.
+	var/oxy_mod = 1                                      // Oxyloss multiplier.
+	var/tox_mod = 1                                      // Toxloss multiplier.
+	var/brain_mod = 1                                    // Brainloss multiplier.
+	var/speed_mod =  0                                   // How fast or slow specific specie.
 
 	var/primitive                // Lesser form, if any (ie. monkey for humans)
 	var/tail                     // Name of tail image in species effects icon file.
 	var/language                 // Default racial language, if any.
-	var/unarmed                  //For empty hand harm-intent attack
-	var/unarmed_type = /datum/unarmed_attack
 	var/secondary_langs = list() // The names of secondary languages that are available to this species.
 	var/attack_verb = "punch"    // Empty hand hurt intent verb.
 	var/punch_damage = 0		 // Extra empty hand attack damage.
@@ -43,10 +52,6 @@
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
-
-	var/brute_mod = null    // Physical damage reduction/malus.
-	var/burn_mod = null     // Burn damage reduction/malus.
-	var/speed_mod = 0		//How fast or slow specific specie.
 
 	var/list/flags = list()       // Various specific features.
 
@@ -84,26 +89,22 @@
 	// Keep in mind that position of organ is important in those lists.
 	// If hand connects to chest, then chest should go first.
 	var/list/has_bodypart = list(
-		 BP_CHEST  = /obj/item/organ/external/chest
-		,BP_GROIN  = /obj/item/organ/external/groin
-		,BP_HEAD   = /obj/item/organ/external/head
-		,BP_L_ARM  = /obj/item/organ/external/l_arm
-		,BP_L_HAND = /obj/item/organ/external/l_hand
-		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_R_HAND = /obj/item/organ/external/r_hand
-		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_L_FOOT = /obj/item/organ/external/l_foot
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
-		,BP_R_FOOT = /obj/item/organ/external/r_foot
+		BP_CHEST = /obj/item/organ/external/chest ,
+		BP_GROIN = /obj/item/organ/external/groin ,
+		BP_HEAD  = /obj/item/organ/external/head  ,
+		BP_L_ARM = /obj/item/organ/external/l_arm ,
+		BP_R_ARM = /obj/item/organ/external/r_arm ,
+		BP_L_LEG = /obj/item/organ/external/l_leg ,
+		BP_R_LEG = /obj/item/organ/external/r_leg
 		)
 
 	var/list/has_organ = list(
-		 O_HEART   = /obj/item/organ/internal/heart
-		,O_BRAIN   = /obj/item/organ/internal/brain
-		,O_EYES    = /obj/item/organ/internal/eyes
-		,O_LUNGS   = /obj/item/organ/internal/lungs
-		,O_LIVER   = /obj/item/organ/internal/liver
-		,O_KIDNEYS = /obj/item/organ/internal/kidneys
+		O_HEART   = /obj/item/organ/internal/heart   ,
+		O_BRAIN   = /obj/item/organ/internal/brain   ,
+		O_EYES    = /obj/item/organ/internal/eyes    ,
+		O_LUNGS   = /obj/item/organ/internal/lungs   ,
+		O_LIVER   = /obj/item/organ/internal/liver   ,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
 /datum/species/New()
@@ -151,6 +152,8 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_HAIR = TRUE
+	,HAS_GENDER_ICON = TRUE
+	,HAS_DISABILITY_FAT = TRUE
 	)
 
 	//If you wanted to add a species-level ability:
@@ -184,6 +187,7 @@
 	,HAS_UNDERWEAR = TRUE
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,HAS_GENDER_ICON = TRUE
 	)
 
 	flesh_color = "#34AF10"
@@ -223,6 +227,7 @@
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_HAIR = TRUE
+	,HAS_GENDER_ICON = TRUE
 	)
 
 	flesh_color = "#AFA59E"
@@ -241,6 +246,7 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,HAS_GENDER_ICON = TRUE
 	)
 
 	eyes = "skrell_eyes"
@@ -252,7 +258,7 @@
 /datum/species/vox
 	name = VOX
 	icobase = 'icons/mob/human_races/r_vox.dmi'
-	deform = 'icons/mob/human_races/r_def_vox.dmi'
+	deform = 'icons/mob/human_races/r_vox.dmi'
 	language = "Vox-pidgin"
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 
@@ -271,6 +277,7 @@
 	flags = list(
 	 NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
+	,UNCAP_VITAL_BP_DMG = TRUE
 	)
 
 	blood_color = "#2299FC"
@@ -326,6 +333,7 @@
 	,NO_BLOOD = TRUE
 	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
+	,UNCAP_VITAL_BP_DMG = TRUE
 	)
 
 	blood_color = "#2299FC"
@@ -345,7 +353,7 @@
 /datum/species/diona
 	name = DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
-	deform = 'icons/mob/human_races/r_def_plant.dmi'
+	deform = 'icons/mob/human_races/r_diona.dmi'
 	language = "Rootspeak"
 	unarmed_type = /datum/unarmed_attack/diona
 	primitive = /mob/living/carbon/monkey/diona
@@ -452,6 +460,7 @@
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,UNCAP_VITAL_BP_DMG = TRUE // without this and blood, players need to attack different parts or rip off head.
 	)
 
 	blood_color = "#BCBCBC"
@@ -515,7 +524,7 @@
 /datum/species/shadowling
 	name = SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
-	deform = 'icons/mob/human_races/r_def_shadowling.dmi'
+	deform = 'icons/mob/human_races/r_shadowling.dmi'
 	language = "Sol Common"
 	unarmed_type = /datum/unarmed_attack/claws
 
@@ -539,6 +548,7 @@
 	,NO_EMBED = TRUE
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,UNCAP_VITAL_BP_DMG = TRUE
 	)
 	burn_mod = 2
 
@@ -547,3 +557,31 @@
 	H.gender = NEUTER
 
 	return ..()
+
+/datum/species/golem
+	name = GOLEM
+
+	icobase = 'icons/mob/human_races/r_golem.dmi'
+	deform = 'icons/mob/human_races/r_golem.dmi'
+
+	brain_mod = 0
+
+	blood_color = "#515573"
+	flesh_color = "#137E8F"
+
+	flags = list(
+		NO_BLOOD = TRUE,
+		NO_BREATHE = TRUE,
+		NO_SCAN = TRUE,
+		NO_PAIN = TRUE,
+		NO_EMBED = TRUE,
+		ENV_IMMUNE = TRUE,
+		RAD_IMMUNE = TRUE,
+		VIRUS_IMMUNE = TRUE,
+		BIOHAZZARD_IMMUNE = TRUE,
+		UNCAP_VITAL_BP_DMG = TRUE
+		)
+
+	has_organ = list(
+		O_BRAIN = /obj/item/organ/internal/brain
+		)

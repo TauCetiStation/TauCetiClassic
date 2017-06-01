@@ -28,6 +28,7 @@
 #define BLOCK_GAS_SMOKE_EFFECT  2048    // Blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
 #define ONESIZEFITSALL          2048
 #define PHORONGUARD             4096    // Does not get contaminated by phoron.
+#define DROPDEL                 8192    // When dropped, it calls qdel on itself
 
 #define	NOREACT  4096    //Reagents dont' react inside this container.
 
@@ -42,6 +43,8 @@
 #define HAS_LIPS           "has_lips"
 #define HAS_UNDERWEAR      "has_underwear"
 #define HAS_TAIL           "has_tail"
+#define HAS_GENDER_ICON    "has_gender_icon"
+#define HAS_DISABILITY_FAT "has_disability_fat"
 #define IS_PLANT           "is_plant"
 #define IS_WHITELISTED     "is_whitelisted"
 #define RAD_ABSORB         "rad_absorb"
@@ -51,6 +54,8 @@
 #define VIRUS_IMMUNE       "virus_immune"
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define HAS_HAIR           "has_hair"
+#define ENV_IMMUNE         "env_immune"          // environment things (pressure, space and so on).
+#define UNCAP_VITAL_BP_DMG "uncap_vital_bp_dmg"  // ignore vital body parts damage cap? helps against heavy resistant species such as golems.
 
 //bitflags for door switches.
 #define OPEN     1

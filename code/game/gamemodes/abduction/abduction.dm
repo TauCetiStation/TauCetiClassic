@@ -111,7 +111,6 @@
 		equip_common(H,team_number)
 		equip_agent(H,team_number)
 		greet_agent(agent,team_number)
-		H.regenerate_icons()
 
 		scientist = scientists[team_number]
 		H = scientist.current
@@ -126,7 +125,6 @@
 		equip_common(H,team_number)
 		equip_scientist(H,team_number)
 		greet_scientist(scientist,team_number)
-		H.regenerate_icons()
 
 	return ..()
 
@@ -161,7 +159,6 @@
 	equip_common(H,team_number)
 	equip_agent(H,team_number)
 	greet_agent(agent,team_number)
-	H.regenerate_icons()
 
 	scientist = scientists[team_number]
 	H = scientist.current
@@ -174,7 +171,6 @@
 	equip_common(H,team_number)
 	equip_scientist(H,team_number)
 	greet_scientist(scientist,team_number)
-	H.regenerate_icons()
 
 
 /datum/game_mode/abduction/proc/greet_agent(datum/mind/abductor,team_number)

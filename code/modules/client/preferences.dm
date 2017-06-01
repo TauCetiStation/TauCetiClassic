@@ -138,6 +138,13 @@ var/const/MAX_SAVE_SLOTS = 10
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender)
 
+/datum/preferences/proc/species_has_flag(specie, flag)
+	var/datum/species/S = all_species[specie]
+	if(!S)
+		return FALSE
+
+	return S.flags[flag]
+
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
@@ -329,14 +336,14 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.disabilities|=TOURETTES
 	if(disabilities & DISABILITY_NERVOUS)
 		character.disabilities|=NERVOUS
-	if(disabilities & DISABILITY_FATNESS)
+	if((disabilities & DISABILITY_FATNESS) && species_has_flag(species, HAS_DISABILITY_FAT))
 		character.mutations += FAT
 		character.nutrition = 1000
 		character.overeatduration = 2000
 
 	// Wheelchair necessary?
-	var/obj/item/organ/external/l_foot = character.bodyparts_by_name[BP_L_FOOT]
-	var/obj/item/organ/external/r_foot = character.bodyparts_by_name[BP_R_FOOT]
+	var/obj/item/organ/external/l_foot = character.bodyparts_by_name[BP_L_LEG]
+	var/obj/item/organ/external/r_foot = character.bodyparts_by_name[BP_R_LEG]
 	if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED)) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
