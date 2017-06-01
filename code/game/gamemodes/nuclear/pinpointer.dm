@@ -1,6 +1,3 @@
-#define SEARCH_FOR_DISK 0
-#define SEARCH_FOR_OBJECT 1
-
 /obj/item/weapon/pinpointer
 	name = "pinpointer"
 	icon_state = "pinoff"
@@ -11,9 +8,9 @@
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
-	var/active = 0
+	var/active = FALSE
 	var/atom/target = null
-	var/mode = 0  // Need here for GREAT OOP style, 0 - searching disk
+	var/mode = SEARCH_FOR_DISK  // Need here for GREAT OOP style, 0 - searching disk
 
 /obj/item/weapon/pinpointer/attack_self(mob/user)
 	if(!active)
@@ -21,9 +18,10 @@
 		to_chat(user, "<span class='notice'>You activate the pinpointer</span>")
 	else
 		icon_state = "pinoff"
-		STOP_PROCESSING(SSobj, src)
 		to_chat(user, "<span class='notice'>You deactivate the pinpointer</span>")
 	active = !active
+
+
 
 /obj/item/weapon/pinpointer/process()
 	if(!active)
@@ -34,24 +32,21 @@
 			icon_state = "pinonnull"
 			return
 	if(target)
-		visualize_distance()
-
-/obj/item/weapon/pinpointer/proc/visualize_distance()
-	dir = get_dir(src, target)
-	var/turf/self_turf = get_turf(src)
-	var/turf/target_turf = get_turf(target)
-	if(target_turf.z != self_turf.z)
-		icon_state = "pinonalert"
-		return
-	switch(get_dist(target_turf, self_turf))
-		if(0)
+		dir = get_dir(src, target)
+		var/turf/self_turf = get_turf(src)
+		var/turf/target_turf = get_turf(target)
+		if(target_turf.z != self_turf.z)
+			icon_state = "pinonalert"
+		else if(target_turf == self_turf)
 			icon_state = "pinondirect"
-		if(1 to 8)
-			icon_state = "pinonclose"
-		if(9 to 16)
-			icon_state = "pinonmedium"
-		if(16 to INFINITY)
-			icon_state = "pinonfar"
+		else
+			switch(get_dist(target_turf, self_turf))
+				if(1 to 8)
+					icon_state = "pinonclose"
+				if(9 to 16)
+					icon_state = "pinonmedium"
+				if(16 to INFINITY)
+					icon_state = "pinonfar"
 
 /obj/item/weapon/pinpointer/examine(mob/user)
 	..()
@@ -60,9 +55,9 @@
 			to_chat(user, "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]")
 
 /obj/item/weapon/pinpointer/Destroy()
-	active = 0
-	target = null
+	active = FALSE
 	STOP_PROCESSING(SSobj, src)
+	target = null
 	return ..()
 
 /obj/item/weapon/pinpointer/advpinpointer
@@ -74,7 +69,7 @@
 	set name = "Toggle Pinpointer Mode"
 	set src in view(1)
 
-	active = 0
+	active = FALSE
 	STOP_PROCESSING(SSobj, src)
 	icon_state = "pinoff"
 	target = null
@@ -136,7 +131,6 @@
 		to_chat(user, "<span class='notice'>Shuttle Locator active.</span>")
 
 /obj/item/weapon/pinpointer/nukeop/process()
-	..()
 	if(bomb_set)
 		mode = SEARCH_FOR_OBJECT
 		if(!istype(target, /obj/machinery/computer/syndicate_station))
@@ -152,6 +146,7 @@
 			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 			visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
 			target = null
+	return ..()
 
 #undef SEARCH_FOR_DISK
 #undef SEARCH_FOR_OBJECT
