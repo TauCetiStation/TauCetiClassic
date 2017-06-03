@@ -9,8 +9,8 @@
 		magiclist = list(/obj/effect/proc_holder/spell/targeted/area_teleport/teleport,/obj/effect/proc_holder/spell/targeted/barnyardcurse,/obj/effect/proc_holder/spell/targeted/charge,
 	/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,/obj/effect/proc_holder/spell/targeted/emplosion/disable_tech,/obj/effect/proc_holder/spell/targeted/ethereal_jaunt,
 	/obj/effect/proc_holder/spell/in_hand/fireball,/obj/effect/proc_holder/spell/in_hand/tesla,/obj/effect/proc_holder/spell/in_hand/arcane_barrage,
-	/obj/effect/proc_holder/spell/aoe_turf/knock,/obj/effect/proc_holder/spell/targeted/mind_transfer,	/obj/effect/proc_holder/spell/aoe_turf/repulse,
-	/obj/effect/proc_holder/spell/targeted/spacetime_dist,/obj/effect/proc_holder/spell/targeted/summonitem,	/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop,
+	/obj/effect/proc_holder/spell/aoe_turf/knock,/obj/effect/proc_holder/spell/targeted/mind_transfer, /obj/effect/proc_holder/spell/aoe_turf/repulse,
+	/obj/effect/proc_holder/spell/targeted/spacetime_dist,/obj/effect/proc_holder/spell/targeted/summonitem, /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop,
 	/obj/effect/proc_holder/spell/targeted/projectile/magic_missile,/obj/effect/proc_holder/spell/targeted/genetic/mutate,/obj/effect/proc_holder/spell/targeted/turf_teleport/blink,
 	/obj/effect/proc_holder/spell/targeted/forcewall,/obj/effect/proc_holder/spell/targeted/trigger/blind,/obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps)
 	if(user) //in this case either someone holding a spellbook or a badmin

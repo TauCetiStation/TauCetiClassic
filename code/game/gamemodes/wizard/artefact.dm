@@ -50,7 +50,7 @@
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
 		return
-	if(istype(M.species,/datum/species/skeleton))
+	if(istype(M.species, /datum/species/skeleton))
 		to_chat(user, "<span class='warning'>This body has been already dried!</span>")
 		return
 

@@ -16,7 +16,7 @@
 	if(!H.miming)
 		to_chat(usr, "You still haven't atoned for your speaking transgression. Wait.")
 		return
-	addtimer(CALLBACK(GLOBAL_PROC, /client/proc/return_mimewall,H),300)
+	addtimer(CALLBACK(GLOBAL_PROC, /client/proc/return_mimewall, H), 300)
 	H.visible_message("<span class='notice'>[H] looks as if a wall is in front of them.</span>", "You form a wall in front of yourself.")
 	H.verbs -= /client/proc/mimewall
 	H.mind.special_verbs  -= /client/proc/mimewall

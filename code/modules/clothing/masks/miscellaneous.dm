@@ -95,7 +95,7 @@
 
 /obj/item/clothing/mask/pig/speechModification(message)
 	if(!canremove)
-		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
+		message = pick("Oink!", "Squeeeeeeee!", "Oink Oink!")
 	return message
 
 /obj/item/clothing/mask/horsehead
@@ -126,7 +126,7 @@
 
 /obj/item/clothing/mask/cowmask/speechModification(message)
 	if(!canremove)
-		message = pick("Moooooooo!","Moo!","Moooo!")
+		message = pick("Moooooooo!", "Moo!", "Moooo!")
 	return message
 
 /obj/item/clothing/mask/bandana
@@ -147,7 +147,7 @@
 
 /obj/item/clothing/mask/chicken/speechModification(message)
 	if(!canremove)
-		message = pick("BKAW!","BUK BUK!","Ba-Gawk!")
+		message = pick("BKAW!", "BUK BUK!", "Ba-Gawk!")
 	return message
 
 /obj/item/clothing/mask/bandana/verb/adjustmask()

@@ -48,5 +48,5 @@
 	playsound(target, mSounds[randM], 100, 1)
 	if(!target.remove_from_mob(target.wear_mask))
 		qdel(target.wear_mask)
-	target.equip_to_slot(magichead, slot_wear_mask)
+	target.equip_to_slot_if_possible(magichead, slot_wear_mask)
 	target.flash_eyes()
