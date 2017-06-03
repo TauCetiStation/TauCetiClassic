@@ -118,10 +118,18 @@ proc/RoundHealth(health)
 			return "health-100"
 	return "0"
 
+//helper for inverting armor blocked values into a multiplier
+#define blocked_mult(blocked) max(1 - (blocked / 100), 0)
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1)
+/proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE)
 	if(!user || !target)
-		return 0
+		return FALSE
+
+	user.busy_with_action = TRUE
+
+	if(check_target_zone)
+		check_target_zone = user.zone_sel.selecting
+
 	var/user_loc = user.loc
 
 	var/target_loc = target.loc
@@ -132,30 +140,37 @@ proc/RoundHealth(health)
 		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = new(user, time, target)
 		else
-			progress = 0
+			progress = FALSE
 
 	var/endtime = world.time+time
 	var/starttime = world.time
-	. = 1
+	. = TRUE
 	while (world.time < endtime)
 		stoplag()
 		if (progress)
 			progbar.update(world.time - starttime)
 		if(!user || !target)
-			. = 0
+			. = FALSE
 			break
 		if(uninterruptible)
 			continue
 		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
-			. = 0
+			. = FALSE
 			break
-	if (progress)
+		if(check_target_zone && user.zone_sel.selecting != check_target_zone)
+			. = FALSE
+			break
+	if(progress)
 		qdel(progbar)
-
+	if(user)
+		user.busy_with_action = FALSE
 
 /proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1)
 	if(!user)
 		return 0
+
+	user.busy_with_action = TRUE
+
 	var/atom/Tloc = null
 	if(target)
 		Tloc = target.loc
@@ -201,5 +216,7 @@ proc/RoundHealth(health)
 			if(user.get_active_hand() != holding)
 				. = 0
 				break
-	if (progress)
+	if(progress)
 		qdel(progbar)
+	if(user)
+		user.busy_with_action = FALSE

@@ -10,9 +10,13 @@
 #define T20C 293.15	// 20degC
 #define TCMB 2.7	// -270.3degC
 
+#define ceil(x) (-round(-(x)))
+
 #define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
 #define CLAMP01(x) (Clamp(x, 0, 1))
 
+// Converts 255 RGB color values to float and returns that as matrix, where color applied into contrast row.
+#define RGB_CONTRAST(r, g, b) list(1,0,0, 0,1,0, 0,0,1, r/255, g/255, b/255)
 
 //"fancy" math for calculating time in ms from tick_usage percentage and the length of ticks
 //percent_of_tick_used * (ticklag * 100(to convert to ms)) / 100(percent ratio)

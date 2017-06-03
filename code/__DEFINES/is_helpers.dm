@@ -68,9 +68,11 @@
 
 // ELSE
 
-#define isbodypart(A) (istype(A, /datum/organ/external))
+#define isbodypart(A) (istype(A, /obj/item/organ/external))
 
 #define isbot(A) (istype(A, /obj/machinery/bot))
+
+#define islist(A) (istype(A, /list))
 
 // GOONCHAT PORT
 

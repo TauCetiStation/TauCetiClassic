@@ -1,23 +1,38 @@
 //Damage things
 //Way to waste perfectly good damagetype names (BRUTE) on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc...
-#define CUT 		"cut"
-#define BRUISE		"bruise"
-#define BRUTE		"brute"
-#define BURN		"fire"
-#define TOX			"tox"
-#define OXY			"oxy"
-#define CLONE		"clone"
-#define HALLOSS		"halloss"
+#define BRUTE     "brute"
+#define BURN      "fire"
+#define TOX       "tox"
+#define OXY       "oxy"
+#define CLONE     "clone"
+#define HALLOSS   "halloss"
 
-#define STUN		"stun"
-#define WEAKEN		"weaken"
-#define PARALYZE	"paralize"
-#define IRRADIATE	"irradiate"
-#define AGONY		"agony"
-#define STUTTER		"stutter"
-#define SLUR 		"slur"
-#define EYE_BLUR	"eye_blur"
-#define DROWSY		"drowsy"
+#define CUT       "cut"
+#define BRUISE    "bruise"
+#define PIERCE    "pierce"
+#define LASER     "laser"
+
+#define STUN      "stun"
+#define WEAKEN    "weaken"
+#define PARALYZE  "paralize"
+#define IRRADIATE "irradiate"
+#define AGONY     "agony"
+#define STUTTER   "stutter"
+#define SLUR      "slur"
+#define EYE_BLUR  "eye_blur"
+#define DROWSY    "drowsy"
+
+// Damage flags
+#define DAM_SHARP 1
+#define DAM_EDGE  2
+#define DAM_LASER 4
+
+// These control the amount of blood lost from burns. The loss is calculated so
+// that dealing just enough burn damage to kill the player will cause the given
+// proportion of their max blood volume to be lost
+// (e.g. 0.6 == 60% lost if 200 burn damage is taken).
+#define FLUIDLOSS_WIDE_BURN 0.6 // for burns from heat applied over a wider area, like from fire
+#define FLUIDLOSS_CONC_BURN 0.4 // for concentrated burns, like from lasers
 
 //I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
 #define BRUTELOSS	1

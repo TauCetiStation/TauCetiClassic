@@ -107,9 +107,6 @@
 	var/organ_health_multiplier = 1
 	var/organ_regeneration_multiplier = 1
 
-	var/bones_can_break = 0
-	var/limbs_can_break = 0
-
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
@@ -564,10 +561,6 @@
 					config.organ_health_multiplier = value / 100
 				if("organ_regeneration_multiplier")
 					config.organ_regeneration_multiplier = value / 100
-				if("bones_can_break")
-					config.bones_can_break = value
-				if("limbs_can_break")
-					config.limbs_can_break = value
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 

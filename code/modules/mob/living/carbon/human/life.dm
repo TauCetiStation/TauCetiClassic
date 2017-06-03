@@ -119,6 +119,7 @@
 	name = get_visible_name()
 
 	handle_regular_hud_updates()
+	handle_bleeding() // bleed when dead? why not.
 
 	pulse = handle_pulse()
 
@@ -319,7 +320,7 @@
 				adjustToxLoss(damage)
 				updatehealth()
 				if (bodyparts.len)
-					var/datum/organ/external/BP = pick(bodyparts)
+					var/obj/item/organ/external/BP = pick(bodyparts)
 					if(istype(BP))
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
@@ -1476,7 +1477,7 @@
 				healthdoll.icon_state = "healthdoll_DEAD"
 			else
 				healthdoll.icon_state = "healthdoll_OVERLAY"
-				for(var/datum/organ/external/BP in bodyparts)
+				for(var/obj/item/organ/external/BP in bodyparts)
 					var/damage = BP.burn_dam + BP.brute_dam
 					var/comparison = (BP.max_damage / 5)
 					var/icon_num = 0

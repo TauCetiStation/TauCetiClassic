@@ -203,7 +203,7 @@
 
 	//splints
 	for(var/bodypart in list(BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM))
-		var/datum/organ/external/BP = bodyparts_by_name[bodypart]
+		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart]
 		if(BP && BP.status & ORGAN_SPLINTED)
 			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [BP.name]!</span>\n"
 
@@ -252,12 +252,19 @@
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()
 	var/list/is_bleeding = list()
-	for(var/datum/organ/external/BP in bodyparts)
+	var/applying_pressure = ""
+
+	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP)
 			if(BP.status & ORGAN_DESTROYED)
 				is_destroyed["[BP.name]"] = 1
 				wound_flavor_text["[BP.name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [BP.name].</b></span>\n"
 				continue
+			if(BP.applied_pressure)
+				if(BP.applied_pressure == src)
+					applying_pressure = "<span class='info'>[t_He] is applying pressure to [t_his] [BP.name].</span><br>"
+				else
+					applying_pressure = "<span class='info'>[BP.applied_pressure] is applying pressure to [t_his] [BP.name].</span><br>"
 			if(BP.status & ORGAN_ROBOT)
 				if(!(BP.brute_dam + BP.burn_dam))
 					if(!species.flags[IS_SYNTHETIC])
@@ -284,8 +291,6 @@
 			else if(BP.wounds.len > 0)
 				var/list/wound_descriptors = list()
 				for(var/datum/wound/W in BP.wounds)
-					if(W.internal && !BP.open)
-						continue // can't see internal wounds
 					var/this_wound_desc = W.desc
 					if(W.damage_type == BURN && W.salved) this_wound_desc = "salved [this_wound_desc]"
 					if(W.bleeding()) this_wound_desc = "bleeding [this_wound_desc]"
@@ -451,7 +456,11 @@
 
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
-	msg += "*---------*</span>"
+	msg += "*---------*</span><br>"
+	if(applying_pressure)
+		msg += applying_pressure
+	else if(busy_with_action)
+		msg += "<span class='info'>[t_He] is busy with something!</span><br>"
 	if (pose)
 		if( findtext(pose,".",lentext(pose)) == 0 && findtext(pose,"!",lentext(pose)) == 0 && findtext(pose,"?",lentext(pose)) == 0 )
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.

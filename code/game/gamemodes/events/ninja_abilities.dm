@@ -56,13 +56,13 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 
 	if(!ninjacost(,2))
 		var/mob/living/carbon/human/U = affecting
-		to_chat(U, "\blue There are <B>[s_bombs]</B> smoke bombs remaining.")
 		var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
 		playsound(U.loc, 'sound/effects/bamf.ogg', 50, 2)
 		s_bombs--
 		s_coold = 1
+		to_chat(U, "<span class='info'>There are <B>[s_bombs]</B> smoke bombs remaining.</span>")
 	return
 
 
@@ -171,8 +171,10 @@ This could be a lot better but I'm too tired atm.*/
 				return
 			if (targloc == curloc)
 				return
-			var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(U.loc)
+			var/obj/item/projectile/energy/dart/A = new(curloc)
+			A.starting = get_turf(affecting)
 			A.current = curloc
+			A.original = targloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
 			cell.use(C*10)

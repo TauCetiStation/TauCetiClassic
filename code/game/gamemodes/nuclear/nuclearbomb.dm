@@ -34,8 +34,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/Destroy()
 	QDEL_NULL(wires)
-	if(auth)
-		QDEL_NULL(auth)
+	QDEL_NULL(auth)
 	return ..()
 
 /obj/machinery/nuclearbomb/process()

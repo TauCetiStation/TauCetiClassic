@@ -87,7 +87,12 @@
 			missing_ages = 1
 			continue
 		if(C.player_age < age)
-			msg += "[key_name(C, 1)]: account is [C.player_age] days and [C.player_ingame_age] in-game minutes old.<br>"
+			msg += {"
+				[key_name(C, 1)] [ADMIN_PP(C.mob)]:<br>
+				<b>Days on server:</b> [C.player_age]<br>
+				<b>In-game minutes:</b> [C.player_ingame_age]
+				<hr>
+			"}
 
 	if(missing_ages)
 		to_chat(src, "Some accounts did not have proper ages set in their clients.  This function requires database to be present")
@@ -655,7 +660,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(! (C.stat & (BROKEN|NOPOWER) ) )
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
 			P.name = "'[command_name()] Update.'"
-			P.info = sanitize_alt(copytext(input, 1, MAX_MESSAGE_LEN), list("ï¿½"=LETTER_255))
+			P.info = sanitize_alt(copytext(input, 1, MAX_MESSAGE_LEN), list("ÿ"=LETTER_255))
 			P.update_icon()
 			C.messagetitle.Add("[command_name()] Update")
 			C.messagetext.Add(P.info)
@@ -1084,7 +1089,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/obj/item/weapon/paper/P = new
 	P.name = sent_name
-	P.info = sent_text
+	P.info = checkhtml(html_decode(sent_text))
 
 	if(stamp_type)
 		var/obj/item/weapon/stamp/S = new stamp_type

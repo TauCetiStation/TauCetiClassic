@@ -34,13 +34,14 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/proc/remove_ex_blood() //removes existant blood on the turf
 	if(istype(src, /obj/effect/decal/cleanable/blood/tracks))
 		return // We handle our own drying.
-	if(src.type == /obj/effect/decal/cleanable/blood)
-		if(src.loc && isturf(src.loc))
-			for(var/obj/effect/decal/cleanable/blood/B in src.loc)
-				if(B != src)
-					if (B.blood_DNA)
-						blood_DNA |= B.blood_DNA.Copy()
-					qdel(B)
+
+	if(isturf(loc))
+		for(var/obj/effect/decal/cleanable/blood/B in loc)
+			if(B != src && B.type == type)
+				if (B.blood_DNA)
+					blood_DNA |= B.blood_DNA.Copy()
+				qdel(B)
+
 	drytime = world.time + DRYING_TIME * (amount+1)
 	START_PROCESSING(SSobj, src)
 
@@ -64,8 +65,8 @@ var/global/list/image/splatter_cache=list()
 	var/skip = FALSE
 	if (ishuman(perp))
 		var/mob/living/carbon/human/H = perp
-		var/datum/organ/external/l_foot = H.bodyparts_by_name[BP_L_FOOT]
-		var/datum/organ/external/r_foot = H.bodyparts_by_name[BP_R_FOOT]
+		var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_FOOT]
+		var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_FOOT]
 		if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
 			hasfeet = FALSE
 		if(perp.shoes && !perp.buckled)//Adding blood to shoes
@@ -140,6 +141,11 @@ var/global/list/image/splatter_cache=list()
 	icon_state = "1"
 	random_icon_states = list("1","2","3","4","5")
 	amount = 0
+	var/list/drips = list()
+
+/obj/effect/decal/cleanable/blood/drip/New()
+	..()
+	drips |= icon_state
 
 /obj/effect/decal/cleanable/blood/writing
 	icon_state = "tracks"

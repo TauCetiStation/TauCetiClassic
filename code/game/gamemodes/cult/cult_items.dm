@@ -16,7 +16,7 @@
 	else
 		user.Paralyse(5)
 		to_chat(user, "\red An unexplicable force powerfully repels the sword from [target]!")
-		var/datum/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
+		var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
 		BP.take_damage(rand(force / 2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)

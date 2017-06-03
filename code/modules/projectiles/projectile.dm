@@ -67,6 +67,7 @@
 										//  have to be recreated multiple times
 
 /obj/item/projectile/New()
+	damtype = damage_type // TODO unify these vars properly (Bay12)
 	..()
 	if(light_color)
 		set_light(light_range,light_power,light_color)
@@ -151,9 +152,9 @@
 		return 0
 
 	var/forcedodge = 0 // force the projectile to pass
-	var/mob/M = A
+	var/mob/M = ismob(A) ? A : null
 	bumped = 1
-	if(firer && istype(M))
+	if(firer && M)
 		if(!istype(A, /mob/living))
 			loc = A.loc
 			return 0// nope.avi
@@ -169,83 +170,60 @@
 				miss_modifier += -60
 		if(distance > 1)
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
-		//def_zone = get_zone_with_probabilty(def_zone)
+
 		if(!def_zone)
+			forcedodge = PROJECTILE_FORCE_MISS
+
+	if(!forcedodge)
+		if(M && ishuman(M))
+			M = check_living_shield(A)
+			A = M
+
+		forcedodge = A.bullet_act(src, def_zone) // searches for return value
+
+	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
+		if(M)
 			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")
-			forcedodge = -1
-//	if(istype(src, /obj/item/projectile/beam))
 
-	if(A)
-		if(!forcedodge)
-			if(istype(M))
-				if(ishuman(A))
-					M = check_living_shield(A)
-					A = M
+		if(istype(A, /turf))
+			loc = A
+		else
+			loc = A.loc
+		bumped = FALSE // reset bumped variable!
+		permutated.Add(A)
 
-				if(silenced)
-					to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
-				else
-					visible_message("<span class = 'red'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
-					//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-				if(firer)
-					M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-					firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-					if(!fake)
-						msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
-				else
-					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-					if(!fake)
-						msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
+		return FALSE
 
-			forcedodge = A.bullet_act(src, def_zone) // searches for return value
-		if(forcedodge == -1) // the bullet passes through a dense object!
-			bumped = 0 // reset bumped variable!
-			if(istype(A, /turf))
-				loc = A
-			else
-				loc = A.loc
-			permutated.Add(A)
-			return 0
-		if(istype(A,/turf))
-			for(var/obj/O in A)
-				O.bullet_act(src)
-			for(var/mob/Mob in A)
-				Mob.bullet_act(src, def_zone)
+	else if(M)
+		if(silenced)
+			to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
+		else
+			visible_message("<span class = 'red'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
+			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+		if(firer)
+			M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+			firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+			if(!fake)
+				msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
+		else
+			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+			if(!fake)
+				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
 
-		//stop flying
-		on_impact(A)
 
-		density = 0
-		invisibility = 101
-		qdel(src)
+	if(istype(A,/turf))
+		for(var/obj/O in A)
+			O.bullet_act(src)
+		for(var/mob/Mob in A)
+			Mob.bullet_act(src, def_zone)
+
+	//stop flying
+	on_impact(A)
+
+	density = 0
+	invisibility = 101
+	qdel(src)
 	return 1
-
-//	else
-//		spawn(0)
-//			if(A)
-//						// We get the location before running A.bullet_act, incase the proc deletes A and makes it null
-//				var/turf/new_loc = null
-//				if(istype(A, /turf))
-//					new_loc = A
-//				else
-//					new_loc = A.loc
-//
-//				if (!forcedodge)
-//					forcedodge = A.bullet_act(src, def_zone) // searches for return value
-//				if(forcedodge == -1) // the bullet passes through a dense object!
-//					bumped = 0 // reset bumped variable!
-//					loc = new_loc
-//					permutated.Add(A)
-//					return 0
-//				//stop flying
-//				on_impact(A)
-//
-//				density = 0
-//				invisibility = 101
-//				qdel(src)
-//				return 0
-//		return 1
-
 
 
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

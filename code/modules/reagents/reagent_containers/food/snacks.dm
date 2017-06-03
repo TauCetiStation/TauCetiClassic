@@ -1562,9 +1562,9 @@
 		surprise.transform *= 0.6
 		surprise.add_blood(M)
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
 		BP.fracture()
-		for (var/datum/organ/internal/IO in BP.bodypart_organs)
+		for (var/obj/item/organ/internal/IO in BP.bodypart_organs)
 			IO.take_damage(rand(IO.min_bruised_damage, IO.min_broken_damage + 1))
 
 		if (!BP.hidden && prob(60)) //set it snuggly

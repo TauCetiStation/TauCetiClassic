@@ -5,32 +5,19 @@
  *		Bike Horns
  */
 
-/obj/item/weapon/proc/slip_on_me(mob/living/carbon/victim)
-	if(ishuman(victim))
-		var/mob/living/carbon/human/human_victim = victim
-		if(isobj(human_victim.shoes) && (human_victim.shoes.flags & NOSLIP))
-			return
-
-	victim.stop_pulling()
-	to_chat(victim, "<span class='notice'>You slipped on the [src]!</span>")
-	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
-	victim.Stun(4)
-	victim.Weaken(2)
-	Move(get_step(get_turf(src), pick(cardinal)))
-
 /*
  * Banana Peals
  */
-/obj/item/weapon/bananapeel/Crossed(AM as mob|obj)
-	if(iscarbon(AM))
-		slip_on_me(AM)
+/obj/item/weapon/bananapeel/Crossed(mob/living/carbon/C)
+	if(istype(C))
+		C.slip("the [src]", 4, 2)
 
 /*
  * Soap
  */
-/obj/item/weapon/soap/Crossed(AM as mob|obj) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
-	if(iscarbon(AM))
-		slip_on_me(AM)
+/obj/item/weapon/soap/Crossed(mob/living/carbon/C) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
+	if(istype(C))
+		C.slip("the [src]", 4, 2)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return

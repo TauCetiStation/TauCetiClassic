@@ -1285,7 +1285,7 @@ datum
 				M.eye_blind = max(M.eye_blind - 5, 0)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/datum/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+					var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 					if(istype(IO))
 						if(IO.damage > 0)
 							IO.damage = max(IO.damage - 1, 0)
@@ -1305,7 +1305,7 @@ datum
 					var/mob/living/carbon/human/H = M
 
 					//Peridaxon is hard enough to get, it's probably fair to make this all organs
-					for(var/datum/organ/internal/IO in H.organs)
+					for(var/obj/item/organ/internal/IO in H.organs)
 						if(IO.damage > 0)
 							IO.damage = max(IO.damage - 0.20, 0)
 
@@ -1318,7 +1318,7 @@ datum
 			overdose = 5.1
 			custom_metabolism = 0.07
 			var/heal_time = 0
-			var/datum/organ/external/External
+			var/obj/item/organ/external/External
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1332,10 +1332,7 @@ datum
 					return
 				H.jitteriness = max(0,H.jitteriness - 100)
 				if(!External)
-					for(var/datum/organ/external/BP in H.bodyparts) // find a broken/destroyed limb
-						for(var/datum/wound/W in BP.wounds) // remove internal
-							if(W.internal)
-								BP.wounds -= W
+					for(var/obj/item/organ/external/BP in H.bodyparts) // find a broken/destroyed limb
 						if(BP.status & ORGAN_DESTROYED)
 							if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
 								continue
@@ -2006,7 +2003,7 @@ datum
 					if(!M.unacidable)
 						if(istype(M, /mob/living/carbon/human) && volume >= 10)
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+							var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 							if(BP)
 								BP.take_damage(4 * toxpwr, 2 * toxpwr)
 								if(prob(meltprob)) //Applies disfigurement
@@ -3100,7 +3097,7 @@ datum
 					M.drowsyness = max(M.drowsyness, 30)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/datum/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
+						var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
 						if(istype(IO))
 							IO.take_damage(0.1, 1)
 						H.adjustToxLoss(0.1)
@@ -3358,13 +3355,13 @@ datum
 							M.adjustToxLoss(2)
 						if(prob(5) && ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+							var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 							if(istype(IO))
 								IO.take_damage(5, 0)
 					if(300 to INFINITY)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/datum/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+							var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 							if(istype(IO))
 								IO.take_damage(100, 0)
 
@@ -3906,7 +3903,7 @@ datum
 		if(H.species.name != "Dionae")
 			switch(volume)
 				if(1 to 5)
-					var/datum/organ/external/BP = H.bodyparts_by_name[BP_CHEST] // it was H.get_bodypart(????) with nothing as arg, so its always a chest?
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST] // it was H.get_bodypart(????) with nothing as arg, so its always a chest?
 					for(var/datum/wound/W in BP.wounds)
 						BP.wounds -= W
 						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
@@ -3950,7 +3947,7 @@ datum
 						if(D.stage < 1)
 							D.cure()
 				if(5 to 20)		//Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
-					var/datum/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
 					for(var/datum/wound/W in BP.wounds)
 						BP.wounds -= W
 						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
@@ -4116,7 +4113,7 @@ datum
 				M.adjustBrainLoss(2)
 				if(ishuman(M) && prob(5))
 					var/mob/living/carbon/human/H = M
-					var/datum/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+					var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 					if(istype(IO))
 						IO.take_damage(10, 0)
 	data++

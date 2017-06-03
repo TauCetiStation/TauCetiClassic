@@ -1182,7 +1182,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					var/list/damaged = H.get_damaged_bodyparts(1, 1)
 					user.show_message("\blue Localized Damage, Brute/Burn:",1)
 					if(length(damaged)>0)
-						for(var/datum/organ/external/BP in damaged)
+						for(var/obj/item/organ/external/BP in damaged)
 							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(BP.name),(BP.brute_dam > 0)?"\red [BP.brute_dam]":0,(BP.burn_dam > 0)?"\red [BP.burn_dam]":0),1)
 					else
 						user.show_message("\blue &emsp; Limbs are OK.",1)
@@ -1314,21 +1314,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		src.id.loc = get_turf(src.loc)
 	return ..()
 
-/obj/item/device/pda/clown/Crossed(AM as mob|obj) //Clown PDA is slippery.
-	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if ((istype(M, /mob/living/carbon/human) && ( (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP)) || (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)  ) || M.m_intent == "walk")
-			return
-
-		if ((istype(M, /mob/living/carbon/human) && (M.real_name != src.owner) && (istype(src.cartridge, /obj/item/weapon/cartridge/clown))))
-			if (src.cartridge.charges < 5)
-				src.cartridge.charges++
-
-		M.stop_pulling()
-		to_chat(M, "\blue You slipped on the PDA!")
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(8)
-		M.Weaken(5)
+/obj/item/device/pda/clown/Crossed(mob/living/carbon/C) //Clown PDA is slippery.
+	if(istype(C))
+		if (C.slip("the PDA", 4, 2) && ishuman(C) && src.cartridge.charges < 5)
+			cartridge.charges++
 
 /obj/item/device/pda/proc/available_pdas()
 	var/list/names = list()

@@ -50,8 +50,8 @@
 			H.Weaken(10)
 			H.op_stage.appendix = 2.0
 
-			var/datum/organ/external/BP = H.bodyparts_by_name[BP_GROIN]
-			var/datum/wound/W = new /datum/wound/internal_bleeding(20)
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_GROIN]
+			BP.sever_artery()
+			BP.germ_level = max(INFECTION_LEVEL_TWO, BP.germ_level)
 			H.adjustToxLoss(25)
-			BP.wounds += W
 			src.cure()

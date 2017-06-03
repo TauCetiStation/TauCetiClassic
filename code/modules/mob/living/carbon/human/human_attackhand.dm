@@ -3,7 +3,7 @@
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
-	var/datum/organ/external/BPH = M.bodyparts_by_name[M.hand ? BP_L_HAND : BP_R_HAND]
+	var/obj/item/organ/external/BPH = M.bodyparts_by_name[M.hand ? BP_L_HAND : BP_R_HAND]
 	if(BPH && !BPH.is_usable())
 		to_chat(M, "\red You can't use your [BPH.name].")
 		return
@@ -28,7 +28,7 @@
 					G.cell.use(2500)
 					G.update_icon()
 					var/mob/living/carbon/human/target = src
-					var/datum/organ/external/BP = get_bodypart(M.zone_sel.selecting) // We're checking the outside, buddy!
+					var/obj/item/organ/external/BP = get_bodypart(M.zone_sel.selecting) // We're checking the outside, buddy!
 					var/calc_power
 					if((prob(25) && !istype(G, /obj/item/clothing/gloves/yellow)) && (target != M))
 						visible_message("\red <B>[M] accidentally touched \himself with the stun gloves!</B>")
@@ -60,7 +60,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("\red <B>[M] has attempted to punch [src]!</B>")
 				return 0
-			var/datum/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
+			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
 
 			if(HULK in M.mutations)			damage += 5
@@ -85,28 +85,27 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(health >= config.health_threshold_crit)
+			if(health < config.health_threshold_crit && health > config.health_threshold_dead)
+				if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
+					to_chat(M, "\blue <B>Remove your mask!</B>")
+					return 0
+				if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
+					to_chat(M, "\blue <B>Remove his mask!</B>")
+					return 0
+
+				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
+				O.source = M
+				O.target = src
+				O.s_loc = M.loc
+				O.t_loc = loc
+				O.place = "CPR"
+				requests += O
+				spawn(0)
+					O.process()
+				return 1
+			else if(!(M == src && apply_pressure(M, M.zone_sel.selecting)))
 				help_shake_act(M)
 				return 1
-//			if(M.health < -75)	return 0
-
-			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				to_chat(M, "\blue <B>Remove your mask!</B>")
-				return 0
-			if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-				to_chat(M, "\blue <B>Remove his mask!</B>")
-				return 0
-
-			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
-			O.source = M
-			O.target = src
-			O.s_loc = M.loc
-			O.t_loc = loc
-			O.place = "CPR"
-			requests += O
-			spawn(0)
-				O.process()
-			return 1
 
 		if("grab")
 			if(M == src || anchored || M.lying)
@@ -147,7 +146,7 @@
 				return 0
 
 
-			var/datum/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
+			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
 
 			if(HULK in M.mutations)			damage += 5
@@ -162,7 +161,7 @@
 				apply_effect(2, WEAKEN, armor_block)
 
 			damage += attack.damage
-			apply_damage(damage, BRUTE, BP, armor_block, sharp = attack.sharp, edge = attack.edge)
+			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
 
 
 		if("disarm")
@@ -174,7 +173,7 @@
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/datum/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
+			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 
 			if(istype(r_hand,/obj/item/weapon/gun) || istype(l_hand,/obj/item/weapon/gun))
 				var/obj/item/weapon/gun/W = null
@@ -246,6 +245,49 @@
 			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] attempted to disarm [src]!</B>")
 	return
+
+/*
+	We want to ensure that a mob may only apply pressure to one bodypart of one mob at any given time. Currently this is done mostly implicitly through
+	the behaviour of do_after() and the fact that applying pressure to someone else requires a grab:
+
+	If you are applying pressure to yourself and attempt to grab someone else, you'll change what you are holding in your active hand which will stop do_mob()
+	If you are applying pressure to another and attempt to apply pressure to yourself, you'll have to switch to an empty hand which will also stop do_mob()
+	Changing targeted zones should also stop do_mob(), preventing you from applying pressure to more than one body part at once.
+*/
+/mob/living/carbon/human/proc/apply_pressure(mob/living/user, target_zone)
+	var/obj/item/organ/external/BP = get_bodypart(target_zone)
+	if(!BP || !(BP.status & ORGAN_BLEEDING) || (BP.status & ORGAN_ROBOT))
+		return FALSE
+
+	if(user.is_busy())
+		return FALSE
+
+	if(BP.applied_pressure)
+		var/message = "<span class='warning'>[ismob(BP.applied_pressure)? "Someone" : "\A [BP.applied_pressure]"] is already applying pressure to [user == src? "your [BP.name]" : "[src]'s [BP.name]"].</span>"
+		to_chat(user, message)
+		return FALSE
+
+	if(user == src)
+		user.visible_message("\The [user] starts applying pressure to \his [BP.name]!", "You start applying pressure to your [BP.name]!")
+	else
+		user.visible_message("\The [user] starts applying pressure to [src]'s [BP.name]!", "You start applying pressure to [src]'s [BP.name]!")
+
+	INVOKE_ASYNC(src, .proc/do_apply_pressure, user, target_zone, BP)
+
+	return TRUE
+
+/mob/living/carbon/human/proc/do_apply_pressure(mob/living/user, target_zone, obj/item/organ/external/BP)
+	BP.applied_pressure = user
+
+	//apply pressure as long as they stay still and keep grabbing
+	do_mob(user, src, INFINITY, target_zone, progress = 0)
+
+	BP.applied_pressure = null
+
+	if(user == src)
+		user.visible_message("\The [user] stops applying pressure to \his [BP.name]!", "You stop applying pressure to your [BP.name]!")
+	else
+		user.visible_message("\The [user] stops applying pressure to [src]'s [BP.name]!", "You stop applying pressure to [src]'s [BP.name]!")
 
 /mob/living/carbon/human/proc/afterattack(atom/target, mob/living/user, inrange, params)
 	return

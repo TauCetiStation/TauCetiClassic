@@ -294,16 +294,24 @@
 
 
 /obj/item/weapon/grab/attack(mob/M, mob/living/user)
+	if(QDELETED(src))
+		return
+
 	if(!affecting)
 		return
 
 	if(world.time < (last_action + 20))
 		return
 
+	if(!M.Adjacent(user))
+		qdel(src)
+		return
+
+	last_action = world.time
+
 	if(M == affecting)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			last_action = world.time
 			var/hit_zone = assailant.zone_sel.selecting
 			flick(hud.icon_state, hud)
 			switch(assailant.a_intent)
@@ -311,14 +319,16 @@
 					if(force_down)
 						to_chat(assailant, "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>")
 						force_down = 0
+						return
+					if(state >= GRAB_AGGRESSIVE)
+						H.apply_pressure(assailant, hit_zone)
 					else
 						inspect_organ(affecting, assailant, hit_zone)
-						return
 				if("grab")
 					if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
-					var/datum/organ/external/BP = H.bodyparts_by_name[check_zone(hit_zone)]
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[check_zone(hit_zone)]
 					if(!BP)
 						return
 					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [H]'s [BP.name] into a jointlock!</span>")
@@ -346,7 +356,7 @@
 						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Pressed fingers into the eyes of [affecting.name] ([affecting.ckey])</font>")
 						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had fingers pressed into their eyes by [assailant.name] ([assailant.ckey])</font>")
 						msg_admin_attack("[key_name(assailant)] has pressed his fingers into [key_name(affecting)]'s eyes.")
-						var/datum/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
+						var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
 						IO.damage += rand(3,4)
 						if (IO.damage >= IO.min_broken_damage)
 							if(affecting.stat != DEAD)
@@ -456,7 +466,7 @@
 
 /obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
 
-	var/datum/organ/external/BP = H.get_bodypart(target_zone)
+	var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 
 	if(!BP || (BP.status & ORGAN_DESTROYED))
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")

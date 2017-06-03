@@ -239,3 +239,12 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		if(istype(mob, /mob/dead/observer))
 			var/mob/dead/observer/O = mob
 			O.ghost_orbit = new_orbit
+
+/client/verb/set_ckey_show()
+	set name = "Show/Hide Ckey"
+	set desc = "Toggle between showing your Ckey in LOOC and dead chat."
+	set category = "Preferences"
+	prefs.chat_toggles ^= CHAT_CKEY
+	prefs.save_preferences()
+	to_chat(src, "You will [(prefs.chat_toggles & CHAT_CKEY) ? "now" : "no longer"] show your ckey in LOOC and deadchat.")
+	feedback_add_details("admin_verb","SC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

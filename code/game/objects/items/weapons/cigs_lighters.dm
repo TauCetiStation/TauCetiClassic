@@ -139,9 +139,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			e.set_up(exploding_reagents, get_turf(src), 0, 0)
 			e.start()
 			if(ishuman(loc))
-				var/mob/living/carbon/human/wearer = loc
-				if(wearer.wear_mask == src)
-					wearer.adjustBruteLossByPart(10 * exploding_reagents, BP_HEAD)
+				var/mob/living/carbon/human/H = loc
+				if(H.wear_mask == src)
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+					if(BP)
+						BP.take_damage(10 * exploding_reagents)
 			qdel(src)
 			return
 		flags &= ~NOREACT // allowing reagents to react after being lit

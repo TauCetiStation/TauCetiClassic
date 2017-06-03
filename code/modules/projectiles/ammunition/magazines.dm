@@ -445,7 +445,7 @@
 
 /obj/item/ammo_box/magazine/m12g/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[Ceiling(ammo_count(0)/8)*8]"
+	icon_state = "[initial(icon_state)]-[ceil(ammo_count(0) / 8) * 8]"
 
 
 /obj/item/ammo_box/magazine/m12g/stun
@@ -471,7 +471,7 @@
 
 /obj/item/ammo_box/magazine/m556/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[Ceiling(ammo_count(0)/30)*30]"
+	icon_state = "[initial(icon_state)]-[ceil(ammo_count(0) / 30) * 30]"
 
 /obj/item/ammo_box/magazine/m556/incendiary
 	name = "A28 magazine (5.56mm incendiary)"

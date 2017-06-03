@@ -11,13 +11,11 @@
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
-	for(var/datum/organ/external/BP in bodyparts)
-		if(istype(BP, /datum/organ/external/chest))
-			continue
+	for(var/obj/item/organ/external/BP in bodyparts)
 		// Only make the limb drop if it's not too damaged
 		if(prob(100 - BP.get_damage()))
 			// Override the current limb status and don't cause an explosion
-			BP.droplimb(1, 1)
+			BP.droplimb(TRUE, null, DROPLIMB_EDGE)
 
 	flick("gibbed-h", animation)
 	if(species)
@@ -66,7 +64,7 @@
 	if(species) species.handle_death(src)
 
 	//Handle brain slugs.
-	var/datum/organ/external/BP = bodyparts_by_name[BP_HEAD]
+	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
 	var/mob/living/simple_animal/borer/B
 
 	for(var/I in BP.implants)
@@ -100,15 +98,6 @@
 
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
-
-		//For ninjas exploding when they die.
-		if( istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_initialized )
-			src << browse(null, "window=spideros")//Just in case.
-			spawn(30)
-				var/location = loc
-				explosion(location, 0, 0, 3, 4)
-				src.gib()
-				gibbed = 1
 
 		update_canmove()
 

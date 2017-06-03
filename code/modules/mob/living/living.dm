@@ -197,7 +197,7 @@
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = burn_amount / H.bodyparts.len
 		var/extradam = 0	//added to when organ is at max dam
-		for(var/datum/organ/external/BP in H.bodyparts)
+		for(var/obj/item/organ/external/BP in H.bodyparts)
 			BP.take_damage(0, divided_damage + extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 		H.updatehealth()
 		return 1
@@ -655,6 +655,13 @@
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
 	return null
 
+/mob/living/carbon/getTrail()
+	return "trails_1"
+
+/mob/living/carbon/human/getTrail()
+	if(!species.flags[NO_BLOOD] && round(vessel.get_reagent_amount("blood")) > 0)
+		return ..()
+
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"
@@ -929,6 +936,9 @@
 
 /mob/living/proc/has_eyes()
 	return 1
+
+/mob/living/proc/slip(slipped_on, stun_duration=4, weaken_duration=2)
+	return FALSE
 
 //-TG Port for smooth standing/lying animations
 /mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)

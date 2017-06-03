@@ -6,7 +6,7 @@
 		return
 	var/total_burn	= 0
 	var/total_brute	= 0
-	for(var/datum/organ/external/BP in bodyparts)	//hardcoded to streamline things a bit
+	for(var/obj/item/organ/external/BP in bodyparts)	//hardcoded to streamline things a bit
 		total_brute	+= BP.brute_dam
 		total_burn	+= BP.burn_dam
 	health = 100 - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
@@ -17,7 +17,7 @@
 
 /mob/living/carbon/human/getBrainLoss()
 	var/res = brainloss
-	var/datum/organ/internal/brain/IO = organs_by_name[O_BRAIN]
+	var/obj/item/organ/internal/brain/IO = organs_by_name[O_BRAIN]
 	if(!IO)
 		return 0
 	if (IO.is_bruised())
@@ -30,13 +30,17 @@
 //These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if((BP.status & ORGAN_ROBOT) && !BP.vital)
+			continue // robot limbs don't count towards shock and crit
 		amount += BP.brute_dam
 	return amount
 
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if((BP.status & ORGAN_ROBOT) && !BP.vital)
+			continue // robot limbs don't count towards shock and crit
 		amount += BP.burn_dam
 	return amount
 
@@ -56,39 +60,11 @@
 		amount = amount*species.burn_mod
 
 	if(amount > 0)
+		if(RESIST_HEAT in mutations)
+			return
 		take_overall_damage(0, amount)
 	else
 		heal_overall_damage(0, -amount)
-	hud_updateflag |= 1 << HEALTH_HUD
-
-/mob/living/carbon/human/proc/adjustBruteLossByPart(amount, bodypart_name, obj/damage_source = null)
-	if(species && species.brute_mod)
-		amount = amount*species.brute_mod
-
-	if (bodypart_name in bodyparts_by_name)
-		var/datum/organ/external/BP = bodyparts_by_name[bodypart_name]
-
-		if(amount > 0)
-			BP.take_damage(amount, 0, sharp = is_sharp(damage_source), edge = has_edge(damage_source), used_weapon = damage_source)
-		else
-			//if you don't want to heal robot bodyparts, they you will have to check that yourself before using this proc.
-			BP.heal_damage(-amount, 0, internal = 0, robo_repair = (BP.status & ORGAN_ROBOT))
-
-	hud_updateflag |= 1 << HEALTH_HUD
-
-/mob/living/carbon/human/proc/adjustFireLossByPart(amount, bodypart_name, obj/damage_source = null)
-	if(species && species.burn_mod)
-		amount = amount*species.burn_mod
-
-	if (bodypart_name in bodyparts_by_name)
-		var/datum/organ/external/BP = bodyparts_by_name[bodypart_name]
-
-		if(amount > 0)
-			BP.take_damage(0, amount, sharp = is_sharp(damage_source), edge = has_edge(damage_source), used_weapon = damage_source)
-		else
-			//if you don't want to heal robot bodyparts, they you will have to check that yourself before using this proc.
-			BP.heal_damage(0, -amount, internal = 0, robo_repair = (BP.status & ORGAN_ROBOT))
-
 	hud_updateflag |= 1 << HEALTH_HUD
 
 /mob/living/carbon/human/Stun(amount)
@@ -124,24 +100,24 @@
 	if (amount > 0)
 		if (prob(mut_prob))
 			var/list/candidates = list()
-			for (var/datum/organ/external/BP in bodyparts)
+			for (var/obj/item/organ/external/BP in bodyparts)
 				if(!(BP.status & ORGAN_MUTATED))
 					candidates += BP
 			if (candidates.len)
-				var/datum/organ/external/BP = pick(candidates)
+				var/obj/item/organ/external/BP = pick(candidates)
 				BP.mutate()
 				to_chat(src, "<span class = 'notice'>Something is not right with your [BP.name]...</span>")
 				return
 	else
 		if (prob(heal_prob))
-			for (var/datum/organ/external/BP in bodyparts)
+			for (var/obj/item/organ/external/BP in bodyparts)
 				if (BP.status & ORGAN_MUTATED)
 					BP.unmutate()
 					to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
 					return
 
 	if (getCloneLoss() < 1)
-		for (var/datum/organ/external/BP in bodyparts)
+		for (var/obj/item/organ/external/BP in bodyparts)
 			if (BP.status & ORGAN_MUTATED)
 				BP.unmutate()
 				to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
@@ -152,7 +128,7 @@
 //Returns a list of damaged bodyparts
 /mob/living/carbon/human/proc/get_damaged_bodyparts(brute, burn)
 	var/list/parts = list()
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam))
 			parts += BP
 	return parts
@@ -160,8 +136,8 @@
 //Returns a list of damageable bodyparts
 /mob/living/carbon/human/proc/get_damageable_bodyparts()
 	var/list/parts = list()
-	for(var/datum/organ/external/BP in bodyparts)
-		if(BP.brute_dam + BP.burn_dam < BP.max_damage)
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.is_damageable())
 			parts += BP
 	return parts
 
@@ -172,7 +148,7 @@
 	var/list/parts = get_damaged_bodyparts(brute, burn)
 	if(!parts.len)
 		return
-	var/datum/organ/external/BP = pick(parts)
+	var/obj/item/organ/external/BP = pick(parts)
 	if(BP.heal_damage(brute, burn))
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
@@ -184,18 +160,21 @@
 	var/list/parts = get_damageable_bodyparts()
 	if(!parts.len)
 		return
-	var/datum/organ/external/BP = pick(parts)
-	if(BP.take_damage(brute, burn, sharp, edge))
+
+	var/obj/item/organ/external/BP = pick(parts)
+	var/damage_flags = (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
+
+	if(BP.take_damage(brute, burn, damage_flags))
 		hud_updateflag |= 1 << HEALTH_HUD
-	updatehealth()
-	speech_problem_flag = 1
+		updatehealth()
+		speech_problem_flag = 1
 
 
 //Heal MANY external bodyparts, in random order
 /mob/living/carbon/human/heal_overall_damage(brute, burn)
 	var/list/parts = get_damaged_bodyparts(brute, burn)
 	while(parts.len && (brute > 0 || burn > 0))
-		var/datum/organ/external/BP = pick(parts)
+		var/obj/item/organ/external/BP = pick(parts)
 		var/brute_was = BP.brute_dam
 		var/burn_was = BP.burn_dam
 		BP.heal_damage(brute, burn)
@@ -211,15 +190,25 @@
 /mob/living/carbon/human/take_overall_damage(brute, burn, sharp = 0, edge = 0, used_weapon = null)
 	if(status_flags & GODMODE)
 		return // godmode
+
 	var/list/parts = get_damageable_bodyparts()
+	if(!parts.len)
+		return
+
+	var/damage_flags = (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
+
 	while(parts.len && (brute > 0 || burn > 0) )
-		var/datum/organ/external/BP = pick(parts)
+		var/obj/item/organ/external/BP = pick(parts)
+
 		var/brute_was = BP.brute_dam
 		var/burn_was = BP.burn_dam
-		BP.take_damage(brute, burn, sharp, edge, used_weapon)
+
+		BP.take_damage(brute, burn, damage_flags, used_weapon)
 		brute -= (BP.brute_dam - brute_was)
 		burn -= (BP.burn_dam - burn_was)
+
 		parts -= BP
+
 	updatehealth()
 	hud_updateflag |= 1 << HEALTH_HUD
 
@@ -239,12 +228,12 @@ This function restores the subjects blood to max.
 This function restores all bodyparts.
 */
 /mob/living/carbon/human/restore_all_bodyparts()
-	for(var/datum/organ/external/BP in bodyparts)
+	for(var/obj/item/organ/external/BP in bodyparts)
 		BP.rejuvenate()
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
-	var/datum/organ/external/BP = get_bodypart(zone)
-	if(istype(BP, /datum/organ/external))
+	var/obj/item/organ/external/BP = get_bodypart(zone)
+	if(istype(BP, /obj/item/organ/external))
 		if(BP.heal_damage(brute, burn))
 			hud_updateflag |= 1 << HEALTH_HUD
 	else
@@ -257,64 +246,46 @@ This function restores all bodyparts.
 		zone = BP_HEAD
 	return bodyparts_by_name[zone]
 
-/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, sharp = 0, edge = 0, obj/used_weapon = null)
-//	visible_message("Hit debug. [damage] | [damagetype] | [def_zone] | [blocked] | [sharp] | [used_weapon]")
+/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
+
+	//Handle other types of damage
 	if((damagetype != BRUTE) && (damagetype != BURN))
 		..(damage, damagetype, def_zone, blocked)
-		return 1
+		return TRUE
 
+	handle_suit_punctures(damagetype, damage)
 
+	if(blocked >= 100)
+		return FALSE
 
-	var/datum/organ/external/BP = null
+	var/obj/item/organ/external/BP = null
 	if(isbodypart(def_zone))
 		BP = def_zone
 	else
 		if(!def_zone)
 			def_zone = ran_zone(def_zone)
 		BP = get_bodypart(check_zone(def_zone))
+
 	if(!BP)
-		return 0
+		return FALSE
 
-	if(istype(used_weapon, /obj/item/projectile))
-		damage = (damage - blocked)
-	else
-		blocked = (100-blocked)/100
-		if(blocked <= 0)
-			return 0
-		damage = (damage * blocked)
+	if(blocked)
+		damage *= blocked_mult(blocked)
 
+	var/datum/wound/created_wound
+	damageoverlaytemp = 20
 	switch(damagetype)
 		if(BRUTE)
-			damageoverlaytemp = 20
 			if(species && species.brute_mod)
-				damage = damage*species.brute_mod
-			BP.take_damage(damage, 0, sharp, edge, used_weapon)
+				damage = damage * species.brute_mod
+			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon)
 		if(BURN)
-			damageoverlaytemp = 20
 			if(species && species.burn_mod)
-				damage = damage*species.burn_mod
-			BP.take_damage(0, damage, sharp, edge, used_weapon)
-
-	handle_suit_punctures(damagetype, damage)
+				damage = damage * species.burn_mod
+			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()
 	hud_updateflag |= 1 << HEALTH_HUD
 
-	//Embedded object code.
-	if(!BP)
-		return
-	if(istype(used_weapon, /obj/item))
-		var/obj/item/W = used_weapon
-		if(!W.can_embed)
-			return
-		if(!W.is_robot_module())
-			//blunt objects should really not be embedding in things unless a huge amount of force is involved
-			var/embed_chance = sharp? damage/W.w_class : damage/(W.w_class*3)
-			var/embed_threshold = sharp? 5*W.w_class : 15*W.w_class
-
-			//Sharp objects will always embed if they do enough damage.
-			//Thrown objects have some momentum already and have a small chance to embed even if the damage is below the threshold
-			if((sharp && damage > (10*W.w_class)) || (sharp && !ismob(W.loc) && prob(damage/(10*W.w_class)*100)) || (damage > embed_threshold && prob(embed_chance)))
-				BP.embed(W)
-	return 1
+	return created_wound

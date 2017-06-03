@@ -102,59 +102,38 @@
 			if(1)
 				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
 					if ((M.m_intent == "run") && !((istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) || (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)))
-						M.stop_pulling()
-						step(M, M.dir)
-						to_chat(M, "\blue You slipped on the wet floor!")
-						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(5)
-						M.Weaken(3)
+						M.slip("the wet floor", 5, 3)
 					else
 						M.inertia_dir = 0
 						return
-				else if(!istype(M, /mob/living/carbon/slime))
+				else
 					if (M.m_intent == "run")
-						M.stop_pulling()
-						step(M, M.dir)
-						to_chat(M, "\blue You slipped on the wet floor!")
-						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(5)
-						M.Weaken(3)
+						M.slip("the wet floor", 5, 3)
 					else
 						M.inertia_dir = 0
 						return
 
 			if(2) //lube                //can cause infinite loops - needs work
-				if(!istype(M, /mob/living/carbon/slime))
-					M.stop_pulling()
-					step(M, M.dir)
-					spawn(1) step(M, M.dir)
-					spawn(2) step(M, M.dir)
-					spawn(3) step(M, M.dir)
-					spawn(4) step(M, M.dir)
-					M.take_bodypart_damage(2) // Was 5 -- TLE
-					to_chat(M, "\blue You slipped on the floor!")
-					playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
-					M.Weaken(10)
+				M.stop_pulling()
+				step(M, M.dir)
+				spawn(1) step(M, M.dir)
+				spawn(2) step(M, M.dir)
+				spawn(3) step(M, M.dir)
+				spawn(4) step(M, M.dir)
+				M.take_bodypart_damage(2) // Was 5 -- TLE
+				M.slip("the floor", 0, 10)
 			if(3) // Ice
 				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
 					if ((M.m_intent == "run") && (!(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) || !(istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)) && prob(30))
-						M.stop_pulling()
+						M.slip("the icy floor", 4, 3)
 						step(M, M.dir)
-						to_chat(M, "\blue You slipped on the icy floor!")
-						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(4)
-						M.Weaken(3)
 					else
 						M.inertia_dir = 0
 						return
-				else if(!istype(M, /mob/living/carbon/slime))
+				else
 					if (M.m_intent == "run" && prob(30))
-						M.stop_pulling()
+						M.slip("the icy floor", 4, 3)
 						step(M, M.dir)
-						to_chat(M, "\blue You slipped on the icy floor!")
-						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(4)
-						M.Weaken(3)
 					else
 						M.inertia_dir = 0
 						return

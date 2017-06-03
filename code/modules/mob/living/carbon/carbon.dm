@@ -30,7 +30,7 @@
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
-					var/datum/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
 					BP.take_damage(d, 0)
 					H.updatehealth()
 				else
@@ -79,7 +79,7 @@
 	if(!istype(M, /mob/living/carbon)) return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
 		if(BP && !BP.is_usable())
 			to_chat(H, "<span class='rose'>You can't use your [BP.name].</span>")
 			return
@@ -196,7 +196,7 @@
 				"<span class='notice'>You check yourself for injuries.</span>" \
 				)
 
-			for(var/datum/organ/external/BP in H.bodyparts)
+			for(var/obj/item/organ/external/BP in H.bodyparts)
 				var/status = ""
 				var/brutedamage = BP.brute_dam
 				var/burndamage = BP.burn_dam
@@ -292,7 +292,7 @@
 				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					var/datum/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 					BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
 				else
 					take_overall_damage(5, used_weapon = "Table")
@@ -492,6 +492,18 @@
 	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		usr.sleeping = 20 //Short nap
 
+/mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
+	if(buckled || sleeping || weakened || paralysis || stunned || resting || crawling)
+		return FALSE
+	stop_pulling()
+	to_chat(src, "<span class='warning'>You slipped on [slipped_on]!</span>")
+	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
+	if (stun_duration > 0)
+		Stun(stun_duration)
+	if(weaken_duration > 0)
+		Weaken(weaken_duration)
+	return TRUE
+
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
 
@@ -616,9 +628,6 @@
 				if(270)	return -2
 	else
 		return initial(pixel_x)
-
-/mob/living/carbon/getTrail()
-	return "trails_1"
 
 /mob/living/carbon/proc/bloody_hands(mob/living/source, amount = 2)
 	return

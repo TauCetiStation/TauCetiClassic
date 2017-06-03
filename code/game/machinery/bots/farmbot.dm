@@ -65,14 +65,11 @@
 			tank = new /obj/structure/reagent_dispensers/watertank(src)
 
 /obj/machinery/bot/farmbot/Bump(atom/M) //Leave no door unopened!
-	spawn(0)
-		if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
-			var/obj/machinery/door/D = M
-			if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
-				D.open()
-				src.frustration = 0
-		return
-	return
+	if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
+		var/obj/machinery/door/D = M
+		if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
+			D.open()
+			src.frustration = 0
 
 /obj/machinery/bot/farmbot/turn_on()
 	. = ..()
@@ -437,9 +434,9 @@
 			src.visible_message("\red <B>[src] [attackVerb] [human]!</B>")
 			var/damage = 5
 			var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
-			var/datum/organ/external/BP = human.bodyparts_by_name[ran_zone(dam_zone)]
+			var/obj/item/organ/external/BP = human.bodyparts_by_name[ran_zone(dam_zone)]
 			var/armor = human.run_armor_check(BP, "melee")
-			human.apply_damage(damage, BRUTE, BP, armor, sharp = 1, edge = 1)
+			human.apply_damage(damage, BRUTE, BP, armor, DAM_SHARP | DAM_EDGE)
 
 	else // warning, plants infested with weeds!
 		mode = FARMBOT_MODE_WAITING

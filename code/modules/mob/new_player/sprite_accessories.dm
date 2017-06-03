@@ -41,7 +41,7 @@
 */
 
 /datum/sprite_accessory/hair
-	icon = 'icons/mob/Human_face.dmi'	  // default icon for all hairs
+	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
 
 /datum/sprite_accessory/hair/bald
 	name = "Bald"
@@ -56,9 +56,9 @@
 	name = "Short Hair 2"
 	icon_state = "hair_shorthair2"
 
-/datum/sprite_accessory/hair/shorthair3
-	name = "Short Hair 3"
-	icon_state = "hair_shorthair3"
+//datum/sprite_accessory/hair/shorthair3
+//	name = "Short Hair 3"
+//	icon_state = "hair_shorthair3"
 
 /datum/sprite_accessory/hair/cut
 	name = "Cut Hair"
@@ -72,17 +72,17 @@
 	name = "Long Hair"
 	icon_state = "hair_vlong"
 
-/datum/sprite_accessory/hair/over_eye
-	name = "Over Eye"
-	icon_state = "hair_shortovereye"
+//datum/sprite_accessory/hair/over_eye
+//	name = "Over Eye"
+//	icon_state = "hair_shortovereye"
 
 /datum/sprite_accessory/hair/long_over_eye
 	name = "Long Over Eye"
 	icon_state = "hair_longovereye"
 
-/datum/sprite_accessory/hair/longest2
-	name = "Very Long Over Eye"
-	icon_state = "hair_longest2"
+//datum/sprite_accessory/hair/longest2
+//	name = "Very Long Over Eye"
+//	icon_state = "hair_longest2"
 
 /datum/sprite_accessory/hair/longest
 	name = "Very Long Hair"
@@ -120,13 +120,13 @@
 	name = "Ponytail 3"
 	icon_state = "hair_ponytail3"
 
-/datum/sprite_accessory/hair/ponytail4
-	name = "Ponytail 4"
-	icon_state = "hair_ponytail4"
+//datum/sprite_accessory/hair/ponytail4
+//	name = "Ponytail 4"
+//	icon_state = "hair_ponytail4"
 
-/datum/sprite_accessory/hair/ponytail5
-	name = "Ponytail 5"
-	icon_state = "hair_ponytail5"
+//datum/sprite_accessory/hair/ponytail5
+//	name = "Ponytail 5"
+//	icon_state = "hair_ponytail5"
 
 /datum/sprite_accessory/hair/sidetail
 	name = "Side Pony"
@@ -136,13 +136,17 @@
 	name = "Side Pony 2"
 	icon_state = "hair_sidetail2"
 
-/datum/sprite_accessory/hair/sidetail3
-	name = "Side Pony 3"
-	icon_state = "hair_sidetail3"
+//datum/sprite_accessory/hair/sidetail3
+//	name = "Side Pony 3"
+//	icon_state = "hair_sidetail3"
 
-/datum/sprite_accessory/hair/sidetail4
-	name = "Side Pony 4"
-	icon_state = "hair_sidetail4"
+//datum/sprite_accessory/hair/sidetail4
+//	name = "Side Pony 4"
+//	icon_state = "hair_sidetail4"
+
+/datum/sprite_accessory/hair/sideponytail
+	name = "Side Pony tail"
+	icon_state = "hair_poofy"
 
 /datum/sprite_accessory/hair/oneshoulder
 	name = "One Shoulder"
@@ -192,10 +196,10 @@
 	icon_state = "hair_beehive"
 	gender = FEMALE
 
-/datum/sprite_accessory/hair/beehive2
-	name = "Beehive 2"
-	icon_state = "hair_beehivev2"
-	gender = FEMALE
+//datum/sprite_accessory/hair/beehive2
+//	name = "Beehive 2"
+//	icon_state = "hair_beehivev2"
+//	gender = FEMALE
 
 /datum/sprite_accessory/hair/bobcurl
 	name = "Bobcurl"
@@ -261,9 +265,9 @@
 	name = "Emo"
 	icon_state = "hair_emo"
 
-/datum/sprite_accessory/hair/longemo
-	name = "Long Emo"
-	icon_state = "hair_longemo"
+//datum/sprite_accessory/hair/longemo
+//	name = "Long Emo"
+//	icon_state = "hair_longemo"
 
 /datum/sprite_accessory/hair/fag
 	name = "Flow Hair"
@@ -282,9 +286,9 @@
 	name = "Mohawk"
 	icon_state = "hair_d"
 
-/datum/sprite_accessory/hair/reversemohawk
-	name = "Reverse Mohawk"
-	icon_state = "hair_reversemohawk"
+//datum/sprite_accessory/hair/reversemohawk
+//	name = "Reverse Mohawk"
+//	icon_state = "hair_reversemohawk"
 
 /datum/sprite_accessory/hair/jensen
 	name = "Jensen Hair"
@@ -302,11 +306,11 @@
 
 /datum/sprite_accessory/hair/spiky2
 	name = "Spiky 2"
-	icon_state = "hair_spiky"
+	icon_state = "hair_crono"
 
 /datum/sprite_accessory/hair/spiky3
 	name = "Spiky 3"
-	icon_state = "hair_spiky2"
+	icon_state = "hair_vegeta"
 
 /datum/sprite_accessory/hair/protagonist
 	name = "Slightly long"
@@ -317,31 +321,38 @@
 	icon_state = "hair_kusanagi"
 
 /datum/sprite_accessory/hair/kagami
-	name = "Pigtails"
+	name = "Kagami Hair"
 	icon_state = "hair_kagami"
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/pigtail
-	name = "Pigtails 2"
+	name = "Pigtails"
 	icon_state = "hair_pigtails"
+	gender = FEMALE
 
-/datum/sprite_accessory/hair/pigtail
-	name = "Pigtails 3"
-	icon_state = "hair_pigtails2"
+/datum/sprite_accessory/hair/pigtail2
+	name = "Pigtails 2"
+	icon_state = "hair_nitori"
+	gender = FEMALE
+
+//datum/sprite_accessory/hair/pigtail3
+//	name = "Pigtails 3"
+//	icon_state = "hair_pigtails3"
+//	gender = FEMALE
 
 /datum/sprite_accessory/hair/himecut
 	name = "Hime Cut"
 	icon_state = "hair_himecut"
 	gender = FEMALE
 
-/datum/sprite_accessory/hair/himecut2
-	name = "Hime Cut 2"
-	icon_state = "hair_himecut2"
-	gender = FEMALE
+//datum/sprite_accessory/hair/himecut2
+//	name = "Hime Cut 2"
+//	icon_state = "hair_himecut2"
+//	gender = FEMALE
 
-/datum/sprite_accessory/hair/himeup
-	name = "Hime Updo"
-	icon_state = "hair_himeup"
+//datum/sprite_accessory/hair/himeup
+//	name = "Hime Updo"
+//	icon_state = "hair_himeup"
 
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
@@ -357,10 +368,10 @@
 	icon_state = "hair_braid2"
 	gender = FEMALE
 
-/datum/sprite_accessory/hair/shortbraid
-	name = "Short Braid"
-	icon_state = "hair_shortbraid"
-	gender = FEMALE
+//datum/sprite_accessory/hair/shortbraid
+//	name = "Short Braid"
+//	icon_state = "hair_shortbraid"
+//	gender = FEMALE
 
 /datum/sprite_accessory/hair/braid
 	name = "Floorlength Braid"
@@ -386,38 +397,38 @@
 	name = "Skinhead"
 	icon_state = "hair_skinhead"
 
-/datum/sprite_accessory/hair/longbangs
-	name = "Long Bangs"
-	icon_state = "hair_lbangs"
+//datum/sprite_accessory/hair/longbangs
+//	name = "Long Bangs"
+//	icon_state = "hair_lbangs"
 
 /datum/sprite_accessory/hair/balding
 	name = "Balding Hair"
 	icon_state = "hair_e"
 	gender = MALE // turnoff!
 
-/datum/sprite_accessory/hair/parted
-	name = "Side Part"
-	icon_state = "hair_part"
+//datum/sprite_accessory/hair/parted
+//	name = "Side Part"
+//	icon_state = "hair_part"
 
-/datum/sprite_accessory/hair/braided
-	name = "Braided"
-	icon_state = "hair_braided"
+//datum/sprite_accessory/hair/braided
+//	name = "Braided"
+//	icon_state = "hair_braided"
 
 /datum/sprite_accessory/hair/bun
 	name = "Bun Head"
 	icon_state = "hair_bun"
 
-/datum/sprite_accessory/hair/bun2
-	name = "Bun Head 2"
-	icon_state = "hair_bunhead2"
+//datum/sprite_accessory/hair/bun2
+//	name = "Bun Head 2"
+//	icon_state = "hair_bunhead2"
 
 /datum/sprite_accessory/hair/braidtail
 	name = "Braided Tail"
 	icon_state = "hair_braidtail"
 
-/datum/sprite_accessory/hair/bigflattop
-	name = "Big Flat Top"
-	icon_state = "hair_bigflattop"
+//datum/sprite_accessory/hair/bigflattop
+//	name = "Big Flat Top"
+//	icon_state = "hair_bigflattop"
 
 /datum/sprite_accessory/hair/drillhair
 	name = "Drill Hair"
@@ -425,81 +436,81 @@
 
 /datum/sprite_accessory/hair/keanu
 	name = "Keanu Hair"
-	icon_state = "hair_keanu"
+	icon_state = "hair_edgeworth"
 
-/datum/sprite_accessory/hair/swept
-	name = "Swept Back Hair"
-	icon_state = "hair_swept"
+//datum/sprite_accessory/hair/swept
+//	name = "Swept Back Hair"
+//	icon_state = "hair_swept"
 
 /datum/sprite_accessory/hair/swept2
 	name = "Swept Back Hair 2"
-	icon_state = "hair_swept2"
+	icon_state = "hair_joestar"
 
-/datum/sprite_accessory/hair/business
-	name = "Business Hair"
-	icon_state = "hair_business"
+//datum/sprite_accessory/hair/business
+//	name = "Business Hair"
+//	icon_state = "hair_business"
 
-/datum/sprite_accessory/hair/business2
-	name = "Business Hair 2"
-	icon_state = "hair_business2"
+//datum/sprite_accessory/hair/business2
+//	name = "Business Hair 2"
+//	icon_state = "hair_business2"
 
 /datum/sprite_accessory/hair/business3
 	name = "Business Hair 3"
-	icon_state = "hair_business3"
+	icon_state = "hair_cia"
 
 /datum/sprite_accessory/hair/business4
 	name = "Business Hair 4"
-	icon_state = "hair_business4"
+	icon_state = "hair_mulder"
 
 /datum/sprite_accessory/hair/hedgehog
 	name = "Hedgehog Hair"
-	icon_state = "hair_hedgehog"
+	icon_state = "hair_blackswordsman"
 
 /datum/sprite_accessory/hair/bob
 	name = "Bob Hair"
-	icon_state = "hair_bob"
+	icon_state = "hair_schierke"
 
 /datum/sprite_accessory/hair/bob2
 	name = "Bob Hair 2"
-	icon_state = "hair_bob2"
+	icon_state = "hair_scully"
 
 /datum/sprite_accessory/hair/long
 	name = "Long Hair 1"
-	icon_state = "hair_long"
+	icon_state = "hair_nia"
 
-/datum/sprite_accessory/hair/long2
-	name = "Long Hair 2"
-	icon_state = "hair_long2"
+//datum/sprite_accessory/hair/long2
+//	name = "Long Hair 2"
+//	icon_state = "hair_long2"
 
-/datum/sprite_accessory/hair/pixie
-	name = "Pixie Cut"
-	icon_state = "hair_pixie"
+//datum/sprite_accessory/hair/pixie
+//	name = "Pixie Cut"
+//	icon_state = "hair_pixie"
 
 /datum/sprite_accessory/hair/megaeyebrows
 	name = "Mega Eyebrows"
 	icon_state = "hair_megaeyebrows"
 
-/datum/sprite_accessory/hair/highponytail
-	name = "High Ponytail"
-	icon_state = "hair_highponytail"
+//datum/sprite_accessory/hair/highponytail
+//	name = "High Ponytail"
+//	icon_state = "hair_highponytail"
 
-/datum/sprite_accessory/hair/longponytail
-	name = "Long Ponytail"
-	icon_state = "hair_longstraightponytail"
+//datum/sprite_accessory/hair/longponytail
+//	name = "Long Ponytail"
+//	icon_state = "hair_longstraightponytail"
 
-/datum/sprite_accessory/hair/sidepartlongalt
-	name = "Long Side Part"
-	icon_state = "hair_longsidepart"
-//Зопилено обратно
+//datum/sprite_accessory/hair/sidepartlongalt
+//	name = "Long Side Part"
+//	icon_state = "hair_longsidepart"
+
 /datum/sprite_accessory/hair/flair
 	name = "Flaired Hair"
 	icon_state = "hair_flair"
 
-/datum/sprite_accessory/hair/himecut3
-	name = "Hime Cut 3"
-	icon_state = "hair_himecut3"
-	gender = FEMALE
-//Убоа
+//datum/sprite_accessory/hair/himecut3
+//	name = "Hime Cut 3"
+//	icon_state = "hair_himecut3"
+//	gender = FEMALE
+
 /datum/sprite_accessory/hair/big_tails
 	name = "Big tails"
 	icon_state = "hair_long_d_tails"
@@ -595,6 +606,10 @@
 	name = "Rose"
 	icon_state = "hair_rose"
 
+/datum/sprite_accessory/hair/ramona
+	name = "Ramona"
+	icon_state = "hair_ramona"
+
 /datum/sprite_accessory/hair/dirk
 	name = "Dirk"
 	icon_state = "hair_dirk"
@@ -646,52 +661,52 @@
 /datum/sprite_accessory/hair/shinobu
 	name = "Shinibu"
 	icon_state = "hair_shinobu"
-//SHIT INCOMING
-/datum/sprite_accessory/hair/modern
-	name = "Modern"
-	icon_state = "hair_trap"
-	gender = FEMALE
 
-/datum/sprite_accessory/hair/twincurl
-	name = "Twincurl"
-	icon_state = "hair_trap2"
-	gender = FEMALE
+//datum/sprite_accessory/hair/modern
+//	name = "Modern"
+//	icon_state = "hair_modern"
+//	gender = FEMALE
 
-/datum/sprite_accessory/hair/rapunzel
-	name = "Rapunzel"
-	icon_state = "hair_trapinsane"
-	gender = FEMALE
+//datum/sprite_accessory/hair/twincurl
+//	name = "Twincurl"
+//	icon_state = "hair_twincurl"
+//	gender = FEMALE
 
-/datum/sprite_accessory/hair/quadcurls
-	name = "Quadcurls "
-	icon_state = "hair_trapinsane2"
-	gender = FEMALE
+//datum/sprite_accessory/hair/rapunzel
+//	name = "Rapunzel"
+//	icon_state = "hair_rapunzel"
+//	gender = FEMALE
 
-/datum/sprite_accessory/hair/twincurl2
-	name = "Twincurl 2"
-	icon_state = "hair_trap3"
-	gender = FEMALE
+//datum/sprite_accessory/hair/quadcurls
+//	name = "Quadcurls "
+//	icon_state = "hair_quadcurls"
+//	gender = FEMALE
 
-/datum/sprite_accessory/hair/birdnest
-	name = "Birdnest "
-	icon_state = "hair_nolife"
+//datum/sprite_accessory/hair/twincurl2
+//	name = "Twincurl 2"
+//	icon_state = "hair_twincurl2"
+//	gender = FEMALE
 
-/datum/sprite_accessory/hair/unkept
-	name = "Unkept"
-	icon_state = "hair_pidor"
+//datum/sprite_accessory/hair/birdnest
+//	name = "Birdnest "
+//	icon_state = "hair_birdnest"
 
-/datum/sprite_accessory/hair/fastline
-	name = "Fastline"
-	icon_state = "hair_dniwe"
-	gender = MALE
+//datum/sprite_accessory/hair/unkept
+//	name = "Unkept"
+//	icon_state = "hair_unkept"
 
-/datum/sprite_accessory/hair/duelist
-	name = "Duelist "
-	icon_state = "hair_pidor2"
+//datum/sprite_accessory/hair/fastline
+//	name = "Fastline"
+//	icon_state = "hair_fastline"
+//	gender = MALE
 
-/datum/sprite_accessory/hair/sparta
-	name = "Sparta hair"
-	icon_state = "hair_sparta"
+//datum/sprite_accessory/hair/duelist
+//	name = "Duelist "
+//	icon_state = "hair_duelist"
+
+//datum/sprite_accessory/hair/sparta
+//	name = "Sparta hair"
+//	icon_state = "hair_sparta"
 
 
 /*
@@ -776,38 +791,37 @@
 	name = "Dwarf Beard"
 	icon_state = "facial_dwarf"
 
-/datum/sprite_accessory/facial_hair/fiveoclock
-	name = "Five o Clock Shadow"
-	icon_state = "facial_fiveoclock"
+//datum/sprite_accessory/facial_hair/fiveoclock
+//	name = "Five o Clock Shadow"
+//	icon_state = "facial_fiveoclock"
 
-/datum/sprite_accessory/facial_hair/fu
-	name = "Fu Manchu"
-	icon_state = "facial_fumanchu"
+//datum/sprite_accessory/facial_hair/fu
+//	name = "Fu Manchu"
+//	icon_state = "facial_fumanchu"
 
-//POWAH OF BEARD
 /datum/sprite_accessory/facial_hair/postal
 	name = "Goat Beard"
 	icon_state = "facial_goatbeard"
 
-/datum/sprite_accessory/facial_hair/britstache
-	name = "Britstache"
-	icon_state = "facial_britstache"
+//datum/sprite_accessory/facial_hair/britstache
+//	name = "Britstache"
+//	icon_state = "facial_britstache"
 
-/datum/sprite_accessory/facial_hair/martial_artist
-	name = "Martial Artist"
-	icon_state = "facial_martialartist"
+//datum/sprite_accessory/facial_hair/martial_artist
+//	name = "Martial Artist"
+//	icon_state = "facial_martialartist"
 
-/datum/sprite_accessory/facial_hair/moonshiner
-	name = "Moonshiner"
-	icon_state = "facial_moonshiner"
+//datum/sprite_accessory/facial_hair/moonshiner
+//	name = "Moonshiner"
+//	icon_state = "facial_moonshiner"
 
-/datum/sprite_accessory/facial_hair/tribeard
-	name = "Tri-Beard"
-	icon_state = "facial_tribeard"
+//datum/sprite_accessory/facial_hair/tribeard
+//	name = "Tri-Beard"
+//	icon_state = "facial_tribeard"
 
-/datum/sprite_accessory/facial_hair/unshaven
-	name = "Unshaven"
-	icon_state = "facial_unshaven"
+//datum/sprite_accessory/facial_hair/unshaven
+//	name = "Unshaven"
+//	icon_state = "facial_unshaven"
 
 
 /*
@@ -910,47 +924,47 @@
 
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"
-	icon_state = "unathi_warrior_horns"
+	icon_state = "una_warrior_horns"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/unathi_smallhorns
 	name = "Small Horns"
-	icon_state = "unathi_smallhorns"
+	icon_state = "una_smallhorns"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads
 	name = "Dreads"
-	icon_state = "unathi_dreads"
+	icon_state = "una_dreads"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads_long
 	name = "Long Dreads"
-	icon_state = "unathi_dreads_long"
+	icon_state = "una_dreads_long"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads_short
 	name = "Short Dreads"
-	icon_state = "unathi_dreads_short"
+	icon_state = "una_dreads_short"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/unathi_dreads_predator
 	name = "Predator Dreads"
-	icon_state = "unathi_dreads_predator"
+	icon_state = "una_dreads_predator"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/unathi_hiss_collinss
 	name = "Hiss Collinss"
-	icon_state = "unathi_hiss_collinss"
+	icon_state = "una_hiss_collinss"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/unathi_horns_curled
 	name = "Curled Horns"
-	icon_state = "unathi_horns_curled"
+	icon_state = "una_horns_curled"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/unathi_horns_ram
 	name = "Ram Horns"
-	icon_state = "unathi_horns_ram"
+	icon_state = "una_horns_ram"
 	species_allowed = list(UNATHI)
 
 /datum/sprite_accessory/hair/una_spines_long
@@ -987,6 +1001,30 @@
 /datum/sprite_accessory/hair/skr_tentacle_f
 	name = "Skrell Female Tentacles"
 	icon_state = "skr_hair_f"
+	species_allowed = list(SKRELL)
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/skr_gold_m
+	name = "Gold plated Skrell Male Tentacles"
+	icon_state = "skr_goldhair_m"
+	species_allowed = list(SKRELL)
+	gender = MALE
+
+/datum/sprite_accessory/hair/skr_gold_f
+	name = "Gold chained Skrell Female Tentacles"
+	icon_state = "skr_goldhair_f"
+	species_allowed = list(SKRELL)
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/skr_clothtentacle_m
+	name = "Cloth draped Skrell Male Tentacles"
+	icon_state = "skr_clothhair_m"
+	species_allowed = list(SKRELL)
+	gender = MALE
+
+/datum/sprite_accessory/hair/skr_clothtentacle_f
+	name = "Cloth draped Skrell Female Tentacles"
+	icon_state = "skr_clothhair_f"
 	species_allowed = list(SKRELL)
 	gender = FEMALE
 
@@ -1050,15 +1088,15 @@
 	icon_state = "taj_hair_messy"
 	species_allowed = list(TAJARAN)
 
-/datum/sprite_accessory/hair/taj_ears_tailshort
-	name = "Tajara Short Tail"
-	icon_state = "taj_hair_shorttail"
-	species_allowed = list(TAJARAN)
+//datum/sprite_accessory/hair/taj_ears_tailshort
+//	name = "Tajara Short Tail"
+//	icon_state = "taj_hair_shorttail"
+//	species_allowed = list(TAJARAN)
 
-/datum/sprite_accessory/hair/taj_ears_messylong
-	name = "Tajara Long Messy"
-	icon_state = "taj_hair_messylong"
-	species_allowed = list(TAJARAN)
+//datum/sprite_accessory/hair/taj_ears_messylong
+//	name = "Tajara Long Messy"
+//	icon_state = "taj_hair_messylong"
+//	species_allowed = list(TAJARAN)
 
 /datum/sprite_accessory/hair/vox_quills_short
 	name = "Short Vox Quills"
@@ -1067,7 +1105,7 @@
 
 /datum/sprite_accessory/facial_hair/taj_sideburns
 	name = "Tajara Sideburns"
-	icon_state = "taj_facial_mutton"
+	icon_state = "taj_facial_sideburns"
 	species_allowed = list(TAJARAN)
 
 /datum/sprite_accessory/facial_hair/taj_mutton

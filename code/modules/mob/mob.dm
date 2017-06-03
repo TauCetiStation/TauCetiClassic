@@ -472,7 +472,7 @@
 		var/mob/living/carbon/human/H = src
 		if((H.health - H.halloss) <= config.health_threshold_softcrit)
 			for(var/bodypart_name in H.bodyparts_by_name)
-				var/datum/organ/external/BP = H.bodyparts_by_name[bodypart_name]
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 				if(H.lying)
 					if((((BP.status & ORGAN_BROKEN) && !(BP.status & ORGAN_SPLINTED)) || (BP.status & ORGAN_BLEEDING)) && ((H.getBruteLoss() + H.getFireLoss()) >= 100))
 						return 1
@@ -967,21 +967,26 @@ mob/proc/yank_out_object()
 	if(istype(src, /mob/living/carbon/human))
 
 		var/mob/living/carbon/human/H = src
-		var/datum/organ/external/BP
+		var/obj/item/organ/external/BP
 
-		for(var/datum/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
+		for(var/obj/item/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
 			for(var/obj/item/weapon/O in limb.implants)
 				if(O == selection)
 					BP = limb
 
 		BP.implants -= selection
-		H.shock_stage += 10
-		H.bloody_hands(S)
+		for(var/datum/wound/wound in BP.wounds)
+			wound.embedded_objects -= selection
 
-		if(prob(10)) //I'M SO ANEMIC I COULD JUST -DIE-.
-			var/datum/wound/internal_bleeding/I = new (15)
-			BP.wounds += I
+		H.shock_stage += 20
+		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
+
+		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.
 			H.custom_pain("Something tears wetly in your [BP.name] as [selection] is pulled free!", 1)
+
+		if(ishuman(U))
+			var/mob/living/carbon/human/human_user = U
+			human_user.bloody_hands(H)
 
 	selection.loc = get_turf(src)
 
