@@ -20,12 +20,14 @@
 	for(var/mob/living/target in targets)
 		for(var/x in mutations)
 			target.mutations.Add(x)
-		target.disabilities |= disabilities
+			target.disabilities |= disabilities
 		target.update_mutations()	//update target's mutation overlays
-		spawn(duration)
-			for(var/x in mutations)
-				target.mutations.Remove(x)
-			target.disabilities &= ~disabilities
-			target.update_mutations()
+		addtimer(CALLBACK(src, .proc/remove_mutations,target,mutations),duration)
 
 	return
+
+/obj/effect/proc_holder/spell/targeted/genetic/proc/remove_mutations(mob/living/target, list/mutations)
+	for(var/x in mutations)
+		target.mutations.Remove(x)
+	target.disabilities &= ~disabilities
+	target.update_mutations()

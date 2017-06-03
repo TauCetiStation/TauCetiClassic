@@ -13,16 +13,17 @@
 	var/list/newVars = list() //vars of the summoned objects will be replaced with those where they meet
 	//should have format of list("emagged" = 1,"name" = "Wizard's Justicebot"), for example
 	var/delay = 1//Go Go Gadget Inheritance
+	sound = 'sound/items/welder.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/cast(list/targets)
 
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
-	playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+	playsound(src.loc, sound, 50, 1)
 
 	if(do_after(usr,delay,target=usr))
-		for(var/i=0,i<summon_amt,i++)
+		for(var/i in 0 to summon_amt)
 			if(!targets.len)
 				break
 			var/summoned_object_type = pick(summon_type)
@@ -41,9 +42,7 @@
 						summoned_object.vars[varName] = newVars[varName]
 
 				if(summon_lifespan)
-					spawn(summon_lifespan)
-						if(summoned_object)
-							qdel(summoned_object)
+					QDEL_IN(summoned_object, summon_lifespan)
 	else
 		switch(charge_type)
 			if("recharge")
@@ -78,14 +77,23 @@
 	density = 1
 	unacidable = 1
 
+/obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)
+	for(var/mob/M in get_turf(loc))
+		Proj.on_hit(M, M.bullet_act(Proj, def_zone))
 
-	bullet_act(obj/item/projectile/Proj, def_zone)
-		var/turf/T = get_turf(src.loc)
-		if(T)
-			for(var/mob/M in T)
-				Proj.on_hit(M,M.bullet_act(Proj, def_zone))
-		return
-		
+/obj/effect/forcefield/magic
+	var/mob/wizard
+
+/obj/effect/forcefield/magic/New(turf/loc,mob/wiz,timeleft = 300)
+	..()
+	wizard = wiz
+	QDEL_IN(src, timeleft)
+
+/obj/effect/forcefield/magic/CanPass(atom/movable/mover, turf/target, height=0)
+	if(mover == wizard)
+		return 1
+	return 0
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/smoke
 	name = "Paralysing Smoke"
 	desc = "This spell spawns a cloud of paralysing smoke."
@@ -105,7 +113,7 @@
 	S.attach(location)
 	S.set_up(reagents, 5, 0, location, 15, 5)
 	S.start()
-	
+
 /datum/reagent/toxin/harvester
 	name = "Harvester Toxin"
 	id = "harvester"
@@ -113,7 +121,7 @@
 	color = "#9C3636"
 	toxpwr = 0
 	custom_metabolism = 1
-	
+
 	on_mob_life(var/mob/living/carbon/M as mob)
 		if(!M) M = holder.my_atom
 		if(!data) data = 1

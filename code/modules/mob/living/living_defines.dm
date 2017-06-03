@@ -47,7 +47,7 @@
 	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/list/pipes_shown = list()
 	var/last_played_vent
-
+	var/tesla_ignore = FALSE
 	var/list/butcher_results = null
 
 	var/isHandsBusy = FALSE

@@ -646,3 +646,10 @@
 	item_state = "dg_suit"
 	item_color = "centcom"
 	displays_id = 0
+
+/obj/item/clothing/under/roman
+	name = "roman armor"
+	desc = "Ancient Roman armor. Made of metallic and leather straps."
+	icon_state = "roman"
+	item_state = "roman"
+	item_color = "roman"

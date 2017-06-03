@@ -13,6 +13,7 @@
 	var/charge_tick = 0
 	var/can_charge = 1
 	var/ammo_type = /obj/item/ammo_casing/magic
+	var/global_access = FALSE
 	origin_tech = null
 	clumsy_check = 0
 
@@ -22,7 +23,7 @@
 /obj/item/weapon/gun/magic/afterattack(atom/target, mob/living/user, flag)
 	newshot()
 	var/area/A = get_area(user)
-	if(user.mind.special_role != "Wizard")
+	if(user.mind.special_role != "Wizard" && !global_access)
 		to_chat(user, "<span class='warning'>You have no idea how to use [src].<span>")
 		return
 	if(istype(A, /area/wizard_station))

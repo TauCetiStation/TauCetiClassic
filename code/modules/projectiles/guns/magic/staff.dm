@@ -17,10 +17,36 @@ obj/item/weapon/gun/magic/staff/
 	icon_state = "staffofanimation"
 	item_state = "staffofanimation"
 	item_color = "staffofanimation"
-/*
+
 obj/item/weapon/gun/magic/staff/healing
 	name = "staff of healing"
 	desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead."
 	ammo_type = /obj/item/ammo_casing/magic/heal
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staffofhealing"
-	item_state = "staffofhealing" */
+	item_state = "staffofhealing"
+	fire_sound = 'sound/magic/Staff_Healing.ogg'
+
+obj/item/weapon/gun/magic/staff/healing/one_person
+	global_access = TRUE
+	var/datum/mind/owner
+
+obj/item/weapon/gun/magic/staff/healing/one_person/New(turf/L, datum/mind/M)
+	..()
+	owner = M
+
+obj/item/weapon/gun/magic/staff/healing/one_person/afterattack(atom/target, mob/living/user, flag)
+	if(user.mind == owner)
+		return ..()
+	to_chat(user,"<span class='userdanger'>It's seems [src] is bounded to someone else and it's not you</span>")
+
+
+
+/obj/item/weapon/gun/magic/staff/doorcreation
+	name = "staff of door creation"
+	desc = "An artefact that spits bolts of transformative magic that can create doors in walls."
+	ammo_type = /obj/item/ammo_casing/magic/door
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "staffofdoor"
+	item_state = "staffofdoor"
+	fire_sound = 'sound/magic/Staff_Door.ogg'
