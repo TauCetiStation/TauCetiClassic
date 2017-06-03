@@ -294,17 +294,28 @@
 	return
 
 /mob/living/carbon/human/LaserEyes(atom/A)
-	if(nutrition > 300)
-		..()
+	if(nutrition > 0)
 		next_move = world.time + 6
-		var/obj/item/projectile/beam/LE = new(loc)
-		LE.damage = 20
+		var/turf/T = get_turf(src)
+		var/turf/U = get_turf(A)
+
+		var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
 		playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
-		LE.Fire(A, src)
-		nutrition = max(nutrition - rand(10,40), 0)
+
+		LE.def_zone = ran_zone(zone_sel.selecting)
+		LE.starting = T
+		LE.original = A
+		LE.current = T
+		LE.damage = 20
+		LE.yo = U.y - T.y
+		LE.xo = U.x - T.x
+		spawn( 1 )
+			LE.process()
+
+		nutrition = max(nutrition - rand(1,10),0)
 		handle_regular_hud_updates()
 	else
-		to_chat(src, "<span class='red'> You're out of energy!  You need food!</span>")
+		to_chat(src, "\red You're out of energy!  You need food!")
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A)
