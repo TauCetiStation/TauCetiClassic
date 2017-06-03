@@ -258,10 +258,15 @@
 		message = ""
 		handled = 1
 	if(wear_mask)
-		var/obj/item/clothing/mask/Mask= wear_mask
-		if(message_mode != "changeling")
-			message = Mask.speechModification(message)
-		handled = 1
+		if(istype(wear_mask, /obj/item/clothing/mask/horsehead))
+			var/obj/item/clothing/mask/horsehead/hoers = wear_mask
+			if(hoers.voicechange)
+				//if(mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")
+				if(message_mode != "changeling")
+					message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
+					verb = pick("whinnies","neighs", "says")
+					//handled = 1
+				handled = 1
 
 	if((HULK in mutations) && health >= 25 && length(message))
 		message = "[uppertext_plus(message)]!!!"

@@ -39,7 +39,9 @@
 	if(!use_charge(user, 2))
 		return
 	next_click = world.time + 10
-	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(get_turf(src))
+	var/turf/T = get_turf(src)
+	var/turf/U = get_turf(A)
+	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(T)
 	if(user.a_intent == "grab")
 		LE.grabber = 1
 	else if(user.a_intent == "disarm" && prob(65))
@@ -49,7 +51,15 @@
 	else
 		LE.agony = 25
 	LE.host = user
-	LE.Fire(A, user)
+	LE.firer = user
+	LE.def_zone = check_zone(user.zone_sel.selecting)
+	LE.starting = T
+	LE.original = A
+	LE.current = T
+	LE.yo = U.y - T.y
+	LE.xo = U.x - T.x
+	spawn( 1 )
+		LE.process()
 
 /obj/item/projectile/changeling_whip
 	name = "Whip"

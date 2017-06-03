@@ -110,10 +110,6 @@
 		to_chat(viewers(user), "\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
 		return(BRUTELOSS)
 
-/obj/item/weapon/claymore/light
-	force = 20
-	can_embed = 0
-
 /obj/item/weapon/claymore/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()

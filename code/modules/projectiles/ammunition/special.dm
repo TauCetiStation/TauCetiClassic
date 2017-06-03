@@ -8,18 +8,18 @@
 
 /obj/item/ammo_casing/magic/animate
 	projectile_type = /obj/item/projectile/magic/animate
-
+/*
 /obj/item/ammo_casing/magic/heal
 	projectile_type = /obj/item/projectile/magic/resurrection
 
-/obj/item/ammo_casing/magic/door
-	projectile_type = /obj/item/projectile/magic/door
-/*
 /obj/item/ammo_casing/magic/death
 	projectile_type = /obj/item/projectile/magic/death
 
 /obj/item/ammo_casing/magic/teleport
 	projectile_type = /obj/item/projectile/magic/teleport
+
+/obj/item/ammo_casing/magic/door
+	projectile_type = /obj/item/projectile/magic/door
 
 /obj/item/ammo_casing/magic/fireball
 	projectile_type = /obj/item/projectile/magic/fireball

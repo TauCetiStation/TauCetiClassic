@@ -9,7 +9,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	panel = "Spells"//What panel the proc holder needs to go on.
 	density = 0
 	opacity = 0
-	var/sound = null //The sound the spell makes when it is cast
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
 
@@ -46,12 +45,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/action_icon = 'icons/mob/actions.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
-	var/static/list/casting_clothes
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
-		to_chat(usr, "<span class='red'> You shouldn't have this spell! Something's wrong.</span>")
+		to_chat(usr, "\red You shouldn't have this spell! Something's wrong.")
 		return 0
 
 	if(usr.z == ZLEVEL_CENTCOMM && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
@@ -74,22 +72,21 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	if(ishuman(usr) || ismonkey(usr))
 		if(istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
-			usr.say("Mmmf mrrfff!")
+			to_chat(usr, "Mmmf mrrfff!")
 			return 0
 
 	if(clothes_req) //clothes check
-		if(!istype(user, /mob/living/carbon/human))
-			to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
+		if(!istype(usr, /mob/living/carbon/human))
+			to_chat(usr, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
 			return 0
-		var/mob/living/carbon/human/H = user
-		if(!is_type_in_typecache(H.wear_suit, casting_clothes))
-			to_chat(user, "I don't feel strong enough without my robe.")
+		if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(user:wear_suit, /obj/item/clothing/suit/space/rig/wizard))
+			to_chat(usr, "I don't feel strong enough without my robe.")
 			return 0
-		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
-			to_chat(user, "I don't feel strong enough without my sandals.")
+		if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
+			to_chat(usr, "I don't feel strong enough without my sandals.")
 			return 0
-		if(!is_type_in_typecache(H.head, casting_clothes))
-			to_chat(user, "I don't feel strong enough without my hat.")
+		if(!istype(usr:head, /obj/item/clothing/head/wizard) && !istype(user:head, /obj/item/clothing/head/helmet/space/rig/wizard))
+			to_chat(usr, "I don't feel strong enough without my hat.")
 			return 0
 
 	if(!skipcharge)
@@ -108,22 +105,23 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	switch(invocation_type)
 		if("shout")
 			if(prob(50))//Auto-mute? Fuck that noise
-				user.say(invocation)
+				usr.say(invocation)
 			else
-				user.say(replacetext(invocation," ","`"))
+				usr.say(replacetext(invocation," ","`"))
+			if(usr.gender==MALE)
+				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+			else
+				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 		if("whisper")
 			if(prob(50))
-				user.whisper(invocation)
+				usr.whisper(invocation)
 			else
-				user.whisper(replacetext(invocation," ","`"))
-	if(sound)
-		playsound(user, sound, 100, 1)
+				usr.whisper(replacetext(invocation," ","`"))
 
 /obj/effect/proc_holder/spell/New()
 	..()
+
 	charge_counter = charge_max
-	if(!casting_clothes)
-		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/suit/space/rig/wizard, /obj/item/clothing/head/wizard, /obj/item/clothing/head/helmet/space/rig/wizard))
 
 /obj/effect/proc_holder/spell/Click()
 	if(cast_check())
@@ -141,8 +139,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation()
-	if(charge_type == "recharge" && recharge)
-		INVOKE_ASYNC(src, .proc/start_recharge)
+	spawn(0)
+		if(charge_type == "recharge" && recharge)
+			start_recharge()
 	if(prob(critfailchance))
 		critfail(targets)
 	else
@@ -162,7 +161,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.icon_state = overlay_icon_state
 			spell.anchored = 1
 			spell.density = 0
-			QDEL_IN(spell, overlay_lifespan)
+			spawn(overlay_lifespan)
+				qdel(spell)
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)

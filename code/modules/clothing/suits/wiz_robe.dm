@@ -39,16 +39,6 @@
 	desc = "A checkered gray flat cap woven together with the rarest of threads."
 	icon_state = "gentcap"
 
-/obj/item/clothing/head/wizard/redhood
-	name = "wizard hood"
-	desc = "A strange red gem-lined hoodie"
-	icon_state = "wiz_red_hood"
-
-/obj/item/clothing/head/wizard/bluehood
-	name = "wizard hood"
-	desc = "A strange blue gem-lined hoodie."
-	icon_state = "wiz_blue_hood"
-
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificant, gem-lined robe that seems to radiate power."
@@ -61,18 +51,6 @@
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.4
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-
-/obj/item/clothing/suit/wizrobe/wiz_blue
-	name = "Blue Jacket"
-	desc = "A stylish gem-lined jacket straight from deep space."
-	icon_state = "mage_jacket_blue"
-	item_state = "mage_jacket_blue"
-
-/obj/item/clothing/suit/wizrobe/wiz_red
-	name = "Red Jacket"
-	desc = "A stylish gem-lined jacket straight from deep space."
-	icon_state = "mage_jacket_red"
-	item_state = "mage_jacket_red"
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
