@@ -34,9 +34,9 @@
 		to_chat(user, "<span class='notice'>They are too far away!</span>")
 		return
 
-	var/list/masks = list(/obj/item/clothing/mask/pig, /obj/item/clothing/mask/cowmask, /obj/item/clothing/mask/horsehead)
-	var/list/mSounds = list('sound/magic/PigHead_curse.ogg', 'sound/magic/CowHead_Curse.ogg', 'sound/magic/HorseHead_curse.ogg')
-	var/randM = rand(1,3)
+	var/list/masks = list(/obj/item/clothing/mask/pig, /obj/item/clothing/mask/cowmask, /obj/item/clothing/mask/horsehead, /obj/item/clothing/mask/chicken)
+	var/list/mSounds = list('sound/magic/PigHead_curse.ogg', 'sound/magic/CowHead_Curse.ogg', 'sound/magic/HorseHead_curse.ogg', 'sound/magic/ChickenHead_curse.ogg')
+	var/randM = rand(1, 4)
 	var/choice = masks[randM]
 	var/obj/item/clothing/mask/magichead = new choice
 	if(istype(target, /mob/living/carbon/human))

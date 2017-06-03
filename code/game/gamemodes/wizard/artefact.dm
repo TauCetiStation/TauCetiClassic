@@ -189,6 +189,8 @@
 //	M << sound('sound/effects/magic.ogg')
 
 /obj/item/weapon/contract/proc/equip_apprentice(mob/living/carbon/human/target)
+	for(var/obj/item/I in target)
+		target.remove_from_mob(I)
 	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_l_ear)
 	target.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(target), slot_w_uniform)
 	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(target), slot_shoes)

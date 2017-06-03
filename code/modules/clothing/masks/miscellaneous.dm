@@ -109,7 +109,6 @@
 	w_class = 2
 	siemens_coefficient = 0.9
 
-
 /obj/item/clothing/mask/horsehead/speechModification(message)
 	if(!canremove)
 		message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
@@ -138,6 +137,18 @@
 	action_button_name = "Adjust Bandana"
 	icon_state = "bandbotany"
 	body_parts_covered = 0
+
+/obj/item/clothing/mask/chicken
+	name = "chicken suit head"
+	desc = "Bkaw!"
+	icon_state = "chickenmask"
+	flags = BLOCKHAIR
+	body_parts_covered = HEAD|FACE|EYES
+
+/obj/item/clothing/mask/chicken/speechModification(message)
+	if(!canremove)
+		message = pick("BKAW!","BUK BUK!","Ba-Gawk!")
+	return message
 
 /obj/item/clothing/mask/bandana/verb/adjustmask()
 	set category = "Object"
