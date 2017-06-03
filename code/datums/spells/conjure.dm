@@ -79,7 +79,8 @@
 
 /obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)
 	for(var/mob/M in get_turf(loc))
-		Proj.on_hit(M, M.bullet_act(Proj, def_zone))
+		if(wizard != M)
+			M.bullet_act(Proj, def_zone)
 
 /obj/effect/forcefield/magic
 	var/mob/wizard

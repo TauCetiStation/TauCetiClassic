@@ -117,6 +117,5 @@
 	if(istype(O,/obj/item/clothing/mask/horsehead) || istype(O,/obj/item/clothing/mask/pig) || istype(O,/obj/item/clothing/mask/cowmask) ||  istype(O,/obj/item/clothing/head/chicken))
 		var/obj/item/clothing/mask/barnyard = O
 		if(user.wear_mask == barnyard)
-			user.unEquip(barnyard)
 			barnyard.loc.visible_message("<span class='warning'>[barnyard] dissolves into a puddle of sizzling goop.</span>")
 			qdel(barnyard)
