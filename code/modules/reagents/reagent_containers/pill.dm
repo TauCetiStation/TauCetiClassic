@@ -29,12 +29,12 @@
 				return
 
 		to_chat(M, "\blue You swallow [src].")
-		M.drop_from_inventory(src) //icon update
+
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, reagents.total_volume)
-			qdel(src)
-		else
-			qdel(src)
+
+		qdel(src)
+
 		return 1
 
 	else
@@ -59,9 +59,8 @@
 
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, reagents.total_volume)
-			qdel(src)
-		else
-			qdel(src)
+
+		qdel(src)
 
 		return 1
 
@@ -83,10 +82,8 @@
 		for(var/mob/O in viewers(2, user))
 			O.show_message("\red [user] puts something in \the [target].", 1)
 
-		spawn(5)
-			qdel(src)
+		qdel(src)
 
-	return
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END

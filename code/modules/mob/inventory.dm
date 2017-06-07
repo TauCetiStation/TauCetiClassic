@@ -261,7 +261,7 @@ var/list/slot_equipment_priority = list( \
 	drop_from_inventory(I)
 	return 1
 
-//Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
+//Attemps to remove an object on a mob. Will drop item to ground or move into target.
 /mob/proc/remove_from_mob(obj/O, atom/target)
 	if(!O) return
 	src.u_equip(O)

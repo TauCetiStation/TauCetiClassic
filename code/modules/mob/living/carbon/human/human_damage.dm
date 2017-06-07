@@ -1,33 +1,62 @@
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/human/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
 		return
-	var/total_burn	= 0
-	var/total_brute	= 0
-	for(var/obj/item/organ/external/BP in bodyparts)	//hardcoded to streamline things a bit
-		total_brute	+= BP.brute_dam
-		total_burn	+= BP.burn_dam
-	health = 100 - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+
+	var/total_burn = 0
+	var/total_brute = 0
+	for(var/obj/item/organ/external/BP in bodyparts) // hardcoded to streamline things a bit
+		if((BP.status & ORGAN_ROBOT) && !BP.vital)
+			continue // *non-vital* robot limbs don't count towards shock and crit
+		total_brute += BP.brute_dam
+		total_burn += BP.burn_dam
+
+	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+
 	//TODO: fix husking
-	if( ((100 - total_burn) < config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
+	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD)
 		ChangeToHusk()
 	return
 
+// =============================================
+
 /mob/living/carbon/human/getBrainLoss()
+	if(status_flags & GODMODE)
+		return 0
+
+	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
+		return 0
+
 	var/res = brainloss
 	var/obj/item/organ/internal/brain/IO = organs_by_name[O_BRAIN]
 	if(!IO)
-		return 0
-	if (IO.is_bruised())
+		return maxHealth * 2
+
+	if(IO.is_bruised())
 		res += 20
-	if (IO.is_broken())
+	if(IO.is_broken())
 		res += 50
-	res = min(res,maxHealth*2)
+	res = min(res, maxHealth * 2)
+
 	return res
 
-//These procs fetch a cumulative total damage from all bodyparts
+/mob/living/carbon/human/adjustBrainLoss(amount)
+	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
+		brainloss = 0
+	else
+		amount = amount * species.brain_mod
+		..(amount)
+
+/mob/living/carbon/human/setBrainLoss(amount)
+	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
+		brainloss = 0
+	else
+		..()
+
+// =============================================
+
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
@@ -35,6 +64,14 @@
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.brute_dam
 	return amount
+
+/mob/living/carbon/human/adjustBruteLoss(amount)
+	if(amount > 0)
+		take_overall_damage(amount, 0)
+	else
+		heal_overall_damage(-amount, 0)
+
+// =============================================
 
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
@@ -44,50 +81,55 @@
 		amount += BP.burn_dam
 	return amount
 
-
-/mob/living/carbon/human/adjustBruteLoss(amount)
-	if(species && species.brute_mod)
-		amount = amount*species.brute_mod
-
-	if(amount > 0)
-		take_overall_damage(amount, 0)
-	else
-		heal_overall_damage(-amount, 0)
-	hud_updateflag |= 1 << HEALTH_HUD
-
 /mob/living/carbon/human/adjustFireLoss(amount)
-	if(species && species.burn_mod)
-		amount = amount*species.burn_mod
-
 	if(amount > 0)
 		if(RESIST_HEAT in mutations)
 			return
 		take_overall_damage(0, amount)
 	else
 		heal_overall_damage(0, -amount)
-	hud_updateflag |= 1 << HEALTH_HUD
 
-/mob/living/carbon/human/Stun(amount)
-	if(HULK in mutations)
-		if(status_flags & CANSTUN)
-			stunned = max(max(stunned,amount/2),0)
+// =============================================
+
+/mob/living/carbon/human/getToxLoss()
+	if(species.tox_mod == 0 || species.flags[NO_BLOOD] || isSynthetic())
+		toxloss = 0
+	return ..()
+
+/mob/living/carbon/human/adjustToxLoss(amount)
+	if(species.tox_mod == 0 || species.flags[NO_BLOOD] || isSynthetic())
+		toxloss = 0
+	else
+		amount = amount * species.tox_mod
+		..(amount)
+
+/mob/living/carbon/human/setToxLoss(amount)
+	if(species.tox_mod == 0 || species.flags[NO_BLOOD] || isSynthetic())
+		toxloss = 0
 	else
 		..()
 
-/mob/living/carbon/human/Weaken(amount)
-	if(HULK in mutations)
-		if(status_flags & CANWEAKEN)
-			weakened = max(amount/2,0)
-			update_canmove()	//updates lying, canmove and icons	return
+// =============================================
+
+/mob/living/carbon/human/getOxyLoss()
+	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
+		oxyloss = 0
+	return ..()
+
+/mob/living/carbon/human/adjustOxyLoss(amount)
+	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
+		oxyloss = 0
+	else
+		amount = amount * species.oxy_mod
+		..(amount)
+
+/mob/living/carbon/human/setOxyLoss(amount)
+	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
+		oxyloss = 0
 	else
 		..()
 
-/mob/living/carbon/human/Paralyse(amount)
-	if(HULK in mutations)
-		if(status_flags & CANPARALYSE)
-			paralysis = max(max(paralysis,amount),0)
-	else
-		..()
+// =============================================
 
 /mob/living/carbon/human/adjustCloneLoss(amount)
 	..()
@@ -122,6 +164,26 @@
 				BP.unmutate()
 				to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
 	hud_updateflag |= 1 << HEALTH_HUD
+
+// =============================================
+
+/mob/living/carbon/human/Stun(amount)
+	if(HULK in mutations)
+		stunned = 0
+	else
+		..()
+
+/mob/living/carbon/human/Weaken(amount)
+	if(HULK in mutations)
+		weakened = 0
+	else
+		..()
+
+/mob/living/carbon/human/Paralyse(amount)
+	if(HULK in mutations)
+		paralysis = 0
+	else
+		..()
 
 ////////////////////////////////////////////
 
@@ -276,12 +338,8 @@ This function restores all bodyparts.
 	damageoverlaytemp = 20
 	switch(damagetype)
 		if(BRUTE)
-			if(species && species.brute_mod)
-				damage = damage * species.brute_mod
 			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon)
 		if(BURN)
-			if(species && species.burn_mod)
-				damage = damage * species.burn_mod
 			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().

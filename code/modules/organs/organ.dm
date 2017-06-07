@@ -113,7 +113,7 @@
 
 			if (!lying && world.time - l_move_time < 15)
 			//Moving around with fractured ribs won't do you any good
-				if (BP.is_broken() && BP.bodypart_organs && prob(15))
+				if (BP.is_broken() && BP.bodypart_organs.len && prob(15))
 					var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 					custom_pain("You feel broken bones moving in your [BP.name]!", 1)
 					IO.take_damage(rand(3, 5))
@@ -124,23 +124,23 @@
 						if (W.infection_check())
 							W.germ_level += 1
 
-			if((BP.body_zone in list(BP_L_LEG , BP_L_FOOT , BP_R_LEG , BP_R_FOOT)) && !lying)
+			if((BP.body_zone in list(BP_L_LEG , BP_R_LEG)) && !lying)
 				if (!BP.is_usable() || BP.is_malfunctioning() || (BP.is_broken() && !(BP.status & ORGAN_SPLINTED)))
-					leg_tally--			// let it fail even if just foot&leg
+					leg_tally -= 2 // let it fail even if just leg
 
 	// standing is poor
 	if(leg_tally <= 0 && !paralysis && !(lying || resting) && prob(5))
-		if(species && species.flags[NO_PAIN])
+		if(!species.flags[NO_PAIN])
 			emote("scream",,, 1)
 		emote("collapse")
 		paralysis = 10
 
 	//Check arms and legs for existence
 	can_stand = 2 //can stand on both legs
-	var/obj/item/organ/external/BP = bodyparts_by_name[BP_L_FOOT]
+	var/obj/item/organ/external/BP = bodyparts_by_name[BP_L_LEG]
 	if(BP.status & ORGAN_DESTROYED)
 		can_stand--
 
-	BP = bodyparts_by_name[BP_R_FOOT]
+	BP = bodyparts_by_name[BP_R_LEG]
 	if(BP.status & ORGAN_DESTROYED)
 		can_stand--

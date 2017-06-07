@@ -561,7 +561,6 @@
 	qdel(S)
 	user.put_in_hands(A)
 	to_chat(user, "<span class='notice'>You add the robot arm to the first aid kit.</span>")
-	user.drop_from_inventory(src)
 	qdel(src)
 
 
@@ -595,5 +594,4 @@
 					var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
 					S.skin = src.skin
 					S.name = src.created_name
-					user.drop_from_inventory(src)
 					qdel(src)

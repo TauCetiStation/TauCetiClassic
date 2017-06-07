@@ -50,8 +50,6 @@
 			energy swords, making a single double-bladed weapon! \
 			You're cool.</span>")
 		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
-		user.unEquip(W)
-		user.unEquip(src)
 		qdel(W)
 		qdel(src)
 		user.put_in_hands(newSaber)
@@ -87,6 +85,6 @@
 	throw_speed = 1
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
-	flags = NOSHIELD | NOBLOODY
+	flags = NOSHIELD | NOBLOODY | DROPDEL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system

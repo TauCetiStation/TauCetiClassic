@@ -1,16 +1,18 @@
 /mob/living/carbon/human/movement_delay()
+
+	if(!has_gravity(src) || mind && mind.changeling && mind.changeling.strained_muscles)
+		return -1 // It's hard to be slowed down in space by... anything
+
 	var/tally = 0
 
 	if(species)
 		tally = species.speed_mod
 
-	if(mind &&  mind.changeling && mind.changeling.strained_muscles)
-		return -3
+	if(RUN in src.mutations)
+		tally -= 0.5
 
 	if(crawling)
 		tally += 7
-	else if((reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")) && species && !(species.flags[NO_BLOOD]))
-		return -1
 
 	if(istype(l_hand, /obj/item/weapon/gun))
 		if(l_hand.w_class > 3)
@@ -18,9 +20,6 @@
 	if(istype(r_hand, /obj/item/weapon/gun))
 		if(r_hand.w_class > 3)
 			tally += 0.5
-
-	if(!has_gravity(src))
-		return -1 // It's hard to be slowed down in space by... anything
 
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
@@ -33,18 +32,18 @@
 	if (hungry >= 70)
 		tally += hungry/50
 
-	if(wear_suit)
+	if(wear_suit && wear_suit.slowdown && should_have_organ(O_HEART) && !species.flags[NO_BLOOD] && !(reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
 		tally += wear_suit.slowdown
 
 	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
-		for(var/bodypart_name in list(BP_L_HAND , BP_R_HAND , BP_L_ARM , BP_R_ARM))
+		for(var/bodypart_name in list(BP_L_ARM , BP_R_ARM))
 			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
 			if(!BP || (BP.status & ORGAN_DESTROYED))
-				tally += 4
+				tally += 8
 			else if(BP.status & ORGAN_SPLINTED)
-				tally += 0.5
+				tally += 1
 			else if(BP.status & ORGAN_BROKEN)
-				tally += 1.5
+				tally += 3
 	else
 		if(shoes)
 			tally += shoes.slowdown
@@ -55,14 +54,14 @@
 		if(buckled)	//so, if we buckled we have large debuff
 			tally += 5.5
 
-		for(var/bodypart_name in list(BP_L_FOOT , BP_R_FOOT , BP_L_LEG , BP_R_LEG))
+		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
 			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
 			if(!BP || (BP.status & ORGAN_DESTROYED))
-				tally += 4
+				tally += 8
 			else if(BP.status & ORGAN_SPLINTED)
-				tally += 0.5
+				tally += 1
 			else if(BP.status & ORGAN_BROKEN)
-				tally += 1.5
+				tally += 3
 
 	if(shock_stage >= 10)
 		tally += 3
@@ -75,10 +74,7 @@
 	if (bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
-	if(RUN in src.mutations)
-		tally = 0
-
-	return (tally+config.human_delay)
+	return (tally + config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
 

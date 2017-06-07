@@ -167,7 +167,6 @@
 
 	for(var/datum/language/L in languages)
 		adult.add_language(L.name)
-	adult.regenerate_icons()
 
 	adult.name = "diona ([rand(100,999)])"
 	adult.real_name = adult.name

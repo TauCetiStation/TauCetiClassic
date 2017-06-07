@@ -51,6 +51,20 @@
 /mob/living/carbon/human/abductor/New(var/new_loc)
 	..(new_loc, ABDUCTOR)
 
+/mob/living/carbon/human/golem/New(loc)
+	status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
+
+	..(loc, GOLEM)
+
+	dna.mutantrace = "adamantine"
+	real_name = text("Adamantine Golem ([rand(1, 1000)])")
+	equip_to_slot_or_del(new /obj/item/clothing/under/golem(src), slot_w_uniform)
+	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem(src), slot_head)
+	equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem(src), slot_wear_suit)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(src), slot_shoes)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(src), slot_wear_mask)
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(src), slot_gloves)
+
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null)
 
 	if(!species)
@@ -211,7 +225,7 @@
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>\The blob attacks you!</span>")
-	var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
+	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
 	return
@@ -244,7 +258,7 @@
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
+		var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 		var/armor = run_armor_check(BP, "melee")
 		apply_damage(damage, BRUTE, BP, armor)
@@ -472,7 +486,7 @@
 	if(NO_SHOCK in src.mutations)	return 0 //#Z2 no shock with that mutation.
 
 	if(!def_zone)
-		def_zone = pick(BP_L_HAND , BP_R_HAND)
+		def_zone = pick(BP_L_ARM , BP_R_ARM)
 
 	var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 
@@ -1265,6 +1279,7 @@
 		remove_language(species.language)
 
 	species = all_species[new_species]
+	maxHealth = species.total_health
 
 	if(force_organs || !bodyparts.len)
 		species.create_organs(src)
@@ -1283,14 +1298,15 @@
 		b_skin = 0
 
 	species.handle_post_spawn(src)
+	full_prosthetic = null
 
-	spawn(0)
-		update_icons()
+	update_icons()
+	regenerate_icons()
 
 	if(species)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 // Unlike set_species(), this proc simply changes owner's specie and thats it.
 /mob/living/carbon/human/proc/set_species_soft(new_species)
@@ -1298,6 +1314,7 @@
 		return
 
 	species = all_species[new_species]
+	maxHealth = species.total_health
 	regenerate_icons()
 
 /mob/living/carbon/human/proc/bloody_doodle()

@@ -291,7 +291,6 @@
 		to_chat(user, "<span class = 'notice'>You add [D] to [src].</span>")
 		qdel(D)
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
-		user.drop_from_inventory(src)
 		qdel(src)
 	if (istype(D, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = D

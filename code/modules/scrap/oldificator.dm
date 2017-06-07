@@ -135,7 +135,6 @@
 	..()
 	IonStorm(0)
 	explosion(sender.loc, 1, 1, 1, 3)
-	sender.drop_from_inventory(src)
 	qdel(src)
 
 /obj/item/weapon/dnainjector/make_old()

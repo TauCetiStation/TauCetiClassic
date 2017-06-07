@@ -229,10 +229,7 @@
 		playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 		sleep(60)
 		var/mob/living/carbon/C = user
-		if(C.r_hand)
-			C.apply_damage(25, BURN, BP_R_HAND)
-		if(C.l_hand)
-			C.apply_damage(25, BURN, BP_L_HAND)
+		C.apply_damage(25, BURN, C.hand ? BP_L_ARM : BP_R_ARM)
 		to_chat(C, "<span class='danger'>The dryer is burning!</span>")
 		new /obj/effect/decal/cleanable/ash(C.loc)
 		qdel(O)
@@ -548,7 +545,7 @@
 /obj/structure/sink/attack_hand(mob/user)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_HAND : BP_R_HAND]
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
 		if(BP && !BP.is_usable())
 			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return

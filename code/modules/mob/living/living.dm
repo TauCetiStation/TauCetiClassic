@@ -232,86 +232,105 @@
 	return temperature
 
 
-// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
-// Stop! ... Hammertime! ~Carn
-// I touched them without asking... I'm soooo edgy ~Erro (added nodamage checks)
+// ==================================
+// ========== DAMAGE PROCS ==========
+// ==================================
 
+// ========== BRUTE ==========
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	bruteloss = Clamp(bruteloss + amount, 0, maxHealth * 2)
 
+
+// ========== OXY ==========
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	oxyloss = Clamp(oxyloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	oxyloss = amount
+	if(status_flags & GODMODE)
+		return
+	oxyloss = Clamp(amount, 0, maxHealth * 2)
 
+
+// ========== TOX ==========
 /mob/living/proc/getToxLoss()
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	toxloss = Clamp(toxloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setToxLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	toxloss = amount
+	if(status_flags & GODMODE)
+		return
+	toxloss = Clamp(amount, 0, maxHealth * 2)
 
+
+// ========== FIRE ==========
 /mob/living/proc/getFireLoss()
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	fireloss = Clamp(fireloss + amount, 0, maxHealth * 2)
 
+
+// ========== CLONE ==========
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	cloneloss = Clamp(cloneloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	cloneloss = amount
+	if(status_flags & GODMODE)
+		return
+	cloneloss = Clamp(amount, 0, maxHealth * 2)
 
+
+// ========== BRAIN ==========
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	brainloss = Clamp(brainloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	brainloss = amount
+	if(status_flags & GODMODE)
+		return
+	brainloss = Clamp(amount, 0, maxHealth * 2)
 
+
+// ========== PAIN ==========
 /mob/living/proc/getHalLoss()
 	return halloss
 
 /mob/living/proc/adjustHalLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = min(max(halloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	halloss = Clamp(halloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setHalLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = amount
+	if(status_flags & GODMODE)
+		return
+	halloss = Clamp(amount, 0, maxHealth * 2)
 
-/mob/living/proc/getMaxHealth()
-	return maxHealth
-
-/mob/living/proc/setMaxHealth(newMaxHealth)
-	maxHealth = newMaxHealth
-
-// ++++ROCKDTBEN++++ MOB PROCS //END
+// ============================================================
 
 
 /mob/proc/get_contents()
@@ -445,9 +464,6 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.shock_stage=0
 
 	// shut down ongoing problems
 	radiation = 0
@@ -466,10 +482,15 @@
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
 
-	// restore all of a human's blood
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_mob = src
-		human_mob.restore_blood()
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		C.shock_stage = 0
+
+		// restore all of a human's blood
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.restore_blood()
+			H.full_prosthetic = null
 
 	// fix all of our bodyparts
 	restore_all_bodyparts()
@@ -837,12 +858,10 @@
 							var/datum/effect/effect/system/spark_spread/S = new
 							S.set_up(4,0,CM.loc)
 							S.start()
-							CM.drop_from_inventory(CM.handcuffed)
-							qdel(HC)
 						else
 							CM.visible_message("<span class='danger'>[CM] manages to remove the handcuffs!</span>", \
 								"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
-							CM.drop_from_inventory(CM.handcuffed)
+						CM.drop_from_inventory(CM.handcuffed)
 
 		else if(CM.legcuffed && (CM.last_special <= world.time))
 			if(!CM.canmove && !CM.resting)	return
@@ -883,16 +902,10 @@
 							var/datum/effect/effect/system/spark_spread/S = new
 							S.set_up(4,0,CM.loc)
 							S.start()
-							CM.drop_from_inventory(CM.legcuffed)
-							CM.legcuffed = null
-							CM.update_inv_legcuffed()
-							qdel(HC)
 						else
 							CM.visible_message("<span class='danger'>[CM] manages to remove the legcuffs!</span>", \
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
-							CM.drop_from_inventory(CM.legcuffed)
-							CM.legcuffed = null
-							CM.update_inv_legcuffed()
+						CM.drop_from_inventory(CM.legcuffed)
 
 /mob/living/verb/lay_down()
 	set name = "Rest"

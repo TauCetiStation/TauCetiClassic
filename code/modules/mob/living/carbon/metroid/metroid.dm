@@ -852,6 +852,8 @@
 	has_sensor = 0
 	canremove = 0
 	unacidable = 1
+	flags = ABSTRACT | DROPDEL
+
 
 /obj/item/clothing/shoes/golem
 	name = "golem's feet"
@@ -859,7 +861,7 @@
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = NOSLIP
+	flags = ABSTRACT | DROPDEL | NOSLIP
 	slowdown = SHOES_SLOWDOWN+2
 	unacidable = 1
 
@@ -872,16 +874,7 @@
 	canremove = 0
 	siemens_coefficient = 0
 	unacidable = 1
-
-/obj/item/clothing/mask/gas/golem
-	name = "golem's face"
-	desc = "The imposing face of an adamantine golem."
-	icon_state = "golem"
-	item_state = "golem"
-	canremove = 0
-	siemens_coefficient = 0
-	unacidable = 1
-	flags_inv = 0
+	flags = ABSTRACT | DROPDEL
 
 
 /obj/item/clothing/gloves/golem
@@ -892,6 +885,7 @@
 	siemens_coefficient = 0
 	canremove = 0
 	unacidable = 1
+	flags = ABSTRACT | DROPDEL
 
 
 /obj/item/clothing/head/helmet/space/golem
@@ -909,6 +903,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	flags = ABSTRACT | DROPDEL
 	flags_inv = 0
 	slowdown = 0
 	unacidable = 1
@@ -932,6 +927,7 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	flags = ABSTRACT | DROPDEL
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
 	slowdown = 0
 	unacidable = 1
@@ -1001,18 +997,7 @@
 		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
 		return
 
-	var/mob/living/carbon/human/G = new /mob/living/carbon/human
-	G.dna.mutantrace = "adamantine"
-	G.update_mutantrace()
-	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
-	G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
-	G.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem(G), slot_head)
-	G.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem(G), slot_wear_suit)
-	G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
-	G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
-	G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
-	G.status_flags &= ~(CANSTUN|CANWEAKEN|CANPARALYSE)
-	G.forceMove(loc)
+	var/mob/living/carbon/human/golem/G = new(loc)
 	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
 	G.key = spirit.key

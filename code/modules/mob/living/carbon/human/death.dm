@@ -119,7 +119,6 @@
 
 	set_species(SKELETON)
 	status_flags |= DISFIGURED
-	regenerate_icons()
 	return
 
 /mob/living/carbon/human/proc/ChangeToHusk()

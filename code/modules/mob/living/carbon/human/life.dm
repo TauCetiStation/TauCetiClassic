@@ -653,7 +653,7 @@
 	return 1
 
 /mob/living/carbon/human/proc/handle_environment(datum/gas_mixture/environment)
-	if(!environment)
+	if(!environment || species.flags[ENV_IMMUNE])
 		return
 
 	//Moved pressure calculations here for use in skip-processing check.
@@ -806,6 +806,10 @@
 	if (species.flags[IS_SYNTHETIC])
 		bodytemperature += species.synth_temp_gain		//just keep putting out heat.
 		return
+
+	// Robolimbs cause overheating too.
+	if(robolimb_count)
+		bodytemperature += round(robolimb_count / 2)
 
 	var/body_temperature_difference = species.body_temperature - bodytemperature
 
@@ -1085,7 +1089,7 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
+		if(overeatduration > 500 && species.flags[HAS_DISABILITY_FAT])
 			mutations.Add(FAT)
 			update_body()
 			update_mutantrace()
