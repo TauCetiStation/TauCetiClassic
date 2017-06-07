@@ -39,6 +39,39 @@
 	component_parts += new /obj/item/weapon/cable_coil/red(null, 1)
 	RefreshParts()
 
+/obj/machinery/clonepod/attack_ghost(mob/dead/observer/user)
+	if(stat & NOPOWER)
+		to_chat(user, "<span class='userdanger'>No power source found.</span>")
+		return
+	if(!connected)
+		to_chat(user, "<span class='userdanger'>No console found.</span>")
+		return
+	if(!connected.autoprocess)
+		to_chat(user, "<span class='userdanger'>Autoprocess is turned off.</span>")
+		return
+	if(biomass < CLONE_BIOMASS)
+		to_chat(user, "<span class='userdanger'>Not enough biomass.</span>")
+		return
+	if(efficiency < 6)
+		to_chat(user, "<span class='userdanger'>Not enough technical level to autoclone.</span>")
+		return
+	if(occupant || mess)
+		to_chat(user, "<span class='userdanger'>[src] is busy.</span>")
+		return
+
+	for(var/datum/dna2/record/R in connected.records)
+		if(user.mind == locate(R.mind) && R.ckey == user.ckey)
+			if(user.timeofdeath + 6000 < world.time || !user.can_reenter_corpse)
+				to_chat(user, "<span class='userdanger'>Not enough data, autocloning is impossible</span>")
+				return
+			if(user.mind && user.mind.current && user.mind.current.stat == DEAD && growclone(R))
+				connected.records.Remove(R)
+				qdel(R)
+				return 1
+			else
+				to_chat(user, "<span class='userdanger'>Data is corrupted, autocloning is impossible</span>")
+				return
+
 /obj/machinery/clonepod/RefreshParts()
 	speed_coeff = 0
 	efficiency = 0
@@ -295,6 +328,7 @@
 			return
 
 		else if((src.occupant.cloneloss <= (100 - src.heal_level)) && (!src.eject_wait) || src.occupant.health >= 100)
+			broadcast_hud_message("<span class='notice'>Cloning Process of the [occupant] is Complete.</span>", src, med_hud_users)
 			src.connected_message("Cloning Process Complete.")
 			src.locked = 0
 			src.go_out()

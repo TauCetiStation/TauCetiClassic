@@ -103,44 +103,49 @@
 		open(user)
 
 /obj/machinery/dna_scannernew/proc/close(mob/user)
-	if(open)
-		if(panel_open)
-			to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
-			return 0
-		open = 0
-		density = 1
-		for(var/mob/living/carbon/C in loc)
-			if(C.buckled)	continue
-			if(C.client)
-				C.client.perspective = EYE_PERSPECTIVE
-				C.client.eye = src
-			occupant = C
-			C.loc = src
-			C.stop_pulling()
-			break
-		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
+	if(!open)
+		return 0
+	if(panel_open)
+		to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
+		return 0
+	open = 0
+	density = 1
+	for(var/mob/living/carbon/C in loc)
+		if(C.buckled)	continue
+		if(C.client)
+			C.client.perspective = EYE_PERSPECTIVE
+			C.client.eye = src
+		occupant = C
+		C.loc = src
+		C.stop_pulling()
+		break
+	icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
 
-		// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-		if(occupant)
-			if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
-				|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
-				|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
-				|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
-
-				if (occupant.stat == DEAD)
-					if (occupant.client) //Ghost in body?
-						occupant << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
-					else
-						for(var/mob/dead/observer/ghost in player_list)
-							if(ghost.mind == occupant.mind)
-								if(ghost.can_reenter_corpse)
-									ghost << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
-									var/answer = alert(ghost,"Do you want to return to corpse for cloning?","Cloning","Yes","No")
-									if(answer == "Yes")
-										ghost.reenter_corpse()
-
-								break
-		return 1
+	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
+	if(occupant)
+		var/obj/machinery/computer/cloning/Console = null
+		for(var/dir in cardinal)
+			var/passed = FALSE
+			for(var/obj/machinery/computer/cloning/f_console in get_step(src, dir))
+				Console = f_console
+				passed = TRUE
+				break
+			if(passed)
+				break
+		if(Console)
+			if(occupant.stat == DEAD)
+				if (occupant.client) //Ghost in body?
+					occupant << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
+				else
+					for(var/mob/dead/observer/ghost in dead_mob_list)
+						if(ghost.mind == occupant.mind && ghost.can_reenter_corpse)
+							ghost << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
+							if(alert(ghost, "Do you want to return to corpse for cloning?","Cloning","Yes","No") == "Yes")
+								ghost.reenter_corpse()
+							break
+			else if(scan_level > 2 && Console.autoprocess)
+				Console.scan_mob(occupant)
+	return 1
 
 /obj/machinery/dna_scannernew/proc/open(mob/user)
 	if(!open)
