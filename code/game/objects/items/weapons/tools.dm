@@ -297,25 +297,30 @@
 
 
 /obj/item/weapon/weldingtool/afterattack(obj/O, mob/user, proximity)
-	if(!proximity) return
-	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
-		O.reagents.trans_to(src, max_fuel)
-		to_chat(user, "<span class='notice'>Welder refueled")
-		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+	if(!proximity)
 		return
-	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
-		message_admins("[key_name_admin(user)] triggered a fueltank explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-		log_game("[key_name(user)] triggered a fueltank explosion.")
-		to_chat(user, "<span class='rose'>That was stupid of you.</span>")
-		var/obj/structure/reagent_dispensers/fueltank/tank = O
-		tank.explode()
+	if(istype(O, /obj/structure/reagent_dispensers/fueltank))
+		if(!welding)
+			O.reagents.trans_to(src, max_fuel)
+			to_chat(user, "<span class='notice'>Welder refueled")
+			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+		else
+			to_chat(user, "<span class='rose'>That was stupid of you.</span>")
+			if(user.client && user.client.player_age == 0)
+				user.sleeping = 100
+				message_admins("[key_name_admin(user)] tried to explode a fueltank. [ADMIN_JMP(user)][ADMIN_FLW(user)]")
+				to_chat(user, "<span class='rose'>But the gods are watching.</span>")
+			else
+				message_admins("[key_name_admin(user)] triggered a fueltank explosion. [ADMIN_JMP(user)][ADMIN_FLW(user)]")
+				log_game("[key_name(user)] triggered a fueltank explosion.")
+				var/obj/structure/reagent_dispensers/fueltank/tank = O
+				tank.explode()
 		return
-	if (src.welding)
+	if(welding)
 		remove_fuel(1)
 		var/turf/location = get_turf(user)
-		if (istype(location, /turf))
+		if(isturf(location))
 			location.hotspot_expose(700, 50, 1, src)
-
 			if(isliving(O))				//Welding can ignite mobs, splashed with fuel
 				var/mob/living/L = O
 				L.IgniteMob()
