@@ -19,6 +19,16 @@
 
 	var/camera_cache = null
 
+/obj/machinery/computer/security/New(location, obj/item/weapon/circuitboard/security/C)
+	..(location, C)
+	if(C) // For new assembled one.
+		network = C.network
+	else // For created from map editor.
+		if(istype(circuit, /obj/item/weapon/circuitboard/security))
+			var/obj/item/weapon/circuitboard/security/S = circuit
+			S.network = network
+			S.build_path = src.type // Circuit saves what kind of screen it represent.
+
 /obj/machinery/computer/security/check_eye(mob/user)
 	if ((get_dist(user, src) > 1 || (user.incapacitated()) || user.blinded) && !istype(user, /mob/living/silicon))
 		return null
@@ -212,8 +222,26 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "telescreen"
 	light_color = "#ffffbb"
+	layer = 4
 	network = list("thunder")
 	density = 0
+
+/obj/machinery/computer/security/telescreen/New(location, C, mob/user) // Remove this after refactor creating telescreen.
+	..(location, C)
+	if(C) // Only for new assembled one.
+		dir = SOUTH
+		pixel_y = 32
+		pixel_x = 0
+		for(var/i = 5; i >= 0; i -= 1)
+			var/direct = input(user, "Direction?", "Assembling telescreen", null) in list("LEAVE IT", "NORTH", "EAST", "SOUTH", "WEST" )
+			if(direct != "LEAVE IT")
+				dir = text2dir(direct)
+			pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
+			pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
+			if(i != 0)
+				var/confirm = alert(user, "Is this what you want? Chances Remaining: [i]", "Confirmation", "Yes", "No")
+				if(confirm == "Yes")
+					break
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)

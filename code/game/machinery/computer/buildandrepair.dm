@@ -443,5 +443,6 @@
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				to_chat(user, "\blue You connect the monitor.")
-				new src.circuit.build_path (src.loc, circuit)
+				invisibility = 101 // Duct-tape for telescreen assemble.
+				new src.circuit.build_path (src.loc, circuit, user) // Remove 'user' after fix telescreen.
 				qdel(src)
