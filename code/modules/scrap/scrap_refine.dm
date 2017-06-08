@@ -34,6 +34,10 @@
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
+	/* //TODO: Add scrap lump welding tool refinement
+/obj/item/weapon/scrap/attack_self(mob/living/user as mob)
+	user << "<span class='notice'>You carefully pick through [src]!</span>"
+*/
 var/global/list/datum/stack_recipe/scrap_recipes = list ( \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
