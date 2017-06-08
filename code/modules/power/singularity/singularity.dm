@@ -204,14 +204,15 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
+	for(var/tile in spiral_range_turfs(grav_pull, src, 0))
 		var/turf/T = tile
 		if(!T)
 			continue
 		if(get_dist(T, src) > consume_range)
 			T.singularity_pull(src, current_size)
 		else
-			consume(T)
+			if( current_size > 1 )
+				consume(T)
 		for(var/thing in T)
 			var/atom/movable/X = thing
 			if(get_dist(X, src) > consume_range)
@@ -225,7 +226,7 @@
 	return 1
 
 /obj/singularity/proc/consume(atom/A)
-	var/gain = A.singularity_act(current_size)
+	var/gain = A.singularity_act(src)
 	src.energy += gain
 	return
 
@@ -348,7 +349,9 @@
 			R.receive_pulse(energy)
 	return
 
-/obj/singularity/singularity_act()
+/obj/singularity/singularity_act(obj/singularity/S)
+	if(S == src)
+		return 0
 	var/gain = (energy/2)
 	var/dist = max((current_size - 2),1)
 	explosion(src.loc,(dist),(dist*2),(dist*4))
