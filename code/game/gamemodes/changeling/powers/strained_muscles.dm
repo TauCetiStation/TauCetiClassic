@@ -36,7 +36,8 @@
 /obj/effect/proc_holder/changeling/strained_muscles/process()
 	if(active)
 		stacks++
-		if(stacks >= 30)
+		owner.mind.changeling.chem_charges = max(owner.mind.changeling.chem_charges - 1.5, 0)
+		if(stacks >= 25)
 			to_chat(owner,"<span class='danger'>We collapse in exhaustion.</span>")
 			owner.Weaken(3)
 			owner.emote("gasp")
@@ -52,6 +53,8 @@
 			to_chat(owner,"<span class='warning'>Our legs are really starting to hurt...</span>")
 		if(stacks > 10)
 			owner.apply_effect(5,AGONY)
+		if(owner.mind.changeling.chem_charges < 1.5)
+			active = !active
 	else if(stacks)
 		stacks -= 0.25
 	else

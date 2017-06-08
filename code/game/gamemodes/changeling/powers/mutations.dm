@@ -18,6 +18,7 @@
 		var/mob/living/carbon/C = user
 		if(C.handcuffed)
 			qdel(C.handcuffed)
+			C.handcuffed = null
 	if(user.incapacitated())
 		to_chat(user,"<span class='userdanger'> We cannot reform our [weapon_name_simple] while restrained</span>")
 		return

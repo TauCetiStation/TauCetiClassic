@@ -9,22 +9,19 @@
 
 	if(user.digitalcamo)
 		to_chat(user, "<span class='notice'>We return to normal.</span>")
+		user.mind.changeling.chem_recharge_slowdown += 0.5
 		for(var/mob/living/silicon/ai/AI in ai_list)
 			if(AI.client)
 				AI.client.images -= user.digitaldisguise
 	else
 		to_chat(user, "<span class='notice'>We distort our form to prevent AI-tracking.</span>")
+		user.mind.changeling.chem_recharge_slowdown -= 0.5
 		user.digitaldisguise = image(loc = user)
 		user.digitaldisguise.override = 1
 		for(var/mob/living/silicon/ai/AI in ai_list)
 			if(AI.client)
 				AI.client.images += user.digitaldisguise
 	user.digitalcamo = !user.digitalcamo
-
-	spawn(0)
-		while(user && user.digitalcamo && user.mind && user.mind.changeling)
-			user.mind.changeling.chem_charges = max(user.mind.changeling.chem_charges - 1, 0)
-			sleep(40)
 
 	feedback_add_details("changeling_powers","CAM")
 	return 1

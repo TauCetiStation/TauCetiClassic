@@ -2,7 +2,7 @@
 	name = "Fleshmend"
 	desc = "Our flesh rapidly regenerates, healing our wounds."
 	helptext = "Heals a moderate amount of damage over a short period of time. Can be used while unconscious."
-	chemical_cost = 25
+	chemical_cost = 35
 	genomecost = 4
 	req_stat = UNCONSCIOUS
 
