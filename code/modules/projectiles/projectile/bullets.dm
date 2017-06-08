@@ -51,7 +51,7 @@
 	embed = 0
 
 /obj/item/projectile/bullet/rifle2
-	damage = 45
+	damage = 30
 	embed = 0
 
 /obj/item/projectile/bullet/heavy/a145
