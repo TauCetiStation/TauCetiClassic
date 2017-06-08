@@ -8,33 +8,73 @@
 	var/obj/structure/ladder/down = null	//the ladder below this one
 	var/obj/structure/ladder/up = null		//the ladder above this one
 
-/obj/structure/ladder/New()
+	var/static/list/ladders = list()
+
+/obj/structure/ladder/New(nid, nheight)
+	ladders += src
+
+	if(nid)
+		id = nid
+
+	if(nheight)
+		height = nheight
+
+	if(!id)
+		return
+
 	spawn(8)
-		for(var/obj/structure/ladder/L in world)
+		for(var/obj/structure/ladder/L in ladders)
 			if(L.id == id)
 				if(L.height == (height - 1))
-					down = L
+					Connect_down(L)
 					continue
 				if(L.height == (height + 1))
-					up = L
+					Connect_up(L)
 					continue
 
 			if(up && down)	//if both our connections are filled
 				break
 		update_icon()
 
+/obj/structure/ladder/Destroy()
+	Disconnect_All()
+	ladders -= src
+	return ..()
+
+/obj/structure/ladder/proc/Connect_down(obj/structure/ladder/Target)
+	if(Target)
+		down = Target
+		Target.up = src
+		Target.update_icon()
+	update_icon()
+
+/obj/structure/ladder/proc/Connect_up(obj/structure/ladder/Target)
+	if(Target)
+		up = Target
+		Target.down = src
+		Target.update_icon()
+	update_icon()
+
+/obj/structure/ladder/proc/Disconnect_All()
+	Disconnect_up()
+	Disconnect_down()
+
+/obj/structure/ladder/proc/Disconnect_down()
+	if(down)
+		down.up = null
+		down.update_icon()
+	down = null
+	update_icon()
+
+/obj/structure/ladder/proc/Disconnect_up()
+	if(up)
+		up.down = null
+		up.update_icon()
+	up = null
+	update_icon()
+
 /obj/structure/ladder/update_icon()
-	if(up && down)
-		icon_state = "ladder11"
-
-	else if(up)
-		icon_state = "ladder10"
-
-	else if(down)
-		icon_state = "ladder01"
-
-	else	//wtf make your ladders properly assholes
-		icon_state = "ladder00"
+	icon_state = "ladder[up ? 1 : 0][down ? 1 : 0]"
 
 /obj/structure/ladder/attack_hand(mob/user)
 	if(up && down)
