@@ -232,7 +232,7 @@ var/list/ai_verbs_default = list(
 		//if(icon_state == initial(icon_state))
 	var/icontype = ""
 	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
-	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Rainbow","Clown", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static", "Soviet", "Trapped", "Heartline","No Pulse","President","BANNED","Helios","House","Yuki","Hiss!","Alter Ego","Urist","Totally Not A Malf","Fuzz","Goon","Database","Glitchman","AmericAI","NT","Gentoo")
+	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Rainbow","Clown", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static", "Soviet", "Trapped", "Heartline","No Pulse","Holy Smile", "Warm Pled", "President","BANNED","Helios","House","Yuki","Hiss!","Alter Ego","Urist","Totally Not A Malf","Fuzz","Goon","Database","Glitchman","AmericAI","NT","Gentoo", "Smile Glitch")
 	switch(icontype)
 		if("Custom") icon_state = "[src.ckey]-ai"
 		if("Rainbow") icon_state = "ai-clown"
@@ -255,6 +255,8 @@ var/list/ai_verbs_default = list(
 		if("Trapped") icon_state = "ai-hades"
 		if("Heartline") icon_state = "ai-heartline"
 		if("No Pulse") icon_state = "ai-heartline_dead"
+		if("Holy Smile") icon_state = "ai-holysmile"
+		if("Warm Pled") icon_state = "ai-pled"
 		if("President") icon_state = "ai-president"
 		if("BANNED") icon_state = "ai-banned"
 		if("Helios") icon_state = "ai-helios"
@@ -274,6 +276,7 @@ var/list/ai_verbs_default = list(
 		if("AmericAI") icon_state = "ai-murica"
 		if("NT") icon_state = "ai-nanotrasen"
 		if("Gentoo") icon_state = "ai-gentoo"
+		if("Smile Glitch") icon_state = "ai-smileglitch"
 		else icon_state = "ai"
 	//else
 			//usr <<"You can only change your display once!"
@@ -702,7 +705,7 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer")
+	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Smile Line", "Pled")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for (var/obj/machinery/M in machines) //change status
 		if(istype(M, /obj/machinery/ai_status_display))
@@ -749,7 +752,8 @@ var/list/ai_verbs_default = list(
 		"default",
 		"floating face",
 		"alien",
-		"carp"
+		"carp",
+		"smileface"
 		)
 		input = input("Please select a hologram:") as null|anything in icon_list
 		if(input)
@@ -763,6 +767,8 @@ var/list/ai_verbs_default = list(
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo3"))
 				if("carp")
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
+				if("smileface")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo5"))
 	return
 
 /*/mob/living/silicon/ai/proc/corereturn()

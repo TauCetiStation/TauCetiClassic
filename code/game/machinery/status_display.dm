@@ -272,6 +272,10 @@
 				set_picture("ai_facepalm")
 			if("Friend Computer")
 				set_picture("ai_friend")
+			if("Smile Line")
+				set_picture("ai_smileline")
+			if("Pled")
+				set_picture("ai_warmpled")
 
 		return
 
