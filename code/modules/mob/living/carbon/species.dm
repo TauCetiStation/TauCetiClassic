@@ -109,6 +109,9 @@
 /datum/species/New()
 	unarmed = new unarmed_type()
 
+	if(!has_organ[O_HEART])
+		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
+
 /datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
 
 	for(var/type in has_bodypart)

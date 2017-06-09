@@ -225,6 +225,9 @@ This function completely restores a damaged organ to perfect condition.
 		status = ORGAN_ROBOT
 	else
 		status = 0
+
+	amputated = 0
+	destspawn = 0
 	perma_injury = 0
 	brute_dam = 0
 	open = 0
@@ -533,9 +536,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 		clamped |= W.clamped
 		number_wounds += W.amount
 
-	// cap each type of damage, even if total damage from wounds exceeds that.
-	brute_dam = min(brute_dam, max_damage)
-	burn_dam = min(burn_dam, max_damage)
+	// cap each type of damage, even if total damage from wounds exceeds that, except for vital (robot body parts (of robot chests added) or species var).
+	if(!(vital && (owner.species.flags[NO_BLOOD] || (status & ORGAN_ROBOT))))
+		brute_dam = min(brute_dam, max_damage)
+		burn_dam = min(burn_dam, max_damage)
 
 	//things tend to bleed if they are CUT OPEN
 	if(owner && owner.should_have_organ(O_HEART) && (open && !clamped))
@@ -624,12 +628,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 				"<span class='moderate'><b>Your [name] explodes[gore]!</b></span>",
 				"<span class='danger'>You hear the [gore_sound].</span>")
 
-	status &= ~ORGAN_BROKEN
-	status &= ~ORGAN_BLEEDING
-	status &= ~ORGAN_SPLINTED
-	status &= ~ORGAN_ARTERY_CUT
+	status &= ~(ORGAN_BROKEN | ORGAN_BLEEDING | ORGAN_SPLINTED | ORGAN_ARTERY_CUT)
+
 	for(var/implant in implants)
 		qdel(implant)
+	implants.Cut()
+	wounds.Cut()
 
 	// If any bodyparts are attached to this, destroy them
 	for(var/obj/item/organ/external/BP in owner.bodyparts)
@@ -655,11 +659,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 						bodypart = new /obj/item/weapon/organ/head/posi(owner.loc, owner)
 					else
 						bodypart = new /obj/item/weapon/organ/head(owner.loc, owner)
-					owner.u_equip(owner.glasses)
-					owner.u_equip(owner.head)
-					owner.u_equip(owner.l_ear)
-					owner.u_equip(owner.r_ear)
-					owner.u_equip(owner.wear_mask)
 				if(ARM_RIGHT)
 					if(status & ORGAN_ROBOT)
 						bodypart = new /obj/item/robot_parts/r_arm(owner.loc)
@@ -683,19 +682,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 				if(HAND_RIGHT)
 					if(!(status & ORGAN_ROBOT))
 						bodypart = new /obj/item/weapon/organ/r_hand(owner.loc, owner)
-					owner.u_equip(owner.gloves)
 				if(HAND_LEFT)
 					if(!(status & ORGAN_ROBOT))
 						bodypart = new /obj/item/weapon/organ/l_hand(owner.loc, owner)
-					owner.u_equip(owner.gloves)
 				if(FOOT_RIGHT)
 					if(!(status & ORGAN_ROBOT))
 						bodypart = new /obj/item/weapon/organ/r_foot/(owner.loc, owner)
-					owner.u_equip(owner.shoes)
 				if(FOOT_LEFT)
 					if(!(status & ORGAN_ROBOT))
 						bodypart = new /obj/item/weapon/organ/l_foot(owner.loc, owner)
-					owner.u_equip(owner.shoes)
 
 			if(bodypart)
 				//Robotic limbs explode if sabotaged.
@@ -738,6 +733,21 @@ Note that amputating the affected organ does in fact remove the infection from t
 				I.loc = get_turf(src)
 				I.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), 30)
 
+	switch(body_part)
+		if(HEAD)
+			owner.remove_from_mob(owner.head)
+			owner.remove_from_mob(owner.glasses)
+			owner.remove_from_mob(owner.l_ear)
+			owner.remove_from_mob(owner.r_ear)
+			owner.remove_from_mob(owner.wear_mask)
+		if(HAND_RIGHT)
+			owner.remove_from_mob(owner.gloves)
+			owner.remove_from_mob(owner.r_hand)
+		if(HAND_LEFT)
+			owner.remove_from_mob(owner.gloves)
+			owner.remove_from_mob(owner.l_hand)
+		if(FOOT_RIGHT , FOOT_LEFT)
+			owner.remove_from_mob(owner.shoes)
 
 	owner.update_body()
 
@@ -874,14 +884,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 			suit.supporting_limbs |= src
 
 /obj/item/organ/external/proc/robotize()
-	src.status &= ~ORGAN_BROKEN
-	src.status &= ~ORGAN_BLEEDING
-	src.status &= ~ORGAN_SPLINTED
-	src.status &= ~ORGAN_CUT_AWAY
-	src.status &= ~ORGAN_ATTACHABLE
-	src.status &= ~ORGAN_DESTROYED
-	src.status |= ORGAN_ROBOT
-	src.destspawn = 0
+	status &= ~ORGAN_BROKEN
+	status &= ~ORGAN_BLEEDING
+	status &= ~ORGAN_SPLINTED
+	status &= ~ORGAN_CUT_AWAY
+	status &= ~ORGAN_ATTACHABLE
+	status &= ~ORGAN_DESTROYED
+	status &= ~ORGAN_ARTERY_CUT
+	status |= ORGAN_ROBOT
+	destspawn = 0
+	amputated = 0
 	for (var/obj/item/organ/external/BP in children)
 		BP.robotize()
 
