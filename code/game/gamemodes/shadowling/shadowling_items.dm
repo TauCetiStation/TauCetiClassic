@@ -14,7 +14,7 @@
 /obj/item/clothing/suit/space/shadowling
 	name = "chitin shell"
 	desc = "Dark, semi-transparent shell. Protects against vacuum, but not against the light of the stars." //Still takes damage from spacewalking but is immune to space itself
-	icon_state = "golem"
+	icon_state = "shadowling_armor"
 	item_state = "golem"
 	body_parts_covered = FULL_BODY //Shadowlings are immune to space
 	cold_protection = FULL_BODY
@@ -33,7 +33,7 @@
 /obj/item/clothing/shoes/shadowling
 	name = "chitin feet"
 	desc = "Charred-looking feet. They have minature hooks that latch onto flooring."
-	icon_state = "golem"
+	icon_state = "shadowling_shoes"
 	unacidable = 1
 	flags = NOSLIP | ABSTRACT | DROPDEL
 	canremove = 0
@@ -55,7 +55,7 @@
 /obj/item/clothing/gloves/shadowling
 	name = "chitin hands"
 	desc = "An electricity-resistant yet thin covering of the hands."
-	icon_state = "golem"
+	icon_state = "shadowling_gloves"
 	item_state = null
 	origin_tech = null
 	siemens_coefficient = 0
@@ -67,7 +67,7 @@
 /obj/item/clothing/head/shadowling
 	name = "chitin helm"
 	desc = "A helmet-like enclosure of the head."
-	icon_state = "golem"
+	icon_state = "shadowling_head"
 	item_state = null
 	origin_tech = null
 	unacidable = 1

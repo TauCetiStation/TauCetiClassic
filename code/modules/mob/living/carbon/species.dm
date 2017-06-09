@@ -106,6 +106,8 @@
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
+	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
+
 /datum/species/New()
 	unarmed = new unarmed_type()
 
@@ -543,7 +545,10 @@
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	)
+
 	burn_mod = 2
+
+	has_gendered_icons = FALSE
 
 
 /datum/species/shadowling/handle_post_spawn(mob/living/carbon/human/H)

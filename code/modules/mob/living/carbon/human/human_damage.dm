@@ -1,17 +1,22 @@
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/human/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
 		return
-	var/total_burn	= 0
-	var/total_brute	= 0
-	for(var/obj/item/organ/external/BP in bodyparts)	//hardcoded to streamline things a bit
-		total_brute	+= BP.brute_dam
-		total_burn	+= BP.burn_dam
-	health = 100 - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+
+	var/total_burn = 0
+	var/total_brute = 0
+	for(var/obj/item/organ/external/BP in bodyparts) // hardcoded to streamline things a bit
+		if((BP.status & ORGAN_ROBOT) && !BP.vital)
+			continue // *non-vital* robot limbs don't count towards shock and crit
+		total_brute += BP.brute_dam
+		total_burn += BP.burn_dam
+
+	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+
 	//TODO: fix husking
-	if( ((100 - total_burn) < config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
+	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD)
 		ChangeToHusk()
 	return
 

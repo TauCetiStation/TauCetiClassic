@@ -81,16 +81,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			H.underwear = 0
 			H.undershirt = 0
-			//M.faction |= "faithless"
 			H.faction = "faithless"
-
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(usr), slot_w_uniform)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(usr), slot_shoes)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(usr), slot_wear_suit)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(usr), slot_head)
-			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
-			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
-			H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
 			H.set_species(SHADOWLING)
 			H.dna.mutantrace = "shadowling"
 			H.update_mutantrace()

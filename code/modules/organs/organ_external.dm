@@ -914,7 +914,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 			return 1
 	return 0
 
-/obj/item/organ/external/get_icon(icon/race_icon, icon/deform_icon,gender="",fat="")
+/obj/item/organ/external/get_icon(icon/race_icon, icon/deform_icon, gender = "", fat = "")
+	if(!owner.species.has_gendered_icons)
+		gender = ""
+
 	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags[IS_SYNTHETIC]))
 		return new /icon('icons/mob/human_races/robotic.dmi', "[body_zone][gender ? "_[gender]" : ""]")
 
@@ -923,6 +926,18 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	return new /icon(race_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
 
+/obj/item/organ/external/head/get_icon(icon/race_icon, icon/deform_icon)
+	if (!owner)
+		return ..()
+
+	var/g = ""
+	if(owner.species.has_gendered_icons)
+		g = owner.gender == FEMALE ? "_f" : "_m"
+
+	if(status & ORGAN_MUTATED)
+		. = new /icon(deform_icon, "[body_zone][g]")
+	else
+		. = new /icon(race_icon, "[body_zone][g]")
 
 /obj/item/organ/external/proc/is_usable()
 	return !(status & (ORGAN_DESTROYED|ORGAN_MUTATED|ORGAN_DEAD))
@@ -1164,17 +1179,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 30
 	min_broken_damage = 15
 
-
-/obj/item/organ/external/head/get_icon(icon/race_icon, icon/deform_icon)
-	if (!owner)
-		return ..()
-	var/g = "m"
-	if(owner.gender == FEMALE)
-		g = "f"
-	if(status & ORGAN_MUTATED)
-		. = new /icon(deform_icon, "[body_zone]_[g]")
-	else
-		. = new /icon(race_icon, "[body_zone]_[g]")
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)
