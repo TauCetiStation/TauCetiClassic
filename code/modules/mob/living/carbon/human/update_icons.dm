@@ -453,9 +453,9 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(dna)
 		switch(dna.mutantrace)
 			if("slime")
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_[species.name]_s", "layer"=-MUTANTRACE_LAYER)
-			if("golem","shadow","adamantine")
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_s", "layer"=-MUTANTRACE_LAYER)
+				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_[species.name]_s", -MUTANTRACE_LAYER)
+			if("golem" , "shadow")
+				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
 
 	if(species.name == SHADOWLING && head)
 		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s", LIGHTING_LAYER + 1)

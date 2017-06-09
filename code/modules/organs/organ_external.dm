@@ -89,6 +89,9 @@
 #define DROPLIMB_THRESHOLD_DESTROY 1
 #define ORGAN_DAMAGE_SPILLOVER_MULTIPLIER 0.005
 /obj/item/organ/external/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
+	brute = round(brute * owner.species.brute_mod, 0.1)
+	burn = round(burn * owner.species.burn_mod, 0.1)
+
 	if((brute <= 0) && (burn <= 0))
 		return 0
 

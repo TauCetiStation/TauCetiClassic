@@ -8,13 +8,22 @@
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
 	var/damage_mask = TRUE
-	var/eyes = "eyes"                                  // Icon for eyes.
+	var/eyes = "eyes"                                    // Icon for eyes.
+
+	// Combat vars.
+	var/total_health = 100                               // Point at which the mob will enter crit.
+	var/unarmed                                          // For empty hand harm-intent attack
+	var/unarmed_type = /datum/unarmed_attack
+	var/brute_mod = 1                                    // Physical damage multiplier (0 == immunity).
+	var/burn_mod = 1                                     // Burn damage multiplier.
+	var/oxy_mod = 1                                      // Oxyloss multiplier.
+	var/tox_mod = 1                                      // Toxloss multiplier.
+	var/brain_mod = 1                                    // Brainloss multiplier.
+	var/speed_mod =  0                                   // How fast or slow specific specie.
 
 	var/primitive                // Lesser form, if any (ie. monkey for humans)
 	var/tail                     // Name of tail image in species effects icon file.
 	var/language                 // Default racial language, if any.
-	var/unarmed                  //For empty hand harm-intent attack
-	var/unarmed_type = /datum/unarmed_attack
 	var/secondary_langs = list() // The names of secondary languages that are available to this species.
 	var/attack_verb = "punch"    // Empty hand hurt intent verb.
 	var/punch_damage = 0		 // Extra empty hand attack damage.
@@ -43,10 +52,6 @@
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
-
-	var/brute_mod = null    // Physical damage reduction/malus.
-	var/burn_mod = null     // Burn damage reduction/malus.
-	var/speed_mod = 0		//How fast or slow specific specie.
 
 	var/list/flags = list()       // Various specific features.
 
@@ -133,6 +138,12 @@
 			IO.mechanize()
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
+	return
+
+/datum/species/proc/on_gain(mob/living/carbon/human/H)
+	return
+
+/datum/species/proc/on_loose(mob/living/carbon/human/H)
 	return
 
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
@@ -553,5 +564,76 @@
 
 /datum/species/shadowling/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
+
+	return ..()
+
+/datum/species/golem
+	name = GOLEM
+
+	icobase = 'icons/mob/human_races/r_golem.dmi'
+	deform = 'icons/mob/human_races/r_golem.dmi'
+
+	total_health = 200
+	oxy_mod = 0
+	tox_mod = 0
+	brain_mod = 0
+	speed_mod = 2
+
+	blood_color = "#515573"
+	flesh_color = "#137E8F"
+
+	flags = list(
+		NO_BLOOD = TRUE,
+		NO_BREATHE = TRUE,
+		NO_SCAN = TRUE,
+		NO_PAIN = TRUE,
+		NO_EMBED = TRUE,
+		RAD_IMMUNE = TRUE,
+		VIRUS_IMMUNE = TRUE,
+		BIOHAZZARD_IMMUNE = TRUE,
+		)
+
+	has_organ = list(
+		O_BRAIN = /obj/item/organ/internal/brain
+		)
+
+	has_gendered_icons = FALSE
+
+/datum/species/golem/on_gain(mob/living/carbon/human/H)
+	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
+	H.dna.mutantrace = "adamantine"
+	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")
+
+	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
+		if(x)
+			H.remove_from_mob(x)
+
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/golem, slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem, slot_head)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem, slot_wear_suit)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, slot_wear_mask)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, slot_gloves)
+
+	return ..()
+
+/datum/species/golem/on_loose(mob/living/carbon/human/H)
+	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
+	H.dna.mutantrace = null
+	h.real_name = "unknown"
+
+	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
+		if(x)
+			var/list/golem_items = list(
+				/obj/item/clothing/under/golem,
+				/obj/item/clothing/head/helmet/space/golem,
+				/obj/item/clothing/suit/space/golem,
+				/obj/item/clothing/shoes/golem,
+				/obj/item/clothing/mask/gas/golem,
+				/obj/item/clothing/gloves/golem
+				)
+
+			if(is_type_in_list(x, golem_items))
+				qdel(x)
 
 	return ..()

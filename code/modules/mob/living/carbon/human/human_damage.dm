@@ -20,17 +20,43 @@
 		ChangeToHusk()
 	return
 
+// =============================================
+
 /mob/living/carbon/human/getBrainLoss()
+	if(status_flags & GODMODE)
+		return 0
+
+	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
+		return 0
+
 	var/res = brainloss
 	var/obj/item/organ/internal/brain/IO = organs_by_name[O_BRAIN]
+
 	if(!IO)
-		return 0
-	if (IO.is_bruised())
+		return maxHealth * 2
+	if(IO.is_bruised())
 		res += 20
-	if (IO.is_broken())
+	if(IO.is_broken())
 		res += 50
-	res = min(res,maxHealth*2)
+
+	res = min(res, maxHealth * 2)
+
 	return res
+
+/mob/living/carbon/human/adjustBrainLoss(amount)
+	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
+		brainloss = 0
+	else
+		amount = amount * species.brain_mod
+		..(amount)
+
+/mob/living/carbon/human/setBrainLoss(amount)
+	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
+		brainloss = 0
+	else
+		..()
+
+// =============================================
 
 //These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/human/getBruteLoss()
@@ -41,6 +67,14 @@
 		amount += BP.brute_dam
 	return amount
 
+/mob/living/carbon/human/adjustBruteLoss(amount)
+	if(amount > 0)
+		take_overall_damage(amount, 0)
+	else
+		heal_overall_damage(-amount, 0)
+
+// =============================================
+
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
@@ -49,50 +83,55 @@
 		amount += BP.burn_dam
 	return amount
 
-
-/mob/living/carbon/human/adjustBruteLoss(amount)
-	if(species && species.brute_mod)
-		amount = amount*species.brute_mod
-
-	if(amount > 0)
-		take_overall_damage(amount, 0)
-	else
-		heal_overall_damage(-amount, 0)
-	hud_updateflag |= 1 << HEALTH_HUD
-
 /mob/living/carbon/human/adjustFireLoss(amount)
-	if(species && species.burn_mod)
-		amount = amount*species.burn_mod
-
 	if(amount > 0)
 		if(RESIST_HEAT in mutations)
 			return
 		take_overall_damage(0, amount)
 	else
 		heal_overall_damage(0, -amount)
-	hud_updateflag |= 1 << HEALTH_HUD
 
-/mob/living/carbon/human/Stun(amount)
-	if(HULK in mutations)
-		if(status_flags & CANSTUN)
-			stunned = max(max(stunned,amount/2),0)
+// =============================================
+
+/mob/living/carbon/human/getToxLoss()
+	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
+		toxloss = 0
+	return ..()
+
+/mob/living/carbon/human/adjustToxLoss(amount)
+	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
+		toxloss = 0
+	else
+		amount = amount * species.tox_mod
+		..(amount)
+
+/mob/living/carbon/human/setToxLoss(amount)
+	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
+		toxloss = 0
 	else
 		..()
 
-/mob/living/carbon/human/Weaken(amount)
-	if(HULK in mutations)
-		if(status_flags & CANWEAKEN)
-			weakened = max(amount/2,0)
-			update_canmove()	//updates lying, canmove and icons	return
+// =============================================
+
+/mob/living/carbon/human/getOxyLoss()
+	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
+		oxyloss = 0
+	return ..()
+
+/mob/living/carbon/human/adjustOxyLoss(amount)
+	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
+		oxyloss = 0
+	else
+		amount = amount * species.oxy_mod
+		..(amount)
+
+/mob/living/carbon/human/setOxyLoss(amount)
+	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
+		oxyloss = 0
 	else
 		..()
 
-/mob/living/carbon/human/Paralyse(amount)
-	if(HULK in mutations)
-		if(status_flags & CANPARALYSE)
-			paralysis = max(max(paralysis,amount),0)
-	else
-		..()
+// =============================================
 
 /mob/living/carbon/human/adjustCloneLoss(amount)
 	..()
@@ -127,6 +166,26 @@
 				BP.unmutate()
 				to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
 	hud_updateflag |= 1 << HEALTH_HUD
+
+// =============================================
+
+/mob/living/carbon/human/Stun(amount)
+	if(HULK in mutations)
+		stunned = 0
+	else
+		..()
+
+/mob/living/carbon/human/Weaken(amount)
+	if(HULK in mutations)
+		weakened = 0
+	else
+		..()
+
+/mob/living/carbon/human/Paralyse(amount)
+	if(HULK in mutations)
+		paralysis = 0
+	else
+		..()
 
 ////////////////////////////////////////////
 
@@ -281,12 +340,8 @@ This function restores all bodyparts.
 	damageoverlaytemp = 20
 	switch(damagetype)
 		if(BRUTE)
-			if(species && species.brute_mod)
-				damage = damage * species.brute_mod
 			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon)
 		if(BURN)
-			if(species && species.burn_mod)
-				damage = damage * species.burn_mod
 			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
