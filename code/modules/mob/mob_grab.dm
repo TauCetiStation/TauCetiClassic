@@ -2,7 +2,7 @@
 	name = "grab"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "reinforce"
-	flags = 0
+	flags = DROPDEL
 	var/obj/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/carbon/human/assailant = null
@@ -439,15 +439,6 @@
 				attacker.stomach_contents.Add(affecting)
 			qdel(src)
 
-
-/obj/item/weapon/grab/dropped()
-	loc = null
-	if(!destroying)
-		qdel(src)
-
-/obj/item/weapon/grab
-	var/destroying = 0
-
 /obj/item/weapon/grab/Destroy()
 	if(affecting)
 		animate(affecting, pixel_x = 0, pixel_y = 0, 4, 1, LINEAR_EASING)
@@ -459,9 +450,7 @@
 		if(assailant.client)
 			assailant.client.screen -= hud
 		assailant = null
-	qdel(hud)
-	hud = null
-	destroying = 1 // stops us calling qdel(src) on dropped()
+	QDEL_NULL(hud)
 	return ..()
 
 /obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)

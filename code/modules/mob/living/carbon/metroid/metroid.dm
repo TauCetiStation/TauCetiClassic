@@ -852,6 +852,8 @@
 	has_sensor = 0
 	canremove = 0
 	unacidable = 1
+	flags = ABSTRACT | DROPDEL
+
 
 /obj/item/clothing/shoes/golem
 	name = "golem's feet"
@@ -859,7 +861,7 @@
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = NOSLIP
+	flags = ABSTRACT | DROPDEL | NOSLIP
 	slowdown = SHOES_SLOWDOWN+2
 	unacidable = 1
 
@@ -872,15 +874,7 @@
 	canremove = 0
 	siemens_coefficient = 0
 	unacidable = 1
-
-/obj/item/clothing/mask/gas/golem
-	name = "golem's face"
-	desc = "The imposing face of an adamantine golem."
-	icon_state = "golem"
-	item_state = "golem"
-	canremove = 0
-	siemens_coefficient = 0
-	unacidable = 1
+	flags = ABSTRACT | DROPDEL
 	flags_inv = 0
 
 
@@ -892,6 +886,7 @@
 	siemens_coefficient = 0
 	canremove = 0
 	unacidable = 1
+	flags = ABSTRACT | DROPDEL
 
 
 /obj/item/clothing/head/helmet/space/golem
@@ -909,6 +904,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	flags = ABSTRACT | DROPDEL
 	flags_inv = 0
 	slowdown = 0
 	unacidable = 1
@@ -932,6 +928,7 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	flags = ABSTRACT | DROPDEL
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
 	slowdown = 0
 	unacidable = 1

@@ -837,12 +837,10 @@
 							var/datum/effect/effect/system/spark_spread/S = new
 							S.set_up(4,0,CM.loc)
 							S.start()
-							CM.drop_from_inventory(CM.handcuffed)
-							qdel(HC)
 						else
 							CM.visible_message("<span class='danger'>[CM] manages to remove the handcuffs!</span>", \
 								"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
-							CM.drop_from_inventory(CM.handcuffed)
+						CM.drop_from_inventory(CM.handcuffed)
 
 		else if(CM.legcuffed && (CM.last_special <= world.time))
 			if(!CM.canmove && !CM.resting)	return
@@ -883,16 +881,10 @@
 							var/datum/effect/effect/system/spark_spread/S = new
 							S.set_up(4,0,CM.loc)
 							S.start()
-							CM.drop_from_inventory(CM.legcuffed)
-							CM.legcuffed = null
-							CM.update_inv_legcuffed()
-							qdel(HC)
 						else
 							CM.visible_message("<span class='danger'>[CM] manages to remove the legcuffs!</span>", \
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
-							CM.drop_from_inventory(CM.legcuffed)
-							CM.legcuffed = null
-							CM.update_inv_legcuffed()
+						CM.drop_from_inventory(CM.legcuffed)
 
 /mob/living/verb/lay_down()
 	set name = "Rest"

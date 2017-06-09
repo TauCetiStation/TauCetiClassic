@@ -215,14 +215,6 @@
 	spark_system.attach(src)
 	return
 
-/obj/item/weapon/melee/energy/blade/dropped()
-	qdel(src)
-	return
-
-/obj/item/weapon/melee/energy/blade/proc/throw_held()
-	qdel(src)
-	return
-
 /*
  * Energy Axe
  */

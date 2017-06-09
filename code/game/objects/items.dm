@@ -84,6 +84,7 @@
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/Destroy()
+	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
 		m.drop_from_inventory(src)
@@ -314,7 +315,8 @@
 
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
-	..()
+	if(DROPDEL & flags)
+		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -350,6 +352,8 @@
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
+		if(!H.has_bodypart_for_slot(slot))
+			return 0
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
 			if(FAT in H.mutations)
