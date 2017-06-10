@@ -105,6 +105,8 @@
 	// High brute damage or sharp objects may damage internal organs
 	var/damage_amt = brute
 	var/cur_damage = brute_dam
+	var/pure_brute = brute
+	var/pure_burn = burn
 	if(laser)
 		damage_amt += burn
 		cur_damage += burn_dam
@@ -173,13 +175,13 @@
 				else
 					edge_eligible = 1
 
-			if(edge_eligible && brute >= max_damage / DROPLIMB_THRESHOLD_EDGE && prob(brute))
+			if(edge_eligible && pure_brute >= max_damage / DROPLIMB_THRESHOLD_EDGE && prob(pure_brute))
 				droplimb(null, null, DROPLIMB_EDGE)
-			else if(burn >= max_damage / DROPLIMB_THRESHOLD_DESTROY && prob(burn / 3))
+			else if(pure_burn >= max_damage / DROPLIMB_THRESHOLD_DESTROY && prob(pure_burn / 3))
 				droplimb(null, null, DROPLIMB_BURN)
-			else if(brute >= max_damage / DROPLIMB_THRESHOLD_DESTROY && prob(brute))
+			else if(pure_brute >= max_damage / DROPLIMB_THRESHOLD_DESTROY && prob(pure_brute))
 				droplimb(null, null, DROPLIMB_BLUNT)
-			else if(brute >= max_damage / DROPLIMB_THRESHOLD_TEAROFF && prob(brute / 3))
+			else if(pure_brute >= max_damage / DROPLIMB_THRESHOLD_TEAROFF && prob(pure_brute / 3))
 				droplimb(null, null, DROPLIMB_EDGE)
 
 	if(update_damstate())
@@ -1020,6 +1022,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
+	w_class = ITEM_SIZE_HUGE // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
 
 /obj/item/organ/external/groin
@@ -1036,6 +1039,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 35
 	vital = TRUE
+	w_class = ITEM_SIZE_LARGE
 
 
 /obj/item/organ/external/head
@@ -1050,6 +1054,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
+	w_class = ITEM_SIZE_NORMAL
 
 	var/disfigured = FALSE
 
@@ -1066,6 +1071,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/organ/external/l_arm/process()
 	..()
@@ -1084,6 +1090,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/organ/external/r_arm/process()
 	..()
@@ -1101,6 +1108,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.5
 	max_damage = 30
 	min_broken_damage = 15
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/organ/external/l_hand/process()
 	..()
@@ -1118,6 +1126,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.5
 	max_damage = 30
 	min_broken_damage = 15
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/organ/external/r_hand/process()
 	..()
@@ -1137,6 +1146,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
+	w_class = ITEM_SIZE_NORMAL
 
 
 /obj/item/organ/external/r_leg
@@ -1153,6 +1163,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.75
 	max_damage = 50
 	min_broken_damage = 30
+	w_class = ITEM_SIZE_NORMAL
 
 
 /obj/item/organ/external/l_foot
@@ -1167,6 +1178,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.5
 	max_damage = 30
 	min_broken_damage = 15
+	w_class = ITEM_SIZE_SMALL
 
 
 /obj/item/organ/external/r_foot
@@ -1181,6 +1193,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	arterial_bleed_severity = 0.5
 	max_damage = 30
 	min_broken_damage = 15
+	w_class = ITEM_SIZE_SMALL
 
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)

@@ -104,6 +104,7 @@
 	w_class = 5.0
 	icon_state = "offhand"
 	name = "offhand"
+	flags = ABSTRACT
 
 /obj/item/weapon/twohanded/offhand/unwield()
 	qdel(src)
@@ -272,8 +273,10 @@
 
 /obj/item/weapon/twohanded/dualsaber/unwield()
 	set_light(0)
+	w_class = initial(w_class)
 	return ..()
 
 /obj/item/weapon/twohanded/dualsaber/wield()
 	set_light(2)
+	w_class = 5
 	return ..()
