@@ -1,8 +1,5 @@
 
 //########################## CONTRABAND ;3333333333333333333 -Agouri ###################################################
-#define NUM_OF_POSTER_DESIGNS 36 // contraband posters
-
-#define NUM_OF_POSTER_DESIGNS_LEGIT 35 // corporate approved posters
 
 #define POSTERNAME "name"
 
@@ -118,7 +115,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 /obj/item/weapon/poster/New(turf/loc, given_serial = 0)
 	if(!given_serial)
-		serial_number = rand(1, official ? NUM_OF_POSTER_DESIGNS_LEGIT : NUM_OF_POSTER_DESIGNS)
+		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)
 		resulting_poster = new(serial_number, official)
 	else
 		serial_number = given_serial
@@ -148,7 +145,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	if(rolled_official)
 		official = rolled_official
 	if(serial_number == loc)
-		serial_number = rand(1, official ? NUM_OF_POSTER_DESIGNS_LEGIT : NUM_OF_POSTER_DESIGNS)	//This is for the mappers that want individual posters without having to use rolled posters.
+		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)	//This is for the mappers that want individual posters without having to use rolled posters.
 	if(official)
 		icon_state = "poster[serial_number]_legit"
 		name += legitposters[serial_number][POSTERNAME]
