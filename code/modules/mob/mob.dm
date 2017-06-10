@@ -719,69 +719,50 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(restrained())					return 0
 	return 1
 
-//Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
-/mob/proc/update_canmove()
-	if(!ismob(src))
-		return
-	if(istype(buckled, /obj/vehicle))
-		var/obj/vehicle/V = buckled
-		if(incapacitated())
-			V.unload(src)
-			lying = 1
-			canmove = 0
-		else
-			if(buckled.buckle_lying != -1)
-				lying = buckled.buckle_lying
-			canmove = 1
-			pixel_y = V.mob_offset_y
-	else if(buckled)
+// Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
+// We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
+/mob/proc/update_canmove(no_transform = FALSE)
+
+	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+
+	lying = (ko || crawling || resting) && !captured && !buckled
+	canmove = !(ko || resting || stunned || captured)
+
+	if(buckled)
 		if(buckled.buckle_lying != -1)
 			lying = buckled.buckle_lying
-		if(istype(buckled, /obj/structure/stool/bed/chair))
-			var/obj/structure/stool/bed/chair/C = buckled
-			if(C.flipped)
-				lying = 1
-		if(!buckled.buckle_movable)
-			anchored = 1
-			canmove = 0
-		else
-			anchored = 0
-			canmove = 1
-	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
-		lying = 1
-		canmove = 0
-	else if(stunned)
-		canmove = 0
-	else if(captured)
-		anchored = 1
-		canmove = 0
-		lying = 0
-	else if (crawling)
-		lying = 1
-		canmove = 1
-	else if(!buckled)
-		lying = !can_stand
-		canmove = has_limbs
+		canmove = canmove && buckled.buckle_movable
+		anchored = buckled.buckle_movable
 
-	if(lying)
-		density = 0
-		if((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove) )
-			if(!isalien(src))
-				drop_l_hand()
-				drop_r_hand()
-	else
-		density = 1
+		if(istype(buckled, /obj/vehicle))
+			var/obj/vehicle/V = buckled
+			if(!canmove)
+				V.unload(src)
+			else
+				pixel_y = V.mob_offset_y
+		else
+			if(istype(buckled, /obj/structure/stool/bed/chair))
+				var/obj/structure/stool/bed/chair/C = buckled
+				if(C.flipped)
+					lying = 1
+
+	anchored = anchored || captured
+	density = !lying
+
+	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isalien(src))
+		drop_l_hand()
+		drop_r_hand()
 
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
-			canmove = 0
+			canmove = FALSE
 			break
 
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
 
-	if(lying != lying_prev)
+	if(!no_transform && lying != lying_prev)
 		update_transform()
 	if(update_icon)	//forces a full overlay update
 		update_icon = FALSE

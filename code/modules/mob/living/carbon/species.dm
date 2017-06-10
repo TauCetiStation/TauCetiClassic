@@ -620,7 +620,7 @@
 /datum/species/golem/on_loose(mob/living/carbon/human/H)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
 	H.dna.mutantrace = null
-	h.real_name = "unknown"
+	H.real_name = "unknown"
 
 	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
 		if(x)
