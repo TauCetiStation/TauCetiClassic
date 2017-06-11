@@ -44,13 +44,7 @@
 				connected.cut_hand(user)
 
 /obj/machinery/mining/brace/proc/connect()
-
-	var/turf/T = get_step(get_turf(src), src.dir)
-
-	for(var/thing in T.contents)
-		if(istype(thing, /obj/machinery/mining/drill))
-			connected = thing
-			break
+	connected = locate(/obj/machinery/mining/drill, get_step(src, dir))
 
 	if(!connected)
 		return
