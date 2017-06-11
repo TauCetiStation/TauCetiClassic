@@ -131,7 +131,6 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc = "A large piece of space-resistant printed paper. "
 	icon = 'icons/obj/contraband.dmi'
 	anchored = TRUE
-	var/idir
 	var/serial_number	//Will hold the value of src.loc if nobody initialises it
 	var/ruined = FALSE
 	var/official = FALSE
@@ -202,12 +201,15 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 /turf/simulated/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
 	if(!P.resulting_poster)	return
 
-	for(var/obj/structure/sign/poster/PO in user.loc.contents) //Let's see if it already has a poster
-		if(istype(PO, /obj/structure/sign/poster) && PO.idir == get_dir(src, user))
-			to_chat(user, "<span class='notice'>The wall is already has a poster!</span>")
-			return
 	if((x - user.x) != 0 && (y - user.y) != 0) // check if user not on the axis with wall
 		return
+	for(var/obj/structure/sign/poster/PO in user.loc.contents) //Let's see if it already has a poster
+		if(istype(PO, /obj/structure/sign/poster) && \
+		PO.pixel_x == (x - user.x) * P.resulting_poster.bound_width && \
+		PO.pixel_y == (y - user.y) * P.resulting_poster.bound_height)
+			to_chat(user, "<span class='notice'>The wall is already has a poster!</span>")
+			return
+
 	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>")//Looks like it's uncluttered enough. Place the poster.
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
@@ -218,7 +220,6 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	D.loc = user.loc
 	D.pixel_x = (x - D.x) * D.bound_width
 	D.pixel_y = (y - D.y) * D.bound_height
-	D.idir = get_dir(src, user)
 	D.official = P.official
 	qdel(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
 	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, 1)
