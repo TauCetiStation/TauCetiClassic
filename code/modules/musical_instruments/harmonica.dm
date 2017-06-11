@@ -16,16 +16,19 @@
 	if(user.zone_sel.selecting == O_MOUTH && last_played <= world.time)
 		play(user)
 
-
 /obj/item/device/harmonica/New()
 	channel = rand(1000, 1024)
 
 /obj/item/device/harmonica/proc/play(mob/living/carbon/user)
 	last_played = world.time + cooldown
-	playsound(src, "sound/musical_instruments/harmonica/fharp[rand(1,8)].ogg", 50, 1, falloff = 5, channel = channel)
-	user.visible_message( pick("[user] plays a bluesy tune with his harmonica!", "[user] plays a warm tune with his harmonica!", \
-		"[user] plays a delightful tune with his harmonica!", "[user] plays a chilling tune with his harmonica!", "[user] plays a upbeat tune with his harmonica!"))
-	return
+	playsound(src, "sound/musical_instruments/harmonica/fharp[rand(1, 8)].ogg", 50, 1, falloff = 5, channel = channel)
+	var/message = pick(
+		"[user] plays a bluesy tune with his harmonica!",
+		"[user] plays a warm tune with his harmonica!",
+		"[user] plays a delightful tune with his harmonica!",
+		"[user] plays a chilling tune with his harmonica!",
+		"[user] plays a upbeat tune with his harmonica!")
+	user.visible_message("<span class='notice'>[message]</span>")
 
 /obj/item/device/harmonica/dropped(mob/user)
 	var/sound/melody = sound()
