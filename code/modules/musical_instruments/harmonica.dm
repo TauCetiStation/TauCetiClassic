@@ -1,7 +1,7 @@
 /obj/item/device/harmonica
 	name = "harmonica"
 	desc = "Much blues. So amaze. Wow."
-	icon = 'code/modules/musical_instruments/harmonica.dmi'
+	icon = 'icons/obj/musician.dmi'
 	icon_state = "harmonica"
 	item_state = "harmonica"
 	force = 5
@@ -22,7 +22,7 @@
 
 /obj/item/device/harmonica/proc/play(mob/living/carbon/user)
 	last_played = world.time + cooldown
-	playsound(src, "code/modules/musical_instruments/sound/harmonica/fharp[rand(1,8)].ogg", 50, 1, falloff = 5, channel = channel)
+	playsound(src, "sound/musical_instruments/harmonica/fharp[rand(1,8)].ogg", 50, 1, falloff = 5, channel = channel)
 	user.visible_message( pick("[user] plays a bluesy tune with his harmonica!", "[user] plays a warm tune with his harmonica!", \
 		"[user] plays a delightful tune with his harmonica!", "[user] plays a chilling tune with his harmonica!", "[user] plays a upbeat tune with his harmonica!"))
 	return
