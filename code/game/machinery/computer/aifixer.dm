@@ -15,11 +15,11 @@
 
 /obj/machinery/computer/aifixer/attackby(I, user)
 	if(istype(I, /obj/item/device/aicard))
-		var/obj/item/device/aicard/AIcard = I
-		if(stat & (NOPOWER|BROKEN))
+		if(stat & (NOPOWER | BROKEN))
 			to_chat(user, "This terminal isn't functioning right now, get it working!")
 			return
-		AIcard.transfer_ai("AIFIXER","AICARD",src,user)
+		var/obj/item/device/aicard/AIcard = I
+		AIcard.transfer_ai("AIFIXER", "AICARD", src, user)
 	else
 		..()
 	return
@@ -86,11 +86,11 @@
 			src.occupier.adjustToxLoss(-1)
 			src.occupier.adjustBruteLoss(-1)
 			src.occupier.updatehealth()
-			if (src.occupier.health >= 0 && src.occupant.stat == DEAD)
+			if (src.occupier.health >= 0 && src.occupier.stat == DEAD)
 				src.occupier.stat = CONSCIOUS
 				src.occupier.lying = 0
-				dead_mob_list -= src.occupant
-				living_mob_list += src.occupant
+				dead_mob_list -= src.occupier
+				living_mob_list += src.occupier
 				src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
 				src.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
 				src.occupier.add_ai_verbs()
