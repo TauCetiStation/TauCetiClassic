@@ -204,3 +204,8 @@
 
 // (Bay12 = -2), but we don't have that projectile code, so...
 #define PROJECTILE_FORCE_MISS -1
+
+#define COORD(A) "([A.x],[A.y],[A.z])"
+
+//Error handler defines
+#define ERROR_USEFUL_LEN 2
