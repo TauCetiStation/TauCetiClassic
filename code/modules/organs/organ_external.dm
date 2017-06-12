@@ -114,7 +114,7 @@
 	if(bodypart_organs.len && (cur_damage + damage_amt >= max_damage || (((sharp && damage_amt >= 5) || damage_amt >= 10) && prob(5))))
 		// Damage an internal organ
 		var/obj/item/organ/internal/IO = pick(bodypart_organs)
-		IO.take_damage(brute / 2)
+		IO.take_damage(damage_amt / 2)
 		brute /= 2
 		if(laser)
 			burn /= 2
