@@ -541,8 +541,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		clamped |= W.clamped
 		number_wounds += W.amount
 
-	// cap each type of damage, even if total damage from wounds exceeds that, except for vital (robot body parts (of robot chests added) or species var).
-	if(!(vital && (owner.species.flags[NO_BLOOD] || (status & ORGAN_ROBOT))))
+	// Continued damage to vital organs can kill you, and robot organs don't count towards total damage so no need to cap them.
+	if(!(vital || (status & ORGAN_ROBOT)))
 		brute_dam = min(brute_dam, max_damage)
 		burn_dam = min(burn_dam, max_damage)
 
