@@ -34,9 +34,13 @@
  * in the middle with by conditions you want.
  *
  * Should return `TRUE` to stop music.
+ *
+ * Example:
+ * > /obj/entity/unable_to_play(mob/living/user)
+ * > 	return ..() || ...conditions
  */
 /obj/proc/unable_to_play(mob/living/user)
-	return FALSE
+	return user.incapacitated() || user.lying
 
 
 /datum/music_player

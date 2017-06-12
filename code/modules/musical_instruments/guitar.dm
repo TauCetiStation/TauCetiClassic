@@ -20,7 +20,7 @@
 	return ..()
 
 /obj/item/device/guitar/unable_to_play(mob/living/user)
-	return loc != user
+	return ..() || loc != user
 
 /obj/item/device/guitar/attack_self(mob/living/user)
 	MP.interact(user)
