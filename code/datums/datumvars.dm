@@ -403,6 +403,9 @@ body
 					index++
 				html += "</ul>"
 
+	else if (isnum(value) && findtext(name, "flags")) // flag variables may not always have flags in name, but i don't know any other way to detect them, so better than nothing.
+		html += "(<a href='?_src_=vars;view_flags=[value]'>F</a>) [name] = <span class='value'>[value]</span>"
+
 	else
 		html += "[name] = <span class='value'>[value]</span>"
 
@@ -418,6 +421,11 @@ body
 		if(!check_rights(R_DEBUG|R_ADMIN))	return
 
 		debug_variables(locate(href_list["Vars"]))
+
+	else if(href_list["view_flags"])
+		if(!check_rights(R_DEBUG | R_VAREDIT))
+			return
+		view_flags_variables(href_list["view_flags"])
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 	else if(href_list["rename"])
@@ -951,3 +959,26 @@ body
 		src.debug_variables(DAT)
 
 	return
+
+/client/proc/view_flags_variables(N)
+	if(!usr.client || !usr.client.holder)
+		return
+
+	if(isnull(N))
+		return
+
+	if(!isnum(N))
+		N = text2num(N)
+
+	var/dat = "<html><head><title>Bit Flags list</title></head>"
+
+	var/i = 1
+	do
+		if(i & N)
+			dat += "<b>[i]</b> = <font color='#FF0000'>TRUE</font><br>"
+		else
+			dat += "<b>[i]</b> = FALSE<br>"
+		i *= 2
+	while(i < ~0)
+
+	usr << browse(dat, "window=bit_flags")
