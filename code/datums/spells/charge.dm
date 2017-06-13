@@ -58,7 +58,7 @@
 					break
 	if(!charged_item)
 		for(var/obj/machinery/MACH in range(1,C))
-			if(istype(MACH,/obj/machinery/power/smes))
+			if(istype(MACH, /obj/machinery/power/smes))
 				var/obj/machinery/power/smes/SMES = MACH
 				SMES.charge = bad_charge ? 0 : SMES.capacity
 				charged_item = SMES.name

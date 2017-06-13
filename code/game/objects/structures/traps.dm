@@ -13,7 +13,7 @@
 /obj/structure/trap/New()
 	..()
 	if(!ignore_typecache)
-		ignore_typecache = typecacheof(list(/obj/effect,/mob/dead))
+		ignore_typecache = typecacheof(list(/obj/effect, /mob/dead))
 
 /obj/structure/trap/examine(mob/user)
 	..()
@@ -90,7 +90,7 @@
 
 /obj/structure/trap/damage/flare()
 	..()
-	var/obj/structure/rock/giant_rock = new(get_turf(src))
+	var/obj/structure/rock/giant_rock = new (get_turf(src))
 	QDEL_IN(giant_rock, 200)
 
 /obj/structure/rock

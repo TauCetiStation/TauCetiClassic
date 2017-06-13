@@ -20,7 +20,7 @@
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
-	playsound(src.loc, sound, 50, 1)
+	playsound(loc, sound, 50, 1)
 
 	if(do_after(usr,delay,target=usr))
 		for(var/i in 0 to summon_amt)
@@ -78,8 +78,8 @@
 	unacidable = 1
 
 /obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)
-	for(var/mob/M in get_turf(loc))
-		Proj.on_hit(M, M.bullet_act(Proj, def_zone))
+	for(var/mob/living/M in get_turf(loc))
+		M.bullet_act(Proj, def_zone)
 
 /obj/effect/forcefield/magic
 	var/mob/wizard

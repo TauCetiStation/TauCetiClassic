@@ -13,8 +13,7 @@
 	if(charge_type == "recharge" && recharge)
 		INVOKE_ASYNC(src, .proc/start_recharge)
 	cast(targets,thearea)
-	invocation(thearea)
-	after_cast(targets)
+	invocation()
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)
 	for(var/mob/living/target in targets)
@@ -27,8 +26,9 @@
 		A = pick(teleportlocs)
 
 	var/area/thearea = teleportlocs[A]
-	playsound(usr,'sound/magic/Teleport_diss.ogg',100,2)
+	usr.say("SCYAR NILA [thearea.name]")
 	if(do_after(usr, 50, target = usr))
+		playsound(usr,'sound/magic/Teleport_diss.ogg', 100, 2)
 		return thearea
 	else
 		return FALSE

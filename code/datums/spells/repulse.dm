@@ -11,7 +11,7 @@
 	var/maxthrow = 5
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets, mob/user = usr)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
@@ -19,8 +19,7 @@
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM
 
-	for(var/am in thrownatoms)
-		var/atom/movable/AM = am
+	for(var/atom/movable/AM in thrownatoms)
 		if(AM == user || AM.anchored)
 			continue
 
@@ -38,4 +37,4 @@
 				var/mob/living/M = AM
 				M.Weaken(2)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
-			AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+			AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1, user)//So stuff gets tossed around at the same time.

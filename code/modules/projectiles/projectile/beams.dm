@@ -16,7 +16,7 @@
 
 /obj/item/projectile/beam/before_move()
 	..()
-	if(numbers_of_timestop > 0 && locate(/obj/effect/timestop) in range(2,loc)) // /obj/effect/timestop/proc/timestop() cannot catch in time this beam cuz of lack step_delay,
+	if(numbers_of_timestop > 0 && locate(/obj/effect/timestop) in range(2, loc)) // /obj/effect/timestop/proc/timestop() cannot catch in time this beam cuz of lack step_delay,
 		hitscan = TRUE 															//so i put it here, meh
 		paused = TRUE
 

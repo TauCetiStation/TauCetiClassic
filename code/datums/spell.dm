@@ -110,12 +110,12 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			if(prob(50))//Auto-mute? Fuck that noise
 				user.say(invocation)
 			else
-				user.say(replacetext(invocation," ","`"))
+				user.say(replacetext(invocation," ", "`"))
 		if("whisper")
 			if(prob(50))
 				user.whisper(invocation)
 			else
-				user.whisper(replacetext(invocation," ","`"))
+				user.whisper(replacetext(invocation," ", "`"))
 	if(sound)
 		playsound(user, sound, 100, 1)
 
@@ -123,7 +123,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	..()
 	charge_counter = charge_max
 	if(!casting_clothes)
-		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/suit/space/rig/wizard, /obj/item/clothing/head/wizard, /obj/item/clothing/head/helmet/space/rig/wizard))
+		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/suit/space/rig/wizard,
+		/obj/item/clothing/head/wizard, /obj/item/clothing/head/helmet/space/rig/wizard))
 
 /obj/effect/proc_holder/spell/Click()
 	if(cast_check())

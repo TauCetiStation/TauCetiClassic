@@ -24,7 +24,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	var/obj/effect/proc_holder/spell/Spell
 	var/uses = 1
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	var/proj_path = /obj/item/projectile/magic
 	var/invoke
 	var/s_fire
@@ -37,14 +37,15 @@
 	if(user.incapacitated() || user.lying)
 		return 0
 	if(s_fire)
-		playsound(src,s_fire, 100, 1)
+		playsound(src, s_fire, 100, 1)
 	if(invoke)
 		user.say(invoke)
 	var/obj/item/projectile/P = new proj_path(get_turf(src))
 	P.Fire(A, user)
 	uses--
 	if(uses <= 0)
-		user.drop_item(src)
+		user.drop_item()
+		return 0
 	return 1
 
 
@@ -54,7 +55,8 @@
 			Spell.revert_cast()
 		else
 			INVOKE_ASYNC(Spell, .obj/effect/proc_holder/spell/proc/start_recharge)
-	qdel(src)
+		Spell = null
+	return ..()
 
 ///////////////////////////////////////////
 ///////////////////////////////////////////
@@ -124,7 +126,7 @@
 /obj/effect/proc_holder/spell/in_hand/arcane_barrage
 	name = "Arcane Barrage"
 	desc = "Fire a torrent of arcane energy at your foes with this (powerful) spell. Requires both hands free to use. Learning this spell makes you unable to learn Lesser Summon Gun."
-	charge_max = 50
+	charge_max = 500
 	action_icon_state = "arcane_barrage"
 	summon_path = /obj/item/weapon/magic/arcane_barrage
 
@@ -146,7 +148,7 @@
 		return
 	if(uses > 0)
 		var/obj/item/weapon/magic/arcane_barrage/Arcane = new type
-		Arcane.uses = uses - 1
+		Arcane.uses = uses
 		C.drop_item()
 		C.swap_hand()
 		C.drop_item()

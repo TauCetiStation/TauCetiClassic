@@ -50,7 +50,7 @@
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
 		return
-	if(istype(M.species,/datum/species/skeleton))
+	if(M.species.name == SKELETON)
 		to_chat(user, "<span class='warning'>This body has been already dried!</span>")
 		return
 
@@ -135,7 +135,7 @@
 	if(!ishuman(usr))
 		return 1
 	var/mob/living/carbon/human/H = usr
-	if(H.mind == wizard)
+	if(H.mind.special_role == "Wizard")
 		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")
 		return
 	for(var/datum/mind/mind in previous_users)
@@ -154,7 +154,7 @@
 			make_apprentice(H, href_list["school"])
 
 /obj/item/weapon/contract/proc/make_apprentice(mob/living/carbon/human/M, type = "")
-	new /obj/effect/effect/smoke(get_turf(src))
+	new /obj/effect/effect/smoke (get_turf(src))
 	var/wizard_name = "Grand Magus"
 	if(wizard)
 		wizard_name = wizard.name
@@ -186,7 +186,7 @@
 		M.mind.objectives += new_objective
 	uses--
 	previous_users += M.mind
-//	M << sound('sound/effects/magic.ogg')
+	playsound(M, 'sound/effects/magic.ogg', 100, 1)
 
 /obj/item/weapon/contract/proc/equip_apprentice(mob/living/carbon/human/target)
 	for(var/obj/item/I in target)

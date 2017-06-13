@@ -20,9 +20,9 @@
 	for(var/mob/living/target in targets)
 		for(var/x in mutations)
 			target.mutations.Add(x)
-			target.disabilities |= disabilities
+		target.disabilities |= disabilities
 		target.update_mutations()	//update target's mutation overlays
-		addtimer(CALLBACK(src, .proc/remove_mutations,target,mutations),duration)
+		addtimer(CALLBACK(src, .proc/remove_mutations, target, mutations), duration)
 
 	return
 

@@ -39,7 +39,7 @@
 	if(!use_charge(user, 2))
 		return
 	next_click = world.time + 10
-	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(get_turf(src))
+	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
 	if(user.a_intent == "grab")
 		LE.grabber = 1
 	else if(user.a_intent == "disarm" && prob(65))

@@ -1,3 +1,5 @@
+#define CONTRACT_PRICE 5
+
 /datum/spellbook_entry
 	var/name = "Entry Name"
 
@@ -14,15 +16,15 @@
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
 
-/datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) // Specific circumstances
-	if(book.uses<cost)
+/datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
+	if(book.uses < cost)
 		return 0
 	for(var/obj/effect/proc_holder/spell/spell in user.mind.spell_list)
-		if(istype(spell,spell_type))
+		if(istype(spell, spell_type))
 			return 0
 	return 1
 
-/datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
+/datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return 1 on success
 	if(!S || QDELETED(S))
 		S = new spell_type()
 	feedback_add_details("wizard_spell_learned",log_name)
@@ -30,7 +32,7 @@
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
 	return 1
 
-/datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
 	if(!refundable)
 		return 0
 	if(!S)
@@ -40,16 +42,17 @@
 			return 1
 	return 0
 
-/datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return point value or -1 for failure
-	var/area/wizard_station/A = locate()
-	if(!(user in A.contents))
+/datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return point value or -1 for failure
+	if(!istype(get_area(user), /area/wizard_station))
 		to_chat(user, "<span clas=='warning'>You can only refund spells at the wizard lair</span>")
 		return -1
 	if(!S)
 		S = new spell_type()
 	for(var/obj/effect/proc_holder/spell/aspell in user.spell_list)
 		if(initial(S.name) == initial(aspell.name))
-			user.spellremove(aspell)
+			user.spell_list -= aspell
+			user.mind.spell_list -= aspell
+			qdel(aspell)
 			qdel(S)
 			return cost
 	return -1
@@ -59,10 +62,10 @@
 	var/dat =""
 	dat += "<b>[initial(S.name)]</b>"
 	if(S.charge_type == "recharge")
-		dat += " Cooldown:[S.charge_max/10]"
+		dat += " Cooldown:[S.charge_max / 10]"
 	dat += " Cost:[cost]<br>"
 	dat += "<i>[S.desc][desc]</i><br>"
-	dat += "[S.clothes_req?"Needs wizard garb":"Can be cast without wizard garb"]<br>"
+	dat += "[S.clothes_req ? "Needs wizard garb" : "Can be cast without wizard garb"]<br>"
 	return dat
 
 /datum/spellbook_entry/fireball
@@ -167,6 +170,11 @@
 	. = ..()
 	user.tesla_ignore = TRUE
 
+/datum/spellbook_entry/lightningbolt/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	. = ..()
+	if(.)
+		user.tesla_ignore = FALSE
+
 /datum/spellbook_entry/arcane_barrage
 	name = "Arcane Barrage"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/arcane_barrage
@@ -203,9 +211,9 @@
 	buy_word = "Summon"
 	var/item_path= null
 
-/datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	new item_path(get_turf(user))
-	feedback_add_details("wizard_spell_learned",log_name)
+/datum/spellbook_entry/item/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	new item_path (get_turf(user))
+	feedback_add_details("wizard_spell_learned", log_name)
 	return 1
 
 /datum/spellbook_entry/item/GetInfo()
@@ -213,7 +221,7 @@
 	dat += "<b>[name]</b>"
 	dat += " Cost:[cost]<br>"
 	dat += "<i>[desc]</i><br>"
-	if(surplus>=0)
+	if(surplus >= 0)
 		dat += "[surplus] left.<br>"
 	return dat
 
@@ -253,14 +261,15 @@
 	log_name = "SO"
 	category = "Defensive"
 
-/datum/spellbook_entry/item/scryingorb/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	if(..())
+/datum/spellbook_entry/item/scryingorb/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	. = ..()
+	if(.)
 		user.mutations.Add(XRAY)
 		user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 		user.see_in_dark = 8
 		user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		user.update_mutations()
-	return 1
+	return .
 
 /datum/spellbook_entry/item/soulstones
 	name = "Six Soul Stone Shards and the spell Artificer"
@@ -302,9 +311,9 @@
 	item_path = /obj/item/weapon/contract
 	log_name = "CT"
 	category = "Assistance"
-	cost = 5
+	cost = CONTRACT_PRICE
 
-/datum/spellbook_entry/item/contract/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/item/contract/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
 	var/obj/item/weapon/contract/contract = new(get_turf(user))
 	contract.wizard = user.mind
 	feedback_add_details("wizard_spell_learned",log_name)
@@ -334,13 +343,13 @@
 	buy_word = "Cast"
 	var/active = 0
 
-/datum/spellbook_entry/summon/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/summon/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
 	return ..() && !active
 
 /datum/spellbook_entry/summon/GetInfo()
 	var/dat =""
 	dat += "<b>[name]</b>"
-	if(cost>0)
+	if(cost > 0)
 		dat += " Cost:[cost]<br>"
 	else
 		dat += " No Cost<br>"
@@ -350,9 +359,7 @@
 	return dat
 
 /datum/spellbook_entry/summon/IsAvailible()
-	if(!ticker.mode) // In case spellbook is placed on map
-		return 0
-	return 1
+	return ticker.mode // In case spellbook is placed on map
 
 /obj/item/weapon/spellbook
 	name = "spell book"
@@ -363,7 +370,7 @@
 	var/uses = 10
 	var/temp = null
 	var/tab = null
-	var/mob/living/carbon/human/owner
+	var/datum/mind/owner
 	var/list/datum/spellbook_entry/entries = list()
 	var/list/categories = list()
 
@@ -386,6 +393,8 @@
 			qdel(E)
 	tab = categories[1]
 
+
+
 /obj/item/weapon/spellbook/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/contract))
 		var/obj/item/weapon/contract/contract = O
@@ -393,7 +402,7 @@
 			to_chat(user, "<span class='warning'>The contract has been used, you can't get your points back now!</span>")
 		else
 			to_chat(user, "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>")
-			uses++
+			uses += CONTRACT_PRICE
 			qdel(O)
 
 /obj/item/weapon/spellbook/proc/GetCategoryHeader(category)
@@ -440,9 +449,9 @@
 /obj/item/weapon/spellbook/attack_self(mob/user)
 	if(!owner)
 		to_chat(user, "<span class='notice'>You bind the spellbook to yourself.</span>")
-		owner = user
+		owner = user.mind
 		return
-	if(user != owner)
+	if(user.mind != owner)
 		to_chat(user, "<span class='warning'>The [name] does not recognize you as its owner and refuses to open!</span>")
 		return
 	user.set_machine(src)

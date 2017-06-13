@@ -185,8 +185,8 @@
 	damage_type = OXY
 	nodamage = 1
 	flag = "magic"
-	var/list/doors = list(/obj/structure/mineral_door/iron,/obj/structure/mineral_door/silver,/obj/structure/mineral_door/gold,/obj/structure/mineral_door/uranium,
-					/obj/structure/mineral_door/sandstone,/obj/structure/mineral_door/transparent/diamond,/obj/structure/mineral_door/wood)
+	var/list/doors = list(/obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver,/obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium,
+					/obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/diamond, /obj/structure/mineral_door/wood)
 	var/door_counter = 0
 	var/max_door_counter = 4
 

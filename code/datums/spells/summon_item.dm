@@ -11,7 +11,7 @@
 	var/obj/item/marked_item
 	action_icon_state = "summons"
 
-/obj/effect/proc_holder/spell/targeted/summonitem/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/summonitem/cast(list/targets, mob/user = usr)
 	if(!iscarbon(user))
 		to_chat(user,"<span class='userdanger'>Where is your hands?</span>")
 	var/list/hand_items = list(user.get_active_hand(), user.get_inactive_hand())
@@ -52,9 +52,10 @@
 				return
 			M.remove_from_mob(item_to_retrieve)
 		item_to_retrieve.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
-		if(!user.put_in_hands(item_to_retrieve))
+		if(item_to_retrieve != marked_item)
 			item_to_retrieve.forceMove(user.loc)
 			item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
 		else
 			item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears in [user]'s hand!</span>")
+			user.put_in_hands(item_to_retrieve)
 		playsound(user, 'sound/magic/SummonItems_generic.ogg', 100, 1)
