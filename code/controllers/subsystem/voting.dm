@@ -220,6 +220,13 @@ var/datum/subsystem/vote/SSvote
 				popup.set_window_options("can_close=0")
 				popup.set_content(SSvote.interface(C))
 				popup.open(0)
+			addtimer(CALLBACK(src , .proc/return_ooc, ooc_allowed, dsay_allowed), config.vote_period)
+			if(ooc_allowed)
+				ooc_allowed = FALSE
+				to_chat(world, "<B>The OOC channel will be globally disabled during vote!</B>")
+			if(dsay_allowed)
+				dsay_allowed = FALSE
+				to_chat(world, "<B>Deadchat will be globally disabled during vote!</B>")
 		return 1
 	return 0
 
@@ -241,7 +248,11 @@ var/datum/subsystem/vote/SSvote
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
-			. += "<li><a href='?src=\ref[src];vote=[i]'>[sanitize_alt(choices[i])]</a> ([votes] votes)</li>"
+			. += "<li><a href='?src=\ref[src];vote=[i]'>[sanitize_alt(choices[i])]</a>"
+			if(mode == "custom" || admin)
+				. +=  "([votes] votes)"
+			. += "</li>"
+
 		. += "</ul><hr>"
 		if(admin)
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
@@ -328,3 +339,11 @@ var/datum/subsystem/vote/SSvote
 	popup.set_window_options("can_close=0")
 	popup.set_content(SSvote.interface(client))
 	popup.open(0)
+
+/datum/subsystem/vote/proc/return_ooc(old_stat_ooc, old_stat_deadchat)
+	if(old_stat_ooc && !ooc_allowed)
+		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
+		ooc_allowed = TRUE
+	if(old_stat_deadchat && !dsay_allowed)
+		to_chat(world, "<B>Deadchat has been globally enabled!</B>")
+		dsay_allowed = TRUE
