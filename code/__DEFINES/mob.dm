@@ -68,6 +68,7 @@
 #define SKELETON    "Skeleton"
 #define SHADOWLING  "Shadowling"
 #define MONKEY      "Monkey"
+#define GOLEM       "Adamantine Golem"
 
 //Some on_mob_life() procs check for alien races.
 #define IS_DIONA  1

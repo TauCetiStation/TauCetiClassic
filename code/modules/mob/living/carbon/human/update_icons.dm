@@ -183,7 +183,7 @@ Please contact me on #coderbus IRC. ~Carn x
 //DAMAGE OVERLAYS
 /mob/living/carbon/human/UpdateDamageIcon(obj/item/organ/external/BP)
 	remove_damage_overlay(BP.limb_layer)
-	if(species.damage_mask)
+	if(species.damage_mask && !(BP.status & ORGAN_DESTROYED))
 		var/image/standing = image("icon" = 'icons/mob/human_races/damage_overlays.dmi', "icon_state" = "[BP.body_zone]_[BP.damage_state]", "layer" = -DAMAGE_LAYER)
 		standing.color = species.blood_color
 		overlays_damage[BP.limb_layer] = standing
@@ -242,18 +242,18 @@ Please contact me on #coderbus IRC. ~Carn x
 	//BEGIN CACHED ICON GENERATION.
 
 		var/race_icon =   species.icobase
-		var/deform_icon = species.icobase
+		var/deform_icon = species.deform
 
 		//Robotic limbs are handled in get_icon() so all we worry about are missing or dead limbs.
 		//No icon stored, so we need to start with a basic one.
 		var/obj/item/organ/external/chest = get_bodypart(BP_CHEST)
-		base_icon = chest.get_icon(race_icon,deform_icon,g,fat)
+		base_icon = chest.get_icon(race_icon, deform_icon, g, fat)
 
 		if(chest.status & ORGAN_DEAD)
 			base_icon.ColorTone(necrosis_color_mod)
 			base_icon.SetIntensity(0.7)
 
-		for(var/obj/item/organ/external/BP in bodyparts)
+		for(var/obj/item/organ/external/BP in (bodyparts - chest))
 
 			var/icon/temp //Hold the bodypart icon for processing.
 
@@ -453,15 +453,14 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(dna)
 		switch(dna.mutantrace)
 			if("slime")
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_[species.name]_s", "layer"=-MUTANTRACE_LAYER)
-			if("golem","shadow","adamantine")
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_s", "layer"=-MUTANTRACE_LAYER)
-			if("shadowling")
-				var/image/eyes = image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_ms_s", "layer"=GLASSES_LAYER)
-				var/image/body = image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_s", "layer"=-MUTANTRACE_LAYER)
-				eyes.plane = LIGHTING_PLANE + 1
-				standing	+= eyes
-				standing	+= body
+				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_[species.name]_s", -MUTANTRACE_LAYER)
+			if("golem" , "shadow")
+				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
+
+	if(species.name == SHADOWLING && head)
+		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s", LIGHTING_LAYER + 1)
+		eyes.plane = LIGHTING_PLANE + 1
+		standing += eyes
 
 	if(!dna || !(dna.mutantrace == "golem"))
 		update_body()
