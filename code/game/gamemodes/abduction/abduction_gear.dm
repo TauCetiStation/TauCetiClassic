@@ -88,7 +88,7 @@
 /obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species.name != "Abductor")
+		if(H.species.name != ABDUCTOR)
 			return 0
 		return 1
 	return 0
@@ -143,7 +143,7 @@
 /obj/item/device/abductor/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species.name != "Abductor")
+		if(H.species.name != ABDUCTOR)
 			return 0
 		return 1
 	return 0
@@ -322,7 +322,7 @@
 	item_state = "alienpistol"
 
 /obj/item/weapon/gun/energy/decloner/alien/special_check(mob/living/carbon/human/M)
-	if(M.species.name != "Abductor")
+	if(M.species.name != ABDUCTOR)
 		to_chat(M, "<span class='notice'>You can't figure how this works.</span>")
 		return 0
 	return 1
@@ -374,7 +374,7 @@
 	var/mob/living/carbon/human/H = user
 	if(!H.species)
 		return 0
-	if(H.species.name != "Abductor")
+	if(H.species.name != ABDUCTOR)
 		return 0
 	return 1
 
@@ -443,7 +443,7 @@
 	var/mob/living/carbon/human/H = user
 	if(!H.species)
 		return 0
-	if(H.species.name != "Abductor")
+	if(H.species.name != ABDUCTOR)
 		return 0
 	return 1
 
@@ -558,6 +558,7 @@
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
 	icon_state = "handcuffAlien"
+	flags = DROPDEL // no CONDUCT
 	origin_tech = "materials=5;combat=4;powerstorage=5"
 	breakouttime = 450
 

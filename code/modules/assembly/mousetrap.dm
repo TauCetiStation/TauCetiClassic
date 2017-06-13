@@ -23,20 +23,20 @@
 /obj/item/device/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)
 		return
-	var/datum/organ/external/affecting = null
+	var/obj/item/organ/external/BP = null
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		switch(type)
 			if("feet")
 				if(!H.shoes)
-					affecting = H.get_organ(pick("l_leg", "r_leg"))
+					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 					H.Weaken(3)
-			if("l_hand", "r_hand")
+			if(BP_L_HAND, BP_R_HAND)
 				if(!H.gloves)
-					affecting = H.get_organ(type)
+					BP = H.bodyparts_by_name[type]
 					H.Stun(3)
-		if(affecting)
-			affecting.take_damage(1, 0)
+		if(BP)
+			BP.take_damage(1, 0)
 			H.updatehealth()
 	else if(ismouse(target))
 		var/mob/living/simple_animal/mouse/M = target
@@ -53,9 +53,9 @@
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
 		if(((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
-			var/which_hand = "l_hand"
+			var/which_hand = BP_L_HAND
 			if(!user.hand)
-				which_hand = "r_hand"
+				which_hand = BP_R_HAND
 			triggered(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
@@ -68,9 +68,9 @@
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/user)
 	if(armed)
 		if(((user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
-			var/which_hand = "l_hand"
+			var/which_hand = BP_L_HAND
 			if(!user.hand)
-				which_hand = "r_hand"
+				which_hand = BP_R_HAND
 			triggered(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
@@ -93,7 +93,7 @@
 	if(armed)
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
-		triggered(finder, finder.hand ? "l_hand" : "r_hand")
+		triggered(finder, finder.hand ? BP_L_HAND : BP_R_HAND)
 		return 1	//end the search!
 	return 0
 

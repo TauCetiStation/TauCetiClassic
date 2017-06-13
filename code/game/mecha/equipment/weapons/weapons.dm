@@ -223,7 +223,7 @@
 	name = "Ultra AC 2"
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
-	projectile = /obj/item/projectile/bullet/weakbullet
+	projectile = /obj/item/projectile/bullet/midbullet
 	fire_sound = 'sound/weapons/Gunshot.ogg'
 	projectiles = 300
 	projectiles_per_shot = 3
@@ -236,7 +236,7 @@
 	var/missile_range = 30
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/Fire(atom/movable/AM, atom/target, turf/aimloc)
-	AM.throw_at(target,missile_range, missile_speed, chassis)
+	AM.throw_at(target, missile_range, missile_speed, spin = FALSE)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive
 	name = "SRM-8 Missile Rack"

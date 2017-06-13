@@ -1,8 +1,3 @@
-#define APC_WIRE_IDSCAN 1
-#define APC_WIRE_MAIN_POWER1 2
-#define APC_WIRE_MAIN_POWER2 3
-#define APC_WIRE_AI_CONTROL 4
-
 //update_state
 #define UPSTATE_CELL_IN 1
 #define UPSTATE_OPENED1 2
@@ -76,7 +71,6 @@
 	var/lastused_total = 0
 	var/main_status = 0
 	var/wiresexposed = 0
-	var/apcwires = 15
 	powernet = 0		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/malfhack = 0 //New var for my changes to AI malf. --NeoFite
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
@@ -87,51 +81,27 @@
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
-	var/list/apcwirelist = list(
-		"Orange" = 1,
-		"Dark red" = 2,
-		"White" = 3,
-		"Yellow" = 4,
-	)
 	var/longtermpower = 10
 	var/update_state = -1
 	var/update_overlay = -1
 	var/global/status_overlays = 0
 	var/updating_icon = 0
+	var/datum/wires/apc/wires = null
 	var/global/list/status_overlays_lock
 	var/global/list/status_overlays_charging
 	var/global/list/status_overlays_equipment
 	var/global/list/status_overlays_lighting
 	var/global/list/status_overlays_environ
 
-
-/proc/RandomAPCWires()
-	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
-	var/list/apcwires = list(0, 0, 0, 0)
-	APCIndexToFlag = list(0, 0, 0, 0)
-	APCIndexToWireColor = list(0, 0, 0, 0)
-	APCWireColorToIndex = list(0, 0, 0, 0)
-	var/flagIndex = 1
-	for (var/flag=1, flag<16, flag+=flag)
-		var/valid = 0
-		while (!valid)
-			var/colorIndex = rand(1, 4)
-			if (apcwires[colorIndex]==0)
-				valid = 1
-				apcwires[colorIndex] = flag
-				APCIndexToFlag[flagIndex] = flag
-				APCIndexToWireColor[flagIndex] = colorIndex
-				APCWireColorToIndex[colorIndex] = flagIndex
-		flagIndex+=1
-	return apcwires
-
 /obj/machinery/power/apc/updateDialog()
 	if (stat & (BROKEN|MAINT))
 		return
 	..()
 
-/obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
+/obj/machinery/power/apc/New(turf/loc, ndir, building=0)
 	..()
+
+	wires = new(src)
 
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
@@ -166,8 +136,8 @@
 	area.power_change()
 	/*if(occupier)
 		malfvacate(1)*/
-	if(cell)
-		qdel(cell)
+	QDEL_NULL(wires)
+	QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
 	return ..()
@@ -491,7 +461,7 @@
 		else if(stat & (BROKEN|MAINT))
 			to_chat(user, "Nothing happens.")
 		else
-			if(src.allowed(usr))
+			if(src.allowed(usr) && !wires.is_index_cut(APC_WIRE_IDSCAN))
 				locked = !locked
 				to_chat(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				update_icon()
@@ -685,19 +655,14 @@
 	user.do_attack_animation(src)
 	user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	var/allcut = 1
-	for(var/wire in apcwirelist)
-		if(!isWireCut(apcwirelist[wire]))
-			allcut = 0
-			break
+
 	if(beenhit >= pick(3, 4) && wiresexposed != 1)
 		wiresexposed = 1
 		src.update_icon()
 		src.visible_message("\red The [src.name]'s cover flies open, exposing the wires!")
 
-	else if(wiresexposed == 1 && allcut == 0)
-		for(var/wire in apcwirelist)
-			cut(apcwirelist[wire])
+	else if(wiresexposed && !wires.is_all_cut())
+		wires.cut_all()
 		src.update_icon()
 		src.visible_message("\red The [src.name]'s wires are shredded!")
 	else
@@ -709,27 +674,9 @@
 /obj/machinery/power/apc/interact(mob/user)
 	if(!user)
 		return
-
-	if(wiresexposed /*&& (!istype(user, /mob/living/silicon))*/) //Commented out the typecheck to allow engiborgs to repair damaged apcs.
-		var/t1 = text("<html><head><title>[area.name] APC wires</title></head><body><B>Access Panel</B><br>\n")
-
-		for(var/wiredesc in apcwirelist)
-			var/is_uncut = src.apcwires & APCWireColorToFlag[apcwirelist[wiredesc]]
-			t1 += "[wiredesc] wire: "
-			if(!is_uncut)
-				t1 += "<a href='?src=\ref[src];apcwires=[apcwirelist[wiredesc]]'>Mend</a>"
-			else
-				t1 += "<a href='?src=\ref[src];apcwires=[apcwirelist[wiredesc]]'>Cut</a> "
-				t1 += "<a href='?src=\ref[src];pulse=[apcwirelist[wiredesc]]'>Pulse</a> "
-			t1 += "<br>"
-		t1 += text("<br>\n[(src.locked ? "The APC is locked." : "The APC is unlocked.")]<br>\n[(src.shorted ? "The APCs power has been shorted." : "The APC is working properly!")]<br>\n[(src.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]")
-		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p></body></html>")
-		user << browse(t1, "window=apcwires")
-		onclose(user, "apcwires")
-
-	// Open the APC NanoUI
+	if(wires.interact(user))
+		return
 	ui_interact(user)
-	return
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
@@ -827,88 +774,6 @@
 //			world << "[area.power_equip]"
 	area.power_change()
 
-/obj/machinery/power/apc/proc/isWireColorCut(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	return ((src.apcwires & wireFlag) == 0)
-
-/obj/machinery/power/apc/proc/isWireCut(wireIndex)
-	var/wireFlag = APCIndexToFlag[wireIndex]
-	return ((src.apcwires & wireFlag) == 0)
-
-/obj/machinery/power/apc/proc/cut(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	apcwires &= ~wireFlag
-	switch(wireIndex)
-		if(APC_WIRE_MAIN_POWER1)
-			src.shock(usr, 50)
-			src.shorted = 1
-			src.updateDialog()
-		if(APC_WIRE_MAIN_POWER2)
-			src.shock(usr, 50)
-			src.shorted = 1
-			src.updateDialog()
-		if (APC_WIRE_AI_CONTROL)
-			if (src.aidisabled == 0)
-				src.aidisabled = 1
-			src.updateDialog()
-//		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
-
-/obj/machinery/power/apc/proc/mend(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
-	apcwires |= wireFlag
-	switch(wireIndex)
-		if(APC_WIRE_MAIN_POWER1)
-			if ((!src.isWireCut(APC_WIRE_MAIN_POWER1)) && (!src.isWireCut(APC_WIRE_MAIN_POWER2)))
-				src.shorted = 0
-				src.shock(usr, 50)
-				src.updateDialog()
-		if(APC_WIRE_MAIN_POWER2)
-			if ((!src.isWireCut(APC_WIRE_MAIN_POWER1)) && (!src.isWireCut(APC_WIRE_MAIN_POWER2)))
-				src.shorted = 0
-				src.shock(usr, 50)
-				src.updateDialog()
-		if (APC_WIRE_AI_CONTROL)
-			//one wire for AI control. Cutting this prevents the AI from controlling the door unless it has hacked the door through the power connection (which takes about a minute). If both main and backup power are cut, as well as this wire, then the AI cannot operate or hack the door at all.
-			//aidisabledDisabled: If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
-			if (src.aidisabled == 1)
-				src.aidisabled = 0
-			src.updateDialog()
-//		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
-
-/obj/machinery/power/apc/proc/pulse(wireColor)
-	//var/wireFlag = apcWireColorToFlag[wireColor] //not used in this function
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	switch(wireIndex)
-		if(APC_WIRE_IDSCAN)			//unlocks the APC for 30 seconds, if you have a better way to hack an APC I'm all ears
-			src.locked = 0
-			spawn(300)
-				src.locked = 1
-				src.updateDialog()
-		if (APC_WIRE_MAIN_POWER1)
-			if(shorted == 0)
-				shorted = 1
-			spawn(1200)
-				if(shorted == 1)
-					shorted = 0
-				src.updateDialog()
-		if (APC_WIRE_MAIN_POWER2)
-			if(shorted == 0)
-				shorted = 1
-			spawn(1200)
-				if(shorted == 1)
-					shorted = 0
-				src.updateDialog()
-		if (APC_WIRE_AI_CONTROL)
-			if (src.aidisabled == 0)
-				src.aidisabled = 1
-			src.updateDialog()
-			spawn(10)
-				if (src.aidisabled == 1)
-					src.aidisabled = 0
-				src.updateDialog()
-
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if (IsAdminGhost(user))
 		return 1
@@ -942,33 +807,14 @@
 /obj/machinery/power/apc/is_operational_topic()
 	return !(stat & (BROKEN|MAINT|EMPED))
 
-/obj/machinery/power/apc/Topic(href, href_list, var/usingUI = 1)
+/obj/machinery/power/apc/Topic(href, href_list, usingUI = TRUE)
 	. = ..(href, href_list)
 	if(!.)
 		return
 
-	if(!(href_list["apcwires"] || href_list["pulse"]))
-		if(!can_use(usr, 1))
-			return FALSE
-	if (href_list["apcwires"])
-		var/t1 = text2num(href_list["apcwires"])
-		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-			to_chat(usr, "You need wirecutters!")
-			return FALSE
-		if (src.isWireColorCut(t1))
-			src.mend(t1)
-		else
-			src.cut(t1)
-	else if (href_list["pulse"])
-		var/t1 = text2num(href_list["pulse"])
-		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			to_chat(usr, "You need a multitool!")
-			return FALSE
-		if (src.isWireColorCut(t1))
-			to_chat(usr, "You can't pulse a cut wire.")
-			return FALSE
-		else
-			src.pulse(t1)
+	if(!can_use(usr, 1))
+		return
+
 	else if (href_list["lock"])
 		coverlocked = !coverlocked
 
@@ -991,7 +837,7 @@
 	else if (href_list["eqp"])
 		var/val = text2num(href_list["eqp"])
 
-		equipment = (val==1) ? 0 : val
+		equipment = setsubsystem(val)
 
 		update_icon()
 		update()
@@ -999,22 +845,19 @@
 	else if (href_list["lgt"])
 		var/val = text2num(href_list["lgt"])
 
-		lighting = (val==1) ? 0 : val
+		lighting = setsubsystem(val)
 
 		update_icon()
 		update()
 	else if (href_list["env"])
 		var/val = text2num(href_list["env"])
 
-		environ = (val==1) ? 0 :val
+		environ = setsubsystem(val)
 
 		update_icon()
 		update()
 	else if( href_list["close"] )
 		nanomanager.close_user_uis(usr, src)
-		return FALSE
-	else if (href_list["close2"])
-		usr << browse(null, "window=apcwires")
 		return FALSE
 
 	else if (href_list["overload"])
@@ -1417,5 +1260,9 @@
 		return 1
 	else
 		return 0
-
+/obj/machinery/power/apc/proc/setsubsystem(val)
+	if(cell && cell.charge > 0)
+		return (val==1) ? 0 : val
+	else
+		return (val == 3)
 #undef APC_UPDATE_ICON_COOLDOWN

@@ -83,10 +83,10 @@
 		if(degutted)
 			to_chat(user, "<span class='notice'>The wires aren't connected to anything!<span>")
 		else if(open_panel)
-			wires.Interact(user)
+			wires.interact(user)
 
 	else if(istype(I, /obj/item/weapon/crowbar))
-		if(open_panel && !degutted && isWireCut(WIRE_BOOM) && isWireCut(WIRE_UNBOLT) && isWireCut(WIRE_DELAY) && isWireCut(WIRE_PROCEED) && isWireCut(WIRE_ACTIVATE))
+		if(open_panel && !degutted && isWireCut(SYNDIEBOMB_WIRE_BOOM) && isWireCut(SYNDIEBOMB_WIRE_UNBOLT) && isWireCut(SYNDIEBOMB_WIRE_DELAY) && isWireCut(SYNDIEBOMB_WIRE_PROCEED) && isWireCut(SYNDIEBOMB_WIRE_ACTIVATE))
 			to_chat(user, "<span class='notice'>You carefully pry out the bomb's payload.</span>")
 			degutted = 1
 			new /obj/item/weapon/syndicatebombcore(user.loc)
@@ -112,7 +112,7 @@
 		to_chat(user, "<span class='notice'>The bomb's explosives have been removed, the [open_panel ? "wires" : "buttons"] are useless now.</span>")
 	else if(anchored)
 		if(open_panel)
-			wires.Interact(user)
+			wires.interact(user)
 		else if(!active)
 			settings()
 		else
@@ -150,7 +150,7 @@
 			START_PROCESSING(SSobj, src) //Ticking down
 
 /obj/machinery/syndicatebomb/proc/isWireCut(index)
-	return wires.IsIndexCut(index)
+	return wires.is_index_cut(index)
 
 /obj/item/weapon/syndicatebombcore
 	name = "bomb payload"

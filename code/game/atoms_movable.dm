@@ -111,19 +111,16 @@
 		pulledby.stop_pulling()
 	return ..()
 
-/atom/movable/Bump(atom/A, yes)
+/atom/movable/Bump(atom/A, non_native_bump)
 	if(throwing)
 		throwing = FALSE
 		throw_impact(A)
 		fly_speed = 0
 
-	spawn( 0 )
-		if ((A && yes))
-			A.last_bumped = world.time
-			A.Bumped(src)
-		return
-	..()
-	return
+	if(A && non_native_bump)
+		A.last_bumped = world.time
+		A.Bumped(src)
+
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)

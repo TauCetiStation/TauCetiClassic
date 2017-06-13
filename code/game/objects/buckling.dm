@@ -25,11 +25,11 @@
 
 	M.buckled = src
 	M.set_dir(dir)
-	M.update_canmove()
 	buckled_mob = M
 	post_buckle_mob(M)
 	M.throw_alert("buckled", new_master = src)
 	correct_pixel_shift(M)
+	M.update_canmove()
 	return 1
 
 /atom/movable/proc/unbuckle_mob()

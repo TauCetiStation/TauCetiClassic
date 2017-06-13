@@ -1048,20 +1048,25 @@ proc/get_mob_with_client_list()
 
 
 /proc/parse_zone(zone)
-	if(zone == "r_hand") return "right hand"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "l_arm") return "left arm"
-	else if (zone == "r_arm") return "right arm"
-	else if (zone == "l_leg") return "left leg"
-	else if (zone == "r_leg") return "right leg"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "r_hand") return "right hand"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
-	else return zone
-
+	switch(zone)
+		if(BP_L_ARM)
+			return "left arm"
+		if(BP_L_HAND)
+			return "left hand"
+		if(BP_R_ARM)
+			return "right arm"
+		if(BP_R_HAND)
+			return "right hand"
+		if(BP_L_LEG)
+			return "left leg"
+		if(BP_L_FOOT)
+			return "left foot"
+		if(BP_R_LEG)
+			return "right leg"
+		if(BP_R_FOOT)
+			return "right foot"
+		else
+			return zone
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1161,33 +1166,49 @@ var/global/list/common_tools = list(
 
 	return 0
 
-//Whether or not the given item counts as sharp in terms of dealing damage
+// Whether or not the given item counts as sharp in terms of dealing damage
 /proc/is_sharp(obj/O)
-	if (!O) return 0
-	if (O.sharp) return 1
-	if (O.edge) return 1
+	if(!O)
+		return 0
+	if(O.sharp)
+		return 1
+	if(O.edge)
+		return 1
 	return 0
 
-//Whether or not the given item counts as cutting with an edge in terms of removing limbs
+// Whether or not the given item counts as cutting with an edge in terms of removing limbs
 /proc/has_edge(obj/O)
-	if (!O) return 0
-	if (O.edge) return 1
+	if(!O)
+		return 0
+	if(O.edge)
+		return 1
 	return 0
 
-//Returns 1 if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
-/proc/can_puncture(obj/item/W)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	if(!W) return 0
-	if(W.sharp) return 1
-	return ( \
-		W.sharp													  || \
-		istype(W, /obj/item/weapon/screwdriver)                   || \
-		istype(W, /obj/item/weapon/pen)                           || \
-		istype(W, /obj/item/weapon/weldingtool)					  || \
-		istype(W, /obj/item/weapon/lighter/zippo)				  || \
-		istype(W, /obj/item/weapon/match)            		      || \
-		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
-		istype(W, /obj/item/weapon/shovel) \
-	)
+// For items that can puncture e.g. thick plastic but aren't necessarily sharp
+// Returns 1 if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
+/obj/item/proc/can_puncture()
+	return sharp
+
+/obj/item/weapon/screwdriver/can_puncture()
+	return TRUE
+
+/obj/item/weapon/pen/can_puncture()
+	return TRUE
+
+/obj/item/weapon/weldingtool/can_puncture()
+	return TRUE
+
+/obj/item/weapon/lighter/zippo/can_puncture()
+	return TRUE
+
+/obj/item/weapon/match/can_puncture()
+	return TRUE
+
+/obj/item/clothing/mask/cigarette/can_puncture()
+	return TRUE
+
+/obj/item/weapon/shovel/can_puncture()
+	return TRUE
 
 /proc/is_surgery_tool(obj/item/W)
 	return (	\
@@ -1420,9 +1441,9 @@ var/mob/dview/dview_mob = new
 	spawn()
 		//if limb names will ever be changed or procs that use names of limbs,
 		//you must adjust names of body_parts according to the current that server uses or mobs will be missing some icon_states.
-		var/list/body_parts = list("head","torso","l_arm","l_hand","r_arm","r_hand","groin","l_leg","l_foot","r_leg","r_foot")
+		var/list/body_parts = list(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG , BP_L_FOOT , BP_R_FOOT)
 		//Same rules for damage states.. must be exactly same as other code uses...
-		var/list/damage_states = list("01","10","11","12","13","02","20","21","22","23","03","30","31","32","33")
+		var/list/damage_states = list("01" , "10" , "11" , "12" , "13" , "02" , "20" , "21" , "22" , "23" , "03" , "30" , "31" , "32" , "33")
 
 		var/icon/master = new()
 		var/total = body_parts.len * damage_states.len

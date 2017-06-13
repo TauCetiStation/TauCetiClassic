@@ -162,7 +162,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/enable_debug_verbs,
 	/*/client/proc/callproc,*/
 //	/proc/machine_upgrade,
-	/client/proc/toggledebuglogs
+	/client/proc/toggledebuglogs,
+	/client/proc/view_runtimes
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

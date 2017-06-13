@@ -247,11 +247,6 @@
 
 	if(species.flags[IS_SYNTHETIC]) //Robots don't suffer from mutations or radloss.
 		return
-//#Z2 healing organs with cold_resist? No, for now!
-		/*if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) || (prob(1)))
-				heal_organ_damage(0,1)*/
-//##Z2
 
 	// DNA2 - Gene processing.
 	// The HULK stuff that was here is now in the hulk gene.
@@ -323,10 +318,10 @@
 			if(damage)
 				adjustToxLoss(damage)
 				updatehealth()
-				if (organs.len)
-					var/datum/organ/external/O = pick(organs)
-					if(istype(O))
-						O.add_autopsy_data("Radiation Poisoning", damage)
+				if (bodyparts.len)
+					var/obj/item/organ/external/BP = pick(bodyparts)
+					if(istype(BP))
+						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/proc/breathe()
 	if(NO_BREATH in src.mutations)
@@ -628,17 +623,17 @@
 
 		switch(breath.temperature)
 			if(-INFINITY to species.cold_level_3)
-				apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
+				apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
 			if(species.cold_level_3 to species.cold_level_2)
-				apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Cold")
+				apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Cold")
 			if(species.cold_level_2 to species.cold_level_1)
-				apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
+				apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Cold")
 			if(species.heat_level_1 to species.heat_level_2)
-				apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
+				apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")
 			if(species.heat_level_2 to species.heat_level_3)
-				apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Heat")
+				apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Heat")
 			if(species.heat_level_3 to INFINITY)
-				apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
+				apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Heat")
 
 		//breathing in hot/cold air also heats/cools you a bit
 		var/temp_adj = breath.temperature - bodytemperature
@@ -1002,15 +997,15 @@
 
 	switch(body_part)
 		if(HEAD)
-			apply_damage(2.5*discomfort, BURN, "head")
+			apply_damage(2.5*discomfort, BURN, BP_HEAD)
 		if(UPPER_TORSO)
-			apply_damage(2.5*discomfort, BURN, "chest")
+			apply_damage(2.5*discomfort, BURN, BP_CHEST)
 		if(LEGS)
-			apply_damage(0.6*discomfort, BURN, "l_leg")
-			apply_damage(0.6*discomfort, BURN, "r_leg")
+			apply_damage(0.6*discomfort, BURN, BP_L_LEG)
+			apply_damage(0.6*discomfort, BURN, BP_R_LEG)
 		if(ARMS)
-			apply_damage(0.4*discomfort, BURN, "l_arm")
-			apply_damage(0.4*discomfort, BURN, "r_arm")
+			apply_damage(0.4*discomfort, BURN, BP_L_ARM)
+			apply_damage(0.4*discomfort, BURN, BP_R_ARM)
 */
 
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
@@ -1145,8 +1140,11 @@
 		updatehealth()	//TODO
 		if(!in_stasis)
 			stabilize_body_temperature()	//Body temperature adjusts itself
-			handle_organs()	//Optimized.
-			handle_blood()
+			handle_bodyparts()	//Optimized.
+			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
+				var/blood_volume = round(vessel.get_reagent_amount("blood"))
+				if(blood_volume > 0)
+					handle_blood(blood_volume)
 
 		if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
 			death()
@@ -1214,15 +1212,14 @@
 			if( prob(2) && health && !hal_crit )
 				spawn(0)
 					emote("snore")
-		else if(resting)
-			if(halloss > 0)
-				adjustHalLoss(-3)
 		//CONSCIOUS
 		else
 			stat = CONSCIOUS
 			if(halloss > 0)
-				adjustHalLoss(-1)
-
+				if(resting)
+					adjustHalLoss(-3)
+				else
+					adjustHalLoss(-1)
 		if(!sleeping) //No refactor - no life!
 			clear_alert("asleep")
 
@@ -1482,9 +1479,9 @@
 				healthdoll.icon_state = "healthdoll_DEAD"
 			else
 				healthdoll.icon_state = "healthdoll_OVERLAY"
-				for(var/datum/organ/external/L in organs)
-					var/damage = L.burn_dam + L.brute_dam
-					var/comparison = (L.max_damage/5)
+				for(var/obj/item/organ/external/BP in bodyparts)
+					var/damage = BP.burn_dam + BP.brute_dam
+					var/comparison = (BP.max_damage / 5)
 					var/icon_num = 0
 					if(damage)
 						icon_num = 1
@@ -1497,7 +1494,7 @@
 					if(damage > (comparison*4))
 						icon_num = 5
 					if(icon_num)
-						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
+						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
 
 		switch(nutrition)
 			if(NUTRITION_LEVEL_FULL to INFINITY)

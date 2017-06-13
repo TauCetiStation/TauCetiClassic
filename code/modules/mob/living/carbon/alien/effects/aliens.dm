@@ -261,7 +261,7 @@
 		for(var/dirn in cardinal)
 			var/turf/T = get_step(src, dirn)
 
-			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
+			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
 				continue
 
 			for(var/obj/machinery/door/D in T)

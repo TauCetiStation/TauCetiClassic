@@ -62,14 +62,14 @@
 
 	if (ishuman(M) && M:species.flags[IS_SYNTHETIC])
 		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_organs(1,1)
+		var/list/damaged = H.get_damaged_bodyparts(1, 1)
 		user.show_message("\blue Localized Damage, Brute/Electronics:",1)
 		if(length(damaged)>0)
-			for(var/datum/organ/external/org in damaged)
+			for(var/obj/item/organ/external/BP in damaged)
 				user.show_message(text("\blue &emsp; []: [] - []",	\
-				capitalize(org.display_name),					\
-				(org.brute_dam > 0)	?	"\red [org.brute_dam]"							:0,		\
-				(org.burn_dam > 0)	?	"<font color='#FFA500'>[org.burn_dam]</font>"	:0),1)
+				capitalize(BP.name),					\
+				(BP.brute_dam > 0)	?	"\red [BP.brute_dam]"							:0,		\
+				(BP.burn_dam > 0)	?	"<font color='#FFA500'>[BP.burn_dam]</font>"	:0),1)
 		else
 			user.show_message("\blue &emsp; Components are OK.",1)
 

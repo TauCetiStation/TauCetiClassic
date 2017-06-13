@@ -18,6 +18,7 @@ var/list/robot_verbs_default = list(
 	var/custom_name = ""
 	var/custom_sprite = 0 //Due to all the sprites involved, a var for our custom borgs may be best
 	var/crisis //Admin-settable for combat module use.
+	var/datum/wires/robot/wires = null
 
 //Hud stuff
 
@@ -62,7 +63,6 @@ var/list/robot_verbs_default = list(
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
 	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
 	var/jeton = 0
-	var/borgwires = 31 // 0b11111
 	var/killswitch = 0
 	var/killswitch_time = 60
 	var/weapon_lock = 0
@@ -82,8 +82,7 @@ var/list/robot_verbs_default = list(
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-
-
+	wires = new(src)
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
@@ -113,7 +112,7 @@ var/list/robot_verbs_default = list(
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
 		camera.replace_networks(list("SS13","Robots"))
-		if(isWireCut(5)) // 5 = BORG CAMERA
+		if(wires.is_index_cut(BORG_WIRE_CAMERA))
 			camera.status = 0
 
 	initialize_components()
@@ -644,7 +643,7 @@ var/list/robot_verbs_default = list(
 				to_chat(user, "You close the cover.")
 				opened = 0
 				updateicon()
-			else if(wiresexposed && isWireCut(1) && isWireCut(2) && isWireCut(3) && isWireCut(4) && isWireCut(5))
+			else if(wiresexposed && wires.is_all_cut())
 				//Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
 				if(istype(src, /mob/living/silicon/robot/syndicate))
 					return
@@ -660,7 +659,7 @@ var/list/robot_verbs_default = list(
 				C.r_leg = new/obj/item/robot_parts/r_leg(C)
 				C.l_arm = new/obj/item/robot_parts/l_arm(C)
 				C.r_arm = new/obj/item/robot_parts/r_arm(C)
-				C.updateicon()
+				C.update_icon()
 				new/obj/item/robot_parts/chest(loc)
 				src.Destroy()
 			else
@@ -716,9 +715,7 @@ var/list/robot_verbs_default = list(
 			C.electronics_damage = 0
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
-		if (wiresexposed)
-			interact(user)
-		else
+		if (!wires.interact(user))
 			to_chat(user, "You can't reach the wiring.")
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
@@ -854,9 +851,9 @@ var/list/robot_verbs_default = list(
 					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe-like arm."), 1)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored || M.lying)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 

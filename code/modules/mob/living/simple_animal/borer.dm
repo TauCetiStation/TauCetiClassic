@@ -212,7 +212,7 @@
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
-	if(!host.internal_organs_by_name["brain"]) //this should only run in admin-weirdness situations, but it's here non the less - RR
+	if(!host.organs_by_name[O_BRAIN]) //this should only run in admin-weirdness situations, but it's here non the less - RR
 		to_chat(src, "<span class='warning'>There is no brain here for us to command!</span>")
 		return
 
@@ -309,8 +309,8 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	if(istype(host,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = host
-		var/datum/organ/external/head = H.get_organ("head")
-		head.implants -= src
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+		BP.implants -= src
 
 	src.loc = get_turf(host)
 	controlling = 0
@@ -401,8 +401,8 @@ mob/living/simple_animal/borer/proc/detatch()
 
 		if(istype(M,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			var/datum/organ/external/head = H.get_organ("head")
-			head.implants += src
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			BP.implants += src
 
 		host_brain.name = M.name
 		host_brain.real_name = M.real_name

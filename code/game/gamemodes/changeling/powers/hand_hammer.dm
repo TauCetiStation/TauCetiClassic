@@ -11,11 +11,11 @@
 	weapon_name_simple = "hammer"
 
 /obj/item/weapon/changeling_hammer
-	name = "Oganic Hammer"
+	name = "oganic hammer"
 	desc = "A mass of tough, boney tissue,reminiscent of hammer."
 	canremove = 0
 	force = 15
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_hammer"
 	item_state = "arm_hammer"
@@ -27,7 +27,7 @@
 
 /obj/item/weapon/changeling_hammer/dropped(mob/user)
 	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his hammer into an arm!</span>", "<span class='notice'>We assimilate the hammer back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
-	qdel(src)
+	..()
 
 
 /obj/item/weapon/proc/use_charge(mob/living/carbon/human/user, req_chem = 3)
@@ -44,9 +44,9 @@
 		playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/datum/organ/external/O = H.get_organ(user.zone_sel.selecting)
-			for(var/datum/organ/external/Org in O.children)
-				H.apply_damage(force/2,BRUTE,Org.name, H.getarmor(Org.name, "melee"))
-			if(O.parent)
-				H.apply_damage(force/2,BRUTE,O.parent.name, H.getarmor(O.parent.name, "melee"))
+			var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+			for(var/obj/item/organ/external/BP_CHILD in BP.children)
+				H.apply_damage(force / 2, BRUTE, BP_CHILD.body_zone, H.getarmor(BP_CHILD.body_zone, "melee"))
+			if(BP.parent)
+				H.apply_damage(force / 2, BRUTE, BP.parent.body_zone, H.getarmor(BP.parent.body_zone, "melee"))
 		return..(target,user)

@@ -47,20 +47,18 @@
 	var/shoot_inventory = 0 //Fire items at customers! We're broken!
 	var/shut_up = 1 //Stop spouting those godawful pitches!
 	var/extended_inventory = 0 //can we access the hidden inventory?
-	var/wires = 15
 	var/obj/item/weapon/coin/coin
-	var/const/WIRE_EXTEND = 1
-	var/const/WIRE_SCANID = 2
-	var/const/WIRE_SHOCK = 3
-	var/const/WIRE_SHOOTINV = 4
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
 	var/obj/item/weapon/spacecash/ewallet/ewallet
+	var/datum/wires/vending/wires = null
+	var/scan_id = TRUE
 
 
 /obj/machinery/vending/New()
 	..()
+	wires = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
 	spawn(4)
@@ -82,9 +80,8 @@
 	return
 
 /obj/machinery/vending/Destroy()
-	if(coin)
-		qdel(coin)
-		coin = null
+	QDEL_NULL(wires)
+	QDEL_NULL(coin)
 	return ..()
 
 /obj/machinery/vending/ex_act(severity)
@@ -157,7 +154,7 @@
 	else
 		var/tmp_charges = refill.charges
 		for(var/datum/data/vending_product/machine_content in machine)
-			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
+			var/restock = ceil(((machine_content.max_amount - machine_content.amount) / to_restock) * tmp_charges)
 			if(restock > refill.charges)
 				restock = refill.charges
 			machine_content.amount += restock
@@ -349,13 +346,17 @@
 	return attack_hand(user)
 
 /obj/machinery/vending/attack_hand(mob/user)
+	if(wires.interact(user))
+		return
+
 	if(stat & (BROKEN|NOPOWER))
 		return
-	user.set_machine(src)
 
 	if(src.seconds_electrified != 0)
 		if(src.shock(user, 100))
 			return
+
+	user.set_machine(src)
 
 	var/vendorname = (src.name)  //import the machine's name
 
@@ -405,33 +406,6 @@
 	if (ewallet)
 		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
-	if(panel_open)
-		var/list/vendwires = list(
-			"Violet" = 1,
-			"Orange" = 2,
-			"Goldenrod" = 3,
-			"Green" = 4,
-		)
-		dat += "<br><hr><br><B>Access Panel</B><br>"
-		for(var/wiredesc in vendwires)
-			var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
-			dat += "[wiredesc] wire: "
-			if(!is_uncut)
-				dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
-			else
-				dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
-				dat += "<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "
-			dat += "<br>"
-
-		dat += "<br>"
-		dat += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
-		dat += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
-		dat += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
-		dat += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
-
-		if (product_slogans != "")
-			dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
-
 	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
 	popup.set_content(dat)
 	popup.open()
@@ -475,8 +449,8 @@
 				to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
 				return FALSE
 
-		if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-			to_chat(usr, "\red Access denied.")//Unless emagged of course
+		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
+			to_chat(usr, "<span class='warning'>Access denied.</span>")//Unless emagged of course
 			flick(src.icon_deny,src)
 			return FALSE
 
@@ -505,35 +479,11 @@
 		src.updateUsrDialog()
 		return
 
-	else if ((href_list["cutwire"]) && (src.panel_open))
-		var/twire = text2num(href_list["cutwire"])
-		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-			to_chat(usr, "You need wirecutters!")
-			return FALSE
-		if (src.isWireColorCut(twire))
-			src.mend(twire)
-		else
-			src.cut(twire)
-
-	else if ((href_list["pulsewire"]) && (src.panel_open))
-		var/twire = text2num(href_list["pulsewire"])
-		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			to_chat(usr, "You need a multitool!")
-			return FALSE
-		if (src.isWireColorCut(twire))
-			to_chat(usr, "You can't pulse a cut wire.")
-			return FALSE
-		else
-			src.pulse(twire)
-
-	else if ((href_list["togglevoice"]) && (src.panel_open))
-		src.shut_up = !src.shut_up
-
 	src.updateUsrDialog()
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
-	if ((!src.allowed(user)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-		to_chat(user, "\red Access denied.")//Unless emagged of course
+	if (!allowed(user) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
+		to_chat(user, "<span class='warning'>Access denied.</span>")//Unless emagged of course
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
@@ -665,51 +615,6 @@
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 	return 1
-
-/obj/machinery/vending/proc/isWireColorCut(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	return ((src.wires & wireFlag) == 0)
-
-/obj/machinery/vending/proc/isWireCut(wireIndex)
-	var/wireFlag = APCIndexToFlag[wireIndex]
-	return ((src.wires & wireFlag) == 0)
-
-/obj/machinery/vending/proc/cut(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	src.wires &= ~wireFlag
-	switch(wireIndex)
-		if(WIRE_EXTEND)
-			src.extended_inventory = 0
-		if(WIRE_SHOCK)
-			src.seconds_electrified = -1
-		if (WIRE_SHOOTINV)
-			if(!src.shoot_inventory)
-				src.shoot_inventory = 1
-
-
-/obj/machinery/vending/proc/mend(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
-	src.wires |= wireFlag
-	switch(wireIndex)
-//		if(WIRE_SCANID)
-		if(WIRE_SHOCK)
-			src.seconds_electrified = 0
-		if (WIRE_SHOOTINV)
-			src.shoot_inventory = 0
-
-/obj/machinery/vending/proc/pulse(wireColor)
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	switch(wireIndex)
-		if(WIRE_EXTEND)
-			src.extended_inventory = !src.extended_inventory
-//		if (WIRE_SCANID)
-		if (WIRE_SHOCK)
-			src.seconds_electrified = 30
-		if (WIRE_SHOOTINV)
-			src.shoot_inventory = !src.shoot_inventory
-
 
 /obj/machinery/vending/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
@@ -1062,7 +967,7 @@
 	/obj/item/clothing/suit/jacket=4, /obj/item/clothing/suit/jacket/puffer/vest=4, /obj/item/clothing/suit/jacket/puffer=4,
 	/obj/item/clothing/under/suit_jacket/navy=2,/obj/item/clothing/under/suit_jacket/really_black=2,/obj/item/clothing/under/suit_jacket/burgundy=2,
 	/obj/item/clothing/under/suit_jacket/charcoal=2, /obj/item/clothing/under/suit_jacket/white=2,/obj/item/clothing/under/kilt=2,/obj/item/clothing/under/overalls=2,
-	/obj/item/clothing/under/suit_jacket/really_black=4,/obj/item/clothing/under/pants/jeans=6,/obj/item/clothing/under/pants/classicjeans=4,
+	/obj/item/clothing/under/suit_jacket/really_black=4,/obj/item/clothing/under/suit_jacket/rouge =4,/obj/item/clothing/under/pants/jeans=6,/obj/item/clothing/under/pants/classicjeans=4,
 	/obj/item/clothing/under/pants/camo = 2,/obj/item/clothing/under/pants/blackjeans=4,/obj/item/clothing/under/pants/khaki=4,
 	/obj/item/clothing/under/pants/white=4,/obj/item/clothing/under/pants/red=2,/obj/item/clothing/under/pants/black=4,
 	/obj/item/clothing/under/pants/tan=4,/obj/item/clothing/under/pants/blue=2,/obj/item/clothing/under/pants/track=2,
@@ -1080,7 +985,7 @@
 	/obj/item/clothing/suit/jacket=299, /obj/item/clothing/suit/jacket/puffer/vest=239, /obj/item/clothing/suit/jacket/puffer=219,
 	/obj/item/clothing/under/suit_jacket/navy=119,/obj/item/clothing/under/suit_jacket/really_black=119,/obj/item/clothing/under/suit_jacket/burgundy=119,
 	/obj/item/clothing/under/suit_jacket/charcoal=119, /obj/item/clothing/under/suit_jacket/white=119,/obj/item/clothing/under/kilt=85,/obj/item/clothing/under/overalls=85,
-	/obj/item/clothing/under/suit_jacket/really_black=142,/obj/item/clothing/under/pants/jeans=142,/obj/item/clothing/under/pants/classicjeans=142,
+	/obj/item/clothing/under/suit_jacket/really_black=142,/obj/item/clothing/under/suit_jacket/rouge =248,/obj/item/clothing/under/pants/jeans=142,/obj/item/clothing/under/pants/classicjeans=142,
 	/obj/item/clothing/under/pants/camo = 142,/obj/item/clothing/under/pants/blackjeans=142,/obj/item/clothing/under/pants/khaki=142,
 	/obj/item/clothing/under/pants/white=142,/obj/item/clothing/under/pants/red=142,/obj/item/clothing/under/pants/black=142,
 	/obj/item/clothing/under/pants/tan=142,/obj/item/clothing/under/pants/blue=142,/obj/item/clothing/under/pants/track=142,

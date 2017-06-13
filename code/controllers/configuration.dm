@@ -63,7 +63,6 @@
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
-	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
@@ -107,9 +106,6 @@
 
 	var/organ_health_multiplier = 1
 	var/organ_regeneration_multiplier = 1
-
-	var/bones_can_break = 0
-	var/limbs_can_break = 0
 
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
@@ -218,9 +214,6 @@
 
 				if ("use_ingame_minutes_restriction_for_jobs")
 					config.use_ingame_minutes_restriction_for_jobs = 1
-
-				if ("jobs_have_minimal_access")
-					config.jobs_have_minimal_access = 1
 
 				if ("log_ooc")
 					config.log_ooc = 1
@@ -568,10 +561,6 @@
 					config.organ_health_multiplier = value / 100
 				if("organ_regeneration_multiplier")
 					config.organ_regeneration_multiplier = value / 100
-				if("bones_can_break")
-					config.bones_can_break = value
-				if("limbs_can_break")
-					config.limbs_can_break = value
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 

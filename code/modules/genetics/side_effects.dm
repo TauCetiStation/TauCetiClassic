@@ -24,12 +24,12 @@
 	H.emote("me", 1, "starts turning very red..")
 
 /datum/genetics/side_effect/genetic_burn/finish(mob/living/carbon/human/H)
-	for(var/organ_name in list("chest","l_arm","r_arm","r_leg","l_leg","head","groin"))
-		var/datum/organ/external/E = H.get_organ(organ_name)
+	for(var/bodypart in list(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN))
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
 		if(prob(85))//#Z2 - now 15% chance even for more burn
-			E.take_damage(0, 5, 0)
+			BP.take_damage(0, 5, 0)
 		else
-			E.take_damage(0, 20, 0)
+			BP.take_damage(0, 20, 0)
 
 /datum/genetics/side_effect/bone_snap
 	name = "Bone Snap"
@@ -42,16 +42,13 @@
 	H.emote("me", 1, "'s limbs start shivering uncontrollably.")
 
 /datum/genetics/side_effect/bone_snap/finish(mob/living/carbon/human/H)
-	if(prob(85))//#Z2 - now 15% chance for heavy brute damage
-		var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-		var/datum/organ/external/E = H.get_organ(organ_name)
-		E.take_damage(20, 0, 0)
-		E.fracture()
+	var/bodypart = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
+	var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
+	if(prob(85))
+		BP.take_damage(20)
+		BP.fracture()
 	else
-		var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-		var/datum/organ/external/E = H.get_organ(organ_name)
-		E.take_damage(70, 0, 0)
-		//E.fracture()
+		BP.take_damage(70)
 
 /datum/genetics/side_effect/monkey //#Z2 Random monkey transform is back
 	name = "Monkey"

@@ -118,14 +118,14 @@
 		raider.name = vox.name
 		vox.age = rand(17,85)
 		//vox.dna.mutantrace = "vox"
-		//vox.set_species("Vox")
+		//vox.set_species(VOX)
 		vox.languages = list() // Removing language from chargen.
 		vox.flavor_text = ""
 		vox.add_language("Gutter")
 		vox.h_style = "Skinhead"
 		vox.f_style = "Shaved"
-		//for(var/datum/organ/external/limb in vox.organs)
-		//	limb.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
+		//for(var/obj/item/organ/external/BP in vox.bodyparts)
+		//	BP.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
 		vox.equip_raider()
 		vox.regenerate_icons()
 

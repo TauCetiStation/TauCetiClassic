@@ -955,6 +955,20 @@
 			log_admin("[key_name(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
 			message_admins("[key_name_admin(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
 
+	else if(href_list["related_accounts"])
+		var/mob/M = locate(href_list["related_accounts"])
+		if (ismob(M))
+			if(!M.client)
+				return
+			var/client/C = M.client
+
+			var/dat = "<html><head><title>[C.key] related accounts by IP and cid</title></head>"
+			dat += "<center><b>Ckey:</b> [C.ckey]</center><br>"
+			dat += "<b>IP:</b> [C.related_accounts_ip]<hr>"
+			dat += "<b>CID:</b> [C.related_accounts_cid]"
+
+			usr << browse(dat, "window=[C.ckey]_related_accounts")
+
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
 		if (ismob(M))
@@ -1596,7 +1610,7 @@
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 
-		var/input = sanitize_alt(input(src.owner, "Please enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null)
+		var/input = sanitize_alt(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null)
 		if(!input)
 			return
 
@@ -1604,7 +1618,7 @@
 
 		var/obj/item/weapon/paper/P = new
 		P.name = "[command_name()]- [customname]"
-		P.info = input
+		P.info = checkhtml(html_decode(input))
 
 		var/obj/item/weapon/stamp/centcomm/S = new
 		S.stamp_paper(P, use_stamp_by_message = TRUE)
@@ -1955,7 +1969,7 @@
 					if(!security)
 						//strip their stuff before they teleport into a cell :downs:
 						for(var/obj/item/weapon/W in H)
-							if(istype(W, /datum/organ/external))
+							if(istype(W, /obj/item/organ/external))
 								continue
 								//don't strip organs
 							H.drop_from_inventory(W)
@@ -2714,6 +2728,20 @@
 				vsc.ChangeSettingsDialog(usr,vsc.plc.settings)
 			if(href_list["vsc"] == "default")
 				vsc.SetDefault(usr)
+
+	else if(href_list["viewruntime"])
+		if(!check_rights(R_DEBUG))
+			return
+
+		var/datum/error_viewer/error_viewer = locate(href_list["viewruntime"])
+		if(!istype(error_viewer))
+			to_chat(usr, "<span class='warning'>That runtime viewer no longer exists.</span>")
+			return
+
+		if(href_list["viewruntime_backto"])
+			error_viewer.show_to(owner, locate(href_list["viewruntime_backto"]), href_list["viewruntime_linear"])
+		else
+			error_viewer.show_to(owner, null, href_list["viewruntime_linear"])
 
 	// player info stuff
 

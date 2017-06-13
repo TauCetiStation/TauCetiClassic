@@ -289,15 +289,11 @@
  * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 /obj/item/weapon/shard/Bump()
-
-	spawn(0)
-		if(prob(20))
-			src.force = 15
-		else
-			src.force = 4
-		..()
-		return
-	return
+	if(prob(20))
+		force = 15
+	else
+		force = 4
+	..()
 
 /obj/item/weapon/shard/New()
 
@@ -345,11 +341,11 @@
 				return
 
 			if(!H.shoes && (!H.wear_suit || !(H.wear_suit.body_parts_covered & FEET)))
-				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
-				if(affecting.status & ORGAN_ROBOT)
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
+				if(BP.status & ORGAN_ROBOT)
 					return
 				H.Weaken(3)
-				affecting.take_damage(5, 0)
+				BP.take_damage(5, 0)
 				H.updatehealth()
 	..()
 

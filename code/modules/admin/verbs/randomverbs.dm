@@ -87,7 +87,12 @@
 			missing_ages = 1
 			continue
 		if(C.player_age < age)
-			msg += "[key_name(C, 1)]: account is [C.player_age] days and [C.player_ingame_age] in-game minutes old.<br>"
+			msg += {"
+				[key_name(C, 1)] [ADMIN_PP(C.mob)]:<br>
+				<b>Days on server:</b> [C.player_age]<br>
+				<b>In-game minutes:</b> [C.player_ingame_age]
+				<hr>
+			"}
 
 	if(missing_ages)
 		to_chat(src, "Some accounts did not have proper ages set in their clients.  This function requires database to be present")
@@ -655,7 +660,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(! (C.stat & (BROKEN|NOPOWER) ) )
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
 			P.name = "'[command_name()] Update.'"
-			P.info = sanitize_alt(copytext(input, 1, MAX_MESSAGE_LEN), list("ï¿½"=LETTER_255))
+			P.info = sanitize_alt(copytext(input, 1, MAX_MESSAGE_LEN), list("ÿ"=LETTER_255))
 			P.update_icon()
 			C.messagetitle.Add("[command_name()] Update")
 			C.messagetext.Add(P.info)
@@ -913,6 +918,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
 		return
 
+	if(SSshuttle.always_fake_recall)
+		var/choice = input("The shuttle will just return if you call it. What you want to do?") in list(
+					"Cancel shuttle call",
+					"Call it anyway",
+					"Call and allow it to fly to station")
+		switch(choice)
+			if("Cancel shuttle call")
+				return
+			if("Call and allow it to fly to station")
+				SSshuttle.always_fake_recall = FALSE
+				SSshuttle.fake_recall = 0
+				log_admin("[key_name(usr)] disabled shuttle fake recall.")
+				message_admins("<span class='info'>[key_name_admin(usr)] disabled shuttle fake recall.</span>")
+
 	var/type = alert(src, "It's emergency shuttle or crew transfer?", "Confirm", "Emergency", "Crew transfer")
 
 	if(type == "Crew transfer")
@@ -1070,7 +1089,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/obj/item/weapon/paper/P = new
 	P.name = sent_name
-	P.info = sent_text
+	P.info = checkhtml(html_decode(sent_text))
 
 	if(stamp_type)
 		var/obj/item/weapon/stamp/S = new stamp_type

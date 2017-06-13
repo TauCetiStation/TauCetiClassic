@@ -134,7 +134,7 @@
 	var/mob/living/carbon/human/user = usr
 	for(var/datum/mind/mindToCount in ticker.mode.thralls)
 		thrallsPresent++
-	if(thrallsPresent >= 5 && (user.dna.species != "Shadowling"))
+	if(thrallsPresent >= 5 && (user.dna.species != SHADOWLING))
 		to_chat(user, "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>")
 		charge_counter = charge_max
 		return
@@ -250,19 +250,20 @@
 		user.visible_message("<span class='warning'>[user]'s skin suddenly bubbles and begins to shift around their body!</span>", \
 							 "<span class='shadowling'>You regenerate your protective armor and cleanse your form of defects.</span>")
 		for(var/obj/item/I in user)
-			user.remove_from_mob(I)
 			if(I.flags & ABSTRACT)
 				qdel(I)
-		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(usr), slot_w_uniform)
-		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(usr), slot_shoes)
-		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(usr), slot_wear_suit)
-		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(usr), slot_head)
-		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
-		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
-		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
-		//hardset_dna(user, null, null, null, null, /datum/species/shadow/ling) //can't be a shadowling without being a shadowling
+			else
+				user.remove_from_mob(I)
+
+		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling, slot_w_uniform)
+		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling, slot_shoes)
+		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling, slot_wear_suit)
+		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling, slot_head)
+		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling, slot_gloves)
+		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, slot_wear_mask)
+		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, slot_glasses)
 		var/mob/living/carbon/human/H = usr
-		H.set_species("Shadowling")
+		H.set_species(SHADOWLING)
 		H.dna.mutantrace = "shadowling"
 		H.update_mutantrace()
 		H.regenerate_icons()
@@ -379,7 +380,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			M.Stun(3)
 	else
 		to_chat(M, "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>")
-		M.heal_organ_damage(2,2)
+		M.heal_bodypart_damage(2, 2)
 		M.adjustOxyLoss(-2)
 		M.adjustToxLoss(-2)
 	..()
@@ -447,7 +448,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			nearbyTargets.Add(M)
 		for(var/mob/living/carbon/M in nearbyTargets)
 			nearbyTargets.Remove(M) //To prevent someone dying like a zillion times
-			U.heal_organ_damage(10, 10)
+			U.heal_bodypart_damage(10, 10)
 			U.adjustToxLoss(-10)
 			U.adjustOxyLoss(-10)
 			U.AdjustWeakened(-1)
@@ -643,7 +644,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			target.Weaken(15)
 			if(target.bodytemperature)
 				target.bodytemperature -= INFINITY //:^)
-			target.take_organ_damage(0,80)
+			target.take_bodypart_damage(0, 80)
 
 
 

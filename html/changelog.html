@@ -16,7 +16,7 @@
   <div class="container"> 
    <div class="row"> 
     <div class="col-lg-12"> 
-     <p><b>Текущие мейнтейнеры: </b>SpaiR, Molesto411, VolAs, Igigin, Rascher, ZVe.</p> 
+     <p><b>Текущие мейнтейнеры: </b>Molesto411, VolAs, Igigin, ZVe.</p> 
      <p><b>Контрибьютеры билда: </b><a href="https://github.com/TauCetiStation/TauCetiClassic/graphs/contributors">-Нажми меня-</a></p> 
      <p><b>Thanks to: </b>Baystation 12, /tg/station, /vg/station, Paradise Station, GoonStation devs and the original SpaceStation developers.</p> 
      <p class="bg-danger"><b>Нашли баг?</b> Пожалуйста, сообщите о нём на нашем <a href="https://github.com/TauCetiStation/TauCetiClassic/issues"><b>трекере</b></a>.</p> 
@@ -24,18 +24,355 @@
    </div> 
    <hr> 
    <!-- НЕ ИЗМЕНЯТЬ текст в этом элементе. Чейнджлоги генерируются АВТОМАТИЧЕСКИ! --> 
-   <div id="changelogs">
-    <div class="row" id="17.04.2017"> 
+   <div id="changelogs"> 
+    <div class="row" id="13.06.2017"> 
      <div class="col-lg-12"> 
-      <h3 class="date">17.04.2017</h3>
+      <h3 class="date">13.06.2017</h3> 
+      <div id="YulianR"> 
+       <h4 class="author">YulianR обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="balance">Доктора и их подвиды получили доступ в тех тоннели, Emergency Physycian'ы получили обратно доступ в хирургию</li> 
+       </ul> 
+      </div> 
+      <div id="sovok4"> 
+       <h4 class="author">sovok4 обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="map">Прибор для объявления войны у нюки теперь недоступен без педального вмешательства.</li> 
+       </ul> 
+      </div> 
+      <div id="Zandwitch"> 
+       <h4 class="author">Zandwitch обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="rscadd">Добавлена электрогитара.</li> 
+        <li class="map">Электрогитара лежит у клоуна в баре.</li> 
+       </ul> 
+      </div> 
+      <div id="Gyaviste"> 
+       <h4 class="author">Gyaviste обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Откреплённые постеры неправильно приклеивались.</li> 
+        <li class="tweak">Теперь чтобы приклеить постер нужно стоять со стеной на соседнем по горизонтали или вертикале месте.</li> 
+        <li class="map">Все постеры на станции теперь одобрены Нанотрейзен™.</li> 
+        <li class="bugfix">AI Core Integrity Restorer не работал</li> 
+       </ul> 
+      </div> 
+      <div id="Uvash"> 
+       <h4 class="author">Uvash обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="rscadd">Взлом и возможность перегрузки АБУ (шахтёрского бура). Берегите руки! Чтобы открыть меню взлома - открутить панель, ткнуть кусачками/мультитулом.</li> 
+        <li class="balance">Распределение руд в астероиде для АБУ.</li> 
+        <li class="rscadd">Сканеры для руды теперь выдают более точную информацию в зависимости от модели. </li> 
+       </ul> 
+      </div> 
+      <div id="ZVee"> 
+       <h4 class="author">ZVee обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Спрайты големов и тенелингов перенесены на уровень конечностей, что как минимум исправляет баг с невидимыми отлетающими и отображением отсутствия этих самых конечностей.</li>
+        <li class="bugfix">Исправлено катание на стульях и байках под каким-либо статусом лишающим игрока возможности передвигаться.</li>
+        <li class="bugfix">Исправлено отображение правой руки, когда она отсутствует.</li>
+        <li class="bugfix">Исправлен заход (и надевание в некоторых редких случаях) за персонажа-инвалида на которого надевались предметы поверх отсутствующей конечности, коротко говоря - не выдадут обувь, если нет одной ступни.</li>
+        <li class="bugfix">Исправлено неработающее отображение деформированных частей тела при редкой мутации органа.</li>
+        <li class="bugfix">Срабатывание потери конечностей должно начать адекватно работать. Это не значит что у вас теперь снова выйдет отстрелить голову мелкокалиберным c20r или отрезать ее пластиковым ножом. Нужно учитывать размер предмета и его урон.</li>
+        <li class="bugfix">Сдвоенные мечи не выставляли вес в режиме работы (что кстати и ломало (помимо других проблем) отчасти возможность отрезать конечности).</li>
+        <li class="bugfix">Исправлен неприятный редкий мини-фриз при использовании examine (вместо фриза теперь видим такие спрайты предметов в виде зеленого знака вопроса из билдмода).</li>
+        <li class="rscdel">Отключил кровотечение у мертвых мобов класса "human".</li>
+        <li class="balance">Предметы в руках начали замедлять начиная с 3-го класса (было с 4-го и только для огнестрела), поэтому делать пробежку по станции выгоднее с пустыми руками или предметами не влияющими на вес.</li>
+        <li class="balance">Гиперцин теперь аннулирует эффекты изменения скорости от ношения некоторых предметов (риги, ботинки, спина и предметы в руках).</li>
+        <li class="balance">Мутация бега дает легкое ускорение, а не аннулирование всего высчитывания скорости передвижения.</li>
+        <li class="balance">Шоковое состояние плавно замедляет игрока по мере роста, а не фиксировано при возникновении.</li>
+        <li class="balance">Strained muscles (changeling) потеряла немного скорости, но заработала и по обшивке.</li>
+        <li class="bugfix">Исправлены параметры fleshmass (organic space suit - changeling). Не защищает от иголок, гороха, тазера и тому подобное, бонусом усилен эффект проводимости электричества. Для защиты есть способность брони.</li>
+        <li class="tweak">Тенелинги перестали получать броню при трансформации (чтобы ее получить, надо как раз использовать умение восстановление хитина) и красное свечение из глаз появляется только при надетом любом головном уборе.</li>
+        <li class="bugfix">Должны исчезнуть проблемы со статусами при наличии иммунитета (например голем при изменении атмосферного давления мог упасть и больше не встать).</li>
+        <li class="balance">Големы получили адекватно работающую сопротивляемость к разного рода вещам (болезни, токсины, брейн дамаг и т.д.), двукратная надбавка к хп (не финальное решение), перестали официально чувствовать боль (если где-то и проскочит, то это уже проблемы кода в целом, а не големов).</li>
+        <li class="balance">Осушение крови от огня (лазер включительно) теперь больше косметический эффект и чтобы потерять значительное кол.во крови - это либо надо в пожаре побывать, либо в вас должны попасть раз 30-40 с какого-нибудь егана.</li>
+       </ul>
+      </div>
+     </div> 
+    </div> 
+    <div class="row" id="31.05.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">31.05.2017</h3> 
+      <div id="ZVee"> 
+       <h4 class="author">ZVee обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="rscadd">Появилась возможность прикрывать кровоточащие раны рукой на "хелпе" - себе или через клик усиленным "синим-грабом" - другим, что снижает обилие кровопотери.</li> 
+        <li class="balance">Внутреннее кровотечение заменено "артериями", хирургам ничего нового учить не надо, исправляется это точно также с использованием fixOvein в правильной последовательности.</li> 
+        <li class="rscadd">Теперь лазеры могут наносить урон внутренним органам.</li> 
+        <li class="rscadd">Урон типа "BURN" осушает кровь.</li> 
+        <li class="rscadd">Конечности научились отделяться тремя различными способами (как обычно, превращаясь в пепел или разлетаясь на гибсы).</li> 
+        <li class="sound">Добавлен звук ломающихся костей.</li> 
+       </ul> 
+      </div> 
+      <div id="dred1792"> 
+       <h4 class="author">dred1792 обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="rscadd">Можно разработать бездонную сумку для руды.</li> 
+        <li class="rscadd">Добавлены гидравлические ножницы (лом + кусачки) и шуруповёрт (отвёртка + гаечный ключ).</li> 
+        <li class="tweak">Магнитные ботинки и экспериментальную горелку с само возобновляемым топливом теперь можно создать в протолате.</li> 
+       </ul> 
+      </div> 
+      <div id="Gyaviste"> 
+       <h4 class="author">Gyaviste обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Речь абдукторов не отображалась в логах</li> 
+        <li class="bugfix">Подскальзывание на PDA клоуна работало неверно.</li> 
+        <li class="bugfix">Проползающий под мылом подскальзывался на нём.</li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="row" id="27.05.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">27.05.2017</h3> 
+      <div id="StrikS"> 
+       <h4 class="author">StrikS обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="tweak">Деструктор РНД теперь уведомит вас, если разбираемая вещь не повысит уровень исследований.</li> 
+       </ul> 
+      </div> 
+      <div id="Kurshan"> 
+       <h4 class="author">Kurshan обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="rscadd">Добавлена экранированная сетка, которую можно всунуть в радио/наушник для защиты от ЭМИ. Производится в РНД.</li> 
+        <li class="rscadd">Появилась возможность настроить в преференсах отображение своего сикея в ЛООКе/Дедчате</li> 
+       </ul> 
+      </div> 
+      <div id="Gyaviste"> 
+       <h4 class="author">Gyaviste обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">При использовании Energy Star ниндзей ничего не происходило.</li> 
+        <li class="bugfix">Неверно отображалось количество дымовых бомб у ниндзи.</li> 
+        <li class="rscadd">Ниндзя теперь появляется со взрывным имплантом.</li> 
+       </ul> 
+      </div> 
+      <div id="Tolerant"> 
+       <h4 class="author">Tolerant обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="rscadd">В игру добавлены 3 новые элемента одежды: авиаторские очки (Aviator glasses) и пальто (serif coat) в лодауте, униформа (rogue jacket) в ClothesMate'е.</li> 
+       </ul> 
+      </div> 
+      <div id="YulianR"> 
+       <h4 class="author">YulianR обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="map">Убрана синдикатовская коробка с инструментами из космоса у спутника ИИ</li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="row" id="22.05.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">22.05.2017</h3> 
+      <div id="Kurshan"> 
+       <h4 class="author">Kurshan обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="tweak">При логауте ИИ, через десять минут слот автоматически освободится.</li> 
+        <li class="tweak">В Прототолат добавлены рецепты Л10 и магазина к нему.</li> 
+       </ul> 
+      </div> 
       <div id="SpaiR"> 
        <h4 class="author">SpaiR обновил:</h4> 
        <ul class="changelog"> 
-        <li class="bugfix">Конфету покупаемую в автоматах нельзя было использовать в рецептах кухни.</li>
-        <li class="bugfix">Из конфеты не выпадал мусор.</li>
-       </ul>
-      </div>
-     </div>
+        <li class="bugfix">Прикрыта лавочка с дюпом ресурсов в РнД через протолат и фабрикатор мехов.</li> 
+        <li class="balance">Увеличена скорость прыжка хантеров в два раза.</li> 
+        <li class="bugfix">Хантеры при прыжке "врезались" в пол.</li> 
+        <li class="bugfix">Факсы, отправляемые админами, не поддерживали html теги.</li> 
+       </ul> 
+      </div> 
+      <div id="P-20"> 
+       <h4 class="author">P-20 обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="balance">Переделаны и изменены все наборы Синдиката. <a href="https://github.com/TauCetiStation/TauCetiClassic/pull/1481">- подробнее -</a></li> 
+        <li class="rscdel">Удалены наборы : "LORDSINGULO","MURDER".</li> 
+        <li class="rscadd">Добавлены Синдикатовские наборы : "NINJA","GADGET".</li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="row" id="18.05.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">18.05.2017</h3> 
+      <div id="ZVee"> 
+       <h4 class="author">ZVee обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">У дион с мутацией ожирения пропадал торс.</li> 
+        <li class="bugfix">Отверткой невозможно провести гетто-хирургию на голове и ее органах.</li> 
+       </ul> 
+      </div> 
+      <div id="YulianR"> 
+       <h4 class="author">YulianR обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="tweak">Появилась задержка при надувании надувных стен и дверей.</li> 
+       </ul> 
+      </div> 
+      <div id="Djekke"> 
+       <h4 class="author">Djekke обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="rscadd">Добавил возможность разбирать незавершенный остов киборгов на запчасти. Гаечный ключ для разборки остова на составляющие, ломом вынимать флешки\батарею, кусачками вырезать провод.</li> 
+        <li class="tweak">Остов киборга при добавлении в него деталей становится тяжелее и не лезет больше в сумку.</li> 
+       </ul> 
+      </div> 
+      <div id="dred1792"> 
+       <h4 class="author">dred1792 обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="image">Добавлен спрайт медицинского ящика с замком.</li> 
+        <li class="tweak">В хирургический ящик заказываемый в карго добавлены хирургические шапочки.</li> 
+        <li class="rscadd">Добавлено 5 ящиков для заказа: с мешками для тел, с кровью для переливания, капельницей, генератором аномального поля, прожекторами</li> 
+       </ul> 
+      </div> 
+      <div id="Belfogor"> 
+       <h4 class="author">Belfogor обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Комбат белт имел на кукле спрайт обычного пояса.</li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="row" id="14.05.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">14.05.2017</h3> 
+      <div id="Kurshan"> 
+       <h4 class="author">Kurshan обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="tweak">Теперь для игры на пианино, человеку нужно стоять рядом с ним.</li> 
+       </ul> 
+      </div> 
+      <div id="skvazarb"> 
+       <h4 class="author">skvazarb обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Исправлено включение APC без батареи и с разряженной батареей.</li> 
+       </ul> 
+      </div> 
+      <div id="ZVee"> 
+       <h4 class="author">ZVee обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Развернутый "neaera cube" (скрельский манки куб) не создавал обезьяну при взаимодействиях.</li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="row" id="11.05.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">11.05.2017</h3> 
+      <div id="Kurshan"> 
+       <h4 class="author">Kurshan обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">При крите, моб некорректно залезал на байк пиратов и взаимодействовал с ним.</li> 
+        <li class="bugfix">Атаки по простым животным дублировались как в техническом, так и в визуальном плане.</li> 
+        <li class="bugfix">Надпись "Heads of staff" находилась в неположенной строчке в статистике окончания революции.</li> 
+        <li class="bugfix">При использования телепорта абдукторов на жертве привязка к предметам (например мед. каталка) не сбрасывалась.</li> 
+        <li class="bugfix">Перелезание через закрытые шлюзы хуманом с мутацией халка убивала их.</li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="row" id="07.05.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">07.05.2017</h3> 
+      <div id="skvazarb"> 
+       <h4 class="author">skvazarb обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Пищевой процессор теперь производит сырые мясные шарики, а не готовые.</li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="row" id="02.05.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">02.05.2017</h3> 
+      <div id="Raschert0"> 
+       <h4 class="author">Raschert0 обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="rscadd">Админам дана возможность вызывать шаттл эвакуации/крю трансфера при революции/малфе/блобе и при этом тот не будет отзываться.</li> 
+       </ul> 
+      </div> 
+      <div id="SpaiR"> 
+       <h4 class="author">SpaiR обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">При попытке открыть лог чата клиент игры перманентно зависал.</li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="row" id="01.05.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">01.05.2017</h3> 
+      <div id="Belfogor"> 
+       <h4 class="author">Belfogor обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Заменены резиновые пули у пулемета "Ultra AC 2", на боевые. </li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="row" id="30.04.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">30.04.2017</h3> 
+      <div id="SpaiR"> 
+       <h4 class="author">SpaiR обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Некорректное взаимодействие с проводами дверей и камер, если зоны, в которых они находились, были обесточены.</li> 
+        <li class="tweak">Сигналер научился цепляться и работать с любыми проводами (не только с аирлочными).</li> 
+        <li class="bugfix">Рокетлаунчер у мехов не запускал ракету при выстреле.</li> 
+        <li class="rscdel">У робототехников отобран доступ к хранилищу плат.</li> 
+        <li class="bugfix">СЕ, РД, Капитан, ИИ и борги не имели доступа к стеклянным дверцам ИИ.</li> 
+        <li class="bugfix">Меховский укладчик проводов не мог прокладывать их на кэтволках.</li> 
+        <li class="bugfix">Убрана возможность строить с помощью РЦД множество аирлоков на одном тайле.</li> 
+       </ul> 
+      </div> 
+      <div id="Raschert0"> 
+       <h4 class="author">Raschert0 обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="tweak">Сандвич теперь не может состоять из более чем 125 предметов</li> 
+        <li class="tweak">Осколок стекла в сандвиче теперь режет голову а не случайную часть тела при съедании</li> 
+        <li class="tweak">В ящик завхоза добавлен шлем от пожарного костюма и заменён маленький баллон с кислородом на большой баллон с воздухом.</li> 
+        <li class="bugfix">Сломанную консоль на шаттле учёных-шахтёров нельзя было починить без педальной магии.</li> 
+        <li class="rscadd">У админов в ВВ панели появилась кнопка Delete this object для удаления конкретного объекта.</li> 
+       </ul> 
+      </div> 
+      <div id="Kurshan"> 
+       <h4 class="author">Kurshan обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">При разборке телепада или его консоли, червоточина не закрывалась.</li> 
+       </ul> 
+      </div> 
+      <div id="skvazarb"> 
+       <h4 class="author">skvazarb обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Исправлено обновление иконок антагонистов при повторной загрузке в течение раунда для следующих режимов: Тенелинги, Gang Wars</li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="row" id="28.04.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">28.04.2017</h3> 
+      <div id="dearprincesscelestia"> 
+       <h4 class="author">dearprincesscelestia обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Спящие персонажи не просыпались, если переменная resting не была обнулена.</li> 
+        <li class="tweak">Лежащий персонаж на хелпе не поднимает рестящих персонажей, добавлен специфический текст.</li> 
+       </ul> 
+      </div> 
+      <div id="Raschert0"> 
+       <h4 class="author">Raschert0 обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Можно было грабнуть кого-либо лёжа.</li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="row" id="17.04.2017"> 
+     <div class="col-lg-12"> 
+      <h3 class="date">17.04.2017</h3> 
+      <div id="SpaiR"> 
+       <h4 class="author">SpaiR обновил:</h4> 
+       <ul class="changelog"> 
+        <li class="bugfix">Конфету покупаемую в автоматах нельзя было использовать в рецептах кухни.</li> 
+        <li class="bugfix">Из конфеты не выпадал мусор.</li> 
+       </ul> 
+      </div> 
+     </div> 
     </div> 
     <div class="row" id="14.04.2017"> 
      <div class="col-lg-12"> 

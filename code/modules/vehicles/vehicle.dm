@@ -275,9 +275,6 @@
 	load.layer = initial(load.layer)
 	load.plane = initial(load.plane)
 
-	if(ismob(load))
-		unbuckle_mob(load)
-
 	load = null
 
 	return 1
@@ -308,5 +305,5 @@
 	src.health -= damage
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	spawn(1) healthcheck()
+	healthcheck()
 	return 1

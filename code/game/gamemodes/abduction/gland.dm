@@ -23,7 +23,7 @@
 
 /obj/item/gland/proc/Inject(mob/living/carbon/human/target)
 	host = target
-	target.internal_organs += src
+	target.organs += src
 	src.loc = target
 
 /obj/item/gland/process()
@@ -136,10 +136,7 @@ obj/item/gland/slime/activate()
 
 /obj/item/gland/pop/activate()
 	to_chat(host, "<span class='notice'>You feel unlike yourself.</span>")
-	var/species = pick(list(/datum/species/vox,/datum/species/diona,/datum/species/tajaran,/datum/species/unathi,/datum/species/human))
-	host.species = new species()
-	host.regenerate_icons()
-	return
+	host.set_species_soft(pick(HUMAN , UNATHI , TAJARAN , DIONA , VOX))
 
 
 //VENTCRAWLING

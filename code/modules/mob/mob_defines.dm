@@ -198,7 +198,7 @@
 
 	var/update_icon = 0 //Set to 1 to trigger regenerate_icons() at the next life() call
 
-	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
+	var/status_flags = MOB_STATUS_FLAGS_DEFAULT // bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
 	var/area/lastarea = null
 
@@ -230,3 +230,4 @@
 	var/list/active_genes=list()
 
 	var/fake_death = 0 //New changeling statis
+	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, use is_busy() before anything if you want to prevent user to do multiple actions.

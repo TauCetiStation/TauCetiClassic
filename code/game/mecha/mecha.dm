@@ -317,8 +317,8 @@
 		use_power(step_energy_drain)
 	return result
 
-/obj/mecha/Bump(var/atom/obstacle, yes)
-	if(yes)
+/obj/mecha/Bump(var/atom/obstacle, non_native_bump)
+	if(non_native_bump)
 		if(throwing)
 			..()
 			return
@@ -475,7 +475,7 @@
 		src.log_append_to_last("Armor saved.")
 		if(istype(A, /mob/living))
 			var/mob/living/M = A
-			M.take_organ_damage(10)
+			M.take_bodypart_damage(10)
 	else if(istype(A, /obj))
 		var/obj/O = A
 		if(O.throwforce)

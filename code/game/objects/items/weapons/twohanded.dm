@@ -104,6 +104,7 @@
 	w_class = 5.0
 	icon_state = "offhand"
 	name = "offhand"
+	flags = ABSTRACT
 
 /obj/item/weapon/twohanded/offhand/unwield()
 	qdel(src)
@@ -202,7 +203,7 @@
 	..()
 	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
 		to_chat(user, "\red You twirl around a bit before losing your balance and impaling yourself on the [src].")
-		user.take_organ_damage(20,25)
+		user.take_bodypart_damage(20, 25)
 		return
 	if((wielded) && prob(50))
 		spawn(0)
@@ -272,8 +273,10 @@
 
 /obj/item/weapon/twohanded/dualsaber/unwield()
 	set_light(0)
+	w_class = initial(w_class)
 	return ..()
 
 /obj/item/weapon/twohanded/dualsaber/wield()
 	set_light(2)
+	w_class = 5
 	return ..()

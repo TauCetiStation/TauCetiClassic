@@ -440,7 +440,6 @@
 
 	for (var/ch_name in radio.channels)
 		dat+=radio.text_sec_channel(ch_name, radio.channels[ch_name])
-	dat+={"[radio.text_wires()]</TT></body></html>"}
 
 	return dat
 

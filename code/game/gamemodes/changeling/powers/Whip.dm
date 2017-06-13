@@ -14,7 +14,7 @@
 	name = "Organic Whip"
 	desc = "A mass of tough tissue that can be elastic"
 	canremove = 0
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_whip"
 	item_state = "arm_whip"
@@ -27,7 +27,7 @@
 
 /obj/item/weapon/changeling_whip/dropped(mob/user)
 	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his whip into an arm!</span>", "<span class='notice'>We assimilate the Whip back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
-	qdel(src)
+	..()
 
 /obj/item/weapon/changeling_whip/afterattack(atom/A, mob/living/carbon/human/user)
 	if(!istype(user))
@@ -85,7 +85,7 @@
 		T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
 
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
-	if(in_range(T, host) && !host.get_inactive_hand())
+	if(in_range(T, host) && !host.get_inactive_hand() && !host.lying)
 		if(iscarbon(T))
 			var/obj/item/weapon/grab/G = new(host,T)
 			host.put_in_inactive_hand(G)

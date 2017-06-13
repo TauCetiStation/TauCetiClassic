@@ -167,22 +167,22 @@ This is chestburster mechanic for damaging
 
 	if(ishuman(affecting))
 		var/mob/living/carbon/human/H = affecting
-		var/datum/organ/external/chest/C = H.get_organ("chest")
-		if((C.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but organs can't be broken, when human is dead.
+		var/obj/item/organ/external/chest/BP = H.bodyparts_by_name[BP_CHEST]
+		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but bodyparts can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
 			chestburster << sound('sound/voice/hiss5.ogg',0,0,0,100)
 			if(H.key)
 				H.death()
 				H.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
-				C.open = 1
+				BP.open = 1
 			else
 				H.gib()
 			qdel(src)
 		else
 			last_bite = world.time
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			H.apply_damage(rand(7,14), BRUTE, "chest")
+			H.apply_damage(rand(7,14), BRUTE, BP_CHEST)
 			H.shock_stage = 20
 			H.Weaken(1)
 			H.emote("scream",,, 1)
@@ -323,7 +323,7 @@ This is emryo growth procs
 			if(prob(2))
 				to_chat(affected_mob, "\red Your muscles ache.")
 				if(prob(20))
-					affected_mob.take_organ_damage(1)
+					affected_mob.take_bodypart_damage(1)
 			if(prob(2))
 				to_chat(affected_mob, "\red Your stomach hurts.")
 				if(prob(20))
@@ -431,7 +431,7 @@ This is facehugger Attach procs
 	if(stat == DEAD)
 		return
 	if(!sterile)
-		L.take_organ_damage(strength, 0)
+		L.take_bodypart_damage(strength, 0)
 
 	if(iscarbon(L))
 		var/mob/living/carbon/target = L
@@ -527,7 +527,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 /obj/item/weapon/fh_grab
 	name = "grab"
-	flags = NOBLUDGEON | ABSTRACT
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	var/obj/screen/fh_grab/hud = null
 	var/mob/affecting = null
 	var/mob/assailant = null
@@ -553,6 +553,11 @@ When we finish, facehugger's player will be transfered inside embryo.
 	hud.name = "Leap at face"
 	hud.master = src
 
+/obj/item/weapon/fh_grab/Destroy()
+	QDEL_NULL(hud)
+	affecting = null
+	assailant = null
+	return ..()
 
 /obj/item/weapon/fh_grab/proc/throw_held()
 	return null
@@ -732,10 +737,3 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(M == affecting)
 		s_click(hud)
 		return
-
-/obj/item/weapon/fh_grab/dropped()
-	qdel(src)
-
-/obj/item/weapon/fh_grab/Destroy()
-	qdel(hud)
-	return ..()
