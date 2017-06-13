@@ -31,8 +31,8 @@
 // that dealing just enough burn damage to kill the player will cause the given
 // proportion of their max blood volume to be lost
 // (e.g. 0.6 == 60% lost if 200 burn damage is taken).
-#define FLUIDLOSS_WIDE_BURN 0.6 // for burns from heat applied over a wider area, like from fire
-#define FLUIDLOSS_CONC_BURN 0.4 // for concentrated burns, like from lasers
+#define FLUIDLOSS_WIDE_BURN 0.2 // for burns from heat applied over a wider area, like from fire
+#define FLUIDLOSS_CONC_BURN 0.1 // for concentrated burns, like from lasers
 
 //I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
 #define BRUTELOSS	1
@@ -51,6 +51,7 @@
 #define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
 #define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
 #define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
+#define MOB_STATUS_FLAGS_DEFAULT (CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH)
 
 //Grab levels
 #define GRAB_PASSIVE	1

@@ -113,7 +113,7 @@
 
 			if (!lying && world.time - l_move_time < 15)
 			//Moving around with fractured ribs won't do you any good
-				if (BP.is_broken() && BP.bodypart_organs && prob(15))
+				if (BP.is_broken() && BP.bodypart_organs.len && prob(15))
 					var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 					custom_pain("You feel broken bones moving in your [BP.name]!", 1)
 					IO.take_damage(rand(3, 5))

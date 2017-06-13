@@ -111,7 +111,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	canremove = 0
 	w_class = 5.0
 	force = 25
@@ -175,7 +175,7 @@
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
 	canremove = 0
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
 	item_state = "ling_shield"
@@ -190,15 +190,15 @@
 		if(M.mind.changeling.absorbedcount)
 			remaining_uses +=  M.mind.changeling.absorbedcount
 
-/obj/item/weapon/shield/changeling/dropped()
-	qdel(src)
-
 /obj/item/weapon/shield/changeling/Get_shield_chance()
 	if(!remaining_uses)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
-			visible_message("<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
-			H.unEquip(src, 1)
+			visible_message(
+				"<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>",
+				"<span class='notice'>We assimilate our shield into our body</span>",
+				"<span class='warning>You hear organic matter ripping and tearing!</span>"
+				)
 		qdel(src)
 		return 0
 	else
@@ -227,18 +227,17 @@
 	icon = 'icons/mob/suit.dmi'
 	icon_state = "lingspacesuit"
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
+	flags = DROPDEL // No PHORONGUARD or THICKMATERIAL, because it's organic tissue, so syringes or other things can get thru easily.
 	canremove = 0
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/tank/oxygen)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0) //No armor at all.
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) // No armor at all.
+	siemens_coefficient = 2 // fleeesh! not a skin! very sensitive!
 
 /obj/item/clothing/suit/space/changeling/New()
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/suit/space/changeling/dropped()
-	qdel(src)
 
 /obj/item/clothing/suit/space/changeling/process()
 	if(ishuman(loc))
@@ -253,12 +252,10 @@
 	icon = 'icons/mob/head.dmi'
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | DROPDEL
 	canremove = 0
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-
-/obj/item/clothing/head/helmet/space/changeling/dropped()
-	qdel(src)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 2 // fleeesh!
 
 /obj/effect/proc_holder/changeling/suit/armor
 	name = "Chitinous Armor"
@@ -282,7 +279,7 @@
 	icon = 'icons/mob/suit.dmi'
 	icon_state = "lingarmor"
 	canremove = 0
-	flags = THICKMATERIAL
+	flags = THICKMATERIAL | DROPDEL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 1
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 35, bomb = 25, bio = 0, rad = 0)
@@ -296,19 +293,13 @@
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 
-/obj/item/clothing/suit/armor/changeling/dropped()
-	qdel(src)
-
 /obj/item/clothing/head/helmet/changeling
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon = 'icons/mob/head.dmi'
 	icon_state = "lingarmorhelmet"
-	flags = HEADCOVERSEYES | BLOCKHAIR | THICKMATERIAL
+	flags = HEADCOVERSEYES | BLOCKHAIR | THICKMATERIAL | DROPDEL
 	canremove = 0
-	armor = list(melee = 70, bullet = 45, laser = 45,energy = 35, bomb = 25, bio = 2, rad = 0)
+	armor = list(melee = 70, bullet = 45, laser = 45, energy = 35, bomb = 25, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.4
-
-/obj/item/clothing/head/helmet/changeling/dropped()
-	qdel(src)

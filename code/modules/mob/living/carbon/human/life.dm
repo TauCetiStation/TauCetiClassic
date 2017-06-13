@@ -119,7 +119,6 @@
 	name = get_visible_name()
 
 	handle_regular_hud_updates()
-	handle_bleeding() // bleed when dead? why not.
 
 	pulse = handle_pulse()
 
@@ -1142,7 +1141,10 @@
 		if(!in_stasis)
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_bodyparts()	//Optimized.
-			handle_blood()
+			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
+				var/blood_volume = round(vessel.get_reagent_amount("blood"))
+				if(blood_volume > 0)
+					handle_blood(blood_volume)
 
 		if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
 			death()

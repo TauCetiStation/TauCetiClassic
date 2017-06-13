@@ -51,21 +51,26 @@
 /mob/living/carbon/human/abductor/New(var/new_loc)
 	..(new_loc, ABDUCTOR)
 
-/mob/living/carbon/human/New(var/new_loc, var/new_species = null)
+/mob/living/carbon/human/golem/New(loc)
+	..(loc, GOLEM)
+
+/mob/living/carbon/human/New(new_loc, new_species)
+
+	dna = new
 
 	if(!species)
 		if(new_species)
-			set_species(new_species,null,1)
+			set_species(new_species, null, TRUE)
 		else
 			set_species()
+
+	dna.species = species.name
 
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
 
-	if(!dna)
-		dna = new /datum/dna(null)
-		dna.species=species.name
+
 
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
@@ -1249,22 +1254,25 @@
 
 /mob/living/carbon/human/proc/set_species(new_species, force_organs, default_colour)
 
-	if(!dna)
-		if(!new_species)
-			new_species = HUMAN
-	else
-		if(!new_species)
+	if(!new_species)
+		if(dna.species)
 			new_species = dna.species
 		else
-			dna.species = new_species
+			new_species = HUMAN
+	else
+		dna.species = new_species
 
-	if(species && (species.name && species.name == new_species))
-		return
+	if(species)
+		if(species.name == new_species)
+			return
 
-	if(species && species.language)
-		remove_language(species.language)
+		if(species.language)
+			remove_language(species.language)
+
+		species.on_loose(src)
 
 	species = all_species[new_species]
+	maxHealth = species.total_health
 
 	if(force_organs || !bodyparts.len)
 		species.create_organs(src)
@@ -1283,9 +1291,9 @@
 		b_skin = 0
 
 	species.handle_post_spawn(src)
+	species.on_gain(src)
 
-	spawn(0)
-		update_icons()
+	regenerate_icons()
 
 	if(species)
 		return 1
@@ -1297,7 +1305,14 @@
 	if(species.name == new_species)
 		return
 
+	species.on_loose(src)
+
 	species = all_species[new_species]
+	maxHealth = species.total_health
+
+	species.handle_post_spawn(src)
+	species.on_gain(src)
+
 	regenerate_icons()
 
 /mob/living/carbon/human/proc/bloody_doodle()

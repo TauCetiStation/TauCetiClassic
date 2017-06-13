@@ -190,7 +190,11 @@ var/list/chatResources = list(
 	var/atom/A = obj
 	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
 	if (!bicon_cache[key]) // Doesn't exist, make it.
-		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
+		var/icon/I
+		if(!A.icon || !A.icon_state || !(A.icon_state in icon_states(A.icon))) // fixes freeze when client uses examine or anything else, when there is something wrong with icon data.
+			I = icon('icons/misc/buildmode.dmi', "buildhelp")                  // there is no logic with this icon choice, i just like it.
+		else
+			I = icon(A.icon, A.icon_state, SOUTH, 1)
 		if (ishuman(obj)) // Shitty workaround for a BYOND issue.
 			var/icon/temp = I
 			I = icon()

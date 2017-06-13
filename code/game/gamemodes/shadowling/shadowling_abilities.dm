@@ -250,16 +250,18 @@
 		user.visible_message("<span class='warning'>[user]'s skin suddenly bubbles and begins to shift around their body!</span>", \
 							 "<span class='shadowling'>You regenerate your protective armor and cleanse your form of defects.</span>")
 		for(var/obj/item/I in user)
-			user.remove_from_mob(I)
 			if(I.flags & ABSTRACT)
 				qdel(I)
-		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(usr), slot_w_uniform)
-		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(usr), slot_shoes)
-		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(usr), slot_wear_suit)
-		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(usr), slot_head)
-		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
-		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
-		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
+			else
+				user.remove_from_mob(I)
+
+		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling, slot_w_uniform)
+		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling, slot_shoes)
+		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling, slot_wear_suit)
+		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling, slot_head)
+		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling, slot_gloves)
+		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, slot_wear_mask)
+		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, slot_glasses)
 		var/mob/living/carbon/human/H = usr
 		H.set_species(SHADOWLING)
 		H.dna.mutantrace = "shadowling"
