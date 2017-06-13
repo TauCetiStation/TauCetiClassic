@@ -66,7 +66,3 @@
 							Item.loc = S
 							ok = 1
 							break
-
-				skip:
-				if (ok == 0) // Finally, since everything else failed, place it on the ground
-					Item.loc = get_turf(M.loc)
