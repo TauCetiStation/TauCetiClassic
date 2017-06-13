@@ -88,6 +88,14 @@ var/list/chatResources = list(
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
 
+		if("encoding")
+			var/static/regex/RE = regex("windows-(874|125\[0-8])")
+			if (RE.Find(href_list["encoding"]))
+				world.log << "ENCODING RECEIVED: [href_list["encoding"]]"
+				owner.encoding = RE.group[1]
+			else
+				CRASH("Unknown encoding received from client: \"[sanitize(href_list["encoding"])]\". Please report this as a bug.")
+
 	if(data)
 		ehjax_send(data = data)
 
@@ -223,7 +231,6 @@ var/list/chatResources = list(
 		if(findtext(message, "\proper"))
 			message = replacetext(message, "\proper", "")
 
-		message = sanitize_popup(message)
 		var/client/C
 		if(istype(target, /client))
 			C = target
@@ -239,4 +246,5 @@ var/list/chatResources = list(
 				C.chatOutput.messageQueue.Add(message)
 				return
 
-		target << output(url_encode(message), "browseroutput:output")
+		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
+		target << output(url_encode(url_encode(message)), "browseroutput:output")

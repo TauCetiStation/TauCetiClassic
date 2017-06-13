@@ -66,3 +66,6 @@
 	// Their chat window, sort of important.
 	// See /goon/code/datums/browserOutput.dm
 	var/datum/chatOutput/chatOutput
+
+	// This gets set by goonchat.
+	var/encoding = "1252"
