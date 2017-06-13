@@ -343,17 +343,11 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	if(usr.stat != CONSCIOUS || !occupant)
 		return
 
-	//You can eject:
-	// - yourself
-	// - not clientless occupants
-	// - dead occupants
-	// - occupants in critical condition
-	// - anyone if you are head or officer
 	if(usr != occupant && \
-			!occupant.client && \
-			occupant.stat != DEAD && \
-			occupant.health - occupant.halloss > config.health_threshold_softcrit && \
-			!allowed(usr))
+		  !occupant.client && \
+		  occupant.stat != DEAD && \
+		  occupant.health > config.health_threshold_softcrit && \
+		  !allowed(usr))
 		to_chat(usr, "<span class='red'>You can't eject person from [src], since the preservation procedure has already begun</span>")
 		return
 
