@@ -45,7 +45,6 @@
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
 		to_chat(user, "[finishmessage]")
-		explosion(src, 2, 3, 4, 4)
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -103,4 +102,3 @@
 		icon_state = "fitnessweight"
 		overlays -= W
 		to_chat(user, "[finishmessage]")
-		explosion(src, 2, 3, 4, 4)
