@@ -87,40 +87,26 @@
 		return 1
 	return 0
 
-
-// this function shows the health of the pAI in the Status panel
-/mob/living/silicon/proc/show_system_integrity()
-	if(!src.stat)
-		stat(null, text("System integrity: [round((health/maxHealth)*100)]%"))
-	else
-		stat(null, text("Systems nonfunctional"))
-
-
 // This is a pure virtual function, it should be overwritten by all subclasses
 /mob/living/silicon/proc/show_malf_ai()
 	return 0
-
-
-// this function displays the station time in the status panel
-/mob/living/silicon/proc/show_station_time()
-	stat(null, "Station Time: [worldtime2text()]")
-
-
-// this function displays the shuttles ETA in the status panel if the shuttle has been called
-/mob/living/silicon/proc/show_SSshuttle_eta()
-	if(SSshuttle.online && SSshuttle.location < 2)
-		var/timeleft = SSshuttle.timeleft()
-		if (timeleft)
-			stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
 
 // This adds the basic clock, shuttle recall timer, and malf_ai info to all silicon lifeforms
 /mob/living/silicon/Stat()
 	..()
 	if(statpanel("Status"))
-		show_station_time()
-		show_SSshuttle_eta()
-		show_system_integrity()
+		stat(null, "Station Time: [worldtime2text()]")
+
+		if(SSshuttle.online && SSshuttle.location < 2)
+			var/timeleft = SSshuttle.timeleft()
+			if (timeleft)
+				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
+		if(stat == CONSCIOUS)
+			stat(null, text("System integrity: [round((health / maxHealth) * 100)]%"))
+		else
+			stat(null, text("Systems nonfunctional"))
+
 		show_malf_ai()
 
 // this function displays the stations manifest in a separate window

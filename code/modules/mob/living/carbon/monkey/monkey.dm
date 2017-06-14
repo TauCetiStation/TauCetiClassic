@@ -431,13 +431,9 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
-		if(client && mind)
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
-	return
+		CHANGELING_STATPANEL_STATS(null)
 
+	CHANGELING_STATPANEL_POWERS(null)
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"

@@ -1011,14 +1011,12 @@
 /mob/living/Stat()
 	..()
 	if(statpanel("Status"))
-		if(ticker)
-			if(ticker.mode)
-				if(istype(ticker.mode, /datum/game_mode/gang))
-					var/datum/game_mode/gang/mode = ticker.mode
-					if(isnum(mode.A_timer))
-						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-					if(isnum(mode.B_timer))
-						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+		if(ticker.mode && ticker.mode.config_tag == "gang")
+			var/datum/game_mode/gang/mode = ticker.mode
+			if(isnum(mode.A_timer))
+				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
+			if(isnum(mode.B_timer))
+				stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
 
 /mob/living/update_gravity(has_gravity)
 	if(!ticker)
