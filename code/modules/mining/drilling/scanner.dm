@@ -26,9 +26,14 @@
 /obj/item/weapon/mining_scanner/attack_self(mob/user)
 	if(working)
 		return
+
 	to_chat(user, "You begin sweeping \the [src] about, scanning for metal deposits.")
+
 	working = 1
-	if(!do_after(user, speed, target = src)) return
+
+	if(!do_after(user, speed, target = src))
+		working = 0
+		return
 
 	find_ore(user)
 
