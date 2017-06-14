@@ -97,6 +97,22 @@ obj/item/weapon/gun/energy/laser/retro
 				chambered.newshot()
 	return
 
+/obj/item/weapon/gun/energy/laser/captain/alien
+	name = "Alien blaster"
+	icon_state = "egun"
+	desc = " The object menaces with spikes of energy. You don't kmown what kind of weapon."
+	force = 5
+	origin_tech = null
+
+/obj/item/weapon/gun/energy/laser/captain/alien/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(200)
+	update_icon()
+	return 1
+
 /obj/item/weapon/gun/energy/laser/scatter
 	name = "scatter laser gun"
 	icon_state = "oldlaser"
@@ -106,6 +122,13 @@ obj/item/weapon/gun/energy/laser/retro
 	attack_self(mob/living/user)
 		select_fire(user)
 		update_icon()
+
+/obj/item/weapon/gun/energy/laser/scatter/alien
+	name = "scatter laser rife"
+	icon_state = "subegun"
+	desc = "A laser gun equipped with a refraction kit that spreads bolts."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
+	origin_tech = null
 
 /obj/item/weapon/gun/energy/lasercannon
 	name = "laser cannon"

@@ -337,16 +337,13 @@
 		if(26)
 			//energy gun
 			var/spawn_type = pick(\
-			/obj/item/weapon/gun/energy/laser/practice,\
-			/obj/item/weapon/gun/energy/laser,\
-			/obj/item/weapon/gun/energy/xray,\
-			/obj/item/weapon/gun/energy/laser/captain)
+			/obj/item/weapon/gun/energy/sniperrifle/rails,\
+			/obj/item/weapon/gun/tesla/rife,\
+			/obj/item/weapon/gun/energy/laser/scatter/alien,\
+			/obj/item/weapon/gun/energy/laser/captain/alien)
 			if(spawn_type)
 				var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 				new_item = new_gun
-				new_item.icon_state = "egun[rand(1,6)]"
-				new_item.icon = 'icons/obj/xenoarchaeology.dmi'
-				new_gun.desc = "This is an antique energy weapon, you're not sure if it will fire or not."
 
 				//5% chance to explode when first fired
 				//10% chance to have an unchargeable cell

@@ -139,6 +139,18 @@
 	tracer_type = /obj/effect/projectile/laser/tracer
 	impact_type = /obj/effect/projectile/laser/impact
 
+/obj/item/projectile/beam/rails
+	name = "rails beam"
+	icon_state = "omnilaser"
+	damage = 50
+	stun = 5
+	weaken = 5
+	stutter = 5
+
+	muzzle_type = /obj/effect/projectile/laser_omni/muzzle
+	tracer_type = /obj/effect/projectile/laser_omni/tracer
+	impact_type = /obj/effect/projectile/laser_omni/impact
+
 /obj/item/projectile/beam/stun
 	name = "stun beam"
 	icon_state = "stun"
