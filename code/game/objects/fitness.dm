@@ -7,6 +7,8 @@
 	anchored = 1
 
 /obj/structure/stacklifter/attack_hand(mob/user)
+	if(!user.Adjacent(src))
+		return
 	var/mob/living/carbon/human/gymnast = user
 	if(!istype(gymnast) || gymnast.lying)
 		return
@@ -43,6 +45,7 @@
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
 		to_chat(user, "[finishmessage]")
+		explosion(src, 2, 3, 4, 4)
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -53,6 +56,8 @@
 	anchored = 1
 
 /obj/structure/weightlifter/attack_hand(mob/user)
+	if(!user.Adjacent(src))
+		return
 	var/mob/living/carbon/human/gymnast = user
 	if(!istype(gymnast) || gymnast.lying)
 		return
@@ -97,5 +102,5 @@
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
 		overlays -= W
-
 		to_chat(user, "[finishmessage]")
+		explosion(src, 2, 3, 4, 4)
