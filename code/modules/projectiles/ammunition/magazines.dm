@@ -477,3 +477,15 @@
 	name = "A28 magazine (5.56mm incendiary)"
 	ammo_type = /obj/item/ammo_casing/a556i
 	icon_state = "556imm"
+
+/obj/item/ammo_box/magazine/a74mm
+	name = "A74 magazine (7.74mm)"
+	icon_state = "a74mm"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/a74
+	caliber = "7.74mm"
+	max_ammo = 30
+
+/obj/item/ammo_box/magazine/a74mm/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]-[ceil(ammo_count(0) / 30) * 30]"

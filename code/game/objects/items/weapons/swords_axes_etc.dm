@@ -241,32 +241,41 @@
 /obj/item/weapon/shield/energy/Get_shield_chance()
 	if(active)
 		return block_chance
-	else
-		return 0
+	return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red You beat yourself in the head with [src].")
+		to_chat(user, "<span class='danger'> You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
+	if(emp_cooldown >= world.time)
+		to_chat(user,"<span class='userdanger'>[src] is recalibrating!</span>")
+		return
 	active = !active
-	if (active)
-		force = 10
-		icon_state = "eshield[active]"
-		w_class = 4
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		to_chat(user, "\blue [src] is now active.")
-
+	if(active)
+		turn_on(user)
 	else
-		force = 3
-		icon_state = "eshield[active]"
-		w_class = 1
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		to_chat(user, "\blue [src] can now be concealed.")
+		turn_off(user)
+	add_fingerprint(user)
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
+/obj/item/weapon/shield/energy/proc/turn_on(mob/living/user)
+	force = 10
+	icon_state = "eshield[active]"
+	w_class = 4
+	playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+	to_chat(user, "<span class='notice'> [src] is now active.</span>")
+	update_icon()
+
+/obj/item/weapon/shield/energy/proc/turn_off(mob/living/user)
+	force = 3
+	icon_state = "eshield[active]"
+	w_class = 1
+	playsound(loc, 'sound/weapons/saberoff.ogg', 50, 1)
+	update_icon()
+	if(user)
+		to_chat(user, "<span class='notice'> [src] can now be concealed.</span>")
+
+/obj/item/weapon/shield/energy/update_icon()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
-
-	add_fingerprint(user)
-	return

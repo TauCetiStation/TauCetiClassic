@@ -47,11 +47,23 @@
 	origin_tech = "materials=4;magnets=3;syndicate=4"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
+	var/emp_cooldown = 0
 
 /obj/item/weapon/shield/energy/IsReflect(def_zone, hol_dir, hit_dir)
 	if(active)
 		return is_the_opposite_dir(hol_dir, hit_dir)
 	return FALSE
+
+/obj/item/weapon/shield/energy/emp_act(severity)
+	if(active)
+		if(severity == 2 && prob(35))
+			active = !active
+			emp_cooldown = world.time + 200
+			turn_off()
+		else if(severity == 1)
+			active = !active
+			emp_cooldown = world.time + rand(200, 400)
+			turn_off()
 
 
 /obj/item/weapon/shield/riot/tele

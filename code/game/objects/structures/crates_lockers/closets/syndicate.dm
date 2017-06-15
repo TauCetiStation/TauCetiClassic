@@ -11,14 +11,18 @@
 
 /obj/structure/closet/syndicate/personal/New()
 	..()
-	sleep(2)
-	new /obj/item/weapon/tank/jetpack/oxygen/harness(src)
 	new /obj/item/clothing/glasses/night(src)
 	new /obj/item/clothing/under/syndicate(src)
 	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/belt/military(src)
 	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/tie/storage/syndi_vest(src)
+	new /obj/item/clothing/mask/gas/syndicate(src)
+	new /obj/item/clothing/suit/armor/syndiassault(src)
+	if(prob(50))
+		new /obj/item/clothing/head/helmet/space/syndiassault(src)
+	else
+		new /obj/item/clothing/head/helmet/space/syndiassault/alternate(src)
 
 
 /obj/structure/closet/syndicate/nuclear
@@ -26,7 +30,6 @@
 
 /obj/structure/closet/syndicate/nuclear/New()
 	..()
-	sleep(2)
 	new /obj/item/weapon/storage/box/handcuffs(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)

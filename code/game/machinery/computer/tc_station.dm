@@ -147,7 +147,11 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
 	var/danger
-	danger = player_list.len
+	var/active_players = length(player_list.len)
+	var/agent_numbers = Clamp((active_players / 5), 2, 6)
+	storedcrystals = agent_numbers * 8 + 30
+	danger = active_players
+
 	while(!IsMultiple(++danger,10))//Just round up to the nearest multiple of ten.
 	storedcrystals += danger
 

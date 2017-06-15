@@ -80,10 +80,11 @@
 		magazine.update_icon()
 		magazine = null
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
+		return 1
 	else
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon()
-	return
+	return 0
 
 /obj/item/weapon/gun/projectile/Destroy()
 	qdel(magazine)

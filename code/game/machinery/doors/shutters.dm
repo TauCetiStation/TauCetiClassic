@@ -18,3 +18,8 @@
 		if("closing")
 			flick("shutterc1", src)
 	return
+
+/obj/machinery/door/poddoor/shutters/syndi
+
+/obj/machinery/door/poddoor/shutters/syndi/ex_act()
+	return

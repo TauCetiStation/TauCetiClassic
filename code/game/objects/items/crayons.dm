@@ -214,26 +214,29 @@
 	if(capped)
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
-	else
-		if(iscarbon(target))
-			if(uses-10 > 0)
-				uses = uses - 10
-				var/mob/living/carbon/human/C = target
-				user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
-				if(C.client)
-					C.eye_blurry = max(C.eye_blurry, 3)
-					C.eye_blind = max(C.eye_blind, 1)
-					//if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS. Need fix
-					//	C.confused = max(C.confused, 3)
-					//	C.Weaken(3)
-				if(ishuman(C))
-					var/mob/living/carbon/human/H = C
-					C.lip_style = "spray_face"
-					C.lip_color = colour
-					H.update_body()
-				C.update_body()
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		..()
+	if(ishuman(target))
+		if(uses-10 > 0)
+			uses = uses - 10
+			var/mob/living/carbon/human/C = target
+			user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
+			C.lip_style = "spray_face"
+			C.lip_color = colour
+			C.update_body()
+			if(C.client)
+				C.eye_blurry = max(C.eye_blurry, 3)
+				C.eye_blind = max(C.eye_blind, 1)
+				//if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS. Need fix
+				//	C.confused = max(C.confused, 3)
+				//	C.Weaken(3)
+	else if(istype(target, /obj/machinery/nuclearbomb))
+		var/obj/machinery/nuclearbomb/N = target
+		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
+		if(N.Spray)
+			N.overlays -= N.Spray
+		N.Spray = icon('icons/effects/Nuke_sprays.dmi', choice)
+		N.overlays += N.Spray
+	playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+	..()
 
 /obj/item/toy/crayon/spraycan/update_icon()
 	overlays.Cut()

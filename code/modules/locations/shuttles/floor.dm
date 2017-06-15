@@ -27,3 +27,8 @@ turf/space/shuttle
 
 	New()
 		icon_state = "[rand(1,4)]swall_s"
+
+/turf/simulated/shuttle/floor/nukeops
+	name = "floor"
+	icon = 'code/modules/locations/shuttles/nukeops.dmi'
+	icon_state = "floor1"

@@ -6,21 +6,22 @@
 	density = 1
 	anchored = 1
 	var/active = 0
-
+	var/hacked = FALSE
 
 /obj/machinery/gateway/initialize()
 	update_icon()
 	if(dir == 2)
 		density = 0
 
-
 /obj/machinery/gateway/update_icon()
-	if(active)
-		icon_state = "on"
-		return
-	icon_state = "off"
+	icon_state = active ? "on" : "off"
+	if(hacked)
+		icon_state += "_s"
 
-
+/obj/machinery/gateway/Destroy()
+	if(hacked)
+		return QDEL_HINT_LETMELIVE
+	return ..()
 
 //this is da important part wot makes things go
 /obj/machinery/gateway/centerstation
@@ -32,6 +33,7 @@
 	var/list/linked = list()
 	var/ready = 0				//have we got all the parts for a gateway?
 	var/wait = 0				//this just grabs world.time at world start
+	var/blocked = TRUE
 	var/obj/machinery/gateway/centeraway/awaygate = null
 
 /obj/machinery/gateway/centerstation/initialize()
@@ -41,18 +43,17 @@
 
 
 /obj/machinery/gateway/centerstation/update_icon()
-	if(active)
-		icon_state = "oncenter"
-		return
-	icon_state = "offcenter"
+	icon_state = active ? "on" : "off"
+	icon_state += "center"
+	if(hacked)
+		icon_state += "_s"
 
 
 
 obj/machinery/gateway/centerstation/process()
-	if(stat & (NOPOWER))
-		if(active) toggleoff()
+	if(stat & (NOPOWER) && active)
+		toggleoff()
 		return
-
 	if(active)
 		use_power(5000)
 
@@ -78,9 +79,8 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centerstation/proc/toggleon(mob/user)
-	if(!ready)			return
-	if(linked.len != 8)	return
-	if(!powered())		return
+	if(!ready || linked.len != 8 || !powered())
+		return
 	if(!awaygate)
 		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
 		return
@@ -91,6 +91,7 @@ obj/machinery/gateway/centerstation/process()
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 1
 		G.update_icon()
+	playsound(src, 'sound/machines/gateway/gateway_open.ogg', 100, 2)
 	active = 1
 	update_icon()
 
@@ -99,6 +100,7 @@ obj/machinery/gateway/centerstation/process()
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 0
 		G.update_icon()
+	playsound(src, 'sound/machines/gateway/gateway_close.ogg', 100, 2)
 	active = 0
 	update_icon()
 
@@ -115,13 +117,36 @@ obj/machinery/gateway/centerstation/process()
 
 //okay, here's the good teleporting stuff
 /obj/machinery/gateway/centerstation/Bumped(atom/movable/M)
-	if(!ready)		return
-	if(!active)		return
-	if(!awaygate)	return
+	if(!ready || !active || !awaygate)
+		return
 	if(awaygate.calibrated)
+		if(hacked && blocked)
+			var/allowed = FALSE
+
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				if(C.mind && C.mind.special_role == "Syndicate")
+					allowed = TRUE
+				else
+					to_chat(C, "<span class='danger'>Gateway Matter reacts strangely to your Touching</span>")
+			else if(istype(M, /mob/living/silicon/robot/syndicate))
+				allowed = TRUE
+			else if(istype(M, /obj/mecha))
+				var/obj/mecha/MECH = M
+				if(MECH.occupant && MECH.occupant.mind && MECH.occupant.mind.special_role == "Syndicate")
+					allowed = TRUE
+			else if(istype(M, /obj/machinery/nuclearbomb))
+				var/obj/machinery/nuclearbomb/N = M
+				if(!N.timing && !N.auth)
+					allowed = TRUE
+
+			if(!allowed)
+				return
 		if(M.buckled_mob)
 			M.unbuckle_mob()
+		playsound(src, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
 		M.forceMove(get_step(awaygate.loc, SOUTH))
+		playsound(awaygate, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
 		M.dir = SOUTH
 		return
 	else
@@ -135,7 +160,7 @@ obj/machinery/gateway/centerstation/process()
 
 /obj/machinery/gateway/centerstation/attackby(obj/item/device/W, mob/user)
 	if(istype(W,/obj/item/device/multitool))
-		to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
+		to_chat(user, "The gate is already calibrated, there is no work for you to do here.")
 		return
 
 /////////////////////////////////////Away////////////////////////
@@ -148,7 +173,7 @@ obj/machinery/gateway/centerstation/process()
 	var/calibrated = 1
 	var/list/linked = list()	//a list of the connected gateway chunks
 	var/ready = 0
-	var/obj/machinery/gateway/centeraway/stationgate = null
+	var/obj/machinery/gateway/centerstation/stationgate = null
 
 
 /obj/machinery/gateway/centeraway/initialize()
@@ -157,10 +182,10 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centeraway/update_icon()
-	if(active)
-		icon_state = "oncenter"
-		return
-	icon_state = "offcenter"
+	icon_state = active ? "on" : "off"
+	icon_state += "center"
+	if(hacked)
+		icon_state += "_s"
 
 
 /obj/machinery/gateway/centeraway/proc/detect()
@@ -184,8 +209,8 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centeraway/proc/toggleon(mob/user)
-	if(!ready)			return
-	if(linked.len != 8)	return
+	if(!ready || linked.len != 8)
+		return 0
 	if(!stationgate)
 		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
 		return
@@ -193,6 +218,7 @@ obj/machinery/gateway/centerstation/process()
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 1
 		G.update_icon()
+	playsound(src, 'sound/machines/gateway/gateway_open.ogg', 100, 2)
 	active = 1
 	update_icon()
 
@@ -201,6 +227,7 @@ obj/machinery/gateway/centerstation/process()
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 0
 		G.update_icon()
+	playsound(src, 'sound/machines/gateway/gateway_close.ogg', 100, 2)
 	active = 0
 	update_icon()
 
@@ -216,23 +243,25 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centeraway/Bumped(atom/movable/M)
-	if(!ready)	return
-	if(!active)	return
-	if(istype(M, /mob/living/carbon))
+	if(!ready || !active)
+		return
+	if(iscarbon(M))
 		for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
 			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
-				to_chat(M, "\black The station gate has detected your exile implant and is blocking your entry.")
+				to_chat(M, "The station gate has detected your exile implant and is blocking your entry.")
 				return
+	playsound(src, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
 	M.forceMove(get_step(stationgate.loc, SOUTH))
+	playsound(stationgate, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
 	M.dir = SOUTH
 
 
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user)
 	if(istype(W,/obj/item/device/multitool))
 		if(calibrated)
-			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
+			to_chat(user, "The gate is already calibrated, there is no work for you to do here.")
 			return
 		else
-			to_chat(user, "\blue <b>Recalibration successful!</b>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
+			to_chat(user, "<span class='notice'> <b>Recalibration successful!</b>:</span> This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
 			calibrated = 1
 			return

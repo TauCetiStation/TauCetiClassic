@@ -298,8 +298,7 @@
 		if(WT.remove_fuel(0,user))
 			user.remove_from_mob(src)
 			var/obj/item/clothing/head/helmet/battlebucket/BBucket = new(usr.loc)
-			for (var/mob/M in viewers(src))
-				M.show_message("<span class = 'rose'>[src] is shaped into [BBucket] by [user.name] with the weldingtool.</span>", 3, "<span class = 'rose'>You hear welding.</span>", 2)
+			loc.visible_message("<span class = 'rose'>[src] is shaped into [BBucket] by [user.name] with the weldingtool.</span>", blind_message = "<span class = 'rose'>You hear welding.</span>")
 			qdel(src)
 		return
 
@@ -311,4 +310,9 @@
 		overlays += "lid_bucket"
 
 /obj/item/weapon/reagent_containers/glass/bucket/on_reagent_change()
+	update_icon()
+
+/obj/item/weapon/reagent_containers/glass/bucket/full/New()
+	..()
+	reagents.add_reagent("water", 70)
 	update_icon()
