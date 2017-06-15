@@ -147,9 +147,9 @@
 	weaken = 5
 	stutter = 5
 
-	muzzle_type = /obj/effect/projectile/laser_omni/muzzle
-	tracer_type = /obj/effect/projectile/laser_omni/tracer
-	impact_type = /obj/effect/projectile/laser_omni/impact
+	muzzle_type = /obj/effect/projectile/rails/muzzle
+	tracer_type = /obj/effect/projectile/rails/tracer
+	impact_type = /obj/effect/projectile/rails/impact
 
 /obj/item/projectile/beam/stun
 	name = "stun beam"

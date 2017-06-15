@@ -172,3 +172,12 @@
 	light_range = 2
 	light_power = 2
 	light_color = "#2be4b8"
+
+/obj/effect/projectile/rails/tracer
+	icon_state = "tracer_rails"
+
+/obj/effect/projectile/rails/muzzle
+	icon_state = "muzzle_rails"
+
+/obj/effect/projectile/rails/impact
+	icon_state = "impact_rails"
