@@ -154,7 +154,7 @@
 		if(/obj/item/weapon/gun/energy/laser/retro)
 			iconholder = TRUE
 
-		if(/obj/item/weapon/gun/energy/laser/captain)
+		if(/obj/item/weapon/gun/energy/laser/selfcharging/captain)
 			iconholder = TRUE
 
 		if(/obj/item/weapon/gun/energy/lasercannon)

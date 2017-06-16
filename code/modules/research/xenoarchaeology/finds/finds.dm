@@ -340,7 +340,7 @@
 			/obj/item/weapon/gun/energy/sniperrifle/rails,\
 			/obj/item/weapon/gun/tesla/rife,\
 			/obj/item/weapon/gun/energy/laser/scatter/alien,\
-			/obj/item/weapon/gun/energy/laser/captain/alien)
+			/obj/item/weapon/gun/energy/laser/selfcharging/alien)
 			if(spawn_type)
 				var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 				new_item = new_gun
