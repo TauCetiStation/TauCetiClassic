@@ -64,6 +64,7 @@ var/datum/subsystem/throwing/SSthrowing
 	var/pure_diagonal
 	var/diagonal_error
 	var/datum/callback/callback
+	var/datum/callback/early_callback // used when you want to call something before throw_impact().
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
@@ -110,24 +111,31 @@ var/datum/subsystem/throwing/SSthrowing
 			finialize()
 			return
 
-/datum/thrownthing/proc/finialize(hit = FALSE)
+/datum/thrownthing/proc/finialize(hit = FALSE, atom/movable/AM)
 	set waitfor = 0
 	SSthrowing.processing -= thrownthing
 	//done throwing, either because it hit something or it finished moving
 	if (!QDELETED(thrownthing) && thrownthing.throwing)
 		thrownthing.throwing = FALSE
-		if (!hit)
-			for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
-				var/atom/A = thing
-				if (A == target)
-					hit = TRUE
-					thrownthing.throw_impact(A)
-					break
-			if (!hit)
-				thrownthing.throw_impact(get_turf(thrownthing))  // we haven't hit something yet and we still must, let's hit the ground.
-				thrownthing.newtonian_move(init_dir)
+
+		if(early_callback)
+			early_callback.Invoke()
+
+		if(AM)
+			thrownthing.throw_impact(AM)
 		else
-			thrownthing.newtonian_move(init_dir)
+			if (!hit)
+				for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
+					var/atom/A = thing
+					if (A == target)
+						hit = TRUE
+						thrownthing.throw_impact(A)
+						break
+				if (!hit)
+					thrownthing.throw_impact(get_turf(thrownthing))  // we haven't hit something yet and we still must, let's hit the ground.
+					thrownthing.newtonian_move(init_dir)
+			else
+				thrownthing.newtonian_move(init_dir)
 		thrownthing.fly_speed = 0
 	if (callback)
 		callback.Invoke()
@@ -142,7 +150,5 @@ var/datum/subsystem/throwing/SSthrowing
 			if (L.lying)
 				continue
 		if (AM.density && !AM.throwpass)
-			thrownthing.throwing = FALSE
-			thrownthing.throw_impact(AM)
-			thrownthing.fly_speed = 0
+			finialize(null, AM)
 			return TRUE
