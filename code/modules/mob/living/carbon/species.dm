@@ -21,13 +21,14 @@
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
 
-	var/primitive                // Lesser form, if any (ie. monkey for humans)
-	var/tail                     // Name of tail image in species effects icon file.
-	var/language                 // Default racial language, if any.
-	var/secondary_langs = list() // The names of secondary languages that are available to this species.
-	var/attack_verb = "punch"    // Empty hand hurt intent verb.
-	var/punch_damage = 0		 // Extra empty hand attack damage.
-	var/mutantrace               // Safeguard due to old code.
+	var/primitive                     // Lesser form, if any (ie. monkey for humans)
+	var/tail                          // Name of tail image in species effects icon file.
+	var/language                      // Default racial language, if any.
+	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
+	var/secondary_langs = list()      // The names of secondary languages that are available to this species.
+	var/attack_verb = "punch"         // Empty hand hurt intent verb.
+	var/punch_damage = 0              // Extra empty hand attack damage.
+	var/mutantrace                    // Safeguard due to old code.
 
 	var/breath_type = "oxygen"   // Non-oxygen gas breathed, if any.
 	var/poison_type = "phoron"   // Poisonous air.
@@ -270,6 +271,7 @@
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
+	force_racial_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 
 	warning_low_pressure = 50

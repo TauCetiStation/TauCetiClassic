@@ -101,6 +101,8 @@ VOX HEIST ROUNDTYPE
 		vox.languages = list() // Removing language from chargen.
 		vox.flavor_text = ""
 		vox.add_language("Vox-pidgin")
+		if(index == 2 || index == 6) // 1st and 5th vox will get ability to speak Sol Common (with current language system, everyone understands common lang even without knowing it).
+			vox.add_language("Sol Common")
 		vox.h_style = "Short Vox Quills"
 		vox.f_style = "Shaved"
 		for(var/obj/item/organ/external/BP in vox.bodyparts)
