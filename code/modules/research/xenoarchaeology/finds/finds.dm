@@ -338,7 +338,7 @@
 			//energy gun
 			var/spawn_type = pick(\
 			/obj/item/weapon/gun/energy/sniperrifle/rails,\
-			/obj/item/weapon/gun/tesla/rife,\
+			/obj/item/weapon/gun/tesla/rifle,\
 			/obj/item/weapon/gun/energy/laser/scatter/alien,\
 			/obj/item/weapon/gun/energy/laser/selfcharging/alien)
 			if(spawn_type)

@@ -350,9 +350,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		charge = 0
 		update_icon()
 
-/obj/item/weapon/gun/tesla/rife
-	name = "Tesla rife"
-	desc = "Cannon which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
+/obj/item/weapon/gun/tesla/rifle
+	name = "Tesla rifle"
+	desc = "Rifle which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "arctesla"
 	item_state = "arctesla"
