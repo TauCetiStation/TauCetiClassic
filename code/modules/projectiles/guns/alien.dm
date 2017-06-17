@@ -19,7 +19,7 @@
 	desc = "A vicious alien projectile weapon. Parts of it quiver gelatinously, as though the thing is insectile and alive."
 
 	var/last_regen = 0
-	var/spike_gen_time = 100
+	var/spike_gen_time = 10 SECONDS
 	var/max_spikes = 3
 	var/spikes = 3
 	var/obj/item/weapon/spike/spike
@@ -32,6 +32,8 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "spikethrower3"
 	item_state = "spikethrower"
+	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
 /obj/item/weapon/spikethrower/New()
 	..()
@@ -111,7 +113,7 @@
 
 	user.visible_message("\red [user] fires [src]!", "\red You fire [src]!")
 	spike.loc = get_turf(src)
-	spike.throw_at(target,10,fire_force,user)
+	spike.throw_at(target, 10, fire_force, user)
 	spike = null
 	update_icon()
 

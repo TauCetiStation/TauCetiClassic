@@ -50,12 +50,6 @@
 				to_chat(src, "<span class='danger'>You fail to push [M]'s fat ass out of the way.</span>")
 			return 1
 
-	//Leaping mobs just land on the tile, no pushing, no anything.
-	if(status_flags & LEAPING)
-		loc = M.loc
-		status_flags &= ~LEAPING
-		return 1
-
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
 	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
@@ -465,6 +459,11 @@
 	disabilities = 0
 	ExtinguishMob()
 	fire_stacks = 0
+
+	if(pinned.len)
+		for(var/obj/O in pinned)
+			O.forceMove(loc)
+		pinned.Cut()
 
 	// fix blindness and deafness
 	blinded = 0

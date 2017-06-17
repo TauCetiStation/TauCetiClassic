@@ -285,8 +285,7 @@
 	poison_type = "oxygen"
 
 	flags = list(
-	 NO_SCAN = TRUE
-	,NO_BLOOD = TRUE
+		NO_SCAN = TRUE
 	)
 
 	blood_color = "#2299FC"
@@ -301,15 +300,34 @@
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
 
-/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
+/datum/species/vox/on_gain(mob/living/carbon/human/H)
+	if(name != VOX_ARMALIS)
+		H.leap_icon = new /obj/screen/leap()
+		H.leap_icon.screen_loc = "CENTER+3:20,SOUTH:5"
 
-	H.verbs += /mob/living/carbon/human/proc/leap
-	..()
+		if(H.hud_used)
+			H.hud_used.adding += H.leap_icon
+		if(H.client)
+			H.client.screen += H.leap_icon
 
-/datum/species/vox/armalis/handle_post_spawn(mob/living/carbon/human/H)
+	else
+		H.verbs += /mob/living/carbon/human/proc/gut
 
-	H.verbs += /mob/living/carbon/human/proc/gut
-	..()
+	return ..()
+
+/datum/species/vox/on_loose(mob/living/carbon/human/H)
+	if(name != VOX_ARMALIS)
+		if(H.leap_icon)
+			if(H.hud_used)
+				H.hud_used.adding -= H.leap_icon
+			if(H.client)
+				H.client.screen -= H.leap_icon
+			QDEL_NULL(H.leap_icon)
+
+	else
+		H.verbs -= /mob/living/carbon/human/proc/gut
+
+	return ..()
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS

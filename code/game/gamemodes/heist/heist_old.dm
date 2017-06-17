@@ -2,8 +2,8 @@
 VOX HEIST ROUNDTYPE
 */
 
-/datum/game_mode/
-	var/list/datum/mind/raiders = list()  //Antags.
+/datum/game_mode
+	var/list/datum/mind/raiders = list()
 
 /datum/game_mode/heist
 	name = "heist"
@@ -16,8 +16,8 @@ VOX HEIST ROUNDTYPE
 
 	votable = 0
 
-	var/list/raid_objectives = list()     //Raid objectives.
-	var/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
+	var/list/raid_objectives = list()
+	var/list/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
 
 /datum/game_mode/heist/announce()
 	to_chat(world, "<B>The current game mode is - Heist!</B>")
@@ -33,6 +33,9 @@ VOX HEIST ROUNDTYPE
 
 	var/raider_num = 0
 
+	//Check that we have enough vox.
+	if(antag_candidates.len < required_enemies)
+		return 0
 	else if(antag_candidates.len < recommended_enemies)
 		raider_num = antag_candidates.len
 	else
@@ -79,11 +82,11 @@ VOX HEIST ROUNDTYPE
 		raider.current.loc = raider_spawn[index]
 		index++
 
-		var/sounds = rand(2,8)
+		var/sounds = rand(2, 8)
 		var/i = 0
 		var/newname = ""
 
-		while(i<=sounds)
+		while(i <= sounds)
 			i++
 			newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
 
@@ -101,7 +104,20 @@ VOX HEIST ROUNDTYPE
 		vox.h_style = "Short Vox Quills"
 		vox.f_style = "Shaved"
 		for(var/obj/item/organ/external/BP in vox.bodyparts)
-			BP.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
+			BP.status = 0 // rejuvenate() saves prostethic limbs, so we tell it NO.
+			BP.rejuvenate()
+
+		//Now apply cortical stack.
+		var/obj/item/organ/external/BP = vox.bodyparts_by_name[BP_HEAD]
+
+		var/obj/item/weapon/implant/cortical/I = new(vox)
+		I.imp_in = vox
+		I.implanted = TRUE
+		BP.implants += I
+		I.part = BP
+
+		cortical_stacks[raider] = I
+
 		vox.equip_vox_raider()
 		vox.regenerate_icons()
 
@@ -113,27 +129,28 @@ VOX HEIST ROUNDTYPE
 /datum/game_mode/heist/proc/is_raider_crew_safe()
 
 	if(cortical_stacks.len == 0)
-		return 0
+		return FALSE
 
-	for(var/obj/stack in cortical_stacks)
-		if (get_area(stack) != locate(/area/shuttle/vox/station))
-			return 0
-	return 1
+	for(var/datum/mind/vox in cortical_stacks)
+		if(get_area(cortical_stacks[vox]) != locate(/area/shuttle/vox/station))
+			return FALSE
+
+	return TRUE
 
 /datum/game_mode/heist/proc/is_raider_crew_alive()
-
 	for(var/datum/mind/raider in raiders)
-		if(raider.current)
-			if(istype(raider.current,/mob/living/carbon/human) && raider.current.stat != DEAD)
-				return 1
-	return 0
+		if(ishuman(raider.current) && raider.current.stat == DEAD)
+			return TRUE
+
+	return FALSE
 
 /datum/game_mode/heist/proc/forge_vox_objectives()
 
 	var/i = 1
 	var/max_objectives = pick(2,2,2,2,3,3,3,4)
 	var/list/objs = list()
-	while(i<= max_objectives)
+
+	while(i <= max_objectives)
 		var/list/goals = list("kidnap","loot","salvage")
 		var/goal = pick(goals)
 		var/datum/objective/heist/O
@@ -150,7 +167,7 @@ VOX HEIST ROUNDTYPE
 
 		i++
 
-	//-All- vox raids have these two objectives. Failing them loses the game.
+	//-All- vox raids have these two (one) objectives. Failing them loses the game.
 	objs += new /datum/objective/heist/inviolate_crew
 	objs += new /datum/objective/heist/inviolate_death
 
@@ -161,7 +178,7 @@ VOX HEIST ROUNDTYPE
 	to_chat(raider.current, "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.")
 	to_chat(raider.current, "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.")
 	to_chat(raider.current, "\blue Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!")
-	to_chat(raider.current, "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http://baystation12.net/forums/viewtopic.php?f=6&t=8657.")
+	//to_chat(raider.current, "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http://baystation12.net/forums/viewtopic.php?f=6&t=8657.")
 	var/obj_count = 1
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in raider.objectives)
@@ -237,21 +254,30 @@ VOX HEIST ROUNDTYPE
 		count++
 
 	..()
+	return TRUE
 
-datum/game_mode/proc/auto_declare_completion_heist()
+/datum/game_mode/proc/auto_declare_completion_heist()
 	if(raiders.len)
 		var/check_return = 0
-		if(ticker && istype(ticker.mode,/datum/game_mode/heist))
+		if(ticker && istype(ticker.mode, /datum/game_mode/heist))
 			check_return = 1
 		var/text = "<FONT size = 2><B>The vox raiders were:</B></FONT>"
 
 		for(var/datum/mind/vox in raiders)
 			text += "<br>[vox.key] was [vox.name] ("
+
 			if(check_return)
-				var/obj/stack = raiders[vox]
-				if(get_area(stack) != locate(/area/shuttle/vox/station))
+				var/datum/game_mode/heist/GM = ticker.mode
+				var/left_behind = TRUE
+
+				var/obj/item/weapon/implant/cortical/I = GM.cortical_stacks[vox]
+				if(I && I.implanted && I.imp_in == vox.current && get_area(I) == locate(/area/shuttle/vox/station))
+					left_behind = FALSE
+
+				if(left_behind)
 					text += "left behind)"
 					continue
+
 			if(vox.current)
 				if(vox.current.stat == DEAD)
 					text += "died"
@@ -264,9 +290,9 @@ datum/game_mode/proc/auto_declare_completion_heist()
 			text += ")"
 
 		to_chat(world, text)
-	return 1
+	return TRUE
 
 /datum/game_mode/heist/check_finished()
-	if (!(is_raider_crew_alive()) || (vox_shuttle_location && (vox_shuttle_location == "start")))
-		return 1
+	if(vox_shuttle_location && (vox_shuttle_location == "start"))
+		return TRUE
 	return ..()

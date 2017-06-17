@@ -1364,71 +1364,114 @@
  		// Might need re-wording.
 		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [target_zone == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 
+/obj/screen/leap
+	name = "toggle leap"
+	icon = 'icons/mob/screen1_action.dmi'
+	icon_state = "action"
 
-//Putting a couple of procs here that I don't know where else to dump.
-//Mostly going to be used for Vox and Vox Armalis, but other human mobs might like them (for adminbuse).
-
-/mob/living/carbon/human/proc/leap()
-	set category = "IC"
-	set name = "Leap"
-	set desc = "Leap at a target and grab them aggressively."
-
-	if(last_special > world.time)
-		return
-
-	if(stat || paralysis || stunned || weakened || lying)
-		to_chat(src, "You cannot leap in your current state.")
-		return
-
-	var/list/choices = list()
-	for(var/mob/living/M in view(6,src))
-		if(!istype(M,/mob/living/silicon))
-			choices += M
-	choices -= src
-
-	var/mob/living/T = input(src,"Who do you wish to leap at?") in null|choices
-
-	if(!T || !src || src.stat) return
-
-	if(get_dist(get_turf(T), get_turf(src)) > 6) return
-
-	last_special = world.time + 100
-	status_flags |= LEAPING
-
-	src.visible_message("<span class='warning'><b>\The [src]</b> leaps at [T]!</span>")
-	src.throw_at(get_step(get_turf(T),get_turf(src)), 5, 1, src, spin = FALSE, callback = CALLBACK(src, .end_leaping, T))
-	playsound(src.loc, 'sound/voice/shriek1.ogg', 50, 1)
+	var/on = FALSE
+	var/time_used = 0
+	var/cooldown = 10 SECONDS
 
 
-/mob/living/carbon/human/proc/end_leaping(mob/living/T)
-	if(status_flags & LEAPING)
-		status_flags &= ~LEAPING
+/obj/screen/leap/New()
+	..()
+	overlays += image(icon, "leap")
+	update_icon()
 
-	if(!src.Adjacent(T))
-		to_chat(src, "<span class='warning'>You miss!</span>")
-		return
+/obj/screen/leap/update_icon()
+	icon_state = "[initial(icon_state)]_[on]"
 
-	T.Weaken(5)
+/obj/screen/leap/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.toggle_leap()
 
-	var/use_hand = "left"
-	if(l_hand)
-		if(r_hand)
-			to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
-			return
-		else
-			use_hand = "right"
+/mob/living/carbon/human/proc/toggle_leap(message = 1)
+	leap_icon.on = !leap_icon.on
+	leap_icon.update_icon()
+	if(message)
+		to_chat(src, "<span class='notice'>You will [leap_icon.on ? "now" : "no longer"] leap at enemies!</span>")
 
-	visible_message("<span class='warning'><b>\The [src]</b> seizes [T] aggressively!</span>")
-
-	var/obj/item/weapon/grab/G = new(src,T)
-	if(use_hand == "left")
-		l_hand = G
+/mob/living/carbon/human/ClickOn(atom/A, params)
+	if(leap_icon && leap_icon.on && A != src)
+		leap_at(A)
 	else
-		r_hand = G
+		..()
 
-	G.state = GRAB_AGGRESSIVE
-	G.icon_state = "grabbed1"
-	G.synch()
+#define MAX_LEAP_DIST 4
+
+/mob/living/carbon/human/proc/leap_at(atom/A)
+	if(leap_icon.time_used > world.time)
+		to_chat(src, "<span class='warning'>You are too fatigued to leap right now!</span>")
+		return
+
+	if(status_flags & LEAPING) // Leap while you leap, so you can leap while you leap
+		return
+
+	if(!has_gravity(src))
+		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
+		return
+
+	if(stat || stunned || lying)
+		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
+		return
+
+	leap_icon.time_used = world.time + leap_icon.cooldown
+	status_flags |= LEAPING
+	stop_pulling()
+
+	var/prev_intent = a_intent
+	a_intent_change("hurt")
+
+	if(species.name == VOX)
+		playsound(src, 'sound/voice/shriek1.ogg', 50, 1)
+
+	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
+
+/mob/living/carbon/human/proc/leap_end(prev_intent)
+	status_flags &= ~LEAPING
+	a_intent_change(prev_intent)
+
+/mob/living/carbon/human/throw_impact(atom/A)
+	if(!(status_flags & LEAPING))
+		return ..()
+
+	if(isliving(A))
+		var/mob/living/L = A
+		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
+		L.Weaken(5)
+		sleep(2) // Runtime prevention (infinite bump() calls on hulks)
+		step_towards(src, L)
+		toggle_leap(FALSE)
+
+		var/use_hand = "left"
+		if(l_hand)
+			if(r_hand)
+				to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
+				return
+			else
+				use_hand = "right"
+
+		visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
+
+		var/obj/item/weapon/grab/G = new(src, L)
+		if(use_hand == "left")
+			l_hand = G
+		else
+			r_hand = G
+
+		G.state = GRAB_AGGRESSIVE
+		G.icon_state = "grabbed1"
+		G.synch()
+
+	else if(A.density)
+		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")
+		weakened = 2
+
+	update_canmove()
+
+#undef MAX_LEAP_DIST
 
 /mob/living/carbon/human/proc/gut()
 	set category = "IC"
