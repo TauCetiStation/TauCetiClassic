@@ -39,3 +39,6 @@
 					healths.icon_state = "health6"
 		else
 			healths.icon_state = "health7"
+
+/mob/living/carbon/alien/humanoid/sentinel/movement_delay()
+	return(1 + move_delay_add + config.alien_delay)

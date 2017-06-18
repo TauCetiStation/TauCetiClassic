@@ -83,6 +83,8 @@
 	for(var/image/I in overlays_standing)
 		overlays += I
 
+/mob/living/carbon/alien/humanoid/queen/movement_delay()
+	return(5 + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/alien/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'

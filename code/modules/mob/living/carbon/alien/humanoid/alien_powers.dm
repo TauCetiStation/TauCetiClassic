@@ -160,8 +160,9 @@ Doesn't work on other aliens/AI.*/
 
 	playsound(src, 'sound/effects/screech2.ogg', 100, 1)
 	for(var/mob/living/carbon/human/H in oviewers())
-		if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+		if(H.sdisabilities & DEAF || istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
 			continue
+
 		to_chat(H, "<font color='red' size='7'>HISSSSSS</font>")
 		H.sleeping = 0
 		H.stuttering += 20
