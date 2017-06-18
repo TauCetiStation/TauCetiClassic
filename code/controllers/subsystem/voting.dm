@@ -250,7 +250,7 @@ var/datum/subsystem/vote/SSvote
 				votes = 0
 			. += "<li><a href='?src=\ref[src];vote=[i]'>[sanitize_alt(choices[i])]</a>"
 			if(mode == "custom" || admin)
-				. +=  "([votes] votes)"
+				. += "([votes] votes)"
 			. += "</li>"
 
 		. += "</ul><hr>"
