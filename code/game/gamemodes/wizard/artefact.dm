@@ -1,31 +1,3 @@
-/obj/item/weapon/scrying
-	name = "scrying orb"
-	desc = "An incandescent orb of otherworldly energy, staring into it gives you vision beyond mortal means."
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state ="bluespace"
-	throw_speed = 3
-	throw_range = 7
-	throwforce = 15
-	damtype = BURN
-	force = 15
-	hitsound = 'sound/items/welder2.ogg'
-	var/cooldown = 0
-
-/obj/item/weapon/scrying/attack_self(mob/living/user)
-	if(cooldown >= world.time)
-		to_chat(user, "<span class='userdanger' It's still charging</span>")
-		return
-	to_chat(user, "<span class='notice'>You can see...everything!</span>")
-	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
-	cooldown = world.time + 1200
-	var/mob/dead/observer/ghost = user.ghostize(FALSE)
-	addtimer(CALLBACK(src, .proc/reenter, user, ghost), 300)
-
-/obj/item/weapon/scrying/proc/reenter(mob/living/body, mob/dead/observer/ghost)
-	if(body && body.stat != DEAD && ghost && ghost.key)
-		body.key = ghost.key
-		qdel(ghost)
-
 /obj/item/device/necromantic_stone
 	name = "necromantic stone"
 	desc = "A shard capable of resurrecting humans as skeleton thralls."

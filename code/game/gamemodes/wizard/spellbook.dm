@@ -240,12 +240,12 @@
 	category = "Assistance"
 	cost = 3
 
-/datum/spellbook_entry/item/staffdoor
+/*/datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
 	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
 	item_path = /obj/item/weapon/gun/magic/staff/doorcreation
 	log_name = "SD"
-	category = "Mobility"
+	category = "Mobility"*/
 
 /datum/spellbook_entry/item/staffhealing
 	name = "Staff of Healing"
@@ -253,23 +253,6 @@
 	item_path = /obj/item/weapon/gun/magic/staff/healing
 	log_name = "SH"
 	category = "Defensive"
-
-/datum/spellbook_entry/item/scryingorb
-	name = "Scrying Orb"
-	desc = "An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x-ray vision."
-	item_path = /obj/item/weapon/scrying
-	log_name = "SO"
-	category = "Defensive"
-
-/datum/spellbook_entry/item/scryingorb/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
-	. = ..()
-	if(.)
-		user.mutations.Add(XRAY)
-		user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-		user.see_in_dark = 8
-		user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-		user.update_mutations()
-	return .
 
 /datum/spellbook_entry/item/soulstones
 	name = "Six Soul Stone Shards and the spell Artificer"

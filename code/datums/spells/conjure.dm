@@ -9,6 +9,8 @@
 	var/summon_amt = 1 //amount of objects summoned
 	var/summon_ignore_density = 0 //if set to 1, adds dense tiles to possible spawn places
 	var/summon_ignore_prev_spawn_points = 0 //if set to 1, each new object is summoned on a new spawn point
+	var/deleting_previous = 0 //if set to 1, a new cast delete previous objects
+	var/list/previous_objects = list() // Containts object references, which was spawned last time.
 
 	var/list/newVars = list() //vars of the summoned objects will be replaced with those where they meet
 	//should have format of list("emagged" = 1,"name" = "Wizard's Justicebot"), for example
@@ -23,6 +25,11 @@
 	playsound(loc, sound, 50, 1)
 
 	if(do_after(usr,delay,target=usr))
+		if(deleting_previous)
+			listclearnulls(previous_objects)
+			for(var/atom/A in previous_objects)
+				qdel(A)
+				previous_objects -= A
 		for(var/i in 0 to summon_amt)
 			if(!targets.len)
 				break
@@ -43,6 +50,9 @@
 
 				if(summon_lifespan)
 					QDEL_IN(summoned_object, summon_lifespan)
+				if(deleting_previous)
+					previous_objects += summoned_object
+
 	else
 		switch(charge_type)
 			if("recharge")

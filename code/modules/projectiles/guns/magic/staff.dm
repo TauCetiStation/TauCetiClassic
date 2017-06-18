@@ -1,6 +1,7 @@
 obj/item/weapon/gun/magic/staff/
 	slot_flags = SLOT_BACK
 	icon_state = "staff"
+	w_class = 4
 
 /obj/item/weapon/gun/magic/staff/change
 	name = "staff of change"

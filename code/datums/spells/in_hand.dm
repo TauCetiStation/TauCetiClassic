@@ -68,6 +68,7 @@
 	school = "evocation"
 	action_icon_state = "fireball"
 	summon_path = /obj/item/weapon/magic/fireball
+	charge_max = 200
 
 /obj/item/weapon/magic/fireball
 	name = "Fireball"
@@ -97,7 +98,7 @@
 	name = "Lightning Bolt"
 	desc = "Fire a high powered lightning bolt at your foes!"
 	school = "evocation"
-	charge_max = 200
+	charge_max = 400
 	clothes_req = 1
 	action_icon_state = "lightning"
 	summon_path = /obj/item/weapon/magic/tesla
@@ -126,7 +127,7 @@
 /obj/effect/proc_holder/spell/in_hand/arcane_barrage
 	name = "Arcane Barrage"
 	desc = "Fire a torrent of arcane energy at your foes with this (powerful) spell. Requires both hands free to use. Learning this spell makes you unable to learn Lesser Summon Gun."
-	charge_max = 500
+	charge_max = 600
 	action_icon_state = "arcane_barrage"
 	summon_path = /obj/item/weapon/magic/arcane_barrage
 

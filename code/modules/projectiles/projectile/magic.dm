@@ -188,28 +188,25 @@
 	var/list/doors = list(/obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver,/obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium,
 					/obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/diamond, /obj/structure/mineral_door/wood)
 	var/door_counter = 0
-	var/max_door_counter = 4
+	var/max_door_counter = 2
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	if(door_counter >= max_door_counter || getOPressureDifferential(target) >= FIREDOOR_MAX_PRESSURE_DIFF)
 		paused = TRUE
 		qdel(src)
 		return
+	door_counter++
 	if(istype(target, /turf/simulated/wall))
 		var/turf/place = target
 		place.ChangeTurf(/turf/simulated/floor/plating)
 		var/pickedtype = pick(doors)
 		new pickedtype(place)
-		door_counter++
 	else if(istype(target, /obj/machinery/door))
 		var/obj/machinery/door/D = target
 		D.open()
-		door_counter++
 	else if(istype(target, /obj/structure/mineral_door))
 		var/obj/structure/mineral_door/D = target
 		D.Open()
-		door_counter++
-
 
 /*/obj/item/projectile/magic/teleport
 	name = "bolt of teleportation"
