@@ -1219,7 +1219,7 @@
 #include "code\modules\mining\drilling\drill.dm"
 #include "code\modules\mining\drilling\scanner.dm"
 #include "code\modules\mining\mining_fabricator\mining_fabricator.dm"
-#include "code\modules\mining\mining_fabricator\mining_resech.dm"
+#include "code\modules\mining\mining_fabricator\mining_research.dm"
 #include "code\modules\mob\abilities.dm"
 #include "code\modules\mob\death.dm"
 #include "code\modules\mob\emote.dm"
