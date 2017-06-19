@@ -73,6 +73,19 @@
 	spell_type = /obj/effect/proc_holder/spell/in_hand/fireball
 	log_name = "FB"
 
+/datum/spellbook_entry/res_touch
+	name = "Resurrection"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/res_touch
+	log_name = "RT"
+	category = "Defensive"
+	cost = 1
+
+/datum/spellbook_entry/heal_touch
+	name = "Heal"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/heal
+	log_name = "HT"
+	category = "Defensive"
+
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
 	spell_type = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
@@ -253,6 +266,7 @@
 	item_path = /obj/item/weapon/gun/magic/staff/healing
 	log_name = "SH"
 	category = "Defensive"
+	cost = 4
 
 /datum/spellbook_entry/item/soulstones
 	name = "Six Soul Stone Shards and the spell Artificer"

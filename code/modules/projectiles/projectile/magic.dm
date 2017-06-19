@@ -6,6 +6,8 @@
 	nodamage = 1
 	flag = "magic"
 
+	var/power_of_spell = 1
+
 /obj/item/projectile/magic/change
 	name = "bolt of change"
 	icon_state = "ice_1"
@@ -16,6 +18,10 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "magic"
+
+/obj/item/projectile/magic/New(loc, power_of_spell = 1)
+	src.power_of_spell = power_of_spell
+	..()
 
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	wabbajack(change)

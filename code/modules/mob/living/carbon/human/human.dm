@@ -1086,44 +1086,6 @@
 	else
 		germ_level += n
 
-/mob/living/carbon/human/revive()
-	for (var/obj/item/organ/external/BP in bodyparts)
-		BP.status &= ~ORGAN_BROKEN
-		BP.status &= ~ORGAN_BLEEDING
-		BP.status &= ~ORGAN_SPLINTED
-		BP.status &= ~ORGAN_CUT_AWAY
-		BP.status &= ~ORGAN_ATTACHABLE
-		if (!BP.amputated)
-			BP.status &= ~ORGAN_DESTROYED
-			BP.destspawn = 0
-		BP.wounds.Cut()
-		BP.heal_damage(1000,1000,1,1)
-
-	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	BP.disfigured = 0
-
-	if(species && !species.flags[NO_BLOOD])
-		vessel.add_reagent("blood",560-vessel.total_volume)
-		fixblood()
-
-	for (var/obj/item/weapon/organ/head/H in world)
-		if(H.brainmob)
-			if(H.brainmob.real_name == src.real_name)
-				if(H.brainmob.mind)
-					H.brainmob.mind.transfer_to(src)
-					qdel(H)
-
-	for(var/obj/item/organ/internal/IO in organs)
-		IO.damage = 0
-
-	for (var/datum/disease/virus in viruses)
-		virus.cure()
-	for (var/ID in virus2)
-		var/datum/disease2/disease/V = virus2[ID]
-		V.cure(src)
-
-	..()
-
 /mob/living/carbon/human/proc/is_lung_ruptured()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 	return IO.is_bruised()
