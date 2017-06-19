@@ -2374,9 +2374,9 @@ datum/design/spraycan
 	name = "Experimental Welding Tool"
 	desc = "An experimental welder capable of self-fuel generation."
 	id = "exwelder"
-	req_tech = list("materials" = 4, "engineering" = 5, "bluespace" = 2, "plasmatech" = 4)
+	req_tech = list("materials" = 4, "engineering" = 5, "bluespace" = 2, "phorontech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PHORON = 1500, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
 	category = list("Equipment")
 
