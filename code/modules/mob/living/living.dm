@@ -428,8 +428,6 @@
 /mob/living/proc/restore_all_bodyparts()
 	return
 
-
-
 /mob/living/proc/revive()
 	rejuvenate()
 	buckled = initial(src.buckled)
@@ -458,9 +456,6 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.shock_stage=0
 
 	// shut down ongoing problems
 	radiation = 0
@@ -479,13 +474,16 @@
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
 
-	// restore all of a human's blood
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_mob = src
-		human_mob.restore_blood()
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		C.shock_stage = 0
 
-	// fix all of our bodyparts
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.restore_blood()
+
 	restore_all_bodyparts()
+	cure_all_viruses()
 
 	// remove the character from the list of the dead
 	if(stat == DEAD)
@@ -507,7 +505,18 @@
 		mutations.Remove(HUSK)
 	regenerate_icons()
 	update_health_hud()
-	return
+
+/mob/living/carbon/human/rejuvenate()
+	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
+	BP.disfigured = FALSE
+
+	for (var/obj/item/weapon/organ/head/H in world) // damn son, where'd you get this?
+		if(H.brainmob)
+			if(H.brainmob.real_name == src.real_name)
+				if(H.brainmob.mind)
+					H.brainmob.mind.transfer_to(src)
+					qdel(H)
+	..()
 
 /mob/living/proc/update_health_hud()
 	hud_updateflag |= 1 << HEALTH_HUD
@@ -515,6 +524,17 @@
 
 /mob/living/proc/UpdateDamageIcon()
 	return
+
+/mob/living/proc/cure_all_viruses()
+	for(var/datum/disease/virus in viruses)
+		virus.cure()
+
+/mob/living/carbon/cure_all_viruses()
+	for(var/ID in virus2)
+		var/datum/disease2/disease/V = virus2[ID]
+		V.cure(src)
+
+	..()
 
 /mob/living/proc/remove_any_mutations()
 	dna.ResetSE()
