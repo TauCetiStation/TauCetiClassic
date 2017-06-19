@@ -156,7 +156,8 @@
 	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
-	if (!user) return
+	if (!user || anchored)
+		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee/))
@@ -219,6 +220,10 @@
 		if(isliving(src.loc))
 			return
 		user.next_move = max(user.next_move+2,world.time + 2)
+
+	if(QDELETED(src)) // remove_from_mob() may remove DROPDEL items, so...
+		return
+
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -226,6 +231,8 @@
 
 
 /obj/item/attack_paw(mob/user)
+	if (!user || anchored)
+		return
 
 	if(isalien(user)) // -- TLE
 		var/mob/living/carbon/alien/A = user
@@ -251,9 +258,13 @@
 	else
 		if(istype(src.loc, /mob/living))
 			return
-		src.pickup(user)
+
 		user.next_move = max(user.next_move+2,world.time + 2)
 
+	if(QDELETED(src)) // no item - no pickup, you dummy!
+		return
+
+	src.pickup(user)
 	user.put_in_active_hand(src)
 	return
 
