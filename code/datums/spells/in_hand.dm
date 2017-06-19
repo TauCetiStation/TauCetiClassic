@@ -27,6 +27,7 @@
 
 	var/obj/effect/proc_holder/spell/Spell
 	var/proj_path = /obj/item/projectile/magic
+	var/drop_activate_recharge = TRUE
 	var/uses = 1
 	var/invoke
 	var/s_fire
@@ -96,7 +97,7 @@
 		if(uses == initial(uses))                        // When we did nothing with spell.
 			Spell.charge_max = initial(Spell.charge_max) // Incase spell has variable charge time.
 			Spell.revert_cast()
-		else
+		else if(drop_activate_recharge)
 			INVOKE_ASYNC(Spell, .obj/effect/proc_holder/spell/proc/start_recharge)
 		Spell = null
 	return ..()
@@ -191,12 +192,15 @@
 	if(!..())
 		return
 	if(uses > 0)
-		var/obj/item/weapon/magic/arcane_barrage/Arcane = new type
+		var/obj/item/weapon/magic/arcane_barrage/Arcane = new type(Spell)
 		Arcane.uses = uses
+		drop_activate_recharge = FALSE
+
 		C.drop_item()
 		C.swap_hand()
 		C.drop_item()
 		C.put_in_hands(Arcane)
+
 		user.next_click = world.time + 4
 		user.next_move = world.time + 4
 	else
