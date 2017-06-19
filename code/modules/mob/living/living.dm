@@ -516,6 +516,21 @@
 /mob/living/proc/UpdateDamageIcon()
 	return
 
+/mob/living/proc/remove_any_mutations()
+	dna.ResetSE()
+	for(var/datum/dna/gene/gene in dna_genes)
+		if(!gene.block)
+			continue
+		genemutcheck(src, gene.block, null, MUTCHK_FORCED)
+
+/mob/living/carbon/human/remove_any_mutations()
+	var/needs_update = mutations.len > 0
+
+	..()
+
+	// Might need to update appearance for hulk etc.
+	if(needs_update)
+		update_mutations()
 
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
