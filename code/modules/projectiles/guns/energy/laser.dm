@@ -56,35 +56,30 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 
-
-/obj/item/weapon/gun/energy/laser/captain
-	icon_state = "caplaser"
-	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
-	force = 10
-	origin_tech = null
+/obj/item/weapon/gun/energy/laser/selfcharging
 	var/charge_tick = 0
+	var/chargespeed = 0
 
-
-/obj/item/weapon/gun/energy/laser/captain/New()
+/obj/item/weapon/gun/energy/laser/selfcharging/New()
 	..()
 	START_PROCESSING(SSobj, src)
 
 
-/obj/item/weapon/gun/energy/laser/captain/Destroy()
+/obj/item/weapon/gun/energy/laser/selfcharging/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
-/obj/item/weapon/gun/energy/laser/captain/process()
+/obj/item/weapon/gun/energy/laser/selfcharging/process()
 	charge_tick++
 	if(charge_tick < 4) return 0
 	charge_tick = 0
 	if(!power_supply) return 0
-	power_supply.give(100)
+	power_supply.give(100 * chargespeed)
 	update_icon()
 	return 1
 
-/obj/item/weapon/gun/energy/laser/captain/isHandgun()
+/obj/item/weapon/gun/energy/laser/selfcharging/isHandgun()
 	return 1
 
 /obj/item/weapon/gun/energy/laser/cyborg/newshot()
@@ -97,6 +92,21 @@ obj/item/weapon/gun/energy/laser/retro
 				chambered.newshot()
 	return
 
+/obj/item/weapon/gun/energy/laser/selfcharging/captain
+	icon_state = "caplaser"
+	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
+	force = 10
+	origin_tech = null
+	chargespeed = 1
+
+/obj/item/weapon/gun/energy/laser/selfcharging/alien
+	name = "Alien blaster"
+	icon_state = "egun"
+	desc = " The object menaces with spikes of energy. You don't kmown what kind of weapon."
+	force = 5
+	origin_tech = null
+	chargespeed = 2
+
 /obj/item/weapon/gun/energy/laser/scatter
 	name = "scatter laser gun"
 	icon_state = "oldlaser"
@@ -106,6 +116,13 @@ obj/item/weapon/gun/energy/laser/retro
 	attack_self(mob/living/user)
 		select_fire(user)
 		update_icon()
+
+/obj/item/weapon/gun/energy/laser/scatter/alien
+	name = "scatter laser rife"
+	icon_state = "subegun"
+	desc = "A laser gun equipped with a refraction kit that spreads bolts."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
+	origin_tech = null
 
 /obj/item/weapon/gun/energy/lasercannon
 	name = "laser cannon"

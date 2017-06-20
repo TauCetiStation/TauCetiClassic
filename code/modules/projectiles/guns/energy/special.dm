@@ -232,6 +232,17 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 	return
 
+/obj/item/weapon/gun/energy/sniperrifle/rails
+	name = "Rails rifle"
+	desc = "With this weapon you'll be the boss at any Arena."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "relsotron"
+	item_state = "relsotron"
+	origin_tech = null
+	ammo_type = list(/obj/item/ammo_casing/energy/rails)
+	fire_delay = 20
+	w_class = 3.0
+
 //Tesla Cannon
 /obj/item/weapon/gun/tesla
 	name = "Tesla Cannon"
@@ -244,6 +255,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	var/charge = 0
 	var/charging = FALSE
 	var/cooldown = FALSE
+	var/spinspeed = 1
 
 /obj/item/weapon/gun/tesla/New()
 	..()
@@ -251,7 +263,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
 	set waitfor = FALSE
-	if(do_after(user, 40, target = src))
+	if(do_after(user, 40 * spinspeed, target = src))
 		if(charging && charge < 3)
 			charge++
 			playsound(loc, "sparks", 75, 1, -1)
@@ -337,3 +349,13 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 			M.electrocute_act(5 * (4 - severity) * charge, src, , , 1)
 		charge = 0
 		update_icon()
+
+/obj/item/weapon/gun/tesla/rifle
+	name = "Tesla rifle"
+	desc = "Rifle which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "arctesla"
+	item_state = "arctesla"
+	w_class = 3.0
+	origin_tech = null
+	spinspeed = 0.5
