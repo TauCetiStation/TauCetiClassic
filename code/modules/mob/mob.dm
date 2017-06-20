@@ -638,17 +638,18 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/Stat()
 	..()
+
 	if(statpanel("Status"))
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client && client.holder)
-			if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
-				if(ticker.mode:malf_mode_declared)
-					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/APC_MIN_TO_MALDF_DECLARE), 0)]")
-			if(SSshuttle)
-				if(SSshuttle.online && SSshuttle.location < 2)
-					var/timeleft = SSshuttle.timeleft()
-					if(timeleft)
-						stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+			if(ticker.mode && ticker.mode.config_tag == "malfunction")
+				var/datum/game_mode/malfunction/GM = ticker.mode
+				if(GM.malf_mode_declared)
+					stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALDF_DECLARE), 0)]")
+			if(SSshuttle.online && SSshuttle.location < 2)
+				var/timeleft = SSshuttle.timeleft()
+				if(timeleft)
+					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 	if(client && client.holder)
 		if((client.holder.rights & R_ADMIN))
@@ -687,11 +688,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					continue
 				statpanel(listed_turf.name, null, A)
 
-	if(mind)
-		if(mind.changeling)
-			add_stings_to_statpanel(mind.changeling.purchasedpowers)
-
-	if(spell_list && spell_list.len)
+	if(spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
 			switch(S.charge_type)
 				if("recharge")
@@ -700,13 +697,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
-
-/mob/proc/add_stings_to_statpanel(list/stings)
-	for(var/obj/effect/proc_holder/changeling/S in stings)
-		if(S.chemical_cost >=0 && S.can_be_used_by(src))
-			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
-
-
 
 // facing verbs
 /mob/proc/canface()
