@@ -7,9 +7,9 @@
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags =  CONDUCT
 	w_class = 5
-	var/max_charges = 6
+	var/max_charges = 2
 	var/charges = 0
-	var/recharge_rate = 4
+	var/recharge_rate = 20
 	var/charge_tick = 0
 	var/can_charge = 1
 	var/ammo_type = /obj/item/ammo_casing/magic

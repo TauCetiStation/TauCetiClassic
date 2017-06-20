@@ -253,12 +253,13 @@
 	category = "Assistance"
 	cost = 3
 
-/*/datum/spellbook_entry/item/staffdoor
+/datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
 	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
 	item_path = /obj/item/weapon/gun/magic/staff/doorcreation
 	log_name = "SD"
-	category = "Mobility"*/
+	category = "Mobility"
+	cost = 3
 
 /datum/spellbook_entry/item/staffhealing
 	name = "Staff of Healing"

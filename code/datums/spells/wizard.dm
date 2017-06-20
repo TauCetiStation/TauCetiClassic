@@ -150,7 +150,7 @@
 	name = "Forcewall"
 	desc = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
 	school = "transmutation"
-	charge_max = 150
+	charge_max = 600
 	clothes_req = 0
 	range = -1
 	include_user = 1

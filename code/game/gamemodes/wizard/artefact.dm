@@ -1,3 +1,9 @@
+#define SCHOOL_DESTRUCTION 1
+#define SCHOOL_BLUESPACE 2
+#define SCHOOL_HEAL 4
+#define SCHOOL_ROBELESS 8
+#define WHOLE_SCHOOLS 15
+
 /obj/item/device/necromantic_stone
 	name = "necromantic stone"
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
@@ -79,6 +85,7 @@
 	icon_state = "scroll"
 	var/datum/mind/wizard
 	var/uses = 3
+	var/free_school_flags = WHOLE_SCHOOLS
 	var/list/previous_users = list()
 
 /obj/item/weapon/contract/attack_self(mob/living/carbon/user)
@@ -90,14 +97,21 @@
 		dat = "<B>Contract of Apprenticeship:</B><BR>"
 		dat += "<I>Using this contract, you agree to become an apprentice .</I><BR>"
 		dat += "<B>Which school of magic you want to studying?:</B><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=destruction'>Destruction</A><BR>"
-		dat += "<I>You will follow the path in offensive magic. They know Magic Missile and Fireball.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=bluespace'>Bluespace Manipulation</A><BR>"
-		dat += "<I>You will follow the path in defy physics, melting through solid objects and travelling great distances in the blink of an eye. you will know Teleport and Ethereal Jaunt.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=healing'>Healing</A><BR>"
-		dat += "<I>You will learn to cast spells that will aid your master survival. You will know Forcewall and Charge and come with a Staff of Healing.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=robeless'>Robeless</A><BR>"
-		dat += "<I>You will be able to cast spells without robes. You will know Knock and Mindswap.</I><BR>"
+		if(free_school_flags & SCHOOL_DESTRUCTION)
+			dat += "<A href='byond://?src=\ref[src];school=destruction'>Destruction</A><BR>"
+			dat += "<I>You will follow the path in offensive magic. They know Magic Missile and Fireball.</I><BR>"
+		if(free_school_flags & SCHOOL_BLUESPACE)
+			dat += "<A href='byond://?src=\ref[src];school=bluespace'>Bluespace Manipulation</A><BR>"
+			dat += "<I>You will follow the path in defy physics, melting through solid objects and travelling great distances in the blink of an eye. you will know Teleport and Ethereal Jaunt.</I><BR>"
+		if(free_school_flags & SCHOOL_HEAL)
+			dat += "<A href='byond://?src=\ref[src];school=healing'>Healing</A><BR>"
+			dat += "<I>You will learn to cast spells that will aid your master survival. You will know Charge, ressurection and healing.</I><BR>"
+		if(free_school_flags & SCHOOL_ROBELESS)
+			dat += "<A href='byond://?src=\ref[src];school=robeless'>Robeless</A><BR>"
+			dat += "<I>You will be able to cast spells without robes. You will know Knock and Mindswap.</I><BR>"
+	dat += "<BR>"
+	for(var/datum/mind/M in previous_users)
+		dat += "<I>[M.name]</I><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -133,23 +147,31 @@
 	to_chat(M, "<span class='notice'>You are [master]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.</span>")
 	switch(type)
 		if("destruction")
-			M.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(M))
-			M.AddSpell(new /obj/effect/proc_holder/spell/in_hand/fireball(M))
-			to_chat(M, "<span class='notice'>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball.</span>")
+			if(free_school_flags & SCHOOL_DESTRUCTION)
+				free_school_flags &= ~SCHOOL_DESTRUCTION
+				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(M))
+				M.AddSpell(new /obj/effect/proc_holder/spell/in_hand/fireball(M))
+				to_chat(M, "<span class='notice'>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball.</span>")
 		if("bluespace")
-			M.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(M))
-			M.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(M))
-			to_chat(M, "<span class='notice'>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.</span>")
+			if(free_school_flags & SCHOOL_BLUESPACE)
+				free_school_flags &= ~SCHOOL_BLUESPACE
+				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(M))
+				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(M))
+				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(M))
+				to_chat(M, "<span class='notice'>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt, forcewall.</span>")
 		if("healing")
-			M.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(M))
-			M.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(M))
-			M.AddSpell(new /obj/effect/proc_holder/spell/in_hand/res_touch(M))
-			M.AddSpell(new /obj/effect/proc_holder/spell/in_hand/heal(M))
-			to_chat(M, "<span class='notice'>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned livesaving survival spells. You are able to cast charge, forcewall, resurrection and heal.</span>")
+			if(free_school_flags & SCHOOL_HEAL)
+				free_school_flags &= ~SCHOOL_HEAL
+				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(M))
+				M.AddSpell(new /obj/effect/proc_holder/spell/in_hand/res_touch(M))
+				M.AddSpell(new /obj/effect/proc_holder/spell/in_hand/heal(M))
+				to_chat(M, "<span class='notice'>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned livesaving survival spells. You are able to cast charge, resurrection and heal.</span>")
 		if("robeless")
-			M.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(M))
-			M.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(M))
-			to_chat(M, "<span class='notice'>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.</span>")
+			if(free_school_flags & SCHOOL_ROBELESS)
+				free_school_flags &= ~SCHOOL_ROBELESS
+				M.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(M))
+				M.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(M))
+				to_chat(M, "<span class='notice'>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.</span>")
 	equip_apprentice(M)
 	if(wizard && wizard.current)
 		var/datum/objective/protect/new_objective = new /datum/objective/protect
@@ -172,3 +194,9 @@
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(target), slot_back)
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/box(target), slot_in_backpack)
 	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(target), slot_r_store)
+
+#undef SCHOOL_DESTRUCTION
+#undef SCHOOL_BLUESPACE
+#undef SCHOOL_HEAL
+#undef SCHOOL_ROBELESS
+#undef WHOLE_SCHOOLS
