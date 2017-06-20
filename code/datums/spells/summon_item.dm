@@ -51,11 +51,19 @@
 				item_to_retrieve = null
 				return
 			M.remove_from_mob(item_to_retrieve)
-		item_to_retrieve.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
-		if(item_to_retrieve != marked_item)
-			item_to_retrieve.forceMove(user.loc)
-			item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
+		if(item_to_retrieve.anchored)
+			to_chat(user, "<span class='userdanger'>[item_to_retrieve] prevents summoning [marked_item]. It's located in [get_area(item_to_retrieve)]!</span>")
+			item_to_retrieve.SpinAnimation(5, 1)
+			playsound(item_to_retrieve, 'sound/magic/SummonItems_generic.ogg', 100, 1)
+			if(alert("Do you want to unlink the [marked_item]?",,"Yes","No") == "Yes")
+				name = initial(name)
+				marked_item = null
 		else
-			item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears in [user]'s hand!</span>")
-			user.put_in_hands(item_to_retrieve)
-		playsound(user, 'sound/magic/SummonItems_generic.ogg', 100, 1)
+			item_to_retrieve.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
+			if(item_to_retrieve != marked_item)
+				item_to_retrieve.forceMove(user.loc)
+				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
+			else
+				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears in [user]'s hand!</span>")
+				user.put_in_hands(item_to_retrieve)
+			playsound(user, 'sound/magic/SummonItems_generic.ogg', 100, 1)

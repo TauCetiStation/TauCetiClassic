@@ -76,7 +76,7 @@
 	sound = file("code/modules/musical_instruments/sound/guitar/[safepick(guitar_notes)].ogg")
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
-	if(linked_dist && walks_left > 0)
+	if(linked_dist && walks_left > 0 && !AM.freeze_movement)
 		flick("purplesparkles", src)
 		linked_dist.get_walker(AM)
 		walks_left--

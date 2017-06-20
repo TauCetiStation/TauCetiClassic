@@ -67,7 +67,6 @@
 				H.LoseTarget()
 
 			M.Stun(10, 1, 1, 1)
-			M.anchored = TRUE
 			M.freeze_movement = TRUE
 			stopped_atoms |= M
 
@@ -77,7 +76,6 @@
 				var/obj/item/projectile/P = O
 				P.paused = TRUE // just so it won't keep trying to move while freezed.
 
-			O.anchored = TRUE
 			O.freeze_movement = TRUE
 			stopped_atoms |= O
 
@@ -94,7 +92,6 @@
 
 	for(var/atom/movable/AM in catched_targets)
 		AM.freeze_movement = FALSE
-		AM.anchored = FALSE
 
 		if(isliving(AM))
 			var/mob/living/M = AM

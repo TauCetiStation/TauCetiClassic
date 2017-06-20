@@ -221,7 +221,7 @@
 			return
 		user.next_move = max(user.next_move+2,world.time + 2)
 
-	if(QDELETED(src)) // remove_from_mob() may remove DROPDEL items, so...
+	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
 		return
 
 	src.pickup(user)
@@ -261,7 +261,7 @@
 
 		user.next_move = max(user.next_move+2,world.time + 2)
 
-	if(QDELETED(src)) // no item - no pickup, you dummy!
+	if(QDELETED(src) || freeze_movement) // no item - no pickup, you dummy!
 		return
 
 	src.pickup(user)

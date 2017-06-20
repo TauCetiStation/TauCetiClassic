@@ -12,7 +12,12 @@
 	range = 7
 	selection_type = "range"
 	action_icon_state = "barn"
-	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	var/list/compatible_mobs = null
+
+/obj/effect/proc_holder/spell/targeted/barnyardcurse/New()
+	..()
+	if(!compatible_mobs)
+		compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
 /obj/effect/proc_holder/spell/targeted/barnyardcurse/cast(list/targets, mob/user = usr)
 	if(!targets.len)

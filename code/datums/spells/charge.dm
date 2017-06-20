@@ -27,8 +27,11 @@
 			for(var/obj/effect/proc_holder/spell/S in M.spell_list)
 				charged_item = S.name
 				if(bad_charge)
-					S.charge_counter = 0
-					INVOKE_ASYNC(S, .obj/effect/proc_holder/spell/proc/start_recharge)
+					if(S.charge_counter == charge_max)
+						S.charge_counter = 0
+						INVOKE_ASYNC(S, .obj/effect/proc_holder/spell/proc/start_recharge)
+					else
+						S.charge_counter = 0
 				else
 					S.charge_counter = S.charge_max
 				break
@@ -50,6 +53,17 @@
 			else if(istype(item, /obj/item/weapon/stock_parts/cell))
 				cell_charge(item, bad_charge)
 				charged_item = item.name
+				break
+			else if(istype(item, /obj/item/weapon/melee/baton))
+				var/obj/item/weapon/melee/baton/B = item
+				if(bad_charge)
+					B.charges = 0
+					B.status = 0
+				else
+					B.charges = initial(B.charges)
+					B.status = 1
+				B.update_icon()
+				charged_item = B.name
 				break
 			else
 				for(var/obj/item/weapon/stock_parts/cell/Cell in item.contents)

@@ -28,21 +28,6 @@ obj/item/weapon/gun/magic/staff/healing
 	item_state = "staffofhealing"
 	fire_sound = 'sound/magic/Staff_Healing.ogg'
 
-obj/item/weapon/gun/magic/staff/healing/one_person
-	global_access = TRUE
-	var/datum/mind/owner
-
-obj/item/weapon/gun/magic/staff/healing/one_person/New(turf/L, datum/mind/M)
-	..()
-	owner = M
-
-obj/item/weapon/gun/magic/staff/healing/one_person/afterattack(atom/target, mob/living/user, flag)
-	if(user.mind == owner)
-		return ..()
-	to_chat(user,"<span class='userdanger'>It's seems [src] is bounded to someone else and it's not you</span>")
-
-
-
 /obj/item/weapon/gun/magic/staff/doorcreation
 	name = "staff of door creation"
 	desc = "An artefact that spits bolts of transformative magic that can create doors in walls."
