@@ -12,7 +12,7 @@
 	range = 7
 	selection_type = "range"
 	action_icon_state = "barn"
-	var/list/compatible_mobs = null
+	var/static/list/compatible_mobs = null
 
 /obj/effect/proc_holder/spell/targeted/barnyardcurse/New()
 	..()
