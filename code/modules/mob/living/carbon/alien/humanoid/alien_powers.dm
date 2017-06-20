@@ -150,8 +150,8 @@ Doesn't work on other aliens/AI.*/
 	return
 */
 
-/mob/living/carbon/alien/humanoid/proc/screesh()
-	set name = "Screesh"
+/mob/living/carbon/alien/humanoid/proc/screech()
+	set name = "Screech!"
 	set desc = "Emit a screech that stuns prey."
 	set category = "Alien"
 
