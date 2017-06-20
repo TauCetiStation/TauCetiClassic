@@ -164,7 +164,7 @@ Doesn't work on other aliens/AI.*/
 			continue
 
 		to_chat(H, "<font color='red' size='7'>HISSSSSS</font>")
-		H.sleeping = 0
+		H.SetSleeping(0)
 		H.stuttering += 20
 		H.ear_deaf += 30
 		H.Weaken(3)
