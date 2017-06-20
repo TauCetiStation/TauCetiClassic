@@ -19,18 +19,18 @@
 		usr.set_machine(src)
 		var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 		dat += "<A HREF='?src=\ref[user];mach_close=alerts'>Close</A><br><br>"
-		for (var/cat in src.alarms)
+		for(var/cat in src.alarms)
 			dat += text("<B>[]</B><BR>\n", cat)
 			var/list/L = src.alarms[cat]
-			if (L.len)
-				for (var/alarm in L)
+			if(L.len)
+				for(var/alarm in L)
 					var/list/alm = L[alarm]
 					var/area/A = alm[1]
 					var/list/sources = alm[3]
 					dat += "<NOBR>"
 					dat += "&bull; "
 					dat += "[A.name]"
-					if (sources.len > 1)
+					if(sources.len > 1)
 						dat += text(" - [] sources", sources.len)
 					dat += "</NOBR><BR>\n"
 			else
@@ -43,20 +43,20 @@
 		if(stat & (BROKEN))
 			return
 		var/list/L = src.alarms[class]
-		for (var/I in L)
-			if (I == A.name)
+		for(var/I in L)
+			if(I == A.name)
 				var/list/alarm = L[I]
 				var/list/sources = alarm[3]
-				if (!(alarmsource in sources))
+				if(!(alarmsource in sources))
 					sources += alarmsource
 				return 1
 		var/obj/machinery/camera/C = null
 		var/list/CL = null
-		if (O && istype(O, /list))
+		if(O && istype(O, /list))
 			CL = O
-			if (CL.len == 1)
+			if(CL.len == 1)
 				C = CL[1]
-		else if (O && istype(O, /obj/machinery/camera))
+		else if(O && istype(O, /obj/machinery/camera))
 			C = O
 		L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 		return 1
@@ -67,13 +67,13 @@
 			return
 		var/list/L = src.alarms[class]
 		var/cleared = 0
-		for (var/I in L)
-			if (I == A.name)
+		for(var/I in L)
+			if(I == A.name)
 				var/list/alarm = L[I]
 				var/list/srcs  = alarm[3]
-				if (origin in srcs)
+				if(origin in srcs)
 					srcs -= origin
-				if (srcs.len == 0)
+				if(srcs.len == 0)
 					cleared = 1
 					L -= I
 		return !cleared
@@ -85,13 +85,13 @@
 	return
 
 /obj/machinery/computer/station_alert/update_icon()
-	if (stat & NOPOWER)
+	if(stat & NOPOWER)
 		icon_state = "atmos0"
 	else if(stat & BROKEN)
 		icon_state = "atmosb"
 	else
 		var/active_alarms = 0
-		for (var/cat in src.alarms)
+		for(var/cat in src.alarms)
 			var/list/L = src.alarms[cat]
 			if(L.len) active_alarms = 1
 		if(active_alarms)

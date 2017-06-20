@@ -1,4 +1,4 @@
-//Monkey Overlays Indexes////////
+// Monkey Overlays Indexes////////
 #define M_MASK_LAYER			1
 #define M_BACK_LAYER			2
 #define M_HANDCUFF_LAYER		3
@@ -21,14 +21,14 @@
 	update_inv_handcuffed(0)
 	update_icons()
 	update_transform()
-	//Hud Stuff
+	// Hud Stuff
 	update_hud()
 	return
 
 /mob/living/carbon/monkey/update_icons()
 	..()
 	update_hud()
-	//lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
+	// lying_prev = lying	// so we don't update overlays for lying/standing unless our stance changes again
 	overlays.Cut()
 	for(var/image/I in overlays_standing)
 		overlays += I
@@ -57,7 +57,7 @@
 		else
 			overlays_standing[M_R_HAND_LAYER]	= image("icon" = r_hand.righthand_file, "icon_state" = t_state)
 		r_hand.screen_loc = ui_rhand
-		if (handcuffed) drop_r_hand()
+		if(handcuffed) drop_r_hand()
 	else
 		overlays_standing[M_R_HAND_LAYER]	= null
 	if(update_icons)		update_icons()
@@ -72,7 +72,7 @@
 		else
 			overlays_standing[M_L_HAND_LAYER]	= image("icon" = l_hand.lefthand_file, "icon_state" = t_state)
 		l_hand.screen_loc = ui_lhand
-		if (handcuffed) drop_l_hand()
+		if(handcuffed) drop_l_hand()
 	else
 		overlays_standing[M_L_HAND_LAYER]	= null
 	if(update_icons)		update_icons()
@@ -102,16 +102,16 @@
 
 
 /mob/living/carbon/monkey/update_hud()
-	if (client)
+	if(client)
 		client.screen |= contents
 
-//Call when target overlay should be added/removed
+// Call when target overlay should be added/removed
 /mob/living/carbon/monkey/update_targeted(var/update_icons=1)
-	if (targeted_by && target_locked)
+	if(targeted_by && target_locked)
 		overlays_standing[TARGETED_LAYER]	= target_locked
-	else if (!targeted_by && target_locked)
+	else if(!targeted_by && target_locked)
 		qdel(target_locked)
-	if (!targeted_by)
+	if(!targeted_by)
 		overlays_standing[TARGETED_LAYER]	= null
 	if(update_icons)		update_icons()
 
@@ -124,7 +124,7 @@
 	else
 		overlays_standing[M_FIRE_LAYER]		= null
 
-//Monkey Overlays Indexes////////
+// Monkey Overlays Indexes////////
 #undef M_MASK_LAYER
 #undef M_BACK_LAYER
 #undef M_HANDCUFF_LAYER

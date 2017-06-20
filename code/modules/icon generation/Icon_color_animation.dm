@@ -41,7 +41,7 @@
 /proc/MapColors_interpolate_list(icon/I, ratio, list/colors)
 	var/list/c[10]
 
-	//Provide default values for any missing colors (without altering the original list
+	// Provide default values for any missing colors(without altering the original list
 	for(var/i = 1, i <= 10, i++)
 		c[i] = list(0, 0, 0, (i == 7 || i == 8)? 255 : 0)
 

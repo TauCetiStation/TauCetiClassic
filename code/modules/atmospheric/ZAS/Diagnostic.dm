@@ -1,7 +1,7 @@
 /client/proc/Zone_Info(turf/T)
 	set category = "Debug"
 	if(T)
-		if(istype(T,/turf/simulated) && T:zone)
+		if(istype(T, /turf/simulated) && T:zone)
 			T:zone:dbg_data(src)
 		else
 			to_chat(mob, "No zone here.")
@@ -27,7 +27,7 @@
 	"East" = EAST,\
 	"West" = WEST,\
 	"N/A" = null)
-	var/direction = input("What direction do you wish to test?","Set direction") as null|anything in direction_list
+	var/direction = input("What direction do you wish to test?", "Set direction") as null|anything in direction_list
 	if(!direction)
 		return
 
@@ -77,7 +77,7 @@
 		return
 
 	if(!dbg_output)
-		dbg_output = 1 //Don't want to be spammed when someone investigates a zone...
+		dbg_output = 1 // Don't want to be spammed when someone investigates a zone...
 
 		if(!client.zone_debug_images)
 			client.zone_debug_images = list()
@@ -116,7 +116,7 @@
 			to_chat(client, "\ref[zone] [zone] - [closed_connection_zones[zone]] (Unconnected)")
 
 		for(var/C in connections)
-			if(!istype(C,/connection))
+			if(!istype(C, /connection))
 				to_chat(client, "[C] (Not Connection!)")
 
 		if(!client.zone_debug_images)
@@ -208,7 +208,7 @@
 		else
 			final_arrangement[current_identifier] += current
 
-	//lazy but fast
+	// lazy but fast
 	final_arrangement.Remove(null)
 
 	to_chat(src, "There are [final_arrangement.len] unique segments.")

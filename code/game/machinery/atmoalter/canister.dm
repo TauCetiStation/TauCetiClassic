@@ -84,14 +84,14 @@ update_flag
 32 = tank_pressure go boom.
 */
 
-	if (src.destroyed)
+	if(src.destroyed)
 		src.overlays = 0
 		src.icon_state = text("[]-1", src.canister_color)
 
 	if(icon_state != "[canister_color]")
 		icon_state = "[canister_color]"
 
-	if(check_change()) //Returns 1 if no change needed to icons.
+	if(check_change()) // Returns 1 if no change needed to icons.
 		return
 
 	src.overlays = 0
@@ -119,7 +119,7 @@ update_flag
 	if(destroyed)
 		return 1
 
-	if (src.health <= 10)
+	if(src.health <= 10)
 		var/atom/location = src.loc
 		location.assume_air(air_contents)
 
@@ -128,7 +128,7 @@ update_flag
 		src.density = 0
 		update_icon()
 
-		if (src.holding)
+		if(src.holding)
 			src.holding.loc = src.loc
 			src.holding = null
 
@@ -137,7 +137,7 @@ update_flag
 		return 1
 
 /obj/machinery/portable_atmospherics/canister/process()
-	if (destroyed)
+	if(destroyed)
 		return
 
 	..()
@@ -151,13 +151,13 @@ update_flag
 
 		var/env_pressure = environment.return_pressure()
 		var/pressure_delta = min(release_pressure - env_pressure, (air_contents.return_pressure() - env_pressure)/2)
-		//Can not have a pressure delta that would cause environment pressure > tank pressure
+		// Can not have a pressure delta that would cause environment pressure > tank pressure
 
 		var/transfer_moles = 0
 		if((air_contents.temperature > 0) && (pressure_delta > 0))
 			transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
-			//Actually transfer the gas
+			// Actually transfer the gas
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 			if(holding)
@@ -217,10 +217,10 @@ update_flag
 		var/datum/gas_mixture/thejetpack = W:air_contents
 		var/env_pressure = thejetpack.return_pressure()
 		var/pressure_delta = min(10*ONE_ATMOSPHERE - env_pressure, (air_contents.return_pressure() - env_pressure)/2)
-		//Can not have a pressure delta that would cause environment pressure > tank pressure
+		// Can not have a pressure delta that would cause environment pressure > tank pressure
 		var/transfer_moles = 0
 		if((air_contents.temperature > 0) && (pressure_delta > 0))
-			transfer_moles = pressure_delta*thejetpack.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)//Actually transfer the gas
+			transfer_moles = pressure_delta*thejetpack.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)// Actually transfer the gas
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 			thejetpack.merge(removed)
 			to_chat(user, "You pulse-pressurize your jetpack from the tank.")
@@ -242,7 +242,7 @@ update_flag
 	return src.ui_interact(user)
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if (src.destroyed)
+	if(src.destroyed)
 		return
 
 	// this is the data which will be sent to the ui
@@ -257,12 +257,12 @@ update_flag
 	data["valveOpen"] = valve_open ? 1 : 0
 
 	data["hasHoldingTank"] = holding ? 1 : 0
-	if (holding)
+	if(holding)
 		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure()))
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "canister.tmpl", "Canister", 480, 400)
@@ -282,45 +282,45 @@ update_flag
 		return
 
 	if(href_list["toggle"])
-		if (valve_open)
-			if (holding)
+		if(valve_open)
+			if(holding)
 				release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the [holding]<br>"
 			else
 				release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the <font color='red'><b>air</b></font><br>"
 		else
-			if (holding)
+			if(holding)
 				release_log += "Valve was <b>opened</b> by [usr] ([usr.ckey]), starting the transfer into the [holding]<br>"
 			else
 				release_log += "Valve was <b>opened</b> by [usr] ([usr.ckey]), starting the transfer into the <font color='red'><b>air</b></font><br>"
 		valve_open = !valve_open
 
-	if (href_list["remove_tank"])
+	if(href_list["remove_tank"])
 		if(holding)
 			if(istype(holding, /obj/item/weapon/tank))
 				holding.manipulated_by = usr.real_name
 			holding.loc = loc
 			holding = null
 
-	if (href_list["pressure_adj"])
+	if(href_list["pressure_adj"])
 		var/diff = text2num(href_list["pressure_adj"])
 		if(diff > 0)
 			release_pressure = min(10*ONE_ATMOSPHERE, release_pressure+diff)
 		else
 			release_pressure = max(ONE_ATMOSPHERE/10, release_pressure+diff)
 
-	if (href_list["relabel"])
-		if (can_label)
+	if(href_list["relabel"])
+		if(can_label)
 			var/list/colors = list(\
 				"\[N2O\]" = "redws", \
 				"\[N2\]" = "red", \
 				"\[O2\]" = "blue", \
-				"\[Toxin (Bio)\]" = "orange", \
+				"\[Toxin(Bio)\]" = "orange", \
 				"\[CO2\]" = "black", \
 				"\[Air\]" = "grey", \
 				"\[CAUTION\]" = "yellow", \
 			)
 			var/label = input("Choose canister label", "Gas canister") as null|anything in colors
-			if (label)
+			if(label)
 				src.canister_color = colors[label]
 				src.icon_state = colors[label]
 				src.name = "Canister: [label]"
@@ -357,15 +357,15 @@ update_flag
 	src.update_icon()
 	return 1
 
-//Dirty way to fill room with gas. However it is a bit easier to do than creating some floor/engine/n2o -rastaf0
+// Dirty way to fill room with gas. However it is a bit easier to do than creating some floor/engine/n2o -rastaf0
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/roomfiller/New()
 	..()
 	var/datum/gas/sleeping_agent/trace_gas = air_contents.trace_gases[1]
 	trace_gas.moles = 9*4000
 	spawn(10)
 		var/turf/simulated/location = src.loc
-		if (istype(src.loc))
-			while (!location.air)
+		if(istype(src.loc))
+			while(!location.air)
 				sleep(10)
 			location.assume_air(air_contents)
 			air_contents = new

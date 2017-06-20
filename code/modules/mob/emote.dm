@@ -1,5 +1,5 @@
 // All mobs should have custom emote, really..
-/mob/proc/custom_emote(m_type=1,message = null)
+/mob/proc/custom_emote(m_type=1, message = null)
 
 	if(stat || !use_me && usr == src)
 		to_chat(usr, "You are unable to emote.")
@@ -10,7 +10,7 @@
 
 	var/input
 	if(!message)
-		input = sanitize(copytext(input(src,"Choose an emote to display.") as text|null,1,MAX_MESSAGE_LEN))
+		input = sanitize(copytext(input(src, "Choose an emote to display.") as text|null, 1, MAX_MESSAGE_LEN))
 	else
 		input = sanitize_plus_chat(message)
 	if(input)
@@ -19,26 +19,26 @@
 		return
 
 
-	if (message)
+	if(message)
 		log_emote("[name]/[key] : [message]")
 
- //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
+ // Hearing gasp and such every five seconds is not good emotes were not global for a reason.
  // Maybe some people are okay with that.
 
 		for(var/mob/M in player_list)
 			if(!M.client)
-				continue //skip monkeys and leavers
+				continue // skip monkeys and leavers
 			if(istype(M, /mob/new_player))
 				continue
-			if(findtext(message," snores.")) //Because we have so many sleeping people.
+			if(findtext(message, " snores.")) // Because we have so many sleeping people.
 				break
-			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
 				M.show_message(message)
 
 
-		// Type 1 (Visual) emotes are sent to anyone in view of the item
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
+		// Type 1(Visual) emotes are sent to anyone in view of the item
+		if(m_type & 1)
+			for(var/mob/O in viewers(src, null))
 
 				if(O.status_flags & PASSEMOTES)
 
@@ -50,10 +50,10 @@
 
 				O.show_message(message, m_type)
 
-		// Type 2 (Audible) emotes are sent to anyone in hear range
+		// Type 2(Audible) emotes are sent to anyone in hear range
 		// of the *LOCATION* -- this is important for pAIs to be heard
-		else if (m_type & 2)
-			for (var/mob/O in hearers(get_turf(src), null))
+		else if(m_type & 2)
+			for(var/mob/O in hearers(get_turf(src), null))
 
 				if(O.status_flags & PASSEMOTES)
 
@@ -68,7 +68,7 @@
 /mob/proc/emote_dead(message)
 
 	if(client.prefs.muted & MUTE_DEADCHAT)
-		to_chat(src, "\red You cannot send deadchat emotes (muted).")
+		to_chat(src, "\red You cannot send deadchat emotes(muted).")
 		return
 
 	if(!(client.prefs.chat_toggles & CHAT_DEAD))

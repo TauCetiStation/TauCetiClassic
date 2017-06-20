@@ -21,7 +21,7 @@
 	var/tried_to_add_revheads = 0
 
 ///////////////////////////////////////////////////////////////////////////////
-//Gets the round setup, cancelling if there's not enough players at the start//
+// Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/rp_revolution/pre_setup()
 
@@ -38,12 +38,12 @@
 			break
 
 	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
+		for(var/job in restricted_jobs)// Removing heads and such from the list
 			if(player.assigned_role == job)
 				antag_candidates -= player
 
-	for (var/i=1 to max_headrevs)
-		if (antag_candidates.len==0)
+	for(var/i=1 to max_headrevs)
+		if(antag_candidates.len==0)
 			break
 		var/datum/mind/lenin = pick(antag_candidates)	//>lenin LMAO
 		antag_candidates -= lenin
@@ -71,14 +71,14 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
 		rev_mind.current.verbs += /mob/living/carbon/human/proc/RevConvert
-		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
+		equip_traitor(rev_mind.current, 1) // changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 
 	modePlayer += head_revolutionaries
 	return ..()
 
 /datum/game_mode/revolution/rp_revolution/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
-	if (you_are)
+	if(you_are)
 		to_chat(rev_mind.current, "\blue You are a member of the revolutionaries' leadership!")
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in rev_mind.objectives)
@@ -100,11 +100,11 @@
 			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
 ///////////////////////////////////////////////////
-//Deals with converting players to the revolution//
+// Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
 /datum/game_mode/revolution/rp_revolution/add_revolutionary(datum/mind/rev_mind)
 	// overwrite this func to make it so even heads can be converted
-	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
+	var/mob/living/carbon/human/H = rev_mind.current// Check to see if the potential rev is implanted
 	if(isloyal(H))
 		return 0
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
@@ -119,7 +119,7 @@
 	return 1
 
 /////////////////////////////
-//Checks for a head victory//
+// Checks for a head victory//
 /////////////////////////////
 /datum/game_mode/revolution/rp_revolution/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
@@ -128,13 +128,13 @@
 			// TODO: add a similar check that also checks whether they're without ID in the brig..
 			//       probably wanna export this stuff into a separate function for use by both
 			//       revs and heads
-			//assume that only carbon mobs can become rev heads for now
+			// assume that only carbon mobs can become rev heads for now
 			if(!rev_mind.current:handcuffed && T && T.z == ZLEVEL_STATION)
 				return 0
 	return 1
 
 ///////////////////////////
-//Announces the game type//
+// Announces the game type//
 ///////////////////////////
 /datum/game_mode/revolution/rp_revolution/announce()
 	to_chat(world, "<B>The current game mode is - Revolution!</B>")
@@ -142,17 +142,17 @@
 
 
 //////////////////////////////////////////////////////////////////////
-//Announces the end of the game with all relavent information stated//
+// Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/rp_revolution/declare_completion()
 	completion_text += "<B>RP-revolution mode resume:</B><BR>"
 	if(!config.objectives_disabled)
 		if(finished == 1)
-			feedback_set_details("round_end_result","win - heads overthrown")
+			feedback_set_details("round_end_result", "win - heads overthrown")
 			completion_text += "<FONT size=3, color='red'><B>The heads of staff were overthrown! The revolutionaries win!</B></FONT>"
 			score["traitorswon"]++
 		else if(finished == 2)
-			feedback_set_details("round_end_result","loss - revolution stopped")
+			feedback_set_details("round_end_result", "loss - revolution stopped")
 			completion_text += "<FONT size=3, color='red'><B>The heads of staff managed to stop the revolution!</B></FONT>"
 	..()
 	return 1
@@ -161,7 +161,7 @@
 	set name = "Rev-Convert"
 	set category = "IC"
 	var/list/Possible = list()
-	for (var/mob/living/carbon/human/P in oview(src))
+	for(var/mob/living/carbon/human/P in oview(src))
 		if(!stat && P.client && P.mind && !P.mind.special_role)
 			Possible += P
 	if(!Possible.len)
@@ -182,7 +182,7 @@
 			to_chat(src, "\red Attempting to convert [M]...")
 			log_admin("[src]([src.ckey]) attempted to convert [M].")
 			message_admins("\red [src]([src.ckey]) attempted to convert [M]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
-			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
+			var/choice = alert(M, "Asked by [src]: Do you want to join the revolution?", "Align Thyself with the Revolution!", "No!", "Yes!")
 			if(choice == "Yes!")
 				ticker.mode:add_revolutionary(M.mind)
 				to_chat(M, "\blue You join the revolution!")
@@ -241,8 +241,8 @@
 	return ..()
 
 /datum/game_mode/revolution/rp_revolution/proc/command_report(message)
-	for (var/obj/machinery/computer/communications/comm in world)
-		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+	for(var/obj/machinery/computer/communications/comm in world)
+		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "Cent. Com. Announcement"
 			intercept.info = message

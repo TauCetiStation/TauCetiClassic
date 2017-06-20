@@ -19,12 +19,12 @@
 			qdel(src)
 			return
 
-		//DESTROYING STUFF AT THE EPICENTER
-		for(var/mob/living/M in orange(1,src))
+		// DESTROYING STUFF AT THE EPICENTER
+		for(var/mob/living/M in orange(1, src))
 			qdel(M)
-		for(var/obj/O in orange(1,src))
+		for(var/obj/O in orange(1, src))
 			qdel(O)
-		for(var/turf/simulated/ST in orange(1,src))
+		for(var/turf/simulated/ST in orange(1, src))
 			ST.ChangeTurf(/turf/space)
 
 		sleep(6)
@@ -44,19 +44,19 @@
 		sleep(6)
 		grav( 3, 2, 50, 6 )
 		sleep(6)
-		grav( 2, 2, 75,25 )
+		grav( 2, 2, 75, 25 )
 		sleep(6)
 
 
 
-		//MOVEMENT
+		// MOVEMENT
 		if( prob(50) )
 			src.anchored = 0
-			step(src,pick(alldirs))
+			step(src, pick(alldirs))
 			src.anchored = 1
 
 /obj/effect/bhole/proc/grav(r, ex_act_force, pull_chance, turf_removal_chance)
-	if(!isturf(loc))	//blackhole cannot be contained inside anything. Weird stuff might happen
+	if(!isturf(loc))	// blackhole cannot be contained inside anything. Weird stuff might happen
 		qdel(src)
 		return
 	for(var/t = -r, t < r, t++)
@@ -67,22 +67,22 @@
 	return
 
 /obj/effect/bhole/proc/affect_coord(x, y, ex_act_force, pull_chance, turf_removal_chance)
-	//Get turf at coordinate
+	// Get turf at coordinate
 	var/turf/T = locate(x, y, z)
 	if(isnull(T))	return
 
-	//Pulling and/or ex_act-ing movable atoms in that turf
+	// Pulling and/or ex_act-ing movable atoms in that turf
 	if( prob(pull_chance) )
 		for(var/obj/O in T.contents)
 			if(O.anchored)
 				O.ex_act(ex_act_force)
 			else
-				step_towards(O,src)
+				step_towards(O, src)
 		for(var/mob/living/M in T.contents)
-			step_towards(M,src)
+			step_towards(M, src)
 
-	//Destroying the turf
-	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
+	// Destroying the turf
+	if( T && istype(T, /turf/simulated) && prob(turf_removal_chance) )
 		var/turf/simulated/ST = T
 		ST.ChangeTurf(/turf/space)
 	return

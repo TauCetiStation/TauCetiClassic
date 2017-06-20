@@ -1,13 +1,13 @@
 /obj/item/clothing/gloves/attackby(obj/item/weapon/W, mob/user)
-	if(istype(src, /obj/item/clothing/gloves/boxing))			//quick fix for stunglove overlay not working nicely with boxing gloves.
-		to_chat(user, "<span class='notice'>That won't work.</span>")//i'm not putting my lips on that!
+	if(istype(src, /obj/item/clothing/gloves/boxing))			// quick fix for stunglove overlay not working nicely with boxing gloves.
+		to_chat(user, "<span class='notice'>That won't work.</span>")// i'm not putting my lips on that!
 		..()
 		return
 
-	//add wires
+	// add wires
 	if(istype(W, /obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/C = W
-		if (clipped)
+		if(clipped)
 			to_chat(user, "<span class='notice'>The [src] are too badly mangled for wiring.</span>")
 			return
 
@@ -26,7 +26,7 @@
 		update_icon()
 		return
 
-	//add cell
+	// add cell
 	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(!wired)
 			to_chat(user, "<span class='notice'>The [src] need to be wired first.</span>")
@@ -42,7 +42,7 @@
 
 	else if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
 
-		//stunglove stuff
+		// stunglove stuff
 		if(cell)
 			cell.updateicon()
 			to_chat(user, "<span class='notice'>You cut the [cell] away from the [src].</span>")
@@ -50,17 +50,17 @@
 			cell = null
 			update_icon()
 			return
-		if(wired) //wires disappear into the void because fuck that shit
+		if(wired) // wires disappear into the void because fuck that shit
 			wired = 0
 			siemens_coefficient = initial(siemens_coefficient)
 			to_chat(user, "<span class='notice'>You cut the wires away from the [src].</span>")
 			update_icon()
 			return
 
-		//clipping fingertips
+		// clipping fingertips
 		if(!clipped)
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			user.visible_message("\red [user] cuts the fingertips off of the [src].","\red You cut the fingertips off of the [src].")
+			user.visible_message("\red [user] cuts the fingertips off of the [src].", "\red You cut the fingertips off of the [src].")
 
 			clipped = 1
 			name = "mangled [name]"

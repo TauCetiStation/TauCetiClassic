@@ -6,8 +6,8 @@
 	anchored = 1
 	var/amount = 3 // spawns each items X times.
 /obj/structure/walllocker/attack_hand(mob/user)
-	if (istype(user, /mob/living/silicon/ai))	//Added by Strumpetplaya - AI shouldn't be able to
-		return									//activate emergency lockers.  This fixes that.  (Does this make sense, the AI can't call attack_hand, can it? --Mloc)
+	if(istype(user, /mob/living/silicon/ai))	// Added by Strumpetplaya - AI shouldn't be able to
+		return									// activate emergency lockers.  This fixes that.  (Does this make sense, the AI can't call attack_hand, can it? --Mloc)
 	if(!amount)
 		to_chat(usr, "It's empty..")
 		return
@@ -18,7 +18,7 @@
 	return
 /obj/structure/walllocker/emerglocker
 	name = "Emergency Locker"
-	spawnitems = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/mask/breath,/obj/item/weapon/crowbar)
+	spawnitems = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/clothing/mask/breath, /obj/item/weapon/crowbar)
 /obj/structure/walllocker/emerglocker/north
 	pixel_y = 32
 	dir = SOUTH

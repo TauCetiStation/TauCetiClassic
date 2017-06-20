@@ -14,7 +14,7 @@
 */
 
 //*******************************
-// Requires Dantom.DB library ( http://www.byond.com/developer/Dantom/DB )
+// Requires Dantom.DB library( http:// www.byond.com/developer/Dantom/DB )
 
 
 /*
@@ -29,7 +29,7 @@
 
    Written by TLE for /tg/station 13
    Feel free to use this as you like. Some credit would be cool.
-   Check us out at http://nanotrasen.com/ if you're so inclined.
+   Check us out at http:// nanotrasen.com/ if you're so inclined.
 */
 
 // CONTAINS:
@@ -49,10 +49,10 @@
 
 // Ideas for the future
 // ---------------------
-// 	- Visitor's computer should be able to search the current in-round library inventory (that the Librarian has stocked and checked in)
+// 	- Visitor's computer should be able to search the current in-round library inventory(that the Librarian has stocked and checked in)
 //  -- Give computer other features like an Instant Messenger application, or the ability to edit, save, and print documents.
 //	- Admin interface directly tied to the Archive DB. Right now there's no way to delete uploaded books in-game.
-//  -- If this gets implemented, allow Librarians to "tag" or "suggest" books to be deleted. The DB ID of the tagged books gets saved to a text file (or another table in the DB maybe?).
+//  -- If this gets implemented, allow Librarians to "tag" or "suggest" books to be deleted. The DB ID of the tagged books gets saved to a text file(or another table in the DB maybe?).
 //	   The admin interface would automatically take these IDs and SELECT them all from the DB to be displayed along with a Delete link to drop the row from the table.
 //	- When the game sets up and the round begins, have it automatically pick random books from the DB to populate the library with. Even if the Librarian is a useless fuck there are at least a few books around.
 //  - Allow books to be "hollowed out" like the Chaplain's Bible, allowing you to store one pocket-sized item inside.

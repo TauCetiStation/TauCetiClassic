@@ -9,14 +9,14 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-	centcomm_cancast = 0 //Prevent people from getting to centcomm
+	centcomm_cancast = 0 // Prevent people from getting to centcomm
 
 	action_icon_state = "jaunt"
 
 	var phaseshift = 0
-	var/jaunt_duration = 50 //in deciseconds
+	var/jaunt_duration = 50 // in deciseconds
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) // magnets, so mostly hardcoded
 	for(var/mob/living/target in targets)
 		spawn(0)
 			var/mobloc = get_turf(target.loc)
@@ -29,13 +29,13 @@
 			animation.icon_state = "liquify"
 			animation.layer = 5
 			animation.master = holder
-			target.ExtinguishMob()			//This spell can extinguish mob
-			target.status_flags ^= GODMODE	//Protection from any kind of damage, caused you in astral world
+			target.ExtinguishMob()			// This spell can extinguish mob
+			target.status_flags ^= GODMODE	// Protection from any kind of damage, caused you in astral world
 			var/image/I = image('icons/mob/blob.dmi', holder, "marker", LIGHTING_LAYER+1)
 			target.client.images += I
 			if(phaseshift)
 				animation.dir = target.dir
-				flick("phase_shift",animation)
+				flick("phase_shift", animation)
 				target.forceMove(holder)
 				target.client.eye = holder
 				sleep(jaunt_duration)
@@ -44,9 +44,9 @@
 				target.canmove = 0
 				sleep(20)
 				animation.dir = target.dir
-				flick("phase_shift2",animation)
+				flick("phase_shift2", animation)
 			else
-				flick("liquify",animation)
+				flick("liquify", animation)
 				target.forceMove(holder)
 				target.client.eye = holder
 				var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
@@ -59,13 +59,13 @@
 				steam.start()
 				target.canmove = 0
 				sleep(20)
-				flick("reappear",animation)
+				flick("reappear", animation)
 			sleep(5)
 			target.client.images -= I
 			target.forceMove(mobloc)
 			target.canmove = 1
 			target.client.eye = target
-			target.status_flags ^= GODMODE	//Turn off this cheat
+			target.status_flags ^= GODMODE	// Turn off this cheat
 			qdel(animation)
 			qdel(holder)
 
@@ -78,8 +78,8 @@
 	anchored = 1
 
 /obj/effect/dummy/spell_jaunt/relaymove(mob/user, direction)
-	if (!src.canmove) return
-	var/turf/newLoc = get_step(src,direction)
+	if(!src.canmove) return
+	var/turf/newLoc = get_step(src, direction)
 	if(!(newLoc.flags & NOJAUNT))
 		loc = newLoc
 	else

@@ -3,7 +3,7 @@ var/global/raider_tick = 1
 /mob/living/carbon/human/proc/equip_raider()
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
-	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
+	R.set_frequency(SYND_FREQ) // Same frequency as the syndicate team in Nuke mode.
 	equip_to_slot_or_del(R, slot_l_ear)
 
 	switch(raider_tick)
@@ -19,7 +19,7 @@ var/global/raider_tick = 1
 			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
 			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			equip_to_slot_or_del(new /obj/item/clothing/head/bandana(src), slot_head)
-			//equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
+			// equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
 			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
 
 	equip_to_slot_or_del(new /obj/item/device/price_tool(src), slot_l_store)
@@ -34,7 +34,7 @@ var/global/raider_tick = 1
 	C.registered_user = src
 	var/obj/item/weapon/storage/wallet/W = new(src)
 	W.handle_item_insertion(C)
-	spawn_money(rand(50,150)*10,W)
+	spawn_money(rand(50, 150)*10, W)
 	equip_to_slot_or_del(W, slot_wear_id)
 
 	raider_tick = 2
@@ -61,13 +61,13 @@ var/global/raider_tick = 1
 	return
 
 /obj/item/ammo_box/magazine/m556/nonlethal
-	name = "A28 magazine (.556NL)"
+	name = "A28 magazine(.556NL)"
 	ammo_type = /obj/item/ammo_casing/a556/nonlethal
 	caliber = "5.56mm"
 	max_ammo = 30
 
 /obj/item/ammo_box/magazine/sm45/nonlethal
-	name = "magazine (.45NL)"
+	name = "magazine(.45NL)"
 	icon_state = "9x19p"
 	ammo_type = /obj/item/ammo_casing/c45/nonlethal
 	caliber = ".45"
@@ -91,7 +91,7 @@ var/global/raider_tick = 1
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(20)//+10=30
 		S.emp_act(2)
-	else if(istype(target,/obj/mecha))
+	else if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(25)
 	..()
@@ -105,7 +105,7 @@ var/global/raider_tick = 1
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(10)//+10=20
 		S.emp_act(2)
-	else if(istype(target,/obj/mecha))
+	else if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(15)
 	..()
@@ -125,9 +125,9 @@ var/global/raider_tick = 1
 /obj/item/weapon/grenade/monsternade/prime()
 	..()
 	playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
-	switch(rand(1,4))
+	switch(rand(1, 4))
 		if(1)
-			for(var/i=0,i<2,i++)
+			for(var/i=0, i<2, i++)
 				new /mob/living/simple_animal/hostile/samak(loc)
 		if(2)
 			for(var/i=0, i<7, i++)
@@ -170,5 +170,5 @@ var/global/raider_tick = 1
 	if(!proximity) return
 	if(!istype(O))
 		return
-	to_chat(user, "<span class='notice'>This object will bring us approximately $[num2text(O.get_price(),9)]$</span>")
+	to_chat(user, "<span class='notice'>This object will bring us approximately $[num2text(O.get_price(), 9)]$</span>")
 	return

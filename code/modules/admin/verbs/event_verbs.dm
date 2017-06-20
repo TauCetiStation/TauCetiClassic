@@ -1,7 +1,7 @@
 var/list/admin_verbs_event = list(
 	/client/proc/event_map_loader,
 	/client/proc/gateway_fix,
-	//client/proc/Noir_anomaly,
+	// client/proc/Noir_anomaly,
 	/client/proc/centcom_barriers_toggle
 	)
 
@@ -18,24 +18,24 @@ var/list/admin_verbs_event = list(
 
 	var/list/Lines = file2list("maps/event_map_list.txt")
 	if(!Lines.len)	return
-	for (var/t in Lines)
-		if (!t)
+	for(var/t in Lines)
+		if(!t)
 			continue
 		t = trim(t)
-		if (length(t) == 0)
+		if(length(t) == 0)
 			continue
-		else if (copytext(t, 1, 2) == "#")
+		else if(copytext(t, 1, 2) == "#")
 			continue
 		var/pos = findtext(t, " ")
 		var/name = null
-		if (pos)
+		if(pos)
             // No, don't do lowertext here, that breaks paths on linux
 			name = copytext(t, 1, pos)
 		//	value = copytext(t, pos + 1)
 		else
             // No, don't do lowertext here, that breaks paths on linux
 			name = t
-		if (!name)
+		if(!name)
 			continue
 
 		AllowedMaps.Add(name)
@@ -65,7 +65,7 @@ var/list/admin_verbs_event = list(
 	set name = "Noir event(in dev!)"
 	if(!check_rights(R_PERMISSIONS))	return
 
-	if(alert("Are you really sure?",,"Yes","No") != "Yes")
+	if(alert("Are you really sure?",, "Yes", "No") != "Yes")
 		return
 
 	for(var/atom/O in world)
@@ -119,7 +119,7 @@ var/centcom_barriers_stat = 1
 
 /obj/effect/landmark/trololo
 	name = "Rickroll"
-	//var/melody = 'sound/Never_Gonna_Give_You_Up.ogg'	//NOPE
+	// var/melody = 'sound/Never_Gonna_Give_You_Up.ogg'	// NOPE
 	var/message = "<i>\blue It's not the door you're looking for...</i>"
 	var/active = 1
 	var/lchannel = 999
@@ -127,7 +127,7 @@ var/centcom_barriers_stat = 1
 	Crossed(M as mob)
 		if(!active) return
 		/*if(istype(M, /mob/living/carbon))
-			M << sound(melody,0,1,lchannel,20)*/
+			M << sound(melody, 0, 1, lchannel, 20)*/
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"

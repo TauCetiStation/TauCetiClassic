@@ -6,7 +6,7 @@
 	icon_state = "nboard05"
 
 /obj/structure/noticeboard/anomaly/New()
-	//add some memos
+	// add some memos
 	var/obj/item/weapon/stamp/rd/S = new
 
 	var/obj/item/weapon/paper/P = new

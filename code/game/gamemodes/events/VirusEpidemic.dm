@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+// This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
 
 /datum/event/viralinfection
 	var/virus_type
@@ -12,17 +12,17 @@
 					continue
 				if(prob(100))	// no lethal diseases outside virus mode!
 					infect_mob_random_lesser(H)
-					if(prob(20))//don't want people to know that the virus alert = greater virus
-						command_alert("Probable outbreak of level [rand(1,6)] viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Virus Alert")
+					if(prob(20))// don't want people to know that the virus alert = greater virus
+						command_alert("Probable outbreak of level [rand(1, 6)] viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Virus Alert")
 				else
 					infect_mob_random_greater(H)
 					if(prob(80))
-						command_alert("Probable outbreak of level [rand(2,9)] viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Virus Alert")
+						command_alert("Probable outbreak of level [rand(2, 9)] viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Virus Alert")
 				break
-			//overall virus alert happens 26% of the time, might need to be higher
+			// overall virus alert happens 26% of the time, might need to be higher
 		else
 			if(!virus)
-				virus_type = pick(/datum/disease/dnaspread,/datum/disease/flu,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
+				virus_type = pick(/datum/disease/dnaspread, /datum/disease/flu, /datum/disease/cold, /datum/disease/brainrot, /datum/disease/magnitis, /datum/disease/pierrot_throat)
 			else
 				switch(virus)
 					if("fake gbs")
@@ -53,8 +53,8 @@
 				if(foundAlready)
 					continue
 
-				if(virus_type == /datum/disease/dnaspread) //Dnaspread needs strain_data set to work.
-					if((!H.dna) || (H.disabilities & 128)) //A blindness disease would be the worst.
+				if(virus_type == /datum/disease/dnaspread) // Dnaspread needs strain_data set to work.
+					if((!H.dna) || (H.disabilities & 128)) // A blindness disease would be the worst.
 						continue
 					var/datum/disease/dnaspread/D = new
 					D.strain_data["name"] = H.real_name
@@ -72,8 +72,8 @@
 					D.affected_mob = H
 					H.viruses += D
 					break
-			spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
+			spawn(rand(3000, 6000)) // Delayed announcements to keep the crew on their toes.
 				command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 				world << sound('sound/AI/outbreak7.ogg')
 	Tick()
-		ActiveFor = Lifetime //killme
+		ActiveFor = Lifetime // killme

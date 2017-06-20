@@ -26,7 +26,7 @@
 
 /obj/item/device/assembly/signaler/Destroy()
 	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
+		radio_controller.remove_object(src, frequency)
 	frequency = 0
 	connected = null
 	return ..()
@@ -46,7 +46,7 @@
 
 /obj/item/device/assembly/signaler/interact(mob/user, flag1)
 	var/t1 = "-------"
-//	if ((src.b_stat && !( flag1 )))
+//	if((src.b_stat && !( flag1 )))
 //		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (src.wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (src.wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
 //	else
 //		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
@@ -83,7 +83,7 @@ Code:
 		onclose(usr, "radio")
 		return
 
-	if (href_list["freq"])
+	if(href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
 		if(new_frequency < 1200 || new_frequency > 1600)
 			new_frequency = sanitize_frequency(new_frequency)
@@ -114,16 +114,16 @@ Code:
 	signal.data["message"] = "ACTIVATE"
 	radio_connection.post_signal(src, signal)
 
-	var/time = time2text(world.realtime,"hh:mm:ss")
+	var/time = time2text(world.realtime, "hh:mm:ss")
 	var/turf/T = get_turf(src)
 	if(usr)
-		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-		message_admins("[key_name_admin(usr)] used [src], location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-		log_game("[usr.ckey]([usr]) used [src], location ([T.x],[T.y],[T.z]),frequency: [format_frequency(frequency)], code:[code]")
+		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+		message_admins("[key_name_admin(usr)] used [src], location([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+		log_game("[usr.ckey]([usr]) used [src], location([T.x],[T.y],[T.z]), frequency: [format_frequency(frequency)], code:[code]")
 	else
-		lastsignalers.Add("[time] <B>:</B> (\red NO USER FOUND) used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-		message_admins("(\red NO USER FOUND)  used [src], location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-		log_game("(NO USER FOUND) used [src], location ([T.x],[T.y],[T.z]),frequency: [format_frequency(frequency)], code:[code]")
+		lastsignalers.Add("[time] <B>:</B> (\red NO USER FOUND) used [src] @ location([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+		message_admins("(\red NO USER FOUND)  used [src], location([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+		log_game("(NO USER FOUND) used [src], location([T.x],[T.y],[T.z]), frequency: [format_frequency(frequency)], code:[code]")
 
 	return
 

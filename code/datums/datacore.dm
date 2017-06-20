@@ -36,7 +36,7 @@
 	var/real_title = assignment
 
 	for(var/datum/data/record/t in data_core.general)
-		if (t)
+		if(t)
 			if(t.fields["name"] == name)
 				foundrecord = t
 				break
@@ -69,10 +69,10 @@
 		else
 			assignment = "Unassigned"
 
-		var/id = add_zero(num2hex(rand(1, 1.6777215E7)), 6)	//this was the best they could come up with? A large random number? *sigh*
+		var/id = add_zero(num2hex(rand(1, 1.6777215E7)), 6)	// this was the best they could come up with? A large random number? *sigh*
 
-		//General Record
-		//Creating photo
+		// General Record
+		// Creating photo
 		var/icon/ticon = get_id_photo(H)
 		var/icon/photo_front = new(ticon, dir = SOUTH)
 		var/icon/photo_side = new(ticon, dir = WEST)
@@ -100,7 +100,7 @@
 			G.fields["notes"] = "No notes found."
 		general += G
 
-		//Medical Record
+		// Medical Record
 		var/datum/data/record/M = new()
 		M.fields["id"]			= id
 		M.fields["name"]		= H.real_name
@@ -120,7 +120,7 @@
 			M.fields["notes"] = "No notes found."
 		medical += M
 
-		//Security Record
+		// Security Record
 		var/datum/data/record/S = new()
 		S.fields["id"]			= id
 		S.fields["name"]		= H.real_name
@@ -136,7 +136,7 @@
 			S.fields["notes"] = "No notes."
 		security += S
 
-		//Locked Record
+		// Locked Record
 		var/datum/data/record/L = new()
 		L.fields["id"]			= md5("[H.real_name][H.mind.assigned_role]")
 		L.fields["name"]		= H.real_name
@@ -151,7 +151,7 @@
 		L.fields["faction"]		= H.personal_faction
 		L.fields["religion"]	= H.religion
 		L.fields["identity"]	= H.dna.UI // "
-		//L.fields["image"]		= getFlatIcon(H)	//This is god-awful
+		// L.fields["image"]		= getFlatIcon(H)	// This is god-awful
 		L.fields["image"]		= get_id_photo(H)
 		locked += L
 	return
@@ -160,7 +160,7 @@
 proc/get_id_photo(mob/living/carbon/human/H)
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 	var/datum/preferences/P = H.client.prefs
-	return get_flat_human_icon(null,J,P)
+	return get_flat_human_icon(null, J, P)
 
 
 

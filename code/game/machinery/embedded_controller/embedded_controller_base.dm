@@ -8,7 +8,7 @@
 
 /obj/machinery/embedded_controller/radio/Destroy()
 	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
+		radio_controller.remove_object(src, frequency)
 	if(program)
 		qdel(program)
 	return ..()
@@ -22,7 +22,7 @@
 
 	if(program)
 		program.receive_signal(signal, receive_method, receive_param)
-			//spawn(5) program.process() //no, program.process sends some signals and machines respond and we here again and we lag -rastaf0
+			// spawn(5) program.process() // no, program.process sends some signals and machines respond and we here again and we lag -rastaf0
 
 /obj/machinery/embedded_controller/process()
 	if(program)
@@ -81,7 +81,7 @@
 	program = new_prog
 
 	spawn(10)
-		program.signalDoor(tag_exterior_door, "update")		//signals connected doors to update their status
+		program.signalDoor(tag_exterior_door, "update")		// signals connected doors to update their status
 		program.signalDoor(tag_interior_door, "update")
 
 /obj/machinery/embedded_controller/radio/update_icon()

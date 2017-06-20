@@ -89,20 +89,20 @@ var/datum/subsystem/xenoarch/SSxenoarch
 		if(isnull(archeo_turf.finds))
 			archeo_turf.finds = list()
 			if(prob(50))
-				archeo_turf.finds += new /datum/find(digsite, rand(5,95))
+				archeo_turf.finds += new /datum/find(digsite, rand(5, 95))
 				digsite_spawning_turfs += archeo_turf
 			else if(prob(75))
-				archeo_turf.finds += new /datum/find(digsite, rand(5,45))
-				archeo_turf.finds += new /datum/find(digsite, rand(55,95))
+				archeo_turf.finds += new /datum/find(digsite, rand(5, 45))
+				archeo_turf.finds += new /datum/find(digsite, rand(55, 95))
 			else
-				archeo_turf.finds += new /datum/find(digsite, rand(5,30))
-				archeo_turf.finds += new /datum/find(digsite, rand(35,75))
-				archeo_turf.finds += new /datum/find(digsite, rand(75,95))
+				archeo_turf.finds += new /datum/find(digsite, rand(5, 30))
+				archeo_turf.finds += new /datum/find(digsite, rand(35, 75))
+				archeo_turf.finds += new /datum/find(digsite, rand(75, 95))
 
 			// Sometimes a find will be close enough to the surface to show
 			var/datum/find/F = archeo_turf.finds[1]
 			if(F.excavation_required <= F.view_range)
-				archeo_turf.archaeo_overlay = "overlay_archaeo[rand(1,3)]"
+				archeo_turf.archaeo_overlay = "overlay_archaeo[rand(1, 3)]"
 				archeo_turf.overlays += archeo_turf.archaeo_overlay
 
 		// Have a chance for an artifact to spawn here, but not in animal or plant digsites
@@ -138,7 +138,7 @@ var/datum/subsystem/xenoarch/SSxenoarch
 	// Make sure we have some prefixes for the gene sequences
 	genome_prefixes = alphabet_uppercase.Copy()
 
-	//create plant gene sequences
+	// create plant gene sequences
 	while(spawn_types_plant.len && genome_prefixes.len)
 		var/datum/genesequence/new_sequence = new
 		new_sequence.spawned_type = pick_n_take(spawn_types_plant)

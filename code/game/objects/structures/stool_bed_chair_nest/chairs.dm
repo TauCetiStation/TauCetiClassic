@@ -1,9 +1,9 @@
-/obj/structure/stool/bed/chair	//YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
+/obj/structure/stool/bed/chair	// YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "chair"
-	buckle_lying = 0 //force people to sit up in chairs when buckled
+	buckle_lying = 0 // force people to sit up in chairs when buckled
 	var/can_flipped = 0
 	var/flipped = 0
 	var/flip_angle = 0
@@ -91,7 +91,7 @@
 
 /obj/structure/stool/bed/chair/New()
 	..()
-	spawn(3)	//sorry. i don't think there's a better way to do this.
+	spawn(3)	// sorry. i don't think there's a better way to do this.
 		handle_rotation()
 	return
 
@@ -117,7 +117,7 @@
 		if(!isnull(buckled_mob))
 			flip_time = 60	//6 sec with
 		if(!flipped)
-			usr.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>","<span class='notice'>You flips \the [src] down.")
+			usr.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>", "<span class='notice'>You flips \the [src] down.")
 			flip()
 			if(buckled_mob && !buckled_mob.restrained())
 				var/mob/living/L = buckled_mob
@@ -125,7 +125,7 @@
 				L.apply_effect(2, WEAKEN, 0)
 				L.apply_damage(3, BRUTE, BP_HEAD)
 		else if(do_after(usr, flip_time, target = usr))
-			usr.visible_message("<span class='notice'>[usr] flips \the [src] up.</span>","<span class='notice'>You flips \the [src] up.")
+			usr.visible_message("<span class='notice'>[usr] flips \the [src] up.</span>", "<span class='notice'>You flips \the [src] up.")
 			flip()
 	else
 		..()
@@ -145,7 +145,7 @@
 		rotate()
 	return
 
-/obj/structure/stool/bed/chair/handle_rotation()	//making this into a seperate proc so office chairs can call it on Move()
+/obj/structure/stool/bed/chair/handle_rotation()	// making this into a seperate proc so office chairs can call it on Move()
 	if(src.dir == NORTH)
 		src.layer = FLY_LAYER
 	else
@@ -188,8 +188,8 @@
 	var/new_angle = pick(90, 270)
 
 	if(!flipped)
-		M.TurnTo(0,new_angle)
-		flip_angle = new_angle	//save our angle for future flip
+		M.TurnTo(0, new_angle)
+		flip_angle = new_angle	// save our angle for future flip
 		if(new_angle==90)
 			offset_y = -4
 			offset_x = 2
@@ -197,11 +197,11 @@
 			offset_y = -4
 			offset_x = -2
 		flipped = 1
-		anchored = 0		//can be pulled
+		anchored = 0		// can be pulled
 		buckle_movable = 0
 		playsound(src.loc, 'sound/items/chair_fall.ogg', 25, 1)
 	else
-		M.TurnTo(flip_angle,0)
+		M.TurnTo(flip_angle, 0)
 		flipped = 0
 		anchored = initial(anchored)
 		buckle_movable = initial(buckle_movable)
@@ -244,7 +244,7 @@
 	name = "comfy chair"
 	desc = "It looks comfy."
 	icon_state = "comfychair"
-	color = rgb(255,255,255)
+	color = rgb(255, 255, 255)
 	var/armrest = null
 
 /obj/structure/stool/bed/chair/comfy/New()
@@ -258,19 +258,19 @@
 		overlays -= armrest
 
 /obj/structure/stool/bed/chair/comfy/brown
-	color = rgb(255,113,0)
+	color = rgb(255, 113, 0)
 
 /obj/structure/stool/bed/chair/comfy/beige
-	color = rgb(255,253,195)
+	color = rgb(255, 253, 195)
 
 /obj/structure/stool/bed/chair/comfy/teal
-	color = rgb(0,255,255)
+	color = rgb(0, 255, 255)
 
 /obj/structure/stool/bed/chair/comfy/black
-	color = rgb(167,164,153)
+	color = rgb(167, 164, 153)
 
 /obj/structure/stool/bed/chair/comfy/lime
-	color = rgb(255,251,0)
+	color = rgb(255, 251, 0)
 
 /obj/structure/stool/bed/chair/office
 	anchored = 0
@@ -281,10 +281,10 @@
 	..()
 	if(buckled_mob)
 		var/mob/living/occupant = buckled_mob
-		if (occupant && (src.loc != occupant.loc))
-			if (propelled)
-				for (var/mob/O in src.loc)
-					if (O != occupant)
+		if(occupant && (src.loc != occupant.loc))
+			if(propelled)
+				for(var/mob/O in src.loc)
+					if(O != occupant)
 						Bump(O)
 			else
 				unbuckle_mob()

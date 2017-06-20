@@ -50,7 +50,7 @@
 
 /obj/machinery/status_display/Destroy()
 	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
+		radio_controller.remove_object(src, frequency)
 	return ..()
 
 /obj/machinery/status_display/process()
@@ -69,20 +69,20 @@
 // set what is displayed
 
 /obj/machinery/status_display/proc/update()
-	if(friendc && mode != 4)	//Makes all status displays except supply shuttle timer display the eye -- Urist
+	if(friendc && mode != 4)	// Makes all status displays except supply shuttle timer display the eye -- Urist
 		set_picture("ai_friend")
 		return
 
-	if(mode == 3 && overlays.len)	//Why we must update diplay if picture is already set?
+	if(mode == 3 && overlays.len)	// Why we must update diplay if picture is already set?
 		return
 
 	if(overlays.len && !friendc || mode == 4)
 		overlays.Cut()
 
 	switch(mode)
-		if(0)				//blank
+		if(0)				// blank
 			remove_display()
-		if(1)				//emergency shuttle timer
+		if(1)				// emergency shuttle timer
 			if(SSshuttle.online)
 				var/line1
 				var/line2 = get_shuttle_timer()
@@ -95,7 +95,7 @@
 				update_display(line1, line2)
 			else
 				remove_display()
-		if(2)				//custom messages
+		if(2)				// custom messages
 			var/line1
 			var/line2
 
@@ -134,7 +134,7 @@
 /obj/machinery/status_display/examine(mob/user)
 	..()
 	switch(mode)
-		if(1,2,4)
+		if(1, 2, 4)
 			to_chat(user, "The display says:<br>&emsp;<xmp>[message1]</xmp><br>&emsp;<xmp>[message2]</xmp>")
 
 
@@ -166,15 +166,15 @@
 /obj/machinery/status_display/proc/get_shuttle_timer()
 	var/timeleft = SSshuttle.timeleft()
 	if(timeleft)
-		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
+		return "[add_zero(num2text((timeleft / 60) % 60), 2)]:[add_zero(num2text(timeleft % 60), 2)]"
 	return ""
 
 /obj/machinery/status_display/proc/get_SSshuttle_timer()
 	if(SSshuttle.moving)
-		var/timeleft = round((SSshuttle.eta_timeofday - world.timeofday) / 10,1)
+		var/timeleft = round((SSshuttle.eta_timeofday - world.timeofday) / 10, 1)
 		if(timeleft < 0)
 			return "Late"
-		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
+		return "[add_zero(num2text((timeleft / 60) % 60), 2)]:[add_zero(num2text(timeleft % 60), 2)]"
 	return ""
 
 /obj/machinery/status_display/proc/remove_display()
@@ -240,7 +240,7 @@
 
 /obj/machinery/ai_status_display/proc/update()
 
-	if(mode==0) //Blank
+	if(mode==0) // Blank
 		overlays.Cut()
 		return
 

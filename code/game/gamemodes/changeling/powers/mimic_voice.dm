@@ -2,7 +2,7 @@
 	name = "Mimic Voice"
 	desc = "We shape our vocal glands to sound like a desired voice."
 	helptext = "Will turn your voice into the name that you enter. We must constantly expend chemicals to maintain our form like this."
-	chemical_cost = 0 //constant chemical drain hardcoded
+	chemical_cost = 0 // constant chemical drain hardcoded
 	genomecost = 1
 	req_human = 1
 
@@ -24,5 +24,5 @@
 	to_chat(user, "<span class='notice'>We shape our glands to take the voice of <b>[mimic_voice]</b>, this will stop us from regenerating chemicals while active.</span>")
 	to_chat(user, "<span class='notice'>Use this power again to return to our original voice and reproduce chemicals again.</span>")
 
-	feedback_add_details("changeling_powers","MV")
+	feedback_add_details("changeling_powers", "MV")
 

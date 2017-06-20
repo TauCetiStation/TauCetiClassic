@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /*
 Space dust
@@ -11,19 +11,19 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 	var/numbers = 1
 	switch(strength)
 		if("weak")
-		 numbers = rand(2,4)
+		 numbers = rand(2, 4)
 		 for(var/i = 0 to numbers)
 		 	new/obj/effect/space_dust/weak()
 		if("norm")
-		 numbers = rand(5,10)
+		 numbers = rand(5, 10)
 		 for(var/i = 0 to numbers)
 		 	new/obj/effect/space_dust()
 		if("strong")
-		 numbers = rand(10,15)
+		 numbers = rand(10, 15)
 		 for(var/i = 0 to numbers)
 		 	new/obj/effect/space_dust/strong()
 		if("super")
-		 numbers = rand(15,25)
+		 numbers = rand(15, 25)
 		 for(var/i = 0 to numbers)
 		 	new/obj/effect/space_dust/super()
 	return
@@ -36,8 +36,8 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 	icon_state = "space_dust"
 	density = 1
 	anchored = 1
-	var/strength = 2 //ex_act severity number
-	var/life = 2 //how many things we hit before del(src)
+	var/strength = 2 // ex_act severity number
+	var/life = 2 // how many things we hit before del(src)
 
 	weak
 		strength = 3
@@ -66,7 +66,7 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 				endy = TRANSITIONEDGE
 				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
 			if(EAST)
-				starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+				starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
 				startx = world.maxx-(TRANSITIONEDGE+1)
 				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
 				endx = TRANSITIONEDGE
@@ -78,7 +78,7 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 			if(WEST)
 				starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
 				startx = (TRANSITIONEDGE+1)
-				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
+				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
 				endx = world.maxx-TRANSITIONEDGE
 		var/goal = locate(endx, endy, 1)
 		src.x = startx
@@ -94,13 +94,13 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 			for(var/mob/M in range(10, src))
 				if(!M.stat && !istype(M, /mob/living/silicon/ai))
 					shake_camera(M, 3, 1)
-		if (A)
+		if(A)
 			playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 
 			if(ismob(A))
-				A.meteorhit(src)//This should work for now I guess
-			else if(!istype(A,/obj/machinery/power/emitter) && !istype(A,/obj/machinery/field_generator)) //Protect the singularity from getting released every round!
-				A.ex_act(strength) //Changing emitter/field gen ex_act would make it immune to bombs and C4
+				A.meteorhit(src)// This should work for now I guess
+			else if(!istype(A, /obj/machinery/power/emitter) && !istype(A, /obj/machinery/field_generator)) // Protect the singularity from getting released every round!
+				A.ex_act(strength) // Changing emitter/field gen ex_act would make it immune to bombs and C4
 
 			life--
 			if(life <= 0)

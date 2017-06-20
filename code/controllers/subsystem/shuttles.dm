@@ -4,10 +4,10 @@ var/datum/subsystem/shuttle/SSshuttle
 #define SHUTTLELEAVETIME 180		// 3 minutes = 180 seconds
 #define SHUTTLETRANSITTIME 120		// 2 minutes = 120 seconds
 
-#define SUPPLY_DOCKZ 2          //Z-level of the Dock.
-#define SUPPLY_STATIONZ 1       //Z-level of the Station.
-#define SUPPLY_STATION_AREATYPE /area/supply/station //Type of the supply shuttle area for station
-#define SUPPLY_DOCK_AREATYPE /area/supply/dock	//Type of the supply shuttle area for dock
+#define SUPPLY_DOCKZ 2          // Z-level of the Dock.
+#define SUPPLY_STATIONZ 1       // Z-level of the Station.
+#define SUPPLY_STATION_AREATYPE /area/supply/station // Type of the supply shuttle area for station
+#define SUPPLY_DOCK_AREATYPE /area/supply/dock	// Type of the supply shuttle area for dock
 
 /datum/subsystem/shuttle
 	name = "Shuttles"
@@ -17,38 +17,38 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	flags = SS_KEEP_TIMING | SS_NO_TICK_CHECK
 
-		//emergency shuttle stuff
+		// emergency shuttle stuff
 	var/alert = 0				//0 = emergency, 1 = crew cycle
-	var/location = 0			//0 = somewhere far away (in spess), 1 = at SS13, 2 = returned from SS13
+	var/location = 0			//0 = somewhere far away(in spess), 1 = at SS13, 2 = returned from SS13
 	var/online = 0
-	var/direction = 1			//-1 = going back to central command, 1 = going to SS13, 2 = in transit to centcom (not recalled)
+	var/direction = 1			//-1 = going back to central command, 1 = going to SS13, 2 = in transit to centcom(not recalled)
 	var/endtime					// timeofday that shuttle arrives
-	var/timelimit				//important when the shuttle gets called for more than shuttlearrivetime
-		//timeleft = 360 //600
-	var/fake_recall = 0			//Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
+	var/timelimit				// important when the shuttle gets called for more than shuttlearrivetime
+		// timeleft = 360 //600
+	var/fake_recall = 0			// Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
 	var/always_fake_recall = 0
-	var/deny_shuttle = 0		//for admins not allowing it to be called.
+	var/deny_shuttle = 0		// for admins not allowing it to be called.
 	var/departed = 0
 
-		//supply shuttle stuff
+		// supply shuttle stuff
 	var/points = 5000
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
 	var/hacked = FALSE
 	var/centcom_message = ""
-		//control
+		// control
 	var/ordernum
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
-		//shuttle movement
+		// shuttle movement
 	var/at_station = 0
 	var/movetime = 1200
 	var/moving = 0
 	var/eta_timeofday
 	var/eta
 
-	//var/datum/round_event/shuttle_loan/shuttle_loan
+	// var/datum/round_event/shuttle_loan/shuttle_loan
 
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
@@ -66,12 +66,12 @@ var/datum/subsystem/shuttle/SSshuttle
 	if(moving == 1)
 		var/ticksleft = (eta_timeofday - world.timeofday)
 		if(ticksleft > 0)
-			eta = round(ticksleft/600,1)
+			eta = round(ticksleft/600, 1)
 		else
 			eta = 0
 			send()
 
-	//What a mess below...
+	// What a mess below...
 	if(!online)
 		return
 	var/timeleft = timeleft()
@@ -105,7 +105,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					location = 2
 
-					//main shuttle
+					// main shuttle
 					var/area/start_location = locate(/area/shuttle/escape/transit)
 					var/area/end_location = locate(/area/shuttle/escape/centcom)
 
@@ -127,7 +127,7 @@ var/datum/subsystem/shuttle/SSshuttle
 								M.Weaken(5)
 						CHECK_TICK
 
-							//pods
+							// pods
 					start_location = locate(/area/shuttle/escape_pod1/transit)
 					end_location = locate(/area/shuttle/escape_pod1/centcom)
 					if( prob(5) ) // 5% that they survive
@@ -246,7 +246,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				for(var/turf/T in dstturfs)
 					// find the turf to move things to
 					var/turf/D = locate(T.x, throwy - 1, 1)
-					//var/turf/E = get_step(D, SOUTH)
+					// var/turf/E = get_step(D, SOUTH)
 					for(var/atom/movable/AM as mob|obj in T)
 						AM.Move(D)
 
@@ -265,10 +265,10 @@ var/datum/subsystem/shuttle/SSshuttle
 				start_location.move_contents_to(end_location)
 				settimeleft(SHUTTLELEAVETIME)
 				if(alert == 0)
-					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
+					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60, 1)] minutes to board the Emergency Shuttle.")
 					world << sound('sound/AI/shuttledock.ogg')
 				else
-					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.")
+					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60, 1)] minutes.")
 
 				send2slack_service("the shuttle has docked with the station")
 
@@ -289,7 +289,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
-				//if(alert == 1)
+				// if(alert == 1)
 				//	captain_announce("Departing...")
 				//	sleep(100)
 				// Turn on the star effects
@@ -304,7 +304,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				location = 0 // in deep space
 				direction = 2 // heading to centcom
 
-				//main shuttle
+				// main shuttle
 				var/area/start_location = locate(/area/shuttle/escape/station)
 				var/area/end_location = locate(/area/shuttle/escape/transit)
 				end_location.parallax_movedir = WEST
@@ -329,7 +329,7 @@ var/datum/subsystem/shuttle/SSshuttle
 							M.Weaken(5)
 					CHECK_TICK
 
-				//pods
+				// pods
 				if(alert == 0) // Crew Transfer not for pods
 
 					start_location = locate(/area/shuttle/escape_pod1/station)
@@ -407,9 +407,9 @@ var/datum/subsystem/shuttle/SSshuttle
 									M.Weaken(5)
 						CHECK_TICK
 
-					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60, 1)] minutes until the shuttle docks at Central Command.")
 				else
-					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60, 1)] minutes until the shuttle docks at Central Command.")
 
 				return 1
 
@@ -433,14 +433,14 @@ var/datum/subsystem/shuttle/SSshuttle
 			at_station = 1
 	moving = 0
 
-	//Do I really need to explain this loop?
+	// Do I really need to explain this loop?
 	for(var/mob/living/unlucky_person in the_shuttles_way)
 		unlucky_person.gib()
 		CHECK_TICK
 
 	from.move_contents_to(dest)
 
-//Check whether the shuttle is allowed to move
+// Check whether the shuttle is allowed to move
 /datum/subsystem/shuttle/proc/can_move()
 	if(moving) return 0
 	if(!at_station) return 1
@@ -453,15 +453,15 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return 1
 
-//To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
+// To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
 /datum/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
-	if(istype(A,/mob/living))
+	if(istype(A, /mob/living))
 		return 1
-	if(istype(A,/obj/item/weapon/disk/nuclear))
+	if(istype(A, /obj/item/weapon/disk/nuclear))
 		return 1
-	if(istype(A,/obj/machinery/nuclearbomb))
+	if(istype(A, /obj/machinery/nuclearbomb))
 		return 1
-	if(istype(A,/obj/item/device/radio/beacon))
+	if(istype(A, /obj/item/device/radio/beacon))
 		return 1
 
 	for(var/i=1, i<=A.contents.len, i++)
@@ -469,7 +469,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(.(B))
 			return 1
 
-	//Sellin
+	// Sellin
 /datum/subsystem/shuttle/proc/sell()
 	var/shuttle_at
 	if(at_station)
@@ -506,10 +506,10 @@ var/datum/subsystem/shuttle/SSshuttle
 		E.export_end()
 
 	centcom_message = msg
-	//investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
+	// investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
 
 
-//Buyin
+// Buyin
 /datum/subsystem/shuttle/proc/buy()
 	if(!shoppinglist.len)
 		return
@@ -531,9 +531,9 @@ var/datum/subsystem/shuttle/SSshuttle
 			continue
 		var/contcount
 		for(var/atom/A in T.contents)
-			if(istype(A,/atom/movable/lighting_overlay))
+			if(istype(A, /atom/movable/lighting_overlay))
 				continue
-			if(istype(A,/obj/machinery/light))
+			if(istype(A, /obj/machinery/light))
 				continue
 			contcount++
 		if(contcount)
@@ -544,9 +544,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	for(var/S in shoppinglist)
 		if(!clear_turfs.len)
 			break
-		var/i = rand(1,clear_turfs.len)
+		var/i = rand(1, clear_turfs.len)
 		var/turf/pickedloc = clear_turfs[i]
-		clear_turfs.Cut(i,i+1)
+		clear_turfs.Cut(i, i+1)
 
 		var/datum/supply_order/SO = S
 
@@ -562,7 +562,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 
 /datum/subsystem/shuttle/proc/incall(coeff = 1)
-	if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
+	if(deny_shuttle && alert == 1) // crew transfer shuttle does not gets recalled by gamemode
 		return
 	if(endtime)
 		if(direction == -1)
@@ -571,11 +571,11 @@ var/datum/subsystem/shuttle/SSshuttle
 		settimeleft(get_shuttle_arrive_time()*coeff)
 		online = 1
 		if(always_fake_recall)
-			fake_recall = rand(300,500)		//turning on the red lights in hallways
+			fake_recall = rand(300, 500)		// turning on the red lights in hallways
 
 /datum/subsystem/shuttle/proc/get_shuttle_arrive_time()
 	// During mutiny rounds, the shuttle takes twice as long.
-	if(ticker && istype(ticker.mode,/datum/game_mode/mutiny))
+	if(ticker && istype(ticker.mode, /datum/game_mode/mutiny))
 		return SHUTTLEARRIVETIME * 2
 
 	return SHUTTLEARRIVETIME
@@ -594,18 +594,18 @@ var/datum/subsystem/shuttle/SSshuttle
 			setdirection(-1)
 			online = 1
 			return
-		else //makes it possible to send shuttle back.
+		else // makes it possible to send shuttle back.
 			captain_announce("The shuttle has been recalled.")
 			setdirection(-1)
 			online = 1
 			alert = 0 // set alert back to 0 after an admin recall
 			return
 
-	// returns the time (in seconds) before shuttle arrival
+	// returns the time(in seconds) before shuttle arrival
 	// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
 /datum/subsystem/shuttle/proc/timeleft()
 	if(online)
-		var/timeleft = round((endtime - world.timeofday)/10 ,1)
+		var/timeleft = round((endtime - world.timeofday)/10, 1)
 		if(direction == 1 || direction == 2)
 			return timeleft
 		else
@@ -613,7 +613,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	else
 		return get_shuttle_arrive_time()
 
-	// sets the time left to a given delay (in seconds)
+	// sets the time left to a given delay(in seconds)
 /datum/subsystem/shuttle/proc/settimeleft(delay)
 	endtime = world.timeofday + delay * 10
 	timelimit = delay
@@ -637,8 +637,8 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /obj/effect/bgstar/New()
 	..()
-	pixel_x += rand(-2,30)
-	pixel_y += rand(-2,30)
+	pixel_x += rand(-2, 30)
+	pixel_y += rand(-2, 30)
 	var/starnum = pick("1", "1", "1", "2", "3", "4")
 
 	icon_state = "star"+starnum
@@ -669,7 +669,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	spawning = 1
 	while(spawning)
 		sleep(rand(2, 30))
-		var/obj/effect/bgstar/S = new/obj/effect/bgstar(locate(x,y,z))
+		var/obj/effect/bgstar/S = new/obj/effect/bgstar(locate(x, y, z))
 		S.direction = spawndir
 		spawn()
 			S.startmove()

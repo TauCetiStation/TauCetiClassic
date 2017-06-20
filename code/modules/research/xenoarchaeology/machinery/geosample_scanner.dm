@@ -11,7 +11,7 @@
 	idle_power_usage = 20
 	active_power_usage = 300
 
-	//var/obj/item/weapon/reagent_containers/glass/coolant_container
+	// var/obj/item/weapon/reagent_containers/glass/coolant_container
 	var/scanning = 0
 	var/report_num = 0
 	//
@@ -27,7 +27,7 @@
 	var/scanner_temperature = 0
 	var/scanner_seal_integrity = 100
 	//
-	var/coolant_usage_rate = 0		//measured in u/microsec
+	var/coolant_usage_rate = 0		// measured in u/microsec
 	var/fresh_coolant = 0
 	var/coolant_purity = 0
 	var/datum/reagents/coolant_reagents
@@ -68,7 +68,7 @@
 		to_chat(user, "<span class='warning'>You can't do that while [src] is scanning!</span>")
 	else
 		if(istype(I, /obj/item/stack/nanopaste))
-			var/choice = alert("What do you want to do with the nanopaste?","Radiometric Scanner","Scan nanopaste","Fix seal integrity")
+			var/choice = alert("What do you want to do with the nanopaste?", "Radiometric Scanner", "Scan nanopaste", "Fix seal integrity")
 			if(choice == "Fix seal integrity")
 				var/obj/item/stack/nanopaste/N = I
 				var/amount_used = min(N.amount, 10 - scanner_seal_integrity / 10)
@@ -76,7 +76,7 @@
 				scanner_seal_integrity = round(scanner_seal_integrity + amount_used * 10)
 				return
 		if(istype(I, /obj/item/weapon/reagent_containers/glass))
-			var/choice = alert("What do you want to do with the container?","Radiometric Scanner","Add coolant","Empty coolant","Scan container")
+			var/choice = alert("What do you want to do with the container?", "Radiometric Scanner", "Add coolant", "Empty coolant", "Scan container")
 			if(choice == "Add coolant")
 				var/obj/item/weapon/reagent_containers/glass/G = I
 				var/amount_transferred = min(src.reagents.maximum_volume - src.reagents.total_volume, G.reagents.total_volume)
@@ -100,8 +100,8 @@
 	fresh_coolant = 0
 	coolant_purity = 0
 	var/num_reagent_types = 0
-	for (var/datum/reagent/current_reagent in src.reagents.reagent_list)
-		if (!current_reagent)
+	for(var/datum/reagent/current_reagent in src.reagents.reagent_list)
+		if(!current_reagent)
 			continue
 		var/cur_purity = coolant_reagents_purity[current_reagent.id]
 		if(!cur_purity)
@@ -147,7 +147,7 @@
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "geoscanner.tmpl", "High Res Radiocarbon Spectrometer", 900, 600)
@@ -166,11 +166,11 @@
 		else if(scanner_progress >= 100)
 			complete_scan()
 		else
-			//calculate time difference
+			// calculate time difference
 			var/deltaT = (world.time - last_process_worldtime) * 0.1
 
-			//modify the RPM over time
-			//i want 1u to last for 10 sec at 500 RPM, scaling linearly
+			// modify the RPM over time
+			// i want 1u to last for 10 sec at 500 RPM, scaling linearly
 			scanner_rpm += scanner_rpm_dir * 50 * deltaT
 			if(scanner_rpm > 1000)
 				scanner_rpm = 1000
@@ -179,27 +179,27 @@
 				scanner_rpm = 1
 				scanner_rpm_dir = 1 * pick(0.5, 2.5, 5.5)
 
-			//heat up according to RPM
-			//each unit of coolant
+			// heat up according to RPM
+			// each unit of coolant
 			scanner_temperature += scanner_rpm * deltaT * 0.05
 
-			//radiation
+			// radiation
 			t_left_radspike -= deltaT
 			if(t_left_radspike > 0)
-				//ordinary radiation
+				// ordinary radiation
 				radiation = rand() * 15
 			else
-				//radspike
+				// radspike
 				if(t_left_radspike > -5)
 					radiation = rand() * 15 + 85
 					if(!rad_shield)
-						//irradiate nearby mobs
-						for(var/mob/living/M in view(7,src))
+						// irradiate nearby mobs
+						for(var/mob/living/M in view(7, src))
 							M.apply_effect(radiation / 25, IRRADIATE, 0)
 				else
-					t_left_radspike = pick(10,15,25)
+					t_left_radspike = pick(10, 15, 25)
 
-			//use some coolant to cool down
+			// use some coolant to cool down
 			if(coolant_usage_rate > 0)
 				var/coolant_used = min(fresh_coolant, coolant_usage_rate * deltaT)
 				if(coolant_used > 0)
@@ -207,10 +207,10 @@
 					used_coolant += coolant_used
 					scanner_temperature = max(scanner_temperature - coolant_used * coolant_purity * 20, 0)
 
-			//modify the optimal wavelength
+			// modify the optimal wavelength
 			tleft_retarget_optimal_wavelength -= deltaT
 			if(tleft_retarget_optimal_wavelength <= 0)
-				tleft_retarget_optimal_wavelength = pick(4,8,15)
+				tleft_retarget_optimal_wavelength = pick(4, 8, 15)
 				optimal_wavelength_target = rand() * 9900 + 100
 			//
 			if(optimal_wavelength < optimal_wavelength_target)
@@ -220,27 +220,27 @@
 			//
 			maser_efficiency = 1 - max(min(10000, abs(optimal_wavelength - maser_wavelength) * 3), 1) / 10000
 
-			//make some scan progress
+			// make some scan progress
 			if(!rad_shield)
 				scanner_progress = min(100, scanner_progress + scanner_rate * maser_efficiency * deltaT)
 
-				//degrade the seal over time according to temperature
-				//i want temperature of 50K to degrade at 1%/sec
+				// degrade the seal over time according to temperature
+				// i want temperature of 50K to degrade at 1%/sec
 				scanner_seal_integrity -= (max(scanner_temperature, 1) / 1000) * deltaT
 
-			//emergency stop if seal integrity reaches 0
+			// emergency stop if seal integrity reaches 0
 			if(scanner_seal_integrity <= 0 || (scanner_temperature >= 1273 && !rad_shield))
 				stop_scanning()
 				src.visible_message("\blue [bicon(src)] buzzes unhappily. It has failed mid-scan!", 2)
 
 			if(prob(5))
-				src.visible_message("\blue [bicon(src)] [pick("whirrs","chuffs","clicks")][pick(" excitedly"," energetically"," busily")].", 2)
+				src.visible_message("\blue [bicon(src)] [pick("whirrs", "chuffs", "clicks")][pick(" excitedly", " energetically", " busily")].", 2)
 	else
-		//gradually cool down over time
+		// gradually cool down over time
 		if(scanner_temperature > 0)
 			scanner_temperature = max(scanner_temperature - 5 - 10 * rand(), 0)
 		if(prob(0.75))
-			src.visible_message("\blue [bicon(src)] [pick("plinks","hisses")][pick(" quietly"," softly"," sadly"," plaintively")].", 2)
+			src.visible_message("\blue [bicon(src)] [pick("plinks", "hisses")][pick(" quietly", " softly", " sadly", " plaintively")].", 2)
 	last_process_worldtime = world.time
 
 /obj/machinery/radiocarbon_spectrometer/proc/stop_scanning()
@@ -261,14 +261,14 @@
 	src.visible_message("\blue [bicon(src)] makes an insistent chime.", 2)
 
 	if(scanned_item)
-		//create report
+		// create report
 		var/obj/item/weapon/paper/P = new(src)
 		P.name = "[src] report #[++report_num]: [scanned_item.name]"
 
 		var/obj/item/weapon/stamp/S = new
 		S.stamp_paper(P)
 
-		//work out data
+		// work out data
 		var/data = " - Mundane object: [scanned_item.desc ? scanned_item.desc : "No information on record."]<br>"
 		var/datum/geosample/G
 		switch(scanned_item.type)
@@ -283,7 +283,7 @@
 					G = O.geological_data
 
 			if(/obj/item/weapon/archaeological_find)
-				data = " - Mundane object (archaic xenos origins)<br>"
+				data = " - Mundane object(archaic xenos origins)<br>"
 
 				var/obj/item/weapon/archaeological_find/A = scanned_item
 				if(A.talking_atom)
@@ -334,7 +334,7 @@
 				if(scanner_seal_integrity > 0)
 					scanner_progress = 0
 					scanning = 1
-					t_left_radspike = pick(5,10,15)
+					t_left_radspike = pick(5, 10, 15)
 					to_chat(usr, "<span class='notice'>Scan initiated.</span>")
 				else
 					to_chat(usr, "<span class='warning'>Could not initiate scan, seal requires replacing.</span>")

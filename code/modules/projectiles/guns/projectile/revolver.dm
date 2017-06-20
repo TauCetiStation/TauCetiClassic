@@ -6,9 +6,9 @@
 	fire_sound = 'sound/weapons/guns/revolver_shot.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
-	if (chambered || !magazine)
+	if(chambered || !magazine)
 		return
-	else if (magazine.ammo_count())
+	else if(magazine.ammo_count())
 		chambered = magazine.get_round(1)
 	return
 
@@ -25,7 +25,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0
-	while (get_ammo() > 0)
+	while(get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		chambered = null
@@ -33,22 +33,22 @@
 		CB.SpinAnimation(10, 1)
 		CB.update_icon()
 		num_unloaded++
-	if (num_unloaded)
+	if(num_unloaded)
 		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/get_ammo(countchambered = 0, countempties = 1)
-	var/boolets = 0 //mature var names for mature people
-	if (chambered && countchambered)
+	var/boolets = 0 // mature var names for mature people
+	if(chambered && countchambered)
 		boolets++
-	if (magazine)
+	if(magazine)
 		boolets += magazine.ammo_count(countempties)
 	return boolets
 
 /obj/item/weapon/gun/projectile/revolver/examine(mob/user)
 	..()
-	to_chat(user, "[get_ammo(0,0)] of those are live rounds.")
+	to_chat(user, "[get_ammo(0, 0)] of those are live rounds.")
 
 /obj/item/weapon/gun/projectile/revolver/detective
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
@@ -61,7 +61,7 @@
 /obj/item/weapon/gun/projectile/revolver/detective/special_check(mob/living/carbon/human/M)
 	if(magazine.caliber == initial(magazine.caliber))
 		return 1
-	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
+	if(prob(70 - (magazine.ammo_count() * 10)))	// minimum probability of 10, maximum of 60
 		to_chat(M, "<span class='danger'>[src] blows up in your face!</span>")
 		M.take_bodypart_damage(0, 20)
 		M.drop_item()
@@ -75,9 +75,9 @@
 	set desc = "Click to rename your gun."
 
 	var/mob/M = usr
-	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
+	var/input = stripped_input(M, "What do you want to name the gun?", , "", MAX_NAME_LEN)
 
-	if(src && input && !M.stat && in_range(M,src))
+	if(src && input && !M.stat && in_range(M, src))
 		name = input
 		to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 		return 1
@@ -88,7 +88,7 @@
 		if(magazine.caliber == "38")
 			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src].</span>")
 			if(magazine.ammo_count())
-				afterattack(user, user)	//you know the drill
+				afterattack(user, user)	// you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
 			if(do_after(user, 30, target = src))
@@ -101,7 +101,7 @@
 		else
 			to_chat(user, "<span class='notice'>You begin to revert the modifications to [src].</span>")
 			if(magazine.ammo_count())
-				afterattack(user, user)	//and again
+				afterattack(user, user)	// and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
 			if(do_after(user, 30, target = src))
@@ -136,7 +136,7 @@
 /obj/item/weapon/gun/projectile/revolver/russian/proc/Spin()
 	chambered = null
 	var/random = rand(1, magazine.max_ammo)
-	if(random <= get_ammo(0,0))
+	if(random <= get_ammo(0, 0))
 		chamber_round()
 	spun = 1
 
@@ -153,32 +153,32 @@
 	return
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user)
-	if(!spun && get_ammo(0,0))
+	if(!spun && get_ammo(0, 0))
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
 	else
 		var/num_unloaded = 0
-		while (get_ammo() > 0)
+		while(get_ammo() > 0)
 			var/obj/item/ammo_casing/CB
 			CB = magazine.get_round()
 			chambered = null
 			CB.loc = get_turf(src.loc)
 			CB.update_icon()
 			num_unloaded++
-		if (num_unloaded)
+		if(num_unloaded)
 			to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src]!</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target, mob/living/user, flag, params)
-	if(!spun && get_ammo(0,0))
+	if(!spun && get_ammo(0, 0))
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
 	..()
 	spun = 0
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target, mob/living/user)
-	if(!spun && get_ammo(0,0))
+	if(!spun && get_ammo(0, 0))
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
 		return
@@ -214,14 +214,14 @@
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user)
 	var/num_unloaded = 0
-	if (get_ammo() > 0)
+	if(get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		chambered = null
 		CB.loc = get_turf(src.loc)
 		CB.update_icon()
 		num_unloaded++
-	if (num_unloaded)
+	if(num_unloaded)
 		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")

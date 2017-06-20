@@ -4,7 +4,7 @@
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 /obj/item/device/nuclear_challenge
-	name = "Declaration of War (Challenge Mode)"
+	name = "Declaration of War(Challenge Mode)"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "recaller"
 	item_state = "walkietalkie"

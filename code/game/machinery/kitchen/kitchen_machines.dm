@@ -10,16 +10,16 @@
 	flags = OPENCONTAINER | NOREACT
 	var/operating = 0 // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
-	var/broken = 0 // ={0,1,2} How broken is it???
+	var/broken = 0 // ={0, 1, 2} How broken is it???
 	var/efficiency = 0
 	var/list/cook_verbs = list("Cooking")
-	//Recipe & Item vars
-	var/recipe_type		//Make sure to set this on the machine definition, or else you're gonna runtime on New()
+	// Recipe & Item vars
+	var/recipe_type		// Make sure to set this on the machine definition, or else you're gonna runtime on New()
 	var/list/datum/recipe/available_recipes // List of the recipes you can use
 	var/list/acceptable_items // List of the items you can put in
 	var/list/acceptable_reagents // List of the reagents you can put in
 	var/max_n_of_items = 10
-	//Icon states
+	// Icon states
 	var/off_icon
 	var/on_icon
 	var/broken_icon
@@ -83,7 +83,7 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (do_after(user,20,target = src))
+			if(do_after(user, 20, target = src))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the [src].</span>", \
 					"<span class='notice'>You have fixed part of the [src].</span>" \
@@ -94,7 +94,7 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (do_after(user,20,target = src))
+			if(do_after(user, 20, target = src))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the [src].</span>", \
 					"<span class='notice'>You have fixed the [src].</span>" \
@@ -103,14 +103,14 @@
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
 				src.flags = OPENCONTAINER
-				return 0 //to use some fuel
+				return 0 // to use some fuel
 		else
 			to_chat(user, "<span class='danger'>It's broken!</span>")
 			return 1
 	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
-		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
-			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
+		if(clean_spray.reagents.has_reagent("cleaner", clean_spray.amount_per_transfer_from_this))
+			clean_spray.reagents.remove_reagent("cleaner", clean_spray.amount_per_transfer_from_this, 1)
 			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			user.visible_message( \
 				"<span class='notice'>[user] has cleaned [src].</span>", \
@@ -131,7 +131,7 @@
 			"<span class='notice'>[user] starts to clean [src].</span>", \
 			"<span class='notice'>You start to clean [src].</span>" \
 		)
-		if (do_after(user,20,target=src))
+		if(do_after(user, 20, target=src))
 			user.visible_message( \
 				"<span class='notice'>[user]  has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \
@@ -143,12 +143,12 @@
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		to_chat(user, "\red It's dirty!")
 		return 1
-	else if(is_type_in_list(O,acceptable_items))
-		if (contents.len>=max_n_of_items)
+	else if(is_type_in_list(O, acceptable_items))
+		if(contents.len>=max_n_of_items)
 			to_chat(user, "<span class='danger'>Tihs [src] is full of ingredients, you cannot put more.</span>")
 			return 1
-		if (istype(O,/obj/item/stack) && O:amount>1)
-			new O.type (src)
+		if(istype(O, /obj/item/stack) && O:amount>1)
+			new O.type(src)
 			O:use(1)
 			user.visible_message( \
 				"<span class='notice'>[user] has added one of [O] to \the [src].</span>", \
@@ -158,18 +158,18 @@
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
-	else if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
-	        istype(O,/obj/item/weapon/reagent_containers/food/drinks) || \
-	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) \
+	else if(istype(O, /obj/item/weapon/reagent_containers/glass) || \
+	        istype(O, /obj/item/weapon/reagent_containers/food/drinks) || \
+	        istype(O, /obj/item/weapon/reagent_containers/food/condiment) \
 		)
-		if (!O.reagents)
+		if(!O.reagents)
 			return 1
-		for (var/datum/reagent/R in O.reagents.reagent_list)
-			if (!(R.id in acceptable_reagents))
+		for(var/datum/reagent/R in O.reagents.reagent_list)
+			if(!(R.id in acceptable_reagents))
 				to_chat(user, "Your [O] contains components unsuitable for cookery")
 				return 1
-		//G.reagents.trans_to(src,G.amount_per_transfer_from_this)
-	else if(istype(O,/obj/item/weapon/grab))
+		// G.reagents.trans_to(src, G.amount_per_transfer_from_this)
+	else if(istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		to_chat(user, "<span class='danger'>You can not fit \the [G.affecting] in this [src].</span>")
 		return 1
@@ -206,44 +206,44 @@
 		var/list/items_counts = new
 		var/list/items_measures = new
 		var/list/items_measures_p = new
-		for (var/obj/O in contents)
+		for(var/obj/O in contents)
 			var/display_name = O.name
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg))
+			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/egg))
 				items_measures[display_name] = "egg"
 				items_measures_p[display_name] = "eggs"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/tofu))
+			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/tofu))
 				items_measures[display_name] = "tofu chunk"
 				items_measures_p[display_name] = "tofu chunks"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat)) //any meat
+			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/meat)) // any meat
 				items_measures[display_name] = "slab of meat"
 				items_measures_p[display_name] = "slabs of meat"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/donkpocket))
+			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/donkpocket))
 				display_name = "Turnovers"
 				items_measures[display_name] = "turnover"
 				items_measures_p[display_name] = "turnovers"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/carpmeat))
+			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/carpmeat))
 				items_measures[display_name] = "fillet of meat"
 				items_measures_p[display_name] = "fillets of meat"
 			items_counts[display_name]++
-		for (var/O in items_counts)
+		for(var/O in items_counts)
 			var/N = items_counts[O]
-			if (!(O in items_measures))
+			if(!(O in items_measures))
 				dat += "[capitalize(O)]: [N] [lowertext(O)]\s<BR>"
 			else
-				if (N==1)
+				if(N==1)
 					dat += "[capitalize(O)]: [N] [items_measures[O]]<BR>"
 				else
 					dat += "[capitalize(O)]: [N] [items_measures_p[O]]<BR>"
 
-		for (var/datum/reagent/R in reagents.reagent_list)
+		for(var/datum/reagent/R in reagents.reagent_list)
 			var/display_name = R.name
-			if (R.id == "capsaicin")
+			if(R.id == "capsaicin")
 				display_name = "Hotsauce"
-			if (R.id == "frostoil")
+			if(R.id == "frostoil")
 				display_name = "Coldsauce"
 			dat += "[display_name]: [R.volume] unit\s<BR>"
 
-		if (items_counts.len==0 && reagents.reagent_list.len==0)
+		if(items_counts.len==0 && reagents.reagent_list.len==0)
 			dat += "[src] is empty.</div>"
 		else
 			dat = "<h3>Ingredients:</h3>[dat]</div>"
@@ -264,20 +264,20 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	start()
-	if (reagents.total_volume==0 && !(locate(/obj) in contents)) //dry run
-		if (!cook_process(10))
+	if(reagents.total_volume==0 && !(locate(/obj) in contents)) // dry run
+		if(!cook_process(10))
 			abort()
 			return
 		stop()
 		return
 
-	var/datum/recipe/recipe = select_recipe(available_recipes,src)
+	var/datum/recipe/recipe = select_recipe(available_recipes, src)
 	var/obj/cooked
 	var/obj/byproduct
-	if (!recipe)
+	if(!recipe)
 		dirty += 1
-		if (prob(max(10,dirty*5)))
-			if (!cook_process(4))
+		if(prob(max(10, dirty*5)))
+			if(!cook_process(4))
 				abort()
 				return
 			muck_start()
@@ -286,8 +286,8 @@
 			cooked = fail()
 			cooked.loc = src.loc
 			return
-		else if (has_extra_item())
-			if (!cook_process(4))
+		else if(has_extra_item())
+			if(!cook_process(4))
 				abort()
 				return
 			broke()
@@ -295,7 +295,7 @@
 			cooked.loc = src.loc
 			return
 		else
-			if (!cook_process(10))
+			if(!cook_process(10))
 				abort()
 				return
 			stop()
@@ -304,10 +304,10 @@
 			return
 	else
 		var/halftime = round(recipe.time/10/2)
-		if (!cook_process(halftime))
+		if(!cook_process(halftime))
 			abort()
 			return
-		if (!cook_process(halftime))
+		if(!cook_process(halftime))
 			abort()
 			cooked = fail()
 			cooked.loc = src.loc
@@ -317,7 +317,7 @@
 		stop()
 		if(cooked)
 			cooked.loc = src.loc
-		for(var/i=1,i<efficiency,i++)
+		for(var/i=1, i<efficiency, i++)
 			cooked = new cooked.type(loc)
 		if(byproduct)
 			new byproduct(loc)
@@ -325,17 +325,17 @@
 		return
 
 /obj/machinery/kitchen_machine/proc/cook_process(seconds)
-	for (var/i=1 to seconds)
-		if (stat & (NOPOWER|BROKEN))
+	for(var/i=1 to seconds)
+		if(stat & (NOPOWER|BROKEN))
 			return 0
 		use_power(500)
 		sleep(10)
 	return 1
 
 /obj/machinery/kitchen_machine/proc/has_extra_item()
-	for (var/obj/O in contents)
-		if ( \
-				!istype(O,/obj/item/weapon/reagent_containers/food) && \
+	for(var/obj/O in contents)
+		if( \
+				!istype(O, /obj/item/weapon/reagent_containers/food) && \
 				!istype(O, /obj/item/weapon/grown) \
 			)
 			return 1
@@ -368,9 +368,9 @@
 	src.updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/dispose()
-	for (var/obj/O in contents)
+	for(var/obj/O in contents)
 		O.loc = src.loc
-	if (src.reagents.total_volume)
+	if(src.reagents.total_volume)
 		src.dirty++
 	src.reagents.clear_reagents()
 	to_chat(usr, "\blue You dispose of [src] contents.")
@@ -384,7 +384,7 @@
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	src.visible_message("\red [src] gets covered in muck!")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
-	src.flags = null //So you can't add condiments
+	src.flags = null // So you can't add condiments
 	src.icon_state = dirty_icon // Make it look dirty too
 	src.operating = 0 // Turn it off again aferwards
 	src.updateUsrDialog()
@@ -394,20 +394,20 @@
 	s.set_up(2, 1, src)
 	s.start()
 	src.icon_state = broken_icon // Make it look all busted up and shit
-	src.visible_message("\red [src] breaks!") //Let them know they're stupid
+	src.visible_message("\red [src] breaks!") // Let them know they're stupid
 	src.broken = 2 // Make it broken so it can't be used util fixed
-	src.flags = null //So you can't add condiments
+	src.flags = null // So you can't add condiments
 	src.operating = 0 // Turn it off again aferwards
 	src.updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/fail()
 	var/obj/item/weapon/reagent_containers/food/snacks/badrecipe/ffuu = new(src)
 	var/amount = 0
-	for (var/obj/O in contents-ffuu)
+	for(var/obj/O in contents-ffuu)
 		amount++
-		if (O.reagents)
+		if(O.reagents)
 			var/id = O.reagents.get_master_reagent_id()
-			if (id)
+			if(id)
 				amount+=O.reagents.get_reagent_amount(id)
 		qdel(O)
 	src.reagents.clear_reagents()
@@ -425,10 +425,10 @@
 		return
 
 	switch(href_list["action"])
-		if ("cook")
+		if("cook")
 			cook()
 
-		if ("dispose")
+		if("dispose")
 			dispose()
 	updateUsrDialog()
 

@@ -1,7 +1,7 @@
-/*///////////////Circuit Imprinter (By Darem)////////////////////////
-	Used to print new circuit boards (for computers and similar systems) and AI modules. Each circuit board pattern are stored in
+/*/////////////// Circuit Imprinter(By Darem)////////////////////////
+	Used to print new circuit boards(for computers and similar systems) and AI modules. Each circuit board pattern are stored in
 a /datum/desgin on the linked R&D console. You can then print them out in a fasion similar to a regular lathe. However, instead of
-using metal and glass, it uses glass and reagents (usually sulfuric acis).
+using metal and glass, it uses glass and reagents(usually sulfuric acis).
 
 */
 /obj/machinery/r_n_d/circuit_imprinter
@@ -42,7 +42,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	efficiency_coeff = 2 ** (T - 1)
 
 /obj/machinery/r_n_d/circuit_imprinter/blob_act()
-	if (prob(50))
+	if(prob(50))
 		qdel(src)
 
 /obj/machinery/r_n_d/circuit_imprinter/meteorhit()
@@ -52,21 +52,21 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)
 	switch(M)
 		if(MAT_GLASS)
-			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return(g_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		if(MAT_GOLD)
-			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return(gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		if(MAT_DIAMOND)
-			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return(diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		else
-			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
+			return(reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/TotalMaterials()
 	return g_amount + gold_amount + diamond_amount + uranium_amount
 
 /obj/machinery/r_n_d/circuit_imprinter/attackby(obj/item/O, mob/user)
-	if (shocked)
-		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "circuit_imprinter_t", "circuit_imprinter", O))
+	if(shocked)
+		shock(user, 50)
+	if(default_deconstruction_screwdriver(user, "circuit_imprinter_t", "circuit_imprinter", O))
 		if(linked_console)
 			linked_console.linked_imprinter = null
 			linked_console = null
@@ -75,7 +75,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if(exchange_parts(user, O))
 		return
 
-	if (panel_open)
+	if(panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 				reagents.trans_to(G, G.reagents.maximum_volume)
@@ -93,23 +93,23 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		else
 			to_chat(user, "\red You can't load the [src.name] while it's opened.")
 			return
-	if (disabled)
+	if(disabled)
 		return
-	if (!linked_console)
+	if(!linked_console)
 		to_chat(user, "\The [name] must be linked to an R&D console first!")
 		return 1
-	if (O.is_open_container())
+	if(O.is_open_container())
 		return
-	if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond))
+	if(!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond))
 		to_chat(user, "\red You cannot insert this item into the [name]!")
 		return
-	if (stat)
+	if(stat)
 		return
-	if (busy)
+	if(busy)
 		to_chat(user, "\red The [name] is busy. Please wait for completion of previous operation.")
 		return
 	var/obj/item/stack/sheet/stack = O
-	if ((TotalMaterials() + stack.perunit) > max_material_amount)
+	if((TotalMaterials() + stack.perunit) > max_material_amount)
 		to_chat(user, "\red The [name] is full. Please remove glass from the protolathe in order to insert more.")
 		return
 

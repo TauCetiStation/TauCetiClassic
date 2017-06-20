@@ -60,7 +60,7 @@ var/global/list/image/fluidtrack_cache=list()
 	*
 	* @param DNA bloodDNA to add to collection.
 	* @param comingdir Direction tracks come from, or 0.
-	* @param goingdir Direction tracks are going to (or 0).
+	* @param goingdir Direction tracks are going to(or 0).
 	* @param bloodcolor Color of the blood when wet.
 	*/
 	proc/AddTracks(list/DNA, comingdir, goingdir, bloodcolor="#A10808")
@@ -90,13 +90,13 @@ var/global/list/image/fluidtrack_cache=list()
 						continue
 					// Remove existing stack entry
 					stack.Remove(track)
-				track=new /datum/fluidtrack(b,bloodcolor,t)
+				track=new /datum/fluidtrack(b, bloodcolor, t)
 				stack.Add(track)
 				setdirs["[b]"]=stack.Find(track)
 				updatedtracks |= b
 				updated=1
 
-			// GOING BIT (shift up 4)
+			// GOING BIT(shift up 4)
 			b=b<<4
 			if(realgoing&b)
 				// If not wet or not set
@@ -107,7 +107,7 @@ var/global/list/image/fluidtrack_cache=list()
 						continue
 					// Remove existing stack entry
 					stack.Remove(track)
-				track=new /datum/fluidtrack(b,bloodcolor,t)
+				track=new /datum/fluidtrack(b, bloodcolor, t)
 				stack.Add(track)
 				setdirs["[b]"]=stack.Find(track)
 				updatedtracks |= b

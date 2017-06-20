@@ -12,7 +12,7 @@
 		message_admins("[key_name(src)] toggled debugging on.")
 		log_admin("[key_name(src)] toggled debugging on.")
 
-	feedback_add_details("admin_verb","DG2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", "DG2") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 
@@ -32,7 +32,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!check_rights(R_PERMISSIONS))
 		return
 
-	if(1) return	//TODO: config option
+	if(1) return	// TODO: config option
 
 	spawn(0)
 		var/target = null
@@ -42,17 +42,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/returnval = null
 		var/class = null
 
-		switch(alert("Proc owned by something?",,"Yes","No"))
+		switch(alert("Proc owned by something?",, "Yes", "No"))
 			if("Yes")
 				targetselected = 1
-				class = input("Proc owned by...","Owner",null) as null|anything in list("Obj","Mob","Area or Turf","Client")
+				class = input("Proc owned by...", "Owner", null) as null|anything in list("Obj", "Mob", "Area or Turf", "Client")
 				switch(class)
 					if("Obj")
-						target = input("Enter target:","Target",usr) as obj in world
+						target = input("Enter target:", "Target", usr) as obj in world
 					if("Mob")
-						target = input("Enter target:","Target",usr) as mob in world
+						target = input("Enter target:", "Target", usr) as mob in world
 					if("Area or Turf")
-						target = input("Enter target:","Target",usr.loc) as area|turf in world
+						target = input("Enter target:", "Target", usr.loc) as area|turf in world
 					if("Client")
 						var/list/keys = list()
 						for(var/client/C)
@@ -64,46 +64,46 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				target = null
 				targetselected = 0
 
-		var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
+		var/procname = input("Proc path, eg: /proc/fake_blood", "Path:", null) as text|null
 		if(!procname)	return
 
-		var/argnum = input("Number of arguments","Number:",0) as num|null
+		var/argnum = input("Number of arguments", "Number:", 0) as num|null
 		if(!argnum && (argnum!=0))	return
 
 		lst.len = argnum // Expand to right length
-		//TODO: make a list to store whether each argument was initialised as null.
-		//Reason: So we can abort the proccall if say, one of our arguments was a mob which no longer exists
-		//this will protect us from a fair few errors ~Carn
+		// TODO: make a list to store whether each argument was initialised as null.
+		// Reason: So we can abort the proccall if say, one of our arguments was a mob which no longer exists
+		// this will protect us from a fair few errors ~Carn
 
 		var/i
 		for(i=1, i<argnum+1, i++) // Lists indexed from 1 forwards in byond
 
 			// Make a list with each index containing one variable, to be given to the proc
-			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
+			class = input("What kind of variable?", "Variable Type") in list("text", "num", "type", "reference", "mob reference", "icon", "file", "client", "mob's area", "CANCEL")
 			switch(class)
 				if("CANCEL")
 					return
 
 				if("text")
-					lst[i] = input("Enter new text:","Text",null) as text
+					lst[i] = input("Enter new text:", "Text", null) as text
 
 				if("num")
-					lst[i] = input("Enter new number:","Num",0) as num
+					lst[i] = input("Enter new number:", "Num", 0) as num
 
 				if("type")
-					lst[i] = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
+					lst[i] = input("Enter type:", "Type") in typesof(/obj, /mob, /area, /turf)
 
 				if("reference")
-					lst[i] = input("Select reference:","Reference",src) as mob|obj|turf|area in world
+					lst[i] = input("Select reference:", "Reference", src) as mob|obj|turf|area in world
 
 				if("mob reference")
-					lst[i] = input("Select reference:","Reference",usr) as mob in world
+					lst[i] = input("Select reference:", "Reference", usr) as mob in world
 
 				if("file")
-					lst[i] = input("Pick file:","File") as file
+					lst[i] = input("Pick file:", "File") as file
 
 				if("icon")
-					lst[i] = input("Pick icon:","Icon") as icon
+					lst[i] = input("Pick icon:", "Icon") as icon
 
 				if("client")
 					var/list/keys = list()
@@ -119,18 +119,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(!target)
 				to_chat(usr, "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>")
 				return
-			if(!hascall(target,procname))
+			if(!hascall(target, procname))
 				to_chat(usr, "<font color='red'>Error: callproc(): target has no such call [procname].</font>")
 				return
 			log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-			returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
+			returnval = call(target, procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 		else
-			//this currently has no hascall protection. wasn't able to get it working.
+			// this currently has no hascall protection. wasn't able to get it working.
 			log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 
 		to_chat(usr, "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>")
-		feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb", "APC") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/Cell()
 	set category = "Debug"
@@ -139,7 +139,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	var/turf/T = mob.loc
 
-	if (!( istype(T, /turf) ))
+	if(!( istype(T, /turf) ))
 		return
 
 	var/datum/gas_mixture/env = T.return_air()
@@ -151,7 +151,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	t+= "CO2: [env.carbon_dioxide]\n"
 
 	usr.show_message(t, 1)
-	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", "ASL") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in mob_list)
 	set category = "Fun"
@@ -214,7 +214,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/datum/paiCandidate/candidate in paiController.pai_candidates)
 		if(candidate.key == choice.key)
 			paiController.pai_candidates.Remove(candidate)
-	feedback_add_details("admin_verb","MPAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", "MPAI") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_alienize(mob/M in mob_list)
 	set category = "Fun"
@@ -227,7 +227,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] has alienized [M.key].")
 		spawn(10)
 			M:Alienize()
-			feedback_add_details("admin_verb","MKAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			feedback_add_details("admin_verb", "MKAL") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
 		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into an alien.")
 	else
@@ -244,7 +244,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] has slimeized [M.key].")
 		spawn(10)
 			M:slimeize()
-			feedback_add_details("admin_verb","MKMET") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			feedback_add_details("admin_verb", "MKMET") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
 		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a slime.")
 	else
@@ -327,12 +327,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(M.mind in ticker.mode.cult)
 			return
 		else
-			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
+			if(alert("Spawn that person a tome?",, "Yes", "No")=="Yes")
 				to_chat(M, "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground.")
 				new /obj/item/weapon/book/tome(M.loc)
 			else
 				to_chat(M, "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.")
-			var/glimpse=pick("1","2","3","4","5","6","7","8")
+			var/glimpse=pick("1", "2", "3", "4", "5", "6", "7", "8")
 			switch(glimpse)
 				if("1")
 					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["travel"]] is travel...")
@@ -357,7 +357,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			to_chat(src, "Made [M] a cultist.")
 */
 
-//TODO: merge the vievars version into this or something maybe mayhaps
+// TODO: merge the vievars version into this or something maybe mayhaps
 /client/proc/cmd_debug_del_all()
 	set category = "Debug"
 	set name = "Del-All"
@@ -372,7 +372,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			CHECK_TICK
 		log_admin("[key_name(src)] has deleted all instances of [hsbitem].")
 		message_admins("[key_name_admin(src)] has deleted all instances of [hsbitem].")
-	feedback_add_details("admin_verb","DELA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", "DELA") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_debug_make_powernets()
 	set category = "Debug"
@@ -380,7 +380,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	SSmachine.makepowernets()
 	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.")
-	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", "MPWN") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_debug_tog_aliens()
 	set category = "Server"
@@ -389,7 +389,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	aliens_allowed = !aliens_allowed
 	log_admin("[key_name(src)] has turned aliens [aliens_allowed ? "on" : "off"].")
 	message_admins("[key_name_admin(src)] has turned aliens [aliens_allowed ? "on" : "off"].")
-	feedback_add_details("admin_verb","TAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", "TAL") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_debug_tog_vcounter()
 	set category = "Server"
@@ -398,7 +398,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	visual_counter = !visual_counter
 	log_admin("[key_name(src)] has turned visual counters [visual_counter ? "on" : "off"].")
 	message_admins("[key_name_admin(src)] has turned visual counters [visual_counter ? "on" : "off"].")
-	feedback_add_details("admin_verb","TVC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", "TVC") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_message_spam_control()
 	set category = "Server"
@@ -407,18 +407,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	global_message_cooldown = !global_message_cooldown
 	log_admin("[key_name(src)] has turned global message cooldown [global_message_cooldown ? "on" : "off"].")
 	message_admins("[key_name_admin(src)] has turned global message cooldown [global_message_cooldown ? "on" : "off"].")
-	feedback_add_details("admin_verb","TGMC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", "TGMC") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_grantfullaccess(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Grant Full Access"
 
-	if (!ticker)
+	if(!ticker)
 		alert("Wait until the game starts")
 		return
-	if (istype(M, /mob/living/carbon/human))
+	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		if (H.wear_id)
+		if(H.wear_id)
 			var/obj/item/weapon/card/id/id = H.wear_id
 			if(istype(H.wear_id, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = H.wear_id
@@ -431,12 +431,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 			id.registered_name = H.real_name
 			id.assignment = "Captain"
-			id.name = "[id.registered_name]'s ID Card ([id.assignment])"
+			id.name = "[id.registered_name]'s ID Card([id.assignment])"
 			H.equip_to_slot_or_del(id, slot_wear_id)
 			H.update_inv_wear_id()
 	else
 		alert("Invalid mob")
-	feedback_add_details("admin_verb","GFA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", "GFA") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins("\blue [key_name_admin(usr)] has granted [M.key] full access.")
 
@@ -447,10 +447,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	if(!check_rights(R_DEBUG|R_ADMIN))	return
 	if(M.ckey)
-		if(alert("This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",,"Yes","No") != "Yes")
+		if(alert("This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",, "Yes", "No") != "Yes")
 			return
 		else
-			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
+			var/mob/dead/observer/ghost = new/mob/dead/observer(M, 1)
 			ghost.ckey = M.ckey
 	message_admins("\blue [key_name_admin(usr)] assumed direct control of [M].")
 	log_admin("[key_name(usr)] assumed direct control of [M].")
@@ -458,7 +458,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	M.ckey = src.ckey
 	if( isobserver(adminmob) )
 		qdel(adminmob)
-	feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", "ADC") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 
@@ -472,7 +472,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	GLOBAL_RADIO_TYPE = !GLOBAL_RADIO_TYPE // toggle
 	log_admin("[key_name(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].")
 	message_admins("[key_name_admin(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].")
-	feedback_add_details("admin_verb","SRM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", "SRM") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_areatest()
 	set category = "Mapping"
@@ -568,7 +568,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!ishuman(M))
 		alert("Invalid mob")
 		return
-	//log_admin("[key_name(src)] has alienized [M.key].")
+	// log_admin("[key_name(src)] has alienized [M.key].")
 	var/list/dresspacks = list(
 		"strip",
 		"standard space gear",
@@ -635,17 +635,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"marisa wizard"
 		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
-	if (isnull(dresscode))
+	if(isnull(dresscode))
 		return
-	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for (var/obj/item/I in M)
-		if (istype(I, /obj/item/weapon/implant))
+	feedback_add_details("admin_verb", "SEQ") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	for(var/obj/item/I in M)
+		if(istype(I, /obj/item/weapon/implant))
 			continue
 		qdel(I)
 	switch(dresscode)
-		if ("strip")
-			//do nothing
-		if ("standard space gear")
+		if("strip")
+			// do nothing
+		if("standard space gear")
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), slot_w_uniform)
@@ -656,8 +656,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			J.toggle()
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), slot_wear_mask)
 			J.Topic(null, list("stat" = 1))
-		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
-			if (dresscode=="tournament standard red")
+		if("tournament standard red", "tournament standard green") // we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
+			if(dresscode=="tournament standard red")
 				M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), slot_w_uniform)
 			else
 				M.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(M), slot_w_uniform)
@@ -671,7 +671,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/smokebomb(M), slot_r_store)
 
 
-		if ("tournament gangster") //gangster are supposed to fight each other. --rastaf0
+		if("tournament gangster") // gangster are supposed to fight each other. --rastaf0
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/det(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
 
@@ -682,7 +682,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile(M), slot_r_hand)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/a357(M), slot_l_store)
 
-		if ("tournament chef") //Steven Seagal FTW
+		if("tournament chef") // Steven Seagal FTW
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
@@ -693,7 +693,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_s_store)
 
-		if ("tournament janitor")
+		if("tournament janitor")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
 			var/obj/item/weapon/storage/backpack/backpack = new(M)
@@ -716,14 +716,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/stack/tile/plasteel(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/stack/tile/plasteel(M), slot_in_backpack)
 
-		if ("pirate")
+		if("pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/bandana(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(M), slot_r_hand)
 
-		if ("space pirate")
+		if("space pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/pirate(M), slot_wear_suit)
@@ -732,12 +732,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(M), slot_r_hand)
 
-		if ("soviet soldier")
+		if("soviet soldier")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka(M), slot_head)
 
-		if("tunnel clown")//Tunnel clowns rule!
+		if("tunnel clown")// Tunnel clowns rule!
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
@@ -751,7 +751,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Tunnel Clown!"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = get_all_accesses()
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -775,8 +775,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(fire_axe, slot_r_hand)
 
 			for(var/obj/item/carried_item in M.contents)
-				if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant.
-					carried_item.add_blood(M)//Oh yes, there will be blood...
+				if(!istype(carried_item, /obj/item/weapon/implant))// If it's not an implant.
+					carried_item.add_blood(M)// Oh yes, there will be blood...
 
 		if("assassin")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(M), slot_w_uniform)
@@ -807,7 +807,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/syndicate/W = new(M)
 			W.assignment = "Reaper"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = get_all_accesses()
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -821,12 +821,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
 			var/obj/item/weapon/card/id/syndicate/W = new(M)
 			W.assignment = "Unknown"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = get_all_accesses()
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
-		if("death commando")//Was looking to add this for a while.
+		if("death commando")// Was looking to add this for a while.
 			M.equip_death_commando()
 
 		if("syndicate commando")
@@ -849,11 +849,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "NanoTrasen Navy Representative"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.icon_state = "centcom"
 			W.item_state = "id_inv"
 			W.access = get_all_accesses()
-			W.access += list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer")
+			W.access += list("VIP Guest", "Custodian", "Thunderdome Overseer", "Intel Officer", "Medical Officer", "Death Commando", "Research Officer")
 			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -876,7 +876,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "NanoTrasen Navy Officer"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.rank = "NanoTrasen Representative"
@@ -902,7 +902,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "NanoTrasen Navy Captain"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.rank = "NanoTrasen Representative"
@@ -920,7 +920,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/ert/W = new(M)
 			W.assignment = "Emergency Response Team"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
@@ -943,7 +943,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "Special Operations Officer"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
@@ -998,7 +998,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), slot_w_uniform)
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Admiral"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.registered_name = M.real_name
@@ -1018,7 +1018,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/gold/W = new(M)
 			W.assignment = "Captain"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = get_all_accesses()
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1042,7 +1042,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
 			W.assignment = "Head of Personnel"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
 			            access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
@@ -1067,7 +1067,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
 			W.assignment = "Head of Security"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_security, access_sec_doors, access_brig, access_armory, access_court,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
@@ -1095,7 +1095,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
 			W.assignment = "Chief Medical Officer"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_psychiatrist)
@@ -1115,7 +1115,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
 			W.assignment = "Research Director"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
 			            access_tox_storage, access_teleporter, access_sec_doors, access_minisat,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
@@ -1137,7 +1137,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
 			W.assignment = "Chief Engineer"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors, access_minisat,
@@ -1159,7 +1159,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Warden"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1178,7 +1178,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Security Officer"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1199,7 +1199,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Detective"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1217,7 +1217,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Medical Doctor"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_medical, access_morgue, access_surgery)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1235,7 +1235,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Chemist"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_medical, access_chemistry)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1254,7 +1254,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Virologist"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_medical, access_virology)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1272,7 +1272,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Psychiatrist"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_medical, access_psychiatrist)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1291,7 +1291,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Station Engineer"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1309,7 +1309,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Atmospheric Technician"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1327,7 +1327,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Scientist"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1345,7 +1345,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Xenobiologist"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_research, access_xenobiology)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1363,7 +1363,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Roboticist"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_robotics, access_tech_storage, access_morgue, access_research)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1381,7 +1381,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Geneticist"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_medical, access_morgue, access_genetics, access_research)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1398,7 +1398,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Janitor"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_janitor, access_maint_tunnels)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1417,7 +1417,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Chef"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_kitchen)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1435,7 +1435,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Bartender"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_bar)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1455,7 +1455,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Botanist"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_hydroponics, access_morgue)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1473,7 +1473,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Quartermaster"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1490,7 +1490,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Cargo Technician"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1507,7 +1507,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Shaft Miner"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1524,7 +1524,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Librarian"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_library)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1543,7 +1543,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
 			W.assignment = "Internal Affairs Agent"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_lawyer, access_court, access_sec_doors)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1567,7 +1567,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Assistant"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_library)
 			if(config.assistant_maint)
 				W.access += access_maint_tunnels
@@ -1586,7 +1586,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Test Subject"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_library)
 			if(config.assistant_maint)
 				W.access += access_maint_tunnels
@@ -1617,7 +1617,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Mime"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_library, access_clown, access_theatre)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1644,7 +1644,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.assignment = "Clown"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.name = "[M.real_name]'s ID Card([W.assignment])"
 			W.access = list(access_library, access_clown, access_theatre)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -1655,7 +1655,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				qdel(M.mind.initial_account)
 				M.mind.initial_account = null
 				create_random_account_and_store_in_mind(M)
-			//else do nothing
+			// else do nothing
 		else
 			create_random_account_and_store_in_mind(M)
 
@@ -1671,7 +1671,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Start Singularity"
 	set desc = "Sets up the singularity and all machines to get power flowing through the station."
 
-	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
+	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",, "Yes", "No") != "Yes")
 		return
 
 	for(var/obj/machinery/power/emitter/E in machines)
@@ -1694,11 +1694,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				S.pixel_x = -96
 				S.pixel_y = -96
 				S.grav_pull = 0
-				//S.consume_range = 3
+				// S.consume_range = 3
 				S.dissipate = 0
-				//S.dissipate_delay = 10
-				//S.dissipate_track = 0
-				//S.dissipate_strength = 10
+				// S.dissipate_delay = 10
+				// S.dissipate_track = 0
+				// S.dissipate_strength = 10
 
 	for(var/obj/machinery/power/rad_collector/Rad in machines)
 		if(Rad.anchored)
@@ -1723,7 +1723,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	if(!check_rights(R_DEBUG|R_ADMIN))      return
 
-	var/response = alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Setup Completely","Setup except coolant","No")
+	var/response = alert("Are you sure? This will start up the engine. Should only be used during debug!",, "Setup Completely", "Setup except coolant", "No")
 
 	if(response == "No")
 		return
@@ -1739,14 +1739,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(!M.loc.loc)
 			continue
 
-		if(istype(M,/obj/machinery/power/rad_collector))
+		if(istype(M, /obj/machinery/power/rad_collector))
 			var/obj/machinery/power/rad_collector/Rad = M
 			Rad.anchored = 1
 			Rad.connect_to_network()
 
 			var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)
 
-			Phoron.air_contents.phoron = 29.1154	//This is a full tank if you filled it from a canister
+			Phoron.air_contents.phoron = 29.1154	// This is a full tank if you filled it from a canister
 			Rad.P = Phoron
 
 			Phoron.loc = Rad
@@ -1755,23 +1755,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				Rad.toggle_power()
 			Rad.update_icon()
 
-		else if(istype(M,/obj/machinery/atmospherics/binary/pump))	//Turning on every pump.
+		else if(istype(M, /obj/machinery/atmospherics/binary/pump))	// Turning on every pump.
 			var/obj/machinery/atmospherics/binary/pump/Pump = M
 			if(Pump.name == "Engine Feed" && response == "Setup Completely")
 				found_the_pump = 1
-				Pump.air2.nitrogen = 3750	//The contents of 2 canisters.
+				Pump.air2.nitrogen = 3750	// The contents of 2 canisters.
 				Pump.air2.temperature = 50
 				Pump.air2.update_values()
 			Pump.on=1
 			Pump.target_pressure = 4500
 			Pump.update_icon()
 
-		else if(istype(M,/obj/machinery/power/supermatter))
+		else if(istype(M, /obj/machinery/power/supermatter))
 			SM = M
 			spawn(50)
 				SM.power = 320
 
-		else if(istype(M,/obj/machinery/power/smes))	//This is the SMES inside the engine room.  We don't need much power.
+		else if(istype(M, /obj/machinery/power/smes))	// This is the SMES inside the engine room.  We don't need much power.
 			var/obj/machinery/power/smes/SMES = M
 			SMES.chargemode = 1
 			SMES.chargelevel = 200000
@@ -1796,32 +1796,32 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know."
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients", "Joined Clients"))
+	switch(input("Which list?") in list("Players", "Admins", "Mobs", "Living Mobs", "Dead Mobs", "Clients", "Joined Clients"))
 		if("Players")
-			to_chat(usr, jointext(player_list,","))
+			to_chat(usr, jointext(player_list, ", "))
 		if("Admins")
-			to_chat(usr, jointext(admins,","))
+			to_chat(usr, jointext(admins, ", "))
 		if("Mobs")
-			to_chat(usr, jointext(mob_list,","))
+			to_chat(usr, jointext(mob_list, ", "))
 		if("Living Mobs")
-			to_chat(usr, jointext(living_mob_list,","))
+			to_chat(usr, jointext(living_mob_list, ", "))
 		if("Dead Mobs")
-			to_chat(usr, jointext(dead_mob_list,","))
+			to_chat(usr, jointext(dead_mob_list, ", "))
 		if("Clients")
-			to_chat(usr, jointext(clients,","))
+			to_chat(usr, jointext(clients, ", "))
 		if("Joined Clients")
-			to_chat(usr, jointext(joined_player_list,","))
+			to_chat(usr, jointext(joined_player_list, ", "))
 
 // DNA2 - Admin Hax
-/client/proc/cmd_admin_toggle_block(mob/M,block)
+/client/proc/cmd_admin_toggle_block(mob/M, block)
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon))
 		var/saved_key = M.key
 		M.dna.SetSEState(block,!M.dna.GetSEState(block))
-		//domutcheck(M,null,MUTCHK_FORCED)  //#Z2
-		genemutcheck(M,block,null,MUTCHK_FORCED) //#Z2
+		// domutcheck(M, null, MUTCHK_FORCED)  //#Z2
+		genemutcheck(M, block, null, MUTCHK_FORCED) //#Z2
 		if(istype(M, /mob/living/carbon))
 			M.update_mutations()
 			var/state="[M.dna.GetSEState(block)?"on":"off"]"

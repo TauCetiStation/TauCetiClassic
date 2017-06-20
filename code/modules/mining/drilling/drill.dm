@@ -1,9 +1,9 @@
 /obj/machinery/mining
 	icon = 'icons/obj/mining_drill.dmi'
 	anchored = 0
-	use_power = 0         //The drill takes power directly from a cell.
+	use_power = 0         // The drill takes power directly from a cell.
 	density = 1
-	layer = MOB_LAYER+0.1 //So it draws over mobs in the tile north of it.
+	layer = MOB_LAYER+0.1 // So it draws over mobs in the tile north of it.
 
 /obj/machinery/mining/drill
 	name = "mining drill head"
@@ -29,7 +29,7 @@
 		"carbonaceous rock" = /obj/item/weapon/ore/coal
 		)
 
-	//Upgrades
+	// Upgrades
 	var/damage_to_user
 	var/harvest_speed
 	var/capacity
@@ -37,11 +37,11 @@
 	var/radius
 	var/obj/item/weapon/stock_parts/cell/cell = null
 
-	//Flags
+	// Flags
 	var/need_update_field = 0
 	var/need_player_check = 0
 
-	//hacks
+	// hacks
 	var/datum/wires/mining_drill/wires = null
 
 	var/wires_shocked = 0
@@ -89,7 +89,7 @@
 	if(need_update_field)
 		get_resource_field()
 
-		//Drill through the flooring, if any.
+		// Drill through the flooring, if any.
 		if(istype(get_turf(src), /turf/simulated/floor/plating/airless/asteroid))
 			var/turf/simulated/floor/plating/airless/asteroid/T = get_turf(src)
 			if(!T.dug)
@@ -155,14 +155,14 @@
 
 
 /obj/machinery/mining/drill/proc/dig_ore()
-	//Dig out the tasty ores.
+	// Dig out the tasty ores.
 	if(!resource_field.len)
 		system_error("resources depleted")
 		return
 
 	var/turf/simulated/harvesting = pick(resource_field)
 
-	//remove emty trufs
+	// remove emty trufs
 	while(resource_field.len && !harvesting.resources)
 		harvesting.has_resources = 0
 		harvesting.resources = null
@@ -173,8 +173,8 @@
 		system_error("resources depleted")
 		return
 
-	var/total_harvest = harvest_speed //Ore harvest-per-tick.
-	var/found_resource = 0 //If this doesn't get set, the area is depleted and the drill errors out.
+	var/total_harvest = harvest_speed // Ore harvest-per-tick.
+	var/found_resource = 0 // If this doesn't get set, the area is depleted and the drill errors out.
 
 	for(var/metal in ore_types)
 
@@ -273,7 +273,7 @@
 
 	if(wires_overload && wires_protector_disable)
 		harvest_speed = min(harvest_speed + 2, 4)
-		radius = min (radius + 1, 4)
+		radius = min(radius + 1, 4)
 		charge_use = charge_use * 2
 
 	damage_to_user = damage_to_user * harvest_speed
@@ -319,7 +319,7 @@
 		return
 	if(wires_shocked)
 		shock(user)
-	if (panel_open && cell)
+	if(panel_open && cell)
 		to_chat(user, "You take out \the [cell].")
 		cell.loc = get_turf(user)
 		component_parts -= cell

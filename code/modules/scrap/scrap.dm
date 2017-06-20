@@ -6,7 +6,7 @@
 	density = 0
 	icon_state = "small"
 	icon = 'icons/obj/structures/scrap/base.dmi'
-	var/obj/item/weapon/storage/internal/updating/loot	//the visible loot
+	var/obj/item/weapon/storage/internal/updating/loot	// the visible loot
 	var/loot_min = 3
 	var/loot_max = 5
 	var/list/loot_list = list(
@@ -20,10 +20,10 @@
 	)
 	var/dig_amount = 7
 	var/parts_icon = 'icons/obj/structures/scrap/trash.dmi'
-	var/base_min = 5	//min and max number of random pieces of base icon
+	var/base_min = 5	// min and max number of random pieces of base icon
 	var/base_max = 8
-	var/base_spread = 12 //limits on pixel offsets of base pieces
-	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
+	var/base_spread = 12 // limits on pixel offsets of base pieces
+	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through", "picks through")
 	var/list/diggers = list()
 
 /obj/structure/scrap/proc/make_cube()
@@ -45,11 +45,11 @@
 
 /obj/structure/scrap/Destroy()
 	diggers.Cut()
-	for (var/obj/item in loot)
+	for(var/obj/item in loot)
 		qdel(item)
 	return ..()
 
-//stupid shard copypaste
+// stupid shard copypaste
 /obj/structure/scrap/Crossed(AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM
@@ -59,23 +59,23 @@
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_FOOT, BP_R_FOOT)]
 				if(BP.status & ORGAN_ROBOT)
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
 				H.Weaken(3)
 				BP.take_damage(5, 0)
-				H.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
+				H.reagents.add_reagent("toxin", pick(prob(50);0, prob(50);5, prob(10);10, prob(1);25))
 				H.updatehealth()
 	..()
 
 /obj/structure/scrap/proc/shuffle_loot()
 	loot.close_all()
 	for(var/A in loot)
-		loot.remove_from_storage(A,src)
+		loot.remove_from_storage(A, src)
 	if(contents.len)
 		contents = shuffle(contents)
-		var/num = rand(1,loot_min)
+		var/num = rand(1, loot_min)
 		for(var/obj/item/O in contents)
 			if(O == loot)
 				continue
@@ -86,25 +86,25 @@
 	update_icon()
 
 /obj/structure/scrap/proc/randomize_image(image/I)
-	I.pixel_x = rand(-base_spread,base_spread)
-	I.pixel_y = rand(-base_spread,base_spread)
+	I.pixel_x = rand(-base_spread, base_spread)
+	I.pixel_y = rand(-base_spread, base_spread)
 	var/matrix/M = matrix()
-	M.Turn(pick(0,90.180,270))
+	M.Turn(pick(0, 90.180, 270))
 	I.transform = M
 	return I
 
 /obj/structure/scrap/update_icon(rebuild_base=0)
 	if(rebuild_base)
 		overlays.Cut()
-		var/num = rand(base_min,base_max)
+		var/num = rand(base_min, base_max)
 		for(var/i=1 to num)
-			var/image/I = image(parts_icon,pick(icon_states(parts_icon)))
+			var/image/I = image(parts_icon, pick(icon_states(parts_icon)))
 			I.color = pick("#996633", "#663300", "#666666", "")
 			overlays |= randomize_image(I)
 
 	underlays.Cut()
 	for(var/obj/O in loot.contents)
-		var/image/I = image(O.icon,O.icon_state)
+		var/image/I = image(O.icon, O.icon_state)
 		I.color = O.color
 		underlays |= randomize_image(I)
 
@@ -117,14 +117,14 @@
 			return 0
 		if(victim.gloves)
 			return 0
-		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_HAND , BP_R_HAND)]
+		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_HAND, BP_R_HAND)]
 		if(!BP)
 			return 0
 		if(BP.status & ORGAN_ROBOT)
 			return 0
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
 		BP.take_damage(5, null, DAM_SHARP | DAM_EDGE, "Sharp debris")
-		victim.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
+		victim.reagents.add_reagent("toxin", pick(prob(50);0, prob(50);5, prob(10);10, prob(1);25))
 		return 1
 	return 0
 
@@ -152,7 +152,7 @@
 		return 1
 
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/shovel) && !(user in diggers))
+	if(istype(W, /obj/item/weapon/shovel) && !(user in diggers))
 		user.do_attack_animation(src)
 		diggers += user
 		if(do_after(user, 30, target = src))

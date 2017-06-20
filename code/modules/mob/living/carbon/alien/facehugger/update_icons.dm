@@ -5,7 +5,7 @@
 	update_icons()
 
 /mob/living/carbon/alien/facehugger/update_icons()
-	update_hud()		//TODO: remove the need for this to be here
+	update_hud()		// TODO: remove the need for this to be here
 	overlays.Cut()
 	if(stat == DEAD)
 		icon_state = "facehugger_dead"
@@ -15,10 +15,10 @@
 		icon_state = "facehugger"
 
 /mob/living/carbon/alien/facehugger/update_hud()
-	//TODO
-	if (client)
-//		if(other)	client.screen |= hud_used.other		//Not used
-//		else		client.screen -= hud_used.other		//Not used
+	// TODO
+	if(client)
+//		if(other)	client.screen |= hud_used.other		// Not used
+//		else		client.screen -= hud_used.other		// Not used
 		client.screen |= contents
 
 /*----------------------------------------
@@ -39,7 +39,7 @@ Des: Removes all infection images from aliens and places an infection image on a
 
 /*----------------------------------------
 Proc: AddInfectionImages(C)
-Des: Checks if the passed mob (C) is infected with the alien egg, then gives each alien client an infected image at C.
+Des: Checks if the passed mob(C) is infected with the alien egg, then gives each alien client an infected image at C.
 ----------------------------------------*/
 /obj/item/alien_embryo/proc/AddInfectionImages(mob/living/C)
 	if(C)
@@ -51,7 +51,7 @@ Des: Checks if the passed mob (C) is infected with the alien egg, then gives eac
 
 /*----------------------------------------
 Proc: RemoveInfectionImage(C)
-Des: Removes the alien infection image from all aliens in the world located in passed mob (C).
+Des: Removes the alien infection image from all aliens in the world located in passed mob(C).
 ----------------------------------------*/
 
 /obj/item/alien_embryo/proc/RemoveInfectionImages(mob/living/C)

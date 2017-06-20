@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Tooltip</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<style type="text/css">
 		body, html {
@@ -94,7 +94,7 @@
 				//alert(tooltip.params+' | '+tooltip.clientView+' | '+tooltip.text+' | '+tooltip.theme); //DEBUG
 
 				//Some reset stuff to avoid fringe issues with sizing
-				window.location = 'byond://winset?id='+tooltip.control+';anchor1=0,0;size=999x999';
+				window.location = 'byond://winset?id='+tooltip.control+';anchor1=0, 0;size=999x999';
 
 				//Get the real icon size according to the client view
 				var mapWidth 		= map['view-size'].x,
@@ -108,7 +108,7 @@
 
 				//alert(realIconSize + ' | ' +tooltip.tileSize + ' | ' + resizeRatio); //DEBUG
 
-				//Parse out the tile and cursor locations from params (e.g. "icon-x=32;icon-y=29;screen-loc=3:10,15:29")
+				//Parse out the tile and cursor locations from params (e.g. "icon-x=32;icon-y=29;screen-loc=3:10, 15:29")
 				var paramsA = tooltip.params.cursor.split(';');
 				if (paramsA.length < 3) {return false;} //Sometimes screen-loc is never sent ahaha fuck you byond
 				//icon-x
@@ -134,7 +134,7 @@
 				top = parseInt(screenLoc[0]);
 				var enteredY = parseInt(screenLoc[1]);
 
-				//Screen loc offsets on objects (e.g. "WEST+0:6,NORTH-1:26") can royally mess with positioning depending on where the cursor enters
+				//Screen loc offsets on objects (e.g. "WEST+0:6, NORTH-1:26") can royally mess with positioning depending on where the cursor enters
 				//This is a giant bitch to parse. Note that it only expects screen_loc in the format <west>,<north>.
 				var oScreenLoc = tooltip.params.screenLoc.split(','); //o for original ok
 
@@ -217,7 +217,7 @@
 				tooltip.special = special;
 
 				//Go get the map details
-				window.location = 'byond://winget?callback=tooltip.updateCallback;id=mapwindow.map;property=size,view-size';
+				window.location = 'byond://winget?callback=tooltip.updateCallback;id=mapwindow.map;property=size, view-size';
 			},
 		};
 	</script>

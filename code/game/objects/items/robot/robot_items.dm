@@ -1,9 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /**********************************************************************
 						Cyborg Spec Items
 ***********************************************************************/
-//Might want to move this into several files later but for now it works here
+// Might want to move this into several files later but for now it works here
 /obj/item/borg/stun
 	name = "electrified arm"
 	icon = 'icons/obj/decals.dmi'
@@ -17,12 +17,12 @@
 		user.cell.charge -= 30
 
 		M.Weaken(5)
-		if (M.stuttering < 5)
+		if(M.stuttering < 5)
 			M.stuttering = 5
 		M.Stun(5)
 
 		for(var/mob/O in viewers(M, null))
-			if (O.client)
+			if(O.client)
 				O.show_message("\red <B>[user] has prodded [M] with an electrically-charged arm!</B>", 1, "\red You hear someone fall", 2)
 
 /obj/item/borg/overdrive

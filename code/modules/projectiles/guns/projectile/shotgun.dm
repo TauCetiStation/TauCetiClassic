@@ -46,19 +46,19 @@
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	pumped = 0
-	if(chambered)//We have a shell in the chamber
-		chambered.loc = get_turf(src)//Eject casing
+	if(chambered)// We have a shell in the chamber
+		chambered.loc = get_turf(src)// Eject casing
 		chambered.SpinAnimation(5, 1)
 		chambered = null
 	if(!magazine.ammo_count())	return 0
-	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
+	var/obj/item/ammo_casing/AC = magazine.get_round() // load next casing.
 	chambered = AC
-	update_icon()	//I.E. fix the desc
+	update_icon()	// I.E. fix the desc
 	return 1
 
 /obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
-	if (chambered)
+	if(chambered)
 		to_chat(user, "A [chambered.BB ? "live" : "spent"] one is in the chamber.")
 
 /obj/item/weapon/gun/projectile/shotgun/combat
@@ -94,7 +94,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/A, mob/user)
 	..()
-	if (istype(A,/obj/item/ammo_box) || istype(A,/obj/item/ammo_casing))
+	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		if(open)
 			chamber_round()
 		else
@@ -103,17 +103,17 @@
 		if(short) return
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(get_ammo())
-			afterattack(user, user)	//will this work?
-			afterattack(user, user)	//it will. we call it twice, for twice the FUN
+			afterattack(user, user)	// will this work?
+			afterattack(user, user)	// it will. we call it twice, for twice the FUN
 			playsound(user, fire_sound, 50, 1)
 			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
 			return
-		if(do_after(user, 30, target = src))	//SHIT IS STEALTHY EYYYYY
+		if(do_after(user, 30, target = src))	// SHIT IS STEALTHY EYYYYY
 			icon_state = "sawnshotgun[open ? "-o" : ""]"
 			w_class = 3.0
 			item_state = "gun"
-			slot_flags &= ~SLOT_BACK	//you can't sling it on your back
-			slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+			slot_flags &= ~SLOT_BACK	// you can't sling it on your back
+			slot_flags |= SLOT_BELT		// but you can wear it on your belt(poorly concealed under a trenchcoat, ideally)
 			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
 			name = "sawn-off shotgun"
 			desc = "Omar's coming!"
@@ -123,9 +123,9 @@
 	add_fingerprint(user)
 	open = !open
 	if(open)
-		//playsound(src.loc, 'sound/weapons/heavybolt_out.ogg', 50, 1)
+		// playsound(src.loc, 'sound/weapons/heavybolt_out.ogg', 50, 1)
 		var/num_unloaded = 0
-		while (get_ammo() > 0)
+		while(get_ammo() > 0)
 			spawn(3)
 				playsound(src.loc, 'sound/weapons/shell_drop.ogg', 50, 1)
 			var/obj/item/ammo_casing/CB
@@ -134,24 +134,24 @@
 			CB.loc = get_turf(src.loc)
 			CB.update_icon()
 			num_unloaded++
-		if (num_unloaded)
+		if(num_unloaded)
 			to_chat(user, "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>")
-			//chambered.loc = get_turf(src)//Eject casing
-			//chambered.SpinAnimation(5, 1)
-			//chambered = null
+			// chambered.loc = get_turf(src)// Eject casing
+			// chambered.SpinAnimation(5, 1)
+			// chambered = null
 		else
 			to_chat(user, "<span class = 'notice'>You break open \the [src].</span>")
 
 	update_icon()
 //	var/num_unloaded = 0
-//	while (get_ammo() > 0)
+//	while(get_ammo() > 0)
 //		var/obj/item/ammo_casing/CB
 //		CB = magazine.get_round(0)
 //		chambered = null
 //		CB.loc = get_turf(src.loc)
 //		CB.update_icon()
 //		num_unloaded++
-//	if (num_unloaded)
+//	if(num_unloaded)
 //		user << "<span class = 'notice'>You unload [num_unloaded] shell\s.</span>"
 //	else
 //		user << "<span class='notice'>[src] is empty.</span>"
@@ -205,8 +205,8 @@
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)
 	playsound(M, 'sound/weapons/bolt_reload.ogg', 60, 0)
 	pumped = 0
-	if(chambered)//We have a shell in the chamber
-		chambered.loc = get_turf(src)//Eject casing
+	if(chambered)// We have a shell in the chamber
+		chambered.loc = get_turf(src)// Eject casing
 		chambered = null
 	if(magazine && !magazine.ammo_count())
 		magazine.loc = get_turf(src.loc)
@@ -214,15 +214,15 @@
 		magazine = null
 		return 0
 	if(magazine && magazine.ammo_count())
-		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
+		var/obj/item/ammo_casing/AC = magazine.get_round() // load next casing.
 		chambered = AC
-		update_icon()	//I.E. fix the desc
+		update_icon()	// I.E. fix the desc
 		return 1
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
+	if(istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
+		if(!magazine && istype(AM, mag_type))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
@@ -231,7 +231,7 @@
 			A.update_icon()
 			update_icon()
 			return 1
-		else if (magazine)
+		else if(magazine)
 			to_chat(user, "<span class='notice'>There's already a clip in \the [src].</span>")
 	return 0
 

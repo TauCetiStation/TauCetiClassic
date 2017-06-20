@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 // Recruiting observers to play as pAIs
 
@@ -24,7 +24,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			var/obj/item/device/paicard/card = locate(href_list["device"])
 			if(card.pai)
 				return
-			if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
+			if(istype(card, /obj/item/device/paicard) && istype(candidate, /datum/paiCandidate))
 				var/mob/living/silicon/pai/pai = new(card)
 				if(!candidate.name)
 					pai.name = pick(ninja_names)
@@ -51,33 +51,33 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				if("name")
 					t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
 					if(t)
-						candidate.name = sanitize(copytext(t,1,MAX_NAME_LEN))
+						candidate.name = sanitize(copytext(t, 1, MAX_NAME_LEN))
 				if("desc")
 					t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
 					if(t)
-						candidate.description = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
+						candidate.description = sanitize(copytext(t, 1, MAX_MESSAGE_LEN))
 				if("role")
 					t = input("Enter a role for your pAI", "pAI Role", candidate.role) as text
 					if(t)
-						candidate.role = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
+						candidate.role = sanitize(copytext(t, 1, MAX_MESSAGE_LEN))
 				if("ooc")
 					t = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
 					if(t)
-						candidate.comments = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
+						candidate.comments = sanitize(copytext(t, 1, MAX_MESSAGE_LEN))
 				if("save")
 					candidate.savefile_save(usr)
 				if("load")
 					candidate.savefile_load(usr)
-					//In case people have saved unsanitized stuff.
+					// In case people have saved unsanitized stuff.
 					// TODO:CYRILLIC
 					if(candidate.name)
-						candidate.name = sanitize(copytext(candidate.name,1,MAX_NAME_LEN))
+						candidate.name = sanitize(copytext(candidate.name, 1, MAX_NAME_LEN))
 					if(candidate.description)
-						candidate.description = sanitize(copytext(candidate.description,1,MAX_MESSAGE_LEN))
+						candidate.description = sanitize(copytext(candidate.description, 1, MAX_MESSAGE_LEN))
 					if(candidate.role)
-						candidate.role = sanitize(copytext(candidate.role,1,MAX_MESSAGE_LEN))
+						candidate.role = sanitize(copytext(candidate.role, 1, MAX_MESSAGE_LEN))
 					if(candidate.comments)
-						candidate.comments = sanitize(copytext(candidate.comments,1,MAX_MESSAGE_LEN))
+						candidate.comments = sanitize(copytext(candidate.comments, 1, MAX_MESSAGE_LEN))
 
 				if("submit")
 					if(candidate)
@@ -232,7 +232,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		var/dat = ""
 
 		dat += {"
-			<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+			<!DOCTYPE HTML PUBLIC \"-// W3C// DTD HTML 4.01 Transitional// EN\" \"http:// www.w3.org/TR/html4/loose.dtd\">
 			<html>
 				<head>
 					<style>
@@ -361,10 +361,10 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			asked.Add(C.key)
 			asked[C.key] = world.time
 			var/response = alert(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "No", "Yes", "Never for this round")
-			if(!C)	return		//handle logouts that happen whilst the alert is waiting for a response.
+			if(!C)	return		// handle logouts that happen whilst the alert is waiting for a response.
 			if(response == "Yes")
 				recruitWindow(C.mob)
-			else if (response == "Never for this round")
+			else if(response == "Never for this round")
 				var/warning = alert(C, "Are you sure? This action will be undoable and you will need to wait until next round.", "You sure?", "Yes", "No")
 				if(warning == "Yes")
 					asked[C.key] = INFINITY

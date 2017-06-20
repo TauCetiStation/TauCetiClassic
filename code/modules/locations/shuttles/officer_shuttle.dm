@@ -18,7 +18,7 @@
 
 /obj/machinery/computer/officer_shuttle/New()
 	curr_location= locate(/area/shuttle/officer/velocity)
-	radio = new (src)
+	radio = new(src)
 
 /obj/machinery/computer/officer_shuttle/proc/officer_move_to(area/destination)
 	if(moving)	return

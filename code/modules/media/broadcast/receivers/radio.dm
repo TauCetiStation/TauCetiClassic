@@ -40,7 +40,7 @@
 		playing=0
 		disconnect_frequency()
 
-/obj/machinery/media/receiver/boombox/Topic(href,href_list)
+/obj/machinery/media/receiver/boombox/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -52,11 +52,11 @@
 		if(href_list["set_freq"]!="-1")
 			newfreq = text2num(href_list["set_freq"])
 		else
-			newfreq = input(usr, "Set a new frequency (MHz, 90.0, 200.0).", src, media_frequency) as null|num
+			newfreq = input(usr, "Set a new frequency(MHz, 90.0, 200.0).", src, media_frequency) as null|num
 		if(newfreq)
 			if(findtext(num2text(newfreq), "."))
 				newfreq *= 10 // shift the decimal one place
-			if(newfreq > 900 && newfreq < 2000) // Between (90.0 and 100.0)
+			if(newfreq > 900 && newfreq < 2000) // Between(90.0 and 100.0)
 				disconnect_frequency()
 				media_frequency = newfreq
 				connect_frequency()

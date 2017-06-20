@@ -23,7 +23,7 @@
 		var/obj/mecha/Mech = O
 		if(Mech.occupant)
 			turretTargets |= Mech
-	else if(istype(O,/mob/living/simple_animal))
+	else if(istype(O, /mob/living/simple_animal))
 		turretTargets |= O
 	else if(isrobot(O))
 		turretTargets |= O
@@ -57,7 +57,7 @@
 		// 1 = lasers
 		// 2 = cannons
 		// 3 = pulse
-		// 4 = change (HONK)
+		// 4 = change(HONK)
 		// 5 = bluetag
 		// 6 = redtag
 	var/health = 120
@@ -66,7 +66,7 @@
 	var/wasvalid = 0
 	var/lastfired = 0
 	var/shot_delay = 30 //3 seconds between shots
-	var/silic_targets = 0 //shooting robots
+	var/silic_targets = 0 // shooting robots
 	var/datum/effect/effect/system/spark_spread/spark_system
 	use_power = 1
 	idle_power_usage = 50
@@ -106,7 +106,7 @@
 
 
 /obj/machinery/turret/proc/isPopping()
-	return (popping != 0)
+	return(popping != 0)
 
 
 /obj/machinery/turret/power_change()
@@ -114,8 +114,8 @@
 		icon_state = "grey_target_prism"
 	else
 		if(powered())
-			if (src.enabled)
-				if (src.lasers)
+			if(src.enabled)
+				if(src.lasers)
 					icon_state = "orange_target_prism"
 				else
 					icon_state = "target_prism"
@@ -149,7 +149,7 @@
 		var/area/area_T = get_area(T)
 		if(!area_T || (area_T.type != protected_area.type))
 			protected_area.Exited(T)
-			return 0 //If the guy is somehow not in the turret's area (teleportation), get them out the damn list. --NEO
+			return 0 // If the guy is somehow not in the turret's area(teleportation), get them out the damn list. --NEO
 		if(iscarbon(T))
 			var/mob/living/carbon/MC = T
 			if(!MC.stat)
@@ -159,7 +159,7 @@
 			var/obj/mecha/ME = T
 			if(ME.occupant)
 				return 1
-		else if(istype(T,/mob/living/simple_animal))
+		else if(istype(T, /mob/living/simple_animal))
 			var/mob/living/simple_animal/A = T
 			if(!A.stat)
 				if(lasers)
@@ -203,16 +203,16 @@
 		if(!isDown() && !isPopping())
 			popDown()
 		return
-	if(!check_target(cur_target)) //if current target fails target check
-		cur_target = get_new_target() //get new target
+	if(!check_target(cur_target)) // if current target fails target check
+		cur_target = get_new_target() // get new target
 
-	if(cur_target) //if it's found, proceed
+	if(cur_target) // if it's found, proceed
 //		world << "[cur_target]"
 		if(!isPopping())
 			if(isDown())
 				popUp()
 				use_power = 2
-			//else
+			// else
 				spawn()
 					if(!targeting_active)
 						targeting_active = 1
@@ -224,7 +224,7 @@
 				playsound(src.loc, 'sound/effects/turret/move1.wav', 60, 1)
 			else
 				playsound(src.loc, 'sound/effects/turret/move2.wav', 60, 1)
-	else if(!isPopping())//else, pop down
+	else if(!isPopping())// else, pop down
 		if(!isDown())
 			popDown()
 			use_power = 1
@@ -273,7 +273,7 @@
 
 
 /obj/machinery/turret/proc/isDown()
-	return (invisibility != 0)
+	return(invisibility != 0)
 
 /obj/machinery/turret/proc/popUp()
 	if(!isPopping() || (src.popping == -1))
@@ -309,7 +309,7 @@
 		src.die()
 	return
 
-/obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
+/obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)// I can't believe no one added this before/N
 	..()
 	playsound(src.loc, 'sound/weapons/smash.ogg', 60, 1)
 	src.spark_system.start()
@@ -335,7 +335,7 @@
 	src.density = 0
 	src.stat |= BROKEN
 	src.icon_state = "destroyed_target_prism"
-	if (cover!=null)
+	if(cover!=null)
 		qdel(cover)
 	sleep(3)
 	flick("explosion", src)
@@ -352,8 +352,8 @@
 	var/lethal = 0
 	var/locked = 1
 	var/silicon = 0
-	var/special_control = 0 //turrets can shoot robots only at AI Sattelite
-	var/control_area //can be area name, path or nothing.
+	var/special_control = 0 // turrets can shoot robots only at AI Sattelite
+	var/control_area // can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
 
@@ -370,7 +370,7 @@
 			if(A.name && A.name==control_area)
 				control_area = A
 				break
-	//don't have to check if control_area is path, since get_area_all_atoms can take path.
+	// don't have to check if control_area is path, since get_area_all_atoms can take path.
 	return
 
 /obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
@@ -379,7 +379,7 @@
 	if(istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
 
-	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
+	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		to_chat(user, "\red You short out the turret controls' access analysis module.")
 		emagged = 1
 		locked = 0
@@ -448,7 +448,7 @@
 	if(!(stat & BROKEN))
 		visible_message("\red <B>[M] [M.attacktext] [src]!</B>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
-		//src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
+		// src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		src.health -= M.melee_damage_upper
 		if(src.health <= 0)
 			src.die()
@@ -477,11 +477,11 @@
 	if(!.)
 		return
 
-	if (src.locked && !src.issilicon_allowed(usr))
+	if(src.locked && !src.issilicon_allowed(usr))
 		to_chat(usr, "Control panel is locked!")
 		return
-	if ((get_dist(src, usr) == 0) || isAI(usr))
-		if (href_list["toggleOn"])
+	if((get_dist(src, usr) == 0) || isAI(usr))
+		if(href_list["toggleOn"])
 			src.enabled = !src.enabled
 			src.updateTurrets()
 		else if(href_list["toggleLethal"])
@@ -521,7 +521,7 @@
 	var/atom/cur_target
 	var/scan_range = 7
 	var/health = 40
-	var/list/scan_for = list("human"=0,"cyborg"=0,"mecha"=0,"alien"=1)
+	var/list/scan_for = list("human"=0, "cyborg"=0, "mecha"=0, "alien"=1)
 	var/on = 0
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "gun_turret"
@@ -593,7 +593,7 @@
 					if(src)
 						src.process()
 		if(href_list["scan_range"])
-			src.scan_range = between(1,src.scan_range+text2num(href_list["scan_range"]),8)
+			src.scan_range = between(1, src.scan_range+text2num(href_list["scan_range"]), 8)
 		if(href_list["scan_for"])
 			if(href_list["scan_for"] in scan_for)
 				scan_for[href_list["scan_for"]] = !scan_for[href_list["scan_for"]]
@@ -606,7 +606,7 @@
 			return 0
 		if(istype(target, /mob))
 			var/mob/M = target
-			if(!M.stat && !M.lying)//ninjas can't catch you if you're lying
+			if(!M.stat && !M.lying)// ninjas can't catch you if you're lying
 				return 1
 		else if(istype(target, /obj/mecha))
 			return 1
@@ -630,12 +630,12 @@
 		var/list/pos_targets = list()
 		var/target = null
 		if(scan_for["human"])
-			for(var/mob/living/carbon/human/M in oview(scan_range,src))
+			for(var/mob/living/carbon/human/M in oview(scan_range, src))
 				if(M.stat || M.lying || M in exclude)
 					continue
 				pos_targets += M
 		if(scan_for["cyborg"])
-			for(var/mob/living/silicon/M in oview(scan_range,src))
+			for(var/mob/living/silicon/M in oview(scan_range, src))
 				if(M.stat || M.lying || M in exclude)
 					continue
 				pos_targets += M
@@ -645,7 +645,7 @@
 					continue
 				pos_targets += M
 		if(scan_for["alien"])
-			for(var/mob/living/carbon/alien/M in oview(scan_range,src))
+			for(var/mob/living/carbon/alien/M in oview(scan_range, src))
 				if(M.stat || M.lying || M in exclude)
 					continue
 				pos_targets += M
@@ -658,7 +658,7 @@
 		if(!target)
 			cur_target = null
 			return
-		src.dir = get_dir(src,target)
+		src.dir = get_dir(src, target)
 		var/turf/targloc = get_turf(target)
 		var/target_x = targloc.x
 		var/target_y = targloc.y
@@ -667,10 +667,10 @@
 		spawn	for(var/i=1 to min(projectiles, projectiles_per_shot))
 			if(!src) break
 			var/turf/curloc = get_turf(src)
-			targloc = locate(target_x+GaussRandRound(deviation,1),target_y+GaussRandRound(deviation,1),target_z)
-			if (!targloc || !curloc)
+			targloc = locate(target_x+GaussRandRound(deviation, 1), target_y+GaussRandRound(deviation, 1), target_z)
+			if(!targloc || !curloc)
 				continue
-			if (targloc == curloc)
+			if(targloc == curloc)
 				continue
 			playsound(src, 'sound/weapons/Gunshot.ogg', 50, 1)
 			var/obj/item/projectile/A = new /obj/item/projectile(curloc)

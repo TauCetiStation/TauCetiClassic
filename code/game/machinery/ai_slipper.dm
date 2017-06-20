@@ -31,18 +31,18 @@
 /obj/machinery/ai_slipper/attackby(obj/item/weapon/W, mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (istype(user, /mob/living/silicon))
+	if(istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
 	else // trying to unlock the interface
-		if (src.allowed(usr))
+		if(src.allowed(usr))
 			locked = !locked
 			to_chat(user, "You [ locked ? "lock" : "unlock"] the device.")
-			if (locked)
-				if (user.machine==src)
+			if(locked)
+				if(user.machine==src)
 					user.unset_machine()
 					user << browse(null, "window=ai_slipper")
 			else
-				if (user.machine==src)
+				if(user.machine==src)
 					src.attack_hand(usr)
 		else
 			to_chat(user, "\red Access denied.")
@@ -55,8 +55,8 @@
 /obj/machinery/ai_slipper/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
+	if( (get_dist(src, user) > 1 ))
+		if(!istype(user, /mob/living/silicon))
 			to_chat(user, text("Too far away."))
 			user.unset_machine()
 			user << browse(null, "window=ai_slipper")
@@ -64,9 +64,9 @@
 
 	user.set_machine(src)
 	var/loc = src.loc
-	if (istype(loc, /turf))
+	if(istype(loc, /turf))
 		loc = loc:loc
-	if (!istype(loc, /area))
+	if(!istype(loc, /area))
 		to_chat(user, text("Turret badly positioned - loc.loc is [].", loc))
 		return
 	var/area/area = loc
@@ -86,13 +86,13 @@
 	. = ..()
 	if(!.)
 		return
-	if (src.locked && !issilicon_allowed(usr))
+	if(src.locked && !issilicon_allowed(usr))
 		to_chat(usr, "Control panel is locked!")
 		return FALSE
-	if (href_list["toggleOn"])
+	if(href_list["toggleOn"])
 		src.disabled = !src.disabled
 		icon_state = src.disabled? "motion0":"motion3"
-	else if (href_list["toggleUse"])
+	else if(href_list["toggleUse"])
 		if(cooldown_on || disabled)
 			return FALSE
 		else
@@ -113,9 +113,9 @@
 
 		cooldown_timeleft = (ticksleft / 10)
 		sleep(5)
-	if (uses <= 0)
+	if(uses <= 0)
 		return
-	if (uses >= 0)
+	if(uses >= 0)
 		cooldown_on = 0
 	src.power_change()
 	return

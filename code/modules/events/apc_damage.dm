@@ -4,9 +4,9 @@
 /datum/event/apc_damage/start()
 	var/obj/machinery/power/apc/A = acquire_random_apc()
 
-	var/severity_range = rand(0,15)
+	var/severity_range = rand(0, 15)
 
-	for(var/obj/machinery/power/apc/apc in range(severity_range,A))
+	for(var/obj/machinery/power/apc/apc in range(severity_range, A))
 		if(is_valid_apc(apc))
 			apc.emagged = 1
 			apc.update_icon()
@@ -23,12 +23,12 @@
 		return
 
 	var/epicentre = pick(possibleEpicentres)
-	for(var/obj/machinery/power/apc/apc in range(epicentre,apcSelectionRange))
+	for(var/obj/machinery/power/apc/apc in range(epicentre, apcSelectionRange))
 		if(is_valid_apc(apc))
 			apcs += apc
 			// Greatly increase the chance for APCs in maintenance areas to be selected
 			var/area/A = get_area(apc)
-			if(istype(A,/area/maintenance))
+			if(istype(A, /area/maintenance))
 				apcs += apc
 				apcs += apc
 
@@ -39,7 +39,7 @@
 
 /datum/event/apc_damage/proc/is_valid_apc(obj/machinery/power/apc/apc)
 	// Type must be exactly a basic APC.
-	// This generally prevents affecting APCs in critical areas (AI core, engine room, etc.) as they often use higher capacity subtypes.
+	// This generally prevents affecting APCs in critical areas(AI core, engine room, etc.) as they often use higher capacity subtypes.
 	if(apc.type != /obj/machinery/power/apc)
 		return 0
 

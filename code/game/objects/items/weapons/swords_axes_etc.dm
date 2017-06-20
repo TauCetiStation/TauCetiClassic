@@ -24,16 +24,16 @@
 	return 0
 
 /obj/item/weapon/melee/energy/sword/New()
-	item_color = pick("red","blue","green","purple","yellow","pink","black")
+	item_color = pick("red", "blue", "green", "purple", "yellow", "pink", "black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red You accidentally cut yourself with [src].")
 		user.take_bodypart_damage(5, 5)
 	active = !active
-	if (active)
+	if(active)
 		force = 30
-		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
+		if(istype(src, /obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
 			icon_state = "sword[item_color]"
@@ -43,7 +43,7 @@
 
 	else
 		force = 3
-		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
+		if(istype(src, /obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
 		else
 			icon_state = "sword0"
@@ -51,7 +51,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		to_chat(user, "\blue [src] can now be concealed.")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
@@ -73,7 +73,7 @@
 	force = 10
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red You club yourself over the head.")
 		user.Weaken(3 * force)
 		if(ishuman(user))
@@ -89,15 +89,15 @@
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 */
-	if (user.a_intent == "hurt")
+	if(user.a_intent == "hurt")
 		if(!..()) return
 		playsound(src.loc, "swing_hit", 50, 1, -1)
-		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+		if(M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stuttering = 8
 		M.Stun(8)
 		M.Weaken(8)
 		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("\red <B>[M] has been beaten with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
+			if(O.client)	O.show_message("\red <B>[M] has been beaten with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
 	else
 		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
 		M.Stun(5)
@@ -108,9 +108,9 @@
 		src.add_fingerprint(user)
 
 		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("\red <B>[M] has been stunned with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
+			if(O.client)	O.show_message("\red <B>[M] has been stunned with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
 
-//Telescopic baton
+// Telescopic baton
 /obj/item/weapon/melee/telebaton
 	name = "telescopic baton"
 	desc = "A compact yet rebalanced personal defense weapon. Can be concealed when folded."
@@ -132,7 +132,7 @@
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
 		w_class = 3
-		force = 15//quite robust
+		force = 15// quite robust
 		attack_verb = list("smacked", "struck", "slapped")
 	else
 		user.visible_message("\blue [user] collapses their telescopic baton.",\
@@ -141,10 +141,10 @@
 		icon_state = "telebaton_0"
 		item_state = null
 		w_class = 2
-		force = 3//not so robust now
+		force = 3// not so robust now
 		attack_verb = list("hit", "punched")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
@@ -152,12 +152,12 @@
 	playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)
 
-	if(blood_overlay && blood_DNA && (blood_DNA.len >= 1)) //updates blood overlay, if any
-		overlays.Cut()//this might delete other item overlays as well but eeeeeeeh
+	if(blood_overlay && blood_DNA && (blood_DNA.len >= 1)) // updates blood overlay, if any
+		overlays.Cut()// this might delete other item overlays as well but eeeeeeeh
 
 		var/icon/I = new /icon(src.icon, src.icon_state)
-		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD)
-		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY)
+		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255, 255, 255)), ICON_ADD)
+		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY)
 		blood_overlay = I
 
 		overlays += blood_overlay
@@ -166,7 +166,7 @@
 
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
-		if ((CLUMSY in user.mutations) && prob(50))
+		if((CLUMSY in user.mutations) && prob(50))
 			to_chat(user, "\red You club yourself over the head.")
 			user.Weaken(3 * force)
 			if(ishuman(user))
@@ -185,7 +185,7 @@
 /*
  *Energy Blade
  */
-//Most of the other special functions are handled in their own files.
+// Most of the other special functions are handled in their own files.
 
 /obj/item/weapon/melee/energy/sword/green/New()
 	item_color = "green"
@@ -221,7 +221,7 @@
 
 /obj/item/weapon/melee/energy/axe/attack_self(mob/user)
 	src.active = !( src.active )
-	if (src.active)
+	if(src.active)
 		to_chat(user, "\blue The axe is now energised.")
 		src.force = 150
 		src.icon_state = "axe1"
@@ -245,11 +245,11 @@
 		return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red You beat yourself in the head with [src].")
 		user.take_bodypart_damage(5)
 	active = !active
-	if (active)
+	if(active)
 		force = 10
 		icon_state = "eshield[active]"
 		w_class = 4
@@ -263,7 +263,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		to_chat(user, "\blue [src] can now be concealed.")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()

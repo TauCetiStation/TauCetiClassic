@@ -1,23 +1,23 @@
-/proc/gibs(atom/location, list/viruses, datum/dna/MobDNA)		//CARN MARKER
-	new /obj/effect/gibspawner/generic(get_turf(location),viruses,MobDNA)
+/proc/gibs(atom/location, list/viruses, datum/dna/MobDNA)		// CARN MARKER
+	new /obj/effect/gibspawner/generic(get_turf(location), viruses, MobDNA)
 
 /proc/hgibs(atom/location, list/viruses, datum/dna/MobDNA, fleshcolor, bloodcolor)
-	new /obj/effect/gibspawner/human(get_turf(location),viruses,MobDNA,fleshcolor,bloodcolor)
+	new /obj/effect/gibspawner/human(get_turf(location), viruses, MobDNA, fleshcolor, bloodcolor)
 
 /proc/xgibs(atom/location, list/viruses)
-	new /obj/effect/gibspawner/xeno(get_turf(location),viruses)
+	new /obj/effect/gibspawner/xeno(get_turf(location), viruses)
 
 /proc/robogibs(atom/location, list/viruses)
-	new /obj/effect/gibspawner/robot(get_turf(location),viruses)
+	new /obj/effect/gibspawner/robot(get_turf(location), viruses)
 
 /obj/effect/gibspawner
-	var/sparks = 0 //whether sparks spread on Gib()
-	var/virusProb = 20 //the chance for viruses to spread on the gibs
+	var/sparks = 0 // whether sparks spread on Gib()
+	var/virusProb = 20 // the chance for viruses to spread on the gibs
 	var/list/gibtypes = list()
 	var/list/gibamounts = list()
-	var/list/gibdirections = list() //of lists
-	var/fleshcolor //Used for gibbed humans.
-	var/bloodcolor //Used for gibbed humans.
+	var/list/gibdirections = list() // of lists
+	var/fleshcolor // Used for gibbed humans.
+	var/bloodcolor // Used for gibbed humans.
 
 	New(location, var/list/viruses, var/datum/dna/MobDNA, var/fleshcolor, var/bloodcolor)
 		..()
@@ -25,8 +25,8 @@
 		if(fleshcolor) src.fleshcolor = fleshcolor
 		if(bloodcolor) src.bloodcolor = bloodcolor
 
-		if(istype(loc,/turf)) //basically if a badmin spawns it
-			Gib(loc,viruses,MobDNA)
+		if(istype(loc, /turf)) // basically if a badmin spawns it
+			Gib(loc, viruses, MobDNA)
 
 	proc/Gib(atom/location, list/viruses = list(), datum/dna/MobDNA = null)
 		if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)

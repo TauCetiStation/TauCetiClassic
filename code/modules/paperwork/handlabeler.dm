@@ -5,13 +5,13 @@
 	item_state = "flight"
 	var/label = null
 	var/labels_left = 30
-	var/mode = 0	//off or on.
+	var/mode = 0	// off or on.
 
 /obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
-	if(!mode)	//if it's off, give up.
+	if(!mode)	// if it's off, give up.
 		return
-	if(A == loc)	// if placing the labeller into something (e.g. backpack)
+	if(A == loc)	// if placing the labeller into something(e.g. backpack)
 		return		// don't set a label
 
 	if(!labels_left)
@@ -42,8 +42,8 @@
 	icon_state = "labeler[mode]"
 	if(mode)
 		to_chat(user, "<span class='notice'>You turn on \the [src].</span>")
-		//Now let them chose the text.
-		var/str = sanitize(copytext(input(user,"Label text?","Set label",""),1,MAX_NAME_LEN))
+		// Now let them chose the text.
+		var/str = sanitize(copytext(input(user, "Label text?", "Set label", ""), 1, MAX_NAME_LEN))
 		if(!str || !length(str))
 			to_chat(user, "<span class='notice'>Invalid text.</span>")
 			return

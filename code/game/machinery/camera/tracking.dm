@@ -16,16 +16,16 @@
 		return
 
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in cameranet.cameras)
+	for(var/obj/machinery/camera/C in cameranet.cameras)
 		L.Add(C)
 
 	camera_sort(L)
 
 	var/list/T = list()
 	T["Cancel"] = "Cancel"
-	for (var/obj/machinery/camera/C in L)
+	for(var/obj/machinery/camera/C in L)
 		var/list/tempnetwork = C.network&src.network
-		if (tempnetwork.len)
+		if(tempnetwork.len)
 			T[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
 
 	track = new()
@@ -39,7 +39,7 @@
 		to_chat(src, "You can't list the cameras because you are dead!")
 		return
 
-	if (!camera || camera == "Cancel")
+	if(!camera || camera == "Cancel")
 		return 0
 
 	var/obj/machinery/camera/C = track.cameras[camera]
@@ -67,7 +67,7 @@
 		return
 
 	var/L = src.eyeobj.getLoc()
-	if (InvalidTurf(get_turf(L)))
+	if(InvalidTurf(get_turf(L)))
 		to_chat(src, "\red Unable to store this location")
 		return
 
@@ -82,7 +82,7 @@
 	set name = "Goto Camera Location"
 	set desc = "Returns to the selected camera location."
 
-	if (!(loc in stored_locations))
+	if(!(loc in stored_locations))
 		to_chat(src, "\red Location [loc] not found")
 		return
 
@@ -94,7 +94,7 @@
 	set name = "Delete Camera Location"
 	set desc = "Deletes the selected camera location."
 
-	if (!(loc in stored_locations))
+	if(!(loc in stored_locations))
 		to_chat(src, "\red Location [loc] not found")
 		return
 
@@ -122,7 +122,7 @@
 			continue
 		if(M == usr)
 			continue
-		if(M.invisibility)//cloaked
+		if(M.invisibility)// cloaked
 			continue
 		if(M.digitalcamo)
 			continue
@@ -132,7 +132,7 @@
 		if(istype(M, /mob/living/carbon/human))
 			human = 1
 			var/mob/living/carbon/human/H = M
-			//Cameras can't track people wearing an agent card or hat with blockTracking.
+			// Cameras can't track people wearing an agent card or hat with blockTracking.
 			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 				continue
 			if(istype(H.head, /obj/item/clothing/head))
@@ -145,7 +145,7 @@
 			continue
 
 		var/name = M.name
-		if (name in TB.names)
+		if(name in TB.names)
 			TB.namecounts[name]++
 			name = text("[] ([])", name, TB.namecounts[name])
 		else
@@ -193,11 +193,11 @@
 	to_chat(U, "Now tracking [target.name] on camera.")
 	target.tracking_initiated()
 
-	spawn (0)
-		while (U.cameraFollow == target)
-			if (U.cameraFollow == null)
+	spawn(0)
+		while(U.cameraFollow == target)
+			if(U.cameraFollow == null)
 				return
-			if (istype(target, /mob/living/carbon/human))
+			if(istype(target, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = target
 				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 					to_chat(U, "Follow camera mode terminated.")
@@ -214,12 +214,12 @@
 					U.cameraFollow = null
 					return
 
-			if(istype(target.loc,/obj/effect/dummy))
+			if(istype(target.loc, /obj/effect/dummy))
 				to_chat(U, "Follow camera mode ended.")
 				U.cameraFollow = null
 				return
 
-			if (!near_camera(target))
+			if(!near_camera(target))
 				to_chat(U, "Target is not near any active cameras.")
 				sleep(100)
 				continue
@@ -232,7 +232,7 @@
 			sleep(10)
 
 /proc/near_camera(mob/living/M)
-	if (!isturf(M.loc))
+	if(!isturf(M.loc))
 		return 0
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
@@ -243,9 +243,9 @@
 	return 1
 
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
-	if (!istype(user))
+	if(!istype(user))
 		return
-	if (!src.can_use())
+	if(!src.can_use())
 		return
 	user.eyeobj.setLoc(get_turf(src))
 
@@ -257,15 +257,15 @@
 	var/obj/machinery/camera/a
 	var/obj/machinery/camera/b
 
-	for (var/i = L.len, i > 0, i--)
-		for (var/j = 1 to i - 1)
+	for(var/i = L.len, i > 0, i--)
+		for(var/j = 1 to i - 1)
 			a = L[j]
 			b = L[j + 1]
-			if (a.c_tag_order != b.c_tag_order)
-				if (a.c_tag_order > b.c_tag_order)
+			if(a.c_tag_order != b.c_tag_order)
+				if(a.c_tag_order > b.c_tag_order)
 					L.Swap(j, j + 1)
 			else
-				if (sorttext(a.c_tag, b.c_tag) < 0)
+				if(sorttext(a.c_tag, b.c_tag) < 0)
 					L.Swap(j, j + 1)
 	return L
 

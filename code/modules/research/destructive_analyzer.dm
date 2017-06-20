@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /*
 Destructive Analyzer
@@ -40,9 +40,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 
 /obj/machinery/r_n_d/destructive_analyzer/attackby(obj/O, mob/user)
-	if (shocked)
-		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "d_analyzer_t", "d_analyzer", O))
+	if(shocked)
+		shock(user, 50)
+	if(default_deconstruction_screwdriver(user, "d_analyzer_t", "d_analyzer", O))
 		if(linked_console)
 			linked_console.linked_destroy = null
 			linked_console = null
@@ -53,22 +53,22 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	default_deconstruction_crowbar(O)
 
-	if (disabled)
+	if(disabled)
 		return
-	if (!linked_console)
+	if(!linked_console)
 		to_chat(user, "<span class='warning'>The protolathe must be linked to an R&D console first!</span>")
 		return
-	if (busy)
+	if(busy)
 		to_chat(user, "<span class='warning'> The protolathe is busy right now.</span>")
 		return
-	if (istype(O, /obj/item) && !loaded_item)
-		if(isrobot(user)) //Don't put your module items in there!
+	if(istype(O, /obj/item) && !loaded_item)
+		if(isrobot(user)) // Don't put your module items in there!
 			return
 		if(!O.origin_tech)
 			to_chat(user, "<span class='warning'> This doesn't seem to have a tech origin!</span>")
 			return
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
-		if (temp_tech.len == 0)
+		if(temp_tech.len == 0)
 			to_chat(user, "<span class='warning'> You cannot deconstruct this item!</span>")
 			return
 		busy = 1
@@ -85,7 +85,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	icon_state = "d_analyzer_l"
 	busy = 0
 
-//For testing purposes only.
+// For testing purposes only.
 /*/obj/item/weapon/deconstruction_test
 	name = "Test Item"
 	desc = "WTF?"

@@ -11,6 +11,6 @@
 	artifact_id = "tesla"
 
 /datum/artifact_effect/tesla/DoEffectPulse()
-	var/radius = rand(0,4)
+	var/radius = rand(0, 4)
 	radius = radius + 2
-	tesla_zap(holder,radius,radius*25000)
+	tesla_zap(holder, radius, radius*25000)

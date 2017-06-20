@@ -81,7 +81,7 @@ field_generator power level display
 
 /obj/machinery/field_generator/attack_hand(mob/user)
 	if(state == FG_WELDED)
-		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
+		if(get_dist(src, user) <= 1)// Need to actually touch the thing to turn it on
 			if(active != FG_OFFLINE)
 				to_chat(user, "<span class='red'>You are unable to turn off the [src] once it is online.</span>")
 				return
@@ -92,7 +92,7 @@ field_generator power level display
 					"<span class='notice'>You hear heavy droning.</span>")
 				turn_on()
 				add_fingerprint(user)
-				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
+				investigate_log("<font color='green'>activated</font> by [user.key].", "singulo")
 	else
 		to_chat(user, "<span class='notice'>The [src] needs to be firmly secured to the floor first.</span>")
 
@@ -126,25 +126,25 @@ field_generator power level display
 			if(FG_UNSECURED)
 				to_chat(user, "<span class='red'>The [src] needs to be wrenched to the floor.</span>")
 			if(FG_SECURED)
-				if (WT.remove_fuel(0, user))
+				if(WT.remove_fuel(0, user))
 					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to weld the [src.name] to the floor.</span>",
 						"<span class='notice'>You start to weld the [src] to the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (do_after(user, 20, target = src))
+					if(do_after(user, 20, target = src))
 						if(!src || !WT.isOn())
 							return
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 			if(FG_WELDED)
-				if (WT.remove_fuel(0, user))
+				if(WT.remove_fuel(0, user))
 					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",
 						"<span class='notice'>You start to cut the [src] free from the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (do_after(user, 20, target = src))
+					if(do_after(user, 20, target = src))
 						if(!src || !WT.isOn())
 							return
 						state = FG_SECURED
@@ -210,7 +210,7 @@ field_generator power level display
 	if(!draw_power(round(power_draw / 2, 1)))
 		visible_message("<span class='warning'>The [src] shuts down!</span>")
 		turn_off()
-		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
+		investigate_log("ran out of power and <font color='red'>deactivated</font>", "singulo")
 		power = 0
 
 // This could likely be better, it tends to start loopin if you have a complex generator loop setup.
@@ -219,24 +219,24 @@ field_generator power level display
 	if(var_power)
 		return TRUE
 
-	if((G && G == src) || (failsafe >= 8))  //Loopin, set fail
+	if((G && G == src) || (failsafe >= 8))  // Loopin, set fail
 		return FALSE
 	else
 		failsafe++
 
-	if(power >= draw)  //We have enough power
+	if(power >= draw)  // We have enough power
 		power -= draw
 		return TRUE
-	else  //Need more power
+	else  // Need more power
 		draw -= power
 		power = 0
 		for(var/thing in connected_gens)
 			var/obj/machinery/field_generator/FG = thing
-			if(FG == last)  //We just asked you
+			if(FG == last)  // We just asked you
 				continue
-			if(G)  //Another gen is askin for power and we dont have it
-				return FG.draw_power(draw, failsafe, G, src)  //Can you take the load
-			else  //We are askin another for power
+			if(G)  // Another gen is askin for power and we dont have it
+				return FG.draw_power(draw, failsafe, G, src)  // Can you take the load
+			else  // We are askin another for power
 				return FG.draw_power(draw, failsafe, src, src)
 
 /obj/machinery/field_generator/proc/start_fields()
@@ -319,19 +319,19 @@ field_generator power level display
 	clean_up = FALSE
 	update_icon()
 
-	//This is here to help fight the "hurr durr, release singulo cos nobody will notice before the
-	//singulo eats the evidence". It's not fool-proof but better than nothing.
-	//I want to avoid using global variables.
+	// This is here to help fight the "hurr durr, release singulo cos nobody will notice before the
+	// singulo eats the evidence". It's not fool-proof but better than nothing.
+	// I want to avoid using global variables.
 	addtimer(CALLBACK(src, .proc/warn_admins), 1)
 
 /obj/machinery/field_generator/proc/warn_admins()
-	var/temp = TRUE //stops spam
+	var/temp = TRUE // stops spam
 	for(var/obj/singularity/O in machines)
 		if(O.last_warning && temp)
-			if((world.time - O.last_warning) > 50) //to stop message-spam
+			if((world.time - O.last_warning) > 50) // to stop message-spam
 				temp = FALSE
 				message_admins("<span class='danger'>A singulo exists and a containment field has failed. [ADMIN_JMP(O)]</span>")
-				investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
+				investigate_log("has <font color='red'>failed</font> whilst a singulo exists.", "singulo")
 		O.last_warning = world.time
 
 

@@ -19,28 +19,28 @@
 
 	anchored = 0
 	density = 0
-	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
+	layer = MOB_LAYER - 0.1 // so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
 
 	var/datum/wires/syndicatebomb/wires = null
 	var/timer = 60
-	var/open_panel = 0 	//are the wires exposed?
-	var/active = 0		//is the bomb counting down?
-	var/defused = 0		//is the bomb capable of exploding?
-	var/degutted = 0	//is the bomb even a bomb anymore?
+	var/open_panel = 0 	// are the wires exposed?
+	var/active = 0		// is the bomb counting down?
+	var/defused = 0		// is the bomb capable of exploding?
+	var/degutted = 0	// is the bomb even a bomb anymore?
 
 /obj/machinery/syndicatebomb/process()
-	if(active && !defused && (timer > 0)) 	//Tick Tock
+	if(active && !defused && (timer > 0)) 	// Tick Tock
 		playsound(loc, 'sound/items/timer.ogg', 5, 0)
 		timer--
-	if(active && !defused && (timer <= 0))	//Boom
+	if(active && !defused && (timer <= 0))	// Boom
 		active = 0
 		timer = 60
 		STOP_PROCESSING(SSobj, src)
-		explosion(src.loc,2,5,11)
+		explosion(src.loc, 2, 5, 11)
 		qdel(src)
 		return
-	if(!active || defused)					//Counter terrorists win
+	if(!active || defused)					// Counter terrorists win
 		STOP_PROCESSING(SSobj, src)
 		return
 
@@ -90,9 +90,9 @@
 			to_chat(user, "<span class='notice'>You carefully pry out the bomb's payload.</span>")
 			degutted = 1
 			new /obj/item/weapon/syndicatebombcore(user.loc)
-		else if (open_panel)
+		else if(open_panel)
 			to_chat(user, "<span class='notice'>The wires conneting the shell to the explosives are holding it down!</span>")
-		else if (degutted)
+		else if(degutted)
 			to_chat(user, "<span class='notice'>The explosives have already been removed.</span>")
 		else
 			to_chat(user, "<span class='notice'>The cover is screwed on, it won't pry off!</span>")
@@ -123,10 +123,10 @@
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", "[timer]") as num
 	newtime = Clamp(newtime, 60, 60000)
-	if(in_range(src, usr) && isliving(usr)) //No running off and setting bombs from across the station
+	if(in_range(src, usr) && isliving(usr)) // No running off and setting bombs from across the station
 		timer = newtime
 		src.loc.visible_message("\blue [bicon(src)] timer set for [timer] seconds.")
-	if(alert(usr,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, usr) && isliving(usr))
+	if(alert(usr, "Would you like to start the countdown now?",, "Yes", "No") == "Yes" && in_range(src, usr) && isliving(usr))
 		if(defused || active || degutted)
 			if(degutted)
 				src.loc.visible_message("\blue [bicon(src)] Device error: Payload missing")
@@ -147,7 +147,7 @@
 			var/area/A = get_area(bombturf)
 			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
-			START_PROCESSING(SSobj, src) //Ticking down
+			START_PROCESSING(SSobj, src) // Ticking down
 
 /obj/machinery/syndicatebomb/proc/isWireCut(index)
 	return wires.is_index_cut(index)
@@ -161,8 +161,8 @@
 	w_class = 3.0
 	origin_tech = "syndicate=6;combat=5"
 
-/obj/item/weapon/syndicatebombcore/ex_act(severity) //Little boom can chain a big boom
-	explosion(src.loc,2,5,11)
+/obj/item/weapon/syndicatebombcore/ex_act(severity) // Little boom can chain a big boom
+	explosion(src.loc, 2, 5, 11)
 	qdel(src)
 
 /obj/item/device/syndicatedetonator

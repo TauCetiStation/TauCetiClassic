@@ -11,7 +11,7 @@
 /*
 /obj/mecha/working/melee_action(atom/target)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
-		target = pick(oview(1,src))
+		target = pick(oview(1, src))
 	if(selected_tool)
 		selected_tool.action(target)
 	return

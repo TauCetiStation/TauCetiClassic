@@ -58,7 +58,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/nougat
 
 // ***********************************************************
-// Base Candy Recipes (unflavored / plain)
+// Base Candy Recipes(unflavored / plain)
 // ***********************************************************
 
 /datum/recipe/candy/cottoncandy
@@ -192,7 +192,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/purple
 
 // ***********************************************************
-// Cotton Candy Recipes (flavored)
+// Cotton Candy Recipes(flavored)
 // ***********************************************************
 
 /datum/recipe/candy/cottoncandy_red
@@ -258,7 +258,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/cotton/rainbow
 
 // ***********************************************************
-// Gummy Bear Recipes (flavored)
+// Gummy Bear Recipes(flavored)
 // ***********************************************************
 
 /datum/recipe/candy/gummybear_red
@@ -319,7 +319,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/wtf
 
 // ***********************************************************
-// Gummy Worm Recipes (flavored)
+// Gummy Worm Recipes(flavored)
 // ***********************************************************
 
 /datum/recipe/candy/gummyworm_red
@@ -379,7 +379,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/wtf
 
 // ***********************************************************
-// Jelly Bean Recipes (flavored)
+// Jelly Bean Recipes(flavored)
 // ***********************************************************
 
 /datum/recipe/candy/jellybean_red
@@ -475,7 +475,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/wtf
 
 // ***********************************************************
-// Candybar Recipes (flavored)
+// Candybar Recipes(flavored)
 // ***********************************************************
 
 /datum/recipe/candy/malper

@@ -8,13 +8,13 @@
 		return 1
 	return 0
 
- //No longer needed, but I'll leave it here incase we plan to re-use it.
+ // No longer needed, but I'll leave it here incase we plan to re-use it.
 /mob/living/silicon/robot/movement_delay()
-	var/tally = 0 //Incase I need to add stuff other than "speed" later
+	var/tally = 0 // Incase I need to add stuff other than "speed" later
 
 	tally = speed
 
-	if(module_active && istype(module_active,/obj/item/borg/combat/mobility))
+	if(module_active && istype(module_active, /obj/item/borg/combat/mobility))
 		tally-=3
 
 	if(confused)
@@ -24,9 +24,9 @@
 
 // NEW: Use power while moving.
 /mob/living/silicon/robot/SelfMove(turf/n, direct)
-	if (!is_component_functioning("actuator"))
+	if(!is_component_functioning("actuator"))
 		return 0
 
 	var/datum/robot_component/actuator/A = get_component("actuator")
-	if (cell_use_power(A.active_usage))
+	if(cell_use_power(A.active_usage))
 		return ..()

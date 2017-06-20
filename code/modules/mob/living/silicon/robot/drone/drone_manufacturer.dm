@@ -19,7 +19,7 @@
 	..()
 
 /obj/machinery/drone_fabricator/power_change()
-	if (powered())
+	if(powered())
 		stat &= ~NOPOWER
 	else
 		icon_state = "drone_fab_nopower"
@@ -47,7 +47,7 @@
 
 /obj/machinery/drone_fabricator/examine(mob/user)
 	..()
-	if(produce_drones && drone_progress >= 100 && istype(user,/mob/dead) && config.allow_drone_spawn && count_drones() < config.max_maint_drones)
+	if(produce_drones && drone_progress >= 100 && istype(user, /mob/dead) && config.allow_drone_spawn && count_drones() < config.max_maint_drones)
 		to_chat(user, "<BR><B>A drone is prepared. Select 'Join As Drone' from the Ghost tab to spawn as a maintenance drone.</B>")
 
 /obj/machinery/drone_fabricator/proc/count_drones()
@@ -65,11 +65,11 @@
 	if(!produce_drones || !config.allow_drone_spawn || count_drones() >= config.max_maint_drones)
 		return
 
-	if(!player) //|| !istype(player.mob,/mob/dead))
+	if(!player) //|| !istype(player.mob, /mob/dead))
 		return
 
 	visible_message("\The [src] churns and grinds as it lurches into motion, disgorging a shiny new drone after a few moments.")
-	flick("h_lathe_leave",src)
+	flick("h_lathe_leave", src)
 
 	time_last_drone = world.time
 	var/mob/living/silicon/robot/drone/new_drone = new(get_turf(src))
@@ -88,10 +88,10 @@
 		to_chat(src, "\red The game hasn't started yet!")
 		return
 
-	if (usr != src)
-		return 0 //something is terribly wrong
+	if(usr != src)
+		return 0 // something is terribly wrong
 
-	if (!src.stat)
+	if(!src.stat)
 		return
 
 	if(!(config.allow_drone_spawn))
@@ -104,11 +104,11 @@
 
 	var/available_in_minutes = role_available_in_minutes(src, ROLE_DRONE)
 	if(available_in_minutes)
-		to_chat(usr, "<span class='notice'>This role will be unlocked in [available_in_minutes] minutes (e.g.: you gain minutes while playing).</span>")
+		to_chat(usr, "<span class='notice'>This role will be unlocked in [available_in_minutes] minutes(e.g.: you gain minutes while playing).</span>")
 		return
 
 	var/deathtime = world.time - src.timeofdeath
-	if(istype(src,/mob/dead/observer))
+	if(istype(src, /mob/dead/observer))
 		var/mob/dead/observer/G = src
 		if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 			to_chat(usr, "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>")
@@ -122,16 +122,16 @@
 		pluralcheck = " [deathtimeminutes] minute and"
 	else if(deathtimeminutes > 1)
 		pluralcheck = " [deathtimeminutes] minutes and"
-	var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
+	var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10, 1)
 
-	if (deathtime < 6000)
+	if(deathtime < 6000)
 		to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
 		to_chat(usr, "You must wait 10 minutes to respawn as a drone!")
 		return
 
-	var/response = alert(src, "Are you -sure- you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
+	var/response = alert(src, "Are you -sure- you want to become a maintenance drone?", "Are you sure you want to beep?", "Beep!", "Nope!")
 	if(response != "Beep!")
-		return  //Hit the wrong key...again.
+		return  // Hit the wrong key...again.
 
 	dronize()
 

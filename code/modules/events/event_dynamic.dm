@@ -1,16 +1,16 @@
 
 /*
 /proc/start_events()
-	//changed to a while(1) loop since they are more efficient.
-	//Moved the spawn in here to allow it to be called with advance proc call if it crashes.
-	//and also to stop spawn copying variables from the game ticker
+	// changed to a while(1) loop since they are more efficient.
+	// Moved the spawn in here to allow it to be called with advance proc call if it crashes.
+	// and also to stop spawn copying variables from the game ticker
 	spawn(3000)
 		while(1)
-			/*if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
+			/*if(prob(50))// Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
 				spawn(1)
 					dust_swarm("weak")*/
 			if(!event)
-				//CARN: checks to see if random events are enabled.
+				// CARN: checks to see if random events are enabled.
 				if(config.allow_random_events)
 					hadevent = event()
 				else
@@ -22,7 +22,7 @@
 
 var/list/event_last_fired = list()
 
-//Always triggers an event when called, dynamically chooses events based on job population
+// Always triggers an event when called, dynamically chooses events based on job population
 /proc/spawn_dynamic_event()
 	if(!config.allow_random_events)
 		return
@@ -30,11 +30,11 @@ var/list/event_last_fired = list()
 	var/minutes_passed = world.time/600
 
 	var/list/active_with_role = number_active_with_role()
-	//var/engineer_count = number_active_with_role("Engineer")
-	//var/security_count = number_active_with_role("Security")
-	//var/medical_count = number_active_with_role("Medical")
-	//var/AI_count = number_active_with_role("AI")
-	//var/janitor_count = number_active_with_role("Janitor")
+	// var/engineer_count = number_active_with_role("Engineer")
+	// var/security_count = number_active_with_role("Security")
+	// var/medical_count = number_active_with_role("Medical")
+	// var/AI_count = number_active_with_role("AI")
+	// var/janitor_count = number_active_with_role("Janitor")
 
 	// Maps event names to event chances
 	// For each chance, 100 represents "normal likelihood", anything below 100 is "reduced likelihood", anything above 100 is "increased likelihood"
@@ -72,7 +72,7 @@ var/list/event_last_fired = list()
 		possibleEvents[/datum/event/anomaly/anomaly_grav] = 5 + 5 * active_with_role["Engineer"] * 5 + active_with_role["Scientist"] * 5
 		possibleEvents[/datum/event/anomaly/anomaly_pyro] = 5 + 5 * active_with_role["Atmospheric Technician"] * 5 + active_with_role["Scientist"] * 5
 		possibleEvents[/datum/event/anomaly/anomaly_flux] = 5 + 5 * active_with_role["Engineer"] * 5 + active_with_role["Scientist"] * 5
-//		possibleEvents[/datum/event/blob] = 20 * active_with_role["Engineer"] //No blob for futher fixes
+//		possibleEvents[/datum/event/blob] = 20 * active_with_role["Engineer"] // No blob for futher fixes
 
 	if(minutes_passed >= 60)
 		possibleEvents[/datum/event/anomaly/anomaly_vortex] = 5 + 2.5 * active_with_role["Engineer"] * 5 + active_with_role["Scientist"] * 5
@@ -116,11 +116,11 @@ var/list/event_last_fired = list()
 	if(!picked_event)
 		return
 
-	//The event will add itself to the MC's event list
-	//and start working via the constructor.
+	// The event will add itself to the MC's event list
+	// and start working via the constructor.
 	new picked_event
 
-	//moved this to proc/check_event()
+	// moved this to proc/check_event()
 	/*var/chance = possibleEvents[picked_event]
 	var/base_chance = 0.4
 	switch(player_list.len)
@@ -145,7 +145,7 @@ var/list/event_last_fired = list()
 		if("Meteor")
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!istype(M, /mob/new_player))
 					M << sound('sound/AI/meteors.ogg')
 			spawn(100)
 				meteor_wave(10)
@@ -154,7 +154,7 @@ var/list/event_last_fired = list()
 				meteor_wave(10)
 				spawn_meteors()
 		if("Space Ninja")
-			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
+			// Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
 			space_ninja_arrival()
 		if("Radiation")
 			high_radiation_event()
@@ -167,7 +167,7 @@ var/list/event_last_fired = list()
 		if("Carp")
 			carp_migration()
 		if("Lights")
-			lightsout(1,2)
+			lightsout(1, 2)
 		if("Appendicitis")
 			appendicitis()
 		if("Ion Storm")

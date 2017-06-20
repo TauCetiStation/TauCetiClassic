@@ -104,7 +104,7 @@
 	New()
 		..()
 		new /obj/item/wardrobe/chaplain(src)
-		new /obj/item/weapon/storage/backpack/cultpack (src)
+		new /obj/item/weapon/storage/backpack/cultpack(src)
 		var/obj/item/weapon/storage/backpack/BPK = new /obj/item/weapon/storage/backpack(src)
 		var/obj/item/weapon/storage/box/B = new(BPK)
 		new /obj/item/weapon/pen(B)

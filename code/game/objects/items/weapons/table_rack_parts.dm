@@ -13,17 +13,17 @@
  */
 /obj/item/weapon/table_parts/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( user.loc )
-		//SN src = null
+		// SN src = null
 		qdel(src)
-	if (istype(W, /obj/item/stack/rods))
-		if (W:amount >= 4)
+	if(istype(W, /obj/item/stack/rods))
+		if(W:amount >= 4)
 			new /obj/item/weapon/table_parts/reinforced( user.loc )
 			to_chat(user, "\blue You reinforce the [name].")
 			W:use(4)
 			qdel(src)
-		else if (W:amount < 4)
+		else if(W:amount < 4)
 			to_chat(user, "\red You need at least four rods to do this.")
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
@@ -37,7 +37,7 @@
  * Reinforced Table Parts
  */
 /obj/item/weapon/table_parts/reinforced/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( user.loc )
 		new /obj/item/stack/rods( user.loc )
 		qdel(src)
@@ -52,11 +52,11 @@
  * Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/wood( user.loc )
 		qdel(src)
 
-	if (istype(W, /obj/item/stack/tile/grass))
+	if(istype(W, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/Grass = W
 		if(Grass.amount > 1)
 			Grass.amount -= 1
@@ -78,7 +78,7 @@
  */
 
 /obj/item/weapon/table_parts/wood/poker/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/wood( user.loc )
 		new /obj/item/stack/tile/grass( user.loc )
 		qdel(src)
@@ -94,7 +94,7 @@
  */
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( user.loc )
 		qdel(src)
 		return

@@ -1,10 +1,10 @@
 
-/datum/admins/proc/player_panel_new()//The new one
-	if (!usr.client.holder)
+/datum/admins/proc/player_panel_new()// The new one
+	if(!usr.client.holder)
 		return
 	var/dat = "<html><head><title>Admin Player Panel</title></head>"
 
-	//javascript, the part that does most of the work~
+	// javascript, the part that does most of the work~
 	dat += {"
 
 		<head>
@@ -29,7 +29,7 @@
 
 						var maintable_data = document.getElementById('maintable_data');
 						var ltr = maintable_data.getElementsByTagName("tr");
-						for ( var i = 0; i < ltr.length; ++i )
+						for( var i = 0; i < ltr.length; ++i )
 						{
 							try{
 								var tr = ltr\[i\];
@@ -40,12 +40,12 @@
 								var td = ltd\[0\];
 								var lsearch = td.getElementsByTagName("b");
 								var search = lsearch\[0\];
-								//var inner_span = li.getElementsByTagName("span")\[1\] //Should only ever contain one element.
-								//document.write("<p>"+search.innerText+"<br>"+filter+"<br>"+search.innerText.indexOf(filter))
-								if ( search.innerText.toLowerCase().indexOf(filter) == -1 )
+								// var inner_span = li.getElementsByTagName("span")\[1\] // Should only ever contain one element.
+								// document.write("<p>"+search.innerText+"<br>"+filter+"<br>"+search.innerText.indexOf(filter))
+								if( search.innerText.toLowerCase().indexOf(filter) == -1 )
 								{
-									//document.write("a");
-									//ltr.removeChild(tr);
+									// document.write("a");
+									// ltr.removeChild(tr);
 									td.innerHTML = "";
 									i--;
 								}
@@ -61,7 +61,7 @@
 
 				}
 
-				function expand(id,job,name,real_name,image,key,ip,antagonist,ref){
+				function expand(id, job, name, real_name, image, key, ip, antagonist, ref){
 
 					clearAll();
 
@@ -120,14 +120,14 @@
 					}
 				}
 
-				function addToLocked(id,link_id,notice_span_id){
+				function addToLocked(id, link_id, notice_span_id){
 					var link = document.getElementById(link_id);
 					var decision = link.getAttribute("name");
 					if(decision == "1"){
-						link.setAttribute("name","2");
+						link.setAttribute("name", "2");
 					}else{
-						link.setAttribute("name","1");
-						removeFromLocked(id,link_id,notice_span_id);
+						link.setAttribute("name", "1");
+						removeFromLocked(id, link_id, notice_span_id);
 						return;
 					}
 
@@ -143,17 +143,17 @@
 					locked_tabs.push(id);
 					var notice_span = document.getElementById(notice_span_id);
 					notice_span.innerHTML = "<font color='red'>Locked</font> ";
-					//link.setAttribute("onClick","attempt('"+id+"','"+link_id+"','"+notice_span_id+"');");
-					//document.write("removeFromLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
-					//document.write("aa - "+link.getAttribute("onClick"));
+					// link.setAttribute("onClick", "attempt('"+id+"','"+link_id+"','"+notice_span_id+"');");
+					// document.write("removeFromLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
+					// document.write("aa - "+link.getAttribute("onClick"));
 				}
 
 				function attempt(ab){
 					return ab;
 				}
 
-				function removeFromLocked(id,link_id,notice_span_id){
-					//document.write("a");
+				function removeFromLocked(id, link_id, notice_span_id){
+					// document.write("a");
 					var index = 0;
 					var pass = 0;
 					for(var j = 0; j < locked_tabs.length; j++){
@@ -168,8 +168,8 @@
 					locked_tabs\[index\] = "";
 					var notice_span = document.getElementById(notice_span_id);
 					notice_span.innerHTML = "";
-					//var link = document.getElementById(link_id);
-					//link.setAttribute("onClick","addToLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
+					// var link = document.getElementById(link_id);
+					// link.setAttribute("onClick", "addToLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
 				}
 
 				function selectTextField(){
@@ -184,10 +184,10 @@
 
 	"}
 
-	//body tag start + onload and onkeypress (onkeyup) javascript event calls
+	// body tag start + onload and onkeypress(onkeyup) javascript event calls
 	dat += "<body onload='selectTextField(); updateSearch();' onkeyup='updateSearch();'>"
 
-	//title + search bar
+	// title + search bar
 	dat += {"
 
 		<table width='560' align='center' cellspacing='0' cellpadding='5' id='maintable'>
@@ -207,7 +207,7 @@
 
 	"}
 
-	//player table header
+	// player table header
 	dat += {"
 		<span id='maintable_data_archive'>
 		<table width='560' align='center' cellspacing='0' cellpadding='5' id='maintable_data'>"}
@@ -226,14 +226,14 @@
 
 			if(isliving(M))
 
-				if(iscarbon(M)) //Carbon stuff
+				if(iscarbon(M)) // Carbon stuff
 					if(ishuman(M))
 						M_job = M.job
 					else if(isslime(M))
 						M_job = "slime"
 					else if(ismonkey(M))
 						M_job = "Monkey"
-					else if(isalien(M)) //aliens
+					else if(isalien(M)) // aliens
 						if(islarva(M))
 							M_job = "Alien larva"
 						else if(isfacehugger(M))
@@ -243,7 +243,7 @@
 					else
 						M_job = "Carbon-based"
 
-				else if(issilicon(M)) //silicon
+				else if(issilicon(M)) // silicon
 					if(isAI(M))
 						M_job = "AI"
 					else if(ispAI(M))
@@ -253,7 +253,7 @@
 					else
 						M_job = "Silicon-based"
 
-				else if(isanimal(M)) //simple animals
+				else if(isanimal(M)) // simple animals
 					if(iscorgi(M))
 						M_job = "Corgi"
 					else
@@ -262,7 +262,7 @@
 				else
 					M_job = "Living"
 
-			else if(istype(M,/mob/new_player))
+			else if(istype(M, /mob/new_player))
 				M_job = "New player"
 
 			else if(isobserver(M))
@@ -286,14 +286,14 @@
 			M_key = replacetext(M_key, "\"", "")
 			M_key = replacetext(M_key, "\\", "")
 
-			//output for each mob
+			// output for each mob
 			dat += {"
 
 				<tr id='data[i]' name='[i]' onClick="addToLocked('item[i]','data[i]','notice_span[i]')">
 					<td align='center' bgcolor='[color]'>
 						<span id='notice_span[i]'></span>
 						<a id='link[i]'
-						onmouseover='expand("item[i]","[M_job]","[M_name]","[M_rname]","--unused--","[M_key]","[M.lastKnownIP]",[is_antagonist],"\ref[M]")'
+						onmouseover='expand("item[i]", "[M_job]", "[M_name]", "[M_rname]", "--unused--", "[M_key]", "[M.lastKnownIP]",[is_antagonist], "\ref[M]")'
 						>
 						<b id='search[i]'>[M_name] - [M_rname] - [M_key] ([M_job])</b>
 						</a>
@@ -306,7 +306,7 @@
 			i++
 
 
-	//player table ending
+	// player table ending
 	dat += {"
 		</table>
 		</span>
@@ -320,14 +320,14 @@
 
 	usr << browse(dat, "window=players;size=600x480")
 
-//The old one
+// The old one
 /datum/admins/proc/player_panel_old()
-	if (!usr.client.holder)
+	if(!usr.client.holder)
 		return
 	var/dat = "<html><head><title>Player Menu</title></head>"
 	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Assigned Job</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th></tr></B>"
-	//add <th>IP:</th> to this if wanting to add back in IP checking
-	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
+	// add <th>IP:</th> to this if wanting to add back in IP checking
+	// add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
 	var/list/mobs = sortmobs()
 
 	for(var/mob/M in mobs)
@@ -381,12 +381,12 @@
 	usr << browse(dat, "window=players;size=640x480")
 
 /datum/admins/proc/check_antagonists()
-	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+	if(ticker && ticker.current_state >= GAME_STATE_PLAYING)
 		var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 		dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
 		dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B><BR>"
 		dat += "<B>Emergency shuttle</B><BR>"
-		if (!SSshuttle.online)
+		if(!SSshuttle.online)
 			dat += "<a href='?src=\ref[src];call_shuttle=1'>Call Shuttle</a><br>"
 		else
 			var/timeleft = SSshuttle.timeleft()
@@ -418,7 +418,7 @@
 						var/obj/O = disk_loc
 						dat += "in \a [O.name] "
 					disk_loc = disk_loc.loc
-				dat += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td></tr>"
+				dat += "in [disk_loc.loc] at([disk_loc.x], [disk_loc.y], [disk_loc.z])</td></tr>"
 			dat += "</table>"
 
 		if(ticker.mode.head_revolutionaries.len || ticker.mode.revolutionaries.len)
@@ -564,7 +564,7 @@
 				for(var/datum/objective/heist/H in mode.raid_objectives)
 					heist_get_shuttle_price()
 					dat += "<tr><td><B>[H.explanation_text]</B></td></tr>"
-					dat += "<tr><td><i>Progress: [num2text(heist_rob_total,9)]/[num2text(H.target_amount,9)]</i></td></tr>"
+					dat += "<tr><td><i>Progress: [num2text(heist_rob_total, 9)]/[num2text(H.target_amount, 9)]</i></td></tr>"
 			dat += check_role_table("Raiders", ticker.mode.raiders, src)
 
 		if(ticker.mode.ninjas.len)
@@ -593,7 +593,7 @@
 	return txt
 
 /proc/check_role_table_row(mob/M, admins=src, show_objectives)
-	if (!istype(M))
+	if(!istype(M))
 		return "<tr><td><i>Not found!</i></td></tr>"
 
 	var/txt = {"
@@ -608,7 +608,7 @@
 			</td>
 	"}
 
-	if (show_objectives)
+	if(show_objectives)
 		txt += {"
 			<td>
 				<a href='?src=\ref[admins];traitor=\ref[M]'>Show Objective</a>

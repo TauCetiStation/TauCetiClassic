@@ -25,9 +25,9 @@ dmm_suite{
 
 		To save a map at runtime, create an instance of /dmm_suite, and then call
 		write_map(), which accepts three arguments:
-			- A turf representing one corner of a three dimensional grid (Required).
-			- Another turf representing the other corner of the same grid (Required).
-			- Any, or a combination, of several bit flags (Optional, see documentation).
+			- A turf representing one corner of a three dimensional grid(Required).
+			- Another turf representing the other corner of the same grid(Required).
+			- Any, or a combination, of several bit flags(Optional, see documentation).
 
 		The order in which the turfs are supplied does not matter, the /dmm_writer will
 		determine the grid containing both, in much the same way as DM's block() function.
@@ -38,8 +38,8 @@ dmm_suite{
 
 		To load a map at runtime, create an instance of /dmm_suite, and then call load_map(),
 		which accepts two arguments:
-			- A .dmm file to load (Required).
-			- A number representing the z-level on which to start loading the map (Optional).
+			- A .dmm file to load(Required).
+			- A number representing the z-level on which to start loading the map(Optional).
 
 		The /dmm_suite will load the map file starting on the specified z-level. If no
 		z-level	was specified, world.maxz will be increased so as to fit the map. Note
@@ -54,20 +54,20 @@ dmm_suite{
 		*/
 
 	verb/load_map(var/dmm_file as file, var/z_offset as num)
-		// dmm_file: A .dmm file to load (Required).
-		// z_offset: A number representing the z-level on which to start loading the map (Optional).
+		// dmm_file: A .dmm file to load(Required).
+		// z_offset: A number representing the z-level on which to start loading the map(Optional).
 
 	verb/write_map(var/turf/t1 as turf, var/turf/t2 as turf, var/flags as num){
-		// t1: A turf representing one corner of a three dimensional grid (Required).
-		// t2: Another turf representing the other corner of the same grid (Required).
-		// flags: Any, or a combination, of several bit flags (Optional, see documentation).
+		// t1: A turf representing one corner of a three dimensional grid(Required).
+		// t2: Another turf representing the other corner of the same grid(Required).
+		// flags: Any, or a combination, of several bit flags(Optional, see documentation).
 		}
 
 	// save_map is included as a legacy proc. Use write_map instead.
 	verb/save_map(var/turf/t1 as turf, var/turf/t2 as turf, var/map_name as text, var/flags as num){
-		// t1: A turf representing one corner of a three dimensional grid (Required).
-		// t2: Another turf representing the other corner of the same grid (Required).
+		// t1: A turf representing one corner of a three dimensional grid(Required).
+		// t2: Another turf representing the other corner of the same grid(Required).
 		// map_name: A valid name for the map to be saved, such as "castle" (Required).
-		// flags: Any, or a combination, of several bit flags (Optional, see documentation).
+		// flags: Any, or a combination, of several bit flags(Optional, see documentation).
 		}
 	}

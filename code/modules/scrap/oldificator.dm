@@ -13,7 +13,7 @@
 	update_icon()
 
 /obj/item/weapon/storage/make_old()
-	var/del_count = rand(0,contents.len)
+	var/del_count = rand(0, contents.len)
 	for(var/i = 1 to del_count)
 		var/removed_item = pick(contents)
 		contents -= removed_item
@@ -22,12 +22,12 @@
 
 /obj/item/weapon/reagent_containers/make_old()
 	for(var/datum/reagent/R in reagents.reagent_list)
-		R.volume = rand(0,R.volume)
-	reagents.add_reagent("toxin", rand(0,10))
+		R.volume = rand(0, R.volume)
+	reagents.add_reagent("toxin", rand(0, 10))
 	..()
 
 /obj/item/ammo_box/make_old()
-	var/del_count = rand(0,contents.len)
+	var/del_count = rand(0, contents.len)
 	for(var/i = 1 to del_count)
 		var/removed_item = pick(stored_ammo)
 		stored_ammo -= removed_item
@@ -39,10 +39,10 @@
 	if(prob(40))
 		rigged = 1
 		if(prob(80))
-			charge = maxcharge  //make it BOOM hard
+			charge = maxcharge  // make it BOOM hard
 	..()
 /obj/item/weapon/stock_parts/make_old()
-	var/degrade = pick(0,1,1,1,2)
+	var/degrade = pick(0, 1, 1, 1, 2)
 	rating = max(rating - degrade, 1)
 	..()
 /obj/item/stack/sheet/make_old()
@@ -53,7 +53,7 @@
 	return
 
 /obj/item/weapon/tank/make_old()
-	var/new_vol = pick(0.2,0.4,0,6,0,8)
+	var/new_vol = pick(0.2, 0.4, 0, 6, 0, 8)
 	air_contents.oxygen *= new_vol
 	air_contents.carbon_dioxide *= new_vol
 	air_contents.nitrogen *= new_vol
@@ -81,7 +81,7 @@
 	if(prob(75))
 		var/datum/breach/B = new()
 		breaches += B
-		B.class = pick(25,50,75)
+		B.class = pick(25, 50, 75)
 		B.damtype = pick(BRUTE, BURN)
 		B.update_descriptor()
 		B.holder = src
@@ -140,7 +140,7 @@
 
 /obj/item/weapon/dnainjector/make_old()
 	if(prob(75))
-		name = "DNA-Injector (unknown)"
+		name = "DNA-Injector(unknown)"
 		desc = pick("1mm0r74l17y 53rum", "1ncr3d1bl3 73l3p47y hNlk", "5up3rhum4n m16h7")
 		value = 0xFFF
 	if(prob(75))

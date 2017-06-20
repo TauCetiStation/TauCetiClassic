@@ -10,7 +10,7 @@
 /*
  * Metal
  */
-var/global/list/datum/stack_recipe/metal_recipes = list ( \
+var/global/list/datum/stack_recipe/metal_recipes = list( \
 	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe_list("metal chairs", list( \
 		new/datum/stack_recipe("grey chair", /obj/structure/stool/bed/chair/metal, one_per_turf = 1, on_floor = 1), \
@@ -23,7 +23,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 		), 1), \
 	new/datum/stack_recipe("bed", /obj/structure/stool/bed, 2, one_per_turf = 1, on_floor = 1), \
 	null, \
-	new/datum/stack_recipe_list("office chairs",list( \
+	new/datum/stack_recipe_list("office chairs", list( \
 		new/datum/stack_recipe("dark office chair", /obj/structure/stool/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
 		new/datum/stack_recipe("light office chair", /obj/structure/stool/bed/chair/office/light, 5, one_per_turf = 1, on_floor = 1), \
 		), 5), \
@@ -110,7 +110,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 /*
  * Plasteel
  */
-var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
+var/global/list/datum/stack_recipe/plasteel_recipes = list( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("Metal crate", /obj/structure/closet/crate, 10, time = 50, one_per_turf = 1), \
 	)
@@ -133,7 +133,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 /*
  * Wood
  */
-var/global/list/datum/stack_recipe/wood_recipes = list ( \
+var/global/list/datum/stack_recipe/wood_recipes = list( \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2), \
@@ -175,7 +175,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 /*
  * Cardboard
  */
-var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
+var/global/list/datum/stack_recipe/cardboard_recipes = list( \
 	new/datum/stack_recipe("box", /obj/item/weapon/storage/box), \
 	new/datum/stack_recipe("shotgun shell box", /obj/item/weapon/storage/box/shotgun), \
 	new/datum/stack_recipe("light tubes", /obj/item/weapon/storage/box/lights/tubes), \
@@ -186,7 +186,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
 	null, \
-	new/datum/stack_recipe_list("folders",list( \
+	new/datum/stack_recipe_list("folders", list( \
 		new/datum/stack_recipe("blue folder", /obj/item/weapon/folder/blue), \
 		new/datum/stack_recipe("grey folder", /obj/item/weapon/folder), \
 		new/datum/stack_recipe("red folder", /obj/item/weapon/folder/red), \
@@ -195,7 +195,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 		)) \
 )
 
-/obj/item/stack/sheet/cardboard	//BubbleWrap
+/obj/item/stack/sheet/cardboard	// BubbleWrap
 	name = "cardboard"
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"

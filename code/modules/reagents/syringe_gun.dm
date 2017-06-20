@@ -23,7 +23,7 @@
 /obj/item/weapon/gun/syringe/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
-		if(S.mode != 2)//SYRINGE_BROKEN in syringes.dm
+		if(S.mode != 2)// SYRINGE_BROKEN in syringes.dm
 			if(syringes.len < max_syringes)
 				user.drop_item()
 				I.loc = src
@@ -36,7 +36,7 @@
 			to_chat(usr, "\red This syringe is broken!")
 
 
-/obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user, flag)
 	if(!isturf(target.loc) || target == user) return
 	..()
 
@@ -44,7 +44,7 @@
 	return syringes.len
 
 /obj/item/weapon/gun/syringe/can_hit(mob/living/target, mob/living/user)
-	return 1		//SHOOT AND LET THE GOD GUIDE IT (probably will hit a wall anyway)
+	return 1		// SHOOT AND LET THE GOD GUIDE IT(probably will hit a wall anyway)
 
 /obj/item/weapon/gun/syringe/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(syringes.len)
@@ -55,13 +55,13 @@
 /obj/item/weapon/gun/syringe/proc/fire_syringe(atom/target, mob/user)
 	set waitfor = FALSE
 
-	if (locate (/obj/structure/table, src.loc))
+	if(locate (/obj/structure/table, src.loc))
 		return
 	else
 		var/turf/trg = get_turf(target)
 		var/obj/effect/syringe_gun_dummy/D = new/obj/effect/syringe_gun_dummy(get_turf(src))
 		var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
-		if((!S) || (!S.reagents))	//ho boy! wot runtimes!
+		if((!S) || (!S.reagents))	// ho boy! wot runtimes!
 			return
 		S.reagents.trans_to(D, S.reagents.total_volume)
 		syringes -= S
@@ -73,29 +73,29 @@
 		for(var/i=0, i<6, i++)
 			if(!D) break
 			if(D.loc == trg) break
-			step_towards(D,trg)
+			step_towards(D, trg)
 
 			if(D)
 				for(var/mob/living/carbon/M in D.loc)
-					if(!istype(M,/mob/living/carbon)) continue
+					if(!istype(M, /mob/living/carbon)) continue
 					if(M == user) continue
-					//Syringe gun attack logging by Yvarov
+					// Syringe gun attack logging by Yvarov
 					var/R
 					if(D.reagents)
 						for(var/datum/reagent/A in D.reagents.reagent_list)
 							R += A.id + " ("
-							R += num2text(A.volume) + "),"
-					if (istype(M, /mob))
+							R += num2text(A.volume) + "), "
+					if(istype(M, /mob))
 						M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
 						user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-						msg_admin_attack("[user.name] ([user.ckey]) shot [M.name] ([M.ckey]) with a syringegun ([R]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+						msg_admin_attack("[user.name] ([user.ckey]) shot [M.name] ([M.ckey]) with a syringegun([R]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 					else
-						M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
+						M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT(No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
 						msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a <b>syringegun</b> ([R]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 					var/mob/living/T
-					if(istype(M,/mob/living))
+					if(istype(M, /mob/living))
 						T = M
 
 					M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
@@ -115,7 +115,7 @@
 
 			sleep(1)
 
-		if (D)
+		if(D)
 			QDEL_IN(D, 10)
 
 		return

@@ -1,4 +1,4 @@
-//Academy Areas
+// Academy Areas
 
 /area/awaymission/academy
 	name = "\improper Academy Asteroids"
@@ -20,7 +20,7 @@
 	name = "\improper Academy Gateway"
 	icon_state = "away4"
 
-//Academy Items
+// Academy Items
 
 /obj/singularity/academy
 	dissipate = 0

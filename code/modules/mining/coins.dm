@@ -10,8 +10,8 @@
 	var/sides = 2
 
 /obj/item/weapon/coin/New()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = rand(0, 16)-8
+	pixel_y = rand(0, 8)-8
 
 /obj/item/weapon/coin/gold
 	name = COIN_GOLD
@@ -46,7 +46,7 @@
 	icon_state = "coin_adamantine"
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/cable_coil) )
+	if(istype(W, /obj/item/weapon/cable_coil) )
 		var/obj/item/weapon/cable_coil/CC = W
 		if(string_attached)
 			to_chat(user, "\blue There already is a string attached to this coin.")
@@ -57,11 +57,11 @@
 			qdel(CC)
 			return
 
-		overlays += image('icons/obj/items.dmi',"coin_string_overlay")
+		overlays += image('icons/obj/items.dmi', "coin_string_overlay")
 		string_attached = 1
 		to_chat(user, "\blue You attach a string to the coin.")
 		CC.use(1)
-	else if(istype(W,/obj/item/weapon/wirecutters) )
+	else if(istype(W, /obj/item/weapon/wirecutters) )
 		if(!string_attached)
 			..()
 			return

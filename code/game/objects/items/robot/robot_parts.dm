@@ -6,31 +6,31 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/list/part = null
-	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
+	var/sabotaged = 0 // Emagging limbs can have repercussions when installed as prosthetics.
 
 /obj/item/robot_parts/l_arm
 	name = "robot left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
-	part = list(BP_L_ARM , BP_L_HAND)
+	part = list(BP_L_ARM, BP_L_HAND)
 
 /obj/item/robot_parts/r_arm
 	name = "robot right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
-	part = list(BP_R_ARM , BP_R_HAND)
+	part = list(BP_R_ARM, BP_R_HAND)
 
 /obj/item/robot_parts/l_leg
 	name = "robot left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
-	part = list(BP_L_LEG , BP_L_FOOT)
+	part = list(BP_L_LEG, BP_L_FOOT)
 
 /obj/item/robot_parts/r_leg
 	name = "robot right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
-	part = list(BP_R_LEG , BP_R_FOOT)
+	part = list(BP_R_LEG, BP_R_FOOT)
 
 /obj/item/robot_parts/chest
 	name = "robot torso"
@@ -82,7 +82,7 @@
 	if(l_arm && r_arm)
 		if(l_leg && r_leg)
 			if(chest && head)
-				feedback_inc("cyborg_frames_built",1)
+				feedback_inc("cyborg_frames_built", 1)
 				return 1
 	return 0
 
@@ -93,7 +93,7 @@
 		B.loc = get_turf(src)
 		to_chat(user, "<span class='info'>You armed the robot frame!</span>")
 		W:use(1)
-		if (user.get_inactive_hand()==src)
+		if(user.get_inactive_hand()==src)
 			user.remove_from_mob(src)
 			user.put_in_inactive_hand(B)
 		qdel(src)
@@ -187,7 +187,7 @@
 	if(istype(W, /obj/item/device/mmi))
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
-			if(!istype(loc,/turf))
+			if(!istype(loc, /turf))
 				to_chat(user, "<span class='warning'>You can't put \the [W] in, the frame has to be standing on the ground to be perfectly precise.</span>")
 				return
 			if(!M.brainmob)
@@ -235,7 +235,7 @@
 
 			O.cell = chest.cell
 			O.cell.loc = O
-			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			W.loc = O// Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 
 			// Since we "magically" installed a cell, we also have to update the correct component.
 			if(O.cell)
@@ -243,7 +243,7 @@
 				cell_component.wrapped = O.cell
 				cell_component.installed = 1
 
-			feedback_inc("cyborg_birth",1)
+			feedback_inc("cyborg_birth", 1)
 			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 			if(mode)
 				mode.borgify_directive(O)
@@ -254,11 +254,11 @@
 			to_chat(user, "<span class='info'>The MMI must go in after everything else!</span>")
 		return
 
-	if (istype(W, /obj/item/weapon/pen))
+	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name, MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 
 		created_name = t
@@ -311,7 +311,7 @@
 /obj/item/robot_parts/head/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/device/flash))
-		if(istype(user,/mob/living/silicon/robot))
+		if(istype(user, /mob/living/silicon/robot))
 			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
 			return
 		else if(flash1 && flash2)
@@ -350,7 +350,7 @@
 	return
 
 /obj/item/robot_parts/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/card/emag))
+	if(istype(W, /obj/item/weapon/card/emag))
 		if(sabotaged)
 			to_chat(user, "<span class='warning'>[src] is already sabotaged!</span>")
 		else

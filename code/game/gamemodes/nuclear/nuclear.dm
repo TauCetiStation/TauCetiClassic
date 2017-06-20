@@ -17,19 +17,19 @@
 	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 20
 
-	var/const/agents_possible = 5 //If we ever need more syndicate agents.
+	var/const/agents_possible = 5 // If we ever need more syndicate agents.
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
-	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
-	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
+	var/nuke_off_station = 0 // Used for tracking if the syndies actually haul the nuke to the station
+	var/syndies_didnt_escape = 0 // Used for tracking if the syndies got the shuttle off of the z-level
 
 
 /datum/game_mode/nuclear/announce()
 	to_chat(world, "<B>The current game mode is - Nuclear Emergency!</B>")
 	to_chat(world, "<B>Gorlex Maradeurs are approaching NSS Exodus!</B>")
-	to_chat(world, "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!")
+	to_chat(world, "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control(STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!")
 
-/datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
+/datum/game_mode/nuclear/can_start()// This could be better, will likely have to recode it later
 	if(!..())
 		return 0
 
@@ -45,7 +45,7 @@
 	 *	agent_number = n_players/2
 	 */
 
-	//Antag number should scale to active crew.
+	// Antag number should scale to active crew.
 	var/n_players = num_players()
 	agent_number = Clamp((n_players/5), 2, 6)
 
@@ -55,14 +55,14 @@
 	while(agent_number > 0)
 		var/datum/mind/new_syndicate = pick(antag_candidates)
 		syndicates += new_syndicate
-		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
+		antag_candidates -= new_syndicate // So it doesn't pick the same guy each time.
 		agent_number--
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
-		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
+		synd_mind.assigned_role = "MODE" // So they aren't chosen for other jobs.
+		synd_mind.special_role = "Syndicate"// So they actually have a special role/N
 	//	log_game("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative")
-	//	message_admins("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative",0,1)
+	//	message_admins("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative", 0, 1)
 	return 1
 
 
@@ -119,7 +119,7 @@
 	var/list/turf/synd_spawn = list()
 	var/turf/synd_comm_spawn
 
-	for(var/obj/effect/landmark/A in landmarks_list) //Add commander spawn places first, really should only be one though.
+	for(var/obj/effect/landmark/A in landmarks_list) // Add commander spawn places first, really should only be one though.
 		if(A.name == "Syndicate-Commander")
 			synd_comm_spawn = get_turf(A)
 			qdel(A)
@@ -131,7 +131,7 @@
 			qdel(A)
 			continue
 
-	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
+	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	// i will be rewriting this shortly
 	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
 
 	var/nuke_code = "[rand(10000, 99999)]"
@@ -178,7 +178,7 @@
 
 	if(uplinklocker)
 		var/obj/structure/closet/C = new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
-		spawn(10) //gives time for the contents to spawn properly
+		spawn(10) // gives time for the contents to spawn properly
 			for(var/obj/item/thing in C)
 				if(thing.hidden_uplink)
 					nuclear_uplink = thing
@@ -191,13 +191,13 @@
 
 
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
-	if (nuke_code)
+	if(nuke_code)
 		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 		to_chat(synd_mind.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
-		if (ticker.mode.config_tag=="nuclear")
+		if(ticker.mode.config_tag=="nuclear")
 			P.loc = synd_mind.current.loc
 		else
 			var/mob/living/carbon/human/H = synd_mind.current
@@ -211,7 +211,7 @@
 
 
 /datum/game_mode/proc/forge_syndicate_objectives(datum/mind/syndicate)
-	if (config.objectives_disabled)
+	if(config.objectives_disabled)
 		return
 	var/datum/objective/nuclear/syndobj = new
 	syndobj.owner = syndicate
@@ -219,7 +219,7 @@
 
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1, boss=0)
-	if (you_are)
+	if(you_are)
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs agent</font>!</span>")
 	if(boss)
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs Commander</font>!</span>")
@@ -284,14 +284,14 @@
 
 
 /datum/game_mode/nuclear/check_win()
-	if (nukes_left == 0)
+	if(nukes_left == 0)
 		return 1
 	return ..()
 
 
 /datum/game_mode/proc/is_operatives_are_dead()
 	for(var/datum/mind/operative_mind in syndicates)
-		if (!istype(operative_mind.current,/mob/living/carbon/human))
+		if(!istype(operative_mind.current, /mob/living/carbon/human))
 			if(operative_mind.current)
 				if(operative_mind.current.stat!=2)
 					return 0
@@ -308,57 +308,57 @@
 			disk_rescued = 0
 			break
 	var/crew_evacuated = (SSshuttle.location==2)
-	//var/operatives_are_dead = is_operatives_are_dead()
+	// var/operatives_are_dead = is_operatives_are_dead()
 
 
-	//nukes_left
-	//station_was_nuked
-	//derp //Used for tracking if the syndies actually haul the nuke to the station	//no
-	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
+	// nukes_left
+	// station_was_nuked
+	// derp // Used for tracking if the syndies actually haul the nuke to the station	// no
+	// herp // Used for tracking if the syndies got the shuttle off of the z-level	// NO, DON'T FUCKING NAME VARS LIKE THIS
 
 	if      (!disk_rescued &&  station_was_nuked &&          !syndies_didnt_escape)
-		feedback_set_details("round_end_result","win - syndicate nuke")
+		feedback_set_details("round_end_result", "win - syndicate nuke")
 		completion_text += "<FONT size = 3, color='red'><B>Syndicate Major Victory!</B></FONT>"
 		completion_text += "<BR><B>Gorlex Maradeurs operatives have destroyed NSS Exodus!</B>"
 		score["roleswon"]++
 
-	else if (!disk_rescued &&  station_was_nuked &&           syndies_didnt_escape)
-		feedback_set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
+	else if(!disk_rescued &&  station_was_nuked &&           syndies_didnt_escape)
+		feedback_set_details("round_end_result", "halfwin - syndicate nuke - did not evacuate in time")
 		completion_text += "<FONT size = 3, color='red'><B>Total Annihilation</B></FONT>"
 		completion_text += "<BR><B>Gorlex Maradeurs operatives destroyed NSS Exodus but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
-		feedback_set_details("round_end_result","halfwin - blew wrong station")
+	else if(!disk_rescued && !station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
+		feedback_set_details("round_end_result", "halfwin - blew wrong station")
 		completion_text += "<FONT size = 3, color='red'><B>Crew Minor Victory</B></FONT>"
 		completion_text += "<BR><B>Gorlex Maradeurs operatives secured the authentication disk but blew up something that wasn't NSS Exodus.</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
-		feedback_set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
+	else if(!disk_rescued && !station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
+		feedback_set_details("round_end_result", "halfwin - blew wrong station - did not evacuate in time")
 		completion_text += "<FONT size = 3, color='red'><B>Gorlex Maradeurs operatives have earned Darwin Award!</B></FONT>"
 		completion_text += "<BR><B>Gorlex Maradeurs operatives blew up something that wasn't NSS Exodus and got caught in the explosion.</B> Next time, don't lose the disk!"
 
-	else if ( disk_rescued                                         && is_operatives_are_dead())
-		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
+	else if( disk_rescued                                         && is_operatives_are_dead())
+		feedback_set_details("round_end_result", "loss - evacuation - disk secured - syndi team dead")
 		completion_text += "<FONT size = 3, color='red'><B>Crew Major Victory!</B></FONT>"
 		completion_text += "<BR><B>The Research Staff has saved the disc and killed the Gorlex Maradeurs Operatives</B>"
 
-	else if ( disk_rescued                                        )
-		feedback_set_details("round_end_result","loss - evacuation - disk secured")
+	else if( disk_rescued                                        )
+		feedback_set_details("round_end_result", "loss - evacuation - disk secured")
 		completion_text += "<FONT size = 3, color='red'><B>Crew Major Victory</B></FONT>"
 		completion_text += "<BR><B>The Research Staff has saved the disc and stopped the Gorlex Maradeurs Operatives!</B>"
 
-	else if (!disk_rescued                                         && is_operatives_are_dead())
-		feedback_set_details("round_end_result","loss - evacuation - disk not secured")
+	else if(!disk_rescued                                         && is_operatives_are_dead())
+		feedback_set_details("round_end_result", "loss - evacuation - disk not secured")
 		completion_text += "<FONT size = 3, color='red'><B>Syndicate Minor Victory!</B></FONT>"
 		completion_text += "<BR><B>The Research Staff failed to secure the authentication disk but did manage to kill most of the Gorlex Maradeurs Operatives!</B>"
 
-	else if (!disk_rescued                                         &&  crew_evacuated)
-		feedback_set_details("round_end_result","halfwin - detonation averted")
+	else if(!disk_rescued                                         &&  crew_evacuated)
+		feedback_set_details("round_end_result", "halfwin - detonation averted")
 		completion_text += "<FONT size = 3, color='red'><B>Syndicate Minor Victory!</B></FONT>"
 		completion_text += "<BR><B>Gorlex Maradeurs operatives recovered the abandoned authentication disk but detonation of NSS Exodus was averted.</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued                                         && !crew_evacuated)
-		feedback_set_details("round_end_result","halfwin - interrupted")
+	else if(!disk_rescued                                         && !crew_evacuated)
+		feedback_set_details("round_end_result", "halfwin - interrupted")
 		completion_text += "<FONT size = 3, color='red'><B>Neutral Victory</B></FONT>"
 		completion_text += "<BR><B>Round was mysteriously interrupted!</B>"
 
@@ -368,7 +368,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	var/text = ""
-	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
+	if( syndicates.len || (ticker && istype(ticker.mode, /datum/game_mode/nuclear)) )
 		text += printlogo("nuke", "syndicate operatives")
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayerwithicon(syndicate)
@@ -380,20 +380,20 @@
 				for(var/entry in nuclear_uplink.hidden_uplink.purchase_log)
 					text += "<BR>[entry]TC(s)"
 			else
-				text += "<BR>The nukeops were smooth operators this round (did not purchase any uplink items)."
+				text += "<BR>The nukeops were smooth operators this round(did not purchase any uplink items)."
 		text += "<BR><HR>"
 	return text
 
 
 /*/proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
 	var/randomname = pick(last_names)
-	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
+	var/newname = copytext(sanitize(input(M, "You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change", randomname)), 1, MAX_NAME_LEN)
 
-	if (!newname)
+	if(!newname)
 		newname = randomname
 
 	else
-		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
+		if(newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
 			to_chat(M, "That name is reserved.")
 			return nukelastname(M)
 

@@ -20,12 +20,12 @@
 	var/silenced = 0
 	var/recoil = 0
 	var/clumsy_check = 1
-	var/tmp/list/mob/living/target //List of who yer targeting.
+	var/tmp/list/mob/living/target // List of who yer targeting.
 	var/tmp/lock_time = -100
-	var/tmp/mouthshoot = 0 ///To stop people from suiciding twice... >.>
-	var/automatic = 0 //Used to determine if you can target multiple people.
-	var/tmp/mob/living/last_moved_mob //Used to fire faster at more than one person.
-	var/tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
+	var/tmp/mouthshoot = 0 /// To stop people from suiciding twice... >.>
+	var/automatic = 0 // Used to determine if you can target multiple people.
+	var/tmp/mob/living/last_moved_mob // Used to fire faster at more than one person.
+	var/tmp/told_cant_shoot = 0 // So that it doesn't spam them with the fact they cannot hit them.
 	var/firerate = 0 	//0 for keep shooting until aim is lowered
 						// 1 for one bullet after tarrget moves and aim is lowered
 	var/fire_delay = 6
@@ -44,7 +44,7 @@
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
 
-/obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver.
+/obj/item/weapon/gun/proc/special_check(mob/M, atom/target) // Placeholder for any special checks, like detective's revolver.
 	return 1
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
@@ -72,21 +72,21 @@
 	return ..()
 
 /obj/item/weapon/gun/afterattack(atom/A, mob/living/user, flag, params)
-	if(flag)	return //It's adjacent, is the user, or is on the user's person
-	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
+	if(flag)	return // It's adjacent, is the user, or is on the user's person
+	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return// Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
-		PreFire(A,user,params) //They're using the new gun system, locate what they're aiming at.
+		PreFire(A, user, params) // They're using the new gun system, locate what they're aiming at.
 	else
-		Fire(A,user,params) //Otherwise, fire normally.
+		Fire(A, user, params) // Otherwise, fire normally.
 
-/obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)//TODO: go over this
-	//Exclude lasertag guns from the CLUMSY check.
+/obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)// TODO: go over this
+	// Exclude lasertag guns from the CLUMSY check.
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
 	if(isliving(user))
 		var/mob/living/M = user
-		if (HULK in M.mutations)
+		if(HULK in M.mutations)
 			to_chat(M, "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>")
 			return
 		if(ishuman(user))
@@ -103,9 +103,9 @@
 					if(V.stealth_active)
 						V.DeactivateStealth()
 
-			if(clumsy_check) //it should be AFTER hulk or monkey check.
+			if(clumsy_check) // it should be AFTER hulk or monkey check.
 				var/going_to_explode = 0
-				if ((CLUMSY in H.mutations) && prob(50))
+				if((CLUMSY in H.mutations) && prob(50))
 					going_to_explode = 1
 				if(chambered && chambered.crit_fail && prob(10))
 					going_to_explode = 1
@@ -122,8 +122,8 @@
 	if(!special_check(user, target))
 		return
 
-	if (!ready_to_fire())
-		if (world.time % 3) //to prevent spam
+	if(!ready_to_fire())
+		if(world.time % 3) // to prevent spam
 			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
 	if(chambered)
@@ -147,10 +147,10 @@
 	return
 
 /obj/item/weapon/gun/proc/can_hit(mob/living/target, mob/living/user)
-	return chambered.BB.check_fire(target,user)
+	return chambered.BB.check_fire(target, user)
 
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
-	if (user)
+	if(user)
 		user.visible_message("*click click*", "<span class='red'><b>*click*</b></span>")
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	else
@@ -161,8 +161,8 @@
 	return 1
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
-	//Suicide handling.
-	if (M == user && user.zone_sel.selecting == O_MOUTH && !mouthshoot)
+	// Suicide handling.
+	if(M == user && user.zone_sel.selecting == O_MOUTH && !mouthshoot)
 		if(isrobot(user))
 			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it.</span>")
 			return
@@ -175,7 +175,7 @@
 			M.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
 			mouthshoot = 0
 			return
-		if (can_fire())
+		if(can_fire())
 			user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
 			if(silenced)
 				playsound(user, fire_sound, 10, 1)
@@ -189,17 +189,17 @@
 			if(istype(chambered.BB, /obj/item/projectile/bullet/chameleon))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel weakness and the taste of gunpowder, but no more.</span>")
-				user.apply_effect(5,WEAKEN,0)
+				user.apply_effect(5, WEAKEN, 0)
 				mouthshoot = 0
 				return
 
 			chambered.BB.on_hit(M)
-			if (chambered.BB.damage_type != HALLOSS)
+			if(chambered.BB.damage_type != HALLOSS)
 				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
 				user.death()
 			else
 				to_chat(user, "<span class = 'notice'>Ow...</span>")
-				user.apply_effect(110,AGONY,0)
+				user.apply_effect(110, AGONY, 0)
 			chambered.BB = null
 			chambered.update_icon()
 			update_icon()
@@ -211,15 +211,15 @@
 			mouthshoot = 0
 			return
 
-	if (can_fire())
-		//Point blank shooting if on harm intent or target we were targeting.
+	if(can_fire())
+		// Point blank shooting if on harm intent or target we were targeting.
 		if(user.a_intent == "hurt")
 			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			chambered.BB.damage *= 1.3
-			Fire(M,user)
+			Fire(M, user)
 			return
 		else if(target && M in target)
-			Fire(M,user) ///Otherwise, shoot!
+			Fire(M, user) /// Otherwise, shoot!
 			return
 	else
 		return ..()

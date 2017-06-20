@@ -8,7 +8,7 @@ json_writer
 				var/val = L[k]
 				. += {"\"[k]\":[write(val)]"}
 				if(i++ < L.len)
-					. += ","
+					. += ", "
 			if(cached_data)
 				. = copytext(., 1, lentext(.)) + ",\"cached\":[cached_data]}"
 			. += "}"
@@ -31,7 +31,7 @@ json_writer
 			for(var/i = 1 to L.len)
 				. += write(L[i])
 				if(i < L.len)
-					. += ","
+					. += ", "
 			. += "]"
 
 		write_string(txt)
@@ -56,6 +56,6 @@ json_writer
 
 		is_associative(list/L)
 			for(var/key in L)
-				// if the key is a list that means it's actually an array of lists (stupid Byond...)
+				// if the key is a list that means it's actually an array of lists(stupid Byond...)
 				if(!isnum(key) && !istype(key, /list))
 					return TRUE

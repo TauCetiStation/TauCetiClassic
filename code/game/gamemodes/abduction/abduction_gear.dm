@@ -4,7 +4,7 @@
 #define GIZMO_MARK 2
 
 
-//AGENT VEST
+// AGENT VEST
 /obj/item/clothing/suit/armor/abductor/vest
 	name = "agent vest"
 	desc = "A vest outfitted with mind influence stealth technology. It has two modes - combat and stealth."
@@ -55,7 +55,7 @@
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/M = src.loc
 		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
+			anim(M.loc, M,'icons/mob/mob.dmi',, "cloak",, M.dir)
 		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
@@ -71,7 +71,7 @@
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/M = src.loc
 		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
+			anim(M.loc, M,'icons/mob/mob.dmi',, "uncloak",, M.dir)
 		M.name_override = null
 		M.overlays.Cut()
 		M.regenerate_icons()
@@ -139,7 +139,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 
-//SCIENCE TOOL
+// SCIENCE TOOL
 /obj/item/device/abductor/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -230,7 +230,7 @@
 		prepare(target, user)
 
 /obj/item/device/abductor/gizmo/proc/prepare(atom/target, mob/living/user)
-	if(get_dist(target,user) > 1)
+	if(get_dist(target, user) > 1)
 		to_chat(user, "<span class='warning'>You need to be next to the specimen to prepare it for transport.</span>")
 		return
 	to_chat(user, "<span class='notice'>You begin preparing [target] for transport...</span>")
@@ -239,7 +239,7 @@
 		to_chat(user, "<span class='notice'>You finish preparing [target] for transport.</span>")
 
 
-//SILENCER
+// SILENCER
 /obj/item/device/abductor/silencer
 	name = "abductor silencer"
 	desc = "A compact device used to shut down communications equipment."
@@ -261,7 +261,7 @@
 	radio_off(target, user)
 
 /obj/item/device/abductor/silencer/proc/radio_off(atom/target, mob/living/user)
-	if(!(user in (viewers(7, target))))
+	if(!(user in(viewers(7, target))))
 		return
 
 	var/turf/targloc = get_turf(target)
@@ -277,12 +277,12 @@
 	var/list/all_items = M.GetAllContents()
 
 	for(var/obj/I in all_items)
-		if(istype(I,/obj/item/device/radio/))
+		if(istype(I, /obj/item/device/radio/))
 			var/obj/item/device/radio/r = I
 			r.on = 0
 
 
-//RECALL IMPLANT
+// RECALL IMPLANT
 /obj/item/weapon/implant/abductor
 	name = "recall implant"
 	desc = "Returns you to the mothership."
@@ -313,7 +313,7 @@
 			STOP_PROCESSING(SSobj, src)
 
 
-//ALIEN DECLONER
+// ALIEN DECLONER
 /obj/item/weapon/gun/energy/decloner/alien
 	name = "alien weapon"
 	desc = "An odd device that resembles human weapon."
@@ -331,7 +331,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/declone/light)
 
 
-//AGENT HELMET
+// AGENT HELMET
 /obj/item/clothing/head/helmet/abductor
 	name = "agent headgear"
 	desc = "Abduct with style - spiky style. Prevents digital tracking."
@@ -379,7 +379,7 @@
 	return 1
 
 
-//ADVANCED BATON
+// ADVANCED BATON
 #define BATON_STUN 0
 #define BATON_SLEEP 1
 #define BATON_CUFF 2
@@ -467,18 +467,18 @@
 	user.do_attack_animation(L)
 	switch(mode)
 		if(BATON_STUN)
-			StunAttack(L,user)
+			StunAttack(L, user)
 		if(BATON_SLEEP)
-			SleepAttack(L,user)
+			SleepAttack(L, user)
 		if(BATON_CUFF)
-			CuffAttack(L,user)
+			CuffAttack(L, user)
 		if(BATON_PROBE)
-			ProbeAttack(L,user)
+			ProbeAttack(L, user)
 
 /obj/item/weapon/abductor_baton/attack_self(mob/living/user)
 	toggle(user)
 
-/obj/item/weapon/abductor_baton/proc/StunAttack(mob/living/L,mob/living/user)
+/obj/item/weapon/abductor_baton/proc/StunAttack(mob/living/L, mob/living/user)
 	user.lastattacked = L
 	L.lastattacker = user
 
@@ -495,7 +495,7 @@
 	msg_admin_attack("[user] ([user.ckey]) stunned [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	return
 
-/obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
+/obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L, mob/living/user)
 	if(L.stunned)
 		L.SetSleeping(60)
 	L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
@@ -507,7 +507,7 @@
 	msg_admin_attack("[user] ([user.ckey]) put to sleep [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	return
 
-/obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
+/obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L, mob/living/user)
 	if(!iscarbon(L))
 		return
 	var/mob/living/carbon/C = L
@@ -527,7 +527,7 @@
 			to_chat(user, "<span class='warning'>You fail to handcuff [C].</span>")
 	return
 
-/obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
+/obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L, mob/living/user)
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
 						"<span class='userdanger'>[user] probes you!</span>")
 
@@ -553,7 +553,7 @@
 			to_chat(user, "<span class='warning'>The baton is in probing mode.</span>")
 
 
-//HANDCUFFS
+// HANDCUFFS
 /obj/item/weapon/handcuffs/alien
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
@@ -607,15 +607,15 @@
 	if(!victim && !fastened)
 		return
 
-	//exclusion any bugs with grab
+	// exclusion any bugs with grab
 	var/mob/living/carbon/C = usr
-	if(istype(C.get_active_hand(),/obj/item/weapon/grab))
+	if(istype(C.get_active_hand(), /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = C.get_active_hand()
 		if(istype(C.l_hand, G))
 			C.drop_l_hand()
 		else
 			C.drop_r_hand()
-	if(istype(C.get_inactive_hand(),/obj/item/weapon/grab))
+	if(istype(C.get_inactive_hand(), /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = C.get_inactive_hand()
 		if(istype(C.l_hand, G))
 			C.drop_l_hand()
@@ -631,7 +631,7 @@
 
 	if(holding)
 		fastened = victim
-		//correction position of victim
+		// correction position of victim
 		switch(fastened.lying_current)
 			if(90)
 				if(fastened.pixel_x != 2)
@@ -648,7 +648,7 @@
 		if(fastened.dir & (EAST|WEST|NORTH))
 			fastened.dir = SOUTH
 
-		flick("belt_anim_on",animation)
+		flick("belt_anim_on", animation)
 		sleep(7)
 		overlays += belt
 		fastened.anchored = 1
@@ -659,7 +659,7 @@
 		switch(fastened.lying_current)
 			if(90)	animation.dir = 2
 			else	animation.dir = 1
-		flick("belt_anim_off",animation)
+		flick("belt_anim_off", animation)
 		sleep(9)
 		fastened.SetStunned(0)
 		fastened.anchored = 0
@@ -706,7 +706,7 @@
  5.Stop the bleeders and retract skin<br>
  6.Make with a circular saw in the chest of subject hole and secure it with retractor.<br>
  7.Make some space with the drill. Don't worry, it's not so bad for subject as it sounds.<br>
- 8.Insert replacement gland (Retrieve one from gland storage).<br>
+ 8.Insert replacement gland(Retrieve one from gland storage).<br>
  8.<b>OPTIONAL</b> Close hole in chest of subject, lubricate it with ectoplasm and cauterize the wound.<br>
  9.Consider dressing the specimen back to not disturb the habitat.<br>
  10.Put the specimen in the experiment machinery.<br>
@@ -735,7 +735,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		M.revive()
 		loaded = 0
 		user.visible_message("<span class='notice'>[user] injects [M] with [src], fully heal it.</span>")
-		playsound(src,'sound/effects/refill.ogg',50,1)
+		playsound(src,'sound/effects/refill.ogg', 50, 1)
 		icon_state = "abductor_empty"
 
 /obj/machinery/recharger/wallcharger/alien

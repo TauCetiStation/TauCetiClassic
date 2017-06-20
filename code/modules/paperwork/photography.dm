@@ -27,8 +27,8 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 2.0
-	var/icon/img	//Big photo image
-	var/scribble	//Scribble on the back.
+	var/icon/img	// Big photo image
+	var/scribble	// Scribble on the back.
 	var/icon/tiny
 
 /obj/item/weapon/photo/Destroy()
@@ -43,7 +43,7 @@
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		var/txt = sanitize_alt(copytext(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text, 1, 128))
-		//txt = copytext(txt, 1, 128)
+		// txt = copytext(txt, 1, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
 	else if(istype(P, /obj/item/weapon/lighter))
@@ -74,7 +74,7 @@
 	set src in usr
 
 	var/n_name = sanitize(copytext(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text, 1, MAX_NAME_LEN))
-	//loc.loc check is for making possible renaming photos in clipboards
+	// loc.loc check is for making possible renaming photos in clipboards
 	if(( (loc == usr || (loc.loc && loc.loc == usr)) && usr.stat == CONSCIOUS))
 		name = "[(n_name ? text("[n_name]") : "photo")]"
 	add_fingerprint(usr)
@@ -140,8 +140,8 @@
 	var/on = 1
 	var/icon_on = "camera"
 	var/icon_off = "camera_off"
-	var/see_ghosts = 0 //for the spoop of it
-	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
+	var/see_ghosts = 0 // for the spoop of it
+	var/photo_size = 3 // Default is 3x3. 1x1, 5x5, 7x7 are also options
 
 /obj/item/device/camera/spooky
 	name = "camera obscura"
@@ -183,7 +183,7 @@
 				if(see_ghosts)
 					if(istype(A, /mob/dead/observer))
 						var/mob/dead/observer/O = A
-						if(O.orbiting) //so you dont see ghosts following people like antags, etc.
+						if(O.orbiting) // so you dont see ghosts following people like antags, etc.
 							continue
 				else
 					continue
@@ -224,7 +224,7 @@
 	var/mob_detail
 	for(var/mob/M in the_turf)
 		if(M.invisibility)
-			if(see_ghosts && istype(M,/mob/dead/observer))
+			if(see_ghosts && istype(M, /mob/dead/observer))
 				var/mob/dead/observer/O = M
 				if(O.orbiting)
 					continue
@@ -272,13 +272,13 @@
 	icon_state = icon_on
 	on = 1
 
-/obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
+/obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  // Proc for both regular and AI-based camera to take the image
 	var/mobs = ""
 	var/isAi = istype(user, /mob/living/silicon/ai)
 	var/list/seen
-	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
-		if(user.client)		//To make shooting through security cameras possible
-			seen = hear(world.view, user.client.eye) //To make shooting through security cameras possible
+	if(!isAi) // crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
+		if(user.client)		// To make shooting through security cameras possible
+			seen = hear(world.view, user.client.eye) // To make shooting through security cameras possible
 		else
 			seen = hear(world.view, user)
 	else
@@ -303,12 +303,12 @@
 /obj/item/device/camera/proc/createpicture(mob/user, icon/temp, mobs, flag)
 	var/icon/small_img = icon(temp)
 	var/icon/tiny_img = icon(temp)
-	var/icon/ic = icon('icons/obj/items.dmi',"photo")
+	var/icon/ic = icon('icons/obj/items.dmi', "photo")
 	var/icon/pc = icon('icons/obj/bureaucracy.dmi', "photo")
 	small_img.Scale(8, 8)
 	tiny_img.Scale(4, 4)
-	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
-	pc.Blend(tiny_img,ICON_OVERLAY, 12, 19)
+	ic.Blend(small_img, ICON_OVERLAY, 10, 13)
+	pc.Blend(tiny_img, ICON_OVERLAY, 12, 19)
 
 	var/datum/picture/P = new()
 	P.fields["author"] = user

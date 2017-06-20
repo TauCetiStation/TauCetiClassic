@@ -154,7 +154,7 @@
 	item_state = "bowler"
 	body_parts_covered = 0
 
-//stylish bs12 hats
+// stylish bs12 hats
 
 /obj/item/clothing/head/bowlerhat
 	name = "bowler hat"
@@ -187,7 +187,7 @@
 	item_state = "fez"
 	desc = "You should wear a fez. Fezzes are cool."
 
-//end bs12 hats
+// end bs12 hats
 
 /obj/item/clothing/head/witchwig
 	name = "witch costume wig"
@@ -220,7 +220,7 @@
 	item_state = "zhan_scarf"
 	desc = "White headscarf"
 	body_parts_covered = 0
-	species_restricted = list(UNATHI , TAJARAN , HUMAN , DIONA , IPC)
+	species_restricted = list(UNATHI, TAJARAN, HUMAN, DIONA, IPC)
 
 /obj/item/clothing/head/skrell_headwear
 	name = "skrell yellow headwear"
@@ -268,7 +268,7 @@
 
 /obj/item/clothing/head/fedora/proc/fedoraproc(mob/user)
 	if(user.canmove && !user.stat && !user.restrained())
-		for(var/mob/living/carbon/M in range(7,src))
+		for(var/mob/living/carbon/M in range(7, src))
 			M.show_message("[user] tips their fedora.")
 
 /obj/item/clothing/head/fedora/verb/fedoratip()

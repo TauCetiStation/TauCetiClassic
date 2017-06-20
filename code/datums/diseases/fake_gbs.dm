@@ -4,9 +4,9 @@
 	spread = "On contact"
 	spread_type = CONTACT_GENERAL
 	cure = "Synaptizine & Sulfur"
-	cure_id = list("synaptizine","sulfur")
+	cure_id = list("synaptizine", "sulfur")
 	agent = "Gravitokinetic Bipotential SADS-"
-	affected_species = list(HUMAN , MONKEY)
+	affected_species = list(HUMAN, MONKEY)
 	desc = "If left untreated death will occur."
 	severity = "Major"
 

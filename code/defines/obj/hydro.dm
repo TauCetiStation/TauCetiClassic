@@ -11,7 +11,7 @@
 		return 0
 
 // ********************************************************
-// Here's all the seeds (plants) that can be used in hydro
+// Here's all the seeds(plants) that can be used in hydro
 // ********************************************************
 
 /obj/item/seeds
@@ -35,7 +35,7 @@
 	var/list/mutatelist = list()
 
 /obj/item/seeds/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		to_chat(user, "*** <B>[plantname]</B> ***")
 		to_chat(user, "-Plant Endurance: \blue [endurance]")
 		to_chat(user, "-Plant Lifespan: \blue [lifespan]")
@@ -185,7 +185,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/glowberryseed,/obj/item/seeds/poisonberryseed)
+	mutatelist = list(/obj/item/seeds/glowberryseed, /obj/item/seeds/poisonberryseed)
 
 /obj/item/seeds/glowberryseed
 	name = "pack of glow-berry seeds"
@@ -601,7 +601,7 @@
 	species = "glowshroom"
 	plantname = "Glowshrooms"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom"
-	lifespan = 120 //ten times that is the delay
+	lifespan = 120 // ten times that is the delay
 	endurance = 30
 	maturation = 15
 	production = 1
@@ -1036,11 +1036,11 @@
 
 /obj/item/seeds/cocoapodseed
 	name = "pack of cocoa pod seeds"
-	desc = "These seeds grow into cacao trees. They look fattening." //SIC: cocoa is the seeds. The tress ARE spelled cacao.
+	desc = "These seeds grow into cacao trees. They look fattening." // SIC: cocoa is the seeds. The tress ARE spelled cacao.
 	icon_state = "seed-cocoapod"
 	mypath = "/obj/item/seeds/cocoapodseed"
 	species = "cocoapod"
-	plantname = "Cocao Tree" //SIC: see above
+	plantname = "Cocao Tree" // SIC: see above
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod"
 	lifespan = 20
 	endurance = 15
@@ -1086,7 +1086,7 @@
 	plant_type = 1
 
 /obj/item/seeds/kudzuseed/attack_self(mob/user)
-	if(istype(user.loc,/turf/space) || istype(user.loc,/turf/simulated/shuttle))
+	if(istype(user.loc, /turf/space) || istype(user.loc, /turf/simulated/shuttle))
 		to_chat(user, "<span class='notice'>You cannot plant kudzu on a moving shuttle or space.</span>")
 		return
 	to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
@@ -1139,7 +1139,7 @@
 // **********************
 
 // **********************
-// Other harvested materials from plants (that are not food)
+// Other harvested materials from plants(that are not food)
 // **********************
 
 /obj/item/weapon/grown // Grown weapons
@@ -1183,9 +1183,9 @@
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
-		for(var/i=0,i<2,i++)
-			var/obj/item/stack/sheet/wood/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/wood/G in user.loc)
+		for(var/i=0, i<2, i++)
+			var/obj/item/stack/sheet/wood/NG = new(user.loc)
+			for(var/obj/item/stack/sheet/wood/G in user.loc)
 				if(G==NG)
 					continue
 				if(G.amount>=G.max_amount)
@@ -1250,7 +1250,7 @@
 
 /obj/item/weapon/grown/nettle/New()
 	..()
-	spawn(5)	//So potency can be set in the proc that creates these crops
+	spawn(5)	// So potency can be set in the proc that creates these crops
 		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("sacid", round(potency, 1))
 		force = round((5+potency/5), 1)
@@ -1273,14 +1273,14 @@
 
 /obj/item/weapon/grown/deathnettle/New()
 	..()
-	spawn(5)	//So potency can be set in the proc that creates these crops
+	spawn(5)	// So potency can be set in the proc that creates these crops
 		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("pacid", round(potency, 1))
 		force = round((5+potency/2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
 	to_chat(viewers(user), "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>")
-	return (BRUTELOSS|TOXLOSS)
+	return(BRUTELOSS|TOXLOSS)
 
 // *************************************
 // Pestkiller defines for hydroponics
@@ -1351,7 +1351,7 @@
 
 /obj/item/weapon/weedspray/suicide_act(mob/user)
 	to_chat(viewers(user), "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>")
-	return (TOXLOSS)
+	return(TOXLOSS)
 
 /obj/item/weapon/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
@@ -1370,7 +1370,7 @@
 
 /obj/item/weapon/pestspray/suicide_act(mob/user)
 	to_chat(viewers(user), "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>")
-	return (TOXLOSS)
+	return(TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers
 	name = "mini hoe"
@@ -1411,7 +1411,7 @@
 	WeedKillStr = 4
 
 /obj/item/weedkiller/D24
-	name = "bottle of 2,4-D"
+	name = "bottle of 2, 4-D"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 	toxicity = 8

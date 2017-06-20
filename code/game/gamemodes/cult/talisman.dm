@@ -13,7 +13,7 @@
 				if("armor")
 					call(/obj/effect/rune/proc/armor)()
 				if("emp")
-					call(/obj/effect/rune/proc/emp)(usr.loc,3)
+					call(/obj/effect/rune/proc/emp)(usr.loc, 3)
 				if("conceal")
 					call(/obj/effect/rune/proc/obscure)(2)
 				if("revealrunes")
@@ -21,7 +21,7 @@
 				if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
 					call(/obj/effect/rune/proc/teleport)(imbue)
 				if("communicate")
-					//If the user cancels the talisman this var will be set to 0
+					// If the user cancels the talisman this var will be set to 0
 					delete = call(/obj/effect/rune/proc/communicate)()
 				if("deafen")
 					call(/obj/effect/rune/proc/deafen)()
@@ -48,13 +48,13 @@
 				call(/obj/effect/rune/proc/runestun)(T)
 				qdel(src)
 			else
-				..()   ///If its some other talisman, use the generic attack code, is this supposed to work this way?
+				..()   /// If its some other talisman, use the generic attack code, is this supposed to work this way?
 		else
 			..()
 
 
 	proc/supply(key)
-		if (!src.uses)
+		if(!src.uses)
 			qdel(src)
 			return
 
@@ -76,9 +76,9 @@
 
 	Topic(href, href_list)
 		if(!src)	return
-		if (usr.stat || usr.restrained() || !in_range(src, usr))	return
+		if(usr.stat || usr.restrained() || !in_range(src, usr))	return
 
-		if (href_list["rune"])
+		if(href_list["rune"])
 			switch(href_list["rune"])
 				if("newtome")
 					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))

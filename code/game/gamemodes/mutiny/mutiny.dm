@@ -37,7 +37,7 @@ datum/game_mode/mutiny
 
 	proc/reveal_directives()
 		spawn(rand(1 MINUTE, 3 MINUTES))
-			command_alert("Incoming emergency directive: Captain's office fax machine, [station_name()].","Emergency Transmission")
+			command_alert("Incoming emergency directive: Captain's office fax machine, [station_name()].", "Emergency Transmission")
 			spawn(rand(3 MINUTES, 5 MINUTES))
 				send_pda_message()
 			spawn(rand(3 MINUTES, 5 MINUTES))
@@ -77,7 +77,7 @@ datum/game_mode/mutiny
 						"classified security operations",
 						"science-defying raw elemental chaos"
 						)
-					command_alert("The presence of [pick(reasons)] in the region is tying up all available local emergency resources; emergency response teams cannot be called at this time.","Emergency Transmission")
+					command_alert("The presence of [pick(reasons)] in the region is tying up all available local emergency resources; emergency response teams cannot be called at this time.", "Emergency Transmission")
 
 	// Returns an array in case we want to expand on this later.
 	proc/get_head_loyalist_candidates()
@@ -100,7 +100,7 @@ datum/game_mode/mutiny
 		var/list/candidates[0]
 		for(var/T in typesof(/datum/directive) - /datum/directive)
 			var/datum/directive/D = new T(src)
-			if (D.meets_prerequisites())
+			if(D.meets_prerequisites())
 				candidates.Add(D)
 		return candidates
 
@@ -110,12 +110,12 @@ datum/game_mode/mutiny
 			pda = P
 			break
 
-		if (!pda)
+		if(!pda)
 			return 0
 
-		if (!pda.message_silent)
+		if(!pda.message_silent)
 			playsound(pda.loc, 'sound/machines/twobeep.ogg', 50, 1)
-			for (var/mob/O in hearers(3, pda.loc))
+			for(var/mob/O in hearers(3, pda.loc))
 				O.show_message(text("[bicon(pda)] *[pda.ttone]*"))
 
 		to_chat(head_mutineer.current, fluff.get_pda_body())
@@ -186,11 +186,11 @@ datum/game_mode/mutiny
 
 	proc/was_bloodbath()
 		var/list/remaining_loyalists = loyalists - body_count
-		if (!remaining_loyalists.len)
+		if(!remaining_loyalists.len)
 			return 1
 
 		var/list/remaining_mutineers = mutineers - body_count
-		if (!remaining_mutineers.len)
+		if(!remaining_mutineers.len)
 			return 1
 
 		return 0
@@ -252,7 +252,7 @@ datum/game_mode/mutiny
 
 	proc/borgify_directive(mob/living/silicon/robot/cyborg)
 		var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
-		if (!D) return
+		if(!D) return
 
 		if(D.cyborgs_to_make.Find(cyborg.mind))
 			D.cyborgs_to_make.Remove(cyborg.mind)
@@ -274,21 +274,21 @@ datum/game_mode/mutiny
 
 	proc/suspension_directive(datum/money_account/account)
 		var/datum/directive/terminations/D = get_directive("terminations")
-		if (!D) return
+		if(!D) return
 
 		if(D.accounts_to_suspend && D.accounts_to_suspend.Find("[account.account_number]"))
 			D.accounts_to_suspend["[account.account_number]"] = account.suspended
 
 	proc/payroll_directive(datum/money_account/account)
 		var/datum/directive/terminations/D = get_directive("terminations")
-		if (!D) return
+		if(!D) return
 
 		if(D.accounts_to_revoke && D.accounts_to_revoke.Find("[account.account_number]"))
 			D.accounts_to_revoke["[account.account_number]"] = 1
 
 	proc/debrain_directive(obj/item/brain/B)
 		var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
-		if (!D) return
+		if(!D) return
 
 		if(D.brains_to_enslave.Find(B.brainmob.mind))
 			D.brains_to_enslave.Remove(B.brainmob.mind)
@@ -302,19 +302,19 @@ datum/game_mode/mutiny
 
 	proc/round_outcome()
 		to_chat(world, "<center><h4>Breaking News</h4></center><br><hr>")
-		if (was_bloodbath())
+		if(was_bloodbath())
 			to_chat(world, fluff.no_victory())
 			return
 
 		var/directives_completed = current_directive.directives_complete()
 		var/ead_activated = ead.activated
-		if (directives_completed && ead_activated)
+		if(directives_completed && ead_activated)
 			to_chat(world, fluff.loyalist_major_victory())
-		else if (directives_completed && !ead_activated)
+		else if(directives_completed && !ead_activated)
 			to_chat(world, fluff.loyalist_minor_victory())
-		else if (!directives_completed && ead_activated)
+		else if(!directives_completed && ead_activated)
 			to_chat(world, fluff.mutineer_minor_victory())
-		else if (!directives_completed && !ead_activated)
+		else if(!directives_completed && !ead_activated)
 			to_chat(world, fluff.mutineer_major_victory())
 
 		world << sound('sound/machines/twobeep.ogg')
@@ -397,11 +397,11 @@ datum/game_mode/mutiny
 	set category = "Mutiny"
 
 	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if (!mode || src != mode.head_loyalist.current)
+	if(!mode || src != mode.head_loyalist.current)
 		return
 
 	var/list/candidates = list()
-	for (var/mob/living/carbon/human/P in oview(src))
+	for(var/mob/living/carbon/human/P in oview(src))
 		if(!stat && P.client && mode.can_be_recruited(P.mind, "loyalist"))
 			candidates += P
 
@@ -417,7 +417,7 @@ datum/game_mode/mutiny
 
 	var/mob/living/carbon/human/M = input("Select a person to recruit", "Loyalist recruitment", null) as mob in candidates
 
-	if (M)
+	if(M)
 		to_chat(src, "Attempting to recruit [M]...")
 		log_admin("[src]([src.ckey]) attempted to recruit [M] as a loyalist.")
 		message_admins("\red [src]([src.ckey]) attempted to recruit [M] as a loyalist.")
@@ -434,11 +434,11 @@ datum/game_mode/mutiny
 	set category = "Mutiny"
 
 	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if (!mode || src != mode.head_mutineer.current)
+	if(!mode || src != mode.head_mutineer.current)
 		return
 
 	var/list/candidates = list()
-	for (var/mob/living/carbon/human/P in oview(src))
+	for(var/mob/living/carbon/human/P in oview(src))
 		if(!stat && P.client && mode.can_be_recruited(P.mind, "mutineer"))
 			candidates += P
 
@@ -454,7 +454,7 @@ datum/game_mode/mutiny
 
 	var/mob/living/carbon/human/M = input("Select a person to recruit", "Mutineer recruitment", null) as mob in candidates
 
-	if (M)
+	if(M)
 		to_chat(src, "Attempting to recruit [M]...")
 		log_admin("[src]([src.ckey]) attempted to recruit [M] as a mutineer.")
 		message_admins("\red [src]([src.ckey]) attempted to recruit [M] as a mutineer.")

@@ -15,7 +15,7 @@
 	..()
 
 	var/datum/playingcard/P
-	for(var/suit in list("spades","clubs","diamonds","hearts"))
+	for(var/suit in list("spades", "clubs", "diamonds", "hearts"))
 
 		var/colour
 		if(suit == "spades" || suit == "clubs")
@@ -23,27 +23,27 @@
 		else
 			colour = "red_"
 
-		for(var/number in list("ace","two","three","four","five","six","seven","eight","nine","ten"))
+		for(var/number in list("ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"))
 			P = new()
 			P.name = "[number] of [suit]"
 			P.card_icon = "[colour]num"
 			cards += P
 
-		for(var/number in list("jack","queen","king"))
+		for(var/number in list("jack", "queen", "king"))
 			P = new()
 			P.name = "[number] of [suit]"
 			P.card_icon = "[colour]col"
 			cards += P
 
 
-	for(var/i = 0,i<2,i++)
+	for(var/i = 0, i<2, i++)
 		P = new()
 		P.name = "joker"
 		P.card_icon = "joker"
 		cards += P
 
 /obj/item/weapon/deck/attackby(obj/O, mob/user)
-	if(istype(O,/obj/item/weapon/hand))
+	if(istype(O, /obj/item/weapon/hand))
 		var/obj/item/weapon/hand/H = O
 		for(var/datum/playingcard/P in H.cards)
 			cards += P
@@ -61,7 +61,7 @@
 
 	if(usr.stat || !Adjacent(usr)) return
 
-	if(!istype(usr,/mob/living/carbon))
+	if(!istype(usr, /mob/living/carbon))
 		return
 
 	var/mob/living/carbon/user = usr
@@ -71,9 +71,9 @@
 		return
 
 	var/obj/item/weapon/hand/H
-	if(user.l_hand && istype(user.l_hand,/obj/item/weapon/hand))
+	if(user.l_hand && istype(user.l_hand, /obj/item/weapon/hand))
 		H = user.l_hand
-	else if(user.r_hand && istype(user.r_hand,/obj/item/weapon/hand))
+	else if(user.r_hand && istype(user.r_hand, /obj/item/weapon/hand))
 		H = user.r_hand
 	else
 		H = new(get_turf(src))
@@ -116,10 +116,10 @@
 	H.concealed = 1
 	H.update_icon()
 	usr.visible_message("\The [usr] deals a card to \the [M].")
-	H.throw_at(get_step(M,M.dir),10,1,H)
+	H.throw_at(get_step(M, M.dir), 10, 1, H)
 
 /obj/item/weapon/hand/attackby(obj/O, mob/user)
-	if(istype(O,/obj/item/weapon/hand))
+	if(istype(O, /obj/item/weapon/hand))
 		var/obj/item/weapon/hand/H = O
 		for(var/datum/playingcard/P in H.cards)
 			cards += P
@@ -171,7 +171,7 @@
 	H.concealed = 0
 	H.update_icon()
 	usr.visible_message("\The [usr] plays \the [discarding].")
-	H.loc = get_step(usr,usr.dir)
+	H.loc = get_step(usr, usr.dir)
 
 	if(!cards.len)
 		qdel(src)

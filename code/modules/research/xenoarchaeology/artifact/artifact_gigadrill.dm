@@ -8,7 +8,7 @@
 	var/drill_time = 10
 	var/turf/drilling_turf
 	density = 1
-	layer = 3.1		//to go over ores
+	layer = 3.1		// to go over ores
 
 /obj/machinery/giga_drill/attack_hand(mob/user)
 	if(active)
@@ -22,7 +22,7 @@
 
 /obj/machinery/giga_drill/Bump(atom/A)
 	if(active && !drilling_turf)
-		if(istype(A,/turf/simulated/mineral))
+		if(istype(A, /turf/simulated/mineral))
 			var/turf/simulated/mineral/M = A
 			drilling_turf = get_turf(src)
 			src.visible_message("\red <b>[src] begins to drill into [M]!</b>")

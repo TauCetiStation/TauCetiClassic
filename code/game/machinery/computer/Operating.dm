@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/operating
 	name = "Operating Computer"
@@ -12,9 +12,9 @@
 
 /obj/machinery/computer/operating/New()
 	..()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		table = locate(/obj/machinery/optable, get_step(src, dir))
-		if (table)
+		if(table)
 			table.computer = src
 			break
 
@@ -24,8 +24,8 @@
 	interact(user)
 
 /obj/machinery/computer/operating/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
+	if( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+		if(!istype(user, /mob/living/silicon))
 			user.unset_machine()
 			user << browse(null, "window=op")
 			return

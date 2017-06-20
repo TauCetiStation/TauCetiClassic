@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/containment_field
 	name = "Containment Field"
@@ -65,7 +65,7 @@
 	S.start()
 
 	if(iscarbon(shoked_mob))
-		var/shock_damage = min(rand(30,40), rand(30,40))
+		var/shock_damage = min(rand(30, 40), rand(30, 40))
 		shoked_mob.burn_skin(shock_damage)
 		shoked_mob.updatehealth()
 
@@ -82,7 +82,7 @@
 		var/atom/target = get_edge_target_turf(shoked_mob, get_dir(src, get_step_away(shoked_mob, src)))
 		shoked_mob.throw_at(target, 200, 4)
 	else if(issilicon(shoked_mob))
-		var/shock_damage = rand(15,30)
+		var/shock_damage = rand(15, 30)
 		shoked_mob.take_overall_damage(0, shock_damage)
 
 		shoked_mob.visible_message(

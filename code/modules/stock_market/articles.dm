@@ -1,5 +1,5 @@
 proc/consonant()
-	return pick("B","C","D","F","G","H","J","K","L","M","N","P","Q","R","S","T","V","W","X","Y","Z")
+	return pick("B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z")
 
 proc/vowel()
 	return pick("A", "E", "I", "O", "U")
@@ -10,14 +10,14 @@ proc/ucfirst(S)
 proc/ucfirsts(S)
 	var/list/L = splittext(S, " ")
 	var/list/M = list()
-	for (var/P in L)
+	for(var/P in L)
 		M += ucfirst(P)
 	return jointext(M, " ")
 
 var/global/list/FrozenAccounts = list()
 
 proc/list_frozen()
-	for (var/A in FrozenAccounts)
+	for(var/A in FrozenAccounts)
 		to_chat(usr, "[A]: [length(FrozenAccounts[A])] borrows")
 
 /datum/article
@@ -71,7 +71,7 @@ proc/list_frozen()
 		outlet = pick(outlets)
 
 	var/list/authors = outlets[outlet]
-	if ((authors.len && !prob(100 / (authors.len + 1))) || !authors.len)
+	if((authors.len && !prob(100 / (authors.len + 1))) || !authors.len)
 		var/AN = generateAuthorName()
 		outlets[outlet] += AN
 		author = AN
@@ -85,41 +85,41 @@ proc/list_frozen()
 	var/list/nouns = list("Post", "Herald", "Sun", "Tribune", "Mail", "Times", "Journal", "Report")
 	var/list/timely = list("Daily", "Hourly", "Weekly", "Biweekly", "Monthly", "Yearly")
 
-	switch(rand(1,2))
-		if (1)
+	switch(rand(1, 2))
+		if(1)
 			return "The [pick(locations)] [pick(nouns)]"
-		if (2)
+		if(2)
 			return "The [pick(timely)] [pick(nouns)]"
 
 /datum/article/proc/generateAuthorName()
-	switch(rand(1,3))
-		if (1)
+	switch(rand(1, 3))
+		if(1)
 			return "[consonant()]. [pick(last_names)]"
-		if (2)
+		if(2)
 			return "[prob(50) ? pick(first_names_male) : pick(first_names_female)] [consonant()].[prob(50) ? "[consonant()]. " : null] [pick(last_names)]"
-		if (3)
+		if(3)
 			return "[prob(50) ? pick(first_names_male) : pick(first_names_female)] \"[prob(50) ? pick(first_names_male) : pick(first_names_female)]\" [pick(last_names)]"
 
 /datum/article/proc/formatSpacetime()
 	var/ticksc = round(ticks/100)
 	ticksc = ticksc % 100000
 	var/ticksp = "[ticksc]"
-	while (length(ticksp) < 5)
+	while(length(ticksp) < 5)
 		ticksp = "0[ticksp]"
 	spacetime = "[ticksp][time2text(world.realtime, "MM")][time2text(world.realtime, "DD")]2556"
 
 /datum/article/proc/formatArticle()
-	if (spacetime == "")
+	if(spacetime == "")
 		formatSpacetime()
 	var/output = "<div class='article'><div class='headline'>[headline]</div><div class='subtitle'>[subtitle]</div><div class='article-body'>[article]</div><div class='author'>[author]</div><div class='timestamp'>[spacetime]</div></div>"
 	return output
 
 /datum/article/proc/detokenize(token_string, list/industry_tokens, list/product_tokens = list())
 	var/list/T_list = default_tokens.Copy()
-	for (var/I in industry_tokens)
+	for(var/I in industry_tokens)
 		T_list[I] = industry_tokens[I]
-	for (var/I in product_tokens)
+	for(var/I in product_tokens)
 		T_list[I] = list(product_tokens[I])
-	for (var/I in T_list)
+	for(var/I in T_list)
 		token_string = replacetext(token_string, "%[I]%", pick(T_list[I]))
 	return ucfirst(token_string)

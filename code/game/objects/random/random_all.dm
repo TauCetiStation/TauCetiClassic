@@ -1,4 +1,4 @@
-//TOOLS RANDOM
+// TOOLS RANDOM
 /obj/random/misc/all
 	name = "Random Item"
 	desc = "This is a random item."

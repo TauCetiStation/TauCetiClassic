@@ -64,7 +64,7 @@
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/reagent_containers))
+	if(istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(src.beaker))
 			to_chat(user, "There is already a reagent container loaded!")
 			return
@@ -80,13 +80,13 @@
 
 
 /obj/machinery/iv_drip/process()
-	//set background = 1
+	// set background = 1
 
 	if(src.attached)
 
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
 			visible_message("The needle is ripped out of [src.attached], doesn't that hurt?")
-			src.attached:apply_damage(3, BRUTE, pick(BP_R_ARM , BP_L_ARM))
+			src.attached:apply_damage(3, BRUTE, pick(BP_R_ARM, BP_L_ARM))
 			src.attached = null
 			src.update_icon()
 			return
@@ -126,9 +126,9 @@
 			if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE) if(prob(5))
 				visible_message("\The [src] beeps loudly.")
 
-			var/datum/reagent/B = T.take_blood(beaker,amount)
+			var/datum/reagent/B = T.take_blood(beaker, amount)
 
-			if (B)
+			if(B)
 				beaker.reagents.reagent_list |= B
 				beaker.reagents.update_total()
 				beaker.on_reagent_change()

@@ -14,24 +14,24 @@ var/datum/subsystem/parallax/SSparallax
 	NEW_SS_GLOBAL(SSparallax)
 
 /datum/subsystem/parallax/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = clients.Copy()
 
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed(lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	while(length(currentrun))
 		var/client/C = currentrun[currentrun.len]
 		currentrun.len--
 
-		if (!C || !C.eye)
-			if (MC_TICK_CHECK)
+		if(!C || !C.eye)
+			if(MC_TICK_CHECK)
 				return
 			continue
 		var/atom/movable/A = C.eye
 		if(!A)
 			return
-		for (A; isloc(A.loc) && !isturf(A.loc); A = A.loc);
+		for(A; isloc(A.loc) && !isturf(A.loc); A = A.loc);
 
 		if(A != C.movingmob)
 			if(C.movingmob != null)
@@ -40,6 +40,6 @@ var/datum/subsystem/parallax/SSparallax
 			LAZYINITLIST(A.client_mobs_in_contents)
 			A.client_mobs_in_contents += C.mob
 			C.movingmob = A
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 	currentrun = null

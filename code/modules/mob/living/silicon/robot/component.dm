@@ -25,7 +25,7 @@
 
 /datum/robot_component/proc/destroy()
 	var/brokenstate = "broken" // Generic icon
-	if (istype(wrapped, /obj/item/robot_parts/robot_component))
+	if(istype(wrapped, /obj/item/robot_parts/robot_component))
 		var/obj/item/robot_parts/robot_component/comp = wrapped
 		brokenstate = comp.icon_state_broken
 	if(wrapped)
@@ -56,7 +56,7 @@
 	electronics_damage = max(0, electronics_damage - electronics)
 
 /datum/robot_component/proc/is_powered()
-	return (installed == 1) && (brute_damage + electronics_damage < max_damage) && (!idle_usage || powered)
+	return(installed == 1) && (brute_damage + electronics_damage < max_damage) && (!idle_usage || powered)
 
 /datum/robot_component/proc/update_power_state()
 	if(toggled == 0)
@@ -89,13 +89,13 @@
 	max_damage = 50
 
 
-//A fixed and much cleaner implementation of /tg/'s special snowflake code.
+// A fixed and much cleaner implementation of /tg/'s special snowflake code.
 /datum/robot_component/actuator/is_powered()
-	return (installed == 1) && (brute_damage + electronics_damage < max_damage)
+	return(installed == 1) && (brute_damage + electronics_damage < max_damage)
 
 
 // POWER CELL
-// Stores power (how unexpected..)
+// Stores power(how unexpected..)
 // No power usage
 /datum/robot_component/cell
 	name = "power cell"

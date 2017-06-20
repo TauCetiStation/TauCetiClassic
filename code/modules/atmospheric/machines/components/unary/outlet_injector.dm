@@ -84,7 +84,7 @@
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 
 	signal.data = list(
@@ -130,14 +130,14 @@
 
 	if("status" in signal.data)
 		addtimer(CALLBACK(src, .proc/broadcast_status), 2)
-		return //do not update_icon
+		return // do not update_icon
 
-		//log_admin("DEBUG \[[world.timeofday]\]: outlet_injector/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
-		//return
+		// log_admin("DEBUG \[[world.timeofday]\]: outlet_injector/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
+		// return
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 	update_icon()
 
-/obj/machinery/atmospherics/unary/outlet_injector/hide(i) //to make the little pipe section invisible, the icon changes.
+/obj/machinery/atmospherics/unary/outlet_injector/hide(i) // to make the little pipe section invisible, the icon changes.
 	if(node)
 		if(on)
 			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"

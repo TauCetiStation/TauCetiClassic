@@ -10,7 +10,7 @@
 	density = 1
 	anchored = 0
 	opacity = 0
-	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel,/obj/item/stack/sheet/metal,/obj/item/stack/rods)
+	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/metal, /obj/item/stack/rods)
 	var/list/wirecutters_salvage = list(/obj/item/weapon/cable_coil)
 	var/list/crowbar_salvage
 	var/salvage_num = 5
@@ -36,7 +36,7 @@
 		if(salvage_num <= 0)
 			to_chat(user, "You don't see anything that can be cut with [W].")
 			return
-		if (!isemptylist(welder_salvage) && WT.remove_fuel(0,user))
+		if(!isemptylist(welder_salvage) && WT.remove_fuel(0, user))
 			var/type = prob(70)?pick(welder_salvage):null
 			if(type)
 				var/N = new type(get_turf(user))

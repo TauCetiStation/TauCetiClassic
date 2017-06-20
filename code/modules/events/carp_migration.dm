@@ -6,7 +6,7 @@
 
 /datum/event/carp_migration/setup()
 	announceWhen = rand(40, 60)
-	endWhen = rand(600,1200)
+	endWhen = rand(600, 1200)
 
 /datum/event/carp_migration/announce()
 	command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")

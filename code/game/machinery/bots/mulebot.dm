@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 // Mulebot - carries crates around for Quartermaster
 // Navigates via floor navbeacons
@@ -16,11 +16,11 @@
 	density = 1
 	anchored = 1
 	animate_movement=1
-	health = 150 //yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
+	health = 150 // yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
 	maxhealth = 150
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
-	var/atom/movable/load = null		// the loaded crate (usually)
+	var/atom/movable/load = null		// the loaded crate(usually)
 	var/beacon_freq = 1400
 	var/control_freq = 1447
 	can_buckle = 1
@@ -28,12 +28,12 @@
 
 	suffix = ""
 
-	var/turf/target				// this is turf to navigate to (location of beacon)
+	var/turf/target				// this is turf to navigate to(location of beacon)
 	var/loaddir = 0				// this the direction to unload onto/load from
-	var/new_destination = ""	// pending new destination (waiting for beacon response)
+	var/new_destination = ""	// pending new destination(waiting for beacon response)
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
+	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr // I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
 	var/path[] = new()
 
 	var/mode = 0		//0 = idle/ready
@@ -43,10 +43,10 @@
 						//4 = blocked
 						//5 = computing navigation
 						//6 = waiting for nav computation
-						//7 = no destination beacon found (or no route)
+						//7 = no destination beacon found(or no route)
 
-	var/blockcount	= 0		//number of times retried a blocked path
-	var/reached_target = 1 	//true if already reached the target
+	var/blockcount	= 0		// number of times retried a blocked path
+	var/reached_target = 1 	// true if already reached the target
 
 	var/refresh = 1		// true to refresh dialogue
 	var/auto_return = 1	// true if auto return to home beacon after unload
@@ -63,7 +63,7 @@
 	botcard = new(src)
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
 	botcard.access = J.get_access()
-//	botcard.access += access_robotics //Why --Ikki
+//	botcard.access += access_robotics // Why --Ikki
 	cell = new(src)
 	cell.charge = 2000
 	cell.maxcharge = 2000
@@ -78,13 +78,13 @@
 			count++
 		if(!suffix)
 			suffix = "#[count]"
-		name = "Mulebot ([suffix])"
+		name = "Mulebot([suffix])"
 
 /obj/machinery/bot/mulebot/Destroy()
 	QDEL_NULL(wires)
 	if(radio_controller)
-		radio_controller.remove_object(src,beacon_freq)
-		radio_controller.remove_object(src,control_freq)
+		radio_controller.remove_object(src, beacon_freq)
+		radio_controller.remove_object(src, control_freq)
 	unload(0)
 	return ..()
 
@@ -94,18 +94,18 @@
 // cell: insert it
 // other: chance to knock rider off bot
 /obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/card/emag))
+	if(istype(I, /obj/item/weapon/card/emag))
 		locked = !locked
 		to_chat(user, "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!")
 		flick("mulebot-emagged", src)
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
-	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
+	else if(istype(I, /obj/item/weapon/stock_parts/cell) && open && !cell)
 		var/obj/item/weapon/stock_parts/cell/C = I
 		user.drop_item()
 		C.loc = src
 		cell = C
 		updateDialog()
-	else if(istype(I,/obj/item/weapon/screwdriver))
+	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(locked)
 			to_chat(user, "\blue The maintenance hatch cannot be opened or closed while the controls are locked.")
 			return
@@ -120,8 +120,8 @@
 			icon_state = "mulebot0"
 
 		updateDialog()
-	else if (istype(I, /obj/item/weapon/wrench))
-		if (src.health < maxhealth)
+	else if(istype(I, /obj/item/weapon/wrench))
+		if(src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
 				"\red [user] repairs [src]!",
@@ -193,7 +193,7 @@
 				dat += "Navigating to Home"
 			if(4)
 				dat += "Waiting for clear path"
-			if(5,6)
+			if(5, 6)
 				dat += "Calculating navigation path"
 			if(7)
 				dat += "Unable to locate destination"
@@ -250,10 +250,10 @@
 				to_chat(usr, "\red Access denied.")
 				return FALSE
 		if("power")
-			if (src.on)
+			if(src.on)
 				turn_off()
-			else if (cell && !open)
-				if (!turn_on())
+			else if(cell && !open)
+				if(!turn_on())
 					to_chat(usr, "\red You can't switch on [src].")
 					return FALSE
 			else
@@ -304,11 +304,11 @@
 
 		if("setid")
 			refresh=0
-			var/new_id = sanitize(copytext(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null,1,MAX_NAME_LEN))
+			var/new_id = sanitize(copytext(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null, 1, MAX_NAME_LEN))
 			refresh=1
 			if(new_id)
 				suffix = new_id
-				name = "Mulebot ([suffix])"
+				name = "Mulebot([suffix])"
 
 		if("sethome")
 			refresh=0
@@ -332,7 +332,7 @@
 
 		if("close")
 			usr.unset_machine()
-			usr << browse(null,"window=mulebot")
+			usr << browse(null, "window=mulebot")
 
 	updateDialog()
 
@@ -360,7 +360,7 @@
 	if(user.incapacitated() || user.lying)
 		return
 
-	if (!istype(AM))
+	if(!istype(AM))
 		return
 
 	load(AM)
@@ -370,7 +370,7 @@
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
 	if(user.incapacitated() || user.lying)
 		return
-	if (!istype(AM))
+	if(!istype(AM))
 		return
 	load(AM)
 
@@ -378,11 +378,11 @@
 /obj/machinery/bot/mulebot/proc/load(atom/movable/AM)
 	if(load ||  AM.anchored)
 		return
-	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
+	if(!isturf(AM.loc)) // To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
 	var/obj/structure/closet/crate/CRATE
-	if(istype(AM,/obj/structure/closet/crate))
+	if(istype(AM, /obj/structure/closet/crate))
 		CRATE = AM
 	else
 		if(wires.load_check())
@@ -394,7 +394,7 @@
 
 	if(isobj(AM))
 		var/obj/O = AM
-		if(O.buckled_mob || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+		if(O.buckled_mob || (locate(/mob) in AM)) // can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
@@ -426,12 +426,12 @@
 
 
 /obj/machinery/bot/mulebot/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob) //post buckling
+	if(M == buckled_mob) // post buckling
 		M.pixel_y = initial(M.pixel_y) + 9
 		if(M.layer < layer)
 			M.layer = layer + 0.1
 
-	else //post unbuckling
+	else // post unbuckling
 		load = null
 		M.layer = initial(M.layer)
 		M.plane = initial(M.plane)
@@ -458,8 +458,8 @@
 	load.plane = initial(load.plane)
 	if(dirn)
 		var/turf/T = loc
-		var/turf/newT = get_step(T,dirn)
-		if(load.CanPass(load,newT)) //Can't get off onto anything that wouldn't let you pass normally
+		var/turf/newT = get_step(T, dirn)
+		if(load.CanPass(load, newT)) // Can't get off onto anything that wouldn't let you pass normally
 			step(load, dirn)
 
 	load = null
@@ -471,7 +471,7 @@
 		return
 	if(on)
 		var/speed = (wires.motor1() ? 1 : 0) + (wires.motor2() ? 2 : 0)
-		//world << "speed: [speed]"
+		// world << "speed: [speed]"
 		switch(speed)
 			if(0)
 				// do nothing
@@ -504,7 +504,7 @@
 			return
 		if(1)		// loading/unloading
 			return
-		if(2,3,4)		// navigating to deliver,home, or blocked
+		if(2, 3, 4)		// navigating to deliver, home, or blocked
 
 			if(loc == target)		// reached target
 				at_target()
@@ -649,7 +649,7 @@
 							AM = A
 							break
 				else			// otherwise, look for crates only
-					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
+					AM = locate(/obj/structure/closet/crate) in get_step(loc, loaddir)
 				if(AM && AM.Adjacent(src))
 					load(AM)
 		// whatever happened, check to see if we return home
@@ -667,10 +667,10 @@
 
 // called when bot bumps into anything
 /obj/machinery/bot/mulebot/Bump(atom/obs)
-	if(!wires.mob_avoid())		//usually just bumps, but if avoidance disabled knock over mobs
+	if(!wires.mob_avoid())		// usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
-			if(istype(M,/mob/living/silicon/robot))
+			if(istype(M, /mob/living/silicon/robot))
 				src.visible_message("\red [src] bumps into [M]!")
 			else
 				src.visible_message("\red [src] knocks over [M]!")
@@ -690,7 +690,7 @@
 	src.visible_message("\red [src] drives over [H]!")
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
-	var/damage = rand(5,15)
+	var/damage = rand(5, 15)
 	H.apply_damage(2*damage, BRUTE, BP_HEAD)
 	H.apply_damage(2*damage, BRUTE, BP_CHEST)
 	H.apply_damage(0.5*damage, BRUTE, BP_L_LEG)
@@ -804,13 +804,13 @@
 	var/datum/signal/signal = new()
 	signal.source = src
 	signal.transmission_method = 1
-	//for(var/key in keyval)
+	// for(var/key in keyval)
 	//	signal.data[key] = keyval[key]
 	signal.data = keyval
-		//world << "sent [key],[keyval[key]] on [freq]"
-	if (signal.data["findbeacon"])
+		// world << "sent [key],[keyval[key]] on [freq]"
+	if(signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-	else if (signal.data["type"] == "mulebot")
+	else if(signal.data["type"] == "mulebot")
 		frequency.post_signal(src, signal, filter = RADIO_MULEBOT)
 	else
 		frequency.post_signal(src, signal)
@@ -832,7 +832,7 @@
 	post_signal_multiple(control_freq, kv)
 
 /obj/machinery/bot/mulebot/emp_act(severity)
-	if (cell)
+	if(cell)
 		cell.emp_act(severity)
 	if(load)
 		load.emp_act(severity)
@@ -847,7 +847,7 @@
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/weapon/cable_coil/cut/red(Tsec)
-	if (cell)
+	if(cell)
 		cell.loc = Tsec
 		cell.update_icon()
 		cell = null

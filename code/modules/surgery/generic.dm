@@ -1,4 +1,4 @@
-//Procedures in this file: Gneric surgery steps
+// Procedures in this file: Gneric surgery steps
 //////////////////////////////////////////////////////////////////
 //						COMMON STEPS							//
 //////////////////////////////////////////////////////////////////
@@ -7,20 +7,20 @@
 	can_infect = 1
 
 /datum/surgery_step/generic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (isslime(target))
+	if(isslime(target))
 		return 0
-	if (target_zone == O_EYES)	//there are specific steps for eye surgery
+	if(target_zone == O_EYES)	// there are specific steps for eye surgery
 		return 0
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP == null)
+	if(BP == null)
 		return 0
-	if (BP.status & ORGAN_DESTROYED)
+	if(BP.status & ORGAN_DESTROYED)
 		return 0
-	if (target_zone == BP_HEAD && target.species && (target.species.flags[IS_SYNTHETIC]))
+	if(target_zone == BP_HEAD && target.species && (target.species.flags[IS_SYNTHETIC]))
 		return 1
-	if (BP.status & ORGAN_ROBOT)
+	if(BP.status & ORGAN_ROBOT)
 		return 0
 	return 1
 
@@ -44,20 +44,20 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts the bloodless incision on [target]'s [BP.name] with \the [tool].", \
 	"You start the bloodless incision on [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("You feel a horrible, searing pain in your [BP.name]!",1)
+	target.custom_pain("You feel a horrible, searing pain in your [BP.name]!", 1)
 	..()
 
 /datum/surgery_step/generic/cut_with_laser/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("\blue [user] has made a bloodless incision on [target]'s [BP.name] with \the [tool].", \
 	"\blue You have made a bloodless incision on [target]'s [BP.name] with \the [tool].",)
-	//Could be cleaner ...
+	// Could be cleaner ...
 	BP.open = 1
 	BP.status |= ORGAN_BLEEDING
 	BP.createwound(CUT, 1)
 	BP.clamp()
 	spread_germs_to_organ(BP, user)
-	if (target_zone == BP_HEAD)
+	if(target_zone == BP_HEAD)
 		target.brain_op_stage = 1
 
 /datum/surgery_step/generic/cut_with_laser/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -84,7 +84,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts to construct a prepared incision on and within [target]'s [BP.name] with \the [tool].", \
 	"You start to construct a prepared incision on and within [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("You feel a horrible, searing pain in your [BP.name] as it is pushed apart!",1)
+	target.custom_pain("You feel a horrible, searing pain in your [BP.name] as it is pushed apart!", 1)
 	..()
 
 /datum/surgery_step/generic/incision_manager/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -96,7 +96,7 @@
 	BP.createwound(CUT, 1)
 	BP.clamp()
 	BP.open = 2
-	if (target_zone == BP_HEAD)
+	if(target_zone == BP_HEAD)
 		target.brain_op_stage = 1
 
 /datum/surgery_step/generic/incision_manager/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -125,7 +125,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts the incision on [target]'s [BP.name] with \the [tool].", \
 	"You start the incision on [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("You feel a horrible pain as if from a sharp knife in your [BP.name]!",1)
+	target.custom_pain("You feel a horrible pain as if from a sharp knife in your [BP.name]!", 1)
 	..()
 
 /datum/surgery_step/generic/cut_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -135,7 +135,7 @@
 	BP.open = 1
 	BP.status |= ORGAN_BLEEDING
 	BP.createwound(CUT, 1)
-	if (target_zone == BP_HEAD)
+	if(target_zone == BP_HEAD)
 		target.brain_op_stage = 1
 
 /datum/surgery_step/generic/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -165,7 +165,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts clamping bleeders in [target]'s [BP.name] with \the [tool].", \
 	"You start clamping bleeders in [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("The pain in your [BP.name] is maddening!",1)
+	target.custom_pain("The pain in your [BP.name] is maddening!", 1)
 	..()
 
 /datum/surgery_step/generic/clamp_bleeders/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -199,24 +199,24 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/msg = "[user] starts to pry open the incision on [target]'s [BP.name] with \the [tool]."
 	var/self_msg = "You start to pry open the incision on [target]'s [BP.name] with \the [tool]."
-	if (target_zone == BP_HEAD)
+	if(target_zone == BP_HEAD)
 		msg = "[user] starts to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
 		self_msg = "You start to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
-	if (target_zone == BP_GROIN)
+	if(target_zone == BP_GROIN)
 		msg = "[user] starts to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
 		self_msg = "You start to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
 	user.visible_message(msg, self_msg)
-	target.custom_pain("It feels like the skin on your [BP.name] is on fire!",1)
+	target.custom_pain("It feels like the skin on your [BP.name] is on fire!", 1)
 	..()
 
 /datum/surgery_step/generic/retract_skin/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/msg = "\blue [user] keeps the incision open on [target]'s [BP.name] with \the [tool]."
 	var/self_msg = "\blue You keep the incision open on [target]'s [BP.name] with \the [tool]."
-	if (target_zone == BP_CHEST)
+	if(target_zone == BP_CHEST)
 		msg = "\blue [user] keeps the ribcage open on [target]'s torso with \the [tool]."
 		self_msg = "\blue You keep the ribcage open on [target]'s torso with \the [tool]."
-	if (target_zone == BP_GROIN)
+	if(target_zone == BP_GROIN)
 		msg = "\blue [user] keeps the incision open on [target]'s lower abdomen with \the [tool]."
 		self_msg = "\blue You keep the incision open on [target]'s lower abdomen with \the [tool]."
 	user.visible_message(msg, self_msg)
@@ -226,10 +226,10 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/msg = "\red [user]'s hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!"
 	var/self_msg = "\red Your hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!"
-	if (target_zone == BP_CHEST)
+	if(target_zone == BP_CHEST)
 		msg = "\red [user]'s hand slips, damaging several organs in [target]'s torso with \the [tool]!"
 		self_msg = "\red Your hand slips, damaging several organs in [target]'s torso with \the [tool]!"
-	if (target_zone == BP_GROIN)
+	if(target_zone == BP_GROIN)
 		msg = "\red [user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]"
 		self_msg = "\red Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!"
 	user.visible_message(msg, self_msg)
@@ -253,9 +253,9 @@
 
 /datum/surgery_step/generic/cauterize/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] is beginning to cauterize the incision on [target]'s [BP.name] with \the [tool]." , \
+	user.visible_message("[user] is beginning to cauterize the incision on [target]'s [BP.name] with \the [tool].", \
 	"You are beginning to cauterize the incision on [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("Your [BP.name] is being burned!",1)
+	target.custom_pain("Your [BP.name] is being burned!", 1)
 	..()
 
 /datum/surgery_step/generic/cauterize/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -282,22 +282,22 @@
 	max_duration = 160
 
 /datum/surgery_step/generic/cut_limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (target_zone == O_EYES) // there are specific steps for eye surgery
+	if(target_zone == O_EYES) // there are specific steps for eye surgery
 		return 0
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP == null)
+	if(BP == null)
 		return 0
-	if (BP.status & ORGAN_DESTROYED)
+	if(BP.status & ORGAN_DESTROYED)
 		return 0
 	return target_zone != BP_CHEST && target_zone != BP_GROIN && target_zone != BP_HEAD
 
 /datum/surgery_step/generic/cut_limb/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] is beginning to cut off [target]'s [BP.name] with \the [tool]." , \
+	user.visible_message("[user] is beginning to cut off [target]'s [BP.name] with \the [tool].", \
 	"You are beginning to cut off [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("Your [BP.name] is being ripped apart!",1)
+	target.custom_pain("Your [BP.name] is being ripped apart!", 1)
 	..()
 
 /datum/surgery_step/generic/cut_limb/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

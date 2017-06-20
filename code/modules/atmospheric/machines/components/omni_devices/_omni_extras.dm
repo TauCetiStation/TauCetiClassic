@@ -8,7 +8,7 @@
 #define ATM_O2		3
 #define ATM_N2		4
 #define ATM_CO2		5
-#define ATM_P		6	//Phoron
+#define ATM_P		6	// Phoron
 #define ATM_N2O		7
 
 //--------------------------------------------
@@ -93,7 +93,7 @@ var/global/list/omni_icons[]
 var/global/list/pipe_colors = list("grey" = null, "red" = PIPE_COLOR_RED, "blue" = PIPE_COLOR_BLUE, "cyan" = PIPE_COLOR_CYAN, "green" = PIPE_COLOR_GREEN, "yellow" = PIPE_COLOR_YELLOW, "purple" = PIPE_COLOR_PURPLE)
 
 
-//returns a text string based on the direction flag input
+// returns a text string based on the direction flag input
 // if capitalize is true, it will return the string capitalized
 // otherwise it will return the direction string in lower case
 /proc/dir_name(dir, capitalize = 0)
@@ -113,7 +113,7 @@ var/global/list/pipe_colors = list("grey" = null, "red" = PIPE_COLOR_RED, "blue"
 
 	return string
 
-//returns a direction flag based on the string passed to it
+// returns a direction flag based on the string passed to it
 // case insensitive
 /proc/dir_flag(dir)
 	dir = lowertext(dir)

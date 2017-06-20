@@ -10,7 +10,7 @@
 
 /obj/machinery/power/port_gen/riteg/attackby(obj/item/O, mob/user, params)
 
-	if (istype(O, /obj/item/weapon/card/emag))
+	if(istype(O, /obj/item/weapon/card/emag))
 		emagged = 1
 		emp_act(1)
 
@@ -31,7 +31,7 @@
 
 /obj/machinery/power/port_gen/riteg/attack_hand(mob/user)
 	..()
-	if (!anchored)
+	if(!anchored)
 		return
 
 	interact(user)
@@ -43,8 +43,8 @@
 	interact(user)
 
 /obj/machinery/power/port_gen/riteg/interact(mob/user)
-	if (get_dist(src, user) > 1 )
-		if (!istype(user, /mob/living/silicon/ai))
+	if(get_dist(src, user) > 1 )
+		if(!istype(user, /mob/living/silicon/ai))
 			user.unset_machine(src)
 			user << browse(null, "window=port_gen")
 			return
@@ -52,7 +52,7 @@
 	user.set_machine(src)
 
 	var/dat = text("<b>[name]</b><br>")
-	if (active)
+	if(active)
 		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
 	else
 		dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
@@ -66,7 +66,7 @@
 	return TRUE
 
 /obj/machinery/power/port_gen/riteg/Topic(href, href_list)
-	if (href_list["action"] == "close")
+	if(href_list["action"] == "close")
 		usr << browse(null, "window=port_gen")
 		usr.unset_machine(src)
 		return FALSE
@@ -81,7 +81,7 @@
 				active = 1
 				icon_state = icon_state_on
 		if(href_list["action"] == "disable")
-			if (active)
+			if(active)
 				active = 0
 				icon_state = initial(icon_state)
 
@@ -89,7 +89,7 @@
 
 
 obj/machinery/power/port_gen/riteg/proc/Pulse_radiation()
-	for(var/mob/living/l in range(rad_range,src))
+	for(var/mob/living/l in range(rad_range, src))
 		l.show_message("<span class=\"warning\">You feel warm</span>", 2)
 		var/rads = rad_cooef * sqrt( 1 / (get_dist(l, src) + 1) )
 		l.apply_effect(rads, IRRADIATE)

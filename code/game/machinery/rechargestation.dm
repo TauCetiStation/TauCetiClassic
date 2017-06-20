@@ -73,7 +73,7 @@
 
 	if(idle_power_usage != charge_diff) // Force update, but only when our power usage changed this tick.
 		idle_power_usage = charge_diff
-		update_use_power(1,1)
+		update_use_power(1, 1)
 
 	current_internal_charge = min((current_internal_charge + ((charge_diff - 50) * CELLRATE)), max_internal_charge)
 
@@ -94,7 +94,7 @@
 	to_chat(user, "The charge meter reads: [round(chargepercentage())]%.")
 
 /obj/machinery/recharge_station/proc/chargepercentage()
-	return ((current_internal_charge / max_internal_charge) * 100)
+	return((current_internal_charge / max_internal_charge) * 100)
 
 /obj/machinery/recharge_station/relaymove(mob/user)
 	if(user.stat)
@@ -142,7 +142,7 @@
 
 /obj/machinery/recharge_station/open_machine()
 	if(occupant)
-		if (occupant.client)
+		if(occupant.client)
 			occupant.client.eye = occupant
 			occupant.client.perspective = MOB_PERSPECTIVE
 		occupant.forceMove(loc)
@@ -198,7 +198,7 @@
 
 /obj/machinery/recharge_station/proc/process_occupant()
 	if(src.occupant)
-		if (istype(occupant, /mob/living/silicon/robot))
+		if(istype(occupant, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = occupant
 			if(R.module)
 				R.module.respawn_consumable(R)

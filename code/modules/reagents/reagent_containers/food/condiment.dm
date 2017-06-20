@@ -1,16 +1,16 @@
-///////////////////////////////////////////////Condiments
-//Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all
+/////////////////////////////////////////////// Condiments
+// Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all
 //	leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
 //	to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
 
-//Food items that aren't eaten normally and leave an empty container behind.
+// Food items that aren't eaten normally and leave an empty container behind.
 /obj/item/weapon/reagent_containers/food/condiment
 	name = "Condiment Container"
 	desc = "Just your average condiment container."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "emptycondiment"
 	flags = OPENCONTAINER
-	possible_transfer_amounts = list(1,5,10)
+	possible_transfer_amounts = list(1, 5, 10)
 	volume = 50
 
 	attackby(obj/item/weapon/W, mob/user)
@@ -33,7 +33,7 @@
 			if(reagents.total_volume)
 				reagents.trans_to_ingest(M, 10)
 
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/drink.ogg', rand(10, 50), 1)
 			return 1
 		else
 
@@ -50,7 +50,7 @@
 			if(reagents.total_volume)
 				reagents.trans_to_ingest(M, 10)
 
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/drink.ogg', rand(10, 50), 1)
 			return 1
 		return 0
 
@@ -58,8 +58,8 @@
 
 		return
 
-	afterattack(obj/target, mob/user , flag)
-		if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	afterattack(obj/target, mob/user, flag)
+		if(istype(target, /obj/structure/reagent_dispensers)) // A dispenser. Transfer FROM it TO us.
 
 			if(!target.reagents.total_volume)
 				to_chat(user, "\red [target] is empty.")
@@ -72,7 +72,7 @@
 			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
 			to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
 
-		//Something like a glass or a food item. Player probably wants to transfer TO it.
+		// Something like a glass or a food item. Player probably wants to transfer TO it.
 		else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 			if(!reagents.total_volume)
 				to_chat(user, "\red [src] is empty.")
@@ -129,7 +129,7 @@
 					desc = "Tastey space sugar!"
 				else
 					name = "Misc Condiment Bottle"
-					if (reagents.reagent_list.len==1)
+					if(reagents.reagent_list.len==1)
 						desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
 					else
 						desc = "A mixture of various condiments. [reagents.get_master_reagent_name()] is one of them."
@@ -161,11 +161,11 @@
 		..()
 		reagents.add_reagent("sugar", 50)
 
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker		// Seperate from above since it's a small shaker rather then
 	name = "Salt Shaker"											//	a large one.
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
-	possible_transfer_amounts = list(1,20) //for clown turning the lid off
+	possible_transfer_amounts = list(1, 20) // for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
 	New()
@@ -176,7 +176,7 @@
 	name = "Pepper Mill"
 	desc = "Often used to flavor food or make people sneeze."
 	icon_state = "peppermillsmall"
-	possible_transfer_amounts = list(1,20) //for clown turning the lid off
+	possible_transfer_amounts = list(1, 20) // for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
 	New()

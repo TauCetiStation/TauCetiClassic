@@ -12,7 +12,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 // This is doubled for the first asset, then added per asset after
 #define ASSET_CACHE_SEND_TIMEOUT 7
 
-//When sending mutiple assets, how many before we give the client a quaint little sending resources message
+// When sending mutiple assets, how many before we give the client a quaint little sending resources message
 #define ASSET_CACHE_TELL_CLIENT_AMOUNT 8
 
 
@@ -22,8 +22,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	var/list/sending = list()
 	var/last_asset_job = 0 // Last job done.
 
-//This proc sends the asset to the client, but only if it needs it.
-//This proc blocks(sleeps) unless verify is set to false
+// This proc sends the asset to the client, but only if it needs it.
+// This proc blocks(sleeps) unless verify is set to false
 /proc/send_asset(var/client/client, var/asset_name, var/verify = TRUE)
 	if(!istype(client))
 		if(ismob(client))
@@ -40,10 +40,10 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 	client << browse_rsc(SSasset.cache[asset_name], asset_name)
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
-		if (client)
+		if(client)
 			client.cache += asset_name
 		return 1
-	if (!client)
+	if(!client)
 		return 0
 
 	client.sending |= asset_name
@@ -68,7 +68,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 	return 1
 
-//This proc blocks(sleeps) unless verify is set to false
+// This proc blocks(sleeps) unless verify is set to false
 /proc/send_asset_list(var/client/client, var/list/asset_list, var/verify = TRUE)
 	if(!istype(client))
 		if(ismob(client))
@@ -86,14 +86,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	if(unreceived.len >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
 		to_chat(client, "<span class='info'><b>Sending Resources, please wait...</b></span>")
 	for(var/asset in unreceived)
-		if (asset in SSasset.cache)
+		if(asset in SSasset.cache)
 			client << browse_rsc(SSasset.cache[asset], asset)
 
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
-		if (client)
+		if(client)
 			client.cache += unreceived
 		return 1
-	if (!client)
+	if(!client)
 		return 0
 	client.sending |= unreceived
 	var/job = ++client.last_asset_job
@@ -117,30 +117,30 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 	return 1
 
-//This proc will download the files without clogging up the browse() queue, used for passively sending files on connection start.
-//The proc calls procs that sleep for long times.
+// This proc will download the files without clogging up the browse() queue, used for passively sending files on connection start.
+// The proc calls procs that sleep for long times.
 /proc/getFilesSlow(var/client/client, var/list/files, var/register_asset = TRUE)
 	for(var/file in files)
-		if (!client)
+		if(!client)
 			break
-		if (register_asset)
-			register_asset(file,files[file])
-		send_asset(client,file)
-		sleep(0) //queuing calls like this too quickly can cause issues in some client versions
+		if(register_asset)
+			register_asset(file, files[file])
+		send_asset(client, file)
+		sleep(0) // queuing calls like this too quickly can cause issues in some client versions
 
-//This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
-//if it's an icon or something be careful, you'll have to copy it before further use.
+// This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
+// if it's an icon or something be careful, you'll have to copy it before further use.
 /proc/register_asset(var/asset_name, var/asset)
 	SSasset.cache[asset_name] = asset
 
-//These datums are used to populate the asset cache, the proc "register()" does this.
+// These datums are used to populate the asset cache, the proc "register()" does this.
 
-//all of our asset datums, used for referring to these later
+// all of our asset datums, used for referring to these later
 /var/global/list/asset_datums = list()
 
-//get a assetdatum or make a new one
+// get a assetdatum or make a new one
 /proc/get_asset_datum(var/type)
-	if (!(type in asset_datums))
+	if(!(type in asset_datums))
 		return new type()
 	return asset_datums[type]
 
@@ -153,7 +153,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 /datum/asset/proc/send(client)
 	return
 
-//If you don't need anything complicated.
+// If you don't need anything complicated.
 /datum/asset/simple
 	var/assets = list()
 	var/verify = FALSE
@@ -162,10 +162,10 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	for(var/asset_name in assets)
 		register_asset(asset_name, assets[asset_name])
 /datum/asset/simple/send(client)
-	send_asset_list(client,assets,verify)
+	send_asset_list(client, assets, verify)
 
 
-//DEFINITIONS FOR ASSET DATUMS START HERE.
+// DEFINITIONS FOR ASSET DATUMS START HERE.
 /datum/asset/simple/spider_os
 	assets = list(
 		"sos_1.png" = 'icons/spideros_icons/sos_1.png',
@@ -204,14 +204,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 /datum/asset/nanoui/register()
 	// Crawl the directories to find files.
-	for (var/path in common_dirs)
+	for(var/path in common_dirs)
 		var/list/filenames = flist(path)
 		for(var/filename in filenames)
 			if(copytext(filename, length(filename)) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					common[filename] = fcopy_rsc(path + filename)
 					register_asset(filename, common[filename])
-	for (var/path in uncommon_dirs)
+	for(var/path in uncommon_dirs)
 		var/list/filenames = flist(path)
 		for(var/filename in filenames)
 			if(copytext(filename, length(filename)) != "/") // Ignore directories.

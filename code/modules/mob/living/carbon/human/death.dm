@@ -60,15 +60,15 @@
 	update_health_hud()
 	handle_hud_list()
 
-	//Handle species-specific deaths.
+	// Handle species-specific deaths.
 	if(species) species.handle_death(src)
 
-	//Handle brain slugs.
+	// Handle brain slugs.
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
 	var/mob/living/simple_animal/borer/B
 
 	for(var/I in BP.implants)
-		if(istype(I,/mob/living/simple_animal/borer))
+		if(istype(I, /mob/living/simple_animal/borer))
 			B = I
 	if(B)
 		if(!B.ckey && ckey && B.controlling)
@@ -87,26 +87,26 @@
 		mode.infected_killed(src)
 		mode.body_count.Add(mind)
 
-	//Check for heist mode kill count.
-	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist) ) )
-		//Check for last assailant's mutantrace.
-		/*if( LAssailant && ( istype( LAssailant,/mob/living/carbon/human ) ) )
+	// Check for heist mode kill count.
+	if(ticker.mode && ( istype( ticker.mode, /datum/game_mode/heist) ) )
+		// Check for last assailant's mutantrace.
+		/*if( LAssailant && ( istype( LAssailant, /mob/living/carbon/human ) ) )
 			var/mob/living/carbon/human/V = LAssailant
-			if (V.dna && (V.dna.mutantrace == "vox"))*/ //Not currently feasible due to terrible LAssailant tracking.
-		//world << "Vox kills: [vox_kills]"
-		vox_kills++ //Bad vox. Shouldn't be killing humans.
+			if(V.dna && (V.dna.mutantrace == "vox"))*/ // Not currently feasible due to terrible LAssailant tracking.
+		// world << "Vox kills: [vox_kills]"
+		vox_kills++ // Bad vox. Shouldn't be killing humans.
 
 	if(!gibbed)
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
+		emote("deathgasp") // let the world KNOW WE ARE DEAD
 
 		update_canmove()
 
-	tod = worldtime2text()		//weasellos time of death patch
+	tod = worldtime2text()		// weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 	if(ticker && ticker.mode)
 //		world.log << "k"
 		sql_report_death(src)
-		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+		ticker.mode.check_win()		// Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
@@ -126,13 +126,13 @@
 	if(HUSK in mutations)
 		return
 	if(f_style)
-		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
+		f_style = "Shaved"		// we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
 	if(h_style)
 		h_style = "Bald"
 
 	update_hair()
 	mutations.Add(HUSK)
-	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
+	status_flags |= DISFIGURED	// makes them unknown without fucking up other stuff like admintools
 	update_body()
 	update_mutantrace()
 	return

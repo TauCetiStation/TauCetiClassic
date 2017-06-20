@@ -14,7 +14,7 @@
 	origin_tech = "magnets=1;engineering=2"
 
 /obj/item/device/geoscanner/afterattack(atom/A, mob/user)
-	if(!istype(A,/turf/simulated/mineral))
+	if(!istype(A, /turf/simulated/mineral))
 		return
 	if(!in_range(user, A))
 		return
@@ -32,7 +32,7 @@
 	if(M.finds && M.finds.len || M.artifact_find)
 		user.show_message("\red Unidentified signature in [M]. Report to nearby xenoarchaeologist/anomalist.", 1)
 
-//	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
+//	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>", "<span class='notice'>You paint \the [P] [mode].</span>")
 //	user << "[M.mineral], [M.toughness], [M.ore_amount]"
 
 /obj/item/clothing/glasses/hud/mining
@@ -48,7 +48,7 @@
 
 /obj/item/clothing/glasses/hud/mining/New()
 	..()
-	error = pick(-1,1)
+	error = pick(-1, 1)
 
 /obj/item/clothing/glasses/hud/mining/process_hud(mob/M)
 	if(!M)	return
@@ -59,6 +59,6 @@
 		if(!C) return
 
 		if(rock.finds && rock.finds.len || rock.artifact_find)
-			C.images += image(hudMineral,rock,"hudanomaly")
-		else if (rock.mineral)
-			C.images += image(hudMineral,rock,"hud[rock.mineral.ore_type]")
+			C.images += image(hudMineral, rock, "hudanomaly")
+		else if(rock.mineral)
+			C.images += image(hudMineral, rock, "hud[rock.mineral.ore_type]")

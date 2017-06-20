@@ -1,5 +1,5 @@
 /**********************Light************************/
-//this item is intended to give the effect of entering the mine, so that light gradually fades
+// this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
 	name = "Light-emtter"
 	anchored = 1
@@ -51,7 +51,7 @@ proc/move_mining_shuttle()
 	spawn(mining_shuttle_tickstomove*10)
 		var/area/fromArea
 		var/area/toArea
-		if (mining_shuttle_location == 1)
+		if(mining_shuttle_location == 1)
 			fromArea = locate(/area/shuttle/mining/outpost)
 			toArea = locate(/area/shuttle/mining/station)
 
@@ -71,7 +71,7 @@ proc/move_mining_shuttle()
 		for(var/turf/T in dstturfs)
 			// find the turf to move things to
 			var/turf/D = locate(T.x, throwy - 1, 1)
-			//var/turf/E = get_step(D, SOUTH)
+			// var/turf/E = get_step(D, SOUTH)
 			for(var/atom/movable/AM as mob|obj in T)
 				AM.Move(D)
 				// NOTE: Commenting this out to avoid recreating mass driver glitch
@@ -91,7 +91,7 @@ proc/move_mining_shuttle()
 			pest.gib()
 
 		fromArea.move_contents_to(toArea)
-		if (mining_shuttle_location)
+		if(mining_shuttle_location)
 			mining_shuttle_location = 0
 		else
 			mining_shuttle_location = 1
@@ -142,12 +142,12 @@ proc/move_mining_shuttle()
 		return
 
 	if(href_list["move"])
-		//if(ticker.mode.name == "blob")
+		// if(ticker.mode.name == "blob")
 		//	if(ticker.mode:declared)
 		//		usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
 		//		return
 
-		if (!mining_shuttle_moving)
+		if(!mining_shuttle_moving)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			move_mining_shuttle()
 		else
@@ -156,7 +156,7 @@ proc/move_mining_shuttle()
 	updateUsrDialog()
 
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
+	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		src.req_access = list()
 		emagged = 1
 		to_chat(usr, "<span class='notice'>You fried the consoles ID checking system. It's now available to everyone!</span>")
@@ -182,8 +182,8 @@ proc/move_mining_shuttle()
 	throwforce = 4.0
 	item_state = "pickaxe"
 	w_class = 4.0
-	m_amt = 3750 //one sheet, but where can you make them?
-	var/digspeed = 50 //moving the delay to an item var so R&D can make improved picks. --NEO
+	m_amt = 3750 // one sheet, but where can you make them?
+	var/digspeed = 50 // moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	var/drill_sound = 'sound/weapons/Genhit.ogg'
@@ -194,7 +194,7 @@ proc/move_mining_shuttle()
 
 /obj/item/weapon/pickaxe/hammer
 	name = "sledgehammer"
-	//icon_state = "sledgehammer" Waiting on sprite
+	// icon_state = "sledgehammer" Waiting on sprite
 	desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
 
 /obj/item/weapon/pickaxe/silver
@@ -217,9 +217,9 @@ proc/move_mining_shuttle()
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
-	w_class = 3.0 //it is smaller than the pickaxe
+	w_class = 3.0 // it is smaller than the pickaxe
 	damtype = "fire"
-	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
+	digspeed = 20 // Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	drill_verb = "cutting"
@@ -259,10 +259,10 @@ proc/move_mining_shuttle()
 	w_class = 2.0
 
 
-/**********************Mining car (Crate like thing, not the rail car)**************************/
+/**********************Mining car(Crate like thing, not the rail car)**************************/
 /obj/structure/closet/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
-	name = "Mining car (not for rails)"
+	name = "Mining car(not for rails)"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "miningcar"
 	density = 1
@@ -342,7 +342,7 @@ proc/move_mining_shuttle()
 /obj/item/weapon/pickaxe/drill/attack_hand(mob/user)
 	if(loc != user)
 		..()
-		return	//let them pick it up
+		return	// let them pick it up
 	if(state == 1 || state == 2)
 		if(!power_supply)
 			to_chat(user, "<span class='notice'>There's no powercell in the [src].</span>")
@@ -366,7 +366,7 @@ proc/move_mining_shuttle()
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
-	digspeed = 40 //Drills 3 tiles in front of user
+	digspeed = 40 // Drills 3 tiles in front of user
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
@@ -374,10 +374,10 @@ proc/move_mining_shuttle()
 	attackby()
 		return
 
-/obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
+/obj/item/weapon/pickaxe/drill/diamond_drill // When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
 	icon_state = "diamond_drill"
-	digspeed = 15 //Digs through walls, girders, and can dig up sand
+	digspeed = 15 // Digs through walls, girders, and can dig up sand
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 	drill_verb = "drilling"
@@ -420,9 +420,9 @@ proc/move_mining_shuttle()
 	to_chat(user, "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>")
 
 /obj/item/weapon/mining_charge/afterattack(turf/simulated/mineral/target, mob/user, flag)
-	if (!flag)
+	if(!flag)
 		return
-	if (!istype(target, /turf/simulated/mineral))
+	if(!istype(target, /turf/simulated/mineral))
 		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
 		return
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
@@ -577,7 +577,7 @@ obj/item/projectile/kinetic/New()
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
-		if((T.z != ZLEVEL_ASTEROID) && !istype(T.loc, /area/space)) //we don't need complete all checks
+		if((T.z != ZLEVEL_ASTEROID) && !istype(T.loc, /area/space)) // we don't need complete all checks
 			src.loc.visible_message("<span class='warning'>You must use shelter at asteroid or in space! Grab this shit \
 			and shut up!</span>")
 			used = TRUE
@@ -593,7 +593,7 @@ obj/item/projectile/kinetic/New()
 			used = TRUE
 			sleep(50)
 
-			T = get_turf(src) //update location
+			T = get_turf(src) // update location
 			var/status = template.check_deploy(T)
 			switch(status)
 				if(SHELTER_DEPLOY_BAD_AREA)
@@ -612,7 +612,7 @@ obj/item/projectile/kinetic/New()
 
 			playsound(T, 'sound/effects/phasein.ogg', 100, 1)
 
-			if(T.z != ZLEVEL_ASTEROID)//only report capsules away from the mining level
+			if(T.z != ZLEVEL_ASTEROID)// only report capsules away from the mining level
 				message_admins("[key_name_admin(usr)] [ADMIN_QUE(usr)] [ADMIN_FLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
 				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
 			template.load(T, centered = TRUE)
@@ -620,10 +620,10 @@ obj/item/projectile/kinetic/New()
 		new /datum/effect/effect/system/smoke_spread(T)
 		qdel(src)
 
-//Pod turfs and objects
+// Pod turfs and objects
 
 
-//Floors
+// Floors
 /turf/simulated/floor/pod
 	name = "pod floor"
 	icon_state = "podfloor"
@@ -640,7 +640,7 @@ obj/item/projectile/kinetic/New()
 	floor_tile = /obj/item/stack/tile/pod/dark
 */
 
-//Walls
+// Walls
 
 /obj/item/inflatable/survival
 	name = "inflatable pod wall"
@@ -664,7 +664,7 @@ obj/item/projectile/kinetic/New()
 /obj/structure/inflatable/survival/proc/update_nearby_icons()
 	update_icon()
 	for(var/direction in cardinal)
-		for(var/obj/structure/inflatable/survival/W in get_step(src,direction) )
+		for(var/obj/structure/inflatable/survival/W in get_step(src, direction) )
 			W.update_icon()
 
 /obj/structure/inflatable/survival/update_icon()
@@ -674,19 +674,19 @@ obj/item/projectile/kinetic/New()
 
 		var/junction = 0
 		if(anchored)
-			for(var/obj/structure/inflatable/survival/W in orange(src,1))
+			for(var/obj/structure/inflatable/survival/W in orange(src, 1))
 				if(abs(x-W.x)-abs(y-W.y) )
-					junction |= get_dir(src,W)
+					junction |= get_dir(src, W)
 		icon_state = "[basestate][junction]"
 
-//Window
+// Window
 /obj/structure/window/shuttle/survival_pod
 	name = "pod window"
 	icon = 'icons/obj/survwindows.dmi'
 	icon_state = "window"
 	basestate = "window"
 
-//Door
+// Door
 /obj/structure/inflatable/door/survival_pod
 	name = "inflatable airlock"
 	icon = 'icons/obj/inflatable.dmi'
@@ -696,17 +696,17 @@ obj/item/projectile/kinetic/New()
 	open_state = "door_surv_open"
 	closed_state = "door_surv_closed"
 
-//Table
+// Table
 /*
 /obj/structure/table/survival_pod
 	icon = 'icons/obj/survival_pod.dmi'
 	icon_state = "table"*/
 
-//Sleeper
+// Sleeper
 /obj/machinery/sleeper/survival_pod
 	icon = 'icons/obj/survival_pod.dmi'
 
-//Computer
+// Computer
 /obj/item/device/gps/computer
 	name = "pod computer"
 	icon_state = "pod_computer"
@@ -728,12 +728,12 @@ obj/item/projectile/kinetic/New()
 /obj/item/device/gps/computer/attack_hand(mob/user)
 	attack_self(user)
 
-//Bed
+// Bed
 /obj/structure/stool/bed/pod
 	icon = 'icons/obj/survival_pod.dmi'
 	icon_state = "bed"
 
-//Survival Storage Unit
+// Survival Storage Unit
 /obj/machinery/smartfridge/survival_pod
 	name = "survival pod storage"
 	desc = "A heated storage unit."
@@ -789,10 +789,10 @@ obj/item/projectile/kinetic/New()
 		ispowered = 1
 
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
-	if(is_type_in_typecache(O,forbidden_tools))
-		if(istype(O,/obj/item/weapon/wrench))
+	if(is_type_in_typecache(O, forbidden_tools))
+		if(istype(O, /obj/item/weapon/wrench))
 			to_chat(user, "\blue You start to disassemble the storage unit...")
-			if(do_after(user,20,target = src))
+			if(do_after(user, 20, target = src))
 				if(!src)
 					return
 				qdel(src)
@@ -815,7 +815,7 @@ obj/item/projectile/kinetic/New()
 
 	..()
 
-//Fans
+// Fans
 /obj/structure/fans
 	icon = 'icons/obj/survival_pod.dmi'
 	icon_state = "fans"
@@ -862,7 +862,7 @@ obj/item/projectile/kinetic/New()
 /obj/structure/fans/Destroy()
 	return ..()
 
-//Signs
+// Signs
 /obj/structure/sign/mining
 	name = "nanotrasen mining corps sign"
 	desc = "A sign of relief for weary miners, and a warning for would-be competitors to Nanotrasen's mining claims."
@@ -881,7 +881,7 @@ obj/item/projectile/kinetic/New()
 	user.visible_message("[user] removes the sign.", "You remove the sign.")
 	qdel(src)
 
-//Fluff
+// Fluff
 /obj/structure/tubes
 	icon_state = "tubes"
 	icon = 'icons/obj/survival_pod.dmi'

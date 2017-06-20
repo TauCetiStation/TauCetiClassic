@@ -11,7 +11,7 @@
 	var/obj/item/weapon/virusdish/dish = null
 
 /obj/machinery/disease2/diseaseanalyser/attackby(obj/O, mob/user)
-	if(!istype(O,/obj/item/weapon/virusdish)) return
+	if(!istype(O, /obj/item/weapon/virusdish)) return
 
 	if(dish)
 		to_chat(user, "\The [src] is already loaded.")
@@ -30,7 +30,7 @@
 	if(scanning)
 		scanning -= 1
 		if(scanning == 0)
-			if (dish.virus2.addToDB())
+			if(dish.virus2.addToDB())
 				ping("\The [src] pings, \"New pathogen added to data bank.\"")
 
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src.loc)

@@ -1,8 +1,8 @@
 /obj/effect/cellular_biomass_controller/necro
-	grow_speed = 4           //lower this value to speed up growth. 1 will process without cooldown.
-	core_grow_chance = 5     //chance to spawn light core
-	living_grow_chance = 25   //chance to spawn lair or mob
-	mark_grow_chance = 0    //chance to spawn decoration
+	grow_speed = 4           // lower this value to speed up growth. 1 will process without cooldown.
+	core_grow_chance = 5     // chance to spawn light core
+	living_grow_chance = 25   // chance to spawn lair or mob
+	mark_grow_chance = 0    // chance to spawn decoration
 	walls_type =     /obj/structure/cellular_biomass/wall/necro
 	insides_type =   /obj/structure/cellular_biomass/grass/necro
 	living_type =     /obj/structure/cellular_biomass/lair/necro
@@ -41,7 +41,7 @@
 	desc = "You don't whant to know what is this..."
 	icon = 'code/game/gamemodes/events/cellular_biomass/necromorphs.dmi'
 	icon_state = "xeno_1"
-	random_icon_states = list("xeno_1", "xeno_2","xeno_3","xeno_4","xeno_5","xeno_6","xeno_7","xeno_8","xeno_9","xeno_10","xeno_11","xeno_12","xeno_13")
+	random_icon_states = list("xeno_1", "xeno_2", "xeno_3", "xeno_4", "xeno_5", "xeno_6", "xeno_7", "xeno_8", "xeno_9", "xeno_10", "xeno_11", "xeno_12", "xeno_13")
 
 /obj/structure/cellular_biomass/wall/necro/New()
 	icon_state = "wall"
@@ -55,7 +55,7 @@
 
 /obj/structure/cellular_biomass/lair/necro/New()
 	new /mob/living/simple_animal/hostile/cellular/necro/(src.loc)
-	qdel(src) //glitches are self-replicating, no need for lair
+	qdel(src) // glitches are self-replicating, no need for lair
 
 /mob/living/simple_animal/hostile/cellular/necro/
 	name = "Twisted creature"
@@ -69,7 +69,7 @@
 	move_speed = 0
 
 /mob/living/simple_animal/hostile/cellular/necro/New()
-	var/type = pick(1,2,3,4,5)
+	var/type = pick(1, 2, 3, 4, 5)
 	icon_state = "enemy[type]"
 	icon_living = "enemy[type]"
 	icon_dead = "enemy[type]-dead"

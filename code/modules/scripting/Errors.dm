@@ -129,4 +129,4 @@
 
 	MaxCPU
 		name="MaxComputationalUse"
-		message="Maximum amount of computational cycles reached (>= 1000)."
+		message="Maximum amount of computational cycles reached(>= 1000)."

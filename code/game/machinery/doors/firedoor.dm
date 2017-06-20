@@ -15,8 +15,8 @@
 	door_open_sound  = 'sound/machines/electric_door_open.ogg'
 	door_close_sound = 'sound/machines/electric_door_open.ogg'
 
-	//These are frequenly used with windows, so make sure zones can pass.
-	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
+	// These are frequenly used with windows, so make sure zones can pass.
+	// Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
 	block_air_zones = 0
 
 	var/hatch_open = 0
@@ -53,7 +53,7 @@
 	areas_added = list(A)
 
 	for(var/direction in cardinal)
-		A = get_area(get_step(src,direction))
+		A = get_area(get_step(src, direction))
 		if(istype(A) && !(A in areas_added))
 			A.all_doors.Add(src)
 			areas_added += A
@@ -84,9 +84,9 @@
 		return ..()
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
-		if (mecha.occupant)
+		if(mecha.occupant)
 			var/mob/M = mecha.occupant
-			if(world.time - M.last_bumped <= 10) return //Can bump-open one airlock per second. This is to prevent popup message spam.
+			if(world.time - M.last_bumped <= 10) return // Can bump-open one airlock per second. This is to prevent popup message spam.
 			M.last_bumped = world.time
 			attack_hand(M)
 	return 0
@@ -109,7 +109,7 @@
 		else
 			to_chat(user, "\red You force your claws between the doors and begin to pry them open...")
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
-			if (do_after(user,40,target = src))
+			if(do_after(user, 40, target = src))
 				if(!src) return
 				open(1)
 	return
@@ -122,7 +122,7 @@
 /obj/machinery/door/firedoor/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(operating)
-		return//Already doing something.
+		return// Already doing something.
 
 	if(blocked)
 		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
@@ -135,7 +135,7 @@
 
 	var/alarmed = 0
 
-	for(var/area/A in areas_added)		//Checks if there are fire alarms in any areas associated with that firedoor
+	for(var/area/A in areas_added)		// Checks if there are fire alarms in any areas associated with that firedoor
 		if(A.fire || A.air_doors_activated)
 			alarmed = 1
 
@@ -160,7 +160,7 @@
 	if(needs_to_close)
 		spawn(50)
 			alarmed = 0
-			for(var/area/A in areas_added)		//Just in case a fire alarm is turned off while the firedoor is going through an autoclose cycle
+			for(var/area/A in areas_added)		// Just in case a fire alarm is turned off while the firedoor is going through an autoclose cycle
 				if(A.fire || A.air_doors_activated)
 					alarmed = 1
 			if(alarmed)
@@ -170,7 +170,7 @@
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user)
 	add_fingerprint(user)
 	if(operating)
-		return//Already doing something.
+		return// Already doing something.
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.remove_fuel(0, user))
@@ -195,7 +195,7 @@
 		else
 			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
 									"You start to remove the electronics from [src].")
-			if(do_after(user,30,target = src))
+			if(do_after(user, 30, target = src))
 				if(blocked && density && hatch_open)
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
@@ -215,7 +215,7 @@
 		to_chat(user, "\red \The [src] is welded solid!")
 		return
 
-	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
+	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
 		if(operating)
 			return
 
@@ -228,7 +228,7 @@
 		user.visible_message("\red \The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!",\
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")
-		if(do_after(user,30,target = src))
+		if(do_after(user, 30, target = src))
 			if( istype(C, /obj/item/weapon/crowbar) )
 				if( stat & (BROKEN|NOPOWER) || !density)
 					user.visible_message("\red \The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!",\
@@ -298,7 +298,7 @@
 				var/cdir = cardinal[d]
 				for(var/i in 1 to ALERT_STATES.len)
 					if(dir_alerts[d] & (1<<(i-1)))
-						overlays += new/icon(icon,"alert_[ALERT_STATES[i]]", dir=cdir)
+						overlays += new/icon(icon, "alert_[ALERT_STATES[i]]", dir=cdir)
 	else
 		icon_state = "door_open"
 		if(blocked)
@@ -324,7 +324,7 @@
 					pdiff_alert = 0
 					changed = 1 // update_icon()
 
-			tile_info = getCardinalAirInfo(src.loc,list("temperature","pressure"))
+			tile_info = getCardinalAirInfo(src.loc, list("temperature", "pressure"))
 			var/old_alerts = dir_alerts
 			for(var/index in 1 to 4)
 				var/list/tileinfo=tile_info[index]

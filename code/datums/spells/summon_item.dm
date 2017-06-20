@@ -13,9 +13,9 @@
 
 /obj/effect/proc_holder/spell/targeted/summonitem/cast(list/targets, mob/user = usr)
 	if(!iscarbon(user))
-		to_chat(user,"<span class='userdanger'>Where is your hands?</span>")
+		to_chat(user, "<span class='userdanger'>Where is your hands?</span>")
 	var/list/hand_items = list(user.get_active_hand(), user.get_inactive_hand())
-	if(!marked_item) //linking item to the spell
+	if(!marked_item) // linking item to the spell
 		for(var/obj/item in hand_items)
 			if(item && item.flags & ABSTRACT)
 				continue
@@ -30,21 +30,21 @@
 				to_chat(user, "<span class='notice'>You must hold the desired item in your hands to mark it for recall.</span>")
 		return
 
-	else if(marked_item in hand_items) //unlinking item to the spell
+	else if(marked_item in hand_items) // unlinking item to the spell
 		to_chat(user, "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>")
 		name = initial(name)
 		marked_item = null
-	else if(marked_item && (QDELETED(marked_item) || !marked_item.loc)) //the item was destroyed at some point
+	else if(marked_item && (QDELETED(marked_item) || !marked_item.loc)) // the item was destroyed at some point
 		to_chat(user, "<span class='warning'>You sense your marked item has been destroyed!</span>")
 		name = initial(name)
 		marked_item = null
-	else	//Getting previously marked item
+	else	// Getting previously marked item
 		var/obj/item_to_retrieve = marked_item
 		while(isobj(item_to_retrieve.loc))
 			item_to_retrieve = item_to_retrieve.loc
-		if(ismob(item_to_retrieve.loc)) //If its on someone, properly drop it
+		if(ismob(item_to_retrieve.loc)) // If its on someone, properly drop it
 			var/mob/M = item_to_retrieve.loc
-			if(issilicon(M)) //Items in silicons warp the whole silicon
+			if(issilicon(M)) // Items in silicons warp the whole silicon
 				M.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
 				M.forceMove(user.loc)
 				M.visible_message("<span class='caution'>[M] suddenly appears!</span>")
@@ -55,7 +55,7 @@
 			to_chat(user, "<span class='userdanger'>[item_to_retrieve] prevents summoning [marked_item]. It's located in [get_area(item_to_retrieve)]!</span>")
 			item_to_retrieve.SpinAnimation(5, 1)
 			playsound(item_to_retrieve, 'sound/magic/SummonItems_generic.ogg', 100, 1)
-			if(alert("Do you want to unlink the [marked_item]?",,"Yes","No") == "Yes")
+			if(alert("Do you want to unlink the [marked_item]?",, "Yes", "No") == "Yes")
 				name = initial(name)
 				marked_item = null
 		else

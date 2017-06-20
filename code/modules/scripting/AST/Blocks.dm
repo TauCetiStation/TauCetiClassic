@@ -5,7 +5,7 @@
 	Class: BlockDefinition
 	An object representing a set of actions to perform independently from the rest of the script. Blocks are basically just
 	lists of statements to execute which also contain some local variables and methods. Note that since functions are local to a block,
-	it is possible to have a function definition inside of any type of block (such as in an if statement or another function),
+	it is possible to have a function definition inside of any type of block(such as in an if statement or another function),
 	and not just in the global scope as in many languages.
 */
 /node/BlockDefinition

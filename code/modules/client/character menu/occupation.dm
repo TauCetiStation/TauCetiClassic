@@ -1,7 +1,7 @@
 /datum/preferences/proc/ShowOccupation(mob/user)
-	var/limit = 19	//The amount of jobs allowed per column. Defaults to 19 to make it look nice.
-	var/list/splitJobs = list("Chief Medical Officer")	//Allows you split the table by job. You can make different tables for each department by including their heads.
-														//Defaults to CMO to make it look nice.
+	var/limit = 19	// The amount of jobs allowed per column. Defaults to 19 to make it look nice.
+	var/list/splitJobs = list("Chief Medical Officer")	// Allows you split the table by job. You can make different tables for each department by including their heads.
+														// Defaults to CMO to make it look nice.
 	if(!SSjob)
 		return
 	. = "<tt><center>"
@@ -20,16 +20,16 @@
 	. += "<table width='100%' cellpadding='1' cellspacing='0'>"
 	var/index = -1
 
-	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
+	// The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 	var/datum/job/lastJob
-	if (!SSjob)		return
+	if(!SSjob)		return
 	for(var/datum/job/job in SSjob.occupations)
 
 		index += 1
 		if((index >= limit) || (job.title in splitJobs))
 			if((index < limit) && (lastJob != null))
-				//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
-				//the last job's selection color. Creating a rather nice effect.
+				// If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
+				// the last job's selection color. Creating a rather nice effect.
 				for(var/i = 0, i < (limit - index), i += 1)
 					. += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'><a>&nbsp</a></td><td><a>&nbsp</a></td></tr>"
 			. += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
@@ -53,7 +53,7 @@
 		if((job_civilian_low & ASSISTANT) && (rank != "Test Subject"))
 			. += "<font color=orange>[rank]</font></td><td></td></tr>"
 			continue
-		if((rank in command_positions) || (rank == "AI"))//Bold head jobs
+		if((rank in command_positions) || (rank == "AI"))// Bold head jobs
 			. += "<b>[rank]</b>"
 		else
 			. += "[rank]"
@@ -62,7 +62,7 @@
 
 		. += "<a class='white' href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
 
-		if(rank == "Test Subject")//Assistant is special
+		if(rank == "Test Subject")// Assistant is special
 			if(job_civilian_low & ASSISTANT)
 				. += " <font color=green size=2>Yes</font>"
 			else
@@ -102,9 +102,9 @@
 					alternate_option = 0
 				else
 					return 0
-			if ("alt_title")
+			if("alt_title")
 				var/datum/job/job = locate(href_list["job"])
-				if (job)
+				if(job)
 					var/choices = list(job.title) + job.alt_titles
 					var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
 					if(choice)
@@ -143,7 +143,7 @@
 		SetJobDepartment(job, 2)
 	else if(GetJobDepartment(job, 3) & job.flag)
 		SetJobDepartment(job, 3)
-	else//job = Never
+	else// job = Never
 		SetJobDepartment(job, 4)
 
 	return 1
@@ -194,12 +194,12 @@
 /datum/preferences/proc/SetJobDepartment(datum/job/job, level)
 	if(!job || !level)	return 0
 	switch(level)
-		if(1)//Only one of these should ever be active at once so clear them all here
+		if(1)// Only one of these should ever be active at once so clear them all here
 			job_civilian_high = 0
 			job_medsci_high = 0
 			job_engsec_high = 0
 			return 1
-		if(2)//Set current highs to med, then reset them
+		if(2)// Set current highs to med, then reset them
 			job_civilian_med |= job_civilian_high
 			job_medsci_med |= job_medsci_high
 			job_engsec_med |= job_engsec_high

@@ -1,5 +1,5 @@
 /* sd_Alert library
-	by Shadowdarke (shadowdarke@byond.com)
+	by Shadowdarke(shadowdarke@byond.com)
 
 	sd_Alert() is a powerful and flexible alternative to the built in BYOND
 	alert() proc. sd_Alert offers timed popups, unlimited buttons, custom
@@ -22,10 +22,10 @@ ARGUMENTS
 					Default Value: the first button in the list
 	duration	- the number of ticks before this alert expires. If not
 					set, the alert lasts until a button is clicked.
-					Default Value: 0 (unlimited)
+					Default Value: 0(unlimited)
 	unfocus		- if this value is set, the popup will not steal keyboard
 					focus from the map or command line.
-					Default Value: 1 (do not take focus)
+					Default Value: 1(do not take focus)
 	size		- size of the popup window in px
 					Default Value: "300x200"
 	table		- optional parameters for the HTML table in the alert
@@ -36,11 +36,11 @@ ARGUMENTS
 					reuse the same window, etc.)
 	select		- if set, the buttons will be replaced with a selection box with a number of
 					lines displayed equal to this value.
-					Default value: 0 (use buttons)
-	flags		- optional flags effecting the alert display. These flags may be ORed (|)
+					Default value: 0(use buttons)
+	flags		- optional flags effecting the alert display. These flags may be ORed(|)
 					together for multiple effects.
 						SD_ALERT_SCROLL			= display a scrollbar
-						SD_ALERT_SELECT_MULTI	= forces selection box display (instead of
+						SD_ALERT_SELECT_MULTI	= forces selection box display(instead of
 													buttons) allows the user to select multiple
 													choices.
 						SD_ALERT_LINKS			= display each choice as a plain text link.
@@ -52,7 +52,7 @@ RETURNS
 	The text of the selected button, or null if the alert duration expired
 	without a button click.
 
-Version 1 changes (from version 0):
+Version 1 changes(from version 0):
 * Added the tag, select, and flags arguments, thanks to several suggestions from Foomer.
 * Split the sd_Alert/Alert() proc into New(), Display(), and Response() to allow more
 	customization by developers. Primarily developers would want to use Display() to change
@@ -84,7 +84,7 @@ Version 1 changes (from version 0):
 		spawn(duration)
 			if(T) qdel(T)
 			return
-	T.Display(message,title,buttons,default,unfocus,size,table,style,select,flags)
+	T.Display(message, title, buttons, default, unfocus, size, table, style, select, flags)
 	. = T.Response()
 
 /sd_alert
@@ -93,7 +93,7 @@ Version 1 changes (from version 0):
 	var/list/validation
 
 /sd_alert/Destroy()
-	target << browse(null,"window=\ref[src]")
+	target << browse(null, "window=\ref[src]")
 	return ..()
 
 /sd_alert/New(who, tag)
@@ -101,14 +101,14 @@ Version 1 changes (from version 0):
 	target = who
 	src.tag = tag
 
-/sd_alert/Topic(href,params[])
+/sd_alert/Topic(href, params[])
 	if(usr.client != target) return
 	response = params["clk"]
 
-/sd_alert/proc/Display(message,title,list/buttons,default,unfocus,size,table,style,select,flags)
+/sd_alert/proc/Display(message, title, list/buttons, default, unfocus, size, table, style, select, flags)
 	if(unfocus)
 		spawn()
-			target << browse(null,null)
+			target << browse(null, null)
 	if(istext(buttons))
 		buttons = list(buttons)
 	if(!default)
@@ -152,7 +152,7 @@ Version 1 changes (from version 0):
 
 	html += "</th></tr></table></body>"
 
-	target << browse(html,"window=\ref[src];size=[size];can_close=0")
+	target << browse(html, "window=\ref[src];size=[size];can_close=0")
 
 /sd_alert/proc/Response()
 	var/validated

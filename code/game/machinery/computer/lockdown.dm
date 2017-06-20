@@ -1,8 +1,8 @@
-//this computer displays status and remotely activates multiple shutters / blast doors
-//todo: lock / electrify specified area doors? might be a bit gamebreaking
+// this computer displays status and remotely activates multiple shutters / blast doors
+// todo: lock / electrify specified area doors? might be a bit gamebreaking
 
 /obj/machinery/computer/lockdown
-	//for reference
+	// for reference
 	/*name = "Lockdown Control"
 	desc = "Used to control blast doors."
 	icon_state = "lockdown"
@@ -15,12 +15,12 @@
 	..()
 	connected_doors = new/list()
 	displayedNetworks  = new/list()
-	//only load blast doors for map-defined departments for the moment
-	//door networks are hardcoded here.
+	// only load blast doors for map-defined departments for the moment
+	// door networks are hardcoded here.
 	switch(department)
 		if("Engineering")
 			connected_doors.Add("Engineering")
-			//Antiqua Engineering
+			// Antiqua Engineering
 			connected_doors.Add("Reactor core")
 			connected_doors.Add("Control Room")
 			connected_doors.Add("Vent Seal")
@@ -31,9 +31,9 @@
 			connected_doors.Add("Locker Room Shutters")
 			connected_doors.Add("Breakroom Shutters")
 			connected_doors.Add("Observation Shutters")
-			//exodus engineering
+			// exodus engineering
 		if("Medbay")
-			//Exodus Medbay
+			// Exodus Medbay
 			connected_doors.Add("Genetics Outer Shutters")
 			connected_doors.Add("Genetics Inner Shutters")
 			connected_doors.Add("Chemistry Outer Shutters")
@@ -45,7 +45,7 @@
 	for(var/net in connected_doors)
 		connected_doors[net] = new/list()
 
-	//loop through the world, grabbing all the relevant doors
+	// loop through the world, grabbing all the relevant doors
 	spawn(1)
 		ConnectDoors()
 
@@ -67,8 +67,8 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
+	if( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+		if(!istype(user, /mob/living/silicon))
 			user.machine = null
 			user << browse(null, "window=lockdown")
 			return
@@ -93,10 +93,10 @@
 				t += "<tr>"
 				t += "<td>[D.id]</td>"
 
-				if(istype(D,/obj/machinery/door/poddoor/shutters))
-					t += "<td>Shutter ([D.density ? "Closed" : "Open"])</td>"
+				if(istype(D, /obj/machinery/door/poddoor/shutters))
+					t += "<td>Shutter([D.density ? "Closed" : "Open"])</td>"
 				else
-					t += "<td>Blast door ([D.density ? "Closed" : "Open"])</td>"
+					t += "<td>Blast door([D.density ? "Closed" : "Open"])</td>"
 				t += "<td><b><a href='?src=\ref[D];toggle=1'>Toggle</a></b></td>"
 				t += "</tr>"
 		else
@@ -142,7 +142,7 @@
 	if( href_list["open_net"] )
 		var/netTag = href_list["open_net"]
 		for(var/obj/machinery/door/poddoor/D in connected_doors[netTag])
-			if(D.density)	//for some reason, there's no var saying whether the door is open or not >.>
+			if(D.density)	// for some reason, there's no var saying whether the door is open or not >.>
 				spawn(0)
 					D.open()
 

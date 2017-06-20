@@ -27,7 +27,7 @@
 /obj/item/weapon/locator/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat
-	if (src.temp)
+	if(src.temp)
 		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
 	else
 		dat = {"
@@ -45,56 +45,56 @@ Frequency:
 
 /obj/item/weapon/locator/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained())
+	if(usr.stat || usr.restrained())
 		return
-	var/turf/current_location = get_turf(usr)//What turf is the user on?
-	if(!current_location||current_location.z==2)//If turf was not found or they're on z level 2.
+	var/turf/current_location = get_turf(usr)// What turf is the user on?
+	if(!current_location||current_location.z==2)// If turf was not found or they're on z level 2.
 		to_chat(usr, "The [src] is malfunctioning.")
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
 		usr.set_machine(src)
-		if (href_list["refresh"])
+		if(href_list["refresh"])
 			src.temp = "<B>Persistent Signal Locator</B><HR>"
 			var/turf/sr = get_turf(src)
 
-			if (sr)
+			if(sr)
 				src.temp += "<B>Located Beacons:</B><BR>"
 
 				for(var/obj/item/device/radio/beacon/W in world)
-					if (W.frequency == src.frequency)
+					if(W.frequency == src.frequency)
 						var/turf/tr = get_turf(W)
-						if (tr.z == sr.z && tr)
+						if(tr.z == sr.z && tr)
 							var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-							if (direct < 5)
+							if(direct < 5)
 								direct = "very strong"
 							else
-								if (direct < 10)
+								if(direct < 10)
 									direct = "strong"
 								else
-									if (direct < 20)
+									if(direct < 20)
 										direct = "weak"
 									else
 										direct = "very weak"
 							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/weapon/implant/tracking/W in world)
-					if (!W.implanted || !(istype(W.loc,/obj/item/organ/external) || ismob(W.loc)))
+				for(var/obj/item/weapon/implant/tracking/W in world)
+					if(!W.implanted || !(istype(W.loc, /obj/item/organ/external) || ismob(W.loc)))
 						continue
 					else
 						var/mob/M = W.loc
-						if (M.stat == DEAD)
-							if (M.timeofdeath + 6000 < world.time)
+						if(M.stat == DEAD)
+							if(M.timeofdeath + 6000 < world.time)
 								continue
 
 					var/turf/tr = get_turf(W)
-					if (tr.z == sr.z && tr)
+					if(tr.z == sr.z && tr)
 						var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-						if (direct < 20)
-							if (direct < 5)
+						if(direct < 20)
+							if(direct < 5)
 								direct = "very strong"
 							else
-								if (direct < 10)
+								if(direct < 10)
 									direct = "strong"
 								else
 									direct = "weak"
@@ -104,17 +104,17 @@ Frequency:
 			else
 				src.temp += "<B><FONT color='red'>Processing Error:</FONT></B> Unable to locate orbital position.<BR>"
 		else
-			if (href_list["freq"])
+			if(href_list["freq"])
 				src.frequency += text2num(href_list["freq"])
 				src.frequency = sanitize_frequency(src.frequency)
 			else
-				if (href_list["temp"])
+				if(href_list["temp"])
 					src.temp = null
-		if (istype(src.loc, /mob))
+		if(istype(src.loc, /mob))
 			attack_self(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
-				if (M.client)
+				if(M.client)
 					src.attack_self(M)
 	return
 
@@ -136,8 +136,8 @@ Frequency:
 	origin_tech = "magnets=1;bluespace=3"
 
 /obj/item/weapon/hand_tele/attack_self(mob/user)
-	var/turf/current_location = get_turf(user)//What turf is the user on?
-	if(!current_location||current_location.z==2||current_location.z>=7)//If turf was not found or they're on z level 2 or >7 which does not currently exist.
+	var/turf/current_location = get_turf(user)// What turf is the user on?
+	if(!current_location||current_location.z==2||current_location.z>=7)// If turf was not found or they're on z level 2 or >7 which does not currently exist.
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	var/list/L = list(  )
@@ -149,15 +149,15 @@ Frequency:
 				L["[com.id] (Inactive)"] = com.target
 	var/list/turfs = list(	)
 	for(var/turf/T in orange(10))
-		if(T.x>world.maxx-8 || T.x<8)	continue	//putting them at the edge is dumb
+		if(T.x>world.maxx-8 || T.x<8)	continue	// putting them at the edge is dumb
 		if(T.y>world.maxy-8 || T.y<8)	continue
 		turfs += T
 	if(turfs.len)
-		L["None (Dangerous)"] = pick(turfs)
+		L["None(Dangerous)"] = pick(turfs)
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") in L
-	if ((user.get_active_hand() != src || user.stat || user.restrained()))
+	if((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
-	var/count = 0	//num of portals from this teleport in world
+	var/count = 0	// num of portals from this teleport in world
 	for(var/obj/effect/portal/PO in world)
 		if(PO.creator == src)	count++
 	if(count >= 3)

@@ -17,7 +17,7 @@
 		0, 0, 0, 1           \
 	)                        \
 
-// Helpers so we can (more easily) control the colour matrices.
+// Helpers so we can(more easily) control the colour matrices.
 #define RR 1
 #define RG 2
 #define RB 3

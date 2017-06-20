@@ -1,11 +1,11 @@
-//SUPPLY PACKS
-//NOTE: only secure crate types use the access var (and are lockable)
-//NOTE: hidden packs only show up when the computer has been hacked.
-//ANOTER NOTE: Contraband is obtainable through modified supplycomp circuitboards.
-//BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
-//NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
+// SUPPLY PACKS
+// NOTE: only secure crate types use the access var(and are lockable)
+// NOTE: hidden packs only show up when the computer has been hacked.
+// ANOTER NOTE: Contraband is obtainable through modified supplycomp circuitboards.
+// BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
+// NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
-var/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
+var/list/all_supply_groups = list("Operations", "Security", "Hospitality", "Engineering", "Medical / Science", "Hydroponics", "Mining", "Supply", "Miscellaneous")
 
 datum/supply_pack
 	var/name = "Crate"
@@ -19,7 +19,7 @@ datum/supply_pack
 	var/crate_name = "crate"
 	var/crate_type = /obj/structure/closet/crate
 	var/dangerous = FALSE // Should we message admins?
-	var/special = FALSE //Event/Station Goals/Admin enabled packs
+	var/special = FALSE // Event/Station Goals/Admin enabled packs
 	var/special_enabled = FALSE
 	var/amount = 0
 
@@ -180,7 +180,7 @@ datum/supply_pack/New()
 
 /datum/supply_pack/loyalty
 	name = "Loyalty implant crate"
-	contains = list (/obj/item/weapon/storage/lockbox/loyalty)
+	contains = list(/obj/item/weapon/storage/lockbox/loyalty)
 	cost = 6000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Loyalty implant crate"
@@ -212,27 +212,27 @@ datum/supply_pack/New()
 	group = "Security"
 
 /datum/supply_pack/shotgunammo_beanbag
-	name = "Shotgun shells (Beanbag)"
+	name = "Shotgun shells(Beanbag)"
 	contains = list(/obj/item/weapon/storage/box/shotgun/beanbag)
 	cost = 1000
-	crate_name = "Shotgun shells (Beanbag)"
+	crate_name = "Shotgun shells(Beanbag)"
 	group = "Security"
 
 /datum/supply_pack/shotgunammo_slug
-	name = "Shotgun shells (slug)"
+	name = "Shotgun shells(slug)"
 	contains = list(/obj/item/weapon/storage/box/shotgun/slug)
 	cost = 2000
 	crate_type = /obj/structure/closet/crate/secure
-	crate_name = "Shotgun shells (slug)"
+	crate_name = "Shotgun shells(slug)"
 	access = access_armory
 	group = "Security"
 
 /datum/supply_pack/shotgunammo_buckshot
-	name = "Shotgun shells (buckshot)"
+	name = "Shotgun shells(buckshot)"
 	contains = list(/obj/item/weapon/storage/box/shotgun/buckshot)
 	cost = 2500
 	crate_type = /obj/structure/closet/crate/secure
-	crate_name = "Shotgun shells (buckshot)"
+	crate_name = "Shotgun shells(buckshot)"
 	access = access_armory
 	group = "Security"
 
@@ -608,10 +608,10 @@ datum/supply_pack/New()
 	crate_name = "Particle Accelerator crate"
 
 /datum/supply_pack/mecha_ripley
-	name = "Circuit Crate (\"Ripley\" APLU)"
+	name = "Circuit Crate(\"Ripley\" APLU)"
 	contains = list(/obj/item/weapon/book/manual/ripley_build_and_repair,
-					/obj/item/weapon/circuitboard/mecha/ripley/main, //TEMPORARY due to lack of circuitboard printer
-					/obj/item/weapon/circuitboard/mecha/ripley/peripherals) //TEMPORARY due to lack of circuitboard printer
+					/obj/item/weapon/circuitboard/mecha/ripley/main, // TEMPORARY due to lack of circuitboard printer
+					/obj/item/weapon/circuitboard/mecha/ripley/peripherals) // TEMPORARY due to lack of circuitboard printer
 	cost = 3000
 	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
 	crate_name = "APLU \"Ripley\" Circuit Crate"
@@ -619,9 +619,9 @@ datum/supply_pack/New()
 	group = "Engineering"
 
 /datum/supply_pack/mecha_odysseus
-	name = "Circuit Crate (\"Odysseus\")"
-	contains = list(/obj/item/weapon/circuitboard/mecha/odysseus/peripherals, //TEMPORARY due to lack of circuitboard printer
-					/obj/item/weapon/circuitboard/mecha/odysseus/main) //TEMPORARY due to lack of circuitboard printer
+	name = "Circuit Crate(\"Odysseus\")"
+	contains = list(/obj/item/weapon/circuitboard/mecha/odysseus/peripherals, // TEMPORARY due to lack of circuitboard printer
+					/obj/item/weapon/circuitboard/mecha/odysseus/main) // TEMPORARY due to lack of circuitboard printer
 	cost = 2500
 	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
 	crate_name = "\"Odysseus\" Circuit Crate"
@@ -678,7 +678,7 @@ datum/supply_pack/New()
 	contains = list(/obj/machinery/power/supermatter)
 	cost = 5000
 	crate_type = /obj/structure/closet/crate/secure/woodseccrate
-	crate_name = "Supermatter crate (CAUTION)"
+	crate_name = "Supermatter crate(CAUTION)"
 	group = "Engineering"
 	access = access_ce
 
@@ -870,7 +870,7 @@ datum/supply_pack/New()
 
 /datum/supply_pack/monkey
 	name = "Monkey crate"
-	contains = list (/obj/item/weapon/storage/box/monkeycubes)
+	contains = list(/obj/item/weapon/storage/box/monkeycubes)
 	cost = 2000
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Monkey crate"
@@ -878,7 +878,7 @@ datum/supply_pack/New()
 
 /datum/supply_pack/farwa
 	name = "Farwa crate"
-	contains = list (/obj/item/weapon/storage/box/monkeycubes/farwacubes)
+	contains = list(/obj/item/weapon/storage/box/monkeycubes/farwacubes)
 	cost = 3000
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Farwa crate"
@@ -886,7 +886,7 @@ datum/supply_pack/New()
 
 /datum/supply_pack/skrell
 	name = "Neaera crate"
-	contains = list (/obj/item/weapon/storage/box/monkeycubes/neaeracubes)
+	contains = list(/obj/item/weapon/storage/box/monkeycubes/neaeracubes)
 	cost = 3000
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Neaera crate"
@@ -894,7 +894,7 @@ datum/supply_pack/New()
 
 /datum/supply_pack/stok
 	name = "Stok crate"
-	contains = list (/obj/item/weapon/storage/box/monkeycubes/stokcubes)
+	contains = list(/obj/item/weapon/storage/box/monkeycubes/stokcubes)
 	cost = 3000
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Stok crate"
@@ -917,7 +917,7 @@ datum/supply_pack/New()
 	access = access_hydroponics
 	group = "Hydroponics"
 
-//farm animals - useless and annoying, but potentially a good source of food
+// farm animals - useless and annoying, but potentially a good source of food
 /datum/supply_pack/cow
 	name = "Cow crate"
 	cost = 3000
@@ -1260,7 +1260,7 @@ datum/supply_pack/New()
 /datum/supply_pack/randomised
 	name = "Collectable Hats Crate!"
 	cost = 20000
-	var/num_contained = 4 //number of items picked to be contained in a randomised crate
+	var/num_contained = 4 // number of items picked to be contained in a randomised crate
 	contains = list(/obj/item/clothing/head/collectable/chef,
 					/obj/item/clothing/head/collectable/paper,
 					/obj/item/clothing/head/collectable/tophat,

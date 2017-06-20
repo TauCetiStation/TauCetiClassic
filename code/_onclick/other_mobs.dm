@@ -10,7 +10,7 @@
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
-	if(proximity && istype(G) && G.Touch(A,1))
+	if(proximity && istype(G) && G.Touch(A, 1))
 		return
 
 	A.attack_hand(src)
@@ -50,17 +50,17 @@
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 	var/mob/living/carbon/ML = A
-	var/dam_zone = ran_zone(pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG))
+	var/dam_zone = ran_zone(pick(BP_CHEST, BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG))
 	var/armor = ML.run_armor_check(dam_zone, "melee")
 	if(prob(75))
-		ML.apply_damage(rand(1,3), BRUTE, dam_zone, armor)
+		ML.apply_damage(rand(1, 3), BRUTE, dam_zone, armor)
 		for(var/mob/O in viewers(ML, null))
 			O.show_message("\red <B>[name] has bit [ML]!</B>", 1)
 		if(armor >= 100) return
 		if(ismonkey(ML))
 			for(var/datum/disease/D in viruses)
 				if(istype(D, /datum/disease/jungle_fever))
-					ML.contract_disease(D,1,0)
+					ML.contract_disease(D, 1, 0)
 	else
 		for(var/mob/O in viewers(ML, null))
 			O.show_message("\red <B>[src] has attempted to bite [ML]!</B>", 1)

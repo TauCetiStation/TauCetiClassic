@@ -68,7 +68,7 @@
 						 "<span class='warning'>You smash against [src].</span>", \
 						 "You hear twisting metal.")
 
-	health -= rand(2,3)
+	health -= rand(2, 3)
 	healthcheck()
 	return
 
@@ -100,7 +100,7 @@
 
 	if(!Proj)	return
 
-	//Tasers and the like should not damage grilles.
+	// Tasers and the like should not damage grilles.
 	if(Proj.damage_type == HALLOSS)
 		return
 
@@ -122,8 +122,8 @@
 								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] the floor.</span>")
 			return
 
-//window placing begin
-	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
+// window placing begin
+	else if( istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass) )
 		var/obj/item/stack/ST = W
 		if(ST.amount < 1)
 			return
@@ -131,7 +131,7 @@
 		if(loc == user.loc)
 			dir_to_set = user.dir
 		else
-			if( ( x == user.x ) || (y == user.y) ) //Only supposed to work for cardinal directions.
+			if( ( x == user.x ) || (y == user.y) ) // Only supposed to work for cardinal directions.
 				if( x == user.x )
 					if( y > user.y )
 						dir_to_set = 2
@@ -144,25 +144,25 @@
 						dir_to_set = 4
 			else
 				to_chat(user, "<span class='notice'>You can't reach.</span>")
-				return //Only works for cardinal direcitons, diagonals aren't supposed to work like this.
+				return // Only works for cardinal direcitons, diagonals aren't supposed to work like this.
 		for(var/obj/structure/window/WINDOW in loc)
 			if(WINDOW.dir == dir_to_set)
 				to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
 				return
 		to_chat(user, "<span class='notice'>You start placing the window.</span>")
-		if(do_after(user,20,target = src))
-			if(!src) return //Grille destroyed while waiting
+		if(do_after(user, 20, target = src))
+			if(!src) return // Grille destroyed while waiting
 			for(var/obj/structure/window/WINDOW in loc)
-				if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
+				if(WINDOW.dir == dir_to_set)// checking this for a 2nd time to check if a window was made while we were waiting.
 					to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
 					return
 			if(!ST.use(1))
 				return
 			var/obj/structure/window/WD
-			if(istype(W,/obj/item/stack/sheet/rglass))
-				WD = new/obj/structure/window/reinforced(loc) //reinforced window
+			if(istype(W, /obj/item/stack/sheet/rglass))
+				WD = new/obj/structure/window/reinforced(loc) // reinforced window
 			else
-				WD = new/obj/structure/window/basic(loc) //normal window
+				WD = new/obj/structure/window/basic(loc) // normal window
 			WD.dir = dir_to_set
 			WD.ini_dir = dir_to_set
 			WD.anchored = 0
@@ -170,7 +170,7 @@
 			to_chat(user, "<span class='notice'>You place the [WD] on [src].</span>")
 			WD.update_icon()
 		return
-//window placing end
+// window placing end
 
 	else if(istype(W, /obj/item/weapon/shard))
 		health -= W.force * 0.1
@@ -201,7 +201,7 @@
 				return
 	return
 
-// shock user with probability prb (if all connections & power are working)
+// shock user with probability prb(if all connections & power are working)
 // returns 1 if shocked, 0 otherwise
 
 /obj/structure/grille/proc/shock(mob/user, prb)
@@ -209,7 +209,7 @@
 		return 0
 	if(!prob(prb))
 		return 0
-	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
+	if(!in_range(src, user))// To prevent TK and mech users from getting shocked
 		return 0
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()

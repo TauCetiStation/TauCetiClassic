@@ -36,7 +36,7 @@ var/const/BORG_WIRE_CAMERA      = 16
 
 		if(BORG_WIRE_AI_CONTROL)
 			if(!mended)
-				if (R.connected_ai)
+				if(R.connected_ai)
 					R.connected_ai = null
 
 		if(BORG_WIRE_CAMERA)

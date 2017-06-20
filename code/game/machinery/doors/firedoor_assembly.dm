@@ -17,12 +17,12 @@ obj/structure/firedoor_assembly/update_icon()
 obj/structure/firedoor_assembly/attackby(C, mob/user)
 	if(istype(C, /obj/item/weapon/cable_coil) && !wired && anchored)
 		var/obj/item/weapon/cable_coil/cable = C
-		if (cable.amount < 1)
+		if(cable.amount < 1)
 			to_chat(user, "<span class='warning'>You need one length of coil to wire \the [src].</span>")
 			return
 		user.visible_message("[user] wires \the [src].", "You start to wire \the [src].")
 		if(do_after(user, 40, target = src) && !wired && anchored)
-			if (cable.use(1))
+			if(cable.use(1))
 				wired = 1
 				to_chat(user, "<span class='notice'>You wire \the [src].</span>")
 

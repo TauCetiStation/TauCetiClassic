@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 // reserving some numbers for later special antigens
 var/global/const/ANTIGEN_A  = 1
@@ -38,7 +38,7 @@ datum/reagent/antibodies
 	color = "#0050F0"
 
 	reaction_mob(mob/M, method=TOUCH, volume)
-		if(istype(M,/mob/living/carbon))
+		if(istype(M, /mob/living/carbon))
 			if(src.data && method == INGEST)
 				if(M:virus2) if(src.data["antibodies"] & M:virus2.antigen)
 					M:virus2.dead = 1

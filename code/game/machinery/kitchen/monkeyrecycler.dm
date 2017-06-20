@@ -48,9 +48,9 @@
 
 	default_deconstruction_crowbar(O)
 
-	if (src.stat != CONSCIOUS) //NOPOWER etc
+	if(src.stat != CONSCIOUS) // NOPOWER etc
 		return
-	if (istype(O, /obj/item/weapon/grab))
+	if(istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		var/grabbed = G.affecting
 		if(ismonkey(grabbed))
@@ -63,7 +63,7 @@
 				to_chat(user, "\blue You stuff the monkey in the machine.")
 				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 				var/offset = prob(50) ? -2 : 2
-				animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+				animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) // start shaking
 				use_power(500)
 				src.grinded++
 				sleep(50)
@@ -74,7 +74,7 @@
 	return
 
 /obj/machinery/monkey_recycler/attack_hand(mob/user)
-	if (src.stat != CONSCIOUS) //NOPOWER etc
+	if(src.stat != CONSCIOUS) // NOPOWER etc
 		return
 	if(grinded >= required_grind)
 		to_chat(user, "\blue The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.")

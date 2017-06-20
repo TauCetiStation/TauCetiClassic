@@ -1,4 +1,4 @@
-//Procedures in this file: Facial reconstruction surgery
+// Procedures in this file: Facial reconstruction surgery
 //////////////////////////////////////////////////////////////////
 //						FACE SURGERY							//
 //////////////////////////////////////////////////////////////////
@@ -9,10 +9,10 @@
 	can_infect = 0
 
 /datum/surgery_step/face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return 0
 	return target_zone == O_MOUTH
 
@@ -36,13 +36,13 @@
 	..()
 
 /datum/surgery_step/generic/cut_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\blue [user] has cut open [target]'s face and neck with \the [tool]." , \
+	user.visible_message("\blue [user] has cut open [target]'s face and neck with \the [tool].", \
 	"\blue You have cut open [target]'s face and neck with \the [tool].",)
 	target.op_stage.face = 1
 
 /datum/surgery_step/generic/cut_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, slicing [target]'s throat wth \the [tool]!" , \
+	user.visible_message("\red [user]'s hand slips, slicing [target]'s throat wth \the [tool]!", \
 	"\red Your hand slips, slicing [target]'s throat wth \the [tool]!" )
 	BP.createwound(CUT, 60)
 	target.losebreath += 10
@@ -53,7 +53,7 @@
 	/obj/item/weapon/cable_coil = 75,            \
 	/obj/item/weapon/wirecutters = 75,           \
 	/obj/item/weapon/kitchen/utensil/fork = 50,  \
-	/obj/item/device/assembly/mousetrap = 10	//I don't know. Don't ask me. But I'm leaving it because hilarity.
+	/obj/item/device/assembly/mousetrap = 10	// I don't know. Don't ask me. But I'm leaving it because hilarity.
 	)
 
 	min_duration = 70
@@ -124,7 +124,7 @@
 	return ..() && target.op_stage.face > 0
 
 /datum/surgery_step/face/cauterize/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] is beginning to cauterize the incision on [target]'s face and neck with \the [tool]." , \
+	user.visible_message("[user] is beginning to cauterize the incision on [target]'s face and neck with \the [tool].", \
 	"You are beginning to cauterize the incision on [target]'s face and neck with \the [tool].")
 	..()
 
@@ -134,7 +134,7 @@
 	"\blue You cauterize the incision on [target]'s face and neck with \the [tool].")
 	BP.open = 0
 	BP.status &= ~ORGAN_BLEEDING
-	if (target.op_stage.face == 3)
+	if(target.op_stage.face == 3)
 		var/obj/item/organ/external/head/H = BP
 		H.disfigured = 0
 	target.op_stage.face = 0

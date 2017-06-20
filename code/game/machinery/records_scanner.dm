@@ -1,4 +1,4 @@
-//not a computer
+// not a computer
 obj/machinery/scanner
 	name = "Identity Analyser"
 	var/outputdir = 0
@@ -42,7 +42,7 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	if(!ishuman(user) || lastuser == user.real_name)
 		return
 	use_power(500)
-	flick("scanner_on",src)
+	flick("scanner_on", src)
 	lastuser = user.real_name
 	var/mname = user.real_name
 	var/dna = user.dna.unique_enzymes
@@ -72,13 +72,13 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	for(var/A in marks)
 		text += "\red[A]<br>"
 	to_chat(user, "<span class='notice'>You feel a sting as the scanner extracts some of your blood.</span>")
-	var/turf/T = get_step(src,outputdir)
+	var/turf/T = get_step(src, outputdir)
 	var/obj/item/weapon/paper/print = new(T)
 	print.name = "[mname] Report"
 	print.info = text
 
 	for(var/datum/data/record/test in data_core.general)
-		if (test.fields["name"] == mname)
+		if(test.fields["name"] == mname)
 			return
 
 	var/datum/data/record/G = new()
@@ -119,7 +119,7 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	S.fields["ma_crim_d"] = "No major crime convictions."
 	S.fields["notes"] = "No notes."
 
-	//Begin locked reporting
+	// Begin locked reporting
 	L.fields["name"] = mname
 	L.fields["sex"] = gender
 	L.fields["age"] = age
@@ -130,8 +130,8 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	L.fields["b_dna"] = dna
 	L.fields["enzymes"] = user.dna.struc_enzymes
 	L.fields["identity"] = user.dna.uni_identity
-	L.fields["image"] = getFlatIcon(user,0)//What the person looks like. Naked, in this case.
-	//End locked reporting
+	L.fields["image"] = getFlatIcon(user, 0)// What the person looks like. Naked, in this case.
+	// End locked reporting
 
 	data_core.general += G
 	data_core.medical += M

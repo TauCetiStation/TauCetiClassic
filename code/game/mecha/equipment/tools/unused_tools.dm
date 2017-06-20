@@ -7,7 +7,7 @@
 
 
 
-//NEEDS SPRITE! (When this gets ticked in search for 'TODO MECHA JETPACK SPRITE MISSING' through code to uncomment the place where it's missing.)
+// NEEDS SPRITE! (When this gets ticked in search for 'TODO MECHA JETPACK SPRITE MISSING' through code to uncomment the place where it's missing.)
 /obj/item/mecha_parts/mecha_equipment/jetpack
 	name = "Jetpack"
 	desc = "Using directed ion bursts and cunning solar wind reflection technique, this device enables controlled space flight."
@@ -64,7 +64,7 @@
 			chassis.dir = direction
 			move_result = 1
 		else
-			move_result	= step(chassis,direction)
+			move_result	= step(chassis, direction)
 			if(chassis.occupant)
 				for(var/obj/effect/speech_bubble/B in range(1, chassis))
 					if(B.parent == chassis.occupant)
@@ -73,9 +73,9 @@
 			wait = 1
 			chassis.use_power(energy_drain)
 			if(!chassis.pr_inertial_movement.active())
-				chassis.pr_inertial_movement.start(list(chassis,direction))
+				chassis.pr_inertial_movement.start(list(chassis, direction))
 			else
-				chassis.pr_inertial_movement.set_process_args(list(chassis,direction))
+				chassis.pr_inertial_movement.set_process_args(list(chassis, direction))
 			do_after_cooldown()
 			return 1
 		return 0
@@ -96,7 +96,7 @@
 		return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] \[<a href=\"?src=\ref[src];toggle=1\">Toggle</a>\]"
 
 
-	Topic(href,href_list)
+	Topic(href, href_list)
 		..()
 		if(href_list["toggle"])
 			toggle()
@@ -133,7 +133,7 @@
 		if(!action_checks(user) || !active)
 			return
 		user.electrocute_act(shock_damage, src)
-		return chassis.dynattackby(W,user)
+		return chassis.dynattackby(W, user)
 
 
 /*
@@ -149,7 +149,7 @@
 			target.client.mom.gib()
 			for(var/mob/M in range(target, 1000))
 				M.gib()
-			explosion(target.loc,100000,100000,100000)
+			explosion(target.loc, 100000, 100000, 100000)
 			usr.gib()
 			world.Reboot()
 			return 1

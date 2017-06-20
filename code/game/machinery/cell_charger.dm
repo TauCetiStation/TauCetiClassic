@@ -18,7 +18,7 @@
 			if(charging && !(stat & (BROKEN|NOPOWER)) )
 
 				var/newlevel = 	round(charging.percent() * 4.0 / 99)
-				//world << "nl: [newlevel]"
+				// world << "nl: [newlevel]"
 
 				if(chargelevel != newlevel)
 
@@ -88,11 +88,11 @@
 
 
 	process()
-		//world << "ccpt [charging] [stat]"
+		// world << "ccpt [charging] [stat]"
 		if(!charging || (stat & (BROKEN|NOPOWER)) || !anchored)
 			return
 
-		var/power_used = 100000	//for 200 units of charge. Yes, thats right, 100 kW. Is something wrong with CELLRATE?
+		var/power_used = 100000	// for 200 units of charge. Yes, thats right, 100 kW. Is something wrong with CELLRATE?
 
 		power_used = charging.give(power_used*CELLRATE*efficiency)
 		use_power(power_used)

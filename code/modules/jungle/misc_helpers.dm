@@ -1,10 +1,10 @@
-//put this here because i needed specific functionality, and i wanted to avoid the hassle of getting it onto svn
+// put this here because i needed specific functionality, and i wanted to avoid the hassle of getting it onto svn
 
 
-/area/proc/copy_turfs_to(area/A , platingRequired = 0 )
-	//Takes: Area. Optional: If it should copy to areas that don't have plating
-	//Returns: Nothing.
-	//Notes: Attempts to move the contents of one area to another area.
+/area/proc/copy_turfs_to(area/A, platingRequired = 0 )
+	// Takes: Area. Optional: If it should copy to areas that don't have plating
+	// Returns: Nothing.
+	// Notes: Attempts to move the contents of one area to another area.
 	//       Movement based on lower left corner. Tiles that do not fit
 	//		 into the new area will not be moved.
 
@@ -15,13 +15,13 @@
 
 	var/src_min_x = 0
 	var/src_min_y = 0
-	for (var/turf/T in turfs_src)
+	for(var/turf/T in turfs_src)
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 
 	var/trg_min_x = 0
 	var/trg_min_y = 0
-	for (var/turf/T in turfs_trg)
+	for(var/turf/T in turfs_trg)
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 
@@ -47,9 +47,9 @@
 
 
 	moving:
-		for (var/turf/T in refined_src)
+		for(var/turf/T in refined_src)
 			var/datum/coords/C_src = refined_src[T]
-			for (var/turf/B in refined_trg)
+			for(var/turf/B in refined_trg)
 				var/datum/coords/C_trg = refined_trg[B]
 				if(C_src.x_pos == C_trg.x_pos && C_src.y_pos == C_trg.y_pos)
 
@@ -64,7 +64,7 @@
 					var/turf/X = new T.type(B)
 					X.dir = old_dir1
 					X.icon_state = old_icon_state1
-					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
+					X.icon = old_icon1 // Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
 
 					var/list/mobs = new/list()
@@ -72,11 +72,11 @@
 
 					for(var/mob/M in T)
 
-						if(!istype(M,/mob) || istype(M, /mob/camera/aiEye)) continue // If we need to check for more mobs, I'll add a variable
+						if(!istype(M, /mob) || istype(M, /mob/camera/aiEye)) continue // If we need to check for more mobs, I'll add a variable
 						mobs += M
 
 					for(var/mob/M in mobs)
-						newmobs += DuplicateObject(M , 1)
+						newmobs += DuplicateObject(M, 1)
 
 					for(var/mob/M in newmobs)
 						M.loc = X
@@ -84,14 +84,14 @@
 
 
 					for(var/V in T.vars)
-						if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")))
+						if(!(V in list("type", "loc", "locs", "vars", "parent", "parent_type", "verbs", "ckey", "key", "x", "y", "z", "contents", "luminosity")))
 							X.vars[V] = T.vars[V]
 
 //					var/area/AR = X.loc
 
 //					if(AR.lighting_use_dynamic)
 //						X.opacity = !X.opacity
-//						X.sd_set_opacity(!X.opacity)			//TODO: rewrite this code so it's not messed by lighting ~Carn
+//						X.sd_set_opacity(!X.opacity)			// TODO: rewrite this code so it's not messed by lighting ~Carn
 
 					toupdate += X
 

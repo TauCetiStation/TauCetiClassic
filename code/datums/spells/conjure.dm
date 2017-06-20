@@ -2,19 +2,19 @@
 	name = "Conjure"
 	desc = "This spell conjures objs of the specified types in range."
 
-	var/list/summon_type = list() //determines what exactly will be summoned
-	//should be text, like list("/obj/machinery/bot/secbot/ed209")
+	var/list/summon_type = list() // determines what exactly will be summoned
+	// should be text, like list("/obj/machinery/bot/secbot/ed209")
 
 	var/summon_lifespan = 0 // 0=permanent, any other time in deciseconds
-	var/summon_amt = 1 //amount of objects summoned
-	var/summon_ignore_density = 0 //if set to 1, adds dense tiles to possible spawn places
-	var/summon_ignore_prev_spawn_points = 0 //if set to 1, each new object is summoned on a new spawn point
-	var/deleting_previous = 0 //if set to 1, a new cast delete previous objects
+	var/summon_amt = 1 // amount of objects summoned
+	var/summon_ignore_density = 0 // if set to 1, adds dense tiles to possible spawn places
+	var/summon_ignore_prev_spawn_points = 0 // if set to 1, each new object is summoned on a new spawn point
+	var/deleting_previous = 0 // if set to 1, a new cast delete previous objects
 	var/list/previous_objects = list() // Containts object references, which was spawned last time.
 
-	var/list/newVars = list() //vars of the summoned objects will be replaced with those where they meet
-	//should have format of list("emagged" = 1,"name" = "Wizard's Justicebot"), for example
-	var/delay = 1//Go Go Gadget Inheritance
+	var/list/newVars = list() // vars of the summoned objects will be replaced with those where they meet
+	// should have format of list("emagged" = 1, "name" = "Wizard's Justicebot"), for example
+	var/delay = 1// Go Go Gadget Inheritance
 	sound = 'sound/items/welder.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/cast(list/targets)
@@ -24,7 +24,7 @@
 			targets -= T
 	playsound(loc, sound, 50, 1)
 
-	if(do_after(usr,delay,target=usr))
+	if(do_after(usr, delay, target=usr))
 		if(deleting_previous)
 			listclearnulls(previous_objects)
 			for(var/atom/A in previous_objects)
@@ -37,7 +37,7 @@
 			var/spawn_place = pick(targets)
 			if(summon_ignore_prev_spawn_points)
 				targets -= spawn_place
-			if(ispath(summoned_object_type,/turf))
+			if(ispath(summoned_object_type, /turf))
 				var/turf/O = spawn_place
 				var/turf/N = summoned_object_type
 				O.ChangeTurf(N)
@@ -56,27 +56,27 @@
 	else
 		switch(charge_type)
 			if("recharge")
-				charge_counter = charge_max - 5//So you don't lose charge for a failed spell(Also prevents most over-fill)
+				charge_counter = charge_max - 5// So you don't lose charge for a failed spell(Also prevents most over-fill)
 			if("charges")
-				charge_counter++//Ditto, just for different spell types
+				charge_counter++// Ditto, just for different spell types
 
 
 	return
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/summonEdSwarm //test purposes
+/obj/effect/proc_holder/spell/aoe_turf/conjure/summonEdSwarm // test purposes
 	name = "Dispense Wizard Justice"
 	desc = "This spell dispenses wizard justice."
 
 	summon_type = list(/obj/machinery/bot/secbot/ed209)
 	summon_amt = 10
 	range = 3
-	newVars = list("emagged" = 1,"name" = "Wizard's Justicebot")
+	newVars = list("emagged" = 1, "name" = "Wizard's Justicebot")
 
 
-//This was previously left in the old wizard code, not being included.
-//Wasn't sure if I should transfer it here, or to code/datums/spells.dm
-//But I decided because it is a conjuration related object it would fit better here
-//Feel free to change this, I don't know.
+// This was previously left in the old wizard code, not being included.
+// Wasn't sure if I should transfer it here, or to code/datums/spells.dm
+// But I decided because it is a conjuration related object it would fit better here
+// Feel free to change this, I don't know.
 /obj/effect/forcefield
 	desc = "A space wizard's magic wall."
 	name = "FORCEWALL"

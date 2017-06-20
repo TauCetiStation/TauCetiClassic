@@ -19,7 +19,7 @@
 /obj/effect/decal/cleanable/ash/attack_hand(mob/user)
 	to_chat(user, "<span class='notice'>[src] sifts through your fingers.</span>")
 	var/turf/simulated/floor/F = get_turf(src)
-	if (istype(F))
+	if(istype(F))
 		F.dirt += 4
 	qdel(src)
 
@@ -89,7 +89,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb2"
 
-//Vomit (sorry)
+// Vomit(sorry)
 /obj/effect/decal/cleanable/vomit
 	name = "vomit"
 	desc = "Gosh, how unpleasant."
@@ -109,7 +109,7 @@
 	return ..()
 
 /obj/effect/decal/cleanable/vomit/proc/stop_light()
-	sleep(rand(150,300))
+	sleep(rand(150, 300))
 	if(!src) return
 	set_light(0)
 
@@ -131,7 +131,7 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_egg1", "smashed_egg2", "smashed_egg3")
 
-/obj/effect/decal/cleanable/pie_smudge //honk
+/obj/effect/decal/cleanable/pie_smudge // honk
 	name = "smashed pie"
 	desc = "It's pie cream from a cream pie."
 	density = 0
@@ -196,9 +196,9 @@
 	if(depth < 0.3)
 		return
 
-	var/tmp_alpha = min(180,max(70, 22.5 * depth))
+	var/tmp_alpha = min(180, max(70, 22.5 * depth))
 	var/tmp_layer = min(3.5, max(2, depth/2))
-	animate(src,time = 10, alpha=tmp_alpha, layer=tmp_layer)
+	animate(src, time = 10, alpha=tmp_alpha, layer=tmp_layer)
 
 	switch(depth)
 		if(0.0 to 2.0)
@@ -233,7 +233,7 @@
 	if(!W)
 		new /obj/effect/decal/cleanable/water(T)
 	else
-		W.depth += rand(2,5)/10
+		W.depth += rand(2, 5)/10
 
 /obj/effect/decal/cleanable/water/proc/check_flamable()
 	var/obj/fire/fire = locate() in loc
@@ -271,7 +271,7 @@
 		var/list/clean_turf = list()
 
 		for(var/direction in cardinal)
-			var/turf/T = get_step(src,direction)
+			var/turf/T = get_step(src, direction)
 			if(istype(T, /turf/simulated/floor))
 				var/dense_obj = 0
 				for(var/atom/movable/AM in T.contents)
@@ -294,7 +294,7 @@
 				try_trans_DNA(W)
 		else
 			for(var/direction in cardinal)
-				var/turf/T = get_step(src,direction)
+				var/turf/T = get_step(src, direction)
 				if(istype(T, /turf/simulated/floor))
 					var/dense_obj = 0
 					for(var/atom/movable/AM in T.contents)
@@ -327,7 +327,7 @@
 	if(depth > depth_max)
 		depth = depth_max
 
-	depth -= rand(1,12)/800
+	depth -= rand(1, 12)/800
 
 	if(depth < 0.3)
 		qdel(src)
@@ -352,7 +352,7 @@
 					if(istype(I, /obj/item/weapon/implant)) continue
 					inv_contents += I
 				if(inv_contents.len)
-					for(var/n=3,n>0,n--)
+					for(var/n=3, n>0, n--)
 						var/obj/item/I = pick(inv_contents)
 						I.make_wet()
 
@@ -379,7 +379,7 @@
 	..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.gloves && istype(H.gloves,/obj/item/clothing/gloves))
+		if(H.gloves && istype(H.gloves, /obj/item/clothing/gloves))
 			H.do_attack_animation(src)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.cell)
@@ -453,10 +453,10 @@
 			else
 				power_calculated *= H.get_siemens_coefficient_organ(BP)
 		if(power_calculated)
-			L.apply_effect(power_calculated,AGONY,0)
+			L.apply_effect(power_calculated, AGONY, 0)
 
-	for(var/direction in list(1,2,4,8,5,6,9,10))
-		var/turf/TS = get_turf(get_step(src,direction))
+	for(var/direction in list(1, 2, 4, 8, 5, 6, 9, 10))
+		var/turf/TS = get_turf(get_step(src, direction))
 		var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, TS)
 		if(W)
 			W.electrocute_act(power-15)
@@ -467,16 +467,16 @@
 	layer = 2.1
 	anchored = 1
 
-/obj/effect/decal/cleanable/toilet_paint/New(main = random_color(),shade = random_color())
+/obj/effect/decal/cleanable/toilet_paint/New(main = random_color(), shade = random_color())
 	..()
 
-	var/type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
+	var/type = pick("amyjon", "face", "matt", "revolution", "engie", "guy", "end", "dwarf", "uboa")
 
-	var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
-	var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
+	var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi', "[type]", 2.1)
+	var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi', "[type]s", 2.1)
 
-	//mainOverlay.Blend(main,ICON_ADD)
-	shadeOverlay.Blend(shade,ICON_ADD)
+	// mainOverlay.Blend(main, ICON_ADD)
+	shadeOverlay.Blend(shade, ICON_ADD)
 
 	overlays += mainOverlay
 	overlays += shadeOverlay

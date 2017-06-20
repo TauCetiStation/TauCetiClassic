@@ -3,7 +3,7 @@
 	~Sayu
 */
 
-// 1 decisecond click delay (above and beyond mob/next_move)
+// 1 decisecond click delay(above and beyond mob/next_move)
 /mob/var/next_click	= 0
 
 /*
@@ -15,12 +15,12 @@
 
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
-/atom/Click(location,control,params)
+/atom/Click(location, control, params)
 	if(src)
 		usr.ClickOn(src, params)
-/atom/DblClick(location,control,params)
+/atom/DblClick(location, control, params)
 	if(src)
-		usr.DblClickOn(src,params)
+		usr.DblClickOn(src, params)
 
 /*
 	Standard mob ClickOn()
@@ -30,10 +30,10 @@
 	check whether you're adjacent to the target, then pass off the click to whoever
 	is recieving it.
 	The most common are:
-	* mob/UnarmedAttack(atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
-	* atom/attackby(item,user,params) - used only when adjacent
-	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
-	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
+	* mob/UnarmedAttack(atom, adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
+	* atom/attackby(item, user, params) - used only when adjacent
+	* item/afterattack(atom, user, adjacent, params) - used both ranged and adjacent
+	* mob/RangedAttack(atom, params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
@@ -59,7 +59,7 @@
 	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+	if(modifiers["alt"]) // alt and alt-gr(rightalt)
 		AltClickOn(A)
 		return
 	if(modifiers["ctrl"])
@@ -74,11 +74,11 @@
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(istype(loc,/obj/mecha))
-		if(!locate(/turf) in list(A,A.loc)) // Prevents inventory from being drilled
+	if(istype(loc, /obj/mecha))
+		if(!locate(/turf) in list(A, A.loc)) // Prevents inventory from being drilled
 			return
 		var/obj/mecha/M = loc
-		return M.click_action(A,src)
+		return M.click_action(A, src)
 
 	if(restrained())
 		RestrainedClickOn(A)
@@ -88,7 +88,7 @@
 		throw_item(A)
 		return
 
-	if(!istype(A,/obj/item/weapon/gun) && !isturf(A) && !istype(A,/obj/screen))
+	if(!istype(A, /obj/item/weapon/gun) && !isturf(A) && !istype(A, /obj/screen))
 		last_target_click = world.time
 
 	var/obj/item/W = get_active_hand()
@@ -105,7 +105,7 @@
 
 		return
 
-	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
+	// operate two STORAGE levels deep here(item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
 	if(A == loc || (A in loc) || (sdepth != -1 && sdepth <= 1))
 
@@ -120,9 +120,9 @@
 			if(W.flags&USEDELAY)
 				next_move += 5
 
-			var/resolved = A.attackby(W,src,params)
+			var/resolved = A.attackby(W, src, params)
 			if(!resolved && A && W)
-				W.afterattack(A,src,1,params) // 1 indicates adjacency
+				W.afterattack(A, src, 1, params) // 1 indicates adjacency
 		else
 			UnarmedAttack(A)
 		return
@@ -140,16 +140,16 @@
 				if(W.flags&USEDELAY)
 					next_move += 5
 
-				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src,params)
+				// Return 1 in attackby() to prevent afterattack() effects(when safely moving items for example)
+				var/resolved = A.attackby(W, src, params)
 				if(!resolved && A && W)
-					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
+					W.afterattack(A, src, 1, params) // 1: clicking something Adjacent
 			else
 				UnarmedAttack(A, 1)
 			return
 		else // non-adjacent click
 			if(W)
-				W.afterattack(A,src,0,params) // 0: not Adjacent
+				W.afterattack(A, src, 0, params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
 
@@ -157,14 +157,14 @@
 
 // Default behavior: ignore double clicks, consider them normal clicks instead
 /mob/proc/DblClickOn(atom/A, params)
-	ClickOn(A,params)
+	ClickOn(A, params)
 
 
 /*
 	Translates into attack_hand, etc.
 
-	Note: proximity_flag here is used to distinguish between normal usage (flag=1),
-	and usage when clicking on things telekinetically (flag=0).  This proc will
+	Note: proximity_flag here is used to distinguish between normal usage(flag=1),
+	and usage when clicking on things telekinetically(flag=0).  This proc will
 	not be called at ranged except with telekinesis.
 
 	proximity_flag is not currently passed to attack_hand, and is instead used
@@ -297,7 +297,7 @@
 	if(nutrition > 300)
 		..()
 		next_move = world.time + 6
-		var/obj/item/projectile/beam/LE = new (loc)
+		var/obj/item/projectile/beam/LE = new(loc)
 		LE.damage = 20
 		playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 		LE.Fire(A, src)
@@ -320,10 +320,10 @@
 		if(dx > 0)	usr.dir = EAST
 		else		usr.dir = WEST
 
-// Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
+// Craft or Build helper(main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)
 	if(C.cob.busy)
-		//do nothing
+		// do nothing
 	else if(modifiers["left"])
 		if(modifiers["alt"])
 			C.cob.rotate_object()

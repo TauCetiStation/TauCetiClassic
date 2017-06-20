@@ -1,20 +1,20 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-//cursors
+// cursors
 #define Default_Cursor	0
 #define Client_Cursor	1
 #define Server_Cursor	2
-//conversions
+// conversions
 #define TEXT_CONV		1
 #define RSC_FILE_CONV	2
 #define NUMBER_CONV		3
-//column flag values:
+// column flag values:
 #define IS_NUMERIC		1
 #define IS_BINARY		2
 #define IS_NOT_NULL		4
 #define IS_PRIMARY_KEY	8
 #define IS_UNSIGNED		16
-//types
+// types
 #define TINYINT		1
 #define SMALLINT	2
 #define MEDIUMINT	3
@@ -34,8 +34,8 @@
 
 // Deprecated! See global.dm for new configuration vars
 /*
-var/DB_SERVER = "" // This is the location of your MySQL server (localhost is USUALLY fine)
-var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is the default)
+var/DB_SERVER = "" // This is the location of your MySQL server(localhost is USUALLY fine)
+var/DB_PORT = 3306 // This is the port your MySQL server is running on(3306 is the default)
 */
 
 /DBConnection
@@ -48,20 +48,20 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 	var/server = ""
 	var/port = 3306
 
-/DBConnection/New(dbi_handler,username,password_handler,cursor_handler)
+/DBConnection/New(dbi_handler, username, password_handler, cursor_handler)
 	src.dbi = dbi_handler
 	src.user = username
 	src.password = password_handler
 	src.default_cursor = cursor_handler
 	_db_con = _dm_db_new_con()
 
-/DBConnection/proc/Connect(dbi_handler=src.dbi,user_handler=src.user,password_handler=src.password,cursor_handler)
+/DBConnection/proc/Connect(dbi_handler=src.dbi, user_handler=src.user, password_handler=src.password, cursor_handler)
 	if(!sqllogging)
 		return 0
 	if(!src) return 0
 	cursor_handler = src.default_cursor
 	if(!cursor_handler) cursor_handler = Default_Cursor
-	return _dm_db_connect(_db_con,dbi_handler,user_handler,password_handler,cursor_handler,null)
+	return _dm_db_connect(_db_con, dbi_handler, user_handler, password_handler, cursor_handler, null)
 
 /DBConnection/proc/Disconnect() return _dm_db_close(_db_con)
 
@@ -70,17 +70,17 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 	var/success = _dm_db_is_connected(_db_con)
 	return success
 
-/DBConnection/proc/Quote(str) return _dm_db_quote(_db_con,str)
+/DBConnection/proc/Quote(str) return _dm_db_quote(_db_con, str)
 
 /DBConnection/proc/ErrorMsg() return _dm_db_error_msg(_db_con)
-/DBConnection/proc/SelectDB(database_name,dbi)
+/DBConnection/proc/SelectDB(database_name, dbi)
 	if(IsConnected()) Disconnect()
-	//return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]",user,password)
-	return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[sqladdress]:[sqlport]"]",user,password)
-/DBConnection/proc/NewQuery(sql_query,cursor_handler=src.default_cursor) return new/DBQuery(sql_query,src,cursor_handler)
+	// return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]", user, password)
+	return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[sqladdress]:[sqlport]"]", user, password)
+/DBConnection/proc/NewQuery(sql_query, cursor_handler=src.default_cursor) return new/DBQuery(sql_query, src, cursor_handler)
 
 
-/DBQuery/New(sql_query,DBConnection/connection_handler,cursor_handler)
+/DBQuery/New(sql_query, DBConnection/connection_handler, cursor_handler)
 	if(sql_query) src.sql = sql_query
 	if(connection_handler) src.db_connection = connection_handler
 	if(cursor_handler) src.default_cursor = cursor_handler
@@ -91,20 +91,20 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 /DBQuery
 	var/sql // The sql query being executed.
 	var/default_cursor
-	var/list/columns //list of DB Columns populated by Columns()
+	var/list/columns // list of DB Columns populated by Columns()
 	var/list/conversions
-	var/list/item[0]  //list of data values populated by NextRow()
+	var/list/item[0]  // list of data values populated by NextRow()
 
 	var/DBConnection/db_connection
 	var/_db_query
 
 /DBQuery/proc/Connect(DBConnection/connection_handler) src.db_connection = connection_handler
 
-/DBQuery/proc/Execute(sql_query=src.sql,cursor_handler=default_cursor)
+/DBQuery/proc/Execute(sql_query=src.sql, cursor_handler=default_cursor)
 	Close()
-	return _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
+	return _dm_db_execute(_db_query, sql_query, db_connection._db_con, cursor_handler, null)
 
-/DBQuery/proc/NextRow() return _dm_db_next_row(_db_query,item,conversions)
+/DBQuery/proc/NextRow() return _dm_db_next_row(_db_query, item, conversions)
 
 /DBQuery/proc/RowsAffected() return _dm_db_rows_affected(_db_query)
 
@@ -114,7 +114,7 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 
 /DBQuery/proc/Columns()
 	if(!columns)
-		columns = _dm_db_columns(_db_query,/DBColumn)
+		columns = _dm_db_columns(_db_query, /DBColumn)
 	return columns
 
 /DBQuery/proc/GetRowData()
@@ -137,7 +137,7 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 /DBQuery/proc/Quote(str)
 	return db_connection.Quote(str)
 
-/DBQuery/proc/SetConversion(column,conversion)
+/DBQuery/proc/SetConversion(column, conversion)
 	if(istext(column)) column = columns.Find(column)
 	if(!conversions) conversions = new/list(column)
 	else if(conversions.len < column) conversions.len = column
@@ -153,7 +153,7 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 	var/length
 	var/max_length
 
-/DBColumn/New(name_handler,table_handler,position_handler,type_handler,flag_handler,length_handler,max_length_handler)
+/DBColumn/New(name_handler, table_handler, position_handler, type_handler, flag_handler, length_handler, max_length_handler)
 	src.name = name_handler
 	src.table = table_handler
 	src.position = position_handler

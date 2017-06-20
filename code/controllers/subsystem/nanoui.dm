@@ -20,9 +20,9 @@ var/datum/subsystem/nanoui/SSnano
 	..("P:[processing.len]")
 
 /datum/subsystem/nanoui/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = processing.Copy()
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed(lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
@@ -32,5 +32,5 @@ var/datum/subsystem/nanoui/SSnano
 			ui.process()
 		else
 			processing -= ui
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return

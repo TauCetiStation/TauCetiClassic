@@ -7,18 +7,18 @@
 	permeability_coefficient = 0.05
 	item_color="yellow"
 
-/obj/item/clothing/gloves/fyellow                             //Cheap Chinese Crap
+/obj/item/clothing/gloves/fyellow                             // Cheap Chinese Crap
 	desc = "These gloves are cheap copies of the coveted gloves, no way this can end badly."
 	name = "budget insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
-	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
+	siemens_coefficient = 1			// Set to a default of 1, gets overridden in New()
 	permeability_coefficient = 0.05
 
 	item_color="yellow"
 
 /obj/item/clothing/gloves/fyellow/New()
-	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
+	siemens_coefficient = pick(0, 0.5, 0.5, 0.5, 0.5, 0.75, 1.5)
 
 
 /obj/item/clothing/gloves/black
@@ -39,11 +39,11 @@
 
 /obj/item/clothing/gloves/black/hos
 	name = "head of security's gloves"
-	item_color = "hosred"		//Exists for washing machines.
+	item_color = "hosred"		// Exists for washing machines.
 
 /obj/item/clothing/gloves/black/ce
 	name = "chief engineer's gloves"
-	item_color = "chief"			//Exists for washing machines.
+	item_color = "chief"			// Exists for washing machines.
 
 
 /obj/item/clothing/gloves/orange
@@ -100,10 +100,10 @@
 	item_color="grey"
 
 /obj/item/clothing/gloves/grey/rd
-	item_color = "director"			//Exists for washing machines. Is not different from gray gloves in any way.
+	item_color = "director"			// Exists for washing machines. Is not different from gray gloves in any way.
 
 /obj/item/clothing/gloves/grey/hop
-	item_color = "hop"				//Exists for washing machines. Is not different from gray gloves in any way.
+	item_color = "hop"				// Exists for washing machines. Is not different from gray gloves in any way.
 
 
 /obj/item/clothing/gloves/light_brown
@@ -121,4 +121,4 @@
 	item_color="brown"
 
 /obj/item/clothing/gloves/brown/cargo
-	item_color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.
+	item_color = "cargo"				// Exists for washing machines. Is not different from brown gloves in any way.

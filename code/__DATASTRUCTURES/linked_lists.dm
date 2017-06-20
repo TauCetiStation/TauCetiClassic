@@ -13,9 +13,9 @@
 	. = (node_amt <= 0)
 
 /**
- * Add a linked_node (or value, creating a linked_node) at position
+ * Add a linked_node(or value, creating a linked_node) at position
  * the added node BECOMES the position-th element,
- * eg: add("Test",5), the 5th node is now "Test", the previous 5th moves up to become the 6th
+ * eg: add("Test", 5), the 5th node is now "Test", the previous 5th moves up to become the 6th
  */
 /datum/linked_list/proc/Add(node, position)
 	var/datum/linked_node/adding
@@ -77,7 +77,7 @@
 /datum/linked_list/proc/Remove(node)
 	var/datum/linked_node/removing
 
-	if(istype(node,/datum/linked_node))
+	if(istype(node, /datum/linked_node))
 		removing = node
 	else
 		// Optimise removing head and tail, no point looping for them, especially the tail
@@ -159,7 +159,7 @@
 	node_amt = 0
 
 //////////////////////
-//Some debugging tools
+// Some debugging tools
 //////////////////////
 
 /datum/linked_list/proc/CheckNodeLinks()

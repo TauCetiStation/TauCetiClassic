@@ -56,7 +56,7 @@
 			to_chat(user, "<span class='notice'>Error... Device's maintenance protocols engaged...</span>")
 		else
 			to_chat(user, "<span class='notice'>Hi there, please wait... Accessing device's software.</span>")
-			if(do_after(user, 30, target = apc) && is_used_on(apc,user))
+			if(do_after(user, 30, target = apc) && is_used_on(apc, user))
 				to_chat(user, "<span class='notice'>My time has come, please wait... Starting HackHim3000...</span>")
 				if(do_after(user, 20, target = apc))
 					to_chat(user, "<span class='notice'>Faster than light, please wait... Hack in progress...</span>")
@@ -76,7 +76,7 @@
 			to_chat(user, "<span class='notice'>Error... Close that F$@^$#$ door NOW!</span>")
 		else
 			to_chat(user, "<span class='notice'>Hi there, please wait... Accessing door's software.</span>")
-			if(do_after(user, 30, target = D) && is_used_on(D,user))
+			if(do_after(user, 30, target = D) && is_used_on(D, user))
 				to_chat(user, "<span class='notice'>My time has come, please wait... Starting HackHim3000...</span>")
 				if(do_after(user, 20, target = D))
 					to_chat(user, "<span class='notice'>Faster than light, please wait... Hack in progress...</span>")

@@ -81,8 +81,8 @@
 
 	P.update_icon()
 	P.loc = C
-	//C.manifest = P
-	//C.update_icon()
+	// C.manifest = P
+	// C.update_icon()
 
 	return P
 

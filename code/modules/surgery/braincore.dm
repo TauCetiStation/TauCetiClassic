@@ -1,4 +1,4 @@
-//Procedures in this file: Brain extraction. Brain fixing. Slime Core extraction.
+// Procedures in this file: Brain extraction. Brain fixing. Slime Core extraction.
 //////////////////////////////////////////////////////////////////
 //						BRAIN SURGERY							//
 //////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@
 	target.brain_op_stage = 2
 
 /datum/surgery_step/brain/saw_skull/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\red [user]'s hand slips, cracking [target]'s skull with \the [tool]!" , \
+	user.visible_message("\red [user]'s hand slips, cracking [target]'s skull with \the [tool]!", \
 	"\red Your hand slips, cracking [target]'s skull with \the [tool]!" )
 	target.apply_damage(max(10, tool.force), BRUTE, BP_HEAD)
 
@@ -95,14 +95,14 @@
 	var/mob/living/simple_animal/borer/borer = target.has_brain_worms()
 
 	if(borer)
-		borer.detatch() //Should remove borer if the brain is removed - RR
+		borer.detatch() // Should remove borer if the brain is removed - RR
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 	var/mob/living/carbon/human/H
-	if(istype(target,/mob/living/carbon/human))
+	if(istype(target, /mob/living/carbon/human))
 		H = target
 
 	var/obj/item/brain/B
@@ -117,13 +117,13 @@
 	target.organs_by_name -= O_BRAIN // this is SOOO wrong.
 
 	target:brain_op_stage = 4.0
-	target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
+	target.death()// You want them to die after the brain was transferred, so not to trigger client death() twice.
 
 /datum/surgery_step/brain/saw_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
 	"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
 	target.apply_damage(30, BRUTE, BP_HEAD, 1, DAM_SHARP)
-	if (ishuman(user))
+	if(ishuman(user))
 		user:bloody_body(target)
 		user:bloody_hands(target, 0)
 
@@ -184,7 +184,7 @@
 	user.visible_message("\blue [user] mends hematoma in [target]'s brain with \the [tool].",	\
 	"\blue You mend hematoma in [target]'s brain with \the [tool].")
 	var/obj/item/organ/internal/brain/IO = target.organs_by_name[O_BRAIN]
-	if (IO)
+	if(IO)
 		IO.damage = 0
 
 

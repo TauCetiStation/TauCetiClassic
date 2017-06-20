@@ -10,7 +10,7 @@
 /datum/construction/New(atom)
 	..()
 	holder = atom
-	if(!holder) //don't want this without a holder
+	if(!holder) // don't want this without a holder
 		qdel(src)
 	set_desc(steps.len)
 	return
@@ -23,10 +23,10 @@
 		set_desc(steps.len)
 	return
 
-/datum/construction/proc/action(atom/used_atom,mob/user)
+/datum/construction/proc/action(atom/used_atom, mob/user)
 	return
 
-/datum/construction/proc/check_step(atom/used_atom,mob/user) //check last step only
+/datum/construction/proc/check_step(atom/used_atom, mob/user) // check last step only
 	var/valid_step = is_right_key(used_atom)
 	if(valid_step)
 		if(custom_action(valid_step, used_atom, user))
@@ -43,12 +43,12 @@
 /datum/construction/proc/custom_action(step, used_atom, user)
 	return 1
 
-/datum/construction/proc/check_all_steps(atom/used_atom,mob/user) //check all steps, remove matching one.
+/datum/construction/proc/check_all_steps(atom/used_atom, mob/user) // check all steps, remove matching one.
 	for(var/i=1;i<=steps.len;i++)
 		var/list/L = steps[i];
 		if(istype(used_atom, L["key"]))
 			if(custom_action(i, used_atom, user))
-				steps[i]=null;//stupid byond list from list removal...
+				steps[i]=null;// stupid byond list from list removal...
 				listclearnulls(steps);
 				if(!steps.len)
 					spawn_result()
@@ -85,12 +85,12 @@
 /datum/construction/reversible/is_right_key(atom/used_atom) // returns index step
 	var/list/L = steps[index]
 	if(istype(used_atom, L["key"]))
-		return FORWARD //to the first step -> forward
+		return FORWARD // to the first step -> forward
 	else if(L["backkey"] && istype(used_atom, L["backkey"]))
-		return BACKWARD //to the last step -> backwards
+		return BACKWARD // to the last step -> backwards
 	return 0
 
-/datum/construction/reversible/check_step(atom/used_atom,mob/user)
+/datum/construction/reversible/check_step(atom/used_atom, mob/user)
 	var/diff = is_right_key(used_atom)
 	if(diff)
 		if(custom_action(index, diff, used_atom, user))

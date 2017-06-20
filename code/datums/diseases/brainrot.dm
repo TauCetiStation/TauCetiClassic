@@ -8,11 +8,11 @@
 	agent = "Cryptococcus Cosmosis"
 	affected_species = list(HUMAN)
 	curable = 0
-	cure_chance = 15//higher chance to cure, since two reagents are required
+	cure_chance = 15// higher chance to cure, since two reagents are required
 	desc = "This disease destroys the braincells, causing brain fever, brain necrosis and general intoxication."
 	severity = "Major"
 
-/datum/disease/brainrot/stage_act() //Removed toxloss because damaging diseases are pretty horrible. Last round it killed the entire station because the cure didn't work -- Urist
+/datum/disease/brainrot/stage_act() // Removed toxloss because damaging diseases are pretty horrible. Last round it killed the entire station because the cure didn't work -- Urist
 	..()
 	switch(stage)
 		if(2)
@@ -30,7 +30,7 @@
 				affected_mob.emote("stare")
 			if(prob(2))
 				affected_mob.emote("drool")
-			if(prob(10) && affected_mob.getBrainLoss()<=98)//shouldn't retard you to death now
+			if(prob(10) && affected_mob.getBrainLoss()<=98)// shouldn't retard you to death now
 				affected_mob.adjustBrainLoss(2)
 				affected_mob.updatehealth()
 				if(prob(2))
@@ -50,7 +50,7 @@
 				affected_mob.updatehealth()
 				if(prob(2))
 					to_chat(affected_mob, "\red Your head hurts.")*/
-			if(prob(15) && affected_mob.getBrainLoss()<=98) //shouldn't retard you to death now
+			if(prob(15) && affected_mob.getBrainLoss()<=98) // shouldn't retard you to death now
 				affected_mob.adjustBrainLoss(3)
 				affected_mob.updatehealth()
 				if(prob(2))
@@ -59,7 +59,7 @@
 				to_chat(affected_mob, "\red You lose consciousness...")
 				for(var/mob/O in viewers(affected_mob, null))
 					O.show_message("[affected_mob] suddenly collapses", 1)
-				affected_mob.Paralyse(rand(5,10))
+				affected_mob.Paralyse(rand(5, 10))
 				if(prob(1))
 					affected_mob.emote("snore")
 			if(prob(15))

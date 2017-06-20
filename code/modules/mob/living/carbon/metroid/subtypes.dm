@@ -1,5 +1,5 @@
 
-////////////////Tier 2
+//////////////// Tier 2
 
 /mob/living/carbon/slime/purple
 	colour = "purple"
@@ -92,7 +92,7 @@
 
 
 
-//Tier 3
+// Tier 3
 
 /mob/living/carbon/slime/darkblue
 	colour = "dark blue"
@@ -186,7 +186,7 @@
 
 
 
-/////////////Tier 4
+///////////// Tier 4
 
 
 /mob/living/carbon/slime/pink

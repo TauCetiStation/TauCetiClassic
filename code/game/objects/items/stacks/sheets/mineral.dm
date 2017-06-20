@@ -19,24 +19,24 @@ Mineral Sheets
 /*
  * Recipes
  */
-var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
+var/global/list/datum/stack_recipe/sandstone_recipes = list( \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
-var/global/list/datum/stack_recipe/diamond_recipes = list ( \
+var/global/list/datum/stack_recipe/diamond_recipes = list( \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
-var/global/list/datum/stack_recipe/phoron_recipes = list ( \
+var/global/list/datum/stack_recipe/phoron_recipes = list( \
 	new/datum/stack_recipe("phoron door", /obj/structure/mineral_door/transparent/phoron, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
-var/global/list/datum/stack_recipe/uranium_recipes = list ( \
+var/global/list/datum/stack_recipe/uranium_recipes = list( \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
-var/global/list/datum/stack_recipe/plastic_recipes = list ( \
+var/global/list/datum/stack_recipe/plastic_recipes = list( \
 	new/datum/stack_recipe("plastic crate", /obj/structure/closet/crate/plastic, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("plastic ashtray", /obj/item/ashtray/plastic, 2, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("plastic fork", /obj/item/weapon/kitchen/utensil/pfork, 1, on_floor = 1), \
@@ -45,24 +45,24 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	new/datum/stack_recipe("plastic bag", /obj/item/weapon/storage/bag/plasticbag, 3, on_floor = 1), \
 	)
 
-var/global/list/datum/stack_recipe/iron_recipes = list ( \
+var/global/list/datum/stack_recipe/iron_recipes = list( \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = 1, on_floor = 1), \
 	null, \
 )
 
-var/global/list/datum/stack_recipe/gold_recipes = list ( \
+var/global/list/datum/stack_recipe/gold_recipes = list( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
-var/global/list/datum/stack_recipe/silver_recipes = list ( \
+var/global/list/datum/stack_recipe/silver_recipes = list( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 
 /obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
 	recipes = sandstone_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_x = rand(0, 4)-4
+	pixel_y = rand(0, 4)-4
 	..()
 
 /obj/item/stack/sheet/mineral
@@ -74,8 +74,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/New()
 	..()
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_x = rand(0, 4)-4
+	pixel_y = rand(0, 4)-4
 
 
 /*
@@ -247,7 +247,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /*
  * Platinum
  */
-//Valuable resource, cargo can sell it.
+// Valuable resource, cargo can sell it.
 /obj/item/stack/sheet/mineral/platinum
 	name = "platinum"
 	icon_state = "sheet-adamantine"
@@ -258,7 +258,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /*
  * Mhydrogen
  */
-//Extremely valuable to Research.
+// Extremely valuable to Research.
 /obj/item/stack/sheet/mineral/mhydrogen
 	name = "metallic hydrogen"
 	icon_state = "sheet-mythril"
@@ -269,7 +269,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /*
  * Tritium
  */
-//Fuel for MRSPACMAN generator.
+// Fuel for MRSPACMAN generator.
 /obj/item/stack/sheet/mineral/tritium
 	name = "tritium"
 	icon_state = "sheet-silver"

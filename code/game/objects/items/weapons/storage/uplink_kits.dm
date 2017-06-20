@@ -2,7 +2,7 @@
 	New()
 		..()
 		var/tagname = pick("bloodyspai", "stealth", "screwed", "ninja", "guns", "implant", "hacker", "smoothoperator", "poisons", "gadgets")
-		switch (tagname)
+		switch(tagname)
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
 				new /obj/item/clothing/mask/gas/voice(src)
@@ -104,7 +104,7 @@
 	icon_state = "box_of_doom"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
-	name = "boxed freedom implant (with injector)"
+	name = "boxed freedom implant(with injector)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom/New()
 	..()
@@ -114,7 +114,7 @@
 	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_compress
-	name = "box (C)"
+	name = "box(C)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_compress/New()
 	new /obj/item/weapon/implanter/compressed(src)
@@ -122,7 +122,7 @@
 	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive
-	name = "box (E)"
+	name = "box(E)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive/New()
 	new /obj/item/weapon/implanter/explosive(src)
@@ -130,7 +130,7 @@
 	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
-	name = "boxed uplink implant (with injector)"
+	name = "boxed uplink implant(with injector)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink/New()
 	..()
@@ -166,7 +166,7 @@
 	new /obj/item/ammo_box/magazine/chameleon(src)
 
 /obj/item/weapon/storage/box/syndie_kit/throwing_weapon
-	name = "box (F)"
+	name = "box(F)"
 
 /obj/item/weapon/storage/box/syndie_kit/throwing_weapon/New()
 	..()
@@ -176,10 +176,10 @@
 		new /obj/item/weapon/throwing_star(src)
 
 /obj/item/weapon/storage/box/syndie_kit/cutouts
-	name = "box (G)"
+	name = "box(G)"
 
 /obj/item/weapon/storage/box/syndie_kit/cutouts/New()
 	..()
 	for(var/i = 1 to 3)
 		new /obj/item/cardboard_cutout(src)
-	new /obj/item/toy/crayon/rainbow (src)
+	new /obj/item/toy/crayon/rainbow(src)

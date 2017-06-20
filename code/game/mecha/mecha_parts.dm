@@ -333,102 +333,102 @@
 		origin_tech = "programming=3"
 
 	ripley/peripherals
-		name = "Circuit board (Ripley Peripherals Control module)"
+		name = "Circuit board(Ripley Peripherals Control module)"
 		icon_state = "mcontroller"
 
 	ripley/main
-		name = "Circuit board (Ripley Central Control module)"
+		name = "Circuit board(Ripley Central Control module)"
 		icon_state = "mainboard"
 
 	gygax
 		origin_tech = "programming=4"
 
 	gygax/peripherals
-		name = "Circuit board (Gygax Peripherals Control module)"
+		name = "Circuit board(Gygax Peripherals Control module)"
 		icon_state = "mcontroller"
 
 	gygax/targeting
-		name = "Circuit board (Gygax Weapon Control and Targeting module)"
+		name = "Circuit board(Gygax Weapon Control and Targeting module)"
 		icon_state = "mcontroller"
 		origin_tech = "programming=4;combat=4"
 
 	gygax/main
-		name = "Circuit board (Gygax Central Control module)"
+		name = "Circuit board(Gygax Central Control module)"
 		icon_state = "mainboard"
 
 	ultra
 		origin_tech = "programming=4;combat=4"
 
 	ultra/peripherals
-		name = "Circuit board (Gygax Ultra Peripherals Control module)"
+		name = "Circuit board(Gygax Ultra Peripherals Control module)"
 		icon_state = "mcontroller"
 
 	ultra/targeting
-		name = "Circuit board (Gygax Ultra Weapon Control and Targeting module)"
+		name = "Circuit board(Gygax Ultra Weapon Control and Targeting module)"
 		icon_state = "mcontroller"
 
 	ultra/main
-		name = "Circuit board (Gygax Ultra Central Control module)"
+		name = "Circuit board(Gygax Ultra Central Control module)"
 		icon_state = "mainboard"
 
 	durand
 		origin_tech = "programming=4"
 
 	durand/peripherals
-		name = "Circuit board (Durand Peripherals Control module)"
+		name = "Circuit board(Durand Peripherals Control module)"
 		icon_state = "mcontroller"
 
 	durand/targeting
-		name = "Circuit board (Durand Weapon Control and Targeting module)"
+		name = "Circuit board(Durand Weapon Control and Targeting module)"
 		icon_state = "mcontroller"
 		origin_tech = "programming=4;combat=4"
 
 	durand/main
-		name = "Circuit board (Durand Central Control module)"
+		name = "Circuit board(Durand Central Control module)"
 		icon_state = "mainboard"
 
 	vindicator
 		origin_tech = "programming=4;combat=4"
 
 	vindicator/peripherals
-		name = "Circuit board (Vindicator Peripherals Control module)"
+		name = "Circuit board(Vindicator Peripherals Control module)"
 		icon_state = "mcontroller"
 
 	vindicator/targeting
-		name = "Circuit board (Vindicator Weapon Control and Targeting module)"
+		name = "Circuit board(Vindicator Weapon Control and Targeting module)"
 		icon_state = "mcontroller"
 
 	vindicator/main
-		name = "Circuit board (Vindicator Central Control module)"
+		name = "Circuit board(Vindicator Central Control module)"
 		icon_state = "mainboard"
 
 	honker
 		origin_tech = "programming=4"
 
 	honker/peripherals
-		name = "Circuit board (H.O.N.K Peripherals Control module)"
+		name = "Circuit board(H.O.N.K Peripherals Control module)"
 		icon_state = "mcontroller"
 
 	honker/targeting
-		name = "Circuit board (H.O.N.K Weapon Control and Targeting module)"
+		name = "Circuit board(H.O.N.K Weapon Control and Targeting module)"
 		icon_state = "mcontroller"
 
 	honker/main
-		name = "Circuit board (H.O.N.K Central Control module)"
+		name = "Circuit board(H.O.N.K Central Control module)"
 		icon_state = "mainboard"
 
 	odysseus
 		origin_tech = "programming=3"
 
 	odysseus/peripherals
-		name = "Circuit board (Odysseus Peripherals Control module)"
+		name = "Circuit board(Odysseus Peripherals Control module)"
 		icon_state = "mcontroller"
 
 	odysseus/main
-		name = "Circuit board (Odysseus Central Control module)"
+		name = "Circuit board(Odysseus Central Control module)"
 		icon_state = "mainboard"
 
-////////////Vindicator
+//////////// Vindicator
 
 /obj/item/mecha_parts/chassis/vindicator
 	name = "Vindicator Chassis"

@@ -1,4 +1,4 @@
-//generic procs copied from obj/effect/alien
+// generic procs copied from obj/effect/alien
 /obj/effect/spider
 	name = "web"
 	desc = "It's stringy and sticky."
@@ -7,16 +7,16 @@
 	density = 0
 	var/health = 15
 
-//similar to weeds, but only barfed out by nurses manually
+// similar to weeds, but only barfed out by nurses manually
 /obj/effect/spider/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				qdel(src)
 	return
 
@@ -81,9 +81,9 @@
 		START_PROCESSING(SSobj, src)
 
 /obj/effect/spider/eggcluster/process()
-	amount_grown += rand(0,2)
+	amount_grown += rand(0, 2)
 	if(amount_grown >= 100)
-		var/num = rand(6,24)
+		var/num = rand(6, 24)
 		for(var/i=0, i<num, i++)
 			new /obj/effect/spider/spiderling(src.loc)
 		qdel(src)
@@ -139,7 +139,7 @@
 				/*if(prob(50))
 					src.visible_message("<B>[src] scrambles into the ventillation ducts!</B>")*/
 
-				spawn(rand(20,60))
+				spawn(rand(20, 60))
 					loc = exit_vent
 					var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
 					spawn(travel_time)
@@ -150,7 +150,7 @@
 							return
 
 						if(prob(50))
-							src.visible_message("\blue You hear something squeezing through the ventilation ducts.",2)
+							src.visible_message("\blue You hear something squeezing through the ventilation ducts.", 2)
 						sleep(travel_time)
 
 						if(!exit_vent || exit_vent.welded)
@@ -172,10 +172,10 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom, 5)
 			if(prob(25))
-				src.visible_message("\blue \the [src] skitters[pick(" away"," around","")].")
+				src.visible_message("\blue \the [src] skitters[pick(" away", " around", "")].")
 	else if(prob(5))
-		//ventcrawl!
-		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
+		// ventcrawl!
+		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7, src))
 			if(!v.welded)
 				entry_vent = v
 				walk_to(src, entry_vent, 5)
@@ -184,7 +184,7 @@
 	if(prob(1))
 		src.visible_message("\blue \the [src] chitters.")
 	if(isturf(loc) && amount_grown > 0)
-		amount_grown += rand(0,2)
+		amount_grown += rand(0, 2)
 		if(amount_grown >= 100)
 			var/spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
 			new spawn_type(src.loc)
@@ -203,7 +203,7 @@
 	health = 60
 
 /obj/effect/spider/cocoon/New()
-	icon_state = pick("cocoon1","cocoon2","cocoon3")
+	icon_state = pick("cocoon1", "cocoon2", "cocoon3")
 
 /obj/effect/spider/cocoon/container_resist()
 	var/mob/living/user = usr
@@ -212,7 +212,7 @@
 	user.last_special = world.time + 100
 	to_chat(user, "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>")
 	visible_message("You see something struggling and writhing in the [src]!")
-	if(do_after(user,(breakout_time*60*10),target=src))
+	if(do_after(user,(breakout_time*60*10), target=src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return
 		qdel(src)

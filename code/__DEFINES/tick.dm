@@ -4,4 +4,4 @@
 #define TICK_LIMIT_MC_INIT 100
 
 #define TICK_CHECK ( world.tick_usage > CURRENT_TICKLIMIT ? stoplag() : 0 )
-#define CHECK_TICK if (world.tick_usage > CURRENT_TICKLIMIT) stoplag()
+#define CHECK_TICK if(world.tick_usage > CURRENT_TICKLIMIT) stoplag()

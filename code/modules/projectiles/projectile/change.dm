@@ -12,7 +12,7 @@
 	on_hit(atom/change)
 		wabbajack(change)
 
-/obj/item/projectile/change/proc/wabbajack (mob/M in living_mob_list)
+/obj/item/projectile/change/proc/wabbajack(mob/M in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)	return
 		M.monkeyizing = 1
@@ -26,7 +26,7 @@
 			if(Robot.mmi)	qdel(Robot.mmi)
 		else
 			for(var/obj/item/W in M)
-				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
+				if(istype(W, /obj/item/weapon/implant))	// TODO: Carn. give implants a dropped() or something
 					qdel(W)
 					continue
 				W.layer = initial(W.layer)
@@ -36,7 +36,7 @@
 
 		var/mob/living/new_mob
 
-		var/randomize = pick("monkey","robot","slime","xeno","human")
+		var/randomize = pick("monkey", "robot", "slime", "xeno", "human")
 		switch(randomize)
 			if("monkey")
 				new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -48,13 +48,13 @@
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.mmi = new /obj/item/device/mmi(new_mob)
-				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+				Robot.mmi.transfer_identity(M)	// Does not transfer key/client.
 			if("slime")
 				if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)
 				else				new_mob = new /mob/living/carbon/slime(M.loc)
 				new_mob.universal_speak = 1
 			if("xeno")
-				var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
+				var/alien_caste = pick("Hunter", "Sentinel", "Drone", "Larva")
 				switch(alien_caste)
 					if("Hunter")	new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 					if("Sentinel")	new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
@@ -72,12 +72,12 @@
 				new_mob.name += " [pick(last_names)]"
 				new_mob.real_name = new_mob.name
 
-				var/datum/preferences/A = new()	//Randomize appearance for the human
+				var/datum/preferences/A = new()	// Randomize appearance for the human
 				A.randomize_appearance_for(new_mob)
 			else
 				return
 
-		for (var/obj/effect/proc_holder/spell/S in M.spell_list)
+		for(var/obj/effect/proc_holder/spell/S in M.spell_list)
 			new_mob.spell_list += new S.type
 
 		new_mob.a_intent = "hurt"

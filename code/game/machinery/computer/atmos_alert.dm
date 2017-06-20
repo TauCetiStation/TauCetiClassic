@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 
 /obj/machinery/computer/atmos_alert
@@ -28,7 +28,7 @@
 	priority_alarms -= zone
 	if(severity=="severe")
 		priority_alarms += zone
-	else if (severity=="minor")
+	else if(severity=="minor")
 		minor_alarms += zone
 	update_icon()
 	return
@@ -43,7 +43,7 @@
 /obj/machinery/computer/atmos_alert/attack_hand(mob/user)
 	if(..(user))
 		return
-	user << browse(return_text(),"window=computer")
+	user << browse(return_text(), "window=computer")
 	user.set_machine(src)
 	onclose(user, "computer")
 
@@ -52,7 +52,7 @@
 		src.updateDialog()
 
 /obj/machinery/computer/atmos_alert/update_icon()
-	if (stat & NOPOWER)
+	if(stat & NOPOWER)
 		icon_state = "atmos0"
 	else if(stat & BROKEN)
 		icon_state = "atmosb"

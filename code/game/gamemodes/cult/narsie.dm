@@ -1,19 +1,19 @@
-/obj/singularity/narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
+/obj/singularity/narsie // Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
 	name = "Nar-sie's Avatar"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -89
 	pixel_y = -85
-	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
-	contained = 0 //Are we going to move around?
-	dissipate = 0 //Do we lose energy over time?
-	move_self = 1 //Do we move on our own?
-	grav_pull = 5 //How many tiles out do we pull?
-	consume_range = 6 //How many tiles out do we eat
-	//var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
+	current_size = 9 // It moves/eats like a max-size singulo, aside from range. --NEO
+	contained = 0 // Are we going to move around?
+	dissipate = 0 // Do we lose energy over time?
+	move_self = 1 // Do we move on our own?
+	grav_pull = 5 // How many tiles out do we pull?
+	consume_range = 6 // How many tiles out do we eat
+	// var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
 
 
-/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
+/proc/notify_ghosts(message, ghost_sound = null) // Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
 			to_chat(O, "<span class='ghostalert'>[message]<span>")
@@ -29,7 +29,7 @@
 	anchored = 0.0
 	mouse_opacity = 0
 	var/amount = 6.0
-	//Remove this bit to use the old smoke
+	// Remove this bit to use the old smoke
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
@@ -37,19 +37,19 @@
 
 /obj/effect/effect/sleep_smoke/New()
 	..()
-	spawn (200+rand(10,30))
+	spawn(200+rand(10, 30))
 		qdel(src)
 	return
 
 /obj/effect/effect/sleep_smoke/Move()
 	..()
 	for(var/mob/living/carbon/M in get_turf(src))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
-//		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal))  // I'll work on it later
+		if(M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
+//		if(M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal))  // I'll work on it later
 		else
 			M.drop_item()
 			M:sleeping += 5
-			if (M.coughedtime != 1)
+			if(M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
 				spawn(20)
@@ -60,13 +60,13 @@
 /obj/effect/effect/sleep_smoke/Crossed(mob/living/carbon/M as mob )
 	..()
 	if(istype(M, /mob/living/carbon))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
-//		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal)) // Work on it later
+		if(M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
+//		if(M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal)) // Work on it later
 			return
 		else
 			M.drop_item()
 			M:sleeping += 5
-			if (M.coughedtime != 1)
+			if(M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
 				spawn(20)
@@ -92,10 +92,10 @@
 
 
 /datum/effect/effect/proc/fadeOut2(atom/A, frames = 16)
-	if(A.alpha == 0) //Handle already transparent case
+	if(A.alpha == 0) // Handle already transparent case
 		return
 	if(frames == 0)
-		frames = 1 //We will just assume that by 0 frames, the coder meant "during one frame".
+		frames = 1 // We will just assume that by 0 frames, the coder meant "during one frame".
 	var/step = A.alpha / frames
 	for(var/i = 0, i < frames, i++)
 		A.alpha -= step
@@ -118,16 +118,16 @@
 					direction = pick(cardinal)
 				else
 					direction = pick(alldirs)
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
+			for(i=0, i<pick(0, 1, 1, 1, 2, 2, 2, 3), i++)
 				sleep(10)
-				step(smoke,direction)
-			spawn(150+rand(10,30))
+				step(smoke, direction)
+			spawn(150+rand(10, 30))
 				if(smoke)
 					fadeOut2(smoke)
 					qdel(smoke)
 				src.total_smoke--
 
-//////////////////////END?////////////////////////////////////////////
+////////////////////// END?////////////////////////////////////////////
 
 */
 
@@ -140,9 +140,9 @@
 	light_range = 1
 	light_color = "#3e0000"
 	current_size = 12
-	move_self = 1 //Do we move on our own?
+	move_self = 1 // Do we move on our own?
 	grav_pull = 10
-	consume_range = 12 //How many tiles out do we eat
+	consume_range = 12 // How many tiles out do we eat
 
 /obj/singularity/narsie/large/New()
 	..()
@@ -197,7 +197,7 @@
 
 
 /obj/singularity/narsie/consume(atom/A)
-	//if(is_type_in_list(A, uneatable))
+	// if(is_type_in_list(A, uneatable))
 	//	return 0
 	if(istype(A, /mob/living))
 		var/mob/living/L = A
@@ -237,7 +237,7 @@
 	var/movement_dir = pick(alldirs - last_failed_movement)
 
 	if(target)
-		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
+		movement_dir = get_dir(src, target) // moves to a singulo beacon, if there is one
 
 	spawn(0)
 		loc = get_step(src, movement_dir)
@@ -245,14 +245,14 @@
 		loc = get_step(src, movement_dir)
 	return 1
 
-/obj/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
+/obj/singularity/narsie/ex_act() // No throwing bombs at it either. --NEO
 	return
 
 
-/obj/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
+/obj/singularity/narsie/proc/pickcultist() // Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
 	var/list/cultists = list()
 	var/list/noncultists = list()
-	for(var/mob/living/carbon/food in living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
+	for(var/mob/living/carbon/food in living_mob_list) // we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
 		if(pos.z != src.z)
 			continue
@@ -263,7 +263,7 @@
 		else
 			noncultists += food
 
-		if(cultists.len) //cultists get higher priority
+		if(cultists.len) // cultists get higher priority
 			acquire(pick(cultists))
 			return
 
@@ -271,7 +271,7 @@
 			acquire(pick(noncultists))
 			return
 
-	//no living humans, follow a ghost instead.
+	// no living humans, follow a ghost instead.
 	for(var/mob/dead/observer/ghost in player_list)
 		if(!ghost.client)
 			continue
@@ -297,17 +297,17 @@
 	icon = 'icons/effects/narsie_spawn_anim.dmi'
 	dir = SOUTH
 	move_self = 0
-	flick("narsie_spawn_anim",src)
+	flick("narsie_spawn_anim", src)
 	sleep(11)
 	move_self = 1
 	icon = initial(icon)
 
-//Wizard narsie
+// Wizard narsie
 /obj/singularity/narsie/wizard
 	grav_pull = 0
 
 /obj/singularity/narsie/wizard/eat()
-	for(var/atom/A in orange(consume_range,src))
+	for(var/atom/A in orange(consume_range, src))
 		if(isturf(A) || istype(A, /atom/movable))
 			consume(A)
 	return

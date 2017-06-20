@@ -10,7 +10,7 @@
 	. += 				"<tr><td colspan='3'><a href='?_src_=prefs;task=reset'>Reset custom UI</a></td></tr>"
 	if(config.allow_Metadata)
 		. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[sanitize_popup(copytext(metadata, 1, 3))]...":"\[...\]"]</a></td></tr>"
-	//if(user.client) TG
+	// if(user.client) TG
 	//	if(user.client.holder)
 	//		. += "<b>Adminhelp Sound:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 	//		. += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
@@ -64,16 +64,16 @@
 	. += 					"<td><a href='?_src_=prefs;preference=see_looc'><b>[(chat_toggles & CHAT_LOOC) ? "Shown" : "Hidden"]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
-	. += 					"<td width='45%'>Parallax (Fancy Space)</td>"
+	. += 					"<td width='45%'>Parallax(Fancy Space)</td>"
 	. += 					"<td><b><a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
-	switch (parallax)
-		if (PARALLAX_LOW)
+	switch(parallax)
+		if(PARALLAX_LOW)
 			. += "Low"
-		if (PARALLAX_MED)
+		if(PARALLAX_MED)
 			. += "Medium"
-		if (PARALLAX_INSANE)
+		if(PARALLAX_INSANE)
 			. += "Insane"
-		if (PARALLAX_DISABLE)
+		if(PARALLAX_DISABLE)
 			. += "Disabled"
 		else
 			. += "High"
@@ -96,13 +96,13 @@
 	switch(href_list["task"])
 		if("input")
 			if(href_list["preference"] == "metadata")
-				var/new_metadata = input(user, "Enter any OOC information you'd like others to see:", "Game Preference" , html_decode(revert_ja(metadata)))  as message|null
+				var/new_metadata = input(user, "Enter any OOC information you'd like others to see:", "Game Preference", html_decode(revert_ja(metadata)))  as message|null
 				if(!isnull(new_metadata))
-					metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
+					metadata = sanitize(copytext(new_metadata, 1, MAX_MESSAGE_LEN))
 
-			//if(href_list["preference"] == "ghostorbit")
+			// if(href_list["preference"] == "ghostorbit")
 			//	if(unlock_content)
-			//		var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in ghost_orbits
+			//		var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:", "Thanks for supporting BYOND", null) as null|anything in ghost_orbits
 			//		if(new_orbit)
 			//			ghost_orbit = new_orbit
 
@@ -137,12 +137,12 @@
 
 		if("parallaxup")
 			parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-			if (parent && parent.mob && parent.mob.hud_used)
+			if(parent && parent.mob && parent.mob.hud_used)
 				parent.mob.hud_used.update_parallax_pref()
 
 		if("parallaxdown")
 			parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-			if (parent && parent.mob && parent.mob.hud_used)
+			if(parent && parent.mob && parent.mob.hud_used)
 				parent.mob.hud_used.update_parallax_pref()
 
 		if("hear_midis")

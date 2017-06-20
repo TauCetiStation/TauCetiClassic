@@ -11,7 +11,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.9
-	var/gas_filter_strength = 1			//For gas mask filters
+	var/gas_filter_strength = 1			// For gas mask filters
 
 // **** Welding gas mask ****
 
@@ -20,7 +20,7 @@
 	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
 	icon_state = "weldingmask"
 	item_state = "weldingmask"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 	origin_tech = "materials=2;engineering=2"
 	action_button_name = "Toggle Welding Mask"
@@ -57,7 +57,7 @@
 
 // ********************************************************************
 
-// **** Security gas mask (TG-stuff) ****
+// **** Security gas mask(TG-stuff) ****
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
@@ -98,7 +98,7 @@
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat) return
 
-	var/phrase = 0	//selects which phrase to use
+	var/phrase = 0	// selects which phrase to use
 	var/phrase_text = null
 	var/phrase_sound = null
 
@@ -106,15 +106,15 @@
 	if(cooldown < world.time - 35) // A cooldown, to stop people being jerks
 		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases
 			if(1)
-				phrase = rand(1,5)	// set the upper limit as the phrase above the first 'bad cop' phrase, the mask will only play 'nice' phrases
+				phrase = rand(1, 5)	// set the upper limit as the phrase above the first 'bad cop' phrase, the mask will only play 'nice' phrases
 			if(2)
-				phrase = rand(1,11)	// default setting, set upper limit to last 'bad cop' phrase. Mask will play good cop and bad cop phrases
+				phrase = rand(1, 11)	// default setting, set upper limit to last 'bad cop' phrase. Mask will play good cop and bad cop phrases
 			if(3)
-				phrase = rand(1,18)	// user has unlocked all phrases, set upper limit to last phrase. The mask will play all phrases
+				phrase = rand(1, 18)	// user has unlocked all phrases, set upper limit to last phrase. The mask will play all phrases
 			if(4)
-				phrase = rand(12,18)	// user has broke the restrictor, it will now only play shitcurity phrases
+				phrase = rand(12, 18)	// user has broke the restrictor, it will now only play shitcurity phrases
 
-		switch(phrase)	//sets the properties of the chosen phrase
+		switch(phrase)	// sets the properties of the chosen phrase
 			if(1)				// good cop
 				phrase_text = "HALT! HALT! HALT! HALT!"
 				phrase_sound = "halt"
@@ -174,13 +174,13 @@
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
 		cooldown = world.time
 
-//Plague Dr suit can be found in clothing/suits/bio.dm
+// Plague Dr suit can be found in clothing/suits/bio.dm
 /obj/item/clothing/mask/gas/plaguedoctor
 	name = "plague doctor mask"
 	desc = "A modernised version of the classic design, this mask will not only filter out phoron but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
 	item_state = "gas_mask"
-	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 2, energy = 2, bomb = 0, bio = 75, rad = 0)
 	body_parts_covered = HEAD|FACE
 
 /obj/item/clothing/mask/gas/swat
@@ -199,10 +199,10 @@
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
 	icon_state = "gas_mask_orange"
-	//desc = "A face-covering mask that can be connected to an air supply. It seems to house some odd electronics."
+	// desc = "A face-covering mask that can be connected to an air supply. It seems to house some odd electronics."
 	var/mode = 0// 0==Scouter | 1==Night Vision | 2==Thermal | 3==Meson
 	var/voice = "Unknown"
-	var/vchange = 0//This didn't do anything before. It now checks if the mask has special functions/N
+	var/vchange = 0// This didn't do anything before. It now checks if the mask has special functions/N
 	origin_tech = "syndicate=4"
 
 /obj/item/clothing/mask/gas/voice/space_ninja

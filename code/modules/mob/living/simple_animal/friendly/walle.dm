@@ -1,11 +1,11 @@
-//Wall-E
+// Wall-E
 /mob/living/simple_animal/walle
 	name = "Wall-E"
 	desc = "The robot which looks for EVA."
 	icon_state = "walle"
 	icon_living = "walle"
 	icon_dead = "walle_dead"
-	speak = list("Beep-Boop","Eva? Evaaa!","Buzz.")
+	speak = list("Beep-Boop", "Eva? Evaaa!", "Buzz.")
 	speak_emote = list("rustles", "smokes")
 	emote_hear = list("pings")
 	emote_see = list("processes garbage", "has got the solar battery")

@@ -27,7 +27,7 @@
 /obj/item/weapon/reagent_containers/glass/rag/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/glass/rag/attack(atom/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/glass/rag/attack(atom/target, mob/user, flag)
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		user.visible_message("\red \The [target] has been smothered with \the [src] by \the [user]!", "\red You smother \the [target] with \the [src]!", "You hear some struggling and muffled cries of surprise")
 		src.reagents.reaction(target, TOUCH)
@@ -40,13 +40,13 @@
 	if(!proximity) return
 	if(istype(A) && src in user)
 		user.visible_message("[user] starts to wipe down [A] with [src]!")
-		if(do_after(user,30,target = A))
+		if(do_after(user, 30, target = A))
 			user.visible_message("[user] finishes wiping off the [A]!")
 			A.clean_blood()
 	return
 
 /obj/item/weapon/reagent_containers/glass/rag/examine()
-	if (!usr)
+	if(!usr)
 		return
 	to_chat(usr, "That's \a [src].")
 	to_chat(usr, desc)

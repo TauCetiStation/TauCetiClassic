@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 
 /obj/machinery/computer/robotics
@@ -20,12 +20,12 @@
 /obj/machinery/computer/robotics/attack_hand(mob/user)
 	if(..())
 		return
-	if (src.z > ZLEVEL_EMPTY)
+	if(src.z > ZLEVEL_EMPTY)
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 	user.set_machine(src)
 	var/dat
-	if (src.temp)
+	if(src.temp)
 		dat = "<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>"
 	else
 		if(screen == 0)
@@ -35,12 +35,12 @@
 		if(screen == 1)
 			for(var/mob/living/silicon/robot/R in mob_list)
 				if(istype(R, /mob/living/silicon/robot/drone))
-					continue //There's a specific console for drones.
+					continue // There's a specific console for drones.
 				if(istype(user, /mob/living/silicon/ai))
-					if (R.connected_ai != user)
+					if(R.connected_ai != user)
 						continue
 				if(istype(user, /mob/living/silicon/robot))
-					if (R != user)
+					if(R != user)
 						continue
 				if(R.scrambledcodes)
 					continue
@@ -48,24 +48,24 @@
 				dat += "[R.name] |"
 				if(R.stat)
 					dat += " Not Responding |"
-				else if (!R.canmove)
+				else if(!R.canmove)
 					dat += " Locked Down |"
 				else
 					dat += " Operating Normally |"
-				if (!R.canmove)
+				if(!R.canmove)
 				else if(R.cell)
-					dat += " Battery Installed ([R.cell.charge]/[R.cell.maxcharge]) |"
+					dat += " Battery Installed([R.cell.charge]/[R.cell.maxcharge]) |"
 				else
 					dat += " No Cell Installed |"
 				if(R.module)
-					dat += " Module Installed ([R.module.name]) |"
+					dat += " Module Installed([R.module.name]) |"
 				else
 					dat += " No Module Installed |"
 				if(R.connected_ai)
 					dat += " Slaved to [R.connected_ai.name] |"
 				else
 					dat += " Independent from AI |"
-				if (istype(user, /mob/living/silicon))
+				if(istype(user, /mob/living/silicon))
 					if((user.mind.special_role && user.mind.original == user) && !R.emagged)
 						dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 				dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
@@ -99,19 +99,19 @@
 	if(!.)
 		return
 
-	if (href_list["eject"])
+	if(href_list["eject"])
 		src.temp = {"Destroy Robots?<BR>
 		<BR><B><A href='?src=\ref[src];eject2=1'>\[Swipe ID to initiate destruction sequence\]</A></B><BR>
 		<A href='?src=\ref[src];temp=1'>Cancel</A>"}
 
-	else if (href_list["eject2"])
+	else if(href_list["eject2"])
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
-		if (istype(I, /obj/item/device/pda))
+		if(istype(I, /obj/item/device/pda))
 			var/obj/item/device/pda/pda = I
 			I = pda.id
-		if (istype(I))
+		if(istype(I))
 			if(src.check_access(I))
-				if (!status)
+				if(!status)
 					message_admins("\blue [key_name_admin(usr)] has initiated the global cyborg killswitch! <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>")
 					log_game("\blue [key_name(usr)] has initiated the global cyborg killswitch!")
 					src.status = 1
@@ -121,23 +121,23 @@
 			else
 				to_chat(usr, "\red Access Denied.")
 
-	else if (href_list["stop"])
+	else if(href_list["stop"])
 		src.temp = {"
 		Stop Robot Destruction Sequence?<BR>
 		<BR><A href='?src=\ref[src];stop2=1'>Yes</A><BR>
 		<A href='?src=\ref[src];temp=1'>No</A>"}
 
-	else if (href_list["stop2"])
+	else if(href_list["stop2"])
 		src.stop = 1
 		src.temp = null
 		src.status = 0
 
-	else if (href_list["reset"])
+	else if(href_list["reset"])
 		src.timeleft = 60
 
-	else if (href_list["temp"])
+	else if(href_list["temp"])
 		src.temp = null
-	else if (href_list["screen"])
+	else if(href_list["screen"])
 		switch(href_list["screen"])
 			if("0")
 				screen = 0
@@ -145,7 +145,7 @@
 				screen = 1
 			if("2")
 				screen = 2
-	else if (href_list["killbot"])
+	else if(href_list["killbot"])
 		if(src.allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
 			if(R)
@@ -163,7 +163,7 @@
 		else
 			to_chat(usr, "\red Access Denied.")
 
-	else if (href_list["stopbot"])
+	else if(href_list["stopbot"])
 		if(src.allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
 			if(R && istype(R)) // Extra sancheck because of input var references
@@ -173,7 +173,7 @@
 						message_admins("\blue [key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) [R.canmove ? "locked down" : "released"] [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
 						log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 						R.canmove = !R.canmove
-						if (R.lockcharge)
+						if(R.lockcharge)
 							R.clear_alert("locked")
 						//	R.cell.charge = R.lockcharge
 							R.lockcharge = !R.lockcharge
@@ -187,7 +187,7 @@
 		else
 			to_chat(usr, "\red Access Denied.")
 
-	else if (href_list["magbot"])
+	else if(href_list["magbot"])
 		if(src.allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
 			if(R)

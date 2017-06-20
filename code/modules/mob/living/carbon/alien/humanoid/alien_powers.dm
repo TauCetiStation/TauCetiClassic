@@ -6,7 +6,7 @@ These are general powers. Specific powers are stored under the appropriate alien
 Doesn't work on other aliens/AI.*/
 
 
-/mob/living/carbon/alien/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
+/mob/living/carbon/alien/proc/powerc(X, Y)// Y is optional, checks for weed planting. X can be null.
 	if(stat)
 		to_chat(src, "\green You must be conscious to do this.")
 		return 0
@@ -19,11 +19,11 @@ Doesn't work on other aliens/AI.*/
 	else	return 1
 
 /mob/living/carbon/alien/humanoid/verb/plant()
-	set name = "Plant Weeds (50)"
+	set name = "Plant Weeds(50)"
 	set desc = "Plants some alien weeds."
 	set category = "Alien"
 
-	if(powerc(50,1))
+	if(powerc(50, 1))
 		adjustToxLoss(-50)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
@@ -32,19 +32,19 @@ Doesn't work on other aliens/AI.*/
 
 /*
 /mob/living/carbon/alien/humanoid/verb/ActivateHuggers()
-	set name = "Activate facehuggers (5)"
+	set name = "Activate facehuggers(5)"
 	set desc = "Makes all nearby facehuggers activate."
 	set category = "Alien"
 
 	if(powerc(5))
 		adjustToxLoss(-5)
-		for(var/obj/item/clothing/mask/facehugger/F in range(8,src))
+		for(var/obj/item/clothing/mask/facehugger/F in range(8, src))
 			F.GoActive()
 		emote("roar")
 	return
 */
 /mob/living/carbon/alien/humanoid/verb/whisp(mob/M as mob in oview())
-	set name = "Whisper (10)"
+	set name = "Whisper(10)"
 	set desc = "Whisper to someone."
 	set category = "Alien"
 
@@ -64,10 +64,10 @@ Doesn't work on other aliens/AI.*/
 
 	if(isalien(M))
 		var/amount = input("Amount:", "Transfer Plasma to [M]") as num
-		if (amount)
+		if(amount)
 			amount = abs(round(amount))
 			if(powerc(amount))
-				if (get_dist(src,M) <= 1)
+				if(get_dist(src, M) <= 1)
 					M.adjustToxLoss(amount)
 					adjustToxLoss(-amount)
 					to_chat(M, "\green [src] has transfered [amount] plasma to you.")
@@ -77,8 +77,8 @@ Doesn't work on other aliens/AI.*/
 	return
 
 
-/mob/living/carbon/alien/humanoid/proc/corrosive_acid(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
-	set name = "Corrossive Acid (200)"
+/mob/living/carbon/alien/humanoid/proc/corrosive_acid(O in oview(1)) // If they right click to corrode, an error will flash if its an invalid target./N
+	set name = "Corrossive Acid(200)"
 	set desc = "Drench an object in acid, destroying it over time."
 	set category = "Alien"
 
@@ -87,7 +87,7 @@ Doesn't work on other aliens/AI.*/
 			// OBJ CHECK
 			if(isobj(O))
 				var/obj/I = O
-				if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
+				if(I.unacidable)	// So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
 					to_chat(src, "\green You cannot dissolve this object.")
 					return
 			// TURF CHECK
@@ -113,7 +113,7 @@ Doesn't work on other aliens/AI.*/
 
 /*
 /mob/living/carbon/alien/humanoid/proc/neurotoxin(mob/target in oview())
-	set name = "Spit Neurotoxin (50)"
+	set name = "Spit Neurotoxin(50)"
 	set desc = "Spits neurotoxin at someone, paralyzing them for a short time if they are not wearing protective gear."
 	set category = "Alien"
 
@@ -124,19 +124,19 @@ Doesn't work on other aliens/AI.*/
 		adjustToxLoss(-50)
 		to_chat(src, "\green You spit neurotoxin at [target].")
 		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				to_chat(O, "\red [src] spits neurotoxin at [target]!")
-		//I'm not motivated enough to revise this. Prjectile code in general needs update.
+		// I'm not motivated enough to revise this. Prjectile code in general needs update.
 		var/turf/T = loc
 		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 
 		if(!U || !T)
 			return
-		while(U && !istype(U,/turf))
+		while(U && !istype(U, /turf))
 			U = U.loc
 		if(!istype(T, /turf))
 			return
-		if (U == T)
+		if(U == T)
 			usr.bullet_act(new /obj/item/projectile/energy/neurotoxin(usr.loc), ran_zone(zone_sel.selecting)
 			return
 		if(!istype(U, /turf))
@@ -217,17 +217,17 @@ Doesn't work on other aliens/AI.*/
 		to_chat(src, "You are not ready.")
 		return
 
-		//I'm not motivated enough to revise this. Prjectile code in general needs update.
+		// I'm not motivated enough to revise this. Prjectile code in general needs update.
 	var/turf/T = loc
 	var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 
 	if(!U || !T)
 		return
-	while(U && !istype(U,/turf))
+	while(U && !istype(U, /turf))
 		U = U.loc
 	if(!istype(T, /turf))
 		return
-	if (U == T)
+	if(U == T)
 		return
 	if(!istype(U, /turf))
 		return
@@ -250,11 +250,11 @@ Doesn't work on other aliens/AI.*/
 
 	visible_message("\red <B> [src] spits [BB.name] at [target]!</B>")
 
-	//prepare "bullet"
+	// prepare "bullet"
 	BB.original = target
 	BB.firer = src
 	BB.def_zone = src.zone_sel.selecting
-	//shoot
+	// shoot
 	BB.loc = T
 	BB.starting = T
 	BB.current = loc
@@ -269,12 +269,12 @@ Doesn't work on other aliens/AI.*/
 #undef ALIEN_NEUROTOXIN
 #undef ALIEN_ACID
 /mob/living/carbon/alien/humanoid/proc/resin() // -- TLE
-	set name = "Secrete Resin (75)"
+	set name = "Secrete Resin(75)"
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
 
 	if(powerc(75))
-		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
+		var/choice = input("Choose what you wish to shape.", "Resin building") as null|anything in list("resin door", "resin wall", "resin membrane", "resin nest") // would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
 		if(!choice || !powerc(75))	return
 		adjustToxLoss(-75)
 		to_chat(src, "\green You shape a [choice].")
@@ -302,7 +302,7 @@ Doesn't work on other aliens/AI.*/
 				if(M in stomach_contents)
 					stomach_contents.Remove(M)
 					M.loc = loc
-					//M.update_pipe_vision()
-					//Paralyse(10)
+					// M.update_pipe_vision()
+					// Paralyse(10)
 			src.visible_message("\green <B>[src] hurls out the contents of their stomach!</B>")
 	return

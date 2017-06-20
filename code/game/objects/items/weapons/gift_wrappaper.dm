@@ -16,8 +16,8 @@
 
 /obj/item/weapon/a_gift/New()
 	..()
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 	if(w_class > 0 && w_class < 4)
 		icon_state = "gift[w_class]"
 	else
@@ -39,22 +39,22 @@
 	return
 
 /obj/effect/spresent/relaymove(mob/user)
-	if (user.stat)
+	if(user.stat)
 		return
 	to_chat(user, "\blue You cant move.")
 
 /obj/effect/spresent/attackby(obj/item/weapon/W, mob/user)
 	..()
 
-	if (!istype(W, /obj/item/weapon/wirecutters))
+	if(!istype(W, /obj/item/weapon/wirecutters))
 		to_chat(user, "\blue I need wirecutters for that.")
 		return
 
 	to_chat(user, "\blue You cut open the present.")
 
-	for(var/mob/M in src) //Should only be one but whatever.
+	for(var/mob/M in src) // Should only be one but whatever.
 		M.loc = src.loc
-		if (M.client)
+		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
 
@@ -109,7 +109,7 @@
 		/obj/item/clothing/suit/jacket/leather,
 		/obj/item/clothing/suit/jacket/leather/overcoat)
 
-	if(!ispath(gift_type,/obj/item))	return
+	if(!ispath(gift_type, /obj/item))	return
 
 	var/obj/item/I = new gift_type(M)
 	M.remove_from_mob(src)
@@ -130,16 +130,16 @@
 
 /obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if (!( locate(/obj/structure/table, src.loc) ))
+	if(!( locate(/obj/structure/table, src.loc) ))
 		to_chat(user, "\blue You MUST put the paper on a table!")
-	if (W.w_class < 4)
-		if ((istype(user.l_hand, /obj/item/weapon/wirecutters) || istype(user.r_hand, /obj/item/weapon/wirecutters)))
+	if(W.w_class < 4)
+		if((istype(user.l_hand, /obj/item/weapon/wirecutters) || istype(user.r_hand, /obj/item/weapon/wirecutters)))
 			var/a_used = 2 ** (src.w_class - 1)
-			if (src.amount < a_used)
+			if(src.amount < a_used)
 				to_chat(user, "\blue You need more paper!")
 				return
 			else
-				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) //No gift wrapping gifts!
+				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) // No gift wrapping gifts!
 					return
 
 				src.amount -= a_used
@@ -153,7 +153,7 @@
 				G.add_fingerprint(user)
 				W.add_fingerprint(user)
 				src.add_fingerprint(user)
-			if (src.amount <= 0)
+			if(src.amount <= 0)
 				new /obj/item/weapon/c_tube( src.loc )
 				qdel(src)
 				return
@@ -170,15 +170,15 @@
 		to_chat(user, "<span class='notice'>There is about [amount] square units of paper left!</span>")
 
 /obj/item/weapon/wrapping_paper/attack(mob/target, mob/user)
-	if (!istype(target, /mob/living/carbon/human)) return
+	if(!istype(target, /mob/living/carbon/human)) return
 	var/mob/living/carbon/human/H = target
 
-	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket) || H.stat)
-		if (src.amount > 2)
-			var/obj/effect/spresent/present = new /obj/effect/spresent (H.loc)
+	if(istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket) || H.stat)
+		if(src.amount > 2)
+			var/obj/effect/spresent/present = new /obj/effect/spresent(H.loc)
 			src.amount -= 2
 
-			if (H.client)
+			if(H.client)
 				H.client.perspective = EYE_PERSPECTIVE
 				H.client.eye = present
 

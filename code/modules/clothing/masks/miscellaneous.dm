@@ -8,9 +8,9 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
-//Monkeys can not take the muzzle off of themself! Call PETA!
+// Monkeys can not take the muzzle off of themself! Call PETA!
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
-	if (src == user.wear_mask)
+	if(src == user.wear_mask)
 		return
 	else
 		..()
@@ -27,7 +27,7 @@
 	body_parts_covered = 0
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 25, rad = 0)
 
 /obj/item/clothing/mask/fakemoustache
 	name = "fake moustache"
@@ -43,7 +43,7 @@
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
 
-//scarves (fit in in mask slot)
+// scarves(fit in in mask slot)
 
 /obj/item/clothing/mask/bluescarf
 	name = "blue neck scarf"

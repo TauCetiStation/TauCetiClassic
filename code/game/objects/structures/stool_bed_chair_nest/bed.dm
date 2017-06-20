@@ -63,7 +63,7 @@
 	var/type_roller = /obj/item/roller
 
 /obj/structure/stool/bed/roller/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,src) || istype(W, /obj/item/roller_holder))
+	if(istype(W, src) || istype(W, /obj/item/roller_holder))
 		if(buckled_mob)
 			user_unbuckle_mob()
 		else

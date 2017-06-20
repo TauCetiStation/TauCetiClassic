@@ -47,15 +47,15 @@
 		else
 			un_equip_or_action(usr, add_to, item_to_add)
 
-//Returns the thing in our active hand (errr... mouth!)
+// Returns the thing in our active hand(errr... mouth!)
 /mob/living/carbon/ian/get_active_hand()
 	return mouth
 
-//Returns the thing in our inactive hand (errr... mouth!)
+// Returns the thing in our inactive hand(errr... mouth!)
 /mob/living/carbon/ian/get_inactive_hand()
 	return mouth
 
-//Drops the item in our active hand (errr... mouth!)
+// Drops the item in our active hand(errr... mouth!)
 /mob/living/carbon/ian/drop_item(atom/Target)
 	return drop_from_inventory(mouth, Target)
 
@@ -93,7 +93,7 @@
 				who.visible_message(text("<span class='danger'>[] is trying to take off \a [] from []'s []!</span>", who, slot_ref, src, lowertext(where)))
 				slot_ref.add_fingerprint(who)
 			else
-				who.isHandsBusy = FALSE //invalid slot
+				who.isHandsBusy = FALSE // invalid slot
 				return
 
 	if(do_after(who, HUMAN_STRIP_DELAY, target = src))
@@ -120,12 +120,12 @@
 		else
 			remove_from_mob(slot_ref)
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their [where] ([slot_ref]) removed by [who.name] ([who.ckey])</font>")
-			who.attack_log += text("\[[time_stamp()]\] <font color='red'>Removed [src.name]'s ([src.ckey]) [where] ([slot_ref])</font>")
+			who.attack_log += text("\[[time_stamp()]\] <font color='red'>Removed [src.name]'s([src.ckey]) [where] ([slot_ref])</font>")
 	else
 		switch(where)
 			if("CPR")
 				if(src.health > config.health_threshold_dead && src.health < config.health_threshold_crit)
-					var/suff = min(src.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
+					var/suff = min(src.getOxyLoss(), 5) // Pre-merge level, less healing, more prevention of dieing.
 					src.adjustOxyLoss(-suff)
 					src.updatehealth()
 					who.visible_message("<span class='warning'>[who] performs CPR on [src]!</span>")
@@ -148,16 +148,16 @@
 					if(where == "Neck")
 						if(istype(this_item, /obj/item/weapon/handcuffs))
 							var/grabbing = FALSE
-							for (var/obj/item/weapon/grab/G in src.grabbed_by)
-								if (G.loc == who && G.state >= GRAB_AGGRESSIVE)
+							for(var/obj/item/weapon/grab/G in src.grabbed_by)
+								if(G.loc == who && G.state >= GRAB_AGGRESSIVE)
 									grabbing = TRUE
-							if (!grabbing)
+							if(!grabbing)
 								to_chat(who, "<span class='warning'>Your grasp was broken before you could restrain [src]!</span>")
 								return
 					who.remove_from_mob(this_item)
 					equip_to_slot_if_possible(this_item, get_slot_id(where))
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>[who.name] ([who.ckey]) placed on our [where] ([slot_ref])</font>")
-					who.attack_log += text("\[[time_stamp()]\] <font color='red'>Placed on [src.name]'s ([src.ckey]) [where] ([slot_ref])</font>")
+					who.attack_log += text("\[[time_stamp()]\] <font color='red'>Placed on [src.name]'s([src.ckey]) [where] ([slot_ref])</font>")
 
 	if(usr.machine == src && in_range(src, usr))
 		show_inv(usr)
@@ -192,7 +192,7 @@
 
 	if(W == mouth)
 		src.mouth = null
-		update_inv_mouth() //So items actually disappear from mouth.
+		update_inv_mouth() // So items actually disappear from mouth.
 
 	W.screen_loc = null // will get moved if inventory is visible
 
@@ -227,7 +227,7 @@
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
 
-//Puts the item into our active hand (errr... mouth!) if possible. returns 1 on success.
+// Puts the item into our active hand(errr... mouth!) if possible. returns 1 on success.
 /mob/living/carbon/ian/put_in_active_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))
 		return FALSE
@@ -241,7 +241,7 @@
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
-		W.equipped(src,slot_mouth)
+		W.equipped(src, slot_mouth)
 		if(client)
 			client.screen |= W
 		if(pulling == W)
@@ -269,18 +269,18 @@
 		return FALSE
 
 /mob/living/carbon/ian/u_equip(obj/W)
-	if (W == head)
+	if(W == head)
 		facehugger = FALSE
 		head = null
 		update_inv_head()
-	else if (W == neck)
+	else if(W == neck)
 		handcuffed = null
 		neck = null
 		update_inv_neck()
-	else if (W == mouth)
+	else if(W == mouth)
 		mouth = null
 		update_inv_mouth()
-	else if (W == back)
+	else if(W == back)
 		back = null
 		update_inv_back()
 
@@ -289,7 +289,7 @@
 	desc = initial(desc)
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
-	emote_hear = list("barks", "woofs", "yaps","pants")
+	emote_hear = list("barks", "woofs", "yaps", "pants")
 	emote_see = list("shakes its head", "shivers")
 
 	if(!head)
@@ -299,7 +299,7 @@
 		name = "Ianknown"
 		return
 
-	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
+	// Various hats and items(worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
 	switch(head.type)
 		if(/obj/item/clothing/head/caphat, /obj/item/clothing/head/collectable/captain)
 			name = "Captain [real_name]"
@@ -318,36 +318,36 @@
 			name = "Yann"
 			desc = "Mon dieu! C'est un chien!"
 			speak = list("le woof!", "le bark!", "JAPPE!!")
-			emote_see = list("cowers in fear", "surrenders", "plays dead","looks as though there is a wall in front of him")
+			emote_see = list("cowers in fear", "surrenders", "plays dead", "looks as though there is a wall in front of him")
 		if(/obj/item/clothing/head/det_hat)
 			name = "Detective [real_name]"
 			desc = "[name] sees through your lies..."
-			emote_see = list("investigates the area","sniffs around for clues","searches for scooby snacks")
+			emote_see = list("investigates the area", "sniffs around for clues", "searches for scooby snacks")
 		if(/obj/item/clothing/head/nursehat)
 			name = "Nurse [real_name]"
 			desc = "[name] needs 100cc of beef jerky...STAT!"
 		if(/obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate)
-			name = "[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibble","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]"
+			name = "[pick("Ol'", "Scurvy", "Black", "Rum", "Gammy", "Bloody", "Gangrene", "Death", "Long-John")] [pick("kibble", "leg", "beard", "tooth", "poop-deck", "Threepwood", "Le Chuck", "corsair", "Silver", "Crusoe")]"
 			desc = "Yaarghh!! Thar' be a scurvy dog!"
-			emote_see = list("hunts for treasure","stares coldly...","gnashes his tiny corgi teeth")
+			emote_see = list("hunts for treasure", "stares coldly...", "gnashes his tiny corgi teeth")
 			emote_hear = list("growls ferociously", "snarls")
-			speak = list("Arrrrgh!!","Grrrrrr!")
+			speak = list("Arrrrgh!!", "Grrrrrr!")
 		if(/obj/item/clothing/head/ushanka)
-			name = "[pick("Comrade","Commissar","Glorious Leader")] [real_name]"
+			name = "[pick("Comrade", "Commissar", "Glorious Leader")] [real_name]"
 			desc = "A follower of Karl Barx."
 			emote_see = list("contemplates the failings of the capitalist economic model", "ponders the pros and cons of vangaurdism")
 		if(/obj/item/clothing/head/collectable/police)
 			name = "Officer [real_name]"
-			emote_see = list("drools","looks for donuts")
+			emote_see = list("drools", "looks for donuts")
 			desc = "Stop right there criminal scum!"
 		if(/obj/item/clothing/head/wizard/fake,	/obj/item/clothing/head/wizard,	/obj/item/clothing/head/collectable/wizard)
 			name = "Grandwizard [real_name]"
 			speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
 		if(/obj/item/weapon/bedsheet)
 			name = "\improper Ghost"
-			speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
+			speak = list("WoooOOOooo~", "AUUUUUUUUUUUUUUUUUU")
 			emote_see = list("stumbles around", "shivers")
-			emote_hear = list("howls","groans")
+			emote_hear = list("howls", "groans")
 			desc = "Spooky!"
 		if(/obj/item/clothing/head/helmet/space/santahat)
 			name = "Rudolph the Red-Nosed Corgi"

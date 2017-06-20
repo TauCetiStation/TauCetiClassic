@@ -1,22 +1,22 @@
 /obj
-	//var/datum/module/mod		//not used
+	// var/datum/module/mod		// not used
 	var/m_amt = 0	// metal
 	var/g_amt = 0	// glass
 	var/w_amt = 0	// waster amounts
-	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
-	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
+	var/origin_tech = null	// Used by R&D to determine what research bonuses it grants.
+	var/reliability = 100	// Used by SOME devices to determine how reliable they are.
 	var/crit_fail = 0
-	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
+	var/unacidable = 0 // universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
 	var/throwforce = 1
-	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
+	var/list/attack_verb = list() // Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/sharp = 0		// whether this object cuts
 	var/edge = 0		// whether this object is more likely to dismember
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
 	var/damtype = "brute"
 	var/force = 0
-	var/icon_custom = null //Default Bay12 sprite or not
+	var/icon_custom = null // Default Bay12 sprite or not
 
 	var/being_shocked = 0
 
@@ -60,15 +60,15 @@
 	if(anchored)
 		if(current_size >= STAGE_FIVE)
 			anchored = 0
-			step_towards(src,S)
+			step_towards(src, S)
 	else
-		step_towards(src,S)
+		step_towards(src, S)
 
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
-	//Return: (NONSTANDARD)
+	// Return: (NONSTANDARD)
 	//		null if object handles breathing logic for lifeform
 	//		datum/air_group to tell lifeform to process using that breath return
-	//DEFAULT: Take air from turf to give to have mob process
+	// DEFAULT: Take air from turf to give to have mob process
 	if(breath_request>0)
 		return remove_air(breath_request)
 	else
@@ -79,18 +79,18 @@
 		var/is_in_use = 0
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
+			if((M.client && M.machine == src))
 				is_in_use = 1
 				src.attack_hand(M)
-		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || IsAdminGhost(usr))
-			if (!(usr in nearby))
-				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
+		if(istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || IsAdminGhost(usr))
+			if(!(usr in nearby))
+				if(usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = 1
 					src.attack_ai(usr)
 
 		// check for TK users
 
-		if (istype(usr, /mob/living/carbon/human))
+		if(istype(usr, /mob/living/carbon/human))
 			if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab/))
 				if(!(usr in nearby))
 					if(usr.client && usr.machine==src)
@@ -104,7 +104,7 @@
 		var/list/nearby = viewers(1, src)
 		var/is_in_use = 0
 		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
+			if((M.client && M.machine == src))
 				is_in_use = 1
 				src.interact(M)
 		var/ai_in_use = AutoUpdateAI(src)
@@ -177,17 +177,17 @@
 /obj/proc/reset_shocked()
 	being_shocked = 0
 
-//mob - who is being feed
-//user - who is feeding
-//food - whai is feeded
-//eatverb - take/drink/eat method
+// mob - who is being feed
+// user - who is feeding
+// food - whai is feeded
+// eatverb - take/drink/eat method
 /proc/CanEat(user, mob, food, eatverb = "consume")
 	if(ishuman(mob))
 		var/mob/living/carbon/human/Feeded = mob
 		if(Feeded.head)
 			var/obj/item/Head = Feeded.head
 			if(Head.flags & HEADCOVERSMOUTH)
-				if (Feeded == user)
+				if(Feeded == user)
 					to_chat(user, "You can't [eatverb] [food] through [Head]")
 				else
 					to_chat(user, "You can't feed [Feeded] with [food] through [Head]")
@@ -195,7 +195,7 @@
 		if(Feeded.wear_mask)
 			var/obj/item/Mask = Feeded.wear_mask
 			if(Mask.flags & MASKCOVERSMOUTH)
-				if (Feeded == user)
+				if(Feeded == user)
 					to_chat(user, "You can't [eatverb] [food] through [Mask]")
 				else
 					to_chat(user, "You can't feed [Feeded] with [food] through [Mask]")
@@ -206,7 +206,7 @@
 		if(dumdum.head)
 			var/obj/item/Head = dumdum.head
 			if(Head.flags & HEADCOVERSMOUTH)
-				if (dumdum == user)
+				if(dumdum == user)
 					to_chat(user, "You can't [eatverb] [food] through [Head]")
 				else
 					to_chat(user, "You can't feed [dumdum] with [food] through [Head]")

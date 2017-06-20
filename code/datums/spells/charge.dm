@@ -10,7 +10,7 @@
 	range = -1
 	include_user = 1
 
-/obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/charge/cast(list/targets, mob/user = usr)
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/C = user
@@ -42,7 +42,7 @@
 		for(var/obj/item in hand_items)
 			if(istype(item, /obj/item/weapon/spellbook))
 				to_chat(C, "<span class='notice'>Glowing red letters appear on the front cover...</span>.\
-				<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
+				<span class='warning'>[pick("NICE TRY BUT NO!", "CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
 			else if(istype(item, /obj/item/weapon/gun/magic))
 				var/obj/item/weapon/gun/magic/I = item
 				if(prob(50) && !I.can_charge)
@@ -71,7 +71,7 @@
 					charged_item = item.name
 					break
 	if(!charged_item)
-		for(var/obj/machinery/MACH in range(1,C))
+		for(var/obj/machinery/MACH in range(1, C))
 			if(istype(MACH, /obj/machinery/power/smes))
 				var/obj/machinery/power/smes/SMES = MACH
 				SMES.charge = bad_charge ? 0 : SMES.capacity

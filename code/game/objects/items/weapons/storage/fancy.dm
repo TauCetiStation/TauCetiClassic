@@ -123,13 +123,13 @@
 	update_icon()
 
 /obj/item/weapon/storage/fancy/crayons/update_icon()
-	overlays = list() //resets list
-	overlays += image('icons/obj/crayons.dmi',"crayonbox")
+	overlays = list() // resets list
+	overlays += image('icons/obj/crayons.dmi', "crayonbox")
 	for(var/obj/item/toy/crayon/crayon in contents)
-		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
+		overlays += image('icons/obj/crayons.dmi', crayon.colourName)
 
 /obj/item/weapon/storage/fancy/crayons/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/toy/crayon))
+	if(istype(W, /obj/item/toy/crayon))
 		switch(W:colourName)
 			if("mime")
 				to_chat(usr, "This crayon is too sad to be contained in this box.")
@@ -145,7 +145,7 @@
 
 /obj/item/weapon/storage/fancy/glowsticks
 	name = "box of glowsticks"
-	desc = "A box of glowsticks (Do not eat)."
+	desc = "A box of glowsticks(Do not eat)."
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = "sticksbox"
 	w_class = 2.0
@@ -165,13 +165,13 @@
 	update_icon()
 
 /obj/item/weapon/storage/fancy/glowsticks/update_icon()
-	overlays = list() //resets list
-	overlays += image('icons/obj/glowsticks.dmi',"sticksbox")
+	overlays = list() // resets list
+	overlays += image('icons/obj/glowsticks.dmi', "sticksbox")
 	for(var/obj/item/weapon/reagent_containers/food/snacks/glowstick/glowstick in contents)
-		overlays += image('icons/obj/glowsticks.dmi',glowstick.colourName)
+		overlays += image('icons/obj/glowsticks.dmi', glowstick.colourName)
 
 ////////////
-//CIG PACK//
+// CIG PACK//
 ////////////
 /obj/item/weapon/storage/fancy/cigarettes
 	name = "cigarette packet"
@@ -183,7 +183,7 @@
 	throwforce = 2
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list("/obj/item/clothing/mask/cigarette","/obj/item/weapon/lighter")
+	can_hold = list("/obj/item/clothing/mask/cigarette", "/obj/item/weapon/lighter")
 	icon_type = "cigarette"
 
 /obj/item/weapon/storage/fancy/cigarettes/New()
@@ -191,7 +191,7 @@
 	flags |= NOREACT
 	for(var/i = 1 to storage_slots)
 		new /obj/item/clothing/mask/cigarette(src)
-	create_reagents(15 * storage_slots)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
+	create_reagents(15 * storage_slots)// so people can inject cigarettes without opening a packet, now with being able to inject the whole one
 
 /obj/item/weapon/storage/fancy/cigarettes/update_icon()
 	icon_state = "[initial(icon_state)][contents.len]"
@@ -237,7 +237,7 @@
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/New()
 	..()
 	for(var/i = 1 to storage_slots)
-		reagents.add_reagent("tricordrazine",15)
+		reagents.add_reagent("tricordrazine", 15)
 	name = "cigarette packet"
 
 /*
@@ -267,7 +267,7 @@
 	item_state = "syringe_kit"
 	max_w_class = 3
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
-	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
+	max_combined_w_class = 14 // The sum of the w_classes of all the items in this storage item.
 	storage_slots = 6
 	req_access = list(access_virology)
 
@@ -279,7 +279,7 @@
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "vialbox[total_contents]"
 	src.overlays.Cut()
-	if (!broken)
+	if(!broken)
 		overlays += image(icon, src, "led[locked]")
 		if(locked)
 			overlays += image(icon, src, "cover")

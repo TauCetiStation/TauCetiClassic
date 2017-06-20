@@ -17,7 +17,7 @@ var/datum/subsystem/air/SSair
 	flags = SS_BACKGROUND
 
 	var/current_cycle = 0
-	var/next_id       = 1 //Used to keep track of zone UIDs.
+	var/next_id       = 1 // Used to keep track of zone UIDs.
 
 	var/cost_pipenets   = 0
 	var/cost_tiles_curr = 0
@@ -66,7 +66,7 @@ var/datum/subsystem/air/SSair
 	current_cycle++
 	var/timer = world.tick_usage
 
-	if (currentpart == SSAIR_PIPENETS || !resumed)
+	if(currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
 		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		if(state != SS_RUNNING)
@@ -74,7 +74,7 @@ var/datum/subsystem/air/SSair
 		resumed = 0
 		currentpart = SSAIR_TILES_CUR
 
-	if (currentpart == SSAIR_TILES_CUR)
+	if(currentpart == SSAIR_TILES_CUR)
 		timer = world.tick_usage
 		process_tiles_current(resumed)
 		cost_tiles_curr = MC_AVERAGE(cost_tiles_curr, TICK_DELTA_TO_MS(world.tick_usage - timer))
@@ -83,7 +83,7 @@ var/datum/subsystem/air/SSair
 		resumed = 0
 		currentpart = SSAIR_TILES_DEF
 
-	if (currentpart == SSAIR_TILES_DEF)
+	if(currentpart == SSAIR_TILES_DEF)
 		timer = world.tick_usage
 		process_tiles_deferred(resumed)
 		cost_tiles_def = MC_AVERAGE(cost_tiles_def, TICK_DELTA_TO_MS(world.tick_usage - timer))
@@ -92,7 +92,7 @@ var/datum/subsystem/air/SSair
 		resumed = 0
 		currentpart = SSAIR_EDGES
 
-	if (currentpart == SSAIR_EDGES)
+	if(currentpart == SSAIR_EDGES)
 		timer = world.tick_usage
 		process_edges(resumed)
 		cost_edges = MC_AVERAGE(cost_edges, TICK_DELTA_TO_MS(world.tick_usage - timer))
@@ -101,7 +101,7 @@ var/datum/subsystem/air/SSair
 		resumed = 0
 		currentpart = SSAIR_FIRE
 
-	if (currentpart == SSAIR_FIRE)
+	if(currentpart == SSAIR_FIRE)
 		timer = world.tick_usage
 		process_fire(resumed)
 		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(world.tick_usage - timer))
@@ -110,7 +110,7 @@ var/datum/subsystem/air/SSair
 		resumed = 0
 		currentpart = SSAIR_ZONES
 
-	if (currentpart == SSAIR_ZONES)
+	if(currentpart == SSAIR_ZONES)
 		timer = world.tick_usage
 		process_zones(resumed)
 		cost_zones = MC_AVERAGE(cost_zones, TICK_DELTA_TO_MS(world.tick_usage - timer))
@@ -123,9 +123,9 @@ var/datum/subsystem/air/SSair
 /*********** Processing procs ***********/
 
 /datum/subsystem/air/proc/process_pipenets(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = pipe_networks.Copy()
-	// Cache for sanic speed (lists are references anyways)
+	// Cache for sanic speed(lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]
@@ -134,66 +134,66 @@ var/datum/subsystem/air/SSair
 			thing.process()
 		else
 			pipe_networks -= thing
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/subsystem/air/proc/process_tiles_current(resumed = 0)
-	while (tiles_to_update.len)
+	while(tiles_to_update.len)
 		var/turf/T = tiles_to_update[tiles_to_update.len]
 		tiles_to_update.len--
 		// Check if the turf is self-zone-blocked
 		if(T.c_airblock(T) & ZONE_BLOCKED)
 			deferred_tiles += T
-			if (MC_TICK_CHECK)
+			if(MC_TICK_CHECK)
 				return
 			continue
 		T.update_air_properties()
 		T.post_update_air_properties()
 		T.needs_air_update = FALSE
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/subsystem/air/proc/process_tiles_deferred(resumed = 0)
-	while (deferred_tiles.len)
+	while(deferred_tiles.len)
 		var/turf/T = deferred_tiles[deferred_tiles.len]
 		deferred_tiles.len--
 		T.update_air_properties()
 		T.post_update_air_properties()
 		T.needs_air_update = FALSE
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/subsystem/air/proc/process_edges(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = edges.Copy()
-	// Cache for sanic speed (lists are references anyways)
+	// Cache for sanic speed(lists are references anyways)
 	var/list/currentrun = src.currentrun
-	while (currentrun.len)
+	while(currentrun.len)
 		var/connection_edge/E = currentrun[currentrun.len]
 		currentrun.len--
 		E.tick()
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/subsystem/air/proc/process_fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = active_hotspots.Copy()
-	// Cache for sanic speed (lists are references anyways)
+	// Cache for sanic speed(lists are references anyways)
 	var/list/currentrun = src.currentrun
-	while (currentrun.len)
+	while(currentrun.len)
 		var/obj/fire/F = currentrun[currentrun.len]
 		currentrun.len--
 		F.process()
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/subsystem/air/proc/process_zones(resumed = 0)
-	while (zones_to_update.len)
+	while(zones_to_update.len)
 		var/zone/Z = zones_to_update[zones_to_update.len]
 		zones_to_update.len--
 		Z.tick()
 		Z.needs_update = FALSE
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 
@@ -276,8 +276,8 @@ var/datum/subsystem/air/SSair
 	var/space = !istype(B)
 
 	if(!space)
-		if(min(A.zone.contents.len, B.zone.contents.len) < 14 || (direct && (equivalent_pressure(A.zone,B.zone) || current_cycle == 0)))
-			merge(A.zone,B.zone)
+		if(min(A.zone.contents.len, B.zone.contents.len) < 14 || (direct && (equivalent_pressure(A.zone, B.zone) || current_cycle == 0)))
+			merge(A.zone, B.zone)
 			return
 
 	var/a_to_b = get_dir(A, B)
@@ -296,7 +296,7 @@ var/datum/subsystem/air/SSair
 		if(A.zone == B.zone)
 			return
 
-	var/connection/c = new /connection(A,B)
+	var/connection/c = new /connection(A, B)
 
 	A.connections.place(c, a_to_b)
 	B.connections.place(c, b_to_a)
@@ -329,14 +329,14 @@ var/datum/subsystem/air/SSair
 		for(var/connection_edge/zone/edge in A.edges)
 			if(edge.contains_zone(B))
 				return edge
-		var/connection_edge/edge = new/connection_edge/zone(A,B)
+		var/connection_edge/edge = new/connection_edge/zone(A, B)
 		edges += edge
 		return edge
 	else
 		for(var/connection_edge/unsimulated/edge in A.edges)
 			if(has_same_air(edge.B, B))
 				return edge
-		var/connection_edge/edge = new/connection_edge/unsimulated(A,B)
+		var/connection_edge/edge = new/connection_edge/unsimulated(A, B)
 		edges += edge
 		return edge
 

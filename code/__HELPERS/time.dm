@@ -4,7 +4,7 @@
 #define MINUTE *600
 #define MINUTES *600
 
-//Returns the world time in english
+// Returns the world time in english
 proc/worldtime2text(time = world.time)
 	return "[round(time / 36000)+12]:[(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]"
 
@@ -34,12 +34,12 @@ proc/isDay(month, day)
 			return 1
 
 		// Uncomment this out when debugging!
-		//else
-			//return 1
+		// else
+			// return 1
 
 /var/midnight_rollovers = 0
 /var/rollovercheck_last_timeofday = 0
 /proc/update_midnight_rollover()
-	if (world.timeofday < rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
+	if(world.timeofday < rollovercheck_last_timeofday) // TIME IS GOING BACKWARDS!
 		return midnight_rollovers++
 	return midnight_rollovers

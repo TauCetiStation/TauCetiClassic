@@ -107,7 +107,7 @@
 	rpm = 0.9* rpm + 0.1 * rpmtarget
 	var/datum/gas_mixture/environment = inturf.return_air()
 	var/transfer_moles = environment.total_moles()/10
-	//var/transfer_moles = rpm/10000*capacity
+	// var/transfer_moles = rpm/10000*capacity
 	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
 	gas_contained.merge(removed)
 
@@ -132,7 +132,7 @@
 		overlays += image('icons/obj/pipes.dmi', "comp-o2", FLY_LAYER)
 	else if(rpm>500)
 		overlays += image('icons/obj/pipes.dmi', "comp-o1", FLY_LAYER)
-	 //TODO: DEFERRED
+	 // TODO: DEFERRED
 
 /obj/machinery/power/turbine/New()
 	..()
@@ -221,7 +221,7 @@
 
 /obj/machinery/power/turbine/interact(mob/user)
 
-	if ( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon)) )
+	if( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon)) )
 		user.machine = null
 		user << browse(null, "window=turbine")
 		return
@@ -318,9 +318,9 @@
 		usr.client.eye = src.compressor
 	else if( href_list["str"] )
 		src.compressor.starter = !src.compressor.starter
-	else if (href_list["doors"])
+	else if(href_list["doors"])
 		for(var/obj/machinery/door/poddoor/D in src.doors)
-			if (door_status == 0)
+			if(door_status == 0)
 				spawn( 0 )
 					D.open()
 					door_status = 1

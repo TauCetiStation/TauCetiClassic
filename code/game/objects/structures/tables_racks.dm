@@ -18,7 +18,7 @@
 	density = 1
 	anchored = 1.0
 	layer = 2.8
-	throwpass = 1	//You can throw objects over this, despite it's density.")
+	throwpass = 1	// You can throw objects over this, despite it's density.")
 	climbable = 1
 
 	var/parts = /obj/item/weapon/table_parts
@@ -26,9 +26,9 @@
 	var/health = 100
 
 /obj/structure/table/proc/update_adjacent()
-	for(var/direction in list(1,2,4,8,5,6,9,10))
-		if(locate(/obj/structure/table,get_step(src,direction)))
-			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
+	for(var/direction in list(1, 2, 4, 8, 5, 6, 9, 10))
+		if(locate(/obj/structure/table, get_step(src, direction)))
+			var/obj/structure/table/T = locate(/obj/structure/table, get_step(src, direction))
 			T.update_icon()
 
 /obj/structure/table/New()
@@ -54,40 +54,40 @@
 	qdel(src)
 
 /obj/structure/table/update_icon()
-	spawn(2) //So it properly updates when deleting
+	spawn(2) // So it properly updates when deleting
 
 		if(flipped)
 			var/type = 0
 			var/tabledirs = 0
-			for(var/direction in list(turn(dir,90), turn(dir,-90)) )
-				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
-				if (T && T.flipped && T.dir == src.dir)
+			for(var/direction in list(turn(dir, 90), turn(dir,-90)) )
+				var/obj/structure/table/T = locate(/obj/structure/table, get_step(src, direction))
+				if(T && T.flipped && T.dir == src.dir)
 					type++
 					tabledirs |= direction
 			var/base = "table"
-			if (istype(src, /obj/structure/table/woodentable))
+			if(istype(src, /obj/structure/table/woodentable))
 				base = "wood"
-			if (istype(src, /obj/structure/table/reinforced))
+			if(istype(src, /obj/structure/table/reinforced))
 				base = "rtable"
-			if (istype(src, /obj/structure/table/woodentable/poker))
+			if(istype(src, /obj/structure/table/woodentable/poker))
 				base = "poker"
 
 			icon_state = "[base]flip[type]"
-			if (type==1)
-				if (tabledirs & turn(dir,90))
+			if(type==1)
+				if(tabledirs & turn(dir, 90))
 					icon_state = icon_state+"-"
-				if (tabledirs & turn(dir,-90))
+				if(tabledirs & turn(dir,-90))
 					icon_state = icon_state+"+"
 			return 1
 
 		var/dir_sum = 0
-		for(var/direction in list(1,2,4,8,5,6,9,10))
+		for(var/direction in list(1, 2, 4, 8, 5, 6, 9, 10))
 			var/skip_sum = 0
 			for(var/obj/structure/window/W in src.loc)
-				if(W.dir == direction) //So smooth tables don't go smooth through windows
+				if(W.dir == direction) // So smooth tables don't go smooth through windows
 					skip_sum = 1
 					continue
-			var/inv_direction //inverse direction
+			var/inv_direction // inverse direction
 			switch(direction)
 				if(1)
 					inv_direction = 2
@@ -105,46 +105,46 @@
 					inv_direction = 6
 				if(10)
 					inv_direction = 5
-			for(var/obj/structure/window/W in get_step(src,direction))
-				if(W.dir == inv_direction) //So smooth tables don't go smooth through windows when the window is on the other table's tile
+			for(var/obj/structure/window/W in get_step(src, direction))
+				if(W.dir == inv_direction) // So smooth tables don't go smooth through windows when the window is on the other table's tile
 					skip_sum = 1
 					continue
-			if(!skip_sum) //means there is a window between the two tiles in this direction
-				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
+			if(!skip_sum) // means there is a window between the two tiles in this direction
+				var/obj/structure/table/T = locate(/obj/structure/table, get_step(src, direction))
 				if(T && !T.flipped)
 					if(direction <5)
 						dir_sum += direction
 					else
-						if(direction == 5)	//This permits the use of all table directions. (Set up so clockwise around the central table is a higher value, from north)
+						if(direction == 5)	// This permits the use of all table directions. (Set up so clockwise around the central table is a higher value, from north)
 							dir_sum += 16
 						if(direction == 6)
 							dir_sum += 32
-						if(direction == 8)	//Aherp and Aderp.  Jezes I am stupid.  -- SkyMarshal
+						if(direction == 8)	// Aherp and Aderp.  Jezes I am stupid.  -- SkyMarshal
 							dir_sum += 8
 						if(direction == 10)
 							dir_sum += 64
 						if(direction == 9)
 							dir_sum += 128
 
-		var/table_type = 0 //stand_alone table
+		var/table_type = 0 // stand_alone table
 		if(dir_sum%16 in cardinal)
-			table_type = 1 //endtable
+			table_type = 1 // endtable
 			dir_sum %= 16
-		if(dir_sum%16 in list(3,12))
+		if(dir_sum%16 in list(3, 12))
 			table_type = 2 //1 tile thick, streight table
 			if(dir_sum%16 == 3) //3 doesn't exist as a dir
 				dir_sum = 2
 			if(dir_sum%16 == 12) //12 doesn't exist as a dir.
 				dir_sum = 4
-		if(dir_sum%16 in list(5,6,9,10))
-			if(locate(/obj/structure/table,get_step(src.loc,dir_sum%16)))
-				table_type = 3 //full table (not the 1 tile thick one, but one of the 'tabledir' tables)
+		if(dir_sum%16 in list(5, 6, 9, 10))
+			if(locate(/obj/structure/table, get_step(src.loc, dir_sum%16)))
+				table_type = 3 // full table(not the 1 tile thick one, but one of the 'tabledir' tables)
 			else
-				table_type = 2 //1 tile thick, corner table (treated the same as streight tables in code later on)
+				table_type = 2 //1 tile thick, corner table(treated the same as streight tables in code later on)
 			dir_sum %= 16
-		if(dir_sum%16 in list(13,14,7,11)) //Three-way intersection
-			table_type = 5 //full table as three-way intersections are not sprited, would require 64 sprites to handle all combinations.  TOO BAD -- SkyMarshal
-			switch(dir_sum%16)	//Begin computation of the special type tables.  --SkyMarshal
+		if(dir_sum%16 in list(13, 14, 7, 11)) // Three-way intersection
+			table_type = 5 // full table as three-way intersections are not sprited, would require 64 sprites to handle all combinations.  TOO BAD -- SkyMarshal
+			switch(dir_sum%16)	// Begin computation of the special type tables.  --SkyMarshal
 				if(7)
 					if(dir_sum == 23)
 						table_type = 6
@@ -192,7 +192,7 @@
 						dir_sum = 2
 						table_type = 3
 					else
-						dir_sum = 2 //These translate the dir_sum to the correct dirs from the 'tabledir' icon_state.
+						dir_sum = 2 // These translate the dir_sum to the correct dirs from the 'tabledir' icon_state.
 		if(dir_sum%16 == 15)
 			table_type = 4 //4-way intersection, the 'middle' table sprites will be used.
 
@@ -211,7 +211,7 @@
 				icon_state = "[initial(icon_state)]_dir2"
 			if(6)
 				icon_state = "[initial(icon_state)]_dir3"
-		if (dir_sum in list(1,2,4,8,5,6,9,10))
+		if(dir_sum in list(1, 2, 4, 8, 5, 6, 9, 10))
 			dir = dir_sum
 		else
 			dir = 2
@@ -222,11 +222,11 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				destroy()
 		else
 	return
@@ -277,8 +277,8 @@
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
-	if(istype(mover,/obj/item/projectile))
-		return (check_cover(mover,target))
+	if(istype(mover, /obj/item/projectile))
+		return(check_cover(mover, target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
@@ -286,32 +286,32 @@
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
-	if (flipped)
-		if (get_dir(loc, target) == dir)
+	if(flipped)
+		if(get_dir(loc, target) == dir)
 			return !density
 		else
 			return 1
 	return 0
 
-//checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
+// checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = flipped ? get_turf(src) : get_step(loc, get_dir(from, loc))
-	if (get_dist(P.starting, loc) <= 1) //Tables won't help you if people are THIS close
+	if(get_dist(P.starting, loc) <= 1) // Tables won't help you if people are THIS close
 		return 1
-	if (get_turf(P.original) == cover)
+	if(get_turf(P.original) == cover)
 		var/chance = 20
-		if (ismob(P.original))
+		if(ismob(P.original))
 			var/mob/M = P.original
-			if (M.lying)
-				chance += 20				//Lying down lets you catch less bullets
+			if(M.lying)
+				chance += 20				// Lying down lets you catch less bullets
 		if(flipped)
-			if(get_dir(loc, from) == dir)	//Flipped tables catch mroe bullets
+			if(get_dir(loc, from) == dir)	// Flipped tables catch mroe bullets
 				chance += 20
 			else
-				return 1					//But only from one side
+				return 1					// But only from one side
 		if(prob(chance))
 			health -= P.damage/2
-			if (health > 0)
+			if(health > 0)
 				visible_message("<span class='warning'>[P] hits \the [src]!</span>")
 				return 0
 			else
@@ -326,8 +326,8 @@
 	if(istype(O) && O.checkpass(PASSCRAWL))
 		O.layer = 4.0
 		return 1
-	if (flipped)
-		if (get_dir(loc, target) == dir)
+	if(flipped)
+		if(get_dir(loc, target) == dir)
 			return !density
 		else
 			return 1
@@ -335,28 +335,28 @@
 
 /obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
 	..()
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
+	if((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
 	if(isrobot(user))
 		return
 	user.drop_item()
-	if (O.loc != src.loc)
+	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
 
 
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
-	if (!W) return
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if(!W) return
+	if(istype(W, /obj/item/weapon/grab) && get_dist(src, user)<2)
 		var/obj/item/weapon/grab/G = W
-		if (istype(G.affecting, /mob/living))
+		if(istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant
-			if (G.state < GRAB_AGGRESSIVE)
+			if(G.state < GRAB_AGGRESSIVE)
 				if(user.a_intent == "hurt")
-					if (prob(15))
+					if(prob(15))
 						M.Weaken(5)
-					M.apply_damage(8,def_zone = BP_HEAD)
+					M.apply_damage(8, def_zone = BP_HEAD)
 					visible_message("<span class='danger'>[G.assailant] slams [G.affecting]'s face against \the [src]!</span>")
 					playsound(src.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey])</font>"
@@ -376,17 +376,17 @@
 			qdel(W)
 			return
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		to_chat(user, "\blue Now disassembling table")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user,50, target = src))
+		if(do_after(user, 50, target = src))
 			destroy()
 		return
 
 	if(isrobot(user))
 		return
 
-	if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
+	if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/twohanded/dualsaber))
 		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W.force > 3 && user.a_intent == "hurt"))
 			if(istype(src, /obj/structure/table/reinforced) && W:active)
 				..()
@@ -407,7 +407,7 @@
 		if(user.drop_item())
 			W.Move(loc)
 			var/list/click_params = params2list(params)
-			//Center the icon where the user clicked.
+			// Center the icon where the user clicked.
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 				return
 			W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
@@ -416,16 +416,16 @@
 
 /obj/structure/table/proc/straight_table_check(var/direction)
 	var/obj/structure/table/T
-	for(var/angle in list(-90,90))
-		T = locate() in get_step(src.loc,turn(direction,angle))
+	for(var/angle in list(-90, 90))
+		T = locate() in get_step(src.loc, turn(direction, angle))
 		if(T && !T.flipped)
 			return 0
-	T = locate() in get_step(src.loc,direction)
-	if (!T || T.flipped)
+	T = locate() in get_step(src.loc, direction)
+	if(!T || T.flipped)
 		return 1
-	if (istype(T,/obj/structure/table/reinforced/))
+	if(istype(T, /obj/structure/table/reinforced/))
 		var/obj/structure/table/reinforced/R = T
-		if (R.status == 2)
+		if(R.status == 2)
 			return 0
 	return T.straight_table_check(direction)
 
@@ -435,10 +435,10 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (!can_touch(usr) || ismouse(usr))
+	if(!can_touch(usr) || ismouse(usr))
 		return
 
-	if(!flip(get_cardinal_dir(usr,src)))
+	if(!flip(get_cardinal_dir(usr, src)))
 		to_chat(usr, "<span class='notice'>It won't budge.</span>")
 		return
 
@@ -450,7 +450,7 @@
 	return
 
 /obj/structure/table/proc/unflipping_check(direction)
-	for(var/mob/M in oview(src,0))
+	for(var/mob/M in oview(src, 0))
 		return 0
 
 	var/list/L = list()
@@ -458,9 +458,9 @@
 		L.Add(direction)
 	else
 		L.Add(turn(src.dir,-90))
-		L.Add(turn(src.dir,90))
+		L.Add(turn(src.dir, 90))
 	for(var/new_dir in L)
-		var/obj/structure/table/T = locate() in get_step(src.loc,new_dir)
+		var/obj/structure/table/T = locate() in get_step(src.loc, new_dir)
 		if(T)
 			if(T.flipped && T.dir == src.dir && !T.unflipping_check(new_dir))
 				return 0
@@ -473,25 +473,25 @@
 	set src in oview(1)
 	if(ismouse(usr))
 		return
-	if (!can_touch(usr))
+	if(!can_touch(usr))
 		return
 
-	if (!unflipping_check())
+	if(!unflipping_check())
 		to_chat(usr, "<span class='notice'>It won't budge.</span>")
 		return
 	unflip()
 
 /obj/structure/table/proc/flip(direction)
-	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
+	if( !straight_table_check(turn(direction, 90)) || !straight_table_check(turn(direction,-90)) )
 		return 0
 
 	verbs -=/obj/structure/table/verb/do_flip
 	verbs +=/obj/structure/table/proc/do_put
 
-	var/list/targets = list(get_step(src,dir),get_step(src,turn(dir, 45)),get_step(src,turn(dir, -45)))
-	for (var/atom/movable/A in get_turf(src))
-		if (!A.anchored)
-			A.throw_at(pick(targets),1,1)
+	var/list/targets = list(get_step(src, dir), get_step(src, turn(dir, 45)), get_step(src, turn(dir, -45)))
+	for(var/atom/movable/A in get_turf(src))
+		if(!A.anchored)
+			A.throw_at(pick(targets), 1, 1)
 
 	dir = direction
 	if(dir != NORTH)
@@ -499,7 +499,7 @@
 	flipped = 1
 	flags |= ON_BORDER
 	for(var/D in list(turn(direction, 90), turn(direction, -90)))
-		var/obj/structure/table/T = locate() in get_step(src,D)
+		var/obj/structure/table/T = locate() in get_step(src, D)
 		if(T && !T.flipped)
 			T.flip(direction)
 	update_icon()
@@ -516,7 +516,7 @@
 	flipped = 0
 	flags &= ~ON_BORDER
 	for(var/D in list(turn(dir, 90), turn(dir, -90)))
-		var/obj/structure/table/T = locate() in get_step(src.loc,D)
+		var/obj/structure/table/T = locate() in get_step(src.loc, D)
 		if(T && T.flipped && T.dir == src.dir)
 			T.unflip()
 	update_icon()
@@ -534,7 +534,7 @@
 	parts = /obj/item/weapon/table_parts/wood
 	health = 50
 
-/obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
+/obj/structure/table/woodentable/poker // No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
 	icon_state = "pokertable"
@@ -553,47 +553,47 @@
 
 /obj/structure/table/reinforced/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
-	if(istype(mover,/obj/item/projectile))
-		return (check_cover(mover,target))
+	if(istype(mover, /obj/item/projectile))
+		return(check_cover(mover, target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
-	if (flipped)
-		if (get_dir(loc, target) == dir)
+	if(flipped)
+		if(get_dir(loc, target) == dir)
 			return !density
 		else
 			return 1
 	return 0
 
 /obj/structure/table/reinforced/flip(direction)
-	if (status == 2)
+	if(status == 2)
 		return 0
 	else
 		return ..()
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
 				to_chat(user, "\blue Now weakening the reinforced table")
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
+				if(do_after(user, 50, target = src))
 					if(!src || !WT.isOn()) return
 					to_chat(user, "\blue Table weakened")
 					src.status = 1
 			else
 				to_chat(user, "\blue Now strengthening the reinforced table")
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
+				if(do_after(user, 50, target = src))
 					if(!src || !WT.isOn()) return
 					to_chat(user, "\blue Table strengthened")
 					src.status = 2
 			return
 		return
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		if(src.status == 2)
 			return
 
@@ -609,7 +609,7 @@
 	icon_state = "rack"
 	density = 1
 	anchored = 1.0
-	throwpass = 1	//You can throw objects over this, despite it's density.
+	throwpass = 1	// You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
 
 /obj/structure/rack/ex_act(severity)
@@ -636,7 +636,7 @@
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
-	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
+	if(src.density == 0) // Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
@@ -644,17 +644,17 @@
 		return 0
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
+	if((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
 	if(isrobot(user))
 		return
 	user.drop_item()
-	if (O.loc != src.loc)
+	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		qdel(src)

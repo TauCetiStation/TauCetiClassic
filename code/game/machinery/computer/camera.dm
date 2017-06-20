@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /proc/invalidateCameraCache()
 	for(var/obj/machinery/computer/security/s in machines)
@@ -15,17 +15,17 @@
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
 	var/list/network = list("SS13")
-	var/mapping = 0//For the overview file, interesting bit of code.
+	var/mapping = 0// For the overview file, interesting bit of code.
 
 	var/camera_cache = null
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if ((get_dist(user, src) > 1 || (user.incapacitated()) || user.blinded) && !istype(user, /mob/living/silicon))
+	if((get_dist(user, src) > 1 || (user.incapacitated()) || user.blinded) && !istype(user, /mob/living/silicon))
 		return null
-	if ( !current || !current.can_use() ) //camera doesn't work
+	if( !current || !current.can_use() ) // camera doesn't work
 		reset_current()
 	var/list/viewing = viewers(src)
-	if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
+	if((istype(user, /mob/living/silicon/robot)) && (!(viewing.Find(user))))
 		return null
 	user.reset_view(current)
 	return 1
@@ -64,7 +64,7 @@
 		ui.load_cached_data(camera_cache)
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "sec_camera.tmpl", "Camera Console", 900, 600)
 
 		// adding a template with the key "mapContent" enables the map ui functionality
@@ -101,13 +101,13 @@
 
 
 /obj/machinery/computer/security/attack_hand(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
+	if(src.z > ZLEVEL_EMPTY)
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
-	if (!network)
+	if(!network)
 		world.log << "A computer lacks a network at [x],[y],[z]."
 		return
-	if (!(istype(network,/list)))
+	if(!(istype(network, /list)))
 		world.log << "The computer at [x],[y],[z] has a network that is not a list!"
 		return
 
@@ -123,7 +123,7 @@
 	return 0
 
 /obj/machinery/computer/security/proc/switch_to_camera(mob/user, obj/machinery/camera/C)
-	//don't need to check if the camera works for AI because the AI jumps to the camera location and doesn't actually look through cameras.
+	// don't need to check if the camera works for AI because the AI jumps to the camera location and doesn't actually look through cameras.
 	if(isAI(user))
 		var/mob/living/silicon/ai/A = user
 		// Only allow non-carded AIs to view because the interaction with the eye gets all wonky otherwise.
@@ -139,12 +139,12 @@
 	use_power(50)
 	return 1
 
-//Camera control: moving.
-/obj/machinery/computer/security/proc/jump_on_click(mob/user,A)
+// Camera control: moving.
+/obj/machinery/computer/security/proc/jump_on_click(mob/user, A)
 	if(user.machine != src)
 		return
 	var/obj/machinery/camera/jump_to
-	if(istype(A,/obj/machinery/camera))
+	if(istype(A, /obj/machinery/camera))
 		jump_to = A
 	else if(ismob(A))
 		if(ishuman(A))
@@ -160,14 +160,14 @@
 				continue
 			if(!can_access_camera(camera))
 				continue
-			var/dist = get_dist(camera,A)
+			var/dist = get_dist(camera, A)
 			if(dist < best_dist)
 				best_dist = dist
 				jump_to = camera
 	if(isnull(jump_to))
 		return
 	if(can_access_camera(jump_to))
-		switch_to_camera(user,jump_to)
+		switch_to_camera(user, jump_to)
 
 /obj/machinery/computer/security/proc/set_current(obj/machinery/camera/C)
 	if(current == C)
@@ -189,22 +189,22 @@
 			L.tracking_cancelled()
 	current = null
 
-//Camera control: mouse.
+// Camera control: mouse.
 /atom/DblClick()
 	..()
-	if(istype(usr.machine,/obj/machinery/computer/security))
+	if(istype(usr.machine, /obj/machinery/computer/security))
 		var/obj/machinery/computer/security/console = usr.machine
-		console.jump_on_click(usr,src)
-//Camera control: arrow keys.
-/mob/Move(n,direct)
-	if(istype(machine,/obj/machinery/computer/security))
+		console.jump_on_click(usr, src)
+// Camera control: arrow keys.
+/mob/Move(n, direct)
+	if(istype(machine, /obj/machinery/computer/security))
 		var/obj/machinery/computer/security/console = machine
 		var/turf/T = get_turf(console.current)
 		for(var/i;i<10;i++)
-			T = get_step(T,direct)
-		console.jump_on_click(src,T)
+			T = get_step(T, direct)
+		console.jump_on_click(src, T)
 		return
-	return ..(n,direct)
+	return ..(n, direct)
 
 /obj/machinery/computer/security/telescreen
 	name = "Telescreen"
@@ -245,7 +245,7 @@
 	name = "engineering camera monitor"
 	desc = "Used to monitor fires and breaches."
 	icon_state = "engineeringcameras"
-	network = list("Engineering","Power Alarms","Atmosphere Alarms","Fire Alarms")
+	network = list("Engineering", "Power Alarms", "Atmosphere Alarms", "Fire Alarms")
 	light_color = "#b88b2e"
 
 /obj/machinery/computer/security/nuclear

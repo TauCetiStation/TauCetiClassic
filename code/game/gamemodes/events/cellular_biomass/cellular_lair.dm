@@ -32,12 +32,12 @@
 	..()
 	return QDEL_HINT_QUEUE
 
-//Mob anal probe
+// Mob anal probe
 
 /obj/lair_life_monitor
 	var/obj/structure/cellular_biomass/lair/lair_to_report
 
-/obj/lair_life_monitor/New(var/obj/structure/cellular_biomass/lair/lair , var/mob/living/my_mob)
+/obj/lair_life_monitor/New(var/obj/structure/cellular_biomass/lair/lair, var/mob/living/my_mob)
 	if(!lair || ! my_mob)
 		qdel(src)
 		return
@@ -48,7 +48,7 @@
 	if(!ismob(src.loc))
 		return
 	var/mob/living/my_mob = src.loc
-	if(get_dist(my_mob,lair_to_report) > 30 || my_mob.z != lair_to_report.z)
+	if(get_dist(my_mob, lair_to_report) > 30 || my_mob.z != lair_to_report.z)
 		qdel(src)
 	if(!(my_mob && my_mob.health > 0))
 		qdel(src)

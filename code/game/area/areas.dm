@@ -22,14 +22,14 @@
 	var/poweralm = 1
 	var/party = null
 	var/lightswitch = 1
-	var/valid_territory = 1 //If it's a valid territory for gangs to claim
+	var/valid_territory = 1 // If it's a valid territory for gangs to claim
 
 	var/eject = null
 
 	var/debug = 0
-	var/powerupdate = 10	//We give everything 10 ticks to settle out it's power usage.
+	var/powerupdate = 10	// We give everything 10 ticks to settle out it's power usage.
 	var/requires_power = 1
-	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
+	var/always_unpowered = 0	// this gets overriden to 1 for space in area/New()
 
 	var/power_equip = 1
 	var/power_light = 1
@@ -48,7 +48,7 @@
 	var/area/master				// master area used for power calcluations
 								// (original area before splitting due to sd_DAL)
 	var/list/related			// the other areas of the same type as this
-	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
+	var/list/all_doors = list()		// Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
 
 
@@ -63,7 +63,7 @@ var/list/teleportlocs = list()
 		if(teleportlocs.Find(AR.name))
 			continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == ZLEVEL_STATION)
+		if(picked.z == ZLEVEL_STATION)
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 	teleportlocs = sortAssoc(teleportlocs)
@@ -80,7 +80,7 @@ var/list/ghostteleportlocs = list()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == ZLEVEL_STATION || picked.z == ZLEVEL_ASTEROID || picked.z == ZLEVEL_TELECOMMS)
+		if(picked.z == ZLEVEL_STATION || picked.z == ZLEVEL_ASTEROID || picked.z == ZLEVEL_TELECOMMS)
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 	ghostteleportlocs = sortAssoc(ghostteleportlocs)
@@ -106,20 +106,20 @@ var/list/ghostteleportlocs = list()
 
 
 /area/proc/poweralert(state, obj/source)
-	if (state != poweralm)
+	if(state != poweralm)
 		poweralm = state
-		if(istype(source))	//Only report power alarms on the z-level where the source is located.
+		if(istype(source))	// Only report power alarms on the z-level where the source is located.
 			var/list/cameras = list()
-			for (var/area/RA in related)
-				for (var/obj/machinery/camera/C in RA)
+			for(var/area/RA in related)
+				for(var/obj/machinery/camera/C in RA)
 					cameras += C
 					if(state == 1)
 						C.network.Remove("Power Alarms")
 					else
 						C.network.Add("Power Alarms")
-			for (var/mob/living/silicon/aiPlayer in player_list)
+			for(var/mob/living/silicon/aiPlayer in player_list)
 				if(aiPlayer.z == source.z)
-					if (state == 1)
+					if(state == 1)
 						aiPlayer.cancelAlarm("Power", src, source)
 					else
 						aiPlayer.triggerAlarm("Power", src, cameras, source)
@@ -132,18 +132,18 @@ var/list/ghostteleportlocs = list()
 	return
 
 /area/proc/atmosalert(danger_level)
-	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.
-	for (var/area/RA in related)
-		for (var/obj/machinery/alarm/AA in RA)
-			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+	// Check all the alarms before lowering atmosalm. Raising is perfectly fine.
+	for(var/area/RA in related)
+		for(var/obj/machinery/alarm/AA in RA)
+			if( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
 				danger_level = max(danger_level, AA.danger_level)
 
 	if(danger_level != atmosalm)
-		if (danger_level < 1 && atmosalm >= 1)
-			//closing the doors on red and opening on green provides a bit of hysteresis that will hopefully prevent fire doors from opening and closing repeatedly due to noise
+		if(danger_level < 1 && atmosalm >= 1)
+			// closing the doors on red and opening on green provides a bit of hysteresis that will hopefully prevent fire doors from opening and closing repeatedly due to noise
 			air_doors_open()
 
-		if (danger_level < 2 && atmosalm >= 2)
+		if(danger_level < 2 && atmosalm >= 2)
 			for(var/area/RA in related)
 				for(var/obj/machinery/camera/C in RA)
 					C.network.Remove("Atmosphere Alarms")
@@ -152,7 +152,7 @@ var/list/ghostteleportlocs = list()
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.cancelAlarm("Atmosphere", src, src)
 
-		if (danger_level >= 2 && atmosalm < 2)
+		if(danger_level >= 2 && atmosalm < 2)
 			var/list/cameras = list()
 			for(var/area/RA in related)
 				for(var/obj/machinery/camera/C in RA)
@@ -166,7 +166,7 @@ var/list/ghostteleportlocs = list()
 
 		atmosalm = danger_level
 		for(var/area/RA in related)
-			for (var/obj/machinery/alarm/AA in RA)
+			for(var/obj/machinery/alarm/AA in RA)
 				AA.update_icon()
 
 		return 1
@@ -194,11 +194,11 @@ var/list/ghostteleportlocs = list()
 
 
 /area/proc/firealert()
-	if(name == "Space") //no fire alarms in space
+	if(name == "Space") // no fire alarms in space
 		return
 	if( !fire )
 		fire = 1
-		master.fire = 1		//used for firedoor checks
+		master.fire = 1		// used for firedoor checks
 		mouse_opacity = 0
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
@@ -208,18 +208,18 @@ var/list/ghostteleportlocs = list()
 					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/close)
 		var/list/cameras = list()
 		for(var/area/RA in related)
-			for (var/obj/machinery/camera/C in RA)
+			for(var/obj/machinery/camera/C in RA)
 				cameras.Add(C)
 				C.network.Add("Fire Alarms")
-		for (var/mob/living/silicon/ai/aiPlayer in player_list)
+		for(var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-		for (var/obj/machinery/computer/station_alert/a in machines)
+		for(var/obj/machinery/computer/station_alert/a in machines)
 			a.triggerAlarm("Fire", src, cameras, src)
 
 /area/proc/firereset()
 	if(fire)
 		fire = 0
-		master.fire = 0		//used for firedoor checks
+		master.fire = 0		// used for firedoor checks
 		mouse_opacity = 0
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
@@ -228,15 +228,15 @@ var/list/ghostteleportlocs = list()
 				else if(D.density)
 					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 		for(var/area/RA in related)
-			for (var/obj/machinery/camera/C in RA)
+			for(var/obj/machinery/camera/C in RA)
 				C.network.Remove("Fire Alarms")
-		for (var/mob/living/silicon/ai/aiPlayer in player_list)
+		for(var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/station_alert/a in machines)
+		for(var/obj/machinery/computer/station_alert/a in machines)
 			a.cancelAlarm("Fire", src, src)
 
 /area/proc/partyalert()
-	if(name == "Space") //no parties in space!!!
+	if(name == "Space") // no parties in space!!!
 		return
 	if(!party)
 		party = 1
@@ -281,8 +281,8 @@ var/list/ghostteleportlocs = list()
 	master.powerupdate = 2
 	for(var/area/RA in related)
 		for(var/obj/machinery/M in RA)	// for each machine in the area
-			M.power_change()				// reverify power status (to update icons etc.)
-		if (fire || eject || party)
+			M.power_change()				// reverify power status(to update icons etc.)
+		if(fire || eject || party)
 			RA.updateicon()
 
 /area/proc/usage(chan)
@@ -330,14 +330,14 @@ var/list/ghostteleportlocs = list()
 
 
 /area/Entered(A)
-	if(!istype(A,/mob/living))
+	if(!istype(A, /mob/living))
 		return
 
 	var/mob/living/L = A
 	if(!L.ckey)
 		return
 
-	//Jukebox
+	// Jukebox
 	if(!L.lastarea)
 		L.lastarea = get_area(L.loc)
 	var/area/newarea = get_area(L.loc)
@@ -375,7 +375,7 @@ var/list/ghostteleportlocs = list()
 			sound = pick('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg','sound/ambience/mars.ogg')
 		else if(istype(src, /area/tcommsat))
 			sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-		else if (istype(src, /area/syndicate_station) || istype(src, /area/syndicate_station/start) || istype(src,/area/syndicate_station/transit))
+		else if(istype(src, /area/syndicate_station) || istype(src, /area/syndicate_station/start) || istype(src, /area/syndicate_station/transit))
 			sound = pick('sound/ambience/omega.ogg')
 		else
 			sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
@@ -404,11 +404,11 @@ var/list/ghostteleportlocs = list()
 	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
 		return
 
-	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
+	if(istype(mob, /mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
 		var/mob/living/carbon/human/H = mob
 		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
 			return
-		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) //Humans in rig with turn on magboots
+		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) // Humans in rig with turn on magboots
 			return
 
 		if(H.m_intent == "run")

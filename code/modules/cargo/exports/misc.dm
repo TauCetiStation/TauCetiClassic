@@ -1,4 +1,4 @@
-//All other
+// All other
 
 /datum/export/misc/ashtray
 	cost = 5

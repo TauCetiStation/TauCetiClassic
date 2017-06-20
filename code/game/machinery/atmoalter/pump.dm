@@ -38,7 +38,7 @@
 	if(prob(100/severity))
 		direction_out = !direction_out
 
-	target_pressure = rand(0,1300)
+	target_pressure = rand(0, 1300)
 	update_icon()
 
 	..(severity)
@@ -53,13 +53,13 @@
 			environment = loc.return_air()
 		if(direction_out)
 			var/pressure_delta = target_pressure - environment.return_pressure()
-			//Can not have a pressure delta that would cause environment pressure > tank pressure
+			// Can not have a pressure delta that would cause environment pressure > tank pressure
 
 			var/transfer_moles = 0
 			if(air_contents.temperature > 0)
 				transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
-				//Actually transfer the gas
+				// Actually transfer the gas
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 				if(holding)
@@ -68,13 +68,13 @@
 					loc.assume_air(removed)
 		else
 			var/pressure_delta = target_pressure - air_contents.return_pressure()
-			//Can not have a pressure delta that would cause environment pressure > tank pressure
+			// Can not have a pressure delta that would cause environment pressure > tank pressure
 
 			var/transfer_moles = 0
 			if(environment.temperature > 0)
 				transfer_moles = pressure_delta*air_contents.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
 
-				//Actually transfer the gas
+				// Actually transfer the gas
 				var/datum/gas_mixture/removed
 				if(holding)
 					removed = environment.remove(transfer_moles)
@@ -82,7 +82,7 @@
 					removed = loc.remove_air(transfer_moles)
 
 				air_contents.merge(removed)
-		//src.update_icon()
+		// src.update_icon()
 
 	src.updateDialog()
 	return
@@ -131,11 +131,11 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?src
 		on = !on
 	else if(href_list["direction"])
 		direction_out = !direction_out
-	else if (href_list["remove_tank"])
+	else if(href_list["remove_tank"])
 		if(holding)
 			holding.loc = loc
 			holding = null
-	else if (href_list["pressure_adj"])
+	else if(href_list["pressure_adj"])
 		var/diff = text2num(href_list["pressure_adj"])
 		target_pressure = min(10 * ONE_ATMOSPHERE, max(0, target_pressure + diff))
 

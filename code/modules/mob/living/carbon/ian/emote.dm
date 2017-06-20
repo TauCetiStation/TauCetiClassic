@@ -5,7 +5,7 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act, "s", -1) && !findtext(act, "_", -2))//Removes ending s's unless they are prefixed with a '_'
+	if(findtext(act, "s", -1) && !findtext(act, "_", -2))// Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act, 1, length(act))
 
 	if(src.stat == DEAD && (act != "deathgasp"))
@@ -16,20 +16,20 @@
 			if(silent)
 				return
 			if(client)
-				if (client.prefs.muted & MUTE_IC)
-					to_chat(src, "<span class='red'>You cannot send IC messages (muted).</span>")
+				if(client.prefs.muted & MUTE_IC)
+					to_chat(src, "<span class='red'>You cannot send IC messages(muted).</span>")
 					return
-				if(client.handle_spam_prevention(message,MUTE_IC))
+				if(client.handle_spam_prevention(message, MUTE_IC))
 					return
 			if(stat || !message)
 				return
 			return custom_emote(m_type, message)
 
-		if ("blink")
+		if("blink")
 			message = "<B>[src]</B> blinks."
 			m_type = 1
 
-		if ("blink_r")
+		if("blink_r")
 			message = "<B>[src]</B> blinks rapidly."
 			m_type = 1
 
@@ -58,7 +58,7 @@
 		if("drool")
 			message = "<B>[src]</B> drools."
 			m_type = 1
-		if ("eyebrow")
+		if("eyebrow")
 			message = "<B>[src]</B> raises an eyebrow."
 			m_type = 1
 		if("paw")
@@ -86,10 +86,10 @@
 		if("twitch")
 			message = "<B>[src]</B> twitches violently."
 			m_type = 1
-		if ("twitch_s")
+		if("twitch_s")
 			message = "<B>[src]</B> twitches."
 			m_type = 1
-		if ("faint")
+		if("faint")
 			message = "<B>[src]</B> faints."
 			if(sleeping)
 				return
@@ -97,7 +97,7 @@
 			m_type = 1
 		if("dance")
 			if(!restrained())
-				message = pick("<B>[src]</B> dances around.","chases its tail")
+				message = pick("<B>[src]</B> dances around.", "chases its tail")
 				m_type = 1
 		if("roll")
 			if(!restrained())
@@ -112,15 +112,15 @@
 		if("jump")
 			message = "<B>[src]</B> jumps!"
 			m_type = 1
-		if ("point")
-			if (!restrained())
+		if("point")
+			if(!restrained())
 				var/atom/target = null
-				if (param)
-					for (var/atom/A as mob|obj|turf in oview())
-						if (param == A.name)
+				if(param)
+					for(var/atom/A as mob|obj|turf in oview())
+						if(param == A.name)
 							target = A
 							break
-				if (!target)
+				if(!target)
 					message = "<span class='notice'><b>[src]</b> points.</span>"
 				else
 					pointed(target)
@@ -146,13 +146,13 @@
 
 		for(var/mob/M in dead_mob_list)
 			if(!M.client || isnewplayer(M))
-				continue //skip monkeys, leavers and new players
-			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+				continue // skip monkeys, leavers and new players
+			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
 				M.show_message(message)
 
-		if (m_type & 1)
-			for (var/mob/O in get_mobs_in_view(world.view,src))
+		if(m_type & 1)
+			for(var/mob/O in get_mobs_in_view(world.view, src))
 				O.show_message(message, m_type)
-		else if (m_type & 2)
-			for (var/mob/O in (hearers(src.loc, null) | get_mobs_in_view(world.view,src)))
+		else if(m_type & 2)
+			for(var/mob/O in (hearers(src.loc, null) | get_mobs_in_view(world.view, src)))
 				O.show_message(message, m_type)

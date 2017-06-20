@@ -2,14 +2,14 @@
 
 /client/proc/SDQL2_query(query_text as message)
 	set category = "Admin"
-	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
+	if(!check_rights(R_DEBUG))  // Shouldn't happen... but just to be safe.
 		message_admins("\red ERROR: Non-admin [usr.key] attempted to execute a SDQL query!")
 		log_admin("Non-admin [usr.key] attempted to execute a SDQL query!")
 
 	if(!query_text || length(query_text) < 1)
 		return
 
-	//world << query_text
+	// world << query_text
 
 	var/list/query_list = SDQL2_tokenize(query_text)
 
@@ -61,7 +61,7 @@
 				objs += d
 			CHECK_TICK
 
-	//usr << "Query: [query_text]"
+	// usr << "Query: [query_text]"
 	message_admins("[usr] executed SDQL query: \"[query_text]\".")
 
 	switch(query_tree[1])
@@ -77,10 +77,10 @@
 					var/atom/a = t
 
 					if(a.x)
-						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t] at ([a.x], [a.y], [a.z])<br>"
+						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t] at([a.x], [a.y], [a.z])<br>"
 
 					else if(a.loc && a.loc.x)
-						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t] in [a.loc] at ([a.loc.x], [a.loc.y], [a.loc.z])<br>"
+						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t] in [a.loc] at([a.loc.x], [a.loc.y], [a.loc.z])<br>"
 
 					else
 						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t]<br>"
@@ -331,7 +331,7 @@
 /proc/SDQL2_tokenize(query_text)
 
 	var/list/whitespace = list(" ", "\n", "\t")
-	var/list/single = list("(", ")", ",", "+", "-", ".")
+	var/list/single = list("(", ")", ", ", "+", "-", ".")
 	var/list/multi = list(
 					"=" = list("", "="),
 					"<" = list("", "=", ">"),

@@ -4,7 +4,7 @@
 // This could be extended to atoms, but it's bad enough as is
 // I genuinely tried to Add and Remove them from var and proc lists, but just couldn't get it working
 
-//for easy reference
+// for easy reference
 /obj/var/datum/talking_atom/talking_atom
 
 /datum/talking_atom
@@ -31,28 +31,28 @@
 		return
 
 	var/list/seperate = list()
-	if(findtext(msg,"(("))
+	if(findtext(msg, "(("))
 		return
-	else if(findtext(msg,"))"))
+	else if(findtext(msg, "))"))
 		return
-	else if(findtext(msg," ")==0)
+	else if(findtext(msg, " ")==0)
 		return
 	else
 		/*var/l = lentext(msg)
-		if(findtext(msg," ",l,l+1)==0)
+		if(findtext(msg, " ", l, l+1)==0)
 			msg+=" "*/
 		seperate = splittext(msg, " ")
 
-	for(var/Xa = 1,Xa<seperate.len,Xa++)
+	for(var/Xa = 1, Xa<seperate.len, Xa++)
 		var/next = Xa + 1
-		if(heard_words.len > 20 + rand(10,20))
+		if(heard_words.len > 20 + rand(10, 20))
 			heard_words.Remove(heard_words[1])
 		if(!heard_words["[lowertext(seperate[Xa])]"])
 			heard_words["[lowertext(seperate[Xa])]"] = list()
 		var/list/w = heard_words["[lowertext(seperate[Xa])]"]
 		if(w)
 			w.Add("[lowertext(seperate[next])]")
-		//world << "Adding [lowertext(seperate[next])] to [lowertext(seperate[Xa])]"
+		// world << "Adding [lowertext(seperate[next])] to [lowertext(seperate[Xa])]"
 
 	if(prob(30))
 		var/list/options = list("[holder_atom] seems to be listening intently to [source]...",\
@@ -65,7 +65,7 @@
 			SaySomething(pick(seperate))
 
 /*/obj/item/weapon/talkingcrystal/proc/debug()
-	//set src in view()
+	// set src in view()
 	for(var/v in heard_words)
 		to_chat(world, "[uppertext(v)]")
 		var/list/d = heard_words["[v]"]
@@ -78,7 +78,7 @@
 		return
 
 	var/msg
-	var/limit = rand(max(5,heard_words.len/2))+3
+	var/limit = rand(max(5, heard_words.len/2))+3
 	var/text
 	if(!word)
 		text = "[pick(heard_words)]"
@@ -87,18 +87,18 @@
 	if(lentext(text)==1)
 		text=uppertext(text)
 	else
-		var/cap = copytext(text,1,2)
+		var/cap = copytext(text, 1, 2)
 		cap = uppertext(cap)
-		cap += copytext(text,2,lentext(text)+1)
+		cap += copytext(text, 2, lentext(text)+1)
 		text=cap
 	var/q = 0
 	msg+=text
-	//TODO:CYRILLIC
+	// TODO:CYRILLIC
 	if(msg=="What" | msg == "Who" | msg == "How" | msg == "Why" | msg == "Are")
 		q=1
 
 	text=lowertext(text)
-	for(var/ya,ya <= limit,ya++)
+	for(var/ya, ya <= limit, ya++)
 
 		if(heard_words.Find("[text]"))
 			var/list/w = heard_words["[text]"]
@@ -109,16 +109,16 @@
 	if(q)
 		msg+="?"
 	else
-		if(rand(0,10))
+		if(rand(0, 10))
 			msg+="."
 		else
 			msg+="!"
 
 	var/list/listening = viewers(holder_atom)
 	for(var/mob/M in mob_list)
-		if (!M.client)
-			continue //skip monkeys and leavers
-		if (isnewplayer(M))
+		if(!M.client)
+			continue // skip monkeys and leavers
+		if(isnewplayer(M))
 			continue
 		if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			listening|=M

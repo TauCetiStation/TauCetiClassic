@@ -3,7 +3,7 @@
 //*****************
 
 /obj/item/clothing/under/chameleon
-//starts off as black
+// starts off as black
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
@@ -15,7 +15,7 @@
 /obj/item/clothing/under/chameleon/New()
 	..()
 	var/blocked = list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/cloud,
-		/obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick)//Prevent infinite loops and bad jumpsuits.
+		/obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick)// Prevent infinite loops and bad jumpsuits.
 	for(var/U in typesof(/obj/item/clothing/under)-blocked)
 		var/obj/item/clothing/under/V = new U
 		src.clothing_choices[V.name] = U
@@ -57,7 +57,7 @@
 	item_color = A.item_color
 	body_parts_covered = A.body_parts_covered
 	if(usr)
-		usr.update_inv_w_uniform()	//so our overlays update.
+		usr.update_inv_w_uniform()	// so our overlays update.
 
 //*****************
 //**Chameleon Hat**
@@ -76,13 +76,13 @@
 /obj/item/clothing/head/chameleon/New()
 	..()
 	var/blocked = list(/obj/item/clothing/head/chameleon,
-		/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/justice,)//Prevent infinite loops and bad hats.
+		/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/justice,)// Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/head)-blocked)
 		var/obj/item/clothing/head/V = new U
 		src.clothing_choices[V.name] = U
 	return
 
-/obj/item/clothing/head/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/head/chameleon/emp_act(severity) // Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
@@ -118,7 +118,7 @@
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	if(usr)
-		usr.update_inv_head()	//so our overlays update.
+		usr.update_inv_head()	// so our overlays update.
 
 //******************
 //**Chameleon Suit**
@@ -136,13 +136,13 @@
 	..()
 	var/blocked = list(/obj/item/clothing/suit/chameleon, /obj/item/clothing/suit/space/space_ninja,
 		/obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/suit, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/suit/justice,
-		/obj/item/clothing/suit/greatcoat)//Prevent infinite loops and bad suits.
+		/obj/item/clothing/suit/greatcoat)// Prevent infinite loops and bad suits.
 	for(var/U in typesof(/obj/item/clothing/suit)-blocked)
 		var/obj/item/clothing/suit/V = new U
 		src.clothing_choices[V.name] = U
 	return
 
-/obj/item/clothing/suit/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/suit/chameleon/emp_act(severity) // Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
@@ -178,7 +178,7 @@
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	if(usr)
-		usr.update_inv_wear_suit()	//so our overlays update.
+		usr.update_inv_wear_suit()	// so our overlays update.
 
 //*******************
 //**Chameleon Shoes**
@@ -195,13 +195,13 @@
 /obj/item/clothing/shoes/chameleon/New()
 	..()
 	var/blocked = list(/obj/item/clothing/shoes/chameleon,
-		/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/syndigaloshes, /obj/item/clothing/shoes/cyborg)//prevent infinite loops and bad shoes.
+		/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/syndigaloshes, /obj/item/clothing/shoes/cyborg)// prevent infinite loops and bad shoes.
 	for(var/U in typesof(/obj/item/clothing/shoes)-blocked)
 		var/obj/item/clothing/shoes/V = new U
 		src.clothing_choices[V.name] = U
 	return
 
-/obj/item/clothing/shoes/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/shoes/chameleon/emp_act(severity) // Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "black shoes"
 	desc = "A pair of black shoes."
 	icon_state = "black"
@@ -236,7 +236,7 @@
 	item_state = A.item_state
 	item_color = A.item_color
 	if(usr)
-		usr.update_inv_shoes()	//so our overlays update.
+		usr.update_inv_shoes()	// so our overlays update.
 
 //**********************
 //**Chameleon Backpack**
@@ -252,12 +252,12 @@
 /obj/item/weapon/storage/backpack/chameleon/New()
 	..()
 	var/blocked = list(/obj/item/weapon/storage/backpack/chameleon, /obj/item/weapon/storage/backpack/satchel/withwallet)
-	for(var/U in typesof(/obj/item/weapon/storage/backpack)-blocked)//Prevent infinite loops and bad backpacks.
+	for(var/U in typesof(/obj/item/weapon/storage/backpack)-blocked)// Prevent infinite loops and bad backpacks.
 		var/obj/item/weapon/storage/backpack/V = new U
 		src.clothing_choices[V.name] = U
 	return
 
-/obj/item/weapon/storage/backpack/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/weapon/storage/backpack/chameleon/emp_act(severity) // Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "backpack"
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
@@ -291,7 +291,7 @@
 	item_state = A.item_state
 	item_color = A.item_color
 	if(usr)
-		usr.update_inv_back()	//so our overlays update.
+		usr.update_inv_back()	// so our overlays update.
 
 //********************
 //**Chameleon Gloves**
@@ -308,13 +308,13 @@
 
 /obj/item/clothing/gloves/chameleon/New()
 	..()
-	var/blocked = list(/obj/item/clothing/gloves/chameleon)//Prevent infinite loops and bad hats.
+	var/blocked = list(/obj/item/clothing/gloves/chameleon)// Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/gloves)-blocked)
 		var/obj/item/clothing/gloves/V = new U
 		src.clothing_choices[V.name] = U
 	return
 
-/obj/item/clothing/gloves/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/gloves/chameleon/emp_act(severity) // Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "black gloves"
 	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
 	icon_state = "black"
@@ -349,7 +349,7 @@
 	item_color = A.item_color
 	flags_inv = A.flags_inv
 	if(usr)
-		usr.update_inv_gloves()	//so our overlays update.
+		usr.update_inv_gloves()	// so our overlays update.
 
 //******************
 //**Chameleon Mask**
@@ -365,14 +365,14 @@
 
 /obj/item/clothing/mask/chameleon/New()
 	..()
-	var/blocked = list(/obj/item/clothing/mask/chameleon)//Prevent infinite loops and bad hats.
+	var/blocked = list(/obj/item/clothing/mask/chameleon)// Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/mask)-blocked)
 		var/obj/item/clothing/mask/V = new U
 		if(V)
 			src.clothing_choices[V.name] = U
 	return
 
-/obj/item/clothing/mask/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/mask/chameleon/emp_act(severity) // Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "gas mask"
 	desc = "It's a gas mask."
 	item_state = "gas_mask_tc"
@@ -407,7 +407,7 @@
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	if(usr)
-		usr.update_inv_wear_mask()	//so our overlays update.
+		usr.update_inv_wear_mask()	// so our overlays update.
 
 //*********************
 //**Chameleon Glasses**
@@ -423,13 +423,13 @@
 
 /obj/item/clothing/glasses/chameleon/New()
 	..()
-	var/blocked = list(/obj/item/clothing/glasses/chameleon)//Prevent infinite loops and bad hats.
+	var/blocked = list(/obj/item/clothing/glasses/chameleon)// Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/glasses)-blocked)
 		var/obj/item/clothing/glasses/V = new U
 		src.clothing_choices[V.name] = U
 	return
 
-/obj/item/clothing/glasses/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/glasses/chameleon/emp_act(severity) // Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "Optical Meson Scanner"
 	desc = "It's a set of mesons."
 	icon_state = "meson"
@@ -462,7 +462,7 @@
 	item_state = A.item_state
 	flags_inv = A.flags_inv
 	if(usr)
-		usr.update_inv_glasses()	//so our overlays update.
+		usr.update_inv_glasses()	// so our overlays update.
 
 //*****************
 //**Chameleon Gun**
@@ -519,4 +519,4 @@
 	flags_inv = A.flags_inv
 	if(usr)
 		usr.update_inv_r_hand()
-		usr.update_inv_l_hand()	//so our overlays update.
+		usr.update_inv_l_hand()	// so our overlays update.

@@ -84,7 +84,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 				if(A.secondsElectrified == -1)
 					A.secondsElectrified = 0
 
-		if (AIRLOCK_WIRE_SAFETY)
+		if(AIRLOCK_WIRE_SAFETY)
 			A.safe = mended
 
 		if(AIRLOCK_WIRE_SPEED)

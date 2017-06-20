@@ -82,24 +82,24 @@
 			occupant.buckled = null
 			occupant.Move(src.loc)
 			occupant.buckled = src
-			if (occupant && (src.loc != occupant.loc))
-				if (propelled)
-					for (var/mob/O in src.loc)
-						if (O != occupant)
+			if(occupant && (src.loc != occupant.loc))
+				if(propelled)
+					for(var/mob/O in src.loc)
+						if(O != occupant)
 							Bump(O)
 				else
 					unbuckle_mob()
-			if (pulling && (get_dist(src, pulling) > 1))
+			if(pulling && (get_dist(src, pulling) > 1))
 				pulling.pulledby = null
 				to_chat(pulling, "<span class='red'>You lost your grip!</span>")
 				pulling = null
 		else
-			if (occupant && (src.loc != occupant.loc))
+			if(occupant && (src.loc != occupant.loc))
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/living/user)
-	if (pulling)
+	if(pulling)
 		MouseDrop(usr)
 	else
 		user_unbuckle_mob(user)
@@ -135,9 +135,9 @@
 
 	if(propelled || (pulling && (pulling.a_intent == "hurt")))
 		var/mob/living/occupant = unbuckle_mob()
-		if (pulling && (pulling.a_intent == "hurt"))
+		if(pulling && (pulling.a_intent == "hurt"))
 			occupant.throw_at(A, 3, 3, pulling)
-		else if (propelled)
+		else if(propelled)
 			occupant.throw_at(A, 3, propelled)
 		occupant.apply_effect(6, STUN, 0)
 		occupant.apply_effect(6, WEAKEN, 0)
@@ -152,9 +152,9 @@
 		if(pulling)
 			occupant.visible_message("<span class='danger'>[pulling] has thrusted \the [name] into \the [A], throwing \the [occupant] out of it!</span>")
 
-			pulling.attack_log += "\[[time_stamp()]\]<font color='red'> Crashed [occupant.name]'s ([occupant.ckey]) [name] into \a [A]</font>"
+			pulling.attack_log += "\[[time_stamp()]\]<font color='red'> Crashed [occupant.name]'s([occupant.ckey]) [name] into \a [A]</font>"
 			occupant.attack_log += "\[[time_stamp()]\]<font color='orange'> Thrusted into \a [A] by [pulling.name] ([pulling.ckey]) with \the [name]</font>"
-			msg_admin_attack("[pulling.name] ([pulling.ckey]) has thrusted [occupant.name]'s ([occupant.ckey]) [name] into \a [A] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[pulling.x];Y=[pulling.y];Z=[pulling.z]'>JMP</a>)")
+			msg_admin_attack("[pulling.name] ([pulling.ckey]) has thrusted [occupant.name]'s([occupant.ckey]) [name] into \a [A] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[pulling.x];Y=[pulling.y];Z=[pulling.z]'>JMP</a>)")
 		else
 			occupant.visible_message("<span class='danger'>[occupant] crashed into \the [A]!</span>")
 

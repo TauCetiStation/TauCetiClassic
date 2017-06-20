@@ -73,8 +73,8 @@
 
 /obj/item/device/assembly_holder/examine(mob/user)
 	..()
-	if (src in view(1, user))
-		if (src.secured)
+	if(src in view(1, user))
+		if(src.secured)
 			to_chat(user, "\The [src] is ready!")
 		else
 			to_chat(user, "\The [src] can be attached!")
@@ -118,14 +118,14 @@
 
 /obj/item/device/assembly_holder/hear_talk(mob/living/M, msg, verb, datum/language/speaking)
 	if(a_left)
-		a_left.hear_talk(M,msg,verb,speaking)
+		a_left.hear_talk(M, msg, verb, speaking)
 	if(a_right)
-		a_right.hear_talk(M,msg,verb,speaking)
+		a_right.hear_talk(M, msg, verb, speaking)
 
 	return
 
 
-/obj/item/device/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
+/obj/item/device/assembly_holder/attack_hand()// Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	if(a_left && a_right)
 		a_left.holder_movement()
 		a_right.holder_movement()
@@ -160,15 +160,15 @@
 		if(!a_left || !a_right)
 			to_chat(user, "\red Assembly part missing!")
 			return
-		if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
-			switch(alert("Which side would you like to use?",,"Left","Right"))
+		if(istype(a_left, a_right.type))// If they are the same type it causes issues due to window code
+			switch(alert("Which side would you like to use?",, "Left", "Right"))
 				if("Left")	a_left.attack_self(user)
 				if("Right")	a_right.attack_self(user)
 			return
 		else
-			if(!istype(a_left,/obj/item/device/assembly/igniter))
+			if(!istype(a_left, /obj/item/device/assembly/igniter))
 				a_left.attack_self(user)
-			if(!istype(a_right,/obj/item/device/assembly/igniter))
+			if(!istype(a_right, /obj/item/device/assembly/igniter))
 				a_right.attack_self(user)
 	else
 		var/turf/T = get_turf(src)
@@ -228,15 +228,15 @@
 	set category = "Object"
 	set src in usr
 
-	if ( !(usr.stat || usr.restrained()) )
+	if( !(usr.stat || usr.restrained()) )
 		var/obj/item/device/assembly_holder/holder
-		if(istype(src,/obj/item/weapon/grenade/chem_grenade))
+		if(istype(src, /obj/item/weapon/grenade/chem_grenade))
 			var/obj/item/weapon/grenade/chem_grenade/gren = src
 			holder=gren.detonator
 		var/obj/item/device/assembly/timer/tmr = holder.a_left
-		if(!istype(tmr,/obj/item/device/assembly/timer))
+		if(!istype(tmr, /obj/item/device/assembly/timer))
 			tmr = holder.a_right
-		if(!istype(tmr,/obj/item/device/assembly/timer))
+		if(!istype(tmr, /obj/item/device/assembly/timer))
 			to_chat(usr, "<span class='notice'>This detonator has no timer.</span>")
 			return
 
@@ -244,7 +244,7 @@
 			to_chat(usr, "<span class='notice'>Clock is ticking already.</span>")
 		else
 			var/ntime = input("Enter desired time in seconds", "Time", "5") as num
-			if (ntime>0 && ntime<1000)
+			if(ntime>0 && ntime<1000)
 				tmr.time = ntime
 				name = initial(name) + "([tmr.time] secs)"
 				to_chat(usr, "<span class='notice'>Timer set to [tmr.time] seconds.</span>")

@@ -1,4 +1,4 @@
-#define ADIABATIC_EXPONENT 0.667 //Actually adiabatic exponent - 1.
+#define ADIABATIC_EXPONENT 0.667 // Actually adiabatic exponent - 1.
 
 /obj/machinery/atmospherics/pipeturbine
 	name = "turbine"
@@ -70,20 +70,20 @@
 
 		update_icon()
 
-	if (network1)
+	if(network1)
 		network1.update = 1
-	if (network2)
+	if(network2)
 		network2.update = 1
 
 /obj/machinery/atmospherics/pipeturbine/update_icon()
 	overlays.Cut()
-	if (dP > 10)
+	if(dP > 10)
 		overlays += image('icons/obj/pipeturbine.dmi', "moto-turb")
-	if (kin_energy > 100000)
+	if(kin_energy > 100000)
 		overlays += image('icons/obj/pipeturbine.dmi', "low-turb")
-	if (kin_energy > 500000)
+	if(kin_energy > 500000)
 		overlays += image('icons/obj/pipeturbine.dmi', "med-turb")
-	if (kin_energy > 1000000)
+	if(kin_energy > 1000000)
 		overlays += image('icons/obj/pipeturbine.dmi', "hi-turb")
 
 /obj/machinery/atmospherics/pipeturbine/attackby(obj/item/weapon/W, mob/user)
@@ -99,10 +99,10 @@
 
 			initialize()
 			build_network()
-			if (node1)
+			if(node1)
 				node1.initialize()
 				node1.build_network()
-			if (node2)
+			if(node2)
 				node2.initialize()
 				node2.build_network()
 		else
@@ -121,10 +121,10 @@
 
 /obj/machinery/atmospherics/pipeturbine/verb/rotate_clockwise()
 	set category = "Object"
-	set name = "Rotate Circulator (Clockwise)"
+	set name = "Rotate Circulator(Clockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained() || anchored)
+	if(usr.stat || usr.restrained() || anchored)
 		return
 
 	src.dir = turn(src.dir, -90)
@@ -132,15 +132,15 @@
 
 /obj/machinery/atmospherics/pipeturbine/verb/rotate_anticlockwise()
 	set category = "Object"
-	set name = "Rotate Circulator (Counterclockwise)"
+	set name = "Rotate Circulator(Counterclockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained() || anchored)
+	if(usr.stat || usr.restrained() || anchored)
 		return
 
 	src.dir = turn(src.dir, 90)
 
-//Goddamn copypaste from binary base class because atmospherics machinery API is not damn flexible
+// Goddamn copypaste from binary base class because atmospherics machinery API is not damn flexible
 /obj/machinery/atmospherics/pipeturbine/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
 		network1 = new_network
@@ -161,13 +161,13 @@
 	var/node2_connect = turn(dir, -90)
 	var/node1_connect = turn(dir, 90)
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node1_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node2_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node2 = target
 			break
 
@@ -232,7 +232,7 @@
 	anchored = 0
 	density = 1
 
-	var/kin_to_el_ratio = 0.1	//How much kinetic energy will be taken from turbine and converted into electricity
+	var/kin_to_el_ratio = 0.1	// How much kinetic energy will be taken from turbine and converted into electricity
 	var/obj/machinery/atmospherics/pipeturbine/turbine
 
 /obj/machinery/power/turbinemotor/New()
@@ -242,8 +242,8 @@
 /obj/machinery/power/turbinemotor/proc/updateConnection()
 	turbine = null
 	if(src.loc && anchored)
-		turbine = locate(/obj/machinery/atmospherics/pipeturbine) in get_step(src,dir)
-		if (turbine.stat & (BROKEN) || !turbine.anchored || turn(turbine.dir,180) != dir)
+		turbine = locate(/obj/machinery/atmospherics/pipeturbine) in get_step(src, dir)
+		if(turbine.stat & (BROKEN) || !turbine.anchored || turn(turbine.dir, 180) != dir)
 			turbine = null
 
 /obj/machinery/power/turbinemotor/process()
@@ -270,7 +270,7 @@
 	set name = "Rotate Motor Clockwise"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if(usr.stat || usr.restrained()  || anchored)
 		return
 
 	src.dir = turn(src.dir, -90)
@@ -280,7 +280,7 @@
 	set name = "Rotate Motor Counterclockwise"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if(usr.stat || usr.restrained()  || anchored)
 		return
 
 	src.dir = turn(src.dir, 90)

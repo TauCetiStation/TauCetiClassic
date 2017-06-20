@@ -1,17 +1,17 @@
-/obj/effect/landmark/heist/aurora //used to locate shuttle.
+/obj/effect/landmark/heist/aurora // used to locate shuttle.
 	name = "Aurora"
 	icon_state = "x3"
 
-/obj/effect/landmark/heist/mob_loot //fulton - locate where to drop mobs.
+/obj/effect/landmark/heist/mob_loot // fulton - locate where to drop mobs.
 	name = "mob loot"
 	icon_state = "x3"
 
-/obj/effect/landmark/heist/obj_loot //fulton - locate where to drop objs.
+/obj/effect/landmark/heist/obj_loot // fulton - locate where to drop objs.
 	name = "obj loot"
 	icon_state = "x3"
 
 /datum/game_mode/
-	var/list/datum/mind/raiders = list()  //Antags.
+	var/list/datum/mind/raiders = list()  // Antags.
 
 /datum/game_mode/heist
 	name = "heist"
@@ -24,8 +24,8 @@
 
 	votable = 0
 
-	var/list/raid_objectives = list()     //Raid objectives.
-	var/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
+	var/list/raid_objectives = list()     // Raid objectives.
+	var/list/obj/cortical_stacks = list() // Stacks for 'leave nobody behind' objective.
 
 /datum/game_mode/heist/announce()
 	to_chat(world, "<B>The current game mode is - Heist!</B>")
@@ -41,7 +41,7 @@
 
 	var/raider_num = 0
 
-	//Check that we have enough vox.
+	// Check that we have enough vox.
 	if(antag_candidates.len < required_enemies)
 		return 0
 	else if(antag_candidates.len < recommended_enemies)
@@ -49,7 +49,7 @@
 	else
 		raider_num = recommended_enemies
 
-	//Grab candidates randomly until we have enough.
+	// Grab candidates randomly until we have enough.
 	while(raider_num > 0)
 		var/datum/mind/new_raider = pick(antag_candidates)
 		raiders += new_raider
@@ -66,7 +66,7 @@
 
 /datum/game_mode/heist/post_setup()
 
-	//Build a list of spawn points.
+	// Build a list of spawn points.
 	var/list/turf/raider_spawn = list()
 
 	for(var/obj/effect/landmark/L in landmarks_list)
@@ -75,14 +75,14 @@
 			qdel(L)
 			continue
 
-	//Generate objectives for the group.
+	// Generate objectives for the group.
 	if(!config.objectives_disabled)
 		raid_objectives = forge_vox_objectives()
 
 	var/index = 1
 	var/captain = 1
 
-	//Spawn the vox!
+	// Spawn the vox!
 	for(var/datum/mind/raider in raiders)
 
 		if(index > raider_spawn.len)
@@ -91,40 +91,40 @@
 		raider.current.loc = raider_spawn[index]
 		index++
 
-		//var/sounds = rand(2,8)
-		//var/i = 0
+		// var/sounds = rand(2, 8)
+		// var/i = 0
 		var/newname = ""
 
 		if(captain)
 			captain = 0
 			newname += "Captain "
 		else
-			newname += pick(list("Diry ","Squidlips ","Bowman ","Buccaneer ","Two Toes ","Carpbait ","Old ",
-				"Fluffbucket ","Scallywag ","Bucko ","Dead man ","Matey ","Jolly ","Stinky ","Bloody ","Miss ",
-				"Mad ","Red ","Lady ","Bretheren ","Rapscallion ","Landlubber ","Wrench ","Freeboter "))
+			newname += pick(list("Diry ", "Squidlips ", "Bowman ", "Buccaneer ", "Two Toes ", "Carpbait ", "Old ",
+				"Fluffbucket ", "Scallywag ", "Bucko ", "Dead man ", "Matey ", "Jolly ", "Stinky ", "Bloody ", "Miss ",
+				"Mad ", "Red ", "Lady ", "Bretheren ", "Rapscallion ", "Landlubber ", "Wrench ", "Freeboter "))
 
-		newname += pick(list("Creeper ","Jim ","Storm ","John ","George ","O` ","Rat ","Jack ","Legs ",
-			"Head ","Cackle ","Patch ","Bones ","Plank ","Greedy ","Space ","Mama ","Spike ",
-			"Squiffy ","Gold ","Yellow ","Felony ","Eddie ","Bay ","Thomas ","Spot "))
+		newname += pick(list("Creeper ", "Jim ", "Storm ", "John ", "George ", "O` ", "Rat ", "Jack ", "Legs ",
+			"Head ", "Cackle ", "Patch ", "Bones ", "Plank ", "Greedy ", "Space ", "Mama ", "Spike ",
+			"Squiffy ", "Gold ", "Yellow ", "Felony ", "Eddie ", "Bay ", "Thomas ", "Spot "))
 
-		newname += pick(list("From the West","Byrd","Jackson","Sparrow","Of the Coast","Jones","Ned Head","Bart","O`Carp",
-			"Kidd","O`Malley","Barnacle","Holystone","Hornswaggle","McStinky","Swashbuckler","Space Wolf","Beard",
-			"Chumbucket","Rivers","Morgan","Tuna Breath","Three Gates","Bailey","Of Atlantis","Of Dark Space"))
+		newname += pick(list("From the West", "Byrd", "Jackson", "Sparrow", "Of the Coast", "Jones", "Ned Head", "Bart", "O`Carp",
+			"Kidd", "O`Malley", "Barnacle", "Holystone", "Hornswaggle", "McStinky", "Swashbuckler", "Space Wolf", "Beard",
+			"Chumbucket", "Rivers", "Morgan", "Tuna Breath", "Three Gates", "Bailey", "Of Atlantis", "Of Dark Space"))
 
 		var/mob/living/carbon/human/vox = raider.current
 
 		vox.real_name = newname
 		vox.name = vox.real_name
 		raider.name = vox.name
-		vox.age = rand(17,85)
-		//vox.dna.mutantrace = "vox"
-		//vox.set_species(VOX)
+		vox.age = rand(17, 85)
+		// vox.dna.mutantrace = "vox"
+		// vox.set_species(VOX)
 		vox.languages = list() // Removing language from chargen.
 		vox.flavor_text = ""
 		vox.add_language("Gutter")
 		vox.h_style = "Skinhead"
 		vox.f_style = "Shaved"
-		//for(var/obj/item/organ/external/BP in vox.bodyparts)
+		// for(var/obj/item/organ/external/BP in vox.bodyparts)
 		//	BP.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
 		vox.equip_raider()
 		vox.regenerate_icons()
@@ -142,14 +142,14 @@
 		return 0
 
 	for(var/obj/stack in cortical_stacks)
-		if (get_area(stack) != locate(/area/shuttle/vox/station))
+		if(get_area(stack) != locate(/area/shuttle/vox/station))
 			return 0
 	return 1
 
 /datum/game_mode/heist/proc/is_raider_crew_alive()
 	for(var/datum/mind/raider in raiders)
 		if(raider.current)
-			if(istype(raider.current,/mob/living/carbon/human) && raider.current.stat != DEAD)
+			if(istype(raider.current, /mob/living/carbon/human) && raider.current.stat != DEAD)
 				return 1
 	return 0
 
@@ -181,7 +181,7 @@
 
 /datum/game_mode/heist/declare_completion()
 
-	//No objectives, go straight to the feedback.
+	// No objectives, go straight to the feedback.
 	if(!(raid_objectives.len)) return ..()
 
 	completion_text += "<B>Heist mode resume:</B><BR>"
@@ -192,11 +192,11 @@
 
 	var/success = raid_objectives.len
 
-	//Decrease success for failed objectives.
+	// Decrease success for failed objectives.
 	for(var/datum/objective/O in raid_objectives)
 		if(!(O.check_completion())) success--
 
-	//Set result by objectives.
+	// Set result by objectives.
 	if(success == raid_objectives.len)
 		win_type = "Major"
 		win_group = "Raider"
@@ -207,7 +207,7 @@
 		win_type = "Minor"
 		win_group = "Crew"
 
-	//Now we modify that result by the state of the pirate crew.
+	// Now we modify that result by the state of the pirate crew.
 	if(!is_raider_crew_alive())
 		win_type = "Major"
 		win_group = "Crew"
@@ -223,36 +223,36 @@
 
 	completion_text += "<FONT size = 3, color='red'><B>[win_type] [win_group] victory!</B></FONT>"
 	completion_text += "<BR>[win_msg]"
-	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
+	feedback_set_details("round_end_result", "heist - [win_type] [win_group]")
 
 	var/count = 1
 	for(var/datum/objective/objective in raid_objectives)
 		if(objective.check_completion())
 			if(objective.target == "valuables")
-				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='green'><B>Success!</B></font>"
-				feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total, 9)]/[num2text(objective.target_amount, 9)]) <font color='green'><B>Success!</B></font>"
+				feedback_add_details("traitor_objective", "[objective.type]|SUCCESS")
 			else
 				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-				feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+				feedback_add_details("traitor_objective", "[objective.type]|SUCCESS")
 		else
 			if(objective.target == "valuables")
-				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='red'>Fail.</font>"
-				feedback_add_details("traitor_objective","[objective.type]|FAIL")
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total, 9)]/[num2text(objective.target_amount, 9)]) <font color='red'>Fail.</font>"
+				feedback_add_details("traitor_objective", "[objective.type]|FAIL")
 			else
 				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-				feedback_add_details("traitor_objective","[objective.type]|FAIL")
+				feedback_add_details("traitor_objective", "[objective.type]|FAIL")
 		count++
 
 	if(heist_rob_total == 0)
 		heist_get_shuttle_price()
-		completion_text += "<BR><BR>Estimated value of valuables left on Aurora - $<font color='red'>[num2text(heist_rob_total,9)]</font> spacebucks."
+		completion_text += "<BR><BR>Estimated value of valuables left on Aurora - $<font color='red'>[num2text(heist_rob_total, 9)]</font> spacebucks."
 	..()
 	return 1
 
 datum/game_mode/proc/auto_declare_completion_heist()
 	var/text =""
 	if(raiders.len)
-		var/loot_savefile = "data/pirate_loot.sav" //loot statistics
+		var/loot_savefile = "data/pirate_loot.sav" // loot statistics
 		var/savefile/S = new /savefile(loot_savefile)
 		if(S)
 			S.cd = "/"
@@ -263,7 +263,7 @@ datum/game_mode/proc/auto_declare_completion_heist()
 			if(!sav_score)
 				sav_score = 0
 			if(max_score > sav_score)
-				S["HeistMaxScore"] << num2text(heist_rob_total,9)
+				S["HeistMaxScore"] << num2text(heist_rob_total, 9)
 			for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
 				if(AM.get_price())
 					var/count = 0
@@ -274,7 +274,7 @@ datum/game_mode/proc/auto_declare_completion_heist()
 		text += printlogo("raider", "raiders")
 		for(var/datum/mind/raider in raiders)
 			if(raider.current)
-				var/icon/flat = getFlatIcon(raider.current,exact=1)
+				var/icon/flat = getFlatIcon(raider.current, exact=1)
 				end_icons += flat
 				var/tempstate = end_icons.len
 				text += {"<br><img src="logo_[tempstate].png"> <b>[raider.key]</b> was <b>[raider.name]</b> ("}
@@ -302,6 +302,6 @@ datum/game_mode/proc/auto_declare_completion_heist()
 	return text
 
 /datum/game_mode/heist/check_finished()
-	if (!(is_raider_crew_alive()) || (vox_shuttle_location && (vox_shuttle_location == "start")))
+	if(!(is_raider_crew_alive()) || (vox_shuttle_location && (vox_shuttle_location == "start")))
 		return 1
 	return ..()

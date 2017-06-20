@@ -1,4 +1,4 @@
-//gangtool device
+// gangtool device
 /obj/item/device/gangtool
 	name = "suspicious device"
 	desc = "A strange device of sorts. Hard to really make out what it actually does just by looking."
@@ -9,13 +9,13 @@
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
-	var/gang //Which gang uses this?
-	var/boss = 1 //Is this the original boss?
+	var/gang // Which gang uses this?
+	var/boss = 1 // Is this the original boss?
 	var/recalling = 0
 	var/outfits = 3
 	var/free_pen = 0
 
-/obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
+/obj/item/device/gangtool/New() // Initialize supply point income if it hasn't already been started
 	if(!ticker.mode.gang_points)
 		ticker.mode.gang_points = new /datum/gang_points(ticker.mode)
 		ticker.mode.gang_points.start()
@@ -23,7 +23,7 @@
 		desc += " Looks important."
 
 /obj/item/device/gangtool/attack_self(mob/user)
-	if (!can_use(user))
+	if(!can_use(user))
 		return
 
 	var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
@@ -31,11 +31,11 @@
 	var/dat
 	if(!gang)
 		dat += "This device is not registered.<br><br>"
-		if(user.mind in (ticker.mode.A_bosses | ticker.mode.B_bosses))
+		if(user.mind in(ticker.mode.A_bosses | ticker.mode.B_bosses))
 			dat += "Give this device to another member of your organization to use to promote them.<hr>"
 			dat += "If this is meant as a spare device for yourself:<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
-		else if (gang_bosses < 3)
+		else if(gang_bosses < 3)
 			dat += "You have been selected for a promotion!<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
 		else
@@ -127,7 +127,7 @@
 			dat += "Recruitment Pen<br>"
 
 		var/tool_cost = (boss ? 10 : 30)
-		var/gangtooldesc = "Promote a Gangster ([3-gang_bosses] left)."
+		var/gangtooldesc = "Promote a Gangster([3-gang_bosses] left)."
 		if(gang_bosses >= 3)
 			gangtooldesc = "Additional Gangtools."
 		dat += "([tool_cost] Influence) "
@@ -145,7 +145,7 @@
 					dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 				else
 					dat += "<b>Station Dominator</b><br>"
-				dat += "<i>(Estimated Takeover Time: [round(max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
+				dat += "<i>(Estimated Takeover Time: [round(max(300, 900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60, 1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
@@ -169,7 +169,7 @@
 	if(href_list["register"])
 		register_device(usr)
 
-	else if(!gang) //Gangtool must be registered before you can use the functions below
+	else if(!gang) // Gangtool must be registered before you can use the functions below
 		return
 
 	if(href_list["purchase"])
@@ -228,7 +228,7 @@
 
 					var/area/usrarea = get_area(usr.loc)
 					var/usrturf = get_turf(usr.loc)
-					if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/space) || usr.z != ZLEVEL_STATION)
+					if(initial(usrarea.name) == "Space" || istype(usrturf, /turf/space) || usr.z != ZLEVEL_STATION)
 						to_chat(usr, "<span class='warning'>You can only use this on the station!</span>")
 						return
 
@@ -263,7 +263,7 @@
 				recall(usr)
 			if("outfit")
 				if(outfits > 0)
-					ticker.mode.gang_outfit(usr,src,gang)
+					ticker.mode.gang_outfit(usr, src, gang)
 					outfits -= 1
 			if("ping")
 				ping_gang(usr)
@@ -273,7 +273,7 @@
 /obj/item/device/gangtool/proc/ping_gang(mob/user)
 	if(!user)
 		return
-	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message") as null|text
+	var/message = stripped_input(user, "Discreetly send a gang-wide message.", "Send Message") as null|text
 	if(!message || (message == "") || !can_use(user))
 		return
 	if(user.z > ZLEVEL_CENTCOMM)
@@ -291,11 +291,11 @@
 				to_chat(ganger.current, ping)
 		for(var/mob/M in dead_mob_list)
 			to_chat(M, ping)
-		log_game("[key_name(user)] Messaged [gang_name(gang)] Gang ([gang]): [sanitize(message)].")
+		log_game("[key_name(user)] Messaged [gang_name(gang)] Gang([gang]): [sanitize(message)].")
 
 
 /obj/item/device/gangtool/proc/register_device(mob/user)
-	if(!(user.mind in (ticker.mode.A_bosses|ticker.mode.B_bosses)))
+	if(!(user.mind in(ticker.mode.A_bosses|ticker.mode.B_bosses)))
 		var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
 		if(gang_bosses >= 3)
 			to_chat(user, "<span class='warning'>[bicon(src)] Error: All positions filled.</span>")
@@ -306,33 +306,33 @@
 		return 0
 
 	var/promoted
-	if(user.mind in (ticker.mode.A_gang | ticker.mode.A_bosses))
+	if(user.mind in(ticker.mode.A_gang | ticker.mode.A_bosses))
 		ticker.mode.A_tools += src
 		gang = "A"
 		icon_state = "gangtool-a"
 		if(!(user.mind in ticker.mode.A_bosses))
 			ticker.mode.remove_gangster(user.mind, 0, 2)
 			ticker.mode.A_bosses += user.mind
-			user.mind.special_role = "[gang_name("A")] Gang (A) Lieutenant"
+			user.mind.special_role = "[gang_name("A")] Gang(A) Lieutenant"
 			ticker.mode.update_gang_icons_added(user.mind, "A")
-			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("A")] Gang (A)")
+			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("A")] Gang(A)")
 			promoted = 1
-	else if(user.mind in (ticker.mode.B_gang | ticker.mode.B_bosses))
+	else if(user.mind in(ticker.mode.B_gang | ticker.mode.B_bosses))
 		ticker.mode.B_tools += src
 		gang = "B"
 		icon_state = "gangtool-b"
 		if(!(user.mind in ticker.mode.B_bosses))
 			ticker.mode.remove_gangster(user.mind, 0, 2)
 			ticker.mode.B_bosses += user.mind
-			user.mind.special_role = "[gang_name("B")] Gang (B) Lieutenant"
+			user.mind.special_role = "[gang_name("B")] Gang(B) Lieutenant"
 			ticker.mode.update_gang_icons_added(user.mind, "B")
-			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("B")] Gang (B)")
+			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("B")] Gang(B)")
 			promoted = 1
 	if(promoted)
 		ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "[user] has been promoted to Lieutenant.")
 		to_chat(user, "<FONT size=3 color=red><B>You have been promoted to Lieutenant!</B></FONT>")
 		ticker.mode.forge_gang_objectives(user.mind)
-		ticker.mode.greet_gang(user.mind,0)
+		ticker.mode.greet_gang(user.mind, 0)
 		to_chat(user, "The <b>Gangtool</b> you registered will allow you to purchase items, send messages to your gangsters and to recall the emergency shuttle from anywhere on the station.")
 		to_chat(user, "Unlike regular gangsters, you may use <b>recruitment pens</b> to add recruits to your gang. Use them on unsuspecting crew members to recruit them. Don't forget to get your one free pen from the gangtool.")
 	if(!gang)
@@ -349,15 +349,15 @@
 	recalling = 1
 	to_chat(loc, "<span class='info'>[bicon(src)]Generating shuttle recall order with codes retrieved from last call signal...</span>")
 
-	sleep(rand(100,300))
+	sleep(rand(100, 300))
 
-	if(SSshuttle.location!=0) //Shuttle can only be recalled when it's moving to the station
+	if(SSshuttle.location!=0) // Shuttle can only be recalled when it's moving to the station
 		to_chat(user, "<span class='info'>[bicon(src)]Emergency shuttle cannot be recalled at this time.</span>")
 		recalling = 0
 		return 0
 	to_chat(loc, "<span class='info'>[bicon(src)]Shuttle recall order generated. Accessing station long-range communication arrays...</span>")
 
-	sleep(rand(100,300))
+	sleep(rand(100, 300))
 
 	if(gang == "A" ? !mode.A_dominations : !mode.B_dominations)
 		to_chat(user, "<span class='info'>[bicon(src)]Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>")
@@ -365,25 +365,25 @@
 		return 0
 
 	var/turf/userturf = get_turf(user)
-	if(userturf.z != ZLEVEL_STATION) //Shuttle can only be recalled while on station
+	if(userturf.z != ZLEVEL_STATION) // Shuttle can only be recalled while on station
 		to_chat(user, "<span class='info'>[bicon(src)]Error: Device out of range of station communication arrays.</span>")
 		recalling = 0
 		return 0
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	if((100 *  start_state.score(end_state)) < 70) //Shuttle cannot be recalled if the station is too damaged
+	if((100 *  start_state.score(end_state)) < 70) // Shuttle cannot be recalled if the station is too damaged
 		to_chat(user, "<span class='info'>[bicon(src)]Error: Station communication systems compromised. Unable to establish connection.</span>")
 		recalling = 0
 		return 0
 	to_chat(loc, "<span class='info'>[bicon(src)]Comm arrays accessed. Broadcasting recall signal...</span>")
 
-	sleep(rand(100,300))
+	sleep(rand(100, 300))
 
 	recalling = 0
 	log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
 	message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
 	userturf = get_turf(user)
-	if(userturf.z == ZLEVEL_STATION) //Check one more time that they are on station.
+	if(userturf.z == ZLEVEL_STATION) // Check one more time that they are on station.
 		if(cancel_call_proc(user))
 			return 1
 

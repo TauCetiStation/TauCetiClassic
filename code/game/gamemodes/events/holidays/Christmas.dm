@@ -1,10 +1,10 @@
 /proc/Christmas_Game_Start()
 	for(var/obj/structure/flora/tree/pine/xmas in world)
 		if(xmas.z != ZLEVEL_STATION)	continue
-		for(var/turf/simulated/floor/T in orange(1,xmas))
-			for(var/i=1,i<=rand(1,5),i++)
+		for(var/turf/simulated/floor/T in orange(1, xmas))
+			for(var/i=1, i<=rand(1, 5), i++)
 				new /obj/item/weapon/a_gift(T)
-	//for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list) Ian transfered to carbon
+	// for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list) Ian transfered to carbon
 	//	Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian)) equipment procs also has been changed. so this must be rewritten when added back.
 
 /proc/ChristmasEvent()
@@ -27,10 +27,10 @@
 	..()
 
 /obj/item/weapon/toy/xmas_cracker/attack(mob/target, mob/user)
-	if( !cracked && istype(target,/mob/living/carbon/human) && (target.stat == CONSCIOUS) && !target.get_active_hand() )
+	if( !cracked && istype(target, /mob/living/carbon/human) && (target.stat == CONSCIOUS) && !target.get_active_hand() )
 		target.visible_message("<span class='notice'>[user] and [target] pop \an [src]! *pop*</span>", "<span class='notice'>You pull \an [src] with [target]! *pop*</span>", "<span class='notice'>You hear a *pop*.</span>")
 		var/obj/item/weapon/paper/Joke = new /obj/item/weapon/paper(user.loc)
-		Joke.name = "[pick("awful","terrible","unfunny")] joke"
+		Joke.name = "[pick("awful", "terrible", "unfunny")] joke"
 		Joke.info = pick("What did one snowman say to the other?\n\n<i>'Is it me or can you smell carrots?'</i>",
 			"Why couldn't the snowman get laid?\n\n<i>He was frigid!</i>",
 			"Where are santa's helpers educated?\n\n<i>Nowhere, they're ELF-taught.</i>",
@@ -59,5 +59,5 @@
 	desc = "A crappy paper hat that you are REQUIRED to wear."
 	flags_inv = 0
 	body_parts_covered = 0
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 

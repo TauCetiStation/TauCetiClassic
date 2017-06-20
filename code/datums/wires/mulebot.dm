@@ -1,7 +1,7 @@
 var/const/MUL_WIRE_POWER1    = 1    // power connections
 var/const/MUL_WIRE_POWER2    = 2
 var/const/MUL_WIRE_AVOIDANCE = 4    // mob avoidance
-var/const/MUL_WIRE_LOADCHECK = 8    // load checking (non-crate)
+var/const/MUL_WIRE_LOADCHECK = 8    // load checking(non-crate)
 var/const/MUL_WIRE_MOTOR1    = 16   // motor wires
 var/const/MUL_WIRE_MOTOR2    = 32
 var/const/MUL_WIRE_REMOTE_RX = 64   // remote recv functions

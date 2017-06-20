@@ -7,30 +7,30 @@
  * Use:
  * > your_list = AStar(start location, end location, moving atom, distance proc, max nodes, maximum node depth, minimum distance to target, adjacent proc, atom id, turfs to exclude, check only simulated)
  *
- * Optional extras to add on (in order):
- * - Distance proc : the distance used in every A* calculation (length of path and heuristic)
- * - MaxNodes: The maximum number of nodes the returned path can be (0 = infinite)
- * - Maxnodedepth: The maximum number of nodes to search (default: 30, 0 = infinite)
+ * Optional extras to add on(in order):
+ * - Distance proc : the distance used in every A* calculation(length of path and heuristic)
+ * - MaxNodes: The maximum number of nodes the returned path can be(0 = infinite)
+ * - Maxnodedepth: The maximum number of nodes to search(default: 30, 0 = infinite)
  * - Mintargetdist: Minimum distance to the target before path returns, could be used to get
  *   near a target, but not right to it - for an AI mob with a gun, for example.
  * - Adjacent proc : returns the turfs to consider around the actually processed node
- * - Simulated only : whether to consider unsimulated turfs or not (used by some Adjacent proc)
+ * - Simulated only : whether to consider unsimulated turfs or not(used by some Adjacent proc)
  *
  * Also added 'exclude' turf to avoid travelling over; defaults to null
  *
  * Actual Adjacent procs :
- * - /turf/proc/reachableAdjacentTurfs : returns reachable turfs in cardinal directions (uses simulated_only)
+ * - /turf/proc/reachableAdjacentTurfs : returns reachable turfs in cardinal directions(uses simulated_only)
  */
 
 /////////////////
-//PathNode object
+// PathNode object
 /////////////////
 
 /PathNode
 	var/turf/source       // Turf associated with the PathNode
 	var/PathNode/prevNode // Link to the parent PathNode
 
-	var/f    // A* Node weight (f = g + h)
+	var/f    // A* Node weight(f = g + h)
 	var/g    // A* movement cost variable
 	var/h    // A* heuristic variable
 	var/nt   // Count the number of Nodes traversed
@@ -48,7 +48,7 @@
 	f = g + h
 
 //////////
-//A* procs
+// A* procs
 //////////
 
 /**
@@ -67,7 +67,7 @@
  * Wrapper that returns an empty list if A* failed to find a path
  */
 /proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
-	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent, id, exclude, simulated_only)
 	if(!path)
 		path = list()
 	return path
@@ -97,7 +97,7 @@
 	var/PathNode/cur      // Current processed turf
 
 	// Initialization
-	open.Insert(new /PathNode(start,null,0,call(start,dist)(end),0))
+	open.Insert(new /PathNode(start, null, 0, call(start, dist)(end), 0))
 
 	// Then run the main loop
 	while(!open.IsEmpty() && !path)
@@ -107,13 +107,13 @@
 		// If we only want to get near the target, check if we're close enough
 		var/closeenough
 		if(mintargetdist)
-			closeenough = call(cur.source,dist)(end) <= mintargetdist
+			closeenough = call(cur.source, dist)(end) <= mintargetdist
 
 		// If too many steps, abandon that path
 		if(maxnodedepth && (cur.nt > maxnodedepth))
 			continue
 
-		// Found the target turf (or close enough), let's create the path to it
+		// Found the target turf(or close enough), let's create the path to it
 		if(cur.source == end || closeenough)
 			path = list()
 			path += cur.source
@@ -125,17 +125,17 @@
 			break
 
 		// Get adjacents turfs using the adjacent proc, checking for access with id
-		var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
+		var/list/L = call(cur.source, adjacent)(caller, id, simulated_only)
 		for(var/turf/T in L)
 			if(T == exclude || (T in closed))
 				continue
 
-			var/newg = cur.g + call(cur.source,dist)(T)
+			var/newg = cur.g + call(cur.source, dist)(T)
 
 			var/PathNode/P = pnodelist[T]
 			if(!P)
 				// Is not already in open list, so add it
-				var/PathNode/newnode = new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1)
+				var/PathNode/newnode = new /PathNode(T, cur, newg, call(T, dist)(end), cur.nt+1)
 				open.Insert(newnode)
 				pnodelist[T] = newnode
 			else
@@ -154,7 +154,7 @@
 
 	// Reverse the path to get it from start to finish
 	if(path)
-		for(var/i in 1 to (path.len / 2))
+		for(var/i in 1 to(path.len / 2))
 			path.Swap(i, path.len - i + 1)
 
 	return path

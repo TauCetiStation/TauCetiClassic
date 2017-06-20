@@ -1,5 +1,5 @@
 /obj/item/weapon/circuitboard/pile_ripper
-	name = "Circuit board (Pile Ripper)"
+	name = "Circuit board(Pile Ripper)"
 	board_type = "machine"
 	build_path = /obj/machinery/pile_ripper
 	origin_tech = "engineering = 3"
@@ -88,7 +88,7 @@
 
 /obj/machinery/pile_ripper/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if (istype(I, /obj/item/weapon/card/emag))
+	if(istype(I, /obj/item/weapon/card/emag))
 		emag_act(user)
 	if(default_deconstruction_screwdriver(user, "grinder-bOpen", "grinder-b0", I))
 		return
@@ -149,7 +149,7 @@
 	for(var/obj/item/I in L.get_equipped_items())
 		if(L.unEquip(I))
 			I.forceMove(loc)
-			if(prob(15)) //saved by ripped cloth
+			if(prob(15)) // saved by ripped cloth
 				return
 
 	// Start shredding meat
@@ -157,7 +157,7 @@
 	var/slab_name = L.name
 	var/slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 
-	if(istype(L,/mob/living/carbon/human))
+	if(istype(L, /mob/living/carbon/human))
 		slab_name = L.real_name
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/human
 	else if(istype(L, /mob/living/carbon/monkey))

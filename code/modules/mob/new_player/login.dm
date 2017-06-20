@@ -1,5 +1,5 @@
 /mob/new_player/Login()
-	update_Login_details()	//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
+	update_Login_details()	// handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
 	if(join_motd)
 		to_chat(src, "<div class=\"motd\">[join_motd]</div>")
 
@@ -11,7 +11,7 @@
 	if(length(newplayer_start))
 		loc = pick(newplayer_start)
 	else
-		loc = locate(1,1,1)
+		loc = locate(1, 1, 1)
 	lastarea = loc
 
 	sight |= SEE_TURFS

@@ -1,4 +1,4 @@
-//Alium nests. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
+// Alium nests. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
 
 /obj/structure/stool/bed/nest
 	name = "alien nest"
@@ -31,12 +31,12 @@
 	return
 
 /obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || usr.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
+	if( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || usr.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
-	if(istype(M,/mob/living/carbon/alien))
+	if(istype(M, /mob/living/carbon/alien))
 		return
-	if(!istype(user,/mob/living/carbon/alien/humanoid))
+	if(!istype(user, /mob/living/carbon/alien/humanoid))
 		return
 
 	if(M == usr)

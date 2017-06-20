@@ -1,10 +1,10 @@
 /mob/living/silicon/ai/say(var/message)
 	if(parent && istype(parent) && parent.stat != DEAD)
 		return parent.say(message)
-		//If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
+		// If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 	return ..(message)
 
-// These Verbs are commented out since we've disabled the AI vocal (VOX) announcements.
+// These Verbs are commented out since we've disabled the AI vocal(VOX) announcements.
 // If you re-enable them there is 3 lines in ai.dm Topic() that you need to uncomment as well.
 // just search for VOX in there.
 
@@ -24,7 +24,7 @@ var/const/VOX_PATH = "sound/vox/"
 	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
 	<UL><LI>You can also click on the word to preview it.</LI>\
 	<LI>You can only say 30 words for every announcement.</LI>\
-	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI></UL>\
+	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test, Bravo'.</LI></UL>\
 	<font class='bad'>WARNING:</font><BR>Misuse of the announcement system will get you job banned.<HR>"
 
 	var/index = 0

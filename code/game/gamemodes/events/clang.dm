@@ -26,7 +26,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			qdel(src)
 		sleep(1)
 /obj/effect/immovablerod/Bump(atom/clong)
-	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
+	if(istype(clong, /turf/simulated/shuttle) || clong == src) // Skip shuttles without actually deleting the rod
 		return
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	visible_message("<span class='danger'>CLANG</span>")
@@ -34,7 +34,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		clong.ex_act(2)
 	else if(isliving(clong))
 		var/mob/living/M = clong
-		M.adjustBruteLoss(rand(10,40))
+		M.adjustBruteLoss(rand(10, 40))
 		if(prob(60))
 			step(src, get_dir(src, M))
 
@@ -58,7 +58,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(WEST)
 			start = locate(41, rand(38, 187), 1)
 			end = locate(199, rand(38, 187), 1)
-	//rod time!
+	// rod time!
 	var/obj/effect/immovablerod/Imm = new(start, end)
 	message_admins("Immovable Rod has spawned at [Imm.x],[Imm.y],[Imm.z] [ADMIN_JMP(Imm)] [ADMIN_FLW(Imm)].")
 	sleep(50)

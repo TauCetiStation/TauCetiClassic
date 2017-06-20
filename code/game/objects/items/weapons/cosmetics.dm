@@ -26,7 +26,7 @@
 	name = "lipstick"
 
 /obj/item/weapon/lipstick/random/New()
-	colour = pick("red","purple","jade","black")
+	colour = pick("red", "purple", "jade", "black")
 	name = "[colour] lipstick"
 
 
@@ -45,7 +45,7 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.lip_style)	//if they already have lipstick on
+		if(H.lip_style)	// if they already have lipstick on
 			to_chat(user, "<span class='notice'>You need to wipe off the old lipstick first!</span>")
 			return
 		if(H == user)
@@ -57,7 +57,7 @@
 		else
 			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
 								 "<span class='notice'>You begin to apply \the [src].</span>")
-			if(do_after(user, 20, target = H))	//user needs to keep their active hand, H does not.
+			if(do_after(user, 20, target = H))	// user needs to keep their active hand, H does not.
 				user.visible_message("<span class='notice'>[user] does [H]'s lips with \the [src].</span>", \
 									 "<span class='notice'>You apply \the [src].</span>")
 				H.lip_style = "lipstick"
@@ -66,7 +66,7 @@
 	else
 		to_chat(user, "<span class='notice'>Where are the lips on that?</span>")
 
-//you can wipe off lipstick with paper!
+// you can wipe off lipstick with paper!
 /obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_sel.selecting == O_MOUTH)
 		if(!istype(M, /mob))	return
@@ -80,7 +80,7 @@
 			else
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
-				if(do_after(user, 10, target = H))	//user needs to keep their active hand, H does not.
+				if(do_after(user, 10, target = H))	// user needs to keep their active hand, H does not.
 					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
 					H.lip_style = null
@@ -126,7 +126,7 @@
 				to_chat(user, "<span class='warning'>Already clean-shaven!</span>")
 				return
 
-			if(H == user) //shaving yourself
+			if(H == user) // shaving yourself
 				user.visible_message("[user] starts to shave their facial hair with [src].", \
 									 "<span class='notice'>You take a moment to shave your facial hair with [src]...</span>")
 				if(do_after(user, 50, target = H))
@@ -154,7 +154,7 @@
 				to_chat(user, "<span class='warning'>There is not enough hair left to shave!</span>")
 				return
 
-			if(H == user) //shaving yourself
+			if(H == user) // shaving yourself
 				user.visible_message("[user] starts to shave their head with [src].", \
 									 "<span class='notice'>You start to shave your head with [src]...</span>")
 				if(do_after(user, 50, target = H))
@@ -175,7 +175,7 @@
 	else
 		..()
 
-/obj/item/weapon/haircomb //sparklysheep's comb
+/obj/item/weapon/haircomb // sparklysheep's comb
 	name = "purple comb"
 	desc = "A pristine purple comb made from flexible plastic."
 	w_class = 1.0

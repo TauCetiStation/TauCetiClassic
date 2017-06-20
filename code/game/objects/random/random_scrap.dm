@@ -1,4 +1,4 @@
-//RANDOM SCRAP PILE GENERATOR
+// RANDOM SCRAP PILE GENERATOR
 /obj/random/scrap/dense_even
 	name = "Random dense even trash"
 	desc = "This is a random trash."

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+// This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
 
 #define BOOK_VERSION_MIN	1
 #define BOOK_VERSION_MAX	2
@@ -46,7 +46,7 @@ datum/book_manager/proc/freeid()
 
 	if(BOOKS_USE_SQL && config.sql_enabled)
 		var/DBConnection/dbcon = new()
-		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
+		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]", "[sqllogin]", "[sqlpass]")
 		if(!dbcon.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
 		else
@@ -66,7 +66,7 @@ datum/archived_book
 	var/author		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
 	var/title		 // The real name of the book.
 	var/category	 // The category/genre of the book
-	var/id			 // the id of the book (like an isbn number)
+	var/id			 // the id of the book(like an isbn number)
 	var/dat			 // Actual page content
 
 	var/author_real	 // author's real_name
@@ -83,7 +83,7 @@ datum/archived_book/New(var/path)
 	var/version
 	F["version"] >> version
 
-	if (isnull(version) || version < BOOK_VERSION_MIN || version > BOOK_VERSION_MAX)
+	if(isnull(version) || version < BOOK_VERSION_MIN || version > BOOK_VERSION_MAX)
 		fdel(path)
 		to_chat(usr, "What book?")
 		return 0
@@ -102,7 +102,7 @@ datum/archived_book/New(var/path)
 
 	// let's sanitize it here too!
 	for(var/tag in paper_blacklist)
-		if(findtext(dat,"<"+tag))
+		if(findtext(dat, "<"+tag))
 			dat = ""
 			return
 

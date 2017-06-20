@@ -13,7 +13,7 @@ json_reader
 	var
 		list
 			string		= list("'", "\"")
-			symbols 	= list("{", "}", "\[", "]", ":", "\"", "'", ",")
+			symbols 	= list("{", "}", "\[", "]", ":", "\"", "'", ", ")
 			sequences 	= list("b" = 8, "t" = 9, "n" = 10, "f" = 12, "r" = 13)
 			tokens
 		json
@@ -65,7 +65,7 @@ json_reader
 							val += char
 						else
 							// TODO: support octal, hex, unicode sequences
-							//testing("Having trouble with \"\\[char]\" in string \"[val]\"")
+							// testing("Having trouble with \"\\[char]\" in string \"[val]\"")
 							ASSERT(sequences.Find(char))
 							val += ascii2text(sequences[char])
 				else
@@ -125,7 +125,7 @@ json_reader
 				var/json_token/S = get_token()
 				check_type(/json_token/symbol)
 				switch(S.value)
-					if(",")
+					if(", ")
 						next_token()
 						continue
 					if("}")
@@ -197,7 +197,7 @@ json_reader
 				var/json_token/T = get_token()
 				check_type(/json_token/symbol)
 				switch(T.value)
-					if(",")
+					if(", ")
 						next_token()
 						continue
 					if("]")

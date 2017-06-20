@@ -90,7 +90,7 @@
 				msg += " <i>(as [C.holder.fakekey])</i>"
 			if(isobserver(C.mob))
 				msg += " - Observing"
-			else if(istype(C.mob,/mob/new_player))
+			else if(istype(C.mob, /mob/new_player))
 				msg += " - Lobby"
 			else
 				msg += " - Playing"
@@ -102,7 +102,7 @@
 			mentmsg += "&emsp;[C] is a Mentor"
 			if(isobserver(C.mob))
 				mentmsg += " - Observing"
-			else if(istype(C.mob,/mob/new_player))
+			else if(istype(C.mob, /mob/new_player))
 				mentmsg += " - Lobby"
 			else
 				mentmsg += " - Playing"
@@ -120,4 +120,4 @@
 		for(var/client/C in mentors)
 			mentmsg += "&emsp;[C] is a Mentor\n"
 			num_mentors_online++
-	to_chat(src, "<b>Current Admins ([num_admins_online]):</b>\n" + msg + "\n<b>Current Mentors ([num_mentors_online]):</b>\n" + mentmsg)
+	to_chat(src, "<b>Current Admins([num_admins_online]):</b>\n" + msg + "\n<b>Current Mentors ([num_mentors_online]):</b>\n" + mentmsg)

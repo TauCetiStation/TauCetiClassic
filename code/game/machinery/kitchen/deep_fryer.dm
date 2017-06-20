@@ -8,8 +8,8 @@
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
-	var/on = FALSE	//Is it deep frying already?
-	var/obj/item/frying = null	//What's being fried RIGHT NOW?
+	var/on = FALSE	// Is it deep frying already?
+	var/obj/item/frying = null	// What's being fried RIGHT NOW?
 	var/fry_time = 0.0
 
 
@@ -48,7 +48,7 @@
 	else if(istype(I, /obj/item/weapon/grab))
 		to_chat(user, "<span class='notice'>You cannot fry him.</span>")
 		return
-	else if (ishuman(user))
+	else if(ishuman(user))
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
 		user.drop_item()
@@ -64,7 +64,7 @@
 		if(fry_time == 30)
 			playsound(src, "sound/machines/ding.ogg", 50, 1)
 			visible_message("[src] dings!")
-		else if (fry_time == 60)
+		else if(fry_time == 60)
 			visible_message("[src] emits an acrid smell!")
 
 
@@ -76,16 +76,16 @@
 		S.desc = frying.desc
 		switch(fry_time)
 			if(0 to 15)
-				S.color = rgb(166,103,54)
+				S.color = rgb(166, 103, 54)
 				S.name = "lightly-fried [frying.name]"
 			if(16 to 49)
-				S.color = rgb(103,63,24)
+				S.color = rgb(103, 63, 24)
 				S.name = "fried [frying.name]"
 			if(50 to 59)
 				S.color = rgb(63, 23, 4)
 				S.name = "deep-fried [frying.name]"
 			if(60 to INFINITY)
-				S.color = rgb(33,19,9)
+				S.color = rgb(33, 19, 9)
 				S.name = "burned down mess"
 				S.desc = "A heavily fried...something.  Who can tell anymore?"
 		S.filling_color = S.color

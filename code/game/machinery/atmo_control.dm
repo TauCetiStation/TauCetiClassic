@@ -11,7 +11,7 @@
 
 	var/on = 1
 	var/output = 3
-	//Flags:
+	// Flags:
 	// 1 for pressure
 	// 2 for temperature
 	// Output >= 4 includes gas composition
@@ -28,28 +28,28 @@
 /obj/machinery/air_sensor/process()
 	if(on)
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.data["tag"] = id_tag
 		signal.data["timestamp"] = world.time
 
 		var/datum/gas_mixture/air_sample = return_air()
 
 		if(output&1)
-			signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
+			signal.data["pressure"] = num2text(round(air_sample.return_pressure(), 0.1),)
 		if(output&2)
-			signal.data["temperature"] = round(air_sample.temperature,0.1)
+			signal.data["temperature"] = round(air_sample.temperature, 0.1)
 
 		if(output>4)
 			var/total_moles = air_sample.total_moles()
 			if(total_moles > 0)
 				if(output&4)
-					signal.data["oxygen"] = round(100*air_sample.oxygen/total_moles,0.1)
+					signal.data["oxygen"] = round(100*air_sample.oxygen/total_moles, 0.1)
 				if(output&8)
-					signal.data["phoron"] = round(100*air_sample.phoron/total_moles,0.1)
+					signal.data["phoron"] = round(100*air_sample.phoron/total_moles, 0.1)
 				if(output&16)
-					signal.data["nitrogen"] = round(100*air_sample.nitrogen/total_moles,0.1)
+					signal.data["nitrogen"] = round(100*air_sample.nitrogen/total_moles, 0.1)
 				if(output&32)
-					signal.data["carbon_dioxide"] = round(100*air_sample.carbon_dioxide/total_moles,0.1)
+					signal.data["carbon_dioxide"] = round(100*air_sample.carbon_dioxide/total_moles, 0.1)
 			else
 				signal.data["oxygen"] = 0
 				signal.data["phoron"] = 0
@@ -96,7 +96,7 @@
 /obj/machinery/computer/general_air_control/attack_hand(mob/user)
 	if(..(user))
 		return
-	user << browse(return_text(),"window=computer")
+	user << browse(return_text(), "window=computer")
 	user.set_machine(src)
 	onclose(user, "computer")
 
@@ -177,7 +177,7 @@
 
 /obj/machinery/computer/general_air_control/large_tank_control/return_text()
 	var/output = ..()
-	//if(signal.data)
+	// if(signal.data)
 	//	input_info = signal.data // Attempting to fix intake control -- TLE
 
 	output += "<B>Tank Control System</B><BR>"
@@ -233,27 +233,27 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	if(!radio_connection)
 		return FALSE
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 	if(href_list["in_refresh_status"])
 		input_info = null
-		signal.data = list ("tag" = input_tag, "status")
+		signal.data = list("tag" = input_tag, "status")
 
 	if(href_list["in_toggle_injector"])
 		input_info = null
-		signal.data = list ("tag" = input_tag, "power_toggle")
+		signal.data = list("tag" = input_tag, "power_toggle")
 
 	if(href_list["out_refresh_status"])
 		output_info = null
-		signal.data = list ("tag" = output_tag, "status")
+		signal.data = list("tag" = output_tag, "status")
 
 	if(href_list["out_toggle_power"])
 		output_info = null
-		signal.data = list ("tag" = output_tag, "power_toggle")
+		signal.data = list("tag" = output_tag, "power_toggle")
 
 	if(href_list["out_set_pressure"])
 		output_info = null
-		signal.data = list ("tag" = output_tag, "set_internal_pressure" = "[pressure_setting]")
+		signal.data = list("tag" = output_tag, "set_internal_pressure" = "[pressure_setting]")
 
 	signal.data["sigtype"]="command"
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
@@ -288,7 +288,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 					injecting = 1
 
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.source = src
 
 		signal.data = list(
@@ -316,7 +316,7 @@ Rate: [volume_rate] L/sec<BR>"}
 			output += "Injector Controls Locked Out<BR>"
 		else
 			output += "Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Disengaged</A><BR>"
-			output += "Injector: <A href='?src=\ref[src];toggle_injector=1'>Toggle Power</A> <A href='?src=\ref[src];injection=1'>Inject (1 Cycle)</A><BR>"
+			output += "Injector: <A href='?src=\ref[src];toggle_injector=1'>Toggle Power</A> <A href='?src=\ref[src];injection=1'>Inject(1 Cycle)</A><BR>"
 
 	else
 		output += "<FONT color='red'>ERROR: Can not find device</FONT> <A href='?src=\ref[src];refresh_status=1'>Search</A><BR>"
@@ -344,7 +344,7 @@ Rate: [volume_rate] L/sec<BR>"}
 			return FALSE
 
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.source = src
 		signal.data = list(
 			"tag" = device_tag,
@@ -362,7 +362,7 @@ Rate: [volume_rate] L/sec<BR>"}
 			return FALSE
 
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.source = src
 		signal.data = list(
 			"tag" = device_tag,
@@ -377,7 +377,7 @@ Rate: [volume_rate] L/sec<BR>"}
 			return FALSE
 
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.source = src
 		signal.data = list(
 			"tag" = device_tag,

@@ -32,7 +32,7 @@
 			var/mob/living/carbon/ian/IAN = M
 			msg = pick(IAN.speak)
 
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[sanitize_plus_popup(msg)]\""//фиксим "я" сразу для принта, да. Записи могут быть большими.
+		storedinfo += "\[[time2text(timerecorded*10, "mm:ss")]\] [M.name] [verb], \"[sanitize_plus_popup(msg)]\""//фиксим "я" сразу для принта, да. Записи могут быть большими.
 		return
 
 /obj/item/device/taperecorder/attackby(obj/item/weapon/W, mob/user)
@@ -52,7 +52,7 @@
 		var/mob/M = loc
 		to_chat(M, "<span class='danger'>\The [src] explodes!</span>")
 	if(T)
-		T.hotspot_expose(700,125)
+		T.hotspot_expose(700, 125)
 		explosion(T, -1, -1, 0, 4)
 	qdel(src)
 	return
@@ -71,7 +71,7 @@
 		to_chat(usr, "<span class='notice'>Recording started.</span>")
 		recording = 1
 		timestamp+= timerecorded
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording started."
+		storedinfo += "\[[time2text(timerecorded*10, "mm:ss")]\] Recording started."
 		for(timerecorded, timerecorded<3600)
 			if(recording == 0)
 				break
@@ -96,7 +96,7 @@
 	if(recording == 1)
 		recording = 0
 		timestamp+= timerecorded
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording stopped."
+		storedinfo += "\[[time2text(timerecorded*10, "mm:ss")]\] Recording stopped."
 		to_chat(usr, "<span class='notice'>Recording stopped.</span>")
 		icon_state = "taperecorderidle"
 		return
@@ -143,7 +143,7 @@
 	playing = 1
 	icon_state = "taperecorderplaying"
 	to_chat(usr, "<span class='notice'>Playing started.</span>")
-	for(var/i=1,timerecorded<3600,sleep(10 * (playsleepseconds) ))
+	for(var/i=1, timerecorded<3600, sleep(10 * (playsleepseconds) ))
 		if(playing == 0)
 			break
 		if(storedinfo.len < i)
@@ -202,7 +202,7 @@
 	to_chat(usr, "<span class='notice'>Transcript printed.</span>")
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
-	for(var/i=1,storedinfo.len >= i,i++)
+	for(var/i=1, storedinfo.len >= i, i++)
 		t1 += "[storedinfo[i]]<BR>"
 	P.info = t1
 	P.name = "Transcript"
@@ -223,7 +223,7 @@
 			to_chat(usr, "\blue Recording started.")
 			recording = 1
 			timestamp+= timerecorded
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording started."
+			storedinfo += "\[[time2text(timerecorded*10, "mm:ss")]\] Recording started."
 			for(timerecorded, timerecorded<3600)
 				if(recording == 0)
 					break
@@ -241,7 +241,7 @@
 		if(recording == 1)
 			recording = 0
 			timestamp+= timerecorded
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording stopped."
+			storedinfo += "\[[time2text(timerecorded*10, "mm:ss")]\] Recording stopped."
 			to_chat(usr, "\blue Recording stopped.")
 			icon_state = "taperecorderidle"
 			return
@@ -249,7 +249,7 @@
 			playing = 0
 			var/turf/T = get_turf(src)
 			for(var/mob/O in hearers(world.view-1, T))
-				O.show_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>",2)
+				O.show_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>", 2)
 			icon_state = "taperecorderidle"
 			return
 		else

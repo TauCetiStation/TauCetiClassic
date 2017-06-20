@@ -7,8 +7,8 @@
 /datum/artifact_effect/gassleeping/New()
 	..()
 	effect = pick(EFFECT_TOUCH, EFFECT_AURA)
-	max_pressure = rand(115,1000)
-	effect_type = pick(6,7)
+	max_pressure = rand(115, 1000)
+	effect_type = pick(6, 7)
 
 /datum/artifact_effect/gassleeping/DoEffectTouch(mob/user)
 	if(holder)
@@ -16,7 +16,7 @@
 		if(env)
 			var/datum/gas/sleeping_agent/trace_gas = new
 			env.trace_gases += trace_gas
-			trace_gas.moles = rand(2,15)
+			trace_gas.moles = rand(2, 15)
 			env.update_values()
 
 

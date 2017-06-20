@@ -24,7 +24,7 @@
 	update_icon()
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/mob_can_equip(M, slot)
-	//Cannot equip wielded items.
+	// Cannot equip wielded items.
 	if(wielded)
 		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
 		return 0
@@ -35,7 +35,7 @@
 	return ..(1, 1)
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/dropped(mob/user)
-	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
+	// handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/gun/projectile/revolver/rocketlauncher/O = user.get_inactive_hand()
 		if(istype(O))
@@ -46,7 +46,7 @@
 	unwield()
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_self(mob/user)
-	if(wielded) //Trying to unwield it
+	if(wielded) // Trying to unwield it
 		unwield()
 		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
 		if(user.hand)
@@ -59,7 +59,7 @@
 			O.unwield()
 		return
 
-	else //Trying to wield it
+	else // Trying to wield it
 		if(user.get_inactive_hand())
 			to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
 			return
@@ -71,7 +71,7 @@
 		else
 			user.update_inv_r_hand()
 
-		var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
+		var/obj/item/weapon/twohanded/offhand/O = new(user) //// Let's reserve his other hand~
 		O.name = "[initial(name)] - offhand"
 		O.desc = "Your second grip on the [initial(name)]."
 		user.put_in_inactive_hand(O)
@@ -80,9 +80,9 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_hand(mob/user)
 	if(loc != user)
 		..()
-		return	//let them pick it up
+		return	// let them pick it up
 	var/num_unloaded = 0
-	while (get_ammo() > 0)
+	while(get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		chambered = null
@@ -90,12 +90,12 @@
 		CB.SpinAnimation(10, 1)
 		CB.update_icon()
 		num_unloaded++
-	if (num_unloaded)
+	if(num_unloaded)
 		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] missile\s from [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/afterattack(atom/target, mob/living/user, flag, params) // what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
 		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return

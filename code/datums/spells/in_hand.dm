@@ -74,10 +74,10 @@
 	if(user.is_busy())
 		return FALSE
 	if(can_powerup && power_of_spell < max_power)
-		if(!do_after(user, 10, null, user,TRUE))
+		if(!do_after(user, 10, null, user, TRUE))
 			return FALSE
 		power_of_spell++
-		//to_chat(user, "<span class'notice'>[src] power has grown up!</span>") much text, so informative, very spam, wow! but i'l leave that anyway.
+		// to_chat(user, "<span class'notice'>[src] power has grown up!</span>") much text, so informative, very spam, wow! but i'l leave that anyway.
 		update_icon()
 		return TRUE
 
@@ -170,7 +170,7 @@
 
 /obj/effect/proc_holder/spell/in_hand/arcane_barrage
 	name = "Arcane Barrage"
-	desc = "Fire a torrent of arcane energy at your foes with this (powerful) spell. Requires both hands free to use. Learning this spell makes you unable to learn Lesser Summon Gun."
+	desc = "Fire a torrent of arcane energy at your foes with this(powerful) spell. Requires both hands free to use. Learning this spell makes you unable to learn Lesser Summon Gun."
 	charge_max = 600
 	action_icon_state = "arcane_barrage"
 	summon_path = /obj/item/weapon/magic/arcane_barrage
@@ -287,7 +287,7 @@
 /obj/effect/proc_holder/spell/in_hand/heal
 	name = "Heal"
 	desc = "Heals physically and mentally. Sometimes target may recieve double effect at lower levels. Target must be alive. \
-		<br>Can be powered up seven times (click spell in hand). Each level provides different effect, while also raises spell cooldown. 1 to 5 can only be used by touching target \
+		<br>Can be powered up seven times(click spell in hand). Each level provides different effect, while also raises spell cooldown. 1 to 5 can only be used by touching target \
 		<br>1 to 3 heals \
 		<br>4 cures any virus, but heals alot less \
 		<br>5 cleans from any mutations, but heals alot less \
@@ -316,7 +316,7 @@
 	if(!..())
 		return
 
-	Spell.charge_max = initial(Spell.charge_max) * power_of_spell // 20 - 140 (2:20)
+	Spell.charge_max = initial(Spell.charge_max) * power_of_spell // 20 - 140(2:20)
 
 	var/level_info = "<span class='notice'><b>level [power_of_spell]</b> [src] now"
 	switch(power_of_spell)
@@ -386,7 +386,7 @@
 	if(!istype(target) || target.stat == DEAD || issilicon(target))
 		return
 
-	var/hamt = -30 * power_of_spell // level 6 = 180 || level 7 = 31.5 (cause of reduction)
+	var/hamt = -30 * power_of_spell // level 6 = 180 || level 7 = 31.5(cause of reduction)
 
 	if(power_of_spell == 7)
 		hamt *= 0.15 // healing everything 85% less, because most of healing power goes into regeneration of limbs which also full heals them.

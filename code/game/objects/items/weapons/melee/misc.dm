@@ -13,7 +13,7 @@
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
 	to_chat(viewers(user), "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>")
-	return (OXYLOSS)
+	return(OXYLOSS)
 
 /obj/item/weapon/melee/icepick
 	name = "ice pick"
@@ -23,4 +23,4 @@
 	force = 15
 	throwforce = 10
 	w_class = 2
-	attack_verb = list("stabbed", "jabbed", "iced,")
+	attack_verb = list("stabbed", "jabbed", "iced, ")

@@ -1,12 +1,12 @@
-//Simple borg hand.
-//Limited use.
+// Simple borg hand.
+// Limited use.
 /obj/item/weapon/gripper
 	name = "magnetic gripper"
 	desc = "A simple grasping tool for synthetic assets."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gripper"
 
-	//Has a list of items that it can hold.
+	// Has a list of items that it can hold.
 	var/list/can_hold = list(
 		/obj/item/weapon/stock_parts/cell,
 		/obj/item/weapon/firealarm_electronics,
@@ -25,7 +25,7 @@
 		/obj/item/weapon/circuitboard
 		)
 
-	//Item currently being held.
+	// Item currently being held.
 	var/obj/item/wrapped = null
 
 /obj/item/weapon/gripper/paperwork
@@ -52,7 +52,7 @@
 	set category = "Drone"
 
 	if(!wrapped)
-		//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
+		// There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
 		for(var/obj/item/thing in src.contents)
 			thing.loc = get_turf(src)
 		return
@@ -64,32 +64,32 @@
 	to_chat(src.loc, "\red You drop \the [wrapped].")
 	wrapped.loc = get_turf(src)
 	wrapped = null
-	//update_icon()
+	// update_icon()
 
 /obj/item/weapon/gripper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
 
 /obj/item/weapon/gripper/afterattack(atom/target, mob/living/user, flag, params)
 
-	if(!target || !flag) //Target is invalid or we are not adjacent.
+	if(!target || !flag) // Target is invalid or we are not adjacent.
 		return
 
-	//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
+	// There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
 	if(!wrapped)
 		for(var/obj/item/thing in src.contents)
 			wrapped = thing
 			break
 
-	if(wrapped) //Already have an item.
+	if(wrapped) // Already have an item.
 
 		wrapped.loc = user
-		//Pass the attack on to the target.
-		target.attackby(wrapped,user)
+		// Pass the attack on to the target.
+		target.attackby(wrapped, user)
 
 		if(wrapped && src && wrapped.loc == user)
 			wrapped.loc = src
 
-		//Sanity/item use checks.
+		// Sanity/item use checks.
 
 		if(!wrapped || !user)
 			return
@@ -98,7 +98,7 @@
 			wrapped = null
 			return
 
-	if(istype(target,/obj/item)) //Check that we're not pocketing a mob.
+	if(istype(target, /obj/item)) // Check that we're not pocketing a mob.
 
 		//...and that the item is not in a container.
 		if(!isturf(target.loc))
@@ -106,14 +106,14 @@
 
 		var/obj/item/I = target
 
-		//Check if the item is blacklisted.
+		// Check if the item is blacklisted.
 		var/grab = 0
 		for(var/typepath in can_hold)
-			if(istype(I,typepath))
+			if(istype(I, typepath))
 				grab = 1
 				break
 
-		//We can grab the item, finally.
+		// We can grab the item, finally.
 		if(grab)
 			to_chat(user, "You collect \the [I].")
 			I.loc = src
@@ -122,7 +122,7 @@
 		else
 			to_chat(user, "\red Your gripper cannot hold \the [target].")
 
-	else if(istype(target,/obj/machinery/power/apc))
+	else if(istype(target, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/A = target
 		if(A.opened)
 			if(A.cell)
@@ -139,7 +139,7 @@
 
 				user.visible_message("\red [user] removes the power cell from [A]!", "You remove the power cell.")
 
-//TODO: Matter decompiler.
+// TODO: Matter decompiler.
 /obj/item/weapon/matter_decompiler
 
 	name = "matter decompiler"
@@ -147,7 +147,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "decompiler"
 
-	//Metal, glass, wood, plastic.
+	// Metal, glass, wood, plastic.
 	var/list/stored_comms = list(
 		"metal" = 0,
 		"glass" = 0,
@@ -160,19 +160,19 @@
 
 /obj/item/weapon/matter_decompiler/afterattack(atom/target, mob/living/user, flag, params)
 
-	if(!flag) return //Not adjacent.
+	if(!flag) return // Not adjacent.
 
-	//We only want to deal with using this on turfs. Specific items aren't important.
+	// We only want to deal with using this on turfs. Specific items aren't important.
 	var/turf/T = get_turf(target)
 	if(!istype(T))
 		return
 
-	//Used to give the right message.
+	// Used to give the right message.
 	var/grabbed_something = 0
 
 	for(var/mob/M in T)
-		if(istype(M,/mob/living/simple_animal/lizard) || istype(M,/mob/living/simple_animal/mouse))
-			src.loc.visible_message("\red [src.loc] sucks [M] into its decompiler. There's a horrible crunching noise.","\red It's a bit of a struggle, but you manage to suck [M] into your decompiler. It makes a series of visceral crunching noises.")
+		if(istype(M, /mob/living/simple_animal/lizard) || istype(M, /mob/living/simple_animal/mouse))
+			src.loc.visible_message("\red [src.loc] sucks [M] into its decompiler. There's a horrible crunching noise.", "\red It's a bit of a struggle, but you manage to suck [M] into your decompiler. It makes a series of visceral crunching noises.")
 			new/obj/effect/decal/cleanable/blood/splatter(get_turf(src))
 			qdel(M)
 			stored_comms["wood"]++
@@ -181,7 +181,7 @@
 			stored_comms["plastic"]++
 			return
 
-		else if(istype(M,/mob/living/silicon/robot/drone) && !M.client)
+		else if(istype(M, /mob/living/silicon/robot/drone) && !M.client)
 
 			var/mob/living/silicon/robot/drone/D = src.loc
 
@@ -190,7 +190,7 @@
 
 			to_chat(D, "\red You begin decompiling the other drone.")
 
-			if(!do_after(D,50,target = M))
+			if(!do_after(D, 50, target = M))
 				to_chat(D, "\red You need to remain still while decompiling such a large object.")
 				return
 
@@ -211,48 +211,48 @@
 			continue
 
 	for(var/obj/W in T)
-		//Different classes of items give different commodities.
-		if (istype(W,/obj/item/weapon/cigbutt))
+		// Different classes of items give different commodities.
+		if(istype(W, /obj/item/weapon/cigbutt))
 			stored_comms["plastic"]++
-		else if(istype(W,/obj/effect/spider/spiderling))
+		else if(istype(W, /obj/effect/spider/spiderling))
 			stored_comms["wood"]++
 			stored_comms["wood"]++
 			stored_comms["plastic"]++
 			stored_comms["plastic"]++
-		else if(istype(W,/obj/item/weapon/light))
+		else if(istype(W, /obj/item/weapon/light))
 			var/obj/item/weapon/light/L = W
-			if(L.status >= 2) //In before someone changes the inexplicably local defines. ~ Z
+			if(L.status >= 2) // In before someone changes the inexplicably local defines. ~ Z
 				stored_comms["metal"]++
 				stored_comms["glass"]++
 			else
 				continue
-		else if(istype(W,/obj/effect/decal/remains/robot))
+		else if(istype(W, /obj/effect/decal/remains/robot))
 			stored_comms["metal"]++
 			stored_comms["metal"]++
 			stored_comms["plastic"]++
 			stored_comms["plastic"]++
 			stored_comms["glass"]++
-		else if(istype(W,/obj/item/trash))
+		else if(istype(W, /obj/item/trash))
 			stored_comms["metal"]++
 			stored_comms["plastic"]++
 			stored_comms["plastic"]++
 			stored_comms["plastic"]++
-		else if(istype(W,/obj/effect/decal/cleanable/blood/gibs/robot))
+		else if(istype(W, /obj/effect/decal/cleanable/blood/gibs/robot))
 			stored_comms["metal"]++
 			stored_comms["metal"]++
 			stored_comms["glass"]++
 			stored_comms["glass"]++
-		else if(istype(W,/obj/item/ammo_casing))
+		else if(istype(W, /obj/item/ammo_casing))
 			stored_comms["metal"]++
-		else if(istype(W,/obj/item/weapon/shard/shrapnel))
+		else if(istype(W, /obj/item/weapon/shard/shrapnel))
 			stored_comms["metal"]++
 			stored_comms["metal"]++
 			stored_comms["metal"]++
-		else if(istype(W,/obj/item/weapon/shard))
+		else if(istype(W, /obj/item/weapon/shard))
 			stored_comms["glass"]++
 			stored_comms["glass"]++
 			stored_comms["glass"]++
-		else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/grown))
+		else if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/grown))
 			stored_comms["wood"]++
 			stored_comms["wood"]++
 			stored_comms["wood"]++
@@ -269,7 +269,7 @@
 		to_chat(user, "\red Nothing on \the [T] is useful to you.")
 	return
 
-//PRETTIER TOOL LIST.
+// PRETTIER TOOL LIST.
 /mob/living/silicon/robot/drone/installed_modules()
 
 	if(weapon_lock)
@@ -293,26 +293,26 @@
 	var/tools = "<B>Tools and devices</B><BR>"
 	var/resources = "<BR><B>Resources</B><BR>"
 
-	for (var/O in module.modules)
+	for(var/O in module.modules)
 
 		var/module_string = ""
 
-		if (!O)
+		if(!O)
 			module_string += text("<B>Resource depleted</B><BR>")
 		else if(activated(O))
 			module_string += text("[O]: <B>Activated</B><BR>")
 		else
 			module_string += text("[O]: <A HREF=?src=\ref[src];act=\ref[O]>Activate</A><BR>")
 
-		if((istype(O,/obj/item/weapon) || istype(O,/obj/item/device)) && !(istype(O,/obj/item/weapon/cable_coil)))
+		if((istype(O, /obj/item/weapon) || istype(O, /obj/item/device)) && !(istype(O, /obj/item/weapon/cable_coil)))
 			tools += module_string
 		else
 			resources += module_string
 
 	dat += tools
 
-	if (emagged)
-		if (!module.emag)
+	if(emagged)
+		if(!module.emag)
 			dat += text("<B>Resource depleted</B><BR>")
 		else if(activated(module.emag))
 			dat += text("[module.emag]: <B>Activated</B><BR>")
@@ -323,14 +323,14 @@
 
 	src << browse(dat, "window=robotmod")
 
-//Putting the decompiler here to avoid doing list checks every tick.
+// Putting the decompiler here to avoid doing list checks every tick.
 /mob/living/silicon/robot/drone/use_power()
 
 	..()
 	if(!src.has_power || !decompiler)
 		return
 
-	//The decompiler replenishes drone stores from hoovered-up junk each tick.
+	// The decompiler replenishes drone stores from hoovered-up junk each tick.
 	for(var/type in decompiler.stored_comms)
 		if(decompiler.stored_comms[type] > 0)
 			var/obj/item/stack/sheet/stack

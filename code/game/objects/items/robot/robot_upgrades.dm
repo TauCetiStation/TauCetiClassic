@@ -30,7 +30,7 @@
 	R.icon_state = "robot"
 	qdel(R.module)
 	R.module = null
-	R.camera.remove_networks(list("Engineering","Medical","MINE"))
+	R.camera.remove_networks(list("Engineering", "Medical", "MINE"))
 	R.updatename("Default")
 	R.status_flags |= CANPUSH
 	R.updateicon()
@@ -120,7 +120,7 @@
 		return 0
 
 	else
-		T.recharge_time = max(2 , T.recharge_time - 4)
+		T.recharge_time = max(2, T.recharge_time - 4)
 
 	return 1
 
@@ -143,9 +143,9 @@
 			return 0
 	var/obj/item/weapon/tank/jetpack/carbondioxide/jet = new(R.module)
 	R.module.modules += jet
-	/*for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules) //we really need this?
+	/*for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules) // we really need this?
 		R.internals = jet*/
-	//R.icon_state="Miner+j"
+	// R.icon_state="Miner+j"
 	return 1
 
 

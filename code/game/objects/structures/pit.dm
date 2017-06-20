@@ -9,7 +9,7 @@
 	var/open = 1
 
 /obj/structure/pit/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/shovel))
+	if(istype(W, /obj/item/weapon/shovel))
 		visible_message("<span class='notice'>\The [user] starts [open ? "filling" : "digging open"] \the [src]</span>")
 		if(do_after(user, 50, target = src) )
 			visible_message("<span class='notice'>\The [user] [open ? "fills" : "digs open"] \the [src]!</span>")
@@ -20,7 +20,7 @@
 		else
 			to_chat(user, "<span class='notice'>You stop shoveling.</span>")
 		return
-	if(!open && istype(W,/obj/item/stack/sheet/wood))
+	if(!open && istype(W, /obj/item/stack/sheet/wood))
 		if(locate(/obj/structure/gravemarker) in src.loc)
 			to_chat(user, "<span class='notice'>There's already a grave marker here.</span>")
 		else
@@ -74,7 +74,7 @@
 	to_chat(escapee, "<span class='warning'>You start digging your way out of \the [src] (this will take about [breakout_time] minute\s)</span>")
 	visible_message("<span class='danger'>Something is scratching its way out of \the [src]!</span>")
 
-	for(var/i in 1 to (6*breakout_time * 2)) //minutes * 6 * 5seconds * 2
+	for(var/i in 1 to(6*breakout_time * 2)) // minutes * 6 * 5seconds * 2
 		playsound(src.loc, 'sound/weapons/bite.ogg', 100, 1)
 
 		if(!do_after(escapee, 50, target = src))
@@ -102,7 +102,7 @@
 	..()
 	close()
 
-//invisible until unearthed first
+// invisible until unearthed first
 /obj/structure/pit/closed/hidden
 	invisibility = INVISIBILITY_OBSERVER
 
@@ -110,7 +110,7 @@
 	..()
 	invisibility = INVISIBILITY_LEVEL_ONE
 
-//spoooky
+// spoooky
 /obj/structure/pit/closed/grave
 	name = "grave"
 	icon_state = "pit0"
@@ -189,30 +189,30 @@
 	..()
 
 /obj/structure/gravemarker/random/proc/generate()
-	icon_state = pick("wood","cross")
+	icon_state = pick("wood", "cross")
 
-	var/nam = random_name(pick(MALE,FEMALE))
+	var/nam = random_name(pick(MALE, FEMALE))
 	var/cur_year = text2num(time2text(world.timeofday, "YYYY"))+544
-	var/born = cur_year - rand(5,150)
-	var/died = max(cur_year - rand(0,70),born)
+	var/born = cur_year - rand(5, 150)
+	var/died = max(cur_year - rand(0, 70), born)
 
 	message = "Here lies [nam], [born] - [died]."
 
 /obj/structure/gravemarker/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/hatchet))
+	if(istype(W, /obj/item/weapon/hatchet))
 		visible_message("<span class = 'warning'>\The [user] starts hacking away at \the [src] with \the [W].</span>")
 		if(do_after(user, 30, target = src))
 			visible_message("<span class = 'warning'>\The [user] hacks \the [src] apart.</span>")
 			new /obj/item/stack/sheet/wood(src)
 			qdel(src)
 			return
-	if(istype(W,/obj/item/weapon/pen))
+	if(istype(W, /obj/item/weapon/pen))
 		var/msg = sanitize(input(user, "What should it say?", "Grave marker", message) as text|null)
 		if(msg)
 			message = msg
 
 
-//Grave jetsons items
+// Grave jetsons items
 
 
 obj/item/weapon/gun/energy/laser/retro/jetsons
@@ -236,7 +236,7 @@ obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 7 //lucky shot
+	damage = 7 // lucky shot
 	damage_type = BURN
 	flag = "laser"
 	eyeblur = 2

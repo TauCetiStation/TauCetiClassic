@@ -13,27 +13,27 @@
 	m_amt = 500
 	origin_tech = "materials=1"
 	var/dispenser = 0
-	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes
+	var/breakouttime = 1200 // Deciseconds = 120s = 2 minutes
 	var/cuff_sound = 'sound/weapons/handcuffs.ogg'
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
-	if (!ishuman(user) && !isIAN(user))
+	if(!ishuman(user) && !isIAN(user))
 		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 	if(!istype(C))
 		return
-	if ((CLUMSY in usr.mutations) && prob(50))
+	if((CLUMSY in usr.mutations) && prob(50))
 		to_chat(user, "\red Uh ... how do those things work?!")
 		place_handcuffs(user, user)
 		return
 	if(!C.handcuffed)
-		if (C == user || isIAN(user))
+		if(C == user || isIAN(user))
 			place_handcuffs(C, user)
 			return
 
-		//check for an aggressive grab
-		for (var/obj/item/weapon/grab/G in C.grabbed_by)
-			if (G.loc == user && G.state >= GRAB_AGGRESSIVE)
+		// check for an aggressive grab
+		for(var/obj/item/weapon/grab/G in C.grabbed_by)
+			if(G.loc == user && G.state >= GRAB_AGGRESSIVE)
 				place_handcuffs(C, user)
 				return
 		to_chat(user, "\red You need to have a firm grip on [C] before you can put \the [src] on!")
@@ -41,9 +41,9 @@
 /obj/item/weapon/handcuffs/proc/place_handcuffs(mob/living/carbon/target, mob/user)
 	playsound(src.loc, cuff_sound, 30, 1, -2)
 
-	if (ishuman(target))
+	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
+		H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed(attempt) by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [H.name] ([H.ckey])</font>")
 		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(H)]")
 
@@ -56,11 +56,11 @@
 		O.place = "handcuff"
 		H.requests += O
 		spawn( 0 )
-			feedback_add_details("handcuffs","H")
+			feedback_add_details("handcuffs", "H")
 			O.process()
 		return
 
-	if (ismonkey(target))
+	if(ismonkey(target))
 		var/mob/living/carbon/monkey/M = target
 		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
 		O.source = user
@@ -74,24 +74,24 @@
 			O.process()
 		return
 
-	if (isIAN(target))
+	if(isIAN(target))
 		var/mob/living/carbon/ian/IAN = target
 		IAN.un_equip_or_action(user, "Neck", user.get_active_hand())
 
 var/last_chew = 0
 /mob/living/carbon/human/RestrainedClickOn(atom/A)
-	if (A != src) return ..()
-	if (last_chew + 26 > world.time) return
+	if(A != src) return ..()
+	if(last_chew + 26 > world.time) return
 
 	var/mob/living/carbon/human/H = A
-	if (!H.handcuffed) return
-	if (H.a_intent != "hurt") return
-	if (H.zone_sel.selecting != O_MOUTH) return
-	if (H.wear_mask) return
-	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket)) return
+	if(!H.handcuffed) return
+	if(H.a_intent != "hurt") return
+	if(H.zone_sel.selecting != O_MOUTH) return
+	if(H.wear_mask) return
+	if(istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket)) return
 
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
-	if (!BP)
+	if(!BP)
 		return
 
 	var/s = "\red [H.name] chews on \his [BP.name]!"
@@ -107,7 +107,7 @@ var/last_chew = 0
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_white"
-	breakouttime = 300 //Deciseconds = 30s
+	breakouttime = 300 // Deciseconds = 30s
 	cuff_sound = 'sound/weapons/cablecuff.ogg'
 
 /obj/item/weapon/handcuffs/cable/red

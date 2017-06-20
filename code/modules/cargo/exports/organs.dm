@@ -1,6 +1,6 @@
 // Organs.
 
-//THIS CODE IS GOOD, BUT FOR US THIS IS USELESS!!!
+// THIS CODE IS GOOD, BUT FOR US THIS IS USELESS!!!
 
 // Alien organs
 /datum/export/organ/alien/get_cost(O, contr = 0, emag = 0)
@@ -81,7 +81,7 @@
 // Human organs.
 
 // Do not put human brains here, they are not sellable for a purpose.
-// If they would be sellable, X-Porter cannon's finishing move (selling victim's organs) will be instakill with no revive.
+// If they would be sellable, X-Porter cannon's finishing move(selling victim's organs) will be instakill with no revive.
 
 /datum/export/organ/human
 	contraband = TRUE

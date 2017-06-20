@@ -6,7 +6,7 @@ var/global/total_runtimes_skipped = 0
 
 #ifdef DEBUG
 /world/Error(exception/E, datum/e_src)
-	if(!istype(E)) //Something threw an unusual exception
+	if(!istype(E)) // Something threw an unusual exception
 		world.log << "\[[time_stamp()]] Uncaught exception: [E]"
 		return ..()
 	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
@@ -23,17 +23,17 @@ var/global/total_runtimes_skipped = 0
 		last_seen = world.time
 
 	if(cooldown < 0)
-		error_cooldown[erroruid]-- //Used to keep track of skip count for this error
+		error_cooldown[erroruid]-- // Used to keep track of skip count for this error
 		total_runtimes_skipped++
-		return //Error is currently silenced, skip handling it
-	//Handle cooldowns and silencing spammy errors
+		return // Error is currently silenced, skip handling it
+	// Handle cooldowns and silencing spammy errors
 	var/silencing = FALSE
 
 	var/configured_error_cooldown = 1 MINUTE
 	var/configured_error_limit = 50
 	var/configured_error_silence_time = 10 MINUTES
 
-	//Each occurence of an unique error adds to its cooldown time...
+	// Each occurence of an unique error adds to its cooldown time...
 	cooldown = max(0, cooldown - (world.time - last_seen)) + configured_error_cooldown
 	// ... which is used to silence an error if it occurs too often, too fast
 	if(cooldown > configured_error_cooldown * configured_error_limit)
@@ -75,7 +75,7 @@ var/global/total_runtimes_skipped = 0
 				desclines += ("  " + line) // Pad any unpadded lines, so they look pretty
 			else
 				desclines += line
-	if(usrinfo) //If this info isn't null, it hasn't been added yet
+	if(usrinfo) // If this info isn't null, it hasn't been added yet
 		desclines.Add(usrinfo)
 	if(silencing)
 		desclines += "  (This error will now be silenced for [configured_error_silence_time / 600] minutes)"
@@ -88,14 +88,14 @@ var/global/total_runtimes_skipped = 0
 
 /* This logs the runtime in the old format */
 
-	E.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][E.name]"
+	E.name = "\n\[[time2text(world.timeofday, "hh:mm:ss")]\][E.name]"
 
-	//Original
+	// Original
 	//
 	var/list/split = splittext(E.desc, "\n")
-	for (var/i in 1 to split.len)
-		if (split[i] != "")
-			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
+	for(var/i in 1 to split.len)
+		if(split[i] != "")
+			split[i] = "\[[time2text(world.timeofday, "hh:mm:ss")]\][split[i]]"
 	E.desc = jointext(split, "\n")
 
 	..(E)

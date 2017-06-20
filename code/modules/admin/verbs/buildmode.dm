@@ -34,7 +34,7 @@
 			M.client.screen += D
 			H.cl = M.client
 
-/obj/effect/bmode//Cleaning up the tree a bit
+/obj/effect/bmode// Cleaning up the tree a bit
 	density = 1
 	anchored = 1
 	layer = ABOVE_HUD_LAYER
@@ -51,7 +51,7 @@
 
 /obj/effect/bmode/builddir
 	icon_state = "build"
-	screen_loc = "NORTH,WEST"
+	screen_loc = "NORTH, WEST"
 	Click()
 		switch(dir)
 			if(NORTH)
@@ -69,7 +69,7 @@
 /obj/effect/bmode/buildhelp
 	icon = 'icons/misc/buildmode.dmi'
 	icon_state = "buildhelp"
-	screen_loc = "NORTH,WEST+1"
+	screen_loc = "NORTH, WEST+1"
 	Click()
 		switch(master.cl.buildmode)
 			if(1)
@@ -106,7 +106,7 @@
 
 /obj/effect/bmode/buildquit
 	icon_state = "buildquit"
-	screen_loc = "NORTH,WEST+3"
+	screen_loc = "NORTH, WEST+3"
 
 	Click()
 		togglebuildmode(master.cl.mob)
@@ -124,7 +124,7 @@
 
 /obj/effect/bmode/buildmode
 	icon_state = "buildmode1"
-	screen_loc = "NORTH,WEST+2"
+	screen_loc = "NORTH, WEST+2"
 	var/varholder = "name"
 	var/valueholder = "derp"
 	var/objholder = /obj/structure/closet
@@ -152,36 +152,36 @@
 				if(1)
 					return 1
 				if(2)
-					objholder = text2path(input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet"))
+					objholder = text2path(input(usr, "Enter typepath:", "Typepath", "/obj/structure/closet"))
 					if(!ispath(objholder))
 						objholder = /obj/structure/closet
 						alert("That path is not allowed.")
 					else
-						if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
+						if(ispath(objholder, /mob) && !check_rights(R_DEBUG, 0))
 							objholder = /obj/structure/closet
 				if(3)
 					var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
 					var/list/fully_locked = list("resize", "resize_rev")
 
-					master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
+					master.buildmode.varholder = input(usr, "Enter variable name:", "Name", "name")
 					if(master.buildmode.varholder in fully_locked)
 						to_chat(usr, "\red It is forbidden to edit this variable.")
 						return
-					if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
+					if(master.buildmode.varholder in locked && !check_rights(R_DEBUG, 0))
 						return 1
-					var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
+					var/thetype = input(usr, "Select variable type:", "Type") in list("text", "number", "mob-reference", "obj-reference", "turf-reference")
 					if(!thetype) return 1
 					switch(thetype)
 						if("text")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", "value") as text
+							master.buildmode.valueholder = input(usr, "Enter variable value:", "Value", "value") as text
 						if("number")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", 123) as num
+							master.buildmode.valueholder = input(usr, "Enter variable value:", "Value", 123) as num
 						if("mob-reference")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as mob in mob_list
+							master.buildmode.valueholder = input(usr, "Enter variable value:", "Value") as mob in mob_list
 						if("obj-reference")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as obj in world
+							master.buildmode.valueholder = input(usr, "Enter variable value:", "Value") as obj in world
 						if("turf-reference")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
+							master.buildmode.valueholder = input(usr, "Enter variable value:", "Value") as turf in world
     	return 1
 
 /proc/build_click(mob/user, buildmode, params, obj/object)
@@ -195,38 +195,38 @@
 
 	switch(buildmode)
 		if(1)
-			if(istype(object,/turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
-				if(istype(object,/turf/space))
+			if(istype(object, /turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
+				if(istype(object, /turf/space))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/floor)
 					return
-				else if(istype(object,/turf/simulated/floor))
+				else if(istype(object, /turf/simulated/floor))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall)
 					return
-				else if(istype(object,/turf/simulated/wall))
+				else if(istype(object, /turf/simulated/wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall/r_wall)
 					return
 			else if(pa.Find("right"))
-				if(istype(object,/turf/simulated/wall))
+				if(istype(object, /turf/simulated/wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/floor)
 					return
-				else if(istype(object,/turf/simulated/floor))
+				else if(istype(object, /turf/simulated/floor))
 					var/turf/T = object
 					T.ChangeTurf(/turf/space)
 					return
-				else if(istype(object,/turf/simulated/wall/r_wall))
+				else if(istype(object, /turf/simulated/wall/r_wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall)
 					return
-				else if(istype(object,/obj))
+				else if(istype(object, /obj))
 					qdel(object)
 					return
-			else if(istype(object,/turf) && pa.Find("alt") && pa.Find("left"))
+			else if(istype(object, /turf) && pa.Find("alt") && pa.Find("left"))
 				new/obj/machinery/door/airlock(get_turf(object))
-			else if(istype(object,/turf) && pa.Find("ctrl") && pa.Find("left"))
+			else if(istype(object, /turf) && pa.Find("ctrl") && pa.Find("left"))
 				switch(holder.builddir.dir)
 					if(NORTH)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
@@ -245,17 +245,17 @@
 						WIN.dir = NORTHWEST
 		if(2)
 			if(pa.Find("left"))
-				if(ispath(holder.buildmode.objholder,/turf))
+				if(ispath(holder.buildmode.objholder, /turf))
 					var/turf/T = get_turf(object)
 					T.ChangeTurf(holder.buildmode.objholder)
 				else
-					var/obj/A = new holder.buildmode.objholder (get_turf(object))
+					var/obj/A = new holder.buildmode.objholder(get_turf(object))
 					A.dir = holder.builddir.dir
 			else if(pa.Find("right"))
 				if(isobj(object)) qdel(object)
 
 		if(3)
-			if(pa.Find("left")) //I cant believe this shit actually compiles.
+			if(pa.Find("left")) // I cant believe this shit actually compiles.
 				if(object.vars.Find(holder.buildmode.varholder))
 					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
 					object.vars[holder.buildmode.varholder] = holder.buildmode.valueholder

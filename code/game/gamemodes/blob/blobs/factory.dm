@@ -82,7 +82,7 @@
 /mob/living/simple_animal/hostile/blobspore/Life()
 
 	if(!is_zombie && isturf(src.loc))
-		for(var/mob/living/carbon/human/H in oview(src,1)) //Only for corpse right next to/on same tile
+		for(var/mob/living/carbon/human/H in oview(src, 1)) // Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
 				Zombify(H)
 				break
@@ -92,7 +92,7 @@
 	if(H.wear_suit)
 		var/obj/item/clothing/suit/armor/A = H.wear_suit
 		if(A.armor && A.armor["melee"])
-			maxHealth += A.armor["melee"] //That zombie's got armor, I want armor!
+			maxHealth += A.armor["melee"] // That zombie's got armor, I want armor!
 	maxHealth += 40
 	health = maxHealth
 	name = "blob zombie"
@@ -110,7 +110,7 @@
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blobspore/death()
-// On death, create a small smoke of harmful gas (s-Acid)
+// On death, create a small smoke of harmful gas(s-Acid)
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	var/turf/location = get_turf(src)
 

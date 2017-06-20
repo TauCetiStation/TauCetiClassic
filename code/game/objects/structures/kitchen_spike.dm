@@ -1,4 +1,4 @@
-//////Kitchen Spike
+////// Kitchen Spike
 
 /obj/structure/kitchenspike_frame
 	name = "meatspike frame"
@@ -51,7 +51,7 @@
 		if(istype(G.affecting, /mob/living))
 			if(!buckled_mob)
 				if(do_mob(user, src, 120))
-					if(buckled_mob) //to prevent spam/queing up attacks
+					if(buckled_mob) // to prevent spam/queing up attacks
 						return
 					if(G.affecting.buckled)
 						return
@@ -62,7 +62,7 @@
 					                  "<span class='notice'>You hear a squishy wet noise.</span>")
 					H.forceMove(src.loc)
 					H.emote("scream")
-					if(istype(H, /mob/living/carbon)) //So you don't get human blood when you spike a giant spidere
+					if(istype(H, /mob/living/carbon)) // So you don't get human blood when you spike a giant spidere
 						var/turf/simulated/pos = get_turf(H)
 						pos.add_blood_floor(H)
 					H.adjustBruteLoss(30)
@@ -77,7 +77,7 @@
 		else
 			to_chat(user, "<span class='danger'>You can't use that on the spike!</span>")
 
-/obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
+/obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) // Don't want them getting put on the rack other than by spiking
 	return
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/carbon/human/user)

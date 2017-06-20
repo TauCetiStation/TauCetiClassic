@@ -1,4 +1,4 @@
-var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
+var/list/possible_changeling_IDs = list("Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega")
 
 /datum/game_mode
 	var/list/datum/mind/changelings = list()
@@ -32,10 +32,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/const/prob_right_sab_target_l = 25 // lower bound on probability of naming right sabotage target
 	var/const/prob_right_sab_target_h = 50 // upper bound on probability of naming right sabotage target
 
-	var/const/prob_right_killer_l = 25 //lower bound on probability of naming the right operative
-	var/const/prob_right_killer_h = 50 //upper bound on probability of naming the right operative
-	var/const/prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
-	var/const/prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
+	var/const/prob_right_killer_l = 25 // lower bound on probability of naming the right operative
+	var/const/prob_right_killer_h = 50 // upper bound on probability of naming the right operative
+	var/const/prob_right_objective_l = 25 // lower bound on probability of determining the objective correctly
+	var/const/prob_right_objective_h = 50 // upper bound on probability of determining the objective correctly
 
 	var/changeling_amount = 4
 
@@ -49,7 +49,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		restricted_jobs += protected_jobs
 
 	for(var/datum/mind/player in antag_candidates)
-		if(player.assigned_role in restricted_jobs)	//Removing robots from the list
+		if(player.assigned_role in restricted_jobs)	// Removing robots from the list
 			antag_candidates -= player
 
 	changeling_amount = 1 + round(num_players() / 10)
@@ -77,12 +77,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 
 /datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling)
-	//OBJECTIVES - Always absorb 5 genomes, plus random traitor objectives.
-	//If they have two objectives as well as absorb, they must survive rather than escape
-	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
-	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
+	// OBJECTIVES - Always absorb 5 genomes, plus random traitor objectives.
+	// If they have two objectives as well as absorb, they must survive rather than escape
+	// No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
+	// If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
 
-	if (config.objectives_disabled)
+	if(config.objectives_disabled)
 		return
 
 	var/datum/objective/absorb/absorb_objective = new
@@ -101,36 +101,36 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	changeling.objectives += steal_objective
 
 
-	switch(rand(1,100))
+	switch(rand(1, 100))
 		if(1 to 80)
-			if (!(locate(/datum/objective/escape) in changeling.objectives))
+			if(!(locate(/datum/objective/escape) in changeling.objectives))
 				var/datum/objective/escape/escape_objective = new
 				escape_objective.owner = changeling
 				changeling.objectives += escape_objective
 		else
-			if (!(locate(/datum/objective/survive) in changeling.objectives))
+			if(!(locate(/datum/objective/survive) in changeling.objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = changeling
 				changeling.objectives += survive_objective
 	return
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
-	if (you_are)
+	if(you_are)
 		to_chat(changeling.current, "<B>\red You are a changeling!</B>")
 	to_chat(changeling.current, "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>")
 
 	if(config.objectives_disabled)
 		to_chat(changeling.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 
-	if (!config.objectives_disabled)
+	if(!config.objectives_disabled)
 		to_chat(changeling.current, "<B>You must complete the following tasks:</B>")
 
-	if (changeling.current.mind)
-		if (changeling.current.mind.assigned_role == "Clown")
+	if(changeling.current.mind)
+		if(changeling.current.mind.assigned_role == "Clown")
 			to_chat(changeling.current, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 			changeling.current.mutations.Remove(CLUMSY)
 
-	if (!config.objectives_disabled)
+	if(!config.objectives_disabled)
 		var/obj_count = 1
 		for(var/datum/objective/objective in changeling.objectives)
 			to_chat(changeling.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
@@ -140,17 +140,17 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /*/datum/game_mode/changeling/check_finished()
 	var/changelings_alive = 0
 	for(var/datum/mind/changeling in changelings)
-		if(!istype(changeling.current,/mob/living/carbon))
+		if(!istype(changeling.current, /mob/living/carbon))
 			continue
 		if(changeling.current.stat==2)
 			continue
 		changelings_alive++
 
-	if (changelings_alive)
+	if(changelings_alive)
 		changelingdeath = 0
 		return ..()
 	else
-		if (!changelingdeath)
+		if(!changelingdeath)
 			changelingdeathtime = world.time
 			changelingdeath = 1
 		if(world.time-changelingdeathtime > TIME_TO_GET_REVIVED)
@@ -170,7 +170,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	for(var/datum/mind/changeling in changelings)
 		if(changeling.current.stat == DEAD)
-			feedback_set_details("round_end_result","loss - changeling killed")
+			feedback_set_details("round_end_result", "loss - changeling killed")
 			prefinal_text = "<FONT size = 3>Changeling <b>[changeling.changeling.changelingID]</b><i> ([changeling.key])</I> has been <font color='red'><b>killed</b></font by the crew! The Thing failed again...</FONT><BR>"
 		else
 			var/failed = 0
@@ -178,10 +178,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				if(!objective.check_completion())
 					failed = 1
 			if(!failed)
-				feedback_set_details("round_end_result","win - changeling alive")
+				feedback_set_details("round_end_result", "win - changeling alive")
 				prefinal_text = "<FONT size = 3>Changeling <b>[changeling.changeling.changelingID]</b><i> ([changeling.key])</i> managed to <font color='green'><B>complete</B></font> his mission! All humanity soon will be infested!</FONT><BR>"
 			else
-				feedback_set_details("round_end_result","loss - changeling alive")
+				feedback_set_details("round_end_result", "loss - changeling alive")
 				prefinal_text = "<FONT size = 3>Changeling <b>[changeling.changeling.changelingID]</b><i> ([changeling.key])</i> managed to stay alive, but <font color='red'><B>failed</B></font> his mission! Next time he will come more prepared!</FONT><BR>"
 		final_text += "[prefinal_text]"
 
@@ -206,7 +206,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			var/changelingwin = 1
 			if(!changeling.current)
 				changelingwin = 0
-			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
+			// Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 			text += "<BR><B>Changeling ID:</B> [changeling.changeling.changelingID]"
 			text += "<BR><B>Genomes Absorbed:</B> [changeling.changeling.absorbedcount]"
 			if(!config.objectives_disabled)
@@ -215,19 +215,19 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 					for(var/datum/objective/objective in changeling.objectives)
 						if(objective.check_completion())
 							text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-							feedback_add_details("changeling_objective","[objective.type]|SUCCESS")
+							feedback_add_details("changeling_objective", "[objective.type]|SUCCESS")
 						else
 							text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-							feedback_add_details("changeling_objective","[objective.type]|FAIL")
+							feedback_add_details("changeling_objective", "[objective.type]|FAIL")
 							changelingwin = 0
 						count++
 					if(changelingwin)
 						text += "<BR><FONT color='green'><B>The changeling was successful!</B></FONT>"
-						feedback_add_details("changeling_success","SUCCESS")
+						feedback_add_details("changeling_success", "SUCCESS")
 						score["roleswon"]++
 					else
 						text += "<BR><FONT color='red'><B>The changeling has failed.</B></FONT>"
-						feedback_add_details("changeling_success","FAIL")
+						feedback_add_details("changeling_success", "FAIL")
 					if(changeling.current && changeling.changeling.purchasedpowers)
 						text += "<BR><B>[changeling.changeling.changelingID] used the following abilities: </B>"
 						var/list/invisible_powers = list("-Evolution Menu-",
@@ -256,11 +256,11 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 					for(var/entry in changeling.uplink_items_bought)
 						text += "<BR>[entry]"
 				else
-					text += "<BR>The Changeling was a smooth operator this round (did not purchase any uplink items)"
+					text += "<BR>The Changeling was a smooth operator this round(did not purchase any uplink items)"
 		text += "<BR><HR>"
 	return text
 
-/datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
+/datum/changeling // stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID(for changeling hivemind)
 	var/list/absorbed_dna = list()
 	var/list/absorbed_species = list()
 	var/list/absorbed_languages = list()
@@ -294,7 +294,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		possible_changeling_IDs -= changelingID
 		changelingID = "[honorific] [changelingID]"
 	else
-		changelingID = "[honorific] [rand(1,999)]"
+		changelingID = "[honorific] [rand(1, 999)]"
 
 /datum/changeling/proc/regenerate()
 	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
@@ -309,7 +309,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			break
 	return chosen_dna
 /*
-//Checks if the target DNA is valid and absorbable.
+// Checks if the target DNA is valid and absorbable.
 /datum/changeling/proc/can_absorb_dna(mob/living/carbon/T, mob/living/carbon/U)
 	if(T)
 		if(NOCLONE in T.mutations || HUSK in T.mutations)

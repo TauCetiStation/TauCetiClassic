@@ -16,7 +16,7 @@
 	var/icon_off = "smartfridge-off"
 	var/icon_panel = "smartfridge-panel"
 	var/list/item_quants = list()
-	var/ispowered = 1 //starts powered
+	var/ispowered = 1 // starts powered
 	var/isbroken = 0
 	var/seconds_electrified = 0;
 	var/shoot_inventory = 0
@@ -48,7 +48,7 @@
 		max_n_of_items = 1500 * B.rating
 
 /obj/machinery/smartfridge/proc/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O, /obj/item/seeds/))
 		return 1
 	return 0
 
@@ -61,7 +61,7 @@
 	icon_off = "seeds-off"
 
 /obj/machinery/smartfridge/seeds/accept_check(obj/item/O)
-	if(istype(O,/obj/item/seeds/))
+	if(istype(O, /obj/item/seeds/))
 		return 1
 	return 0
 
@@ -70,20 +70,20 @@
 	desc = "A refrigerated storage unit for medicine storage."
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/storage/pill_bottle))
+	if(istype(O, /obj/item/weapon/storage/pill_bottle))
 		if(O.contents.len)
 			for(var/obj/item/I in O)
 				if(!accept_check(I))
 					return 0
 			return 1
 		return 0
-	if(!istype(O,/obj/item/weapon/reagent_containers))
+	if(!istype(O, /obj/item/weapon/reagent_containers))
 		return 0
-	if(istype(O,/obj/item/weapon/reagent_containers/pill)) // empty pill prank ok
+	if(istype(O, /obj/item/weapon/reagent_containers/pill)) // empty pill prank ok
 		return 1
 	if(!O.reagents || !O.reagents.reagent_list.len) // other empty containers not accepted
 		return 0
-	if(istype(O,/obj/item/weapon/reagent_containers/syringe) || istype(O,/obj/item/weapon/reagent_containers/glass/bottle) || istype(O,/obj/item/weapon/reagent_containers/glass/beaker) || istype(O,/obj/item/weapon/reagent_containers/spray))
+	if(istype(O, /obj/item/weapon/reagent_containers/syringe) || istype(O, /obj/item/weapon/reagent_containers/glass/bottle) || istype(O, /obj/item/weapon/reagent_containers/glass/beaker) || istype(O, /obj/item/weapon/reagent_containers/spray))
 		return 1
 	return 0
 
@@ -93,23 +93,23 @@
 	req_access_txt = "47"
 
 /obj/machinery/smartfridge/secure/extract/accept_check(obj/item/O)
-	if(istype(O,/obj/item/slime_extract))
+	if(istype(O, /obj/item/slime_extract))
 		return 1
 	return 0
 
 /obj/machinery/smartfridge/secure/medbay
 	name = "\improper Refrigerated Medicine Storage"
 	desc = "A refrigerated storage unit for storing medicine and chemicals."
-	icon_state = "smartfridge" //To fix the icon in the map editor.
+	icon_state = "smartfridge" // To fix the icon in the map editor.
 	icon_on = "smartfridge_chem"
 	req_one_access_txt = "5;33"
 
 /obj/machinery/smartfridge/secure/medbay/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/glass/))
+	if(istype(O, /obj/item/weapon/reagent_containers/glass/))
 		return 1
-	if(istype(O,/obj/item/weapon/storage/pill_bottle/))
+	if(istype(O, /obj/item/weapon/storage/pill_bottle/))
 		return 1
-	if(istype(O,/obj/item/weapon/reagent_containers/pill/))
+	if(istype(O, /obj/item/weapon/reagent_containers/pill/))
 		return 1
 	return 0
 
@@ -122,9 +122,9 @@
 	icon_off = "smartfridge_virology-off"
 
 /obj/machinery/smartfridge/secure/virology/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial/))
+	if(istype(O, /obj/item/weapon/reagent_containers/glass/beaker/vial/))
 		return 1
-	if(istype(O,/obj/item/weapon/virusdish/))
+	if(istype(O, /obj/item/weapon/virusdish/))
 		return 1
 	return 0
 
@@ -133,7 +133,7 @@
 	desc = "A refrigerated storage unit for medicine and chemical storage."
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/storage/pill_bottle) || istype(O,/obj/item/weapon/reagent_containers))
+	if(istype(O, /obj/item/weapon/storage/pill_bottle) || istype(O, /obj/item/weapon/reagent_containers))
 		return 1
 	return 0
 
@@ -147,7 +147,7 @@
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
+	if(istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O, /obj/item/weapon/reagent_containers/food/drinks) || istype(O, /obj/item/weapon/reagent_containers/food/condiment))
 		return 1
 
 /obj/machinery/smartfridge/process()
@@ -234,7 +234,7 @@
 					to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 					return 1
 				else
-					P.remove_from_storage(G,src)
+					P.remove_from_storage(G, src)
 					if(item_quants[G.name])
 						item_quants[G.name]++
 					else
@@ -255,7 +255,7 @@
 		return 1
 
 /obj/machinery/smartfridge/secure/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/weapon/card/emag))
+	if(istype(O, /obj/item/weapon/card/emag))
 		emagged = 1
 		locked = -1
 		to_chat(user, "You short out the product lock on [src].")
@@ -287,7 +287,7 @@
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	user.set_machine(src)
 
-	var/is_secure = istype(src,/obj/machinery/smartfridge/secure)
+	var/is_secure = istype(src, /obj/machinery/smartfridge/secure)
 
 	var/data[0]
 	data["contents"] = null
@@ -297,17 +297,17 @@
 	data["secure"] = is_secure
 
 	var/list/items[0]
-	for (var/i=1 to length(item_quants))
+	for(var/i=1 to length(item_quants))
 		var/K = item_quants[i]
 		var/count = item_quants[K]
-		if (count > 0)
+		if(count > 0)
 			items.Add(list(list("display_name" = html_encode(capitalize(K)), "vend" = i, "quantity" = count)))
 
-	if (items.len > 0)
+	if(items.len > 0)
 		data["contents"] = items
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "smartfridge.tmpl", src.name, 400, 500)
 		ui.set_initial_data(data)
 		ui.open()
@@ -320,12 +320,12 @@
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	if (href_list["close"])
+	if(href_list["close"])
 		user.unset_machine()
 		ui.close()
 		return FALSE
 
-	if (href_list["vend"])
+	if(href_list["vend"])
 		var/index = text2num(href_list["vend"])
 		var/amount = text2num(href_list["amount"])
 		var/K = item_quants[index]
@@ -337,22 +337,22 @@
 
 			var/i = amount
 			for(var/obj/O in contents)
-				if (O.name == K)
+				if(O.name == K)
 					O.loc = loc
 					i--
-					if (i <= 0)
+					if(i <= 0)
 						return TRUE
 
 		return TRUE
 
 /obj/machinery/smartfridge/proc/throw_item()
 	var/obj/throw_item = null
-	var/mob/living/target = locate() in view(7,src)
+	var/mob/living/target = locate() in view(7, src)
 	if(!target)
 		return 0
 
-	for (var/O in item_quants)
-		if(item_quants[O] <= 0) //Try to use a record that actually has something to dump.
+	for(var/O in item_quants)
+		if(item_quants[O] <= 0) // Try to use a record that actually has something to dump.
 			continue
 
 		item_quants[O]--
@@ -364,7 +364,7 @@
 		break
 	if(!throw_item)
 		return 0
-	throw_item.throw_at(target,16,3,src)
+	throw_item.throw_at(target, 16, 3, src)
 	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
 	return 1
 
@@ -386,6 +386,6 @@
 	. = ..()
 	if(!.)
 		return
-	if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
+	if(!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
 		to_chat(usr, "\red Access denied.")
 		return FALSE

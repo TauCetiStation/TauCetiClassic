@@ -1,4 +1,4 @@
-//NEVER USE THIS IT SUX	-PETETHEGOAT
+// NEVER USE THIS IT SUX	-PETETHEGOAT
 
 var/global/list/cached_icons = list()
 
@@ -12,7 +12,7 @@ var/global/list/cached_icons = list()
 	g_amt = 0
 	w_class = 3.0
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10,20,30,50,70)
+	possible_transfer_amounts = list(10, 20, 30, 50, 70)
 	volume = 70
 	flags = OPENCONTAINER
 	var/paint_type = ""
@@ -36,7 +36,7 @@ var/global/list/cached_icons = list()
 		..()
 		reagents.add_reagent("paint_[paint_type]", volume)
 
-	on_reagent_change() //Until we have a generic "paint", this will give new colours to all paints in the can
+	on_reagent_change() // Until we have a generic "paint", this will give new colours to all paints in the can
 		var/mixedcolor = mix_color_from_reagents(reagents.reagent_list)
 		for(var/datum/reagent/paint/P in reagents.reagent_list)
 			P.color = mixedcolor
@@ -125,7 +125,7 @@ var/global/list/cached_icons = list()
 
 	attack_self(mob/user)
 		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "black", "white")
-		if ((user.get_active_hand() != src || user.stat || user.restrained()))
+		if((user.get_active_hand() != src || user.stat || user.restrained()))
 			return
 		switch(t1)
 			if("red")
@@ -154,7 +154,7 @@ var/global/list/cached_icons = list()
 	var/ind = "[initial(target.icon)][color]"
 	if(!cached_icons[ind])
 		var/icon/overlay = new/icon(initial(target.icon))
-		overlay.Blend("#[color]",ICON_MULTIPLY)
+		overlay.Blend("#[color]", ICON_MULTIPLY)
 		overlay.SetIntensity(1.4)
 		target.icon = overlay
 		cached_icons[ind] = target.icon
@@ -186,7 +186,7 @@ datum/reagent/paint
 		var/ind = "[initial(T.icon)][color]"
 		if(!cached_icons[ind])
 			var/icon/overlay = new/icon(initial(T.icon))
-			overlay.Blend(color,ICON_MULTIPLY)
+			overlay.Blend(color, ICON_MULTIPLY)
 			overlay.SetIntensity(1.4)
 			T.icon = overlay
 			cached_icons[ind] = T.icon

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector
@@ -26,7 +26,7 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/process()
 	if(P)
 		if(P.air_contents.phoron <= 0)
-			investigate_log("<font color='red'>out of fuel</font>.","singulo")
+			investigate_log("<font color='red'>out of fuel</font>.", "singulo")
 			P.air_contents.phoron = 0
 			eject()
 		else
@@ -40,7 +40,7 @@ var/global/list/rad_collectors = list()
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"You turn the [src.name] [active? "on":"off"].")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.phoron/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.phoron/0.29)]%":"<font color='red'>It is empty</font>"].", "singulo")
 			return
 		else
 			to_chat(user, "\red The controls are locked!")
@@ -81,12 +81,12 @@ var/global/list/rad_collectors = list()
 		else
 			disconnect_from_network()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+		if(src.allowed(user))
 			if(active)
 				src.locked = !src.locked
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 			else
-				src.locked = 0 //just in case it somehow gets locked
+				src.locked = 0 // just in case it somehow gets locked
 				to_chat(user, "\red The controls can only be locked when the [src] is active")
 		else
 			to_chat(user, "\red Access denied!")
@@ -106,7 +106,7 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
 	var/obj/item/weapon/tank/phoron/Z = src.P
-	if (!Z)
+	if(!Z)
 		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)

@@ -25,10 +25,10 @@
 
 /obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params)
 	var/turf/curloc = user.loc
-	if (!istype(targloc) || !istype(curloc) || !BB)
+	if(!istype(targloc) || !istype(curloc) || !BB)
 		return 0
 	if(targloc == curloc)
-		if(target) //if the target is right on our location we go straight to bullet_act()
+		if(target) // if the target is right on our location we go straight to bullet_act()
 			target.bullet_act(BB, BB.def_zone)
 		qdel(BB)
 		BB = null

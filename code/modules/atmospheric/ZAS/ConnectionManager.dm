@@ -12,7 +12,7 @@ Class Vars:
 Class Procs:
 
 	get(d)
-		Returns the connection (if any) in this direction.
+		Returns the connection(if any) in this direction.
 		Preferable to accessing the connection directly because it checks validity.
 
 	place(connection/c, d)

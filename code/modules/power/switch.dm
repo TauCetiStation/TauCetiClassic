@@ -1,7 +1,7 @@
-//This is a power switch. When turned on it looks at the cables around the tile that it's on and notes which cables are trying to connect to it.
-//After it knows this it creates the number of cables from the center to each of the cables attempting to conenct. These cables cannot be removed
-//with wirecutters. When the switch is turned off it removes all the cables on the tile it's on.
-//The switch uses a 5s delay to prevent powernet change spamming.
+// This is a power switch. When turned on it looks at the cables around the tile that it's on and notes which cables are trying to connect to it.
+// After it knows this it creates the number of cables from the center to each of the cables attempting to conenct. These cables cannot be removed
+// with wirecutters. When the switch is turned off it removes all the cables on the tile it's on.
+// The switch uses a 5s delay to prevent powernet change spamming.
 
 /obj/structure/powerswitch
 	name = "power switch"
@@ -12,8 +12,8 @@
 	var/icon_state_off = "switch-dbl-up"
 	density = 0
 	anchored = 1
-	var/on = 0  //up is off, down is on
-	var/busy = 0 //set to 1 when you start pulling
+	var/on = 0  // up is off, down is on
+	var/busy = 0 // set to 1 when you start pulling
 
 /obj/structure/powerswitch/simple
 	icon_state = "switch-up"
@@ -55,8 +55,8 @@
 	if(on)
 		icon_state = icon_state_on
 		var/list/connection_dirs = list()
-		for(var/direction in list(1,2,4,8,5,6,9,10))
-			for(var/obj/structure/cable/C in get_step(src,direction))
+		for(var/direction in list(1, 2, 4, 8, 5, 6, 9, 10))
+			for(var/obj/structure/cable/C in get_step(src, direction))
 				if(C.d1 == turn(direction, 180) || C.d2 == turn(direction, 180))
 					connection_dirs += direction
 					break

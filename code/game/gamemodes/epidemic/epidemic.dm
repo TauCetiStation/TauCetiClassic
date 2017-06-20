@@ -15,7 +15,7 @@
 	var/doctors = 0
 
 ///////////////////////////
-//Announces the game type//
+// Announces the game type//
 ///////////////////////////
 /datum/game_mode/epidemic/announce()
 	to_chat(world, "<B>The current game mode is - Epidemic!</B>")
@@ -23,12 +23,12 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-//Gets the round setup, cancelling if there's not enough players at the start//
+// Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/epidemic/pre_setup()
 	doctors = 0
 	for(var/mob/new_player/player in mob_list)
-		if(player.mind.assigned_role in list("Chief Medical Officer","Medical Doctor"))
+		if(player.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
 			doctors++
 			break
 
@@ -38,7 +38,7 @@
 	return 1
 
 /datum/game_mode/epidemic/proc/cruiser_seconds()
-	return (cruiser_arrival - world.time) / 10
+	return(cruiser_arrival - world.time) / 10
 
 ////////////////////// INTERCEPT ////////////////////////
 /// OVERWRITE THE INTERCEPT WITH A QUARANTINE WARNING ///
@@ -46,10 +46,10 @@
 
 /datum/game_mode/epidemic/send_intercept()
 	var/intercepttext = "<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</FONT><HR>"
-	virus_name = "X-[rand(1,99)]&trade;"
+	virus_name = "X-[rand(1, 99)]&trade;"
 	intercepttext += "<B>Warning: Pathogen [virus_name] has been detected on [station_name()].</B><BR><BR>"
 	intercepttext += "<B>Code violet quarantine of [station_name()] put under immediate effect.</B><BR>"
-	intercepttext += "<B>Class [rand(2,5)] cruiser has been dispatched. ETA: [round(cruiser_seconds() / 60)] minutes.</B><BR>"
+	intercepttext += "<B>Class [rand(2, 5)] cruiser has been dispatched. ETA: [round(cruiser_seconds() / 60)] minutes.</B><BR>"
 	intercepttext += "<BR><B><FONT size = 2 color='blue'>Instructions</FONT></B><BR>"
 	intercepttext += "<B>* ELIMINATE THREAT WITH EXTREME PREJUDICE. [virus_name] IS HIGHLY CONTAGIOUS. INFECTED CREW MEMBERS MUST BE QUARANTINED IMMEDIATELY.</B><BR>"
 	intercepttext += "<B>* [station_name()] is under QUARANTINE. Any vessels outbound from [station_name()] will be tracked down and destroyed.</B><BR>"
@@ -57,8 +57,8 @@
 	intercepttext += "<B>* A cure is to be researched immediately, but NanoTrasen intellectual property must be respected. To prevent knowledge of [virus_name] from falling into unauthorized hands, all medical staff that work with the pathogen must be enhanced with a NanoTrasen loyality implant.</B><BR>"
 
 
-	for (var/obj/machinery/computer/communications/comm in machines)
-		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+	for(var/obj/machinery/computer/communications/comm in machines)
+		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "paper"
 			intercept.info = intercepttext
@@ -79,8 +79,8 @@
 	intercepttext += "<FONT size = 2;color='red'><B>PATHOGEN [virus_name] IS STILL PRESENT ON [station_name()]. IN COMPLIANCE WITH NANOTRASEN LAWS FOR INTERSTELLAR SAFETY, EMERGENCY SAFETY MEASURES HAVE BEEN AUTHORIZED. ALL INFECTED CREW MEMBERS ON [station_name()] ARE TO BE NEUTRALIZED AND DISPOSED OF IN A MANNER THAT WILL DESTROY ALL TRACES OF THE PATHOGEN. FAILURE TO COMPLY WILL RESULT IN IMMEDIATE DESTRUCTION OF [station_name].</B></FONT><BR>"
 	intercepttext += "<B>CRUISER WILL ARRIVE IN [round(cruiser_seconds()/60)] MINUTES</B><BR>"
 
-	for (var/obj/machinery/computer/communications/comm in machines)
-		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+	for(var/obj/machinery/computer/communications/comm in machines)
+		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "paper"
 			intercept.info = intercepttext
@@ -157,7 +157,7 @@
 	return 0
 
 //////////////////////////////////////
-//Checks if the revs have won or not//
+// Checks if the revs have won or not//
 //////////////////////////////////////
 /datum/game_mode/epidemic/check_win()
 	var/alive = 0
@@ -173,7 +173,7 @@
 	return
 
 ///////////////////////////////
-//Checks if the round is over//
+// Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/epidemic/check_finished()
 	if(finished != 0)
@@ -182,7 +182,7 @@
 		return 0
 
 ///////////////////////////////////////////
-///Handle crew failure(station explodes)///
+/// Handle crew failure(station explodes)///
 ///////////////////////////////////////////
 /datum/game_mode/epidemic/proc/crew_lose()
 	ticker.mode:explosion_in_progress = 1
@@ -190,13 +190,13 @@
 		if(M.client)
 			M << 'sound/machines/Alarm.ogg'
 	to_chat(world, "\blue<b>Incoming missile detected.. Impact in 10..</b>")
-	for (var/i=9 to 1 step -1)
+	for(var/i=9 to 1 step -1)
 		sleep(10)
 		to_chat(world, "\blue<b>[i]..</b>")
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)
-		ticker.station_explosion_cinematic(0,null)
+		ticker.station_explosion_cinematic(0, null)
 		if(ticker.mode)
 			ticker.mode:station_was_nuked = 1
 			ticker.mode:explosion_in_progress = 0
@@ -205,14 +205,14 @@
 
 
 //////////////////////////////////////////////////////////////////////
-//Announces the end of the game with all relavent information stated//
+// Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/epidemic/declare_completion()
 	if(finished == 1)
-		feedback_set_details("round_end_result","win - epidemic cured")
+		feedback_set_details("round_end_result", "win - epidemic cured")
 		to_chat(world, "\red <FONT size = 3><B> The virus outbreak was contained! The crew wins!</B></FONT>")
 	else if(finished == 2)
-		feedback_set_details("round_end_result","loss - rev heads killed")
+		feedback_set_details("round_end_result", "loss - rev heads killed")
 		to_chat(world, "\red <FONT size = 3><B> The crew succumbed to the epidemic!</B></FONT>")
 	..()
 	return 1

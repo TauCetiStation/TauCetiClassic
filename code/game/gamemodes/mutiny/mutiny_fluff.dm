@@ -9,8 +9,8 @@
 		return ..()
 
 	proc/announce_directives()
-		for (var/obj/machinery/faxmachine/fax in machines)
-			if (fax.department == "Captain's Office")
+		for(var/obj/machinery/faxmachine/fax in machines)
+			if(fax.department == "Captain's Office")
 				var/obj/item/weapon/paper/directive_x = new(fax.loc)
 				directive_x.name = "emergency action message"
 				directive_x.info = get_fax_body()
@@ -52,7 +52,7 @@
 
 			<b>Encoded Authentication String:</b> <small>T0JCJUwoIVFDQA==</small><br>
 			<b>Emergency Action Code:</b> O B B _ L _ _ Q C _<br>
-			<font color='red'><u>ERROR: DECODING INCOMPLETE (40% LOSS)</u></font>
+			<font color='red'><u>ERROR: DECODING INCOMPLETE(40% LOSS)</u></font>
 			<br>
 			<br>
 			<br>
@@ -81,7 +81,7 @@ Be safe, friend.\" (Unable to Reply)</p>"}
 <p>The crew will be divided by their sense of ethics when a morally turbulent emergency directive arrives with an incomplete command validation code.<br><br>
 The [loyalist_tag("Head Loyalist")] is the Captain, who carries the [loyalist_tag("Captain's Authentication Key")] at all times.<br>
 The [mutineer_tag("Head Mutineer")] is a random Head of Staff who carries the [mutineer_tag("Emergency Secondary Authentication Key")].</p>
-Both keys are required to activate the <b>Emergency Authentication Device (EAD)</b> in the vault, signalling to NanoTrasen that the directive is complete.
+Both keys are required to activate the <b>Emergency Authentication Device(EAD)</b> in the vault, signalling to NanoTrasen that the directive is complete.
 <hr>
 <p>
 <b>Loyalists</b> - Follow the Head Loyalist in carrying out [loyalist_tag("NanoTrasen's directives")] then activate the <b>EAD</b>.<br>
@@ -96,9 +96,9 @@ Both keys are required to activate the <b>Emergency Authentication Device (EAD)<
 		return "<font color='#FFA500'><b>[text]</b></font>"
 
 	proc/their(datum/mind/head)
-		if (head.current.gender == MALE)
+		if(head.current.gender == MALE)
 			return "his"
-		else if (head.current.gender == FEMALE)
+		else if(head.current.gender == FEMALE)
 			return "her"
 
 		return "their"
@@ -165,7 +165,7 @@ NanoTrasen has [mode.loyalists.len] members of the crew in holding, while it inv
 <center><b>Gilthari Exports Incident Transcript</b></center>
 <center><font color='red'>CONFIDENTIAL: PROPERTY OF NANOTRASEN</font></center>
 <i>Location:</i> Operator's Desk, D Deck, Polumetis Installation<br>
-<i>Time:</i> 16:11, May 24, 2558 (Sol Reckoning)<br>
+<i>Time:</i> 16:11, May 24, 2558(Sol Reckoning)<br>
 <br>
 <br>
 

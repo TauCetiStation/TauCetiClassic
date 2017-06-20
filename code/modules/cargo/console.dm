@@ -11,7 +11,7 @@
 	var/hacked = FALSE
 	var/temp = ""
 	var/last_viewed_group = "categories"
-	var/reqtime = 0 //Cooldown for requisitions - Quarxink
+	var/reqtime = 0 // Cooldown for requisitions - Quarxink
 	var/safety_warning = "For safety reasons the automated supply shuttle \
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
@@ -48,7 +48,7 @@
 		dat = temp
 	else
 		dat += {"<BR><B>Supply shuttle</B><HR>
-		Location: [SSshuttle.moving ? "Moving to station ([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>
+		Location: [SSshuttle.moving ? "Moving to station([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>
 		<HR>Supply points: [SSshuttle.points]<BR>\n<BR>"}
 		if(requestonly)
 			dat += "\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>"
@@ -84,15 +84,15 @@
 			SSshuttle.moving = 1
 			SSshuttle.buy()
 			SSshuttle.eta_timeofday = (world.timeofday + SSshuttle.movetime) % 864000
-			temp = "The supply shuttle has been called and will arrive in [round(SSshuttle.movetime/600,1)] minutes.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			temp = "The supply shuttle has been called and will arrive in [round(SSshuttle.movetime/600, 1)] minutes.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 			post_signal("supply")
 
 	if(href_list["order"])
 		if(!requestonly && SSshuttle.moving)
 			return
 		if(href_list["order"] == "categories")
-			//all_supply_groups
-			//Request what?
+			// all_supply_groups
+			// Request what?
 			last_viewed_group = "categories"
 			temp = "<b>Supply points: [SSshuttle.points]</b><BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
@@ -108,22 +108,22 @@
 				var/datum/supply_pack/N = SSshuttle.supply_packs[supply_name]
 				if(requestonly)
 					if(N.hidden || N.contraband || N.group != last_viewed_group)
-						continue	//Have to send the type instead of a reference to
+						continue	// Have to send the type instead of a reference to
 				else if((N.hidden && !hacked) || (N.contraband && !contraband) || N.group != last_viewed_group)
 					continue
-				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
+				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"		// the obj because it would get caught by the garbage
 
 	if(href_list["doorder"])
 		if(world.time < reqtime)
 			for(var/mob/V in hearers(src))
 				V.show_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
 			return FALSE
-		//Find the correct supply_pack datum
+		// Find the correct supply_pack datum
 		var/datum/supply_pack/P = SSshuttle.supply_packs[href_list["doorder"]]
 		if(!istype(P))
 			return FALSE
 		var/timeout = world.time + 600
-		var/reason = sanitize_alt(copytext(input(usr,"Reason:","Why do you require this item?","") as null|text,1,MAX_MESSAGE_LEN))
+		var/reason = sanitize_alt(copytext(input(usr, "Reason:", "Why do you require this item?", "") as null|text, 1, MAX_MESSAGE_LEN))
 		if(world.time > timeout)
 			return FALSE
 		if(!reason)
@@ -140,10 +140,10 @@
 
 		reqtime = (world.time + 5) % 1e5
 
-		//make our supply_order datum
+		// make our supply_order datum
 		var/datum/supply_order/O = new /datum/supply_order(P, idname, idrank, usr.ckey, reason)
 		SSshuttle.requestlist += O
-		O.generateRequisition(loc) //print supply request
+		O.generateRequisition(loc) // print supply request
 
 		if(requestonly)
 			temp = "Thanks for your request. The cargo team will process it as soon as possible.<BR>"
@@ -153,7 +153,7 @@
 			temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> | <A href='?src=\ref[src];mainmenu=1'>Main Menu</A> | <A href='?src=\ref[src];confirmorder=[O.id]'>Authorize Order</A>"
 
 	if(href_list["confirmorder"])
-		//Find the correct supply_order datum
+		// Find the correct supply_order datum
 		var/ordernum = text2num(href_list["confirmorder"])
 		var/datum/supply_order/O
 		var/datum/supply_pack/P
@@ -164,7 +164,7 @@
 				O = SO
 				P = O.object
 				if(SSshuttle.points >= P.cost)
-					SSshuttle.requestlist.Cut(i,i+1)
+					SSshuttle.requestlist.Cut(i, i+1)
 					SSshuttle.points -= P.cost
 					SSshuttle.shoppinglist += O
 					temp = "Thanks for your order.<BR>"
@@ -196,18 +196,18 @@
 			temp += "<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
-	else if (href_list["rreq"])
+	else if(href_list["rreq"])
 		var/ordernum = text2num(href_list["rreq"])
 		temp = "Invalid Request.<BR>"
 		for(var/i = 1 to SSshuttle.requestlist.len)
 			var/datum/supply_order/SO = SSshuttle.requestlist[i]
 			if(SO.id == ordernum)
-				SSshuttle.requestlist.Cut(i,i+1)
+				SSshuttle.requestlist.Cut(i, i+1)
 				temp = "Request removed.<BR>"
 				break
 		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
-	else if (href_list["clearreq"])
+	else if(href_list["clearreq"])
 		SSshuttle.requestlist.Cut()
 		temp = "List cleared.<BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"

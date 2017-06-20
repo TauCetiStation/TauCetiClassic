@@ -3,7 +3,7 @@
 	desc = "A window."
 	icon = 'icons/obj/window.dmi'
 	density = 1
-	layer = 3.2//Just above doors
+	layer = 3.2// Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1.0
 	flags = ON_BORDER
@@ -13,10 +13,10 @@
 	var/state = 2
 	var/reinf = 0
 	var/basestate
-	var/can_merge = 1	//Sometimes it's needed
+	var/can_merge = 1	// Sometimes it's needed
 	var/shardtype = /obj/item/weapon/shard
 	var/image/crack_overlay
-	var/damage_threshold = 5	//This will be deducted from any physical damage source.
+	var/damage_threshold = 5	// This will be deducted from any physical damage source.
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
@@ -25,7 +25,7 @@
 	var/message = 1
 	var/fulltile = 0
 
-	//if(silicate)
+	// if(silicate)
 	//	damage = damage * (1 - silicate / 200)
 
 	if(is_fulltile())
@@ -68,22 +68,22 @@
 		var/index = null
 		index = 0
 		while(index < 2)
-			new shardtype(loc) //todo pooling?
+			new shardtype(loc) // todo pooling?
 			if(reinf)
 				new /obj/item/stack/rods(loc)
 			index++
 	else
-		new shardtype(loc) //todo pooling?
+		new shardtype(loc) // todo pooling?
 		if(reinf)
 			new /obj/item/stack/rods(loc)
 	qdel(src)
 	return
 
 /obj/structure/window/bullet_act(obj/item/projectile/Proj)
-	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
+	if(Proj.pass_flags & PASSGLASS)	// Lasers mostly use this flag.. Why should they able to focus damage with direct click...
 		return -1
 
-	//Tasers and the like should not damage windows.
+	// Tasers and the like should not damage windows.
 	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		return
 
@@ -118,7 +118,7 @@
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
-		return 0	//full tile window, you can't move into it!
+		return 0	// full tile window, you can't move into it!
 	if(get_dir(loc, target) & dir)
 		return !density
 	else
@@ -161,15 +161,15 @@
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
 
-/obj/structure/window/attack_hand(mob/user)	//specflags please!!
+/obj/structure/window/attack_hand(mob/user)	// specflags please!!
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.do_attack_animation(src)
-		take_damage(rand(15,25), "generic")
+		take_damage(rand(15, 25), "generic")
 	else if(user.dna && user.dna.mutantrace == "adamantine")
 		user.do_attack_animation(src)
-		take_damage(rand(15,25), "generic")
-	else if (usr.a_intent == "hurt")
+		take_damage(rand(15, 25), "generic")
+	else if(usr.a_intent == "hurt")
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
 		usr.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
 							"<span class='danger'>You bang against the [src.name]!</span>", \
@@ -223,20 +223,20 @@
 
 /obj/structure/window/attackby(obj/item/W, mob/user)
 	if(!istype(W))
-		return//I really wish I did not need this
+		return// I really wish I did not need this
 
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
 		return
 
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if(istype(W, /obj/item/weapon/grab) && get_dist(src, user)<2)
 		var/obj/item/weapon/grab/G = W
-		if (istype(G.affecting, /mob/living))
+		if(istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant
 			var/state = G.state
-			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
-			switch (state)
+			qdel(W)	// gotta delete it here because if window breaks, it won't get deleted
+			switch(state)
 				if(1)
 					M.apply_damage(7)
 					take_damage(7)
@@ -245,7 +245,7 @@
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams [M.name] against \the [src]([M.ckey])</font>"
 					msg_admin_attack("[key_name(A)] slams [key_name(M)] into \the [src]")
 				if(2)
-					if (prob(50))
+					if(prob(50))
 						M.Weaken(1)
 					M.apply_damage(8)
 					take_damage(9)
@@ -262,7 +262,7 @@
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Crushes [M.name] against \the [src]([M.ckey])</font>"
 					msg_admin_attack("[key_name(A)] crushes [key_name(M)] against \the [src]")
 			return
-	if(istype(W,/obj/item/weapon/changeling_hammer))
+	if(istype(W, /obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/C = W
 		if(C.use_charge(user))
 			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
@@ -298,7 +298,7 @@
 		..()
 	return
 
-//painter
+// painter
 /obj/structure/window/proc/change_paintjob(obj/item/C, mob/user)
 	var/obj/item/weapon/airlock_painter/W
 	if(istype(C, /obj/item/weapon/airlock_painter))
@@ -322,14 +322,14 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(isobserver(usr)) //to stop ghosts from rotating
+	if(isobserver(usr)) // to stop ghosts from rotating
 		return
 
 	if(anchored)
 		to_chat(usr, "It is fastened to the floor therefore you can't rotate it!")
 		return 0
 
-	update_nearby_tiles(need_rebuild=1) //Compel updates before
+	update_nearby_tiles(need_rebuild=1) // Compel updates before
 	dir = turn(dir, 90)
 //	updateSilicate()
 	update_nearby_tiles(need_rebuild=1)
@@ -342,14 +342,14 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(isobserver(usr)) //to stop ghosts from rotating
+	if(isobserver(usr)) // to stop ghosts from rotating
 		return
 
 	if(anchored)
 		to_chat(usr, "It is fastened to the floor therefore you can't rotate it!")
 		return 0
 
-	update_nearby_tiles(need_rebuild=1) //Compel updates before
+	update_nearby_tiles(need_rebuild=1) // Compel updates before
 	dir = turn(dir, 270)
 //	updateSilicate()
 	update_nearby_tiles(need_rebuild=1)
@@ -362,12 +362,12 @@
 	if(silicateIcon && silicate)
 		icon = initial(icon)
 
-		var/icon/I = icon(icon,icon_state,dir)
+		var/icon/I = icon(icon, icon_state, dir)
 
 		var/r = (silicate / 100) + 1
 		var/g = (silicate / 70) + 1
 		var/b = (silicate / 50) + 1
-		I.SetIntensity(r,g,b)
+		I.SetIntensity(r, g, b)
 		icon = I
 		silicateIcon = I
 */
@@ -401,7 +401,7 @@
 	update_nearby_tiles(need_rebuild=1)
 
 
-//This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_tiles().
+// This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_tiles().
 /obj/structure/window/proc/update_nearby_tiles(need_rebuild)
 	if(!SSair)
 		return 0
@@ -409,24 +409,24 @@
 
 	return 1
 
-//checks if this window is full-tile one
+// checks if this window is full-tile one
 /obj/structure/window/proc/is_fulltile()
 	if(dir & (dir - 1))
 		return 1
 	return 0
 
-//This proc is used to update the icons of nearby windows. It should not be confused with update_nearby_tiles(), which is an atmos proc!
+// This proc is used to update the icons of nearby windows. It should not be confused with update_nearby_tiles(), which is an atmos proc!
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
 	for(var/direction in cardinal)
-		for(var/obj/structure/window/W in get_step(src,direction) )
+		for(var/obj/structure/window/W in get_step(src, direction) )
 			W.update_icon()
 
-//merges adjacent full-tile windows into one (blatant ripoff from game/smoothwall.dm)
+// merges adjacent full-tile windows into one(blatant ripoff from game/smoothwall.dm)
 /obj/structure/window/update_icon()
-	//A little cludge here, since I don't know how it will work with slim windows. Most likely VERY wrong.
-	//this way it will only update full-tile ones
-	//This spawn is here so windows get properly updated when one gets deleted.
+	// A little cludge here, since I don't know how it will work with slim windows. Most likely VERY wrong.
+	// this way it will only update full-tile ones
+	// This spawn is here so windows get properly updated when one gets deleted.
 	spawn(2)
 		if(!src)
 			return
@@ -434,12 +434,12 @@
 			icon_state = "[basestate]"
 			return
 
-		var/junction = 0 //will be used to determine from which side the window is connected to other windows
+		var/junction = 0 // will be used to determine from which side the window is connected to other windows
 		if(anchored)
-			for(var/obj/structure/window/W in orange(src,1))
-				if(W.anchored && W.density && W.is_fulltile() && W.can_merge) //Only counts anchored, not-destroyed fill-tile windows.
-					if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
-						junction |= get_dir(src,W)
+			for(var/obj/structure/window/W in orange(src, 1))
+				if(W.anchored && W.density && W.is_fulltile() && W.can_merge) // Only counts anchored, not-destroyed fill-tile windows.
+					if(abs(x-W.x)-abs(y-W.y) ) 		// doesn't count windows, placed diagonally to src
+						junction |= get_dir(src, W)
 		icon_state = "[basestate][junction]"
 
 		var/ratio = health / maxhealth
@@ -448,7 +448,7 @@
 		overlays -= crack_overlay
 		if(ratio > 75)
 			return
-		crack_overlay = image('icons/obj/window.dmi',"damage[ratio]",-(layer+0.1))
+		crack_overlay = image('icons/obj/window.dmi', "damage[ratio]",-(layer+0.1))
 		overlays += crack_overlay
 
 /obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -504,7 +504,7 @@
 	basestate = "twindow"
 	opacity = 1
 
-/obj/structure/window/reinforced/tinted/frosted //Actually, there is no icon for this!!
+/obj/structure/window/reinforced/tinted/frosted // Actually, there is no icon for this!!
 	name = "frosted window"
 	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
 	icon_state = "fwindow"
@@ -523,5 +523,5 @@
 	dir = 5
 	damage_threshold = 30
 
-/obj/structure/window/shuttle/update_icon() //icon_state has to be set manually
+/obj/structure/window/shuttle/update_icon() // icon_state has to be set manually
 	return

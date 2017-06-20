@@ -12,7 +12,7 @@
 		if("delta")
 			level = SEC_LEVEL_DELTA
 
-	//Will not be announced if you try to set to the same level as it already is
+	// Will not be announced if you try to set to the same level as it already is
 	if(level >= SEC_LEVEL_GREEN && level <= SEC_LEVEL_DELTA && level != security_level)
 		switch(level)
 			if(SEC_LEVEL_GREEN)
@@ -44,7 +44,7 @@
 					to_chat(world, "<font color='red'>[config.alert_desc_red_downto]</font>")
 				security_level = SEC_LEVEL_RED
 
-				var/obj/machinery/computer/communications/CC = locate(/obj/machinery/computer/communications,world)
+				var/obj/machinery/computer/communications/CC = locate(/obj/machinery/computer/communications, world)
 				if(CC)
 					CC.post_status("alert", "redalert")
 

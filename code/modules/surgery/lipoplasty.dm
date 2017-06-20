@@ -30,12 +30,12 @@
 /datum/surgery_step/lipoplasty/cut_fat/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to cut away [target]'s excess fat with \the [tool].", \
 	"You begin to cut away [target]'s excess fat with \the [tool].")
-	if (target.overeatduration > 0)
-		target.custom_pain("Something hurts horribly in your chest!",1)
+	if(target.overeatduration > 0)
+		target.custom_pain("Something hurts horribly in your chest!", 1)
 	..()
 
 /datum/surgery_step/lipoplasty/cut_fat/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (target.overeatduration > 0)
+	if(target.overeatduration > 0)
 		user.visible_message("\blue [user] cuts [target]'s excess fat loose with \the [tool].",		\
 		"\blue You have cut [target]'s excess fat loose with \the [tool].")
 		target.op_stage.lipoplasty = 1
@@ -44,7 +44,7 @@
 		"\blue Unfortunately, there is nothing to cut on [target] with \the [tool].")
 
 /datum/surgery_step/lipoplasty/cut_fat/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\red [user]'s hand slips, cutting [target]'s chest with \the [tool]!" , \
+	user.visible_message("\red [user]'s hand slips, cutting [target]'s chest with \the [tool]!", \
 	"\red Your hand slips, cutting [target]'s chest with \the [tool]!" )
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.createwound(CUT, 30)
@@ -66,13 +66,13 @@
 /datum/surgery_step/lipoplasty/remove_fat/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to extract [target]'s loose fat with \the [tool].", \
 	"You begin to extract [target]'s loose fat with \the [tool].")
-	if (target.overeatduration > 0)
-		target.custom_pain("Something hurts horribly in your chest!",1)
+	if(target.overeatduration > 0)
+		target.custom_pain("Something hurts horribly in your chest!", 1)
 	..()
 
 /datum/surgery_step/lipoplasty/remove_fat/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	target.op_stage.lipoplasty = 0
-	if (target.overeatduration > 0)
+	if(target.overeatduration > 0)
 		user.visible_message("\blue [user] extracts [target]'s fat with \the [tool].",		\
 		"\blue You have removed [target]'s fat loose with \the [tool].")
 		var/removednutriment = max(75, (target.nutrition + target.overeatduration) - 450)
@@ -81,11 +81,11 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/P = new
 		P.name = "fatty meat"
 		P.desc = "Extremely fatty tissue taken from a patient."
-		P.reagents.add_reagent ("nutriment", (removednutriment / 15))
+		P.reagents.add_reagent("nutriment", (removednutriment / 15))
 		var/amount = 0
-		if (target.reagents.total_volume > 0)
+		if(target.reagents.total_volume > 0)
 			amount = target.reagents.total_volume
-			target.reagents.remove_reagent("nutriment",amount)
+			target.reagents.remove_reagent("nutriment", amount)
 		var/obj/item/meatslab = P
 		meatslab.loc = get_turf(target)
 		playsound(target.loc, 'sound/effects/splat.ogg', 50, 1)
@@ -94,7 +94,7 @@
 		"\blue Unfortunately, there is nothing to extract of [target] with \the [tool].")
 
 /datum/surgery_step/lipoplasty/remove_fat/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\red [user]'s hand slips, cutting [target]'s belly with \the [tool]!" , \
+	user.visible_message("\red [user]'s hand slips, cutting [target]'s belly with \the [tool]!", \
 	"\red Your hand slips, cutting [target]'s belly with \the [tool]!" )
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.createwound(CUT, 30)

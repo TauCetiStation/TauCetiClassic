@@ -28,8 +28,8 @@
 				update_icon()
 
 	process()
-		if(!connected_port) //only react when pipe_network will ont it do it for you
-			//Allow for reactions
+		if(!connected_port) // only react when pipe_network will ont it do it for you
+			// Allow for reactions
 			air_contents.react()
 		else
 			update_icon()
@@ -44,21 +44,21 @@
 	proc
 
 		connect(obj/machinery/atmospherics/portables_connector/new_port)
-			//Make sure not already connected to something else
+			// Make sure not already connected to something else
 			if(connected_port || !new_port || new_port.connected_device)
 				return 0
 
-			//Make sure are close enough for a valid connection
+			// Make sure are close enough for a valid connection
 			if(new_port.loc != loc)
 				return 0
 
-			//Perform the connection
+			// Perform the connection
 			connected_port = new_port
 			connected_port.connected_device = src
 
-			anchored = 1 //Prevent movement
+			anchored = 1 // Prevent movement
 
-			//Actually enforce the air sharing
+			// Actually enforce the air sharing
 			var/datum/pipe_network/network = connected_port.return_network(src)
 			if(network && !network.gases.Find(air_contents))
 				network.gases += air_contents
@@ -83,8 +83,8 @@
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user)
 	var/obj/icon = src
-	if ((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
-		if (src.holding)
+	if((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
+		if(src.holding)
 			return
 		var/obj/item/weapon/tank/T = W
 		user.drop_item()
@@ -93,7 +93,7 @@
 		update_icon()
 		return
 
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/weapon/wrench))
 		if(connected_port)
 			disconnect()
 			to_chat(user, "\blue You disconnect [name] from the port.")
@@ -113,14 +113,14 @@
 				to_chat(user, "\blue Nothing happens.")
 				return
 
-	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
+	else if((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		visible_message("\red [user] has used [W] on [bicon(icon)]")
 		if(air_contents)
 			var/pressure = air_contents.return_pressure()
 			var/total_moles = air_contents.total_moles()
 
 			to_chat(user, "\blue Results of analysis of [bicon(icon)]")
-			if (total_moles>0)
+			if(total_moles>0)
 				var/o2_concentration = air_contents.oxygen/total_moles
 				var/n2_concentration = air_contents.nitrogen/total_moles
 				var/co2_concentration = air_contents.carbon_dioxide/total_moles
@@ -128,7 +128,7 @@
 
 				var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 
-				to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
+				to_chat(user, "\blue Pressure: [round(pressure, 0.1)] kPa")
 				to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
 				to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
 				to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")

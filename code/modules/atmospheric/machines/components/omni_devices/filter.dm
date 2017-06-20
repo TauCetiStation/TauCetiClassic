@@ -39,7 +39,7 @@
 /obj/machinery/atmospherics/omni/filter/error_check()
 	if(!input || !output || !filters)
 		return 1
-	if(filters.len < 1 || filters.len > 2) //requires 1 or 2 filters ~otherwise why are you using a filter?
+	if(filters.len < 1 || filters.len > 2) // requires 1 or 2 filters ~otherwise why are you using a filter?
 		return 1
 
 	return 0
@@ -52,7 +52,7 @@
 	if(!input || !output)
 		return
 
-	var/datum/gas_mixture/output_air = output.air	//BYOND doesn't like referencing "output.air.return_pressure()" so we need to make a direct reference
+	var/datum/gas_mixture/output_air = output.air	// BYOND doesn't like referencing "output.air.return_pressure()" so we need to make a direct reference
 	var/datum/gas_mixture/input_air = input.air		// it's completely happy with them if they're in a loop though i.e. "P.air.return_pressure()"... *shrug*
 
 	var/output_pressure = output_air.return_pressure()
@@ -123,7 +123,7 @@
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "omni_filter.tmpl", "Omni Filter Control", 330, 330)
 		ui.set_initial_data(data)
 
@@ -163,7 +163,7 @@
 	if(portData.len)
 		data["ports"] = portData
 	if(output)
-		data["set_pressure"] = round(target_pressure*10)		//because nanoui can't handle rounded decimals.
+		data["set_pressure"] = round(target_pressure*10)		// because nanoui can't handle rounded decimals.
 
 	return data
 
@@ -197,16 +197,16 @@
 			if(configuring)
 				on = 0
 
-	//only allows config changes when in configuring mode ~otherwise you'll get weird pressure stuff going on
+	// only allows config changes when in configuring mode ~otherwise you'll get weird pressure stuff going on
 	if(configuring && !on)
 		switch(href_list["command"])
 			if("set_pressure")
-				var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",target_pressure) as num
+				var/new_pressure = input(usr, "Enter new output pressure(0-4500kPa)", "Pressure control", target_pressure) as num
 				target_pressure = between(0, new_pressure, 4500)
 			if("switch_mode")
 				switch_mode(dir_flag(href_list["dir"]), mode_return_switch(href_list["mode"]))
 			if("switch_filter")
-				var/new_filter = input(usr,"Select filter mode:","Change filter",href_list["mode"]) in list("None", "Oxygen", "Nitrogen", "Carbon Dioxide", "Phoron", "Nitrous Oxide")
+				var/new_filter = input(usr, "Select filter mode:", "Change filter", href_list["mode"]) in list("None", "Oxygen", "Nitrogen", "Carbon Dioxide", "Phoron", "Nitrous Oxide")
 				switch_filter(dir_flag(href_list["dir"]), mode_return_switch(new_filter))
 
 	update_icon()
@@ -234,7 +234,7 @@
 			return null
 
 /obj/machinery/atmospherics/omni/filter/proc/switch_filter(dir, mode)
-	//check they aren't trying to disable the input or output ~this can only happen if they hack the cached tmpl file
+	// check they aren't trying to disable the input or output ~this can only happen if they hack the cached tmpl file
 	for(var/datum/omni_port/P in ports)
 		if(P.dir == dir)
 			if(P.mode == ATM_INPUT || P.mode == ATM_OUTPUT)

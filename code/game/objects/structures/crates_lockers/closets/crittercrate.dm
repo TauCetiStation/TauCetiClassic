@@ -16,7 +16,7 @@
 	if(!can_open())
 		return 0
 
-	if(content_mob == null) //making sure we don't spawn anything too eldritch
+	if(content_mob == null) // making sure we don't spawn anything too eldritch
 		already_opened = 1
 		return ..()
 
@@ -27,7 +27,7 @@
 				new content_mob(loc)
 		else if(content_mob == /mob/living/simple_animal/corgi)
 			var/num = rand(0, 1)
-			if(num) //No more matriarchy for cargo
+			if(num) // No more matriarchy for cargo
 				content_mob = /mob/living/simple_animal/corgi/Lisa
 			new content_mob(loc)
 		else
@@ -52,7 +52,7 @@
 
 /obj/structure/closet/critter/corgi
 	name = "corgi crate"
-	content_mob = /mob/living/simple_animal/corgi //This statement is (not) false. See above.
+	content_mob = /mob/living/simple_animal/corgi // This statement is(not) false. See above.
 
 /obj/structure/closet/critter/cow
 	name = "cow crate"

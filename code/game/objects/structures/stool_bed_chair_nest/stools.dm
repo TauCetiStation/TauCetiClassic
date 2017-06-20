@@ -17,11 +17,11 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				qdel(src)
 				return
 	return
@@ -93,7 +93,7 @@
 	qdel(src)
 
 /obj/item/weapon/stool/attack(mob/M, mob/user)
-	if (prob(5) && isliving(M))
+	if(prob(5) && isliving(M))
 		user.visible_message("<span class='red'>[user] breaks [src] over [M]'s back!</span>")
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		qdel(src)

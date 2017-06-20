@@ -9,9 +9,9 @@
 ##################### TWO HANDED WEAPONS BE HERE~ -Agouri :3 ########
 ####################################################################*/
 
-//Rewrote TwoHanded weapons stuff and put it all here. Just copypasta fireaxe to make new ones ~Carn
-//This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
-//It also tidies stuff up elsewhere.
+// Rewrote TwoHanded weapons stuff and put it all here. Just copypasta fireaxe to make new ones ~Carn
+// This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
+// It also tidies stuff up elsewhere.
 
 /*
  * Twohanded
@@ -36,7 +36,7 @@
 	update_icon()
 
 /obj/item/weapon/twohanded/mob_can_equip(M, slot)
-	//Cannot equip wielded items.
+	// Cannot equip wielded items.
 	if(wielded)
 		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
 		return 0
@@ -44,7 +44,7 @@
 	return ..()
 
 /obj/item/weapon/twohanded/dropped(mob/user)
-	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
+	// handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
@@ -58,12 +58,12 @@
 	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
-	if(istype(user,/mob/living/carbon/monkey))
+	if(istype(user, /mob/living/carbon/monkey))
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 
 	..()
-	if(wielded) //Trying to unwield it
+	if(wielded) // Trying to unwield it
 		unwield()
 		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
 		if(user.hand)
@@ -71,7 +71,7 @@
 		else
 			user.update_inv_r_hand()
 
-		if (src.unwieldsound)
+		if(src.unwieldsound)
 			playsound(src.loc, unwieldsound, 50, 1)
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
@@ -79,13 +79,13 @@
 			user.drop_from_inventory(O)
 		return
 
-	else //Trying to wield it
+	else // Trying to wield it
 		if(user.get_inactive_hand())
 			to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
 			return
 		wield()
 		to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
-		if (src.wieldsound)
+		if(src.wieldsound)
 			playsound(src.loc, wieldsound, 50, 1)
 
 		if(user.hand)
@@ -93,13 +93,13 @@
 		else
 			user.update_inv_r_hand()
 
-		var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
+		var/obj/item/weapon/twohanded/offhand/O = new(user) //// Let's reserve his other hand~
 		O.name = "[initial(name)] - offhand"
 		O.desc = "Your second grip on the [initial(name)]"
 		user.put_in_inactive_hand(O)
 		return
 
-///////////OFFHAND///////////////
+/////////// OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
 	w_class = 5.0
 	icon_state = "offhand"
@@ -128,18 +128,18 @@
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
-/obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/weapon/twohanded/fireaxe/update_icon()  // Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
 	return
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	..()
-	if(A && wielded) //destroys windows and grilles in one hit
-		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
+	if(A && wielded) // destroys windows and grilles in one hit
+		if(istype(A, /obj/structure/window)) // should just make a window.Break() proc but couldn't bother with it
 			var/obj/structure/window/W = A
 			W.shatter()
-		else if(istype(A,/obj/structure/grille))
+		else if(istype(A, /obj/structure/grille))
 			var/obj/structure/grille/G = A
 			new /obj/item/stack/rods(G.loc)
 			qdel(A)
@@ -173,8 +173,8 @@
 	can_embed = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
-	reflect_chance = rand(50,85)
-	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
+	reflect_chance = rand(50, 85)
+	item_color = pick("red", "blue", "green", "purple", "yellow", "pink", "black")
 	switch(item_color)
 		if("red")
 			light_color = "#ff0000"
@@ -197,7 +197,7 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
+	clean_blood()// blood overlays get weird otherwise, because the sprite changes.
 
 /obj/item/weapon/twohanded/dualsaber/attack(target, mob/living/user)
 	..()
@@ -207,7 +207,7 @@
 		return
 	if((wielded) && prob(50))
 		spawn(0)
-			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
+			for(var/i in list(1, 2, 4, 8, 4, 2, 1, 2, 4, 8, 4, 2))
 				user.dir = i
 				sleep(1)
 
@@ -226,17 +226,17 @@
 	if(istype(W, /obj/item/device/multitool))
 		if(!hacked)
 			hacked = 1
-			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
+			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
 			item_color = "rainbow"
 			light_color = ""
 			update_icon()
 		else
-			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
 	else
 		return ..()
 
 /obj/item/weapon/twohanded/dualsaber/afterattack(obj/O, mob/user, proximity)
-	if(!istype(O,/obj/machinery/door/airlock) || src.slicing)
+	if(!istype(O, /obj/machinery/door/airlock) || src.slicing)
 		return
 	if(O.density && src.wielded && proximity && in_range(user, O))
 		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")

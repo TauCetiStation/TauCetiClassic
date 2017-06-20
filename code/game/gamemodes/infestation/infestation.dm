@@ -32,7 +32,7 @@ Infestation:
 
 	var/xenomorphs_num = 0
 
-	//Check that we have enough vox.
+	// Check that we have enough vox.
 	if(antag_candidates.len < required_enemies)
 		return 0
 	else if(antag_candidates.len < recommended_enemies)
@@ -50,7 +50,7 @@ Infestation:
 		xeno.assigned_role = "MODE"
 		xeno.special_role = "Xenomorph"
 
-	//Build a list of spawn points.
+	// Build a list of spawn points.
 
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "xeno_spawn")
@@ -99,7 +99,7 @@ Infestation:
 	to_chat(xeno.current, "\green <B>You target also must be near, after you prepares to leap.</b>")
 	to_chat(xeno.current, "\blue Use :A to hivetalk.")
 	to_chat(xeno.current, "\green ------------------")
-	//xeno.current << "\red IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru"
+	// xeno.current << "\red IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http:// tauceti.ru"
 
 
 /*

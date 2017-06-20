@@ -4,7 +4,7 @@
 #define MOVING_TO_TARGET 3
 #define SPINNING_COCOON 4
 
-//basic spider mob, these generally guard nests
+// basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/giant_spider
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
@@ -36,7 +36,7 @@
 	speed = 3
 	environment_smash = 1
 
-//nursemaids - these create webs and eggs
+// nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/giant_spider/nurse
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
 	icon_state = "nurse"
@@ -51,7 +51,7 @@
 	poison_type = "stoxin"
 	var/fed = 0
 
-//hunters have the most poison and move the fastest, so they can find prey
+// hunters have the most poison and move the fastest, so they can find prey
 /mob/living/simple_animal/hostile/giant_spider/hunter
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
 	icon_state = "hunter"
@@ -87,12 +87,12 @@
 				walk_to(src, pick(orange(20, src)), 1, move_to_delay)
 				spawn(50)
 					stop_automated_movement = 0
-					walk(src,0)
+					walk(src, 0)
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/proc/GiveUp(C)
 	spawn(100)
 		if(busy == MOVING_TO_TARGET)
-			if(cocoon_target == C && get_dist(src,cocoon_target) > 1)
+			if(cocoon_target == C && get_dist(src, cocoon_target) > 1)
 				cocoon_target = null
 			busy = 0
 			stop_automated_movement = 0
@@ -104,17 +104,17 @@
 			var/list/can_see = view(src, 10)
 			//30% chance to stop wandering and do something
 			if(!busy && prob(30))
-				//first, check for potential food nearby to cocoon
+				// first, check for potential food nearby to cocoon
 				for(var/mob/living/C in can_see)
 					if(C.stat)
 						cocoon_target = C
 						busy = MOVING_TO_TARGET
 						walk_to(src, C, 1, move_to_delay)
-						//give up if we can't reach them after 10 seconds
+						// give up if we can't reach them after 10 seconds
 						GiveUp(C)
 						return
 
-				//second, spin a sticky spiderweb on this tile
+				// second, spin a sticky spiderweb on this tile
 				var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 				if(!W)
 					busy = SPINNING_WEB
@@ -126,7 +126,7 @@
 							busy = 0
 							stop_automated_movement = 0
 				else
-					//third, lay an egg cluster there
+					// third, lay an egg cluster there
 					var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
 					if(!E && fed > 0)
 						busy = LAYING_EGGS
@@ -141,7 +141,7 @@
 								busy = 0
 								stop_automated_movement = 0
 					else
-						//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
+						// fourthly, cocoon any nearby items so those pesky pinkskins can't use them
 						for(var/obj/O in can_see)
 
 							if(O.anchored)
@@ -152,7 +152,7 @@
 								busy = MOVING_TO_TARGET
 								stop_automated_movement = 1
 								walk_to(src, O, 1, move_to_delay)
-								//give up if we can't reach them after 10 seconds
+								// give up if we can't reach them after 10 seconds
 								GiveUp(O)
 
 			else if(busy == MOVING_TO_TARGET && cocoon_target)
@@ -160,10 +160,10 @@
 					busy = SPINNING_COCOON
 					src.visible_message("\blue \the [src] begins to secrete a sticky substance around \the [cocoon_target].")
 					stop_automated_movement = 1
-					walk(src,0)
+					walk(src, 0)
 					spawn(50)
 						if(busy == SPINNING_COCOON)
-							if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
+							if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src, cocoon_target) <= 1)
 								var/obj/effect/spider/cocoon/C = new(cocoon_target.loc)
 								var/large_cocoon = 0
 								C.pixel_x = cocoon_target.pixel_x
@@ -189,7 +189,7 @@
 										M.loc = C
 										large_cocoon = 1
 								if(large_cocoon)
-									C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
+									C.icon_state = pick("cocoon_large1", "cocoon_large2", "cocoon_large3")
 							busy = 0
 							stop_automated_movement = 0
 

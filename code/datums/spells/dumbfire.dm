@@ -7,18 +7,18 @@
 	var/proj_icon_state = "spell"
 	var/proj_name = "a spell projectile"
 
-	var/proj_trail = 0 //if it leaves a trail
-	var/proj_trail_lifespan = 0 //deciseconds
+	var/proj_trail = 0 // if it leaves a trail
+	var/proj_trail_lifespan = 0 // deciseconds
 	var/proj_trail_icon = 'icons/obj/wizard.dmi'
 	var/proj_trail_icon_state = "trail"
 
-	var/proj_type = "/obj/effect/proc_holder/spell" //IMPORTANT use only subtypes of this
+	var/proj_type = "/obj/effect/proc_holder/spell" // IMPORTANT use only subtypes of this
 
-	var/proj_insubstantial = 0 //if it can pass through dense objects or not
-	var/proj_trigger_range = 1 //the range from target at which the projectile triggers cast(target)
+	var/proj_insubstantial = 0 // if it can pass through dense objects or not
+	var/proj_trigger_range = 1 // the range from target at which the projectile triggers cast(target)
 
-	var/proj_lifespan = 100 //in deciseconds * proj_step_delay
-	var/proj_step_delay = 1 //lower = faster
+	var/proj_lifespan = 100 // in deciseconds * proj_step_delay
+	var/proj_step_delay = 1 // lower = faster
 
 /obj/effect/proc_holder/spell/dumbfire/choose_targets(mob/user = usr)
 
@@ -38,7 +38,7 @@
 			if(istext(proj_type))
 				var/projectile_type = text2path(proj_type)
 				projectile = new projectile_type(user)
-			if(istype(proj_type,/obj/effect/proc_holder/spell))
+			if(istype(proj_type, /obj/effect/proc_holder/spell))
 				projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
 				projectile:linked_spells += proj_type
 			projectile.icon = proj_icon
@@ -50,7 +50,7 @@
 
 			projectile.loc = current_loc
 
-			for(var/i = 0,i < proj_lifespan,i++)
+			for(var/i = 0, i < proj_lifespan, i++)
 				if(!projectile)
 					break
 

@@ -9,7 +9,7 @@
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50)
+	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50)
 	volume = 50
 	flags = OPENCONTAINER
 
@@ -17,7 +17,7 @@
 
 	var/label_text = ""
 
-	//var/list/
+	// var/list/
 	can_be_placed_into = list(
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
@@ -57,7 +57,7 @@
 
 /obj/item/weapon/reagent_containers/glass/attack_self()
 	..()
-	if (is_open_container())
+	if(is_open_container())
 		to_chat(usr, "<span class = 'notice'>You put the lid on \the [src].</span>")
 		flags ^= OPENCONTAINER
 	else
@@ -65,9 +65,9 @@
 		flags |= OPENCONTAINER
 	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, flag)
 
-	if (!is_open_container() || !flag)
+	if(!is_open_container() || !flag)
 		return
 
 	for(var/type in src.can_be_placed_into)
@@ -91,7 +91,7 @@
 		src.reagents.reaction(target, TOUCH)
 		spawn(5) src.reagents.clear_reagents()
 		return
-	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	else if(istype(target, /obj/structure/reagent_dispensers)) // A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume && target.reagents)
 			to_chat(user, "<span class = 'rose'>[target] is empty.</span>")
@@ -104,7 +104,7 @@
 		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
-	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+	else if(target.is_open_container() && target.reagents) // Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class = 'rose'>[src] is empty.</span>")
 			return
@@ -116,7 +116,7 @@
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>You transfer [trans] units of the solution to [target].</span>")
 
-	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
+	// Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
 		return
 
@@ -134,22 +134,22 @@
 		src.reagents.reaction(target, TOUCH)
 		spawn(5) src.reagents.clear_reagents()
 		var/turf/T = get_turf(src)
-		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-		log_game("[usr.ckey]([usr]) splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
+		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [target], location([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+		log_game("[usr.ckey]([usr]) splashed [src.reagents.get_reagents()] on [target], location([T.x],[T.y],[T.z])")
 		return
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
-		var/tmp_label = sanitize(copytext(input(user, "Enter a label for [src.name]","Label",src.label_text), 1, MAX_NAME_LEN))
+		var/tmp_label = sanitize(copytext(input(user, "Enter a label for [src.name]", "Label", src.label_text), 1, MAX_NAME_LEN))
 		if(length(tmp_label) > 10)
 			to_chat(user, "<span class = 'rose'>The label can be at most 10 characters long.</span>")
 		else
 			to_chat(user, "<span class = 'notice'>You set the label to \"[tmp_label]\".</span>")
 			src.label_text = tmp_label
 			src.update_name_label()
-	if (istype(W, /obj/item/stack/nanopaste))
+	if(istype(W, /obj/item/stack/nanopaste))
 		var/obj/item/stack/nanopaste/N = W
-		if(src.is_open_container() && src.reagents) //Something like a glass. Player probably wants to transfer TO it.
+		if(src.is_open_container() && src.reagents) // Something like a glass. Player probably wants to transfer TO it.
 			if(src.reagents.total_volume >= src.reagents.maximum_volume)
 				to_chat(user, "<span class = 'rose'>[src] is full.</span>")
 				return
@@ -208,7 +208,7 @@
 		filling.icon += mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
 
-	if (!is_open_container())
+	if(!is_open_container())
 		var/image/lid = image(icon, src, "lid_[initial(icon_state)]")
 		overlays += lid
 
@@ -219,7 +219,7 @@
 	g_amt = 5000
 	volume = 100
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100)
+	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50, 100)
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
@@ -238,7 +238,7 @@
 	g_amt = 5000
 	volume = 300
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
+	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50, 100, 300)
 	flags = OPENCONTAINER
 
 
@@ -249,7 +249,7 @@
 	g_amt = 250
 	volume = 25
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25)
+	possible_transfer_amounts = list(5, 10, 15, 25)
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
@@ -280,7 +280,7 @@
 	g_amt = 0
 	w_class = 3.0
 	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(10,20,30,50,70)
+	possible_transfer_amounts = list(10, 20, 30, 50, 70)
 	volume = 70
 	flags = OPENCONTAINER
 	body_parts_covered = HEAD
@@ -293,21 +293,21 @@
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 		user.drop_from_inventory(src)
 		qdel(src)
-	if (istype(D, /obj/item/weapon/weldingtool))
+	if(istype(D, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = D
-		if(WT.remove_fuel(0,user))
+		if(WT.remove_fuel(0, user))
 			user.remove_from_mob(src)
 			var/obj/item/clothing/head/helmet/battlebucket/BBucket = new(usr.loc)
-			for (var/mob/M in viewers(src))
+			for(var/mob/M in viewers(src))
 				M.show_message("<span class = 'rose'>[src] is shaped into [BBucket] by [user.name] with the weldingtool.</span>", 3, "<span class = 'rose'>You hear welding.</span>", 2)
 			qdel(src)
 		return
 
 /obj/item/weapon/reagent_containers/glass/bucket/update_icon()
 	overlays.Cut()
-	if (reagents.total_volume > 1)
+	if(reagents.total_volume > 1)
 		overlays += "bucket_water"
-	if (!is_open_container())
+	if(!is_open_container())
 		overlays += "lid_bucket"
 
 /obj/item/weapon/reagent_containers/glass/bucket/on_reagent_change()

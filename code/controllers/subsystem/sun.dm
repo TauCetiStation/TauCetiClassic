@@ -19,8 +19,8 @@ var/datum/subsystem/sun/SSsun
 /datum/subsystem/sun/New()
 	NEW_SS_GLOBAL(SSsun)
 
-	angle = rand (0,360)			// the station position to the sun is randomised at round start
-	rate = rand(500,2000)/1000			// 50% - 200% of standard rotation
+	angle = rand(0, 360)			// the station position to the sun is randomised at round start
+	rate = rand(500, 2000)/1000			// 50% - 200% of standard rotation
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
 		rate = -rate
 
@@ -32,7 +32,7 @@ var/datum/subsystem/sun/SSsun
 
 	/*
 		Yields a 45 - 75 IC minute rotational period
-		Rotation rate can vary from 4.8 deg/min to 8 deg/min (288 to 480 deg/hr)
+		Rotation rate can vary from 4.8 deg/min to 8 deg/min(288 to 480 deg/hr)
 	*/
 	if(lastAngleUpdate != angle)
 		for(var/obj/machinery/power/tracker/T in solars)
@@ -44,7 +44,7 @@ var/datum/subsystem/sun/SSsun
 
 	nexttime = nexttime + 600	// 600 world.time ticks = 1 minute
 
-	// now calculate and cache the (dx,dy) increments for line drawing
+	// now calculate and cache the(dx, dy) increments for line drawing
 	var/s = sin(angle)
 	var/c = cos(angle)
 
@@ -75,7 +75,7 @@ var/datum/subsystem/sun/SSsun
 		ax += dx	// do step
 		ay += dy
 
-		var/turf/T = locate( round(ax,0.5),round(ay,0.5),S.z)
+		var/turf/T = locate( round(ax, 0.5), round(ay, 0.5), S.z)
 		if(T.x == 1 || T.x==world.maxx || T.y==1 || T.y==world.maxy)		// not obscured if we reach the edge
 			break
 

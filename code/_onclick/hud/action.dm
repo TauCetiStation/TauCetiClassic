@@ -70,7 +70,7 @@
 				Deactivate()
 		if(AB_GENERIC)
 			if(target && procname)
-				call(target,procname)(usr)
+				call(target, procname)(usr)
 	return
 
 /datum/action/proc/Activate()
@@ -88,7 +88,7 @@
 /datum/action/proc/IsAvailable()
 	return Checks()
 
-/obj/screen/movable/action_button/MouseEntered(location,control,params)
+/obj/screen/movable/action_button/MouseEntered(location, control, params)
 	openToolTip(usr, src, params, title = name, content = desc)
 
 /obj/screen/movable/action_button/MouseExited()
@@ -119,9 +119,9 @@
 
 /obj/screen/movable/action_button
 	var/datum/action/owner
-	screen_loc = "WEST,NORTH"
+	screen_loc = "WEST, NORTH"
 
-/obj/screen/movable/action_button/Click(location,control,params)
+/obj/screen/movable/action_button/Click(location, control, params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		moved = 0
@@ -141,19 +141,19 @@
 	var/image/img
 	if(owner.action_type == AB_ITEM && owner.target)
 		var/obj/item/I = owner.target
-		img = image(I.icon, src , I.icon_state)
+		img = image(I.icon, src, I.icon_state)
 	else if(owner.button_icon && owner.button_icon_state)
-		img = image(owner.button_icon,src,owner.button_icon_state)
+		img = image(owner.button_icon, src, owner.button_icon_state)
 	img.pixel_x = 0
 	img.pixel_y = 0
 	overlays += img
 
 	if(!owner.IsAvailable())
-		color = rgb(128,0,0,128)
+		color = rgb(128, 0, 0, 128)
 	else
-		color = rgb(255,255,255,255)
+		color = rgb(255, 255, 255, 255)
 
-//Hide/Show Action Buttons ... Button
+// Hide/Show Action Buttons ... Button
 /obj/screen/movable/action_button/hide_toggle
 	name = "Hide Buttons"
 	icon = 'icons/mob/actions.dmi'
@@ -181,11 +181,11 @@
 
 /obj/screen/movable/action_button/hide_toggle/UpdateIcon()
 	overlays.Cut()
-	var/image/img = image(icon,src,hidden?"show":"hide")
+	var/image/img = image(icon, src, hidden?"show":"hide")
 	overlays += img
 	return
 
-//This is the proc used to update all the action buttons. Properly defined in /mob/living/
+// This is the proc used to update all the action buttons. Properly defined in /mob/living/
 /mob/proc/update_action_buttons()
 	return
 
@@ -200,19 +200,19 @@
 	var/coord_col_offset = AB_WEST_OFFSET+2*col
 	var/coord_row = "[-1 - row]"
 	var/coord_row_offset = AB_NORTH_OFFSET
-	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:[coord_row_offset]"
+	return "WEST[coord_col]:[coord_col_offset], NORTH[coord_row]:[coord_row_offset]"
 
-/datum/hud/proc/SetButtonCoords(obj/screen/button,number)
+/datum/hud/proc/SetButtonCoords(obj/screen/button, number)
 	var/row = round((number-1)/AB_MAX_COLUMNS)
 	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
 	var/x_offset = 32*(col-1) + AB_WEST_OFFSET + 2*col
 	var/y_offset = -32*(row+1) + AB_NORTH_OFFSET
 
 	var/matrix/M = matrix()
-	M.Translate(x_offset,y_offset)
+	M.Translate(x_offset, y_offset)
 	button.transform = M
 
-//Presets for item actions
+// Presets for item actions
 /datum/action/item_action
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
@@ -222,7 +222,7 @@
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
-//Preset for spells
+// Preset for spells
 /datum/action/spell_action
 	action_type = AB_SPELL
 	check_flags = 0

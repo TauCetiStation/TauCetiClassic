@@ -1,6 +1,6 @@
 // ### Preset machines  ###
 
-//Relay
+// Relay
 
 /obj/machinery/telecomms/relay/preset
 	network = "tcommsat"
@@ -28,13 +28,13 @@
 	id = "Centcom Relay"
 	hide = 1
 	toggled = 1
-	//anchored = 1
-	//use_power = 0
-	//idle_power_usage = 0
+	// anchored = 1
+	// use_power = 0
+	// idle_power_usage = 0
 	heatgen = 0
 	autolinkers = list("c_relay")
 
-//HUB
+// HUB
 
 /obj/machinery/telecomms/hub/preset
 	id = "Hub"
@@ -50,7 +50,7 @@
 	autolinkers = list("hub_cent", "c_relay", "s_relay", "m_relay", "r_relay",
 	 "centcomm", "receiverCent", "broadcasterCent")
 
-//Receivers
+// Receivers
 
 //--PRESET LEFT--//
 
@@ -67,9 +67,9 @@
 	id = "Receiver B"
 	network = "tcommsat"
 	autolinkers = list("receiverB") // link to relay
-	freq_listening = list(1353, 1357, 1359) //command, engineering, security
+	freq_listening = list(1353, 1357, 1359) // command, engineering, security
 
-	//Common and other radio frequencies for people to freely use
+	// Common and other radio frequencies for people to freely use
 	New()
 		for(var/i = 1441, i < 1489, i += 2)
 			freq_listening |= i
@@ -83,7 +83,7 @@
 	freq_listening = list(1345, 1341)
 
 
-//Buses
+// Buses
 
 /obj/machinery/telecomms/bus/preset_one
 	id = "Bus 1"
@@ -121,7 +121,7 @@
 	heatgen = 0
 	autolinkers = list("processorCent", "centcomm")
 
-//Processors
+// Processors
 
 /obj/machinery/telecomms/processor/preset_one
 	id = "Processor 1"
@@ -149,7 +149,7 @@
 	heatgen = 0
 	autolinkers = list("processorCent")
 
-//Servers
+// Servers
 
 /obj/machinery/telecomms/server/presets
 
@@ -175,7 +175,7 @@
 	freq_listening = list()
 	autolinkers = list("common")
 
-	//Common and other radio frequencies for people to freely use
+	// Common and other radio frequencies for people to freely use
 	// 1441 to 1489
 /obj/machinery/telecomms/server/presets/common/New()
 	for(var/i = 1441, i < 1489, i += 2)
@@ -204,7 +204,7 @@
 	autolinkers = list("centcomm")
 
 
-//Broadcasters
+// Broadcasters
 
 //--PRESET LEFT--//
 

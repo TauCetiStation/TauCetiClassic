@@ -16,7 +16,7 @@
 	var/drain_rate = 600000		// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 1e8		// maximum power that can be drained before exploding
-	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
+	var/mode = 0		// 0 = off, 1=clamped(off), 2=operating
 
 
 	var/obj/structure/cable/attached		// the attached cable
@@ -42,7 +42,7 @@
 					to_chat(user, "Device must be placed over an exposed cable to attach to it.")
 					return
 			else
-				if (mode == 2)
+				if(mode == 2)
 					STOP_PROCESSING(SSobj, src) // Now the power sink actually stops draining the station's power if you unhook it. --NeoFite
 				anchored = 0
 				mode = 0
@@ -79,7 +79,7 @@
 				icon_state = "powersink1"
 				START_PROCESSING(SSobj, src)
 
-			if(2)  //This switch option wasn't originally included. It exists now. --NeoFite
+			if(2)  // This switch option wasn't originally included. It exists now. --NeoFite
 				to_chat(user, "You deactivate the device!")
 				for(var/mob/M in viewers(user))
 					if(M == user) continue
@@ -97,7 +97,7 @@
 
 				// found a powernet, so drain up to max power from it
 
-				var/drained = min ( drain_rate, PN.avail )
+				var/drained = min( drain_rate, PN.avail )
 				PN.newload += drained
 				power_drained += drained
 
@@ -116,5 +116,5 @@
 				playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
 			if(power_drained >= max_power)
 				STOP_PROCESSING(SSobj, src)
-				explosion(src.loc, 3,6,9,12)
+				explosion(src.loc, 3, 6, 9, 12)
 				qdel(src)

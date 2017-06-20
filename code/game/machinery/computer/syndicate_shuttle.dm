@@ -96,7 +96,7 @@
 	updateUsrDialog()
 
 /obj/item/weapon/circuitboard/computer/syndicate_shuttle
-	name = "Syndicate Shuttle (Computer Board)"
+	name = "Syndicate Shuttle(Computer Board)"
 	build_path = /obj/machinery/computer/syndicate_station
 	var/challenge = FALSE
 	var/moved = FALSE

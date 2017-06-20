@@ -12,10 +12,10 @@
 		newAnomaly = new /obj/effect/anomaly/bluespace(T)
 
 /datum/event/anomaly/anomaly_bluespace/end()
-	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to warp half the station away jeez
+	if(newAnomaly.loc)// If it hasn't been neutralized, it's time to warp half the station away jeez
 		var/turf/T = pick(get_area_turfs(impact_area))
 		if(T)
-				// Calculate new position (searches through beacons in world)
+				// Calculate new position(searches through beacons in world)
 			var/obj/item/device/radio/beacon/chosen
 			var/list/possible = list()
 			for(var/obj/item/device/radio/beacon/W in world)
@@ -41,7 +41,7 @@
 
 				var/y_distance = TO.y - FROM.y
 				var/x_distance = TO.x - FROM.x
-				for (var/atom/movable/A in ultra_range(12, FROM )) // iterate thru list of mobs in the area
+				for(var/atom/movable/A in ultra_range(12, FROM )) // iterate thru list of mobs in the area
 					if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
 					if(A.anchored) continue
 
@@ -54,7 +54,7 @@
 							var/mob/M = A
 							if(M.client)
 								var/obj/blueeffect = new /obj(src)
-								blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
+								blueeffect.screen_loc = "WEST, SOUTH to EAST, NORTH"
 								blueeffect.icon = 'icons/effects/effects.dmi'
 								blueeffect.icon_state = "shieldsparkles"
 								blueeffect.layer = FLASH_LAYER

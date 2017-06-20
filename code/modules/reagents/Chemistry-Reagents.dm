@@ -6,8 +6,8 @@
 #define REAGENTS_OVERDOSE 30
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
-//The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
-//so that it can continue working when the reagent is deleted while the proc is still active.
+// The reaction procs must ALWAYS set src = null, this detaches the proc from the object(the reagent)
+// so that it can continue working when the reagent is deleted while the proc is still active.
 
 
 datum
@@ -23,18 +23,18 @@ datum
 		var/custom_metabolism = REAGENTS_METABOLISM
 		var/overdose = 0
 		var/overdose_dam = 1
-		//var/list/viruses = list()
-		var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
+		// var/list/viruses = list()
+		var/color = "#000000" // rgb: 0, 0, 0(does not support alpha channels - yet!)
 
 		proc
-			reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
+			reaction_mob(mob/M, method=TOUCH, volume) // By default we have a chance to transfer some
 				if(!istype(M, /mob/living))	return 0
 				var/datum/reagent/self = src
-				src = null										  //of the reagent to the mob on TOUCHING it.
+				src = null										  // of the reagent to the mob on TOUCHING it.
 
-				if(self.holder)		//for catching rare runtimes
+				if(self.holder)		// for catching rare runtimes
 					if(!istype(self.holder.my_atom, /obj/effect/effect/smoke/chem))
-						// If the chemicals are in a smoke cloud, do not try to let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
+						// If the chemicals are in a smoke cloud, do not try to let the chemicals "penetrate" into the mob's system(balance station 13) -- Doohl
 
 						if(method == TOUCH)
 
@@ -57,13 +57,13 @@ datum
 
 							if(prob(chance) && !block)
 								if(M.reagents)
-									M.reagents.add_reagent(self.id,self.volume/2)
+									M.reagents.add_reagent(self.id, self.volume/2)
 				return 1
 
-			reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
-				src = null						//if it can hold reagents. nope!
-				//if(O.reagents)
-				//	O.reagents.add_reagent(id,volume/3)
+			reaction_obj(var/obj/O, var/volume) // By default we transfer a small part of the reagent to the object
+				src = null						// if it can hold reagents. nope!
+				// if(O.reagents)
+				//	O.reagents.add_reagent(id, volume/3)
 				return
 
 			reaction_turf(var/turf/T, var/volume)
@@ -74,8 +74,8 @@ datum
 				if(!M || !holder)
 					return
 				if(!isliving(M))
-					return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
-				if((overdose > 0) && (volume >= overdose))//Overdosing, wooo
+					return // Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
+				if((overdose > 0) && (volume >= overdose))// Overdosing, wooo
 					M.adjustToxLoss(overdose_dam)
 				return TRUE
 
@@ -96,7 +96,7 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null, "antibodies" = null)
+			data = new/list("donor"=null, "viruses"=null, "blood_DNA"=null, "blood_type"=null, "resistances"=null, "trace_chem"=null, "antibodies" = null)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -107,24 +107,24 @@ datum
 				src = null
 				if(self.data && self.data["viruses"])
 					for(var/datum/disease/D in self.data["viruses"])
-						//var/datum/disease/virus = new D.type(0, D, 1)
+						// var/datum/disease/virus = new D.type(0, D, 1)
 						// We don't spread.
 						if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS) continue
 
 						if(method == TOUCH)
 							M.contract_disease(D)
-						else //injected
+						else // injected
 							M.contract_disease(D, 1, 0)
-				if(self.data && self.data["virus2"] && istype(M, /mob/living/carbon))//infecting...
+				if(self.data && self.data["virus2"] && istype(M, /mob/living/carbon))// infecting...
 					var/list/vlist = self.data["virus2"]
-					if (vlist.len)
-						for (var/ID in vlist)
+					if(vlist.len)
+						for(var/ID in vlist)
 							var/datum/disease2/disease/V = vlist[ID]
 
 							if(method == TOUCH)
-								infect_virus2(M,V.getcopy())
+								infect_virus2(M, V.getcopy())
 							else
-								infect_virus2(M,V.getcopy(),1) //injected, force infection!
+								infect_virus2(M, V.getcopy(), 1) // injected, force infection!
 				if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
 					var/mob/living/carbon/C = M
 					C.antibodies |= self.data["antibodies"]
@@ -132,15 +132,15 @@ datum
 
 
 
-			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
+			reaction_turf(var/turf/simulated/T, var/volume)// splash the blood all over the place
 				if(!istype(T)) return
 				var/datum/reagent/blood/self = src
 				src = null
 				if(!(volume >= 3)) return
-				//var/datum/disease/D = self.data["virus"]
+				// var/datum/disease/D = self.data["virus"]
 				if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
-					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
-					if(!blood_prop) //first blood!
+					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T // find some blood here
+					if(!blood_prop) // first blood!
 						blood_prop = new(T)
 						blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 
@@ -183,7 +183,7 @@ datum
 				..()
 */
 		vaccine
-			//data must contain virus type
+			// data must contain virus type
 			name = "Vaccine"
 			id = "vaccine"
 			reagent_state = LIQUID
@@ -215,19 +215,19 @@ datum
 			custom_metabolism = 0.01
 
 			reaction_turf(var/turf/simulated/T, var/volume)
-				if (!istype(T)) return
+				if(!istype(T)) return
 				src = null
 				if(volume >= 3)
 					create_water(T)
 					T.make_wet_floor(WATER_FLOOR)
 
 				for(var/mob/living/carbon/slime/M in T)
-					M.adjustToxLoss(rand(15,20))
+					M.adjustToxLoss(rand(15, 20))
 
 				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
-					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+					lowertemp.temperature = max( min(lowertemp.temperature-2000, lowertemp.temperature / 2) , 0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
 					qdel(hotspot)
@@ -238,11 +238,11 @@ datum
 				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
-					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+					lowertemp.temperature = max( min(lowertemp.temperature-2000, lowertemp.temperature / 2) , 0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
 					qdel(hotspot)
-				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+				if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 					var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 					if(!cube.wrapped)
 						cube.Expand()
@@ -273,7 +273,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			reaction_turf(var/turf/simulated/T, var/volume)
-				if (!istype(T)) return
+				if(!istype(T)) return
 				src = null
 				if(volume >= 1)
 					T.make_wet_floor(LUBE_FLOOR)
@@ -331,7 +331,7 @@ datum
 					M.overlays.Cut()
 					M.invisibility = 101
 					for(var/obj/item/W in M)
-						if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
+						if(istype(W, /obj/item/weapon/implant))	// TODO: Carn. give implants a dropped() or something
 							qdel(W)
 							continue
 						W.layer = initial(W.layer)
@@ -416,7 +416,7 @@ datum
 						if(prob(10))
 							step(M, pick(cardinal))
 				if(prob(7))
-					M.emote(pick("twitch","drool","moan","giggle"))
+					M.emote(pick("twitch", "drool", "moan", "giggle"))
 
 		serotrotium
 			name = "Serotrotium"
@@ -432,7 +432,7 @@ datum
 					return
 				if(ishuman(M))
 					if(prob(7))
-						M.emote(pick("twitch","drool","moan","gasp"))
+						M.emote(pick("twitch", "drool", "moan", "gasp"))
 
 /*		silicate
 			name = "Silicate"
@@ -443,19 +443,19 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				src = null
-				if(istype(O,/obj/structure/window))
+				if(istype(O, /obj/structure/window))
 					if(O:silicate <= 200)
 
 						O:silicate += volume
 						O:health += volume * 3
 
 						if(!O:silicateIcon)
-							var/icon/I = icon(O.icon,O.icon_state,O.dir)
+							var/icon/I = icon(O.icon, O.icon_state, O.dir)
 
 							var/r = (volume / 100) + 1
 							var/g = (volume / 70) + 1
 							var/b = (volume / 50) + 1
-							I.SetIntensity(r,g,b)
+							I.SetIntensity(r, g, b)
 							O.icon = I
 							O:silicateIcon = I
 						else
@@ -464,7 +464,7 @@ datum
 							var/r = (volume / 100) + 1
 							var/g = (volume / 70) + 1
 							var/b = (volume / 50) + 1
-							I.SetIntensity(r,g,b)
+							I.SetIntensity(r, g, b)
 							O.icon = I
 							O:silicateIcon = I
 
@@ -486,7 +486,7 @@ datum
 					return
 				if(alien && alien == IS_VOX)
 					M.adjustToxLoss(REAGENTS_METABOLISM)
-					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
+					holder.remove_reagent(src.id, REAGENTS_METABOLISM) // By default it slowly disappears.
 
 		copper
 			name = "Copper"
@@ -512,7 +512,7 @@ datum
 					return
 				if(alien && alien == IS_VOX)
 					M.adjustOxyLoss(-2 * REM)
-					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
+					holder.remove_reagent(src.id, REAGENTS_METABOLISM) // By default it slowly disappears.
 
 		hydrogen
 			name = "Hydrogen"
@@ -546,7 +546,7 @@ datum
 				if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
 					step(M, pick(cardinal))
 				if(prob(5))
-					M.emote(pick("twitch","drool","moan"))
+					M.emote(pick("twitch", "drool", "moan"))
 				M.adjustBrainLoss(2)
 
 		sulfur
@@ -571,7 +571,7 @@ datum
 				src = null
 				if(!istype(T, /turf/space))
 					var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, T)
-					if (!dirtoverlay)
+					if(!dirtoverlay)
 						dirtoverlay = new/obj/effect/decal/cleanable/dirt(T)
 						dirtoverlay.alpha = volume * 30
 					else
@@ -635,7 +635,7 @@ datum
 				if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
 					step(M, pick(cardinal))
 				if(prob(5))
-					M.emote(pick("twitch","drool","moan"))
+					M.emote(pick("twitch", "drool", "moan"))
 
 		sugar
 			name = "Sugar"
@@ -672,14 +672,14 @@ datum
 			id = "radium"
 			description = "Radium is an alkaline earth metal. It is extremely radioactive."
 			reagent_state = SOLID
-			color = "#C7C7C7" // rgb: 199,199,199
+			color = "#C7C7C7" // rgb: 199, 199, 199
 
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				M.apply_effect(2 * REM,IRRADIATE, 0)
+				M.apply_effect(2 * REM, IRRADIATE, 0)
 				// radium may increase your chances to cure a disease
-				if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
+				if(istype(M, /mob/living/carbon)) // make sure to only use it on carbon mobs
 					var/mob/living/carbon/C = M
 					if(C.virus2.len)
 						for(var/ID in C.virus2)
@@ -688,7 +688,7 @@ datum
 								if(prob(50))
 									M.radiation += 50 // curing it that way may kill you instead
 									var/mob/living/carbon/human/H
-									if(istype(C,/mob/living/carbon/human))
+									if(istype(C, /mob/living/carbon/human))
 										H = C
 									if(!H || (H.species && !H.species.flags[RAD_ABSORB]))
 										M.adjustToxLoss(100)
@@ -733,7 +733,7 @@ datum
 					if(istype(T, /turf/simulated/wall))
 						var/turf/simulated/wall/W = T
 						W.thermite = 1
-						W.overlays += image('icons/effects/effects.dmi',icon_state = "#673910")
+						W.overlays += image('icons/effects/effects.dmi', icon_state = "#673910")
 				return
 
 			on_mob_life(mob/living/M)
@@ -806,9 +806,9 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
-			//makes you squeaky clean
+			// makes you squeaky clean
 			reaction_mob(mob/living/M, method=TOUCH, volume)
-				if (method == TOUCH)
+				if(method == TOUCH)
 					M.germ_level -= min(volume*20, M.germ_level)
 
 			reaction_obj(var/obj/O, var/volume)
@@ -819,11 +819,11 @@ datum
 
 	/*		reaction_mob(mob/living/M, method=TOUCH, volume)
 				src = null
-				if (method==TOUCH)
+				if(method==TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						if(M.health >= -100 && M.health <= 0)
 							M.crit_op_stage = 0.0
-				if (method==INGEST)
+				if(method==INGEST)
 					to_chat(usr, "Well, that was stupid.")
 					M.adjustToxLoss(3)
 				return
@@ -901,7 +901,7 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				var/turf/the_turf = get_turf(O)
 				if(!the_turf)
-					return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
+					return // No sense trying to start a fire if you don't have a turf to set on fire. --NEO
 				new /obj/effect/decal/cleanable/liquid_fuel(the_turf, volume)
 
 			reaction_turf(var/turf/T, var/volume)
@@ -913,7 +913,7 @@ datum
 					return
 				M.adjustToxLoss(1)
 
-			reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
+			reaction_mob(mob/living/M, method=TOUCH, volume)// Splashing people with welding fuel to make them easy to ignite!
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)
@@ -929,7 +929,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			reaction_obj(var/obj/O, var/volume)
-				if(istype(O,/obj/effect/decal/cleanable))
+				if(istype(O, /obj/effect/decal/cleanable))
 					qdel(O)
 				else
 					if(O)
@@ -946,12 +946,12 @@ datum
 						qdel(C)
 
 					for(var/mob/living/carbon/slime/M in T)
-						M.adjustToxLoss(rand(5,10))
+						M.adjustToxLoss(rand(5, 10))
 
 			reaction_mob(mob/M, method=TOUCH, volume)
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
-					if(istype(M,/mob/living/carbon/human))
+					if(istype(M, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = M
 						if(H.lip_style)
 							H.lip_style = null
@@ -1028,8 +1028,8 @@ datum
 					return
 				if(M.stat == DEAD)
 					return
-				//This needs a diona check but if one is added they won't be able to heal burn damage at all.
-				M.heal_bodypart_damage(0,2 * REM)
+				// This needs a diona check but if one is added they won't be able to heal burn damage at all.
+				M.heal_bodypart_damage(0, 2 * REM)
 
 		dermaline
 			name = "Dermaline"
@@ -1042,10 +1042,10 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(M.stat == DEAD) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
+				if(M.stat == DEAD) // THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
 					return
 				if(!alien || alien != IS_DIONA)
-					M.heal_bodypart_damage(0,3 * REM)
+					M.heal_bodypart_damage(0, 3 * REM)
 
 		dexalin
 			name = "Dexalin"
@@ -1059,7 +1059,7 @@ datum
 				if(!..())
 					return
 				if(M.stat == DEAD)
-					return  //See above, down and around. --Agouri
+					return  // See above, down and around. --Agouri
 
 				if(alien && alien == IS_VOX)
 					M.adjustToxLoss(2 * REM)
@@ -1113,7 +1113,7 @@ datum
 						M.adjustToxLoss(-1 * REM)
 
 		anti_toxin
-			name = "Anti-Toxin (Dylovene)"
+			name = "Anti-Toxin(Dylovene)"
 			id = "anti_toxin"
 			description = "Dylovene is a broad-spectrum antitoxin."
 			reagent_state = LIQUID
@@ -1128,7 +1128,7 @@ datum
 					M.hallucination = max(0, M.hallucination - 5 * REM)
 					M.adjustToxLoss(-2 * REM)
 
-		adminordrazine //An OP chemical for admins
+		adminordrazine // An OP chemical for admins
 			name = "Adminordrazine"
 			id = "adminordrazine"
 			description = "It's magic. We don't have to explain it."
@@ -1142,7 +1142,7 @@ datum
 				M.setCloneLoss(0)
 				M.setOxyLoss(0)
 				M.radiation = 0
-				M.heal_bodypart_damage(5,5)
+				M.heal_bodypart_damage(5, 5)
 				M.adjustToxLoss(-5)
 				M.hallucination = 0
 				M.setBrainLoss(0)
@@ -1234,7 +1234,7 @@ datum
 				if(!..())
 					return
 				if(M.stat == DEAD)
-					return  //See above, down and around. --Agouri
+					return  // See above, down and around. --Agouri
 				M.radiation = max(M.radiation - 7 * REM, 0)
 				M.adjustToxLoss(-1 * REM)
 				if(prob(15))
@@ -1288,7 +1288,7 @@ datum
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 
-					//Peridaxon is hard enough to get, it's probably fair to make this all organs
+					// Peridaxon is hard enough to get, it's probably fair to make this all organs
 					for(var/obj/item/organ/internal/IO in H.organs)
 						if(IO.damage > 0)
 							IO.damage = max(IO.damage - 0.20, 0)
@@ -1314,7 +1314,7 @@ datum
 					H.make_jittery(100)
 					volume += 0.07
 					return
-				H.jitteriness = max(0,H.jitteriness - 100)
+				H.jitteriness = max(0, H.jitteriness - 100)
 				if(!External)
 					for(var/obj/item/organ/external/BP in H.bodyparts) // find a broken/destroyed limb
 						if(BP.status & ORGAN_DESTROYED)
@@ -1333,26 +1333,26 @@ datum
 						B.volume -= 4
 					H.nutrition -= 3
 					H.apply_effect(3, WEAKEN)
-					H.apply_damages(0,0,1,4,0,5) // 1 toxic, 4 oxy and 5 halloss
+					H.apply_damages(0, 0, 1, 4, 0, 5) // 1 toxic, 4 oxy and 5 halloss
 					data++
 					if(data == 1)
 						H.visible_message("<span class='notice'>You see oddly moving in [H]'s [External.name]...</span>"
-					 	,"<span class='notice'> You feel strange vibration on tips of your [External.name]... </span>")
+					 	, "<span class='notice'> You feel strange vibration on tips of your [External.name]... </span>")
 					if(data == 10)
 						H.visible_message("<span class='notice'>You hear sickening crunch In [H]'s [External.name]...</span>")
 					if(data == 20)
 						H.visible_message("<span class='notice'>[H]'s [External.name] shortly bends...</span>")
 					if(data == 30)
 						if(heal_time == 30)
-							H.visible_message("<span class='notice'>[H] stirs his [External.name]...</span>","<span class='userdanger'>You feel freedom in moving your [External.name]</span>")
+							H.visible_message("<span class='notice'>[H] stirs his [External.name]...</span>", "<span class='userdanger'>You feel freedom in moving your [External.name]</span>")
 						else
 							H.visible_message("<span class='notice'>From [H]'s [External.parent.name] grow small meaty sprout...</span>")
 					if(data == 50)
 						H.visible_message("<span class='notice'>You see something resembling [External.name] at [H]'s [External.parent.name]...</span>")
 					if(data == 65)
-						H.visible_message("<span class='userdanger'>A new [External.name] grown from [H]'s [External.parent.name]!</span>","<span class='userdanger'>You feel again your [External.name]!</span>")
+						H.visible_message("<span class='userdanger'>A new [External.name] grown from [H]'s [External.parent.name]!</span>", "<span class='userdanger'>You feel again your [External.name]!</span>")
 					if(prob(50))
-						H.emote("scream",1,null,1)
+						H.emote("scream", 1, null, 1)
 					if(data >= heal_time) // recover organ
 						External.rejuvenate()
 						data = 0
@@ -1389,7 +1389,7 @@ datum
 					return
 				if(!alien || alien != IS_DIONA)
 					if(prob(5))
-						M.emote(pick("twitch","blink_r","shiver"))
+						M.emote(pick("twitch", "blink_r", "shiver"))
 
 		cryoxadone
 			name = "Cryoxadone"
@@ -1471,7 +1471,7 @@ datum
 			reaction_mob(mob/M, method=TOUCH, volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					M.contract_disease(new /datum/disease/robotic_transformation(0),1)
+					M.contract_disease(new /datum/disease/robotic_transformation(0), 1)
 
 		xenomicrobes
 			name = "Xenomicrobes"
@@ -1483,16 +1483,16 @@ datum
 			reaction_mob(mob/M, method=TOUCH, volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					M.contract_disease(new /datum/disease/xeno_transformation(0),1)
+					M.contract_disease(new /datum/disease/xeno_transformation(0), 1)
 
-		fluorosurfactant//foam precursor
+		fluorosurfactant// foam precursor
 			name = "Fluorosurfactant"
 			id = "fluorosurfactant"
 			description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
 			reagent_state = LIQUID
 			color = "#9E6B38" // rgb: 158, 107, 56
 
-		foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
+		foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes(e.g. LiH + H2O -> LiOH + H2) eventually.
 			name = "Foaming agent"
 			id = "foaming_agent"
 			description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
@@ -1543,7 +1543,7 @@ datum
 				M.confused = 0
 				M.reagents.remove_all_type(/datum/reagent/ethanol, 1 * REM, 0, 1)
 
-//////////////////////////Poison stuff///////////////////////
+////////////////////////// Poison stuff///////////////////////
 
 		toxin
 			name = "Toxin"
@@ -1559,7 +1559,7 @@ datum
 					return
 				if(toxpwr)
 					M.adjustToxLoss(toxpwr * REM)
-				return TRUE //toxin has many subclasses, so we need return TRUE for them.
+				return TRUE // toxin has many subclasses, so we need return TRUE for them.
 
 		toxin/amatoxin
 			name = "Amatoxin"
@@ -1579,7 +1579,7 @@ datum
 
 			reaction_mob(mob/living/carbon/M, method=TOUCH, volume)
 				if(!..())	return
-				if(!istype(M) || !M.dna)	return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
+				if(!istype(M) || !M.dna)	return  // No robots, AIs, aliens, Ians or other mobs should be affected by this.
 				src = null
 				if((method==TOUCH && prob(33)) || method==INGEST)
 					randmuti(M)
@@ -1609,9 +1609,9 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				src = null
-				/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
+				/*if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/egg/slime))
 					var/obj/item/weapon/reagent_containers/food/snacks/egg/slime/egg = O
-					if (egg.grown)
+					if(egg.grown)
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
 				if(volume < 0) return 0
@@ -1632,7 +1632,7 @@ datum
 				napalm.trace_gases += fuel
 				T.assume_air(napalm)
 				return
-			reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
+			reaction_mob(mob/living/M, method=TOUCH, volume)// Splashing people with plasma is stronger than fuel!
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)
@@ -1672,11 +1672,11 @@ datum
 					return
 				if(prob(10))
 					to_chat(M, "\red Your insides are burning!")
-					M.adjustToxLoss(rand(20,60) * REM)
+					M.adjustToxLoss(rand(20, 60) * REM)
 				else if(prob(40))
 					M.heal_bodypart_damage(5 * REM, 0)
 
-		toxin/cyanide //Fast and Lethal
+		toxin/cyanide // Fast and Lethal
 			name = "Cyanide"
 			id = "cyanide"
 			description = "A highly toxic chemical."
@@ -1771,14 +1771,14 @@ datum
 							O.show_message(text("\blue The fungi are completely dissolved by the solution!"), 1)
 
 			reaction_obj(var/obj/O, var/volume)
-				if(istype(O,/obj/structure/alien/weeds))
+				if(istype(O, /obj/structure/alien/weeds))
 					var/obj/structure/alien/weeds/alien_weeds = O
-					alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
+					alien_weeds.health -= rand(15, 35) // Kills alien weeds pretty fast
 					alien_weeds.healthcheck()
-				else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
+				else if(istype(O, /obj/effect/glowshroom)) // even a small amount is enough to kill it
 					qdel(O)
-				else if(istype(O,/obj/effect/spacevine))
-					if(prob(50)) del(O) //Kills kudzu too.
+				else if(istype(O, /obj/effect/spacevine))
+					if(prob(50)) del(O) // Kills kudzu too.
 				// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
 
 			reaction_mob(mob/living/M, method=TOUCH, volume)
@@ -1790,7 +1790,7 @@ datum
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if(H.dna)
-							if(H.species.flags[IS_PLANT]) //plantmen take a LOT of damage
+							if(H.species.flags[IS_PLANT]) // plantmen take a LOT of damage
 								H.adjustToxLoss(50)
 
 		toxin/stoxin
@@ -1830,7 +1830,7 @@ datum
 			reagent_state = SOLID
 			color = "#000067" // rgb: 0, 0, 103
 			toxpwr = 1
-			custom_metabolism = 0.1 //Default 0.2
+			custom_metabolism = 0.1 // Default 0.2
 			overdose = 15
 			overdose_dam = 5
 
@@ -1854,7 +1854,7 @@ datum
 			id = "potassium_chloride"
 			description = "A delicious salt that stops the heart when injected into cardiac muscle."
 			reagent_state = SOLID
-			color = "#FFFFFF" // rgb: 255,255,255
+			color = "#FFFFFF" // rgb: 255, 255, 255
 			toxpwr = 0
 			overdose = 30
 
@@ -1862,7 +1862,7 @@ datum
 				if(!..())
 					return
 				if(M.stat != UNCONSCIOUS)
-					if (volume >= overdose)
+					if(volume >= overdose)
 						if(M.losebreath >= 10)
 							M.losebreath = max(10, M.losebreath - 10)
 						M.adjustOxyLoss(2)
@@ -1873,7 +1873,7 @@ datum
 			id = "potassium_chlorophoride"
 			description = "A specific chemical based on Potassium Chloride to stop the heart for surgery. Not safe to eat!"
 			reagent_state = SOLID
-			color = "#FFFFFF" // rgb: 255,255,255
+			color = "#FFFFFF" // rgb: 255, 255, 255
 			toxpwr = 2
 			overdose = 20
 
@@ -1888,10 +1888,10 @@ datum
 						H.adjustOxyLoss(2)
 						H.Weaken(10)
 
-		toxin/beer2	//disguised as normal beer for use by emagged brobots
+		toxin/beer2	// disguised as normal beer for use by emagged brobots
 			name = "Beer"
 			id = "beer2"
-			description = "An alcoholic beverage made from malted grains, hops, yeast, and water. The fermentation appears to be incomplete." //If the players manage to analyze this, they deserve to know something is wrong.
+			description = "An alcoholic beverage made from malted grains, hops, yeast, and water. The fermentation appears to be incomplete." // If the players manage to analyze this, they deserve to know something is wrong.
 			reagent_state = LIQUID
 			color = "#FBBF0D" // rgb: 251, 191, 13
 			custom_metabolism = 0.15 // Sleep toxins should always be consumed pretty fast
@@ -1913,7 +1913,7 @@ datum
 						M.adjustToxLoss((data - 50) * REM)
 				data++
 
-		toxin/mutetoxin //the new zombie powder. @ TG Port
+		toxin/mutetoxin // the new zombie powder. @ TG Port
 			name = "Mute Toxin"
 			id = "mutetoxin"
 			description = "A toxin that temporarily paralyzes the vocal cords."
@@ -1940,7 +1940,7 @@ datum
 					return
 				M.take_bodypart_damage(0, 1 * REM)
 
-			reaction_mob(mob/living/M, method=TOUCH, volume)//magic numbers everywhere
+			reaction_mob(mob/living/M, method=TOUCH, volume)// magic numbers everywhere
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)
@@ -1967,7 +1967,7 @@ datum
 								to_chat(H, "<span class='warning'>Your mask protects you from the acid.</span>")
 							return
 
-						if(H.glasses) //Doesn't protect you from the acid but can melt anyways!
+						if(H.glasses) // Doesn't protect you from the acid but can melt anyways!
 							if(prob(meltprob) && !H.glasses.unacidable)
 								to_chat(H, "<span class='danger'>Your glasses melts away!</span>")
 								qdel(H.glasses)
@@ -1990,17 +1990,17 @@ datum
 							var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 							if(BP)
 								BP.take_damage(4 * toxpwr, 2 * toxpwr)
-								if(prob(meltprob)) //Applies disfigurement
+								if(prob(meltprob)) // Applies disfigurement
 									H.emote("scream",,, 1)
 									H.status_flags |= DISFIGURED
 						else
-							M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
+							M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts(1 unit != insta rape) -- Doohl
 				else
 					if(!M.unacidable)
 						M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr))
 
 			reaction_obj(var/obj/O, var/volume)
-				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
+				if((istype(O, /obj/item) || istype(O, /obj/effect/glowshroom)) && prob(meltprob * 3))
 					if(!O.unacidable)
 						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 						I.desc = "Looks like this was \an [O] some time ago."
@@ -2017,7 +2017,7 @@ datum
 			toxpwr = 2
 			meltprob = 30
 
-/////////////////////////Food Reagents////////////////////////////
+///////////////////////// Food Reagents////////////////////////////
 // Part of the food code. Nutriment is used instead of the old "heal_amt" code. Also is where all the food
 // 	condiments, additives, and such go.
 		nutriment
@@ -2038,12 +2038,12 @@ datum
 				// If overeaten - vomit and fall down
 				// Makes you feel bad but removes reagents and some effect
 				// from your body
-				if (M.nutrition > 650)
-					M.nutrition = rand (250, 400)
+				if(M.nutrition > 650)
+					M.nutrition = rand(250, 400)
 					M.weakened += rand(2, 10)
 					M.jitteriness += rand(0, 5)
-					M.dizziness = max (0, (M.dizziness - rand(0, 15)))
-					M.druggy = max (0, (M.druggy - rand(0, 15)))
+					M.dizziness = max(0, (M.dizziness - rand(0, 15)))
+					M.druggy = max(0, (M.druggy - rand(0, 15)))
 					M.adjustToxLoss(rand(-15, -5)))
 					M.updatehealth()
 */
@@ -2062,7 +2062,7 @@ datum
 					return
 				M.nutrition = max(M.nutrition - nutriment_factor, 0)
 				M.overeatduration = 0
-				if(M.nutrition < 0)//Prevent from going into negatives.
+				if(M.nutrition < 0)// Prevent from going into negatives.
 					M.nutrition = 0
 
 		soysauce
@@ -2108,15 +2108,15 @@ datum
 						if(holder.has_reagent("frostoil"))
 							holder.remove_reagent("frostoil", 5)
 						if(istype(M, /mob/living/carbon/slime))
-							M.bodytemperature += rand(5,20)
+							M.bodytemperature += rand(5, 20)
 					if(15 to 25)
 						M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(istype(M, /mob/living/carbon/slime))
-							M.bodytemperature += rand(10,20)
+							M.bodytemperature += rand(10, 20)
 					if(25 to INFINITY)
 						M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(istype(M, /mob/living/carbon/slime))
-							M.bodytemperature += rand(15,20)
+							M.bodytemperature += rand(15, 20)
 				data++
 
 		condensedcapsaicin
@@ -2136,36 +2136,36 @@ datum
 						var/eyes_covered = 0
 						var/obj/item/safe_thing = null
 						if( victim.wear_mask )
-							if ( victim.wear_mask.flags & MASKCOVERSEYES )
+							if( victim.wear_mask.flags & MASKCOVERSEYES )
 								eyes_covered = 1
 								safe_thing = victim.wear_mask
-							if ( victim.wear_mask.flags & MASKCOVERSMOUTH )
+							if( victim.wear_mask.flags & MASKCOVERSMOUTH )
 								mouth_covered = 1
 								safe_thing = victim.wear_mask
 						if( victim.head )
-							if ( victim.head.flags & MASKCOVERSEYES )
+							if( victim.head.flags & MASKCOVERSEYES )
 								eyes_covered = 1
 								safe_thing = victim.head
-							if ( victim.head.flags & MASKCOVERSMOUTH )
+							if( victim.head.flags & MASKCOVERSMOUTH )
 								mouth_covered = 1
 								safe_thing = victim.head
 						if(victim.glasses)
 							eyes_covered = 1
-							if ( !safe_thing )
+							if( !safe_thing )
 								safe_thing = victim.glasses
-						if ( eyes_covered && mouth_covered )
+						if( eyes_covered && mouth_covered )
 							to_chat(victim, "\red Your [safe_thing] protects you from the pepperspray!")
 							return
-						else if ( mouth_covered )	// Reduced effects if partially protected
+						else if( mouth_covered )	// Reduced effects if partially protected
 							to_chat(victim, "\red Your [safe_thing] protect you from most of the pepperspray!")
 							victim.eye_blurry = max(M.eye_blurry, 15)
 							victim.eye_blind = max(M.eye_blind, 5)
 							victim.Stun(5)
 							victim.Weaken(5)
-							//victim.Paralyse(10)
-							//victim.drop_item()
+							// victim.Paralyse(10)
+							// victim.drop_item()
 							return
-						else if ( eyes_covered ) // Eye cover is better than mouth cover
+						else if( eyes_covered ) // Eye cover is better than mouth cover
 							to_chat(victim, "\red Your [safe_thing] protects your eyes from the pepperspray!")
 							victim.emote("scream",,, 1)
 							victim.eye_blurry = max(M.eye_blurry, 5)
@@ -2177,14 +2177,14 @@ datum
 							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Stun(5)
 							victim.Weaken(5)
-							//victim.Paralyse(10)
-							//victim.drop_item()
+							// victim.Paralyse(10)
+							// victim.drop_item()
 
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
 				if(prob(5))
-					M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
+					M.visible_message("<span class='warning'>[M] [pick("dry heaves!", "coughs!", "splutters!")]</span>")
 
 		frostoil
 			name = "Frost Oil"
@@ -2201,20 +2201,20 @@ datum
 				if(prob(1))
 					M.emote("shiver")
 				if(istype(M, /mob/living/carbon/slime))
-					M.bodytemperature = max(M.bodytemperature - rand(10,20), 0)
+					M.bodytemperature = max(M.bodytemperature - rand(10, 20), 0)
 				holder.remove_reagent("capsaicin", 5)
 				holder.remove_reagent(src.id, FOOD_METABOLISM)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				for(var/mob/living/carbon/slime/M in T)
-					M.adjustToxLoss(rand(15,30))
+					M.adjustToxLoss(rand(15, 30))
 
 		sodiumchloride
 			name = "Table Salt"
 			id = "sodiumchloride"
 			description = "A salt made of sodium chloride. Commonly used to season food."
 			reagent_state = SOLID
-			color = "#FFFFFF" // rgb: 255,255,255
+			color = "#FFFFFF" // rgb: 255, 255, 255
 			overdose = REAGENTS_OVERDOSE
 
 		blackpepper
@@ -2222,7 +2222,7 @@ datum
 			id = "blackpepper"
 			description = "A powder ground from peppercorns. *AAAACHOOO*"
 			reagent_state = SOLID
-			// no color (ie, black)
+			// no color(ie, black)
 
 		coco
 			name = "Coco Powder"
@@ -2248,7 +2248,7 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+				if(M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.nutrition += nutriment_factor
 
@@ -2272,7 +2272,7 @@ datum
 							M.stuttering = 1
 						M.make_dizzy(5)
 						if(prob(10))
-							M.emote(pick("twitch","giggle"))
+							M.emote(pick("twitch", "giggle"))
 					if(5 to 10)
 						if(!M.stuttering)
 							M.stuttering = 1
@@ -2280,7 +2280,7 @@ datum
 						M.make_dizzy(10)
 						M.druggy = max(M.druggy, 35)
 						if(prob(20))
-							M.emote(pick("twitch","giggle"))
+							M.emote(pick("twitch", "giggle"))
 					if(10 to INFINITY)
 						if(!M.stuttering)
 							M.stuttering = 1
@@ -2288,7 +2288,7 @@ datum
 						M.make_dizzy(20)
 						M.druggy = max(M.druggy, 40)
 						if(prob(30))
-							M.emote(pick("twitch","giggle"))
+							M.emote(pick("twitch", "giggle"))
 				data++
 
 		sprinkles
@@ -2310,7 +2310,7 @@ datum
 					return
 				*/
 
-/*	//removed because of meta bullshit. this is why we can't have nice things.
+/*	// removed because of meta bullshit. this is why we can't have nice things.
 		syndicream
 			name = "Cream filling"
 			id = "syndicream"
@@ -2343,14 +2343,14 @@ datum
 				M.nutrition += nutriment_factor
 
 			reaction_turf(var/turf/simulated/T, var/volume)
-				if (!istype(T)) return
+				if(!istype(T)) return
 				src = null
 				if(volume >= 3)
 					T.make_wet_floor(WATER_FLOOR)
 				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot)
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
-					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+					lowertemp.temperature = max( min(lowertemp.temperature-2000, lowertemp.temperature / 2) , 0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
 					qdel(hotspot)
@@ -2388,7 +2388,7 @@ datum
 				if(!..())
 					return
 				M.nutrition += nutriment_factor
-				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+				if(M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 		hell_ramen
@@ -2473,11 +2473,11 @@ datum
 					return
 				M.nutrition += nutriment_factor
 				if(adj_dizzy)
-					M.dizziness = max(0,M.dizziness + adj_dizzy)
+					M.dizziness = max(0, M.dizziness + adj_dizzy)
 				if(adj_drowsy)
-					M.drowsyness = max(0,M.drowsyness + adj_drowsy)
+					M.drowsyness = max(0, M.drowsyness + adj_drowsy)
 				if(adj_sleepy)
-					M.sleeping = max(0,M.sleeping + adj_sleepy)
+					M.sleeping = max(0, M.sleeping + adj_sleepy)
 				if(adj_temp)
 					if(M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 						M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -2533,7 +2533,7 @@ datum
 					data = 1
 				switch(data)
 					if(1 to 20)
-						//nothing
+						// nothing
 					if(21 to INFINITY)
 						if(prob(data - 10))
 							M.disabilities &= ~NEARSIGHTED
@@ -2834,17 +2834,17 @@ datum
 						if(holder.has_reagent("capsaicin"))
 							holder.remove_reagent("capsaicin", 5)
 						if(istype(M, /mob/living/carbon/slime))
-							M.bodytemperature -= rand(5,20)
+							M.bodytemperature -= rand(5, 20)
 					if(15 to 25)
 						M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(istype(M, /mob/living/carbon/slime))
-							M.bodytemperature -= rand(10,20)
+							M.bodytemperature -= rand(10, 20)
 					if(25 to INFINITY)
 						M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(prob(1))
 							M.emote("shiver")
 						if(istype(M, /mob/living/carbon/slime))
-							M.bodytemperature -= rand(15,20)
+							M.bodytemperature -= rand(15, 20)
 				data++
 
 		drink/cold/rewriter
@@ -2884,7 +2884,7 @@ datum
 				if(M.confused !=0)
 					M.confused = max(0, M.confused - 5)
 
-//////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
+////////////////////////////////////////////// The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
 		atomicbomb
 			name = "Atomic Bomb"
@@ -2897,7 +2897,7 @@ datum
 				if(!..())
 					return
 				M.druggy = max(M.druggy, 50)
-				M.confused = max(M.confused + 2,0)
+				M.confused = max(M.confused + 2, 0)
 				M.make_dizzy(10)
 				if(!M.stuttering)
 					M.stuttering = 1
@@ -2931,7 +2931,7 @@ datum
 						M.stuttering = 1
 					M.stuttering += 3
 				else if(data >= 45 && prob(50) && data < 55)
-					M.confused = max(M.confused + 3,0)
+					M.confused = max(M.confused + 3, 0)
 				else if(data >=55)
 					M.druggy = max(M.druggy, 55)
 				else if(data >=200)
@@ -2953,11 +2953,11 @@ datum
 				data++
 				M.dizziness += 6
 				if(data >= 15 && data < 45)
-					if (!M.stuttering)
+					if(!M.stuttering)
 						M.stuttering = 1
 					M.stuttering += 3
 				else if(data >= 45 && prob(50) && data <55)
-					M.confused = max(M.confused + 3,0)
+					M.confused = max(M.confused + 3, 0)
 				else if(data >=55)
 					M.druggy = max(M.druggy, 55)
 				else if(data >=200)
@@ -2984,7 +2984,7 @@ datum
 							M.stuttering = 1
 						M.make_dizzy(10)
 						if(prob(10))
-							M.emote(pick("twitch","giggle"))
+							M.emote(pick("twitch", "giggle"))
 					if(5 to 10)
 						if(!M.stuttering)
 							M.stuttering = 1
@@ -2992,7 +2992,7 @@ datum
 						M.make_dizzy(20)
 						M.druggy = max(M.druggy, 45)
 						if(prob(20))
-							M.emote(pick("twitch","giggle"))
+							M.emote(pick("twitch", "giggle"))
 					if(10 to 200)
 						if(!M.stuttering)
 							M.stuttering = 1
@@ -3000,7 +3000,7 @@ datum
 						M.make_dizzy(40)
 						M.druggy = max(M.druggy, 60)
 						if(prob(30))
-							M.emote(pick("twitch","giggle"))
+							M.emote(pick("twitch", "giggle"))
 					if(200 to INFINITY)
 						if(!M.stuttering)
 							M.stuttering = 1
@@ -3008,7 +3008,7 @@ datum
 						M.make_dizzy(60)
 						M.druggy = max(M.druggy, 75)
 						if(prob(40))
-							M.emote(pick("twitch","giggle"))
+							M.emote(pick("twitch", "giggle"))
 						if(prob(30))
 							M.adjustToxLoss(2)
 
@@ -3021,23 +3021,23 @@ datum
 */
 
 		ethanol
-			name = "Ethanol" //Parent class for all alcoholic reagents.
+			name = "Ethanol" // Parent class for all alcoholic reagents.
 			id = "ethanol"
 			description = "A well-known alcohol with a variety of applications."
 			reagent_state = LIQUID
-			nutriment_factor = 0 //So alcohol can fill you up! If they want to.
+			nutriment_factor = 0 // So alcohol can fill you up! If they want to.
 			color = "#404030" // rgb: 64, 64, 48
 			custom_metabolism = DRINK_METABOLISM * 0.4
-			var/boozepwr = 5 //higher numbers mean the booze will have an effect faster.
+			var/boozepwr = 5 // higher numbers mean the booze will have an effect faster.
 			var/dizzy_adj = 3
 			var/adj_drowsy = 0
 			var/adj_sleepy = 0
 			var/slurr_adj = 3
 			var/confused_adj = 2
-			var/slur_start = 90			//amount absorbed after which mob starts slurring
-			var/confused_start = 150	//amount absorbed after which mob starts confusing directions
-			var/blur_start = 300	//amount absorbed after which mob starts getting blurred vision
-			var/pass_out = 400	//amount absorbed after which mob starts passing out
+			var/slur_start = 90			// amount absorbed after which mob starts slurring
+			var/confused_start = 150	// amount absorbed after which mob starts confusing directions
+			var/blur_start = 300	// amount absorbed after which mob starts getting blurred vision
+			var/pass_out = 400	// amount absorbed after which mob starts passing out
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -3046,13 +3046,13 @@ datum
 				M.nutrition += nutriment_factor
 
 				if(adj_drowsy)
-					M.drowsyness = max(0,M.drowsyness + adj_drowsy)
+					M.drowsyness = max(0, M.drowsyness + adj_drowsy)
 				if(adj_sleepy)
-					M.sleeping = max(0,M.sleeping + adj_sleepy)
+					M.sleeping = max(0, M.sleeping + adj_sleepy)
 
 				if(!src.data || (!isnum(src.data) && src.data.len))
-					data = 1   //if it doesn't exist we set it.  if it's a list we're going to set it to 1 as well.  This is to
-				src.data += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
+					data = 1   // if it doesn't exist we set it.  if it's a list we're going to set it to 1 as well.  This is to
+				src.data += boozepwr						// avoid a runtime error associated with drinking blood mixed in drinks(demon's blood).
 
 				var/d = 0
 
@@ -3061,7 +3061,7 @@ datum
 					if(isnum(A.data))
 						d += A.data
 
-				if(alien && alien == IS_SKRELL) //Skrell get very drunk very quickly.
+				if(alien && alien == IS_SKRELL) // Skrell get very drunk very quickly.
 					d *= 5
 
 				M.dizziness += dizzy_adj
@@ -3088,12 +3088,12 @@ datum
 				return TRUE
 
 			reaction_obj(var/obj/O, var/volume)
-				if(istype(O,/obj/item/weapon/paper))
+				if(istype(O, /obj/item/weapon/paper))
 					var/obj/item/weapon/paper/paperaffected = O
 					paperaffected.clearpaper()
 					to_chat(usr, "The solution dissolves the ink on the paper.")
-				if(istype(O,/obj/item/weapon/book))
-					if(istype(O,/obj/item/weapon/book/tome))
+				if(istype(O, /obj/item/weapon/book))
+					if(istype(O, /obj/item/weapon/book/tome))
 						to_chat(usr, "The solution does nothing. Whatever this is, it isn't normal ink.")
 						return
 					if(volume >= 5)
@@ -3103,7 +3103,7 @@ datum
 					else
 						to_chat(usr, "It wasn't enough...")
 				return
-			reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with ethanol isn't quite as good as fuel.
+			reaction_mob(mob/living/M, method=TOUCH, volume)// Splashing people with ethanol isn't quite as good as fuel.
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)
@@ -3122,7 +3122,7 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				M.jitteriness = max(M.jitteriness - 3,0)
+				M.jitteriness = max(M.jitteriness - 3, 0)
 
 		ethanol/kahlua
 			name = "Kahlua"
@@ -3154,7 +3154,7 @@ datum
 			color = "#664300" // rgb: 102, 67, 0
 			boozepwr = 2
 			dizzy_adj = 4
-			slur_start = 30		//amount absorbed after which mob starts slurring
+			slur_start = 30		// amount absorbed after which mob starts slurring
 
 		ethanol/thirteenloko
 			name = "Thirteen Loko"
@@ -3182,7 +3182,7 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				M.radiation = max(M.radiation - 1,0)
+				M.radiation = max(M.radiation - 1, 0)
 
 		ethanol/bilk
 			name = "Bilk"
@@ -3240,8 +3240,8 @@ datum
 			color = "#7E4043" // rgb: 126, 64, 67
 			boozepwr = 1.5
 			dizzy_adj = 2
-			slur_start = 65			//amount absorbed after which mob starts slurring
-			confused_start = 145	//amount absorbed after which mob starts confusing directions
+			slur_start = 65			// amount absorbed after which mob starts slurring
+			confused_start = 145	// amount absorbed after which mob starts confusing directions
 
 		ethanol/cognac
 			name = "Cognac"
@@ -3250,7 +3250,7 @@ datum
 			color = "#AB3C05" // rgb: 171, 60, 5
 			boozepwr = 1.5
 			dizzy_adj = 4
-			confused_start = 115	//amount absorbed after which mob starts confusing directions
+			confused_start = 115	// amount absorbed after which mob starts confusing directions
 
 		ethanol/hooch
 			name = "Hooch"
@@ -3260,8 +3260,8 @@ datum
 			boozepwr = 2
 			dizzy_adj = 6
 			slurr_adj = 5
-			slur_start = 35			//amount absorbed after which mob starts slurring
-			confused_start = 90	//amount absorbed after which mob starts confusing directions
+			slur_start = 35			// amount absorbed after which mob starts slurring
+			confused_start = 90	// amount absorbed after which mob starts confusing directions
 
 		ethanol/ale
 			name = "Ale"
@@ -3305,7 +3305,7 @@ datum
 						M.make_dizzy(1)
 						M.hallucination = max(M.hallucination, 3)
 						if(prob(1))
-							M.emote(pick("twitch","giggle"))
+							M.emote(pick("twitch", "giggle"))
 					if(25 to 75)
 						if(!M.stuttering)
 							M.stuttering = 1
@@ -3314,7 +3314,7 @@ datum
 						M.make_dizzy(2)
 						M.druggy = max(M.druggy, 45)
 						if(prob(5))
-							M.emote(pick("twitch","giggle"))
+							M.emote(pick("twitch", "giggle"))
 					if(75 to 150)
 						if(!M.stuttering)
 							M.stuttering = 1
@@ -3323,7 +3323,7 @@ datum
 						M.make_dizzy(4)
 						M.druggy = max(M.druggy, 60)
 						if(prob(10))
-							M.emote(pick("twitch","giggle"))
+							M.emote(pick("twitch", "giggle"))
 						if(prob(30))
 							M.adjustToxLoss(2)
 					if(150 to 300)
@@ -3334,7 +3334,7 @@ datum
 						M.make_dizzy(4)
 						M.druggy = max(M.druggy, 60)
 						if(prob(10))
-							M.emote(pick("twitch","giggle"))
+							M.emote(pick("twitch", "giggle"))
 						if(prob(30))
 							M.adjustToxLoss(2)
 						if(prob(5) && ishuman(M))
@@ -3369,7 +3369,7 @@ datum
 			boozepwr = 2
 
 
-/////////////////////////////////////////////////////////////////cocktail entities//////////////////////////////////////////////
+///////////////////////////////////////////////////////////////// cocktail entities//////////////////////////////////////////////
 
 
 		ethanol/goldschlager
@@ -3474,7 +3474,7 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				if (M.bodytemperature < 330)
+				if(M.bodytemperature < 330)
 					M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 
 		ethanol/beepsky_smash
@@ -3582,7 +3582,7 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				if (M.bodytemperature < 330)
+				if(M.bodytemperature < 330)
 					M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 
 		ethanol/barefoot
@@ -3670,7 +3670,7 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				if (M.bodytemperature < 360)
+				if(M.bodytemperature < 360)
 					M.bodytemperature = min(360, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 
 		ethanol/devilskiss
@@ -3825,7 +3825,7 @@ datum
 ////////////////////////////////////////////// Chemlights ///////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		luminophore_temp //Temporary holder of vars used in mixing colors
+		luminophore_temp // Temporary holder of vars used in mixing colors
 			name = "Luminophore"
 			id = "luminophore"
 			description = "Uh, some kind of drink."
@@ -3848,7 +3848,7 @@ datum
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 					H.vomit()
-					H.apply_effect(1,IRRADIATE,0)
+					H.apply_effect(1, IRRADIATE, 0)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
@@ -3858,23 +3858,23 @@ datum
 	id = "nanites2"
 	description = "Friendly microscopic construction robots."
 	reagent_state = LIQUID
-	color = "#535E66" //rgb: 83, 94, 102
+	color = "#535E66" // rgb: 83, 94, 102
 
 /datum/reagent/nanobots
 	name = "Nanobots"
 	id = "nanobots"
 	description = "Microscopic robots intended for use in humans. Must be loaded with further chemicals to be useful."
 	reagent_state = LIQUID
-	color = "#3E3959" //rgb: 62, 57, 89
+	color = "#3E3959" // rgb: 62, 57, 89
 
-//Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
-//Dangerous in amounts over 5 units, healing that occurs while over 5 units adds to a counter. That counter affects gib chance. Guaranteed gib over 20 units.
+// Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
+// Dangerous in amounts over 5 units, healing that occurs while over 5 units adds to a counter. That counter affects gib chance. Guaranteed gib over 20 units.
 /datum/reagent/mednanobots
 	name = "Medical Nanobots"
 	id = "mednanobots"
 	description = "Microscopic robots intended for use in humans. Configured for rapid healing upon infiltration into the body."
 	reagent_state = LIQUID
-	color = "#593948" //rgb: 89, 57, 72
+	color = "#593948" // rgb: 89, 57, 72
 	custom_metabolism = 0.005
 	var/spawning_horror = 0
 	var/percent_machine = 0
@@ -3894,7 +3894,7 @@ datum
 					if(H.getOxyLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
 							H.adjustOxyLoss(-4)
-							holder.remove_reagent("mednanobots", 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+							holder.remove_reagent("mednanobots", 0.1)  // The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
 
 					if(H.getBruteLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
@@ -3930,7 +3930,7 @@ datum
 						D.stage--
 						if(D.stage < 1)
 							D.cure()
-				if(5 to 20)		//Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
+				if(5 to 20)		// Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
 					for(var/datum/wound/W in BP.wounds)
 						BP.wounds -= W
@@ -3938,7 +3938,7 @@ datum
 					if(H.getOxyLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
 							H.adjustOxyLoss(-4)
-							holder.remove_reagent("mednanobots", 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+							holder.remove_reagent("mednanobots", 0.1)  // The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
 							percent_machine += 0.5
 							if(prob(20))
 								to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
@@ -4002,14 +4002,14 @@ datum
 		holder.del_reagent("mednanobots")
 
 //////////////////////////////////////////////
-//////////////New poisons/////////////////////
+////////////// New poisons/////////////////////
 //////////////////////////////////////////////
 
 /datum/reagent/alphaamanitin
 	name = "Alpha-amanitin"
 	id = "alphaamanitin"
 	description = "Deadly rapidly degrading toxin derived from certain species of mushrooms."
-	color = "#792300" //rgb: 121, 35, 0
+	color = "#792300" // rgb: 121, 35, 0
 	custom_metabolism = 0.5
 
 /datum/reagent/alphaamanitin/on_mob_life(mob/living/M, alien)
@@ -4025,7 +4025,7 @@ datum
 	id = "aflatoxin"
 	description = "Deadly toxin delayed action. Causes general poisoning and damage the structure of DNA."
 	reagent_state = LIQUID
-	color = "#792300" //rgb: 59, 8, 5
+	color = "#792300" // rgb: 59, 8, 5
 	custom_metabolism = 0.05
 
 /datum/reagent/aflatoxin/on_mob_life(mob/living/M, alien)
@@ -4037,17 +4037,17 @@ datum
 
 	if(data >= 165)
 		M.adjustToxLoss(4)
-		M.apply_effect(5*REM,IRRADIATE,0)
+		M.apply_effect(5*REM, IRRADIATE, 0)
 	data++
 
-/datum/reagent/chefspecial	//From VG. Only for traitors
+/datum/reagent/chefspecial	// From VG. Only for traitors
 	name = "Chef's Special"
 	id = "chefspecial"
 	description = "An extremely toxic chemical that will surely end in death."
 	reagent_state = LIQUID
-	color = "#792300" //rgb: 207, 54, 0
+	color = "#792300" // rgb: 207, 54, 0
 	custom_metabolism = 0.01
-	data = 1 //Used as a tally
+	data = 1 // Used as a tally
 
 /datum/reagent/chefspecial/on_mob_life(mob/living/M, alien)
 	if(!..() || (alien && alien == IS_DIONA))
@@ -4066,8 +4066,8 @@ datum
 	id = "dioxin"
 	description = "A powerful poison with a cumulative effect."
 	reagent_state = LIQUID
-	color = "#792300" //rgb: 207, 54, 0
-	custom_metabolism = 0 //No metabolism
+	color = "#792300" // rgb: 207, 54, 0
+	custom_metabolism = 0 // No metabolism
 
 /datum/reagent/dioxin/on_mob_life(mob/living/M, alien)
 	if(!..() || (alien && alien == IS_DIONA))
@@ -4079,20 +4079,20 @@ datum
 	if(data >= 130)
 		M.make_jittery(2)
 		M.make_dizzy(2)
-		switch (volume)
+		switch(volume)
 			if(10 to 20)
 				if(prob(5))
-					M.emote(pick("twitch","giggle"))
+					M.emote(pick("twitch", "giggle"))
 				if(data >=180)
 					M.adjustToxLoss(1)
 			if(20 to 30)
 				if(prob(10))
-					M.emote(pick("twitch","giggle"))
+					M.emote(pick("twitch", "giggle"))
 				M.adjustToxLoss(3)
 				M.adjustBrainLoss(2)
 			if(30 to INFINITY)
 				if(prob(20))
-					M.emote(pick("twitch","giggle"))
+					M.emote(pick("twitch", "giggle"))
 				M.adjustToxLoss(3)
 				M.adjustBrainLoss(2)
 				if(ishuman(M) && prob(5))
@@ -4112,13 +4112,13 @@ datum
 	id = "mulligan"
 	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
 	reagent_state = LIQUID
-	color = "#5EFF3B" //RGB: 94, 255, 59
+	color = "#5EFF3B" // RGB: 94, 255, 59
 	custom_metabolism = 1000
 
 /datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
 	if(!..())
 		return
-	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
+	to_chat(H, "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	H.gender = pick(MALE, FEMALE)
 	if(H.gender == MALE)
@@ -4127,7 +4127,7 @@ datum
 		H.name = pick(first_names_female)
 	H.name += " [pick(last_names)]"
 	H.real_name = H.name
-	var/datum/preferences/A = new()	//Randomize appearance for the human
+	var/datum/preferences/A = new()	// Randomize appearance for the human
 	A.randomize_appearance_for(H)
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER

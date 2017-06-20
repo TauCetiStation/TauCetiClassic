@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/structure/particle_accelerator/particle_emitter
 	name = "EM Containment Grid"
@@ -35,7 +35,7 @@
 	if((src.last_shot + src.fire_delay) <= world.time)
 		src.last_shot = world.time
 		var/obj/effect/accelerated_particle/A = null
-		var/turf/T = get_step(src,dir)
+		var/turf/T = get_step(src, dir)
 		switch(strength)
 			if(0)
 				A = new/obj/effect/accelerated_particle/weak(T, dir)

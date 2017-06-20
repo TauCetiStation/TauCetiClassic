@@ -1,4 +1,4 @@
-//Cyborg
+// Cyborg
 /datum/design/borg_suit
 	name = "Cyborg Endoskeleton"
 	id = "borg_suit"
@@ -62,7 +62,7 @@
 	construction_time = 200
 	category = list("Cyborg")
 
-//Cyborg Components
+// Cyborg Components
 /datum/design/borg_binary
 	name = "Binary Communication Device"
 	id = "borg_binary"
@@ -118,9 +118,9 @@
 	category = list("Cyborg Components")
 
 
-//Ripley
+// Ripley
 /datum/design/ripley_chassis
-	name = "Exosuit Chassis (APLU \"Ripley\")"
+	name = "Exosuit Chassis(APLU \"Ripley\")"
 	id = "ripley_chassis"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/ripley
@@ -129,7 +129,7 @@
 	category = list("Ripley")
 
 /datum/design/ripley_torso
-	name = "Exosuit Torso (APLU \"Ripley\")"
+	name = "Exosuit Torso(APLU \"Ripley\")"
 	id = "ripley_torso"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_torso
@@ -138,7 +138,7 @@
 	category = list("Ripley")
 
 /datum/design/ripley_left_arm
-	name = "Exosuit Left Arm (APLU \"Ripley\")"
+	name = "Exosuit Left Arm(APLU \"Ripley\")"
 	id = "ripley_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_left_arm
@@ -147,7 +147,7 @@
 	category = list("Ripley")
 
 /datum/design/ripley_right_arm
-	name = "Exosuit Right Arm (APLU \"Ripley\")"
+	name = "Exosuit Right Arm(APLU \"Ripley\")"
 	id = "ripley_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_right_arm
@@ -156,7 +156,7 @@
 	category = list("Ripley")
 
 /datum/design/ripley_left_leg
-	name = "Exosuit Left Leg (APLU \"Ripley\")"
+	name = "Exosuit Left Leg(APLU \"Ripley\")"
 	id = "ripley_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_left_leg
@@ -165,7 +165,7 @@
 	category = list("Ripley")
 
 /datum/design/ripley_right_leg
-	name = "Exosuit Right Leg (APLU \"Ripley\")"
+	name = "Exosuit Right Leg(APLU \"Ripley\")"
 	id = "ripley_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_right_leg
@@ -174,9 +174,9 @@
 	category = list("Ripley")
 
 
-//Odysseus
+// Odysseus
 /datum/design/odysseus_chassis
-	name = "Exosuit Chassis (\"Odysseus\")"
+	name = "Exosuit Chassis(\"Odysseus\")"
 	id = "odysseus_chassis"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/odysseus
@@ -185,7 +185,7 @@
 	category = list("Odysseus")
 
 /datum/design/odysseus_torso
-	name = "Exosuit Torso (\"Odysseus\")"
+	name = "Exosuit Torso(\"Odysseus\")"
 	id = "odysseus_torso"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_torso
@@ -194,7 +194,7 @@
 	category = list("Odysseus")
 
 /datum/design/odysseus_head
-	name = "Exosuit Head (\"Odysseus\")"
+	name = "Exosuit Head(\"Odysseus\")"
 	id = "odysseus_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_head
@@ -203,7 +203,7 @@
 	category = list("Odysseus")
 
 /datum/design/odysseus_left_arm
-	name = "Exosuit Right Arm (\"Odysseus\")"
+	name = "Exosuit Right Arm(\"Odysseus\")"
 	id = "odysseus_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_left_arm
@@ -212,7 +212,7 @@
 	category = list("Odysseus")
 
 /datum/design/odysseus_right_arm
-	name = "Exosuit Right Arm (\"Odysseus\")"
+	name = "Exosuit Right Arm(\"Odysseus\")"
 	id = "odysseus_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_right_arm
@@ -221,7 +221,7 @@
 	category = list("Odysseus")
 
 /datum/design/odysseus_left_leg
-	name = "Exosuit Left Leg (\"Odysseus\")"
+	name = "Exosuit Left Leg(\"Odysseus\")"
 	id = "odysseus_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_left_leg
@@ -230,7 +230,7 @@
 	category = list("Odysseus")
 
 /datum/design/odysseus_right_leg
-	name = "Exosuit Right Leg (\"Odysseus\")"
+	name = "Exosuit Right Leg(\"Odysseus\")"
 	id = "odysseus_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_right_leg
@@ -239,9 +239,9 @@
 	category = list("Odysseus")
 
 
-//Gygax
+// Gygax
 /datum/design/gygax_chassis
-	name = "Exosuit Chassis (\"Gygax\")"
+	name = "Exosuit Chassis(\"Gygax\")"
 	id = "gygax_chassis"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/gygax
@@ -250,7 +250,7 @@
 	category = list("Gygax")
 
 /datum/design/gygax_torso
-	name = "Exosuit Torso (\"Gygax\")"
+	name = "Exosuit Torso(\"Gygax\")"
 	id = "gygax_torso"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_torso
@@ -259,7 +259,7 @@
 	category = list("Gygax")
 
 /datum/design/gygax_head
-	name = "Exosuit Head (\"Gygax\")"
+	name = "Exosuit Head(\"Gygax\")"
 	id = "gygax_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_head
@@ -268,7 +268,7 @@
 	category = list("Gygax")
 
 /datum/design/gygax_left_arm
-	name = "Exosuit Left Arm (\"Gygax\")"
+	name = "Exosuit Left Arm(\"Gygax\")"
 	id = "gygax_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_left_arm
@@ -277,7 +277,7 @@
 	category = list("Gygax")
 
 /datum/design/gygax_right_arm
-	name = "Exosuit Right Arm (\"Gygax\")"
+	name = "Exosuit Right Arm(\"Gygax\")"
 	id = "gygax_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_right_arm
@@ -286,7 +286,7 @@
 	category = list("Gygax")
 
 /datum/design/gygax_left_leg
-	name = "Exosuit Left Leg (\"Gygax\")"
+	name = "Exosuit Left Leg(\"Gygax\")"
 	id = "gygax_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_left_leg
@@ -295,7 +295,7 @@
 	category = list("Gygax")
 
 /datum/design/gygax_right_leg
-	name = "Exosuit Right Leg (\"Gygax\")"
+	name = "Exosuit Right Leg(\"Gygax\")"
 	id = "gygax_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_right_leg
@@ -304,7 +304,7 @@
 	category = list("Gygax")
 
 /datum/design/gygax_armour
-	name = "Exosuit Armour (\"Gygax\")"
+	name = "Exosuit Armour(\"Gygax\")"
 	id = "gygax_armour"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_armour
@@ -312,9 +312,9 @@
 	construction_time = 600
 	category = list("Gygax")
 
-//Gygax Ultra
+// Gygax Ultra
 /datum/design/ultra_chassis
-	name = "Exosuit Chassis (\"Gygax Ultra\")"
+	name = "Exosuit Chassis(\"Gygax Ultra\")"
 	id = "ultra_chassis"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/ultra
@@ -323,7 +323,7 @@
 	category = list("Gygax Ultra")
 
 /datum/design/ultra_torso
-	name = "Exosuit Torso (\"Gygax Ultra\")"
+	name = "Exosuit Torso(\"Gygax Ultra\")"
 	id = "ultra_torso"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ultra_torso
@@ -332,7 +332,7 @@
 	category = list("Gygax Ultra")
 
 /datum/design/ultra_head
-	name = "Exosuit Head (\"Gygax Ultra\")"
+	name = "Exosuit Head(\"Gygax Ultra\")"
 	id = "ultra_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ultra_head
@@ -341,7 +341,7 @@
 	category = list("Gygax Ultra")
 
 /datum/design/ultra_left_arm
-	name = "Exosuit Left Arm (\"Gygax Ultra\")"
+	name = "Exosuit Left Arm(\"Gygax Ultra\")"
 	id = "ultra_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ultra_left_arm
@@ -350,7 +350,7 @@
 	category = list("Gygax Ultra")
 
 /datum/design/ultra_right_arm
-	name = "Exosuit Right Arm (\"Gygax Ultra\")"
+	name = "Exosuit Right Arm(\"Gygax Ultra\")"
 	id = "ultra_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ultra_right_arm
@@ -359,7 +359,7 @@
 	category = list("Gygax Ultra")
 
 /datum/design/ultra_left_leg
-	name = "Exosuit Left Leg (\"Gygax Ultra\")"
+	name = "Exosuit Left Leg(\"Gygax Ultra\")"
 	id = "ultra_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ultra_left_leg
@@ -368,7 +368,7 @@
 	category = list("Gygax Ultra")
 
 /datum/design/ultra_right_leg
-	name = "Exosuit Right Leg (\"Gygax Ultra\")"
+	name = "Exosuit Right Leg(\"Gygax Ultra\")"
 	id = "ultra_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ultra_right_leg
@@ -377,7 +377,7 @@
 	category = list("Gygax Ultra")
 
 /datum/design/ultra_armour
-	name = "Exosuit Armour (\"Gygax Ultra\")"
+	name = "Exosuit Armour(\"Gygax Ultra\")"
 	id = "ultra_armour"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ultra_armour
@@ -385,9 +385,9 @@
 	construction_time = 600
 	category = list("Gygax Ultra")
 
-//Durand
+// Durand
 /datum/design/durand_chassis
-	name = "Exosuit Chassis (\"Durand\")"
+	name = "Exosuit Chassis(\"Durand\")"
 	id = "durand_chassis"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/durand
@@ -396,7 +396,7 @@
 	category = list("Durand")
 
 /datum/design/durand_torso
-	name = "Exosuit Torso (\"Durand\")"
+	name = "Exosuit Torso(\"Durand\")"
 	id = "durand_torso"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_torso
@@ -405,7 +405,7 @@
 	category = list("Durand")
 
 /datum/design/durand_head
-	name = "Exosuit Head (\"Durand\")"
+	name = "Exosuit Head(\"Durand\")"
 	id = "durand_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_head
@@ -414,7 +414,7 @@
 	category = list("Durand")
 
 /datum/design/durand_left_arm
-	name = "Exosuit Left Arm (\"Durand\")"
+	name = "Exosuit Left Arm(\"Durand\")"
 	id = "durand_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_left_arm
@@ -422,7 +422,7 @@
 	category = list("Durand")
 
 /datum/design/durand_right_arm
-	name = "Exosuit Right Arm (\"Durand\")"
+	name = "Exosuit Right Arm(\"Durand\")"
 	id = "durand_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_right_arm
@@ -431,7 +431,7 @@
 	category = list("Durand")
 
 /datum/design/durand_left_leg
-	name = "Exosuit Left Leg (\"Durand\")"
+	name = "Exosuit Left Leg(\"Durand\")"
 	id = "durand_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_left_leg
@@ -440,7 +440,7 @@
 	category = list("Durand")
 
 /datum/design/durand_right_leg
-	name = "Exosuit Right Leg (\"Durand\")"
+	name = "Exosuit Right Leg(\"Durand\")"
 	id = "durand_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_right_leg
@@ -449,7 +449,7 @@
 	category = list("Durand")
 
 /datum/design/durand_armour
-	name = "Exosuit Armour (\"Durand\")"
+	name = "Exosuit Armour(\"Durand\")"
 	id = "durand_armour"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_armour
@@ -458,9 +458,9 @@
 	category = list("Durand")
 
 
-//Vindicator
+// Vindicator
 /datum/design/vindicator_chassis
-	name = "Exosuit Chassis (\"Vindicator\")"
+	name = "Exosuit Chassis(\"Vindicator\")"
 	id = "vindicator_chassis"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/vindicator
@@ -469,7 +469,7 @@
 	category = list("Vindicator")
 
 /datum/design/vindicator_torso
-	name = "Exosuit Torso (\"Vindicator\")"
+	name = "Exosuit Torso(\"Vindicator\")"
 	id = "vindicator_torso"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/vindicator_torso
@@ -478,7 +478,7 @@
 	category = list("Vindicator")
 
 /datum/design/vindicator_head
-	name = "Exosuit Head (\"Vindicator\")"
+	name = "Exosuit Head(\"Vindicator\")"
 	id = "vindicator_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/vindicator_head
@@ -487,7 +487,7 @@
 	category = list("Vindicator")
 
 /datum/design/vindicator_left_arm
-	name = "Exosuit Left Arm (\"Vindicator\")"
+	name = "Exosuit Left Arm(\"Vindicator\")"
 	id = "vindicator_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/vindicator_left_arm
@@ -496,7 +496,7 @@
 	category = list("Vindicator")
 
 /datum/design/vindicator_right_arm
-	name = "Exosuit Right Arm (\"Vindicator\")"
+	name = "Exosuit Right Arm(\"Vindicator\")"
 	id = "vindicator_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/vindicator_right_arm
@@ -505,7 +505,7 @@
 	category = list("Vindicator")
 
 /datum/design/vindicator_left_leg
-	name = "Exosuit Left Leg (\"Vindicator\")"
+	name = "Exosuit Left Leg(\"Vindicator\")"
 	id = "vindicator_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/vindicator_left_leg
@@ -514,7 +514,7 @@
 	category = list("Vindicator")
 
 /datum/design/vindicator_right_leg
-	name = "Exosuit Right Leg (\"Vindicator\")"
+	name = "Exosuit Right Leg(\"Vindicator\")"
 	id = "vindicator_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/vindicator_right_leg
@@ -523,7 +523,7 @@
 	category = list("Vindicator")
 
 /datum/design/vindicator_armour
-	name = "Exosuit Armour (\"Vindicator\")"
+	name = "Exosuit Armour(\"Vindicator\")"
 	id = "vindicator_armour"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/vindicator_armour
@@ -532,9 +532,9 @@
 	category = list("Vindicator")
 
 
-//Exosuit Equipment
+// Exosuit Equipment
 /datum/design/firefighter_chassis
-	name = "Exosuit Chassis (\"Firefighter\")"
+	name = "Exosuit Chassis(\"Firefighter\")"
 	id = "firefighter_chassis"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/firefighter
@@ -543,7 +543,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_hydraulic_clamp
-	name = "Exosuit Engineering Equipement (Hydraulic Clamp)"
+	name = "Exosuit Engineering Equipement(Hydraulic Clamp)"
 	id = "mech_hydraulic_clamp"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
@@ -552,7 +552,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_drill
-	name = "Exosuit Engineering Equipement (Drill)"
+	name = "Exosuit Engineering Equipement(Drill)"
 	id = "mech_drill"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill
@@ -561,7 +561,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_extinguisher
-	name = "Exosuit Engineering Equipement (Extinguisher)"
+	name = "Exosuit Engineering Equipement(Extinguisher)"
 	id = "mech_extinguisher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
@@ -570,7 +570,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_cable_layer
-	name = "Exosuit Engineering Equipement (Cable Layer)"
+	name = "Exosuit Engineering Equipement(Cable Layer)"
 	id = "mech_cable_layer"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
@@ -579,7 +579,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_sleeper
-	name = "Exosuit Medical Equipement (Mounted Sleeper)"
+	name = "Exosuit Medical Equipement(Mounted Sleeper)"
 	id = "mech_sleeper"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/sleeper
@@ -588,7 +588,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_syringe_gun
-	name = "Exosuit Medical Equipement (Syringe Gun)"
+	name = "Exosuit Medical Equipement(Syringe Gun)"
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
@@ -597,7 +597,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_generator
-	name = "Exosuit Equipement (Phoron Generator)"
+	name = "Exosuit Equipement(Phoron Generator)"
 	id = "mech_generator"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
@@ -606,7 +606,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_taser
-	name = "Exosuit Weapon (PBT \"Pacifier\" Mounted Taser)"
+	name = "Exosuit Weapon(PBT \"Pacifier\" Mounted Taser)"
 	id = "mech_taser"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
@@ -615,7 +615,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_lmg
-	name = "Exosuit Weapon (\"Ultra AC 2\" LMG)"
+	name = "Exosuit Weapon(\"Ultra AC 2\" LMG)"
 	id = "mech_lmg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
@@ -624,7 +624,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_scattershot
-	name = "Exosuit Weapon (LBX AC 10 \"Scattershot\")"
+	name = "Exosuit Weapon(LBX AC 10 \"Scattershot\")"
 	desc = "Allows for the construction of LBX AC 10."
 	id = "mech_scattershot"
 	build_type = MECHFAB
@@ -635,7 +635,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_carbine
-	name = "Exosuit Weapon (FNX-99 \"Hades\" Carbine)"
+	name = "Exosuit Weapon(FNX-99 \"Hades\" Carbine)"
 	desc = "Allows for the construction of FNX-99 \"Hades\" Carbine."
 	id = "mech_carbine"
 	build_type = MECHFAB
@@ -646,7 +646,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_laser
-	name = "Exosuit Weapon (CH-PS \"Immolator\" Laser)"
+	name = "Exosuit Weapon(CH-PS \"Immolator\" Laser)"
 	desc = "Allows for the construction of CH-PS Laser."
 	id = "mech_laser"
 	build_type = MECHFAB
@@ -657,7 +657,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_laser_heavy
-	name = "Exosuit Weapon (CH-LC \"Solaris\" Laser Cannon)"
+	name = "Exosuit Weapon(CH-LC \"Solaris\" Laser Cannon)"
 	desc = "Allows for the construction of CH-LC Laser Cannon."
 	id = "mech_laser_heavy"
 	build_type = MECHFAB
@@ -668,7 +668,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_ion
-	name = "Exosuit Weapon (MKIV Ion Heavy Cannon)"
+	name = "Exosuit Weapon(MKIV Ion Heavy Cannon)"
 	desc = "Allows for the construction of MKIV Ion Heavy Cannon."
 	id = "mech_ion"
 	build_type = MECHFAB
@@ -679,7 +679,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_pulse
-	name = "Exosuit Weapon (eZ-13 mk2 Heavy pulse rifle)"
+	name = "Exosuit Weapon(eZ-13 mk2 Heavy pulse rifle)"
 	desc = "Allows for the construction of eZ-13 mk2 Heavy pulse rifle."
 	id = "mech_pulse"
 	build_type = MECHFAB
@@ -690,7 +690,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_missile_rack
-	name = "Exosuit Weapon (SRM-8 Missile Rack)"
+	name = "Exosuit Weapon(SRM-8 Missile Rack)"
 	desc = "Allows for the construction of SRM-8 Missile Rack."
 	id = "mech_missile_rack"
 	build_type = MECHFAB
@@ -701,7 +701,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_grenade_launcher
-	name = "Exosuit Weapon (SGL-6 Grenade Launcher)"
+	name = "Exosuit Weapon(SGL-6 Grenade Launcher)"
 	desc = "Allows for the construction of SGL-6 Grenade Launcher."
 	id = "mech_grenade_launcher"
 	build_type = MECHFAB
@@ -712,7 +712,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/clusterbang_launcher
-	name = "Exosuit Module (SOP-6 Clusterbang Launcher)"
+	name = "Exosuit Module(SOP-6 Clusterbang Launcher)"
 	desc = "A weapon that violates the Geneva Convention at 6 rounds per minute."
 	id = "clusterbang_launcher"
 	build_type = MECHFAB
@@ -723,7 +723,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_wormhole_gen
-	name = "Exosuit Module (Localized Wormhole Generator)"
+	name = "Exosuit Module(Localized Wormhole Generator)"
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 	id = "mech_wormhole_gen"
 	build_type = MECHFAB
@@ -734,7 +734,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_teleporter
-	name = "Exosuit Module (Teleporter Module)"
+	name = "Exosuit Module(Teleporter Module)"
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	id = "mech_teleporter"
 	build_type = MECHFAB
@@ -745,7 +745,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_rcd
-	name = "Exosuit Module (RCD Module)"
+	name = "Exosuit Module(RCD Module)"
 	desc = "An exosuit-mounted Rapid Construction Device."
 	id = "mech_rcd"
 	build_type = MECHFAB
@@ -756,7 +756,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_gravcatapult
-	name = "Exosuit Module (Gravitational Catapult Module)"
+	name = "Exosuit Module(Gravitational Catapult Module)"
 	desc = "An exosuit mounted Gravitational Catapult."
 	id = "mech_gravcatapult"
 	build_type = MECHFAB
@@ -767,7 +767,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_repair_droid
-	name = "Exosuit Module (Repair Droid Module)"
+	name = "Exosuit Module(Repair Droid Module)"
 	desc = "Automated Repair Droid. BEEP BOOP!"
 	id = "mech_repair_droid"
 	build_type = MECHFAB
@@ -778,7 +778,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_energy_relay
-	name = "Exosuit Module (Tesla Energy Relay)"
+	name = "Exosuit Module(Tesla Energy Relay)"
 	desc = "Tesla Energy Relay."
 	id = "mech_energy_relay"
 	build_type = MECHFAB
@@ -789,7 +789,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_ccw_armor
-	name = "Exosuit Module (Reactive Armor Booster Module)"
+	name = "Exosuit Module(Reactive Armor Booster Module)"
 	desc = "Exosuit-mounted armor booster."
 	id = "mech_ccw_armor"
 	build_type = MECHFAB
@@ -800,7 +800,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_proj_armor
-	name = "Exosuit Module (Reflective Armor Booster Module)"
+	name = "Exosuit Module(Reflective Armor Booster Module)"
 	desc = "Exosuit-mounted armor booster."
 	id = "mech_proj_armor"
 	build_type = MECHFAB
@@ -811,7 +811,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_syringe_gun
-	name = "Exosuit Module (Syringe Gun)"
+	name = "Exosuit Module(Syringe Gun)"
 	desc = "Exosuit-mounted syringe gun and chemical synthesizer."
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
@@ -822,7 +822,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_diamond_drill
-	name = "Exosuit Module (Diamond Mining Drill)"
+	name = "Exosuit Module(Diamond Mining Drill)"
 	desc = "An upgraded version of the standard drill."
 	id = "mech_diamond_drill"
 	build_type = MECHFAB
@@ -833,7 +833,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_generator_nuclear
-	name = "Exosuit Module (ExoNuclear Reactor)"
+	name = "Exosuit Module(ExoNuclear Reactor)"
 	desc = "Compact nuclear reactor module."
 	id = "mech_generator_nuclear"
 	build_type = MECHFAB
@@ -843,9 +843,9 @@
 	construction_time = 100
 	category = list("Exosuit_Equipment")
 
-//Cyborg Upgrade Modules
+// Cyborg Upgrade Modules
 /datum/design/borg_upgrade_reset
-	name = "Cyborg Upgrade Module (Reset Module)"
+	name = "Cyborg Upgrade Module(Reset Module)"
 	id = "borg_upgrade_reset"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/reset
@@ -854,7 +854,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_rename
-	name = "Cyborg Upgrade Module (Rename Module)"
+	name = "Cyborg Upgrade Module(Rename Module)"
 	id = "borg_upgrade_rename"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/rename
@@ -863,7 +863,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_restart
-	name = "Cyborg Upgrade Module (Restart Module)"
+	name = "Cyborg Upgrade Module(Restart Module)"
 	id = "borg_upgrade_restart"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/restart
@@ -872,7 +872,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_vtec
-	name = "Cyborg Upgrade Module (VTEC Module)"
+	name = "Cyborg Upgrade Module(VTEC Module)"
 	id = "borg_upgrade_vtec"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/vtec
@@ -881,7 +881,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_tasercooler
-	name = "Cyborg Upgrade Module (Rapid Taser Cooling Module)"
+	name = "Cyborg Upgrade Module(Rapid Taser Cooling Module)"
 	id = "borg_upgrade_tasercooler"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/tasercooler
@@ -890,7 +890,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_jetpack
-	name = "Cyborg Upgrade Module (Mining Jetpack)"
+	name = "Cyborg Upgrade Module(Mining Jetpack)"
 	id = "borg_upgrade_jetpack"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/jetpack
@@ -899,7 +899,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 
-//Misc
+// Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"
 	id = "mecha_tracking"

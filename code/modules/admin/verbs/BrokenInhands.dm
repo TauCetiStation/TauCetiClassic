@@ -1,7 +1,7 @@
 /proc/getbrokeninhands()
 	var/text
 	for(var/A in typesof(/obj/item))
-		var/obj/item/O = new A( locate(1,1,1) )
+		var/obj/item/O = new A( locate(1, 1, 1) )
 		if(!O) continue
 		var/icon/IL = new(O.lefthand_file)
 		var/list/Lstates = IL.IconStates()
@@ -20,10 +20,10 @@
 		if(O.icon_state)
 			if(!istates.Find(O.icon_state))
 				text += "[O.type] is missing normal icon called \"[O.icon_state]\" in \"[O.icon]\".\n"
-		//if(O.item_state)
+		// if(O.item_state)
 		//	if(!istates.Find(O.item_state))
 		//		text += "[O.type] MISSING NORMAL ICON CALLED\n\"[O.item_state]\" IN \"[O.icon]\"\n"
-		//text+="\n"
+		// text+="\n"
 		qdel(O)
 	if(text)
 		var/F = file("broken_icons.txt")

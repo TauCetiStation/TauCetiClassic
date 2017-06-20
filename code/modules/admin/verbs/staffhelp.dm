@@ -1,5 +1,5 @@
-//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
-var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as")
+// This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
+var/list/adminhelp_ignored_words = list("unknown", "the", "a", "an", "of", "monkey", "alien", "as")
 
 client/proc/staffhelp(msg, help_type = null)
 	if(!help_type)
@@ -21,15 +21,15 @@ client/proc/staffhelp(msg, help_type = null)
 
 	if(!msg)
 		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
 	if(!msg)
 		return
 	var/original_msg = msg
 
-	//explode the input msg into a list
+	// explode the input msg into a list
 	var/list/msglist = splittext(msg, " ")
 
-	//generate keywords lookup
+	// generate keywords lookup
 	var/list/surnames = list()
 	var/list/forenames = list()
 	var/list/ckeys = list()
@@ -41,19 +41,19 @@ client/proc/staffhelp(msg, help_type = null)
 		for(var/string in indexing)
 			var/list/L = splittext(string, " ")
 			var/surname_found = 0
-			//surnames
+			// surnames
 			for(var/i=L.len, i>=1, i--)
 				var/word = ckey(L[i])
 				if(word)
 					surnames[word] = M
 					surname_found = i
 					break
-			//forenames
+			// forenames
 			for(var/i=1, i<surname_found, i++)
 				var/word = ckey(L[i])
 				if(word)
 					forenames[word] = M
-			//ckeys
+			// ckeys
 			ckeys[M.ckey] = M
 
 	var/ai_found = 0
@@ -61,7 +61,7 @@ client/proc/staffhelp(msg, help_type = null)
 	var/list/mobs_found = list()
 	for(var/original_word in msglist)
 		var/word = ckey(original_word)
-		//if(word)
+		// if(word)
 		if(!(word in adminhelp_ignored_words))
 			if(word == "ai")
 				ai_found = 1
@@ -83,7 +83,7 @@ client/proc/staffhelp(msg, help_type = null)
 	var/ref_mob = "\ref[mob]"
 	msg = "\blue <b><font color=[colour]>[prefix]: </font>[get_options_bar(mob, 2, 1, 1, TRUE)][ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> [msg]"
 
-	//send this msg to all admins
+	// send this msg to all admins
 	var/admin_number_afk = 0
 	for(var/client/X in admins)
 		if(R_ADMIN & X.holder.rights)
@@ -104,9 +104,9 @@ client/proc/staffhelp(msg, help_type = null)
 			X << 'sound/effects/adminhelp.ogg'
 			to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[key_name(src, 1, 0, 0, TRUE)][jump]:</b> [original_msg]</font>")
 
-	adminhelped = 1 //Determines if they get the message to reply by clicking the name.
+	adminhelped = 1 // Determines if they get the message to reply by clicking the name.
 
-	//show it to the person adminhelping too
+	// show it to the person adminhelping too
 	to_chat(src, "<font color='blue'>PM to-<b>[target_group]</b>: [original_msg]</font>")
 
 	var/mentor_number_present = mentors.len - mentor_number_afk
@@ -118,9 +118,9 @@ client/proc/staffhelp(msg, help_type = null)
 			send2slack_logs(key_name(src), original_msg, "(MHELP)")
 		if("AH")
 			log_msg = "[prefix]: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins."
-			//clean the input msg
+			// clean the input msg
 			send2slack_logs(key_name(src), original_msg, "(HELP)")
 
-	feedback_add_details("admin_verb", help_type) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb", help_type) // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin(log_msg)
 	return

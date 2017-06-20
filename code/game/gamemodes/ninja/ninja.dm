@@ -5,7 +5,7 @@
 	config_tag = "ninja"
 	role_type = ROLE_NINJA
 	restricted_jobs = list("Cyborg", "AI")
-	required_players = 10 //Can be adjusted later, should suffice for now.
+	required_players = 10 // Can be adjusted later, should suffice for now.
 	required_players_secret = 15
 	required_enemies = 2
 	recommended_enemies = 2
@@ -33,16 +33,16 @@
 			ninja.protector_role = 1
 		ninjas += ninja
 		modePlayer += ninja
-		ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		ninja.assigned_role = "MODE" // So they aren't chosen for other jobs.
 		ninja.special_role = "Ninja"
 		ninja.original = ninja.current
-		antag_candidates -= ninja //So it doesn't pick the same guy each time.
+		antag_candidates -= ninja // So it doesn't pick the same guy each time.
 		ninja_number--
 
 	/*var/datum/mind/ninja = pick(possible_ninjas)
 	ninjas += ninja
 	modePlayer += ninja
-	ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
+	ninja.assigned_role = "MODE" // So they aren't chosen for other jobs.
 	ninja.special_role = "Ninja"
 	ninja.original = ninja.current*/
 
@@ -50,19 +50,19 @@
 		to_chat(ninja.current, "<B>\red A proper starting location for you could not be found, please report this bug!</B>")
 		to_chat(ninja.current, "<B>\red Attempting to place at a carpspawn.</B>")*/
 
-	//Until such a time as people want to place ninja spawn points, carpspawn will do fine.
+	// Until such a time as people want to place ninja spawn points, carpspawn will do fine.
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "carpspawn")
 			ninjastart.Add(L)
 
-	if (ninjastart.len == 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
+	if(ninjastart.len == 0)
+		// ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
 		return 0
 	/*if(ninjastart.len == 0 && latejoin.len > 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Defaulting to latejoin.</B>"
+		// ninja.current << "<B>\red No spawneable locations could be found. Defaulting to latejoin.</B>"
 		return 1
-	else if (ninjastart.len == 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
+	else if(ninjastart.len == 0)
+		// ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
 		return 0*/
 
 	return 1
@@ -72,14 +72,14 @@
 		ninja.current << browse(null, "window=playersetup")
 		var/start_point = pick(ninjastart)
 		ninjastart -= start_point
-		//ninja.current = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
+		// ninja.current = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 		ninja.current = create_space_ninja(start_point)
 		ninja.current.ckey = ninja.key
 	return 1
 
 /datum/game_mode/ninja/post_setup()
 	for(var/datum/mind/ninja in ninjas)
-		if(ninja.current && !(istype(ninja.current,/mob/living/carbon/human))) return 0
+		if(ninja.current && !(istype(ninja.current, /mob/living/carbon/human))) return 0
 		if(!config.objectives_disabled)
 			forge_ninja_objectives(ninja)
 		else
@@ -87,7 +87,7 @@
 		var/mob/living/carbon/human/N = ninja.current
 		N.internal = N.s_store
 		N.internals.icon_state = "internal1"
-		if(N.wear_suit && istype(N.wear_suit,/obj/item/clothing/suit/space/space_ninja))
+		if(N.wear_suit && istype(N.wear_suit, /obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/S = N.wear_suit
 			S:randomize_param()
 	return ..()
@@ -97,27 +97,27 @@
 		return ..()
 	var/ninjas_alive = 0
 	for(var/datum/mind/ninja in ninjas)
-		if(!istype(ninja.current,/mob/living/carbon/human))
+		if(!istype(ninja.current, /mob/living/carbon/human))
 			continue
 		if(ninja.current.stat==2)
 			continue
 		ninjas_alive++
-	if (ninjas_alive)
+	if(ninjas_alive)
 		return ..()
 	else
 		finished = 1
 		return 1
 
 /datum/game_mode/ninja/proc/forge_ninja_objectives(datum/mind/ninja)
-	if (config.objectives_disabled)
+	if(config.objectives_disabled)
 		return
 
 	if(!ninja.protector_role)
-		//var/objective_list = list(1,2,3,4,5)
-		var/objective_list = list(1,2,3,4)
-		for(var/i=rand(2,4),i>0,i--)
+		// var/objective_list = list(1, 2, 3, 4, 5)
+		var/objective_list = list(1, 2, 3, 4)
+		for(var/i=rand(2, 4), i>0, i--)
 			switch(pick(objective_list))
-				if(1)//Kill
+				if(1)// Kill
 					var/datum/objective/assassinate/ninja_objective = new
 					ninja_objective.owner = ninja
 					ninja_objective.target = ninja_objective.find_target()
@@ -126,12 +126,12 @@
 					else
 						i++
 					objective_list -= 1 // No more than one kill objective
-				if(2)//Steal
+				if(2)// Steal
 					var/datum/objective/steal/ninja_objective = new
 					ninja_objective.owner = ninja
 					ninja_objective.target = ninja_objective.find_target()
 					ninja.objectives += ninja_objective
-				/*if(3)//Protect
+				/*if(3)// Protect
 					var/datum/objective/protect/ninja_objective = new
 					ninja_objective.owner = ninja
 					ninja_objective.target = ninja_objective.find_target()
@@ -140,16 +140,16 @@
 					else
 						i++
 						objective_list -= 3*/
-				//if(4)//Download
-				if(3)//Download
+				// if(4)// Download
+				if(3)// Download
 					var/datum/objective/download/ninja_objective = new
 					ninja_objective.owner = ninja
 					ninja_objective.gen_amount_goal()
 					ninja.objectives += ninja_objective
-					//objective_list -= 4
+					// objective_list -= 4
 					objective_list -= 3
-				//if(5)//Harm
-				if(4)//Harm
+				// if(5)// Harm
+				if(4)// Harm
 					var/datum/objective/harm/ninja_objective = new
 					ninja_objective.owner = ninja
 					ninja_objective.target = ninja_objective.find_target()
@@ -157,7 +157,7 @@
 						ninja.objectives += ninja_objective
 					else
 						i++
-						//objective_list -= 5
+						// objective_list -= 5
 						objective_list -= 4
 	else
 		for(var/datum/mind/ninja_p in ninjas)
@@ -215,7 +215,7 @@
 	ninja.objectives += ninja_objective
 	ninja.current.mind = ninja
 
-	var/directive = generate_ninja_directive("heel")//Only hired by antags, not NT
+	var/directive = generate_ninja_directive("heel")// Only hired by antags, not NT
 	to_chat(ninja.current, "<span class = 'info'><B>You are <font color='red'>Ninja</font>!</B></span>")
 	to_chat(ninja.current, "You are an elite mercenary assassin of the Spider Clan, [ninja.current.real_name]. You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor")
 	to_chat(ninja.current, "Your current directive is: <span class = 'red'><B>[directive]</B></span>")
@@ -236,15 +236,15 @@
 			text += printplayerwithicon(ninja)
 
 			var/ninjawin = 1
-			if(ninja.objectives.len)//If the ninja had no objectives, don't need to process this.
+			if(ninja.objectives.len)// If the ninja had no objectives, don't need to process this.
 				var/count = 1
 				for(var/datum/objective/objective in ninja.objectives)
 					if(objective.check_completion())
 						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-						feedback_add_details("ninja_objective","[objective.type]|SUCCESS")
+						feedback_add_details("ninja_objective", "[objective.type]|SUCCESS")
 					else
 						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-						feedback_add_details("ninja_objective","[objective.type]|FAIL")
+						feedback_add_details("ninja_objective", "[objective.type]|FAIL")
 						ninjawin = 0
 					count++
 
@@ -257,11 +257,11 @@
 			if(!config.objectives_disabled)
 				if(ninjawin)
 					text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
-					feedback_add_details("traitor_success","SUCCESS")
+					feedback_add_details("traitor_success", "SUCCESS")
 					score["roleswon"]++
 				else
 					text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
-					feedback_add_details("traitor_success","FAIL")
+					feedback_add_details("traitor_success", "FAIL")
 
 				text += "<BR>"
 		text += "<HR>"

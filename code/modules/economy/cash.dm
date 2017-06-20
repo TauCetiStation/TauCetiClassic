@@ -70,7 +70,7 @@
 
 proc/spawn_money(sum, spawnloc)
 	var/cash_type
-	for(var/i in list(1000,500,200,100,50,20,10,1))
+	for(var/i in list(1000, 500, 200, 100, 50, 20, 10, 1))
 		cash_type = text2path("/obj/item/weapon/spacecash/c[i]")
 		while(sum >= i)
 			sum -= i
@@ -81,7 +81,7 @@ proc/spawn_money(sum, spawnloc)
 	name = "Charge card"
 	icon_state = "efundcard"
 	desc = "A card that holds an amount of money."
-	var/owner_name = "" //So the ATM can set it so the EFTPOS can put a valid name on transactions.
+	var/owner_name = "" // So the ATM can set it so the EFTPOS can put a valid name on transactions.
 
 /obj/item/weapon/spacecash/ewallet/examine(mob/user)
 	..()

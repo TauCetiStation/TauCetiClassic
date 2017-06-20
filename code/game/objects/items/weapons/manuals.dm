@@ -1,6 +1,6 @@
-/*********************MANUALS (BOOKS)***********************/
+/*********************MANUALS(BOOKS)***********************/
 
-//Oh god what the fuck I am not good at computer
+// Oh god what the fuck I am not good at computer
 /obj/item/weapon/book/manual
 	icon = 'icons/obj/library.dmi'
 	due_date = 0 // Game time in 1/10th seconds
@@ -19,7 +19,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://baystation12.net/wiki/index.php?title=Guide_to_construction&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="http:// baystation12.net/wiki/index.php?title=Guide_to_construction&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
@@ -114,9 +114,9 @@
 
 				<li><b>Begin primary emitter burst series</b>: Begin by firing four shots into the supermatter using the emitter. It is important to move to this step quickly. The onboard SMES units may not have enough power to run the emitters if left alone too long on-station. This engine can produce enough power on its own to run the entire station, ignoring the SMES units completely, and is wired to do so.</li>
 
-				<li><b>Switch SMES units to primary settings</b>: Maximize input and set the devices to automatically charge, additionally turn their outputs on if they are off unless power is to be saved (Which can be useful in case of later failures).</li>
+				<li><b>Switch SMES units to primary settings</b>: Maximize input and set the devices to automatically charge, additionally turn their outputs on if they are off unless power is to be saved(Which can be useful in case of later failures).</li>
 
-				<li><b>Begin secondary emitter burst series</b>: Before firing the emitter again, check the power in the line with a multimeter (Do not forget electrical gloves). The engine is running at high efficiency when the value exceeds 200,000 power units.</li>
+				<li><b>Begin secondary emitter burst series</b>: Before firing the emitter again, check the power in the line with a multimeter(Do not forget electrical gloves). The engine is running at high efficiency when the value exceeds 200, 000 power units.</li>
 
 				<li><b>Maintain engine power</b>: When power in the lines get low, add an additional emitter burst series to bring power to normal levels.</li>
 				</ol>
@@ -137,7 +137,7 @@
 
 				<li><b>Modify the engine room filters</b>: Unlike the Heat-Primary Mode, it is important to change the filters attached to the gas system to stop filtering O2, and start filtering carbon molecules. O2-Reaction Mode produces far more plasma than Heat-Primary, therefore filtering it off is essential.</li>
 
-				<li><b>Switch SMES units to primary settings</b>: Maximize input and set the devices to automatically charge, additionally turn their outputs on if they are off unless power is to be saved (Which can be useful in case of later failures). If you check the power in the system lines at this point, you will find that it is constantly going up. Indeed, with just the addition of O2 to the supermatter, it will begin outputting power.</li>
+				<li><b>Switch SMES units to primary settings</b>: Maximize input and set the devices to automatically charge, additionally turn their outputs on if they are off unless power is to be saved(Which can be useful in case of later failures). If you check the power in the system lines at this point, you will find that it is constantly going up. Indeed, with just the addition of O2 to the supermatter, it will begin outputting power.</li>
 
 				<li><b>Begin primary emitter burst series</b>: Begin by firing four shots into the supermatter using the emitter. Do not over power the supermatter. The reaction is self sustaining and propagating. As long as O2 is in the chamber, it will continue outputting MORE power.</li>
 
@@ -151,9 +151,9 @@
 				To understand why O2-Reaction mode is dangerous, the core principle of the supermatter must be understood. The supermatter emits three things when 'not safe,' that is any time it is giving off power. These things are:</br>
 
 				<ul>
-					<li>Radiation (which is converted into power by the collectors)</li></br>
-					<li>Heat (which is removed via the gas exchange system and coolers)</li></br>
-					<li>External gas (in the form of plasma and O2)</li></br>
+					<li>Radiation(which is converted into power by the collectors)</li></br>
+					<li>Heat(which is removed via the gas exchange system and coolers)</li></br>
+					<li>External gas(in the form of plasma and O2)</li></br>
 				</ul></br>
 
 				When in Heat-Primary mode, far more heat and plasma are produced than radiation. In O2-Reaction mode, very little heat and only moderate amounts of plasma are produced, however HUGE amounts of energy leaving the supermatter is in the form of radiation.</br></br>
@@ -194,7 +194,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://baystation12.net/wiki/index.php?title=Hacking&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="http:// baystation12.net/wiki/index.php?title=Hacking&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
@@ -342,7 +342,7 @@
 				Grab the body and then put it inside the DNA modifier. If you cannot do this, then you messed up at Step 2. Go back and check you took EVERYTHING off - a commonly missed item is their headset.
 
 				<a name='4'><h3>Step 4: Scan body</h3>
-				Go onto the computer and scan the body by pressing 'Scan - &lt;Subject Name Here&gt;.' If you're successful, they will be added to the records (note that this can be done at any time, even with living people,
+				Go onto the computer and scan the body by pressing 'Scan - &lt;Subject Name Here&gt;.' If you're successful, they will be added to the records(note that this can be done at any time, even with living people,
 				so that they can be cloned without a body in the event that they are lying dead on port solars and didn't turn on their suit sensors)!
 				If not, and it says "Error: Mental interface failure.", then they have left their bodily confines and are one with the spirits. If this happens, just shout at them to get back in their body,
 				click 'Refresh' and try scanning them again. If there's no success, threaten them with gibbing.
@@ -355,8 +355,8 @@
 
 				<a name='6'><h3>Step 6: Get clean SEs for body</h3>
 				Cloning is a finicky and unreliable process. Whilst it will most certainly bring someone back from the dead, they can have any number of nasty disabilities given to them during the cloning process!
-				For this reason, you need to prepare a clean, defect-free Structural Enzyme (SE) injection for when they're done. If you're a competent Geneticist, you will already have one ready on your working computer.
-				If, for any reason, you do not, then eject the body from the DNA modifier (NOT THE CLONING POD) and take it next door to the Genetics research room. Put the body in one of those DNA modifiers and then go onto the console.
+				For this reason, you need to prepare a clean, defect-free Structural Enzyme(SE) injection for when they're done. If you're a competent Geneticist, you will already have one ready on your working computer.
+				If, for any reason, you do not, then eject the body from the DNA modifier(NOT THE CLONING POD) and take it next door to the Genetics research room. Put the body in one of those DNA modifiers and then go onto the console.
 				Go into View/Edit/Transfer Buffer, find an open slot and click "SE" to save it. Then click 'Injector' to get the SEs in syringe form. Put this in your pocket or something for when the body is done.
 
 				<a name='7'><h3>Step 7: Put body in morgue</h3>
@@ -413,7 +413,7 @@
 				<ul class="a">
 				<li><b>Class:</b> Autonomous Power Loader</li>
 				<li><b>Scope:</b> Logistics and Construction</li>
-				<li><b>Weight:</b> 820kg (without operator and with empty cargo compartment)</li>
+				<li><b>Weight:</b> 820kg(without operator and with empty cargo compartment)</li>
 				<li><b>Height:</b> 2.5m</li>
 				<li><b>Width:</b> 1.8m</li>
 				<li><b>Top speed:</b> 5km/hour</li>
@@ -434,16 +434,16 @@
 					<li>Connect all exosuit parts to the chassis frame.</li>
 					<li>Connect all hydraulic fittings and tighten them up with a wrench.</li>
 					<li>Adjust the servohydraulics with a screwdriver.</li>
-					<li>Wire the chassis (Cable is not included).</li>
+					<li>Wire the chassis(Cable is not included).</li>
 					<li>Use the wirecutters to remove the excess cable if needed.</li>
-					<li>Install the central control module (Not included. Use supplied datadisk to create one).</li>
+					<li>Install the central control module(Not included. Use supplied datadisk to create one).</li>
 					<li>Secure the mainboard with a screwdriver.</li>
-					<li>Install the peripherals control module (Not included. Use supplied datadisk to create one).</li>
+					<li>Install the peripherals control module(Not included. Use supplied datadisk to create one).</li>
 					<li>Secure the peripherals control module with a screwdriver.</li>
-					<li>Install the internal armor plating (Not included due to NanoTrasen regulations. Can be made using 5 metal sheets).</li>
+					<li>Install the internal armor plating(Not included due to NanoTrasen regulations. Can be made using 5 metal sheets).</li>
 					<li>Secure the internal armor plating with a wrench.</li>
 					<li>Weld the internal armor plating to the chassis.</li>
-					<li>Install the external reinforced armor plating (Not included due to NanoTrasen regulations. Can be made using 5 reinforced metal sheets).</li>
+					<li>Install the external reinforced armor plating(Not included due to NanoTrasen regulations. Can be made using 5 reinforced metal sheets).</li>
 					<li>Secure the external reinforced armor plating with a wrench.</li>
 					<li>Weld the external reinforced armor plating to the chassis.</li>
 				</ol>
@@ -493,23 +493,23 @@
 				Those are the basic steps to furthering science. What do you do science with, however? Well, you have four major tools: R&D Console, the Destructive Analyzer, the Protolathe, and the Circuit Imprinter.
 
 				<h2>The R&D Console</h2>
-				The R&D console is the cornerstone of any research lab. It is the central system from which the Destructive Analyzer, Protolathe, and Circuit Imprinter (your R&D systems) are controlled. More on those systems in their own sections.
+				The R&D console is the cornerstone of any research lab. It is the central system from which the Destructive Analyzer, Protolathe, and Circuit Imprinter(your R&D systems) are controlled. More on those systems in their own sections.
 				On its own, the R&D console acts as a database for all your technological gains and new devices you discover. So long as the R&D console remains intact, you'll retain all that SCIENCE you've discovered. Protect it though,
 				because if it gets damaged, you'll lose your data!
 				In addition to this important purpose, the R&D console has a disk menu that lets you transfer data from the database onto disk or from the disk into the database.
-				It also has a settings menu that lets you re-sync with nearby R&D devices (if they've become disconnected), lock the console from the unworthy,
-				upload the data to all other R&D consoles in the network (all R&D consoles are networked by default), connect/disconnect from the network, and purge all data from the database.<br><br>
+				It also has a settings menu that lets you re-sync with nearby R&D devices(if they've become disconnected), lock the console from the unworthy,
+				upload the data to all other R&D consoles in the network(all R&D consoles are networked by default), connect/disconnect from the network, and purge all data from the database.<br><br>
 
 				<b>NOTE:</b> The technology list screen, circuit imprinter, and protolathe menus are accessible by non-scientists. This is intended to allow 'public' systems for the plebians to utilize some new devices.
 
 				<h2>Destructive Analyzer</h2>
 				This is the source of all technology. Whenever you put a handheld object in it, it analyzes it and determines what sort of technological advancements you can discover from it. If the technology of the object is equal or higher then your current knowledge,
 				you can destroy the object to further those sciences.
-				Some devices (notably, some devices made from the protolathe and circuit imprinter) aren't 100% reliable when you first discover them. If these devices break down, you can put them into the Destructive Analyzer and improve their reliability rather than further science.
+				Some devices(notably, some devices made from the protolathe and circuit imprinter) aren't 100% reliable when you first discover them. If these devices break down, you can put them into the Destructive Analyzer and improve their reliability rather than further science.
 				If their reliability is high enough, it'll also advance their related technologies.
 
 				<h2>Circuit Imprinter</h2>
-				This machine, along with the Protolathe, is used to actually produce new devices. The Circuit Imprinter takes glass and various chemicals (depends on the design) to produce new circuit boards to build new machines or computers. It can even be used to print AI modules.
+				This machine, along with the Protolathe, is used to actually produce new devices. The Circuit Imprinter takes glass and various chemicals(depends on the design) to produce new circuit boards to build new machines or computers. It can even be used to print AI modules.
 
 				<h2>Protolathe</h2>
 				This machine is an advanced form of the Autolathe that produce non-circuit designs. Unlike the Autolathe, it can use processed metal, glass, solid phoron, silver, gold, and diamonds along with a variety of chemicals to produce devices.
@@ -524,7 +524,7 @@
 				<h2>Building a Better Machine</h2>
 				Many machines produced from circuit boards inserted into a machine frames require a variety of parts to construct. These are parts like capacitors, batteries, matter bins, and so forth. As your knowledge of science improves, more advanced versions are unlocked.
 				If you use these parts when constructing something, its attributes may be improved.
-				For example, if you use an advanced matter bin when constructing an autolathe (rather than a regular one), it'll hold more materials. Experiment around with stock parts of various qualities to see how they affect the end results! Be warned, however:
+				For example, if you use an advanced matter bin when constructing an autolathe(rather than a regular one), it'll hold more materials. Experiment around with stock parts of various qualities to see how they affect the end results! Be warned, however:
 				Tier 3 and higher stock parts don't have 100% reliability and their low reliability may affect the reliability of the end machine.
 				</body>
 			</html>
@@ -634,7 +634,7 @@
 				  <li>Platter</li>
 				  <li>Beer Synthesizer</li>
 				  <li>Zippo Lighter</li>
-				  <li>Rapid-Service-Fabricator (Produces various entertainment and refreshment objects)</li>
+				  <li>Rapid-Service-Fabricator(Produces various entertainment and refreshment objects)</li>
 				  <li>Pen</li>
 				</ul>
 
@@ -643,7 +643,7 @@
 				<ul>
 				  <li>Metal</li>
 				  <li>Two Flashes</li>
-				  <li>One Power Cell (Preferably rated to 15000w)</li>
+				  <li>One Power Cell(Preferably rated to 15000w)</li>
 				  <li>Some electrical wires</li>
 				  <li>One Human Brain</li>
 				  <li>One Man-Machine Interface</li>
@@ -655,7 +655,7 @@
 				  <li>Once you have a Robot Head, place your two flashes inside the eye sockets</li>
 				  <li>Once you have your Robot Chest, wire the Robot chest, then insert the power cell</li>
 				  <li>Attach all of the Robot parts to the Robot frame</li>
-				  <li>Insert the Man-Machine Interface (With the Brain inside) into the Robot Body</li>
+				  <li>Insert the Man-Machine Interface(With the Brain inside) into the Robot Body</li>
 				  <li>Congratulations! You have a new cyborg!</li>
 				</ol>
 
@@ -686,7 +686,7 @@
 				</ol>
 
 				<h2><a name="Repairs">Cyborg Repairs</h2>
-				Occasionally a Cyborg may become damaged. This could be in the form of impact damage from a heavy or fast-travelling object, or it could be heat damage from high temperatures, or even lasers or Electromagnetic Pulses (EMPs).
+				Occasionally a Cyborg may become damaged. This could be in the form of impact damage from a heavy or fast-travelling object, or it could be heat damage from high temperatures, or even lasers or Electromagnetic Pulses(EMPs).
 
 				<h3>Dents</h3>
 				If a cyborg becomes damaged due to impact from heavy or fast-moving objects, it will become dented. Sure, a dent may not seem like much, but it can compromise the structural integrity of the cyborg, possibly causing a critical failure.
@@ -749,7 +749,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://wiki.tauceti.ru/mwiki/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="http:// wiki.tauceti.ru/mwiki/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
@@ -797,7 +797,7 @@
 
 				<HR COLOR="steelblue" WIDTH="60%" ALIGN="LEFT">
 
-				<iframe width='100%' height='100%' src="http://baystation12.net/wiki/index.php?title=Guide_to_Medicine&printable=yes&removelinks=1" frameborder="0" id="main_frame"></iframe>
+				<iframe width='100%' height='100%' src="http:// baystation12.net/wiki/index.php?title=Guide_to_Medicine&printable=yes&removelinks=1" frameborder="0" id="main_frame"></iframe>
 				</body>
 			</html>
 
@@ -816,7 +816,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='100%' src="http://baystation12.net/wiki/index.php?title=Guide_to_Engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>		</body>
+		<iframe width='100%' height='100%' src="http:// baystation12.net/wiki/index.php?title=Guide_to_Engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>		</body>
 
 		</html>
 
@@ -868,7 +868,7 @@
 				Put a flattened piece of dough and some meat into the microwave and wait.
 
 				<h3>Boiled Spaghetti:</h3>
-				Put the spaghetti (processed flour) and 5 units of water into the microwave and wait.
+				Put the spaghetti(processed flour) and 5 units of water into the microwave and wait.
 
 				<h3>Donuts:</h3>
 				Add some dough and 5 units of sugar to the microwave and wait.
@@ -962,12 +962,12 @@
 				<p>
 				<ol>
 					<li>Go to the crime scene. </li>
-					<li>Take your scanner and scan EVERYTHING (Yes, the doors, the tables, even the dog). </li>
+					<li>Take your scanner and scan EVERYTHING(Yes, the doors, the tables, even the dog). </li>
 					<li>Once you are reasonably certain you have every scrap of evidence you can use, find all possible entry points and scan them, too. </li>
 					<li>Return to your office. </li>
 					<li>Using your forensic scanning computer, scan your scanner to upload all of your evidence into the database.</li>
 					<li>Browse through the resulting dossiers, looking for the one that either has the most complete set of prints, or the most suspicious items handled. </li>
-					<li>If you have 80% or more of the print (The print is displayed), go to step 10, otherwise continue to step 8.</li>
+					<li>If you have 80% or more of the print(The print is displayed), go to step 10, otherwise continue to step 8.</li>
 					<li>Look for clues from the suit fibres you found on your perpetrator, and go about looking for more evidence with this new information, scanning as you go. </li>
 					<li>Try to get a fingerprint card of your perpetrator, as if used in the computer, the prints will be completed on their dossier.</li>
 					<li>Assuming you have enough of a print to see it, grab the biggest complete piece of the print and search the security records for it. </li>
@@ -1103,7 +1103,7 @@
 				Stop it. It's unbecoming. Most of these are fairly straightforward.<BR>
 
 				<ul>
-				<li><b>Gas pump:</b> Take a wild guess. It moves gas in the direction it's pointing (marked by the red line on one end). It moves it based on pressure, the maximum output being 4500 kPa (kilopascals).
+				<li><b>Gas pump:</b> Take a wild guess. It moves gas in the direction it's pointing(marked by the red line on one end). It moves it based on pressure, the maximum output being 4500 kPa (kilopascals).
 				Ordinary atmospheric pressure, for comparison, is 101.3 kPa, and the minimum pressure of room-temperature pure oxygen needed to not suffocate in a matter of minutes is 16 kPa
 				(though 18 kPa is preferred using internals, for various reasons).</li>
 				<li><b>Volume pump:</b> This pump goes based on volume, instead of pressure, and the possible maximum pressure it can create in the pipe on the receiving end is double the gas pump because of this,
@@ -1115,7 +1115,7 @@
 				<li><b>Unary vent:</b> The basic vent used in rooms. It pumps gas into the room, but can't suck it back out. Controlled by the room's air alarm system.</li>
 				<li><b>Scrubber:</b> The other half of room equipment. Filters air, and can suck it in entirely in what's called a "panic siphon." Activating a panic siphon without very good reason will kill someone. Don't do it.</li>
 				<li><b>Meter:</b> A little box with some gauges and numbers. Fasten it to any pipe or manifold and it'll read you the pressure in it. Very useful.</li>
-				<li><b>Gas mixer:</b> Two sides are input, one side is output. Mixes the gases pumped into it at the ratio defined. The side perpendicular to the other two is "node 2," for reference.
+				<li><b>Gas mixer:</b> Two sides are input, one side is output. Mixes the gases pumped into it at the ratio defined. The side perpendicular to the other two is "node 2, " for reference.
 				Can output this gas at pressures from 0-4500 kPa.</li>
 				<li><b>Gas filter:</b> Essentially the opposite of a gas mixer. One side is input. The other two sides are output. One gas type will be filtered into the perpendicular output pipe,
 				the rest will continue out the other side. Can also output from 0-4500 kPa.</li>
@@ -1123,7 +1123,7 @@
 
 				<h1><a name="HES"><B>Heat Exchange Systems</B></a></h1>
 				<I>Will not set you on fire.</I><BR>
-				These systems are used to only transfer heat between two pipes. They will not move gases or any other element, but will equalize the temperature (eventually). Note that because of how gases work (remember: pv=nRt),
+				These systems are used to only transfer heat between two pipes. They will not move gases or any other element, but will equalize the temperature(eventually). Note that because of how gases work (remember: pv=nRt),
 				a higher temperature will raise pressure, and a lower one will lower temperature.<BR>
 
 				<li><I>Pipe:</I> This is a pipe that will exchange heat with the surrounding atmosphere. Place in fire for superheating. Place in space for supercooling.</li>

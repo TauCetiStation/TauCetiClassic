@@ -1,11 +1,11 @@
 
-//Structured Datum Query Language. Basically SQL meets BYOND objects.
+// Structured Datum Query Language. Basically SQL meets BYOND objects.
 
-//Note: For use in BS12, need text_starts_with proc, and to modify the action on select to use BS12's object edit command(s).
+// Note: For use in BS12, need text_starts_with proc, and to modify the action on select to use BS12's object edit command(s).
 
 /client/proc/SDQL_query(query_text as message)
 	set category = "Admin"
-	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
+	if(!check_rights(R_DEBUG))  // Shouldn't happen... but just to be safe.
 		message_admins("\red ERROR: Non-admin [usr.key] attempted to execute a SDQL query!")
 		log_admin("Non-admin [usr.key] attempted to execute a SDQL query!")
 
@@ -26,7 +26,7 @@
 	for(i = 2; i <= query_list.len; i += 2)
 		types += query_list[i]
 
-		if(i + 1 >= query_list.len || query_list[i + 1] != ",")
+		if(i + 1 >= query_list.len || query_list[i + 1] != ", ")
 			break
 
 	i++
@@ -38,7 +38,7 @@
 			for(i++; i <= query_list.len; i += 2)
 				from += query_list[i]
 
-				if(i + 1 >= query_list.len || query_list[i + 1] != ",")
+				if(i + 1 >= query_list.len || query_list[i + 1] != ", ")
 					break
 
 			i++
@@ -61,7 +61,7 @@
 
 				i += 3
 
-				if(i >= query_list.len || query_list[i] != ",")
+				if(i >= query_list.len || query_list[i] != ", ")
 					break
 
 		if(set_vars.len < 1)
@@ -312,10 +312,10 @@
 					var/atom/a = t
 
 					if(a.x)
-						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t] at ([a.x], [a.y], [a.z])<br>"
+						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t] at([a.x], [a.y], [a.z])<br>"
 
 					else if(a.loc && a.loc.x)
-						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t] in [a.loc] at ([a.loc.x], [a.loc.y], [a.loc.z])<br>"
+						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t] in [a.loc] at([a.loc.x], [a.loc.y], [a.loc.z])<br>"
 
 					else
 						text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t]<br>"
@@ -323,11 +323,11 @@
 				else
 					text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t]<br>"
 
-				//text += "[t]<br>"
+				// text += "[t]<br>"
 			usr << browse(text, "window=sdql_result")
 
 
-/client/Topic(href,href_list[],hsrc)
+/client/Topic(href, href_list[], hsrc)
 	if(href_list["SDQL_select"])
 		debug_variables(locate(href_list["SDQL_select"]))
 
@@ -392,7 +392,7 @@
 /proc/SDQL_tokenize(query_text)
 
 	var/list/whitespace = list(" ", "\n", "\t")
-	var/list/single = list("(", ")", ",", "+", "-")
+	var/list/single = list("(", ")", ", ", "+", "-")
 	var/list/multi = list(
 					"=" = list("", "="),
 					"<" = list("", "=", ">"),

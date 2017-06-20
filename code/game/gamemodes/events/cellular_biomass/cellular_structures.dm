@@ -90,7 +90,7 @@
 	layer = 2
 
 /obj/structure/cellular_biomass/grass/New()
-	icon_state = "bloodfloor_[pick(1,2,3)]"
+	icon_state = "bloodfloor_[pick(1, 2, 3)]"
 
 
 /obj/structure/cellular_biomass/grass/Destroy()
@@ -106,7 +106,7 @@
 	icon_state = "light_1"
 
 /obj/structure/cellular_biomass/core/New()
-	icon_state = "light_[pick(1,2)]"
+	icon_state = "light_[pick(1, 2)]"
 	set_light(luminosity)
 
 /obj/structure/cellular_biomass/core/process()

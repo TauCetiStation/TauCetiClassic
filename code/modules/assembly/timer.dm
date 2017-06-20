@@ -15,7 +15,7 @@
 	var/time = 10
 
 /obj/item/device/assembly/timer/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())	return 0// Cooldown check
 
 	timing = !timing
 
@@ -45,11 +45,11 @@
 		process_cooldown()
 
 
-	var/time_pulse = time2text(world.realtime,"hh:mm:ss")
+	var/time_pulse = time2text(world.realtime, "hh:mm:ss")
 	var/turf/T = get_turf(src)
-	lastsignalers.Add("[time_pulse] <B>:</B> [src] activated  @ location ([T.x],[T.y],[T.z])")
-	message_admins("[src] activated  @ location ([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
-	log_game("[src] activated  @ location ([T.x],[T.y],[T.z])")
+	lastsignalers.Add("[time_pulse] <B>:</B> [src] activated  @ location([T.x],[T.y],[T.z])")
+	message_admins("[src] activated  @ location([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
+	log_game("[src] activated  @ location([T.x],[T.y],[T.z])")
 	return
 
 
@@ -74,7 +74,7 @@
 	return
 
 
-/obj/item/device/assembly/timer/interact(mob/user)//TODO: Have this use the wires
+/obj/item/device/assembly/timer/interact(mob/user)// TODO: Have this use the wires
 	if(!secured)
 		user.show_message("\red The [name] is unsecured!")
 		return 0
@@ -97,16 +97,16 @@
 
 	if(href_list["time"])
 		timing = text2num(href_list["time"])
-		var/time_start = time2text(world.realtime,"hh:mm:ss")
+		var/time_start = time2text(world.realtime, "hh:mm:ss")
 		var/turf/T = get_turf(src)
 		if(usr)
-			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("[key_name_admin(usr)] set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-			log_game("[usr.ckey]([usr]) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [timing?"On":"Off"] @ location([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
+			message_admins("[key_name_admin(usr)] set [src] [timing?"On":"Off"], location([T.x],[T.y],[T.z]) <B>:</B> time set: [time] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+			log_game("[usr.ckey]([usr]) set [src] [timing?"On":"Off"], location([T.x],[T.y],[T.z]), time set: [time]")
 		else
-			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("( NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]",0,1)
-			log_game("(NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [timing?"On":"Off"] @ location([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
+			message_admins("( NO USER FOUND) set [src] [timing?"On":"Off"], location([T.x],[T.y],[T.z]) <B>:</B> time set: [time]", 0, 1)
+			log_game("(NO USER FOUND) set [src] [timing?"On":"Off"], location([T.x],[T.y],[T.z]), time set: [time]")
 		update_icon()
 
 	if(href_list["tp"])

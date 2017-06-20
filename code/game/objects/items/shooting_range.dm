@@ -11,7 +11,7 @@
 
 /obj/item/target/Destroy()
 	// if a target is deleted and associated with a stake, force stake to forget
-	for(var/obj/structure/target_stake/T in view(3,src))
+	for(var/obj/structure/target_stake/T in view(3, src))
 		if(T.pinned_target == src)
 			T.pinned_target = null
 			T.density = 1
@@ -21,7 +21,7 @@
 /obj/item/target/Move()
 	..()
 	// After target moves, check for nearby stakes. If associated, move to target
-	for(var/obj/structure/target_stake/M in view(3,src))
+	for(var/obj/structure/target_stake/M in view(3, src))
 		if(M.density == 0 && M.pinned_target == src)
 			M.loc = loc
 
@@ -33,7 +33,7 @@
 
 
 /obj/item/target/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			overlays.Cut()
@@ -44,7 +44,7 @@
 /obj/item/target/attack_hand(mob/user)
 	// taking pinned targets off!
 	var/obj/structure/target_stake/stake
-	for(var/obj/structure/target_stake/T in view(3,src))
+	for(var/obj/structure/target_stake/T in view(3, src))
 		if(T.pinned_target == src)
 			stake = T
 			break
@@ -81,8 +81,8 @@
 	hp = 2350 // alium onest too kinda
 
 /obj/item/target/bullet_act(obj/item/projectile/Proj)
-	var/p_x = Proj.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset Proj.p_x!"
-	var/p_y = Proj.p_y + pick(0,0,0,0,0,-1,1)
+	var/p_x = Proj.p_x + pick(0, 0, 0, 0, 0,-1, 1) // really ugly way of coding "sometimes offset Proj.p_x!"
+	var/p_y = Proj.p_y + pick(0, 0, 0, 0, 0,-1, 1)
 	var/decaltype = 1 // 1 - scorch, 2 - bullet
 
 	if(istype(/obj/item/projectile/bullet, Proj))
@@ -91,12 +91,12 @@
 
 	virtualIcon = new(icon, icon_state)
 
-	if( virtualIcon.GetPixel(p_x, p_y) ) // if the located pixel isn't blank (null)
+	if( virtualIcon.GetPixel(p_x, p_y) ) // if the located pixel isn't blank(null)
 
 		hp -= Proj.damage
 		if(hp <= 0)
 			for(var/mob/O in oviewers())
-				if ((O.client && !( O.blinded )))
+				if((O.client && !( O.blinded )))
 					to_chat(O, "<span class='rose'>[src] breaks into tiny pieces and collapses!</span>")
 			qdel(src)
 
@@ -117,7 +117,7 @@
 
 			if(Proj.damage >= 20 || istype(Proj, /obj/item/projectile/beam/practice))
 				bmark.icon_state = "scorch"
-				bmark.dir = pick(NORTH,SOUTH,EAST,WEST) // random scorch design
+				bmark.dir = pick(NORTH, SOUTH, EAST, WEST) // random scorch design
 
 
 			else
@@ -166,17 +166,17 @@
 	if(!Target) return
 
 	// Randomize the first box
-	b1x1 = pixel_x - pick(1,1,1,1,2,2,3,3,4)
-	b1x2 = pixel_x + pick(1,1,1,1,2,2,3,3,4)
+	b1x1 = pixel_x - pick(1, 1, 1, 1, 2, 2, 3, 3, 4)
+	b1x2 = pixel_x + pick(1, 1, 1, 1, 2, 2, 3, 3, 4)
 	b1y = pixel_y
 	if(prob(35))
-		b1y += rand(-4,4)
+		b1y += rand(-4, 4)
 
 	// Randomize the second box
 	b2x = pixel_x
 	if(prob(35))
-		b2x += rand(-4,4)
-	b2y1 = pixel_y + pick(1,1,1,1,2,2,3,3,4)
-	b2y2 = pixel_y - pick(1,1,1,1,2,2,3,3,4)
+		b2x += rand(-4, 4)
+	b2y1 = pixel_y + pick(1, 1, 1, 1, 2, 2, 3, 3, 4)
+	b2y2 = pixel_y - pick(1, 1, 1, 1, 2, 2, 3, 3, 4)
 
 	Target.bulletholes.Add(src)

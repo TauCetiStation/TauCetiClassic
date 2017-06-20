@@ -6,26 +6,26 @@
 	anchored = 1
 	density = 1
 	layer = 6
-	//light_range = 6
-	unacidable = 1 //Don't comment this out.
+	// light_range = 6
+	unacidable = 1 // Don't comment this out.
 	var/current_size = 1
 	var/allowed_size = 1
-	var/contained = 1 //Are we going to move around?
-	var/energy = 100 //How strong are we?
-	var/dissipate = 1 //Do we lose energy over time?
+	var/contained = 1 // Are we going to move around?
+	var/energy = 100 // How strong are we?
+	var/dissipate = 1 // Do we lose energy over time?
 	var/dissipate_delay = 10
 	var/dissipate_track = 0
-	var/dissipate_strength = 1 //How much energy do we lose?
-	var/move_self = 1 //Do we move on our own?
-	var/grav_pull = 4 //How many tiles out do we pull?
-	var/consume_range = 0 //How many tiles out do we eat
-	var/event_chance = 15 //Prob for event each tick
-	var/target = null //its target. moves towards the target if it has one
-	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
+	var/dissipate_strength = 1 // How much energy do we lose?
+	var/move_self = 1 // Do we move on our own?
+	var/grav_pull = 4 // How many tiles out do we pull?
+	var/consume_range = 0 // How many tiles out do we eat
+	var/event_chance = 15 // Prob for event each tick
+	var/target = null // its target. moves towards the target if it has one
+	var/last_failed_movement = 0// Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
-	//CARN: admin-alert for chuckle-fuckery.
+	// CARN: admin-alert for chuckle-fuckery.
 	admin_investigate_setup()
 
 	src.energy = starting_energy
@@ -51,7 +51,7 @@
 
 /obj/singularity/Move(atom/newloc, direct)
 	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
-		last_failed_movement = 0//Reset this because we moved
+		last_failed_movement = 0// Reset this because we moved
 		return ..()
 	else
 		last_failed_movement = direct
@@ -64,15 +64,15 @@
 	switch(severity)
 		if(1.0)
 			if(current_size <= 3)
-				investigate_log("has been destroyed by a heavy explosion.","singulo")
+				investigate_log("has been destroyed by a heavy explosion.", "singulo")
 				qdel(src)
 				return
 			else
-				energy -= round(((energy+1)/2),1)
+				energy -= round(((energy+1)/2), 1)
 		if(2.0)
-			energy -= round(((energy+1)/3),1)
+			energy -= round(((energy+1)/3), 1)
 		if(3.0)
-			energy -= round(((energy+1)/4),1)
+			energy -= round(((energy+1)/4), 1)
 	return
 
 /obj/singularity/Bump(atom/A)
@@ -87,7 +87,7 @@
 	if(current_size >= STAGE_TWO)
 		move()
 		pulse()
-		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+		if(prob(event_chance))// Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 
 	eat()
@@ -96,15 +96,15 @@
 
 	return
 
-/obj/singularity/attack_ai() //to prevent ais from gibbing themselves when they click on one.
+/obj/singularity/attack_ai() // to prevent ais from gibbing themselves when they click on one.
 	return
 
 /obj/singularity/proc/admin_investigate_setup()
 	last_warning = world.time
 	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
 	if(!count)
-		message_admins("A singulo has been created without containment fields active ([x],[y],[z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
-	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
+		message_admins("A singulo has been created without containment fields active([x],[y],[z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]", "singulo")
 
 /obj/singularity/proc/dissipate()
 	if(!dissipate)
@@ -143,7 +143,7 @@
 			dissipate_track = 0
 			dissipate_strength = 5
 		if(STAGE_THREE)
-			if((check_turfs_in(1,2))&&(check_turfs_in(2,2))&&(check_turfs_in(4,2))&&(check_turfs_in(8,2)))
+			if((check_turfs_in(1, 2))&&(check_turfs_in(2, 2))&&(check_turfs_in(4, 2))&&(check_turfs_in(8, 2)))
 				current_size = STAGE_THREE
 				icon = 'icons/effects/160x160.dmi'
 				icon_state = "singularity_s5"
@@ -155,7 +155,7 @@
 				dissipate_track = 0
 				dissipate_strength = 20
 		if(STAGE_FOUR)
-			if((check_turfs_in(1,3))&&(check_turfs_in(2,3))&&(check_turfs_in(4,3))&&(check_turfs_in(8,3)))
+			if((check_turfs_in(1, 3))&&(check_turfs_in(2, 3))&&(check_turfs_in(4, 3))&&(check_turfs_in(8, 3)))
 				current_size = STAGE_FOUR
 				icon = 'icons/effects/224x224.dmi'
 				icon_state = "singularity_s7"
@@ -166,7 +166,7 @@
 				dissipate_delay = 10
 				dissipate_track = 0
 				dissipate_strength = 10
-		if(STAGE_FIVE)//this one also lacks a check for gens because it eats everything
+		if(STAGE_FIVE)// this one also lacks a check for gens because it eats everything
 			current_size = STAGE_FIVE
 			icon = 'icons/effects/288x288.dmi'
 			icon_state = "singularity_s9"
@@ -174,9 +174,9 @@
 			pixel_y = -128
 			grav_pull = 10
 			consume_range = 4
-			dissipate = 0 //It cant go smaller due to e loss
+			dissipate = 0 // It cant go smaller due to e loss
 	if(current_size == allowed_size)
-		investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
+		investigate_log("<font color='red'>grew to size [current_size]</font>", "singulo")
 		return 1
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)
@@ -187,7 +187,7 @@
 	if(energy <= 0)
 		qdel(src)
 		return 0
-	switch(energy)//Some of these numbers might need to be changed up later -Mport
+	switch(energy)// Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
 			allowed_size = STAGE_ONE
 		if(200 to 499)
@@ -221,7 +221,7 @@
 			CHECK_TICK
 	return
 
-/obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
+/obj/singularity/Process_Spacemove() // The singularity stops drifting for no man!
 	return 1
 
 /obj/singularity/proc/consume(atom/A)
@@ -239,7 +239,7 @@
 		movement_dir = force_move
 
 	if(target && prob(60))
-		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
+		movement_dir = get_dir(src, target) // moves to a singulo beacon, if there is one
 
 	step(src, movement_dir)
 
@@ -252,7 +252,7 @@
 			if(STAGE_ONE)
 				steps = 1
 			if(STAGE_TWO)
-				steps = 3//Yes this is right
+				steps = 3// Yes this is right
 			if(STAGE_THREE)
 				steps = 3
 			if(STAGE_FOUR)
@@ -264,7 +264,7 @@
 	var/list/turfs = list()
 	var/turf/T = src.loc
 	for(var/i = 1 to steps)
-		T = get_step(T,direction)
+		T = get_step(T, direction)
 	if(!isturf(T))
 		return 0
 	turfs.Add(T)
@@ -279,12 +279,12 @@
 			dir3 = 2
 	var/turf/T2 = T
 	for(var/j = 1 to steps-1)
-		T2 = get_step(T2,dir2)
+		T2 = get_step(T2, dir2)
 		if(!isturf(T2))
 			return 0
 		turfs.Add(T2)
 	for(var/k = 1 to steps-1)
-		T = get_step(T,dir3)
+		T = get_step(T, dir3)
 		if(!isturf(T))
 			return 0
 		turfs.Add(T)
@@ -311,11 +311,11 @@
 	return 1
 
 /obj/singularity/proc/event()
-	var/numb = pick(1,2,3,4,5,6)
+	var/numb = pick(1, 2, 3, 4, 5, 6)
 	switch(numb)
-		if(1)//EMP
+		if(1)// EMP
 			emp_area()
-		if(2,3)//Stun mobs who lack optic scanners
+		if(2, 3)// Stun mobs who lack optic scanners
 			mezzer()
 		else
 			return 0
@@ -323,13 +323,13 @@
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
+		if(istype(M, /mob/living/carbon/brain)) // Ignore brains
 			continue
 
 		if(M.stat == CONSCIOUS)
-			if (ishuman(M))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
+				if(istype(H.glasses, /obj/item/clothing/glasses/meson))
 					to_chat(H, "<span class='notice'>You look directly into The [src.name], good thing you had your protective eyewear on!</span>")
 					return
 		to_chat(M, "<span class='red'>You look directly into The [src.name] and feel weak.</span>")
@@ -350,7 +350,7 @@
 
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)
-	var/dist = max((current_size - 2),1)
+	var/dist = max((current_size - 2), 1)
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)

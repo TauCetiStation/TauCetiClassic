@@ -1,10 +1,10 @@
-//Skrell space gear. Sleek like a wetsuit.
+// Skrell space gear. Sleek like a wetsuit.
 /obj/item/clothing/head/helmet/space/skrell
 	name = "Skrellian helmet"
 	desc = "Smoothly contoured and polished to a shine. Still looks like a fishbowl."
-	armor = list(melee = 20, bullet = 20, laser = 25,energy = 50, bomb = 50, bio = 100, rad = 100)
+	armor = list(melee = 20, bullet = 20, laser = 25, energy = 50, bomb = 50, bio = 100, rad = 100)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list(SKRELL , HUMAN)
+	species_restricted = list(SKRELL, HUMAN)
 
 /obj/item/clothing/head/helmet/space/skrell/white
 	icon_state = "skrell_helmet_white"
@@ -19,11 +19,11 @@
 /obj/item/clothing/suit/space/skrell
 	name = "Skrellian hardsuit"
 	desc = "Seems like a wetsuit with reinforced plating seamlessly attached to it. Very chic."
-	armor = list(melee = 20, bullet = 20, laser = 25,energy = 50, bomb = 50, bio = 100, rad = 100)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
+	armor = list(melee = 20, bullet = 20, laser = 25, energy = 50, bomb = 50, bio = 100, rad = 100)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank, /obj/item/weapon/storage/bag/ore, /obj/item/device/t_scanner, /obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list(SKRELL , HUMAN)
+	species_restricted = list(SKRELL, HUMAN)
 
 /obj/item/clothing/suit/space/skrell/white
 	icon_state = "skrell_suit_white"
@@ -35,12 +35,12 @@
 	item_state = "skrell_suit_black"
 	item_color = "skrell_suit_black"
 
-//Unathi space gear. Huge and restrictive.
+// Unathi space gear. Huge and restrictive.
 /obj/item/clothing/head/helmet/space/unathi
-	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	var/up = 0 //So Unathi helmets play nicely with the weldervision check.
+	var/up = 0 // So Unathi helmets play nicely with the weldervision check.
 	species_restricted = list(UNATHI)
 
 /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
@@ -51,8 +51,8 @@
 	item_color = "unathi_helm_cheap"
 
 /obj/item/clothing/suit/space/unathi
-	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank, /obj/item/weapon/storage/bag/ore, /obj/item/device/t_scanner, /obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(UNATHI)
@@ -79,16 +79,16 @@
 	item_color = "unathi_breacher"
 	slowdown = 1
 
-// Vox space gear (vaccuum suit, low pressure armour)
+// Vox space gear(vaccuum suit, low pressure armour)
 // Can't be equipped by any other species due to bone structure and vox cybernetics.
 /obj/item/clothing/suit/space/vox
 	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box/magazine, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/melee/energy/sword, /obj/item/weapon/handcuffs, /obj/item/weapon/tank)
 	slowdown = 2
-	armor = list(melee = 60, bullet = 30, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list(VOX , VOX_ARMALIS)
+	species_restricted = list(VOX, VOX_ARMALIS)
 	sprite_sheets = list(
 		VOX = 'icons/mob/species/vox/suit.dmi',
 		VOX_ARMALIS = 'icons/mob/species/armalis/suit.dmi',
@@ -97,7 +97,7 @@
 /obj/item/clothing/head/helmet/space/vox
 	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES
-	species_restricted = list(VOX , VOX_ARMALIS)
+	species_restricted = list(VOX, VOX_ARMALIS)
 	sprite_sheets = list(
 		VOX = 'icons/mob/species/vox/head.dmi',
 		VOX_ARMALIS = 'icons/mob/species/armalis/head.dmi',
@@ -179,7 +179,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	item_color = "gloves-vox"
-	species_restricted = list(VOX , VOX_ARMALIS)
+	species_restricted = list(VOX, VOX_ARMALIS)
 	sprite_sheets = list(
 		VOX = 'icons/mob/species/vox/gloves.dmi',
 		VOX_ARMALIS = 'icons/mob/species/armalis/gloves.dmi',
@@ -191,7 +191,7 @@
 	item_state = "boots-vox"
 	icon_state = "boots-vox"
 
-	species_restricted = list(VOX , VOX_ARMALIS)
+	species_restricted = list(VOX, VOX_ARMALIS)
 	sprite_sheets = list(
 		VOX_ARMALIS = 'icons/mob/species/armalis/feet.dmi'
 		)
@@ -205,22 +205,22 @@
 		canremove = 1
 		to_chat(user, "You relax your deathgrip on the flooring.")
 	else
-		//make sure these can only be used when equipped.
+		// make sure these can only be used when equipped.
 		if(!ishuman(user))
 			return
 		var/mob/living/carbon/human/H = user
-		if (H.shoes != src)
+		if(H.shoes != src)
 			to_chat(user, "You will have to put on the [src] before you can do that.")
 			return
 
 
 		flags |= NOSLIP
 		magpulse = 1
-		canremove = 0	//kinda hard to take off magclaws when you are gripping them tightly.
+		canremove = 0	// kinda hard to take off magclaws when you are gripping them tightly.
 		to_chat(user, "You dig your claws deeply into the flooring, bracing yourself.")
 		to_chat(user, "It would be hard to take off the [src] without relaxing your grip first.")
 
-//In case they somehow come off while enabled.
+// In case they somehow come off while enabled.
 /obj/item/clothing/shoes/magboots/vox/dropped(mob/user)
 	..()
 	if(src.magpulse)
@@ -231,5 +231,5 @@
 
 /obj/item/clothing/shoes/magboots/vox/examine(mob/user)
 	..()
-	if (magpulse)
-		to_chat(user, "It would be hard to take these off without relaxing your grip first.")//theoretically this message should only be seen by the wearer when the claws are equipped.
+	if(magpulse)
+		to_chat(user, "It would be hard to take these off without relaxing your grip first.")// theoretically this message should only be seen by the wearer when the claws are equipped.

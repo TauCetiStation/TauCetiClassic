@@ -21,12 +21,12 @@
 		to_chat(user, "<span class='notice'>You can't work with the brace of a running drill!</span>")
 		return
 
-	if(default_deconstruction_screwdriver(user,"mining_brace","mining_brace", W))
+	if(default_deconstruction_screwdriver(user, "mining_brace", "mining_brace", W))
 		return
 	if(default_deconstruction_crowbar(W, 1))
 		return
 
-	if(istype(W,/obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 
 		if(istype(get_turf(src), /turf/space))
 			to_chat(user, "<span class='notice'>You can't anchor something to empty space. Idiot.</span>")
@@ -69,7 +69,7 @@
 
 	if(usr.stat) return
 
-	if (src.anchored)
+	if(src.anchored)
 		to_chat(usr, "It is anchored in place!")
 		return 0
 

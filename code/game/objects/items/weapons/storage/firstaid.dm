@@ -24,9 +24,9 @@
 
 	New()
 		..()
-		if (empty) return
+		if(empty) return
 
-		icon_state = pick("ointment","firefirstaid")
+		icon_state = pick("ointment", "firefirstaid")
 
 		new /obj/item/device/healthanalyzer( src )
 		new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
@@ -34,7 +34,7 @@
 		new /obj/item/stack/medical/ointment( src )
 		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
 		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
-		new /obj/item/weapon/reagent_containers/pill/kelotane( src ) //Replaced ointment with these since they actually work --Errorage
+		new /obj/item/weapon/reagent_containers/pill/kelotane( src ) // Replaced ointment with these since they actually work --Errorage
 		return
 
 
@@ -43,7 +43,7 @@
 
 	New()
 		..()
-		if (empty) return
+		if(empty) return
 		new /obj/item/stack/medical/bruise_pack(src)
 		new /obj/item/stack/medical/bruise_pack(src)
 		new /obj/item/stack/medical/bruise_pack(src)
@@ -61,9 +61,9 @@
 
 	New()
 		..()
-		if (empty) return
+		if(empty) return
 
-		icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
+		icon_state = pick("antitoxin", "antitoxfirstaid", "antitoxfirstaid2", "antitoxfirstaid3")
 
 		new /obj/item/weapon/reagent_containers/syringe/antitoxin( src )
 		new /obj/item/weapon/reagent_containers/syringe/antitoxin( src )
@@ -82,7 +82,7 @@
 
 	New()
 		..()
-		if (empty) return
+		if(empty) return
 		new /obj/item/weapon/reagent_containers/pill/dexalin( src )
 		new /obj/item/weapon/reagent_containers/pill/dexalin( src )
 		new /obj/item/weapon/reagent_containers/pill/dexalin( src )
@@ -100,7 +100,7 @@
 
 /obj/item/weapon/storage/firstaid/adv/New()
 	..()
-	if (empty) return
+	if(empty) return
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
 	new /obj/item/stack/medical/advanced/bruise_pack(src)
 	new /obj/item/stack/medical/advanced/bruise_pack(src)
@@ -119,7 +119,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
 	w_class = 2.0
-	can_hold = list("/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/dice","/obj/item/weapon/paper")
+	can_hold = list("/obj/item/weapon/reagent_containers/pill", "/obj/item/weapon/dice", "/obj/item/weapon/paper")
 	allow_quick_gather = 1
 	use_to_pickup = 1
 	storage_slots = 14

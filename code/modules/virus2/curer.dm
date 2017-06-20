@@ -9,22 +9,22 @@
 	var/obj/item/weapon/reagent_containers/container = null
 
 /obj/machinery/computer/curer/attackby(obj/I, mob/user)
-	if(istype(I,/obj/item/weapon/reagent_containers))
+	if(istype(I, /obj/item/weapon/reagent_containers))
 		var/mob/living/carbon/C = user
 		if(!container)
 			container = I
 			C.drop_item()
 			I.loc = src
 		return
-	if(istype(I,/obj/item/weapon/virusdish))
+	if(istype(I, /obj/item/weapon/virusdish))
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..")
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
-		var/list/data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=list(),"antibodies"=0)
+		var/list/data = list("donor"=null, "viruses"=null, "blood_DNA"=null, "blood_type"=null, "resistances"=null, "trace_chem"=null, "virus2"=list(), "antibodies"=0)
 		data["virus2"] |= I:virus2
-		product.reagents.add_reagent("blood",30,data)
+		product.reagents.add_reagent("blood", 30, data)
 
 		virusing = 1
 		addtimer(CALLBACK(src, .proc/unvirus), 1200)
@@ -93,7 +93,7 @@
 	if(!.)
 		return
 
-	if (href_list["antibody"])
+	if(href_list["antibody"])
 		curing = 10
 	else if(href_list["eject"])
 		container.loc = src.loc
@@ -109,6 +109,6 @@
 
 	var/list/data = list()
 	data["antibodies"] = B.data["antibodies"]
-	product.reagents.add_reagent("antibodies",30,data)
+	product.reagents.add_reagent("antibodies", 30, data)
 
 	state("\The [src.name] buzzes", "blue")

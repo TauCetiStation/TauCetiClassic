@@ -5,8 +5,8 @@
 	icon_state = "cutout_basic"
 	w_class = 4
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
-		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Ian")
-	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
+		"Traitor", "Nuke Op", "Cultist", "Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Ian")
+	var/pushed_over = FALSE // If the cutout is pushed over and has to be righted
 
 	var/lastattacker = null
 
@@ -28,7 +28,7 @@
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
 	if(!pushed_over)
 		return
-	to_chat(user,"<span class='notice'>You right [src].</span>")
+	to_chat(user, "<span class='notice'>You right [src].</span>")
 	desc = initial(desc)
 	icon = initial(icon)
 	icon_state = initial(icon_state)
@@ -60,10 +60,10 @@
 		push_over()
 
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
-	if(!istype(crayon,/obj/item/toy/crayon) || !user)
+	if(!istype(crayon, /obj/item/toy/crayon) || !user)
 		return
 	if(pushed_over)
-		to_chat(user,"<span class='warning'>Right [src] first!</span>")
+		to_chat(user, "<span class='warning'>Right [src] first!</span>")
 		return
 	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
 	if(!new_appearance || !crayon)
@@ -111,11 +111,11 @@
 			desc = "A cardboard cutout of a shadowling."
 			icon_state = "cutout_shadowling"
 		if("Xenomorph")
-			name = "alien hunter ([rand(1, 999)])"
+			name = "alien hunter([rand(1, 999)])"
 			desc = "A cardboard cutout of a xenomorph."
 			icon_state = "cutout_fukken_xeno"
 			if(prob(25))
-				alpha = 75 //Spooky sneaking!
+				alpha = 75 // Spooky sneaking!
 		if("Deathsquad Officer")
 			name = pick(commando_names)
 			desc = "A cardboard cutout of a death commando."

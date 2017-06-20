@@ -17,8 +17,8 @@
 		return
 
 /mob/living/carbon/alien/larva/handle_hud_icons_health()
-	if (healths)
-		if (stat != DEAD)
+	if(healths)
+		if(stat != DEAD)
 			switch(health)
 				if(25 to INFINITY)
 					healths.icon_state = "health0"

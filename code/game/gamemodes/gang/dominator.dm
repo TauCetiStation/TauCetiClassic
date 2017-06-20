@@ -43,7 +43,7 @@
 			to_chat(user, "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>")
 	else
 		to_chat(user, "<span class='notice'>System on standby.</span>")
-	to_chat(user, "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>")
+	to_chat(user, "<span class='danger'>System Integrity: [round((health/maxhealth)*100, 1)]%</span>")
 
 /obj/machinery/dominator/process()
 	..()
@@ -90,25 +90,25 @@
 	if(gang == "B")
 		mode.B_timer = "OFFLINE"
 	if(gang)
-		//SSshuttle.emergencyNoEscape = 0
-		//if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-		//SSshuttle.location!=0
+		// SSshuttle.emergencyNoEscape = 0
+		// if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+		// SSshuttle.location!=0
 		if(!isnum(mode.A_timer) && !isnum(mode.B_timer))
 
-			//if(SSshuttle.direction == 1)
+			// if(SSshuttle.direction == 1)
 			//	SSshuttle.settimeleft(0)
-				//SSshuttle.emergency.mode = SHUTTLE_DOCKED
-				//SSshuttle.emergency.timer = world.time
-				//priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-				//captain_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.")
-				//world << sound('sound/AI/shuttledock.ogg')
-			//else
-				//priority_announce("All hostile activity within station systems have ceased.","Network Alert")
-				//captain_announce("All hostile activity within station systems have ceased.")
+				// SSshuttle.emergency.mode = SHUTTLE_DOCKED
+				// SSshuttle.emergency.timer = world.time
+				// priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+				// captain_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.")
+				// world << sound('sound/AI/shuttledock.ogg')
+			// else
+				// priority_announce("All hostile activity within station systems have ceased.", "Network Alert")
+				// captain_announce("All hostile activity within station systems have ceased.")
 			if(get_security_level() == "delta")
 				set_security_level("red")
 
-		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover cancelled: Dominator is no longer operational.",1,1)
+		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools), "Hostile takeover cancelled: Dominator is no longer operational.", 1, 1)
 
 	set_light(0)
 	icon_state = "dominator-broken"
@@ -142,7 +142,7 @@
 	if(Proj.damage)
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			var/damage = Proj.damage
-			//if(Proj.forcedodge)
+			// if(Proj.forcedodge)
 			//	damage *= 0.5
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 			visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
@@ -166,11 +166,11 @@
 	var/timer
 
 	var/tempgang
-	if(user.mind in (ticker.mode.A_gang|ticker.mode.A_bosses))
+	if(user.mind in(ticker.mode.A_gang|ticker.mode.A_bosses))
 		tempgang = "A"
 		gang_territory = ticker.mode.A_territory.len
 		timer = mode.A_timer
-	else if(user.mind in (ticker.mode.B_gang|ticker.mode.B_bosses))
+	else if(user.mind in(ticker.mode.B_gang|ticker.mode.B_bosses))
 		tempgang = "B"
 		gang_territory = ticker.mode.B_territory.len
 		timer = mode.B_timer
@@ -187,20 +187,20 @@
 		to_chat(user, "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>")
 		return
 
-	var/time = max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 1) - 60) * 15))
-	if(alert(user,"With [round((gang_territory/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang == "A" ? mode.A_dominations : mode.B_dominations] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
-		if ((!in_range(src, user) || !istype(src.loc, /turf)))
+	var/time = max(300, 900 - ((round((gang_territory/start_state.num_territories)*200, 1) - 60) * 15))
+	if(alert(user, "With [round((gang_territory/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang == "A" ? mode.A_dominations : mode.B_dominations] attempt(s) remaining. Are you ready?", "Confirm", "Ready", "Later") == "Ready")
+		if((!in_range(src, user) || !istype(src.loc, /turf)))
 			return 0
 		gang = tempgang
 		if(gang == "A")
 			mode.A_dominations --
 		else
 			mode.B_dominations --
-		mode.domination(gang,1,src)
+		mode.domination(gang, 1, src)
 		src.name = "[gang_name(gang)] Gang [src.name]"
 		healthcheck(0)
 		operating = 1
-		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover in progress: Estimated [time] seconds until victory.")
+		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools), "Hostile takeover in progress: Estimated [time] seconds until victory.")
 		START_PROCESSING(SSmachine, src)
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
@@ -220,14 +220,14 @@
 		return
 	healthcheck(M.melee_damage_upper)
 
-//obj/machinery/dominator/mech_melee_attack(obj/mecha/M)
+// obj/machinery/dominator/mech_melee_attack(obj/mecha/M)
 //	if(M.damtype == "brute")
 //		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 //		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 //		healthcheck(M.force)
 //	return
 
-//obj/machinery/dominator/attack_hulk(mob/user)
+// obj/machinery/dominator/attack_hulk(mob/user)
 //	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 //	user.visible_message("<span class='danger'>[user] smashes [src].</span>",\
 //	"<span class='danger'>You punch [src].</span>",\
@@ -237,7 +237,7 @@
 /obj/machinery/dominator/attackby(obj/item/weapon/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon))
 		add_fingerprint(user)
-		//user.changeNext_move(CLICK_CD_MELEE)
+		// user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return

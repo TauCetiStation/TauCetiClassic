@@ -17,7 +17,7 @@
 	origin_tech = null
 	clumsy_check = 0
 
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' // not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 /obj/item/weapon/gun/magic/afterattack(atom/target, mob/living/user, flag)
@@ -32,7 +32,7 @@
 	..()
 
 /obj/item/weapon/gun/magic/proc/newshot()
-	if (charges && chambered)
+	if(charges && chambered)
 		chambered.newshot()
 		charges--
 	return

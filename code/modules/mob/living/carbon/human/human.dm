@@ -3,14 +3,14 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	//icon_state = "body_m_s"
+	// icon_state = "body_m_s"
 	var/list/hud_list[9]
-	var/datum/species/species //Contains icon generation and language information, set during New().
+	var/datum/species/species // Contains icon generation and language information, set during New().
 	var/dog_owner
 	var/heart_beat = 0
-	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
+	var/embedded_flag	  // To check if we've need to roll for damage on movement while an item is imbedded in us.
 
-	var/scientist = 0	//Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
+	var/scientist = 0	// Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
 	var/agent = 0
 	var/team = 0
 	var/metadata
@@ -113,13 +113,13 @@
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
 		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
-			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
+			stat("SpiderOS Status:", "[SN.s_initialized ? "Initialized" : "Disabled"]")
 			stat("Current Time:", "[worldtime2text()]")
 			if(SN.s_initialized)
-				//Suit gear
+				// Suit gear
 				stat("Energy Charge", "[round(SN.cell.charge/100)]%")
 				stat("Smoke Bombs:", "\Roman [SN.s_bombs]")
-				//Ninja status
+				// Ninja status
 				stat("Fingerprints:", "[md5(dna.uni_identity)]")
 				stat("Unique Identity:", "[dna.unique_enzymes]")
 				stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
@@ -128,8 +128,8 @@
 				stat("Toxin Levels:", "[getToxLoss()]")
 				stat("Burn Severity:", "[getFireLoss()]")
 				stat("Brute Trauma:", "[getBruteLoss()]")
-				stat("Radiation Levels:","[radiation] rad")
-				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
+				stat("Radiation Levels:", "[radiation] rad")
+				stat("Body Temperature:", "[bodytemperature-T0C] degrees C([bodytemperature*1.8-459.67] degrees F)")
 
 
 /mob/living/carbon/human/ex_act(severity)
@@ -139,43 +139,43 @@
 	var/shielded = 0
 	var/b_loss = null
 	var/f_loss = null
-	switch (severity)
-		if (1.0)
+	switch(severity)
+		if(1.0)
 			b_loss += 500
-			if (!prob(getarmor(null, "bomb")))
+			if(!prob(getarmor(null, "bomb")))
 				gib()
 				return
 			else
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(target, 200, 4)
-			//return
+			// return
 //				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
-				//user.throw_at(target, 200, 4)
+				// user.throw_at(target, 200, 4)
 
-		if (2.0)
-			if (!shielded)
+		if(2.0)
+			if(!shielded)
 				b_loss += 60
 
 			f_loss += 60
 
-			if (prob(getarmor(null, "bomb")))
+			if(prob(getarmor(null, "bomb")))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
-			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
+			if(!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 30
 				ear_deaf += 120
-			if (prob(70) && !shielded)
+			if(prob(70) && !shielded)
 				Paralyse(10)
 
 		if(3.0)
 			b_loss += 30
-			if (prob(getarmor(null, "bomb")))
+			if(prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
-			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
+			if(!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
 				ear_deaf += 60
-			if (prob(50) && !shielded)
+			if(prob(50) && !shielded)
 				Paralyse(10)
 
 	// focus most of the blast on one organ
@@ -193,11 +193,11 @@
 	var/gain = 20
 	if(mind)
 		switch(mind.assigned_role)
-			if("Station Engineer","Chief Engineer")
+			if("Station Engineer", "Chief Engineer")
 				gain = 100
 			if("Clown")
-				gain = rand(-300, 300)//HONK
-	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+				gain = rand(-300, 300)// HONK
+	investigate_log(" has consumed [key_name(src)].", "singulo") // Oh that's where the clown ended up!
 	gib()
 	return(gain)
 
@@ -209,27 +209,27 @@
 				step_towards(hand, src)
 				to_chat(src, "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>")
 	apply_effect(current_size * 3, IRRADIATE)
-	if(mob_negates_gravity())//Magboots protection
+	if(mob_negates_gravity())// Magboots protection
 		return
 	..()
 
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>\The blob attacks you!</span>")
-	var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
+	var/dam_zone = pick(BP_CHEST, BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG)
 	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
 	return
 
 /mob/living/carbon/human/meteorhit(O)
 	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
+		if((M.client && !( M.blinded )))
 			M.show_message("\red [src] has been hit by [O]", 1)
-	if (health > 0)
-		var/obj/item/organ/external/BP = bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
+	if(health > 0)
+		var/obj/item/organ/external/BP = bodyparts_by_name[pick(BP_CHEST, BP_CHEST, BP_CHEST, BP_HEAD)]
 		if(!BP)
 			return
-		if (istype(O, /obj/effect/immovablerod))
+		if(istype(O, /obj/effect/immovablerod))
 			BP.take_damage(101, 0)
 		else
 			BP.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30)
@@ -249,7 +249,7 @@
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
+		var/dam_zone = pick(BP_CHEST, BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG)
 		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 		var/armor = run_armor_check(BP, "melee")
 		apply_damage(damage, BRUTE, BP, armor)
@@ -267,10 +267,10 @@
 /mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M)
 	if(M.Victim) return // can't attack while eating!
 
-	if (health > -100)
+	if(health > -100)
 
 		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
 
 		var/damage = rand(1, 3)
@@ -281,7 +281,7 @@
 			damage = rand(5, 25)
 
 
-		var/dam_zone = pick(BP_HEAD , BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG , BP_GROIN)
+		var/dam_zone = pick(BP_HEAD, BP_CHEST, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG, BP_GROIN)
 
 		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 		var/armor_block = run_armor_check(BP, "melee")
@@ -290,7 +290,7 @@
 
 		if(M.powerlevel > 0)
 			var/stunprob = 10
-			var/power = M.powerlevel + rand(0,3)
+			var/power = M.powerlevel + rand(0, 3)
 
 			switch(M.powerlevel)
 				if(1 to 2) stunprob = 20
@@ -306,11 +306,11 @@
 					M.powerlevel = 0
 
 				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
+					if((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>The [M.name] has shocked []!</B>", src), 1)
 
 				Weaken(power)
-				if (stuttering < power)
+				if(stuttering < power)
 					stuttering = power
 				Stun(power)
 
@@ -318,8 +318,8 @@
 				s.set_up(5, 1, src)
 				s.start()
 
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustFireLoss(M.powerlevel * rand(6,10))
+				if(prob(stunprob) && M.powerlevel >= 8)
+					adjustFireLoss(M.powerlevel * rand(6, 10))
 
 
 		updatehealth()
@@ -328,18 +328,18 @@
 
 
 /mob/living/carbon/human/restrained()
-	if (handcuffed)
+	if(handcuffed)
 		return 1
-	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
+	if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 		return 1
-	if (istype(buckled, /obj/structure/stool/bed/nest))
+	if(istype(buckled, /obj/structure/stool/bed/nest))
 		return 1
 	return 0
 
 
 /mob/living/carbon/human/show_inv(mob/user)
 	var/obj/item/clothing/under/suit = null
-	if (istype(w_uniform, /obj/item/clothing/under))
+	if(istype(w_uniform, /obj/item/clothing/under))
 		suit = w_uniform
 
 	user.set_machine(src)
@@ -385,8 +385,8 @@
 // Get rank from ID, ID inside PDA, PDA, ID in wallet, etc.
 /mob/living/carbon/human/proc/get_authentification_rank(if_no_id = "No id", if_no_job = "No job")
 	var/obj/item/device/pda/pda = wear_id
-	if (istype(pda))
-		if (pda.id)
+	if(istype(pda))
+		if(pda.id)
 			return pda.id.rank
 		else
 			return pda.ownrank
@@ -397,46 +397,46 @@
 		else
 			return if_no_id
 
-//gets assignment from ID or ID inside PDA or PDA itself
-//Useful when player do something with computers
+// gets assignment from ID or ID inside PDA or PDA itself
+// Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job")
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
-	if (istype(pda))
-		if (pda.id && istype(pda.id, /obj/item/weapon/card/id))
+	if(istype(pda))
+		if(pda.id && istype(pda.id, /obj/item/weapon/card/id))
 			. = pda.id.assignment
 		else
 			. = pda.ownjob
-	else if (istype(id))
+	else if(istype(id))
 		. = id.assignment
 	else
 		return if_no_id
-	if (!.)
+	if(!.)
 		. = if_no_job
 	return
 
-//gets name from ID or ID inside PDA or PDA itself
-//Useful when player do something with computers
+// gets name from ID or ID inside PDA or PDA itself
+// Useful when player do something with computers
 /mob/living/carbon/human/proc/get_authentification_name(if_no_id = "Unknown")
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
-	if (istype(pda))
-		if (pda.id)
+	if(istype(pda))
+		if(pda.id)
 			. = pda.id.registered_name
 		else
 			. = pda.owner
-	else if (istype(id))
+	else if(istype(id))
 		. = id.registered_name
 	else
 		return if_no_id
 	return
 
-//repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
+// repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
 /mob/living/carbon/human/proc/get_visible_name()
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
+	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	// Wearing a mask which hides our face, use id-name if possible
 		return get_id_name("Unknown")
 	if( head && (head.flags_inv&HIDEFACE) )
-		return get_id_name("Unknown")		//Likewise for hats
+		return get_id_name("Unknown")		// Likewise for hats
 	if(name_override)
 		return name_override
 	var/face_name = get_face_name()
@@ -445,18 +445,18 @@
 		return "[face_name] (as [id_name])"
 	return face_name
 
-//Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
+// Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	if( !BP || BP.disfigured || (BP.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+	if( !BP || BP.disfigured || (BP.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	// disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 
-//gets name from ID or PDA itself, ID inside PDA doesn't matter
-//Useful when player is being seen by other mobs
+// gets name from ID or PDA itself, ID inside PDA doesn't matter
+// Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
 	. = if_no_id
-	if(istype(wear_id,/obj/item/device/pda))
+	if(istype(wear_id, /obj/item/device/pda))
 		var/obj/item/device/pda/P = wear_id
 		return P.owner
 	if(wear_id)
@@ -465,19 +465,19 @@
 			return I.registered_name
 	return
 
-//gets ID card object from special clothes slot or null.
+// gets ID card object from special clothes slot or null.
 /mob/living/carbon/human/proc/get_idcard()
 	if(wear_id)
 		return wear_id.GetID()
 
-//Removed the horrible safety parameter. It was only being used by ninja code anyways.
-//Now checks siemens_coefficient of the affected area by default
+// Removed the horrible safety parameter. It was only being used by ninja code anyways.
+// Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	// godmode
 	if(NO_SHOCK in src.mutations)	return 0 //#Z2 no shock with that mutation.
 
 	if(!def_zone)
-		def_zone = pick(BP_L_HAND , BP_R_HAND)
+		def_zone = pick(BP_L_HAND, BP_R_HAND)
 
 	var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 
@@ -500,16 +500,16 @@
 		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if (href_list["refresh"])
+	if(href_list["refresh"])
 		if((machine)&&(in_range(src, usr)))
 			show_inv(machine)
 
-	if (href_list["mach_close"])
+	if(href_list["mach_close"])
 		var/t1 = text("window=[]", href_list["mach_close"])
 		unset_machine()
 		src << browse(null, t1)
 
-	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
+	if((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) // if game hasn't started, can't make an equip_e
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 		O.source = usr
 		O.target = src
@@ -522,8 +522,8 @@
 			O.process()
 			return
 
-	if (href_list["criminal"])
-		if(hasHUD(usr,"security"))
+	if(href_list["criminal"])
+		if(hasHUD(usr, "security"))
 
 			var/modified = 0
 			var/perpname = "wot"
@@ -537,10 +537,10 @@
 				perpname = name
 
 			if(perpname)
-				for (var/datum/data/record/E in data_core.general)
-					if (E.fields["name"] == perpname)
-						for (var/datum/data/record/R in data_core.security)
-							if (R.fields["id"] == E.fields["id"])
+				for(var/datum/data/record/E in data_core.general)
+					if(E.fields["name"] == perpname)
+						for(var/datum/data/record/R in data_core.security)
+							if(R.fields["id"] == E.fields["id"])
 
 								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
 
@@ -551,34 +551,34 @@
 
 										spawn()
 											hud_updateflag |= 1 << WANTED_HUD
-											if(istype(usr,/mob/living/carbon/human))
+											if(istype(usr, /mob/living/carbon/human))
 												var/mob/living/carbon/human/U = usr
 												U.handle_regular_hud_updates()
-											if(istype(usr,/mob/living/silicon/robot))
+											if(istype(usr, /mob/living/silicon/robot))
 												var/mob/living/silicon/robot/U = usr
 												U.handle_regular_hud_updates()
 
 			if(!modified)
 				to_chat(usr, "\red Unable to locate a data core entry for this person.")
 
-	if (href_list["secrecord"])
-		if(hasHUD(usr,"security"))
+	if(href_list["secrecord"])
+		if(hasHUD(usr, "security"))
 			var/perpname = "wot"
 			var/read = 0
 
 			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
+				if(istype(wear_id, /obj/item/weapon/card/id))
 					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
+				else if(istype(wear_id, /obj/item/device/pda))
 					var/obj/item/device/pda/tempPda = wear_id
 					perpname = tempPda.owner
 			else
 				perpname = src.name
-			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.security)
-						if (R.fields["id"] == E.fields["id"])
-							if(hasHUD(usr,"security"))
+			for(var/datum/data/record/E in data_core.general)
+				if(E.fields["name"] == perpname)
+					for(var/datum/data/record/R in data_core.security)
+						if(R.fields["id"] == E.fields["id"])
+							if(hasHUD(usr, "security"))
 								to_chat(usr, "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]")
 								to_chat(usr, "<b>Minor Crimes:</b> [R.fields["mi_crim"]]")
 								to_chat(usr, "<b>Details:</b> [R.fields["mi_crim_d"]]")
@@ -591,87 +591,87 @@
 			if(!read)
 				to_chat(usr, "\red Unable to locate a data core entry for this person.")
 
-	if (href_list["secrecordComment"])
-		if(hasHUD(usr,"security"))
+	if(href_list["secrecordComment"])
+		if(hasHUD(usr, "security"))
 			var/perpname = "wot"
 			var/read = 0
 
 			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
+				if(istype(wear_id, /obj/item/weapon/card/id))
 					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
+				else if(istype(wear_id, /obj/item/device/pda))
 					var/obj/item/device/pda/tempPda = wear_id
 					perpname = tempPda.owner
 			else
 				perpname = src.name
-			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.security)
-						if (R.fields["id"] == E.fields["id"])
-							if(hasHUD(usr,"security"))
+			for(var/datum/data/record/E in data_core.general)
+				if(E.fields["name"] == perpname)
+					for(var/datum/data/record/R in data_core.security)
+						if(R.fields["id"] == E.fields["id"])
+							if(hasHUD(usr, "security"))
 								read = 1
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
 									to_chat(usr, text("[]", R.fields[text("com_[]", counter)]))
 									counter++
-								if (counter == 1)
+								if(counter == 1)
 									to_chat(usr, "No comment found")
 								to_chat(usr, "<a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>")
 
 			if(!read)
 				to_chat(usr, "\red Unable to locate a data core entry for this person.")
 
-	if (href_list["secrecordadd"])
-		if(hasHUD(usr,"security"))
+	if(href_list["secrecordadd"])
+		if(hasHUD(usr, "security"))
 			var/perpname = "wot"
 			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
+				if(istype(wear_id, /obj/item/weapon/card/id))
 					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
+				else if(istype(wear_id, /obj/item/device/pda))
 					var/obj/item/device/pda/tempPda = wear_id
 					perpname = tempPda.owner
 			else
 				perpname = src.name
-			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.security)
-						if (R.fields["id"] == E.fields["id"])
-							if(hasHUD(usr,"security"))
-								var/t1 = sanitize(copytext(input("Add Comment:", "Sec. records", null, null)  as message,1,MAX_MESSAGE_LEN))
-								if ( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr,"security")) )
+			for(var/datum/data/record/E in data_core.general)
+				if(E.fields["name"] == perpname)
+					for(var/datum/data/record/R in data_core.security)
+						if(R.fields["id"] == E.fields["id"])
+							if(hasHUD(usr, "security"))
+								var/t1 = sanitize(copytext(input("Add Comment:", "Sec. records", null, null)  as message, 1, MAX_MESSAGE_LEN))
+								if( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr, "security")) )
 									return
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
 									counter++
-								if(istype(usr,/mob/living/carbon/human))
+								if(istype(usr, /mob/living/carbon/human))
 									var/mob/living/carbon/human/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
-								if(istype(usr,/mob/living/silicon/robot))
+								if(istype(usr, /mob/living/silicon/robot))
 									var/mob/living/silicon/robot/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 
-	if (href_list["medical"])
-		if(hasHUD(usr,"medical"))
+	if(href_list["medical"])
+		if(hasHUD(usr, "medical"))
 			var/perpname = "wot"
 			var/modified = 0
 
 			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
+				if(istype(wear_id, /obj/item/weapon/card/id))
 					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
+				else if(istype(wear_id, /obj/item/device/pda))
 					var/obj/item/device/pda/tempPda = wear_id
 					perpname = tempPda.owner
 			else
 				perpname = src.name
 
-			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.general)
-						if (R.fields["id"] == E.fields["id"])
+			for(var/datum/data/record/E in data_core.general)
+				if(E.fields["name"] == perpname)
+					for(var/datum/data/record/R in data_core.general)
+						if(R.fields["id"] == E.fields["id"])
 
 							var/setmedical = input(usr, "Specify a new medical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("*SSD*", "*Deceased*", "Physically Unfit", "Active", "Disabled", "Cancel")
 
-							if(hasHUD(usr,"medical"))
+							if(hasHUD(usr, "medical"))
 								if(setmedical != "Cancel")
 									R.fields["p_stat"] = setmedical
 									modified = 1
@@ -679,34 +679,34 @@
 										PDA_Manifest.Cut()
 
 									spawn()
-										if(istype(usr,/mob/living/carbon/human))
+										if(istype(usr, /mob/living/carbon/human))
 											var/mob/living/carbon/human/U = usr
 											U.handle_regular_hud_updates()
-										if(istype(usr,/mob/living/silicon/robot))
+										if(istype(usr, /mob/living/silicon/robot))
 											var/mob/living/silicon/robot/U = usr
 											U.handle_regular_hud_updates()
 
 			if(!modified)
 				to_chat(usr, "\red Unable to locate a data core entry for this person.")
 
-	if (href_list["medrecord"])
-		if(hasHUD(usr,"medical"))
+	if(href_list["medrecord"])
+		if(hasHUD(usr, "medical"))
 			var/perpname = "wot"
 			var/read = 0
 
 			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
+				if(istype(wear_id, /obj/item/weapon/card/id))
 					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
+				else if(istype(wear_id, /obj/item/device/pda))
 					var/obj/item/device/pda/tempPda = wear_id
 					perpname = tempPda.owner
 			else
 				perpname = src.name
-			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.medical)
-						if (R.fields["id"] == E.fields["id"])
-							if(hasHUD(usr,"medical"))
+			for(var/datum/data/record/E in data_core.general)
+				if(E.fields["name"] == perpname)
+					for(var/datum/data/record/R in data_core.medical)
+						if(R.fields["id"] == E.fields["id"])
+							if(hasHUD(usr, "medical"))
 								to_chat(usr, "<b>Name:</b> [R.fields["name"]]	<b>Blood Type:</b> [R.fields["b_type"]]")
 								to_chat(usr, "<b>DNA:</b> [R.fields["b_dna"]]")
 								to_chat(usr, "<b>Minor Disabilities:</b> [R.fields["mi_dis"]]")
@@ -720,78 +720,78 @@
 			if(!read)
 				to_chat(usr, "\red Unable to locate a data core entry for this person.")
 
-	if (href_list["medrecordComment"])
-		if(hasHUD(usr,"medical"))
+	if(href_list["medrecordComment"])
+		if(hasHUD(usr, "medical"))
 			var/perpname = "wot"
 			var/read = 0
 
 			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
+				if(istype(wear_id, /obj/item/weapon/card/id))
 					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
+				else if(istype(wear_id, /obj/item/device/pda))
 					var/obj/item/device/pda/tempPda = wear_id
 					perpname = tempPda.owner
 			else
 				perpname = src.name
-			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.medical)
-						if (R.fields["id"] == E.fields["id"])
-							if(hasHUD(usr,"medical"))
+			for(var/datum/data/record/E in data_core.general)
+				if(E.fields["name"] == perpname)
+					for(var/datum/data/record/R in data_core.medical)
+						if(R.fields["id"] == E.fields["id"])
+							if(hasHUD(usr, "medical"))
 								read = 1
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
 									to_chat(usr, text("[]", R.fields[text("com_[]", counter)]))
 									counter++
-								if (counter == 1)
+								if(counter == 1)
 									to_chat(usr, "No comment found")
 								to_chat(usr, "<a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>")
 
 			if(!read)
 				to_chat(usr, "\red Unable to locate a data core entry for this person.")
 
-	if (href_list["medrecordadd"])
-		if(hasHUD(usr,"medical"))
+	if(href_list["medrecordadd"])
+		if(hasHUD(usr, "medical"))
 			var/perpname = "wot"
 			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
+				if(istype(wear_id, /obj/item/weapon/card/id))
 					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
+				else if(istype(wear_id, /obj/item/device/pda))
 					var/obj/item/device/pda/tempPda = wear_id
 					perpname = tempPda.owner
 			else
 				perpname = src.name
-			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.medical)
-						if (R.fields["id"] == E.fields["id"])
-							if(hasHUD(usr,"medical"))
-								var/t1 = sanitize(copytext(input("Add Comment:", "Med. records", null, null)  as message,1,MAX_MESSAGE_LEN))
-								if ( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr,"medical")) )
+			for(var/datum/data/record/E in data_core.general)
+				if(E.fields["name"] == perpname)
+					for(var/datum/data/record/R in data_core.medical)
+						if(R.fields["id"] == E.fields["id"])
+							if(hasHUD(usr, "medical"))
+								var/t1 = sanitize(copytext(input("Add Comment:", "Med. records", null, null)  as message, 1, MAX_MESSAGE_LEN))
+								if( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr, "medical")) )
 									return
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
 									counter++
-								if(istype(usr,/mob/living/carbon/human))
+								if(istype(usr, /mob/living/carbon/human))
 									var/mob/living/carbon/human/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
-								if(istype(usr,/mob/living/silicon/robot))
+								if(istype(usr, /mob/living/silicon/robot))
 									var/mob/living/silicon/robot/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 
-	if (href_list["lookitem"])
+	if(href_list["lookitem"])
 		var/obj/item/I = locate(href_list["lookitem"])
 		usr.examinate(I)
 
-	if (href_list["lookmob"])
+	if(href_list["lookmob"])
 		var/mob/M = locate(href_list["lookmob"])
 		usr.examinate(M)
 	..()
 	return
 
 
-///eyecheck()
-///Returns a number between -1 to 2
+/// eyecheck()
+/// Returns a number between -1 to 2
 /mob/living/carbon/human/eyecheck()
 	var/number = 0
 	if(istype(src.head, /obj/item/clothing/head/welding))
@@ -817,7 +817,7 @@
 
 
 /mob/living/carbon/human/IsAdvancedToolUser()
-	return 1//Humans can use guns and such
+	return 1// Humans can use guns and such
 
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)
@@ -848,7 +848,7 @@
 
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
-		visible_message("\red [src] begins playing his ribcage like a xylophone. It's quite spooky.","\blue You begin to play a spooky refrain on your ribcage.","\red You hear a spooky xylophone melody.")
+		visible_message("\red [src] begins playing his ribcage like a xylophone. It's quite spooky.", "\blue You begin to play a spooky refrain on your ribcage.", "\red You hear a spooky xylophone melody.")
 		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
 		playsound(loc, song, 50, 1, -1)
 		xylophone = 1
@@ -859,26 +859,26 @@
 /mob/living/carbon/human/proc/vomit()
 
 	if(species.flags[IS_SYNTHETIC])
-		return //Machines don't throw up.
+		return // Machines don't throw up.
 
 	if(!lastpuke)
 		lastpuke = 1
 		to_chat(src, "<span class='warning'>You feel nauseous...</span>")
 		spawn(150)	//15 seconds until second warning
 			to_chat(src, "<span class='warning'>You feel like you are about to throw up!</span>")
-			spawn(100)	//and you have 10 more for mad dash to the bucket
+			spawn(100)	// and you have 10 more for mad dash to the bucket
 				Stun(5)
 
-				src.visible_message("<span class='warning'>[src] throws up!","<spawn class='warning'>You throw up!</span>")
+				src.visible_message("<span class='warning'>[src] throws up!", "<spawn class='warning'>You throw up!</span>")
 				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 				var/turf/location = loc
-				if (istype(location, /turf/simulated))
+				if(istype(location, /turf/simulated))
 					location.add_vomit_floor(src, 1)
 
 				nutrition -= 40
 				adjustToxLoss(-3)
-				spawn(350)	//wait 35 seconds before next volley
+				spawn(350)	// wait 35 seconds before next volley
 					lastpuke = 0
 
 /mob/living/carbon/human/proc/morph()
@@ -894,27 +894,27 @@
 		src.verbs -= /mob/living/carbon/human/proc/morph
 		return
 
-	var/new_facial = input("Please select facial hair color.", "Character Generation",rgb(r_facial,g_facial,b_facial)) as color
+	var/new_facial = input("Please select facial hair color.", "Character Generation", rgb(r_facial, g_facial, b_facial)) as color
 	if(new_facial)
 		r_facial = hex2num(copytext(new_facial, 2, 4))
 		g_facial = hex2num(copytext(new_facial, 4, 6))
 		b_facial = hex2num(copytext(new_facial, 6, 8))
 
-	var/new_hair = input("Please select hair color.", "Character Generation",rgb(r_hair,g_hair,b_hair)) as color
+	var/new_hair = input("Please select hair color.", "Character Generation", rgb(r_hair, g_hair, b_hair)) as color
 	if(new_facial)
 		r_hair = hex2num(copytext(new_hair, 2, 4))
 		g_hair = hex2num(copytext(new_hair, 4, 6))
 		b_hair = hex2num(copytext(new_hair, 6, 8))
 
-	var/new_eyes = input("Please select eye color.", "Character Generation",rgb(r_eyes,g_eyes,b_eyes)) as color
+	var/new_eyes = input("Please select eye color.", "Character Generation", rgb(r_eyes, g_eyes, b_eyes)) as color
 	if(new_eyes)
 		r_eyes = hex2num(copytext(new_eyes, 2, 4))
 		g_eyes = hex2num(copytext(new_eyes, 4, 6))
 		b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation", "[35-s_tone]")  as text
+	var/new_tone = input("Please select skin tone level: 1-220(1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation", "[35-s_tone]")  as text
 
-	if (!new_tone)
+	if(!new_tone)
 		new_tone = 35
 	s_tone = max(min(round(text2num(new_tone)), 220), 1)
 	s_tone =  -s_tone + 35
@@ -929,10 +929,10 @@
 		hairs.Add(H.name) // add hair name to hairs
 		qdel(H) // delete the hair after it's all done
 
-	var/new_style = input("Please select hair style", "Character Generation",h_style)  as null|anything in hairs
+	var/new_style = input("Please select hair style", "Character Generation", h_style)  as null|anything in hairs
 
-	// if new style selected (not cancel)
-	if (new_style)
+	// if new style selected(not cancel)
+	if(new_style)
 		h_style = new_style
 
 	// facial hair
@@ -944,13 +944,13 @@
 		fhairs.Add(H.name)
 		qdel(H)
 
-	new_style = input("Please select facial style", "Character Generation",f_style)  as null|anything in fhairs
+	new_style = input("Please select facial style", "Character Generation", f_style)  as null|anything in fhairs
 
 	if(new_style)
 		f_style = new_style
 
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
-	if (new_gender)
+	if(new_gender)
 		if(new_gender == "Male")
 			gender = MALE
 		else
@@ -994,11 +994,11 @@
 			continue
 		creatures[name] += M
 
-	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
+	var/mob/target = input("Who do you want to project your mind to ?") as null|anything in creatures
 	if(isnull(target))
 		return
 
-	var/say = input ("What do you wish to say")
+	var/say = input("What do you wish to say")
 	if(!say)
 		return
 	else
@@ -1041,7 +1041,7 @@
 	var/list/names = list()
 	var/list/creatures = list()
 	var/list/namecounts = list()
-	var/target = null	   //Chosen target.
+	var/target = null	   // Chosen target.
 
 	for(var/mob/living/carbon/human/M in world) //#Z2 only carbon/human for now
 		var/name = M.real_name
@@ -1056,18 +1056,18 @@
 				names.Add(name)
 				namecounts[name] = 1
 		var/turf/temp_turf = get_turf(M)
-		if((temp_turf.z != ZLEVEL_STATION && temp_turf.z != ZLEVEL_ASTEROID || temp_turf.z != src.z) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead #Z2 + target on the same Z level as player
+		if((temp_turf.z != ZLEVEL_STATION && temp_turf.z != ZLEVEL_ASTEROID || temp_turf.z != src.z) || M.stat!=CONSCIOUS) // Not on mining or the station. Or dead #Z2 + target on the same Z level as player
 			continue
 		creatures[name] += M
 
-	target = input ("Who do you want to project your mind to ?") as null|anything in creatures
+	target = input("Who do you want to project your mind to ?") as null|anything in creatures
 
-	if (!target)//Make sure we actually have a target
+	if(!target)// Make sure we actually have a target
 		return
 	if(src.getBrainLoss() >= 100)
 		to_chat(src, "Too hard to concentrate...")
 		return
-	if (target && (creatures[target] != src))
+	if(target && (creatures[target] != src))
 		src.adjustBrainLoss(4)
 		remoteview_target = creatures[target]
 		reset_view(creatures[target])
@@ -1100,46 +1100,46 @@
 /*
 /mob/living/carbon/human/verb/simulate()
 	set name = "sim"
-	//set background = 1
+	// set background = 1
 
-	var/damage = input("Wound damage","Wound damage") as num
+	var/damage = input("Wound damage", "Wound damage") as num
 
 	var/germs = 0
 	var/tdamage = 0
 	var/ticks = 0
-	while (germs < 2501 && ticks < 100000 && round(damage/10)*20)
+	while(germs < 2501 && ticks < 100000 && round(damage/10)*20)
 		log_misc("VIRUS TESTING: [ticks] : germs [germs] tdamage [tdamage] prob [round(damage/10)*20]")
 		ticks++
-		if (prob(round(damage/10)*20))
+		if(prob(round(damage/10)*20))
 			germs++
-		if (germs == 100)
+		if(germs == 100)
 			to_chat(world, "Reached stage 1 in [ticks] ticks")
-		if (germs > 100)
-			if (prob(10))
+		if(germs > 100)
+			if(prob(10))
 				damage++
 				germs++
-		if (germs == 1000)
+		if(germs == 1000)
 			to_chat(world, "Reached stage 2 in [ticks] ticks")
-		if (germs > 1000)
+		if(germs > 1000)
 			damage++
 			germs++
-		if (germs == 2500)
+		if(germs == 2500)
 			to_chat(world, "Reached stage 3 in [ticks] ticks")
 	to_chat(world, "Mob took [tdamage] tox damage")
 */
-//returns 1 if made bloody, returns 0 otherwise
+// returns 1 if made bloody, returns 0 otherwise
 
 /mob/living/carbon/human/add_blood(mob/living/carbon/human/M)
-	if (!..())
+	if(!..())
 		return 0
-	//if this blood isn't already in the list, add it
+	// if this blood isn't already in the list, add it
 	if(blood_DNA[M.dna.unique_enzymes])
-		return 0 //already bloodied with this blood. Cannot add more.
+		return 0 // already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	hand_blood_color = blood_color
-	src.update_inv_gloves()	//handles bloody hands overlays and updating
+	src.update_inv_gloves()	// handles bloody hands overlays and updating
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
-	return 1 //we applied blood to the item
+	return 1 // we applied blood to the item
 
 /mob/living/carbon/human/clean_blood(var/clean_feet)
 	.=..()
@@ -1154,7 +1154,7 @@
 	var/list/visible_implants = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
 		for(var/obj/item/weapon/O in BP.implants)
-			if(!istype(O,/obj/item/weapon/implant) && O.w_class > class)
+			if(!istype(O, /obj/item/weapon/implant) && O.w_class > class)
 				visible_implants += O
 
 	return(visible_implants)
@@ -1162,13 +1162,13 @@
 /mob/living/carbon/human/proc/handle_embedded_objects()
 
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.status & ORGAN_SPLINTED) //Splints prevent movement.
+		if(BP.status & ORGAN_SPLINTED) // Splints prevent movement.
 			continue
 		for(var/obj/item/weapon/O in BP.implants)
-			if(!istype(O,/obj/item/weapon/implant) && prob(5)) //Moving with things stuck in you could be bad.
+			if(!istype(O, /obj/item/weapon/implant) && prob(5)) // Moving with things stuck in you could be bad.
 				// All kinds of embedded objects cause bleeding.
 				var/msg = null
-				switch(rand(1,3))
+				switch(rand(1, 3))
 					if(1)
 						msg ="<span class='warning'>A spike of pain jolts your [BP.name] as you bump [O] inside.</span>"
 					if(2)
@@ -1177,10 +1177,10 @@
 						msg ="<span class='warning'>[O] in your [BP.name] twists painfully as you move.</span>"
 				to_chat(src, msg)
 
-				BP.take_damage(rand(1,3), 0, 0)
-				if(!(BP.status & ORGAN_ROBOT)) //There is no blood in protheses.
+				BP.take_damage(rand(1, 3), 0, 0)
+				if(!(BP.status & ORGAN_ROBOT)) // There is no blood in protheses.
 					BP.status |= ORGAN_BLEEDING
-					src.adjustToxLoss(rand(1,3))
+					src.adjustToxLoss(rand(1, 3))
 
 /mob/living/carbon/human/verb/check_pulse()
 	set category = "Object"
@@ -1203,13 +1203,13 @@
 	if(src.pulse)
 		to_chat(usr, "\blue [self ? "You have a" : "[src] has a"] pulse! Counting...")
 	else
-		to_chat(usr, "\red [src] has no pulse!")//it is REALLY UNLIKELY that a dead person would check his own pulse
+		to_chat(usr, "\red [src] has no pulse!")// it is REALLY UNLIKELY that a dead person would check his own pulse
 		return
 
 	to_chat(usr, "Don't move until counting is finished.")
 	var/time = world.time
 	sleep(60)
-	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
+	if(usr.l_move_time >= time)	// checks if our mob has moved during the sleep()
 		to_chat(usr, "You moved while counting. Try again.")
 	else
 		to_chat(usr, "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].")
@@ -1243,10 +1243,10 @@
 		add_language(species.language)
 
 	if(species.base_color && default_colour)
-		//Apply colour.
-		r_skin = hex2num(copytext(species.base_color,2,4))
-		g_skin = hex2num(copytext(species.base_color,4,6))
-		b_skin = hex2num(copytext(species.base_color,6,8))
+		// Apply colour.
+		r_skin = hex2num(copytext(species.base_color, 2, 4))
+		g_skin = hex2num(copytext(species.base_color, 4, 6))
+		b_skin = hex2num(copytext(species.base_color, 6, 8))
 	else
 		r_skin = 0
 		g_skin = 0
@@ -1282,47 +1282,47 @@
 	set name = "Write in blood"
 	set desc = "Use blood on your hands to write a short message on the floor or a wall, murder mystery style."
 
-	if (src.stat)
+	if(src.stat)
 		return
 
-	if (usr != src)
-		return 0 //something is terribly wrong
+	if(usr != src)
+		return 0 // something is terribly wrong
 
-	if (!bloody_hands)
+	if(!bloody_hands)
 		verbs -= /mob/living/carbon/human/proc/bloody_doodle
 
-	if (src.gloves)
+	if(src.gloves)
 		to_chat(src, "<span class='warning'>Your [src.gloves] are getting in the way.</span>")
 		return
 
 	var/turf/simulated/T = src.loc
-	if (!istype(T)) //to prevent doodling out of mechs and lockers
+	if(!istype(T)) // to prevent doodling out of mechs and lockers
 		to_chat(src, "<span class='warning'>You cannot reach the floor.</span>")
 		return
 
-	var/direction = input(src,"Which way?","Tile selection") as anything in list("Here","North","South","East","West")
-	if (direction != "Here")
-		T = get_step(T,text2dir(direction))
-	if (!istype(T))
+	var/direction = input(src, "Which way?", "Tile selection") as anything in list("Here", "North", "South", "East", "West")
+	if(direction != "Here")
+		T = get_step(T, text2dir(direction))
+	if(!istype(T))
 		to_chat(src, "<span class='warning'>You cannot doodle there.</span>")
 		return
 
 	var/num_doodles = 0
-	for (var/obj/effect/decal/cleanable/blood/writing/W in T)
+	for(var/obj/effect/decal/cleanable/blood/writing/W in T)
 		num_doodles++
-	if (num_doodles > 4)
+	if(num_doodles > 4)
 		to_chat(src, "<span class='warning'>There is no space to write on!</span>")
 		return
 
-	var/max_length = bloody_hands * 30 //tweeter style
+	var/max_length = bloody_hands * 30 // tweeter style
 
-	var/message = sanitize(copytext(stripped_input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""), 1, MAX_MESSAGE_LEN))
+	var/message = sanitize(copytext(stripped_input(src, "Write a message. It cannot be longer than [max_length] characters.", "Blood writing", ""), 1, MAX_MESSAGE_LEN))
 
-	if (message)
+	if(message)
 		var/used_blood_amount = round(length(message) / 30, 1)
-		bloody_hands = max(0, bloody_hands - used_blood_amount) //use up some blood
+		bloody_hands = max(0, bloody_hands - used_blood_amount) // use up some blood
 
-		if (length(message) > max_length)
+		if(length(message) > max_length)
 			message += "-"
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
@@ -1349,7 +1349,7 @@
 	. = 1
 
 	if(!user)
-		target_zone = pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM , BP_HEAD)
+		target_zone = pick(BP_CHEST, BP_CHEST, BP_CHEST, BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM, BP_HEAD)
 	else if(!target_zone)
 		target_zone = user.zone_sel.selecting
 
@@ -1365,8 +1365,8 @@
 		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [target_zone == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 
 
-//Putting a couple of procs here that I don't know where else to dump.
-//Mostly going to be used for Vox and Vox Armalis, but other human mobs might like them (for adminbuse).
+// Putting a couple of procs here that I don't know where else to dump.
+// Mostly going to be used for Vox and Vox Armalis, but other human mobs might like them(for adminbuse).
 
 /mob/living/carbon/human/proc/leap()
 	set category = "IC"
@@ -1381,12 +1381,12 @@
 		return
 
 	var/list/choices = list()
-	for(var/mob/living/M in view(6,src))
-		if(!istype(M,/mob/living/silicon))
+	for(var/mob/living/M in view(6, src))
+		if(!istype(M, /mob/living/silicon))
 			choices += M
 	choices -= src
 
-	var/mob/living/T = input(src,"Who do you wish to leap at?") in null|choices
+	var/mob/living/T = input(src, "Who do you wish to leap at?") in null|choices
 
 	if(!T || !src || src.stat) return
 
@@ -1396,7 +1396,7 @@
 	status_flags |= LEAPING
 
 	src.visible_message("<span class='warning'><b>\The [src]</b> leaps at [T]!</span>")
-	src.throw_at(get_step(get_turf(T),get_turf(src)), 5, 1, src, spin = FALSE, callback = CALLBACK(src, .end_leaping, T))
+	src.throw_at(get_step(get_turf(T), get_turf(src)), 5, 1, src, spin = FALSE, callback = CALLBACK(src, .end_leaping, T))
 	playsound(src.loc, 'sound/voice/shriek1.ogg', 50, 1)
 
 
@@ -1420,7 +1420,7 @@
 
 	visible_message("<span class='warning'><b>\The [src]</b> seizes [T] aggressively!</span>")
 
-	var/obj/item/weapon/grab/G = new(src,T)
+	var/obj/item/weapon/grab/G = new(src, T)
 	if(use_hand == "left")
 		l_hand = G
 	else
@@ -1455,15 +1455,15 @@
 
 	visible_message("<span class='warning'><b>\The [src]</b> rips viciously at \the [G.affecting]'s body with its claws!</span>")
 
-	if(istype(G.affecting,/mob/living/carbon/human))
+	if(istype(G.affecting, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = G.affecting
-		H.apply_damage(50,BRUTE)
+		H.apply_damage(50, BRUTE)
 		if(H.stat == DEAD)
 			H.gib()
 	else
 		var/mob/living/M = G.affecting
-		if(!istype(M)) return //wut
-		M.apply_damage(50,BRUTE)
+		if(!istype(M)) return // wut
+		M.apply_damage(50, BRUTE)
 		if(M.stat == DEAD)
 			M.gib()
 
@@ -1477,17 +1477,17 @@
 /mob/living/carbon/human/slip(slipped_on, stun_duration=4, weaken_duration=2)
 	if(shoes && (shoes.flags & NOSLIP))
 		return FALSE
-	return ..(slipped_on,stun_duration, weaken_duration)
+	return ..(slipped_on, stun_duration, weaken_duration)
 
-//Turns a mob black, flashes a skeleton overlay
-//Just like a cartoon!
+// Turns a mob black, flashes a skeleton overlay
+// Just like a cartoon!
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
-	//TG...
-	//Handle mutant parts if possible
-	//if(species)
-	//	species.handle_mutant_bodyparts(src,"black")
-	//	species.handle_hair(src,"black")
-	//	species.update_color(src,"black")
+	// TG...
+	// Handle mutant parts if possible
+	// if(species)
+	//	species.handle_mutant_bodyparts(src, "black")
+	//	species.handle_hair(src, "black")
+	//	species.update_color(src, "black")
 	//	overlays += "electrocuted_base"
 	//	spawn(anim_duration)
 	//		if(src)
@@ -1496,12 +1496,12 @@
 	//				dna.species.handle_hair(src)
 	//				dna.species.update_color(src)
 	//			overlays -= "electrocuted_base"
-	//else //or just do a generic animation
+	// else // or just do a generic animation
 	var/list/viewing = list()
 	for(var/mob/M in viewers(src))
 		if(M.client)
 			viewing += M.client
-	flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+	flick_overlay(image(icon, src, "electrocuted_generic", MOB_LAYER+1), viewing, anim_duration)
 
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 

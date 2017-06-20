@@ -62,7 +62,7 @@ var/global/vs_control/vsc = new
 	var/airflow_delay_DESC = "Time in deciseconds before things can be moved by airflow again."
 
 	var/airflow_mob_delay = 10
-	var/airflow_mob_delay_NAME = "Airflow Retrigger Delay (Mob)"
+	var/airflow_mob_delay_NAME = "Airflow Retrigger Delay(Mob)"
 	var/airflow_mob_delay_DESC = "Time in deciseconds before mob can be moved by airflow again."
 
 	var/airflow_mob_slowdown = 3
@@ -79,30 +79,30 @@ var/global/vs_control/vsc = new
 
 
 /vs_control/var/list/settings = list()
-/vs_control/var/list/bitflags = list("1","2","4","8","16","32","64","128","256","512","1024")
+/vs_control/var/list/bitflags = list("1", "2", "4", "8", "16", "32", "64", "128", "256", "512", "1024")
 /vs_control/var/pl_control/plc = new()
 
 /vs_control/New()
 	. = ..()
 	settings = vars.Copy()
 
-	var/datum/D = new() //Ensure only unique vars are put through by making a datum and removing all common vars.
+	var/datum/D = new() // Ensure only unique vars are put through by making a datum and removing all common vars.
 	for(var/V in D.vars)
 		settings -= V
 
 	for(var/V in settings)
-		if(findtextEx(V,"_RANDOM") || findtextEx(V,"_DESC") || findtextEx(V,"_METHOD"))
+		if(findtextEx(V, "_RANDOM") || findtextEx(V, "_DESC") || findtextEx(V, "_METHOD"))
 			settings -= V
 
 	settings -= "settings"
 	settings -= "bitflags"
 	settings -= "plc"
 
-/vs_control/proc/ChangeSettingsDialog(mob/user,list/L)
-	//var/which = input(user,"Choose a setting:") in L
+/vs_control/proc/ChangeSettingsDialog(mob/user, list/L)
+	// var/which = input(user, "Choose a setting:") in L
 	var/dat = ""
 	for(var/ch in L)
-		if(findtextEx(ch,"_RANDOM") || findtextEx(ch,"_DESC") || findtextEx(ch,"_METHOD") || findtextEx(ch,"_NAME")) continue
+		if(findtextEx(ch, "_RANDOM") || findtextEx(ch, "_DESC") || findtextEx(ch, "_METHOD") || findtextEx(ch, "_NAME")) continue
 		var/vw
 		var/vw_desc = "No Description."
 		var/vw_name = ch
@@ -116,13 +116,13 @@ var/global/vs_control/vsc = new
 			if("[ch]_NAME" in vars) vw_name = vars["[ch]_NAME"]
 		dat += "<b>[vw_name] = [vw]</b> <A href='?src=\ref[src];changevar=[ch]'>\[Change\]</A><br>"
 		dat += "<i>[vw_desc]</i><br><br>"
-	user << browse(dat,"window=settings")
+	user << browse(dat, "window=settings")
 
-/vs_control/Topic(href,href_list)
+/vs_control/Topic(href, href_list)
 	if("changevar" in href_list)
-		ChangeSetting(usr,href_list["changevar"])
+		ChangeSetting(usr, href_list["changevar"])
 
-/vs_control/proc/ChangeSetting(mob/user,ch)
+/vs_control/proc/ChangeSetting(mob/user, ch)
 	var/vw
 	var/how = "Text"
 	var/display_description = ch
@@ -151,9 +151,9 @@ var/global/vs_control/vsc = new
 	var/newvar = vw
 	switch(how)
 		if("Numeric")
-			newvar = input(user,"Enter a number:","Settings",newvar) as num
+			newvar = input(user, "Enter a number:", "Settings", newvar) as num
 		if("Bit Flag")
-			var/flag = input(user,"Toggle which bit?","Settings") in bitflags
+			var/flag = input(user, "Toggle which bit?", "Settings") in bitflags
 			flag = text2num(flag)
 			if(newvar & flag)
 				newvar &= ~flag
@@ -162,9 +162,9 @@ var/global/vs_control/vsc = new
 		if("Toggle")
 			newvar = !newvar
 		if("Text")
-			newvar = input(user,"Enter a string:","Settings",newvar) as text
+			newvar = input(user, "Enter a string:", "Settings", newvar) as text
 		if("Long Text")
-			newvar = input(user,"Enter text:","Settings",newvar) as message
+			newvar = input(user, "Enter text:", "Settings", newvar) as message
 	vw = newvar
 	if(ch in plc.settings)
 		plc.vars[ch] = vw
@@ -174,9 +174,9 @@ var/global/vs_control/vsc = new
 		newvar = (newvar?"ON":"OFF")
 	to_chat(world, "\blue <b>[key_name(user)] changed the setting [display_description] to [newvar].</b>")
 	if(ch in plc.settings)
-		ChangeSettingsDialog(user,plc.settings)
+		ChangeSettingsDialog(user, plc.settings)
 	else
-		ChangeSettingsDialog(user,settings)
+		ChangeSettingsDialog(user, settings)
 
 /vs_control/proc/RandomizeWithProbability()
 	for(var/V in settings)
@@ -202,38 +202,38 @@ var/global/vs_control/vsc = new
 		return
 	switch(def)
 		if("Phoron - Standard")
-			plc.CLOTH_CONTAMINATION = 1 //If this is on, phoron does damage by getting into cloth.
+			plc.CLOTH_CONTAMINATION = 1 // If this is on, phoron does damage by getting into cloth.
 			plc.PHORONGUARD_ONLY = 0
-			plc.GENETIC_CORRUPTION = 0 //Chance of genetic corruption as well as toxic damage, X in 1000.
-			plc.SKIN_BURNS = 0       //Phoron has an effect similar to mustard gas on the un-suited.
-			plc.EYE_BURNS = 1 //Phoron burns the eyes of anyone not wearing eye protection.
+			plc.GENETIC_CORRUPTION = 0 // Chance of genetic corruption as well as toxic damage, X in 1000.
+			plc.SKIN_BURNS = 0       // Phoron has an effect similar to mustard gas on the un-suited.
+			plc.EYE_BURNS = 1 // Phoron burns the eyes of anyone not wearing eye protection.
 			plc.PHORON_HALLUCINATION = 0
 			plc.CONTAMINATION_LOSS = 0.02
 
 		if("Phoron - Low Hazard")
-			plc.CLOTH_CONTAMINATION = 0 //If this is on, phoron does damage by getting into cloth.
+			plc.CLOTH_CONTAMINATION = 0 // If this is on, phoron does damage by getting into cloth.
 			plc.PHORONGUARD_ONLY = 0
-			plc.GENETIC_CORRUPTION = 0 //Chance of genetic corruption as well as toxic damage, X in 1000
-			plc.SKIN_BURNS = 0       //Phoron has an effect similar to mustard gas on the un-suited.
-			plc.EYE_BURNS = 1 //Phoron burns the eyes of anyone not wearing eye protection.
+			plc.GENETIC_CORRUPTION = 0 // Chance of genetic corruption as well as toxic damage, X in 1000
+			plc.SKIN_BURNS = 0       // Phoron has an effect similar to mustard gas on the un-suited.
+			plc.EYE_BURNS = 1 // Phoron burns the eyes of anyone not wearing eye protection.
 			plc.PHORON_HALLUCINATION = 0
 			plc.CONTAMINATION_LOSS = 0.01
 
 		if("Phoron - High Hazard")
-			plc.CLOTH_CONTAMINATION = 1 //If this is on, phoron does damage by getting into cloth.
+			plc.CLOTH_CONTAMINATION = 1 // If this is on, phoron does damage by getting into cloth.
 			plc.PHORONGUARD_ONLY = 0
-			plc.GENETIC_CORRUPTION = 0 //Chance of genetic corruption as well as toxic damage, X in 1000.
-			plc.SKIN_BURNS = 1       //Phoron has an effect similar to mustard gas on the un-suited.
-			plc.EYE_BURNS = 1 //Phoron burns the eyes of anyone not wearing eye protection.
+			plc.GENETIC_CORRUPTION = 0 // Chance of genetic corruption as well as toxic damage, X in 1000.
+			plc.SKIN_BURNS = 1       // Phoron has an effect similar to mustard gas on the un-suited.
+			plc.EYE_BURNS = 1 // Phoron burns the eyes of anyone not wearing eye protection.
 			plc.PHORON_HALLUCINATION = 1
 			plc.CONTAMINATION_LOSS = 0.05
 
 		if("Phoron - Oh Shit!")
-			plc.CLOTH_CONTAMINATION = 1 //If this is on, phoron does damage by getting into cloth.
+			plc.CLOTH_CONTAMINATION = 1 // If this is on, phoron does damage by getting into cloth.
 			plc.PHORONGUARD_ONLY = 1
-			plc.GENETIC_CORRUPTION = 5 //Chance of genetic corruption as well as toxic damage, X in 1000.
-			plc.SKIN_BURNS = 1       //Phoron has an effect similar to mustard gas on the un-suited.
-			plc.EYE_BURNS = 1 //Phoron burns the eyes of anyone not wearing eye protection.
+			plc.GENETIC_CORRUPTION = 5 // Chance of genetic corruption as well as toxic damage, X in 1000.
+			plc.SKIN_BURNS = 1       // Phoron has an effect similar to mustard gas on the un-suited.
+			plc.EYE_BURNS = 1 // Phoron burns the eyes of anyone not wearing eye protection.
 			plc.PHORON_HALLUCINATION = 1
 			plc.CONTAMINATION_LOSS = 0.075
 
@@ -333,12 +333,12 @@ var/global/vs_control/vsc = new
 	. = ..()
 	settings = vars.Copy()
 
-	var/datum/D = new() //Ensure only unique vars are put through by making a datum and removing all common vars.
+	var/datum/D = new() // Ensure only unique vars are put through by making a datum and removing all common vars.
 	for(var/V in D.vars)
 		settings -= V
 
 	for(var/V in settings)
-		if(findtextEx(V,"_RANDOM") || findtextEx(V,"_DESC"))
+		if(findtextEx(V, "_RANDOM") || findtextEx(V, "_DESC"))
 			settings -= V
 
 	settings -= "settings"
@@ -350,18 +350,18 @@ var/global/vs_control/vsc = new
 			newvalue = prob(vars["[V]_RANDOM"])
 		else if(istext(vars["[V]_RANDOM"]))
 			var/txt = vars["[V]_RANDOM"]
-			if(findtextEx(txt,"PROB"))
-				txt = splittext(txt,"/")
-				txt[1] = replacetext(txt[1],"PROB","")
+			if(findtextEx(txt, "PROB"))
+				txt = splittext(txt, "/")
+				txt[1] = replacetext(txt[1], "PROB", "")
 				var/p = text2num(txt[1])
 				var/r = txt[2]
 				if(prob(p))
 					newvalue = roll(r)
 				else
 					newvalue = vars[V]
-			else if(findtextEx(txt,"PICK"))
-				txt = replacetext(txt,"PICK","")
-				txt = splittext(txt,",")
+			else if(findtextEx(txt, "PICK"))
+				txt = replacetext(txt, "PICK", "")
+				txt = splittext(txt, ", ")
 				newvalue = pick(txt)
 			else
 				newvalue = roll(txt)

@@ -32,7 +32,7 @@
 
 /obj/machinery/atmospherics/valve/update_icon(animation)
 	if(animation)
-		flick("valve[src.open][!src.open]",src)
+		flick("valve[src.open][!src.open]", src)
 	else
 		icon_state = "valve[open]"
 
@@ -142,30 +142,30 @@
 	src.add_fingerprint(usr)
 	update_icon(1)
 	sleep(10)
-	if (src.open)
+	if(src.open)
 		src.close()
 	else
 		src.open()
 
 /obj/machinery/atmospherics/valve/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
+	if(!istype(W, /obj/item/weapon/wrench))
 		return ..()
-	if (istype(src, /obj/machinery/atmospherics/valve/digital))
+	if(istype(src, /obj/machinery/atmospherics/valve/digital))
 		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it's too complicated.</span>")
 		return 1
 	var/turf/T = src.loc
-	if (level==1 && isturf(T) && T.intact)
+	if(level==1 && isturf(T) && T.intact)
 		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
-	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+	if((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
 		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-	if (do_after(user, 40, target = src))
+	if(do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
 			"<span class='notice'>You have unfastened \the [src].</span>", \
@@ -187,17 +187,17 @@
 
 	for(var/direction in cardinal)
 		if(direction&initialize_directions)
-			if (!node1_dir)
+			if(!node1_dir)
 				node1_dir = direction
-			else if (!node2_dir)
+			else if(!node2_dir)
 				node2_dir = direction
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node1_dir))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node2_dir))
+		if(target.initialize_directions & get_dir(target, src))
 			node2 = target
 			break
 
@@ -271,7 +271,7 @@
 		return
 	..()
 
-//Radio remote control
+// Radio remote control
 
 /obj/machinery/atmospherics/valve/digital/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)

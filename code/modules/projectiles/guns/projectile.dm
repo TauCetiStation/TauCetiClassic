@@ -7,9 +7,9 @@
 	m_amt = 1000
 	fire_delay = 0
 	recoil = 1
-	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
+	var/mag_type = /obj/item/ammo_box/magazine/m9mm // Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
-	var/energy_gun = 0 //Used in examine, if 1 - no ammo count.
+	var/energy_gun = 0 // Used in examine, if 1 - no ammo count.
 
 /obj/item/weapon/gun/projectile/New()
 	..()
@@ -22,16 +22,16 @@
 //	if(chambered)
 //		return 1
 	if(crit_fail && prob(50))  // IT JAMMED GODDAMIT
-		last_fired += pick(20,40,60)
+		last_fired += pick(20, 40, 60)
 		return
-	var/obj/item/ammo_casing/AC = chambered //Find chambered round
+	var/obj/item/ammo_casing/AC = chambered // Find chambered round
 	if(isnull(AC) || !istype(AC))
 		chamber_round()
 		return
 	if(eject_casing)
-		AC.loc = get_turf(src) //Eject casing onto ground.
-		AC.SpinAnimation(10, 1) //next gen special effects
-		spawn(3) //next gen sound effects
+		AC.loc = get_turf(src) // Eject casing onto ground.
+		AC.SpinAnimation(10, 1) // next gen special effects
+		spawn(3) // next gen sound effects
 			playsound(src.loc, 'sound/weapons/shell_drop.ogg', 50, 1)
 	if(empty_chamber)
 		chambered = null
@@ -41,22 +41,22 @@
 	return
 
 /obj/item/weapon/gun/projectile/proc/chamber_round()
-	if (chambered || !magazine)
+	if(chambered || !magazine)
 		return
-	else if (magazine.ammo_count())
+	else if(magazine.ammo_count())
 		chambered = magazine.get_round()
 		chambered.loc = src
 		if(chambered.BB)
 			if(chambered.reagents && chambered.BB.reagents)
 				var/datum/reagents/casting_reagents = chambered.reagents
-				casting_reagents.trans_to(chambered.BB, casting_reagents.total_volume) //For chemical darts/bullets
+				casting_reagents.trans_to(chambered.BB, casting_reagents.total_volume) // For chemical darts/bullets
 				casting_reagents.delete()
 	return
 
 /obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
+	if(istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
+		if(!magazine && istype(AM, mag_type))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
@@ -65,7 +65,7 @@
 			A.update_icon()
 			update_icon()
 			return 1
-		else if (magazine)
+		else if(magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
@@ -74,7 +74,7 @@
 		return 1
 
 /obj/item/weapon/gun/projectile/attack_self(mob/living/user)
-	if (magazine)
+	if(magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
 		magazine.update_icon()
@@ -96,9 +96,9 @@
 		to_chat(user, "Has [get_ammo()] round\s remaining.")
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
-	var/boolets = 0 //mature var names for mature people
-	if (chambered && countchambered)
+	var/boolets = 0 // mature var names for mature people
+	if(chambered && countchambered)
 		boolets++
-	if (magazine)
+	if(magazine)
 		boolets += magazine.ammo_count()
 	return boolets

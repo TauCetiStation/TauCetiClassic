@@ -1,9 +1,9 @@
 /mob/living/silicon/ai/death(gibbed)
 	if(stat == DEAD)	return
 	stat = DEAD
-	if (src.custom_sprite == 1)//check for custom AI sprite, defaulting to blue screen if no.
+	if(src.custom_sprite == 1)// check for custom AI sprite, defaulting to blue screen if no.
 		icon_state = "[ckey]-ai-crash"
-	if("[icon_state]_dead" in icon_states(src.icon,1))
+	if("[icon_state]_dead" in icon_states(src.icon, 1))
 		icon_state = "[icon_state]_dead"
 	else
 		icon_state = "ai_dead"
@@ -22,28 +22,28 @@
 	for(var/obj/machinery/computer/communications/commconsole in world)
 		if(commconsole.z == ZLEVEL_CENTCOMM)
 			continue
-		if(istype(commconsole.loc,/turf))
+		if(istype(commconsole.loc, /turf))
 			break
 		callshuttle++
 
 	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
 		if(commboard.z == ZLEVEL_CENTCOMM)
 			continue
-		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
+		if(istype(commboard.loc, /turf) || istype(commboard.loc, /obj/item/weapon/storage))
 			break
 		callshuttle++
 
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
 		if(shuttlecaller.z == ZLEVEL_CENTCOMM)
 			continue
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc, /turf))
 			break
 		callshuttle++
 
 	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || sent_strike_team)
 		callshuttle = 0
 
-	if(callshuttle == 3) //if all three conditions are met
+	if(callshuttle == 3) // if all three conditions are met
 		SSshuttle.incall(2)
 		log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 		message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
@@ -54,13 +54,13 @@
 		spawn(10)
 			explosion(src.loc, 3, 6, 12, 15)
 
-	for(var/obj/machinery/ai_status_display/O in world) //change status
+	for(var/obj/machinery/ai_status_display/O in world) // change status
 		spawn( 0 )
 		O.mode = 2
-		if (istype(loc, /obj/item/device/aicard))
+		if(istype(loc, /obj/item/device/aicard))
 			loc.icon_state = "aicard-404"
 
-	tod = worldtime2text() //weasellos time of death patch
+	tod = worldtime2text() // weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 
 	return ..(gibbed)

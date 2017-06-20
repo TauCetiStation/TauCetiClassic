@@ -9,7 +9,7 @@
 	m_amt = 50
 	g_amt = 50
 	origin_tech = "engineering=1"
-	var/list/modes = list("grey","red","blue","cyan","green","yellow","purple")
+	var/list/modes = list("grey", "red", "blue", "cyan", "green", "yellow", "purple")
 	var/mode = "grey"
 
 	flags = CONDUCT
@@ -20,8 +20,8 @@
 /obj/item/weapon/airlock_painter/New()
 	ink = new /obj/item/device/toner(src)
 
-	//This proc doesn't just check if the painter can be used, but also uses it.
-	//Only call this if you are certain that the painter will be used right after this check!
+	// This proc doesn't just check if the painter can be used, but also uses it.
+	// Only call this if you are certain that the painter will be used right after this check!
 /obj/item/weapon/airlock_painter/proc/use(mob/user, cost)
 	if(can_use(user, cost))
 		ink.charges -= cost
@@ -30,9 +30,9 @@
 	else
 		return 0
 
-	//This proc only checks if the painter can be used.
-	//Call this if you don't want the painter to be used right after this check, for example
-	//because you're expecting user input.
+	// This proc only checks if the painter can be used.
+	// Call this if you don't want the painter to be used right after this check, for example
+	// because you're expecting user input.
 /obj/item/weapon/airlock_painter/proc/can_use(mob/user, cost = 10)
 	if(!ink)
 		to_chat(user, "<span class='notice'>There is no toner cardridge installed installed in \the [name]!</span>")
@@ -55,7 +55,7 @@
 		ink_level = "empty"
 	else if((ink.charges/ink.max_charges) <= 0.25) //25%
 		ink_level = "low"
-	else if((ink.charges/ink.max_charges) > 1) //Over 100% (admin var edit)
+	else if((ink.charges/ink.max_charges) > 1) // Over 100% (admin var edit)
 		ink_level = "dangerously high"
 	to_chat(user, "<span class='notice'>Its ink levels look [ink_level].</span>")
 
@@ -81,12 +81,12 @@
 
 /obj/item/weapon/airlock_painter/afterattack(atom/A, mob/user)
 	if(user && user.client)
-		if(!istype(A,/obj/machinery/atmospherics/pipe) || istype(A,/obj/machinery/atmospherics/pipe/tank) || istype(A,/obj/machinery/atmospherics/pipe/vent) || istype(A,/obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(A,/obj/machinery/atmospherics/pipe/simple/insulated))
+		if(!istype(A, /obj/machinery/atmospherics/pipe) || istype(A, /obj/machinery/atmospherics/pipe/tank) || istype(A, /obj/machinery/atmospherics/pipe/vent) || istype(A, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(A, /obj/machinery/atmospherics/pipe/simple/insulated))
 			return
 		else
-			mode = input("Which colour do you want to use?","Universal painter") in modes
+			mode = input("Which colour do you want to use?", "Universal painter") in modes
 			var/obj/machinery/atmospherics/pipe/P = A
 			P.pipe_color = mode
-			user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
+			user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>", "<span class='notice'>You paint \the [P] [mode].</span>")
 			P.update_icon()
 	return

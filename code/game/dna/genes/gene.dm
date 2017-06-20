@@ -71,7 +71,7 @@
 * Called after the mob runs update_icons.
 *
 * @params M The subject.
-* @params g Gender (m or f)
+* @params g Gender(m or f)
 * @params fat Fat? (0 or 1)
 */
 /datum/dna/gene/proc/OnDrawUnderlays(mob/M, g, fat)
@@ -86,7 +86,7 @@
 // Gene is activated:
 //  1. If mutation already exists in mob
 //  2. If the probability roll succeeds
-//  3. Activation is forced (done in domutcheck)
+//  3. Activation is forced(done in domutcheck)
 /////////////////////
 
 
@@ -97,7 +97,7 @@
 	var/mutation=0
 
 	// Activation probability
-	//var/activation_prob=45 //#Z2 not used here anymore, now in /datum/dna/gene
+	// var/activation_prob=45 //#Z2 not used here anymore, now in /datum/dna/gene
 
 	// Possible activation messages
 	var/list/activation_messages=list()
@@ -105,7 +105,7 @@
 	// Possible deactivation messages
 	var/list/deactivation_messages=list()
 
-/datum/dna/gene/basic/can_activate(mob/M,flags)
+/datum/dna/gene/basic/can_activate(mob/M, flags)
 	if(flags & MUTCHK_FORCED)
 		return 1
 	// Probability check

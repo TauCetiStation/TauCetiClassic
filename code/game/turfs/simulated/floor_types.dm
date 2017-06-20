@@ -19,7 +19,7 @@
 	floor_type = /obj/item/stack/tile/light
 
 	New()
-		var/n = name //just in case commands rename it in the ..() call
+		var/n = name // just in case commands rename it in the ..() call
 		..()
 		spawn(4)
 			if(src)
@@ -40,14 +40,14 @@
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
 
-	New(location,type)
+	New(location, type)
 		..()
 		icon_state = "[type]vault"
 
 /turf/simulated/wall/vault
 	icon_state = "rockvault"
 
-	New(location,type)
+	New(location, type)
 		..()
 		icon_state = "[type]vault"
 
@@ -184,7 +184,7 @@
 
 /turf/simulated/floor/beach/water/New()
 	..()
-	overlays += image("icon"='icons/misc/beach.dmi',"icon_state"="water5","layer"=MOB_LAYER+0.1)
+	overlays += image("icon"='icons/misc/beach.dmi', "icon_state"="water5", "layer"=MOB_LAYER+0.1)
 
 /turf/simulated/floor/grass
 	name = "Grass patch"
@@ -192,15 +192,15 @@
 	floor_type = /obj/item/stack/tile/grass
 
 	New()
-		icon_state = "grass[pick("1","2","3","4")]"
+		icon_state = "grass[pick("1", "2", "3", "4")]"
 		..()
 		spawn(4)
 			if(src)
 				update_icon()
 				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+					if(istype(get_step(src, direction), /turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src, direction)
+						FF.update_icon() // so siding get updated properly
 
 /turf/simulated/floor/carpet
 	name = "Carpet"
@@ -214,17 +214,17 @@
 		spawn(4)
 			if(src)
 				update_icon()
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+				for(var/direction in list(1, 2, 4, 8, 5, 6, 9, 10))
+					if(istype(get_step(src, direction), /turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src, direction)
+						FF.update_icon() // so siding get updated properly
 
 
 
 /turf/simulated/floor/plating/ironsand/New()
 	..()
 	name = "Iron Sand"
-	icon_state = "ironsand[rand(1,15)]"
+	icon_state = "ironsand[rand(1, 15)]"
 
 /turf/simulated/floor/plating/snow
 	name = "snow"
@@ -263,7 +263,7 @@
 
 		var/dirs = 0
 		for(var/direction in cardinal)
-			var/turf/T = get_step(src,direction)
+			var/turf/T = get_step(src, direction)
 			if(T.is_catwalk())
 				var/turf/simulated/floor/plating/airless/catwalk/C=T
 				dirs |= direction

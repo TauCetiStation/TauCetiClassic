@@ -1,6 +1,6 @@
-//Alloys that contain subsets of each other's ingredients must be ordered in the desired sequence
-//eg. steel comes after plasteel because plasteel's ingredients contain the ingredients for steel and
-//it would be impossible to produce.
+// Alloys that contain subsets of each other's ingredients must be ordered in the desired sequence
+// eg. steel comes after plasteel because plasteel's ingredients contain the ingredients for steel and
+// it would be impossible to produce.
 
 /datum/alloy
 	var/list/requires

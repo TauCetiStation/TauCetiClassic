@@ -3,14 +3,14 @@
 /atom/var/pressure_resistance = ONE_ATMOSPHERE
 
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	//Purpose: Determines if the object (or airflow) can pass this atom.
-	//Called by: Movement, airflow.
-	//Inputs: The moving atom (optional), target turf, "height" and air group
-	//Outputs: Boolean if can pass.
+	// Purpose: Determines if the object(or airflow) can pass this atom.
+	// Called by: Movement, airflow.
+	// Inputs: The moving atom(optional), target turf, "height" and air group
+	// Outputs: Boolean if can pass.
 
-	return (!density || !height || air_group)
+	return(!density || !height || air_group)
 
-/turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
+/turf/CanPass(atom/movable/mover, turf/target, height=1.5, air_group=0)
 	if(!target) return 0
 
 	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
@@ -30,8 +30,8 @@
 
 		return 1
 
-//Basically another way of calling CanPass(null, other, 0, 0) and CanPass(null, other, 1.5, 1).
-//Returns:
+// Basically another way of calling CanPass(null, other, 0, 0) and CanPass(null, other, 1.5, 1).
+// Returns:
 // 0 - Not blocked
 // AIR_BLOCKED - Blocked
 // ZONE_BLOCKED - Not blocked, but zone boundaries will not cross.
@@ -40,7 +40,7 @@
 	#ifdef ZASDBG
 	ASSERT(isturf(other))
 	#endif
-	return (AIR_BLOCKED*!CanPass(null, other, 0, 0))|(ZONE_BLOCKED*!CanPass(null, other, 1.5, 1))
+	return(AIR_BLOCKED*!CanPass(null, other, 0, 0))|(ZONE_BLOCKED*!CanPass(null, other, 1.5, 1))
 
 
 /turf/c_airblock(turf/other)

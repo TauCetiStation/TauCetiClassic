@@ -15,11 +15,11 @@
 
 	New()
 		..()
-		//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
-		//WASSSSSUUUPPPP /N
+		// Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
+		// WASSSSSUUUPPPP /N
 		spawn(5)
 			if(brainmob && brainmob.client)
-				brainmob.client.screen.len = null //clear the hud
+				brainmob.client.screen.len = null // clear the hud
 
 	proc
 		transfer_identity(mob/living/carbon/H)
@@ -39,7 +39,7 @@
 
 /obj/item/brain/examine(mob/user) // -- TLE
 	..()
-	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
+	if(brainmob && brainmob.client)// if thar be a brain inside... the brain.
 		to_chat(user, "You can feel the small spark of life still left in this one.")
 	else
 		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
@@ -62,7 +62,7 @@
 		to_chat(user, "\blue You're going to need to remove their head cover first.")
 		return
 
-//since these people will be dead M != usr
+// since these people will be dead M != usr
 
 	if(M:brain_op_stage == 4.0)
 		for(var/mob/O in viewers(M, null))
@@ -79,8 +79,8 @@
 		else
 			to_chat(user, "\red You insert [src] into your head!")
 
-		//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
-		if(M.key)//Revised. /N
+		// this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
+		if(M.key)// Revised. /N
 			M.ghostize()
 
 		if(brainmob.mind)

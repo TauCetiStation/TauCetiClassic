@@ -56,20 +56,20 @@
 			spawn_area_type = /area/storage/tech
 			locstring = "technical storage"
 
-	//world << "looking for [spawn_area_type]"
+	// world << "looking for [spawn_area_type]"
 	for(var/areapath in typesof(spawn_area_type))
-		//world << "	checking [areapath]"
+		// world << "	checking [areapath]"
 		var/area/A = locate(areapath)
-		//world << "	A: [A], contents.len: [A.contents.len]"
+		// world << "	A: [A], contents.len: [A.contents.len]"
 		for(var/area/B in A.related)
-			//world << "	B: [B], contents.len: [B.contents.len]"
+			// world << "	B: [B], contents.len: [B.contents.len]"
 			for(var/turf/simulated/floor/F in B.contents)
 				if(!F.contents.len)
 					turfs += F
 
 	var/list/spawn_types = list()
 	var/max_number
-	vermin = rand(0,2)
+	vermin = rand(0, 2)
 	switch(vermin)
 		if(VERM_MICE)
 			spawn_types = list(/mob/living/simple_animal/mouse/gray, /mob/living/simple_animal/mouse/brown, /mob/living/simple_animal/mouse/white)
@@ -85,7 +85,7 @@
 			vermstring = "spiders"
 
 	spawn(0)
-		var/num = rand(2,max_number)
+		var/num = rand(2, max_number)
 		while(turfs.len > 0 && num > 0)
 			var/turf/simulated/floor/T = pick(turfs)
 			turfs.Remove(T)

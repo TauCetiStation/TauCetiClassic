@@ -52,7 +52,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels)
-	alt_titles = list("Surgeon","Emergency Physician","Nurse")
+	alt_titles = list("Surgeon", "Emergency Physician", "Nurse")
 	minimal_player_ingame_minutes = 960
 
 /datum/job/doctor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -71,7 +71,7 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(H), slot_l_ear)
-	if (H.mind.role_alt_title)
+	if(H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
 			if("Emergency Physician")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
@@ -109,7 +109,7 @@
 	return 1
 
 
-//Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete	//Guys, behave -Erro
+// Chemist is a medical job damnit	// YEAH FUCK YOU SCIENCE	-Pete	// Guys, behave -Erro
 /datum/job/chemist
 	title = "Chemist"
 	flag = CHEMIST
@@ -188,7 +188,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	access = list(access_medical, access_virology)
-	alt_titles = list("Pathologist","Microbiologist")
+	alt_titles = list("Pathologist", "Microbiologist")
 	minimal_player_ingame_minutes = 960
 
 /datum/job/virologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -243,7 +243,7 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(H), slot_l_ear)
-	if (H.mind.role_alt_title)
+	if(H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
 			if("Psychiatrist")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/psych(H), slot_w_uniform)

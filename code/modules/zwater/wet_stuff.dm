@@ -1,4 +1,4 @@
-//NextGen mechanic to make items wet
+// NextGen mechanic to make items wet
 /obj/item/var/dry_inprocess = 0
 
 /obj/item/proc/make_wet(shower = 0)
@@ -19,7 +19,7 @@
 					W.blood_color = blood_color
 					animate(W, color = blood_color, time = 10)
 
-	var/wet_weight = rand(18,28)
+	var/wet_weight = rand(18, 28)
 	if(wet)
 		if(wet > wet_weight)
 			return
@@ -41,7 +41,7 @@
 		return
 
 	if(dry_inprocess < 1)
-		dry_inprocess = rand(4,8)
+		dry_inprocess = rand(4, 8)
 		wet--
 		if(prob(15))
 			var/turf/T = get_turf(src)
@@ -50,7 +50,7 @@
 				if(!W)
 					W = new /obj/effect/decal/cleanable/water(T)
 				else
-					W.depth = min(2, W.depth + rand(2,5)/10)
+					W.depth = min(2, W.depth + rand(2, 5)/10)
 				if(blood_DNA)
 					if(blood_DNA.len)
 						if(!W.blood_DNA)
@@ -95,7 +95,7 @@
 			W.electrocute_act(120)
 		else if(istype(loc, /mob/living))
 			var/mob/living/L = loc
-			L.apply_effect(120,AGONY,0)
+			L.apply_effect(120, AGONY, 0)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()

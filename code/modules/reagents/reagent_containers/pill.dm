@@ -14,7 +14,7 @@
 /obj/item/weapon/reagent_containers/pill/New()
 	..()
 	if(!icon_state)
-		icon_state = "pill[rand(1,20)]"
+		icon_state = "pill[rand(1, 20)]"
 
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	return
@@ -29,7 +29,7 @@
 				return
 
 		to_chat(M, "\blue You swallow [src].")
-		M.drop_from_inventory(src) //icon update
+		M.drop_from_inventory(src) // icon update
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, reagents.total_volume)
 			qdel(src)
@@ -49,7 +49,7 @@
 
 		if(!do_mob(user, M)) return
 
-		user.drop_from_inventory(src) //icon update
+		user.drop_from_inventory(src) // icon update
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message("\red [user] forces [M] to swallow [src].", 1)
 
@@ -92,7 +92,7 @@
 /// Pills. END
 ////////////////////////////////////////////////////////////////////////////////
 
-//Pills
+// Pills
 /obj/item/weapon/reagent_containers/pill/antitox
 	name = "Anti-toxins pill"
 	desc = "Neutralizes many common toxins."

@@ -80,7 +80,7 @@
 /datum/industry/agriculture/generateProductName(company_name)
 	var/list/products = list("water tank", "cattle prod", "scythe", "plough", "sickle", "cultivator", "loy", "spade", "hoe", "daisy grubber", "cotton gin")
 	var/list/prefix = list("[company_name]'s ", "the [company_name] ", "the fully automatic ", "the full-duplex ", "the semi-automatic ", "the drone-mounted ", "the industry-leading ", "the world-class ")
-	var/list/suffix = list(" of farming", " multiplex", " +[rand(1,15)]", " [consonant()][rand(1000, 9999)]", " hybrid", " maximus", " extreme")
+	var/list/suffix = list(" of farming", " multiplex", " +[rand(1, 15)]", " [consonant()][rand(1000, 9999)]", " hybrid", " maximus", " extreme")
 	return "[pick(prefix)][pick(products)][pick(suffix)]"
 	
 
@@ -95,34 +95,34 @@
 /datum/industry/it/proc/latin_number(n)
 	if(n < 20 || !(n % 10))
 		switch(n)
-			if (0) return "Nihil"
-			if (1) return "Unus"
-			if (2) return "Duo"
-			if (3) return "Tres"
-			if (4) return "Quattour"
-			if (5) return "Quinque"
-			if (6) return "Sex"
-			if (7) return "Septem"
-			if (8) return "Octo"
-			if (9) return "Novem"
-			if (10) return "Decim"
-			if (11) return "Undecim"
-			if (12) return "Duodecim"
-			if (13) return "Tredecim"
-			if (14) return "Quattourdecim"
-			if (15) return "Quindecim"
-			if (16) return "Sedecim"
-			if (17) return "Septdecim"
-			if (18) return "Duodeviginti"
-			if (19) return "Undeviginti"
-			if (20) return "Viginti"
-			if (30) return "Triginta"
-			if (40) return "Quadriginta"
-			if (50) return "Quinquaginta"
-			if (60) return "Sexaginta"
-			if (70) return "Septuaginta"
-			if (80) return "Octoginta"
-			if (90) return "Nonaginta"
+			if(0) return "Nihil"
+			if(1) return "Unus"
+			if(2) return "Duo"
+			if(3) return "Tres"
+			if(4) return "Quattour"
+			if(5) return "Quinque"
+			if(6) return "Sex"
+			if(7) return "Septem"
+			if(8) return "Octo"
+			if(9) return "Novem"
+			if(10) return "Decim"
+			if(11) return "Undecim"
+			if(12) return "Duodecim"
+			if(13) return "Tredecim"
+			if(14) return "Quattourdecim"
+			if(15) return "Quindecim"
+			if(16) return "Sedecim"
+			if(17) return "Septdecim"
+			if(18) return "Duodeviginti"
+			if(19) return "Undeviginti"
+			if(20) return "Viginti"
+			if(30) return "Triginta"
+			if(40) return "Quadriginta"
+			if(50) return "Quinquaginta"
+			if(60) return "Sexaginta"
+			if(70) return "Septuaginta"
+			if(80) return "Octoginta"
+			if(90) return "Nonaginta"
 	else
 		return "[latin_number(n - (n % 10))] [lowertext(latin_number(n % 10))]"
 
@@ -192,7 +192,7 @@
 
 /datum/industry/defense
 	name = "Defense"
-	tokens = list ( \
+	tokens = list( \
 		"industry" = list("defense", "warfare", "security", "law enforcement"), \
 		"industrial" = list("defense"), \
 		"jobs" = list("security officers", "government officials", "soldiers", "weapons engineers")

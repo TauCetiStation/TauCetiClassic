@@ -37,17 +37,17 @@
 	if(points != 0)
 		blob_points = Clamp(blob_points + points, 0, max_blob_points)
 /mob/camera/blob/say(var/message)
-	if (!message)
+	if(!message)
 		return
 
-	if (src.client)
+	if(src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "You cannot send IC messages (muted).")
+			to_chat(src, "You cannot send IC messages(muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
-	if (stat)
+	if(stat)
 		return
 
 	blob_talk(message)
@@ -57,19 +57,19 @@
 
 	message = trim(sanitize(copytext(message, 1, MAX_MESSAGE_LEN)))
 
-	if (!message)
+	if(!message)
 		return
 
-	//var/message_a = say_quote(message)
+	// var/message_a = say_quote(message)
 	//ïðîáëåìêà êàê è ó àëèåíîâ, ìåðæèòü/îáíîâëÿòü
 	var/message_a = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
 
-	for (var/mob/M in mob_list)
+	for(var/mob/M in mob_list)
 		if(isovermind(M) || isobserver(M))
 			M.show_message(rendered, 2)
 
-/mob/camera/blob/emote(act,m_type=1,message = null)
+/mob/camera/blob/emote(act, m_type=1, message = null)
 	return
 
 /mob/camera/blob/blob_act()

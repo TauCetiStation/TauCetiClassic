@@ -44,14 +44,14 @@
 	T.contents += contents
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
-		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+		B.loc = get_step(loc, SOUTH) // Beaker is carefully ejected from the wreckage of the cryotube
 	return ..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return
 	var/node_connect = dir
-	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node = target
 			break
 
@@ -101,12 +101,12 @@
 	set desc = "Begin the release sequence inside the cryo tube."
 	set category = "Object"
 	set src in oview(1)
-	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
-		if(usr.stat == DEAD)	//and he's not dead....
+	if(usr == occupant || contents.Find(usr))	// If the user is inside the tube...
+		if(usr.stat == DEAD)	// and he's not dead....
 			return
 		to_chat(usr, "<span class='notice'>Release sequence activated. This will take about a minute.</span>")
 		sleep(600)
-		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
+		if(!src || !usr || (!occupant && !contents.Find(usr)))	// Check if someone's released/replaced/bombed him already
 			return
 		open_machine()
 		add_fingerprint(usr)
@@ -131,10 +131,10 @@
  /**
   * The ui_interact proc is used to open and update Nano UIs
   * If ui_interact is not used then the UI will not update correctly
-  * ui_interact is currently defined for /atom/movable (which is inherited by /obj and /mob)
+  * ui_interact is currently defined for /atom/movable(which is inherited by /obj and /mob)
   *
   * @param user /mob The mob who is interacting with this ui
-  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
+  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob(defaut value "main")
   * @param ui /datum/nanoui This parameter is passed by the nanoui process() proc when updating an open ui
   *
   * @return nothing
@@ -149,7 +149,7 @@
 	data["hasOccupant"] = occupant ? 1 : 0
 
 	var/occupantData[0]
-	if (occupant)
+	if(occupant)
 		occupantData["name"] = occupant.name
 		occupantData["stat"] = occupant.stat
 		occupantData["health"] = occupant.health
@@ -165,7 +165,7 @@
 	data["isOpen"] = state_open
 	data["cellTemperature"] = round(air_contents.temperature)
 	data["cellTemperatureStatus"] = "good"
-	if(air_contents.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
+	if(air_contents.temperature > T0C) // if greater than 273.15 kelvin(0 celcius)
 		data["cellTemperatureStatus"] = "bad"
 	else if(air_contents.temperature > 225)
 		data["cellTemperatureStatus"] = "average"
@@ -175,7 +175,7 @@
 	data["beakerVolume"] = 0
 	if(beaker)
 		data["beakerLabel"] = beaker.label_text ? beaker.label_text : null
-		if (beaker.reagents && beaker.reagents.reagent_list.len)
+		if(beaker.reagents && beaker.reagents.reagent_list.len)
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
 				data["beakerVolume"] += R.volume
 
@@ -275,7 +275,7 @@
 		icon_state = "pod-o"
 
 		I = image(icon, "pod-o_top")
-		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting (at 10)
+		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting(at 10)
 		I.pixel_z = 32
 		overlays += I
 
@@ -326,9 +326,9 @@
 				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 			else
 				occupant.adjustOxyLoss(-1)
-			//severe damage should heal waaay slower without proper chemicals
+			// severe damage should heal waaay slower without proper chemicals
 			if(occupant.bodytemperature < 225)
-				if (occupant.getToxLoss())
+				if(occupant.getToxLoss())
 					occupant.adjustToxLoss(max(-efficiency, (-20*(efficiency ** 2)) / occupant.getToxLoss()))
 				var/heal_brute = occupant.getBruteLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getBruteLoss()) : 0
 				var/heal_fire = occupant.getFireLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getFireLoss()) : 0
@@ -354,4 +354,4 @@
 		return
 
 /obj/machinery/atmospherics/unary/cryo_cell/can_crawl_through()
-	return //can't ventcrawl in or out of cryo.
+	return // can't ventcrawl in or out of cryo.

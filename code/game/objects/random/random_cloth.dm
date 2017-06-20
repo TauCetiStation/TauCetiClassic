@@ -1,4 +1,4 @@
-//CLOTH RANDOM
+// CLOTH RANDOM
 /obj/random/cloth/masks
 	name = "random mask"
 	desc = "This is a random mask."
@@ -48,7 +48,7 @@
 /obj/random/cloth/shittysuit/item_to_spawn()
 	return pick(\
 				/obj/item/clothing/suit/tajaran/furs,\
-				/obj/item/clothing/suit/unathi/robe ,\
+				/obj/item/clothing/suit/unathi/robe,\
 				/obj/item/clothing/suit/nun,\
 				/obj/item/clothing/suit/chef/classic,\
 				/obj/item/clothing/suit/suspenders,\

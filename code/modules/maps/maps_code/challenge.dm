@@ -1,4 +1,4 @@
-//Challenge Areas
+// Challenge Areas
 
 /area/awaymission/challenge/start
 	name = "Where Am I?"

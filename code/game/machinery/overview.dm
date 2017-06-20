@@ -30,7 +30,7 @@
 		imap += icon('icons/misc/imap.dmi', "blank")
 		imap += icon('icons/misc/imap.dmi', "blank")
 
-	//world << "[icount] images in list"
+	// world << "[icount] images in list"
 
 
 	for(var/wx = 1 ; wx <= world.maxx; wx++)
@@ -45,39 +45,39 @@
 
 
 			if(!T)
-				colour = rgb(0,0,0)
+				colour = rgb(0, 0, 0)
 
 			else
 				var/sense = 1
 				switch("[T.type]")
 					if("/turf/space")
-						colour = rgb(10,10,10)
+						colour = rgb(10, 10, 10)
 						sense = 0
 
 					if("/turf/simulated/floor")
-						colour = rgb(150,150,150)
+						colour = rgb(150, 150, 150)
 						var/turf/simulated/floor/TF = T
 						if(TF.burnt == 1)
 							sense = 0
-							colour = rgb(130,130,130)
+							colour = rgb(130, 130, 130)
 
 					if("/turf/simulated/floor/engine")
-						colour = rgb(128,128,128)
+						colour = rgb(128, 128, 128)
 
 					if("/turf/simulated/wall")
-						colour = rgb(96,96,96)
+						colour = rgb(96, 96, 96)
 
 					if("/turf/simulated/wall/r_wall")
-						colour = rgb(128,96,96)
+						colour = rgb(128, 96, 96)
 
 					if("/turf/unsimulated/floor")
-						colour  = rgb(240,240,240)
+						colour  = rgb(240, 240, 240)
 
 					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
-						colour  = rgb(140,140,140)
+						colour  = rgb(140, 140, 140)
 
 					else
-						colour = rgb(0,40,0)
+						colour = rgb(0, 40, 0)
 
 
 
@@ -88,25 +88,25 @@
 
 						if(istype(AM, /obj/machinery/door) && !istype(AM, /obj/machinery/door/window))
 							if(AM.density)
-								colour = rgb(96,96,192)
+								colour = rgb(96, 96, 192)
 								colour2 = colour
 							else
-								colour = rgb(128,192,128)
+								colour = rgb(128, 192, 128)
 
 						if(istype(AM, /obj/machinery/alarm))
-							colour = rgb(0,255,0)
+							colour = rgb(0, 255, 0)
 							colour2 = colour
 							if(AM.icon_state=="alarm:1")
-								colour = rgb(255,255,0)
-								colour2 = rgb(255,128,0)
+								colour = rgb(255, 255, 0)
+								colour2 = rgb(255, 128, 0)
 
 						if(istype(AM, /mob))
 							if(AM:client)
-								colour = rgb(255,0,0)
+								colour = rgb(255, 0, 0)
 							else
-								colour = rgb(255,128,128)
+								colour = rgb(255, 128, 128)
 
-							colour2 = rgb(192,0,0)
+							colour2 = rgb(192, 0, 0)
 
 				var/area/A = T.loc
 
@@ -125,14 +125,14 @@
 			if(!colour2 && !T.density)
 				var/datum/gas_mixture/environment = T.return_air()
 				var/turf_total = environment.total_moles()
-				//var/turf_total = T.co2 + T.oxygen + T.poison + T.sl_gas + T.n2
+				// var/turf_total = T.co2 + T.oxygen + T.poison + T.sl_gas + T.n2
 
 
 				var/t1 = turf_total / MOLES_CELLSTANDARD * 150
 
 
 				if(t1<=100)
-					colour2 = rgb(t1*2.55,0,0)
+					colour2 = rgb(t1*2.55, 0, 0)
 				else
 					t1 = min(100, t1-100)
 					colour2 = rgb(255, t1*2.55, t1*2.55)
@@ -146,12 +146,12 @@
 			var/rx = ((wx*2+xoff)%32) + 1
 			var/ry = ((wy*2+yoff)%32) + 1
 
-			//world << "trying [ix],[iy] : [ix+icx*iy]"
+			// world << "trying [ix],[iy] : [ix+icx*iy]"
 			var/icon/I = imap[1+(ix + icx*iy)*2]
 			var/icon/I2 = imap[2+(ix + icx*iy)*2]
 
 
-			//world << "icon: [bicon(i)]"
+			// world << "icon: [bicon(i)]"
 
 			I.DrawBox(colour, rx, ry, rx+1, ry+1)
 
@@ -168,7 +168,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"[bicon(i)] at [H.screen_loc]"
+		// world<<"[bicon(i)] at [H.screen_loc]"
 
 		H.name = (i==0)?"maprefresh":"map"
 
@@ -183,7 +183,7 @@
 		qdel(I)
 		qdel(J)
 		H.icon = HI
-		H.layer = ABOVE_HUD_LAYER //it was 25 before ?
+		H.layer = ABOVE_HUD_LAYER // it was 25 before ?
 		H.plane = ABOVE_HUD_PLANE
 		usr.mapobjs += H
 #else
@@ -200,13 +200,13 @@
 			var/colour
 
 			if(!T)
-				colour = rgb(0,0,0)
+				colour = rgb(0, 0, 0)
 
 			else
 				var/sense = 1
 				switch("[T.type]")
 					if("/turf/space")
-						colour = rgb(10,10,10)
+						colour = rgb(10, 10, 10)
 						sense = 0
 
 					if("/turf/simulated/floor", "/turf/simulated/floor/engine")
@@ -215,25 +215,25 @@
 						var/t1 = turf_total / MOLES_CELLSTANDARD * 175
 
 						if(t1<=100)
-							colour = rgb(0,0,t1*2.55)
+							colour = rgb(0, 0, t1*2.55)
 						else
 							t1 = min(100, t1-100)
 							colour = rgb( t1*2.55, t1*2.55, 255)
 
 					if("/turf/simulated/wall")
-						colour = rgb(96,96,96)
+						colour = rgb(96, 96, 96)
 
 					if("/turf/simulated/wall/r_wall")
-						colour = rgb(128,96,96)
+						colour = rgb(128, 96, 96)
 
 					if("/turf/unsimulated/floor")
-						colour  = rgb(240,240,240)
+						colour  = rgb(240, 240, 240)
 
 					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
-						colour  = rgb(140,140,140)
+						colour  = rgb(140, 140, 140)
 
 					else
-						colour = rgb(0,40,0)
+						colour = rgb(0, 40, 0)
 
 
 				if(sense)
@@ -242,24 +242,24 @@
 
 						if(istype(AM, /obj/machinery/door) && !istype(AM, /obj/machinery/door/window))
 							if(AM.density)
-								colour = rgb(0,96,192)
+								colour = rgb(0, 96, 192)
 							else
-								colour = rgb(96,192,128)
+								colour = rgb(96, 192, 128)
 
 						if(istype(AM, /obj/machinery/alarm))
-							colour = rgb(0,255,0)
+							colour = rgb(0, 255, 0)
 
 							if(AM.icon_state=="alarm:1")
-								colour = rgb(255,255,0)
+								colour = rgb(255, 255, 0)
 
 						if(istype(AM, /mob))
 							if(AM:client)
-								colour = rgb(255,0,0)
+								colour = rgb(255, 0, 0)
 							else
-								colour = rgb(255,128,128)
+								colour = rgb(255, 128, 128)
 
-						//if(istype(AM, /obj/effect/blob))
-						//	colour = rgb(255,0,255)
+						// if(istype(AM, /obj/effect/blob))
+						//	colour = rgb(255, 0, 255)
 
 				var/area/A = T.loc
 
@@ -281,11 +281,11 @@
 			var/rx = ((wx*2+xoff)%32) + 1
 			var/ry = ((wy*2+yoff)%32) + 1
 
-			//world << "trying [ix],[iy] : [ix+icx*iy]"
+			// world << "trying [ix],[iy] : [ix+icx*iy]"
 			var/icon/I = imap[1+(ix + icx*iy)]
 
 
-			//world << "icon: [bicon(i)]"
+			// world << "icon: [bicon(i)]"
 
 			I.DrawBox(colour, rx, ry, rx, ry)
 
@@ -300,7 +300,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"[bicon(i)] at [H.screen_loc]"
+		// world<<"[bicon(i)] at [H.screen_loc]"
 
 		H.name = (i==0)?"maprefresh":"map"
 
@@ -330,7 +330,7 @@
 	spawn(20)
 		var/using = null
 		if(user.mapobjs)
-			for(var/obj/machinery/computer/security/seccomp in oview(1,user))
+			for(var/obj/machinery/computer/security/seccomp in oview(1, user))
 				if(seccomp == src)
 					using = 1
 					break
@@ -343,10 +343,10 @@
 		return
 
 proc/getr(col)
-	return hex2num( copytext(col, 2,4))
+	return hex2num( copytext(col, 2, 4))
 
 proc/getg(col)
-	return hex2num( copytext(col, 4,6))
+	return hex2num( copytext(col, 4, 6))
 
 proc/getb(col)
 	return hex2num( copytext(col, 6))

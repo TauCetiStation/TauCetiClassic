@@ -36,13 +36,13 @@
 	random_icon_states = list("creep_1", "creep_2", "creep_3", "creep_4", "creep_5", "creep_6", "creep_7", "creep_8", "creep_9")
 
 /obj/structure/cellular_biomass/wall/meat/New()
-	icon_state = "bloodwall_[pick(1,1,2,2,3,4)]"
+	icon_state = "bloodwall_[pick(1, 1, 2, 2, 3, 4)]"
 
 /obj/structure/cellular_biomass/grass/meat/New()
-	icon_state = "bloodfloor_[pick(1,2,3)]"
+	icon_state = "bloodfloor_[pick(1, 2, 3)]"
 
 /obj/structure/cellular_biomass/core/meat/New()
-	icon_state = "light_[pick(1,2)]"
+	icon_state = "light_[pick(1, 2)]"
 	set_light(luminosity)
 
 /obj/structure/cellular_biomass/lair/meat/New()

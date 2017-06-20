@@ -1,12 +1,12 @@
 // reference: /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 
-datum/proc/on_varedit(modified_var) //called whenever a var is edited
+datum/proc/on_varedit(modified_var) // called whenever a var is edited
 	return
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
-	//set src in world
+	// set src in world
 
 
 	if(!usr.client || !usr.client.holder)
@@ -23,13 +23,13 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 		title = "[A.name] (\ref[A]) = [A.type]"
 
 		#ifdef VARSICON
-		if (A.icon)
+		if(A.icon)
 			body += debug_variable("icon", new/icon(A.icon, A.icon_state, A.dir), 0)
 		#endif
 
 	var/sprite
 
-	if(istype(D,/atom))
+	if(istype(D, /atom))
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
 			sprite = 1
@@ -42,14 +42,14 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 					var filter_text = document.getElementById('filter');
 					var filter = filter_text.value.toLowerCase();
 
-					if(event.keyCode == 13){	//Enter / return
+					if(event.keyCode == 13){	// Enter / return
 						var vars_ol = document.getElementById('vars');
 						var lis = vars_ol.getElementsByTagName("li");
-						for ( var i = 0; i < lis.length; ++i )
+						for( var i = 0; i < lis.length; ++i )
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
+								if( li.style.backgroundColor == "#ffee88" )
 								{
 									alist = lis\[i\].getElementsByTagName("a")
 									if(alist.length > 0){
@@ -61,14 +61,14 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 						return
 					}
 
-					if(event.keyCode == 38){	//Up arrow
+					if(event.keyCode == 38){	// Up arrow
 						var vars_ol = document.getElementById('vars');
 						var lis = vars_ol.getElementsByTagName("li");
-						for ( var i = 0; i < lis.length; ++i )
+						for( var i = 0; i < lis.length; ++i )
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
+								if( li.style.backgroundColor == "#ffee88" )
 								{
 									if( (i-1) >= 0){
 										var li_new = lis\[i-1\];
@@ -82,14 +82,14 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 						return
 					}
 
-					if(event.keyCode == 40){	//Down arrow
+					if(event.keyCode == 40){	// Down arrow
 						var vars_ol = document.getElementById('vars');
 						var lis = vars_ol.getElementsByTagName("li");
-						for ( var i = 0; i < lis.length; ++i )
+						for( var i = 0; i < lis.length; ++i )
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
+								if( li.style.backgroundColor == "#ffee88" )
 								{
 									if( (i+1) < lis.length){
 										var li_new = lis\[i+1\];
@@ -103,7 +103,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 						return
 					}
 
-					//This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
+					// This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway(mobs).
 					if(complete_list != null && complete_list != ""){
 						var vars_ol1 = document.getElementById("vars");
 						vars_ol1.innerHTML = complete_list
@@ -115,11 +115,11 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 						var vars_ol = document.getElementById('vars');
 						var lis = vars_ol.getElementsByTagName("li");
 
-						for ( var i = 0; i < lis.length; ++i )
+						for( var i = 0; i < lis.length; ++i )
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
+								if( li.innerText.toLowerCase().indexOf(filter) == -1 )
 								{
 									vars_ol.removeChild(li);
 									i--;
@@ -128,10 +128,10 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 						}
 					}
 					var lis_new = vars_ol.getElementsByTagName("li");
-					for ( var j = 0; j < lis_new.length; ++j )
+					for( var j = 0; j < lis_new.length; ++j )
 					{
 						var li1 = lis\[j\];
-						if (j == 0){
+						if(j == 0){
 							li1.style.backgroundColor = "#ffee88";
 						}else{
 							li1.style.backgroundColor = "white";
@@ -170,7 +170,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 
 	body += "<div align='center'>"
 
-	if(istype(D,/atom))
+	if(istype(D, /atom))
 		var/atom/A = D
 		if(isliving(A))
 			body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
@@ -204,11 +204,11 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var/formatted_type = text("[D.type]")
 	if(length(formatted_type) > 25)
 		var/middle_point = length(formatted_type) / 2
-		var/splitpoint = findtext(formatted_type,"/",middle_point)
+		var/splitpoint = findtext(formatted_type, "/", middle_point)
 		if(splitpoint)
-			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
+			formatted_type = "[copytext(formatted_type, 1, splitpoint)]<br>[copytext(formatted_type, splitpoint)]"
 		else
-			formatted_type = "Type too long" //No suitable splitpoint (/) found.
+			formatted_type = "Type too long" // No suitable splitpoint(/) found.
 
 	body += "<div align='center'><b><font size='1'>[formatted_type]</font></b>"
 
@@ -221,7 +221,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 
 	body += "<td width='50%'><div align='center'><a href='?_src_=vars;datumrefresh=\ref[D]'>Refresh</a>"
 
-	//if(ismob(D))
+	// if(ismob(D))
 	//	body += "<br><a href='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
 
 	body += {"	<form>
@@ -302,18 +302,18 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	body += "<ol id='vars'>"
 
 	var/list/names = list()
-	for (var/V in D.vars)
+	for(var/V in D.vars)
 		names += V
 
 	names = sortList(names)
 
-	for (var/V in names)
+	for(var/V in names)
 		body += debug_variable(V, D.vars[V], 0, D)
 
 	body += "</ol>"
 
 	var/html = "<html><head>"
-	if (title)
+	if(title)
 		html += "<title>[title]</title>"
 	html += {"<style>
 body
@@ -351,42 +351,42 @@ body
 	else
 		html += "<li>"
 
-	if (isnull(value))
+	if(isnull(value))
 		html += "[name] = <span class='value'>null</span>"
 
-	else if (istext(value))
+	else if(istext(value))
 		html += "[name] = <span class='value'>\"[sanitize_popup(value)]\"</span>"
 
-	else if (isicon(value))
+	else if(isicon(value))
 		#ifdef VARSICON
-		html += "[name] = /icon (<span class='value'>[value]</span>) [bicon(value, use_class = 0)]"
+		html += "[name] = /icon(<span class='value'>[value]</span>) [bicon(value, use_class = 0)]"
 		#else
-		html += "[name] = /icon (<span class='value'>[value]</span>)"
+		html += "[name] = /icon(<span class='value'>[value]</span>)"
 		#endif
 
-	else if (istype(value, /image))
+	else if(istype(value, /image))
 		#ifdef VARSICON
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>) [bicon(value, use_class = 0)]"
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image(<span class='value'>[value]</span>) [bicon(value, use_class = 0)]"
 		#else
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>)"
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image(<span class='value'>[value]</span>)"
 		#endif
 
-	else if (isfile(value))
+	else if(isfile(value))
 		html += "[name] = <span class='value'>'[value]'</span>"
 
-	else if (istype(value, /datum))
+	else if(istype(value, /datum))
 		var/datum/D = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
 
-	else if (istype(value, /client))
+	else if(istype(value, /client))
 		var/client/C = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
 //
-	else if (istype(value, /list))
+	else if(istype(value, /list))
 		var/list/L = value
-		html += "[name] = /list ([L.len])"
+		html += "[name] = /list([L.len])"
 
-		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
+		if(L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
 			// not sure if this is completely right...
 			if(0)   //(L.vars.len > 0)
 				html += "<ol>"
@@ -394,16 +394,16 @@ body
 			else
 				html += "<ul>"
 				var/index = 1
-				for (var/entry in L)
+				for(var/entry in L)
 					if(istext(entry))
 						html += debug_variable(entry, L[entry], level + 1)
-					//html += debug_variable("[index]", L[index], level + 1)
+					// html += debug_variable("[index]", L[index], level + 1)
 					else
 						html += debug_variable(index, L[index], level + 1)
 					index++
 				html += "</ul>"
 
-	else if (isnum(value) && findtext(name, "flags")) // flag variables may not always have flags in name, but i don't know any other way to detect them, so better than nothing.
+	else if(isnum(value) && findtext(name, "flags")) // flag variables may not always have flags in name, but i don't know any other way to detect them, so better than nothing.
 		html += "(<a href='?_src_=vars;view_flags=[value]'>F</a>) [name] = <span class='value'>[value]</span>"
 
 	else
@@ -414,7 +414,7 @@ body
 	return html
 
 /client/proc/view_var_Topic(href, href_list, hsrc)
-	//This should all be moved over to datum/admins/Topic() or something ~Carn
+	// This should all be moved over to datum/admins/Topic() or something ~Carn
 	if( (usr.client != src) || !src.holder )
 		return
 	if(href_list["Vars"])
@@ -427,7 +427,7 @@ body
 			return
 		view_flags_variables(href_list["view_flags"])
 
-	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
+	//~CARN: for renaming mobs(updates their name, real_name, mind.name, their ID/PDA and datacore records).
 	else if(href_list["rename"])
 		if(!check_rights(R_VAREDIT))	return
 
@@ -436,18 +436,18 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		var/new_name = sanitize(copytext(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null,1,MAX_NAME_LEN))
+		var/new_name = sanitize(copytext(input(usr, "What would you like to name this mob?", "Input a name", M.real_name) as text|null, 1, MAX_NAME_LEN))
 		if( !new_name || !M )	return
 
 		message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].")
-		M.fully_replace_character_name(M.real_name,new_name)
+		M.fully_replace_character_name(M.real_name, new_name)
 		href_list["datumrefresh"] = href_list["rename"]
 
 	else if(href_list["varnameedit"] && href_list["datumedit"])
 		if(!check_rights(R_VAREDIT))	return
 
 		var/D = locate(href_list["datumedit"])
-		if(!istype(D,/datum) && !istype(D,/client))
+		if(!istype(D, /datum) && !istype(D, /client))
 			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
@@ -457,7 +457,7 @@ body
 		if(!check_rights(R_VAREDIT))	return
 
 		var/D = locate(href_list["datumchange"])
-		if(!istype(D,/datum) && !istype(D,/client))
+		if(!istype(D, /datum) && !istype(D, /client))
 			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
@@ -583,7 +583,7 @@ body
 			usr.client.cmd_assume_direct_control(M)
 
 	else if(href_list["delthis"])
-		//Rights check are in cmd_admin_delete() proc
+		// Rights check are in cmd_admin_delete() proc
 		var/atom/A = locate(href_list["delthis"])
 		cmd_admin_delete(A)
 
@@ -595,14 +595,14 @@ body
 			to_chat(usr, "This can only be used on instances of type /obj")
 			return
 
-		var/action_type = alert("Strict type ([O.type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
+		var/action_type = alert("Strict type([O.type]) or type and all subtypes?",, "Strict type", "Type and subtypes", "Cancel")
 		if(action_type == "Cancel" || !action_type)
 			return
 
-		if(alert("Are you really sure you want to delete all objects of type [O.type]?",,"Yes","No") != "Yes")
+		if(alert("Are you really sure you want to delete all objects of type [O.type]?",, "Yes", "No") != "Yes")
 			return
 
-		if(alert("Second confirmation required. Delete?",,"Yes","No") != "Yes")
+		if(alert("Second confirmation required. Delete?",, "Yes", "No") != "Yes")
 			return
 
 		var/O_type = O.type
@@ -622,7 +622,7 @@ body
 			if("Type and subtypes")
 				var/i = 0
 				for(var/obj/Obj in world)
-					if(istype(Obj,O_type))
+					if(istype(Obj, O_type))
 						i++
 						qdel(Obj)
 					CHECK_TICK
@@ -686,7 +686,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(alert("Confirm mob type change?",, "Transform", "Cancel") != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -700,7 +700,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(alert("Confirm mob type change?",, "Transform", "Cancel") != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -714,7 +714,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(alert("Confirm mob type change?",, "Transform", "Cancel") != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -728,7 +728,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(alert("Confirm mob type change?",, "Transform", "Cancel") != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -742,7 +742,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(alert("Confirm mob type change?",, "Transform", "Cancel") != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -756,7 +756,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","adamantine","golem","shadow","shadowling","slime")
+		var/new_mutantrace = input("Please choose a new mutantrace", "Mutantrace", null) as null|anything in list("NONE", "adamantine", "golem", "shadow", "shadowling", "slime")
 		switch(new_mutantrace)
 			if(null)
 				return
@@ -777,7 +777,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		var/new_species = input("Please choose a new species.","Species",null) as null|anything in all_species
+		var/new_species = input("Please choose a new species.", "Species", null) as null|anything in all_species
 
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
@@ -797,7 +797,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob")
 			return
 
-		var/new_language = input("Please choose a language to add.","Language",null) as null|anything in all_languages
+		var/new_language = input("Please choose a language to add.", "Language", null) as null|anything in all_languages
 
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
@@ -820,7 +820,7 @@ body
 			to_chat(usr, "This mob knows no languages.")
 			return
 
-		var/datum/language/rem_language = input("Please choose a language to remove.","Language",null) as null|anything in H.languages
+		var/datum/language/rem_language = input("Please choose a language to remove.", "Language", null) as null|anything in H.languages
 
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
@@ -841,18 +841,18 @@ body
 			return
 		var/list/possibleverbs = list()
 		possibleverbs += "Cancel" 								// One for the top...
-		possibleverbs += typesof(/mob/proc,/mob/verb,/mob/living/proc,/mob/living/verb)
+		possibleverbs += typesof(/mob/proc, /mob/verb, /mob/living/proc, /mob/living/verb)
 		switch(H.type)
 			if(/mob/living/carbon/human)
-				possibleverbs += typesof(/mob/living/carbon/proc,/mob/living/carbon/verb,/mob/living/carbon/human/verb,/mob/living/carbon/human/proc)
+				possibleverbs += typesof(/mob/living/carbon/proc, /mob/living/carbon/verb, /mob/living/carbon/human/verb, /mob/living/carbon/human/proc)
 			if(/mob/living/silicon/robot)
-				possibleverbs += typesof(/mob/living/silicon/proc,/mob/living/silicon/robot/proc,/mob/living/silicon/robot/verb)
+				possibleverbs += typesof(/mob/living/silicon/proc, /mob/living/silicon/robot/proc, /mob/living/silicon/robot/verb)
 			if(/mob/living/silicon/ai)
-				possibleverbs += typesof(/mob/living/silicon/proc,/mob/living/silicon/ai/proc,/mob/living/silicon/ai/verb)
+				possibleverbs += typesof(/mob/living/silicon/proc, /mob/living/silicon/ai/proc, /mob/living/silicon/ai/verb)
 		possibleverbs -= H.verbs
 		possibleverbs += "Cancel" 								// ...And one for the bottom
 
-		var/verb = input("Select a verb!", "Verbs",null) as anything in possibleverbs
+		var/verb = input("Select a verb!", "Verbs", null) as anything in possibleverbs
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -869,7 +869,7 @@ body
 		if(!istype(H))
 			to_chat(usr, "This can only be done to instances of type /mob")
 			return
-		var/verb = input("Please choose a verb to remove.","Verbs",null) as null|anything in H.verbs
+		var/verb = input("Please choose a verb to remove.", "Verbs", null) as null|anything in H.verbs
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -911,7 +911,7 @@ body
 
 		var/Text = href_list["adjustDamage"]
 
-		var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
+		var/amount =  input("Deal how much damage to mob? (Negative values here heal)", "Adjust [Text]loss", 0) as num
 
 		if(!L)
 			to_chat(usr, "Mob doesn't exist anymore")
@@ -943,7 +943,7 @@ body
 				return
 
 		var/list/clients_list = clients + "Cancel"
-		var/client/new_client = input("Select client:","Clients","Cancel") in clients_list
+		var/client/new_client = input("Select client:", "Clients", "Cancel") in clients_list
 
 		if(new_client == "Cancel") return
 

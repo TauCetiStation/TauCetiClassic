@@ -10,11 +10,11 @@
 	var/welded = 0
 	var/locked = 0
 	var/broken = 0
-	var/wall_mounted = 0 //never solid (You can always pass over it)
+	var/wall_mounted = 0 // never solid(You can always pass over it)
 	var/health = 100
 	var/lastbang
-	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
-							  //then open it in a populated area to crash clients.
+	var/storage_capacity = 30 // This is so that someone can't pack hundreds of items in a locker/crate
+							  // then open it in a populated area to crash clients.
 
 /obj/structure/closet/initialize()
 	if(!opened)		// if closed, any item at the crate's loc is put in the contents
@@ -27,7 +27,7 @@
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0 || wall_mounted)) return 1
-	return (!density)
+	return(!density)
 
 /obj/structure/closet/proc/can_open()
 	if(src.welded)
@@ -41,7 +41,7 @@
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
-	//Cham Projector Exception
+	// Cham Projector Exception
 	for(var/obj/effect/dummy/chameleon/AD in src)
 		AD.forceMove(src.loc)
 
@@ -78,7 +78,7 @@
 
 	var/itemcount = 0
 
-	//Cham Projector Exception
+	// Cham Projector Exception
 	for(var/obj/effect/dummy/chameleon/AD in src.loc)
 		if(itemcount >= storage_capacity)
 			break
@@ -95,13 +95,13 @@
 	for(var/mob/M in src.loc)
 		if(itemcount >= storage_capacity)
 			break
-		if(istype (M, /mob/dead/observer))
+		if(istype(M, /mob/dead/observer))
 			continue
 		if(M.buckled)
 			continue
 
 		M.forceMove(src)
-		M.instant_vision_update(1,src)
+		M.instant_vision_update(1, src)
 		itemcount++
 
 	src.icon_state = src.icon_closed
@@ -122,13 +122,13 @@
 /obj/structure/closet/ex_act(severity)
 	switch(severity)
 		if(1)
-			for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
+			for(var/atom/movable/A as mob|obj in src)// pulls everything out of the locker and hits it with an explosion
 				A.forceMove(src.loc)
 				A.ex_act(severity++)
 			qdel(src)
 		if(2)
 			if(prob(50))
-				for (var/atom/movable/A as mob|obj in src)
+				for(var/atom/movable/A as mob|obj in src)
 					A.forceMove(src.loc)
 					A.ex_act(severity++)
 				qdel(src)
@@ -175,12 +175,12 @@
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
 	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
-			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
-		if(istype(W,/obj/item/tk_grab))
+			src.MouseDrop_T(W:affecting, user)      // act like they were dragged onto the closet
+		if(istype(W, /obj/item/tk_grab))
 			return 0
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(!WT.remove_fuel(0,user))
+			if(!WT.remove_fuel(0, user))
 				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 			new /obj/item/stack/sheet/metal(src.loc)
@@ -199,7 +199,7 @@
 		return
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(!WT.remove_fuel(0,user))
+		if(!WT.remove_fuel(0, user))
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		src.welded = !src.welded
@@ -211,7 +211,7 @@
 	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/user)
-	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
+	if(istype(O, /obj/screen))	// fix for HUD elements making their way into the world	-Pete
 		return
 	if(O.loc == user)
 		return
@@ -234,7 +234,7 @@
 	return
 
 /obj/structure/closet/attack_ai(mob/user)
-	if(isrobot(user) && Adjacent(user)) //Robots can open/close it, but not the AI
+	if(isrobot(user) && Adjacent(user)) // Robots can open/close it, but not the AI
 		attack_hand(user)
 
 /obj/structure/closet/relaymove(mob/user)
@@ -245,7 +245,7 @@
 		to_chat(user, "<span class='notice'>It won't budge!</span>")
 		if(!lastbang)
 			lastbang = 1
-			for (var/mob/M in hearers(src, null))
+			for(var/mob/M in hearers(src, null))
 				to_chat(M, text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M))))
 			spawn(30)
 				lastbang = 0
@@ -278,7 +278,7 @@
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
-/obj/structure/closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
+/obj/structure/closet/update_icon()// Putting the welded stuff in updateicon() so it's easy to overwrite for special cases(Fridges, cabinets, and whatnot)
 	overlays.Cut()
 	if(!opened)
 		icon_state = icon_closed
@@ -288,35 +288,35 @@
 		icon_state = icon_opened
 
 /obj/structure/closet/hear_talk(mob/M, text, verb, datum/language/speaking)
-	for (var/atom/A in src)
-		if(istype(A,/obj/))
+	for(var/atom/A in src)
+		if(istype(A, /obj/))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)
 
 /obj/structure/closet/container_resist()
 	var/mob/living/user = usr
 	var/breakout_time = 2 //2 minutes by default
-	//if(istype(user.loc, /obj/structure/closet/critter) && !welded)
+	// if(istype(user.loc, /obj/structure/closet/critter) && !welded)
 	//	breakout_time = 0.75 //45 seconds if it's an unwelded critter crate
 
 	if(opened || (!welded && !locked))
-		return  //Door's open, not locked or welded, no point in resisting.
+		return  // Door's open, not locked or welded, no point in resisting.
 
-	//okay, so the closet is either welded or locked... resist!!!
+	// okay, so the closet is either welded or locked... resist!!!
 	user.next_move = world.time + 100
 	user.last_special = world.time + 100
 	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
 	for(var/mob/O in viewers(src))
 		to_chat(O, "<span class='warning'>[src] begins to shake violently!</span>")
 
-	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
+	if(do_after(user,(breakout_time*60*10), target=src)) // minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded))
 			return
-		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
+		// we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 
-		welded = 0 //applies to all lockers lockers
-		locked = 0 //applies to critter crates and secure lockers only
-		broken = 1 //applies to secure lockers only
+		welded = 0 // applies to all lockers lockers
+		locked = 0 // applies to critter crates and secure lockers only
+		broken = 1 // applies to secure lockers only
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()

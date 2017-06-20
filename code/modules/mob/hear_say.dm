@@ -1,6 +1,6 @@
 // At minimum every mob has a hear_say proc.
 
-/mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
+/mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "", italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
 	if(!client)
 		return
 
@@ -9,12 +9,12 @@
 		hear_sleep(message)
 		return
 
-	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
-	if (language && (language.flags & NONVERBAL))
-		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
+	// non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
+	if(language && (language.flags & NONVERBAL))
+		if(!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
 
-	if(!say_understands(speaker,language))
+	if(!say_understands(speaker, language))
 		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
 			message = pick(S.speak)
@@ -57,7 +57,7 @@
 			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
 		else
 			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='body'>\"[sanitize_plus_chat(message)]\"</span></span></span>")
-		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
+		if(speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			src.playsound_local(source, speech_sound, sound_vol, 1)
 
@@ -66,18 +66,18 @@
 	if(!client)
 		return
 
-	if(sleeping || stat==1) //If unconscious or sleeping
+	if(sleeping || stat==1) // If unconscious or sleeping
 		hear_sleep(message)
 		return
 
 	var/track = null
 
-	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
-	if (language && (language.flags & NONVERBAL))
-		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
+	// non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
+	if(language && (language.flags & NONVERBAL))
+		if(!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
 
-	if(!say_understands(speaker,language))
+	if(!say_understands(speaker, language))
 		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
 			message = pick(S.speak)
@@ -110,12 +110,12 @@
 
 	if(istype(src, /mob/living/silicon/ai) && !hard_to_hear)
 		var/jobname // the mob's "job"
-		var/mob/living/carbon/human/impersonating //The crewmember being impersonated, if any.
+		var/mob/living/carbon/human/impersonating // The crewmember being impersonated, if any.
 
-		if (ishuman(speaker))
+		if(ishuman(speaker))
 			var/mob/living/carbon/human/H = speaker
 
-			if((H.wear_id && istype(H.wear_id,/obj/item/weapon/card/id/syndicate)) && (H.wear_mask && istype(H.wear_mask,/obj/item/clothing/mask/gas/voice)))
+			if((H.wear_id && istype(H.wear_id, /obj/item/weapon/card/id/syndicate)) && (H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/gas/voice)))
 
 				changed_voice = 1
 				var/mob/living/carbon/human/I = locate(speaker_name)
@@ -128,13 +128,13 @@
 			else
 				jobname = H.get_assignment()
 
-		else if (iscarbon(speaker)) // Nonhuman carbon mob
+		else if(iscarbon(speaker)) // Nonhuman carbon mob
 			jobname = "No id"
-		else if (isAI(speaker))
+		else if(isAI(speaker))
 			jobname = "AI"
-		else if (isrobot(speaker))
+		else if(isrobot(speaker))
 			jobname = "Cyborg"
-		else if (istype(speaker, /mob/living/silicon/pai))
+		else if(istype(speaker, /mob/living/silicon/pai))
 			jobname = "Personal AI"
 		else
 			jobname = "Unknown"
@@ -148,7 +148,7 @@
 			track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[speaker]'>[speaker_name] ([jobname])</a>"
 
 	if(istype(src, /mob/dead/observer))
-		if(speaker_name != speaker.real_name && !isAI(speaker)) //Announce computer and various stuff that broadcasts doesn't use it's real name but AI's can't pretend to be other mobs.
+		if(speaker_name != speaker.real_name && !isAI(speaker)) // Announce computer and various stuff that broadcasts doesn't use it's real name but AI's can't pretend to be other mobs.
 			speaker_name = "[speaker.real_name] ([speaker_name])"
 		if(isAI(speaker))
 			var/mob/living/silicon/ai/S = speaker
@@ -188,14 +188,14 @@
 /mob/proc/hear_sleep(message)
 	var/heard = ""
 	if(prob(15))
-		var/list/punctuation = list(",", "!", ".", ";", "?")
+		var/list/punctuation = list(", ", "!", ".", ";", "?")
 		var/list/messages = splittext(message, " ")
 		var/R = rand(1, messages.len)
 		var/heardword = messages[R]
-		if(copytext(heardword,1, 1) in punctuation)
-			heardword = copytext(heardword,2)
+		if(copytext(heardword, 1, 1) in punctuation)
+			heardword = copytext(heardword, 2)
 		if(copytext(heardword,-1) in punctuation)
-			heardword = copytext(heardword,1,lentext(heardword))
+			heardword = copytext(heardword, 1, lentext(heardword))
 		heard = "<span class = 'game_say'>...You hear something about...[sanitize_plus_chat(heardword)]</span>"
 
 	else

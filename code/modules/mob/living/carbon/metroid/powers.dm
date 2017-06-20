@@ -10,11 +10,11 @@
 		return
 
 	var/list/choices = list()
-	for(var/mob/living/C in view(1,src))
-		if(C!=src && !istype(C,/mob/living/carbon/slime))
+	for(var/mob/living/C in view(1, src))
+		if(C!=src && !istype(C, /mob/living/carbon/slime))
 			choices += C
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to feed on?") in null|choices
+	var/mob/living/carbon/M = input(src, "Who do you wish to feed on?") in null|choices
 	if(!M) return
 	if(M in view(1, src))
 
@@ -48,7 +48,7 @@
 	canmove = 0
 	anchored = 1
 	var/lastnut = nutrition
-	//if(M.client) M << "\red You legs become paralyzed!"
+	// if(M.client) M << "\red You legs become paralyzed!"
 	if(istype(src, /mob/living/carbon/slime/adult))
 		icon_state = "[colour] adult slime eat"
 	else
@@ -71,10 +71,10 @@
 				"A sharp, deep pain bathes every inch of your body!")]")
 
 			if(istype(M, /mob/living/carbon))
-				Victim.adjustCloneLoss(rand(1,10))
-				Victim.adjustToxLoss(rand(1,2))
+				Victim.adjustCloneLoss(rand(1, 10))
+				Victim.adjustToxLoss(rand(1, 2))
 				if(Victim.health <= 0)
-					Victim.adjustToxLoss(rand(2,4))
+					Victim.adjustToxLoss(rand(2, 4))
 
 				// Heal yourself
 				adjustToxLoss(-10)
@@ -84,11 +84,11 @@
 				adjustCloneLoss(-10)
 
 				if(Victim)
-					for(var/mob/living/carbon/slime/slime in view(1,M))
+					for(var/mob/living/carbon/slime/slime in view(1, M))
 						if(slime.Victim == M && slime != src)
 							slime.Feedstop()
 
-				nutrition += rand(10,25)
+				nutrition += rand(10, 25)
 				if(nutrition >= lastnut + 50)
 					if(prob(80))
 						lastnut = nutrition
@@ -113,7 +113,7 @@
 					"I am not satisified", "I can not feed from this subject", \
 					"I do not feel nourished", "This subject is not food")]...</i>")
 
-			sleep(rand(15,45))
+			sleep(rand(15, 45))
 
 		else
 			break
@@ -203,7 +203,7 @@
 
 	if(istype(src, /mob/living/carbon/slime/adult))
 		if(amount_grown >= 10)
-			//if(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced slime.") in list("Yes","No")=="Yes")
+			// if(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced slime.") in list("Yes", "No")=="Yes")
 			if(stat)
 				to_chat(src, "<i>I must be conscious to do this...</i>")
 				return
@@ -211,39 +211,39 @@
 			var/list/babies = list()
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
-			for(var/i=1,i<=4,i++)
+			for(var/i=1, i<=4, i++)
 				if(prob(80))
 					var/mob/living/carbon/slime/M = new primarytype(loc)
 					M.nutrition = new_nutrition
 					M.powerlevel = new_powerlevel
-					if(i != 1) step_away(M,src)
+					if(i != 1) step_away(M, src)
 					babies += M
 				else
-					var/mutations = pick("one","two","three","four")
+					var/mutations = pick("one", "two", "three", "four")
 					switch(mutations)
 						if("one")
 							var/mob/living/carbon/slime/M = new mutationone(loc)
 							M.nutrition = new_nutrition
 							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
+							if(i != 1) step_away(M, src)
 							babies += M
 						if("two")
 							var/mob/living/carbon/slime/M = new mutationtwo(loc)
 							M.nutrition = new_nutrition
 							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
+							if(i != 1) step_away(M, src)
 							babies += M
 						if("three")
 							var/mob/living/carbon/slime/M = new mutationthree(loc)
 							M.nutrition = new_nutrition
 							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
+							if(i != 1) step_away(M, src)
 							babies += M
 						if("four")
 							var/mob/living/carbon/slime/M = new mutationfour(loc)
 							M.nutrition = new_nutrition
 							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
+							if(i != 1) step_away(M, src)
 							babies += M
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)

@@ -2,4 +2,4 @@
 	name = "Plasmatoid"
 	max_stages = 4
 	cure = "None"
-	affected_species = list(HUMAN , MONKEY)
+	affected_species = list(HUMAN, MONKEY)

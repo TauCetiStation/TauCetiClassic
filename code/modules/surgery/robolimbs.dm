@@ -1,4 +1,4 @@
-//Procedures in this file: Robotic limbs attachment
+// Procedures in this file: Robotic limbs attachment
 //////////////////////////////////////////////////////////////////
 //						LIMB SURGERY							//
 //////////////////////////////////////////////////////////////////
@@ -10,12 +10,12 @@
 	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return 0
-	if (!(BP.status & ORGAN_DESTROYED))
+	if(!(BP.status & ORGAN_DESTROYED))
 		return 0
-	if (BP.parent)
-		if (BP.parent.status & ORGAN_DESTROYED)
+	if(BP.parent)
+		if(BP.parent.status & ORGAN_DESTROYED)
 			return 0
 	return BP.body_zone != BP_CHEST
 
@@ -49,7 +49,7 @@
 
 /datum/surgery_step/limb/cut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.parent)
+	if(BP.parent)
 		BP = BP.parent
 		user.visible_message("\red [user]'s hand slips, cutting [target]'s [BP.name] open!", \
 		"\red Your hand slips, cutting [target]'s [BP.name] open!")
@@ -69,7 +69,7 @@
 /datum/surgery_step/limb/mend/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		return (BP.status & ORGAN_CUT_AWAY) && BP.open < 3 && !(BP.status & ORGAN_ATTACHABLE)
+		return(BP.status & ORGAN_CUT_AWAY) && BP.open < 3 && !(BP.status & ORGAN_ATTACHABLE)
 
 /datum/surgery_step/limb/mend/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -85,7 +85,7 @@
 
 /datum/surgery_step/limb/mend/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.parent)
+	if(BP.parent)
 		BP = BP.parent
 		user.visible_message("\red [user]'s hand slips, tearing flesh on [target]'s [BP.name]!", \
 		"\red Your hand slips, tearing flesh on [target]'s [BP.name]!")
@@ -125,7 +125,7 @@
 
 /datum/surgery_step/limb/prepare/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.parent)
+	if(BP.parent)
 		BP = BP.parent
 		user.visible_message("\red [user]'s hand slips, searing [target]'s [BP.name]!", \
 		"\red Your hand slips, searing [target]'s [BP.name]!")
@@ -141,11 +141,11 @@
 /datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/robot_parts/p = tool
-		if (p.part)
-			if (!(target_zone in p.part))
+		if(p.part)
+			if(!(target_zone in p.part))
 				return 0
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		return (BP.status & ORGAN_ATTACHABLE)
+		return(BP.status & ORGAN_ATTACHABLE)
 
 /datum/surgery_step/limb/attach/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)

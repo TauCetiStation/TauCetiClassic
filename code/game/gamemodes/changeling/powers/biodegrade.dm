@@ -3,7 +3,7 @@
 	desc = "Dissolves restraints or other objects preventing free movement."
 	helptext = "This is obvious to nearby people, and can destroy \
 		standard restraints and closets."
-	chemical_cost = 30 //High cost to prevent spam
+	chemical_cost = 30 // High cost to prevent spam
 	genomecost = 2
 	req_human = 1
 	genetic_damage = 10
@@ -32,7 +32,7 @@
 		used = TRUE
 
 	if(!user.restrained() && istype(user.loc, /turf) && !used)
-		to_chat(user,"<span class='warning'>We are already free!</span>")
+		to_chat(user, "<span class='warning'>We are already free!</span>")
 		return 0
 
 	if(user.handcuffed && !used)
@@ -56,19 +56,19 @@
 	if(istype(user.loc, /obj/structure/closet) && !used)
 		user.loc.visible_message("<span class='warning'>[user.loc]'s hinges suddenly \
 			begin to melt and run!</span>")
-		to_chat(user,"<span class='warning'>We vomit acidic goop onto the \
+		to_chat(user, "<span class='warning'>We vomit acidic goop onto the \
 			interior of [user.loc]!</span>")
 		addtimer(CALLBACK(src, .proc/open_closet, user, user.loc), 70)
 		used = TRUE
 
 	if(istype(user.loc, /obj/effect/spider/cocoon) && !used)
 		user.loc.visible_message("<span class='warning'>[user.loc] shifts and starts to fall apart!</span>")
-		to_chat(user,"<span class='warning'>We secrete acidic enzymes from our skin and begin melting our cocoon...</span>")
-		addtimer(CALLBACK(src, .proc/dissolve_cocoon, user, user.loc), 25) //Very short because it's just webs
+		to_chat(user, "<span class='warning'>We secrete acidic enzymes from our skin and begin melting our cocoon...</span>")
+		addtimer(CALLBACK(src, .proc/dissolve_cocoon, user, user.loc), 25) // Very short because it's just webs
 		used = TRUE
 
 	if(used)
-		feedback_add_details("changeling_powers","BD")
+		feedback_add_details("changeling_powers", "BD")
 	return 1
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/item/weapon/handcuffs/O)
@@ -89,12 +89,12 @@
 		C.locked = FALSE
 		C.broken = TRUE
 		C.open(TRUE)
-		to_chat(user,"<span class='warning'>We open the container restraining us!</span>")
+		to_chat(user, "<span class='warning'>We open the container restraining us!</span>")
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/effect/spider/cocoon/O)
 	if(istype(O) && user.loc == O)
-		qdel(O) //The cocoon's destroy will move the changeling outside of it without interference
-		to_chat(user,"<span class='warning'>We dissolve the cocoon!</span>")
+		qdel(O) // The cocoon's destroy will move the changeling outside of it without interference
+		to_chat(user, "<span class='warning'>We dissolve the cocoon!</span>")
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_electropack(mob/living/carbon/human/user, obj/item/device/radio/electropack/O)
 	if(istype(O) && user.back == O)

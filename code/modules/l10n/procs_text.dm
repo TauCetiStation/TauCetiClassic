@@ -5,8 +5,8 @@
 	UPD: На случай, если вы ищите варианты пофиксить "я"!
 	Это старый фикс, с тех пор мы немного отрефакторили оригинальный бэй и
 	создали RuBaystation, тамошний фикс "я" более правильный и актуальный.
-	https://github.com/TauCetiStation/RuBaystation12
-	В ожидании чуда: http://www.byond.com/forum/?post=1768158
+	https:// github.com/TauCetiStation/RuBaystation12
+	В ожидании чуда: http:// www.byond.com/forum/?post=1768158
 */
 
 /*
@@ -18,8 +18,8 @@
 
 var/letter_255_ascii = text2ascii(LETTER_255)
 
-//Removes a few problematic characters
-/proc/sanitize_simple(t,list/repl_chars = list("\n"=" ","\t"=" ","я"=LETTER_255))
+// Removes a few problematic characters
+/proc/sanitize_simple(t, list/repl_chars = list("\n"=" ", "\t"=" ", "я"=LETTER_255))
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize_simple, entered. Text:</b> <i>[t]</i>")
@@ -43,7 +43,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 
 	return t
 
-/proc/sanitize(t,list/repl_chars = null)
+/proc/sanitize(t, list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize, entered. Text:</b> <i>[t]</i>")
@@ -58,7 +58,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 	var/index = findtext(t, LETTER_255)
 	while(index)
 		t = copytext(t, 1, index) + "&#255;" + copytext(t, index+1)
-		index = findtext(t, LETTER_255, index + 6)//index+len("&#255;")
+		index = findtext(t, LETTER_255, index + 6)// index+len("&#255;")
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \red <b>Sanitize, finished. Return text:</b> <i>[t]</i>")
@@ -66,7 +66,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 
 	return t
 
-/proc/sanitize_alt(t,list/repl_chars = null)
+/proc/sanitize_alt(t, list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize_alt, entered. Text:</b> <i>[t]</i>")
@@ -81,7 +81,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 	var/index = findtext(t, LETTER_255)
 	while(index)
 		t = copytext(t, 1, index) + "&#1103;" + copytext(t, index+1)
-		index = findtext(t, LETTER_255, index + 7)//index+len("&#1103;")
+		index = findtext(t, LETTER_255, index + 7)// index+len("&#1103;")
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \red <b>Sanitize_alt, finished. Return text:</b> <i>[t]</i>")
@@ -101,7 +101,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 	#endif
 	return replacetext(t, "&#1103;", "&#255;")
 
-/proc/sanitize_plus(t,list/repl_chars = null)
+/proc/sanitize_plus(t, list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize_plus, entered. Text:</b> <i>[t]</i>")
@@ -132,7 +132,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 	return replacetext(t, LETTER_255, "&#1103;")
 
 
-//TODO: придумать способ вернуть "я" для полей ввода и логов
+// TODO: придумать способ вернуть "я" для полей ввода и логов
 /proc/revert_ja(t, list/repl_chars = list("&#255;", "&#1103;"))
 	return replacetext(replacetext(t, "&#255;", LETTER_255), "&#1103;", LETTER_255)
 

@@ -35,7 +35,7 @@
 
 		update_icon()
 		nanomanager.update_uis(src) // update all UIs attached to src
-//TODO: Have this take an assemblyholder
+// TODO: Have this take an assemblyholder
 	else if(isassembly(item))
 		var/obj/item/device/assembly/A = item
 		if(A.secured)
@@ -49,7 +49,7 @@
 		A.loc = src
 		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
 		A.holder = src
-		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
+		A.toggle_secure()	// this calls update_icon(), which calls update_icon() on the holder(i.e. the bomb).
 
 		bombers += "[key_name(user)] attached a [item] to a transfer valve."
 		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -66,7 +66,7 @@
 
 /obj/item/device/transfer_valve/hear_talk(mob/living/M, msg)
 	if(!attached_device)	return
-	attached_device.hear_talk(M,msg)
+	attached_device.hear_talk(M, msg)
 	return
 
 /obj/item/device/transfer_valve/attack_self(mob/user)
@@ -83,7 +83,7 @@
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "transfer_valve.tmpl", "Tank Transfer Valve", 460, 280)
@@ -92,13 +92,13 @@
 		// open the new ui window
 		ui.open()
 		// auto update every Master Controller tick
-		//ui.set_auto_update(1)
+		// ui.set_auto_update(1)
 
 /obj/item/device/transfer_valve/Topic(href, href_list)
 	..()
-	if ( usr.stat || usr.restrained() )
+	if( usr.stat || usr.restrained() )
 		return 0
-	if (src.loc != usr)
+	if(src.loc != usr)
 		return 0
 	if(tank_one && href_list["tankone"])
 		split_gases()
@@ -157,7 +157,7 @@
 	tank_two.air_contents.merge(temp)
 
 /obj/item/device/transfer_valve/proc/split_gases()
-	if (!valve_open || !tank_one || !tank_two)
+	if(!valve_open || !tank_one || !tank_two)
 		return
 	var/ratio1 = tank_one.air_contents.volume/tank_two.air_contents.volume
 	var/datum/gas_mixture/temp
@@ -167,7 +167,7 @@
 
 	/*
 	Exadv1: I know this isn't how it's going to work, but this was just to check
-	it explodes properly when it gets a signal (and it does).
+	it explodes properly when it gets a signal(and it does).
 	*/
 
 /obj/item/device/transfer_valve/proc/toggle_valve()
@@ -199,7 +199,7 @@
 		log_game(log_str)
 		merge_gases()
 		spawn(20) // In case one tank bursts
-			for (var/i=0,i<5,i++)
+			for(var/i=0, i<5, i++)
 				src.update_icon()
 				sleep(10)
 			src.update_icon()
@@ -210,6 +210,6 @@
 		src.update_icon()
 
 // this doesn't do anything but the timer etc. expects it to be here
-// eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
+// eventually maybe have it update icon to show state(timer, prox etc.) like old bombs
 /obj/item/device/transfer_valve/proc/c_state()
 	return

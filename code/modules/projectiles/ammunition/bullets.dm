@@ -106,21 +106,21 @@
 
 /obj/item/ammo_casing/r4046
 	name = "A 40x46mm grenade"
-	desc = "A 40x46mm grenade (rubber)."
+	desc = "A 40x46mm grenade(rubber)."
 	icon_state = "40x46"
 	caliber = "40x46"
 	projectile_type = /obj/item/projectile/bullet/grenade/r4046
 
 /obj/item/ammo_casing/r4046/chem/teargas
-	desc = "A 40x46mm grenade (teargas)."
+	desc = "A 40x46mm grenade(teargas)."
 	projectile_type = /obj/item/projectile/bullet/chem/teargas
 
 /obj/item/ammo_casing/r4046/chem/EMP
-	desc = "A 40x46mm grenade (EMP)."
+	desc = "A 40x46mm grenade(EMP)."
 	projectile_type = /obj/item/projectile/bullet/chem/EMP
 
 /obj/item/ammo_casing/r4046/chem/Exp
-	desc = "A 40x46mm grenade (Exp)."
+	desc = "A 40x46mm grenade(Exp)."
 	projectile_type = /obj/item/projectile/bullet/chem/Exp
 
 
@@ -128,7 +128,7 @@
 	desc = "A caseless bullet casing."
 
 /obj/item/ammo_casing/caseless/fire(atom/target, mob/living/user, params, distro, quiet)
-	if (..())
+	if(..())
 		loc = null
 		return 1
 	else
@@ -180,7 +180,7 @@
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 
 /obj/item/ammo_box/c38m
-	name = "speed loader (.38)"
+	name = "speed loader(.38)"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38m
 	max_ammo = 6

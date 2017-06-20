@@ -58,7 +58,7 @@
 	if(issilicon(user))
 		dat += "<BR>"
 		if(safety_disabled)
-			if (emagged)
+			if(emagged)
 				dat += "<font color=red><b>ERROR</b>: Cannot re-enable Safety Protocols.</font><BR>"
 			else
 				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=green>Re-Enable Safety Protocols?</font>)</A><BR>"
@@ -102,7 +102,7 @@
 			return FALSE
 
 		if(safety_disabled && emagged)
-			return FALSE//if a traitor has gone through the trouble to emag the thing, let them keep it.
+			return FALSE// if a traitor has gone through the trouble to emag the thing, let them keep it.
 
 		safety_disabled = !safety_disabled
 		update_projections()
@@ -121,8 +121,8 @@
 /obj/machinery/computer/HolodeckControl/attackby(obj/item/weapon/D, mob/user)
 	if(istype(D, /obj/item/weapon/card/emag))
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		last_to_emag = user //emag again to change the owner
-		if (!emagged)
+		last_to_emag = user // emag again to change the owner
+		if(!emagged)
 			emagged = 1
 			safety_disabled = 1
 			update_projections()
@@ -135,7 +135,7 @@
 	return
 
 /obj/machinery/computer/HolodeckControl/proc/update_projections()
-	if (safety_disabled)
+	if(safety_disabled)
 		item_power_usage = 2500
 		for(var/obj/item/weapon/holo/esword/H in linkedholodeck)
 			H.damtype = BRUTE
@@ -146,14 +146,14 @@
 
 	for(var/mob/living/simple_animal/hostile/carp/holodeck/C in holographic_mobs)
 		C.set_safety(!safety_disabled)
-		if (last_to_emag)
+		if(last_to_emag)
 			C.friends = list(last_to_emag)
 
 /obj/machinery/computer/HolodeckControl/New()
 	..()
 	linkedholodeck = locate(/area/holodeck/alphadeck)
 
-//This could all be done better, but it works for now.
+// This could all be done better, but it works for now.
 /obj/machinery/computer/HolodeckControl/Destroy()
 	emergencyShutdown()
 	return ..()
@@ -180,7 +180,7 @@
 /obj/machinery/computer/HolodeckControl/power_change()
 	var/oldstat
 	..()
-	if (stat != oldstat && active && (stat & NOPOWER))
+	if(stat != oldstat && active && (stat & NOPOWER))
 		emergencyShutdown()
 
 /obj/machinery/computer/HolodeckControl/process()
@@ -188,9 +188,9 @@
 		if(!(get_turf(item) in linkedholodeck))
 			derez(item, 0)
 
-	if (!safety_disabled)
+	if(!safety_disabled)
 		for(var/mob/living/simple_animal/hostile/carp/holodeck/C in holographic_mobs)
-			if (get_area(C.loc) != linkedholodeck)
+			if(get_area(C.loc) != linkedholodeck)
 				holographic_mobs -= C
 				C.derez()
 
@@ -204,7 +204,7 @@
 			loadIdProgram()
 			active = 0
 			use_power = 1
-			for(var/mob/M in range(10,src))
+			for(var/mob/M in range(10, src))
 				M.show_message("The holodeck overloads!")
 
 
@@ -214,9 +214,9 @@
 					s.set_up(2, 1, T)
 					s.start()
 				T.ex_act(3)
-				T.hotspot_expose(1000,500,1)
+				T.hotspot_expose(1000, 500, 1)
 
-/obj/machinery/computer/HolodeckControl/proc/derez(obj/obj , silent = 1)
+/obj/machinery/computer/HolodeckControl/proc/derez(obj/obj, silent = 1)
 	holographic_objs.Remove(obj)
 
 	if(obj == null)
@@ -226,7 +226,7 @@
 		var/mob/M = obj.loc
 		if(ismob(M))
 			M.remove_from_mob(obj)
-			M.update_icons()	//so their overlays update
+			M.update_icons()	// so their overlays update
 
 	if(!silent)
 		var/obj/oldobj = obj
@@ -247,9 +247,9 @@
 /obj/machinery/computer/HolodeckControl/proc/loadProgram()
 
 	if(world.time < (last_change + 25))
-		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
+		if(world.time < (last_change + 15))// To prevent super-spam clicking, reduced process size and annoyance -Sieve
 			return
-		for(var/mob/M in range(3,src))
+		for(var/mob/M in range(3, src))
 			M.show_message("\b ERROR. Recalibrating projection apparatus.")
 			last_change = world.time
 			return
@@ -285,7 +285,7 @@
 	linkedholodeck = spawn_point.loc
 
 	for(var/obj/holo_obj in holographic_objs)
-		holo_obj.alpha *= 0.8 //give holodeck objs a slight transparency
+		holo_obj.alpha *= 0.8 // give holodeck objs a slight transparency
 
 	addtimer(CALLBACK(src, .proc/initEnv), 30, TIMER_UNIQUE)
 
@@ -298,7 +298,7 @@
 			holographic_mobs += new /mob/living/simple_animal/hostile/carp/holodeck(L.loc)
 
 		if(L.name=="Holocarp Spawn Random")
-			if (prob(4)) //With 4 spawn points, carp should only appear 15% of the time.
+			if(prob(4)) // With 4 spawn points, carp should only appear 15% of the time.
 				holographic_mobs += new /mob/living/simple_animal/hostile/carp/holodeck(L.loc)
 
 	update_projections()
@@ -310,13 +310,13 @@
 	s.start()
 	if(T)
 		T.temperature = 5000
-		T.hotspot_expose(50000,50000,1)
+		T.hotspot_expose(50000, 50000, 1)
 
 /obj/machinery/computer/HolodeckControl/proc/toggleGravity(area/A)
 	if(world.time < (last_gravity_change + 25))
-		if(world.time < (last_gravity_change + 15))//To prevent super-spam clicking
+		if(world.time < (last_gravity_change + 15))// To prevent super-spam clicking
 			return
-		for(var/mob/M in range(3,src))
+		for(var/mob/M in range(3, src))
 			M.show_message("\b ERROR. Recalibrating gravity field.")
 			last_change = world.time
 			return
@@ -326,22 +326,22 @@
 	use_power = 1
 
 	if(A.has_gravity)
-		A.gravitychange(0,A)
+		A.gravitychange(0, A)
 	else
-		A.gravitychange(1,A)
+		A.gravitychange(1, A)
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
-	//Get rid of any items
+	// Get rid of any items
 	for(var/item in holographic_objs)
 		derez(item)
 	for(var/mob/living/simple_animal/hostile/carp/holodeck/C in holographic_mobs)
 		holographic_mobs -= C
 		C.derez()
-	//Turn it back to the regular non-holographic room
+	// Turn it back to the regular non-holographic room
 	loadIdProgram()
 
 	if(!linkedholodeck.has_gravity)
-		linkedholodeck.gravitychange(1,linkedholodeck)
+		linkedholodeck.gravitychange(1, linkedholodeck)
 
 	active = 0
 	use_power = 1

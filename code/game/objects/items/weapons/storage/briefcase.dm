@@ -17,7 +17,7 @@
 /obj/item/weapon/storage/briefcase/attack(mob/living/M, mob/living/user)
 	//..()
 
-	if ((CLUMSY in user.mutations) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red The [src] slips out of your hand and hits your head.")
 		user.take_bodypart_damage(10)
 		user.Paralyse(2)
@@ -28,14 +28,14 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>)")
 
-	if (M.stat < 2 && M.health < 50 && prob(90))
+	if(M.stat < 2 && M.health < 50 && prob(90))
 		var/mob/H = M
 		// ******* Check
-		if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
+		if((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
 			to_chat(M, "\red The helmet protects you from being hit hard in the head!")
 			return
 		var/time = rand(2, 6)
-		if (prob(75))
+		if(prob(75))
 			M.Paralyse(time)
 		else
 			M.Stun(time)
@@ -43,7 +43,7 @@
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall.", 2)
 	else
-		to_chat(M, text("\red [] tried to knock you unconcious!",user))
+		to_chat(M, text("\red [] tried to knock you unconcious!", user))
 		M.eye_blurry += 3
 
 	return

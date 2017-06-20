@@ -16,8 +16,8 @@
 /obj/machinery/power/generator_type2/New()
 	..()
 	spawn(5)
-		input1 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,turn(dir, 90))
-		input2 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,turn(dir, -90))
+		input1 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src, turn(dir, 90))
+		input2 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src, turn(dir, -90))
 		if(!input1 || !input2)
 			stat |= BROKEN
 		updateicon()
@@ -69,7 +69,7 @@
 			hot_air.temperature = hot_air.temperature - energy_transfer/hot_air_heat_capacity
 			cold_air.temperature = cold_air.temperature + heat/cold_air_heat_capacity
 
-			//world << "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]"
+			// world << "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]"
 
 			if(input1.network)
 				input1.network.update = 1
@@ -100,7 +100,7 @@
 
 
 /obj/machinery/power/generator_type2/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) && (!istype(user, /mob/living/silicon/ai)))
+	if( (get_dist(src, user) > 1 ) && (!istype(user, /mob/living/silicon/ai)))
 		user.unset_machine(src)
 		user << browse(null, "window=teg")
 		return

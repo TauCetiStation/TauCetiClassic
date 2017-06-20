@@ -2,7 +2,7 @@
 	..()
 
 	// Increase germ_level regularly
-	if(germ_level < GERM_LEVEL_AMBIENT && prob(80))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
+	if(germ_level < GERM_LEVEL_AMBIENT && prob(80))	// if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
 /mob/living/carbon/Move(NewLoc, direct)
@@ -47,7 +47,7 @@
 					src.gib()
 
 /mob/living/carbon/attack_animal(mob/living/simple_animal/M)
-	if(istype(M,/mob/living/simple_animal/headcrab))
+	if(istype(M, /mob/living/simple_animal/headcrab))
 		var/mob/living/simple_animal/headcrab/crab = M
 		crab.Infect(src)
 
@@ -77,7 +77,7 @@
 
 /mob/living/carbon/attack_hand(mob/M)
 	if(!istype(M, /mob/living/carbon)) return
-	if (ishuman(M))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
 		if(BP && !BP.is_usable())
@@ -115,7 +115,7 @@
 	return
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return 0	// godmode
 
 	var/turf/T = get_turf(src)
 	var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
@@ -140,7 +140,7 @@
 		if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
 			Stun(2)
 		spawn(20)
-			jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
+			jitteriness = max(jitteriness - 990, 10) // Still jittery, but vastly less
 			if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
 				Stun(8)
 				Weaken(8)
@@ -155,20 +155,20 @@
 
 /mob/living/carbon/proc/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	//OOP? Generics? Hue hue hue hue ...
+	if(item_in_hand) // this segment checks if the item in your hand is twohanded.
+		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	// OOP? Generics? Hue hue hue hue ...
 			if(item_in_hand:wielded)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)	//This being 1 means the left hand is in use
+		if(hand)	// This being 1 means the left hand is in use
 			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
 			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
 		else
 			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
 			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
-	/*if (!( src.hand ))
+	/*if(!( src.hand ))
 		src.hands.dir = NORTH
 	else
 		src.hands.dir = SOUTH*/
@@ -188,11 +188,11 @@
 		swap_hand()
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	if (src.health >= config.health_threshold_crit)
+	if(src.health >= config.health_threshold_crit)
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
 			src.visible_message( \
-				text("<span class='notice'>[src] examines [].</span>",src.gender==MALE?"himself":"herself"), \
+				text("<span class='notice'>[src] examines [].</span>", src.gender==MALE?"himself":"herself"), \
 				"<span class='notice'>You check yourself for injuries.</span>" \
 				)
 
@@ -227,22 +227,22 @@
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].", status == "OK" ? "\blue " : "\red ", BP.name,status), 1)
+				src.show_message(text("\t []My [] is [].", status == "OK" ? "\blue " : "\red ", BP.name, status), 1)
 			if(H.species && (H.species.name == SKELETON) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			var/t_him = "it"
-			if (src.gender == MALE)
+			if(src.gender == MALE)
 				t_him = "him"
-			else if (src.gender == FEMALE)
+			else if(src.gender == FEMALE)
 				t_him = "her"
-			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
+			if(istype(src, /mob/living/carbon/human) && src:w_uniform)
 				var/mob/living/carbon/human/H = src
 				H.w_uniform.add_fingerprint(M)
 
 			if(lying)
-				src.sleeping = max(0,src.sleeping-5)
-				if (!M.lying)
+				src.sleeping = max(0, src.sleeping-5)
+				if(!M.lying)
 					if(!src.sleeping)
 						src.resting = 0
 					if(src.crawling)
@@ -331,7 +331,7 @@
 /mob/living/carbon/proc/setDNA(datum/dna/newDNA)
 	dna = newDNA
 
-// ++++ROCKDTBEN++++ MOB PROCS //END
+// ++++ROCKDTBEN++++ MOB PROCS // END
 
 /mob/living/carbon/clean_blood()
 	. = ..()
@@ -346,20 +346,20 @@
 				H.bloody_hands = 0
 				H.update_inv_gloves()
 			H.germ_level = 0
-	update_icons()	//apply the now updated overlays to the mob
+	update_icons()	// apply the now updated overlays to the mob
 
 
-//Throwing stuff
+// Throwing stuff
 
 /mob/living/carbon/proc/toggle_throw_mode()
-	if (src.in_throw_mode)
+	if(src.in_throw_mode)
 		throw_mode_off()
 	else
 		throw_mode_on()
 
 /mob/living/carbon/proc/throw_mode_off()
 	src.in_throw_mode = 0
-	if(src.throw_icon) //in case we don't have the HUD and we use the hotkey
+	if(src.throw_icon) // in case we don't have the HUD and we use the hotkey
 		src.throw_icon.icon_state = "act_throw_off"
 
 /mob/living/carbon/proc/throw_mode_on()
@@ -380,12 +380,12 @@
 
 	if(!item || !item:canremove) return
 
-	if (istype(item, /obj/item/weapon/grab))
+	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
-		item = G.throw_held() //throw the person instead of the grab
+		item = G.throw_held() // throw the person instead of the grab
 		qdel(G)
 		if(ismob(item))
-			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
+			var/turf/start_T = get_turf(loc) // Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
 			if(start_T && end_T)
 				var/mob/M = item
@@ -396,12 +396,12 @@
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
 				msg_admin_attack("[usr.name] ([usr.ckey]) has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 
-	if(!item) return //Grab processing has a chance of returning null
+	if(!item) return // Grab processing has a chance of returning null
 
 	src.remove_from_mob(item)
 
-	//actually throw it!
-	if (item)
+	// actually throw it!
+	if(item)
 		src.visible_message("<span class='rose'>[src] has thrown [item].</span>")
 
 		newtonian_move(get_dir(target, src))
@@ -420,20 +420,20 @@
 	return 1
 
 /mob/living/carbon/restrained()
-	if (handcuffed)
+	if(handcuffed)
 		return 1
 	return
 
 /mob/living/carbon/u_equip(obj/item/W)
 	if(!W)	return 0
 
-	else if (W == handcuffed)
+	else if(W == handcuffed)
 		handcuffed = null
 		update_inv_handcuffed()
 		if(buckled && buckled.buckle_require_restraints)
 			buckled.unbuckle_mob()
 
-	else if (W == legcuffed)
+	else if(W == legcuffed)
 		legcuffed = null
 		update_inv_legcuffed()
 	else
@@ -460,9 +460,9 @@
 	onclose(user, "mob[name]")
 	return
 
-//generates realistic-ish pulse output based on preset levels
-/mob/living/carbon/proc/get_pulse(method)	//method 0 is for hands, 1 is for machines, more accurate
-	var/temp = 0								//see setup.dm:694
+// generates realistic-ish pulse output based on preset levels
+/mob/living/carbon/proc/get_pulse(method)	// method 0 is for hands, 1 is for machines, more accurate
+	var/temp = 0								// see setup.dm:694
 	switch(src.pulse)
 		if(PULSE_NONE)
 			return "0"
@@ -489,8 +489,8 @@
 	if(usr.sleeping)
 		to_chat(usr, "<span class='rose'>You are already sleeping")
 		return
-	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		usr.sleeping = 20 //Short nap
+	if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
+		usr.sleeping = 20 // Short nap
 
 /mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
 	if(buckled || sleeping || weakened || paralysis || stunned || resting || crawling)
@@ -498,13 +498,13 @@
 	stop_pulling()
 	to_chat(src, "<span class='warning'>You slipped on [slipped_on]!</span>")
 	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
-	if (stun_duration > 0)
+	if(stun_duration > 0)
 		Stun(stun_duration)
 	if(weaken_duration > 0)
 		Weaken(weaken_duration)
 	return TRUE
 
-//Brain slug proc for voluntary removal of control.
+// Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
 
 	set category = "Alien"
@@ -531,7 +531,7 @@
 	verbs -= /mob/living/carbon/proc/punish_host
 	verbs -= /mob/living/carbon/proc/spawn_larvae
 
-//Brain slug proc for tormenting the host.
+// Brain slug proc for tormenting the host.
 /mob/living/carbon/proc/punish_host()
 	set category = "Alien"
 	set name = "Torment host"
@@ -546,11 +546,11 @@
 		to_chat(src, "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>")
 		to_chat(B.host_brain, "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>")
 
-//Check for brain worms in head.
+// Check for brain worms in head.
 /mob/proc/has_brain_worms()
 
 	for(var/I in contents)
-		if(istype(I,/mob/living/simple_animal/borer))
+		if(istype(I, /mob/living/simple_animal/borer))
 			return I
 
 	return 0
@@ -597,9 +597,9 @@
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
 		update_inv_legcuffed()
-		if (client)
+		if(client)
 			client.screen -= W
-		if (W)
+		if(W)
 			W.loc = loc
 			W.dropped(src)
 			if(W)
@@ -613,7 +613,7 @@
 			return 1
 		else if(locate(/obj/structure/stool/bed/roller, src.loc))
 			return -5
-		else if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
+		else if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	// we need special pixel shift for beds & optable to make mob lying centered
 			return -4
 		else
 			return -6
@@ -622,7 +622,7 @@
 
 /mob/living/carbon/get_standard_pixel_x_offset(lying_current = 0)
 	if(lying)
-		if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
+		if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	// we need special pixel shift for beds & optable to make mob lying centered
 			switch(src.lying_current)
 				if(90)	return 2
 				if(270)	return -2

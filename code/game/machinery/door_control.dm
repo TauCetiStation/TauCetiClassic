@@ -38,7 +38,7 @@
 
 	if(!allowed(user))
 		to_chat(user, "\red Access Denied")
-		flick("doorctrl-denied",src)
+		flick("doorctrl-denied", src)
 		return
 
 	use_power(5)
@@ -49,7 +49,7 @@
 		for(var/obj/machinery/door/airlock/D in range(range))
 			if(D.id_tag == src.id)
 				if(specialfunctions & OPEN)
-					if (D.density)
+					if(D.density)
 						spawn(0)
 							D.open()
 							return
@@ -79,8 +79,8 @@
 
 	else
 		for(var/obj/machinery/door/poddoor/M in machines)
-			if (M.id == src.id)
-				if (M.density)
+			if(M.id == src.id)
+				if(M.density)
 					spawn( 0 )
 						M.open()
 						return
@@ -128,7 +128,7 @@
 	icon_state = "launcheract"
 
 	for(var/obj/machinery/door/poddoor/M in machines)
-		if (M.id == src.id)
+		if(M.id == src.id)
 			spawn( 0 )
 				M.open()
 				return
@@ -142,7 +142,7 @@
 	sleep(50)
 
 	for(var/obj/machinery/door/poddoor/M in machines)
-		if (M.id == src.id)
+		if(M.id == src.id)
 			spawn( 0 )
 				M.close()
 				return

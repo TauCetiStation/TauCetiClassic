@@ -16,7 +16,7 @@
 	var/access_janitor = 0
 //	var/access_flora = 0
 	var/access_reagent_scanner = 0
-	var/access_remote_door = 0 //Control some blast doors remotely!!
+	var/access_remote_door = 0 // Control some blast doors remotely!!
 	var/remote_door_id = ""
 	var/access_status_display = 0
 	var/access_quartermaster = 0
@@ -25,9 +25,9 @@
 	var/charges = 0
 	var/mode = null
 	var/menu
-	var/datum/data/record/active1 = null //General
-	var/datum/data/record/active2 = null //Medical
-	var/datum/data/record/active3 = null //Security
+	var/datum/data/record/active1 = null // General
+	var/datum/data/record/active2 = null // Medical
+	var/datum/data/record/active3 = null // Security
 	var/obj/machinery/computer/monitor/powmonitor = null // Power Monitor
 	var/list/powermonitors = list()
 	var/message1	// used for status_displays
@@ -205,7 +205,7 @@
 	icon_state = "cart"
 	access_remote_door = 1
 	access_detonate_pda = 1
-	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
+	remote_door_id = "smindicate" // Make sure this matches the syndicate shuttle's shield/door id!!	// don't ask about the name, testing.
 	charges = 4
 
 /obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
@@ -226,7 +226,7 @@
 			if(loc)
 				var/obj/item/PDA = loc
 				var/mob/user = null
-				if(istype(PDA.loc,/mob/living))
+				if(istype(PDA.loc, /mob/living))
 					user = PDA.loc
 				else if(PDA.fingerprintslast)
 					var/client/user_client = directory[PDA.fingerprintslast]
@@ -259,16 +259,16 @@
 /obj/item/weapon/cartridge/proc/create_NanoUI_values(mob/user)
 	var/values[0]
 
-	/*		Signaler (Mode: 40)				*/
+	/*		Signaler(Mode: 40)				*/
 
 
-	if(istype(radio,/obj/item/radio/integrated/signal) && (mode==40))
+	if(istype(radio, /obj/item/radio/integrated/signal) && (mode==40))
 		var/obj/item/radio/integrated/signal/R = radio
 		values["signal_freq"] = format_frequency(R.frequency)
 		values["signal_code"] = R.code
 
 
-	/*		Station Display (Mode: 42)			*/
+	/*		Station Display(Mode: 42)			*/
 
 	if(mode==42)
 		values["message1"] = message1 ? message1 : "(none)"
@@ -276,12 +276,12 @@
 
 
 
-	/*		Power Monitor (Mode: 43 / 433)			*/
+	/*		Power Monitor(Mode: 43 / 433)			*/
 	if(mode==43)
 		var/pMonData[0]
 		for(var/obj/machinery/computer/monitor/pMon in machines)
 			if(!(pMon.stat & (NOPOWER|BROKEN)) )
-				pMonData[++pMonData.len] = list ("Name" = pMon.name, "ref" = "\ref[pMon]")
+				pMonData[++pMonData.len] = list("Name" = pMon.name, "ref" = "\ref[pMon]")
 				if(isnull(powmonitor))
 					powmonitor = pMon
 
@@ -291,7 +291,7 @@
 		if(powmonitor)
 			values["powermonitor_detected"] = TRUE
 			values["poweravail"] = powmonitor.powernet.avail
-			values["powerload"] = num2text(powmonitor.powernet.viewload,10)
+			values["powerload"] = num2text(powmonitor.powernet.viewload, 10)
 
 			var/list/L = list()
 			for(var/obj/machinery/power/terminal/term in powmonitor.powernet.nodes)
@@ -299,8 +299,8 @@
 					var/obj/machinery/power/apc/A = term.master
 					L += A
 
-			var/list/Status = list("Off","AOff","On","AOn") // Status:  off, auto-off, on, auto-on
-			var/list/chg = list("N","C","F")	// Charging: nope, charging, full
+			var/list/Status = list("Off", "AOff", "On", "AOn") // Status:  off, auto-off, on, auto-on
+			var/list/chg = list("N", "C", "F")	// Charging: nope, charging, full
 			var/apcData[0]
 			for(var/obj/machinery/power/apc/A in L)
 				apcData[++apcData.len] = list("Name" = html_encode(A.area.name), "Equipment" = Status[A.equipment+1], "Lights" = Status[A.lighting+1], "Environment" = Status[A.environ+1], "CellStatus" = A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "N/C", "Load" = add_lspace(A.lastused_total, 6))
@@ -312,7 +312,7 @@
 
 
 
-	/*		General Records (Mode: 44 / 441 / 45 / 451)	*/
+	/*		General Records(Mode: 44 / 441 / 45 / 451)	*/
 	if(mode == 44 || mode == 441 || mode == 45 || mode ==451)
 		if(istype(active1, /datum/data/record) && (active1 in data_core.general))
 			values["general"] = active1.fields
@@ -323,12 +323,12 @@
 
 
 
-	/*		Medical Records (Mode: 44 / 441)	*/
+	/*		Medical Records(Mode: 44 / 441)	*/
 
 	if(mode == 44 || mode == 441)
 		var/medData[0]
 		for(var/datum/data/record/R in sortRecord(data_core.general))
-			medData[++medData.len] = list(Name = R.fields["name"],"ref" = "\ref[R]")
+			medData[++medData.len] = list(Name = R.fields["name"], "ref" = "\ref[R]")
 		values["medical_records"] = medData
 
 		if(istype(active2, /datum/data/record) && (active2 in data_core.medical))
@@ -337,11 +337,11 @@
 		else
 			values["medical_exists"] = 0
 
-	/*		Security Records (Mode:45 / 451)	*/
+	/*		Security Records(Mode:45 / 451)	*/
 
 	if(mode == 45 || mode == 451)
 		var/secData[0]
-		for (var/datum/data/record/R in sortRecord(data_core.general))
+		for(var/datum/data/record/R in sortRecord(data_core.general))
 			secData[++secData.len] = list(Name = R.fields["name"], "ref" = "\ref[R]")
 		values["security_records"] = secData
 
@@ -351,12 +351,12 @@
 		else
 			values["security_exists"] = 0
 
-	/*		Security Bot Control (Mode: 46)		*/
+	/*		Security Bot Control(Mode: 46)		*/
 
 	if(mode==46)
 		var/botsData[0]
 		var/beepskyData[0]
-		if(istype(radio,/obj/item/radio/integrated/beepsky))
+		if(istype(radio, /obj/item/radio/integrated/beepsky))
 			var/obj/item/radio/integrated/beepsky/SC = radio
 			beepskyData["active"] = SC.active
 			if(SC.active && !isnull(SC.botstatus))
@@ -393,16 +393,16 @@
 	if(mode==48)
 		var/muleData[0]
 		var/mulebotsData[0]
-		if(istype(radio,/obj/item/radio/integrated/mule))
+		if(istype(radio, /obj/item/radio/integrated/mule))
 			var/obj/item/radio/integrated/mule/QC = radio
 			muleData["active"] = QC.active
 			if(QC.active && !isnull(QC.botstatus))
 				var/area/loca = QC.botstatus["loca"]
 				var/loca_name = sanitize(loca.name)
-				muleData["botstatus"] =  list("loca" = loca_name, "mode" = QC.botstatus["mode"],"home"=QC.botstatus["home"],"powr" = QC.botstatus["powr"],"retn" =QC.botstatus["retn"], "pick"=QC.botstatus["pick"], "load" = QC.botstatus["load"], "dest" = sanitize(QC.botstatus["dest"]))
+				muleData["botstatus"] =  list("loca" = loca_name, "mode" = QC.botstatus["mode"], "home"=QC.botstatus["home"], "powr" = QC.botstatus["powr"], "retn" =QC.botstatus["retn"], "pick"=QC.botstatus["pick"], "load" = QC.botstatus["load"], "dest" = sanitize(QC.botstatus["dest"]))
 
 			else
-				muleData["botstatus"] = list("loca" = null, "mode" = -1,"home"=null,"powr" = null,"retn" =null, "pick"=null, "load" = null, "dest" = null)
+				muleData["botstatus"] = list("loca" = null, "mode" = -1, "home"=null, "powr" = null, "retn" =null, "pick"=null, "load" = null, "dest" = null)
 
 
 			var/mulebotsCount=0
@@ -418,7 +418,7 @@
 			muleData["count"] = mulebotsCount
 
 		else
-			muleData["botstatus"] =  list("loca" = null, "mode" = -1,"home"=null,"powr" = null,"retn" =null, "pick"=null, "load" = null, "dest" = null)
+			muleData["botstatus"] =  list("loca" = null, "mode" = -1, "home"=null, "powr" = null, "retn" =null, "pick"=null, "load" = null, "dest" = null)
 			muleData["active"] = 0
 			mulebotsData[++mulebotsData.len] = list("Name" = "No bots found", "Location" = "Invalid", "ref"= null)
 			muleData["bots"] = mulebotsData
@@ -428,7 +428,7 @@
 
 
 
-	/*	Supply Shuttle Requests Menu (Mode: 47)		*/
+	/*	Supply Shuttle Requests Menu(Mode: 47)		*/
 
 	if(mode==47)
 		var/supplyData[0]
@@ -480,7 +480,7 @@
 				if(ml.z != cl.z)
 					continue
 				var/direction = get_dir(src, M)
-				MopData[++MopData.len] = list ("x" = ml.x, "y" = ml.y, "dir" = uppertext(dir2text(direction)), "status" = M.reagents.total_volume ? "Wet" : "Dry")
+				MopData[++MopData.len] = list("x" = ml.x, "y" = ml.y, "dir" = uppertext(dir2text(direction)), "status" = M.reagents.total_volume ? "Wet" : "Dry")
 
 		if(!MopData.len)
 			MopData[++MopData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
@@ -492,8 +492,8 @@
 			if(bl)
 				if(bl.z != cl.z)
 					continue
-				var/direction = get_dir(src,B)
-				BucketData[++BucketData.len] = list ("x" = bl.x, "y" = bl.y, "dir" = uppertext(dir2text(direction)), "status" = B.reagents.total_volume/100)
+				var/direction = get_dir(src, B)
+				BucketData[++BucketData.len] = list("x" = bl.x, "y" = bl.y, "dir" = uppertext(dir2text(direction)), "status" = B.reagents.total_volume/100)
 
 		if(!BucketData.len)
 			BucketData[++BucketData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
@@ -504,7 +504,7 @@
 			if(bl)
 				if(bl.z != cl.z)
 					continue
-				var/direction = get_dir(src,B)
+				var/direction = get_dir(src, B)
 				CbotData[++CbotData.len] = list("x" = bl.x, "y" = bl.y, "dir" = uppertext(dir2text(direction)), "status" = B.on ? "Online" : "Offline")
 
 
@@ -516,7 +516,7 @@
 			if(bl)
 				if(bl.z != cl.z)
 					continue
-				var/direction = get_dir(src,B)
+				var/direction = get_dir(src, B)
 				CartData[++CartData.len] = list("x" = bl.x, "y" = bl.y, "dir" = uppertext(dir2text(direction)), "status" = B.reagents.total_volume/100)
 		if(!CartData.len)
 			CartData[++CartData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
@@ -539,7 +539,7 @@
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
-	if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return
@@ -553,9 +553,9 @@
 			var/datum/data/record/M = locate(href_list["target"])
 			loc:mode = 441
 			mode = 441
-			if (R in data_core.general)
-				for (var/datum/data/record/E in data_core.medical)
-					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+			if(R in data_core.general)
+				for(var/datum/data/record/E in data_core.medical)
+					if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 						M = E
 						break
 				active1 = R
@@ -566,9 +566,9 @@
 			var/datum/data/record/S = locate(href_list["target"])
 			loc:mode = 451
 			mode = 451
-			if (R in data_core.general)
-				for (var/datum/data/record/E in data_core.security)
-					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+			if(R in data_core.general)
+				for(var/datum/data/record/E in data_core.security)
+					if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 						S = E
 						break
 				active1 = R

@@ -1,5 +1,5 @@
 datum/preferences
-	//The mob should have a gender you want before running this proc. Will run fine without H
+	// The mob should have a gender you want before running this proc. Will run fine without H
 	proc/randomize_appearance_for(mob/living/carbon/human/H)
 		if(H)
 			if(H.gender == MALE)
@@ -13,17 +13,17 @@ datum/preferences
 		randomize_hair_color("facial")
 		randomize_eyes_color()
 		randomize_skin_color()
-		underwear = rand(1,underwear_m.len)
-		undershirt = rand(1,undershirt_t.len)
-		socks = rand(1,socks_t.len)
+		underwear = rand(1, underwear_m.len)
+		undershirt = rand(1, undershirt_t.len)
+		socks = rand(1, socks_t.len)
 		backbag = 2
-		age = rand(AGE_MIN,AGE_MAX)
+		age = rand(AGE_MIN, AGE_MAX)
 		if(H)
 			copy_to(H)
 
 
 	proc/randomize_hair_color(target = "hair")
-		if(prob (75) && target == "facial") // Chance to inherit hair color
+		if(prob(75) && target == "facial") // Chance to inherit hair color
 			r_facial = r_hair
 			g_facial = g_hair
 			b_facial = b_hair
@@ -33,7 +33,7 @@ datum/preferences
 		var/green
 		var/blue
 
-		var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
+		var/col = pick("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
 		switch(col)
 			if("blonde")
 				red = 255
@@ -60,17 +60,17 @@ datum/preferences
 				green = 255
 				blue = 153
 			if("old")
-				red = rand (100, 255)
+				red = rand(100, 255)
 				green = red
 				blue = red
 			if("punk")
-				red = rand (0, 255)
-				green = rand (0, 255)
-				blue = rand (0, 255)
+				red = rand(0, 255)
+				green = rand(0, 255)
+				blue = rand(0, 255)
 
-		red = max(min(red + rand (-25, 25), 255), 0)
-		green = max(min(green + rand (-25, 25), 255), 0)
-		blue = max(min(blue + rand (-25, 25), 255), 0)
+		red = max(min(red + rand(-25, 25), 255), 0)
+		green = max(min(green + rand(-25, 25), 255), 0)
+		blue = max(min(blue + rand(-25, 25), 255), 0)
 
 		switch(target)
 			if("hair")
@@ -87,14 +87,14 @@ datum/preferences
 		var/green
 		var/blue
 
-		var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
+		var/col = pick("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
 		switch(col)
 			if("black")
 				red = 0
 				green = 0
 				blue = 0
 			if("grey")
-				red = rand (100, 200)
+				red = rand(100, 200)
 				green = red
 				blue = red
 			if("brown")
@@ -118,13 +118,13 @@ datum/preferences
 				green = 102
 				blue = 0
 			if("albino")
-				red = rand (200, 255)
-				green = rand (0, 150)
-				blue = rand (0, 150)
+				red = rand(200, 255)
+				green = rand(0, 150)
+				blue = rand(0, 150)
 
-		red = max(min(red + rand (-25, 25), 255), 0)
-		green = max(min(green + rand (-25, 25), 255), 0)
-		blue = max(min(blue + rand (-25, 25), 255), 0)
+		red = max(min(red + rand(-25, 25), 255), 0)
+		green = max(min(green + rand(-25, 25), 255), 0)
+		blue = max(min(blue + rand(-25, 25), 255), 0)
 
 		r_eyes = red
 		g_eyes = green
@@ -135,14 +135,14 @@ datum/preferences
 		var/green
 		var/blue
 
-		var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
+		var/col = pick("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
 		switch(col)
 			if("black")
 				red = 0
 				green = 0
 				blue = 0
 			if("grey")
-				red = rand (100, 200)
+				red = rand(100, 200)
 				green = red
 				blue = red
 			if("brown")
@@ -166,20 +166,20 @@ datum/preferences
 				green = 102
 				blue = 0
 			if("albino")
-				red = rand (200, 255)
-				green = rand (0, 150)
-				blue = rand (0, 150)
+				red = rand(200, 255)
+				green = rand(0, 150)
+				blue = rand(0, 150)
 
-		red = max(min(red + rand (-25, 25), 255), 0)
-		green = max(min(green + rand (-25, 25), 255), 0)
-		blue = max(min(blue + rand (-25, 25), 255), 0)
+		red = max(min(red + rand(-25, 25), 255), 0)
+		green = max(min(green + rand(-25, 25), 255), 0)
+		blue = max(min(blue + rand(-25, 25), 255), 0)
 
 		r_skin = red
 		g_skin = green
 		b_skin = blue
 
 
-/datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
+/datum/preferences/proc/update_preview_icon()		// seriously. This is horrendous.
 	// Silicons only need a very basic preview since there is no customization for them.
 	if(job_engsec_high)
 		switch(job_engsec_high)

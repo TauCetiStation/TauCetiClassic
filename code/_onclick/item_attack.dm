@@ -15,7 +15,7 @@
 	if(istype(I) && ismob(user))
 		I.attack(src, user)
 
-		if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
+		if(ishuman(user))	// When abductor will hit someone from stelth he will reveal himself
 			var/mob/living/carbon/human/H = user
 			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
 				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
@@ -39,11 +39,11 @@
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
 
-	if (!istype(M)) // not sure if this is the right thing...
+	if(!istype(M)) // not sure if this is the right thing...
 		return 0
 	var/messagesource = M
-	if (can_operate(M))        //Checks if mob is lying down on table for surgery
-		if (do_surgery(M,user,src))
+	if(can_operate(M))        // Checks if mob is lying down on table for surgery
+		if(do_surgery(M, user, src))
 			return 0
 
 	// Knifing
@@ -56,7 +56,7 @@
 					if(AH.is_in_space_suit())
 						protected = 1
 				if(!protected)
-					//TODO: better alternative for applying damage multiple times? Nice knifing sound?
+					// TODO: better alternative for applying damage multiple times? Nice knifing sound?
 					var/damage_flags = damage_flags()
 					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
 					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
@@ -71,9 +71,9 @@
 					msg_admin_attack("[key_name(user)] knifed [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])" )
 					return
 
-	if (istype(M,/mob/living/carbon/brain))
+	if(istype(M, /mob/living/carbon/brain))
 		messagesource = M:container
-	if (hitsound)
+	if(hitsound)
 		playsound(loc, hitsound, 50, 1, -1)
 	/////////////////////////
 	user.lastattacked = M
@@ -114,7 +114,7 @@
 						spawn()
 							if(slime)
 								slime.SStun = 1
-								sleep(rand(5,20))
+								sleep(rand(5, 20))
 								if(slime)
 									slime.SStun = 0
 
@@ -141,7 +141,7 @@
 								spawn()
 									if(slime)
 										slime.SStun = 1
-										sleep(rand(5,20))
+										sleep(rand(5, 20))
 										if(slime)
 											slime.SStun = 0
 
@@ -179,7 +179,7 @@
 
 
 	if(istype(M, /mob/living/carbon/human))
-		return M:attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
+		return M:attacked_by(src, user, def_zone)	// make sure to return whether we have hit or miss
 	else
 		switch(damtype)
 			if("brute")
@@ -189,12 +189,12 @@
 				else
 
 					M.take_bodypart_damage(power)
-					if (prob(33)) // Added blood for whacking non-humans too
+					if(prob(33)) // Added blood for whacking non-humans too
 						var/turf/location = M.loc
-						if (istype(location, /turf/simulated))
+						if(istype(location, /turf/simulated))
 							location:add_blood_floor(M)
 			if("fire")
-				if (!(COLD_RESISTANCE in M.mutations))
+				if(!(COLD_RESISTANCE in M.mutations))
 					M.take_bodypart_damage(0, power)
 					to_chat(M, "Aargh it burns!")
 		M.updatehealth()

@@ -8,10 +8,10 @@
 	components["armour"] = new/datum/robot_component/armour/class_5(src)
 
 /datum/robot_component/armour/class_5
-	name = "armour plating (Class V)"
+	name = "armour plating(Class V)"
 	max_damage = 180
 
-//Combat Components (+75% HP)
+// Combat Components(+75% HP)
 /datum/robot_component/actuator/combat
 	name = "actuator"
 	max_damage = 88

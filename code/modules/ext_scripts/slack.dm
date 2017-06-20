@@ -2,7 +2,7 @@
 	if(!config.use_slack_bot || !config.slack_team || !channel || !msg)
 		return 0
 
-	//more info here: https://api.slack.com/docs/formatting
+	// more info here: https:// api.slack.com/docs/formatting
 	msg = sanitize_slack(msg)
 
 	var/script_args = "\"[channel]\" \"[msg]\""
@@ -14,8 +14,8 @@
 	if(icon)
 		script_args += " --icon \"[sanitize_slack(icon)]\""
 
-	//required positional args: channel, text
-	//optional: --attachment_message TEXT, --name NAME, --icon EMOJI
+	// required positional args: channel, text
+	// optional: --attachment_message TEXT, --name NAME, --icon EMOJI
 	ext_python("slackbot_message.py", script_args)
 
 /proc/send2slack_service(msg)

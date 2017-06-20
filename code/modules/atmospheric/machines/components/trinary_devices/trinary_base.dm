@@ -58,7 +58,7 @@ obj/machinery/atmospherics/trinary/network_expand(datum/pipe_network/new_network
 			qdel(network2)
 		network2 = new_network
 
-	else if (reference == node3)
+	else if(reference == node3)
 		if(network3)
 			qdel(network3)
 		network3 = new_network
@@ -96,18 +96,18 @@ obj/machinery/atmospherics/trinary/initialize()
 	var/node2_connect = turn(dir, -90)
 	var/node3_connect = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node1_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node2_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node2 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node3_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node3 = target
 			break
 

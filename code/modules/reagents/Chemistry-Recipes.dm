@@ -13,14 +13,14 @@ datum
 
 		var/result_amount = 0
 		var/secondary = 0 // set to nonzero if secondary reaction
-		var/list/secondary_results = list()		//additional reagents produced by the reaction
+		var/list/secondary_results = list()		// additional reagents produced by the reaction
 		var/requires_heating = 0
 
 		proc
 			on_reaction(datum/reagents/holder, created_volume)
 				return
 
-		//I recommend you set the result amount to the total volume of all components.
+		// I recommend you set the result amount to the total volume of all components.
 
 		explosion_potassium
 			name = "Explosion"
@@ -31,7 +31,7 @@ datum
 			on_reaction(datum/reagents/holder, created_volume)
 				var/location = get_turf(holder.my_atom)
 				var/datum/effect/effect/system/reagents_explosion/e = new()
-				e.set_up(round (created_volume/10, 1), location, 0, 0)
+				e.set_up(round(created_volume/10, 1), location, 0, 0)
 				e.start()
 				holder.clear_reagents()
 
@@ -79,7 +79,7 @@ datum
 			result_amount = 3
 
 		anti_toxin
-			name = "Anti-Toxin (Dylovene)"
+			name = "Anti-Toxin(Dylovene)"
 			id = "anti_toxin"
 			result = "anti_toxin"
 			required_reagents = list("silicon" = 1, "potassium" = 1, "nitrogen" = 1)
@@ -114,14 +114,14 @@ datum
 			required_catalysts = list("phoron" = 1)
 			result_amount = 1
 
-		//cyanide
+		// cyanide
 		//	name = "Cyanide"
 		//	id = "cyanide"
 		//	result = "cyanide"
 		//	required_reagents = list("hydrogen" = 1, "carbon" = 1, "nitrogen" = 1)
 		//	result_amount = 1
 
-		water //I can't believe we never had this.
+		water // I can't believe we never had this.
 			name = "Water"
 			id = "water"
 			result = "water"
@@ -329,7 +329,7 @@ datum
 			result_amount = 3
 
 		ethanoloxidation
-			name = "ethanoloxidation"	//Kind of a placeholder in case someone ever changes it so that chemicals
+			name = "ethanoloxidation"	// Kind of a placeholder in case someone ever changes it so that chemicals
 			id = "ethanoloxidation"		//	react in the body. Also it would be silly if it didn't exist.
 			result = "water"
 			required_reagents = list("ethylredoxrazine" = 1, "ethanol" = 1)
@@ -350,7 +350,7 @@ datum
 			result_amount = 2
 			on_reaction(datum/reagents/holder, created_volume)
 				var/datum/effect/effect/system/reagents_explosion/e = new()
-				e.set_up(round (created_volume/2, 1), holder.my_atom, 0, 0)
+				e.set_up(round(created_volume/2, 1), holder.my_atom, 0, 0)
 				e.holder_damage(holder.my_atom)
 				if(isliving(holder.my_atom))
 					e.amount *= 0.5
@@ -406,7 +406,7 @@ datum
 			result_amount = 1
 			on_reaction(datum/reagents/holder, created_volume)
 				var/turf/simulated/T = get_turf(holder.my_atom)
-				for(var/turf/simulated/turf in range(created_volume/10,T))
+				for(var/turf/simulated/turf in range(created_volume/10, T))
 					new /obj/fire(turf)
 				holder.del_reagent("napalm")
 				return
@@ -463,7 +463,7 @@ datum
 			required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
 			result_amount = 1
 
-		mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v @ TG Port
+		mutetoxin // i'll just fit this in here snugly between other unfun chemicals :v @ TG Port
 			name = "Mute toxin"
 			id = "mutetoxin"
 			result = "mutetoxin"
@@ -537,7 +537,7 @@ datum
 			required_reagents = list("pacid" = 10, "plasticide" = 20)
 			result_amount = 1
 			on_reaction(datum/reagents/holder)
-				new /obj/item/stack/sheet/mineral/plastic(get_turf(holder.my_atom),10)
+				new /obj/item/stack/sheet/mineral/plastic(get_turf(holder.my_atom), 10)
 				return
 
 		virus_food
@@ -623,8 +623,8 @@ datum
 				for(var/mob/M in viewers(5, location))
 					to_chat(M, "\red The solution spews out foam!")
 
-				//world << "Holder volume is [holder.total_volume]"
-				//for(var/datum/reagent/R in holder.reagent_list)
+				// world << "Holder volume is [holder.total_volume]"
+				// for(var/datum/reagent/R in holder.reagent_list)
 				//	world << "[R.name] = [R.volume]"
 
 				var/datum/effect/effect/system/foam_spread/s = new()
@@ -694,7 +694,7 @@ datum
 			name = "Diethylamine"
 			id = "diethylamine"
 			result = "diethylamine"
-			required_reagents = list ("ammonia" = 1, "ethanol" = 1)
+			required_reagents = list("ammonia" = 1, "ethanol" = 1)
 			result_amount = 2
 
 		space_cleaner
@@ -712,7 +712,7 @@ datum
 			result_amount = 5
 
 
-/////////////////////////////////////OLD SLIME CORE REACTIONS ///////////////////////////////
+///////////////////////////////////// OLD SLIME CORE REACTIONS ///////////////////////////////
 /*
 		slimepepper
 			name = "Slime Condensedcapaicin"
@@ -750,7 +750,7 @@ datum
 			on_reaction(datum/reagents/holder, created_volume)
 				var/location = get_turf(holder.my_atom)
 				var/datum/effect/effect/system/reagents_explosion/e = new()
-				e.set_up(round (created_volume/10, 1), location, 0, 0)
+				e.set_up(round(created_volume/10, 1), location, 0, 0)
 				e.start()
 
 				holder.clear_reagents()
@@ -812,7 +812,7 @@ datum
 				var/list/data = list("viruses"= list(F))
 				holder.add_reagent("blood", 20, data)
 
-				holder.add_reagent("cyanide", rand(1,10))
+				holder.add_reagent("cyanide", rand(1, 10))
 
 				return
 
@@ -827,7 +827,7 @@ datum
 			required_other = 4
 			on_reaction(datum/reagents/holder, created_volume)
 
-				// Calculate new position (searches through beacons in world)
+				// Calculate new position(searches through beacons in world)
 				var/obj/item/device/radio/beacon/chosen
 				var/list/possible = list()
 				for(var/obj/item/device/radio/beacon/W in world)
@@ -852,9 +852,9 @@ datum
 
 					var/y_distance = TO.y - FROM.y
 					var/x_distance = TO.x - FROM.x
-					for (var/atom/movable/A in range(2, FROM )) // iterate thru list of mobs in the area
+					for(var/atom/movable/A in range(2, FROM )) // iterate thru list of mobs in the area
 						if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
-						if( A.anchored && !istype(A, /mob/dead/observer) ) continue // don't teleport anchored things (computers, tables, windows, grilles, etc) because this causes problems!
+						if( A.anchored && !istype(A, /mob/dead/observer) ) continue // don't teleport anchored things(computers, tables, windows, grilles, etc) because this causes problems!
 						// do teleport ghosts however because hell why not
 
 						var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
@@ -866,7 +866,7 @@ datum
 								var/mob/M = A
 								if(M.client)
 									var/obj/blueeffect = new /obj(src)
-									blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
+									blueeffect.screen_loc = "WEST, SOUTH to EAST, NORTH"
 									blueeffect.icon = 'icons/effects/effects.dmi'
 									blueeffect.icon_state = "shieldsparkles"
 									blueeffect.layer = 17
@@ -898,7 +898,7 @@ datum
 					/mob/living/simple_animal/hostile/syndicate/ranged/space,
 					/mob/living/simple_animal/hostile/alien/queen/large,
 					/mob/living/simple_animal/clown
-					)//exclusion list for things you don't want the reaction to create.
+					)// exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
@@ -913,7 +913,7 @@ datum
 					C.loc = get_turf_loc(holder.my_atom)
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)
-							step(C, pick(NORTH,SOUTH,EAST,WEST))
+							step(C, pick(NORTH, SOUTH, EAST, WEST))
 		slimebork
 			name = "Slime Bork"
 			id = "m_tele"
@@ -933,14 +933,14 @@ datum
 					if(M:eyecheck() <= 0)
 						M.flash_eyes()
 
-				for(var/i = 1, i <= created_volume + rand(1,2), i++)
+				for(var/i = 1, i <= created_volume + rand(1, 2), i++)
 					var/chosen = pick(borks)
 					var/obj/B = new chosen
 					if(B)
 						B.loc = get_turf_loc(holder.my_atom)
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
-								step(B, pick(NORTH,SOUTH,EAST,WEST))
+								step(B, pick(NORTH, SOUTH, EAST, WEST))
 
 
 
@@ -985,8 +985,8 @@ datum
 				for(var/mob/M in viewers(5, location))
 					to_chat(M, "\red The solution spews out foam!")
 
-				//world << "Holder volume is [holder.total_volume]"
-				//for(var/datum/reagent/R in holder.reagent_list)
+				// world << "Holder volume is [holder.total_volume]"
+				// for(var/datum/reagent/R in holder.reagent_list)
 				//	world << "[R.name] = [R.volume]"
 
 				var/datum/effect/effect/system/foam_spread/s = new()
@@ -995,9 +995,9 @@ datum
 				holder.clear_reagents()
 				return
 */
-/////////////////////////////////////////////NEW SLIME CORE REACTIONS/////////////////////////////////////////////
+///////////////////////////////////////////// NEW SLIME CORE REACTIONS/////////////////////////////////////////////
 
-//Grey
+// Grey
 		slimespawn
 			name = "Slime Spawn"
 			id = "m_spawn"
@@ -1026,7 +1026,7 @@ datum
 					var /obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 					M.loc = get_turf_loc(holder.my_atom)
 
-//Green
+// Green
 		slimemutate
 			name = "Mutation Toxin"
 			id = "mutationtoxin"
@@ -1036,7 +1036,7 @@ datum
 			required_other = 1
 			required_container = /obj/item/slime_extract/green
 
-//Metal
+// Metal
 		slimemetal
 			name = "Slime Metal"
 			id = "m_metal"
@@ -1053,7 +1053,7 @@ datum
 				P.amount = 5
 				P.loc = get_turf_loc(holder.my_atom)
 
-//Gold
+// Gold
 		slimecrit
 			name = "Slime Crit"
 			id = "m_tele"
@@ -1080,7 +1080,7 @@ datum
 					/mob/living/simple_animal/hostile/snake,
 					/mob/living/simple_animal/hostile/retaliate,
 					/mob/living/simple_animal/hostile/retaliate/clown
-					)//exclusion list for things you don't want the reaction to create.
+					)// exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
@@ -1096,11 +1096,11 @@ datum
 					C.loc = get_turf_loc(holder.my_atom)
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)
-							step(C, pick(NORTH,SOUTH,EAST,WEST))*/
+							step(C, pick(NORTH, SOUTH, EAST, WEST))*/
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-					O.show_message(text("\red The slime core fizzles disappointingly,"), 1)
+					O.show_message(text("\red The slime core fizzles disappointingly, "), 1)
 
-//Silver
+// Silver
 		slimebork
 			name = "Slime Bork"
 			id = "m_tele2"
@@ -1120,14 +1120,14 @@ datum
 					if(M:eyecheck() <= 0)
 						M.flash_eyes()
 
-				for(var/i = 1, i <= 4 + rand(1,2), i++)
+				for(var/i = 1, i <= 4 + rand(1, 2), i++)
 					var/chosen = pick(borks)
 					var/obj/B = new chosen
 					if(B)
 						B.loc = get_turf_loc(holder.my_atom)
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
-								step(B, pick(NORTH,SOUTH,EAST,WEST))
+								step(B, pick(NORTH, SOUTH, EAST, WEST))
 
 		slimebork2
 			name = "Slime Bork 2"
@@ -1148,17 +1148,17 @@ datum
 					if(M:eyecheck() <= 0)
 						M.flash_eyes()
 
-				for(var/i = 1, i <= 4 + rand(1,2), i++)
+				for(var/i = 1, i <= 4 + rand(1, 2), i++)
 					var/chosen = pick(borks2)
 					var/obj/B = new chosen
 					if(B)
 						B.loc = get_turf(holder.my_atom)
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
-								step(B, pick(NORTH,SOUTH,EAST,WEST))
+								step(B, pick(NORTH, SOUTH, EAST, WEST))
 
 
-//Blue
+// Blue
 		slimefrost
 			name = "Slime Frost Oil"
 			id = "m_frostoil"
@@ -1167,7 +1167,7 @@ datum
 			result_amount = 10
 			required_container = /obj/item/slime_extract/blue
 			required_other = 1
-//Dark Blue
+// Dark Blue
 		slimefreeze
 			name = "Slime Freeze"
 			id = "m_freeze"
@@ -1181,11 +1181,11 @@ datum
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
-				for(var/mob/living/M in range (get_turf_loc(holder.my_atom), 7))
+				for(var/mob/living/M in range(get_turf_loc(holder.my_atom), 7))
 					M.bodytemperature -= 140
 					to_chat(M, "\blue You feel a chill!")
 
-//Orange
+// Orange
 		slimecasp
 			name = "Slime Capsaicin Oil"
 			id = "m_capsaicinoil"
@@ -1208,7 +1208,7 @@ datum
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
 				var/turf/location = get_turf(holder.my_atom.loc)
-				for(var/turf/simulated/floor/target_tile in range(0,location))
+				for(var/turf/simulated/floor/target_tile in range(0, location))
 
 					var/datum/gas_mixture/napalm = new
 
@@ -1216,12 +1216,12 @@ datum
 					napalm.temperature = 1400
 
 					target_tile.assume_air(napalm)
-					spawn (0)
+					spawn(0)
 						target_tile.hotspot_expose(700, 400)
 				message_admins("Orange slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)")
 				log_game("Orange slime extract activated by [usr.ckey]([usr])")
 
-//Yellow
+// Yellow
 		slimeoverload
 			name = "Slime EMP"
 			id = "m_emp"
@@ -1261,7 +1261,7 @@ datum
 				var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
 				F.loc = get_turf(holder.my_atom)
 
-//Purple
+// Purple
 
 		slimepsteroid
 			name = "Slime Steroid"
@@ -1287,7 +1287,7 @@ datum
 			required_other = 1
 
 
-//Dark Purple
+// Dark Purple
 		slimeplasma
 			name = "Slime Plasma"
 			id = "m_plasma"
@@ -1301,7 +1301,7 @@ datum
 				P.amount = 10
 				P.loc = get_turf_loc(holder.my_atom)
 
-//Red
+// Red
 		slimeglycerol
 			name = "Slime Glycerol"
 			id = "m_glycerol"
@@ -1327,7 +1327,7 @@ datum
 					for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 						O.show_message(text("\red The [slime] is driven into a frenzy!."), 1)
 
-//Pink
+// Pink
 		slimeppotion
 			name = "Slime Potion"
 			id = "m_potion"
@@ -1341,7 +1341,7 @@ datum
 				P.loc = get_turf_loc(holder.my_atom)
 
 
-//Black
+// Black
 		slimemutate2
 			name = "Advanced Mutation Toxin"
 			id = "mutationtoxin2"
@@ -1351,7 +1351,7 @@ datum
 			required_other = 1
 			required_container = /obj/item/slime_extract/black
 
-//Oil
+// Oil
 		slimeexplosion
 			name = "Slime Explosion"
 			id = "m_explosion"
@@ -1364,10 +1364,10 @@ datum
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
-				explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
+				explosion(get_turf_loc(holder.my_atom), 1, 3, 6)
 				message_admins("Oil slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)")
 				log_game("Oil slime extract activated by [usr.ckey]([usr])")
-//Light Pink
+// Light Pink
 		slimepotion2
 			name = "Slime Potion 2"
 			id = "m_potion2"
@@ -1379,7 +1379,7 @@ datum
 			on_reaction(datum/reagents/holder)
 				var/obj/item/weapon/slimepotion2/P = new /obj/item/weapon/slimepotion2
 				P.loc = get_turf_loc(holder.my_atom)
-//Adamantine
+// Adamantine
 		slimegolem
 			name = "Slime Golem"
 			id = "m_golem"
@@ -1392,7 +1392,7 @@ datum
 				var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 				Z.loc = get_turf_loc(holder.my_atom)
 
-//Bluespace
+// Bluespace
 		slimecrystal
 			name = "Slime Crystal"
 			id = "m_crystal"
@@ -1407,7 +1407,7 @@ datum
 				var/obj/item/bluespace_crystal/I = new /obj/item/bluespace_crystal
 				I.loc = get_turf(holder.my_atom)
 
-//Cerulean
+// Cerulean
 		slimepsteroid2
 			name = "Slime Steroid 2"
 			id = "m_steroid2"
@@ -1420,7 +1420,7 @@ datum
 				var/obj/item/weapon/slimesteroid2/P = new /obj/item/weapon/slimesteroid2
 				P.loc = get_turf(holder.my_atom)
 
-//Sepia
+// Sepia
 		slimecamera
 			name = "Slime Camera"
 			id = "m_camera"
@@ -1445,7 +1445,7 @@ datum
 				var/obj/item/device/camera_film/P = new /obj/item/device/camera_film
 				P.loc = get_turf(holder.my_atom)
 
-//Pyrite
+// Pyrite
 		slimepaint
 			name = "Slime Paint"
 			id = "s_paint"
@@ -1460,7 +1460,7 @@ datum
 				var/obj/B = new chosen
 				if(B)
 					B.loc = get_turf(holder.my_atom)
-//////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
+////////////////////////////////////////// FOOD MIXTURES////////////////////////////////////
 
 		tofu
 			name = "Tofu"
@@ -1784,14 +1784,14 @@ datum
 			name = "The Manly Dorf"
 			id = "manlydorf"
 			result = "manlydorf"
-			required_reagents = list ("beer" = 1, "ale" = 2)
+			required_reagents = list("beer" = 1, "ale" = 2)
 			result_amount = 3
 
 		hooch
 			name = "Hooch"
 			id = "hooch"
 			result = "hooch"
-			required_reagents = list ("sugar" = 1, "ethanol" = 2, "fuel" = 1)
+			required_reagents = list("sugar" = 1, "ethanol" = 2, "fuel" = 1)
 			result_amount = 3
 
 		irish_coffee
@@ -1943,7 +1943,7 @@ datum
 
 
 
-////DRINKS THAT REQUIRED IMPROVED SPRITES BELOW:: -Agouri/////
+//// DRINKS THAT REQUIRED IMPROVED SPRITES BELOW:: -Agouri/////
 
 		sbiten
 			name = "Sbiten"
@@ -2150,7 +2150,7 @@ datum
 			result_amount = 4
 
 //////////////////////////////////////////////
-//////////////New poisons/////////////////////
+////////////// New poisons/////////////////////
 //////////////////////////////////////////////
 
 /datum/chemical_reaction/alphaamanitin

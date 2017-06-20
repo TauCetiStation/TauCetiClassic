@@ -3,17 +3,17 @@ README:
 
 The global_iterator datum is supposed to provide a simple and robust way to
 create some constantly "looping" processes with ability to stop and restart them at will.
-Generally, the only thing you want to play with (meaning, redefine) is the process() proc.
+Generally, the only thing you want to play with(meaning, redefine) is the process() proc.
 It must contain all the things you want done.
 
 Control functions:
-	new - used to create datum. First argument (optional) - var list(to use in process() proc) as list,
-	second (optional) - autostart control.
+	new - used to create datum. First argument(optional) - var list(to use in process() proc) as list,
+	second(optional) - autostart control.
 	If autostart == TRUE, the loop will be started immediately after datum creation.
 
 	start(list/arguments) - starts the loop. Takes arguments(optional) as a list, which is then used
 	by process() proc. Returns null if datum already active, 1 if loop started succesfully and 0 if there's
-	an error in supplied arguments (not list or empty list).
+	an error in supplied arguments(not list or empty list).
 
 	stop() - stops the loop. Returns null if datum is already inactive and 1 on success.
 
@@ -24,7 +24,7 @@ Control functions:
 
 	active() - Returns 1 if datum is active, 0 otherwise.
 
-	toggle() - toggles datum state. Returns new datum state (see active()).
+	toggle() - toggles datum state. Returns new datum state(see active()).
 
 Misc functions:
 
@@ -38,7 +38,7 @@ Control vars:
 	delay - 	delay between iterations
 
 	check_for_null - if equals TRUE, on each iteration the supplied arguments will be checked for nulls.
-	If some varible equals null (and null only), the loop is stopped.
+	If some varible equals null(and null only), the loop is stopped.
 	Usefull, if some var unexpectedly becomes null - due to object deletion, for example.
 	Of course, you can also check the variables inside process() proc to prevent runtime errors.
 
@@ -57,9 +57,9 @@ Data storage vars:
 	var/result
 	var/state = 0
 
-	New(list/arguments=null,autostart=1)
+	New(list/arguments=null, autostart=1)
 		delay = delay>0?(delay):1
-		if(forbid_garbage) //prevents garbage collection with tag != null
+		if(forbid_garbage) // prevents garbage collection with tag != null
 			tag = "\ref[src]"
 		set_process_args(arguments)
 		if(autostart)
@@ -74,7 +74,7 @@ Data storage vars:
 				stop()
 				return 0
 			result = process(arglist(arg_list))
-			for(var/sleep_time=delay;sleep_time>0;sleep_time--) //uhh, this is ugly. But I see no other way to terminate sleeping proc. Such disgrace.
+			for(var/sleep_time=delay;sleep_time>0;sleep_time--) // uhh, this is ugly. But I see no other way to terminate sleeping proc. Such disgrace.
 				if(!control_switch)
 					return 0
 				sleep(1)
@@ -86,7 +86,7 @@ Data storage vars:
 		if(arguments)
 			if(!set_process_args(arguments))
 				return 0
-		if(!state_check()) //the main loop is sleeping, wait for it to terminate.
+		if(!state_check()) // the main loop is sleeping, wait for it to terminate.
 			return
 		control_switch = 1
 		spawn()
@@ -97,7 +97,7 @@ Data storage vars:
 		if(!active())
 			return
 		control_switch = 0
-		spawn(-1) //report termination error but don't wait for state_check().
+		spawn(-1) // report termination error but don't wait for state_check().
 			state_check()
 		return 1
 
@@ -129,10 +129,10 @@ Data storage vars:
 			return 0
 
 	proc/get_last_exec_time()
-		return (last_exec||0)
+		return(last_exec||0)
 
 	proc/get_last_exec_time_as_text()
-		return (time2text(last_exec)||"Wasn't executed yet")
+		return(time2text(last_exec)||"Wasn't executed yet")
 
 	proc/set_process_args(list/arguments)
 		if(arguments && istype(arguments, /list) && arguments.len)

@@ -11,14 +11,14 @@
 	mob/living/carbon/brain/brainmob = null
 	req_access = list(access_robotics)
 	locked = 0
-	mecha = null//This does not appear to be used outside of reference in mecha.dm.
+	mecha = null// This does not appear to be used outside of reference in mecha.dm.
 
-	var/ping_cd = 0//attack_ghost cooldown
+	var/ping_cd = 0// attack_ghost cooldown
 
 
 	attack_self(mob/user)
 		if(brainmob && !brainmob.key && searching == 0)
-			//Start the process of searching for a new user.
+			// Start the process of searching for a new user.
 			to_chat(user, "\blue You carefully locate the manual activation switch and start the positronic brain's boot process.")
 			icon_state = "posibrain-searching"
 			src.searching = 1
@@ -41,15 +41,15 @@
 	proc/question(client/C)
 		if(!C)	return
 		var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "No", "Yes", "Never for this round")
-		if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+		if(!C || brainmob.key || 0 == searching)	return		// handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 		if(response == "Yes")
 			transfer_personality(C.mob)
-		else if (response == "Never for this round")
+		else if(response == "Never for this round")
 			C.prefs.ignore_question += "posibrain"
 
 
 	transfer_identity(mob/living/carbon/H)
-		name = "positronic brain ([H])"
+		name = "positronic brain([H])"
 		brainmob.name = H.real_name
 		brainmob.real_name = H.real_name
 		brainmob.dna = H.dna
@@ -67,9 +67,9 @@
 
 		src.searching = 0
 		src.brainmob.mind = candidate.mind
-		//src.brainmob.key = candidate.key
+		// src.brainmob.key = candidate.key
 		src.brainmob.ckey = candidate.ckey
-		src.name = "positronic brain ([src.brainmob.name])"
+		src.name = "positronic brain([src.brainmob.name])"
 
 		to_chat(src.brainmob, "<b>You are a positronic brain, brought into existence on [station_name()].</b>")
 		to_chat(src.brainmob, "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>")
@@ -78,11 +78,11 @@
 		src.brainmob.mind.assigned_role = "Positronic Brain"
 
 		var/turf/T = get_turf_or_move(src.loc)
-		for (var/mob/M in viewers(T))
+		for(var/mob/M in viewers(T))
 			M.show_message("\blue The positronic brain chimes quietly.")
 		icon_state = "posibrain-occupied"
 
-	proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
+	proc/reset_search() // We give the players sixty seconds to decide, then reset the timer.
 
 		if(src.brainmob && src.brainmob.key) return
 
@@ -90,7 +90,7 @@
 		icon_state = "posibrain"
 
 		var/turf/T = get_turf_or_move(src.loc)
-		for (var/mob/M in viewers(T))
+		for(var/mob/M in viewers(T))
 			M.show_message("\blue The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
 
 /obj/item/device/mmi/posibrain/examine(mob/user)
@@ -101,7 +101,7 @@
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
-					msg += "It appears to be in stand-by mode.\n" //afk
+					msg += "It appears to be in stand-by mode.\n" // afk
 			if(UNCONSCIOUS)
 				msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
 			if(DEAD)
@@ -117,11 +117,11 @@
 	else
 		switch(severity)
 			if(1)
-				src.brainmob.emp_damage += rand(20,30)
+				src.brainmob.emp_damage += rand(20, 30)
 			if(2)
-				src.brainmob.emp_damage += rand(10,20)
+				src.brainmob.emp_damage += rand(10, 20)
 			if(3)
-				src.brainmob.emp_damage += rand(0,10)
+				src.brainmob.emp_damage += rand(0, 10)
 	..()
 
 /obj/item/device/mmi/posibrain/attack_ghost(mob/dead/observer/O)
@@ -130,13 +130,13 @@
 		spawn(50)
 			ping_cd = 0
 		var/turf/T = get_turf(src.loc)
-		for (var/mob/M in viewers(T))
+		for(var/mob/M in viewers(T))
 			M.show_message("<span class='notice'>\The [src] pings softly.</span>")
 
 /obj/item/device/mmi/posibrain/New()
 
 	src.brainmob = new(src)
-	src.brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
+	src.brainmob.name = "[pick(list("PBU", "HIU", "SINA", "ARMA", "OSI"))]-[rand(100, 999)]"
 	src.brainmob.real_name = src.brainmob.name
 	src.brainmob.loc = src
 	src.brainmob.container = src

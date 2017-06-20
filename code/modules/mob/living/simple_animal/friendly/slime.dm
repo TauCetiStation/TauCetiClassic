@@ -36,12 +36,12 @@
 
 
 /mob/living/simple_animal/slime/adult/death()
-	var/mob/living/simple_animal/slime/S1 = new /mob/living/simple_animal/slime (src.loc)
+	var/mob/living/simple_animal/slime/S1 = new /mob/living/simple_animal/slime(src.loc)
 	S1.icon_state = "[src.colour] baby slime"
 	S1.icon_living = "[src.colour] baby slime"
 	S1.icon_dead = "[src.colour] baby slime dead"
 	S1.colour = "[src.colour]"
-	var/mob/living/simple_animal/slime/S2 = new /mob/living/simple_animal/slime (src.loc)
+	var/mob/living/simple_animal/slime/S2 = new /mob/living/simple_animal/slime(src.loc)
 	S2.icon_state = "[src.colour] baby slime"
 	S2.icon_living = "[src.colour] baby slime"
 	S2.icon_dead = "[src.colour] baby slime dead"

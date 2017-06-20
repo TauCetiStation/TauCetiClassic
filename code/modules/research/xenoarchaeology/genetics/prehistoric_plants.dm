@@ -7,11 +7,11 @@
 	species = "telriis"
 	plantname = "Telriis grass"
 	productname = "/obj/item/weapon/telriis_clump"
-	lifespan = 50		//number of ticks
+	lifespan = 50		// number of ticks
 	endurance = 50		//
-	maturation = 5		//ticks to full growth stage
-	production = 5		//ticks till ready to harvest
-	yield = 4			//number produced when harvest
+	maturation = 5		// ticks to full growth stage
+	production = 5		// ticks till ready to harvest
+	yield = 4			// number produced when harvest
 	potency = 5
 	plant_type = 1		//1=weed, 2=shroom, 0=normal
 	growthstages = 4
@@ -137,7 +137,7 @@
 	icon_state = "gelthiberries"
 	New(var/loc, var/potency)
 		..()
-		//this may prove a little strong
+		// this may prove a little strong
 		reagents.add_reagent("stoxin", (potency * potency) / 5)
 		reagents.add_reagent("capsaicin", (potency * potency) / 5)
 		reagents.add_reagent("nutriment", potency)

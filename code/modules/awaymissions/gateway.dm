@@ -22,16 +22,16 @@
 
 
 
-//this is da important part wot makes things go
+// this is da important part wot makes things go
 /obj/machinery/gateway/centerstation
 	density = 1
 	icon_state = "offcenter"
 	use_power = 1
 
-	//warping vars
+	// warping vars
 	var/list/linked = list()
-	var/ready = 0				//have we got all the parts for a gateway?
-	var/wait = 0				//this just grabs world.time at world start
+	var/ready = 0				// have we got all the parts for a gateway?
+	var/wait = 0				// this just grabs world.time at world start
 	var/obj/machinery/gateway/centeraway/awaygate = null
 
 /obj/machinery/gateway/centerstation/initialize()
@@ -58,7 +58,7 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centerstation/proc/detect()
-	linked = list()	//clear the list
+	linked = list()	// clear the list
 	var/turf/T = loc
 
 	for(var/i in alldirs)
@@ -68,7 +68,7 @@ obj/machinery/gateway/centerstation/process()
 			linked.Add(G)
 			continue
 
-		//this is only done if we fail to find a part
+		// this is only done if we fail to find a part
 		ready = 0
 		toggleoff()
 		break
@@ -113,7 +113,7 @@ obj/machinery/gateway/centerstation/process()
 	toggleoff()
 
 
-//okay, here's the good teleporting stuff
+// okay, here's the good teleporting stuff
 /obj/machinery/gateway/centerstation/Bumped(atom/movable/M)
 	if(!ready)		return
 	if(!active)		return
@@ -134,11 +134,11 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centerstation/attackby(obj/item/device/W, mob/user)
-	if(istype(W,/obj/item/device/multitool))
+	if(istype(W, /obj/item/device/multitool))
 		to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
 		return
 
-/////////////////////////////////////Away////////////////////////
+///////////////////////////////////// Away////////////////////////
 
 
 /obj/machinery/gateway/centeraway
@@ -146,7 +146,7 @@ obj/machinery/gateway/centerstation/process()
 	icon_state = "offcenter"
 	use_power = 0
 	var/calibrated = 1
-	var/list/linked = list()	//a list of the connected gateway chunks
+	var/list/linked = list()	// a list of the connected gateway chunks
 	var/ready = 0
 	var/obj/machinery/gateway/centeraway/stationgate = null
 
@@ -164,7 +164,7 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centeraway/proc/detect()
-	linked = list()	//clear the list
+	linked = list()	// clear the list
 	var/turf/T = loc
 
 	for(var/i in alldirs)
@@ -174,7 +174,7 @@ obj/machinery/gateway/centerstation/process()
 			linked.Add(G)
 			continue
 
-		//this is only done if we fail to find a part
+		// this is only done if we fail to find a part
 		ready = 0
 		toggleoff()
 		break
@@ -219,8 +219,8 @@ obj/machinery/gateway/centerstation/process()
 	if(!ready)	return
 	if(!active)	return
 	if(istype(M, /mob/living/carbon))
-		for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
-			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
+		for(var/obj/item/weapon/implant/exile/E in M)// Checking that there is an exile implant in the contents
+			if(E.imp_in == M)// Checking that it's actually implanted vs just in their pocket
 				to_chat(M, "\black The station gate has detected your exile implant and is blocking your entry.")
 				return
 	M.forceMove(get_step(stationgate.loc, SOUTH))
@@ -228,7 +228,7 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user)
-	if(istype(W,/obj/item/device/multitool))
+	if(istype(W, /obj/item/device/multitool))
 		if(calibrated)
 			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
 			return

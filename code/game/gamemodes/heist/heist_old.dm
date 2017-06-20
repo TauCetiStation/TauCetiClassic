@@ -3,7 +3,7 @@ VOX HEIST ROUNDTYPE
 */
 
 /datum/game_mode/
-	var/list/datum/mind/raiders = list()  //Antags.
+	var/list/datum/mind/raiders = list()  // Antags.
 
 /datum/game_mode/heist
 	name = "heist"
@@ -16,8 +16,8 @@ VOX HEIST ROUNDTYPE
 
 	votable = 0
 
-	var/list/raid_objectives = list()     //Raid objectives.
-	var/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
+	var/list/raid_objectives = list()     // Raid objectives.
+	var/list/obj/cortical_stacks = list() // Stacks for 'leave nobody behind' objective.
 
 /datum/game_mode/heist/announce()
 	to_chat(world, "<B>The current game mode is - Heist!</B>")
@@ -38,7 +38,7 @@ VOX HEIST ROUNDTYPE
 	else
 		raider_num = recommended_enemies
 
-	//Grab candidates randomly until we have enough.
+	// Grab candidates randomly until we have enough.
 	while(raider_num > 0)
 		var/datum/mind/new_raider = pick(antag_candidates)
 		raiders += new_raider
@@ -55,7 +55,7 @@ VOX HEIST ROUNDTYPE
 
 /datum/game_mode/heist/post_setup()
 
-	//Build a list of spawn points.
+	// Build a list of spawn points.
 	var/list/turf/raider_spawn = list()
 
 	for(var/obj/effect/landmark/L in landmarks_list)
@@ -64,13 +64,13 @@ VOX HEIST ROUNDTYPE
 			qdel(L)
 			continue
 
-	//Generate objectives for the group.
+	// Generate objectives for the group.
 	if(!config.objectives_disabled)
 		raid_objectives = forge_vox_objectives()
 
 	var/index = 1
 
-	//Spawn the vox!
+	// Spawn the vox!
 	for(var/datum/mind/raider in raiders)
 
 		if(index > raider_spawn.len)
@@ -79,20 +79,20 @@ VOX HEIST ROUNDTYPE
 		raider.current.loc = raider_spawn[index]
 		index++
 
-		var/sounds = rand(2,8)
+		var/sounds = rand(2, 8)
 		var/i = 0
 		var/newname = ""
 
 		while(i<=sounds)
 			i++
-			newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
+			newname += pick(list("ti", "hi", "ki", "ya", "ta", "ha", "ka", "ya", "chi", "cha", "kah"))
 
 		var/mob/living/carbon/human/vox = raider.current
 
 		vox.real_name = capitalize(newname)
 		vox.name = vox.real_name
 		raider.name = vox.name
-		vox.age = rand(12,20)
+		vox.age = rand(12, 20)
 		vox.dna.mutantrace = "vox"
 		vox.set_species(VOX)
 		vox.languages = list() // Removing language from chargen.
@@ -116,7 +116,7 @@ VOX HEIST ROUNDTYPE
 		return 0
 
 	for(var/obj/stack in cortical_stacks)
-		if (get_area(stack) != locate(/area/shuttle/vox/station))
+		if(get_area(stack) != locate(/area/shuttle/vox/station))
 			return 0
 	return 1
 
@@ -124,17 +124,17 @@ VOX HEIST ROUNDTYPE
 
 	for(var/datum/mind/raider in raiders)
 		if(raider.current)
-			if(istype(raider.current,/mob/living/carbon/human) && raider.current.stat != DEAD)
+			if(istype(raider.current, /mob/living/carbon/human) && raider.current.stat != DEAD)
 				return 1
 	return 0
 
 /datum/game_mode/heist/proc/forge_vox_objectives()
 
 	var/i = 1
-	var/max_objectives = pick(2,2,2,2,3,3,3,4)
+	var/max_objectives = pick(2, 2, 2, 2, 3, 3, 3, 4)
 	var/list/objs = list()
 	while(i<= max_objectives)
-		var/list/goals = list("kidnap","loot","salvage")
+		var/list/goals = list("kidnap", "loot", "salvage")
 		var/goal = pick(goals)
 		var/datum/objective/heist/O
 
@@ -161,7 +161,7 @@ VOX HEIST ROUNDTYPE
 	to_chat(raider.current, "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.")
 	to_chat(raider.current, "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.")
 	to_chat(raider.current, "\blue Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!")
-	to_chat(raider.current, "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http://baystation12.net/forums/viewtopic.php?f=6&t=8657.")
+	to_chat(raider.current, "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http:// baystation12.net/forums/viewtopic.php?f=6&t=8657.")
 	var/obj_count = 1
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in raider.objectives)
@@ -173,7 +173,7 @@ VOX HEIST ROUNDTYPE
 
 /datum/game_mode/heist/declare_completion()
 
-	//No objectives, go straight to the feedback.
+	// No objectives, go straight to the feedback.
 	if(!(raid_objectives.len)) return ..()
 
 	var/win_type = "Major"
@@ -182,11 +182,11 @@ VOX HEIST ROUNDTYPE
 
 	var/success = raid_objectives.len
 
-	//Decrease success for failed objectives.
+	// Decrease success for failed objectives.
 	for(var/datum/objective/O in raid_objectives)
 		if(!(O.check_completion())) success--
 
-	//Set result by objectives.
+	// Set result by objectives.
 	if(success == raid_objectives.len)
 		win_type = "Major"
 		win_group = "Vox"
@@ -197,7 +197,7 @@ VOX HEIST ROUNDTYPE
 		win_type = "Minor"
 		win_group = "Crew"
 
-	//Now we modify that result by the state of the vox crew.
+	// Now we modify that result by the state of the vox crew.
 	if(!is_raider_crew_alive())
 
 		win_type = "Major"
@@ -224,16 +224,16 @@ VOX HEIST ROUNDTYPE
 
 	to_chat(world, "\red <FONT size = 3><B>[win_type] [win_group] victory!</B></FONT>")
 	to_chat(world, "[win_msg]")
-	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
+	feedback_set_details("round_end_result", "heist - [win_type] [win_group]")
 
 	var/count = 1
 	for(var/datum/objective/objective in raid_objectives)
 		if(objective.check_completion())
 			to_chat(world, "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>")
-			feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+			feedback_add_details("traitor_objective", "[objective.type]|SUCCESS")
 		else
 			to_chat(world, "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>")
-			feedback_add_details("traitor_objective","[objective.type]|FAIL")
+			feedback_add_details("traitor_objective", "[objective.type]|FAIL")
 		count++
 
 	..()
@@ -241,7 +241,7 @@ VOX HEIST ROUNDTYPE
 datum/game_mode/proc/auto_declare_completion_heist()
 	if(raiders.len)
 		var/check_return = 0
-		if(ticker && istype(ticker.mode,/datum/game_mode/heist))
+		if(ticker && istype(ticker.mode, /datum/game_mode/heist))
 			check_return = 1
 		var/text = "<FONT size = 2><B>The vox raiders were:</B></FONT>"
 
@@ -267,6 +267,6 @@ datum/game_mode/proc/auto_declare_completion_heist()
 	return 1
 
 /datum/game_mode/heist/check_finished()
-	if (!(is_raider_crew_alive()) || (vox_shuttle_location && (vox_shuttle_location == "start")))
+	if(!(is_raider_crew_alive()) || (vox_shuttle_location && (vox_shuttle_location == "start")))
 		return 1
 	return ..()

@@ -10,7 +10,7 @@
 	health = 50
 	universal_speak = 1
 	speak_emote = list("hisses")
-	emote_hear = list("wails","screeches")
+	emote_hear = list("wails", "screeches")
 	response_help  = "puts their hand through"
 	response_disarm = "flails at"
 	response_harm   = "punches the"
@@ -32,7 +32,7 @@
 	Life()
 		..()
 		if(stat == DEAD)
-			new /obj/item/weapon/ectoplasm (src.loc)
+			new /obj/item/weapon/ectoplasm(src.loc)
 			for(var/mob/M in viewers(src, null))
 				if((M.client && !( M.blinded )))
 					M.show_message("\red [src] lets out a contented sigh as their form unwinds. ")
@@ -41,21 +41,21 @@
 			return
 
 
-	attackby(obj/item/O, mob/user)  //Marker -Agouri
+	attackby(obj/item/O, mob/user)  // Marker -Agouri
 		if(istype(O, /obj/item/device/soulstone))
 			O.transfer_soul("SHADE", src, user)
 		else
 			if(O.force)
 				var/damage = O.force
-				if (O.damtype == HALLOSS)
+				if(O.damtype == HALLOSS)
 					damage = 0
 				health -= damage
 				for(var/mob/M in viewers(src, null))
-					if ((M.client && !( M.blinded )))
+					if((M.client && !( M.blinded )))
 						M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
 			else
 				to_chat(usr, "\red This weapon is ineffective, it does no damage.")
 				for(var/mob/M in viewers(src, null))
-					if ((M.client && !( M.blinded )))
+					if((M.client && !( M.blinded )))
 						M.show_message("\red [user] gently taps [src] with the [O]. ")
 		return

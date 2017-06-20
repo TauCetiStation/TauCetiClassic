@@ -29,7 +29,7 @@
 		switch(type)
 			if("feet")
 				if(!H.shoes)
-					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
+					BP = H.bodyparts_by_name[pick(BP_L_LEG, BP_R_LEG)]
 					H.Weaken(3)
 			if(BP_L_HAND, BP_R_HAND)
 				if(!H.gloves)
@@ -94,7 +94,7 @@
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
 		triggered(finder, finder.hand ? BP_L_HAND : BP_R_HAND)
-		return 1	//end the search!
+		return 1	// end the search!
 	return 0
 
 /obj/item/device/assembly/mousetrap/hitby(A)

@@ -19,15 +19,15 @@
 	set category = "Object"
 	set src in usr
 
-	if ((usr.canmove && !( usr.restrained() )))
+	if((usr.canmove && !( usr.restrained() )))
 		src.code = t
-	if (!( src.code ))
+	if(!( src.code ))
 		src.code = "beacon"
 	src.add_fingerprint(usr)
 	return
 
 
-/obj/item/device/radio/beacon/bacon //Probably a better way of doing this, I'm lazy.
+/obj/item/device/radio/beacon/bacon // Probably a better way of doing this, I'm lazy.
 	proc/digest_delay()
 		spawn(600)
 			qdel(src)
@@ -48,7 +48,7 @@
 		qdel(src)
 	return
 
-//Medical beacon stuff
+// Medical beacon stuff
 /obj/item/device/beacon/medical
 	name = "Medical Tracking Beacon"
 	desc = "A beacon used by a body teleporter."
@@ -70,9 +70,9 @@
 	var/atom/target = null
 
 /obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, flag)
-	if (!flag)
+	if(!flag)
 		return
-	if (!ishuman(target))
+	if(!ishuman(target))
 		to_chat(user, "\blue Can only be planted on human.")
 		return
 	var/found = 0
@@ -101,7 +101,7 @@
 		user.drop_item()
 		target = H
 		loc = null
-		//var/location
+		// var/location
 		H.attack_log += "\[[time_stamp()]\]<font color='blue'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 		playsound(H.loc, 'sound/items/timer.ogg', 5, 0)
 		user.visible_message("\red [user.name] finished planting an [name] on [H.name]!")
@@ -123,7 +123,7 @@
 			s.start()
 			s2.start()
 			H.loc = get_turf(beacon)
-		if (src)
+		if(src)
 			qdel(src)
 		H.overlays -= I
 		qdel(I)

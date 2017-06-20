@@ -1,6 +1,6 @@
-//A set of constants used to determine which type of mute an admin wishes to apply:
-//Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
-//Therefore there needs to be a gap between the flags for the automute flags
+// A set of constants used to determine which type of mute an admin wishes to apply:
+// Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
+// Therefore there needs to be a gap between the flags for the automute flags
 #define MUTE_IC			1
 #define MUTE_OOC		2
 #define MUTE_PRAY		4
@@ -9,20 +9,20 @@
 #define MUTE_MENTORHELP	32
 #define MUTE_ALL		63
 
-//Number of identical messages required to get the spam-prevention automute thing to trigger warnings and automutes
+// Number of identical messages required to get the spam-prevention automute thing to trigger warnings and automutes
 #define SPAM_TRIGGER_WARNING  5
 #define SPAM_TRIGGER_AUTOMUTE 10
 
-//Some constants for DB_Ban
+// Some constants for DB_Ban
 #define BANTYPE_PERMA		1
 #define BANTYPE_TEMP		2
 #define BANTYPE_JOB_PERMA	3
 #define BANTYPE_JOB_TEMP	4
-#define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
-#define BANTYPE_ANY_JOB		9 //used to remove jobbans
+#define BANTYPE_ANY_FULLBAN	5 // used to locate stuff to unban.
+#define BANTYPE_ANY_JOB		9 // used to remove jobbans
 
-//Please don't edit these values without speaking to Errorage first	~Carn
-//Admin Permissions
+// Please don't edit these values without speaking to Errorage first	~Carn
+// Admin Permissions
 #define R_BUILDMODE		1
 #define R_ADMIN			2
 #define R_BAN			4
@@ -39,7 +39,7 @@
 #define R_WHITELIST		8192
 
 
-#define R_MAXPERMISSION 8192 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
+#define R_MAXPERMISSION 8192 // This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
 #define R_HOST			65535
 

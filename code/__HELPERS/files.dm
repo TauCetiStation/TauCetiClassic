@@ -1,31 +1,31 @@
-//checks if a file exists and contains text
-//returns text as a string if these conditions are met
+// checks if a file exists and contains text
+// returns text as a string if these conditions are met
 /proc/return_file_text(filename)
 	if(fexists(filename) == 0)
-		error("File not found ([filename])")
+		error("File not found([filename])")
 		return
 
 	var/text = file2text(filename)
 	if(!text)
-		error("File empty ([filename])")
+		error("File empty([filename])")
 		return
 
 	return text
 
-//Sends resource files to client cache
+// Sends resource files to client cache
 /client/proc/getFiles()
 	for(var/file in args)
 		src << browse_rsc(file)
 
-/client/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list(".txt",".log",".htm"))
+/client/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list(".txt", ".log", ".htm"))
 	var/path = root
 
 	for(var/i=0, i<max_iterations, i++)
 		var/list/choices = sortList(flist(path))
 		if(path != root)
-			choices.Insert(1,"/")
+			choices.Insert(1, "/")
 
-		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in choices
+		var/choice = input(src, "Choose a file to access:", "Download", null) as null|anything in choices
 		switch(choice)
 			if(null)
 				return
@@ -34,10 +34,10 @@
 				continue
 		path += choice
 
-		if(copytext(path,-1,0) != "/")		//didn't choose a directory, no need to iterate again
+		if(copytext(path,-1, 0) != "/")		// didn't choose a directory, no need to iterate again
 			break
 
-	var/extension = copytext(path,-4,0)
+	var/extension = copytext(path,-4, 0)
 	if( !fexists(path) || !(extension in valid_extensions) )
 		src << "<font color='red'>Error: browse_files(): File not found/Invalid file([path]).</font>"
 		return

@@ -9,7 +9,7 @@ var/datum/controller/failsafe/Failsafe
 /datum/controller/failsafe // This thing pretty much just keeps poking the master controller
 	name = "Failsafe"
 
-	// The length of time to check on the MC (in deciseconds).
+	// The length of time to check on the MC(in deciseconds).
 	// Set to 0 to disable.
 	var/processing_interval = 20
 	// The alert level. For every failed poke, we drop a DEFCON level. Once we hit DEFCON 1, restart the MC.
@@ -32,7 +32,7 @@ var/datum/controller/failsafe/Failsafe
 /datum/controller/failsafe/proc/LaunchLoop()
 	set waitfor = 0
 	Failsafe.Loop()
-	qdel(Failsafe) //when Loop() returns, we delete ourselves and let the mc recreate us
+	qdel(Failsafe) // when Loop() returns, we delete ourselves and let the mc recreate us
 
 /datum/controller/failsafe/Destroy()
 	..()
@@ -50,7 +50,7 @@ var/datum/controller/failsafe/Failsafe
 				// Check if processing is done yet.
 				if(Master.iteration == master_iteration)
 					switch(defcon)
-						if(4,5)
+						if(4, 5)
 							--defcon
 						if(3)
 							to_chat(admins, "<span class='adminnotice'>Notice: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks.")
@@ -70,18 +70,18 @@ var/datum/controller/failsafe/Failsafe
 							else if(rtn < 0)
 								log_game("FailSafe: Could not restart MC, runtime encountered. Entering defcon 0")
 								to_chat(admins, "<span class='boldannounce'>ERROR: DEFCON [defcon_pretty()]. Could not restart MC, runtime encountered. I will silently keep retrying.</span>")
-							//if the return number was 0, it just means the mc was restarted too recently, and it just needs some time before we try again
-							//no need to handle that specially when defcon 0 can handle it
-						if(0) //DEFCON 0! (mc failed to restart)
+							// if the return number was 0, it just means the mc was restarted too recently, and it just needs some time before we try again
+							// no need to handle that specially when defcon 0 can handle it
+						if(0) // DEFCON 0! (mc failed to restart)
 							var/rtn = Recreate_MC()
 							if(rtn > 0)
 								defcon = 4
 								master_iteration = 0
 								to_chat(admins, "<span class='adminnotice'>MC restarted successfully</span>")
 				else
-					defcon = min(defcon + 1,5)
+					defcon = min(defcon + 1, 5)
 					master_iteration = Master.iteration
-			if (defcon <= 1)
+			if(defcon <= 1)
 				sleep(processing_interval * 2)
 			else
 				sleep(processing_interval)

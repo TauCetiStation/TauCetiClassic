@@ -17,7 +17,7 @@
 
 	var/list/speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
-	var/list/emote_hear = list("barks", "woofs", "yaps","pants")
+	var/list/emote_hear = list("barks", "woofs", "yaps", "pants")
 	var/list/emote_see = list("shakes its head", "shivers")
 	var/speak_chance = 1
 
@@ -38,7 +38,7 @@
 	var/dodged = FALSE
 	var/unlock_mouth = FALSE        // Whitelist related, blocks attack_paw() usage.
 	var/ian_action = IAN_STANDARD   // Overrides click logic, holds special abilities.
-	var/soap_eaten = 0              // It looks like bool, but its not (i have no idea how to name it properly). Actually it contains number of ticks.
+	var/soap_eaten = 0              // It looks like bool, but its not(i have no idea how to name it properly). Actually it contains number of ticks.
 	var/nose_last_sniff = 0         // Used as cooldown, holds "last use" time.
 	var/nose_memory = null          // Holds single smell, which we are looking for.
 	var/list/nose_database = list() // Holds all smells which we know.
@@ -85,7 +85,7 @@
 					var/turf/simulated/S = A
 					S.make_wet_floor(soap_eaten ? LUBE_FLOOR : WATER_FLOOR)
 				else if(isliving(A))
-					var/expression = pick("amused","annoyed","confused","resentful","happy","excited")
+					var/expression = pick("amused", "annoyed", "confused", "resentful", "happy", "excited")
 					message = "<span class='notice'>[src] licks [A], \he looks [expression]!</span>"
 					if(iscarbon(A))
 						var/mob/living/carbon/C = A
@@ -108,7 +108,7 @@
 						adjustBruteLoss(-1)
 						adjustFireLoss(-1)
 				else if(istype(A, /obj/item/weapon/soap))
-					var/expression = pick("amused","annoyed","confused")
+					var/expression = pick("amused", "annoyed", "confused")
 					message = "<span class='notice'>[src] ate [A] and looks [expression]!</span>"
 					qdel(A)
 					soap_eaten += 200
@@ -122,13 +122,13 @@
 	NORMAL ATTACK
 */
 			if(IAN_SNIFF)
-				if(A == src) //Resets current smell in memory.
+				if(A == src) // Resets current smell in memory.
 					nose_memory = null
 					to_chat(src, "<span class='notice'>Dropped current smell.</span>")
 					isHandsBusy = FALSE
 					return
 
-				if(isturf(A)) //Visualize smells in X range around us.
+				if(isturf(A)) // Visualize smells in X range around us.
 					if(nose_last_sniff > world.time)
 						to_chat(src, "<span class='warning'>Nose is on cooldown.</span>")
 					else
@@ -142,7 +142,7 @@
 					return
 
 				var/smell
-				if(ishuman(A)) //If human - just add his smell to database as known or compare it with nose_smell.
+				if(ishuman(A)) // If human - just add his smell to database as known or compare it with nose_smell.
 					var/mob/living/carbon/human/H = A
 					if(!istype(H.dna, /datum/dna))
 						to_chat(src, "<span class='warning'>This humanoid has no smell at all!</span>")
@@ -235,16 +235,16 @@
 	underlays.Add(I)
 
 	var/matrix/Mx = matrix()
-	Mx.Scale(rand(60,80) / 100)
+	Mx.Scale(rand(60, 80) / 100)
 	transform = Mx
 
-	var/end_in = rand(26,43)
-	animate(src, pixel_y = rand(28,66) , time = end_in, easing = SINE_EASING)
+	var/end_in = rand(26, 43)
+	animate(src, pixel_y = rand(28, 66) , time = end_in, easing = SINE_EASING)
 	addtimer(CALLBACK(src, .proc/pop), end_in + 3)
 
 /obj/effect/bubble_ian/proc/pop()
 	if(prob(3)) // There is too many of them!
-		for(var/mob/living/carbon/C in view(1,src))
+		for(var/mob/living/carbon/C in view(1, src))
 			C.Stun(1)
 			C.Weaken(1)
 	playsound(src, 'sound/effects/bubble_pop.ogg', 50, 1)
@@ -274,7 +274,7 @@
 
 			if(I)
 				if((nose_memory in nose_database) && nose_database[nose_memory] == "Unknown")
-					I.color = list(1.438,-0.062,-0.062,0.122,1.378,-0.122,0.016,-0.016,1.483,-0.03,0.05,-0.02)
+					I.color = list(1.438,-0.062,-0.062, 0.122, 1.378,-0.122, 0.016,-0.016, 1.483,-0.03, 0.05,-0.02)
 				client.images += I
 				addtimer(CALLBACK(src, .proc/unvisualize_smell, I), rand(30, 60))
 
@@ -284,7 +284,7 @@
 
 	client.images -= I
 
-//Standard procs, etc.
+// Standard procs, etc.
 /mob/living/carbon/ian/IsAdvancedToolUser()
 	return FALSE
 
@@ -304,7 +304,7 @@
 	if(pull_debuff)
 		tally += pull_debuff
 
-	if (bodytemperature < 283.222)
+	if(bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 	return tally
 
@@ -317,9 +317,9 @@
 
 /mob/living/carbon/ian/attackby(obj/item/O, mob/user)
 	var/chance = 0
-	if(head && istype(head,/obj/item/clothing/head/helmet))
+	if(head && istype(head, /obj/item/clothing/head/helmet))
 		chance += 50
-	if(back && istype(back,/obj/item/clothing/suit/armor))
+	if(back && istype(back, /obj/item/clothing/suit/armor))
 		chance += 50
 
 	if(chance && prob(chance))
@@ -330,30 +330,30 @@
 			user.visible_message("<span class='notice'>[user] gently taps [src] with the [O].</span>",
 			                     "<span class='notice'>You can't reach its skin.</span>")
 		if(prob(15) && stat == CONSCIOUS)
-			var/expression = pick("an amused","an annoyed","a confused","a resentful","a happy","an excited")
-			emote("me",1,"looks at [user] with [expression] expression on his face")
+			var/expression = pick("an amused", "an annoyed", "a confused", "a resentful", "a happy", "an excited")
+			emote("me", 1, "looks at [user] with [expression] expression on his face")
 		return
 	..()
 
 /mob/living/carbon/ian/attack_hand(mob/living/carbon/human/M)
-	if (!ticker.mode)
+	if(!ticker.mode)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	if(istype(loc, /turf) && istype(loc.loc, /area/start))
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
-	if (M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
+	if(M.gloves && istype(M.gloves, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == "hurt")// Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					if(is_armored(M, 40))
-						//do nothing
+						// do nothing
 					else
-						apply_effects(0,0,0,0,5,0,0,150)
+						apply_effects(0, 0, 0, 0, 5, 0, 0, 150)
 						M.visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>", , "<span class='red'>You hear someone fall</span>")
 					var/datum/effect/effect/system/spark_spread/s = new
 					s.set_up(3, 1, src)
@@ -376,7 +376,7 @@
 				to_chat(M, "<span class='notice'>Remove his [head]!</span>")
 				return
 			un_equip_or_action(M, "CPR")
-		if ("hurt")
+		if("hurt")
 			M.do_attack_animation(src)
 			if(is_armored(M, 35))
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -480,14 +480,14 @@
 				to_chat(FH, "<span class='red'>looks dead.</span>")
 
 /mob/living/carbon/ian/attack_slime(mob/living/carbon/slime/M)
-	if (!ticker.mode)
+	if(!ticker.mode)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(M.Victim)
 		return // can't attack while eating!
 
-	if (stat != DEAD)
+	if(stat != DEAD)
 		if(is_armored(M, 35))
 			return
 
@@ -504,7 +504,7 @@
 
 		if(M.powerlevel > 0)
 			var/stunprob = 10
-			var/power = M.powerlevel + rand(0,3)
+			var/power = M.powerlevel + rand(0, 3)
 
 			switch(M.powerlevel)
 				if(1 to 2) stunprob = 20
@@ -522,7 +522,7 @@
 				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>")
 
 				Weaken(power)
-				if (stuttering < power)
+				if(stuttering < power)
 					stuttering = power
 				Stun(power)
 
@@ -530,8 +530,8 @@
 				s.set_up(5, 1, src)
 				s.start()
 
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustFireLoss(M.powerlevel * rand(6,10))
+				if(prob(stunprob) && M.powerlevel >= 8)
+					adjustFireLoss(M.powerlevel * rand(6, 10))
 
 		updatehealth()
 
@@ -553,32 +553,32 @@
 		if(1)
 			gib()
 		if(2)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 				updatehealth()
 		if(3)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(30)
 				updatehealth()
-			if (prob(50))
+			if(prob(50))
 				Paralyse(10)
 
 /mob/living/carbon/ian/blob_act()
-	if (stat != DEAD)
+	if(stat != DEAD)
 		adjustFireLoss(60)
 		updatehealth()
-		if (prob(50))
+		if(prob(50))
 			Paralyse(10)
 	else
 		gib()
 
 /mob/living/carbon/ian/attack_paw(mob/M)
 	..()
-	if (M.a_intent == "help")
+	if(M.a_intent == "help")
 		help_shake_act(M)
 	else
-		if (M.a_intent == "hurt" && !istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
+		if(M.a_intent == "hurt" && !istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
 			M.do_attack_animation(src)
 
 			if(is_armored(M, 35))
@@ -593,28 +593,28 @@
 				updatehealth()
 				for(var/datum/disease/D in M.viruses)
 					if(istype(D, /datum/disease/jungle_fever))
-						contract_disease(D,1,0)
+						contract_disease(D, 1, 0)
 			else
 				visible_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>")
 
 /mob/living/carbon/ian/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (!ticker.mode)
+	if(!ticker.mode)
 		to_chat(M, "<span class='warning'>You cannot attack people before the game has started.</span>")
 		return
 
 	switch(M.a_intent)
-		if ("help")
+		if("help")
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-		if ("hurt")
+		if("hurt")
 			if(prob(95))
 				if(is_armored(M, 25))
 					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 					return
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
-				if (damage >= 25)
+				if(damage >= 25)
 					damage = rand(20, 40)
-					if (paralysis < 15)
+					if(paralysis < 15)
 						Paralyse(rand(10, 15))
 					visible_message("<span class='danger'>has wounded [name]!</span>")
 				else
@@ -624,8 +624,8 @@
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>has attempted to lunge at [name]!</span>")
-		if ("grab")
-			if (M == src || anchored || M.lying)
+		if("grab")
+			if(M == src || anchored || M.lying)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 			M.put_in_active_hand(G)
@@ -634,7 +634,7 @@
 			LAssailant = M
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			visible_message("<span class='red'>has grabbed [name] passively!</span>")
-		if ("disarm")
+		if("disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(is_armored(M, 35))
 				return
@@ -668,9 +668,9 @@
 		return
 
 	var/chance = 0
-	if(head && istype(head,/obj/item/clothing/head/helmet))
+	if(head && istype(head, /obj/item/clothing/head/helmet))
 		chance += 50
-	if(back && istype(back,/obj/item/clothing/suit/armor))
+	if(back && istype(back, /obj/item/clothing/suit/armor))
 		chance += 50
 
 	if(chance && prob(chance) && dodged < world.time)
@@ -680,8 +680,8 @@
 		else
 			visible_message("<span class='notice'>[src] dodges [Proj].</span>")
 		if(prob(15))
-			var/expression = pick("a resentful","a happy","an excited")
-			emote("me",1,"looks with [expression] expression on his face and wants to play more!")
+			var/expression = pick("a resentful", "a happy", "an excited")
+			emote("me", 1, "looks with [expression] expression on his face and wants to play more!")
 		return
 	..()
 
@@ -692,9 +692,9 @@
 
 /mob/living/carbon/ian/proc/is_armored(atom/movable/AM, luck = 50, msg = "dodges")
 	var/chance = 0
-	if(head && istype(head,/obj/item/clothing/head/helmet))
+	if(head && istype(head, /obj/item/clothing/head/helmet))
 		chance += luck
-	if(back && istype(back,/obj/item/clothing/suit/armor))
+	if(back && istype(back, /obj/item/clothing/suit/armor))
 		chance += luck
 
 	if(chance && prob(chance) && !stat)
@@ -705,8 +705,8 @@
 				msg = "<span class='notice'>[src] has been hit by [AM], however [src] is too armored.</span>"
 		visible_message(msg)
 		if(prob(15))
-			var/expression = pick("an amused","an annoyed","a confused","a resentful","a happy","an excited")
-			emote("me",1,"looks at [AM] with [expression] expression on his face")
+			var/expression = pick("an amused", "an annoyed", "a confused", "a resentful", "a happy", "an excited")
+			emote("me", 1, "looks at [AM] with [expression] expression on his face")
 		return TRUE
 	return FALSE
 
@@ -725,8 +725,8 @@
 
 	message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
 
-	if(copytext(message,1,2) == "*")
-		return emote(copytext(message,2))
+	if(copytext(message, 1, 2) == "*")
+		return emote(copytext(message, 2))
 
 	var/verb = "says"
 

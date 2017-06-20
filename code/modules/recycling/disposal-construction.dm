@@ -133,9 +133,9 @@
 	// returns the type path of disposalpipe corresponding to this item dtype
 /obj/structure/disposalconstruct/proc/dpipetype()
 	switch(ptype)
-		if(0,1)
+		if(0, 1)
 			return /obj/structure/disposalpipe/segment
-		if(2,3,4)
+		if(2, 3, 4)
 			return /obj/structure/disposalpipe/junction
 		if(5)
 			return /obj/structure/disposalpipe/trunk
@@ -192,7 +192,7 @@
 	var/obj/structure/disposalpipe/CP = locate() in T
 	if(ptype>=6 && ptype <= 8) // Disposal or outlet
 		if(CP) // There's something there
-			if(!istype(CP,/obj/structure/disposalpipe/trunk))
+			if(!istype(CP, /obj/structure/disposalpipe/trunk))
 				to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
 				return
 		else // Nothing under, fuck.
@@ -232,7 +232,7 @@
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		if(anchored)
 			var/obj/item/weapon/weldingtool/W = I
-			if(W.remove_fuel(0,user))
+			if(W.remove_fuel(0, user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				to_chat(user, "Welding the [nicetype] in place.")
 				if(do_after(user, 20, target = src))
@@ -249,7 +249,7 @@
 						P.dpdir = dpdir
 						P.updateicon()
 
-						//Needs some special treatment ;)
+						// Needs some special treatment ;)
 						if(ptype==9 || ptype==10)
 							var/obj/structure/disposalpipe/sortjunction/SortP = P
 							SortP.updatedir()

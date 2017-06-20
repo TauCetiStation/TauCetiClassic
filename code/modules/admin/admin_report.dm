@@ -14,7 +14,7 @@ datum/admin_report/var
 	offender_cid // store the cid of the offender
 
 datum/report_topic_handler
-	Topic(href,href_list)
+	Topic(href, href_list)
 		..()
 		var/client/C = locate(href_list["client"])
 		if(href_list["action"] == "show_reports")
@@ -105,7 +105,7 @@ client/proc/display_admin_reports()
 				continue
 			output += "<b>Reported player:</b> [N.offender_key](CID: [N.offender_cid])<br>"
 			output += "<b>Offense:</b>[N.body]<br>"
-			output += "<small>Occured at [time2text(N.date,"MM/DD hh:mm:ss")]</small><br>"
+			output += "<small>Occured at [time2text(N.date, "MM/DD hh:mm:ss")]</small><br>"
 			output += "<small>authored by <i>[N.author]</i></small><br>"
 			output += " <a href='?src=\ref[report_topic_handler];client=\ref[src];action=remove;ID=[N.ID]'>Flag as Handled</a>"
 			if(src.key == N.author)

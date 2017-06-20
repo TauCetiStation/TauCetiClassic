@@ -1,4 +1,4 @@
-//Define all tape types in policetape.dm
+// Define all tape types in policetape.dm
 /obj/item/taperoll
 	name = "tape roll"
 	icon = 'icons/policetape.dmi'
@@ -39,7 +39,7 @@
 /obj/item/tape/engineering
 	name = "engineering tape"
 	desc = "A length of engineering tape. Better not cross it."
-	req_one_access = list(access_engine,access_atmospherics)
+	req_one_access = list(access_engine, access_atmospherics)
 	icon_base = "engineering"
 
 /obj/item/taperoll/attack_self(mob/user)
@@ -56,54 +56,54 @@
 
 		var/turf/cur = start
 		var/dir
-		if (start.x == end.x)
+		if(start.x == end.x)
 			var/d = end.y-start.y
 			if(d) d = d/abs(d)
-			end = get_turf(locate(end.x,end.y+d,end.z))
+			end = get_turf(locate(end.x, end.y+d, end.z))
 			dir = "v"
 		else
 			var/d = end.x-start.x
 			if(d) d = d/abs(d)
-			end = get_turf(locate(end.x+d,end.y,end.z))
+			end = get_turf(locate(end.x+d, end.y, end.z))
 			dir = "h"
 
 		var/can_place = 1
-		while (cur!=end && can_place)
+		while(cur!=end && can_place)
 			if(cur.density == 1)
 				can_place = 0
-			else if (istype(cur, /turf/space))
+			else if(istype(cur, /turf/space))
 				can_place = 0
 			else
 				for(var/obj/O in cur)
 					if(!istype(O, /obj/item/tape) && O.density)
 						can_place = 0
 						break
-			cur = get_step_towards(cur,end)
-		if (!can_place)
+			cur = get_step_towards(cur, end)
+		if(!can_place)
 			to_chat(usr, "\blue You can't run \the [src] through that!")
 			return
 
 		cur = start
 		var/tapetest = 0
-		while (cur!=end)
+		while(cur!=end)
 			for(var/obj/item/tape/Ptest in cur)
 				if(Ptest.icon_state == "[Ptest.icon_base]_[dir]")
 					tapetest = 1
 			if(tapetest != 1)
 				var/obj/item/tape/P = new tape_type(cur)
 				P.icon_state = "[P.icon_base]_[dir]"
-			cur = get_step_towards(cur,end)
-	//is_blocked_turf(turf/T)
-		to_chat(usr, "\blue You finish placing the [src].")//Git Test
+			cur = get_step_towards(cur, end)
+	// is_blocked_turf(turf/T)
+		to_chat(usr, "\blue You finish placing the [src].")// Git Test
 
 /obj/item/taperoll/afterattack(atom/A, mob/user)
-	if (istype(A, /obj/machinery/door/airlock))
+	if(istype(A, /obj/machinery/door/airlock))
 		if(!user.Adjacent(A))
 			to_chat(user, "<span class='notice'>You're too far away from \the [A]!</span>")
 			return
 		var/turf/T = get_turf(A)
-		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
-		P.loc = locate(T.x,T.y,T.z)
+		var/obj/item/tape/P = new tape_type(T.x, T.y, T.z)
+		P.loc = locate(T.x, T.y, T.z)
 		P.icon_state = "[src.icon_base]_door"
 		P.layer = 3.2
 		to_chat(user, "\blue You finish placing the [src].")
@@ -117,7 +117,7 @@
 	if(!density) return 1
 	if(air_group || (height==0)) return 1
 
-	if ((mover.pass_flags & PASSTABLE || istype(mover, /obj/effect/meteor) || mover.throwing == 1) )
+	if((mover.pass_flags & PASSTABLE || istype(mover, /obj/effect/meteor) || mover.throwing == 1) )
 		return 1
 	else
 		return 0
@@ -126,7 +126,7 @@
 	breaktape(W, user, FALSE)
 
 /obj/item/tape/attack_hand(mob/user)
-	if (user.a_intent == "help" && src.allowed(user))
+	if(user.a_intent == "help" && src.allowed(user))
 		user.show_viewers("\blue [user] lifts [src], allowing passage.")
 		src.density = 0
 		spawn(200)
@@ -161,14 +161,14 @@
 
 	for(var/i = 1 to 2)
 		var/N = 0
-		var/turf/cur = get_step(src,dir[i])
+		var/turf/cur = get_step(src, dir[i])
 		while(N != 1)
 			N = 1
-			for (var/obj/item/tape/P in cur)
+			for(var/obj/item/tape/P in cur)
 				if(P.icon_state == icon_dir)
 					N = 0
 					qdel(P)
-			cur = get_step(cur,dir[i])
+			cur = get_step(cur, dir[i])
 
 	qdel(src)
 	return

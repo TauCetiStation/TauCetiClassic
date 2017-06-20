@@ -80,10 +80,10 @@
 			mode = SEARCH_FOR_DISK
 		if("Location")
 			mode = SEARCH_FOR_OBJECT
-			var/locationx = input(usr, "Please input the x coordinate to search for.", "Location?" , "") as num
+			var/locationx = input(usr, "Please input the x coordinate to search for.", "Location?", "") as num
 			if(!locationx || !(usr in view(1, src)))
 				return
-			var/locationy = input(usr, "Please input the y coordinate to search for.", "Location?" , "") as num
+			var/locationy = input(usr, "Please input the y coordinate to search for.", "Location?", "") as num
 			if(!locationy || !(usr in view(1, src)))
 				return
 			var/turf/Z = get_turf(src)
@@ -96,11 +96,11 @@
 
 		if("Other Signature")
 			mode = SEARCH_FOR_OBJECT
-			switch(alert("Search for item signature or DNA fragment?" , "Signature Mode Select" , "" , "Item" , "DNA"))
+			switch(alert("Search for item signature or DNA fragment?", "Signature Mode Select", "", "Item", "DNA"))
 				if("Item")
 					var/datum/objective/steal/itemlist
 					itemlist = itemlist // To supress a 'variable defined but not used' error.
-					var/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in itemlist.possible_items
+					var/targetitem = input("Select item to search for.", "Item Mode Select", "") as null|anything in itemlist.possible_items
 					if(!targetitem)
 						return
 					target = locate(itemlist.possible_items[targetitem])
@@ -109,7 +109,7 @@
 						return
 					to_chat(usr, "You set the pinpointer to locate [targetitem]")
 				if("DNA")
-					var/DNAstring = input("Input DNA string to search for." , "Please Enter String." , "")
+					var/DNAstring = input("Input DNA string to search for.", "Please Enter String.", "")
 					if(!DNAstring)
 						return
 					for(var/mob/living/carbon/M in mob_list)
@@ -138,8 +138,8 @@
 			if(!target)
 				icon_state = "pinonnull"
 				return
-			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)	//Plays a beep
-			visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
+			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)	// Plays a beep
+			visible_message("Shuttle Locator active.")			// Lets the mob holding it know that the mode has changed
 	else
 		mode = SEARCH_FOR_DISK
 		if(istype(target, /obj/machinery/computer/syndicate_station))

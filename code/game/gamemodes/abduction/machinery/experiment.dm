@@ -44,7 +44,7 @@
 	var/icon/preview_icon = null
 
 	var/g = "m"
-	if (H.gender == FEMALE)
+	if(H.gender == FEMALE)
 		g = "f"
 
 	var/icon/icobase = H.species.icobase
@@ -61,17 +61,17 @@
 			continue
 		temp = new /icon(icobase, "[BP.body_zone]")
 		if(BP.status & ORGAN_ROBOT)
-			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			temp.MapColors(rgb(77, 77, 77), rgb(150, 150, 150), rgb(28, 28, 28), rgb(0, 0, 0))
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
-	//Tail
+	// Tail
 	if(H.species.tail && H.species.flags[HAS_TAIL])
 		temp = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[H.species.tail]_s")
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone
 	if(H.species.flags[HAS_SKIN_TONE])
-		if (H.s_tone >= 0)
+		if(H.s_tone >= 0)
 			preview_icon.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
 		else
 			preview_icon.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
@@ -110,7 +110,7 @@
 		P.photocreate(null, icon(dissection_icon(occupant), dir = SOUTH))
 		user << browse_rsc(P.img, "dissection_img")
 		dat += "<table><tr><td>"
-		dat += "<img src=dissection_img height=80 width=80>" //Avert your eyes
+		dat += "<img src=dissection_img height=80 width=80>" // Avert your eyes
 		dat += "</td><td>"
 		dat += "<a href='?src=\ref[src];experiment=1'>Probe</a><br>"
 		dat += "<a href='?src=\ref[src];experiment=2'>Dissect</a><br>"
@@ -150,10 +150,10 @@
 		close_machine()
 	else if(occupant && occupant.stat != DEAD)
 		if(href_list["experiment"])
-			flash = Experiment(occupant,href_list["experiment"])
+			flash = Experiment(occupant, href_list["experiment"])
 	updateUsrDialog()
 
-/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
+/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant, type)
 	var/mob/living/carbon/human/H = occupant
 	var/point_reward = 0
 	if(H in history)
@@ -213,7 +213,7 @@
 		A = console.pad.teleport_target
 	else
 		A = teleportlocs[pick(teleportlocs)]
-	TeleportToArea(H,A)
+	TeleportToArea(H, A)
 	var/obj/item/weapon/handcuffs/alien/handcuffs = H.handcuffed
 	H.drop_from_inventory(handcuffs)
 	qdel(handcuffs)

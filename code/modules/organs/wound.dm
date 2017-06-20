@@ -62,7 +62,7 @@
 	for(var/obj/item/thing in embedded_objects)
 		if(thing.w_class > ITEM_SIZE_SMALL)
 			return FALSE
-	return (wound_damage() <= autoheal_cutoff) ? 1 : is_treated()
+	return(wound_damage() <= autoheal_cutoff) ? 1 : is_treated()
 
 // checks whether the wound has been appropriately treated
 /datum/wound/proc/is_treated()
@@ -75,28 +75,28 @@
 
 // Checks whether other other can be merged into src.
 /datum/wound/proc/can_merge(datum/wound/W)
-	if (W.type != type)
+	if(W.type != type)
 		return FALSE
 
-	if (W.current_stage != current_stage)
+	if(W.current_stage != current_stage)
 		return FALSE
 
-	if (W.damage_type != damage_type)
+	if(W.damage_type != damage_type)
 		return FALSE
 
-	if (!(W.can_autoheal()) != !(can_autoheal()))
+	if(!(W.can_autoheal()) != !(can_autoheal()))
 		return FALSE
 
-	if (!(W.bandaged) != !(bandaged))
+	if(!(W.bandaged) != !(bandaged))
 		return FALSE
 
-	if (!(W.clamped) != !(clamped))
+	if(!(W.clamped) != !(clamped))
 		return FALSE
 
-	if (!(W.salved) != !(salved))
+	if(!(W.salved) != !(salved))
 		return FALSE
 
-	if (!(W.disinfected) != !(disinfected))
+	if(!(W.disinfected) != !(disinfected))
 		return FALSE
 
 	return TRUE
@@ -110,17 +110,17 @@
 	created = max(created, W.created) // take the newer created time
 
 // checks if wound is considered open for external infections
-// untreated cuts (and bleeding bruises) and burns are possibly infectable, chance higher if wound is bigger
+// untreated cuts(and bleeding bruises) and burns are possibly infectable, chance higher if wound is bigger
 /datum/wound/proc/infection_check()
-	if (damage < 10) // small cuts, tiny bruises, and moderate burns shouldn't be infectable.
+	if(damage < 10) // small cuts, tiny bruises, and moderate burns shouldn't be infectable.
 		return FALSE
-	if (is_treated() && damage < 25) // anything less than a flesh wound (or equivalent) isn't infectable if treated properly
+	if(is_treated() && damage < 25) // anything less than a flesh wound (or equivalent) isn't infectable if treated properly
 		return FALSE
-	if (disinfected)
+	if(disinfected)
 		germ_level = 0 // reset this, just in case
 		return FALSE
 
-	if (damage_type == BRUISE && !bleeding()) // bruises only infectable if bleeding
+	if(damage_type == BRUISE && !bleeding()) // bruises only infectable if bleeding
 		return FALSE
 
 	var/dam_coef = round(damage / 10)
@@ -175,17 +175,17 @@
 // returns whether this wound can absorb the given amount of damage.
 // this will prevent large amounts of damage being trapped in less severe wound types
 /datum/wound/proc/can_worsen(damage_type, damage)
-	if (src.damage_type != damage_type)
+	if(src.damage_type != damage_type)
 		return FALSE // incompatible damage types
 
-	if (src.amount > 1)
+	if(src.amount > 1)
 		return FALSE
 
-	//with 1.5*, a shallow cut will be able to carry at most 30 damage,
+	// with 1.5*, a shallow cut will be able to carry at most 30 damage,
 	//37.5 for a deep cut
 	//52.5 for a flesh wound, etc.
 	var/max_wound_damage = 1.5 * damage_list[1]
-	if (src.damage + damage > max_wound_damage)
+	if(src.damage + damage > max_wound_damage)
 		return FALSE
 
 	return TRUE
@@ -203,10 +203,10 @@
 
 /** WOUND DEFINITIONS **/
 
-//Note that the MINIMUM damage before a wound can be applied should correspond to
-//the damage amount for the stage with the same name as the wound.
-//e.g. /datum/wound/cut/deep should only be applied for 15 damage and up,
-//because in it's stages list, "deep cut" = 15.
+// Note that the MINIMUM damage before a wound can be applied should correspond to
+// the damage amount for the stage with the same name as the wound.
+// e.g. /datum/wound/cut/deep should only be applied for 15 damage and up,
+// because in it's stages list, "deep cut" = 15.
 /proc/get_wound_type(type = CUT, damage)
 	switch(type)
 		if(CUT)
@@ -249,7 +249,7 @@
 					return /datum/wound/burn/large
 				if(0 to 15)
 					return /datum/wound/burn/moderate
-	return null //no wound
+	return null // no wound
 
 /** CUTS **/
 /datum/wound/cut
@@ -259,7 +259,7 @@
 /datum/wound/cut/small
 	// link wound descriptions to amounts of damage
 	// Minor cuts have max_bleeding_stage set to the stage that bears the wound type's name.
-	// The major cut types have the max_bleeding_stage set to the clot stage (which is accordingly given the "blood soaked" descriptor).
+	// The major cut types have the max_bleeding_stage set to the clot stage(which is accordingly given the "blood soaked" descriptor).
 	max_bleeding_stage = 3
 	stages = list(
 		"ugly ripped cut" = 20,

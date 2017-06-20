@@ -6,7 +6,7 @@
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
-	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
+	var/obj/item/weapon/circuitboard/circuit = null // if circuit==null, computer can't disassembly
 	var/processing = 0
 
 	var/light_range_on = 1.5
@@ -50,15 +50,15 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(25))
+			if(prob(25))
 				qdel(src)
 				return
-			if (prob(50))
+			if(prob(50))
 				for(var/x in verbs)
 					verbs -= x
 				set_broken()
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				for(var/x in verbs)
 					verbs -= x
 				set_broken()
@@ -72,7 +72,7 @@
 
 
 /obj/machinery/computer/blob_act()
-	if (prob(75))
+	if(prob(75))
 		for(var/x in verbs)
 			verbs -= x
 		set_broken()
@@ -102,7 +102,7 @@
 
 
 /obj/machinery/computer/proc/set_broken()
-	if(circuit) //no circuit, no breaking
+	if(circuit) // no circuit, no breaking
 		stat |= BROKEN
 		update_icon()
 	return
@@ -120,9 +120,9 @@
 			A.circuit = circuit
 			A.anchored = 1
 			circuit = null
-			for (var/obj/C in src)
+			for(var/obj/C in src)
 				C.loc = src.loc
-			if (src.stat & BROKEN)
+			if(src.stat & BROKEN)
 				to_chat(user, "\blue The broken glass falls out.")
 				new /obj/item/weapon/shard( src.loc )
 				A.state = 3

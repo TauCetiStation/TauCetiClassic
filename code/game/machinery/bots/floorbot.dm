@@ -1,4 +1,4 @@
-//Floorbot assemblies
+// Floorbot assemblies
 /obj/item/weapon/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top."
 	name = "tiles and toolbox"
@@ -23,7 +23,7 @@
 	w_class = 3.0
 	var/created_name = "Floorbot"
 
-//Floorbot
+// Floorbot
 /obj/machinery/bot/floorbot
 	name = "Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
@@ -34,7 +34,7 @@
 	anchored = 0
 	health = 25
 	maxhealth = 25
-	//weight = 1.0E7
+	// weight = 1.0E7
 	var/amount = 10
 	var/repairing = 0
 	var/improvefloors = 0
@@ -68,7 +68,7 @@
 
 /obj/machinery/bot/floorbot/attack_hand(mob/user)
 	. = ..()
-	if (.)
+	if(.)
 		return
 	usr.set_machine(src)
 	interact(user)
@@ -85,7 +85,7 @@
 		dat += "Finds tiles: <A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A><BR>"
 		dat += "Make singles pieces of metal into tiles when empty: <A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A><BR>"
 		var/bmode
-		if (src.targetdirection)
+		if(src.targetdirection)
 			bmode = dir2text(src.targetdirection)
 		else
 			bmode = "Disabled"
@@ -96,7 +96,7 @@
 	return
 
 
-/obj/machinery/bot/floorbot/attackby(obj/item/W , mob/user)
+/obj/machinery/bot/floorbot/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/tile/plasteel))
 		var/obj/item/stack/tile/plasteel/T = W
 		if(src.amount >= 50)
@@ -132,7 +132,7 @@
 		return
 	switch(href_list["operation"])
 		if("start")
-			if (src.on)
+			if(src.on)
 				turn_off()
 			else
 				turn_on()
@@ -159,7 +159,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/bot/floorbot/process()
-	//set background = 1
+	// set background = 1
 
 	if(!src.on)
 		return
@@ -189,7 +189,7 @@
 	if((!src.target || src.target == null) && emagged < 2)
 		if(targetdirection != null)
 			/*
-			for (var/turf/space/D in view(7,src))
+			for(var/turf/space/D in view(7, src))
 				if(!(D in floorbottargets) && D != src.oldtarget)			// Added for bridging mode -- TLE
 					if(get_dir(src, D) == targetdirection)
 						src.oldtarget = D
@@ -201,13 +201,13 @@
 				src.oldtarget = T
 				src.target = T
 		if(!src.target || src.target == null)
-			for (var/turf/space/D in view(7,src))
+			for(var/turf/space/D in view(7, src))
 				if(!(D in floorbottargets) && D != src.oldtarget && (D.loc.name != "Space"))
 					src.oldtarget = D
 					src.target = D
 					break
 		if((!src.target || src.target == null ) && src.improvefloors)
-			for (var/turf/simulated/floor/F in view(7,src))
+			for(var/turf/simulated/floor/F in view(7, src))
 				if(!(F in floorbottargets) && F != src.oldtarget && F.icon_state == "Floor1" && !(istype(F, /turf/simulated/floor/plating)))
 					src.oldtarget = F
 					src.target = F
@@ -221,7 +221,7 @@
 
 	if((!src.target || src.target == null) && emagged == 2)
 		if(!src.target || src.target == null)
-			for (var/turf/simulated/floor/D in view(7,src))
+			for(var/turf/simulated/floor/D in view(7, src))
 				if(!(D in floorbottargets) && D != src.oldtarget && D.floor_type)
 					src.oldtarget = D
 					src.target = D
@@ -256,7 +256,7 @@
 			src.maketile(src.target)
 		else if(istype(src.target, /turf/) && emagged < 2)
 			repair(src.target)
-		else if(emagged == 2 && istype(src.target,/turf/simulated/floor))
+		else if(emagged == 2 && istype(src.target, /turf/simulated/floor))
 			var/turf/simulated/floor/F = src.target
 			src.anchored = 1
 			src.repairing = 1
@@ -364,16 +364,16 @@
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	while (amount)//Dumps the tiles into the appropriate sized stacks
+	while(amount)// Dumps the tiles into the appropriate sized stacks
 		if(amount >= 16)
-			var/obj/item/stack/tile/plasteel/T = new (Tsec)
+			var/obj/item/stack/tile/plasteel/T = new(Tsec)
 			T.amount = 16
 			amount -= 16
 		else
-			var/obj/item/stack/tile/plasteel/T = new (Tsec)
+			var/obj/item/stack/tile/plasteel/T = new(Tsec)
 			T.amount = src.amount
 			amount = 0
 
@@ -411,11 +411,11 @@
 		user.drop_from_inventory(src)
 		qdel(src)
 
-	else if (istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
-		if (!t)
+	else if(istype(W, /obj/item/weapon/pen))
+		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name), 1, MAX_NAME_LEN)
+		if(!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if(!in_range(src, usr) && src.loc != usr)
 			return
 
 		src.created_name = t
@@ -430,12 +430,12 @@
 		to_chat(user, "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>")
 		user.drop_from_inventory(src)
 		qdel(src)
-	else if (istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
 
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if(!in_range(src, usr) && src.loc != usr)
 			return
 
 		src.created_name = t

@@ -28,10 +28,10 @@
 	var/const/prob_right_sab_target_l = 25 // lower bound on probability of naming right sabotage target
 	var/const/prob_right_sab_target_h = 50 // upper bound on probability of naming right sabotage target
 
-	var/const/prob_right_killer_l = 25 //lower bound on probability of naming the right operative
-	var/const/prob_right_killer_h = 50 //upper bound on probability of naming the right operative
-	var/const/prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
-	var/const/prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
+	var/const/prob_right_killer_l = 25 // lower bound on probability of naming the right operative
+	var/const/prob_right_killer_h = 50 // upper bound on probability of naming the right operative
+	var/const/prob_right_objective_l = 25 // lower bound on probability of determining the objective correctly
+	var/const/prob_right_objective_h = 50 // upper bound on probability of determining the objective correctly
 
 /datum/game_mode/meme/announce()
 	to_chat(world, "<B>The current game mode is - Meme!</B>")
@@ -43,21 +43,21 @@
 
 	// for every 10 players, get 1 meme, and for each meme, get a host
 	// also make sure that there's at least one meme and one host
-	//recommended_enemies = max(src.num_players() / 20 * 2, 2)
+	// recommended_enemies = max(src.num_players() / 20 * 2, 2)
 
 	if(antag_candidates.len < 1)
-		//log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.") // We need no spam anymore, it works for a long time.
+		// log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.") // We need no spam anymore, it works for a long time.
 		return 0 // not enough candidates for meme
 
 	/*if(possible_memes.len < 2)
 		log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.")
 		return 0 not enough candidates for meme*/
 
-	//testing("[player_list.len] cur players")
+	// testing("[player_list.len] cur players")
 
-	//var/meme_limit = Clamp((num_players()/20), 1, 3)
+	// var/meme_limit = Clamp((num_players()/20), 1, 3)
 	var/meme_limit = Clamp((player_list.len/13), 1, 3)
-	//testing("Current meme limit is [meme_limit]")
+	// testing("Current meme limit is [meme_limit]")
 	var/i = 0
 
 	while(antag_candidates.len > meme_limit)
@@ -82,22 +82,22 @@
 		return 0 // not enough candidates for meme
 
 	while(antag_candidates.len >= 1)
-		//for(var/mob/new_player/player in player_list)
+		// for(var/mob/new_player/player in player_list)
 		var/datum/mind/meme = pick(antag_candidates)
 		antag_candidates.Remove(meme)
 
-		//var/datum/mind/first_host = pick(possible_memes)
-		//possible_memes.Remove(first_host)
+		// var/datum/mind/first_host = pick(possible_memes)
+		// possible_memes.Remove(first_host)
 
 		modePlayer += meme
-		//modePlayer += first_host
+		// modePlayer += first_host
 		memes += meme
-		//first_hosts += first_host
+		// first_hosts += first_host
 
 		// so that we can later know which host belongs to which meme
-		//assigned_hosts[meme.key] = first_host
+		// assigned_hosts[meme.key] = first_host
 
-		meme.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		meme.assigned_role = "MODE" // So they aren't chosen for other jobs.
 		meme.special_role = "Meme"
 
 	return 1
@@ -121,7 +121,7 @@
 	for(var/datum/mind/meme in memes)
 		var/mob/living/parasite/meme/M = new
 		var/mob/original = meme.current
-		M.meme_death = pick ("stoxin", "bdam", "holywater", "mindbreaker", "beer", "burns")
+		M.meme_death = pick("stoxin", "bdam", "holywater", "mindbreaker", "beer", "burns")
 		meme.transfer_to(M)
 		M.clearHUD()
 
@@ -148,13 +148,13 @@
 
 
 /datum/game_mode/proc/forge_meme_objectives(datum/mind/meme, datum/mind/first_host)
-	if (config.objectives_disabled)
+	if(config.objectives_disabled)
 		return
 
 	// meme always needs to attune X hosts
 	var/datum/objective/meme_attune/attune_objective = new
 	attune_objective.owner = meme
-	attune_objective.gen_amount_goal(3,6)
+	attune_objective.gen_amount_goal(3, 6)
 	meme.objectives += attune_objective
 
 	var/datum/objective/assassinate/kill_objective = new
@@ -176,20 +176,20 @@
 	return
 
 /datum/game_mode/proc/greet_meme(datum/mind/meme, you_are=1)
-	if (you_are)
+	if(you_are)
 		var/meme_death_explained = "sleep toxin"
 		var/mob/living/parasite/meme/M = meme.current
-		if (M.meme_death == "stoxin")
+		if(M.meme_death == "stoxin")
 			meme_death_explained = "sleep toxin"
-		if (M.meme_death == "bdam")
+		if(M.meme_death == "bdam")
 			meme_death_explained = "brain"
-		if (M.meme_death == "holywater")
+		if(M.meme_death == "holywater")
 			meme_death_explained = "holy water"
-		if (M.meme_death == "mindbreaker")
+		if(M.meme_death == "mindbreaker")
 			meme_death_explained = "mind breaking drug"
-		if (M.meme_death == "beer")
+		if(M.meme_death == "beer")
 			meme_death_explained = "firewater"
-		if (M.meme_death == "burns")
+		if(M.meme_death == "burns")
 			meme_death_explained = "fire"
 		to_chat(meme.current, "<B>You are a <span class = 'red'>meme</span>!</B>")
 		to_chat(meme.current, "<B>Your death is in <span class = 'red'>[meme_death_explained]</span>!</B>")
@@ -204,13 +204,13 @@
 /datum/game_mode/meme/check_finished()
 	var/memes_alive = 0
 	for(var/datum/mind/meme in memes)
-		if(!istype(meme.current,/mob/living))
+		if(!istype(meme.current, /mob/living))
 			continue
 		if(meme.current.stat==2)
 			continue
 		memes_alive++
 
-	if (memes_alive)
+	if(memes_alive)
 		return ..()
 	else
 		return 1
@@ -220,7 +220,7 @@
 	for(var/datum/mind/meme in memes)
 		var/memewin = 1
 		var/attuned = 0
-		if((meme.current) && istype(meme.current,/mob/living/parasite/meme))
+		if((meme.current) && istype(meme.current, /mob/living/parasite/meme))
 			text += "The meme was <B>[meme.current.key]</B>.<BR>"
 			text += "The last host was <B>[meme.current:host.key]</B>.<BR>"
 			text += "<B>Hosts attuned:</B> [attuned]<BR>"
@@ -229,10 +229,10 @@
 			for(var/datum/objective/objective in meme.objectives)
 				if(objective.check_completion())
 					text += "<B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font><BR>"
-					feedback_add_details("meme_objective","[objective.type]|SUCCESS")
+					feedback_add_details("meme_objective", "[objective.type]|SUCCESS")
 				else
 					text += "<B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Failed.</font><BR>"
-					feedback_add_details("meme_objective","[objective.type]|FAIL")
+					feedback_add_details("meme_objective", "[objective.type]|FAIL")
 					memewin = 0
 				count++
 
@@ -241,10 +241,10 @@
 
 		if(memewin)
 			text += "<B>The meme was successful!<B>"
-			feedback_add_details("meme_success","SUCCESS")
+			feedback_add_details("meme_success", "SUCCESS")
 			score["roleswon"]++
 		else
 			text += "<B>The meme has failed!<B>"
-			feedback_add_details("meme_success","FAIL")
+			feedback_add_details("meme_success", "FAIL")
 		text += "<BR><HR>"
 	return text

@@ -29,9 +29,9 @@
 	if(istype(O, /obj/item/weapon/wrench))
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 
-		if (anchored)
+		if(anchored)
 			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s casters...</span>")
-			if (do_after(user, 40, target = src))
+			if(do_after(user, 40, target = src))
 				user.visible_message(
 					"<span class='notice'>[user] loosens \the [src]'s casters.</span>",
 					"<span class='notice'>You have loosened \the [src]. Now it can be pulled somewhere else.</span>",
@@ -39,7 +39,7 @@
 				)
 		else
 			to_chat(user, "<span class='notice'>You begin to tighten \the [src] to the floor...</span>")
-			if (do_after(user, 20, target = src))
+			if(do_after(user, 20, target = src))
 				user.visible_message(
 					"<span class='notice'>[user] tightens \the [src]'s casters.</span>",
 					"<span class='notice'>You have tightened \the [src]'s casters. Now it can be played again.</span>",

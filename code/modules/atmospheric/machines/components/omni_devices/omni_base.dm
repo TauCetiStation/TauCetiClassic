@@ -70,7 +70,7 @@
 		update_icon()
 
 /obj/machinery/atmospherics/omni/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/pipe_painter))	//for updating the color of connected pipe ends
+	if(istype(W, /obj/item/device/pipe_painter))	// for updating the color of connected pipe ends
 		for(var/datum/omni_port/P in ports)
 			P.update = 1
 		update_ports()
@@ -83,7 +83,7 @@
 	for(var/datum/omni_port/P in ports)
 		int_pressure += P.air.return_pressure()
 	var/datum/gas_mixture/env_air = loc.return_air()
-	if ((int_pressure - env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+	if((int_pressure - env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], it is too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
@@ -117,7 +117,7 @@
 	else
 		return
 
-	//directional icons are layers 1-4, with the core icon on layer 5
+	// directional icons are layers 1-4, with the core icon on layer 5
 	if(core_icon)
 		overlays_off[5] = omni_icons[core_icon]
 		overlays_on[5] = omni_icons[core_icon + "_glow"]
@@ -225,7 +225,7 @@
 			continue
 		P.node = null
 		for(var/obj/machinery/atmospherics/target in get_step(src, P.dir))
-			if(target.initialize_directions & get_dir(target,src))
+			if(target.initialize_directions & get_dir(target, src))
 				P.node = target
 				break
 

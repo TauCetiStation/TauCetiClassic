@@ -57,20 +57,20 @@
 	return 0
 
 /mob/living/silicon/robot/heal_bodypart_damage(brute, burn)
-	var/list/datum/robot_component/parts = get_damaged_components(brute,burn)
+	var/list/datum/robot_component/parts = get_damaged_components(brute, burn)
 	if(!parts.len)	return
 	var/datum/robot_component/picked = pick(parts)
-	picked.heal_damage(brute,burn)
+	picked.heal_damage(brute, burn)
 
 /mob/living/silicon/robot/take_bodypart_damage(brute = 0, burn = 0, sharp = 0, edge = 0)
 	var/list/components = get_damageable_components()
 	if(!components.len)
 		return
 
-	 //Combat shielding absorbs a percentage of damage directly into the cell.
-	if(module_active && istype(module_active,/obj/item/borg/combat/shield))
+	 // Combat shielding absorbs a percentage of damage directly into the cell.
+	if(module_active && istype(module_active, /obj/item/borg/combat/shield))
 		var/obj/item/borg/combat/shield/shield = module_active
-		//Shields absorb a certain percentage of damage based on their power setting.
+		// Shields absorb a certain percentage of damage based on their power setting.
 		var/absorb_brute = brute*shield.shield_level
 		var/absorb_burn = burn*shield.shield_level
 		var/cost = (absorb_brute+absorb_burn)*100
@@ -86,14 +86,14 @@
 
 	var/datum/robot_component/armour/A = get_armour()
 	if(A)
-		A.take_damage(brute,burn,sharp,edge)
+		A.take_damage(brute, burn, sharp, edge)
 		return
 
 	var/datum/robot_component/C = pick(components)
-	C.take_damage(brute,burn,sharp,edge)
+	C.take_damage(brute, burn, sharp, edge)
 
 /mob/living/silicon/robot/heal_overall_damage(brute, burn)
-	var/list/datum/robot_component/parts = get_damaged_components(brute,burn)
+	var/list/datum/robot_component/parts = get_damaged_components(brute, burn)
 
 	while(parts.len && (brute>0 || burn>0) )
 		var/datum/robot_component/picked = pick(parts)
@@ -101,7 +101,7 @@
 		var/brute_was = picked.brute_damage
 		var/burn_was = picked.electronics_damage
 
-		picked.heal_damage(brute,burn)
+		picked.heal_damage(brute, burn)
 
 		brute -= (brute_was-picked.brute_damage)
 		burn -= (burn_was-picked.electronics_damage)
@@ -109,13 +109,13 @@
 		parts -= picked
 
 /mob/living/silicon/robot/take_overall_damage(brute = 0, burn = 0, sharp = 0, used_weapon = null)
-	if(status_flags & GODMODE)	return	//godmode
+	if(status_flags & GODMODE)	return	// godmode
 	var/list/datum/robot_component/parts = get_damageable_components()
 
-	 //Combat shielding absorbs a percentage of damage directly into the cell.
-	if(module_active && istype(module_active,/obj/item/borg/combat/shield))
+	 // Combat shielding absorbs a percentage of damage directly into the cell.
+	if(module_active && istype(module_active, /obj/item/borg/combat/shield))
 		var/obj/item/borg/combat/shield/shield = module_active
-		//Shields absorb a certain percentage of damage based on their power setting.
+		// Shields absorb a certain percentage of damage based on their power setting.
 		var/absorb_brute = brute*shield.shield_level
 		var/absorb_burn = burn*shield.shield_level
 		var/cost = (absorb_brute+absorb_burn)*100
@@ -131,7 +131,7 @@
 
 	var/datum/robot_component/armour/A = get_armour()
 	if(A)
-		A.take_damage(brute,burn,sharp)
+		A.take_damage(brute, burn, sharp)
 		return
 
 	while(parts.len && (brute>0 || burn>0) )
@@ -140,7 +140,7 @@
 		var/brute_was = picked.brute_damage
 		var/burn_was = picked.electronics_damage
 
-		picked.take_damage(brute,burn)
+		picked.take_damage(brute, burn)
 
 		brute	-= (picked.brute_damage - brute_was)
 		burn	-= (picked.electronics_damage - burn_was)

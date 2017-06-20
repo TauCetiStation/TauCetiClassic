@@ -1,5 +1,5 @@
 /*
-	File: Interpreter (Public)
+	File: Interpreter(Public)
 	Contains methods for interacting with the interpreter.
 */
 /*
@@ -47,7 +47,7 @@
 */
 		SetVar(name, value)
 			if(!istext(name))
-				//CRASH("Invalid variable name")
+				// CRASH("Invalid variable name")
 				return
 			AssignVariable(name, value)
 
@@ -63,7 +63,7 @@
 */
 		SetProc(name, path, object=null, list/params=null)
 			if(!istext(name))
-				//CRASH("Invalid function name")
+				// CRASH("Invalid function name")
 				return
 			if(!object)
 				globalScope.functions[name] = path
@@ -87,7 +87,7 @@
 	Checks whether a global variable with the specified name exists.
 */
 		VarExists(name)
-			return globalScope.variables.Find(name) //convert to 1/0 first?
+			return globalScope.variables.Find(name) // convert to 1/0 first?
 
 /*
 	Proc: ProcExists
@@ -105,7 +105,7 @@
 */
 		GetVar(name)
 			if(!VarExists(name))
-				//CRASH("No variable named '[name]'.")
+				// CRASH("No variable named '[name]'.")
 				return
 			var/x = globalScope.variables[name]
 			return Eval(x)
@@ -120,7 +120,7 @@
 */
 		CallProc(name, params[]=null)
 			if(!ProcExists(name))
-				//CRASH("No function named '[name]'.")
+				// CRASH("No function named '[name]'.")
 				return
 			var/node/statement/FunctionDefinition/func = globalScope.functions[name]
 			if(istype(func))
@@ -130,7 +130,7 @@
 				return RunFunction(stmt)
 			else
 				return call(func)(arglist(params))
-			//CRASH("Unknown function type '[name]'.")
+			// CRASH("Unknown function type '[name]'.")
 
 /*
 	Event: HandleError

@@ -8,10 +8,10 @@
 		anchored = 1
 		unacidable = 1
 		var/const/max_health = 200
-		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
+		var/health = max_health // The shield can only take so much beating(prevents perma-prisons)
 
 /obj/machinery/shield/New()
-	src.dir = pick(1,2,3,4)
+	src.dir = pick(1, 2, 3, 4)
 	..()
 	update_nearby_tiles(need_rebuild=1)
 
@@ -25,7 +25,7 @@
 	if(!height || air_group) return 0
 	else return ..()
 
-//Looks like copy/pasted code... I doubt 'need_rebuild' is even used here - Nodrak
+// Looks like copy/pasted code... I doubt 'need_rebuild' is even used here - Nodrak
 /obj/machinery/shield/proc/update_nearby_tiles(need_rebuild)
 	if(!SSair)
 		return 0
@@ -38,16 +38,16 @@
 /obj/machinery/shield/attackby(obj/item/weapon/W, mob/user)
 	if(!istype(W)) return
 
-	//Calculate damage
+	// Calculate damage
 	var/aforce = W.force
 	if(W.damtype == BRUTE || W.damtype == BURN)
 		src.health -= aforce
 
-	//Play a fitting sound
+	// Play a fitting sound
 	playsound(src.loc, 'sound/effects/EMPulse.ogg', 75, 1)
 
 
-	if (src.health <= 0)
+	if(src.health <= 0)
 		visible_message("\blue The [src] dissipates!")
 		qdel(src)
 		return
@@ -82,13 +82,13 @@
 /obj/machinery/shield/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			if (prob(75))
+			if(prob(75))
 				qdel(src)
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				qdel(src)
 	return
 
@@ -105,10 +105,10 @@
 
 
 /obj/machinery/shield/hitby(AM)
-	//Let everyone know we've been hit!
+	// Let everyone know we've been hit!
 	visible_message("\red <B>[src] was hit by [AM].</B>")
 
-	//Super realistic, resource-intensive, real-time damage calculations.
+	// Super realistic, resource-intensive, real-time damage calculations.
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -117,16 +117,16 @@
 
 	src.health -= tforce
 
-	//This seemed to be the best sound for hitting a force field.
+	// This seemed to be the best sound for hitting a force field.
 	playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
 
-	//Handle the destruction of the shield
-	if (src.health <= 0)
+	// Handle the destruction of the shield
+	if(src.health <= 0)
 		visible_message("\blue The [src] dissipates!")
 		qdel(src)
 		return
 
-	//The shield becomes dense to absorb the blow.. purely asthetic.
+	// The shield becomes dense to absorb the blow.. purely asthetic.
 	opacity = 1
 	spawn(20) if(src) opacity = 0
 
@@ -148,9 +148,9 @@
 		var/const/max_health = 100
 		var/health = max_health
 		var/active = 0
-		var/malfunction = 0 //Malfunction causes parts of the shield to slowly dissapate
+		var/malfunction = 0 // Malfunction causes parts of the shield to slowly dissapate
 		var/list/deployed_shields = list()
-		var/is_open = 0 //Whether or not the wires are exposed
+		var/is_open = 0 // Whether or not the wires are exposed
 		var/locked = 0
 
 /obj/machinery/shieldgen/Destroy()
@@ -161,18 +161,18 @@
 
 
 /obj/machinery/shieldgen/proc/shields_up()
-	if(active) return 0 //If it's already turned on, how did this get called?
+	if(active) return 0 // If it's already turned on, how did this get called?
 
 	src.active = 1
 	update_icon()
 
 	for(var/turf/target_tile in range(2, src))
-		if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
-			if (malfunction && prob(33) || !malfunction)
+		if(istype(target_tile, /turf/space) && !(locate(/obj/machinery/shield) in target_tile))
+			if(malfunction && prob(33) || !malfunction)
 				deployed_shields += new /obj/machinery/shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
-	if(!active) return 0 //If it's already off, how did this get called?
+	if(!active) return 0 // If it's already off, how did this get called?
 
 	src.active = 0
 	update_icon()
@@ -197,8 +197,8 @@
 	return
 
 /obj/machinery/shieldgen/meteorhit(obj/O)
-	src.health -= max_health*0.25 //A quarter of the machine's health
-	if (prob(5))
+	src.health -= max_health*0.25 // A quarter of the machine's health
+	if(prob(5))
 		src.malfunction = 1
 	src.checkhp()
 	return
@@ -210,7 +210,7 @@
 			src.checkhp()
 		if(2.0)
 			src.health -= 30
-			if (prob(15))
+			if(prob(15))
 				src.malfunction = 1
 			src.checkhp()
 		if(3.0)
@@ -221,12 +221,12 @@
 /obj/machinery/shieldgen/emp_act(severity)
 	switch(severity)
 		if(1)
-			src.health /= 2 //cut health in half
+			src.health /= 2 // cut health in half
 			malfunction = 1
-			locked = pick(0,1)
+			locked = pick(0, 1)
 		if(2)
 			if(prob(50))
-				src.health *= 0.3 //chop off a third of the health
+				src.health *= 0.3 // chop off a third of the health
 				malfunction = 1
 	checkhp()
 
@@ -238,7 +238,7 @@
 		to_chat(user, "The panel must be closed before operating this machine.")
 		return
 
-	if (src.active)
+	if(src.active)
 		user.visible_message("\blue [bicon(src)] [user] deactivated the shield generator.", \
 			"\blue [bicon(src)] You deactivate the shield generator.", \
 			"You hear heavy droning fade out.")
@@ -270,7 +270,7 @@
 	else if(istype(W, /obj/item/weapon/cable_coil) && malfunction && is_open)
 		var/obj/item/weapon/cable_coil/coil = W
 		to_chat(user, "\blue You begin to replace the wires.")
-		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
+		// if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) // Take longer to repair heavier damage
 		if(do_after(user, 30, target = src))
 			if(!src || !coil) return
 			if(!coil.use(1))
@@ -292,7 +292,7 @@
 				src.shields_down()
 			anchored = 0
 		else
-			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
+			if(istype(get_turf(src), /turf/space)) return // No wrenching these in space!
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "\blue You secure the [src] to the floor!")
 			anchored = 1
@@ -316,7 +316,7 @@
 		src.icon_state = malfunction ? "shieldoffbr":"shieldoff"
 	return
 
-////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
+//// FIELD GEN START // shameless copypasta from fieldgen, powersink, and grille
 #define maxstoredpower 500
 /obj/machinery/shieldwallgen
 		name = "Shield Generator"
@@ -355,17 +355,17 @@
 		return 0
 
 	var/surplus = max(PN.avail-PN.load, 0)
-	var/shieldload = min(rand(50,200), surplus)
+	var/shieldload = min(rand(50, 200), surplus)
 	if(shieldload==0 && !storedpower)		// no cable or no power, and no power stored
 		power = 0
 		return 0
 	else
 		power = 1	// IVE GOT THE POWER!
-		if(PN) //runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stored power.
+		if(PN) // runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stored power.
 			storedpower += shieldload
-			PN.newload += shieldload //uses powernet power.
+			PN.newload += shieldload // uses powernet power.
 //		message_admins("[PN.load]", 1)
-//		use_power(250) //uses APC power
+//		use_power(250) // uses APC power
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
 	if(state != 1)
@@ -385,7 +385,7 @@
 		user.visible_message("[user] turned the shield generator off.", \
 			"You turn off the shield generator.", \
 			"You hear heavy droning fade out.")
-		for(var/dir in list(1,2,4,8)) src.cleanup(dir)
+		for(var/dir in list(1, 2, 4, 8)) src.cleanup(dir)
 	else
 		src.active = 1
 		icon_state = "Shield_Gen +a"
@@ -398,12 +398,12 @@
 	spawn(100)
 		power()
 		if(power)
-			storedpower -= 50 //this way it can survive longer and survive at all
+			storedpower -= 50 // this way it can survive longer and survive at all
 	if(storedpower >= maxstoredpower)
 		storedpower = maxstoredpower
 	if(storedpower <= 0)
 		storedpower = 0
-//	if(shieldload >= maxshieldload) //there was a loop caused by specifics of process(), so this was needed.
+//	if(shieldload >= maxshieldload) // there was a loop caused by specifics of process(), so this was needed.
 //		shieldload = maxshieldload
 
 	if(src.active == 1)
@@ -425,7 +425,7 @@
 				"You hear heavy droning fade out")
 			icon_state = "Shield_Gen"
 			src.active = 0
-			for(var/dir in list(1,2,4,8)) src.cleanup(dir)
+			for(var/dir in list(1, 2, 4, 8)) src.cleanup(dir)
 
 /obj/machinery/shieldwallgen/proc/setup_field(NSEW = 0)
 	var/turf/T = src.loc
@@ -434,7 +434,7 @@
 	var/steps = 0
 	var/oNSEW = 0
 
-	if(!NSEW)//Make sure its ran right
+	if(!NSEW)// Make sure its ran right
 		return
 
 	if(NSEW == 1)
@@ -464,7 +464,7 @@
 	T2 = src.loc
 
 	for(var/dist = 0, dist < steps, dist += 1) // creates each field tile
-		var/field_dir = get_dir(T2,get_step(T2, NSEW))
+		var/field_dir = get_dir(T2, get_step(T2, NSEW))
 		T = get_step(T2, NSEW)
 		T2 = T
 		var/obj/machinery/shieldwall/CF = new/obj/machinery/shieldwall/(src, G) //(ref to this gen, ref to connected gen)
@@ -493,7 +493,7 @@
 			return
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+		if(src.allowed(user))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
@@ -535,7 +535,7 @@
 	return
 
 
-//////////////Containment Field START
+////////////// Containment Field START
 /obj/machinery/shieldwall
 		name = "Shield"
 		desc = "An energy shield."
@@ -597,21 +597,21 @@
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		switch(severity)
-			if(1.0) //big boom
+			if(1.0) // big boom
 				if(prob(50))
 					G = gen_primary
 				else
 					G = gen_secondary
 				G.storedpower -= 200
 
-			if(2.0) //medium boom
+			if(2.0) // medium boom
 				if(prob(50))
 					G = gen_primary
 				else
 					G = gen_secondary
 				G.storedpower -= 50
 
-			if(3.0) //lil boom
+			if(3.0) // lil boom
 				if(prob(50))
 					G = gen_primary
 				else
@@ -626,7 +626,7 @@
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(20)
 	else
-		if (istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/item/projectile))
 			return prob(10)
 		else
 			return !src.density

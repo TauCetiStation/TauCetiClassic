@@ -12,7 +12,7 @@
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
 
 	on_hit(atom/target, blocked = 0)
-		if (..(target, blocked))
+		if(..(target, blocked))
 			var/mob/living/L = target
 			shake_camera(L, 3, 2)
 
@@ -28,7 +28,7 @@
 	name = "pellet"
 	damage = 20
 
-/obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
+/obj/item/projectile/bullet/weakbullet/beanbag		// because beanbags are not bullets
 	name = "beanbag"
 	agony = 95
 
@@ -65,7 +65,7 @@
 	damage = 10
 	stun = 10
 	weaken = 10
-	//impact_force = 5
+	// impact_force = 5
 	embed = 0
 	sharp = 0
 
@@ -127,7 +127,7 @@
 	beakers += B2
 
 
-/obj/item/projectile/bullet/suffocationbullet//How does this even work?
+/obj/item/projectile/bullet/suffocationbullet// How does this even work?
 	name = "co bullet"
 	damage = 20
 	damage_type = OXY
@@ -139,7 +139,7 @@
 	damage_type = TOX
 
 
-/obj/item/projectile/bullet/burstbullet//I think this one needs something for the on hit
+/obj/item/projectile/bullet/burstbullet// I think this one needs something for the on hit
 	name = "exploding bullet"
 	damage = 20
 	embed = 0

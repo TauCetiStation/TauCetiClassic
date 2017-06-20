@@ -43,7 +43,7 @@
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] // Necessary to find cost of shot
 			if(R.cell.use(shot.e_cost))
 				chambered = shot
 				chambered.newshot()

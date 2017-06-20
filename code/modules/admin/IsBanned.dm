@@ -1,12 +1,12 @@
-//Blocks an attempt to connect before even creating our client datum thing.
-world/IsBanned(key,address,computer_id)
+// Blocks an attempt to connect before even creating our client datum thing.
+world/IsBanned(key, address, computer_id)
 	if(config.serverwhitelist && !check_if_a_new_player(key))
 		return list("reason"="", "desc"="[config.serverwhitelist_message]")
 
 	if(ckey(key) in admin_datums)
 		return ..()
 
-	//Guest Checking
+	// Guest Checking
 	if(!guests_allowed && IsGuestKey(key))
 		log_access("Failed Login: [key] - Guests not allowed")
 		message_admins("\blue Failed Login: [key] - Guests not allowed")
@@ -14,14 +14,14 @@ world/IsBanned(key,address,computer_id)
 
 	if(config.ban_legacy_system)
 
-		//Ban Checking
+		// Ban Checking
 		. = CheckBan( ckey(key), computer_id, address )
 		if(.)
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
 			message_admins("\blue Failed Login: [key] id:[computer_id] ip:[address] - Banned [.["reason"]]")
 			return .
 
-		return ..()	//default pager ban stuff
+		return ..()	// default pager ban stuff
 
 	else
 
@@ -45,14 +45,14 @@ world/IsBanned(key,address,computer_id)
 			failedcid = 0
 			cidquery = " OR computerid = '[computer_id]' "
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_ban WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_ban WHERE(ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 
 		query.Execute()
 
 		while(query.NextRow())
 			var/pckey = query.item[1]
-			//var/pip = query.item[2]
-			//var/pcid = query.item[3]
+			// var/pip = query.item[2]
+			// var/pcid = query.item[3]
 			var/ackey = query.item[4]
 			var/reason = query.item[5]
 			var/expiration = query.item[6]
@@ -64,12 +64,12 @@ world/IsBanned(key,address,computer_id)
 			if(text2num(duration) > 0)
 				expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
 
-			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[replacetext(reason, LETTER_255,"ÿ")] \nThis ban was applied by [ackey] on [bantime], [expires]"
+			var/desc = "\nReason: You, or another user of this computer or connection([pckey]) is banned from playing here. The ban reason is:\n[replacetext(reason, LETTER_255, "ÿ")] \nThis ban was applied by [ackey] on [bantime], [expires]"
 
 			return list("reason"="[bantype]", "desc"="[desc]")
 
-		if (failedcid)
+		if(failedcid)
 			message_admins("[key] has logged in with a blank computer id in the ban check.")
-		if (failedip)
+		if(failedip)
 			message_admins("[key] has logged in with a blank ip in the ban check.")
-		return ..()	//default pager ban stuff
+		return ..()	// default pager ban stuff

@@ -119,7 +119,7 @@
 /obj/machinery/computer/telescience/interact(mob/user)
 	var/t
 	if(!telepad)
-		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
+		in_use = 0     // Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
 		t += "<div class='statusDisplay'>No telepad located. <BR>Please add telepad data.</div><BR>"
 	else
 		if(inserted_gps)
@@ -158,7 +158,7 @@
 			t += "No teleport data found."
 		else
 			t += "Source Location: ([last_tele_data.src_x], [last_tele_data.src_y])<BR>"
-			//t += "Distance: [round(last_tele_data.distance, 0.1)]m<BR>"
+			// t += "Distance: [round(last_tele_data.distance, 0.1)]m<BR>"
 			t += "Time: [round(last_tele_data.time, 0.1)] secs<BR>"
 		t += "</div>"
 
@@ -177,7 +177,7 @@
 		var/atom/A = X
 		if(A.density)
 			return FALSE
-	active_wormhole = new (telepad.loc, exit)
+	active_wormhole = new(telepad.loc, exit)
 	active_wormhole.linked_console = src
 	return active_wormhole
 
@@ -259,7 +259,7 @@
 					temp_msg += "<BR>Calibration required soon."
 				else
 					temp_msg += "<BR>Data printed below."
-				investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].","telesci")
+				investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].", "telesci")
 
 				var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread
 				SS.set_up(5, 1, target)

@@ -155,7 +155,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 /obj/machinery/computer/libraryconsole/bookmanagement/New()
 	..()
 	if(circuit)
-		circuit.name = "circuit board (Book Inventory Management Console)"
+		circuit.name = "circuit board(Book Inventory Management Console)"
 		circuit.build_path = /obj/machinery/computer/libraryconsole/bookmanagement
 
 /obj/machinery/computer/libraryconsole/bookmanagement/interact(mob/user)
@@ -188,11 +188,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<h3>Checked Out Books</h3><BR>"
 			for(var/datum/borrowbook/b in checkouts)
 				var/timetaken = world.time - b.getdate
-				//timetaken *= 10
+				// timetaken *= 10
 				timetaken /= 600
 				timetaken = round(timetaken)
 				var/timedue = b.duedate - world.time
-				//timedue *= 10
+				// timedue *= 10
 				timedue /= 600
 				if(timedue <= 0)
 					timedue = "<font color=red><b>(OVERDUE)</b> [timedue]</font>"
@@ -271,13 +271,13 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user)
-	if (src.density && istype(W, /obj/item/weapon/card/emag))
+	if(src.density && istype(W, /obj/item/weapon/card/emag))
 		src.emagged = 1
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
 		to_chat(user, "[scanner]'s associated machine has been set to [src].")
-		for (var/mob/V in hearers(src))
+		for(var/mob/V in hearers(src))
 			V.show_message("[src] lets out a low, short blip.", 2)
 	else
 		..()
@@ -316,7 +316,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						bibledelay = 0
 
 				else
-					for (var/mob/V in hearers(src))
+					for(var/mob/V in hearers(src))
 						V.show_message("<b>[src]</b>'s monitor flashes, \"Bible printer currently unavailable, please wait a moment.\"")
 
 			if("7")
@@ -332,9 +332,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		if(checkoutperiod < 1)
 			checkoutperiod = 1
 	if(href_list["editbook"])
-		buffer_book = sanitize_alt(copytext(input("Enter the book's title:") as text|null,1,MAX_MESSAGE_LEN))
+		buffer_book = sanitize_alt(copytext(input("Enter the book's title:") as text|null, 1, MAX_MESSAGE_LEN))
 	if(href_list["editmob"])
-		buffer_mob = sanitize_alt(copytext(input("Enter the recipient's name:") as text|null,1,MAX_NAME_LEN))
+		buffer_mob = sanitize_alt(copytext(input("Enter the recipient's name:") as text|null, 1, MAX_NAME_LEN))
 	if(href_list["checkout"])
 		var/datum/borrowbook/b = new /datum/borrowbook
 		b.bookname = sanitize_alt(buffer_book)//����� ��, TODO:CYRILLIC
@@ -349,7 +349,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		var/obj/item/weapon/book/b = locate(href_list["delbook"])
 		inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = sanitize_alt(copytext(input("Enter the author's name: ") as text|null,1,MAX_MESSAGE_LEN))
+		var/newauthor = sanitize_alt(copytext(input("Enter the author's name: ") as text|null, 1, MAX_MESSAGE_LEN))
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
@@ -378,7 +378,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 							var/sqlauthor = sanitizeSQL(scanner.cache.author)
 							var/sqlcontent = sanitizeSQL(scanner.cache.dat)
 							var/sqlcategory = sanitizeSQL(upload_category)
-							var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]')")
+							var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library(author, title, content, category) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]')")
 							if(!query.Execute())
 								to_chat(usr, query.ErrorMsg())
 							else
@@ -391,7 +391,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		if(!dbcon_old.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
 		if(bibledelay)
-			for (var/mob/V in hearers(src))
+			for(var/mob/V in hearers(src))
 				V.show_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
 		else
 			bibledelay = 1
@@ -409,7 +409,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				B.title = title
 				B.author = author
 				B.dat = content
-				B.icon_state = "book[rand(1,7)]"
+				B.icon_state = "book[rand(1, 7)]"
 				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
 	if(href_list["orderbyid"])
@@ -483,12 +483,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		O.loc = src
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 		src.visible_message("[src] begins to hum as it warms up its printing drums.")
-		sleep(rand(200,400))
+		sleep(rand(200, 400))
 		src.visible_message("[src] whirs as it prints and binds a new book.")
 		var/obj/item/weapon/book/b = new(src.loc)
 		b.dat = O:info
 		b.name = "Print Job #" + "[rand(100, 999)]"
-		b.icon_state = "book[rand(1,7)]"
+		b.icon_state = "book[rand(1, 7)]"
 		qdel(O)
 	else
 		..()

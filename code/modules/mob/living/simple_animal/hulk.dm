@@ -84,7 +84,7 @@
 
 /mob/living/simple_animal/hulk/unathi/Login()
 	..()
-	to_chat(src, "\blue Can eat limbs (left mouse button).")
+	to_chat(src, "\blue Can eat limbs(left mouse button).")
 
 /mob/living/simple_animal/hulk/Life()
 	if(health < 1)
@@ -106,7 +106,7 @@
 		Mx.Translate(0,-2)
 	else
 		Mx.Scale(1)
-		Mx.Translate(0,0)
+		Mx.Translate(0, 0)
 	transform = Mx
 
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -125,7 +125,7 @@
 
 		if(pressure <= 75)
 			if(prob(15))
-				emote("me",1,"gasps!")
+				emote("me", 1, "gasps!")
 
 	weakened = 0
 	if(health > 0)
@@ -163,14 +163,14 @@
 	if(isliving(M) && !(istype(M, /mob/living/simple_animal/hulk) || issilicon(M)))
 		var/mob/living/L = M
 		L.Weaken(3)
-		L.take_overall_damage(rand(4,12), 0)
+		L.take_overall_damage(rand(4, 12), 0)
 	return 0
 
 /mob/living/simple_animal/hulk/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
-	if (src.health < src.maxHealth)
+	if(src.health < src.maxHealth)
 		msg += "<span class='warning'>"
-		if (src.health >= src.maxHealth/2)
+		if(src.health >= src.maxHealth/2)
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<B>It looks severely dented!</B>\n"
@@ -180,7 +180,7 @@
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hulk/attack_animal(mob/living/simple_animal/M)
-	if(M == src) //No punching myself to avoid hulk transformation!
+	if(M == src) // No punching myself to avoid hulk transformation!
 		return
 	if(M.melee_damage_upper <= 0)
 		M.emote("[M.friendly] \the <EM>[src]</EM>")
@@ -201,27 +201,27 @@
 /mob/living/simple_animal/hulk/airflow_hit(atom/A)
 	return
 
-//mob/living/simple_animal/hulk/Process_Spacemove(movement_dir = 0)
-//	return 1 //copypasta from carp code
+// mob/living/simple_animal/hulk/Process_Spacemove(movement_dir = 0)
+//	return 1 // copypasta from carp code
 
 /mob/living/simple_animal/hulk/attackby(obj/item/O, mob/user)
 	if(O.force)
 		if(O.force >= 10)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if(O.damtype == HALLOSS)
 				damage = 0
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
+				if((M.client && !( M.blinded )))
 					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
 		else
 			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
+				if((M.client && !( M.blinded )))
 					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
 	else
 		to_chat(usr, "\red This weapon is ineffective, it does no damage.")
 		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
+			if((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
 /mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
@@ -230,13 +230,13 @@
 		health -= P.agony / 10
 
 /mob/living/simple_animal/hulk/proc/attack_hulk(obj/machinery/door/D)
-	if(istype(D,/obj/machinery/door/airlock))
+	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
 		if(A.welded || A.locked)
 			if(hulk_scream(A, 75))
 				A.door_rupture(src)
 			return
-	if(istype(D,/obj/machinery/door/firedoor))
+	if(istype(D, /obj/machinery/door/firedoor))
 		var/obj/machinery/door/firedoor/F = D
 		if(F.blocked)
 			if(hulk_scream(F))
@@ -246,7 +246,7 @@
 		to_chat(src, "<span class='userdanger'>You force your fingers between \
 		 the doors and begin to pry them open...</span>")
 		playsound(D, 'sound/machines/electric_door_open.ogg', 30, 1, -4)
-		if (do_after(src,40,target = D))
+		if(do_after(src, 40, target = D))
 			if(!D) return
 			D.open(1)
 

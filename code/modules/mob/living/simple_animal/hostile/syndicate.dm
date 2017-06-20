@@ -38,15 +38,15 @@
 /mob/living/simple_animal/hostile/syndicate/death()
 	..()
 	if(corpse)
-		new corpse (src.loc)
+		new corpse(src.loc)
 	if(weapon1)
-		new weapon1 (src.loc)
+		new weapon1(src.loc)
 	if(weapon2)
-		new weapon2 (src.loc)
+		new weapon2(src.loc)
 	qdel(src)
 	return
 
-///////////////Sword and shield////////////
+/////////////// Sword and shield////////////
 
 /mob/living/simple_animal/hostile/syndicate/melee
 	melee_damage_lower = 20
@@ -62,7 +62,7 @@
 	if(O.force)
 		if(prob(80))
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if(O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
 			visible_message("\red \b [src] has been attacked with the [O] by [user]. ")

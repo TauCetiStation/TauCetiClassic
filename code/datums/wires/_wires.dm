@@ -1,7 +1,7 @@
 /**
  * Usage should be the next. Create subtype of `wires` class for object you want to have wires.
  * Then override procs under `Overridable procs` part to make reaction you want.
- * After it you shoud create wires in object you want (see another implemetation for example).
+ * After it you shoud create wires in object you want(see another implemetation for example).
  *
  * Call `wires.interact(user)` from object method to interact with wires menu.
  * See `get_interact_window()` to create additional data for view.
@@ -100,7 +100,7 @@ var/list/same_wires = list()
 	var/list/colors_to_pick = wire_colors.Copy() // Get a copy, not a reference.
 	var/list/indexes_to_pick = list()
 
-	//Generate our indexes
+	// Generate our indexes
 	for(var/i = 1; i < MAX_FLAG && i < (1 << wire_count); i += i)
 		indexes_to_pick += i
 	colors_to_pick.len = wire_count // Downsize it to our specifications.
@@ -267,7 +267,7 @@ var/list/same_wires = list()
 	return is_index_cut(index)
 
 /datum/wires/proc/is_index_cut(index)
-	return (index & wires_status)
+	return(index & wires_status)
 
 
 //////////////////

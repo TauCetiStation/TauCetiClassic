@@ -1,9 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /mob/new_player
 	var/ready = 0
-	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
-	var/totalPlayers = 0		 //Player counts for the Lobby tab
+	var/spawning = 0// Referenced when you want to delete the new_player later on in the code.
+	var/totalPlayers = 0		 // Player counts for the Lobby tab
 	var/totalPlayersReady = 0
 	universal_speak = 1
 
@@ -45,7 +45,7 @@
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
-			var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM erro_poll_textreply WHERE ckey = \"[ckey]\")")
+			var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN(SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM erro_poll_textreply WHERE ckey = \"[ckey]\")")
 			query.Execute()
 			var/newpoll = 0
 			while(query.NextRow())
@@ -59,7 +59,7 @@
 
 	output += "</div>"
 
-	src << browse(output,"window=playersetup;size=210x240;can_close=0")
+	src << browse(output, "window=playersetup;size=210x240;can_close=0")
 	return
 
 /mob/new_player/Stat()
@@ -94,14 +94,14 @@
 			ready = !ready
 
 	if(href_list["refresh"])
-		src << browse(null, "window=playersetup") //closes the player setup window
+		src << browse(null, "window=playersetup") // closes the player setup window
 		new_player_panel_proc()
 
 	if(href_list["observe"])
 		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 			to_chat(src, "<span class='red'>You have been banned from observing. Declare yourself.</span>")
 			return 0
-		if(alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup","Yes","No") == "Yes")
+		if(alert(src, "Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!", "Player Setup", "Yes", "No") == "Yes")
 			if(!client)
 				return 1
 			var/mob/dead/observer/observer = new()
@@ -117,8 +117,8 @@
 			observer.loc = O.loc
 			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
-			//client.prefs.update_preview_icon()
-			//observer.icon = client.prefs.preview_icon
+			// client.prefs.update_preview_icon()
+			// observer.icon = client.prefs.preview_icon
 			observer.icon = 'icons/mob/mob.dmi'
 			observer.icon_state = "ghost"
 			observer.alpha = 127
@@ -169,14 +169,14 @@
 			return
 		var/voted = 0
 
-		//First check if the person has not voted yet.
+		// First check if the person has not voted yet.
 		var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
 		query.Execute()
 		while(query.NextRow())
 			voted = 1
 			break
 
-		//This is a safety switch, so only valid options pass through
+		// This is a safety switch, so only valid options pass through
 		var/option = "UNKNOWN"
 		switch(href_list["privacy_poll"])
 			if("signed")
@@ -186,7 +186,7 @@
 			if("nostats")
 				option = "NOSTATS"
 			if("later")
-				usr << browse(null,"window=privacypoll")
+				usr << browse(null, "window=privacypoll")
 				return
 			if("abstain")
 				option = "ABSTAIN"
@@ -195,11 +195,11 @@
 			return
 
 		if(!voted)
-			var/sql = "INSERT INTO erro_privacy VALUES (null, Now(), '[src.ckey]', '[option]')"
+			var/sql = "INSERT INTO erro_privacy VALUES(null, Now(), '[src.ckey]', '[option]')"
 			var/DBQuery/query_insert = dbcon.NewQuery(sql)
 			query_insert.Execute()
 			to_chat(usr, "<b>Thank you for your vote!</b>")
-			usr << browse(null,"window=privacypoll")
+			usr << browse(null, "window=privacypoll")
 
 	if(href_list["preference"] && (!ready || (href_list["preference"] == "close")))
 		if(client)
@@ -235,12 +235,12 @@
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
 
-				if( (id_max - id_min) > 100 )	//Basic exploit prevention
+				if( (id_max - id_min) > 100 )	// Basic exploit prevention
 					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
-					if(!isnull(href_list["o[optionid]"]))	//Test if this optionid was replied to
+					if(!isnull(href_list["o[optionid]"]))	// Test if this optionid was replied to
 						var/rating
 						if(href_list["o[optionid]"] == "abstain")
 							rating = null
@@ -254,25 +254,25 @@
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
 
-				if( (id_max - id_min) > 100 )	//Basic exploit prevention
+				if( (id_max - id_min) > 100 )	// Basic exploit prevention
 					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
-					if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
+					if(!isnull(href_list["option_[optionid]"]))	// Test if this optionid was selected
 						vote_on_poll(pollid, optionid, 1)
 
 /mob/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)	return 0
 	if(!job.is_position_available()) return 0
-	if(jobban_isbanned(src,rank))	return 0
+	if(jobban_isbanned(src, rank))	return 0
 	if(!job.player_old_enough(src.client))	return 0
 	return 1
 
 
 /mob/new_player/proc/AttemptLateSpawn(rank)
-	if (src != usr)
+	if(src != usr)
 		return 0
 	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 		to_chat(usr, "\red The round is either not ready, or has already finished...")
@@ -289,8 +289,8 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+	var/mob/living/carbon/human/character = create_character()	// creates the human and transfers vars and mind
+	SSjob.EquipRank(character, rank, 1)					// equips the human
 	EquipCustomItems(character)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
@@ -304,7 +304,7 @@
 
 		character.loc = C.loc
 
-		//AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
+		// AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
 		ticker.mode.latespawn(character)
 
 		qdel(C)
@@ -320,11 +320,11 @@
 
 	ticker.mode.latespawn(character)
 
-	//ticker.mode.latespawn(character)
+	// ticker.mode.latespawn(character)
 
 	if(character.mind.assigned_role != "Cyborg")
 		data_core.manifest_inject(character)
-		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
+		ticker.minds += character.mind// Cyborgs and AIs handle this in the transform proc.	// TODO!!!!! ~Carn
 	//	AnnounceArrival(character, rank)
 
 	else
@@ -335,24 +335,24 @@
 	qdel(src)
 
 /mob/new_player/proc/AnnounceArrival(mob/living/carbon/human/character, rank)
-	if (ticker.current_state == GAME_STATE_PLAYING)
+	if(ticker.current_state == GAME_STATE_PLAYING)
 		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
 		if(character.mind.role_alt_title)
 			rank = character.mind.role_alt_title
-		a.autosay("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer")
+		a.autosay("[character.real_name],[rank ? " [rank], " : " visitor, " ] has arrived on the station.", "Arrivals Announcement Computer")
 		qdel(a)
 
 /mob/new_player/proc/LateChoices()
 	var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
-	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
+	// var/secs = ((mills % 36000) % 600) / 10 // Not really needed, but I'll leave it here for refrence.. or something
 	var/mins = (mills % 36000) / 600
 	var/hours = mills / 36000
 
 	var/dat = "<html><body><center>"
 	dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
 
-	if(SSshuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
-		if(SSshuttle.direction == 2) //Shuttle is going to centcomm, not recalled
+	if(SSshuttle) // In case Nanotrasen decides reposess CentComm's shuttles.
+		if(SSshuttle.direction == 2) // Shuttle is going to centcomm, not recalled
 			dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
 		if(SSshuttle.direction == 1 && SSshuttle.timeleft() < 300 && SSshuttle.alert == 0) // Emergency shuttle is past the point of no recall
 			dat += "<font color='red'>The station is currently undergoing evacuation procedures.</font><br>"
@@ -408,12 +408,12 @@
 	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
 	if(mind)
-		mind.active = 0					//we wish to transfer the key manually
-		if(mind.assigned_role == "Clown")				//give them a clownname if they are a clown
-			new_character.real_name = pick(clown_names)	//I hate this being here of all places but unfortunately dna is based on real_name!
+		mind.active = 0					// we wish to transfer the key manually
+		if(mind.assigned_role == "Clown")				// give them a clownname if they are a clown
+			new_character.real_name = pick(clown_names)	// I hate this being here of all places but unfortunately dna is based on real_name!
 			new_character.rename_self("clown")
 		mind.original = new_character
-		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
+		mind.transfer_to(new_character)					// won't transfer key since the mind is not active
 
 	new_character.name = real_name
 	new_character.dna.ready_dna(new_character)
@@ -421,33 +421,33 @@
 
 /*	if(client.prefs.disabilities)
 		// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
-		new_character.dna.SetSEState(GLASSESBLOCK,1,0)
+		new_character.dna.SetSEState(GLASSESBLOCK, 1, 0)
 		new_character.disabilities |= NEARSIGHTED */
 
 	if(client.prefs.disabilities & DISABILITY_NEARSIGHTED)
-		new_character.dna.SetSEState(GLASSESBLOCK,1,1)
+		new_character.dna.SetSEState(GLASSESBLOCK, 1, 1)
 		new_character.disabilities |= NEARSIGHTED
 
 	if(client.prefs.disabilities & DISABILITY_EPILEPTIC)
-		new_character.dna.SetSEState(EPILEPSYBLOCK,1,1)
+		new_character.dna.SetSEState(EPILEPSYBLOCK, 1, 1)
 		new_character.disabilities |= EPILEPSY
 
 	if(client.prefs.disabilities & DISABILITY_COUGHING)
-		new_character.dna.SetSEState(COUGHBLOCK,1,1)
+		new_character.dna.SetSEState(COUGHBLOCK, 1, 1)
 		new_character.disabilities |= COUGHING
 
 	if(client.prefs.disabilities & DISABILITY_TOURETTES)
-		new_character.dna.SetSEState(TWITCHBLOCK,1,1)
+		new_character.dna.SetSEState(TWITCHBLOCK, 1, 1)
 		new_character.disabilities |= TOURETTES
 
 	if(client.prefs.disabilities & DISABILITY_NERVOUS)
-		new_character.dna.SetSEState(NERVOUSBLOCK,1,1)
+		new_character.dna.SetSEState(NERVOUSBLOCK, 1, 1)
 		new_character.disabilities |= NERVOUS
 
 	// And uncomment this, too.
 	new_character.dna.UpdateSE()
 	if(key)
-		new_character.key = key		//Manually transfer the key to log them in
+		new_character.key = key		// Manually transfer the key to log them in
 
 	return new_character
 
@@ -462,11 +462,11 @@
 	return 0
 
 /mob/new_player/proc/close_spawn_windows()
-	src << browse(null, "window=latechoices") //closes late choices window
-	src << browse(null, "window=playersetup") //closes the player setup window
+	src << browse(null, "window=latechoices") // closes late choices window
+	src << browse(null, "window=playersetup") // closes the player setup window
 
 /mob/new_player/proc/has_admin_rights()
-	return (client && client.holder && (client.holder.rights & R_ADMIN))
+	return(client && client.holder && (client.holder.rights & R_ADMIN))
 
 /mob/new_player/proc/is_species_whitelisted(datum/species/S)
 	if(!S)
@@ -493,7 +493,7 @@
 /mob/new_player/is_ready()
 	return ready && ..()
 
-/mob/new_player/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null)
+/mob/new_player/hear_say(message, verb = "says", datum/language/language = null, alt_name = "", italics = 0, mob/speaker = null)
 	return
 
 /mob/new_player/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0)

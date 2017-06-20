@@ -32,7 +32,7 @@
 	sleep(30)
 	var/list/flooring_near_beacon = list()
 	for(var/turf/T in RANGE_TURFS(impact_range, src))
-		if(!istype(T,/turf/simulated/floor))
+		if(!istype(T, /turf/simulated/floor))
 			continue
 		if((locate(/obj/structure/scrap) in T))
 			continue

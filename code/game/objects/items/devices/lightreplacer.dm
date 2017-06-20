@@ -1,5 +1,5 @@
 
-// Light Replacer (LR)
+// Light Replacer(LR)
 //
 // ABOUT THE DEVICE
 //
@@ -190,11 +190,11 @@
 		name = initial(name)
 	update_icon()
 
-//Can you use it?
+// Can you use it?
 
 /obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
 	src.add_fingerprint(user)
-	//Not sure what else to check for. Maybe if clumsy?
+	// Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)
 		return 1
 	else

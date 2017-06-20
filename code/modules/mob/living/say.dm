@@ -33,8 +33,8 @@ var/list/department_radio_keys = list(
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":D" = "dronechat",	"#D" = "dronechat",		".D" = "dronechat",
 
-	  //kinda localization -- rastaf0
-	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
+	  // kinda localization -- rastaf0
+	  // same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	  ":ê" = "right ear",	"#ê" = "right ear",		".ê" = "right ear",
 	  ":ä" = "left ear",	"#ä" = "left ear",		".ä" = "left ear",
 	  ":ø" = "intercom",	"#ø" = "intercom",		".ø" = "intercom",
@@ -71,16 +71,16 @@ var/list/department_radio_keys = list(
 )
 
 /mob/living/proc/binarycheck()
-	if (istype(src, /mob/living/silicon/pai))
+	if(istype(src, /mob/living/silicon/pai))
 		return
-	if (issilicon(src))
+	if(issilicon(src))
 		return 1
-	if (!ishuman(src))
+	if(!ishuman(src))
 		return
 	var/mob/living/carbon/human/H = src
-	if (H.l_ear || H.r_ear)
+	if(H.l_ear || H.r_ear)
 		var/obj/item/device/radio/headset/dongle
-		if(istype(H.l_ear,/obj/item/device/radio/headset))
+		if(istype(H.l_ear, /obj/item/device/radio/headset))
 			dongle = H.l_ear
 		else
 			dongle = H.r_ear
@@ -90,14 +90,14 @@ var/list/department_radio_keys = list(
 			return 1
 
 /mob/living/proc/hivecheck()
-	if (isalien(src))
+	if(isalien(src))
 		return 1
-	if (!ishuman(src))
+	if(!ishuman(src))
 		return
 	var/mob/living/carbon/human/H = src
-	if (H.l_ear || H.r_ear)
+	if(H.l_ear || H.r_ear)
 		var/obj/item/device/radio/headset/dongle
-		if(istype(H.l_ear,/obj/item/device/radio/headset))
+		if(istype(H.l_ear, /obj/item/device/radio/headset))
 			dongle = H.l_ear
 		else
 			dongle = H.r_ear
@@ -107,11 +107,11 @@ var/list/department_radio_keys = list(
 			return 1
 
 /mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=0, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = 1)
-	if (src.client)
+	if(src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "You cannot send IC messages (muted).")
+			to_chat(src, "You cannot send IC messages(muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	if(sanitize)
@@ -119,31 +119,31 @@ var/list/department_radio_keys = list(
 
 	var/turf/T = get_turf(src)
 
-	//handle nonverbal and sign languages here
-	if (speaking)
-		if (speaking.flags & NONVERBAL)
-			if (prob(30))
+	// handle nonverbal and sign languages here
+	if(speaking)
+		if(speaking.flags & NONVERBAL)
+			if(prob(30))
 				src.custom_emote(1, "[pick(speaking.signlang_verb)].")
 
-		if (speaking.flags & SIGNLANG)
+		if(speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
 			return 1
 
-	//speaking into radios
+	// speaking into radios
 	if(used_radios.len)
 		italics = 1
 		message_range = 1
 
-		if (!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
+		if(!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
 			for(var/mob/living/M in hearers(5, src))
 				if(M != src)
 					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>")
-				if (speech_sound)
+				if(speech_sound)
 					src.playsound_local(get_turf(src), speech_sound, sound_vol * 0.5, 1)
 
-		speech_sound = null	//so we don't play it twice.
+		speech_sound = null	// so we don't play it twice.
 
-	//make sure the air can transmit speech
+	// make sure the air can transmit speech
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment)
 		var/pressure = environment.return_pressure()
@@ -151,8 +151,8 @@ var/list/department_radio_keys = list(
 			italics = 1
 			message_range = 1
 
-			if (speech_sound)
-				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
+			if(speech_sound)
+				sound_vol *= 0.5	// muffle the sound a bit, so it's like we're actually talking through contact
 
 	var/list/listening = list()
 	var/list/listening_obj = list()
@@ -180,7 +180,7 @@ var/list/department_radio_keys = list(
 			if(M.loc && M.locs[1] in hearturfs)
 				listening |= M
 
-	//speech bubble
+	// speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
 		if(M.client)
@@ -196,14 +196,14 @@ var/list/department_radio_keys = list(
 
 	for(var/obj/O in listening_obj)
 		spawn(0)
-			if(O) //It's possible that it could be deleted in the meantime.
+			if(O) // It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
 
 	log_say("[name]/[key] : [message]")
 	return 1
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)
-	for (var/mob/O in viewers(src, null))
+	for(var/mob/O in viewers(src, null))
 		O.hear_signlang(message, verb, language, src)
 
 /obj/effect/speech_bubble

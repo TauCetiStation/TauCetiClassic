@@ -1,4 +1,4 @@
-//this function places received data into element with specified id.
+// this function places received data into element with specified id.
 var/const/js_byjax = {"
 
 function replaceContent() {
@@ -14,10 +14,10 @@ function replaceContent() {
 	}
 	var parent = document.getElementById(id);
 	if(typeof(parent)!=='undefined' && parent!=null){
-		parent.innerHTML = content?content:'';
+		parent.innerHTML = content ? content : '';
 	}
 	if(callback && window\[callback\]){
-		window\[callback\].apply(null,args);
+		window\[callback\].apply(null, args);
 	}
 }
 "}
@@ -26,7 +26,7 @@ function replaceContent() {
 sends data to control_id:replaceContent
 
 receiver - mob
-control_id - window id (for windows opened with browse(), it'll be "windowname.browser")
+control_id - window id(for windows opened with browse(), it'll be "windowname.browser")
 target_element - HTML element id
 new_content - HTML content
 callback - js function that will be called after the data is sent
@@ -45,6 +45,6 @@ Be sure to include required js functions in your page, or it'll raise an excepti
 /*		if(callback_args)
 			argums += "&[list2params(callback_args)]"
 */
-		receiver << output(argums,"[control_id]:replaceContent")
+		receiver << output(argums, "[control_id]:replaceContent")
 	return
 

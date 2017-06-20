@@ -52,8 +52,8 @@
 /mob/living/simple_animal/hostile/pirate/death()
 	..()
 	if(corpse)
-		new corpse (src.loc)
+		new corpse(src.loc)
 	if(weapon1)
-		new weapon1 (src.loc)
+		new weapon1(src.loc)
 	qdel(src)
 	return

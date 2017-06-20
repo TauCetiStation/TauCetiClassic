@@ -4,8 +4,8 @@
 	invisibility = 70
 
 /obj/machinery/power/dynamo/process()
-	if (raw_power>0)
-		if (raw_power>10)
+	if(raw_power>0)
+		if(raw_power>10)
 			raw_power -= 3
 			add_avail(power_produced * 2)
 		else
@@ -23,7 +23,7 @@
 	icon_state = "pedalgen"
 	anchored = 0
 	density = 0
-	//copypaste sorry
+	// copypaste sorry
 	var/obj/machinery/power/dynamo/Generator = null
 	var/pedaled = 0
 
@@ -47,7 +47,7 @@
 
 
 /obj/structure/stool/bed/chair/pedalgen/attackby(obj/item/W, mob/user)
-	if(default_unfasten_wrench(user,W))
+	if(default_unfasten_wrench(user, W))
 		if(anchored)
 			Generator.loc = src.loc
 			Generator.connect_to_network()
@@ -76,10 +76,10 @@
 				Generator.Rotated()
 				var/mob/living/carbon/human/pedaler = buckled_mob
 				pedaler.nutrition -= 0.5
-				pedaler.apply_effect(1,AGONY,0)
+				pedaler.apply_effect(1, AGONY, 0)
 				if(pedaler.halloss > 80)
 					to_chat(user, "You pushed yourself too hard.")
-					pedaler.apply_effect(24,AGONY,0)
+					pedaler.apply_effect(24, AGONY, 0)
 					unbuckle_mob()
 				sleep(5)
 				pedaled = 0
@@ -107,7 +107,7 @@
 
 
 /obj/structure/stool/bed/chair/pedalgen/post_buckle_mob(mob/user)
-	update_mob(user,1)
+	update_mob(user, 1)
 
 /obj/structure/stool/bed/chair/pedalgen/handle_rotation()
 	if(dir == SOUTH)
@@ -117,8 +117,8 @@
 
 	if(buckled_mob)
 		if(buckled_mob.loc != loc)
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			buckled_mob.buckled = src //Restoring
+			buckled_mob.buckled = null // Temporary, so Move() succeeds.
+			buckled_mob.buckled = src // Restoring
 		update_mob(buckled_mob)
 
 

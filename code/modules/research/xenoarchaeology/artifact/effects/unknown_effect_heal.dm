@@ -4,7 +4,7 @@
 	effect_type = 5
 
 /datum/artifact_effect/heal/DoEffectTouch(mob/toucher)
-	//todo: check over this properly
+	// todo: check over this properly
 	if(toucher && iscarbon(toucher))
 		var/weakness = GetAnomalySusceptibility(toucher)
 		if(prob(weakness * 100))
@@ -15,8 +15,8 @@
 				var/mob/living/carbon/human/H = toucher
 				for(var/obj/item/organ/external/BP in H.bodyparts)
 					BP.heal_damage(25 * weakness, 25 * weakness)
-				//H:heal_bodypart_damage(25, 25)
-				H.vessel.add_reagent("blood",5)
+				// H:heal_bodypart_damage(25, 25)
+				H.vessel.add_reagent("blood", 5)
 				H.nutrition += 50 * weakness
 				H.adjustBrainLoss(-25 * weakness)
 				H.radiation -= min(H.radiation, 25 * weakness)
@@ -33,10 +33,10 @@
 			return 1
 
 /datum/artifact_effect/heal/DoEffectAura()
-	//todo: check over this properly
+	// todo: check over this properly
 	if(holder)
 		var/turf/T = get_turf(holder)
-		for (var/mob/living/carbon/C in range(src.effectrange,T))
+		for(var/mob/living/carbon/C in range(src.effectrange, T))
 			var/weakness = GetAnomalySusceptibility(C)
 			if(prob(weakness * 100))
 				if(prob(10))
@@ -49,10 +49,10 @@
 				C.updatehealth()
 
 /datum/artifact_effect/heal/DoEffectPulse()
-	//todo: check over this properly
+	// todo: check over this properly
 	if(holder)
 		var/turf/T = get_turf(holder)
-		for (var/mob/living/carbon/C in range(src.effectrange,T))
+		for(var/mob/living/carbon/C in range(src.effectrange, T))
 			var/weakness = GetAnomalySusceptibility(C)
 			if(prob(weakness * 100))
 				to_chat(C, "\blue A wave of energy invigorates you.")

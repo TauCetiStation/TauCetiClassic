@@ -13,8 +13,8 @@
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
-	code = rand(min,max)
-	var/loot = rand(1,30)
+	code = rand(min, max)
+	var/loot = rand(1, 30)
 	switch(loot)
 		if(1)
 			new/obj/item/weapon/reagent_containers/food/drinks/bottle/rum(src)
@@ -58,10 +58,10 @@
 			new/obj/item/clothing/under/shorts(src)
 			new/obj/item/clothing/under/shorts/red(src)
 			new/obj/item/clothing/under/shorts/blue(src)
-		//Dummy crates start here.
+		// Dummy crates start here.
 		if(17 to 29)
 			return
-		//Dummy crates end here.
+		// Dummy crates end here.
 		if(30)
 			new/obj/item/weapon/melee/baton(src)
 
@@ -71,18 +71,18 @@
 		var/input = input(usr, "Enter digit from [min] to [max].", "Deca-Code Lock", "") as num
 		if(in_range(src, user))
 			input = Clamp(input, 0, 10)
-			if (input == code)
+			if(input == code)
 				to_chat(user, "<span class='notice'>The crate unlocks!</span>")
 				locked = 0
 				overlays.Cut()
 				overlays += greenlight
-			else if (input == null || input > max || input < min)
+			else if(input == null || input > max || input < min)
 				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else
 				to_chat(user, "<span class='warning'>A red light flashes.</span>")
 				lastattempt = input
 				attempts--
-				if (attempts == 0)
+				if(attempts == 0)
 					to_chat(user, "<span class='danger'>The crate's anti-tamper system activates!</span>")
 					var/turf/T = get_turf(src.loc)
 					explosion(T, 0, 0, 0, 1)
@@ -96,20 +96,20 @@
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
-		if (istype(W, /obj/item/weapon/card/emag))
+		if(istype(W, /obj/item/weapon/card/emag))
 			to_chat(user, "<span class='notice'>The crate unlocks!</span>")
 			locked = 0
-		if (istype(W, /obj/item/device/multitool))
+		if(istype(W, /obj/item/device/multitool))
 			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
-			if (attempts == 1)
+			if(attempts == 1)
 				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")
 			else
 				to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>")
-			if (lastattempt == null)
+			if(lastattempt == null)
 				to_chat(user, "<span class='notice'> has been made to open the crate thus far.</span>")
 				return
 			// hot and cold
-			if (code > lastattempt)
+			if(code > lastattempt)
 				to_chat(user, "<span class='notice'>* Last access attempt lower than expected code.</span>")
 			else
 				to_chat(user, "<span class='notice'>* Last access attempt higher than expected code.</span>")

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Computer"
@@ -82,10 +82,10 @@
 
 	if(href_list["togglep"])
 		src.toggle_power()
-		investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr.key]","singulo")
-		if (active)
-			message_admins("PA Control Computer turned ON by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-			log_game("PA Control Computer turned ON by [usr.ckey]([usr]) in ([x],[y],[z])")
+		investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr.key]", "singulo")
+		if(active)
+			message_admins("PA Control Computer turned ON by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)", 0, 1)
+			log_game("PA Control Computer turned ON by [usr.ckey]([usr]) in([x],[y],[z])")
 	else if(href_list["scan"])
 		src.part_scan()
 	else if(href_list["strengthup"])
@@ -93,9 +93,9 @@
 		if(strength > 2)
 			strength = 2
 		else
-			message_admins("PA Control Computer increased to [strength] by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-			log_game("PA Control Computer increased to [strength] by [usr.ckey]([usr]) in ([x],[y],[z])")
-			investigate_log("increased to <font color='red'>[strength]</font> by [usr.key]","singulo")
+			message_admins("PA Control Computer increased to [strength] by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)", 0, 1)
+			log_game("PA Control Computer increased to [strength] by [usr.ckey]([usr]) in([x],[y],[z])")
+			investigate_log("increased to <font color='red'>[strength]</font> by [usr.key]", "singulo")
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
 			part.strength = strength
 			part.update_icon()
@@ -105,7 +105,7 @@
 		if(strength < 0)
 			strength = 0
 		else
-			investigate_log("decreased to <font color='green'>[strength]</font> by [usr.key]","singulo")
+			investigate_log("decreased to <font color='green'>[strength]</font> by [usr.key]", "singulo")
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
 			part.strength = strength
 			part.update_icon()
@@ -126,12 +126,12 @@
 
 /obj/machinery/particle_accelerator/control_box/process()
 	if(src.active)
-		//a part is missing!
+		// a part is missing!
 		if( length(connected_parts) < 6 )
-			investigate_log("lost a connected part; It <font color='red'>powered down</font>.","singulo")
+			investigate_log("lost a connected part; It <font color='red'>powered down</font>.", "singulo")
 			src.toggle_power()
 			return
-		//emit some particles
+		// emit some particles
 		for(var/obj/structure/particle_accelerator/particle_emitter/PE in connected_parts)
 			if(PE)
 				PE.emit_particle(src.strength)
@@ -139,33 +139,33 @@
 
 
 /obj/machinery/particle_accelerator/control_box/proc/part_scan()
-	for(var/obj/structure/particle_accelerator/fuel_chamber/F in orange(1,src))
+	for(var/obj/structure/particle_accelerator/fuel_chamber/F in orange(1, src))
 		src.dir = F.dir
 	connected_parts = list()
 	var/tally = 0
 	var/ldir = turn(dir,-90)
-	var/rdir = turn(dir,90)
-	var/odir = turn(dir,180)
+	var/rdir = turn(dir, 90)
+	var/odir = turn(dir, 180)
 	var/turf/T = src.loc
-	T = get_step(T,rdir)
-	if(check_part(T,/obj/structure/particle_accelerator/fuel_chamber))
+	T = get_step(T, rdir)
+	if(check_part(T, /obj/structure/particle_accelerator/fuel_chamber))
 		tally++
-	T = get_step(T,odir)
-	if(check_part(T,/obj/structure/particle_accelerator/end_cap))
+	T = get_step(T, odir)
+	if(check_part(T, /obj/structure/particle_accelerator/end_cap))
 		tally++
-	T = get_step(T,dir)
-	T = get_step(T,dir)
-	if(check_part(T,/obj/structure/particle_accelerator/power_box))
+	T = get_step(T, dir)
+	T = get_step(T, dir)
+	if(check_part(T, /obj/structure/particle_accelerator/power_box))
 		tally++
-	T = get_step(T,dir)
-	if(check_part(T,/obj/structure/particle_accelerator/particle_emitter/center))
+	T = get_step(T, dir)
+	if(check_part(T, /obj/structure/particle_accelerator/particle_emitter/center))
 		tally++
-	T = get_step(T,ldir)
-	if(check_part(T,/obj/structure/particle_accelerator/particle_emitter/left))
+	T = get_step(T, ldir)
+	if(check_part(T, /obj/structure/particle_accelerator/particle_emitter/left))
 		tally++
-	T = get_step(T,rdir)
-	T = get_step(T,rdir)
-	if(check_part(T,/obj/structure/particle_accelerator/particle_emitter/right))
+	T = get_step(T, rdir)
+	T = get_step(T, rdir)
+	if(check_part(T, /obj/structure/particle_accelerator/particle_emitter/right))
 		tally++
 	if(tally >= 6)
 		assembled = 1

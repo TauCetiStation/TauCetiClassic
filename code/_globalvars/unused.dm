@@ -27,10 +27,10 @@ var/list/liftable_structures = list(\
 	/obj/machinery/portable_atmospherics/canister)
 
 //	list/mazewarp = list()
-//	list/traitors = list()	//traitor list
+//	list/traitors = list()	// traitor list
 //  reverse_dir[dir] = reverse of dir
 var/datum/engine_eject/engine_eject_control = null
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 
-//var/red_alert_code = 0 //Used in new code red and emergency shuttle call lighting
-//var/red_alert_evac = 0
+// var/red_alert_code = 0 // Used in new code red and emergency shuttle call lighting
+// var/red_alert_evac = 0

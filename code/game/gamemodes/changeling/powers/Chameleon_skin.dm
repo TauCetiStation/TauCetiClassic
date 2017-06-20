@@ -19,7 +19,7 @@
 	else
 		turn_on()
 	active = !active
-	feedback_add_details("changeling_powers","CS")
+	feedback_add_details("changeling_powers", "CS")
 	return 1
 
 /obj/effect/proc_holder/changeling/chameleon_skin/process()

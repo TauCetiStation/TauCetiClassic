@@ -15,7 +15,7 @@
 	var/toxins = 0
 
 /obj/machinery/disease2/incubator/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/syringe))
+	if(istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O, /obj/item/weapon/reagent_containers/syringe))
 
 		if(beaker)
 			to_chat(user, "\The [src] is already loaded.")
@@ -70,27 +70,27 @@
 	data["can_breed_virus"] = null
 	data["blood_already_infected"] = null
 
-	if (beaker)
+	if(beaker)
 		var/datum/reagent/blood/B = locate(/datum/reagent/blood) in beaker.reagents.reagent_list
 		data["can_breed_virus"] = dish && dish.virus2 && B
 
-		if (B)
-			if (!B.data["virus2"])
+		if(B)
+			if(!B.data["virus2"])
 				B.data["virus2"] = list()
 
 			var/list/virus = B.data["virus2"]
-			for (var/ID in virus)
+			for(var/ID in virus)
 				data["blood_already_infected"] = virus[ID]
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "dish_incubator.tmpl", src.name, 400, 600)
 		ui.set_initial_data(data)
 		ui.open()
 
 /obj/machinery/disease2/incubator/process()
 	if(dish && on && dish.virus2)
-		use_power(50,EQUIP)
+		use_power(50, EQUIP)
 		if(!powered(EQUIP))
 			on = 0
 			icon_state = "incubator"
@@ -127,21 +127,21 @@
 		nanomanager.update_uis(src)
 
 	if(beaker)
-		if(!beaker.reagents.remove_reagent("virusfood",5))
+		if(!beaker.reagents.remove_reagent("virusfood", 5))
 			foodsupply += 10
 			nanomanager.update_uis(src)
 
-		if (locate(/datum/reagent/toxin) in beaker.reagents.reagent_list)
+		if(locate(/datum/reagent/toxin) in beaker.reagents.reagent_list)
 			for(var/datum/reagent/toxin/T in beaker.reagents.reagent_list)
-				toxins += max(T.toxpwr,1)
-				beaker.reagents.remove_reagent(T.id,1)
+				toxins += max(T.toxpwr, 1)
+				beaker.reagents.remove_reagent(T.id, 1)
 			nanomanager.update_uis(src)
 
 /obj/machinery/disease2/incubator/Topic(href, href_list)
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	if (href_list["close"])
+	if(href_list["close"])
 		user.unset_machine(src)
 		ui.close()
 		return FALSE
@@ -150,35 +150,35 @@
 	if(!.)
 		return
 
-	if (href_list["ejectchem"])
-		if (beaker)
+	if(href_list["ejectchem"])
+		if(beaker)
 			beaker.loc = src.loc
 			beaker = null
 		return TRUE
 
-	if (href_list["power"])
-		if (dish)
+	if(href_list["power"])
+		if(dish)
 			on = !on
 			icon_state = on ? "incubator_on" : "incubator"
 		return TRUE
 
-	if (href_list["ejectdish"])
-		if (dish)
+	if(href_list["ejectdish"])
+		if(dish)
 			dish.loc = src.loc
 			dish = null
 		return TRUE
 
-	if (href_list["rad"])
+	if(href_list["rad"])
 		radiation += 10
 		return TRUE
 
-	if (href_list["flush"])
+	if(href_list["flush"])
 		radiation = 0
 		toxins = 0
 		foodsupply = 0
 		return TRUE
 
-	if (href_list["virus"])
+	if(href_list["virus"])
 		if(!dish)
 			return TRUE
 

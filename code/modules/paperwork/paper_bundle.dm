@@ -11,7 +11,7 @@
 	layer = 4
 	pressure_resistance = 1
 	attack_verb = list("bapped")
-	var/amount = 0 //Amount of items clipped to the paper
+	var/amount = 0 // Amount of items clipped to the paper
 	var/page = 1
 	var/screen = 0
 
@@ -24,9 +24,9 @@
 		if(P.crumpled>0)
 			to_chat(usr, "Paper to crumpled for bundle.")
 			return
-		if (istype(P, /obj/item/weapon/paper/carbon))
+		if(istype(P, /obj/item/weapon/paper/carbon))
 			var/obj/item/weapon/paper/carbon/C = P
-			if (!C.iscopy && !C.copied)
+			if(!C.iscopy && !C.copied)
 				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				add_fingerprint(user)
 				return
@@ -37,7 +37,7 @@
 		to_chat(user, "<span class='notice'>You add [(P.name == "paper") ? "the paper" : P.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
 		user.drop_from_inventory(P)
 		P.loc = src
-		if(istype(user,/mob/living/carbon/human))
+		if(istype(user, /mob/living/carbon/human))
 			user:update_inv_l_hand()
 			user:update_inv_r_hand()
 	else if(istype(W, /obj/item/weapon/photo))
@@ -61,13 +61,13 @@
 		qdel(W)
 	else
 		if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
-			usr << browse("", "window=[name]") //Closes the dialog
+			usr << browse("", "window=[name]") // Closes the dialog
 		P = src[page]
 		P.attackby(W, user)
 
 
 	update_icon()
-	attack_self(usr) //Update the browsed page.
+	attack_self(usr) // Update the browsed page.
 	add_fingerprint(usr)
 	return
 
@@ -160,7 +160,7 @@
 			update_icon()
 	else
 		to_chat(usr, "<span class='notice'>You need to hold it in hands!</span>")
-	if (istype(src.loc, /mob))
+	if(istype(src.loc, /mob))
 		src.attack_self(src.loc)
 		updateUsrDialog()
 

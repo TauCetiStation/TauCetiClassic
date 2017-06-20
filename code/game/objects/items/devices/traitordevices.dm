@@ -26,7 +26,7 @@ effective or pretty fucking useless.
 	item_state = "electronic"
 	origin_tech = "magnets=3;combat=3;syndicate=3"
 
-	var/times_used = 0 //Number of times it's been used.
+	var/times_used = 0 // Number of times it's been used.
 	var/max_uses = 2
 
 
@@ -42,9 +42,9 @@ effective or pretty fucking useless.
 		spawn()
 			if(prob(50))
 
-				M.Weaken(rand(10,20))
+				M.Weaken(rand(10, 20))
 				if(prob(25))
-					M.Stun(rand(5,10))
+					M.Stun(rand(5, 10))
 				to_chat(M, "\red <b>You feel a tremendous, paralyzing wave flood your mind.</b>")
 
 			else

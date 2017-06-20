@@ -71,7 +71,7 @@
 	impact_type = /obj/effect/projectile/emitter/impact
 
 /obj/item/projectile/beam/emitter/singularity_pull()
-	return //don't want the emitters to miss
+	return // don't want the emitters to miss
 
 /obj/item/projectile/beam/lastertag/blue
 	name = "lasertag beam"
@@ -109,7 +109,7 @@
 				M.Weaken(5)
 		return 1
 
-/obj/item/projectile/beam/lastertag/omni//A laser tag bolt that stuns EVERYONE
+/obj/item/projectile/beam/lastertag/omni// A laser tag bolt that stuns EVERYONE
 	name = "lasertag beam"
 	icon_state = "omnilaser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE

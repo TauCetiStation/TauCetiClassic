@@ -2,7 +2,7 @@
 // These are the main datums that emit light.
 
 /datum/light_source
-	var/atom/top_atom       // The atom we're emitting light from (for example a mob if we're from a flashlight that's being held).
+	var/atom/top_atom       // The atom we're emitting light from(for example a mob if we're from a flashlight that's being held).
 	var/atom/source_atom    // The atom that we belong to.
 
 	var/turf/source_turf    // The turf under the above.
@@ -25,7 +25,7 @@
 
 	var/applied             // Whether we have applied our light yet or not.
 
-	var/vis_update          // Whether we should smartly recalculate visibility. and then only update tiles that became (in)visible to us.
+	var/vis_update          // Whether we should smartly recalculate visibility. and then only update tiles that became(in)visible to us.
 	var/needs_update        // Whether we are queued for an update.
 	var/destroyed           // Whether we are destroyed and need to stop emitting light.
 	var/force_update
@@ -71,7 +71,7 @@
 
 // Call it dirty, I don't care.
 // This is here so there's no performance loss on non-instant updates from the fact that the engine can also do instant updates.
-// If you're wondering what's with the "BYOND" argument: BYOND won't let me have a () macro that has no arguments :|.
+// If you're wondering what's with the "BYOND" argument: BYOND won't let me have a() macro that has no arguments :|.
 #define effect_update(BYOND)               \
 	if(!needs_update)                      \
 	{                                      \
@@ -146,7 +146,7 @@
 /datum/light_source/proc/parse_light_color()
 	if(light_color)
 		lum_r = GetRedPart   (light_color) / 255
-		lum_g = GetGreenPart (light_color) / 255
+		lum_g = GetGreenPart(light_color) / 255
 		lum_b = GetBluePart  (light_color) / 255
 	else
 		lum_r = 1

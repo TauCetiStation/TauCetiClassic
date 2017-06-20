@@ -18,7 +18,7 @@
 	return src.attack_hand(user)
 
 
-/obj/item/weapon/reagent_containers/hypospray/New() //comment this to make hypos start off empty
+/obj/item/weapon/reagent_containers/hypospray/New() // comment this to make hypos start off empty
 	..()
 	reagents.add_reagent("tricordrazine", 30)
 	return
@@ -27,9 +27,9 @@
 	if(!reagents.total_volume)
 		to_chat(user, "\red [src] is empty.")
 		return
-	if (!( istype(M, /mob) ))
+	if(!( istype(M, /mob) ))
 		return
-	if (reagents.total_volume)
+	if(reagents.total_volume)
 		to_chat(user, "\blue You inject [M] with [src].")
 		to_chat(M, "\red You feel a tiny prick!")
 
@@ -64,7 +64,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack //goliath kiting
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack // goliath kiting
 	name = "stimpack"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
@@ -80,7 +80,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/attack(mob/M, mob/user)
 	..()
-	if(reagents.total_volume <= 0) //Prevents autoinjectors to be refilled.
+	if(reagents.total_volume <= 0) // Prevents autoinjectors to be refilled.
 		flags &= ~OPENCONTAINER
 	update_icon()
 	return

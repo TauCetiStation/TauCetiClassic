@@ -10,7 +10,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/structure/bigDelivery/Destroy()
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+	if(wrapped) // sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = (get_turf(loc))
 		if(istype(wrapped, /obj/structure/closet))
 			var/obj/structure/closet/O = wrapped
@@ -21,7 +21,7 @@
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+	if(wrapped) // sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = (get_turf(src.loc))
 		if(istype(wrapped, /obj/structure/closet))
 			var/obj/structure/closet/O = wrapped
@@ -39,7 +39,7 @@
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/pen))
-		var/str = sanitize(copytext(input(usr,"Label text?","Set label",""),1,MAX_NAME_LEN))
+		var/str = sanitize(copytext(input(usr, "Label text?", "Set label", ""), 1, MAX_NAME_LEN))
 		if(!str || !length(str))
 			to_chat(usr, "\red Invalid text.")
 			return
@@ -57,7 +57,7 @@
 	var/sortTag = ""
 
 /obj/item/smallDelivery/attack_self(mob/user)
-	if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+	if(src.wrapped) // sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = user.loc
 		if(ishuman(user))
 			user.put_in_hands(wrapped)
@@ -77,7 +77,7 @@
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/pen))
-		var/str = sanitize(copytext(input(usr,"Label text?","Set label",""),1,MAX_NAME_LEN))
+		var/str = sanitize(copytext(input(usr, "Label text?", "Set label", ""), 1, MAX_NAME_LEN))
 		if(!str || !length(str))
 			to_chat(usr, "\red Invalid text.")
 			return
@@ -97,49 +97,49 @@
 
 /obj/item/weapon/packageWrap/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return
-	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
+	if(!istype(target))	// this really shouldn't be necessary(but it is).	-Pete
 		return
-	if(istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
+	if(istype(target, /obj/item/smallDelivery) || istype(target, /obj/structure/bigDelivery) \
 	|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/evidencebag))
 		return
 	if(target.anchored)
 		return
 	if(target in user)
 		return
-	if(user in target) //no wrapping closets that you are inside - it's not physically possible
+	if(user in target) // no wrapping closets that you are inside - it's not physically possible
 		return
 
 	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
 
 
-	if (istype(target, /obj/item))
+	if(istype(target, /obj/item))
 		var/obj/item/O = target
-		if (src.amount > 1)
-			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
+		if(src.amount > 1)
+			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	// Aaannd wrap it up!
 			if(!istype(O.loc, /turf))
 				if(user.client)
 					user.client.screen -= O
 			P.w_class = O.w_class
 			if(P.w_class <= 1.0)
 				P.icon_state = "deliverycrate1"
-			else if (P.w_class <= 2.0)
+			else if(P.w_class <= 2.0)
 				P.icon_state = "deliverycrate2"
-			else if (P.w_class <= 3.0)
+			else if(P.w_class <= 3.0)
 				P.icon_state = "deliverycrate3"
 			else
 				P.icon_state = "deliverycrate4"
 			P.wrapped = O
 			O.loc = P
 			var/i = round(O.w_class)
-			if(i in list(1,2,3,4,5))
+			if(i in list(1, 2, 3, 4, 5))
 				P.icon_state = "deliverycrate[i]"
 			P.add_fingerprint(usr)
 			O.add_fingerprint(usr)
 			src.add_fingerprint(usr)
 			src.amount -= 1
-	else if (istype(target, /obj/structure/closet/crate))
+	else if(istype(target, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/O = target
-		if (src.amount > 3 && !O.opened)
+		if(src.amount > 3 && !O.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			P.icon_state = "deliverycrate"
 			P.wrapped = O
@@ -147,9 +147,9 @@
 			src.amount -= 3
 		else if(src.amount < 3)
 			to_chat(user, "\blue You need more paper.")
-	else if (istype (target, /obj/structure/closet))
+	else if(istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target
-		if (src.amount > 3 && !O.opened)
+		if(src.amount > 3 && !O.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			P.wrapped = O
 			O.welded = 1
@@ -159,7 +159,7 @@
 			to_chat(user, "\blue You need more paper.")
 	else
 		to_chat(user, "\blue The object you are trying to wrap is unsuitable for the sorting machinery!")
-	if (src.amount <= 0)
+	if(src.amount <= 0)
 		new /obj/item/weapon/c_tube( src.loc )
 		qdel(src)
 		return
@@ -189,7 +189,7 @@
 	for(var/i = 1, i <= tagger_locations.len, i++)
 		dat += "<td><a href='?src=\ref[src];nextTag=[tagger_locations[i]]'>[tagger_locations[i]]</a></td>"
 
-		if (i%4==0)
+		if(i%4==0)
 			dat += "</tr><tr>"
 
 	dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"
@@ -233,7 +233,7 @@
 /obj/machinery/disposal/deliveryChute/update()
 	return
 
-/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
+/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) // Go straight into the chute
 	if(istype(AM, /obj/item/projectile) || istype(AM, /obj/effect))	return
 	switch(dir)
 		if(NORTH)
@@ -290,15 +290,15 @@
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(istype(I,/obj/item/weapon/weldingtool) && c_mode==1)
+	else if(istype(I, /obj/item/weapon/weldingtool) && c_mode==1)
 		var/obj/item/weapon/weldingtool/W = I
-		if(W.remove_fuel(0,user))
+		if(W.remove_fuel(0, user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			to_chat(user, "You start slicing the floorweld off the delivery chute.")
-			if(do_after(user,20,target = src))
+			if(do_after(user, 20, target = src))
 				if(!src || !W.isOn()) return
 				to_chat(user, "You sliced the floorweld off the delivery chute.")
-				var/obj/structure/disposalconstruct/C = new (src.loc)
+				var/obj/structure/disposalconstruct/C = new(src.loc)
 				C.ptype = 8 // 8 =  Delivery chute
 				C.update()
 				C.anchored = 1

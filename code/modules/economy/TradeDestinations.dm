@@ -8,7 +8,7 @@ var/list/weighted_mundaneevent_locations = list()
 	var/distance = 0
 	var/list/willing_to_buy = list()
 	var/list/willing_to_sell = list()
-	var/can_shuttle_here = 0		//one day crew from the exodus will be able to travel to this destination
+	var/can_shuttle_here = 0		// one day crew from the exodus will be able to travel to this destination
 	var/list/viable_random_events = list()
 	var/list/temp_price_change[BIOMEDICAL]
 	var/list/viable_mundane_events = list()
@@ -16,7 +16,7 @@ var/list/weighted_mundaneevent_locations = list()
 /datum/trade_destination/proc/get_custom_eventstring(event_type)
 	return null
 
-//distance is measured in AU and co-relates to travel time
+// distance is measured in AU and co-relates to travel time
 /datum/trade_destination/centcomm
 	name = "CentComm"
 	description = "NanoTrasen's administrative centre for Tau Ceti."
@@ -28,7 +28,7 @@ var/list/weighted_mundaneevent_locations = list()
 
 /datum/trade_destination/anansi
 	name = "NSS Anansi"
-	description = "Medical station ran by Second Red Cross (but owned by NT) for handling emergency cases from nearby colonies."
+	description = "Medical station ran by Second Red Cross(but owned by NT) for handling emergency cases from nearby colonies."
 	distance = 1.7
 	willing_to_buy = list()
 	willing_to_sell = list()
@@ -38,7 +38,7 @@ var/list/weighted_mundaneevent_locations = list()
 /datum/trade_destination/anansi/get_custom_eventstring(event_type)
 	if(event_type == RESEARCH_BREAKTHROUGH)
 		return "Thanks to research conducted on the NSS Anansi, Second Red Cross Society wishes to announce a major breakthough in the field of \
-		[pick("mind-machine interfacing","neuroscience","nano-augmentation","genetics")]. NanoTrasen is expected to announce a co-exploitation deal within the fortnight."
+		[pick("mind-machine interfacing", "neuroscience", "nano-augmentation", "genetics")]. NanoTrasen is expected to announce a co-exploitation deal within the fortnight."
 	return null
 
 /datum/trade_destination/icarus
@@ -61,7 +61,7 @@ var/list/weighted_mundaneevent_locations = list()
 /datum/trade_destination/redolant/get_custom_eventstring(event_type)
 	if(event_type == RESEARCH_BREAKTHROUGH)
 		return "Thanks to research conducted on the OAV Redolant, Osiris Atmospherics wishes to announce a major breakthough in the field of \
-		[pick("phoron research","high energy flux capacitance","super-compressed materials","theoretical particle physics")]. NanoTrasen is expected to announce a co-exploitation deal within the fortnight."
+		[pick("phoron research", "high energy flux capacitance", "super-compressed materials", "theoretical particle physics")]. NanoTrasen is expected to announce a co-exploitation deal within the fortnight."
 	return null
 
 /datum/trade_destination/beltway
@@ -93,7 +93,7 @@ var/list/weighted_mundaneevent_locations = list()
 
 /datum/trade_destination/luthien
 	name = "Luthien"
-	description = "A small colony established on a feral, untamed world (largely jungle). Savages and wild beasts attack the outpost regularly, although NT maintains tight military control."
+	description = "A small colony established on a feral, untamed world(largely jungle). Savages and wild beasts attack the outpost regularly, although NT maintains tight military control."
 	distance = 8.9
 	willing_to_buy = list()
 	willing_to_sell = list()

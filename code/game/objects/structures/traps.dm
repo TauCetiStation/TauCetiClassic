@@ -5,9 +5,9 @@
 	icon_state = "trap"
 	density = 0
 	anchored = TRUE
-	alpha = 30 //initially quite hidden when not "recharging"
+	alpha = 30 // initially quite hidden when not "recharging"
 	var/last_trigger = 0
-	var/time_between_triggers = 600 //takes a minute to recharge
+	var/time_between_triggers = 600 // takes a minute to recharge
 	var/static/list/ignore_typecache
 
 /obj/structure/trap/New()
@@ -90,7 +90,7 @@
 
 /obj/structure/trap/damage/flare()
 	..()
-	var/obj/structure/rock/giant_rock = new (get_turf(src))
+	var/obj/structure/rock/giant_rock = new(get_turf(src))
 	QDEL_IN(giant_rock, 200)
 
 /obj/structure/rock
@@ -109,7 +109,7 @@
 	desc = "A divine barrier, It looks like you could destroy it with enough effort, or wait for it to dissipate..."
 	icon_state = "ward"
 	density = 1
-	time_between_triggers = 1200 //Exists for 2 minutes
+	time_between_triggers = 1200 // Exists for 2 minutes
 
 
 /obj/structure/trap/ward/New()

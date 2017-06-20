@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/aiupload
 	name = "AI Upload"
@@ -27,7 +27,7 @@
 
 
 	attackby(obj/item/weapon/O, mob/user)
-		if (user.z > ZLEVEL_EMPTY)
+		if(user.z > ZLEVEL_EMPTY)
 			to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 			return
 		if(istype(O, /obj/item/weapon/aiModule))
@@ -47,7 +47,7 @@
 
 		src.current = select_active_ai(user)
 
-		if (!src.current)
+		if(!src.current)
 			to_chat(usr, "No active AIs detected.")
 		else
 			to_chat(usr, "[src.current.name] selected for law changes.")
@@ -80,7 +80,7 @@
 
 		src.current = freeborg()
 
-		if (!src.current)
+		if(!src.current)
 			to_chat(usr, "No free cyborgs detected.")
 		else
 			to_chat(usr, "[src.current.name] selected for law changes.")

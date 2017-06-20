@@ -25,8 +25,8 @@
 			to_chat(H, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
 			obj_count++
 
-		for (var/obj/item/I in H)
-			if (istype(I, /obj/item/weapon/implant))
+		for(var/obj/item/I in H)
+			if(istype(I, /obj/item/weapon/implant))
 				continue
 			qdel(I)
 

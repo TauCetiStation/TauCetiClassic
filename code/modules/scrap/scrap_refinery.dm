@@ -1,7 +1,7 @@
 var/const/SAFETY_COOLDOWN = 100
 
 /obj/item/weapon/circuitboard/recycler
-	name = "Circuit board (Recycler)"
+	name = "Circuit board(Recycler)"
 	board_type = "machine"
 	build_path = /obj/machinery/recycler
 	origin_tech = "engineering = 3"
@@ -50,7 +50,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if (istype(I, /obj/item/weapon/card/emag))
+	if(istype(I, /obj/item/weapon/card/emag))
 		emag_act(user)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return

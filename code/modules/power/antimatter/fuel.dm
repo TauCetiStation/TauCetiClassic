@@ -13,12 +13,12 @@
 /obj/item/weapon/fuel/H
 	name = "Hydrogen storage ring"
 	content = "Hydrogen"
-	fuel = 1e-12		//pico-kilogram
+	fuel = 1e-12		// pico-kilogram
 
 /obj/item/weapon/fuel/antiH
 	name = "Anti-Hydrogen storage ring"
 	content = "Anti-Hydrogen"
-	fuel = 1e-12		//pico-kilogram
+	fuel = 1e-12		// pico-kilogram
 
 /obj/item/weapon/fuel/attackby(obj/item/weapon/fuel/F, mob/user)
 	..()
@@ -45,13 +45,13 @@
 
 	var/strength = convert2energy(mass)
 
-	if (strength < 773.0)
+	if(strength < 773.0)
 		var/turf/T = get_turf(src)
 
-		if (strength > (450+T0C))
+		if(strength > (450+T0C))
 			explosion(T, 0, 1, 2, 4)
 		else
-			if (strength > (300+T0C))
+			if(strength > (300+T0C))
 				explosion(T, 0, 0, 2, 3)
 
 		qdel(src)
@@ -62,7 +62,7 @@
 	var/ground_zero_range = round(strength / 387)
 	explosion(ground_zero, ground_zero_range, ground_zero_range*2, ground_zero_range*3, ground_zero_range*4)
 
-	//SN src = null
+	// SN src = null
 	qdel(src)
 	return
 
@@ -82,7 +82,7 @@
 	return
 
 /obj/item/weapon/fuel/attack(mob/M, mob/user)
-	if (user != M)
+	if(user != M)
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 		O.source = user
 		O.target = M

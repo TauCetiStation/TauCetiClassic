@@ -1,11 +1,11 @@
-//supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
+// supposedly the fastest way to do this according to https:// gist.github.com/Giacom/be635398926bb463b42a
 #define RANGE_TURFS(RADIUS, CENTER) \
   block( \
-    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
-    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
+    locate(max(CENTER.x-(RADIUS), 1),          max(CENTER.y-(RADIUS), 1),          CENTER.z), \
+    locate(min(CENTER.x+(RADIUS), world.maxx), min(CENTER.y+(RADIUS), world.maxy), CENTER.z) \
   )
 
-/proc/dopage(src,target)
+/proc/dopage(src, target)
 	var/href_list
 	var/href
 	href_list = params2list("src=\ref[src]&[target]=1")
@@ -24,7 +24,7 @@
 /proc/get_area_master(const/O)
 	var/area/A = get_area(O)
 
-	if (isarea(A))
+	if(isarea(A))
 		return A
 
 /proc/get_area(O)
@@ -35,7 +35,7 @@
 		var/area/res = loc.loc
 		. = res
 
-/proc/get_area_name(N) //get area by its name
+/proc/get_area_name(N) // get area by its name
 	for(var/area/A in all_areas)
 		if(A.name == N)
 			return A
@@ -45,7 +45,7 @@
 	if(get_dist(source, user) <= 1)
 		return 1
 
-	return 0 //not in range and not telekinetic
+	return 0 // not in range and not telekinetic
 
 // Like view but bypasses luminosity check
 
@@ -74,7 +74,7 @@
 /proc/isNotAdminLevel(level)
 	return !isAdminLevel(level)
 
-/proc/circlerange(center=usr,radius=3)
+/proc/circlerange(center=usr, radius=3)
 
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
@@ -86,10 +86,10 @@
 		if(dx*dx + dy*dy <= rsq)
 			turfs += T
 
-	//turfs += centerturf
+	// turfs += centerturf
 	return turfs
 
-/proc/circleview(center=usr,radius=3)
+/proc/circleview(center=usr, radius=3)
 
 	var/turf/centerturf = get_turf(center)
 	var/list/atoms = new/list()
@@ -101,10 +101,10 @@
 		if(dx*dx + dy*dy <= rsq)
 			atoms += A
 
-	//turfs += centerturf
+	// turfs += centerturf
 	return atoms
 
-/proc/get_dist_euclidian(atom/Loc1,atom/Loc2)
+/proc/get_dist_euclidian(atom/Loc1, atom/Loc2)
 	var/dx = Loc1.x - Loc2.x
 	var/dy = Loc1.y - Loc2.y
 
@@ -112,7 +112,7 @@
 
 	return dist
 
-/proc/circlerangeturfs(center=usr,radius=3)
+/proc/circlerangeturfs(center=usr, radius=3)
 
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
@@ -125,7 +125,7 @@
 			turfs += T
 	return turfs
 
-/proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
+/proc/circleviewturfs(center=usr, radius=3)		// Is there even a diffrence between this proc and circlerangeturfs()?
 
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
@@ -140,7 +140,7 @@
 
 
 
-//var/debug_mob = 0
+// var/debug_mob = 0
 
 // Will recursively loop through an atom's contents and check for mobs, then it will loop through every atom in that atom's contents.
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
@@ -148,7 +148,7 @@
 
 /proc/recursive_mob_check(atom/O,  list/L = list(), recursion_limit = 3, client_check = 1, sight_check = 1, include_radio = 1)
 
-	//debug_mob += O.contents.len
+	// debug_mob += O.contents.len
 	if(!recursion_limit)
 		return L
 	for(var/atom/A in O.contents)
@@ -161,7 +161,7 @@
 			if(sight_check && !isInSight(A, O))
 				continue
 			L |= M
-			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+			// world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 
 		else if(include_radio && istype(A, /obj/item/device/radio))
 			if(sight_check && !isInSight(A, O))
@@ -191,7 +191,7 @@
 			var/mob/M = A
 			if(M.client)
 				hear += M
-			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+			// world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 		else if(istype(A, /obj/item/device/radio))
 			hear += A
 
@@ -202,7 +202,7 @@
 
 
 /proc/get_hearers_in_view(R, atom/source)
-	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
+	// Returns a list of hearers in view(R) from source(ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
 
@@ -218,26 +218,26 @@
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
 
-	//set background = 1
+	// set background = 1
 
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
 	for(var/obj/item/device/radio/R in radios)
 		if(R)
-			//Cyborg checks. Receiving message uses a bit of cyborg's charge.
+			// Cyborg checks. Receiving message uses a bit of cyborg's charge.
 			var/obj/item/device/radio/borg/BR = R
 			if(istype(BR) && BR.myborg)
 				var/mob/living/silicon/robot/borg = BR.myborg
 				var/datum/robot_component/CO = borg.get_component("radio")
 				if(!CO)
-					continue //No radio component (Shouldn't happen)
+					continue // No radio component(Shouldn't happen)
 				if(!borg.is_component_functioning("radio") || !borg.cell_use_power(CO.active_usage))
-					continue //No power.
+					continue // No power.
 
 			var/turf/speaker = get_turf(R)
 			if(speaker)
-				for(var/turf/T in hear(R.canhear_range,speaker))
+				for(var/turf/T in hear(R.canhear_range, speaker))
 					speaker_coverage[T] = T
 
 
@@ -277,32 +277,32 @@
 #define SIGN(X) ((X<0)?-1:1)
 
 proc
-	inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
+	inLineOfSight(X1, Y1, X2, Y2, Z=1, PX1=16.5, PY1=16.5, PX2=16.5, PY2=16.5)
 		var/turf/T
 		if(X1==X2)
 			if(Y1==Y2)
-				return 1 //Light cannot be blocked on same tile
+				return 1 // Light cannot be blocked on same tile
 			else
 				var/s = SIGN(Y2-Y1)
 				Y1+=s
 				while(Y1!=Y2)
-					T=locate(X1,Y1,Z)
+					T=locate(X1, Y1, Z)
 					if(T.opacity)
 						return 0
 					Y1+=s
 		else
 			var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
+			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) // In tiles
 			var/signX = SIGN(X2-X1)
 			var/signY = SIGN(Y2-Y1)
 			if(X1<X2)
 				b+=m
 			while(X1!=X2 || Y1!=Y2)
 				if(round(m*X1+b-Y1))
-					Y1+=signY //Line exits tile vertically
+					Y1+=signY // Line exits tile vertically
 				else
-					X1+=signX //Line exits tile horizontally
-				T=locate(X1,Y1,Z)
+					X1+=signX // Line exits tile horizontally
+				T=locate(X1, Y1, Z)
 				if(T.opacity)
 					return 0
 		return 1
@@ -315,7 +315,7 @@ proc/isInSight(atom/A, atom/B)
 	if(!Aturf || !Bturf)
 		return 0
 
-	if(inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z))
+	if(inLineOfSight(Aturf.x, Aturf.y, Bturf.x, Bturf.y, Aturf.z))
 		return 1
 
 	else
@@ -332,11 +332,11 @@ proc/isInSight(atom/A, atom/B)
 		mobs_found += M
 	return mobs_found
 
-/proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
-	//returns only NORTH, SOUTH, EAST, or WEST
+/proc/get_cardinal_step_away(atom/start, atom/finish) // returns the position of a step from start away from finish, in one of the cardinal directions
+	// returns only NORTH, SOUTH, EAST, or WEST
 	var/dx = finish.x - start.x
 	var/dy = finish.y - start.y
-	if(abs(dy) > abs (dx)) //slope is above 1:1 (move horizontally in a tie)
+	if(abs(dy) > abs(dx)) // slope is above 1:1 (move horizontally in a tie)
 		if(dy > 0)
 			return get_step(start, SOUTH)
 		else
@@ -363,7 +363,7 @@ proc/isInSight(atom/A, atom/B)
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
 /proc/get_active_candidates(buffer = 1)
 
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
+	var/list/candidates = list() // List of candidate KEYS to assume control of the new larva ~Carn
 	var/i = 0
 	while(candidates.len <= 0 && i < 5)
 		for(var/mob/dead/observer/G in player_list)
@@ -377,7 +377,7 @@ proc/isInSight(atom/A, atom/B)
 
 /proc/get_alien_candidates()
 
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
+	var/list/candidates = list() // List of candidate KEYS to assume control of the new larva ~Carn
 	var/i = 0
 	while(candidates.len <= 0 && i < 5)
 		for(var/mob/dead/observer/G in player_list)
@@ -388,9 +388,9 @@ proc/isInSight(atom/A, atom/B)
 		i++
 	return candidates
 
-/proc/get_candidates(be_role_type, afk_bracket=3000) //Get candidates for Blob
+/proc/get_candidates(be_role_type, afk_bracket=3000) // Get candidates for Blob
 	var/list/candidates = list()
-	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
+	// Keep looping until we find a non-afk candidate within the time bracket(we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
 		for(var/mob/dead/observer/G in player_list)
 			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
@@ -399,7 +399,7 @@ proc/isInSight(atom/A, atom/B)
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
 
-/proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
+/proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7, CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))	O = new /obj/screen/text()
 	O.maptext = maptext
 	O.maptext_height = maptext_height
@@ -440,7 +440,7 @@ proc/isInSight(atom/A, atom/B)
 
 /proc/projectile_trajectory(src_x, src_y, rotation, angle, power)
 
-	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
+	// returns the destination(Vx, y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
 	// rotated at [rotation] and with the power of [power]
 	// Thanks to VistaPOWA for this function
 
@@ -456,13 +456,13 @@ proc/isInSight(atom/A, atom/B)
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
 /proc/GetRedPart(const/hexa)
-	return hex2num(copytext(hexa,2,4))
+	return hex2num(copytext(hexa, 2, 4))
 
 /proc/GetGreenPart(const/hexa)
-	return hex2num(copytext(hexa,4,6))
+	return hex2num(copytext(hexa, 4, 6))
 
 /proc/GetBluePart(const/hexa)
-	return hex2num(copytext(hexa,6,8))
+	return hex2num(copytext(hexa, 6, 8))
 
 /proc/GetHexColors(const/hexa)
 	return list(
@@ -477,7 +477,7 @@ proc/isInSight(atom/A, atom/B)
 	var/list/greens = list()
 	var/list/weights = list()
 
-	for (var/i = 0, ++i <= colors.len)
+	for(var/i = 0, ++i <= colors.len)
 		reds.Add(GetRedPart(colors[i]))
 		blues.Add(GetBluePart(colors[i]))
 		greens.Add(GetGreenPart(colors[i]))
@@ -486,21 +486,21 @@ proc/isInSight(atom/A, atom/B)
 	var/r = mixOneColor(weights, reds)
 	var/g = mixOneColor(weights, greens)
 	var/b = mixOneColor(weights, blues)
-	return rgb(r,g,b)
+	return rgb(r, g, b)
 
 /proc/random_color()
 	var/list/rand = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
 	return "#" + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand)
 
 /proc/noob_notify(mob/M)
-	//todo: check db before
+	// todo: check db before
 	if(!M.client)
 		return
 	if(M.client.holder)
 		return
 	if(M.client.player_age == 0)
 		var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
-		var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
+		var/player_byond_profile = "http:// www.byond.com/members/[M.ckey]"
 
 		var/msg = {"New player notify
 					Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
@@ -514,14 +514,14 @@ proc/isInSight(atom/A, atom/B)
 	var/list/processed_list = new/list()
 	var/found_atoms = new/list()
 
-	while (processing_list.len)
+	while(processing_list.len)
 		var/atom/A = processing_list[1]
 
-		if (istype(A, type))
+		if(istype(A, type))
 			found_atoms |= A
 
-		for (var/atom/B in A)
-			if (!processed_list[B])
+		for(var/atom/B in A)
+			if(!processed_list[B])
 				processing_list |= B
 
 		processing_list.Cut(1, 2)
@@ -530,7 +530,7 @@ proc/isInSight(atom/A, atom/B)
 	return found_atoms
 
 /proc/get_contents_in_object(atom/O, type_path = /atom/movable)
-	if (O)
+	if(O)
 		return recursive_type_check(O, type_path) - O
 	else
 		return new/list()
@@ -546,10 +546,10 @@ proc/isInSight(atom/A, atom/B)
 
 //============Bay12 atmos=============
 /proc/convert_k2c(temp)
-	return ((temp - T0C))
+	return((temp - T0C))
 
 /proc/convert_c2k(temp)
-	return ((temp + T0C))
+	return((temp + T0C))
 
 /proc/getCardinalAirInfo(turf/loc, list/stats=list("temperature"))
 	var/list/temps = new/list(4)
@@ -564,7 +564,7 @@ proc/isInSight(atom/A, atom/B)
 				direction = 3
 			if(WEST)
 				direction = 4
-		var/turf/simulated/T=get_turf(get_step(loc,dir))
+		var/turf/simulated/T=get_turf(get_step(loc, dir))
 		var/list/rstats = new /list(stats.len)
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
@@ -574,7 +574,7 @@ proc/isInSight(atom/A, atom/B)
 				else
 					rstats[i] = environment.vars[stats[i]]
 		else if(istype(T, /turf/simulated))
-			rstats = null // Exclude zone (wall, door, etc).
+			rstats = null // Exclude zone(wall, door, etc).
 		else if(istype(T, /turf))
 			// Should still work.  (/turf/return_air())
 			var/datum/gas_mixture/environment = T.return_air()

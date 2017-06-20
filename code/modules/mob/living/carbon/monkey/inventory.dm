@@ -1,41 +1,41 @@
 /obj/effect/equip_e/monkey/process()
-	if (item)
+	if(item)
 		item.add_fingerprint(source)
-	if (!( item ))
+	if(!( item ))
 		switch(place)
 			if("head")
-				if (!( target.wear_mask ))
+				if(!( target.wear_mask ))
 					qdel(src)
 					return
 			if("l_hand")
-				if (!( target.l_hand ))
+				if(!( target.l_hand ))
 					qdel(src)
 					return
 			if("r_hand")
-				if (!( target.r_hand ))
+				if(!( target.r_hand ))
 					qdel(src)
 					return
 			if("back")
-				if (!( target.back ))
+				if(!( target.back ))
 					qdel(src)
 					return
 			if("handcuff")
-				if (!( target.handcuffed ))
+				if(!( target.handcuffed ))
 					qdel(src)
 					return
 			if("internal")
-				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.back, /obj/item/weapon/tank) && !( target.internal )) ) && !( target.internal )))
+				if((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.back, /obj/item/weapon/tank) && !( target.internal )) ) && !( target.internal )))
 					qdel(src)
 					return
 
-	if (item)
+	if(item)
 		if(isrobot(source) && place != "handcuff")
 			var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel")
 			if(!(L.Find(place)))
 				qdel(src)
 				return
 		for(var/mob/O in viewers(target, null))
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				O.show_message(text("<span class='danger'>[] is trying to put a [] on [].</span>", source, item, target), 1)
 	else
 		var/message = null
@@ -54,12 +54,12 @@
 			if("handcuff")
 				message = text("<span class='danger'>[] is trying to unhandcuff []!</span>", source, target)
 			if("internal")
-				if (target.internal)
+				if(target.internal)
 					message = text("<span class='danger'>[] is trying to remove []'s internals.</span>", source, target)
 				else
 					message = text("<span class='danger'>[] is trying to set on []'s internals.</span>", source, target)
 			if("pockets")
-				message = text("<span class='danger'>[] is trying to empty []'s pockets.</span>",source, target)
+				message = text("<span class='danger'>[] is trying to empty []'s pockets.</span>", source, target)
 
 		for(var/mob/M in viewers(target, null))
 			M.show_message(message, 1)
@@ -74,17 +74,17 @@
 	if(target.loc != t_loc)						return
 	if(!in_range(s_loc, t_loc)) return
 	if(item && source.get_active_hand() != item)	return
-	if ((source.restrained() || source.stat))	return
+	if((source.restrained() || source.stat))	return
 	switch(place)
 		if("mask")
-			if (target.wear_mask)
+			if(target.wear_mask)
 				if(istype(target.wear_mask, /obj/item/clothing)&& !target.wear_mask:canremove)
 					return
 				var/obj/item/W = target.wear_mask
 				target.remove_from_mob(W)
 				W.add_fingerprint(source)
 			else
-				if (istype(item, /obj/item/clothing/mask))
+				if(istype(item, /obj/item/clothing/mask))
 					source.drop_item()
 					loc = target
 					item.layer = ABOVE_HUD_LAYER
@@ -93,12 +93,12 @@
 					target.wear_mask = item
 					item.loc = target
 		if("l_hand")
-			if (target.l_hand)
+			if(target.l_hand)
 				var/obj/item/W = target.l_hand
 				target.remove_from_mob(W)
 				W.add_fingerprint(source)
 			else
-				if (istype(item, /obj/item))
+				if(istype(item, /obj/item))
 					source.drop_item()
 					loc = target
 					item.layer = ABOVE_HUD_LAYER
@@ -107,14 +107,14 @@
 					target.l_hand = item
 					item.loc = target
 					item.dropped(source)
-					item.equipped(target,target.l_hand)
+					item.equipped(target, target.l_hand)
 		if("r_hand")
-			if (target.r_hand)
+			if(target.r_hand)
 				var/obj/item/W = target.r_hand
 				target.remove_from_mob(W)
 				W.add_fingerprint(source)
 			else
-				if (istype(item, /obj/item))
+				if(istype(item, /obj/item))
 					source.drop_item()
 					loc = target
 					item.layer = ABOVE_HUD_LAYER
@@ -123,14 +123,14 @@
 					target.r_hand = item
 					item.loc = target
 					item.dropped(source)
-					item.equipped(target,target.r_hand)
+					item.equipped(target, target.r_hand)
 		if("back")
-			if (target.back)
+			if(target.back)
 				var/obj/item/W = target.back
 				target.remove_from_mob(W)
 				W.add_fingerprint(source)
 			else
-				if ((istype(item, /obj/item) && item.slot_flags & SLOT_BACK ))
+				if((istype(item, /obj/item) && item.slot_flags & SLOT_BACK ))
 					source.drop_item()
 					loc = target
 					item.layer = ABOVE_HUD_LAYER
@@ -139,30 +139,30 @@
 					target.back = item
 					item.loc = target
 		if("handcuff")
-			if (target.handcuffed)
+			if(target.handcuffed)
 				var/obj/item/W = target.handcuffed
 				target.remove_from_mob(W)
 				W.add_fingerprint(source)
 			else
-				if (istype(item, /obj/item/weapon/handcuffs))
+				if(istype(item, /obj/item/weapon/handcuffs))
 					source.drop_item()
 					target.handcuffed = item
 					item.loc = target
 		if("internal")
-			if (target.internal)
+			if(target.internal)
 				target.internal.add_fingerprint(source)
 				target.internal = null
 			else
-				if (target.internal)
+				if(target.internal)
 					target.internal = null
-				if (!( istype(target.wear_mask, /obj/item/clothing/mask) ))
+				if(!( istype(target.wear_mask, /obj/item/clothing/mask) ))
 					return
 				else
-					if (istype(target.back, /obj/item/weapon/tank))
+					if(istype(target.back, /obj/item/weapon/tank))
 						target.internal = target.back
 						target.internal.add_fingerprint(source)
 						for(var/mob/M in viewers(target, 1))
-							if ((M.client && !( M.blinded )))
+							if((M.client && !( M.blinded )))
 								M.show_message(text("<span class='notice'>[] is now running on internals.</span>", target), 1)
 	source.regenerate_icons()
 	target.regenerate_icons()
@@ -171,8 +171,8 @@
 
 
 
-//This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-//set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
+// This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
+// set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
 /mob/living/carbon/monkey/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
 	if(!slot) return
 	if(!istype(W)) return
@@ -183,26 +183,26 @@
 	switch(slot)
 		if(slot_back)
 			src.back = W
-			equip_to_slot_if_possible(W,slot,0,1)
+			equip_to_slot_if_possible(W, slot, 0, 1)
 			update_inv_back(redraw_mob)
 		if(slot_wear_mask)
 			src.wear_mask = W
-			equip_to_slot_if_possible(W,slot,0,1)
+			equip_to_slot_if_possible(W, slot, 0, 1)
 			update_inv_wear_mask(redraw_mob)
 		if(slot_handcuffed)
 			src.handcuffed = W
 			update_inv_handcuffed(redraw_mob)
 		if(slot_legcuffed)
 			src.legcuffed = W
-			equip_to_slot_if_possible(W,slot,0,1)
+			equip_to_slot_if_possible(W, slot, 0, 1)
 			update_inv_legcuffed(redraw_mob)
 		if(slot_l_hand)
 			src.l_hand = W
-			equip_to_slot_if_possible(W,slot,0,1)
+			equip_to_slot_if_possible(W, slot, 0, 1)
 			update_inv_l_hand(redraw_mob)
 		if(slot_r_hand)
 			src.r_hand = W
-			equip_to_slot_if_possible(W,slot,0,1)
+			equip_to_slot_if_possible(W, slot, 0, 1)
 			update_inv_r_hand(redraw_mob)
 		if(slot_in_backpack)
 			W.forceMove(src.back)

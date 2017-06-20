@@ -1,5 +1,5 @@
-//Anomalies, used for events. Note that these DO NOT work by themselves; their procs are called by the event datum.
-//TG-stuff
+// Anomalies, used for events. Note that these DO NOT work by themselves; their procs are called by the event datum.
+// TG-stuff
 /obj/effect/anomaly
 	name = "anomaly"
 	icon = 'code/modules/anomaly/anomalies.dmi'
@@ -11,19 +11,19 @@
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/New()
-	set_light(3,5,light_color)
+	set_light(3, 5, light_color)
 	aSignal = new(src)
 	aSignal.name = "[name] core"
-	aSignal.code = rand(1,100)
+	aSignal.code = rand(1, 100)
 
 	aSignal.frequency = rand(1200, 1599)
-	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
+	if(IsMultiple(aSignal.frequency, 2))// signaller frequencies are always uneven!
 		aSignal.frequency++
 
 
 /obj/effect/anomaly/proc/anomalyEffect()
 	if(prob(50))
-		step(src,pick(alldirs))
+		step(src, pick(alldirs))
 
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
@@ -57,9 +57,9 @@
 	boing = 1
 	for(var/obj/O in orange(4, src))
 		if(!O.anchored)
-			step_towards(O,src)
+			step_towards(O, src)
 	for(var/mob/living/M in orange(4, src))
-		step_towards(M,src)
+		step_towards(M, src)
 
 /obj/effect/anomaly/grav/Bump(mob/A)
 	gravShock(A)
@@ -138,16 +138,16 @@
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()
-	if(!isturf(loc)) //blackhole cannot be contained inside anything. Weird stuff might happen
+	if(!isturf(loc)) // blackhole cannot be contained inside anything. Weird stuff might happen
 		qdel(src)
 		return
 
-	grav(rand(0,3), rand(2,3), 50, 25)
+	grav(rand(0, 3), rand(2, 3), 50, 25)
 
-	//Throwing stuff around!
-	for(var/obj/O in orange(1,src))
+	// Throwing stuff around!
+	for(var/obj/O in orange(1, src))
 		if(!O.anchored)
-			var/mob/living/target = locate() in view(5,src)
+			var/mob/living/target = locate() in view(5, src)
 			if(!target)
 				return
 			O.throw_at(target, 5, 10)
@@ -164,21 +164,21 @@
 	return
 
 /obj/effect/anomaly/bhole/proc/affect_coord(x, y, ex_act_force, pull_chance, turf_removal_chance)
-	//Get turf at coordinate
+	// Get turf at coordinate
 	var/turf/T = locate(x, y, z)
 	if(isnull(T))	return
 
-	//Pulling and/or ex_act-ing movable atoms in that turf
+	// Pulling and/or ex_act-ing movable atoms in that turf
 	if(prob(pull_chance))
 		for(var/obj/O in T.contents)
 			if(O.anchored)
 				O.ex_act(ex_act_force)
 			else
-				step_towards(O,src)
+				step_towards(O, src)
 		for(var/mob/living/M in T.contents)
-			step_towards(M,src)
+			step_towards(M, src)
 
-	//Damaging the turf
-	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
+	// Damaging the turf
+	if( T && istype(T, /turf/simulated) && prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
 	return

@@ -1,4 +1,4 @@
-//these are probably broken
+// these are probably broken
 
 /obj/machinery/floodlight
 	name = "Emergency Floodlight"
@@ -65,8 +65,8 @@
 
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/screwdriver))
-		if (!open)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(!open)
 			if(unlocked)
 				unlocked = 0
 				to_chat(user, "You screw the battery panel in place.")
@@ -74,7 +74,7 @@
 				unlocked = 1
 				to_chat(user, "You unscrew the battery panel.")
 
-	if (istype(W, /obj/item/weapon/crowbar))
+	if(istype(W, /obj/item/weapon/crowbar))
 		if(unlocked)
 			if(open)
 				open = 0
@@ -85,7 +85,7 @@
 					open = 1
 					to_chat(user, "You remove the battery panel.")
 
-	if (istype(W, /obj/item/weapon/stock_parts/cell))
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(open)
 			if(cell)
 				to_chat(user, "There is a power cell already installed.")

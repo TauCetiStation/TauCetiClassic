@@ -1,18 +1,18 @@
 /*
 Tooltips v1.1 - 22/10/15
-Developed by Wire (#goonstation on irc.synirc.net)
+Developed by Wire(#goonstation on irc.synirc.net)
 - Added support for screen_loc pixel offsets. Should work. Maybe.
 - Added init function to more efficiently send base vars
 
 Configuration:
-- Set control to the correct skin element (remember to actually place the skin element)
-- Set file to the correct path for the .html file (remember to actually place the html file)
+- Set control to the correct skin element(remember to actually place the skin element)
+- Set file to the correct path for the .html file(remember to actually place the html file)
 - Attach the datum to the user client on login, e.g.
 	/client/New()
 		src.tooltips = new /datum/tooltip(src)
 
 Usage:
-- Define mouse event procs on your (probably HUD) object and simply call the show and hide procs respectively:
+- Define mouse event procs on your(probably HUD) object and simply call the show and hide procs respectively:
 	/obj/screen/hud
 		MouseEntered(location, control, params)
 			usr.client.tooltip.show(params, title = src.name, content = src.desc)
@@ -27,7 +27,7 @@ Customization:
 Notes:
 - You may have noticed 90% of the work is done via javascript on the client. Gotta save those cycles man.
 - This is entirely untested in any other codebase besides goonstation so I have no idea if it will port nicely. Good luck!
-	- After testing and discussion (Wire, Remie, MrPerson, AnturK) ToolTips are ok and work for /tg/station13
+	- After testing and discussion(Wire, Remie, MrPerson, AnturK) ToolTips are ok and work for /tg/station13
 */
 
 
@@ -40,46 +40,46 @@ Notes:
 	var/init = 0
 
 /datum/tooltip/New(client/C)
-	if (C)
+	if(C)
 		owner = C
 		owner << browse(file2text(file), "window=[control]")
 	..()
 
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
-	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
+	if(!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
 		return 0
 
-	if (!init)
-		//Initialize some vars
+	if(!init)
+		// Initialize some vars
 		init = 1
 		owner << output(list2params(list(world.icon_size, control)), "[control]:tooltip.init")
 
 	showing = 1
 
-	if (title && content)
+	if(title && content)
 		title = "<h1>[title]</h1>"
 		content = "<p>[content]</p>"
-	else if (title && !content)
+	else if(title && !content)
 		title = "<p>[title]</p>"
-	else if (!title && content)
+	else if(!title && content)
 		content = "<p>[content]</p>"
 
-	//Make our dumb param object
+	// Make our dumb param object
 	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
 
-	//Send stuff to the tooltip
+	// Send stuff to the tooltip
 	owner << output(list2params(list(params, owner.view, "[title][content]", theme, special)), "[control]:tooltip.update")
 
-	//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
+	// If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
 	showing = 0
-	if (queueHide)
+	if(queueHide)
 		hide()
 
 	return 1
 
 
 /datum/tooltip/proc/hide()
-	if (queueHide)
+	if(queueHide)
 		spawn(1)
 			winshow(owner, control, 0)
 	else
@@ -93,9 +93,9 @@ Notes:
 /* TG SPECIFIC CODE */
 
 
-//Open a tooltip for user, at a location based on params
-//Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style (Midnight, Plasmafire, Retro)
-//Includes sanity.checks
+// Open a tooltip for user, at a location based on params
+// Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style(Midnight, Plasmafire, Retro)
+// Includes sanity.checks
 /proc/openToolTip(mob/user = null, atom/movable/tip_src = null, params = null, title = "", content = "", theme = "")
 	if(istype(user))
 		if(user.client && user.client.tooltips)
@@ -103,11 +103,11 @@ Notes:
 				theme = lowertext(user.client.prefs.UI_style)
 			if(!theme)
 				theme = "default"
-			user.client.tooltips.show(tip_src, params,title,content,theme)
+			user.client.tooltips.show(tip_src, params, title, content, theme)
 
 
-//Arbitrarily close a user's tooltip
-//Includes sanity checks.
+// Arbitrarily close a user's tooltip
+// Includes sanity checks.
 /proc/closeToolTip(mob/user)
 	if(istype(user))
 		if(user.client && user.client.tooltips)

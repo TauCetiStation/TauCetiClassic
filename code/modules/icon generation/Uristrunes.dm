@@ -12,15 +12,15 @@
 	var/icon/I = icon('icons/effects/uristrunes.dmi', "blank")
 	I.Blend(input, ICON_OVERLAY)
 
-	//Discard the image
+	// Discard the image
 	I.MapColors(0,	0,	0,	0, //-\  Ignore
 				0,	0,	0,	0, //--> The
 				0,	0,	0,	0, //-/  Colors
-				0,255,	0,	1, //Keep alpha channel, any pixel with non-zero alpha gets max green channel
+				0, 255,	0,	1, // Keep alpha channel, any pixel with non-zero alpha gets max green channel
 				0,	0,	0,	0)
 
-	//Loop over the image, calculating the border value, and storing it in the red channel
-	//Store border's alpha in the blue channel
+	// Loop over the image, calculating the border value, and storing it in the red channel
+	// Store border's alpha in the blue channel
 	for(var/x = 1, x <= 32, x++)
 		for(var/y = 1, y <= 32, y++)
 			var/p = I.GetPixel(x, y)
@@ -63,7 +63,7 @@
 
 				I.DrawBox(rgb(255 - a, a, 255 - a, a), x, y)
 
-	//Map the red and green channels to the desired output colors
+	// Map the red and green channels to the desired output colors
 	I.MapColors(border_color, fill_color, rgb(0, 0, 0, border_alpha), rgb(0, 0, 0, fill_alpha), "#00000000")
 
 	return I
@@ -82,16 +82,16 @@
 /proc/animate_rune_full(icon/input, rr1, rg1, rb1, ra1, rr2, rg2, rb2, ra2, br1, bg1, bb1, ba1, br2, bg2, bb2, ba2, ar1, ag1, ab1, aa1, ar2, ag2, ab2, aa2, or1, og1, ob1, oa1, or2, og2, ob2, oa2, frames)
 
 	var/list/colors[10]
-	colors[ 1] = list(rr1, rg1, rb1, ra1) //Rune color 1
-	colors[ 2] = list(rr2, rg2, rb2, ra2) //Rune color 2
-	colors[ 3] = list(br1, bg1, bb1, ba1) //Border color 1
-	colors[ 4] = list(br2, bg2, bb2, ba2) //Border color 2
-	colors[ 5] = list(  0,   0,   0,   0) //Unused
-	colors[ 6] = list(  0,   0,   0,   0) //Unused
-	colors[ 7] = list(ar1, ag1, ab1, aa1) //Alpha color 1
-	colors[ 8] = list(ar2, ag2, ab2, aa2) //Alpha color 2
-	colors[ 9] = list(or1, og1, ob1, oa1) //Added color 1
-	colors[10] = list(or2, og2, ob2, oa2) //Added color 2
+	colors[ 1] = list(rr1, rg1, rb1, ra1) // Rune color 1
+	colors[ 2] = list(rr2, rg2, rb2, ra2) // Rune color 2
+	colors[ 3] = list(br1, bg1, bb1, ba1) // Border color 1
+	colors[ 4] = list(br2, bg2, bb2, ba2) // Border color 2
+	colors[ 5] = list(  0,   0,   0,   0) // Unused
+	colors[ 6] = list(  0,   0,   0,   0) // Unused
+	colors[ 7] = list(ar1, ag1, ab1, aa1) // Alpha color 1
+	colors[ 8] = list(ar2, ag2, ab2, aa2) // Alpha color 2
+	colors[ 9] = list(or1, og1, ob1, oa1) // Added color 1
+	colors[10] = list(or2, og2, ob2, oa2) // Added color 2
 
 	var/icon/base = create_border_image(input, "#00ff0000", "#ff000000")
 

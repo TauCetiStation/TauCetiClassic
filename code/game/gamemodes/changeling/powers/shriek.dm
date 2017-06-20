@@ -6,7 +6,7 @@
 	genomecost = 3
 	req_human = 1
 
-//A flashy ability, good for crowd control and sewing chaos.
+// A flashy ability, good for crowd control and sewing chaos.
 /obj/effect/proc_holder/changeling/resonant_shriek/sting_action(mob/user)
 	for(var/mob/living/M in hearers(4, user))
 		if(iscarbon(M))
@@ -19,11 +19,11 @@
 
 		if(issilicon(M))
 			M << sound('sound/weapons/flash.ogg')
-			M.Weaken(rand(5,10))
+			M.Weaken(rand(5, 10))
 
 	for(var/obj/machinery/light/L in range(4, user))
 		L.on = 1
 		L.broken()
 
-	feedback_add_details("changeling_powers","RES")
+	feedback_add_details("changeling_powers", "RES")
 	return 1

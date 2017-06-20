@@ -26,11 +26,11 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 
 		if(BP.body_zone == BP_HEAD)
-			if(H.head && istype(H.head,/obj/item/clothing/head/helmet/space))
+			if(H.head && istype(H.head, /obj/item/clothing/head/helmet/space))
 				to_chat(user, "<span class='warning'>You can't apply [src] through [H.head]!</span>")
 				return 1
 		else
-			if(H.wear_suit && istype(H.wear_suit,/obj/item/clothing/suit/space))
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/space))
 				to_chat(user, "<span class='warning'>You can't apply [src] through [H.wear_suit]!</span>")
 				return 1
 
@@ -78,8 +78,8 @@
 					if(W.current_stage <= W.max_bleeding_stage)
 						user.visible_message("<span class='notice'>\The [user] bandages [W.desc] on [M]'s [BP.name].</span>", \
 											"<span class='notice'>You bandage [W.desc] on [M]'s [BP.name].</span>")
-						//H.add_side_effect("Itch")
-					else if (istype(W,/datum/wound/bruise))
+						// H.add_side_effect("Itch")
+					else if(istype(W, /datum/wound/bruise))
 						user.visible_message("<span class='notice'>\The [user] places bruise patch over [W.desc] on [M]'s [BP.name].</span>", \
 											"<span class='notice'>You place bruise patch over [W.desc] on [M]'s [BP.name].</span>" )
 					else
@@ -96,8 +96,8 @@
 				H.update_bandage()
 				use(used)
 		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				if(do_surgery(H,user,src))
+			if(can_operate(H))        // Checks if mob is lying down on table for surgery
+				if(do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
@@ -137,8 +137,8 @@
 				BP.salve()
 				use(1)
 		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				if(do_surgery(H,user,src))
+			if(can_operate(H))        // Checks if mob is lying down on table for surgery
+				if(do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
@@ -194,7 +194,7 @@
 					if(W.current_stage <= W.max_bleeding_stage)
 						user.visible_message("<span class='notice'>\The [user] cleans [W.desc] on [M]'s [BP.name] and seals edges with bioglue.</span>", \
 											"<span class='notice'>You clean and seal [W.desc] on [M]'s [BP.name].</span>")
-					else if (istype(W,/datum/wound/bruise))
+					else if(istype(W, /datum/wound/bruise))
 						user.visible_message("<span class='notice'>\The [user] places medicine patch over [W.desc] on [M]'s [BP.name].</span>", \
 											"<span class='notice'>You place medicine patch over [W.desc] on [M]'s [BP.name].</span>")
 					else
@@ -213,8 +213,8 @@
 				H.update_bandage()
 				use(used)
 		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				if(do_surgery(H,user,src))
+			if(can_operate(H))        // Checks if mob is lying down on table for surgery
+				if(do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
@@ -250,12 +250,12 @@
 					return 1
 				user.visible_message("<span class='notice'>\The [user] covers wounds on [M]'s [BP.name] with regenerative membrane.</span>", \
 									"<span class='notice'>You cover wounds on [M]'s [BP.name] with regenerative membrane.</span>")
-				BP.heal_damage(0,heal_burn)
+				BP.heal_damage(0, heal_burn)
 				BP.salve()
 				use(1)
 		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				if (do_surgery(H,user,src))
+			if(can_operate(H))        // Checks if mob is lying down on table for surgery
+				if(do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")

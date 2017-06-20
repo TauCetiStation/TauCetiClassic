@@ -28,7 +28,7 @@
 	living_mob_list -= src
 	dead_mob_list += src
 	stat = DEAD
-	visible_message("\red <B>[src] shudders violently and explodes!</B>","\red <B>You feel your body rupture!</B>")
+	visible_message("\red <B>[src] shudders violently and explodes!</B>", "\red <B>You feel your body rupture!</B>")
 	explosion(get_turf(loc), -1, -1, 3, 5)
 	src.gib()
 	return
@@ -37,20 +37,20 @@
 	if(O.force)
 		if(O.force >= 25)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if(O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
 			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
+				if((M.client && !( M.blinded )))
 					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
 		else
 			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
+				if((M.client && !( M.blinded )))
 					M.show_message("\red \b The [O] bounces harmlessly off of [src]. ")
 	else
 		to_chat(usr, "\red This weapon is ineffective, it does no damage.")
 		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
+			if((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with the [O]. ")
 
 /mob/living/simple_animal/vox/armalis/verb/fire_quill(mob/target as mob in oview())
@@ -64,12 +64,12 @@
 
 	to_chat(src, "\red You launch a razor-sharp quill at [target]!")
 	for(var/mob/O in oviewers())
-		if ((O.client && !( O.blinded )))
+		if((O.client && !( O.blinded )))
 			to_chat(O, "\red [src] launches a razor-sharp quill at [target]!")
 
 	var/obj/item/weapon/arrow/quill/Q = new(loc)
 	Q.fingerprintslast = src.ckey
-	Q.throw_at(target,10,30)
+	Q.throw_at(target, 10, 30)
 	quills--
 
 	spawn(100)
@@ -85,11 +85,11 @@
 	var/target = null
 	var/text = null
 
-	targets += getmobs() //Fill list, prompt user with list
+	targets += getmobs() // Fill list, prompt user with list
 	target = input("Select a creature!", "Speak to creature", null, null) as null|anything in targets
 	text = input("What would you like to say?", "Speak to creature", null, null)
 
-	if (!target || !text)
+	if(!target || !text)
 		return
 
 	var/mob/M = targets[target]
@@ -99,7 +99,7 @@
 		return
 
 	to_chat(M, "\blue Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]")
-	if(istype(M,/mob/living/carbon/human))
+	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == VOX)
 			return
@@ -112,21 +112,21 @@
 	set desc = "Give voice to a psychic shriek."
 
 /mob/living/simple_animal/vox/armalis/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/vox/armalis_armour))
+	if(istype(O, /obj/item/vox/armalis_armour))
 		user.drop_item()
 		armour = O
 		speed = 1
 		maxHealth += 200
 		health += 200
 		O.loc = src
-		visible_message("\blue [src] is quickly outfitted in [O] by [user].","\blue You quickly outfit [src] in [O].")
+		visible_message("\blue [src] is quickly outfitted in [O] by [user].", "\blue You quickly outfit [src] in [O].")
 		regenerate_icons()
 		return
-	if(istype(O,/obj/item/vox/armalis_amp))
+	if(istype(O, /obj/item/vox/armalis_amp))
 		user.drop_item()
 		amp = O
 		O.loc = src
-		visible_message("\blue [src] is quickly outfitted in [O] by [user].","\blue You quickly outfit [src] in [O].")
+		visible_message("\blue [src] is quickly outfitted in [O] by [user].", "\blue You quickly outfit [src] in [O].")
 		regenerate_icons()
 		return
 	return ..()
@@ -135,11 +135,11 @@
 
 	overlays = list()
 	if(armour)
-		var/icon/armour = image('icons/mob/vox.dmi',"armour")
+		var/icon/armour = image('icons/mob/vox.dmi', "armour")
 		speed = 1
 		overlays += armour
 	if(amp)
-		var/icon/amp = image('icons/mob/vox.dmi',"amplifier")
+		var/icon/amp = image('icons/mob/vox.dmi', "amplifier")
 		overlays += amp
 	return
 

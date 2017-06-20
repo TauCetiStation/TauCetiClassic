@@ -13,7 +13,7 @@
 	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return 0
 	return target_zone == O_MOUTH
 
@@ -64,7 +64,7 @@
 /datum/surgery_step/plastic_surgery/adjust_vocal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/obj/item/organ/external/head/H = BP
-	if (H.disfigured == 1)
+	if(H.disfigured == 1)
 		user.visible_message("[user] starts mending [target]'s vocal cords with \the [tool].", \
 		"You start mending [target]'s vocal cords with \the [tool].")
 	else
@@ -75,7 +75,7 @@
 /datum/surgery_step/plastic_surgery/adjust_vocal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/obj/item/organ/external/head/H = BP
-	if (H.disfigured == 1)
+	if(H.disfigured == 1)
 		user.visible_message("\blue [user] mends [target]'s vocal cords with \the [tool].", \
 		"\blue You mend [target]'s vocal cords with \the [tool].")
 		H.disfigured = 0
@@ -89,7 +89,7 @@
 	"\red Your hand slips, clamping [user]'s trachea shut for a moment with \the [tool]!")
 	target.losebreath += 10
 
-//reshape_face
+// reshape_face
 /datum/surgery_step/plastic_surgery/reshape_face
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
@@ -112,13 +112,13 @@
 	user.visible_message("\blue [user] alters [target]'s appearance with \the [tool].",		\
 	"\blue You alter [target]'s appearance with \the [tool].")
 	var/i
-	while (!i)
+	while(!i)
 		var/randomname
-		if (target.gender == MALE)
+		if(target.gender == MALE)
 			randomname = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
 		else
 			randomname = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
-		if (findname(randomname))
+		if(findname(randomname))
 			continue
 		else
 			target.real_name = randomname
@@ -144,7 +144,7 @@
 	return ..() && target.op_stage.face > 0 && target.op_stage.plasticsur > 0
 
 /datum/surgery_step/plastic_surgery/cauterize/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] is beginning to cauterize the incision on [target]'s face and neck with \the [tool]." , \
+	user.visible_message("[user] is beginning to cauterize the incision on [target]'s face and neck with \the [tool].", \
 	"You are beginning to cauterize the incision on [target]'s face and neck with \the [tool].")
 	..()
 
@@ -154,7 +154,7 @@
 	"\blue You cauterize theon [target]'s face and neck with \the [tool].")
 	BP.open = 0
 	BP.status &= ~ORGAN_BLEEDING
-	if (target.op_stage.plasticsur == 2)
+	if(target.op_stage.plasticsur == 2)
 		var/obj/item/organ/external/head/H = BP
 		H.disfigured = 0
 	target.op_stage.plasticsur = 0

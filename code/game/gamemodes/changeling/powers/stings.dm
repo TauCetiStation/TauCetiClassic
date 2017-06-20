@@ -42,9 +42,9 @@
 	if(!isturf(user.loc))
 		return
 	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = FALSE))
-		return //hope this ancient magic still works
+		return // hope this ancient magic still works
 	if(target.mind && target.mind.changeling)
-		sting_feedback(user,target)
+		sting_feedback(user, target)
 		take_chemical_cost(user.mind.changeling)
 		return
 	return 1
@@ -72,7 +72,7 @@
 			if(I.flags & THICKMATERIAL)
 				to_chat(user, "<span class='warning'>We broke our sting about our's armor!</span>")
 				unset_sting(user)
-				user.mind.changeling.chem_charges -= rand(5,10)
+				user.mind.changeling.chem_charges -= rand(5, 10)
 				H.drip(10)
 				return 1
 	if(ishuman(target))
@@ -82,7 +82,7 @@
 			to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [BP.name]!</span>")
 			to_chat(target, "<span class='warning'>You feel a tiny push in your [BP.name]!</span>")
 			unset_sting(user)
-			user.mind.changeling.chem_charges -= rand(5,10)
+			user.mind.changeling.chem_charges -= rand(5, 10)
 			if(ishuman(user))
 				user:drip(10)
 			return 1
@@ -98,12 +98,12 @@ obj/effect/proc_holder/changeling/sting/cryo
 	genomecost = 1
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	if(target.reagents)
 		target.reagents.add_reagent("frostoil", 30)
 		target.reagents.add_reagent("ice", 30)
-	feedback_add_details("changeling_powers","CS")
+	feedback_add_details("changeling_powers", "CS")
 	return 1
 
 obj/effect/proc_holder/changeling/sting/LSD
@@ -115,12 +115,12 @@ obj/effect/proc_holder/changeling/sting/LSD
 	genomecost = 2
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
-	spawn(rand(300,600))
+	spawn(rand(300, 600))
 		if(target)
 			target.hallucination = max(400, target.hallucination)
-	feedback_add_details("changeling_powers","HS")
+	feedback_add_details("changeling_powers", "HS")
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation
@@ -156,7 +156,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
@@ -165,7 +165,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 	target.real_name = selected_dna.real_name
 	domutcheck(target, null)
 	target.UpdateAppearance()
-	feedback_add_details("changeling_powers","TS")
+	feedback_add_details("changeling_powers", "TS")
 	return 1
 
 obj/effect/proc_holder/changeling/sting/extract_dna
@@ -182,7 +182,7 @@ obj/effect/proc_holder/changeling/sting/extract_dna
 		return user.mind.changeling.can_absorb_dna(user, target)
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	var/datum/changeling/changeling = user.mind.changeling
 
@@ -197,7 +197,7 @@ obj/effect/proc_holder/changeling/sting/extract_dna
 			changeling.absorbed_languages += language
 
 	user.changeling_update_languages(changeling.absorbed_languages)
-	feedback_add_details("changeling_powers","ED")
+	feedback_add_details("changeling_powers", "ED")
 	return 1
 
 obj/effect/proc_holder/changeling/sting/silence
@@ -209,13 +209,13 @@ obj/effect/proc_holder/changeling/sting/silence
 	genomecost = 2
 
 /obj/effect/proc_holder/changeling/sting/silence/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	to_chat(target, "<span class='danger'>Your ears pop and begin ringing loudly!</span>")
 	target.sdisabilities |= DEAF
 	spawn(300)	target.sdisabilities &= ~DEAF
 	target.silent += 30
-	feedback_add_details("changeling_powers","MS")
+	feedback_add_details("changeling_powers", "MS")
 	return 1
 
 obj/effect/proc_holder/changeling/sting/blind
@@ -228,14 +228,14 @@ obj/effect/proc_holder/changeling/sting/blind
 	genomecost = 2
 
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
 	target.disabilities |= NEARSIGHTED
 	spawn(300)	target.disabilities &= ~NEARSIGHTED
 	target.eye_blind = 20
 	target.eye_blurry = 40
-	feedback_add_details("changeling_powers","BS")
+	feedback_add_details("changeling_powers", "BS")
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/paralysis
@@ -247,11 +247,11 @@ obj/effect/proc_holder/changeling/sting/blind
 	genomecost = 6
 
 /obj/effect/proc_holder/changeling/sting/paralysis/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	to_chat(target, "<span class='danger'>Your muscles begin to painfully tighten.</span>")
 	target.Weaken(20)
-	feedback_add_details("changeling_powers","PS")
+	feedback_add_details("changeling_powers", "PS")
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/death
@@ -263,7 +263,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	genomecost = 8
 
 /obj/effect/proc_holder/changeling/sting/death/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	to_chat(target, "<span class='danger'>You feel a small prick and your chest becomes tight.</span>")
 	target.silent = 15
@@ -276,7 +276,7 @@ obj/effect/proc_holder/changeling/sting/blind
 			target.reagents.add_reagent("radium", 20)
 			target.reagents.add_reagent("phoron", 20)
 			target.reagents.add_reagent("pacid", 20)
-	feedback_add_details("changeling_powers","DTHS")
+	feedback_add_details("changeling_powers", "DTHS")
 	return 1
 
 obj/effect/proc_holder/changeling/sting/unfat
@@ -288,7 +288,7 @@ obj/effect/proc_holder/changeling/sting/unfat
 	genomecost = 1
 
 /obj/effect/proc_holder/changeling/sting/unfat/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	if(FAT in target.mutations)
 		target.overeatduration = 0
@@ -298,5 +298,5 @@ obj/effect/proc_holder/changeling/sting/unfat
 		target.overeatduration = 600
 		target.nutrition += 100
 		to_chat(target, "<span class='danger'>You feel a small prick as stomach churns violently and you become to feel blubbery.</span>")
-	feedback_add_details("changeling_powers","US")
+	feedback_add_details("changeling_powers", "US")
 	return 1

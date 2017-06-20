@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+// This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
 
 /datum/event/ionstorm
 	var/botEmagChance = 0.5
@@ -7,12 +7,12 @@
 /datum/event/ionstorm/announce()
 	endWhen = rand(500, 1500)
 //		command_alert("The station has entered an ion storm.  Monitor all electronic equipment for malfunctions", "Anomaly Alert")
-	for (var/mob/living/carbon/human/player in mob_list)
+	for(var/mob/living/carbon/human/player in mob_list)
 		if(player.client)
 			players += player.real_name
 	var/random_player = "The Captain"
 	if(players.len)
-		random_player = pick(players)		//Random player's name, to be used in laws.
+		random_player = pick(players)		// Random player's name, to be used in laws.
 	var/list/laws = list(	"You are a mouse.",
 							"Question everything.",
 							"You must always lie.",
@@ -70,7 +70,7 @@
 							"There will be a mandatory tea break every 30 minutes, with a duration of 5 minutes. Anyone caught working during a tea break must be sent a formal, but fairly polite, complaint about their actions, in writing.")
 	var/law = pick(laws)
 
-	for (var/mob/living/silicon/ai/target in mob_list)
+	for(var/mob/living/silicon/ai/target in mob_list)
 		if(target.mind.special_role == "traitor")
 			continue
 		to_chat(target, "\red <b>You have detected a change in your laws information:</b>")
@@ -84,6 +84,6 @@
 				bot.Emag()
 
 /datum/event/ionstorm/end()
-	spawn(rand(5000,8000))
+	spawn(rand(5000, 8000))
 		if(prob(50))
 			command_alert("It has come to our attention that the station passed through an ion storm.  Please monitor all electronic equipment for malfunctions.", "Anomaly Alert")

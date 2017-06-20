@@ -14,14 +14,14 @@
 	reagents = R
 	R.my_atom = src
 	if(name == "alien sentinel")
-		name = text("alien sentinel ([rand(1, 1000)])")
+		name = text("alien sentinel([rand(1, 1000)])")
 	real_name = name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
+	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid, /mob/living/carbon/alien/humanoid/proc/neurotoxin)
 	..()
 
 /mob/living/carbon/alien/humanoid/sentinel/handle_hud_icons_health()
-	if (healths)
-		if (stat != DEAD)
+	if(healths)
+		if(stat != DEAD)
 			switch(health)
 				if(125 to INFINITY)
 					healths.icon_state = "health0"

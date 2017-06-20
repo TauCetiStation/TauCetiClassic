@@ -5,17 +5,17 @@
 	icon_state = "power_mod"
 	var/obj/item/device/pda/hostpda = null
 
-	var/on = 0 //Are we currently active??
+	var/on = 0 // Are we currently active??
 	var/menu_message = ""
 
 /obj/item/radio/integrated/New()
 	..()
-	if (istype(loc.loc, /obj/item/device/pda))
+	if(istype(loc.loc, /obj/item/device/pda))
 		hostpda = loc.loc
 
 /obj/item/radio/integrated/proc/post_signal(freq, key, value, key2, value2, key3, value3, s_filter)
 
-	//world << "Post: [freq]: [key]=[value], [key2]=[value2]"
+	// world << "Post: [freq]: [key]=[value], [key2]=[value2]"
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
 	if(!frequency) return
@@ -61,7 +61,7 @@
 	for(var/d in signal.data)
 		to_chat(world, "- [d] = [signal.data[d]]")
 	*/
-	if (signal.data["type"] == "secbot")
+	if(signal.data["type"] == "secbot")
 		if(!botlist)
 			botlist = new()
 
@@ -72,7 +72,7 @@
 			var/list/b = signal.data
 			botstatus = b.Copy()
 
-//		if (istype(P)) P.updateSelfDialog()
+//		if(istype(P)) P.updateSelfDialog()
 
 /obj/item/radio/integrated/beepsky/Topic(href, href_list)
 	..()
@@ -228,7 +228,7 @@
 		initialize()
 
 /obj/item/radio/integrated/signal/initialize()
-	if (src.frequency < 1441 || src.frequency > 1489)
+	if(src.frequency < 1441 || src.frequency > 1489)
 		src.frequency = sanitize_frequency(src.frequency)
 
 	set_frequency(frequency)
@@ -244,11 +244,11 @@
 		return
 	last_transmission = world.time
 
-	var/time = time2text(world.realtime,"hh:mm:ss")
+	var/time = time2text(world.realtime, "hh:mm:ss")
 	var/turf/T = get_turf(src)
-	lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-	message_admins("[key_name_admin(usr)] used [src], location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-	log_game("[usr.ckey]([usr]) used [src], location ([T.x],[T.y],[T.z]),frequency: [format_frequency(frequency)], code:[code]")
+	lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+	message_admins("[key_name_admin(usr)] used [src], location([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+	log_game("[usr.ckey]([usr]) used [src], location([T.x],[T.y],[T.z]), frequency: [format_frequency(frequency)], code:[code]")
 
 	var/datum/signal/signal = new
 	signal.source = src

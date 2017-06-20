@@ -8,7 +8,7 @@
 /obj/structure/crystal/New()
 	..()
 
-	icon_state = pick("ano70","ano80")
+	icon_state = pick("ano70", "ano80")
 
 	desc = pick(\
 	"It shines faintly as it catches the light.",\
@@ -33,4 +33,4 @@
 		new /obj/item/weapon/shard(src.loc)
 	return ..()
 
-//todo: laser_act
+// todo: laser_act

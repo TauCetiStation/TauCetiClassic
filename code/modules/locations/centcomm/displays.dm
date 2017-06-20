@@ -1,4 +1,4 @@
-//TODO: разложить все по полочкам
+// TODO: разложить все по полочкам
 /obj/structure/sign/directions/velocity
 	name = "Direction sign"
 	icon = 'code/modules/locations/centcomm/tablo.dmi'
@@ -68,7 +68,7 @@
 		set name = "Switch monitor"
 		set category = "Object"
 
-		if (usr.stat != CONSCIOUS || !ishuman(usr))
+		if(usr.stat != CONSCIOUS || !ishuman(usr))
 			return
 
 		add_fingerprint(usr)
@@ -76,13 +76,13 @@
 
 	proc/switch_display(new_mode = 0)
 		switch(new_mode)
-			if(1)//on
+			if(1)// on
 				if(stat & (NOPOWER|BROKEN))		return
 				use_power = 1
 				icon_state = icon_state_on
 				mode = new_mode
 
-			if(2)//off
+			if(2)// off
 				use_power = 0
 				icon_state = "monitor_off"
 				mode = new_mode

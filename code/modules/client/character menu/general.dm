@@ -1,10 +1,10 @@
 /datum/preferences/proc/ShowGeneral(mob/user)
-	. =  "<table cellspacing='0' width='100%'>"	//Main body table start
+	. =  "<table cellspacing='0' width='100%'>"	// Main body table start
 	. += 	"<tr>"
 	. += 		"<td width='340px' height='320px' style='padding-left:25px'>"
 
-	//General
-	. += 			"<table width='100%' cellpadding='5' cellspacing='0'>"	//General table start
+	// General
+	. += 			"<table width='100%' cellpadding='5' cellspacing='0'>"	// General table start
 	. += 				"<tr valign='top'>"
 	. += 					"<td colspan='2'>"
 	. += 						"<b>Name:</b> "
@@ -23,7 +23,7 @@
 	. += 					"</td>"
 	. += 				"</tr>"
 
-	//Character setup menu
+	// Character setup menu
 	. += 				"<tr>"
 	. += 					"<td>"
 	. += 						"<center>"
@@ -36,12 +36,12 @@
 	. += 						"[submenu_type=="gear"?"<b>Gear</b>":"<a href=\"byond://?src=\ref[user];preference=gear\">Gear</a>"]"
 	. += 						"</center>"
 	. += 						"<br>"
-	. += 						"<table border width='100%' background='opacity7.png' bordercolor='5A6E7D' cellspacing='0'>"	//Submenu table start
+	. += 						"<table border width='100%' background='opacity7.png' bordercolor='5A6E7D' cellspacing='0'>"	// Submenu table start
 	. += 							"<tr valign='top'>"
 	. += 								"<td height='180px'>"
 
-	switch(submenu_type)	//Submenu
-		//Body
+	switch(submenu_type)	// Submenu
+		// Body
 		if("body")
 			. += "Body: <a href='?_src_=prefs;preference=all;task=random'>&reg;</a>"
 			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
@@ -49,14 +49,14 @@
 			. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
 			. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
 
-		//Organs
+		// Organs
 		if("organs")
 			. += "Limbs & Internal Organs: <a href='byond://?src=\ref[user];preference=organs;task=input'>Adjust</a>"
 
 			//(display limbs below)
 			var/ind = 0
 			for(var/name in organ_data)
-				//world << "[ind] \ [organ_data.len]"
+				// world << "[ind] \ [organ_data.len]"
 				var/status = organ_data[name]
 				var/organ_name = parse_zone(name)
 				switch(name)
@@ -95,7 +95,7 @@
 					switch(organ_name)
 						if("heart")
 							. += "<li>Pacemaker-assisted [organ_name]</li>"
-						if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
+						if("voicebox") // on adding voiceboxes for speaking skrell/similar replacements
 							. += "<li>Surgically altered [organ_name]</li>"
 						if("eyes")
 							. += "<li>Retinal overlayed [organ_name]</li>"
@@ -104,7 +104,7 @@
 			if(!ind)
 				. += "<br>\[...\]"
 
-		//Appearance
+		// Appearance
 		if("appearance")
 			. += "<b>Hair</b>"
 			. += "<br><a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td width='20' height='15'></td></tr></table></font>"
@@ -117,18 +117,18 @@
 			. += "<b>Body Color</b>"
 			. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td width='20' height='15'></td></tr></table></font>"
 
-		//Adjustment
+		// Adjustment
 		if("disabil_menu")
 			. += "<b>Disabilities:</b>"
 			. += "<br>"
-			. += ShowDisabilityState(user,DISABILITY_NEARSIGHTED,"Needs Glasses")
-			. += ShowDisabilityState(user,DISABILITY_COUGHING,"Coughing")
-			. += ShowDisabilityState(user,DISABILITY_EPILEPTIC,"Seizures")
-			. += ShowDisabilityState(user,DISABILITY_TOURETTES,"Twitching")
-			. += ShowDisabilityState(user,DISABILITY_NERVOUS,"Nervousness")
-			. += ShowDisabilityState(user,DISABILITY_FATNESS,"Fatness")
+			. += ShowDisabilityState(user, DISABILITY_NEARSIGHTED, "Needs Glasses")
+			. += ShowDisabilityState(user, DISABILITY_COUGHING, "Coughing")
+			. += ShowDisabilityState(user, DISABILITY_EPILEPTIC, "Seizures")
+			. += ShowDisabilityState(user, DISABILITY_TOURETTES, "Twitching")
+			. += ShowDisabilityState(user, DISABILITY_NERVOUS, "Nervousness")
+			. += ShowDisabilityState(user, DISABILITY_FATNESS, "Fatness")
 
-		//Gear
+		// Gear
 		if("gear")
 			. += "<b>Gear:</b><br>"
 			if(gender == MALE)
@@ -141,19 +141,19 @@
 
 	. += 								"</td>"
 	. += 							"</tr>"
-	. += 						"</table>"	//Submenu table end
+	. += 						"</table>"	// Submenu table end
 	. += 					"</td>"
 	. += 				"</tr>"
 
-	. += 			"</table>"	//General table end
+	. += 			"</table>"	// General table end
 	. += 		"</td>"
 
 	. += 		"<td width='300px' height='300px' valign='top'>"
-	. += 			"<table width='100%' cellpadding='5'>"	//Backstory table start
+	. += 			"<table width='100%' cellpadding='5'>"	// Backstory table start
 	. += 				"<tr>"
 	. += 					"<td>"
 
-	//Backstory
+	// Backstory
 	. += 						"<b>Background information:</b>"
 	. += 						"<br>Nanotrasen Relation: <a href ='?_src_=prefs;preference=nt_relation;task=input'>[nanotrasen_relation]</a>"
 	. += 						"<br>Home system</b>: <a href='byond://?src=\ref[user];preference=home_system;task=input'>[home_system]</a>"
@@ -179,13 +179,13 @@
 	. += 						" <a href='byond://?src=\ref[user];preference=flavor_text;task=input'>[length(flavor_text)>0?"[sanitize_popup(copytext(flavor_text, 1, 3))]...":"\[...\]"]</a>"
 	. += 					"</td>"
 	. += 				"</tr>"
-	. += 			"</table>"	//Backstory table end
+	. += 			"</table>"	// Backstory table end
 	. += 		"</td>"
 	. += 	"</tr>"
-	. += "</table>"	//Main body table end
+	. += "</table>"	// Main body table end
 
 
-/datum/preferences/proc/ShowDisabilityState(mob/user,flag,label)
+/datum/preferences/proc/ShowDisabilityState(mob/user, flag, label)
 	return "[label]: <a href=\"?_src_=prefs;task=input;preference=disabilities;disability=[flag]\">[disabilities & flag ? "<b>Yes</b>" : "No"]</a><br>"
 
 /datum/preferences/proc/process_link_general(mob/user, list/href_list)
@@ -194,24 +194,24 @@
 			if(href_list["task"] == "input")
 				var/dflag=text2num(href_list["disability"])
 				if(dflag >= 0)
-					disabilities ^= text2num(href_list["disability"]) //MAGIC
+					disabilities ^= text2num(href_list["disability"]) // MAGIC
 
 		if("records")
 			switch(href_list["task"])
 				if("med_record")
-					var/medmsg = sanitize(copytext(input(usr,"Set your medical notes here.","Medical Records",html_decode(revert_ja(med_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
+					var/medmsg = sanitize(copytext(input(usr, "Set your medical notes here.", "Medical Records", html_decode(revert_ja(med_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
 
 					if(medmsg != null)
 						med_record = medmsg
 
 				if("sec_record")
-					var/secmsg = sanitize(copytext(input(usr,"Set your security notes here.","Security Records",html_decode(revert_ja(sec_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
+					var/secmsg = sanitize(copytext(input(usr, "Set your security notes here.", "Security Records", html_decode(revert_ja(sec_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
 
 					if(secmsg != null)
 						sec_record = secmsg
 
 				if("gen_record")
-					var/genmsg = sanitize(copytext(input(usr,"Set your employment notes here.","Employment Records",html_decode(revert_ja(gen_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
+					var/genmsg = sanitize(copytext(input(usr, "Set your employment notes here.", "Employment Records", html_decode(revert_ja(gen_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
 
 					if(genmsg != null)
 						gen_record = genmsg
@@ -224,37 +224,37 @@
 				if("age")
 					age = rand(AGE_MIN, AGE_MAX)
 				if("hair")
-					r_hair = rand(0,255)
-					g_hair = rand(0,255)
-					b_hair = rand(0,255)
+					r_hair = rand(0, 255)
+					g_hair = rand(0, 255)
+					b_hair = rand(0, 255)
 				if("h_style")
 					h_style = random_hair_style(gender, species)
 				if("facial")
-					r_facial = rand(0,255)
-					g_facial = rand(0,255)
-					b_facial = rand(0,255)
+					r_facial = rand(0, 255)
+					g_facial = rand(0, 255)
+					b_facial = rand(0, 255)
 				if("f_style")
 					f_style = random_facial_hair_style(gender, species)
 				if("underwear")
-					underwear = rand(1,underwear_m.len)
+					underwear = rand(1, underwear_m.len)
 				if("undershirt")
-					undershirt = rand(1,undershirt_t.len)
+					undershirt = rand(1, undershirt_t.len)
 				if("socks")
-					socks = rand(1,socks_t.len)
+					socks = rand(1, socks_t.len)
 				if("eyes")
-					r_eyes = rand(0,255)
-					g_eyes = rand(0,255)
-					b_eyes = rand(0,255)
+					r_eyes = rand(0, 255)
+					g_eyes = rand(0, 255)
+					b_eyes = rand(0, 255)
 				if("s_tone")
 					s_tone = random_skin_tone()
 				if("s_color")
-					r_skin = rand(0,255)
-					g_skin = rand(0,255)
-					b_skin = rand(0,255)
+					r_skin = rand(0, 255)
+					g_skin = rand(0, 255)
+					b_skin = rand(0, 255)
 				if("bag")
-					backbag = rand(1,4)
+					backbag = rand(1, 4)
 				if("all")
-					randomize_appearance_for()	//no params needed
+					randomize_appearance_for()	// no params needed
 		if("input")
 			switch(href_list["preference"])
 				if("name")
@@ -267,21 +267,21 @@
 				if("age")
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 					if(new_age)
-						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
+						age = max(min( round(text2num(new_age)), AGE_MAX), AGE_MIN)
 
 				if("species")
 					var/list/new_species = list(HUMAN)
 					var/prev_species = species
 					var/whitelisted = 0
 
-					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
+					if(config.usealienwhitelist) // If we're using the whitelist, make sure to check it!
 						for(var/S in whitelisted_species)
-							if(is_alien_whitelisted(user,S))
+							if(is_alien_whitelisted(user, S))
 								new_species += S
 								whitelisted = 1
 						if(!whitelisted)
 							alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
-					else //Not using the whitelist? Aliens for everyone!
+					else // Not using the whitelist? Aliens for everyone!
 						new_species = whitelisted_species
 
 					species = input("Please select a species", "Character Generation", null) in new_species
@@ -295,7 +295,7 @@
 					var/list/new_languages = list("None")
 					var/datum/species/S = all_species[species]
 
-					//I don't understant, how it works(and does not), so..
+					// I don't understant, how it works(and does not), so..
 					if(config.usealienwhitelist)
 						for(var/L in all_languages)
 							var/datum/language/lang = all_languages[L]
@@ -388,7 +388,7 @@
 					undershirt_options = undershirt_t
 
 					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
-					if (new_undershirt)
+					if(new_undershirt)
 						undershirt = undershirt_options.Find(new_undershirt)
 				if("socks")
 					var/list/socks_options
@@ -409,7 +409,7 @@
 						return
 					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
 					if(new_s_tone)
-						s_tone = 35 - max(min( round(new_s_tone), 220),1)
+						s_tone = 35 - max(min( round(new_s_tone), 220), 1)
 
 				if("skin")
 					if(species == UNATHI || species == TAJARAN || species == SKRELL)
@@ -430,51 +430,51 @@
 						nanotrasen_relation = new_relation
 
 				if("home_system")
-					var/choice = input(user, "Please choose a home system.") as null|anything in home_system_choices + list("None","Other")
+					var/choice = input(user, "Please choose a home system.") as null|anything in home_system_choices + list("None", "Other")
 					if(!choice)
 						return
 					if(choice == "Other")
 						var/raw_choice = input(user, "Please enter a home system.")  as text|null
 						if(raw_choice)
-							home_system = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							home_system = sanitize(copytext(raw_choice, 1, MAX_MESSAGE_LEN))
 						return
 					home_system = choice
 
 				if("citizenship")
-					var/choice = input(user, "Please choose your current citizenship.") as null|anything in citizenship_choices + list("None","Other")
+					var/choice = input(user, "Please choose your current citizenship.") as null|anything in citizenship_choices + list("None", "Other")
 					if(!choice)
 						return
 					if(choice == "Other")
 						var/raw_choice = input(user, "Please enter your current citizenship.", "Character Preference") as text|null
 						if(raw_choice)
-							citizenship = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							citizenship = sanitize(copytext(raw_choice, 1, MAX_MESSAGE_LEN))
 						return
 					citizenship = choice
 
 				if("faction")
-					var/choice = input(user, "Please choose a faction to work for.") as null|anything in faction_choices + list("None","Other")
+					var/choice = input(user, "Please choose a faction to work for.") as null|anything in faction_choices + list("None", "Other")
 					if(!choice)
 						return
 					if(choice == "Other")
 						var/raw_choice = input(user, "Please enter a faction.")  as text|null
 						if(raw_choice)
-							faction = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							faction = sanitize(copytext(raw_choice, 1, MAX_MESSAGE_LEN))
 						return
 					faction = choice
 
 				if("religion")
-					var/choice = input(user, "Please choose a religion.") as null|anything in religion_choices + list("None","Other")
+					var/choice = input(user, "Please choose a religion.") as null|anything in religion_choices + list("None", "Other")
 					if(!choice)
 						return
 					if(choice == "Other")
 						var/raw_choice = input(user, "Please enter a religon.")  as text|null
 						if(raw_choice)
-							religion = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							religion = sanitize(copytext(raw_choice, 1, MAX_MESSAGE_LEN))
 						return
 					religion = choice
 
 				if("flavor_text")
-					var/msg = sanitize(copytext(input(usr,"Set the flavor text in your 'examine' verb.","Flavor Text",html_decode(revert_ja(flavor_text))) as message, 1, MAX_MESSAGE_LEN))
+					var/msg = sanitize(copytext(input(usr, "Set the flavor text in your 'examine' verb.", "Flavor Text", html_decode(revert_ja(flavor_text))) as message, 1, MAX_MESSAGE_LEN))
 
 					if(msg != null)
 						flavor_text = msg
@@ -485,7 +485,7 @@
 
 					switch(menu_type)
 						if("Limbs")
-							var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
+							var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg", "Right Leg", "Left Arm", "Right Arm", "Left Foot", "Right Foot", "Left Hand", "Right Hand")
 							if(!limb_name) return
 
 							var/limb = null
@@ -517,7 +517,7 @@
 									limb = BP_R_HAND
 									third_limb = BP_R_ARM
 
-							var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
+							var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal", "Amputated", "Prothesis")
 							if(!new_state) return
 
 							switch(new_state)
@@ -545,7 +545,7 @@
 								if("Eyes")
 									organ = O_EYES
 
-							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
+							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal", "Assisted", "Mechanical")
 							if(!new_state) return
 
 							switch(new_state)
@@ -571,8 +571,8 @@
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species)
 
-				if("disabilities")				//please note: current code only allows nearsightedness as a disability
-					disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
+				if("disabilities")				// please note: current code only allows nearsightedness as a disability
+					disabilities = !disabilities// if you want to add actual disabilities, code that selects them should be here
 
 				if("randomslot")
 					randomslot = !randomslot

@@ -8,8 +8,8 @@
 	var/id = null
 	var/obj/machinery/teleport/station/power_station
 	var/calibrating
-	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
-						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
+	var/turf/target // Used for one-time-use teleport cards(such as clown planet coordinates.)
+						 // Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
@@ -21,7 +21,7 @@
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
-	if (power_station)
+	if(power_station)
 		power_station.teleporter_console = null
 		power_station = null
 	return ..()
@@ -29,7 +29,7 @@
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
 		return
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
 		if(power_station)
 			break
@@ -129,7 +129,7 @@
 		to_chat(usr, "<span class='notice'>Processing hub calibration to target...</span>")
 
 		calibrating = 1
-		spawn(50 * (3 - power_station.teleporter_hub.accurate)) //Better parts mean faster calibration
+		spawn(50 * (3 - power_station.teleporter_hub.accurate)) // Better parts mean faster calibration
 			calibrating = 0
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1
@@ -165,7 +165,7 @@
 
 		for(var/obj/item/device/radio/beacon/R in world)
 			var/turf/T = get_turf(R)
-			if (!T)
+			if(!T)
 				continue
 			if(T.z == ZLEVEL_CENTCOMM || T.z > 7)
 				continue
@@ -176,13 +176,13 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in world)
-			if (!I.implanted || !ismob(I.loc))
+		for(var/obj/item/weapon/implant/tracking/I in world)
+			if(!I.implanted || !ismob(I.loc))
 				continue
 			else
 				var/mob/M = I.loc
-				if (M.stat == 2)
-					if (M.timeofdeath + 6000 < world.time)
+				if(M.stat == 2)
+					if(M.timeofdeath + 6000 < world.time)
 						continue
 				var/turf/T = get_turf(M)
 				if(!T)	continue
@@ -206,7 +206,7 @@
 			return
 		for(var/obj/machinery/teleport/station/R in S)
 			var/turf/T = get_turf(R)
-			if (!T || !R.teleporter_hub || !R.teleporter_console)
+			if(!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
 			if(T.z == ZLEVEL_CENTCOMM || T.z > 7)
 				continue
@@ -245,7 +245,7 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/obj/machinery/teleport/station/power_station
-	var/calibrated //Calibration prevents mutation
+	var/calibrated // Calibration prevents mutation
 
 /obj/machinery/teleport/hub/New()
 	..()
@@ -262,7 +262,7 @@
 	link_power_station()
 
 /obj/machinery/teleport/hub/Destroy()
-	if (power_station)
+	if(power_station)
 		power_station.teleporter_hub = null
 		power_station = null
 	return ..()
@@ -276,7 +276,7 @@
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
 		return
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
 		if(power_station)
 			break
@@ -301,17 +301,17 @@
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
-	if (!com)
+	if(!com)
 		return
-	if (!com.target)
+	if(!com.target)
 		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
-	if (istype(M, /atom/movable))
+	if(istype(M, /atom/movable))
 		if(do_teleport(M, com.target))
-			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
-				if(ishuman(M))//don't remove people from the round randomly you jerks
+			if(!calibrated && prob(30 - ((accurate) * 10))) // oh dear a problem
+				if(ishuman(M))// don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
-					//Effects similar to mutagen.
+					// Effects similar to mutagen.
 					randmuti(human)
 					randmutb(human)
 					domutcheck(human)
@@ -339,14 +339,14 @@
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
-//obj/machinery/teleport/hub/syndicate/New()
+// obj/machinery/teleport/hub/syndicate/New()
 //	..()
 //	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
 //	RefreshParts()
 
 /obj/machinery/teleport/station
 	name = "station"
-	desc = "It's the station thingy of a teleport thingy." //seriously, wtf.
+	desc = "It's the station thingy of a teleport thingy." // seriously, wtf.
 	icon_state = "controller"
 	var/engaged = 0
 	use_power = 1
@@ -379,12 +379,12 @@
 	efficiency = E - 1
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		teleporter_hub = locate(/obj/machinery/teleport/hub, get_step(src, dir))
 		if(teleporter_hub)
 			teleporter_hub.link_power_station()
 			break
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		teleporter_console = locate(/obj/machinery/computer/teleporter, get_step(src, dir))
 		if(teleporter_console)
 			teleporter_console.link_power_station()
@@ -396,7 +396,7 @@
 		teleporter_hub.power_station = null
 		teleporter_hub.update_icon()
 		teleporter_hub = null
-	if (teleporter_console)
+	if(teleporter_console)
 		teleporter_console.power_station = null
 		teleporter_console = null
 	return ..()
@@ -444,7 +444,7 @@
 /obj/machinery/teleport/station/proc/toggle(mob/user)
 	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
 		return
-	if (teleporter_console.target)
+	if(teleporter_console.target)
 		src.engaged = !src.engaged
 		use_power(5000)
 		visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")

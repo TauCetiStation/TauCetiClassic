@@ -20,7 +20,7 @@
 	reconnect_scanner()
 
 /obj/machinery/artifact_analyser/proc/reconnect_scanner()
-	//connect to a nearby scanner pad
+	// connect to a nearby scanner pad
 	owned_scanner = locate(/obj/machinery/artifact_scanpad) in get_step(src, dir)
 	if(!owned_scanner)
 		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(1, src)
@@ -59,11 +59,11 @@
 
 /obj/machinery/artifact_analyser/process()
 	if(scan_in_progress && world.time > scan_completion_time)
-		//finish scanning
+		// finish scanning
 		scan_in_progress = 0
 		updateDialog()
 
-		//print results
+		// print results
 		var/results = ""
 		if(!owned_scanner)
 			reconnect_scanner()
@@ -133,7 +133,7 @@
 
 	updateDialog()
 
-//hardcoded responses, oh well
+// hardcoded responses, oh well
 /obj/machinery/artifact_analyser/proc/get_scan_info(obj/scanned_obj)
 	switch(scanned_obj.type)
 		if(/obj/machinery/auto_cloner)
@@ -163,13 +163,13 @@
 		if(/obj/structure/crystal)
 			return "Crystal formation - Pseudo organic crystalline matrix, unlikely to have formed naturally. No known technology exists to synthesize this exact composition."
 		if(/obj/machinery/artifact)
-			//the fun one
+			// the fun one
 			var/obj/machinery/artifact/A = scanned_obj
 			var/out = "Anomalous alien device - Composed of an unknown alloy, "
 
-			//primary effect
+			// primary effect
 			if(A.my_effect)
-				//what kind of effect the artifact has
+				// what kind of effect the artifact has
 				switch(A.my_effect.effect_type)
 					if(1)
 						out += "concentrated energy emissions"
@@ -189,7 +189,7 @@
 						out += "low level energy emissions"
 				out += " have been detected "
 
-				//how the artifact does it's effect
+				// how the artifact does it's effect
 				switch(A.my_effect.effect)
 					if(1)
 						out += " emitting in an ambient energy field."
@@ -207,13 +207,13 @@
 				else
 					out += " Unable to determine any data about activation trigger."
 
-			//secondary:
+			// secondary:
 			if(A.secondary_effect && A.secondary_effect.activated)
-				//sciencey words go!
-				out += "<br><br>Warning, internal scans indicate ongoing [pick("subluminous","subcutaneous","superstructural")] activity operating \
+				// sciencey words go!
+				out += "<br><br>Warning, internal scans indicate ongoing [pick("subluminous", "subcutaneous", "superstructural")] activity operating \
 				independantly from primary systems. Auxiliary activity involves "
 
-				//what kind of effect the artifact has
+				// what kind of effect the artifact has
 				switch(A.secondary_effect.effect_type)
 					if(1)
 						out += "concentrated energy emissions"
@@ -232,7 +232,7 @@
 					else
 						out += "low level radiation"
 
-				//how the artifact does it's effect
+				// how the artifact does it's effect
 				switch(A.secondary_effect.effect)
 					if(1)
 						out += " emitting in an ambient energy field."
@@ -254,5 +254,5 @@
 					out += " Unable to determine any data about activation trigger."
 			return out
 		else
-			//it was an ordinary item
+			// it was an ordinary item
 			return "[scanned_obj.name] - Mundane application, composed of carbo-ferritic alloy composite."

@@ -1,5 +1,5 @@
 /proc/isobject(x)
-	return (istype(x, /datum) || istype(x, /list) || istype(x, /savefile) || istype(x, /client) || (x==world))
+	return(istype(x, /datum) || istype(x, /list) || istype(x, /savefile) || istype(x, /client) || (x==world))
 
 /n_Interpreter
 	proc
@@ -92,23 +92,23 @@
 						RaiseError(new/runtimeError/UnknownInstruction())
 
 
-	//Binary//
-		//Comparison operators
+	// Binary//
+		// Comparison operators
 		Equal(a, b) 				return a==b
-		NotEqual(a, b)			return a!=b //LogicalNot(Equal(a, b))
+		NotEqual(a, b)			return a!=b // LogicalNot(Equal(a, b))
 		Greater(a, b)				return a>b
 		Less(a, b)					return a<b
 		GreaterOrEqual(a, b)return a>=b
 		LessOrEqual(a, b)		return a<=b
-		//Logical Operators
+		// Logical Operators
 		LogicalAnd(a, b)		return a&&b
 		LogicalOr(a, b)			return a||b
-		LogicalXor(a, b)		return (a||b) && !(a&&b)
-		//Bitwise Operators
+		LogicalXor(a, b)		return(a||b) && !(a&&b)
+		// Bitwise Operators
 		BitwiseAnd(a, b)		return a&b
 		BitwiseOr(a, b)			return a|b
 		BitwiseXor(a, b)		return a^b
-		//Arithmetic Operators
+		// Arithmetic Operators
 		Add(a, b)
 			if(istext(a)&&!istext(b)) 		 b="[b]"
 			else if(istext(b)&&!istext(a)) a="[a]"
@@ -163,7 +163,7 @@
 				return null
 			return a**b
 
-	//Unary//
+	// Unary//
 		Minus(a)						return -a
 		LogicalNot(a)				return !a
 		BitwiseNot(a)				return ~a

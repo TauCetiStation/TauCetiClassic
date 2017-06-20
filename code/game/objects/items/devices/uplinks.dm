@@ -1,11 +1,11 @@
-//This could either be split into the proper DM files or placed somewhere else all together, but it'll do for now -Nodrak
+// This could either be split into the proper DM files or placed somewhere else all together, but it'll do for now -Nodrak
 
 /*
 
 A list of items and costs is stored under the datum of every game mode, alongside the number of crystals, and the welcoming message.
 
 */
-//TG-stuff
+// TG-stuff
 /obj/item/device/uplink
 	var/welcome 					// Welcoming menu message
 	var/uses 						// Numbers of crystals
@@ -21,7 +21,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	welcome = ticker.mode.uplink_welcome
 	uses = ticker.mode.uplink_uses
 
-//Let's build a menu!
+// Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu()
 	var/dat = "<B>[src.welcome]</B><BR>"
 	dat += "Tele-Crystals left: [src.uses]<BR>"
@@ -84,7 +84,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	if(!active)
 		return
 
-	if (href_list["buy_item"])
+	if(href_list["buy_item"])
 
 		var/item = href_list["buy_item"]
 		var/list/split = splittext(item, ":") // throw away variable
@@ -163,7 +163,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			return 1
 	return 0
 
-//Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
+// Refund proc for the borg teleporter(later I'll make a general refund proc if there is demand for it)
 /obj/item/device/radio/uplink/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/antag_spawner/borg_tele))
 		var/obj/item/weapon/antag_spawner/borg_tele/S = W
@@ -177,7 +177,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 // A collection of preset uplinks.
 //
 // Includes normal radio uplink, multitool uplink,
-// implant uplink (not the implant tool) and a preset headset uplink.
+// implant uplink(not the implant tool) and a preset headset uplink.
 
 /obj/item/device/radio/uplink/New()
 	hidden_uplink = new(src)

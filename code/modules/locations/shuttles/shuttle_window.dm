@@ -4,25 +4,25 @@
 	can_merge = 0
 
 /obj/structure/window/reinforced/shuttle/attackby(obj/item/weapon/W, mob/user)
-	if(!istype(W)) return//I really wish I did not need this
+	if(!istype(W)) return// I really wish I did not need this
 
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
 		return
 
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if(istype(W, /obj/item/weapon/grab) && get_dist(src, user)<2)
 		var/obj/item/weapon/grab/G = W
-		if (istype(G.affecting, /mob/living))
+		if(istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			var/state = G.state
-			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
-			switch (state)
+			qdel(W)	// gotta delete it here because if window breaks, it won't get deleted
+			switch(state)
 				if(1)
 					M.apply_damage(7)
 					take_damage(7)
 					visible_message("\red [user] slams [M] against \the [src]!")
 				if(2)
-					if (prob(50))
+					if(prob(50))
 						M.Weaken(1)
 					M.apply_damage(10)
 					take_damage(9)

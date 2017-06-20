@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/machinery/implantchair
 	name = "loyalty implanter"
@@ -37,9 +37,9 @@
 			if(src.occupant.health <= -100)
 				health_text = "<FONT color=red>Dead</FONT>"
 			else if(src.occupant.health < 0)
-				health_text = "<FONT color=red>[round(src.occupant.health,0.1)]</FONT>"
+				health_text = "<FONT color=red>[round(src.occupant.health, 0.1)]</FONT>"
 			else
-				health_text = "[round(src.occupant.health,0.1)]"
+				health_text = "[round(src.occupant.health, 0.1)]"
 
 		var/dat ="<B>Implanter Status</B><BR>"
 
@@ -77,7 +77,7 @@
 		if(istype(G, /obj/item/weapon/grab))
 			if(!ismob(G:affecting))
 				return
-			for(var/mob/living/carbon/slime/M in range(1,G:affecting))
+			for(var/mob/living/carbon/slime/M in range(1, G:affecting))
 				if(M.Victim == G:affecting)
 					to_chat(usr, "[G:affecting:name] will not fit into the [src.name] because they have a slime latched onto their head.")
 					return
@@ -93,7 +93,7 @@
 			return
 		if(M == occupant) // so that the guy inside can't eject himself -Agouri
 			return
-		if (src.occupant.client)
+		if(src.occupant.client)
 			src.occupant.client.eye = src.occupant.client.mob
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		src.occupant.loc = src.loc
@@ -124,13 +124,13 @@
 
 
 	implant(var/mob/M)
-		if (!istype(M, /mob/living/carbon))
+		if(!istype(M, /mob/living/carbon))
 			return
 		if(!implant_list.len)	return
 		for(var/obj/item/weapon/implant/loyalty/imp in implant_list)
 			if(!imp)	continue
 			if(istype(imp, /obj/item/weapon/implant/loyalty))
-				for (var/mob/O in viewers(M, null))
+				for(var/mob/O in viewers(M, null))
 					O.show_message("\red [M] has been implanted by the [src.name].", 1)
 
 				if(imp.implanted(M))

@@ -11,7 +11,7 @@ Attach to transfer valve and open. BOOM.
 */
 
 
-//Some legacy definitions so fires can be started.
+// Some legacy definitions so fires can be started.
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return null
 
@@ -36,20 +36,20 @@ Attach to transfer valve and open. BOOM.
 
 		if(! (locate(/obj/fire) in src))
 
-			new /obj/fire(src,1000)
+			new /obj/fire(src, 1000)
 
 			if(firestarter)
-				if (firestarter.fingerprintslast && istype(firestarter,/obj/item))
-					message_admins("Fire started at ([x],[y],[z]) by [firestarter] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>). Last touched by: <B>[firestarter.fingerprintslast]</B>")
-					log_game("Fire started at ([x],[y],[z]) by [firestarter]. Last touched by: [firestarter.fingerprintslast].")
+				if(firestarter.fingerprintslast && istype(firestarter, /obj/item))
+					message_admins("Fire started at([x],[y],[z]) by [firestarter] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>). Last touched by: <B>[firestarter.fingerprintslast]</B>")
+					log_game("Fire started at([x],[y],[z]) by [firestarter]. Last touched by: [firestarter.fingerprintslast].")
 				else
-					message_admins("Fire started at ([x],[y],[z]) by [firestarter] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-					log_game("Fire started at ([x],[y],[z]) by [firestarter].")
+					message_admins("Fire started at([x],[y],[z]) by [firestarter] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+					log_game("Fire started at([x],[y],[z]) by [firestarter].")
 
 	return igniting
 
 /obj/fire
-	//Icon for fire on turfs.
+	// Icon for fire on turfs.
 
 	anchored = 1
 	mouse_opacity = 0
@@ -61,7 +61,7 @@ Attach to transfer valve and open. BOOM.
 	light_color = "#ED9200"
 	layer = TURF_LAYER
 
-	var/firelevel = 10000 //Calculated by gas_mixture.calculate_firelevel()
+	var/firelevel = 10000 // Calculated by gas_mixture.calculate_firelevel()
 
 /obj/fire/Crossed(mob/living/L)
 	..()
@@ -71,7 +71,7 @@ Attach to transfer valve and open. BOOM.
 /obj/fire/process()
 	. = 1
 
-	//get location and check if it is in a proper ZAS zone
+	// get location and check if it is in a proper ZAS zone
 	var/turf/simulated/S = loc
 
 	if(!istype(S))
@@ -83,13 +83,13 @@ Attach to transfer valve and open. BOOM.
 		return
 
 	var/datum/gas_mixture/air_contents = S.return_air()
-	//get liquid fuels on the ground.
+	// get liquid fuels on the ground.
 	var/obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in S
-	//and the volatile stuff from the air
+	// and the volatile stuff from the air
 	var/datum/gas/volatile_fuel/fuel = locate() in air_contents.trace_gases
 
-	//since the air is processed in fractions, we need to make sure not to have any minuscle residue or
-	//the amount of moles might get to low for some functions to catch them and thus result in wonky behaviour
+	// since the air is processed in fractions, we need to make sure not to have any minuscle residue or
+	// the amount of moles might get to low for some functions to catch them and thus result in wonky behaviour
 	if(air_contents.oxygen < 0.1)
 		air_contents.oxygen = 0
 	if(air_contents.phoron < 0.1)
@@ -98,12 +98,12 @@ Attach to transfer valve and open. BOOM.
 		if(fuel.moles < 0.1)
 			air_contents.trace_gases.Remove(fuel)
 
-	//check if there is something to combust
+	// check if there is something to combust
 	if(!air_contents.check_combustability(liquid))
 		qdel(src)
 		return
 
-	//get a firelevel and set the icon
+	// get a firelevel and set the icon
 	firelevel = air_contents.calculate_firelevel(liquid)
 
 	if(firelevel > 6)
@@ -113,36 +113,36 @@ Attach to transfer valve and open. BOOM.
 	else
 		icon_state = "1"
 
-	//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
+	// im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 	for(var/mob/living/carbon/human/M in loc)
-		M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure() ) //Burn the humans!
+		M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure() ) // Burn the humans!
 
 	loc.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
 	for(var/atom/A in loc)
 		A.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
 		CHECK_TICK
-	//spread
+	// spread
 	for(var/direction in cardinal)
 		var/turf/simulated/enemy_tile = get_step(S, direction)
 
 		if(istype(enemy_tile))
-			if(S.open_directions & direction) //Grab all valid bordering tiles
+			if(S.open_directions & direction) // Grab all valid bordering tiles
 				var/datum/gas_mixture/acs = enemy_tile.return_air()
 				var/obj/effect/decal/cleanable/liquid_fuel/liq = locate() in enemy_tile
 				if(!acs)
 					continue
 				if(!acs.check_combustability(liq))
 					continue
-				//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
-				//reduce firelevel.
+				// If extinguisher mist passed over the turf it's trying to spread to, don't spread and
+				// reduce firelevel.
 				if(enemy_tile.fire_protection > world.time-30)
 					firelevel -= 1.5
 					continue
 
-				//Spread the fire.
+				// Spread the fire.
 				if(!(locate(/obj/fire) in enemy_tile))
-					if( prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && S.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, S, 0,0))
-						new/obj/fire(enemy_tile,firelevel)
+					if( prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && S.CanPass(null, enemy_tile, 0, 0) && enemy_tile.CanPass(null, S, 0, 0))
+						new/obj/fire(enemy_tile, firelevel)
 
 			else
 				enemy_tile.adjacent_fire_act(loc, air_contents, air_contents.temperature, air_contents.return_volume())
@@ -151,21 +151,21 @@ Attach to transfer valve and open. BOOM.
 	color = heat2color(air_contents.temperature)
 	set_light(l_color = color)
 
-	//seperate part of the present gas
-	//this is done to prevent the fire burning all gases in a single pass
+	// seperate part of the present gas
+	// this is done to prevent the fire burning all gases in a single pass
 	var/datum/gas_mixture/flow = air_contents.remove_ratio(vsc.fire_consuption_rate)
 ///////////////////////////////// FLOW HAS BEEN CREATED /// DONT DELETE THE FIRE UNTIL IT IS MERGED BACK OR YOU WILL DELETE AIR ///////////////////////////////////////////////
 
 	if(flow)
-		//burn baby burn!
-		flow.zburn(liquid,1)
-		//merge the air back
+		// burn baby burn!
+		flow.zburn(liquid, 1)
+		// merge the air back
 		S.assume_air(flow)
 
 ///////////////////////////////// FLOW HAS BEEN REMERGED /// feel free to delete the fire again from here on //////////////////////////////////////////////////////////////////
 
 
-/obj/fire/New(newLoc,fl)
+/obj/fire/New(newLoc, fl)
 	..()
 
 	if(!istype(loc, /turf))
@@ -188,14 +188,14 @@ Attach to transfer valve and open. BOOM.
 	return ..()
 
 /obj/fire/proc/RemoveFire()
-	if (istype(loc, /turf/simulated))
+	if(istype(loc, /turf/simulated))
 		set_light(0)
 		loc = null
 	SSair.active_hotspots.Remove(src)
 
 
 
-/turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
+/turf/simulated/var/fire_protection = 0 // Protects newly extinguished tiles from being overrun again.
 /turf/proc/apply_fire_protection()
 /turf/simulated/apply_fire_protection()
 	fire_protection = world.time
@@ -211,11 +211,11 @@ Attach to transfer valve and open. BOOM.
 		total_fuel += phoron
 
 		if(fuel)
-		//Volatile Fuel
+		// Volatile Fuel
 			total_fuel += fuel.moles
 
 		if(liquid)
-		//Liquid Fuel
+		// Liquid Fuel
 			if(liquid.amount <= 0.1)
 				qdel(liquid)
 			else
@@ -224,26 +224,26 @@ Attach to transfer valve and open. BOOM.
 		if(total_fuel == 0)
 			return 0
 
-		//Calculate the firelevel.
+		// Calculate the firelevel.
 		var/firelevel = calculate_firelevel(liquid)
 
-		//get the current inner energy of the gas mix
-		//this must be taken here to prevent the addition or deletion of energy by a changing heat capacity
+		// get the current inner energy of the gas mix
+		// this must be taken here to prevent the addition or deletion of energy by a changing heat capacity
 		var/starting_energy = temperature * heat_capacity()
 
-		//determine the amount of oxygen used
+		// determine the amount of oxygen used
 		var/total_oxygen = min(oxygen, 2 * total_fuel)
 
-		//determine the amount of fuel actually used
-		var/used_fuel_ratio = min(oxygen / 2 , total_fuel) / total_fuel
+		// determine the amount of fuel actually used
+		var/used_fuel_ratio = min(oxygen / 2, total_fuel) / total_fuel
 		total_fuel = total_fuel * used_fuel_ratio
 
 		var/total_reactants = total_fuel + total_oxygen
 
-		//determine the amount of reactants actually reacting
+		// determine the amount of reactants actually reacting
 		var/used_reactants_ratio = min( max(total_reactants * firelevel / vsc.fire_firelevel_multiplier, 0.2), total_reactants) / total_reactants
 
-		//remove and add gasses as calculated
+		// remove and add gasses as calculated
 		oxygen -= min(oxygen, total_oxygen * used_reactants_ratio )
 
 		phoron -= min(phoron, (phoron * used_fuel_ratio * used_reactants_ratio ) * 3)
@@ -253,7 +253,7 @@ Attach to transfer valve and open. BOOM.
 		carbon_dioxide += max(2 * total_fuel, 0)
 
 		if(fuel)
-			fuel.moles -= (fuel.moles * used_fuel_ratio * used_reactants_ratio) * 5 //Fuel burns 5 times as quick
+			fuel.moles -= (fuel.moles * used_fuel_ratio * used_reactants_ratio) * 5 // Fuel burns 5 times as quick
 			if(fuel.moles <= 0) qdel(fuel)
 
 		if(liquid)
@@ -261,7 +261,7 @@ Attach to transfer valve and open. BOOM.
 
 			if(liquid.amount <= 0) qdel(liquid)
 
-		//calculate the energy produced by the reaction and then set the new temperature of the mix
+		// calculate the energy produced by the reaction and then set the new temperature of the mix
 		temperature = (starting_energy + vsc.fire_fuel_energy_release * total_fuel) / heat_capacity()
 
 		update_values()
@@ -269,7 +269,7 @@ Attach to transfer valve and open. BOOM.
 	return value
 
 /datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
-	//this is a copy proc to continue a fire after its been started.
+	// this is a copy proc to continue a fire after its been started.
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
 
@@ -284,7 +284,7 @@ Attach to transfer valve and open. BOOM.
 	return 0
 
 /datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
-	//this check comes up very often and is thus centralized here to ease adding stuff
+	// this check comes up very often and is thus centralized here to ease adding stuff
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
 
@@ -299,7 +299,7 @@ Attach to transfer valve and open. BOOM.
 	return 0
 
 /datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fuel/liquid)
-	//Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
+	// Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
 	var/total_fuel = 0
@@ -319,11 +319,11 @@ Attach to transfer valve and open. BOOM.
 
 		if(total_fuel > 0 && oxygen > 0)
 
-			//slows down the burning when the concentration of the reactants is low
+			// slows down the burning when the concentration of the reactants is low
 			var/dampening_multiplier = total_combustables / (total_combustables + nitrogen + carbon_dioxide)
-			//calculates how close the mixture of the reactants is to the optimum
+			// calculates how close the mixture of the reactants is to the optimum
 			var/mix_multiplier = 1 / (1 + (5 * ((oxygen / total_combustables) ** 2)))
-			//toss everything together
+			// toss everything together
 			firelevel = vsc.fire_firelevel_multiplier * mix_multiplier * dampening_multiplier
 
 	return max( 0, firelevel)
@@ -335,8 +335,8 @@ Attach to transfer valve and open. BOOM.
 
 
 /mob/living/carbon/human/FireBurn(firelevel, last_temperature, pressure)
-	//Burns mobs due to fire. Respects heat transfer coefficients on various body parts.
-	//Due to TG reworking how fireprotection works, this is kinda less meaningful.
+	// Burns mobs due to fire. Respects heat transfer coefficients on various body parts.
+	// Due to TG reworking how fireprotection works, this is kinda less meaningful.
 
 	var/head_exposure = 1
 	var/chest_exposure = 1
@@ -344,7 +344,7 @@ Attach to transfer valve and open. BOOM.
 	var/legs_exposure = 1
 	var/arms_exposure = 1
 
-	//Get heat transfer coefficients for clothing.
+	// Get heat transfer coefficients for clothing.
 
 	for(var/obj/item/clothing/C in src)
 		if(l_hand == C || r_hand == C)
@@ -361,10 +361,10 @@ Attach to transfer valve and open. BOOM.
 				legs_exposure = 0
 			if(C.body_parts_covered & ARMS)
 				arms_exposure = 0
-	//minimize this for low-pressure enviroments
+	// minimize this for low-pressure enviroments
 	var/mx = 5 * firelevel/vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
 
-	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
+	// Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
 
 	apply_damage(2.5*mx*head_exposure, BURN, BP_HEAD, 0, 0, "Fire")
 	apply_damage(2.5*mx*chest_exposure, BURN, BP_CHEST, 0, 0, "Fire")

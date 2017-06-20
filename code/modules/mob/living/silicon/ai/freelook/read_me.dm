@@ -3,7 +3,7 @@
  Initial code credit for this goes to Uristqwerty.
  Debugging, functionality, all comments and porting by Giacom.
 
- Everything about freelook (or what we can put in here) will be stored here.
+ Everything about freelook(or what we can put in here) will be stored here.
 
 
  WHAT IS THIS?
@@ -11,7 +11,7 @@
  This is a replacement for the current camera movement system, of the AI. Before this, the AI had to move between cameras and could
  only see what the cameras could see. Not only this but the cameras could see through walls, which created problems.
  With this, the AI controls an "AI Eye" mob, which moves just like a ghost; such as moving through walls and being invisible to players.
- The AI's eye is set to this mob and then we use a system (explained below) to determine what the cameras around the AI Eye can and
+ The AI's eye is set to this mob and then we use a system(explained below) to determine what the cameras around the AI Eye can and
  cannot see. If the camera cannot see a turf, it will black it out, otherwise it won't and the AI will be able to see it.
  This creates several features, such as.. no more see-through-wall cameras, easier to control camera movement, easier tracking,
  the AI only being able to track mobs which are visible to a camera, only trackable mobs appearing on the mob list and many more.

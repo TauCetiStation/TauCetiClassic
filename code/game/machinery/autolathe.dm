@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/global/list/autolathe_recipes = list( \
 		/* screwdriver removed*/ \
@@ -136,29 +136,29 @@ var/global/list/autolathe_recipes_hidden = list( \
 	dat = text("<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<FONT color=blue><B>Glass Amount:</B></FONT> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>")
 	var/list/objs = list()
 	objs += src.L
-	if (src.hacked)
+	if(src.hacked)
 		objs += src.LL
 	for(var/obj/t in objs)
-		if (istype(t, /obj/item/stack))
+		if(istype(t, /obj/item/stack))
 			var/title = "[t.name] ([t.m_amt] m /[t.g_amt] g)"
-			if (m_amount<t.m_amt || g_amount<t.g_amt)
+			if(m_amount<t.m_amt || g_amount<t.g_amt)
 				dat += title + "<br>"
 				continue
 			dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
 
 			var/obj/item/stack/S = t
-			var/max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)
-			if (max_multiplier>1)
+			var/max_multiplier = min(S.max_amount, S.m_amt ? round(m_amount/S.m_amt) : INFINITY, S.g_amt ? round(g_amount/S.g_amt) : INFINITY)
+			if(max_multiplier>1)
 				dat += " |"
-			if (max_multiplier>10)
+			if(max_multiplier>10)
 				dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[10]'>x[10]</A>"
-			if (max_multiplier>25)
+			if(max_multiplier>25)
 				dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[25]'>x[25]</A>"
-			if (max_multiplier>1)
+			if(max_multiplier>1)
 				dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[max_multiplier]'>x[max_multiplier]</A>"
 		else
 			var/title = "[t.name] ([t.m_amt/coeff] m /[t.g_amt/coeff] g)"
-			if (m_amount<t.m_amt/coeff || g_amount<t.g_amt/coeff)
+			if(m_amount<t.m_amt/coeff || g_amount<t.g_amt/coeff)
 				dat += title + "<br>"
 				continue
 			dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
@@ -175,7 +175,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7))
+	if(electrocute_mob(user, get_area(src), src, 0.7))
 		return 1
 	else
 		return 0
@@ -183,9 +183,9 @@ var/global/list/autolathe_recipes_hidden = list( \
 /obj/machinery/autolathe/interact(mob/user)
 	if(..())
 		return
-	if (shocked)
-		shock(user,50)
-	if (disabled)
+	if(shocked)
+		shock(user, 50)
+	if(disabled)
 		to_chat(user, "\red You press the button, but nothing happens.")
 		return
 	if(wires.interact(user))
@@ -194,7 +194,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	regular_win(user)
 
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
-	if (busy)
+	if(busy)
 		to_chat(user, "\red The autolathe is busy. Please wait for completion of previous operation.")
 		return 1
 
@@ -205,7 +205,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	if(exchange_parts(user, I))
 		return
 
-	if (panel_open)
+	if(panel_open)
 		if(istype(I, /obj/item/weapon/crowbar))
 			if(m_amount >= 3750)
 				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
@@ -219,16 +219,16 @@ var/global/list/autolathe_recipes_hidden = list( \
 			attack_hand(user)
 			return 1
 
-	if (stat)
+	if(stat)
 		return 1
 
-	if (src.m_amount + I.m_amt > max_m_amount)
+	if(src.m_amount + I.m_amt > max_m_amount)
 		to_chat(user, "\red The autolathe is full. Please remove metal from the autolathe in order to insert more.")
 		return 1
-	if (src.g_amount + I.g_amt > max_g_amount)
+	if(src.g_amount + I.g_amt > max_g_amount)
 		to_chat(user, "\red The autolathe is full. Please remove glass from the autolathe in order to insert more.")
 		return 1
-	if (I.m_amt == 0 && I.g_amt == 0)
+	if(I.m_amt == 0 && I.g_amt == 0)
 		to_chat(user, "\red This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.")
 		return 1
 
@@ -236,15 +236,15 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/obj/item/stack/stack
 	var/m_amt = I.m_amt
 	var/g_amt = I.g_amt
-	if (istype(I, /obj/item/stack))
+	if(istype(I, /obj/item/stack))
 		stack = I
 		amount = stack.amount
-		if (m_amt)
+		if(m_amt)
 			amount = min(amount, round((max_m_amount-src.m_amount)/m_amt))
-			flick("autolathe_o",src)//plays metal insertion animation
-		if (g_amt)
+			flick("autolathe_o", src)// plays metal insertion animation
+		if(g_amt)
 			amount = min(amount, round((max_g_amount-src.g_amount)/g_amt))
-			flick("autolathe_r",src)//plays glass insertion animation
+			flick("autolathe_r", src)// plays glass insertion animation
 		stack.use(amount)
 	else
 		usr.remove_from_mob(I)
@@ -255,7 +255,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	src.m_amount += m_amt * amount
 	src.g_amount += g_amt * amount
 	to_chat(user, "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe.")
-	if (I && I.loc == src)
+	if(I && I.loc == src)
 		qdel(I)
 	busy = 0
 	src.updateUsrDialog()
@@ -279,7 +279,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 
 	if(href_list["make"])
 		var/coeff = 2 ** prod_coeff
-		var/turf/T = get_step(src.loc, get_dir(src,usr))
+		var/turf/T = get_step(src.loc, get_dir(src, usr))
 
 		// critical exploit fix start -walter0o
 		var/obj/item/template = null
@@ -302,17 +302,17 @@ var/global/list/autolathe_recipes_hidden = list( \
 
 		var/multiplier = text2num(href_list["multiplier"])
 
-		if (!multiplier) multiplier = 1
+		if(!multiplier) multiplier = 1
 		var/max_multiplier = 1
 
 		if(istype(template, /obj/item/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o
 			var/obj/item/stack/S = template
-			max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)  // pasta from regular_win() to make sure the numbers match -walter0o
+			max_multiplier = min(S.max_amount, S.m_amt ? round(m_amount/S.m_amt) : INFINITY, S.g_amt ? round(g_amount/S.g_amt) : INFINITY)  // pasta from regular_win() to make sure the numbers match -walter0o
 
 		if( (multiplier > max_multiplier) || (multiplier <= 0) ) // somebody is trying to exploit, alert admins-walter0o
 
 			var/turf/LOC = get_turf(usr)
-			message_admins("[key_name_admin(usr)] tried to exploit an autolathe with multiplier set to <u>[multiplier]</u> on <u>[template]</u>  ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])" , 0)
+			message_admins("[key_name_admin(usr)] tried to exploit an autolathe with multiplier set to <u>[multiplier]</u> on <u>[template]</u>  ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
 			log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe with multiplier set to [multiplier] on [template]  !")
 			return FALSE
 
@@ -321,7 +321,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 			busy = 1
 			use_power(power)
 			icon_state = "autolathe"
-			flick("autolathe_n",src)
+			flick("autolathe_n", src)
 			spawn(32/coeff)
 				if(istype(template, /obj/item/stack))
 					src.m_amount -= template.m_amt*multiplier

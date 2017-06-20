@@ -106,11 +106,11 @@
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "plantbag"
 	name = "Plant Bag"
-	storage_slots = 50; //the number of plant pieces it can carry.
-	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
+	storage_slots = 50; // the number of plant pieces it can carry.
+	max_combined_w_class = 200 // Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
 	max_w_class = 3
 	w_class = 2
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown")
+	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown", "/obj/item/seeds", "/obj/item/weapon/grown")
 
 
 // -----------------------------
@@ -125,24 +125,24 @@
 	name = "Sheet Snatcher"
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 
-	var/capacity = 300; //the number of sheets it can carry.
+	var/capacity = 300; // the number of sheets it can carry.
 	w_class = 3
 
 	allow_quick_empty = 1 // this function is superceded
 	New()
 		..()
-		//verbs -= /obj/item/weapon/storage/verb/quick_empty
-		//verbs += /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty
+		// verbs -= /obj/item/weapon/storage/verb/quick_empty
+		// verbs += /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty
 
 	can_be_inserted(obj/item/W, stop_messages = 0)
-		if(!istype(W,/obj/item/stack/sheet) || istype(W,/obj/item/stack/sheet/mineral/sandstone) || istype(W,/obj/item/stack/sheet/wood))
+		if(!istype(W, /obj/item/stack/sheet) || istype(W, /obj/item/stack/sheet/mineral/sandstone) || istype(W, /obj/item/stack/sheet/wood))
 			if(!stop_messages)
 				to_chat(usr, "The snatcher does not accept [W].")
-			return 0 //I don't care, but the existing code rejects them for not being "sheets" *shrug* -Sayu
+			return 0 // I don't care, but the existing code rejects them for not being "sheets" *shrug* -Sayu
 		var/current = 0
 		for(var/obj/item/stack/sheet/S in contents)
 			current += S.amount
-		if(capacity == current)//If it's full, you're done
+		if(capacity == current)// If it's full, you're done
 			if(!stop_messages)
 				to_chat(usr, "\red The snatcher is full.")
 			return 0
@@ -159,7 +159,7 @@
 		var/current = 0
 		for(var/obj/item/stack/sheet/S2 in contents)
 			current += S2.amount
-		if(capacity < current + S.amount)//If the stack will fill it up
+		if(capacity < current + S.amount)// If the stack will fill it up
 			amount = capacity - current
 		else
 			amount = S.amount
@@ -173,7 +173,7 @@
 
 		if(!inserted || !S.amount)
 			usr.remove_from_mob(S)
-			usr.update_icons()	//update our overlays
+			usr.update_icons()	// update our overlays
 			if(!S.amount)
 				qdel(S)
 			else
@@ -191,7 +191,7 @@
 	orient2hud(mob/user)
 		var/adjusted_contents = contents.len
 
-		//Numbered contents display
+		// Numbered contents display
 		var/list/datum/numbered_display/numbered_contents
 		if(display_contents_with_number)
 			numbered_contents = list()
@@ -203,8 +203,8 @@
 				numbered_contents.Add( D )
 
 		var/row_num = 0
-		var/col_count = min(7,storage_slots) -1
-		if (adjusted_contents > 7)
+		var/col_count = min(7, storage_slots) -1
+		if(adjusted_contents > 7)
 			row_num = round((adjusted_contents-1) / 7) // 7 is the maximum allowed width.
 		src.standard_orient_objs(row_num, col_count, numbered_contents)
 		return
@@ -216,7 +216,7 @@
 		for(var/obj/item/stack/sheet/S in contents)
 			while(S.amount)
 				var/obj/item/stack/sheet/N = new S.type(location)
-				var/stacksize = min(S.amount,N.max_amount)
+				var/stacksize = min(S.amount, N.max_amount)
 				N.amount = stacksize
 				S.amount -= stacksize
 			if(!S.amount)
@@ -231,9 +231,9 @@
 		var/obj/item/stack/sheet/S = W
 		if(!istype(S)) return 0
 
-		//I would prefer to drop a new stack, but the item/attack_hand code
+		// I would prefer to drop a new stack, but the item/attack_hand code
 		// that calls this can't recieve a different object than you clicked on.
-		//Therefore, make a new stack internally that has the remainder.
+		// Therefore, make a new stack internally that has the remainder.
 		// -Sayu
 
 		if(S.amount > S.max_amount)
@@ -241,16 +241,16 @@
 			temp.amount = S.amount - S.max_amount
 			S.amount = S.max_amount
 
-		return ..(S,new_location)
+		return ..(S, new_location)
 
 // -----------------------------
-//    Sheet Snatcher (Cyborg)
+//    Sheet Snatcher(Cyborg)
 // -----------------------------
 
 /obj/item/weapon/storage/bag/sheetsnatcher/borg
 	name = "Sheet Snatcher 9000"
 	desc = ""
-	capacity = 500//Borgs get more because >specialization
+	capacity = 500// Borgs get more because >specialization
 
 // -----------------------------
 //           Cash Bag
@@ -261,7 +261,7 @@
 	icon_state = "cashbag"
 	name = "Cash bag"
 	desc = "A bag for carrying lots of cash. It's got a big dollar sign printed on the front."
-	storage_slots = 50; //the number of cash pieces it can carry.
+	storage_slots = 50; // the number of cash pieces it can carry.
 	max_combined_w_class = 100
 	w_class = 2
-	can_hold = list("/obj/item/weapon/coin","/obj/item/weapon/spacecash")
+	can_hold = list("/obj/item/weapon/coin", "/obj/item/weapon/spacecash")

@@ -41,11 +41,11 @@ var/global/list/geoip_ckey_updated = list()
 			ban_unban_log_save("Tau Kitty has permabanned [C.ckey]. - Reason: [reason] - This is a permanent ban.")
 			log_admin("Tau Kitty has banned [C.ckey].\nReason: [reason]\nThis is a permanent ban.")
 			message_admins("Tau Kitty has banned [C.ckey].\nReason: [reason]\nThis is a permanent ban.")
-			feedback_inc("ban_perma",1)
+			feedback_inc("ban_perma", 1)
 			DB_ban_record_2(BANTYPE_PERMA, C.mob, -1, reason)
 			del(C)
 		else
-			var/msg = "[holder] connected from ([country], [regionName], [city]) using ISP: ([isp]) with IP: ([ip]) Proxy: ([proxy])"
+			var/msg = "[holder] connected from([country], [regionName], [city]) using ISP: ([isp]) with IP: ([ip]) Proxy: ([proxy])"
 			log_access(msg)
 			if(ticker.current_state > GAME_STATE_STARTUP && !(C.ckey in geoip_ckey_updated))
 				geoip_ckey_updated |= C.ckey
@@ -57,7 +57,7 @@ var/global/list/geoip_ckey_updated = list()
 
 	if(C.holder && (C.holder.rights & R_ADMIN))
 		status = "admin"
-		return 0//Lets save calls.
+		return 0// Lets save calls.
 
 	if(status != "updated")
 		holder = C.ckey
@@ -101,8 +101,8 @@ var/global/list/geoip_ckey_updated = list()
 	if(geoip_query_counter > 130)
 		return "limit reached"
 
-	var/list/vl = world.Export("http://ip-api.com/json/[addr]?fields=205599")
-	if (!("CONTENT" in vl) || vl["STATUS"] != "200 OK")
+	var/list/vl = world.Export("http:// ip-api.com/json/[addr]?fields=205599")
+	if(!("CONTENT" in vl) || vl["STATUS"] != "200 OK")
 		return "export fail"
 
 	var/msg = file2text(vl["CONTENT"])

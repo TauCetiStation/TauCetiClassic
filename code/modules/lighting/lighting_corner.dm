@@ -1,5 +1,5 @@
 // Because we can control each corner of every lighting overlay.
-// And corners get shared between multiple turfs (unless you're on the corners of the map, then 1 corner doesn't).
+// And corners get shared between multiple turfs(unless you're on the corners of the map, then 1 corner doesn't).
 // For the record: these should never ever ever be deleted, even if the turf doesn't have dynamic lighting.
 
 // This list is what the code that assigns corners listens to, the order in this list is the order in which corners are added to the /turf/corners list.
@@ -27,13 +27,13 @@
 
 	masters[new_turf] = turn(diagonal, 180)
 
-	var/vertical   = diagonal & ~(diagonal - 1) // The horizontal directions (4 and 8) are bigger than the vertical ones (1 and 2), so we can reliably say the lsb is the horizontal direction.
+	var/vertical   = diagonal & ~(diagonal - 1) // The horizontal directions(4 and 8) are bigger than the vertical ones (1 and 2), so we can reliably say the lsb is the horizontal direction.
 	var/horizontal = diagonal & ~vertical       // Now that we know the horizontal one we can get the vertical one.
 
 	x = new_turf.x + (horizontal == EAST  ? 0.5 : -0.5)
 	y = new_turf.y + (vertical   == NORTH ? 0.5 : -0.5)
 
-	// My initial plan was to make this loop through a list of all the dirs (horizontal, vertical, diagonal).
+	// My initial plan was to make this loop through a list of all the dirs(horizontal, vertical, diagonal).
 	// Issue being that the only way I could think of doing it was very messy, slow and honestly overengineered.
 	// So we'll have this hardcode instead.
 	var/turf/T
@@ -78,11 +78,11 @@
 	// Cache these values a head of time so 4 individual lighting overlays don't all calculate them individually.
 	var/mx = max(lum_r, lum_g, lum_b) // Scale it so 1 is the strongest lum, if it is above 1.
 	. = 1 // factor
-	if (mx > 1)
+	if(mx > 1)
 		. = 1 / mx
 
 	#if LIGHTING_SOFT_THRESHOLD != 0
-	else if (mx < LIGHTING_SOFT_THRESHOLD)
+	else if(mx < LIGHTING_SOFT_THRESHOLD)
 		. = 0 // 0 means soft lighting.
 
 	cache_r  = lum_r * . || LIGHTING_SOFT_THRESHOLD

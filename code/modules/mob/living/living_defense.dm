@@ -12,7 +12,7 @@
 			to_chat(src, "<span class='userdanger'>Your armor softens the blow!</span>")
 	return armor
 
-//if null is passed for def_zone, then this should return something appropriate for all zones (e.g. area effect damage)
+// if null is passed for def_zone, then this should return something appropriate for all zones(e.g. area effect damage)
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
 
@@ -20,8 +20,8 @@
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	flash_weak_pain()
 
-	//Being hit while using a deadman switch
-	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
+	// Being hit while using a deadman switch
+	if(istype(get_active_hand(), /obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
 			attack_log += "\[[time_stamp()]\]<font color='orange'>triggers their deadman's switch!</font>"
@@ -30,14 +30,14 @@
 			src.visible_message("\red [src] triggers their deadman's switch!")
 			signaler.signal()
 
-	//Armor
+	// Armor
 	var/damage = P.damage
 	var/flags = P.damage_flags()
 	var/absorb = run_armor_check(def_zone, P.flag)
-	if (prob(absorb))
+	if(prob(absorb))
 		if(flags & DAM_LASER)
-			//the armour causes the heat energy to spread out, which reduces the damage (and the blood loss)
-			//this is mostly so that armour doesn't cause people to lose MORE fluid from lasers than they would otherwise
+			// the armour causes the heat energy to spread out, which reduces the damage(and the blood loss)
+			// this is mostly so that armour doesn't cause people to lose MORE fluid from lasers than they would otherwise
 			damage *= FLUIDLOSS_CONC_BURN / FLUIDLOSS_WIDE_BURN
 		flags &= ~(DAM_SHARP | DAM_EDGE | DAM_LASER)
 
@@ -47,22 +47,22 @@
 
 	return absorb
 
-//this proc handles being hit by a thrown atom
-/mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
-	if(istype(AM,/obj/))
+// this proc handles being hit by a thrown atom
+/mob/living/hitby(atom/movable/AM)// Standardization and logging -Sieve
+	if(istype(AM, /obj/))
 		var/obj/O = AM
 		var/dtype = BRUTE
-		if(istype(O,/obj/item/weapon))
+		if(istype(O, /obj/item/weapon))
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
 		var/throw_damage = O.throwforce*(AM.fly_speed/5)
 
 		var/miss_chance = 15
-		if (O.throw_source)
+		if(O.throw_source)
 			var/distance = get_dist(O.throw_source, loc)
 			miss_chance = min(15*(distance-2), 0)
 
-		if (prob(miss_chance))
+		if(prob(miss_chance))
 			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
 
@@ -77,7 +77,7 @@
 			if(assailant)
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a [O], thrown by [M.name] ([assailant.ckey])</font>")
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
-				if(!istype(src,/mob/living/simple_animal/mouse))
+				if(!istype(src, /mob/living/simple_animal/mouse))
 					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [M.name] ([assailant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 		// Begin BS12 momentum-transfer code.
@@ -86,47 +86,47 @@
 			var/momentum = AM.fly_speed/2
 			var/dir = get_dir(O.throw_source, src)
 
-			visible_message("<span class='warning'>[src] staggers under the impact!</span>","<span class='danfer'>You stagger under the impact!</span>")
-			src.throw_at(get_edge_target_turf(src,dir),1,momentum)
+			visible_message("<span class='warning'>[src] staggers under the impact!</span>", "<span class='danfer'>You stagger under the impact!</span>")
+			src.throw_at(get_edge_target_turf(src, dir), 1, momentum)
 
 			if(!W || !src) return
 
-			if(W.sharp) //Projectile is suitable for pinning.
-				//Handles embedding for non-humans and simple_animals.
+			if(W.sharp) // Projectile is suitable for pinning.
+				// Handles embedding for non-humans and simple_animals.
 				O.loc = src
 				src.embedded += O
 
-				var/turf/T = near_wall(dir,2)
+				var/turf/T = near_wall(dir, 2)
 
 				if(T)
 					src.loc = T
-					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='danger'>You are pinned to the wall by [O]!</span>")
+					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>", "<span class='danger'>You are pinned to the wall by [O]!</span>")
 					src.anchored = 1
 					src.pinned += O
 					src.verbs += /mob/proc/yank_out_object
 
-//This is called when the mob is thrown into a dense turf
+// This is called when the mob is thrown into a dense turf
 /mob/living/proc/turf_collision(turf/T)
-	visible_message("<span class='warning'>[src] crashed into \the [T]!</span>","<span class='danger'>You are crashed into \the [T]!</span>")
+	visible_message("<span class='warning'>[src] crashed into \the [T]!</span>", "<span class='danger'>You are crashed into \the [T]!</span>")
 	take_bodypart_damage(fly_speed * 5)
 
-/mob/living/proc/near_wall(direction,distance=1)
-	var/turf/T = get_step(get_turf(src),direction)
+/mob/living/proc/near_wall(direction, distance=1)
+	var/turf/T = get_step(get_turf(src), direction)
 	var/turf/last_turf = src.loc
 	var/i = 1
 
 	while(i>0 && i<=distance)
-		if(T.density) //Turf is a wall!
+		if(T.density) // Turf is a wall!
 			return last_turf
 		i++
 		last_turf = T
-		T = get_step(T,direction)
+		T = get_step(T, direction)
 
 	return 0
 
 // End BS12 momentum-transfer code.
 
-//Mobs on Fire
+// Mobs on Fire
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
@@ -140,25 +140,25 @@
 		set_light(max(0, light_range - 3))
 		update_fire()
 
-/mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
+/mob/living/proc/adjust_fire_stacks(add_fire_stacks) // Adjusting the amount of fire_stacks we have on person
     fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0)
-		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
-		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
+		fire_stacks++ // If we've doused ourselves in water to avoid fire, dry off slowly
+		fire_stacks = min(0, fire_stacks)// So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
 		return 1
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 	if(G.oxygen < 1)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+		ExtinguishMob() // If there's no oxygen in the tile we're on, put out the fire
 		return
 	for(var/obj/item/I in contents)
 		if(I.wet)
 			ExtinguishMob()
 			break
 	if(fire_stacks == 0)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+		ExtinguishMob() // If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 50, 1)
@@ -167,7 +167,7 @@
 	adjust_fire_stacks(0.5)
 	IgniteMob()
 
-//Mobs on Fire end
+// Mobs on Fire end
 
 /mob/living/regular_hud_updates()
 	..()
@@ -177,7 +177,7 @@
 	if(!hud_used) return
 	if(!client) return
 
-	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
+	if(hud_used.hud_shown != 1)	// Hud toggled to minimal
 		return
 
 	client.screen -= hud_used.hide_actions_toggle
@@ -192,7 +192,7 @@
 
 		if(!hud_used.hide_actions_toggle.moved)
 			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(1)
-			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,1)
+			// hud_used.SetButtonCoords(hud_used.hide_actions_toggle, 1)
 
 		client.screen += hud_used.hide_actions_toggle
 		return
@@ -215,7 +215,7 @@
 
 		if(!B.moved)
 			B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
-			//hud_used.SetButtonCoords(B,button_number)
+			// hud_used.SetButtonCoords(B, button_number)
 
 	if(button_number > 0)
 		if(!hud_used.hide_actions_toggle)
@@ -223,7 +223,7 @@
 			hud_used.hide_actions_toggle.InitialiseIcon(src)
 		if(!hud_used.hide_actions_toggle.moved)
 			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
-			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
+			// hud_used.SetButtonCoords(hud_used.hide_actions_toggle, button_number+1)
 		client.screen += hud_used.hide_actions_toggle
 
 /mob/living/incapacitated()

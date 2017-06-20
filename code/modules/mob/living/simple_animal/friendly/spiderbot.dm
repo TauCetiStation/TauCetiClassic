@@ -11,7 +11,7 @@
 	var/obj/item/weapon/stock_parts/cell/cell = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/device/mmi/mmi = null
-	var/list/req_access = list(access_robotics) //Access needed to pop out the brain.
+	var/list/req_access = list(access_robotics) // Access needed to pop out the brain.
 
 	name = "Spider-bot"
 	desc = "A skittering robotic friend!"
@@ -19,7 +19,7 @@
 	icon_state = "spiderbot-chassis"
 	icon_living = "spiderbot-chassis"
 	icon_dead = "spiderbot-smashed"
-	universal_speak = 1 //Temp until these are rewritten.
+	universal_speak = 1 // Temp until these are rewritten.
 
 	wander = 0
 
@@ -37,17 +37,17 @@
 	ventcrawler = 2
 
 	var/emagged = 0
-	var/obj/item/held_item = null //Storage for single item they can hold.
-	speed = -1                    //Spiderbots gotta go fast.
-	//pass_flags = PASSTABLE      //Maybe griefy?
+	var/obj/item/held_item = null // Storage for single item they can hold.
+	speed = -1                    // Spiderbots gotta go fast.
+	// pass_flags = PASSTABLE      // Maybe griefy?
 	small = 1
-	speak_emote = list("beeps","clicks","chirps")
+	speak_emote = list("beeps", "clicks", "chirps")
 
 /mob/living/simple_animal/spiderbot/attackby(obj/item/O, mob/user)
 
 	if(istype(O, /obj/item/device/mmi) || istype(O, /obj/item/device/mmi/posibrain))
 		var/obj/item/device/mmi/B = O
-		if(src.mmi) //There's already a brain in it.
+		if(src.mmi) // There's already a brain in it.
 			to_chat(user, "\red There's already a brain in [src]!")
 			return
 		if(!B.brainmob)
@@ -82,11 +82,11 @@
 		src.update_icon()
 		return 1
 
-	if (istype(O, /obj/item/weapon/weldingtool))
+	if(istype(O, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = O
-		if (WT.remove_fuel(0))
+		if(WT.remove_fuel(0))
 			if(health < maxHealth)
-				health += pick(1,1,1,2,2,3)
+				health += pick(1, 1, 1, 2, 2, 3)
 				if(health > maxHealth)
 					health = maxHealth
 				add_fingerprint(user)
@@ -98,7 +98,7 @@
 			to_chat(user, "Need more welding fuel!")
 			return
 	else if(istype(O, /obj/item/weapon/card/id)||istype(O, /obj/item/device/pda))
-		if (!mmi)
+		if(!mmi)
 			to_chat(user, "\red There's no reason to swipe your ID - the spiderbot has no brain to remove.")
 			return 0
 
@@ -122,8 +122,8 @@
 		else
 			to_chat(user, "\red You swipe your card, with no effect.")
 			return 0
-	else if (istype(O, /obj/item/weapon/card/emag))
-		if (emagged)
+	else if(istype(O, /obj/item/weapon/card/emag))
+		if(emagged)
 			to_chat(user, "\red [src] is already overloaded - better run.")
 			return 0
 		else
@@ -141,16 +141,16 @@
 	else
 		if(O.force)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if(O.damtype == HALLOSS)
 				damage = 0
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
+				if((M.client && !( M.blinded )))
 					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
 		else
 			to_chat(usr, "\red This weapon is ineffective, it does no damage.")
 			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
+				if((M.client && !( M.blinded )))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
 
 /mob/living/simple_animal/spiderbot/proc/transfer_personality(obj/item/device/mmi/M)
@@ -158,11 +158,11 @@
 		src.mind = M.brainmob.mind
 		src.mind.key = M.brainmob.key
 		src.ckey = M.brainmob.ckey
-		src.name = "Spider-bot ([M.brainmob.name])"
+		src.name = "Spider-bot([M.brainmob.name])"
 
-/mob/living/simple_animal/spiderbot/proc/explode() //When emagged.
+/mob/living/simple_animal/spiderbot/proc/explode() // When emagged.
 	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
+		if((M.client && !( M.blinded )))
 			M.show_message("\red [src] makes an odd warbling noise, fizzles, and explodes.")
 	explosion(get_turf(loc), -1, -1, 3, 5)
 	eject_brain()
@@ -170,7 +170,7 @@
 
 /mob/living/simple_animal/spiderbot/proc/update_icon()
 	if(mmi)
-		if(istype(mmi,/obj/item/device/mmi))
+		if(istype(mmi, /obj/item/device/mmi))
 			icon_state = "spiderbot-chassis-mmi"
 			icon_living = "spiderbot-chassis-mmi"
 		if(istype(mmi, /obj/item/device/mmi/posibrain))
@@ -219,20 +219,20 @@
 	src.Destroy()
 	return
 
-//copy paste from alien/larva, if that func is updated please update this one alsoghost
+// copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/spiderbot/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Spiderbot"
 
-	if (layer != TURF_LAYER+0.2)
+	if(layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		to_chat(src, text("\blue You are now hiding."))
 	else
 		layer = MOB_LAYER
 		to_chat(src, text("\blue You have stopped hiding."))
 
-//Cannibalized from the parrot mob. ~Zuhayr
+// Cannibalized from the parrot mob. ~Zuhayr
 
 /mob/living/simple_animal/spiderbot/verb/drop_held_item()
 	set name = "Drop held item"
@@ -275,7 +275,7 @@
 		return 1
 
 	var/list/items = list()
-	for(var/obj/item/I in view(1,src))
+	for(var/obj/item/I in view(1, src))
 		if(I.loc != src && I.w_class <= 2)
 			items.Add(I)
 

@@ -8,18 +8,18 @@
     add_object(obj/device, new_frequency, filter = null)
       Adds listening object.
       parameters:
-        device - device receiving signals, must have proc receive_signal (see description below).
+        device - device receiving signals, must have proc receive_signal(see description below).
           one device may listen several frequencies, but not same frequency twice.
         new_frequency - see possibly frequencies below;
         filter - thing for optimization. Optional, but recommended.
                  All filters should be consolidated in this file, see defines later.
-                 Device without listening filter will receive all signals (on specified frequency).
+                 Device without listening filter will receive all signals(on specified frequency).
                  Device with filter will receive any signals sent without filter.
                  Device with filter will not receive any signals sent with different filter.
       returns:
        Reference to frequency object.
 
-    remove_object (obj/device, old_frequency)
+    remove_object(obj/device, old_frequency)
       Obliviously, after calling this proc, device will not receive any signals on old_frequency.
       Other frequencies will left unaffected.
 
@@ -63,7 +63,7 @@
 
 /*
 Frequency range: 1200 to 1600
-Radiochat range: 1441 to 1489 (most devices refuse to be tune to other frequency, even during mapmaking)
+Radiochat range: 1441 to 1489(most devices refuse to be tune to other frequency, even during mapmaking)
 
 Radio:
 1459 - standard radio chat
@@ -81,7 +81,7 @@ Devices:
 1457 - RSD default
 
 On the map:
-1311 for prison shuttle console (in fact, it is not used)
+1311 for prison shuttle console(in fact, it is not used)
 1435 for status displays
 1437 for atmospherics/fire alerts
 1439 for engine components
@@ -108,13 +108,13 @@ var/list/radiochannels = list(
 	"Syndicate" = 1213,
 	"Supply" = 1347,
 )
-//depenging helpers
+// depenging helpers
 var/list/DEPT_FREQS = list(1351, 1355, 1357, 1359, 1213, 1345, 1341, 1347)
 
 // central command channels, i.e deathsquid & response teams
 var/list/CENT_FREQS = list(1345, 1341)
 
-var/const/COMM_FREQ = 1353 //command, colored gold in chat window
+var/const/COMM_FREQ = 1353 // command, colored gold in chat window
 var/const/SYND_FREQ = 1213
 
 // department channels
@@ -184,7 +184,7 @@ var/global/datum/controller/radio/radio_controller
 	var/list/list/obj/devices = list()
 
 /datum/radio_frequency/proc/post_signal(obj/source, datum/signal/signal, filter = null, range = null)
-	//log_admin("DEBUG \[[world.timeofday]\]: post_signal {source=\"[source]\", [signal.debug_print()], filter=[filter]}")
+	// log_admin("DEBUG \[[world.timeofday]\]: post_signal {source=\"[source]\", [signal.debug_print()], filter=[filter]}")
 //	var/N_f=0
 //	var/N_nf=0
 //	var/Nt=0
@@ -194,7 +194,7 @@ var/global/datum/controller/radio/radio_controller
 		if(!start_point)
 			qdel(signal)
 			return 0
-	if (filter) //here goes some copypasta. It is for optimisation. -rastaf0
+	if(filter) // here goes some copypasta. It is for optimisation. -rastaf0
 		for(var/obj/device in devices[filter])
 			if(device == source)
 				continue
@@ -202,7 +202,7 @@ var/global/datum/controller/radio/radio_controller
 				var/turf/end_point = get_turf(device)
 				if(!end_point)
 					continue
-				//if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
+				// if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
 				if(start_point.z!=end_point.z || get_dist(start_point, end_point) > range)
 					continue
 			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
@@ -213,13 +213,13 @@ var/global/datum/controller/radio/radio_controller
 				var/turf/end_point = get_turf(device)
 				if(!end_point)
 					continue
-				//if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
+				// if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
 				if(start_point.z!=end_point.z || get_dist(start_point, end_point) > range)
 					continue
 			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 //					N_f++
 	else
-		for (var/next_filter in devices)
+		for(var/next_filter in devices)
 //			var/list/obj/DDD = devices[next_filter]
 //			Nt+=DDD.len
 			for(var/obj/device in devices[next_filter])
@@ -229,30 +229,30 @@ var/global/datum/controller/radio/radio_controller
 					var/turf/end_point = get_turf(device)
 					if(!end_point)
 						continue
-					//if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
+					// if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
 					if(start_point.z!=end_point.z || get_dist(start_point, end_point) > range)
 						continue
 				device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 //						N_nf++
 
-//	log_admin("DEBUG: post_signal(source=[source] ([source.x], [source.y], [source.z]),filter=[filter]) frequency=[frequency], N_f=[N_f], N_nf=[N_nf]")
+//	log_admin("DEBUG: post_signal(source=[source] ([source.x], [source.y], [source.z]), filter=[filter]) frequency=[frequency], N_f=[N_f], N_nf=[N_nf]")
 
 
 //	qdel(signal)
 
 /datum/radio_frequency/proc/add_listener(obj/device, filter)
-	if (!filter)
+	if(!filter)
 		filter = "_default"
-	//log_admin("add_listener(device=[device],filter=[filter]) frequency=[frequency]")
+	// log_admin("add_listener(device=[device], filter=[filter]) frequency=[frequency]")
 	var/list/obj/devices_line = devices[filter]
-	if (!devices_line)
+	if(!devices_line)
 		devices_line = new
 		devices[filter] = devices_line
 	devices_line+=device
 //	var/list/obj/devices_line___ = devices[filter_str]
 //	var/l = devices_line___.len
-	//log_admin("DEBUG: devices_line.len=[devices_line.len]")
-	//log_admin("DEBUG: devices(filter_str).len=[l]")
+	// log_admin("DEBUG: devices_line.len=[devices_line.len]")
+	// log_admin("DEBUG: devices(filter_str).len=[l]")
 
 /datum/radio_frequency/proc/remove_listener(obj/device)
 	for(var/devices_filter in devices)
@@ -288,11 +288,11 @@ var/global/datum/controller/radio/radio_controller
 	frequency = model.frequency
 
 /datum/signal/proc/debug_print()
-	if (source)
+	if(source)
 		. = "signal = {source = '[source]' ([source:x],[source:y],[source:z])\n"
 	else
 		. = "signal = {source = '[source]' ()\n"
-	for (var/i in data)
+	for(var/i in data)
 		. += "data\[\"[i]\"\] = \"[data[i]]\"\n"
 		if(islist(data[i]))
 			var/list/L = data[i]

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/device/mmi
 	name = "Man-Machine Interface"
@@ -10,15 +10,15 @@
 
 	req_access = list(access_robotics)
 
-	//Revised. Brainmob is now contained directly within object of transfer. MMI in this case.
+	// Revised. Brainmob is now contained directly within object of transfer. MMI in this case.
 
 	var/locked = 0
-	var/mob/living/carbon/brain/brainmob = null//The current occupant.
-	var/mob/living/silicon/robot = null//Appears unused.
-	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
+	var/mob/living/carbon/brain/brainmob = null// The current occupant.
+	var/mob/living/silicon/robot = null// Appears unused.
+	var/obj/mecha = null// This does not appear to be used outside of reference in mecha.dm.
 
 	attackby(obj/item/O, mob/user)
-		if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
+		if(istype(O, /obj/item/brain) && !brainmob) // Time to stick a brain in it --NEO
 			if(!O:brainmob)
 				to_chat(user, "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain.")
 				return
@@ -30,7 +30,7 @@
 			brainmob.loc = src
 			brainmob.container = src
 			brainmob.stat = CONSCIOUS
-			dead_mob_list -= brainmob//Update dem lists
+			dead_mob_list -= brainmob// Update dem lists
 			living_mob_list += brainmob
 
 			user.drop_item()
@@ -41,11 +41,11 @@
 
 			locked = 1
 
-			feedback_inc("cyborg_mmis_filled",1)
+			feedback_inc("cyborg_mmis_filled", 1)
 
 			return
 
-		if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
+		if((istype(O, /obj/item/weapon/card/id)||istype(O, /obj/item/device/pda)) && brainmob)
 			if(allowed(user))
 				locked = !locked
 				to_chat(user, "\blue You [locked ? "lock" : "unlock"] the brain holder.")
@@ -53,7 +53,7 @@
 				to_chat(user, "\red Access denied.")
 			return
 		if(brainmob)
-			O.attack(brainmob, user)//Oh noooeeeee
+			O.attack(brainmob, user)// Oh noooeeeee
 			return
 		..()
 
@@ -65,17 +65,17 @@
 		else
 			to_chat(user, "\blue You upend the MMI, spilling the brain onto the floor.")
 			var/obj/item/brain/brain = new(user.loc)
-			brainmob.container = null//Reset brainmob mmi var.
-			brainmob.loc = brain//Throw mob into brain.
-			living_mob_list -= brainmob//Get outta here
-			brain.brainmob = brainmob//Set the brain to use the brainmob
-			brainmob = null//Set mmi brainmob var to null
+			brainmob.container = null// Reset brainmob mmi var.
+			brainmob.loc = brain// Throw mob into brain.
+			living_mob_list -= brainmob// Get outta here
+			brain.brainmob = brainmob// Set the brain to use the brainmob
+			brainmob = null// Set mmi brainmob var to null
 
 			icon_state = "mmi_empty"
 			name = "Man-Machine Interface"
 
 	proc
-		transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
+		transfer_identity(mob/living/carbon/human/H)// Same deal as the regular brain proc. Used for human-->robot people.
 			brainmob = new(src)
 			brainmob.name = H.real_name
 			brainmob.real_name = H.real_name
@@ -92,22 +92,22 @@
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
 	origin_tech = "biotech=4"
 
-	var/obj/item/device/radio/radio = null//Let's give it a radio.
+	var/obj/item/device/radio/radio = null// Let's give it a radio.
 
 	New()
 		..()
-		radio = new(src)//Spawns a radio inside the MMI.
-		radio.broadcasting = 1//So it's broadcasting from the start.
+		radio = new(src)// Spawns a radio inside the MMI.
+		radio.broadcasting = 1// So it's broadcasting from the start.
 
-	verb//Allows the brain to toggle the radio functions.
+	verb// Allows the brain to toggle the radio functions.
 		Toggle_Broadcasting()
 			set name = "Toggle Broadcasting"
 			set desc = "Toggle broadcasting channel on or off."
 			set category = "MMI"
-			set src = usr.loc//In user location, or in MMI in this case.
-			set popup_menu = 0//Will not appear when right clicking.
+			set src = usr.loc// In user location, or in MMI in this case.
+			set popup_menu = 0// Will not appear when right clicking.
 
-			if(brainmob.stat)//Only the brainmob will trigger these so no further check is necessary.
+			if(brainmob.stat)// Only the brainmob will trigger these so no further check is necessary.
 				to_chat(brainmob, "Can't do that while incapacitated or dead.")
 
 			radio.broadcasting = radio.broadcasting==1 ? 0 : 1
@@ -132,9 +132,9 @@
 	else
 		switch(severity)
 			if(1)
-				brainmob.emp_damage += rand(20,30)
+				brainmob.emp_damage += rand(20, 30)
 			if(2)
-				brainmob.emp_damage += rand(10,20)
+				brainmob.emp_damage += rand(10, 20)
 			if(3)
-				brainmob.emp_damage += rand(0,10)
+				brainmob.emp_damage += rand(0, 10)
 	..()

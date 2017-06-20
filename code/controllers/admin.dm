@@ -36,7 +36,7 @@
 /client/proc/restart_controller(controller in list("Master", "Failsafe"))
 	set category = "Debug"
 	set name = "Restart Controller"
-	set desc = "Restart one of the various periodic loop controllers for the game (be careful!)"
+	set desc = "Restart one of the various periodic loop controllers for the game(be careful!)"
 
 	if(!holder)
 		return
@@ -46,9 +46,9 @@
 		if("Master")
 			new/datum/controller/master()
 			Master.process()
-			feedback_add_details("admin_verb","RMC")
+			feedback_add_details("admin_verb", "RMC")
 		if("Failsafe")
 			new /datum/controller/failsafe()
-			feedback_add_details("admin_verb","RFailsafe")
+			feedback_add_details("admin_verb", "RFailsafe")
 
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")

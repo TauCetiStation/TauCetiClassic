@@ -56,7 +56,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
 			A.forceMove(holder_obj)
-			balloon = image(icon,"extraction_balloon")
+			balloon = image(icon, "extraction_balloon")
 			balloon.pixel_y = 10
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.overlays += balloon
@@ -86,7 +86,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			if(!A)
 				return
 			playsound(holder_obj.loc, 'sound/effects/fultext_launch.ogg', 50, 1, -3)
-			//animate(holder_obj, pixel_z = 1000, time = 30)
+			// animate(holder_obj, pixel_z = 1000, time = 30)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, holder_obj.loc)
 			s.start()
@@ -97,7 +97,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 				H.SetParalysis(0) // wakey wakey
 				H.drowsyness = 0
 				H.sleeping = 0
-			//sleep(30)
+			// sleep(30)
 			holder_obj.loc = teleport_loc
 			s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, holder_obj.loc)

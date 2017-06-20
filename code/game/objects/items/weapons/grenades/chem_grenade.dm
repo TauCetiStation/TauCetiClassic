@@ -46,9 +46,9 @@
 
 /obj/item/weapon/grenade/chem_grenade/attackby(obj/item/weapon/W, mob/user)
 
-	if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
+	if(istype(W, /obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 		var/obj/item/device/assembly_holder/det = W
-		if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
+		if(istype(det.a_left, det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
 			to_chat(user, "<span class='red'>Assembly must contain one igniter.</span>")
 			return
 		if(!det.secured)
@@ -63,7 +63,7 @@
 		icon_state = initial(icon_state) +"_ass"
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
-	else if(istype(W,/obj/item/weapon/screwdriver) && path != 2)
+	else if(istype(W, /obj/item/weapon/screwdriver) && path != 2)
 		if(stage == 1)
 			path = 1
 			if(beakers.len)
@@ -134,7 +134,7 @@
 /obj/item/weapon/grenade/chem_grenade/prime()
 	if(!stage || stage<2) return
 
-	//if(prob(reliability))
+	// if(prob(reliability))
 	var/has_reagents = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		if(G.reagents.total_volume) has_reagents = 1
@@ -150,7 +150,7 @@
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		G.reagents.trans_to(src, G.reagents.total_volume)
 
-	if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
+	if(src.reagents.total_volume) // The possible reactions didnt use up all reagents.
 		var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 		steam.set_up(10, 0, get_turf(src))
 		steam.attach(src)
@@ -160,22 +160,22 @@
 			if( A == src ) continue
 			src.reagents.reaction(A, 1, 10)
 
-	if(istype(loc, /mob/living/carbon))		//drop dat grenade if it goes off in your hand
+	if(istype(loc, /mob/living/carbon))		// drop dat grenade if it goes off in your hand
 		var/mob/living/carbon/C = loc
 		C.drop_from_inventory(src)
 		C.throw_mode_off()
 
-	invisibility = INVISIBILITY_MAXIMUM //Why am i doing this?
-	spawn(50)		   //To make sure all reagents can work
-		qdel(src)	   //correctly before deleting the grenade.
+	invisibility = INVISIBILITY_MAXIMUM // Why am i doing this?
+	spawn(50)		   // To make sure all reagents can work
+		qdel(src)	   // correctly before deleting the grenade.
 
 /obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM as mob|obj)
-	if (detonator)
+	if(detonator)
 		detonator.Crossed(AM)
 
 /obj/item/weapon/grenade/chem_grenade/hear_talk(mob/living/M, msg)
-	if (detonator)
-		detonator.hear_talk(M,msg)
+	if(detonator)
+		detonator.hear_talk(M, msg)
 
 /obj/item/weapon/grenade/chem_grenade/on_found(mob/finder)
 	if(detonator)
@@ -190,7 +190,7 @@
 	affected_area = 4
 
 
-///////Metalfoam
+/////// Metalfoam
 /obj/item/weapon/grenade/chem_grenade/metalfoam
 	name = "metal-foam grenade"
 	desc = "Used for emergency sealing of air breaches."
@@ -213,7 +213,7 @@
 	icon_state = initial(icon_state) +"_locked"
 
 
-///////Incendiary
+/////// Incendiary
 /obj/item/weapon/grenade/chem_grenade/incendiary
 	name = "incendiary grenade"
 	desc = "Used for clearing rooms of living things."
@@ -225,7 +225,7 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("fuel",20)
+	B1.reagents.add_reagent("fuel", 20)
 	B1.reagents.add_reagent("aluminum", 15)
 	B2.reagents.add_reagent("phoron", 15)
 	B2.reagents.add_reagent("sacid", 15)
@@ -237,7 +237,7 @@
 	icon_state = initial(icon_state) +"_locked"
 
 
-///////Antiweed
+/////// Antiweed
 /obj/item/weapon/grenade/chem_grenade/antiweed
 	name = "weedkiller grenade"
 	desc = "Used for purging large areas of invasive plant species. Contents under pressure. Do not directly inhale contents."
@@ -261,7 +261,7 @@
 	icon_state = "grenade"
 
 
-///////Cleaner
+/////// Cleaner
 /obj/item/weapon/grenade/chem_grenade/cleaner
 	name = "cleaner grenade"
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
@@ -284,7 +284,7 @@
 	icon_state = initial(icon_state) +"_locked"
 
 
-///////Teargas
+/////// Teargas
 /obj/item/weapon/grenade/chem_grenade/teargas
 	name = "teargas grenade"
 	desc = "Used for nonlethal riot control. Contents under pressure. Do not directly inhale contents."

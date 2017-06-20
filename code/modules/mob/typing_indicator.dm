@@ -27,7 +27,7 @@
 	set hidden = 1
 
 	set_typing_indicator(1)
-	var/message = input("","say (text)") as text|null
+	var/message = input("", "say(text)") as text|null
 	if(message)
 		say_verb(message)
 	set_typing_indicator(0)
@@ -36,6 +36,6 @@
 	set name = ".Me"
 	set hidden = 1
 
-	var/message = input("","me (text)") as text|null
+	var/message = input("", "me(text)") as text|null
 	if(message)
 		me_verb(message)

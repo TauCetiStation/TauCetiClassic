@@ -18,7 +18,7 @@
 	m_amt = 1000
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
-	var/cooldown = 0 //shield bash cooldown. based on world.time
+	var/cooldown = 0 // shield bash cooldown. based on world.time
 
 	Get_shield_chance()
 		return block_chance
@@ -117,7 +117,7 @@
 
 /obj/item/weapon/cloaking_device/attack_self(mob/user)
 	src.active = !( src.active )
-	if (src.active)
+	if(src.active)
 		to_chat(user, "\blue The cloaking device is now active.")
 		src.icon_state = "shield1"
 	else

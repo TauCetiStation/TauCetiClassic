@@ -3,21 +3,21 @@
 	robot_talk_understand = 1
 	voice_name = "synthesized voice"
 	var/syndicate = 0
-	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
+	var/datum/ai_laws/laws = null// Now... THEY ALL CAN ALL HAVE LAWS
 	immune_to_ssd = 1
 	var/list/hud_list[9]
-	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
+	var/list/speech_synthesizer_langs = list()	// which languages can be vocalized by the speech synthesizer
 
 
 
 
 
 
-	var/obj/item/device/camera/siliconcam/aiCamera = null //photography
+	var/obj/item/device/camera/siliconcam/aiCamera = null // photography
 
-	var/sensor_mode = 0 //Determines the current HUD.
-	#define SEC_HUD 1 //Security HUD mode
-	#define MED_HUD 2 //Medical HUD mode
+	var/sensor_mode = 0 // Determines the current HUD.
+	#define SEC_HUD 1 // Security HUD mode
+	#define MED_HUD 2 // Medical HUD mode
 
 /mob/living/silicon/proc/show_laws()
 	return
@@ -29,10 +29,10 @@
 	switch(severity)
 		if(1)
 			src.take_bodypart_damage(20)
-			Stun(rand(5,10))
+			Stun(rand(5, 10))
 		if(2)
 			src.take_bodypart_damage(10)
-			Stun(rand(1,5))
+			Stun(rand(1, 5))
 	flash_eyes(affect_silicon = 1)
 	to_chat(src, "\red <B>*BZZZT*</B>")
 	to_chat(src, "\red Warning: Electromagnetic pulse detected.")
@@ -54,12 +54,12 @@
 			if(BURN)
 				adjustFireLoss(Proj.damage)
 
-	Proj.on_hit(src,2)
+	Proj.on_hit(src, 2)
 
 	return 2
 
-/mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
-	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
+/mob/living/silicon/apply_effect(effect = 0, effecttype = STUN, blocked = 0)
+	return 0// The only effect that can hit them atm is flashes and they still directly edit so this works for now
 /*
 	if(!effect || (blocked >= 2))	return 0
 	switch(effecttype)
@@ -70,7 +70,7 @@
 		if(PARALYZE)
 			paralysis = max(paralysis,(effect/(blocked+1)))
 		if(IRRADIATE)
-			radiation += min((effect - (effect*getarmor(null, "rad"))), 0)//Rads auto check armor
+			radiation += min((effect - (effect*getarmor(null, "rad"))), 0)// Rads auto check armor
 		if(STUTTER)
 			stuttering = max(stuttering,(effect/(blocked+1)))
 		if(EYE_BLUR)
@@ -83,7 +83,7 @@
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
 		return 0
-	if (bot.connected_ai == ai)
+	if(bot.connected_ai == ai)
 		return 1
 	return 0
 
@@ -110,7 +110,7 @@
 /mob/living/silicon/proc/show_SSshuttle_eta()
 	if(SSshuttle.online && SSshuttle.location < 2)
 		var/timeleft = SSshuttle.timeleft()
-		if (timeleft)
+		if(timeleft)
 			stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 
@@ -133,27 +133,27 @@
 	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
 
-//can't inject synths
+// can't inject synths
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
 		to_chat(user, "<span class='alert'>The armoured plating is too tough.</span>")
 	return 0
 
 
-//Silicon mob language procs
+// Silicon mob language procs
 
 /mob/living/silicon/can_speak(datum/language/speaking)
-	return universal_speak || (speaking in src.speech_synthesizer_langs)	//need speech synthesizer support to vocalize a language
+	return universal_speak || (speaking in src.speech_synthesizer_langs)	// need speech synthesizer support to vocalize a language
 
 /mob/living/silicon/add_language(language, can_speak=1)
-	if (..(language) && can_speak)
+	if(..(language) && can_speak)
 		speech_synthesizer_langs.Add(all_languages[language])
 
 /mob/living/silicon/remove_language(rem_language)
 	..(rem_language)
 
-	for (var/datum/language/L in speech_synthesizer_langs)
-		if (L.name == rem_language)
+	for(var/datum/language/L in speech_synthesizer_langs)
+		if(L.name == rem_language)
 			speech_synthesizer_langs -= L
 
 /mob/living/silicon/check_languages()
@@ -170,17 +170,17 @@
 	return
 
 /mob/living/silicon/proc/toggle_sensor_mode()
-	//set name = "Set Sensor Augmentation" // Dunno, but it loops if open. ~Zve
-	//set desc = "Augment visual feed with internal sensor overlays."
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Disable")
+	// set name = "Set Sensor Augmentation" // Dunno, but it loops if open. ~Zve
+	// set desc = "Augment visual feed with internal sensor overlays."
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical", "Disable")
 	switch(sensor_type)
-		if ("Security")
+		if("Security")
 			sensor_mode = SEC_HUD
 			to_chat(src, "<span class='notice'>Security records overlay enabled.</span>")
-		if ("Medical")
+		if("Medical")
 			sensor_mode = MED_HUD
 			to_chat(src, "<span class='notice'>Life signs monitor overlay enabled.</span>")
-		if ("Disable")
+		if("Disable")
 			sensor_mode = 0
 			to_chat(src, "Sensor augmentations disabled.")
 

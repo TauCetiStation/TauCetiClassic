@@ -34,7 +34,7 @@
 
 /datum/stockEvent/product/New(var/datum/stock/S)
 	company = S
-	var/mins = rand(5*TIME_MULTIPLIER,20*TIME_MULTIPLIER)
+	var/mins = rand(5*TIME_MULTIPLIER, 20*TIME_MULTIPLIER)
 	next_phase = mins * (600*TIME_MULTIPLIER) + world.time
 	current_title = "Product demo"
 	current_desc = S.industry.detokenize("[S.name] will unveil a new product on an upcoming %industrial% conference held at spacetime [spacetime(next_phase)]")
@@ -43,7 +43,7 @@
 
 /datum/stockEvent/product/transition()
 	last_change = world.time
-	switch (phase_id)
+	switch(phase_id)
 		if(0)
 			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			product_name = company.industry.generateProductName(company.name)
@@ -71,7 +71,7 @@
 /datum/stockEvent/bankruptcy/New(var/datum/stock/S)
 	hidden = 1
 	company = S
-	var/mins = rand(9*TIME_MULTIPLIER,60*TIME_MULTIPLIER)
+	var/mins = rand(9*TIME_MULTIPLIER, 60*TIME_MULTIPLIER)
 	bailout_millions = rand(70, 190)
 	next_phase = mins * 300*TIME_MULTIPLIER + world.time
 	current_title = ""
@@ -79,11 +79,11 @@
 	S.addEvent(src)
 
 /datum/stockEvent/bankruptcy/transition()
-	switch (phase_id)
+	switch(phase_id)
 		if(0)
 			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			var/datum/article/A = generateBankruptcyArticle()
-			if (!A.opinion)
+			if(!A.opinion)
 				effect = rand(5) * (prob(50) ? -1 : 1)
 			else
 				effect = prob(25) ? -A.opinion * rand(8) : A.opinion * rand(4)
@@ -96,11 +96,11 @@
 		if(1)
 			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			finished = 1
-			if (effect <= -5 && prob(10))
+			if(effect <= -5 && prob(10))
 				current_title = "[company.name]: Complete crash"
 				current_desc = "The company had gone bankrupt, was not bailed out and could not recover. No further stock trade will take place. All shares in the company are effectively worthless."
 				company.bankrupt = 1
-				for (var/X in company.shareholders)
+				for(var/X in company.shareholders)
 					var/amt = company.shareholders[X]
 					stockExchange.balanceLog(X, -amt * company.current_value)
 				company.shareholders = list()
@@ -169,7 +169,7 @@
 		var/offense = pick(O)
 		O -= offense
 		offense = "[prob(20) ? "attempted " : (prob(20) ? "being accessory to " : null)][offense][prob(5) ? " of the [pick("first", "second", "third", "fourth", "fifth", "sixth")] degree" : null]"
-		if (offenses == "")
+		if(offenses == "")
 			offenses = offense
 		else
 			offenses += ", [offense]"
@@ -182,7 +182,7 @@
 			tname = "[female ? pick(first_names_female) : pick(first_names_male)] [pick(last_names)]"
 			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			var/datum/article/A = generateArrestArticle()
-			if (!A.opinion)
+			if(!A.opinion)
 				effect = rand(5) * (prob(50) ? -1 : 1)
 			else
 				effect = prob(25) ? -A.opinion * rand(5) : A.opinion * rand(3)
@@ -196,7 +196,7 @@
 			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			finished = 1
 			current_title = "[tname] [effect > 0 ? "acquitted" : "found guilty"]"
-			if (effect > 0)
+			if(effect > 0)
 				current_desc = "The accused has been acquitted of all charges. Investors optimistic."
 			else
 				current_desc = "The accused has been found guilty of all charges. Investor trust takes massive hit."

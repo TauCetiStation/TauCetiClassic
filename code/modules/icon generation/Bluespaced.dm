@@ -154,7 +154,7 @@
 			0, 0, 0, 0,
 			255, 255, 255, 0)
 
-	var/icon/temp = icon(source, state) //Mask already contains the original alpha values, avoid squaring them
+	var/icon/temp = icon(source, state) // Mask already contains the original alpha values, avoid squaring them
 	temp.MapColors(
 			1, 0, 0, 0,
 			0, 1, 0, 0,
@@ -175,29 +175,29 @@
 	bluespaced.Blend(icon(source, state), ICON_MULTIPLY)
 
 	var/list/frames = list(
-			list(0.000,20),
+			list(0.000, 20),
 			list(0.020, 5),
 			list(0.050, 4),
 			list(0.080, 5),
-			list(0.100,10),
-			list(0.080, 5),
-			list(0.050, 4),
-			list(0.020, 5),
-
-			list(0.000,20),
-			list(0.020, 5),
-			list(0.050, 4),
-			list(0.080, 5),
-			list(0.100,10),
+			list(0.100, 10),
 			list(0.080, 5),
 			list(0.050, 4),
 			list(0.020, 5),
 
-			list(0.000,20),
+			list(0.000, 20),
 			list(0.020, 5),
 			list(0.050, 4),
 			list(0.080, 5),
-			list(0.100,10),
+			list(0.100, 10),
+			list(0.080, 5),
+			list(0.050, 4),
+			list(0.020, 5),
+
+			list(0.000, 20),
+			list(0.020, 5),
+			list(0.050, 4),
+			list(0.080, 5),
+			list(0.100, 10),
 			list(0.080, 5),
 			list(0.050, 4),
 			list(0.020, 5),

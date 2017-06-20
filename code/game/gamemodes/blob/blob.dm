@@ -1,6 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-//Few global vars to track the blob
+// Few global vars to track the blob
 var/list/blobs = list()
 var/list/blob_cores = list()
 var/list/blob_nodes = list()
@@ -26,7 +26,7 @@ var/list/blob_nodes = list()
 	var/players_per_core = 30
 	var/blob_point_rate = 3
 
-	//var/blobwincount = 350 //default value
+	// var/blobwincount = 350 // default value
 	var/blobwincount = 500
 
 	var/list/infected_crew = list()
@@ -37,12 +37,12 @@ var/list/blob_nodes = list()
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
 	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing robots from the list
+		for(var/job in restricted_jobs)// Removing robots from the list
 			if(player.assigned_role == job)
 				antag_candidates -= player
 
 	for(var/j = 0, j < cores_to_spawn, j++)
-		if (!antag_candidates.len)
+		if(!antag_candidates.len)
 			break
 		var/datum/mind/blob = pick(antag_candidates)
 		infected_crew += blob
@@ -139,12 +139,12 @@ var/list/blob_nodes = list()
 /datum/game_mode/blob/proc/stage(stage)
 
 	switch(stage)
-		if (0)
+		if(0)
 			send_intercept(1)
 			declared = 1
 			return
 
-		if (1)
+		if(1)
 			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 			for(var/mob/M in player_list)
 				if(!isnewplayer(M))
@@ -154,14 +154,14 @@ var/list/blob_nodes = list()
 	return
 
 /mob/living/carbon/human/proc/Blobize()
-	if (monkeyizing)
+	if(monkeyizing)
 		return
-	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
+	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core(loc)
 	if(!client)
 		for(var/mob/dead/observer/G in player_list)
 			if(ckey == "@[G.ckey]")
-				new_blob.create_overmind(G.client , 1)
+				new_blob.create_overmind(G.client, 1)
 				break
 	else
-		new_blob.create_overmind(src.client , 1)
+		new_blob.create_overmind(src.client, 1)
 	gib(src)

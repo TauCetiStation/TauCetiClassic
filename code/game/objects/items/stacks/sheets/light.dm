@@ -13,14 +13,14 @@
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user)
 	..()
-	if(istype(O,/obj/item/weapon/wirecutters))
+	if(istype(O, /obj/item/weapon/wirecutters))
 		if(!use(1))
 			return
 		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil/random(user.loc)
 		CC.amount = 5
 		new/obj/item/stack/sheet/glass(user.loc)
 
-	if(istype(O,/obj/item/stack/sheet/metal))
+	if(istype(O, /obj/item/stack/sheet/metal))
 		var/list/resources_to_use = list()
 		resources_to_use[O] = 1
 		resources_to_use[src] = 1

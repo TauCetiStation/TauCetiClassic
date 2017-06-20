@@ -9,7 +9,7 @@
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
-	var/last_tick //used to delay the powercheck
+	var/last_tick // used to delay the powercheck
 
 /obj/item/device/radio/intercom/New()
 	..()
@@ -32,19 +32,19 @@
 	INVOKE_ASYNC(src, .proc/attack_self, user)
 
 /obj/item/device/radio/intercom/receive_range(freq, level)
-	if (!on)
+	if(!on)
 		return -1
-	if (wires.is_index_cut(RADIO_WIRE_RECEIVE))
+	if(wires.is_index_cut(RADIO_WIRE_RECEIVE))
 		return -1
 	if(!(0 in level))
 		var/turf/position = get_turf(src)
 		if(isnull(position) || !(position.z in level))
 			return -1
-	if (!src.listening)
+	if(!src.listening)
 		return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))
-			return -1//Prevents broadcast of messages over devices lacking the encryption
+			return -1// Prevents broadcast of messages over devices lacking the encryption
 
 	return canhear_range
 

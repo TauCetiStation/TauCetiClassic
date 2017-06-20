@@ -26,7 +26,7 @@
 		..()
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.isOn()) //Badasses dont get blinded by lighting their candle with a welding tool
+			if(WT.isOn()) // Badasses dont get blinded by lighting their candle with a welding tool
 				light("\red [user] casually lights the [name] with [W].")
 		else if(istype(W, /obj/item/weapon/lighter))
 			var/obj/item/weapon/lighter/L = W
@@ -45,7 +45,7 @@
 	light(flavor_text = "\red [usr] lights the [name].")
 		if(!src.lit)
 			src.lit = 1
-			//src.damtype = "fire"
+			// src.damtype = "fire"
 			for(var/mob/O in viewers(usr, null))
 				O.show_message(flavor_text, 1)
 			set_light(CANDLE_LUM)
@@ -62,7 +62,7 @@
 				src.dropped()
 			qdel(src)
 		update_icon()
-		if(istype(loc, /turf)) //start a fire if possible
+		if(istype(loc, /turf)) // start a fire if possible
 			var/turf/T = loc
 			T.hotspot_expose(700, 5)
 

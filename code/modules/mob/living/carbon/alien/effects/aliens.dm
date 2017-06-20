@@ -20,7 +20,7 @@
 	name = "alien thing"
 	desc = "theres something alien about this."
 	icon = 'icons/mob/xenomorph.dmi'
-//	unacidable = 1 //Aliens won't ment their own.
+//	unacidable = 1 // Aliens won't ment their own.
 
 
 /*
@@ -37,12 +37,12 @@
 	layer = 3.14
 	var/health = 250
 	var/resintype = null
-	//var/mob/living/affecting = null
+	// var/mob/living/affecting = null
 
 /obj/effect/alien/resin/wall
 		name = "resin wall"
 		desc = "Purple slime solidified into a wall."
-		icon_state = "wall0" //same as resin, but consistency ho!
+		icon_state = "wall0" // same as resin, but consistency ho!
 		resintype = "wall"
 
 /obj/effect/alien/resin/membrane
@@ -74,7 +74,7 @@
 		density = 0
 		var/turf/T = loc
 		qdel(src)
-		for (var/obj/structure/alien/weeds/W in range(1,T))
+		for(var/obj/structure/alien/weeds/W in range(1, T))
 			W.updateWeedOverlays()
 	return
 
@@ -91,7 +91,7 @@
 		if(2.0)
 			health-=50
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				health-=50
 			else
 				health-=25
@@ -125,7 +125,7 @@
 
 /obj/effect/alien/resin/attack_hand()
 	usr.do_attack_animation(src)
-	if (HULK in usr.mutations)
+	if(HULK in usr.mutations)
 		to_chat(usr, "\blue You easily destroy the [name].")
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] destroys the [name]!", 1)
@@ -134,7 +134,7 @@
 		to_chat(usr, "\blue You claw at the [name].")
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] claws at the [name]!", 1)
-		health -= rand(5,10)
+		health -= rand(5, 10)
 	healthcheck()
 	return
 
@@ -143,7 +143,7 @@
 
 /obj/effect/alien/resin/attack_alien()
 	usr.do_attack_animation(src)
-	if (islarva(usr) || isfacehugger(usr))//Safety check for larva. /N
+	if(islarva(usr) || isfacehugger(usr))// Safety check for larva. /N
 		return
 	to_chat(usr, "\green You claw at the [name].")
 	for(var/mob/O in oviewers(src))
@@ -201,8 +201,8 @@
 
 /obj/structure/alien/weeds/node/New()
 	..(src.loc, src)
-	for (var/obj/structure/alien/weeds/W in loc)
-		if (W != src)
+	for(var/obj/structure/alien/weeds/W in loc)
+		if(W != src)
 			qdel(W)
 	set_light(2)
 
@@ -247,10 +247,10 @@
 		W.updateWeedOverlays()
 
 /obj/structure/alien/weeds/proc/Life()
-	//set background = 1
+	// set background = 1
 	var/turf/U = get_turf(src)
 
-	if (istype(U, /turf/space))
+	if(istype(U, /turf/space))
 		qdel(src)
 		return
 
@@ -261,7 +261,7 @@
 		for(var/dirn in cardinal)
 			var/turf/T = get_step(src, dirn)
 
-			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+			if(!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
 				continue
 
 			for(var/obj/machinery/door/D in T)
@@ -281,10 +281,10 @@
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				qdel(src)
 
 /obj/structure/alien/weeds/attackby(obj/item/weapon/W, mob/user)
@@ -315,7 +315,7 @@
 	if(health <= 0)
 		var/turf/T = loc
 		qdel(src)
-		for (var/obj/structure/alien/weeds/W in range(1,T))
+		for(var/obj/structure/alien/weeds/W in range(1, T))
 			W.updateWeedOverlays()
 
 /obj/structure/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -327,7 +327,7 @@
 	return -1
 
 /*/obj/effect/alien/weeds/burn(fi_amount)
-	if (fi_amount > 18000)
+	if(fi_amount > 18000)
 		spawn( 0 )
 			qdel(src)
 			return
@@ -361,7 +361,7 @@
 	if(isturf(target)) // Turf take twice as long to take down.
 		target_strength = 8
 	else if(istype(target, /obj/machinery/atmospherics/unary/vent_pump))
-		target_strength = 2 //Its just welded, what??
+		target_strength = 2 // Its just welded, what??
 	else
 		target_strength = 4
 	tick()
@@ -403,13 +403,13 @@
 /*
  * Egg
  */
-/var/const //for the status var
+/var/const // for the status var
 	BURST = 0
 	BURSTING = 1
 	GROWING = 2
 	GROWN = 3
 
-	MIN_GROWTH_TIME = 1800 //time it takes to grow a hugger
+	MIN_GROWTH_TIME = 1800 // time it takes to grow a hugger
 	MAX_GROWTH_TIME = 3000
 
 /obj/effect/alien/egg
@@ -420,12 +420,12 @@
 	anchored = 1
 
 	var/health = 100
-	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
+	var/status = GROWING // can be GROWING, GROWN or BURST; all mutually exclusive
 	var/used = 0
 
 	New()
 		..()
-		spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
+		spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 			Grow()
 
 	attack_paw(user)

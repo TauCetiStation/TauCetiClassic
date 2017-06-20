@@ -16,7 +16,7 @@
 	if(usr.canmove && !usr.stat && !usr.restrained())
 		if(!src.hanging)
 			src.hanging = !src.hanging
-			gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
+			gas_transfer_coefficient = 1 // gas is now escaping to the turf and vice versa
 			flags &= ~(MASKCOVERSMOUTH | MASKINTERNALS)
 			icon_state = "breathdown"
 			to_chat(usr, "Your mask is now hanging on your neck.")
@@ -42,7 +42,7 @@
 	icon_state = "voxmask"
 	item_state = "voxmask"
 	permeability_coefficient = 0.01
-	species_restricted = list(VOX , VOX_ARMALIS)
+	species_restricted = list(VOX, VOX_ARMALIS)
 	sprite_sheets = list(
 		VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi'
 		)

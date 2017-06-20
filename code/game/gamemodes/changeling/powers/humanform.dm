@@ -23,7 +23,7 @@
 	user.dna = chosen_dna.Clone()
 
 	var/list/implants = list()
-	for (var/obj/item/weapon/implant/I in user) //Still preserving implants
+	for(var/obj/item/weapon/implant/I in user) // Still preserving implants
 		implants += I
 
 	user.monkeyizing = 1
@@ -45,7 +45,7 @@
 		qdel(T)
 
 	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )
-	if (user.dna.GetUIState(DNA_UI_GENDER))
+	if(user.dna.GetUIState(DNA_UI_GENDER))
 		O.gender = FEMALE
 	else
 		O.gender = MALE
@@ -65,7 +65,7 @@
 	O.setOxyLoss(user.getOxyLoss())
 	O.adjustFireLoss(user.getFireLoss())
 	O.stat = user.stat
-	for (var/obj/item/weapon/implant/I in implants)
+	for(var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
 
@@ -75,7 +75,7 @@
 	O.changeling_update_languages(changeling.absorbed_languages)
 
 
-	feedback_add_details("changeling_powers","LFT")
+	feedback_add_details("changeling_powers", "LFT")
 	qdel(user)
 	O.mind.changeling.purchasedpowers -= src
 	return 1

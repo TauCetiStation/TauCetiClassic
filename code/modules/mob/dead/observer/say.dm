@@ -1,17 +1,17 @@
 /mob/dead/observer/say(var/message)
 	message = sanitize(copytext(message, 1, MAX_MESSAGE_LEN))
 
-	if (!message)
+	if(!message)
 		return
 
 	log_say("Ghost/[src.key] : [message]")
 
-	if (src.client)
+	if(src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			to_chat(src, "<span class='red'> You cannot talk in deadchat (muted).</span>")
+			to_chat(src, "<span class='red'> You cannot talk in deadchat(muted).</span>")
 			return
 
-		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
+		if(src.client.handle_spam_prevention(message, MUTE_DEADCHAT))
 			return
 
 	. = src.say_dead(message)
@@ -30,7 +30,7 @@
 
 	if(src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			to_chat(src, "\red You cannot emote in deadchat (muted).")
+			to_chat(src, "\red You cannot emote in deadchat(muted).")
 			return
 
 		if(src.client.handle_spam_prevention(message, MUTE_DEADCHAT))
@@ -39,10 +39,10 @@
 	. = src.emote_dead(message)
 
 /*
-	for (var/mob/M in hearers(null, null))
-		if (!M.stat)
+	for(var/mob/M in hearers(null, null))
+		if(!M.stat)
 			if(M.job == "Chaplain")
-				if (prob (49))
+				if(prob (49))
 					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
 					if(prob(20))
 						playsound(src.loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
@@ -52,9 +52,9 @@
 					if(prob(30))
 						playsound(src.loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
 			else
-				if (prob(50))
+				if(prob(50))
 					return
-				else if (prob (95))
+				else if(prob (95))
 					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
 					if(prob(20))
 						playsound(src.loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)

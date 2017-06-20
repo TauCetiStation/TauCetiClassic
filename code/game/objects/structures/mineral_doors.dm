@@ -1,5 +1,5 @@
-//NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly based on its
-//machineryness
+// NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly based on its
+// machineryness
 
 /obj/structure/mineral_door
 	name = "mineral door"
@@ -12,7 +12,7 @@
 
 	var/operating_sound = 'sound/effects/stonedoor_openclose.ogg'
 	var/mineralType = "metal"
-	var/state = 0 //closed, 1 == open
+	var/state = 0 // closed, 1 == open
 	var/isSwitchingStates = 0
 	var/oreAmount = 7
 
@@ -34,11 +34,11 @@
 		return TryToSwitchState(user)
 	return
 
-/obj/structure/mineral_door/attack_ai(mob/user) //those aren't machinery, they're just big fucking slabs of a mineral
-	if(isAI(user)) //so the AI can't open it
+/obj/structure/mineral_door/attack_ai(mob/user) // those aren't machinery, they're just big fucking slabs of a mineral
+	if(isAI(user)) // so the AI can't open it
 		return
-	else if(isrobot(user)) //but cyborgs can
-		if(get_dist(user,src) <= 1) //not remotely though
+	else if(isrobot(user)) // but cyborgs can
+		if(get_dist(user, src) <= 1) // not remotely though
 			return TryToSwitchState(user)
 
 /obj/structure/mineral_door/attack_paw(mob/user)
@@ -57,7 +57,7 @@
 	if(isSwitchingStates) return
 	if(ismob(user))
 		var/mob/M = user
-		if(world.time - user.last_bumped <= 60) return //NOTE do we really need that?
+		if(world.time - user.last_bumped <= 60) return // NOTE do we really need that?
 		if(M.client)
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M
@@ -77,7 +77,7 @@
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = 1
 	playsound(loc, operating_sound, 100, 1)
-	flick("[mineralType]opening",src)
+	flick("[mineralType]opening", src)
 	sleep(10)
 	density = 0
 	opacity = 0
@@ -89,7 +89,7 @@
 /obj/structure/mineral_door/proc/Close()
 	isSwitchingStates = 1
 	playsound(loc, operating_sound, 100, 1)
-	flick("[mineralType]closing",src)
+	flick("[mineralType]closing", src)
 	sleep(10)
 	density = 1
 	opacity = 1
@@ -105,14 +105,14 @@
 		icon_state = mineralType
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/pickaxe))
+	if(istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
 		to_chat(user, "You start digging the [name].")
-		if(do_after(user,digTool.digspeed, target = src) && src)
+		if(do_after(user, digTool.digspeed, target = src) && src)
 			to_chat(user, "You finished digging.")
 			Dismantle()
 	else if(istype(W, /obj/item/weapon))
-		if (istype(W, /obj/item/weapon/weldingtool))
+		if(istype(W, /obj/item/weapon/weldingtool))
 			if(istype(src, /obj/structure/mineral_door/resin) || istype(src, /obj/structure/mineral_door/wood))
 				health -= W.force
 				CheckHealth()
@@ -131,7 +131,7 @@
 			else
 				to_chat(user, "\blue You need more welding fuel.")
 				return
-		else if (istype(W, /obj/item/weapon/wrench))
+		else if(istype(W, /obj/item/weapon/wrench))
 			if(!istype(src, /obj/structure/mineral_door/wood))
 				health -= W.force
 				CheckHealth()
@@ -156,7 +156,7 @@
 
 /obj/structure/mineral_door/proc/Dismantle(devastated = 0)
 	if(!devastated)
-		if (mineralType == "metal")
+		if(mineralType == "metal")
 			var/ore = /obj/item/stack/sheet/metal
 			for(var/i = 1, i <= oreAmount, i++)
 				new ore(get_turf(src))
@@ -165,7 +165,7 @@
 			for(var/i = 1, i <= oreAmount, i++)
 				new ore(get_turf(src))
 	else
-		if (mineralType == "metal")
+		if(mineralType == "metal")
 			var/ore = /obj/item/stack/sheet/metal
 			for(var/i = 3, i <= oreAmount, i++)
 				new ore(get_turf(src))
@@ -190,7 +190,7 @@
 			CheckHealth()
 	return
 
-/obj/structure/mineral_door/proc/update_nearby_tiles(need_rebuild) //Copypasta from airlock code
+/obj/structure/mineral_door/proc/update_nearby_tiles(need_rebuild) // Copypasta from airlock code
 	if(!SSair)
 		return 0
 	SSair.mark_for_update(get_turf(src))
@@ -227,7 +227,7 @@
 	mineralType = "phoron"
 
 /obj/structure/mineral_door/transparent/phoron/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/weldingtool))
+	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			TemperatureAct(100)
@@ -238,7 +238,7 @@
 		TemperatureAct(exposed_temperature)
 
 /obj/structure/mineral_door/transparent/phoron/proc/TemperatureAct(temperature)
-	for(var/turf/simulated/floor/target_tile in range(2,loc))
+	for(var/turf/simulated/floor/target_tile in range(2, loc))
 
 		var/datum/gas_mixture/napalm = new
 
@@ -248,7 +248,7 @@
 		napalm.temperature = 200+T0C
 
 		target_tile.assume_air(napalm)
-		spawn (0) target_tile.hotspot_expose(temperature, 400)
+		spawn(0) target_tile.hotspot_expose(temperature, 400)
 
 		health -= phoronToDeduce/100
 		CheckHealth()

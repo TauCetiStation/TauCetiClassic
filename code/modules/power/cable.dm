@@ -1,5 +1,5 @@
 ///////////////////////////////
-//CABLE STRUCTURE
+// CABLE STRUCTURE
 ///////////////////////////////
 
 
@@ -7,7 +7,7 @@
 // Definitions
 ////////////////////////////////
 
-/* Cable directions (d1 and d2)
+/* Cable directions(d1 and d2)
 
 
   9   1   5
@@ -17,23 +17,23 @@
   10  2   6
 
 If d1 = 0 and d2 = 0, there's no cable
-If d1 = 0 and d2 = dir, it's a O-X cable, getting from the center of the tile to dir (knot cable)
+If d1 = 0 and d2 = dir, it's a O-X cable, getting from the center of the tile to dir(knot cable)
 If d1 = dir1 and d2 = dir2, it's a full X-X cable, getting from dir1 to dir2
 By design, d1 is the smallest direction and d2 is the highest
 */
 
 // the power cable object
 /obj/structure/cable
-	level = 1 //is underfloor
+	level = 1 // is underfloor
 	anchored =1
 	var/datum/powernet/powernet
 	name = "power cable"
 	desc = "A flexible superconducting cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond_white.dmi'
 	icon_state = "0-1"
-	var/d1 = 0   // cable direction 1 (see above)
-	var/d2 = 1   // cable direction 2 (see above)
-	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
+	var/d1 = 0   // cable direction 1(see above)
+	var/d2 = 1   // cable direction 2(see above)
+	layer = 2.44 // Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	color = COLOR_RED
 
 /obj/structure/cable/yellow
@@ -70,21 +70,21 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/turf/T = src.loc			// hide if turf is not intact
 
 	if(level==1) hide(T.intact)
-	cable_list += src //add it to the global cable list
+	cable_list += src // add it to the global cable list
 	update_icon()
 
 
 /obj/structure/cable/Destroy()						// called when a cable is deleted
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
-	cable_list -= src							//remove it from global cable list
+	cable_list -= src							// remove it from global cable list
 	return ..()
 
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
 
-//If underfloor, hide the cable
+// If underfloor, hide the cable
 /obj/structure/cable/hide(i)
 	if(level == 1 && istype(loc, /turf))
 		invisibility = i ? 101 : 0
@@ -96,10 +96,10 @@ By design, d1 is the smallest direction and d2 is the highest
 
 
 // returns the powernet this cable belongs to
-/obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
+/obj/structure/cable/proc/get_powernet()			// TODO: remove this as it is obsolete
 	return powernet
 
-//Telekinesis has no effect on a cable
+// Telekinesis has no effect on a cable
 /obj/structure/cable/attack_tk(mob/user)
 	return
 
@@ -116,7 +116,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	if(istype(W, /obj/item/weapon/wirecutters))
 
-		if (shock(user, 50))
+		if(shock(user, 50))
 			return
 
 		var/atom/newcable
@@ -148,7 +148,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		shock(user, 5, 0.2)
 
 	else
-		if (W.flags & CONDUCT)
+		if(W.flags & CONDUCT)
 			shock(user, 50, 0.7)
 
 	src.add_fingerprint(user)
@@ -157,7 +157,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
 	if(!prob(prb))
 		return 0
-	if (electrocute_mob(user, powernet, src, siemens_coeff))
+	if(electrocute_mob(user, powernet, src, siemens_coeff))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
@@ -165,18 +165,18 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		return 0
 
-//explosion handling
+// explosion handling
 /obj/structure/cable/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				new /obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, color)
 				qdel(src)
 
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				new /obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, color)
 				qdel(src)
 	return
@@ -213,8 +213,8 @@ By design, d1 is the smallest direction and d2 is the highest
 // merge with the powernets of power objects in the given direction
 /obj/structure/cable/proc/mergeConnectedNetworks(direction)
 	var/turf/TB
-	var/fdir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
-	if(!(d1 == direction || d2 == direction)) //if the cable is not pointed in this direction, do nothing
+	var/fdir = (!direction)? 0 : turn(direction, 180) // flip the direction, to match with the source position on its turf
+	if(!(d1 == direction || d2 == direction)) // if the cable is not pointed in this direction, do nothing
 		return
 	TB = get_step(src, direction)
 
@@ -225,34 +225,34 @@ By design, d1 is the smallest direction and d2 is the highest
 		if(src == C)
 			continue
 
-		if(C.d1 == fdir || C.d2 == fdir) //we've got a matching cable in the neighbor turf
-			if(!C.powernet) //if the matching cable somehow got no powernet, make him one (should not happen for cables)
+		if(C.d1 == fdir || C.d2 == fdir) // we've got a matching cable in the neighbor turf
+			if(!C.powernet) // if the matching cable somehow got no powernet, make him one(should not happen for cables)
 				var/datum/powernet/newPN = new()
 				newPN.add_cable(C)
 
-			if(powernet) //if we already have a powernet, then merge the two powernets
-				merge_powernets(powernet,C.powernet)
+			if(powernet) // if we already have a powernet, then merge the two powernets
+				merge_powernets(powernet, C.powernet)
 			else
-				C.powernet.add_cable(src) //else, we simply connect to the matching cable powernet
+				C.powernet.add_cable(src) // else, we simply connect to the matching cable powernet
 
 // merge with the powernets of power objects in the source turf
 /obj/structure/cable/proc/mergeConnectedNetworksOnTurf()
-	if(!powernet) //if we somehow have no powernet, make one (should not happen for cables)
+	if(!powernet) // if we somehow have no powernet, make one(should not happen for cables)
 		var/datum/powernet/newPN = new()
 		newPN.add_cable(src)
 
 	for(var/AM in loc)
-		if(istype(AM,/obj/structure/cable))
+		if(istype(AM, /obj/structure/cable))
 			var/obj/structure/cable/C = AM
-			if(C.d1 == 0 && d1==0) //only connected if they are both "nodes"
+			if(C.d1 == 0 && d1==0) // only connected if they are both "nodes"
 				if(C.powernet == powernet)
 					continue
 				if(C.powernet)
 					merge_powernets(powernet, C.powernet)
 				else
-					powernet.add_cable(C) //the cable was powernetless, let's just add it to our powernet
+					powernet.add_cable(C) // the cable was powernetless, let's just add it to our powernet
 
-		else if(istype(AM,/obj/machinery/power/apc))
+		else if(istype(AM, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/N = AM
 			if(!N.terminal)
 				continue // APC are connected through their terminal
@@ -261,7 +261,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			else
 				powernet.add_machine(N.terminal)
 
-		else if(istype(AM,/obj/machinery/power)) //other power machines
+		else if(istype(AM, /obj/machinery/power)) // other power machines
 			var/obj/machinery/power/M = AM
 			if(M.powernet == powernet)
 				continue
@@ -281,15 +281,15 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(d1)
 		T = get_step(src, d1)
 	if(T)
-		. += power_list(T, src, d1, 1) //only returns these with no powernets
+		. += power_list(T, src, d1, 1) // only returns these with no powernets
 
 	T = get_step(src, d2)
 	if(T)
-		. += power_list(T, src, d2, 1) //only returns these with no powernets
+		. += power_list(T, src, d2, 1) // only returns these with no powernets
 
 	return .
 
-// will get both marked and unmarked connections (i.e with or without powernets)
+// will get both marked and unmarked connections(i.e with or without powernets)
 /obj/structure/cable/proc/get_marked_connections()
 	. = list()	// this will be a list of all connected power objects
 	var/turf/T = loc
@@ -305,19 +305,19 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	return .
 
-//should be called after placing a cable which extends another cable, creating a "smooth" cable that no longer terminates in the centre of a turf.
-//needed as this can, unlike other placements, disconnect cables
+// should be called after placing a cable which extends another cable, creating a "smooth" cable that no longer terminates in the centre of a turf.
+// needed as this can, unlike other placements, disconnect cables
 /obj/structure/cable/proc/denode()
 	var/turf/T1 = loc
 	if(!T1)
 		return
 
-	var/list/powerlist = power_list(T1,src,0,0) //find the other cables that ended in the centre of the turf, with or without a powernet
+	var/list/powerlist = power_list(T1, src, 0, 0) // find the other cables that ended in the centre of the turf, with or without a powernet
 	if(powerlist.len>0)
 		var/datum/powernet/PN = new()
-		propagate_network(powerlist[1],PN) //propagates the new powernet beginning at the source cable
+		propagate_network(powerlist[1], PN) // propagates the new powernet beginning at the source cable
 
-		if(PN.is_empty()) //can happen with machines made nodeless when smoothing cables
+		if(PN.is_empty()) // can happen with machines made nodeless when smoothing cables
 			qdel(PN)
 
 // cut the cable's powernet at this cable and updates the powergrid
@@ -332,41 +332,41 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(d1)
 		T1 = get_step(T1, d1)
 
-	var/list/P_list = power_list(T1, src, d1,0,cable_only = 1)	// what joins on to cut cable...
-	P_list += power_list(T2, src, d2,0, cable_only = 1) //...in both directions
+	var/list/P_list = power_list(T1, src, d1, 0, cable_only = 1)	// what joins on to cut cable...
+	P_list += power_list(T2, src, d2, 0, cable_only = 1) //...in both directions
 
-	if(P_list.len == 0)//if nothing in both list, then the cable was a lone cable, just delete it and its powernet
+	if(P_list.len == 0)// if nothing in both list, then the cable was a lone cable, just delete it and its powernet
 		powernet.remove_cable(src)
 
-		for(var/obj/machinery/power/P in T1)//check if it was powering a machine
-			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
-				P.disconnect_from_network() //remove from current network (and delete powernet)
+		for(var/obj/machinery/power/P in T1)// check if it was powering a machine
+			if(!P.connect_to_network()) // can't find a node cable on a the turf to connect to
+				P.disconnect_from_network() // remove from current network(and delete powernet)
 		return
 
 	var/i
 	var/obj/structure/cable/Cable_i
 
-	//removes every adjacents cables, from the powernet, except the first found (to save processing)
-	//that way we'll know if there was a loop somewhere
-	for (i = 2, i <= P_list.len, i++)
+	// removes every adjacents cables, from the powernet, except the first found(to save processing)
+	// that way we'll know if there was a loop somewhere
+	for(i = 2, i <= P_list.len, i++)
 		Cable_i = P_list[i]
 		powernet.remove_cable(Cable_i)
 
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	loc = null
-	powernet.remove_cable(src) //remove the cut cable from its powernet
+	powernet.remove_cable(src) // remove the cut cable from its powernet
 
-	for (i = 2, i <= P_list.len, i++) // propagate network to every powernetless adjacents cables
+	for(i = 2, i <= P_list.len, i++) // propagate network to every powernetless adjacents cables
 		Cable_i = P_list[i]
-		if(Cable_i.powernet == null) //if not null, there was a loop and the cable is already part of a powernet
+		if(Cable_i.powernet == null) // if not null, there was a loop and the cable is already part of a powernet
 			var/datum/powernet/newPN = new()
 			propagate_network(P_list[i], newPN)
 
 	// Disconnect machines connected to nodes
-	if(d1 == 0) // if we cut a node (O-X) cable
+	if(d1 == 0) // if we cut a node(O-X) cable
 		for(var/obj/machinery/power/P in T1)
-			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
-				P.disconnect_from_network() //remove from current network
+			if(!P.connect_to_network()) // can't find a node cable on a the turf to connect to
+				P.disconnect_from_network() // remove from current network
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
@@ -411,8 +411,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	src.amount = amount
 	if(param_color)
 		color = param_color
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = rand(-2, 2)
+	pixel_y = rand(-2, 2)
 	update_icon()
 	update_wclass()
 
@@ -420,7 +420,7 @@ By design, d1 is the smallest direction and d2 is the highest
 // General procedures
 ///////////////////////////////////
 
-//you can use wires to heal robotics
+// you can use wires to heal robotics
 /obj/item/weapon/cable_coil/attack(mob/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -482,7 +482,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/mob/M = usr
 
 	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
-		if(!istype(usr.loc,/turf))
+		if(!istype(usr.loc, /turf))
 			return
 		if(!src.use(15))
 			to_chat(usr, "<span class='warning'>You need at least 15 lengths to make restraints!</span>")
@@ -523,13 +523,13 @@ By design, d1 is the smallest direction and d2 is the highest
 			C.give(C.max_amount-C.amount)
 			return
 
-//remove cables from the stack
+// remove cables from the stack
 /obj/item/weapon/cable_coil/proc/use(used)
 	if(src.amount < used)
 		return 0
 	else
 		amount -= used
-		if ((src.amount <= 0) && !istype(loc,/obj/item/weapon/robot_module) && !istype(loc,/mob/living/silicon))
+		if((src.amount <= 0) && !istype(loc, /obj/item/weapon/robot_module) && !istype(loc, /mob/living/silicon))
 			. = 1
 			qdel(src)
 		else
@@ -537,7 +537,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			update_wclass()
 		return 1
 
-//add cables to the stack
+// add cables to the stack
 /obj/item/weapon/cable_coil/proc/give(extra)
 	if(amount + extra > max_amount)
 		amount = max_amount
@@ -559,7 +559,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		to_chat(user, "<span class='warning'>You need more cable.</span>")
 		return
 
-	if(get_dist(F,user) > 1) //too far
+	if(get_dist(F, user) > 1) // too far
 		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away.</span>")
 		return
 
@@ -584,21 +584,21 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		C.color = color
 
-		//set up the new cable
-		C.d1 = 0 //it's a O-X node cable
+		// set up the new cable
+		C.d1 = 0 // it's a O-X node cable
 		C.d2 = dirn
 		C.add_fingerprint(user)
 		C.updateicon()
 
-		//create a new powernet with the cable, if needed it will be merged later
+		// create a new powernet with the cable, if needed it will be merged later
 		var/datum/powernet/PN = new
 		PN.add_cable(C)
 
-		C.mergeConnectedNetworks(C.d2) //merge the powernet with adjacents powernets
-		C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
+		C.mergeConnectedNetworks(C.d2) // merge the powernet with adjacents powernets
+		C.mergeConnectedNetworksOnTurf() // merge the powernet with on turf powernets
 
-		if (C.shock(user, 50))
-			if (prob(50)) //fail
+		if(C.shock(user, 50))
+			if(prob(50)) // fail
 				new /obj/item/weapon/cable_coil(C.loc, 1, C.color)
 				qdel(C)
 
@@ -619,8 +619,8 @@ By design, d1 is the smallest direction and d2 is the highest
 		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away.</span>")
 		return
 
-	if(U == T) //if clicked on the turf we're standing on, try to put a cable in the direction we're facing
-		turf_place(T,user)
+	if(U == T) // if clicked on the turf we're standing on, try to put a cable in the direction we're facing
+		turf_place(T, user)
 		return
 
 	var/dirn = get_dir(C, user)
@@ -651,15 +651,15 @@ By design, d1 is the smallest direction and d2 is the highest
 			NC.add_fingerprint()
 			NC.updateicon()
 
-			//create a new powernet with the cable, if needed it will be merged later
+			// create a new powernet with the cable, if needed it will be merged later
 			var/datum/powernet/newPN = new()
 			newPN.add_cable(NC)
 
-			NC.mergeConnectedNetworks(NC.d2) //merge the powernet with adjacents powernets
-			NC.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
+			NC.mergeConnectedNetworks(NC.d2) // merge the powernet with adjacents powernets
+			NC.mergeConnectedNetworksOnTurf() // merge the powernet with on turf powernets
 
-			if (NC.shock(user, 50))
-				if (prob(50)) //fail
+			if(NC.shock(user, 50))
+				if(prob(50)) // fail
 					new /obj/item/weapon/cable_coil(NC.loc, 1, NC.color)
 					qdel(NC)
 
@@ -694,12 +694,12 @@ By design, d1 is the smallest direction and d2 is the highest
 		C.add_fingerprint()
 		C.updateicon()
 
-		C.mergeConnectedNetworks(C.d1) //merge the powernets...
+		C.mergeConnectedNetworks(C.d1) // merge the powernets...
 		C.mergeConnectedNetworks(C.d2) //...in the two new cable directions
 		C.mergeConnectedNetworksOnTurf()
 
-		if (C.shock(user, 50))
-			if (prob(50)) //fail
+		if(C.shock(user, 50))
+			if(prob(50)) // fail
 				new /obj/item/weapon/cable_coil(C.loc, 2, C.color)
 				qdel(C)
 				return
@@ -715,7 +715,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	item_state = "coil2"
 
 /obj/item/weapon/cable_coil/cut/New(loc)
-	..(amount = rand(1,2))
+	..(amount = rand(1, 2))
 
 /obj/item/weapon/cable_coil/cut/red
 	color = COLOR_RED

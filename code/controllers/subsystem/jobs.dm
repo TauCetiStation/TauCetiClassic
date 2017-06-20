@@ -11,9 +11,9 @@ var/datum/subsystem/job/SSjob
 
 	flags = SS_NO_FIRE
 
-	var/list/occupations = list()		//List of all jobs
-	var/list/unassigned = list()		//Players who need jobs
-	var/list/job_debug = list()			//Debug info
+	var/list/occupations = list()		// List of all jobs
+	var/list/unassigned = list()		// Players who need jobs
+	var/list/job_debug = list()			// Debug info
 
 /datum/subsystem/job/New()
 	NEW_SS_GLOBAL(SSjob)
@@ -85,7 +85,7 @@ var/datum/subsystem/job/SSjob
 	Debug("AR has failed, Player: [player], Rank: [rank]")
 	return 0
 
-/datum/subsystem/job/proc/FreeRole(rank)	//making additional slot on the fly
+/datum/subsystem/job/proc/FreeRole(rank)	// making additional slot on the fly
 	var/datum/job/job = GetJob(rank)
 	if(job && job.current_positions >= job.total_positions && job.total_positions != -1)
 		job.total_positions++
@@ -120,7 +120,7 @@ var/datum/subsystem/job/SSjob
 		if(istype(job, GetJob("Test Subject"))) // We don't want to give him assistant, that's boring!
 			continue
 
-		if(job.title in command_positions) //If you want a command position, select it!
+		if(job.title in command_positions) // If you want a command position, select it!
 			continue
 
 		if(jobban_isbanned(player, job.title))
@@ -153,9 +153,9 @@ var/datum/subsystem/job/SSjob
 	return
 
 
-//This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until
-//it locates a head or runs out of levels to check
-//This is basically to ensure that there's atleast a few heads in the round
+// This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until
+// it locates a head or runs out of levels to check
+// This is basically to ensure that there's atleast a few heads in the round
 /datum/subsystem/job/proc/FillHeadPosition()
 	for(var/level = 1 to 3)
 		for(var/command_position in command_positions)
@@ -173,8 +173,8 @@ var/datum/subsystem/job/SSjob
 	return 0
 
 
-//This proc is called at the start of the level loop of DivideOccupations() and will cause head jobs to be checked before any other jobs of the same level
-//This is also to ensure we get as many heads as possible
+// This proc is called at the start of the level loop of DivideOccupations() and will cause head jobs to be checked before any other jobs of the same level
+// This is also to ensure we get as many heads as possible
 /datum/subsystem/job/proc/CheckHeadPositions(level)
 	for(var/command_position in command_positions)
 		var/datum/job/job = GetJob(command_position)
@@ -199,7 +199,7 @@ var/datum/subsystem/job/SSjob
 	for(var/i = job.total_positions, i > 0, i--)
 		for(var/level = 1 to 3)
 			var/list/candidates = list()
-			if(ticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
+			if(ticker.mode.name == "AI malfunction")// Make sure they want to malf if its malf
 				candidates = FindOccupationCandidates(job, level, ROLE_MALF)
 			else
 				candidates = FindOccupationCandidates(job, level)
@@ -208,7 +208,7 @@ var/datum/subsystem/job/SSjob
 				if(AssignRole(candidate, "AI"))
 					ai_selected++
 					break
-		//Malf NEEDS an AI so force one if we didn't get a player who wanted it
+		// Malf NEEDS an AI so force one if we didn't get a player who wanted it
 		if((ticker.mode.name == "AI malfunction")&&(!ai_selected))
 			unassigned = shuffle(unassigned)
 			for(var/mob/new_player/player in unassigned)
@@ -225,17 +225,17 @@ var/datum/subsystem/job/SSjob
  *  This proc must not have any side effect besides of modifying "assigned_role".
  **/
 /datum/subsystem/job/proc/DivideOccupations()
-	//Setup new player list and get the jobs list
+	// Setup new player list and get the jobs list
 	Debug("Running DO")
 	SetupOccupations()
 
-	//Holder for Triumvirate is stored in the ticker, this just processes it
+	// Holder for Triumvirate is stored in the ticker, this just processes it
 	if(ticker)
 		for(var/datum/job/ai/A in occupations)
 			if(ticker.triai)
 				A.spawn_positions = 3
 
-	//Get the players who are ready
+	// Get the players who are ready
 	for(var/mob/new_player/player in player_list)
 		if(player.ready && player.mind && !player.mind.assigned_role)
 			unassigned += player
@@ -243,12 +243,12 @@ var/datum/subsystem/job/SSjob
 	Debug("DO, Len: [unassigned.len]")
 	if(unassigned.len == 0)	return 0
 
-	//Shuffle players and jobs
+	// Shuffle players and jobs
 	unassigned = shuffle(unassigned)
 
 	HandleFeedbackGathering()
 
-	//People who wants to be assistants, sure, go on.
+	// People who wants to be assistants, sure, go on.
 	Debug("DO, Running Assistant Check 1")
 	var/datum/job/assist = new /datum/job/assistant()
 	var/list/assistant_candidates = FindOccupationCandidates(assist, 3)
@@ -259,17 +259,17 @@ var/datum/subsystem/job/SSjob
 		assistant_candidates -= player
 	Debug("DO, AC1 end")
 
-	//Select one head
+	// Select one head
 	Debug("DO, Running Head Check")
 	FillHeadPosition()
 	Debug("DO, Head Check end")
 
-	//Check for an AI
+	// Check for an AI
 	Debug("DO, Running AI Check")
 	FillAIPosition()
 	Debug("DO, AI Check end")
 
-	//Other jobs are now checked
+	// Other jobs are now checked
 	Debug("DO, Running Standard Check")
 
 
@@ -280,7 +280,7 @@ var/datum/subsystem/job/SSjob
 	// Loop through all levels from high to low
 	var/list/shuffledoccupations = shuffle(occupations)
 	for(var/level = 1 to 3)
-		//Check the head jobs first each level
+		// Check the head jobs first each level
 		CheckHeadPositions(level)
 
 		// Loop through all unassigned players
@@ -325,14 +325,14 @@ var/datum/subsystem/job/SSjob
 			Debug("AC2 Assistant located, Player: [player]")
 			AssignRole(player, "Test Subject")
 
-	//For ones returning to lobby
+	// For ones returning to lobby
 	for(var/mob/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
 			player.ready = 0
 			unassigned -= player
 	return 1
 
-//Gives the player the stuff he should have with his rank
+// Gives the player the stuff he should have with his rank
 /datum/subsystem/job/proc/EquipRank(mob/living/carbon/human/H, rank, joined_late=0)
 	if(!H)	return 0
 	var/datum/job/job = GetJob(rank)
@@ -340,8 +340,8 @@ var/datum/subsystem/job/SSjob
 
 	if(job)
 
-		//Equip custom gear loadout.
-		var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
+		// Equip custom gear loadout.
+		var/list/custom_equip_slots = list() // If more than one item takes the same slot, all after the first one spawn in storage.
 		var/list/custom_equip_leftovers = list()
 		var/metadata
 		if(H.client.prefs.gear && H.client.prefs.gear.len && job.title != "Cyborg" && job.title != "AI")
@@ -412,7 +412,7 @@ var/datum/subsystem/job/SSjob
 			H.buckled.loc = H.loc
 			H.buckled.dir = H.dir
 
-	//give them an account in the station database
+	// give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H)
 
 	// If they're head, give them the account info for their department
@@ -441,39 +441,39 @@ var/datum/subsystem/job/SSjob
 				return 1
 			if("AI")
 				return H
-			if("Clown")	//don't need bag preference stuff!
+			if("Clown")	// don't need bag preference stuff!
 			else
-				switch(H.backbag) //BS12 EDIT
+				switch(H.backbag) // BS12 EDIT
 					if(1)
 						H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 					if(2)
 						var/obj/item/weapon/storage/backpack/BPK = new(H)
 						new /obj/item/weapon/storage/box/survival(BPK)
-						H.equip_to_slot_or_del(BPK, slot_back,1)
+						H.equip_to_slot_or_del(BPK, slot_back, 1)
 					if(3)
 						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
 						new /obj/item/weapon/storage/box/survival(BPK)
-						H.equip_to_slot_or_del(BPK, slot_back,1)
+						H.equip_to_slot_or_del(BPK, slot_back, 1)
 					if(4)
 						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
 						new /obj/item/weapon/storage/box/survival(BPK)
-						H.equip_to_slot_or_del(BPK, slot_back,1)
+						H.equip_to_slot_or_del(BPK, slot_back, 1)
 
-	//TODO: Generalize this by-species
+	// TODO: Generalize this by-species
 	if(H.species)
 		if(H.species.name == TAJARAN || H.species.name == UNATHI)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes,1)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes, 1)
 		else if(H.species.name == VOX)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), slot_wear_mask)
 			if(!H.r_hand)
 				H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_r_hand)
 				H.internal = H.r_hand
-			else if (!H.l_hand)
+			else if(!H.l_hand)
 				H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_l_hand)
 				H.internal = H.l_hand
 			H.internals.icon_state = "internal1"
 
-	//Deferred item spawning.
+	// Deferred item spawning.
 	for(var/thing in spawn_in_storage)
 		var/datum/gear/G = gear_datums[thing]
 		var/metadata = H.client.prefs.gear[G.display_name]
@@ -500,7 +500,7 @@ var/datum/subsystem/job/SSjob
 	spawnId(H, rank, alt_title)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_l_ear)
 
-	//Gives glasses to the vision impaired
+	// Gives glasses to the vision impaired
 	if(H.disabilities & NEARSIGHTED)
 		var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
 		if(equipped != 1)
@@ -536,17 +536,17 @@ var/datum/subsystem/job/SSjob
 		C.registered_name = H.real_name
 		C.rank = rank
 		C.assignment = title ? title : rank
-		C.name = "[C.registered_name]'s ID Card ([C.assignment])"
+		C.name = "[C.registered_name]'s ID Card([C.assignment])"
 
-		//put the player's account number onto the ID
+		// put the player's account number onto the ID
 		if(H.mind && H.mind.initial_account)
 			C.associated_account_number = H.mind.initial_account.account_number
 
 		H.equip_to_slot_or_del(C, slot_wear_id)
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
-	if(locate(/obj/item/device/pda,H))
-		var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
+	if(locate(/obj/item/device/pda, H))
+		var/obj/item/device/pda/pda = locate(/obj/item/device/pda, H)
 		pda.owner = H.real_name
 		pda.ownjob = C.assignment
 		pda.ownrank = C.rank
@@ -565,7 +565,7 @@ var/datum/subsystem/job/SSjob
 			continue
 
 		job = trim(job)
-		if (!length(job))
+		if(!length(job))
 			continue
 
 		var/pos = findtext(job, "=")
@@ -583,7 +583,7 @@ var/datum/subsystem/job/SSjob
 			if(!J)	continue
 			J.total_positions = text2num(value)
 			J.spawn_positions = text2num(value)
-			if(name == "AI" || name == "Cyborg")//I dont like this here but it will do for now
+			if(name == "AI" || name == "Cyborg")// I dont like this here but it will do for now
 				J.total_positions = 0
 
 	return 1
@@ -592,15 +592,15 @@ var/datum/subsystem/job/SSjob
 	for(var/datum/job/job in occupations)
 		var/tmp_str = "|[job.title]|"
 
-		var/level1 = 0 //high
-		var/level2 = 0 //medium
-		var/level3 = 0 //low
-		var/level4 = 0 //never
-		var/level5 = 0 //banned
-		var/level6 = 0 //account too young
+		var/level1 = 0 // high
+		var/level2 = 0 // medium
+		var/level3 = 0 // low
+		var/level4 = 0 // never
+		var/level5 = 0 // banned
+		var/level6 = 0 // account too young
 		for(var/mob/new_player/player in player_list)
 			if(!(player.ready && player.mind && !player.mind.assigned_role))
-				continue //This player is not ready
+				continue // This player is not ready
 			if(jobban_isbanned(player, job.title))
 				level5++
 				continue
@@ -613,10 +613,10 @@ var/datum/subsystem/job/SSjob
 				level2++
 			else if(player.client.prefs.GetJobDepartment(job, 3) & job.flag)
 				level3++
-			else level4++ //not selected
+			else level4++ // not selected
 
 		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
-		feedback_add_details("job_preferences",tmp_str)
+		feedback_add_details("job_preferences", tmp_str)
 
 #undef GET_RANDOM_JOB
 #undef BE_ASSISTANT

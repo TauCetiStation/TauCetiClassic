@@ -26,23 +26,23 @@
 
 /obj/item/weapon/shard/phoron/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if ( istype(W, /obj/item/weapon/weldingtool))
+	if( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/glass/phoronglass/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/glass/phoronglass/G in user.loc)
+			var/obj/item/stack/sheet/glass/phoronglass/NG = new(user.loc)
+			for(var/obj/item/stack/sheet/glass/phoronglass/G in user.loc)
 				if(G==NG)
 					continue
 				if(G.amount>=G.max_amount)
 					continue
 				G.attackby(NG, user)
 				to_chat(usr, "You add the newly-formed phoron glass to the stack. It now contains [NG.amount] sheets.")
-			//SN src = null
+			// SN src = null
 			qdel(src)
 			return
 	return ..()
 
-//legacy crystal
+// legacy crystal
 /obj/machinery/crystal
 	name = "Crystal"
 	icon = 'icons/obj/mining.dmi'
@@ -52,23 +52,23 @@
 	if(prob(50))
 		icon_state = "crystal2"
 
-//large finds
+// large finds
 				/*
 				/obj/machinery/syndicate_beacon
 				/obj/machinery/wish_granter
 			if(18)
 				item_type = "jagged green crystal"
-				additional_desc = pick("It shines faintly as it catches the light.","It appears to have a faint inner glow.","It seems to draw you inward as you look it at.","Something twinkles faintly as you look at it.","It's mesmerizing to behold.")
+				additional_desc = pick("It shines faintly as it catches the light.", "It appears to have a faint inner glow.", "It seems to draw you inward as you look it at.", "Something twinkles faintly as you look at it.", "It's mesmerizing to behold.")
 				icon_state = "crystal"
 				apply_material_decorations = 0
 				if(prob(10))
 					apply_image_decorations = 1
 			if(19)
 				item_type = "jagged pink crystal"
-				additional_desc = pick("It shines faintly as it catches the light.","It appears to have a faint inner glow.","It seems to draw you inward as you look it at.","Something twinkles faintly as you look at it.","It's mesmerizing to behold.")
+				additional_desc = pick("It shines faintly as it catches the light.", "It appears to have a faint inner glow.", "It seems to draw you inward as you look it at.", "Something twinkles faintly as you look at it.", "It's mesmerizing to behold.")
 				icon_state = "crystal2"
 				apply_material_decorations = 0
 				if(prob(10))
 					apply_image_decorations = 1
 				*/
-			//machinery type artifacts?
+			// machinery type artifacts?

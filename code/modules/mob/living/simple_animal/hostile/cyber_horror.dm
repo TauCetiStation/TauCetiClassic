@@ -25,7 +25,7 @@
 	if(!.)
 		return 0
 	if(prob(90) && ((health + emp_damage) < maxHealth))
-		health += 4                                                                        //Created by misuse of medical nanobots, so it heals
+		health += 4                                                                        // Created by misuse of medical nanobots, so it heals
 		if(prob(15))
 			visible_message("<span class='warning'>[src]'s wounds heal slightly!</span>")
 

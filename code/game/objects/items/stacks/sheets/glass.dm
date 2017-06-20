@@ -3,7 +3,7 @@
  *		Glass sheets
  *		Reinforced glass sheets
  *		Phoron Glass Sheets
- *		Reinforced Phoron Glass Sheets (AKA Holy fuck strong windows)
+ *		Reinforced Phoron Glass Sheets(AKA Holy fuck strong windows)
  *		Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 
@@ -32,7 +32,7 @@
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
 	..()
-	if(istype(W,/obj/item/weapon/cable_coil))
+	if(istype(W, /obj/item/weapon/cable_coil))
 
 		var/list/resources_to_use = list()
 		resources_to_use[W] = 5
@@ -50,13 +50,13 @@
 		if(!use_multi(user, resources_to_use))
 			return
 
-		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
+		var/obj/item/stack/sheet/rglass/RG = new(user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
 		var/obj/item/stack/sheet/glass/G = src
 		src = null
 		var/replace = (user.get_inactive_hand() == G)
-		if (!G && !RG && replace)
+		if(!G && !RG && replace)
 			user.put_in_hands(RG)
 	else
 		return ..()
@@ -64,7 +64,7 @@
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user)
 	if(!user || !src)
 		return 0
-	if(!istype(user.loc,/turf))
+	if(!istype(user.loc, /turf))
 		return 0
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "\red You don't have the dexterity to do this!")
@@ -90,9 +90,9 @@
 					to_chat(user, "\red Can't let you do that.")
 					return 1
 
-			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
+			// Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 			var/dir_to_set = 2
-			for(var/direction in list(user.dir, turn(user.dir,90), turn(user.dir,180), turn(user.dir,270)))
+			for(var/direction in list(user.dir, turn(user.dir, 90), turn(user.dir, 180), turn(user.dir, 270)))
 				var/found = 0
 				for(var/obj/structure/window/WT in user.loc)
 					if(WT.dir == direction)
@@ -136,7 +136,7 @@
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
-	var/new_amount = amount - rand(5,35)
+	var/new_amount = amount - rand(5, 35)
 	if(new_amount > 0)
 		amount = new_amount
 	else
@@ -146,7 +146,7 @@
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
-	var/new_amount = amount - rand(1,15)
+	var/new_amount = amount - rand(1, 15)
 	if(new_amount > 0)
 		amount = new_amount
 	else
@@ -178,7 +178,7 @@
 /obj/item/stack/sheet/rglass/proc/construct_window(mob/user)
 	if(!user || !src)
 		return 0
-	if(!istype(user.loc,/turf))
+	if(!istype(user.loc, /turf))
 		return 0
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "\red You don't have the dexterity to do this!")
@@ -193,7 +193,7 @@
 				return 1
 			var/list/directions = new/list(cardinal)
 			var/i = 0
-			for (var/obj/structure/window/win in user.loc)
+			for(var/obj/structure/window/win in user.loc)
 				i++
 				if(i >= 4)
 					to_chat(user, "\red There are too many windows in this location.")
@@ -203,9 +203,9 @@
 					to_chat(user, "\red Can't let you do that.")
 					return 1
 
-			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
+			// Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 			var/dir_to_set = 2
-			for(var/direction in list( user.dir, turn(user.dir,90), turn(user.dir,180), turn(user.dir,270) ))
+			for(var/direction in list( user.dir, turn(user.dir, 90), turn(user.dir, 180), turn(user.dir, 270) ))
 				var/found = 0
 				for(var/obj/structure/window/WT in user.loc)
 					if(WT.dir == direction)
@@ -276,7 +276,7 @@
 				if(WEST)
 					WD.dir = WEST
 					WD.ini_dir = WEST
-				else//If the user is facing northeast. northwest, southeast, southwest or north, default to north
+				else// If the user is facing northeast. northwest, southeast, southwest or north, default to north
 					WD.dir = NORTH
 					WD.ini_dir = NORTH
 		else
@@ -316,7 +316,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/glass/NG = new (user.loc)
+			var/obj/item/stack/sheet/glass/NG = new(user.loc)
 			for(var/obj/item/stack/sheet/glass/G in user.loc)
 				if(G==NG)
 					continue
@@ -324,7 +324,7 @@
 					continue
 				G.attackby(NG, user)
 				to_chat(usr, "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets.")
-			//SN src = null
+			// SN src = null
 			qdel(src)
 			return
 	return ..()
@@ -341,7 +341,7 @@
 				return
 
 			if(!H.shoes && (!H.wear_suit || !(H.wear_suit.body_parts_covered & FEET)))
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_FOOT, BP_R_FOOT)]
 				if(BP.status & ORGAN_ROBOT)
 					return
 				H.Weaken(3)
@@ -376,13 +376,13 @@
 		if(!use_multi(user, resources_to_use))
 			return
 
-		var/obj/item/stack/sheet/glass/phoronrglass/RG = new (user.loc)
+		var/obj/item/stack/sheet/glass/phoronrglass/RG = new(user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
 		var/obj/item/stack/sheet/glass/G = src
 		src = null
 		var/replace = (user.get_inactive_hand() == G)
-		if (!G && !RG && replace)
+		if(!G && !RG && replace)
 			user.put_in_hands(RG)
 	else
 		return ..()

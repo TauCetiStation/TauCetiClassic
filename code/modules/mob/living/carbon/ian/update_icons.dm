@@ -94,7 +94,7 @@
 
 			var/icon/mask_lie = icon(icon, "[icon_state]_mask_lie")
 			temp_icon = icon(I)
-			temp_icon.Shift(SOUTH, 13) //lying state
+			temp_icon.Shift(SOUTH, 13) // lying state
 			temp_icon.Blend(icon(mask_lie, icon_state, dir = NORTH), ICON_MULTIPLY)
 			I.Insert(icon(temp_icon), i_state + "_lie")
 
@@ -126,7 +126,7 @@
 		t_state = mouth.icon_state
 
 	var/skip = FALSE
-	if(!(t_state in icon_states(mouth.lefthand_file))) //oh, god, no! plz NO! not those icon_custom, icon_override, icon_graytide, icon_whatever9000namedifferent_icons_with_million_ifs...
+	if(!(t_state in icon_states(mouth.lefthand_file))) // oh, god, no! plz NO! not those icon_custom, icon_override, icon_graytide, icon_whatever9000namedifferent_icons_with_million_ifs...
 		t_state = "uni_item"
 		skip = TRUE
 
@@ -153,14 +153,14 @@
 			temp_icon = icon(I, t_state, WEST)
 			temp_icon.Shift(EAST, 14)
 			temp_icon.Shift(NORTH, 3)
-			//temp_icon.Blend(icon(mask, icon_state, dir = EAST), ICON_MULTIPLY)
+			// temp_icon.Blend(icon(mask, icon_state, dir = EAST), ICON_MULTIPLY)
 			I.Insert(icon(temp_icon, dir = WEST), dir = EAST)
 
 			temp_icon.Flip(WEST)
 			I.Insert(icon(temp_icon, dir = WEST), dir = WEST)
 
 			temp_icon = icon(I)
-			temp_icon.Shift(SOUTH, 13) //lying state
+			temp_icon.Shift(SOUTH, 13) // lying state
 			I.Insert(icon(temp_icon), t_state + "_lie")
 
 			corgi_icons[cached_icon_string] = image("icon" = I, "icon_state" = t_state, "layer" = -LAYERIAN_MOUTH)
@@ -177,7 +177,7 @@
 	apply_overlay(LAYERIAN_MOUTH)
 
 /mob/living/carbon/ian/proc/update_inv_neck()
-	//remove_overlay(LAYERIAN_NECKCUFF) incase icons ever will be added.
+	// remove_overlay(LAYERIAN_NECKCUFF) incase icons ever will be added.
 
 	if(!neck)
 		return
@@ -189,7 +189,7 @@
 	if(client && hud_used && hud_used.hud_shown)
 		client.screen += neck
 
-	//apply_overlay(LAYERIAN_NECKCUFF)
+	// apply_overlay(LAYERIAN_NECKCUFF)
 
 /mob/living/carbon/ian/update_inv_back()
 	remove_overlay(LAYERIAN_BACK)
@@ -217,7 +217,7 @@
 	switch(pose_last)
 		if(POSE_SIT)
 			body_icon.icon_state = i_state + "_sit"
-		if(POSE_REST,POSE_STAT)
+		if(POSE_REST, POSE_STAT)
 			body_icon.icon_state = i_state + "_lie"
 
 	overlays_inv[LAYERIAN_BACK] = body_icon
@@ -229,7 +229,7 @@
 
 	if(targeted_by && target_locked)
 		overlays_inv[LAYERIAN_TARGETED] = image("icon"=target_locked, "layer"=-LAYERIAN_TARGETED)
-	else if (!targeted_by && target_locked)
+	else if(!targeted_by && target_locked)
 		qdel(target_locked)
 
 	apply_overlay(LAYERIAN_TARGETED)

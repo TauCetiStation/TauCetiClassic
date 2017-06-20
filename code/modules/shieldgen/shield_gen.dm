@@ -1,9 +1,9 @@
-//renwicks: fictional unit to describe shield strength
-//a small meteor hit will deduct 1 renwick of strength from that shield tile
-//light explosion range will do 1 renwick's damage
-//medium explosion range will do 2 renwick's damage
-//heavy explosion range will do 3 renwick's damage
-//explosion damage is cumulative. if a tile is in range of light, medium and heavy damage, it will take a hit from all three
+// renwicks: fictional unit to describe shield strength
+// a small meteor hit will deduct 1 renwick of strength from that shield tile
+// light explosion range will do 1 renwick's damage
+// medium explosion range will do 2 renwick's damage
+// heavy explosion range will do 3 renwick's damage
+// explosion damage is cumulative. if a tile is in range of light, medium and heavy damage, it will take a hit from all three
 
 /obj/machinery/shield_gen
 	name = "shield generator"
@@ -23,7 +23,7 @@
 	var/obj/machinery/shield_capacitor/owned_capacitor
 	var/target_field_strength = 10
 	var/time_since_fail = 100
-	var/energy_conversion_rate = 0.01	//how many renwicks per watt?
+	var/energy_conversion_rate = 0.01	// how many renwicks per watt?
 	//
 	use_power = 1			//0 use nothing
 							//1 use idle power
@@ -99,8 +99,8 @@
 	interact(user)
 
 /obj/machinery/shield_gen/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
+	if( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+		if(!istype(user, /mob/living/silicon))
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
 			return
@@ -111,7 +111,7 @@
 		t += "[owned_capacitor ? "<font color=green>Charge capacitor connected.</font>" : "<font color=red>Unable to locate charge capacitor!</font>"]<br>"
 		t += "This generator is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>"
 		t += "[time_since_fail > 2 ? "<font color=green>Field is stable.</font>" : "<font color=red>Warning, field is unstable!</font>"]<br>"
-		t += "Coverage diameter (restart required): \
+		t += "Coverage diameter(restart required): \
 		<a href='?src=\ref[src];change_radius=-50'>---</a> \
 		<a href='?src=\ref[src];change_radius=-5'>--</a> \
 		<a href='?src=\ref[src];change_radius=-1'>-</a> \
@@ -119,7 +119,7 @@
 		<a href='?src=\ref[src];change_radius=1'>+</a> \
 		<a href='?src=\ref[src];change_radius=5'>++</a> \
 		<a href='?src=\ref[src];change_radius=50'>+++</a><br>"
-		t += "Overall field strength: [average_field_strength] Renwicks ([target_field_strength ? 100 * average_field_strength / target_field_strength : "NA"]%)<br>"
+		t += "Overall field strength: [average_field_strength] Renwicks([target_field_strength ? 100 * average_field_strength / target_field_strength : "NA"]%)<br>"
 		t += "Upkeep energy: [field.len * average_field_strength / energy_conversion_rate] Watts/sec<br>"
 		t += "Charge rate: <a href='?src=\ref[src];strengthen_rate=-0.1'>--</a> \
 		[strengthen_rate] Renwicks/sec \
@@ -213,7 +213,7 @@
 		icon_state = "broke"
 	else
 		if( powered() )
-			if (src.active)
+			if(src.active)
 				icon_state = "generator1"
 			else
 				icon_state = "generator0"
@@ -222,7 +222,7 @@
 			spawn(rand(0, 15))
 				src.icon_state = "generator0"
 				stat |= NOPOWER
-			if (src.active)
+			if(src.active)
 				toggle()
 
 /obj/machinery/shield_gen/ex_act(var/severity)
@@ -240,7 +240,7 @@
 	var/turf/T = src.loc
 	var/obj/structure/cable/C = T.get_cable_node()
 	var/net
-	if (C)
+	if(C)
 		net = C.netnum		// find the powernet of the connected cable
 
 	if(!net)
@@ -252,7 +252,7 @@
 		powered = 0
 		return 0
 	var/surplus = max(PN.avail-PN.load, 0)
-	var/shieldload = min(rand(50,200), surplus)
+	var/shieldload = min(rand(50, 200), surplus)
 	if(shieldload==0 && !storedpower)		// no cable or no power, and no power stored
 		powered = 0
 		return 0
@@ -260,7 +260,7 @@
 		powered = 1
 		if(PN)
 			storedpower += shieldload
-			PN.newload += shieldload //uses powernet power.
+			PN.newload += shieldload // uses powernet power.
 			*/
 
 /obj/machinery/shield_gen/proc/toggle()
@@ -277,20 +277,20 @@
 			field.Add(E)
 		covered_turfs = null
 
-		for(var/mob/M in view(5,src))
+		for(var/mob/M in view(5, src))
 			to_chat(M, "[bicon(src)] You hear heavy droning start up.")
 	else
 		for(var/obj/effect/energy_field/D in field)
 			field.Remove(D)
 			D.loc = null
 
-		for(var/mob/M in view(5,src))
+		for(var/mob/M in view(5, src))
 			to_chat(M, "[bicon(src)] You hear heavy droning fade out.")
 
-//grab the border tiles in a circle around this machine
+// grab the border tiles in a circle around this machine
 /obj/machinery/shield_gen/proc/get_shielded_turfs()
 	var/list/out = list()
 	for(var/turf/T in range(field_radius, src))
-		if(get_dist(src,T) == field_radius)
+		if(get_dist(src, T) == field_radius)
 			out.Add(T)
 	return out

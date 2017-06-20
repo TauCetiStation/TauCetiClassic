@@ -21,7 +21,7 @@ This is what happens, when alien attack.
 	return
 
 /mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/M)
-	if(check_shields(0, M.name, get_dir(M,src) ))
+	if(check_shields(0, M.name, get_dir(M, src) ))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
@@ -41,17 +41,17 @@ This is what happens, when alien attack.
 			updatehealth()
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(check_shields(0, M.name, get_dir(M,src) ))
+	if(check_shields(0, M.name, get_dir(M, src) ))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
 	switch(M.a_intent)
-		if ("help")
+		if("help")
 			visible_message(text("\blue [M] caresses [src] with its scythe like arm."))
-		if ("grab")
+		if("grab")
 			if(M == src || anchored || M.lying)
 				return
-			if (w_uniform)
+			if(w_uniform)
 				w_uniform.add_fingerprint(M)
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
@@ -66,7 +66,7 @@ This is what happens, when alien attack.
 
 		if("hurt")
 			M.do_attack_animation(src)
-			if (w_uniform)
+			if(w_uniform)
 				w_uniform.add_fingerprint(M)
 			var/damage = rand(15, 30)
 			if(!damage)
@@ -80,22 +80,22 @@ This is what happens, when alien attack.
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
 
 			apply_damage(damage, BRUTE, BP, armor_block)
-			if (damage >= 20)
+			if(damage >= 20)
 				visible_message("\red <B>[M] has wounded [src]!</B>")
-				apply_effect(rand(3,5), WEAKEN, armor_block)
+				apply_effect(rand(3, 5), WEAKEN, armor_block)
 			updatehealth()
 
 		if("disarm")
-			if (prob(80))
+			if(prob(80))
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-				Weaken(rand(3,5))
+				Weaken(rand(3, 5))
 				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
+					if((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1)
-				if (prob(25))
-					M.Weaken(rand(5,8))
+				if(prob(25))
+					M.Weaken(rand(5, 8))
 			else
-				if (prob(80))
+				if(prob(80))
 					playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 					drop_item()
 					visible_message(text("\red <B>[] disarmed []!</B>", M, src))

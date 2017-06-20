@@ -91,7 +91,7 @@ var/datum/gear_tweak/color/gear_tweak_free_color_choice = new()
 	for(var/i = metadata.len to valid_contents.len)
 		metadata += "Random"
 	for(var/i = 1 to valid_contents.len)
-		var/entry = input(user, "Choose an entry.", "Character Preference", metadata[i]) as null|anything in (valid_contents[i] + list("Random", "None"))
+		var/entry = input(user, "Choose an entry.", "Character Preference", metadata[i]) as null|anything in(valid_contents[i] + list("Random", "None"))
 		if(entry)
 			. += entry
 		else

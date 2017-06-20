@@ -7,7 +7,7 @@
 	agent = "Appendix"
 	affected_species = list(HUMAN)
 	permeability_mod = 1
-	contagious_period = 9001 //slightly hacky, but hey! whatever works, right?
+	contagious_period = 9001 // slightly hacky, but hey! whatever works, right?
 	desc = "If left untreated the subject will become very weak, and may vomit often."
 	severity = "Medium"
 	longevity = 1000
@@ -17,7 +17,7 @@
 /datum/disease/appendicitis/stage_act()
 	..()
 
-	if(istype(affected_mob,/mob/living/carbon/human))
+	if(istype(affected_mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = affected_mob
 		if(H.species.name == DIONA || H.species.name == IPC || H.species.name == VOX)
 			src.cure()
@@ -28,15 +28,15 @@
 			src.cure()
 		if(prob(5))
 			to_chat(affected_mob, "\red You feel a stinging pain in your abdomen!")
-			affected_mob.emote("me",1,"winces slightly.")
+			affected_mob.emote("me", 1, "winces slightly.")
 	if(stage > 1)
 		if(prob(3))
 			to_chat(affected_mob, "\red You feel a stabbing pain in your abdomen!")
-			affected_mob.emote("me",1,"winces painfully.")
+			affected_mob.emote("me", 1, "winces painfully.")
 			affected_mob.adjustToxLoss(1)
 	if(stage > 2)
 		if(prob(1))
-			if (affected_mob.nutrition > 100)
+			if(affected_mob.nutrition > 100)
 				var/mob/living/carbon/human/H = affected_mob
 				H.vomit()
 			else

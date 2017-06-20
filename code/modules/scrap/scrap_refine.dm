@@ -18,7 +18,7 @@
 
 /obj/structure/scrap_cube/attackby(obj/item/W, mob/user)
 	user.do_attack_animation(src)
-	if(istype(W,/obj/item/weapon) && W.force >=8)
+	if(istype(W, /obj/item/weapon) && W.force >=8)
 		visible_message("<span class='notice'>\The [user] smashes the [src], restoring it's original form.</span>")
 		make_pile()
 	else
@@ -31,10 +31,10 @@
 	icon_state = "unrefined"
 	w_class = 4
 /obj/item/weapon/scrap_lump/New()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = rand(0, 16)-8
+	pixel_y = rand(0, 8)-8
 
-var/global/list/datum/stack_recipe/scrap_recipes = list ( \
+var/global/list/datum/stack_recipe/scrap_recipes = list( \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 )

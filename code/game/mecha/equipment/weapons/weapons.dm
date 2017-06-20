@@ -2,14 +2,14 @@
 	name = "mecha weapon"
 	range = RANGED
 	origin_tech = "materials=3;combat=3"
-	var/projectile //Type of projectile fired.
-	var/projectiles = 1 //Amount of projectiles loaded.
-	var/projectiles_per_shot = 1 //Amount of projectiles fired per single shot.
-	var/deviation = 0 //Inaccuracy of shots.
-	var/fire_cooldown = 0 //Duration of sleep between firing projectiles in single shot.
-	var/fire_sound //Sound played while firing.
-	var/fire_volume = 50 //How loud it is played.
-	var/auto_rearm = 0 //Does the weapon reload itself after each shot?
+	var/projectile // Type of projectile fired.
+	var/projectiles = 1 // Amount of projectiles loaded.
+	var/projectiles_per_shot = 1 // Amount of projectiles fired per single shot.
+	var/deviation = 0 // Inaccuracy of shots.
+	var/fire_cooldown = 0 // Duration of sleep between firing projectiles in single shot.
+	var/fire_sound // Sound played while firing.
+	var/fire_volume = 50 // How loud it is played.
+	var/auto_rearm = 0 // Does the weapon reload itself after each shot?
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(!istype(M))
@@ -35,7 +35,7 @@
 	for(var/i = 1 to min(projectiles, projectiles_per_shot))
 		var/turf/aimloc = targloc
 		if(deviation)
-			aimloc = locate(targloc.x+GaussRandRound(deviation,1),targloc.y+GaussRandRound(deviation,1),targloc.z)
+			aimloc = locate(targloc.x+GaussRandRound(deviation, 1), targloc.y+GaussRandRound(deviation, 1), targloc.z)
 		if(!aimloc || aimloc == curloc)
 			break
 		playsound(chassis, fire_sound, fire_volume, 1)
@@ -159,16 +159,16 @@
 				M.Paralyse(4)
 			else
 				M.make_jittery(500)
-			/* //else the mousetraps are useless
+			/* // else the mousetraps are useless
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(isobj(H.shoes))
 					var/thingy = H.shoes
 					H.drop_from_inventory(H.shoes)
-					walk_away(thingy,chassis,15,2)
+					walk_away(thingy, chassis, 15, 2)
 					spawn(20)
 						if(thingy)
-							walk(thingy,0)
+							walk(thingy, 0)
 			*/
 		chassis.use_power(energy_drain)
 		log_message("Honked from [src.name]. HONK!")
@@ -189,13 +189,13 @@
 				projectiles++
 				projectiles_to_add--
 				chassis.use_power(projectile_energy_cost)
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant, "exosuit.browser", "\ref[src]", src.get_equip_info())
 		log_message("Rearmed [src.name].")
 		return
 
 	Topic(href, href_list)
 		..()
-		if (href_list["rearm"])
+		if(href_list["rearm"])
 			src.rearm()
 		return
 
@@ -283,15 +283,15 @@
 	var/obj/item/weapon/grenade/flashbang/F = AM
 	addtimer(CALLBACK(F, /obj/item/weapon/grenade/flashbang.proc/prime), det_time)
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang//Because I am a heartless bastard -Sieve
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang// Because I am a heartless bastard -Sieve
 	name = "SOP-6 Grenade Launcher"
 	projectile = /obj/item/weapon/grenade/clusterbuster
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited/get_equip_info()//Limited version of the clusterbang launcher that can't reload
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited/get_equip_info()// Limited version of the clusterbang launcher that can't reload
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[chassis.selected==src?"<b>":"<a href='?src=\ref[chassis];select_equip=\ref[src]'>"][src.name][chassis.selected==src?"</b>":"</a>"]\[[src.projectiles]\]"
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited/rearm()
-	return//Extra bit of security
+	return// Extra bit of security
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "Banana Mortar"

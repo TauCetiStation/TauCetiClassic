@@ -7,18 +7,18 @@ var/datum/nanomanager/nanomanager = new()
 // Announcer intercom, because too much stuff creates an intercom for one message then hard del()s it.
 var/global/obj/item/device/radio/intercom/global_announcer
 
-var/list/paper_tag_whitelist = list("center","p","div","span","h1","h2","h3","h4","h5","h6","hr","pre",	\
-	"big","small","font","i","u","b","s","sub","sup","tt","br","hr","ol","ul","li","caption","col",	\
-	"table","td","th","tr")
-var/list/paper_blacklist = list("java","onblur","onchange","onclick","ondblclick","onfocus","onkeydown",	\
-	"onkeypress","onkeyup","onload","onmousedown","onmousemove","onmouseout","onmouseover",	\
-	"onmouseup","onreset","onselect","onsubmit","onunload")
+var/list/paper_tag_whitelist = list("center", "p", "div", "span", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "pre",	\
+	"big", "small", "font", "i", "u", "b", "s", "sub", "sup", "tt", "br", "hr", "ol", "ul", "li", "caption", "col",	\
+	"table", "td", "th", "tr")
+var/list/paper_blacklist = list("java", "onblur", "onchange", "onclick", "ondblclick", "onfocus", "onkeydown",	\
+	"onkeypress", "onkeyup", "onload", "onmousedown", "onmousemove", "onmouseout", "onmouseover",	\
+	"onmouseup", "onreset", "onselect", "onsubmit", "onunload")
 
 var/gravity_is_on = 1
 var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
 var/visual_counter = 1
 
-//Goonstyle scoreboard
+// Goonstyle scoreboard
 // NOW AN ASSOCIATIVE LIST
 // NO FUCKING EXCUSE FOR THE ATROCITY THAT WAS
 var/list/score=list(
@@ -53,7 +53,7 @@ var/list/score=list(
 	"richestjob"    = null,  // kinda pointless if you dont have a money system i guess
 	"richestcash"   = 0,
 	"richestkey"    = null,
-	"dmgestname"    = null, // who had the most damage on the shuttle (but was still alive)
+	"dmgestname"    = null, // who had the most damage on the shuttle(but was still alive)
 	"dmgestjob"     = null,
 	"dmgestdamage"  = 0,
 	"dmgestkey"     = null

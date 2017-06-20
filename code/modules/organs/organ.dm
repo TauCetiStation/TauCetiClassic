@@ -11,7 +11,7 @@
 	var/parent_bodypart                // Bodypart holding this object.
 
 	// Status tracking.
-	var/status = 0                     // Various status flags (such as robotic)
+	var/status = 0                     // Various status flags(such as robotic)
 	var/vital                          // Lose a vital organ, die immediately.
 
 	// Reference data.
@@ -45,30 +45,30 @@
 	return 0
 
 /obj/item/organ/proc/get_icon(icon/race_icon, icon/deform_icon)
-	return icon('icons/mob/human.dmi',"blank")
+	return icon('icons/mob/human.dmi', "blank")
 
-//Germs
+// Germs
 /obj/item/organ/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 
-	if (!germ_level || antibiotics < 5)
+	if(!germ_level || antibiotics < 5)
 		return
 
-	if (germ_level < INFECTION_LEVEL_ONE)
-		germ_level = 0	//cure instantly
-	else if (germ_level < INFECTION_LEVEL_TWO)
-		germ_level -= 6	//at germ_level == 500, this should cure the infection in a minute
+	if(germ_level < INFECTION_LEVEL_ONE)
+		germ_level = 0	// cure instantly
+	else if(germ_level < INFECTION_LEVEL_TWO)
+		germ_level -= 6	// at germ_level == 500, this should cure the infection in a minute
 	else
-		germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
+		germ_level -= 2 // at germ_level == 1000, this will cure the infection in 5 minutes
 
-//Handles chem traces
+// Handles chem traces
 /mob/living/carbon/human/proc/handle_trace_chems()
-	//New are added for reagents to random bodyparts.
+	// New are added for reagents to random bodyparts.
 	for(var/datum/reagent/A in reagents.reagent_list)
 		var/obj/item/organ/external/BP = pick(bodyparts)
 		BP.trace_chemicals[A.name] = 100
 
-//Adds autopsy data for used_weapon.
+// Adds autopsy data for used_weapon.
 /obj/item/organ/proc/add_autopsy_data(used_weapon, damage)
 	var/datum/autopsy_data/W = autopsy_data[used_weapon]
 	if(!W)
@@ -94,7 +94,7 @@
 		for(var/obj/item/organ/external/BP in bodyparts)
 			bad_bodyparts += BP
 
-	//processing organs is pretty cheap, do that first.
+	// processing organs is pretty cheap, do that first.
 	for(var/obj/item/organ/internal/IO in organs)
 		IO.process()
 
@@ -111,21 +111,21 @@
 			BP.process()
 			number_wounds += BP.number_wounds
 
-			if (!lying && world.time - l_move_time < 15)
-			//Moving around with fractured ribs won't do you any good
-				if (BP.is_broken() && BP.bodypart_organs.len && prob(15))
+			if(!lying && world.time - l_move_time < 15)
+			// Moving around with fractured ribs won't do you any good
+				if(BP.is_broken() && BP.bodypart_organs.len && prob(15))
 					var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 					custom_pain("You feel broken bones moving in your [BP.name]!", 1)
 					IO.take_damage(rand(3, 5))
 
-				//Moving makes open wounds get infected much faster
-				if (BP.wounds.len)
+				// Moving makes open wounds get infected much faster
+				if(BP.wounds.len)
 					for(var/datum/wound/W in BP.wounds)
-						if (W.infection_check())
+						if(W.infection_check())
 							W.germ_level += 1
 
-			if((BP.body_zone in list(BP_L_LEG , BP_L_FOOT , BP_R_LEG , BP_R_FOOT)) && !lying)
-				if (!BP.is_usable() || BP.is_malfunctioning() || (BP.is_broken() && !(BP.status & ORGAN_SPLINTED)))
+			if((BP.body_zone in list(BP_L_LEG, BP_L_FOOT, BP_R_LEG, BP_R_FOOT)) && !lying)
+				if(!BP.is_usable() || BP.is_malfunctioning() || (BP.is_broken() && !(BP.status & ORGAN_SPLINTED)))
 					leg_tally--			// let it fail even if just foot&leg
 
 	// standing is poor
@@ -135,8 +135,8 @@
 		emote("collapse")
 		paralysis = 10
 
-	//Check arms and legs for existence
-	can_stand = 2 //can stand on both legs
+	// Check arms and legs for existence
+	can_stand = 2 // can stand on both legs
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_L_FOOT]
 	if(BP.status & ORGAN_DESTROYED)
 		can_stand--

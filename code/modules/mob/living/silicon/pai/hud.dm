@@ -1,7 +1,7 @@
 /mob/living/silicon/pai/proc/regular_hud_updates()
 	if(client)
 		for(var/image/hud in client.images)
-			if(copytext(hud.icon_state,1,4) == "hud")
+			if(copytext(hud.icon_state, 1, 4) == "hud")
 				client.images -= hud
 
 /mob/living/silicon/pai/proc/securityHUD()
@@ -60,8 +60,8 @@
 				if(!D.hidden[SCANNER])
 					foundVirus++
 
-			for (var/ID in patient.virus2)
-				if (ID in virusDB)
+			for(var/ID in patient.virus2)
+				if(ID in virusDB)
 					foundVirus = 1
 					break
 

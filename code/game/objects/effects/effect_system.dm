@@ -10,7 +10,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	name = "effect"
 	icon = 'icons/effects/effects.dmi'
 	mouse_opacity = 0
-	unacidable = 1//So effect are not targeted by alien acid.
+	unacidable = 1// So effect are not targeted by alien acid.
 	pass_flags = PASSTABLE | PASSGRILLE
 
 /obj/effect/effect/water
@@ -26,11 +26,11 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	return ..()
 
 /obj/effect/effect/water/Move(turf/newloc)
-	//var/turf/T = src.loc
-	//if (istype(T, /turf))
-	//	T.firelevel = 0 //TODO: FIX
-	if (--src.life < 1)
-		//SN src = null
+	// var/turf/T = src.loc
+	// if(istype(T, /turf))
+	//	T.firelevel = 0 // TODO: FIX
+	if(--src.life < 1)
+		// SN src = null
 		qdel(src)
 	if(newloc.density)
 		return 0
@@ -70,7 +70,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM
 
-//Usage: set_up(number of bits of steam, use North/South/East/West only, spawn location)
+// Usage: set_up(number of bits of steam, use North/South/East/West only, spawn location)
 // The attach(atom/atom) proc is optional, and can be called to attach the effect
 // to something, like a smoking beaker, so then you can just call start() and the steam
 // will always spawn at the items location, even if it's moved.
@@ -109,13 +109,13 @@ steam.start() -- spawns the effect
 					direction = pick(cardinal)
 				else
 					direction = pick(alldirs)
-				for(i=0, i<pick(1,2,3), i++)
+				for(i=0, i<pick(1, 2, 3), i++)
 					sleep(5)
-					step(steam,direction)
+					step(steam, direction)
 				QDEL_IN(steam, 20)
 
 /////////////////////////////////////////////
-//SPARK SYSTEM (like steam system)
+// SPARK SYSTEM(like steam system)
 // The attach(atom/atom) proc is optional, and can be called to attach the effect
 // to something, like the RCD, so then you can just call start() and the sparks
 // will always spawn at the items location.
@@ -132,22 +132,22 @@ steam.start() -- spawns the effect
 	..()
 	playsound(src.loc, "sparks", 100, 1)
 	var/turf/T = src.loc
-	if (istype(T, /turf))
-		T.hotspot_expose(1000,100)
+	if(istype(T, /turf))
+		T.hotspot_expose(1000, 100)
 	QDEL_IN(src, 100)
 	return
 
 /obj/effect/effect/sparks/Destroy()
 	var/turf/T = src.loc
-	if (istype(T, /turf))
-		T.hotspot_expose(1000,100)
+	if(istype(T, /turf))
+		T.hotspot_expose(1000, 100)
 	return	..()
 
 /obj/effect/effect/sparks/Move()
 	..()
 	var/turf/T = src.loc
-	if (istype(T, /turf))
-		T.hotspot_expose(1000,100)
+	if(istype(T, /turf))
+		T.hotspot_expose(1000, 100)
 	return
 
 /datum/effect/effect/system/spark_spread
@@ -178,9 +178,9 @@ steam.start() -- spawns the effect
 					direction = pick(cardinal)
 				else
 					direction = pick(alldirs)
-				for(i=0, i<pick(1,2,3), i++)
+				for(i=0, i<pick(1, 2, 3), i++)
 					sleep(5)
-					step(sparks,direction)
+					step(sparks, direction)
 				addtimer(CALLBACK(src, .proc/delete_sparks, sparks), 20)
 
 /datum/effect/effect/system/spark_spread/proc/delete_sparks(obj/effect/effect/sparks/sparks)
@@ -204,7 +204,7 @@ steam.start() -- spawns the effect
 	var/amount = 6.0
 	var/time_to_live = 100
 
-	//Remove this bit to use the old smoke
+	// Remove this bit to use the old smoke
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
@@ -220,9 +220,9 @@ steam.start() -- spawns the effect
 		affect(M)
 
 /obj/effect/effect/smoke/proc/affect(mob/living/carbon/M)
-	if (istype(M))
+	if(istype(M))
 		return 0
-	if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
+	if(M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
 		return 0
 	return 1
 
@@ -239,14 +239,14 @@ steam.start() -- spawns the effect
 		affect(M)
 
 /obj/effect/effect/smoke/bad/affect(mob/living/carbon/M)
-	if (!..())
+	if(!..())
 		return 0
 	M.drop_item()
 	M.adjustOxyLoss(1)
-	if (M.coughedtime != 1)
+	if(M.coughedtime != 1)
 		M.coughedtime = 1
 		M.emote("cough")
-		spawn ( 20 )
+		spawn( 20 )
 			M.coughedtime = 0
 
 /obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -267,15 +267,15 @@ steam.start() -- spawns the effect
 		affect(M)
 
 /obj/effect/effect/smoke/sleepy/affect(mob/living/carbon/M )
-	if (!..())
+	if(!..())
 		return 0
 
 	M.drop_item()
 	M:sleeping += 1
-	if (M.coughedtime != 1)
+	if(M.coughedtime != 1)
 		M.coughedtime = 1
 		M.emote("cough")
-		spawn ( 20 )
+		spawn( 20 )
 			M.coughedtime = 0
 /////////////////////////////////////////////
 // Mustard Gas
@@ -292,16 +292,16 @@ steam.start() -- spawns the effect
 		affect(R)
 
 /obj/effect/effect/smoke/mustard/affect(mob/living/carbon/human/R)
-	if (!..())
+	if(!..())
 		return 0
-	if (R.wear_suit != null)
+	if(R.wear_suit != null)
 		return 0
 
 	R.burn_skin(0.75)
-	if (R.coughedtime != 1)
+	if(R.coughedtime != 1)
 		R.coughedtime = 1
 		R.emote("gasp")
-		spawn (20)
+		spawn(20)
 			R.coughedtime = 0
 	R.updatehealth()
 	return
@@ -343,11 +343,11 @@ steam.start() -- spawns the effect
 					direction = pick(cardinal)
 				else
 					direction = pick(alldirs)
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
+			for(i=0, i<pick(0, 1, 1, 1, 2, 2, 2, 3), i++)
 				sleep(10)
-				step(smoke,direction)
-			spawn(smoke.time_to_live*0.75+rand(10,30))
-				if (smoke) qdel(smoke)
+				step(smoke, direction)
+			spawn(smoke.time_to_live*0.75+rand(10, 30))
+				if(smoke) qdel(smoke)
 				src.total_smoke--
 
 
@@ -363,7 +363,7 @@ steam.start() -- spawns the effect
 
 
 /////////////////////////////////////////////
-//////// Attach an Ion trail to any object, that spawns when it moves (like for the jetpack)
+//////// Attach an Ion trail to any object, that spawns when it moves(like for the jetpack)
 /// just pass in the object to attach it to in set_up
 /// Then do start() to start it and stop() to stop it, obviously
 /// and don't call start() in a loop that will be repeated otherwise it'll get spammed!
@@ -385,7 +385,7 @@ steam.start() -- spawns the effect
 /datum/effect/effect/system/ion_trail_follow/set_up(atom/atom)
 	attach(atom)
 
-/datum/effect/effect/system/ion_trail_follow/start() //Whoever is responsible for this abomination of code should become an hero
+/datum/effect/effect/system/ion_trail_follow/start() // Whoever is responsible for this abomination of code should become an hero
 	if(!src.on)
 		src.on = 1
 		src.processing = 1
@@ -411,7 +411,7 @@ steam.start() -- spawns the effect
 	oldposition = null
 
 /////////////////////////////////////////////
-//////// Attach a steam trail to an object (eg. a reacting beaker) that will follow it
+//////// Attach a steam trail to an object(eg. a reacting beaker) that will follow it
 // even if it's carried of thrown.
 /////////////////////////////////////////////
 
@@ -511,7 +511,7 @@ steam.start() -- spawns the effect
 	for(var/direction in cardinal)
 
 
-		var/turf/T = get_step(src,direction)
+		var/turf/T = get_step(src, direction)
 		if(!T)
 			continue
 
@@ -526,9 +526,9 @@ steam.start() -- spawns the effect
 		F.amount = amount
 		if(!metal)
 			F.create_reagents(10)
-			if (reagents)
+			if(reagents)
 				for(var/datum/reagent/R in reagents.reagent_list)
-					F.reagents.add_reagent(R.id, 1, safety = 1)		//added safety check since reagents in the foam have already had a chance to react
+					F.reagents.add_reagent(R.id, 1, safety = 1)		// added safety check since reagents in the foam have already had a chance to react
 
 // foam disolves when heated
 // except metal foams
@@ -541,9 +541,9 @@ steam.start() -- spawns the effect
 	if(metal)
 		return
 
-	if (istype(AM, /mob/living/carbon))
+	if(istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) )
+		if(istype(M, /mob/living/carbon/human) && (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) )
 			return
 		if( istype(M, /mob/living/carbon/human) && (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)	)
 			return
@@ -575,7 +575,7 @@ steam.start() -- spawns the effect
 
 
 		// bit of a hack here. Foam carries along any reagent also present in the glass it is mixed
-		// with (defaults to water if none is present). Rather than actually transfer the reagents,
+		// with(defaults to water if none is present). Rather than actually transfer the reagents,
 		// this makes a list of the reagent ids and spawns 1 unit of that reagent when the foam disolves.
 
 
@@ -598,7 +598,7 @@ steam.start() -- spawns the effect
 
 				if(carried_reagents)
 					for(var/id in carried_reagents)
-						F.reagents.add_reagent(id, 1, null, 1) //makes a safety call because all reagents should have already reacted anyway
+						F.reagents.add_reagent(id, 1, null, 1) // makes a safety call because all reagents should have already reacted anyway
 				else
 					F.reagents.add_reagent("water", 1, safety = 1)
 
@@ -648,10 +648,10 @@ steam.start() -- spawns the effect
 		return
 
 	attack_hand(mob/user)
-		if ((HULK in user.mutations) || (prob(75 - metal*25)))
+		if((HULK in user.mutations) || (prob(75 - metal*25)))
 			to_chat(user, "\blue You smash through the metal foam wall.")
 			for(var/mob/O in oviewers(user))
-				if ((O.client && !( O.blinded )))
+				if((O.client && !( O.blinded )))
 					to_chat(O, "\red [user] smashes through the foamed metal.")
 
 			qdel(src)
@@ -662,11 +662,11 @@ steam.start() -- spawns the effect
 
 	attackby(obj/item/I, mob/user)
 
-		if (istype(I, /obj/item/weapon/grab))
+		if(istype(I, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = I
 			G.affecting.loc = src.loc
 			for(var/mob/O in viewers(src))
-				if (O.client)
+				if(O.client)
 					to_chat(O, "\red [G.assailant] smashes [G.affecting] through the foamed metal wall.")
 			qdel(I)
 			qdel(src)
@@ -675,7 +675,7 @@ steam.start() -- spawns the effect
 		if(prob(I.force*20 - metal*25))
 			to_chat(user, "\blue You smash through the foamed metal with \the [I].")
 			for(var/mob/O in oviewers(user))
-				if ((O.client && !( O.blinded )))
+				if((O.client && !( O.blinded )))
 					to_chat(O, "\red [user] smashes through the foamed metal.")
 			qdel(src)
 		else
@@ -699,7 +699,7 @@ steam.start() -- spawns the effect
 	var/flashing = 0			// does explosion creates flash effect?
 	var/flashing_factor = 0		// factor of how powerful the flash effect relatively to the explosion
 
-	set_up (amt, loc, flash = 0, flash_fact = 0)
+	set_up(amt, loc, flash = 0, flash_fact = 0)
 		amount = amt
 		if(istype(loc, /turf/))
 			location = loc
@@ -712,7 +712,7 @@ steam.start() -- spawns the effect
 		return
 
 	start()
-		if (amount <= 2)
+		if(amount <= 2)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 			s.set_up(2, 1, location)
 			s.start()
@@ -720,9 +720,9 @@ steam.start() -- spawns the effect
 			for(var/mob/M in viewers(5, location))
 				to_chat(M, "\red The solution violently explodes.")
 			for(var/mob/M in viewers(1, location))
-				if (prob (50 * amount))
+				if(prob (50 * amount))
 					to_chat(M, "\red The explosion knocks you down.")
-					M.Weaken(rand(1,5))
+					M.Weaken(rand(1, 5))
 			return
 		else
 			var/devastation = 0
@@ -731,16 +731,16 @@ steam.start() -- spawns the effect
 			var/flash = 0
 
 			// Clamp all values to MAX_EXPLOSION_RANGE
-			if (round(amount/12) > 0)
-				devastation = min (MAX_EXPLOSION_RANGE, round(amount/12))
+			if(round(amount/12) > 0)
+				devastation = min(MAX_EXPLOSION_RANGE, round(amount/12))
 
-			if (round(amount/6) > 0)
-				heavy = min (MAX_EXPLOSION_RANGE, round(amount/6))
+			if(round(amount/6) > 0)
+				heavy = min(MAX_EXPLOSION_RANGE, round(amount/6))
 
-			if (round(amount/3) > 0)
-				light = min (MAX_EXPLOSION_RANGE, round(amount/3))
+			if(round(amount/3) > 0)
+				light = min(MAX_EXPLOSION_RANGE, round(amount/3))
 
-			if (flash && flashing_factor)
+			if(flash && flashing_factor)
 				flash += (round(amount/4) * flashing_factor)
 
 			for(var/mob/M in viewers(world.view, location))
@@ -752,11 +752,11 @@ steam.start() -- spawns the effect
 		if(holder)
 			var/dmglevel = 4
 
-			if (round(amount/8) > 0)
+			if(round(amount/8) > 0)
 				dmglevel = 1
-			else if (round(amount/4) > 0)
+			else if(round(amount/4) > 0)
 				dmglevel = 2
-			else if (round(amount/2) > 0)
+			else if(round(amount/2) > 0)
 				dmglevel = 3
 
 			if(dmglevel<4) holder.ex_act(dmglevel)

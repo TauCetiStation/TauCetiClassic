@@ -14,8 +14,8 @@
 	circuit = /obj/item/weapon/circuitboard/powermonitor
 	var/datum/powernet/powernet = null
 
-//fix for issue 521, by QualityVan.
-//someone should really look into why circuits have a powernet var, it's several kinds of retarded.
+// fix for issue 521, by QualityVan.
+// someone should really look into why circuits have a powernet var, it's several kinds of retarded.
 /obj/machinery/computer/monitor/New()
 	..()
 	var/obj/structure/cable/attached = null
@@ -25,7 +25,7 @@
 	if(attached)
 		powernet = attached.get_powernet()
 
-/obj/machinery/computer/monitor/process() //oh shit, somehow we didnt end up with a powernet... lets look for one.
+/obj/machinery/computer/monitor/process() // oh shit, somehow we didnt end up with a powernet... lets look for one.
 	if(!powernet)
 		var/obj/structure/cable/attached = null
 		var/turf/T = loc
@@ -42,8 +42,8 @@
 
 /obj/machinery/computer/monitor/interact(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!(istype(user, /mob/living/silicon) || IsAdminGhost(user)))
+	if( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+		if(!(istype(user, /mob/living/silicon) || IsAdminGhost(user)))
 			user.unset_machine()
 			user << browse(null, "window=powcomp")
 			return
@@ -65,7 +65,7 @@
 				var/obj/machinery/power/apc/A = term.master
 				L += A
 
-		t += "<PRE>Total power: [powernet.avail] W<BR>Total load:  [num2text(powernet.viewload,10)] W<BR>"
+		t += "<PRE>Total power: [powernet.avail] W<BR>Total load:  [num2text(powernet.viewload, 10)] W<BR>"
 
 		t += "<FONT SIZE=-1>"
 
@@ -73,8 +73,8 @@
 
 			t += "Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
 
-			var/list/S = list(" Off","AOff","  On", " AOn")
-			var/list/chg = list("N","C","F")
+			var/list/S = list(" Off", "AOff", "  On", " AOn")
+			var/list/chg = list("N", "C", "F")
 
 			for(var/obj/machinery/power/apc/A in L)
 

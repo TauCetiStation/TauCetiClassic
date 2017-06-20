@@ -3,10 +3,10 @@
 	name = "Prototype Sting"
 	desc = "" // Fluff
 	var/helptext = "" // Details
-	var/chemical_cost = 0 // negative chemical cost is for passive abilities (chemical glands)
-	var/genomecost = -1 //cost of the sting in dna points. 0 = auto-purchase, -1 = cannot be purchased
-	var/req_dna = 0  //amount of dna needed to use this ability. Changelings always have atleast 1
-	var/req_human = 0 //if you need to be human to use this ability
+	var/chemical_cost = 0 // negative chemical cost is for passive abilities(chemical glands)
+	var/genomecost = -1 // cost of the sting in dna points. 0 = auto-purchase, -1 = cannot be purchased
+	var/req_dna = 0  // amount of dna needed to use this ability. Changelings always have atleast 1
+	var/req_human = 0 // if you need to be human to use this ability
 	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
 	var/genetic_damage = 0 // genetic damage caused by using the sting. Nothing to do with cloneloss.
 	var/max_genetic_damage = 100 // hard counter for spamming abilities. Not used/balanced much yet.
@@ -38,9 +38,9 @@
 	changeling.chem_charges -= chemical_cost
 	changeling.geneticdamage += genetic_damage
 
-//Fairly important to remember to return 1 on success >.<
+// Fairly important to remember to return 1 on success >.<
 /obj/effect/proc_holder/changeling/proc/can_sting(mob/user, mob/target)
-	if(!ishuman(user) && !ismonkey(user)) //typecast everything from mob to carbon from this point onwards
+	if(!ishuman(user) && !ismonkey(user)) // typecast everything from mob to carbon from this point onwards
 		return 0
 	if(req_human && !ishuman(user))
 		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
@@ -63,7 +63,7 @@
 		return 0
 	return 1
 
-//used in /mob/Stat()
+// used in /mob/Stat()
 /obj/effect/proc_holder/changeling/proc/can_be_used_by(mob/user)
 	if(!ishuman(user) && !ismonkey(user))
 		return 0

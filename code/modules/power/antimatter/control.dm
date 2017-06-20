@@ -16,17 +16,17 @@
 	var/stability = 100
 	var/exploding = 0
 
-	var/active = 0//On or not
-	var/fuel_injection = 2//How much fuel to inject
-	var/shield_icon_delay = 0//delays resetting for a short time
+	var/active = 0// On or not
+	var/fuel_injection = 2// How much fuel to inject
+	var/shield_icon_delay = 0// delays resetting for a short time
 	var/reported_core_efficiency = 0
 
 	var/power_cycle = 0
-	var/power_cycle_delay = 4//How many ticks till produce_power is called
+	var/power_cycle_delay = 4// How many ticks till produce_power is called
 	var/stored_core_stability = 0
 	var/stored_core_stability_delay = 0
 
-	var/stored_power = 0//Power to deploy per tick
+	var/stored_power = 0// Power to deploy per tick
 
 
 /obj/machinery/power/am_control_unit/New()
@@ -35,7 +35,7 @@
 	linked_cores = list()
 
 
-/obj/machinery/power/am_control_unit/Destroy()//Perhaps damage and run stability checks rather than just del on the others
+/obj/machinery/power/am_control_unit/Destroy()// Perhaps damage and run stability checks rather than just del on the others
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 		qdel(AMS)
 	return ..()
@@ -43,19 +43,19 @@
 
 /obj/machinery/power/am_control_unit/process()
 	if(exploding)
-		explosion(get_turf(src),8,12,18,12)
+		explosion(get_turf(src), 8, 12, 18, 12)
 		if(src) del(src)
 
 	if(update_shield_icons && !shield_icon_delay)
 		check_shield_icons()
 		update_shield_icons = 0
 
-	if(stat & (NOPOWER|BROKEN) || !active)//can update the icons even without power
+	if(stat & (NOPOWER|BROKEN) || !active)// can update the icons even without power
 		return
 
-	if(!fueljar)//No fuel but we are on, shutdown
+	if(!fueljar)// No fuel but we are on, shutdown
 		toggle_power()
-		//Angry buzz or such here
+		// Angry buzz or such here
 		return
 
 	add_avail(stored_power)
@@ -70,17 +70,17 @@
 
 /obj/machinery/power/am_control_unit/proc/produce_power()
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
-	var/core_power = reported_core_efficiency//Effectively how much fuel we can safely deal with
-	if(core_power <= 0) return 0//Something is wrong
+	var/core_power = reported_core_efficiency// Effectively how much fuel we can safely deal with
+	if(core_power <= 0) return 0// Something is wrong
 	var/core_damage = 0
 	var/fuel = fueljar.usefuel(fuel_injection)
 
 	stored_power = (fuel/core_power)*fuel*200000
-	//Now check if the cores could deal with it safely, this is done after so you can overload for more power if needed, still a bad idea
-	if(fuel > (2*core_power))//More fuel has been put in than the current cores can deal with
-		if(prob(50))core_damage = 1//Small chance of damage
-		if((fuel-core_power) > 5)	core_damage = 5//Now its really starting to overload the cores
-		if((fuel-core_power) > 10)	core_damage = 20//Welp now you did it, they wont stand much of this
+	// Now check if the cores could deal with it safely, this is done after so you can overload for more power if needed, still a bad idea
+	if(fuel > (2*core_power))// More fuel has been put in than the current cores can deal with
+		if(prob(50))core_damage = 1// Small chance of damage
+		if((fuel-core_power) > 5)	core_damage = 5// Now its really starting to overload the cores
+		if((fuel-core_power) > 10)	core_damage = 20// Welp now you did it, they wont stand much of this
 		if(core_damage == 0) return
 		for(var/obj/machinery/am_shielding/AMS in linked_cores)
 			AMS.stability -= core_damage
@@ -93,21 +93,21 @@
 	switch(severity)
 		if(1)
 			if(active)	toggle_power()
-			stability -= rand(15,30)
+			stability -= rand(15, 30)
 		if(2)
 			if(active)	toggle_power()
-			stability -= rand(10,20)
+			stability -= rand(10, 20)
 	..()
 	return 0
 
 
 /obj/machinery/power/am_control_unit/blob_act()
 	stability -= 20
-	if(prob(100-stability))//Might infect the rest of the machine
+	if(prob(100-stability))// Might infect the rest of the machine
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 			AMS.blob_act()
 		spawn(0)
-			//Likely explode
+			// Likely explode
 			qdel(src)
 		return
 	check_stability()
@@ -142,7 +142,7 @@
 /obj/machinery/power/am_control_unit/update_icon()
 	if(active) icon_state = "control_on"
 	else icon_state = "control"
-	//No other icons for it atm
+	// No other icons for it atm
 
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user)
@@ -208,7 +208,7 @@
 	return 1
 
 
-/obj/machinery/power/am_control_unit/proc/check_stability()//TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced
+/obj/machinery/power/am_control_unit/proc/check_stability()// TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced
 	if(stability <= 0)
 		qdel(src)
 	return
@@ -226,7 +226,7 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/proc/check_shield_icons()//Forces icon_update for all shields
+/obj/machinery/power/am_control_unit/proc/check_shield_icons()// Forces icon_update for all shields
 	if(shield_icon_delay) return
 	shield_icon_delay = 1
 	if(update_shield_icons == 2)//2 means to clear everything and rebuild
@@ -274,7 +274,7 @@
 	dat += "<A href='?src=\ref[src];togglestatus=1'>Toggle Status</A><BR>"
 
 	dat += "Instability: [stability]%<BR>"
-	dat += "Reactor parts: [linked_shielding.len]<BR>"//TODO: perhaps add some sort of stability check
+	dat += "Reactor parts: [linked_shielding.len]<BR>"// TODO: perhaps add some sort of stability check
 	dat += "Cores: [linked_cores.len]<BR><BR>"
 	dat += "-Current Efficiency: [reported_core_efficiency]<BR>"
 	dat += "-Average Stability: [stored_core_stability] <A href='?src=\ref[src];refreshstability=1'>(update)</A><BR>"
@@ -316,8 +316,8 @@
 		if(fueljar)
 			fueljar.loc = src.loc
 			fueljar = null
-			//fueljar.control_unit = null currently it does not care where it is
-			//update_icon() when we have the icon for it
+			// fueljar.control_unit = null currently it does not care where it is
+			// update_icon() when we have the icon for it
 
 	else if(href_list["strengthup"])
 		fuel_injection++

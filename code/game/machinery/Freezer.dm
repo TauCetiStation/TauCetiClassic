@@ -84,15 +84,15 @@
 	data["targetGasTemperature"] = round(current_temperature)
 
 	var/temp_class = "good"
-	if (air_contents.temperature > (T0C - 20))
+	if(air_contents.temperature > (T0C - 20))
 		temp_class = "bad"
-	else if (air_contents.temperature < (T0C - 20) && air_contents.temperature > (T0C - 100))
+	else if(air_contents.temperature < (T0C - 20) && air_contents.temperature > (T0C - 100))
 		temp_class = "average"
 	data["gasTemperatureClass"] = temp_class
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "freezer.tmpl", "Gas Cooling System", 440, 300)
@@ -211,13 +211,13 @@
 	data["targetGasTemperature"] = round(current_temperature)
 
 	var/temp_class = "normal"
-	if (air_contents.temperature > (T20C+40))
+	if(air_contents.temperature > (T20C+40))
 		temp_class = "bad"
 	data["gasTemperatureClass"] = temp_class
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "freezer.tmpl", "Gas Heating System", 440, 300)
@@ -232,7 +232,7 @@
 	. = ..()
 	if(!.)
 		return
-	if (href_list["toggleStatus"])
+	if(href_list["toggleStatus"])
 		src.on = !src.on
 		update_icon()
 	if(href_list["temp"])

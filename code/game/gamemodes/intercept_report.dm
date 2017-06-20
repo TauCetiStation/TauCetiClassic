@@ -85,7 +85,7 @@
 			src.text = ""
 			src.build_malf(correct_person)
 			return src.text
-		if("changeling","traitorchan")
+		if("changeling", "traitorchan")
 			src.text = ""
 			src.build_changeling(correct_person)
 			return src.text
@@ -98,8 +98,8 @@
 /datum/intercept_text/proc/pick_mob()
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in player_list)
-		if (!man.mind) continue
-		if (man.mind.assigned_role=="MODE") continue
+		if(!man.mind) continue
+		if(man.mind.assigned_role=="MODE") continue
 		dudes += man
 	if(dudes.len==0)
 		return null
@@ -108,18 +108,18 @@
 
 /datum/intercept_text/proc/pick_fingerprints()
 	var/mob/living/carbon/human/dude = src.pick_mob()
-	//if (!dude) return pick_fingerprints() //who coded that is totally crasy or just a traitor. -- rastaf0
+	// if(!dude) return pick_fingerprints() // who coded that is totally crasy or just a traitor. -- rastaf0
 	if(dude)
 		return num2text(md5(dude.dna.uni_identity))
 	else
-		return num2text(md5(num2text(rand(1,10000))))
+		return num2text(md5(num2text(rand(1, 10000))))
 */
 
 /datum/intercept_text/proc/get_suspect()
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.client.prefs.nanotrasen_relation == "Opposed")
 		dudes += man
-	for(var/i = 0, i < max(player_list.len/10,2), i++)
+	for(var/i = 0, i < max(player_list.len/10, 2), i++)
 		dudes += pick(player_list)
 	return pick(dudes)
 
@@ -142,7 +142,7 @@
 		src.text += "are [prob_right_dude]% sure that [traitor_name] may have been involved, and should be closely observed."
 		src.text += "<BR>Note: This group are known to be untrustworthy, so do not act on this information without proper discourse."
 	else
-		src.text += "discovered the following set of fingerprints ([fingerprints]) on sensitive materials, and their owner should be closely observed."
+		src.text += "discovered the following set of fingerprints([fingerprints]) on sensitive materials, and their owner should be closely observed."
 		src.text += "However, these could also belong to a current Cent. Com employee, so do not act on this without reason."
 
 

@@ -32,7 +32,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=whitelist;size=600x500")
+	usr << browse(output, "window=whitelist;size=600x500")
 
 /datum/admins/proc/whitelist_view(user_ckey)
 	src = usr.client.holder
@@ -81,13 +81,13 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=whitelist_user;size=750x500")
+	usr << browse(output, "window=whitelist_user;size=750x500")
 
 /datum/admins/proc/whitelist_add_user()
 	if(!check_rights(R_WHITELIST))
 		return
 
-	var/target_ckey = input(usr,"type in ckey:","Add User", null) as null|text
+	var/target_ckey = input(usr, "type in ckey:", "Add User", null) as null|text
 	if(!target_ckey)
 		return
 
@@ -128,7 +128,7 @@
 	var/ban = role_whitelist[target_ckey][role]["ban"]
 
 	if(ban_edit)
-		ban_edit = alert(usr, ban ? "Do you want to UNBAN [role] for [target_ckey]?" : "Do you want to BAN [role] for [target_ckey]?",,ban ? "Unban" : "Ban", "Cancel")
+		ban_edit = alert(usr, ban ? "Do you want to UNBAN [role] for [target_ckey]?" : "Do you want to BAN [role] for [target_ckey]?",, ban ? "Unban" : "Ban", "Cancel")
 		switch(ban_edit)
 			if("Cancel")
 				return
@@ -176,11 +176,11 @@
 			to_chat(usr, "<span class='warning'>Failed to establish database connection.</span>")
 		return FALSE
 
-	var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `whitelist` (`ckey`, `role`, `ban`, `reason`, `addby`, `addtm`, `editby`, `edittm`) VALUES ('[target_ckey]', '[role]', '0', '[reason]', '[adm_ckey]', NOW(), '[adm_ckey]', NOW());")
+	var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `whitelist` (`ckey`, `role`, `ban`, `reason`, `addby`, `addtm`, `editby`, `edittm`) VALUES('[target_ckey]', '[role]', '0', '[reason]', '[adm_ckey]', NOW(), '[adm_ckey]', NOW());")
 	if(!insert_query.Execute())
 		var/fail_msg = insert_query.ErrorMsg()
-		world.log << "SQL ERROR (I): [fail_msg]"
-		message_admins("SQL ERROR (I): [fail_msg]")
+		world.log << "SQL ERROR(I): [fail_msg]"
+		message_admins("SQL ERROR(I): [fail_msg]")
 		return FALSE
 
 	if(!role_whitelist[target_ckey])
@@ -241,8 +241,8 @@
 	var/DBQuery/query_update = dbcon.NewQuery(sql_update)
 	if(!query_update.Execute())
 		var/fail_msg = query_update.ErrorMsg()
-		world.log << "SQL ERROR (U): [fail_msg]"
-		message_admins("SQL ERROR (U): [fail_msg]")
+		world.log << "SQL ERROR(U): [fail_msg]"
+		message_admins("SQL ERROR(U): [fail_msg]")
 		return
 
 	var/msg = "changed reason in whitelist from [sanitize(role_whitelist[target_ckey][role]["reason"])] to [sanitize(reason)] for [target_ckey] as [role]."
@@ -268,13 +268,13 @@
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		world.log << "SQL ERROR (L): whitelist: connection failed to SQL database."
+		world.log << "SQL ERROR(L): whitelist: connection failed to SQL database."
 		return
 
 	var/DBQuery/select_query = dbcon.NewQuery("SELECT * FROM whitelist")
 
 	if(!select_query.Execute())
-		world.log << "SQL ERROR (L): whitelist: [select_query.ErrorMsg()]."
+		world.log << "SQL ERROR(L): whitelist: [select_query.ErrorMsg()]."
 		return FALSE
 	else
 		while(select_query.NextRow())
@@ -297,10 +297,10 @@
 	if(role == "human")
 		return TRUE
 
-	switch(role) //We don't use separate whitelist for languages, lets transform lang name to their race name.
+	switch(role) // We don't use separate whitelist for languages, lets transform lang name to their race name.
 		if("sinta'unathi")
 			role = "unathi"
-		if("siik'maas","siik'tajr")
+		if("siik'maas", "siik'tajr")
 			role = "tajaran"
 		if("skrellian")
 			role = "skrell"

@@ -32,7 +32,7 @@
 	..()
 	spawn(7)
 		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
-		if (machine)
+		if(machine)
 			machine.console = src
 		else
 			qdel(src)
@@ -110,7 +110,7 @@
 		return
 
 	if(href_list["toggle_smelting"])
-		var/choice = input("What setting do you wish to use for processing [href_list["toggle_smelting"]]?") as null|anything in list("Smelting","Compressing","Alloying","Drop","Nothing")
+		var/choice = input("What setting do you wish to use for processing [href_list["toggle_smelting"]]?") as null|anything in list("Smelting", "Compressing", "Alloying", "Drop", "Nothing")
 		if(!choice)
 			return FALSE
 		switch(choice)
@@ -154,7 +154,7 @@
 	return dat
 
 /obj/machinery/mineral/processing_unit_console/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
@@ -167,7 +167,7 @@
 
 /**********************Mineral processing unit**************************/
 /obj/machinery/mineral/processing_unit
-	name = "material processor" //This isn't actually a goddamn furnace, we're in space and it's processing platinum and flammable phoron...
+	name = "material processor" // This isn't actually a goddamn furnace, we're in space and it's processing platinum and flammable phoron...
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "furnace"
 	density = 1
@@ -185,7 +185,7 @@
 
 /obj/machinery/mineral/processing_unit/New()
 	..()
-	//TODO: Ore and alloy global storage datum.
+	// TODO: Ore and alloy global storage datum.
 	for(var/alloytype in typesof(/datum/alloy)-/datum/alloy)
 		alloy_data += new alloytype()
 	for(var/oretype in typesof(/datum/ore)-/datum/ore)
@@ -193,12 +193,12 @@
 		ore_data[OD.oretag] = OD
 		ores_processing[OD.oretag] = 0
 		ores_stored[OD.oretag] = 0
-	//Locate our output and input machinery.
+	// Locate our output and input machinery.
 	spawn(5)
-		for (var/dir in cardinal)
+		for(var/dir in cardinal)
 			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
 			if(src.input) break
-		for (var/dir in cardinal)
+		for(var/dir in cardinal)
 			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 			if(src.output) break
 		return
@@ -206,12 +206,12 @@
 
 /obj/machinery/mineral/processing_unit/process()
 
-	if (!src.output || !src.input) return
+	if(!src.output || !src.input) return
 
 	var/list/tick_alloys = list()
 
-	//Grab some more ore to process next tick.
-	for(var/i = 0,i<sheets_per_tick,i++)
+	// Grab some more ore to process next tick.
+	for(var/i = 0, i<sheets_per_tick, i++)
 		var/obj/item/weapon/ore/O = locate() in input.loc
 		var/obj/item/stack/sheet/M = locate() in input.loc
 		if(M)	M.loc = output.loc
@@ -222,30 +222,30 @@
 	if(!active)
 		return
 
-	//Process our stored ores and spit out sheets.
+	// Process our stored ores and spit out sheets.
 	var/sheets = 0
 	for(var/metal in ores_stored)
 		if(sheets >= sheets_per_tick) break
 		if(ores_stored[metal] > 0 && ores_processing[metal] != 0)
 			var/datum/ore/O = ore_data[metal]
 			if(!O) continue
-			if(ores_processing[metal] == 4) //Drop.
-				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+			if(ores_processing[metal] == 4) // Drop.
+				var/can_make = Clamp(ores_stored[metal], 0, sheets_per_tick-sheets)
 				if(ores_stored[metal] < 1)
 					continue
-				for(var/i=0,i<can_make,i++)
+				for(var/i=0, i<can_make, i++)
 					ores_stored[metal]--
 					new O.start(output.loc)
-			else if(ores_processing[metal] == 3 && O.alloy) //Alloying.
+			else if(ores_processing[metal] == 3 && O.alloy) // Alloying.
 				for(var/datum/alloy/A in alloy_data)
 					if(A.metaltag in tick_alloys)
 						continue
 					tick_alloys += A.metaltag
 					var/enough_metal
-					if(!isnull(A.requires[metal]) && ores_stored[metal] >= A.requires[metal]) //We have enough of our first metal, we're off to a good start.
+					if(!isnull(A.requires[metal]) && ores_stored[metal] >= A.requires[metal]) // We have enough of our first metal, we're off to a good start.
 						enough_metal = 1
 						for(var/needs_metal in A.requires)
-							//Check if we're alloying the needed metal and have it stored.
+							// Check if we're alloying the needed metal and have it stored.
 							if(ores_processing[needs_metal] != 3 || ores_stored[needs_metal] < A.requires[needs_metal])
 								enough_metal = 0
 								break
@@ -256,26 +256,26 @@
 						for(var/needs_metal in A.requires)
 							ores_stored[needs_metal] -= A.requires[needs_metal]
 							total += A.requires[needs_metal]
-							total = max(1,round(total*A.product_mod)) //Always get at least one sheet.
+							total = max(1, round(total*A.product_mod)) // Always get at least one sheet.
 							sheets += total-1
-						for(var/i=0,i<total,i++)
+						for(var/i=0, i<total, i++)
 							console.points += A.points
 							new A.product(output.loc)
-			else if(ores_processing[metal] == 2 && O.compresses_to) //Compressing.
-				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+			else if(ores_processing[metal] == 2 && O.compresses_to) // Compressing.
+				var/can_make = Clamp(ores_stored[metal], 0, sheets_per_tick-sheets)
 				if(can_make%2>0) can_make--
 				if(!can_make || ores_stored[metal] < 1)
 					continue
-				for(var/i=0,i<can_make,i+=2)
+				for(var/i=0, i<can_make, i+=2)
 					ores_stored[metal]-=2
 					sheets+=2
 					console.points += O.points
 					new O.compresses_to(output.loc)
-			else if(ores_processing[metal] == 1 && O.smelts_to) //Smelting.
-				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+			else if(ores_processing[metal] == 1 && O.smelts_to) // Smelting.
+				var/can_make = Clamp(ores_stored[metal], 0, sheets_per_tick-sheets)
 				if(!can_make || ores_stored[metal] < 1)
 					continue
-				for(var/i=0,i<can_make,i++)
+				for(var/i=0, i<can_make, i++)
 					ores_stored[metal]--
 					sheets++
 					console.points += O.points

@@ -18,13 +18,13 @@
 	var/temploc = src.loc
 
 	spawn(10)
-		for(var/turf/simulated/wall/W in range(temploc,1))
+		for(var/turf/simulated/wall/W in range(temploc, 1))
 			W.relativewall()
 
-		for(var/obj/structure/falsewall/W in range(temploc,1))
+		for(var/obj/structure/falsewall/W in range(temploc, 1))
 			W.relativewall()
 
-		for(var/obj/structure/falserwall/W in range(temploc,1))
+		for(var/obj/structure/falserwall/W in range(temploc, 1))
 			W.relativewall()
 	return ..()
 
@@ -35,20 +35,20 @@
 		icon_state = "[mineral]fwall_open"
 		return
 
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+	var/junction = 0 // will be used to determine from which side the wall is connected to other walls
 
-	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+	for(var/turf/simulated/wall/W in orange(src, 1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
+			if(src.mineral == W.mineral)// Only 'like' walls connect -Sieve
+				junction |= get_dir(src, W)
+	for(var/obj/structure/falsewall/W in orange(src, 1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
 			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falserwall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+				junction |= get_dir(src, W)
+	for(var/obj/structure/falserwall/W in orange(src, 1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
 			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
+				junction |= get_dir(src, W)
 	icon_state = "[mineral][junction]"
 	return
 
@@ -74,7 +74,7 @@
 		src.relativewall()
 		opening = 0
 
-/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+/obj/structure/falsewall/update_icon()// Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	..()
 	if(density)
 		icon_state = "[mineral]0"
@@ -107,9 +107,9 @@
 					T.ChangeTurf(/turf/simulated/wall)
 				else
 					T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-				if(mineral != "phoron")//Stupid shit keeps me from pushing the attackby() to phoron walls -Sieve
+				if(mineral != "phoron")// Stupid shit keeps me from pushing the attackby() to phoron walls -Sieve
 					T = get_turf(src)
-					T.attackby(W,user)
+					T.attackby(W, user)
 				qdel(src)
 	else
 		to_chat(user, "\blue You can't reach, close it first!")
@@ -122,18 +122,18 @@
 			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 		if(mineral != "phoron")
 			T = get_turf(src)
-			T.attackby(W,user)
+			T.attackby(W, user)
 		qdel(src)
 
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	// DRILLING
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		var/turf/T = get_turf(src)
 		if(!mineral)
 			T.ChangeTurf(/turf/simulated/wall)
 		else
 			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 		T = get_turf(src)
-		T.attackby(W,user)
+		T.attackby(W, user)
 		qdel(src)
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
@@ -144,10 +144,10 @@
 			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 		if(mineral != "phoron")
 			T = get_turf(src)
-			T.attackby(W,user)
+			T.attackby(W, user)
 		qdel(src)
 
-/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+/obj/structure/falsewall/update_icon()// Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	..()
 	if(density)
 		icon_state = "[mineral]0"
@@ -204,20 +204,20 @@
 		icon_state = "frwall_open"
 		return
 
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+	var/junction = 0 // will be used to determine from which side the wall is connected to other walls
 
-	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+	for(var/turf/simulated/wall/W in orange(src, 1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
+			if(src.mineral == W.mineral)// Only 'like' walls connect -Sieve
+				junction |= get_dir(src, W)
+	for(var/obj/structure/falsewall/W in orange(src, 1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
 			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falserwall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+				junction |= get_dir(src, W)
+	for(var/obj/structure/falserwall/W in orange(src, 1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
 			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
+				junction |= get_dir(src, W)
 	icon_state = "rwall[junction]"
 	return
 
@@ -236,33 +236,33 @@
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if( WT.remove_fuel(0,user) )
+		if( WT.remove_fuel(0, user) )
 			var/turf/T = get_turf(src)
 			T.ChangeTurf(/turf/simulated/wall/r_wall)
 			T = get_turf(src)
-			T.attackby(W,user)
+			T.attackby(W, user)
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(/turf/simulated/wall/r_wall)
 		T = get_turf(src)
-		T.attackby(W,user)
+		T.attackby(W, user)
 		qdel(src)
 
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	// DRILLING
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(/turf/simulated/wall/r_wall)
 		T = get_turf(src)
-		T.attackby(W,user)
+		T.attackby(W, user)
 		qdel(src)
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(/turf/simulated/wall/r_wall)
 		T = get_turf(src)
-		T.attackby(W,user)
+		T.attackby(W, user)
 		qdel(src)
 
 
@@ -290,9 +290,9 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.apply_effect(12,IRRADIATE,0)
-			for(var/turf/simulated/wall/mineral/uranium/T in range(3,src))
+			for(var/mob/living/L in range(3, src))
+				L.apply_effect(12, IRRADIATE, 0)
+			for(var/turf/simulated/wall/mineral/uranium/T in range(3, src))
 				T.radiate()
 			last_event = world.time
 			active = null

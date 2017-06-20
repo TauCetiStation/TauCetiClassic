@@ -15,15 +15,15 @@
 	m_amt = 700
 	g_amt = 50
 	var/rigged = 0		// true if rigged to explode
-	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
+	var/minor_fault = 0 // If not 100% reliable, it will build up faults.
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>")
-		return (FIRELOSS)
+		return(FIRELOSS)
 
 /obj/item/weapon/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"
-	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
+	desc = "You can't top the plasma top." // TOTALLY TRADEMARK INFRINGEMENT
 	origin_tech = "powerstorage=0"
 	maxcharge = 500
 	g_amt = 40
@@ -87,7 +87,7 @@
 	maxcharge = 40000
 	g_amt = 80
 	rating = 6
-	//chargerate = 4000
+	// chargerate = 4000
 
 /obj/item/weapon/stock_parts/cell/bluespace/empty/New()
 	..()

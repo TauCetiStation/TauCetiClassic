@@ -1,20 +1,20 @@
 
 
-///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
-//Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
-//Bottles now weaken and break when smashed on people's heads. - Giacom
+/////////////////////////////////////////////// Alchohol bottles! -Agouri //////////////////////////
+// Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
+// Bottles now weaken and break when smashed on people's heads. - Giacom
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
-	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
-	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
-	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
-	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
+	item_state = "broken_beer" // Generic held-item sprite until unique ones are made.
+	var/const/duration = 13 // Directly relates to the 'weaken' duration. Lowered by armor(i.e. helmets)
+	var/is_glass = 1 // Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+	var/is_transparent = 1 // Determines whether an overlay of liquid should be added to bottle when it fills
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
-	//Creates a shattering noise and replaces the bottle with a broken_bottle
+	// Creates a shattering noise and replaces the bottle with a broken_bottle
 	user.drop_item()
 	var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(user.loc)
 	user.put_in_active_hand(B)
@@ -42,12 +42,12 @@
 		return
 		underlays.Cut()
 
-	var/icon/filler = new('icons/obj/reagentfillings.dmi',src.icon_state)
+	var/icon/filler = new('icons/obj/reagentfillings.dmi', src.icon_state)
 	var/icon/cut = new('icons/obj/reagentfillings.dmi', "cut")
 	filler += mix_color_from_reagents(reagents.reagent_list)
 
 	var/offset = round((reagents.total_volume / volume) * 24) + 2
-	filler.Blend(cut, ICON_OVERLAY,1,offset)
+	filler.Blend(cut, ICON_OVERLAY, 1, offset)
 	filler.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 
 	underlays.Cut()
@@ -63,21 +63,21 @@
 		return ..()
 
 
-	force = 15 //Smashing bottles over someoen's head hurts.
+	force = 15 // Smashing bottles over someoen's head hurts.
 
-	var/target_zone = user.zone_sel.selecting //Find what the player is aiming at
+	var/target_zone = user.zone_sel.selecting // Find what the player is aiming at
 
-	var/armor_block = 0 //Get the target's armour values for normal attack damage.
-	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
+	var/armor_block = 0 // Get the target's armour values for normal attack damage.
+	var/armor_duration = 0 // The more force the bottle has, the longer the duration.
 
-	//Calculating duration and calculating damage.
+	// Calculating duration and calculating damage.
 	if(ishuman(target))
 
 		var/mob/living/carbon/human/H = target
 		var/headarmor = 0 // Target's head armour
 		armor_block = H.run_armor_check(target_zone, "melee") // For normal attack damage
 
-		//If they have a hat/helmet and the user is targeting their head.
+		// If they have a hat/helmet and the user is targeting their head.
 		if(istype(H.head, /obj/item/clothing/head) && target_zone == BP_HEAD)
 
 			// If their head has an armour value, assign headarmor to it, else give it 0.
@@ -88,53 +88,53 @@
 		else
 			headarmor = 0
 
-		//Calculate the weakening duration for the target.
+		// Calculate the weakening duration for the target.
 		armor_duration = (duration - headarmor) + force
 
 	else
-		//Only humans can have armour, right?
+		// Only humans can have armour, right?
 		armor_block = target.run_armor_check(target_zone, "melee")
 		if(target_zone == BP_HEAD)
 			armor_duration = duration + force
 	armor_duration /= 10
 
-	//Apply the damage!
+	// Apply the damage!
 	target.apply_damage(force, BRUTE, target_zone, armor_block)
 
 	// You are going to knock someone out for longer if they are not wearing a helmet.
 	if(target_zone == BP_HEAD && istype(target, /mob/living/carbon))
 
-		//Display an attack message.
+		// Display an attack message.
 		for(var/mob/O in viewers(user, null))
 			if(target != user) O.show_message(text("\red <B>[target] has been hit over the head with a bottle of [src.name], by [user]!</B>"), 1)
 			else O.show_message(text("\red <B>[target] hit himself with a bottle of [src.name] on the head!</B>"), 1)
-		//Weaken the target for the duration that we calculated and divide it by 5.
+		// Weaken the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
 			target.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
 
 	else
-		//Default attack message and don't weaken the target.
+		// Default attack message and don't weaken the target.
 		for(var/mob/O in viewers(user, null))
 			if(target != user) O.show_message(text("\red <B>[target] has been attacked with a bottle of [src.name], by [user]!</B>"), 1)
 			else O.show_message(text("\red <B>[target] has attacked himself with a bottle of [src.name]!</B>"), 1)
 
-	//Attack logs
+	// Attack logs
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [target.name] ([target.ckey]) with a bottle!</font>")
 	target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a bottle by [user.name] ([user.ckey])</font>")
 	msg_admin_attack("[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with a bottle. (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
+	// The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	if(src.reagents)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\blue <B>The contents of the [src] splashes all over [target]!</B>"), 1)
 		src.reagents.reaction(target, TOUCH)
 
-	//Finally, smash the bottle. This kills (del) the bottle.
+	// Finally, smash the bottle. This kills(del) the bottle.
 	src.smash(target, user)
 
 	return
 
-//Keeping this here for now, I'll ask if I should keep it here.
+// Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/weapon/broken_bottle
 
 	name = "Broken Bottle"
@@ -273,7 +273,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor
 	name = "Emeraldine Melon Liquor"
 	desc = "A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light."
-	icon_state = "alco-green" //Placeholder.
+	icon_state = "alco-green" // Placeholder.
 	New()
 		..()
 		reagents.add_reagent("melonliquor", 100)
@@ -281,7 +281,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao
 	name = "Miss Blue Curacao"
 	desc = "A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic."
-	icon_state = "alco-blue" //Placeholder.
+	icon_state = "alco-blue" // Placeholder.
 	New()
 		..()
 		reagents.add_reagent("bluecuracao", 100)
@@ -303,7 +303,7 @@
 		..()
 		reagents.add_reagent("pwine", 100)
 
-//////////////////////////JUICES AND STUFF ///////////////////////
+////////////////////////// JUICES AND STUFF ///////////////////////
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice
 	name = "Orange Juice"

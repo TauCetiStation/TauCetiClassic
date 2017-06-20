@@ -12,17 +12,17 @@
 	var/list/amounts
 
 /obj/machinery/abductor/gland_dispenser/proc/random_color()
-	//TODO : replace with presets or spectrum
-	return rgb(rand(0,255),rand(0,255),rand(0,255))
+	// TODO : replace with presets or spectrum
+	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
 /obj/machinery/abductor/gland_dispenser/New()
 	gland_types = typesof(/obj/item/gland) - /obj/item/gland
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
-	for(var/i=1,i<=gland_types.len,i++)
+	for(var/i=1, i<=gland_types.len, i++)
 		gland_colors[i] = random_color()
-		amounts[i] = rand(1,5)
+		amounts[i] = rand(1, 5)
 
 /obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
 	if(..())
@@ -39,13 +39,13 @@
 		margin: 5px;
 		border-width: 1px;
 		border-style: solid;
-		border-color: rgba(0,0,0,.2);
+		border-color: rgba(0, 0, 0,.2);
 		text-align: center;
 		}
 	</style>"}
 	var/dat = ""
 	var/item_count = 0
-	for(var/i=1,i<=gland_colors.len,i++)
+	for(var/i=1, i<=gland_colors.len, i++)
 		item_count++
 		var/g_color = gland_colors[i]
 		var/amount = amounts[i]
@@ -64,7 +64,7 @@
 	if(istype(W, /obj/item/gland))
 		user.drop_item()
 		W.loc = src
-		for(var/i=1,i<=gland_colors.len,i++)
+		for(var/i=1, i<=gland_colors.len, i++)
 			if(gland_types[i] == W.type)
 				amounts[i]++
 

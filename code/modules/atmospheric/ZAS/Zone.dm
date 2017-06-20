@@ -92,10 +92,10 @@ Class Procs:
 		T.dbg(merged)
 		#endif
 
-	//rebuild the old zone's edges so that the will be possesed by the new zone
+	// rebuild the old zone's edges so that the will be possesed by the new zone
 	for(var/connection_edge/E in edges)
 		if(E.contains_zone(into))
-			continue //don't need to rebuild this edge
+			continue // don't need to rebuild this edge
 		for(var/turf/T in E.connecting_turfs)
 			SSair.mark_for_update(T)
 
@@ -109,15 +109,15 @@ Class Procs:
 
 /zone/proc/rebuild()
 	if(invalid)
-		return //Short circuit for explosions where rebuild is called many times over.
+		return // Short circuit for explosions where rebuild is called many times over.
 	c_invalidate()
 	for(var/turf/simulated/T in contents)
-		//T.dbg(invalid_zone)
-		T.needs_air_update = 0 //Reset the marker so that it will be added to the list.
+		// T.dbg(invalid_zone)
+		T.needs_air_update = 0 // Reset the marker so that it will be added to the list.
 		SSair.mark_for_update(T)
 
 /zone/proc/add_tile_air(datum/gas_mixture/tile_air)
-	//air.volume += CELL_VOLUME
+	// air.volume += CELL_VOLUME
 	air.group_multiplier = 1
 	air.multiply(contents.len)
 	air.merge(tile_air)
@@ -133,11 +133,11 @@ Class Procs:
 /zone/proc/dbg_data(mob/M)
 	to_chat(M, name)
 	to_chat(M, "O2: [air.oxygen] N2: [air.nitrogen] CO2: [air.carbon_dioxide] P: [air.phoron]")
-	to_chat(M, "P: [air.return_pressure()] kPa V: [air.volume]L T: [air.temperature]�K ([air.temperature - T0C]�C)")
+	to_chat(M, "P: [air.return_pressure()] kPa V: [air.volume]L T: [air.temperature]�K([air.temperature - T0C]�C)")
 	to_chat(M, "O2 per N2: [(air.nitrogen ? air.oxygen/air.nitrogen : "N/A")] Moles: [air.total_moles]")
 	to_chat(M, "Simulated: [contents.len] ([air.group_multiplier])")
-	//M << "Unsimulated: [unsimulated_contents.len]"
-	//M << "Edges: [edges.len]"
+	// M << "Unsimulated: [unsimulated_contents.len]"
+	// M << "Edges: [edges.len]"
 	if(invalid)
 		to_chat(M, "Invalid!")
 	var/zone_edges = 0
@@ -153,5 +153,5 @@ Class Procs:
 	to_chat(M, "Zone Edges: [zone_edges]")
 	to_chat(M, "Space Edges: [space_edges] ([space_coefficient] connections)")
 
-	//for(var/turf/T in unsimulated_contents)
-	//	M << "[T] at ([T.x],[T.y])"
+	// for(var/turf/T in unsimulated_contents)
+	//	M << "[T] at([T.x],[T.y])"

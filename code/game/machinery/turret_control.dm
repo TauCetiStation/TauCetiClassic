@@ -1,5 +1,5 @@
 ////////////////////////
-//Turret Control Panel//
+// Turret Control Panel//
 ////////////////////////
 
 /area
@@ -16,17 +16,17 @@
 	var/enabled = 0
 	var/lethal = 0
 	var/locked = 1
-	var/area/control_area //can be area name, path or nothing.
+	var/area/control_area // can be area name, path or nothing.
 
-	var/check_arrest = 1	//checks if the perp is set to arrest
-	var/check_records = 1	//checks if a security record exists at all
-	var/check_weapons = 0	//checks if it can shoot people that have a weapon they aren't authorized to have
-	var/check_access = 1	//if this is active, the turret shoots everything that does not meet the access requirements
-	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
-	var/check_n_synth = 0 	//if active, will shoot at anything not an AI or cyborg
-	var/shot_synth = 0	//if active and in letal, will shoot any cyborgs
+	var/check_arrest = 1	// checks if the perp is set to arrest
+	var/check_records = 1	// checks if a security record exists at all
+	var/check_weapons = 0	// checks if it can shoot people that have a weapon they aren't authorized to have
+	var/check_access = 1	// if this is active, the turret shoots everything that does not meet the access requirements
+	var/check_anomalies = 1	// checks if it can shoot at unidentified lifeforms(ie xenos)
+	var/check_n_synth = 0 	// if active, will shoot at anything not an AI or cyborg
+	var/shot_synth = 0	// if active and in letal, will shoot any cyborgs
 	var/ailock = 0 			// AI cannot use this
-	var/special_control = 0 //AI (and only AI) can set shot_synth
+	var/special_control = 0 // AI(and only AI) can set shot_synth
 
 	req_access = list(access_ai_upload)
 
@@ -67,7 +67,7 @@
 		else
 			control_area = null
 
-	power_change() //Checks power and initial settings
+	power_change() // Checks power and initial settings
 	return
 
 /obj/machinery/turretid/proc/isLocked(mob/user)
@@ -175,7 +175,7 @@
 
 	if(href_list["command"])
 		var/log_action = null
-		var/list/toggle = list("disabled","enabled")
+		var/list/toggle = list("disabled", "enabled")
 		switch(href_list["command"])
 			if("enable")
 				enabled = !enabled
@@ -219,7 +219,7 @@
 		TC.shot_synth = shot_synth
 		TC.ailock = ailock
 
-		for (var/obj/machinery/porta_turret/aTurret in control_area)
+		for(var/obj/machinery/porta_turret/aTurret in control_area)
 			aTurret.setState(TC)
 
 	update_icon()
@@ -234,21 +234,21 @@
 	if(stat & NOPOWER)
 		icon_state = "control_off"
 		set_light(0)
-	else if (enabled)
-		if (lethal)
+	else if(enabled)
+		if(lethal)
 			icon_state = "control_kill"
-			set_light(1.5, 1,"#990000")
+			set_light(1.5, 1, "#990000")
 		else
 			icon_state = "control_stun"
-			set_light(1.5, 1,"#FF9900")
+			set_light(1.5, 1, "#FF9900")
 	else
 		icon_state = "control_standby"
-		set_light(1.5, 1,"#003300")
+		set_light(1.5, 1, "#003300")
 
 /obj/machinery/turretid/emp_act(severity)
 	if(enabled)
-		//if the turret is on, the EMP no matter how severe disables the turret for a while
-		//and scrambles its settings, with a slight chance of having an emag effect
+		// if the turret is on, the EMP no matter how severe disables the turret for a while
+		// and scrambles its settings, with a slight chance of having an emag effect
 
 		check_arrest = pick(0, 1)
 		check_records = pick(0, 1)
@@ -258,7 +258,7 @@
 
 		enabled=0
 		updateTurrets()
-		addtimer(CALLBACK(src, .proc/emp_act_post), rand(60,600))
+		addtimer(CALLBACK(src, .proc/emp_act_post), rand(60, 600))
 
 	..()
 

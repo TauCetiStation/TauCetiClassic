@@ -1,4 +1,4 @@
-///////////////ANTIBODY SCANNER///////////////
+/////////////// ANTIBODY SCANNER///////////////
 
 /obj/item/device/antibody_scanner
 	name = "\improper Antibody Scanner"
@@ -9,12 +9,12 @@
 	flags = CONDUCT
 
 /obj/item/device/antibody_scanner/attack(mob/M, mob/user)
-	if(!istype(M,/mob/living/carbon/))
+	if(!istype(M, /mob/living/carbon/))
 		report("Scan aborted: Incompatible target.", user)
 		return
 
 	var/mob/living/carbon/C = M
-	if (istype(C,/mob/living/carbon/human/))
+	if(istype(C, /mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = C
 		if(H.species && H.species.flags[NO_BLOOD])
 			report("Scan aborted: The target does not have blood.", user)
@@ -24,7 +24,7 @@
 		report("Scan Complete: No antibodies detected.", user)
 		return
 
-	if (CLUMSY in user.mutations && prob(50))
+	if(CLUMSY in user.mutations && prob(50))
 		// I was tempted to be really evil and rot13 the output.
 		report("Antibodies detected: [reverse_text(antigens2string(C.antibodies))]", user)
 	else
@@ -33,7 +33,7 @@
 /obj/item/device/antibody_scanner/proc/report(text, mob/user)
 	to_chat(user, "\blue [bicon(src)] \The [src] beeps, \"[text]\"")
 
-///////////////VIRUS DISH///////////////
+/////////////// VIRUS DISH///////////////
 
 /obj/item/weapon/virusdish
 	name = "virus containment/growth dish"
@@ -53,19 +53,19 @@
 	src.virus2.makerandom()
 	growth = rand(5, 50)
 
-/obj/item/weapon/virusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
-	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
+/obj/item/weapon/virusdish/attackby(obj/item/weapon/W, mob/living/carbon/user)
+	if(istype(W, /obj/item/weapon/hand_labeler) || istype(W, /obj/item/weapon/reagent_containers/syringe))
 		return
 	..()
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
 		message_admins("Virus dish shattered by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>[src.x],[src.y],[src.z]</a>)")
-		log_game("Virus dish shattered by [user.ckey]([user]) in ([src.x],[src.y],[src.z])")
+		log_game("Virus dish shattered by [user.ckey]([user]) in([src.x],[src.y],[src.z])")
 		if(virus2.infectionchance > 0)
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))
 				if(airborne_can_reach(get_turf(src), get_turf(target)))
 					if(get_infection_chance(target))
-						infect_virus2(target,src.virus2)
+						infect_virus2(target, src.virus2)
 		qdel(src)
 
 /obj/item/weapon/virusdish/examine(mob/user)
@@ -80,15 +80,15 @@
 	icon_state = "implantcase-b"
 	desc = "The bacteria in the dish are completely dead."
 
-/obj/item/weapon/ruinedvirusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
-	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
+/obj/item/weapon/ruinedvirusdish/attackby(obj/item/weapon/W, mob/living/carbon/user)
+	if(istype(W, /obj/item/weapon/hand_labeler) || istype(W, /obj/item/weapon/reagent_containers/syringe))
 		return ..()
 
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
 		qdel(src)
 
-///////////////GNA DISK///////////////
+/////////////// GNA DISK///////////////
 
 /obj/item/weapon/diseasedisk
 	name = "blank GNA disk"
@@ -100,7 +100,7 @@
 	var/analysed = 1
 
 /obj/item/weapon/diseasedisk/premade/New()
-	name = "blank GNA disk (stage: [stage])"
+	name = "blank GNA disk(stage: [stage])"
 	effect = new /datum/disease2/effectholder
 	effect.effect = new /datum/disease2/effect/invisible
 	effect.stage = stage

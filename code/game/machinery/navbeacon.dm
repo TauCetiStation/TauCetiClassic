@@ -115,9 +115,9 @@
 
 		updateicon()
 
-	else if (istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
+	else if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
 		if(open)
-			if (src.allowed(user))
+			if(src.allowed(user))
 				src.locked = !src.locked
 				to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			else
@@ -189,11 +189,11 @@ Transponder Codes:<UL>"}
 	if(!. && open && !locked)
 		return FALSE
 
-	if (href_list["freq"])
+	if(href_list["freq"])
 		freq = sanitize_frequency(freq + text2num(href_list["freq"]))
 
 	else if(href_list["locedit"])
-		var/newloc = sanitize(copytext(input("Enter New Location", "Navigation Beacon", location) as text|null,1,MAX_MESSAGE_LEN))
+		var/newloc = sanitize(copytext(input("Enter New Location", "Navigation Beacon", location) as text|null, 1, MAX_MESSAGE_LEN))
 		if(newloc)
 			location = newloc
 

@@ -3,11 +3,11 @@
 	icon_state = "ability0"
 
 /obj/screen/corgi/ability/Click()
-	var/mob/living/carbon/ian/IAN = usr //shouldn't be in anywhere else, so no type check.
+	var/mob/living/carbon/ian/IAN = usr // shouldn't be in anywhere else, so no type check.
 	if(IAN.stat)
 		return
 
-	switch(alert("Do you want to lick or sniff something?",,"Nothing","Tongue","Nose"))
+	switch(alert("Do you want to lick or sniff something?",, "Nothing", "Tongue", "Nose"))
 		if("Nothing")
 			if(IAN.ian_action == IAN_STANDARD) // Do nothing, if we already using this mode.
 				return
@@ -35,8 +35,8 @@
 	name = "pose selector"
 	icon_state = "sit_lie"
 
-/obj/screen/corgi/sit_lie/Click(location, control,params)
-	var/mob/living/carbon/ian/IAN = usr //shouldn't be in anywhere else, so no type check.
+/obj/screen/corgi/sit_lie/Click(location, control, params)
+	var/mob/living/carbon/ian/IAN = usr // shouldn't be in anywhere else, so no type check.
 	if(IAN.stat)
 		return
 
@@ -64,7 +64,7 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	var/mob/living/carbon/ian/IAN = mymob //shouldn't be in anywhere else, so no type check.
+	var/mob/living/carbon/ian/IAN = mymob // shouldn't be in anywhere else, so no type check.
 
 	using = new
 	using.name = "act_intent"

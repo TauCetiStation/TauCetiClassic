@@ -26,7 +26,7 @@
 	output += "<br>Pick this option if you think usernames should be logged with stats. This allows us to have personalized stats as well as polls."
 
 	output += "<p><a href='byond://?src=\ref[src];privacy_poll=anonymous'>Anonymous stats gathering</A>"
-	output += "<br>Pick this option if you think only hashed (indecipherable) usernames should be logged with stats. This doesn't allow us to have personalized stats, as we can't tell who is who (hashed values aren't readable), we can however have ingame polls."
+	output += "<br>Pick this option if you think only hashed(indecipherable) usernames should be logged with stats. This doesn't allow us to have personalized stats, as we can't tell who is who (hashed values aren't readable), we can however have ingame polls."
 
 	output += "<p><a href='byond://?src=\ref[src];privacy_poll=nostats'>No stats gathering</A>"
 	output += "<br>Pick this option if you don't want player-specific stats gathered. This does not allow us to have player-specific stats or polls."
@@ -39,7 +39,7 @@
 
 	output += "</div>"
 
-	src << browse(output,"window=privacypoll;size=600x500")
+	src << browse(output, "window=privacypoll;size=600x500")
 	return
 
 /datum/polloption
@@ -75,7 +75,7 @@
 
 		output += "</table>"
 
-		src << browse(output,"window=playerpolllist;size=500x300")
+		src << browse(output, "window=playerpolllist;size=500x300")
 
 
 
@@ -107,7 +107,7 @@
 			return
 
 		switch(polltype)
-			//Polls that have enumerated options
+			// Polls that have enumerated options
 			if("OPTION")
 				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
 				voted_query.Execute()
@@ -134,7 +134,7 @@
 				output += "<b>Question: [pollquestion]</b><br>"
 				output += "<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
 
-				if(!voted)	//Only make this a form if we have not voted yet
+				if(!voted)	// Only make this a form if we have not voted yet
 					output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
 					output += "<input type='hidden' name='src' value='\ref[src]'>"
 					output += "<input type='hidden' name='votepollid' value='[pollid]'>"
@@ -152,15 +152,15 @@
 							output += "<input type='radio' name='voteoptionid' value='[O.optionid]'> [O.optiontext]<br>"
 				output += "</td></tr></table>"
 
-				if(!voted)	//Only make this a form if we have not voted yet
+				if(!voted)	// Only make this a form if we have not voted yet
 					output += "<p><input type='submit' value='Vote'>"
 					output += "</form>"
 
 				output += "</div>"
 
-				src << browse(output,"window=playerpoll;size=500x250")
+				src << browse(output, "window=playerpoll;size=500x250")
 
-			//Polls with a text input
+			// Polls with a text input
 			if("TEXT")
 				var/DBQuery/voted_query = dbcon.NewQuery("SELECT replytext FROM erro_poll_textreply WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
 				voted_query.Execute()
@@ -178,7 +178,7 @@
 				output += "<b>Question: [pollquestion]</b><br>"
 				output += "<font size='2'>Feedback gathering runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
 
-				if(!voted)	//Only make this a form if we have not voted yet
+				if(!voted)	// Only make this a form if we have not voted yet
 					output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
 					output += "<input type='hidden' name='src' value='\ref[src]'>"
 					output += "<input type='hidden' name='votepollid' value='[pollid]'>"
@@ -200,9 +200,9 @@
 				else
 					output += "[vote_text]"
 
-				src << browse(output,"window=playerpoll;size=500x500")
+				src << browse(output, "window=playerpoll;size=500x500")
 
-			//Polls with a text input
+			// Polls with a text input
 			if("NUMVAL")
 				var/DBQuery/voted_query = dbcon.NewQuery("SELECT o.text, v.rating FROM erro_poll_option o, erro_poll_vote v WHERE o.pollid = [pollid] AND v.ckey = '[usr.ckey]' AND o.id = v.optionid")
 				voted_query.Execute()
@@ -221,7 +221,7 @@
 
 					output += "<br><b>[optiontext] - [rating]</b>"
 
-				if(!voted)	//Only make this a form if we have not voted yet
+				if(!voted)	// Only make this a form if we have not voted yet
 					output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
 					output += "<input type='hidden' name='src' value='\ref[src]'>"
 					output += "<input type='hidden' name='votepollid' value='[pollid]'>"
@@ -253,12 +253,12 @@
 
 						output += "<br>[optiontext]: <select name='o[optionid]'>"
 						output += "<option value='abstain'>abstain</option>"
-						for (var/j = minvalue; j <= maxvalue; j++)
+						for(var/j = minvalue; j <= maxvalue; j++)
 							if(j == minvalue && descmin)
 								output += "<option value='[j]'>[j] ([descmin])</option>"
-							else if (j == midvalue && descmid)
+							else if(j == midvalue && descmid)
 								output += "<option value='[j]'>[j] ([descmid])</option>"
-							else if (j == maxvalue && descmax)
+							else if(j == maxvalue && descmax)
 								output += "<option value='[j]'>[j] ([descmax])</option>"
 							else
 								output += "<option value='[j]'>[j]</option>"
@@ -271,7 +271,7 @@
 					output += "<p><input type='submit' value='Submit'>"
 					output += "</form>"
 
-				src << browse(output,"window=playerpoll;size=500x500")
+				src << browse(output, "window=playerpoll;size=500x500")
 			if("MULTICHOICE")
 				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
 				voted_query.Execute()
@@ -307,7 +307,7 @@
 				output += "<b>Question: [pollquestion]</b><br>You can select up to [multiplechoiceoptions] options. If you select more, the first [multiplechoiceoptions] will be saved.<br>"
 				output += "<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
 
-				if(!voted)	//Only make this a form if we have not voted yet
+				if(!voted)	// Only make this a form if we have not voted yet
 					output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
 					output += "<input type='hidden' name='src' value='\ref[src]'>"
 					output += "<input type='hidden' name='votepollid' value='[pollid]'>"
@@ -327,13 +327,13 @@
 							output += "<input type='checkbox' name='option_[O.optionid]' value='[O.optionid]'> [O.optiontext]<br>"
 				output += "</td></tr></table>"
 
-				if(!voted)	//Only make this a form if we have not voted yet
+				if(!voted)	// Only make this a form if we have not voted yet
 					output += "<p><input type='submit' value='Vote'>"
 					output += "</form>"
 
 				output += "</div>"
 
-				src << browse(output,"window=playerpoll;size=500x250")
+				src << browse(output, "window=playerpoll;size=500x250")
 		return
 
 /mob/new_player/proc/vote_on_poll(pollid = -1, optionid = -1, multichoice = 0)
@@ -399,11 +399,11 @@
 			adminrank = usr.client.holder.rank
 
 
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank) VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]')")
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote(id, datetime, pollid, optionid, ckey, ip, adminrank) VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]')")
 		insert_query.Execute()
 
 		to_chat(usr, "\blue Vote successful.")
-		usr << browse(null,"window=playerpoll")
+		usr << browse(null, "window=playerpoll")
 
 
 /mob/new_player/proc/log_text_poll_reply(pollid = -1, replytext = "")
@@ -450,18 +450,18 @@
 
 		replytext = replacetext(replytext, "%BR%", "")
 		replytext = replacetext(replytext, "\n", "%BR%")
-		var/text_pass = reject_bad_text(replytext,8000)
+		var/text_pass = reject_bad_text(replytext, 8000)
 		replytext = replacetext(replytext, "%BR%", "<BR>")
 
 		if(!text_pass)
 			to_chat(usr, "The text you entered was blank, contained illegal characters or was too long. Please correct the text and submit again.")
 			return
 
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_textreply (id ,datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (null, Now(), [pollid], '[usr.ckey]', '[usr.client.address]', '[replytext]', '[adminrank]')")
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_textreply(id, datetime, pollid, ckey, ip, replytext, adminrank) VALUES (null, Now(), [pollid], '[usr.ckey]', '[usr.client.address]', '[replytext]', '[adminrank]')")
 		insert_query.Execute()
 
 		to_chat(usr, "\blue Feedback logging successful.")
-		usr << browse(null,"window=playerpoll")
+		usr << browse(null, "window=playerpoll")
 
 
 /mob/new_player/proc/vote_on_numval_poll(pollid = -1, optionid = -1, rating = null)
@@ -519,8 +519,8 @@
 			adminrank = usr.client.holder.rank
 
 
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]', [(isnull(rating)) ? "null" : rating])")
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote(id, datetime, pollid, optionid, ckey, ip, adminrank, rating) VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]', [(isnull(rating)) ? "null" : rating])")
 		insert_query.Execute()
 
 		to_chat(usr, "\blue Vote successful.")
-		usr << browse(null,"window=playerpoll")
+		usr << browse(null, "window=playerpoll")

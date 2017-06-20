@@ -23,7 +23,7 @@
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
 
-	//Space carp aren't affected by atmos.
+	// Space carp aren't affected by atmos.
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -39,12 +39,12 @@
 	faction = "carp"
 
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(movement_dir = 0)
-	return 1	//No drifting in space for space carp!	//original comments do not steal
+	return 1	// No drifting in space for space carp!	// original comments do not steal
 
 /mob/living/simple_animal/hostile/carp/FindTarget()
 	. = ..()
 	if(.)
-		custom_emote(1,"nashes at [.]")
+		custom_emote(1, "nashes at [.]")
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	. =..()
@@ -100,6 +100,6 @@
 	if(!.)
 		return 0
 
-	if(rand(0,100) < idle_snd_chance)
+	if(rand(0, 100) < idle_snd_chance)
 		var/list/idle_snd = list('sound/voice/polkan/idle1.ogg','sound/voice/polkan/idle2.ogg')
 		playsound(src, pick(idle_snd), 50, 1, -3)

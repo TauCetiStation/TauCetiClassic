@@ -7,17 +7,17 @@
 	if(stat != CONSCIOUS)
 		return
 
-	if (layer != TURF_LAYER+0.2)
+	if(layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		to_chat(src, text("\green You are now hiding."))
 		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				to_chat(O, text("<B>[] scurries to the ground!</B>", src))
 	else
 		layer = MOB_LAYER
 		to_chat(src, text("\green You have stopped hiding."))
 		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				to_chat(O, text("[] slowly peaks up from the ground...", src))
 
 /mob/living/carbon/alien/larva/verb/evolve()
@@ -29,24 +29,24 @@
 		return
 
 	if(!isturf(src.loc))
-		to_chat(src, "\red You cannot evolve when you are inside something.")//Silly aliens!
+		to_chat(src, "\red You cannot evolve when you are inside something.")// Silly aliens!
 		return
 
 	if(handcuffed || legcuffed)
 		to_chat(src, "\red You cannot evolve when you are cuffed.")
 		return
 
-	if(amount_grown >= max_grown)	//TODO ~Carn
-		//green is impossible to read, so i made these blue and changed the formatting slightly
+	if(amount_grown >= max_grown)	// TODO ~Carn
+		// green is impossible to read, so i made these blue and changed the formatting slightly
 		to_chat(src, "\blue <b>You are growing into a beautiful alien! It is time to choose a caste.</b>")
 		to_chat(src, "\blue There are three to choose from:")
 		to_chat(src, "<B>Hunters</B> \blue are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves.")
 		to_chat(src, "<B>Sentinels</B> \blue are tasked with protecting the hive and are deadly up close and at a range. They are not as physically imposing nor fast as the hunters.")
 		to_chat(src, "<B>Drones</B> \blue are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen.")
-		var/evolve_now = alert(src, "Are you sure?",,"Yes","No")
+		var/evolve_now = alert(src, "Are you sure?",, "Yes", "No")
 		if(evolve_now == "No")
 			return
-		var/alien_caste = alert(src, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
+		var/alien_caste = alert(src, "Please choose which alien caste you shall belong to.",, "Hunter", "Sentinel", "Drone")
 
 		var/mob/living/carbon/alien/humanoid/new_xeno
 		switch(alien_caste)

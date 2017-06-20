@@ -9,13 +9,13 @@
 /datum/dna/gene/disability
 	name="DISABILITY"
 
-	// Mutation to give (or 0)
+	// Mutation to give(or 0)
 	var/mutation=0
 
-	// Disability to give (or 0)
+	// Disability to give(or 0)
 	var/disability=0
 
-	// SDisability to give (or 0)
+	// SDisability to give(or 0)
 	var/sdisability=0
 
 	// Activation message
@@ -24,7 +24,7 @@
 	// Yay, you're no longer growing 3 arms
 	var/deactivation_message=""
 
-/datum/dna/gene/disability/can_activate(mob/M,flags)
+/datum/dna/gene/disability/can_activate(mob/M, flags)
 	return 1 // Always set!
 
 /datum/dna/gene/disability/activate(mob/M, connected, flags)
@@ -36,8 +36,8 @@
 		M.sdisabilities|=sdisability
 	if(activation_message)
 		to_chat(M, "\red [activation_message]")
-	//else
-		//testing("[name] has no activation message.")
+	// else
+		// testing("[name] has no activation message.")
 
 /datum/dna/gene/disability/deactivate(mob/M, connected, flags)
 	if(mutation && (mutation in M.mutations))
@@ -48,8 +48,8 @@
 		M.sdisabilities-=sdisability
 	if(deactivation_message)
 		to_chat(M, "\red [deactivation_message]")
-	//else
-		//testing("[name] has no deactivation message.")
+	// else
+		// testing("[name] has no deactivation message.")
 
 // Note: Doesn't seem to do squat, at the moment.
 /datum/dna/gene/disability/hallucinate
@@ -65,7 +65,7 @@
 		M.hallucination = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.hallucination = 0 //##Z2
 
 /datum/dna/gene/disability/epilepsy
@@ -122,7 +122,7 @@
 		M.eye_blind = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.eye_blurry = 0
 		M.eye_blind = 0 //##Z2
 
@@ -139,7 +139,7 @@
 		M.ear_deaf = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.ear_deaf = 0 //##Z2
 
 /datum/dna/gene/disability/nearsighted

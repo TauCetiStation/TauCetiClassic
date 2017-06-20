@@ -11,7 +11,7 @@
 	anchored = 1.0
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
 	var/obj/machinery/alarm/current
-	var/overridden = 0 //not set yet, can't think of a good way to do it
+	var/overridden = 0 // not set yet, can't think of a good way to do it
 	req_access = list(access_ce)
 
 
@@ -41,11 +41,11 @@
 				continue
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
-				if (0)
+				if(0)
 					dat += "<font color=green>"
-				if (1)
+				if(1)
 					dat += "<font color=blue>"
-				if (2)
+				if(2)
 					dat += "<font color=red>"
 			dat += "[alarm]</font></a><br/>"
 	user << browse(dat, "window=atmoscontrol")
@@ -69,7 +69,7 @@
 		dat += "<hr>[return_controls()]"
 	return dat
 
-//a bunch of this is copied from atmos alarms
+// a bunch of this is copied from atmos alarms
 /obj/machinery/computer/atmoscontrol/Topic(href, href_list)
 	. = ..()
 	if(!.)
@@ -92,28 +92,28 @@
 					"panic_siphon",
 					"scrubbing"
 				)
-					current.send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
+					current.send_signal(device_id, list(href_list["command"] = text2num(href_list["val"])))
 					spawn(3)
 						src.updateUsrDialog()
-				//if("adjust_threshold") //was a good idea but required very wide window
+				// if("adjust_threshold") // was a good idea but required very wide window
 				if("set_threshold")
 					var/env = href_list["env"]
 					var/threshold = text2num(href_list["var"])
 					var/list/selected = current.TLV[env]
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as num|null
-					if (isnull(newval) || ..() || (current.locked && issilicon(usr)))
+					if(isnull(newval) || ..() || (current.locked && issilicon(usr)))
 						return FALSE
-					if (newval<0)
+					if(newval<0)
 						selected[threshold] = -1.0
-					else if (env=="temperature" && newval>5000)
+					else if(env=="temperature" && newval>5000)
 						selected[threshold] = 5000
-					else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
+					else if(env=="pressure" && newval>50*ONE_ATMOSPHERE)
 						selected[threshold] = 50*ONE_ATMOSPHERE
-					else if (env!="temperature" && env!="pressure" && newval>200)
+					else if(env!="temperature" && env!="pressure" && newval>200)
 						selected[threshold] = 200
 					else
-						newval = round(newval,0.01)
+						newval = round(newval, 0.01)
 						selected[threshold] = newval
 					if(threshold == 1)
 						if(selected[1] > selected[2])
@@ -144,7 +144,7 @@
 						if(selected[3] > selected[4])
 							selected[3] = selected[4]
 
-					//Sets the temperature the built-in heater/cooler tries to maintain.
+					// Sets the temperature the built-in heater/cooler tries to maintain.
 					if(env == "temperature")
 						if(current.target_temperature < selected[2])
 							current.target_temperature = selected[2]
@@ -161,9 +161,9 @@
 				src.updateUsrDialog()
 			return
 
-		//commenting this out because it causes compile errors
-		//I tried fixing it but wasn't sucessful.
-		//if(href_list["atmos_unlock"])
+		// commenting this out because it causes compile errors
+		// I tried fixing it but wasn't sucessful.
+		// if(href_list["atmos_unlock"])
 		//	switch(href_list["atmos_unlock"])
 		//		if("0")
 		//			current.alarm_area.air_doors_close()
@@ -171,14 +171,14 @@
 		//			current.alarm_area.air_doors_open()
 
 		if(href_list["atmos_alarm"])
-			if (current.alarm_area.atmosalert(2))
+			if(current.alarm_area.atmosalert(2))
 				current.apply_danger_level(2)
 			spawn(1)
 				src.updateUsrDialog()
 			current.update_icon()
 			return
 		if(href_list["atmos_reset"])
-			if (current.alarm_area.atmosalert(0))
+			if(current.alarm_area.atmosalert(0))
 				current.apply_danger_level(0)
 			spawn(1)
 				src.updateUsrDialog()
@@ -193,14 +193,14 @@
 			return
 	updateUsrDialog()
 
-//copypasta from alarm code, changed to work with this without derping hard
+// copypasta from alarm code, changed to work with this without derping hard
 //---START COPYPASTA----
 
 /obj/machinery/computer/atmoscontrol/proc/return_controls()
 	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
 
 	switch(current.screen)
-		if (AALARM_SCREEN_MAIN)
+		if(AALARM_SCREEN_MAIN)
 			if(current.alarm_area.atmosalm)
 				output += {"<a href='?src=\ref[src];alarm=\ref[current];atmos_reset=1'>Reset - Atmospheric Alarm</a><hr>"}
 			else
@@ -213,13 +213,13 @@
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_SENSORS]'>Sensor Control</a><br>
 <HR>
 "}
-			if (current.mode==AALARM_MODE_PANIC)
+			if(current.mode==AALARM_MODE_PANIC)
 				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br><A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_SCRUBBING]'>turn syphoning off</A>"
 			else
 				output += "<A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
 
 			output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];alarm=\ref[current];atmos_unlock=[current.alarm_area.air_doors_activated]'>[current.alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
-		if (AALARM_SCREEN_VENT)
+		if(AALARM_SCREEN_VENT)
 			var/sensor_data = ""
 			if(current.alarm_area.air_vent_names.len)
 				for(var/id_tag in current.alarm_area.air_vent_names)
@@ -228,8 +228,8 @@
 					var/state = ""
 					if(!data)
 						state = "<font color='red'> can not be found!</font>"
-						data = list("external" = 0) //for "0" instead of empty string
-					else if (data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
+						data = list("external" = 0) // for "0" instead of empty string
+					else if(data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
 						state = "<font color='red'> not responding!</font>"
 					sensor_data += {"
 <B>[long_name]</B>[state]<BR>
@@ -252,7 +252,7 @@
 <A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=adjust_external_pressure;val=+1000'>+</A>
 <BR>
 "}
-					if (data["direction"] == "siphon")
+					if(data["direction"] == "siphon")
 						sensor_data += {"
 <B>Direction:</B>
 siphoning
@@ -262,7 +262,7 @@ siphoning
 			else
 				sensor_data = "No vents connected.<BR>"
 			output = {"<a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>[sensor_data]"}
-		if (AALARM_SCREEN_SCRUB)
+		if(AALARM_SCREEN_SCRUB)
 			var/sensor_data = ""
 			if(current.alarm_area.air_scrub_names.len)
 				for(var/id_tag in current.alarm_area.air_scrub_names)
@@ -271,8 +271,8 @@ siphoning
 					var/state = ""
 					if(!data)
 						state = "<font color='red'> can not be found!</font>"
-						data = list("external" = 0) //for "0" instead of empty string
-					else if (data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
+						data = list("external" = 0) // for "0" instead of empty string
+					else if(data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
 						state = "<font color='red'> not responding!</font>"
 
 					sensor_data += {"
@@ -303,7 +303,7 @@ Nitrous Oxide
 				sensor_data = "No scrubbers connected.<BR>"
 			output = {"<a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>[sensor_data]"}
 
-		if (AALARM_SCREEN_MODE)
+		if(AALARM_SCREEN_MODE)
 			output += {"
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
 <b>Air machinery mode for the area:</b><ul>"}
@@ -313,13 +313,13 @@ Nitrous Oxide
 					AALARM_MODE_CYCLE       = "<font color='red'>Cycle - Siphons air before replacing</font>",\
 					AALARM_MODE_FILL        = "<font color='green'>Fill - Shuts off scrubbers and opens vents</font>",\
 					AALARM_MODE_OFF         = "<font color='blue'>Off - Shuts off vents and scrubbers</font>",)
-			for (var/m=1,m<=modes.len,m++)
-				if (current.mode==m)
+			for(var/m=1, m<=modes.len, m++)
+				if(current.mode==m)
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"}
 				else
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'>[modes[m]]</A></li>"}
 			output += "</ul>"
-		if (AALARM_SCREEN_SENSORS)
+		if(AALARM_SCREEN_SENSORS)
 			output += {"
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
 <b>Alarm thresholds:</b><br>
@@ -343,23 +343,23 @@ table tr:first-child th:first-child { border: none;}
 				"other"          = "Other",
 			)
 			var/list/tlv
-			for (var/g in gases)
+			for(var/g in gases)
 				output += "<TR><th>[gases[g]]</th>"
 				tlv = current.TLV[g]
-				for (var/i = 1, i <= 4, i++)
-					output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=[g];var=[i]'>[tlv[i] >= 0?tlv[i]:"OFF"]</A></td>"
+				for(var/i = 1, i <= 4, i++)
+					output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=[g];var=[i]'>[tlv[i] >= 0 ? tlv[i] : "OFF"]</A></td>"
 				output += "</TR>"
 
 			tlv = current.TLV["pressure"]
 			output += "<TR><th>Pressure</th>"
-			for (var/i = 1, i <= 4, i++)
-				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=pressure;var=[i]'>[tlv[i]>= 0?tlv[i]:"OFF"]</A></td>"
+			for(var/i = 1, i <= 4, i++)
+				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=pressure;var=[i]'>[tlv[i]>= 0 ? tlv[i] : "OFF"]</A></td>"
 			output += "</TR>"
 
 			tlv = current.TLV["temperature"]
 			output += "<TR><th>Temperature</th>"
-			for (var/i = 1, i <= 4, i++)
-				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=temperature;var=[i]'>[tlv[i]>= 0?tlv[i]:"OFF"]</A></td>"
+			for(var/i = 1, i <= 4, i++)
+				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=temperature;var=[i]'>[tlv[i]>= 0 ? tlv[i] : "OFF"]</A></td>"
 			output += "</TR>"
 			output += "</table>"
 

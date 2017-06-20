@@ -25,7 +25,7 @@
 	..()
 	update_icon()
 
-/obj/mecha/working/ripley/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
+/obj/mecha/working/ripley/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc, mob/user)
 	..()
 	update_icon()
 
@@ -46,7 +46,7 @@
 	max_temperature = 65000
 	health = 250
 	lights_power = 8
-	damage_absorption = list("fire"=0.5,"bullet"=0.8,"bomb"=0.5)
+	damage_absorption = list("fire"=0.5, "bullet"=0.8, "bomb"=0.5)
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley/firefighter
 
 /obj/mecha/working/ripley/deathripley
@@ -61,7 +61,7 @@
 
 /obj/mecha/working/ripley/deathripley/New()
 	..()
-	if(!istype(src,/obj/mecha/working/ripley/deathripley/pirate))
+	if(!istype(src, /obj/mecha/working/ripley/deathripley/pirate))
 		var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/safety_clamp
 		ME.attach(src)
 	return
@@ -73,7 +73,7 @@
 	step_energy_drain = 10
 	health = 750
 	deflect_chance = 0
-	damage_absorption = list("brute"=1,"fire"=1,"bullet"=1,"laser"=1,"energy"=1,"bomb"=1)
+	damage_absorption = list("brute"=1, "fire"=1, "bullet"=1, "laser"=1, "energy"=1, "bomb"=1)
 	add_req_access = 0
 	maint_access = 0
 	operation_req_access = list(access_syndicate)
@@ -95,18 +95,18 @@
 
 /obj/mecha/working/ripley/mining/New()
 	..()
-	//Attach drill
-	if(prob(25)) //Possible diamond drill... Feeling lucky?
+	// Attach drill
+	if(prob(25)) // Possible diamond drill... Feeling lucky?
 		var/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
 		D.attach(src)
 	else
 		var/obj/item/mecha_parts/mecha_equipment/tool/drill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill
 		D.attach(src)
 
-	//Attach hydrolic clamp
+	// Attach hydrolic clamp
 	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
 	HC.attach(src)
-	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
+	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)// Deletes the beacon so it can't be found easily
 		qdel(B)
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)

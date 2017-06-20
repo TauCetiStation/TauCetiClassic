@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/mass_driver
 	name = "mass driver"
@@ -13,7 +13,7 @@
 	var/power = 1.0
 	var/code = 1.0
 	var/id = 1.0
-	var/drive_range = 50 //this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
+	var/drive_range = 50 // this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
 
 
 	proc/drive(amount)
@@ -23,7 +23,7 @@
 		var/O_limit
 		var/atom/target = get_edge_target_turf(src, dir)
 		for(var/atom/movable/O in loc)
-			if(!O.anchored||istype(O, /obj/mecha))//Mechs need their launch platforms.
+			if(!O.anchored||istype(O, /obj/mecha))// Mechs need their launch platforms.
 				O_limit++
 				if(O_limit >= 20)
 					for(var/mob/M in hearers(src, null))

@@ -1,9 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/hsboxspawn = 1
 var/list
 		hrefs = list(
-					"hsbsuit" = "Suit Up (Space Travel Gear)",
+					"hsbsuit" = "Suit Up(Space Travel Gear)",
 					"hsbmetal" = "Spawn 50 Metal",
 					"hsbglass" = "Spawn 50 Glass",
 					"hsbairlock" = "Spawn Airlock",
@@ -46,7 +46,7 @@ datum/hSB
 			usr << browse(hsbpanel, "window=hsbpanel")
 	Topic(href, href_list)
 		if(!(src.owner == usr.ckey)) return
-		if(!usr) return //I guess this is possible if they log out or die with the panel open? It happened.
+		if(!usr) return // I guess this is possible if they log out or die with the panel open? It happened.
 		if(href_list["hsb"])
 			switch(href_list["hsb"])
 				if("hsbtobj")
@@ -104,7 +104,7 @@ datum/hSB
 				if("hsbairlock")
 					var/obj/machinery/door/hsb = new/obj/machinery/door/airlock
 
-					//TODO: DEFERRED make this better, with an HTML window or something instead of 15 popups
+					// TODO: DEFERRED make this better, with an HTML window or something instead of 15 popups
 					hsb.req_access = list()
 					var/accesses = get_all_accesses()
 					for(var/A in accesses)
@@ -119,16 +119,16 @@ datum/hSB
 					if(!(hsbcanister == "Cancel"))
 						new hsbcanister(usr.loc)
 				if("hsbfueltank")
-					//var/obj/hsb = new/obj/weldfueltank
-					//hsb.loc = usr.loc
+					// var/obj/hsb = new/obj/weldfueltank
+					// hsb.loc = usr.loc
 				if("hsbwatertank")
-					//var/obj/hsb = new/obj/watertank
-					//hsb.loc = usr.loc
+					// var/obj/hsb = new/obj/watertank
+					// hsb.loc = usr.loc
 				if("hsbtoolbox")
 					var/obj/item/weapon/storage/hsb = new/obj/item/weapon/storage/toolbox/mechanical
 					for(var/obj/item/device/radio/T in hsb)
 						qdel(T)
-					new/obj/item/weapon/crowbar (hsb)
+					new/obj/item/weapon/crowbar(hsb)
 					hsb.loc = usr.loc
 				if("hsbmedkit")
 					var/obj/item/weapon/storage/firstaid/hsb = new/obj/item/weapon/storage/firstaid/regular
@@ -138,7 +138,7 @@ datum/hSB
 
 					var/list/selectable = list()
 					for(var/O in typesof(/obj/item/))
-					//Note, these istypes don't work
+					// Note, these istypes don't work
 						if(istype(O, /obj/item/weapon/gun))
 							continue
 						if(istype(O, /obj/item/assembly))

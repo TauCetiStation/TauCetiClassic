@@ -15,28 +15,28 @@
 
 /obj/machinery/optable/New()
 	..()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
-		if (computer)
+		if(computer)
 			computer.table = src
 			break
-//	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
+//	spawn(100) // Wont the MC just call this process() before and at the 10 second mark anyway?
 //		process()
 
 /obj/machinery/optable/ex_act(severity)
 
 	switch(severity)
 		if(1.0)
-			//SN src = null
+			// SN src = null
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
-				//SN src = null
+			if(prob(50))
+				// SN src = null
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				src.density = 0
 		else
 	return
@@ -46,7 +46,7 @@
 		qdel(src)
 
 /obj/machinery/optable/attack_paw(mob/user)
-	if ((HULK in usr.mutations))
+	if((HULK in usr.mutations))
 		to_chat(usr, text("<span class='notice'>You destroy the operating table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
@@ -54,7 +54,7 @@
 	return
 
 /obj/machinery/optable/attack_hand(mob/user)
-	if (HULK in usr.mutations)
+	if(HULK in usr.mutations)
 		to_chat(usr, text("<span class='notice'>You destroy the table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
@@ -74,10 +74,10 @@
 	if(isrobot(user))
 		return
 
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
+	if((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
 	user.drop_item()
-	if (O.loc != src.loc)
+	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
 
@@ -96,11 +96,11 @@
 	check_victim()
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user)
-	if (C == user)
-		user.visible_message("<span class='rose'>[user] climbs on the operating table.</span>","<span class='notice'>You climb on the operating table.</span>")
+	if(C == user)
+		user.visible_message("<span class='rose'>[user] climbs on the operating table.</span>", "<span class='notice'>You climb on the operating table.</span>")
 	else
 		visible_message("<span class='notice'>[C] has been laid on the operating table by [user].</span>", 3)
-	if (C.client)
+	if(C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
 	C.resting = 1
@@ -127,15 +127,15 @@
 		to_chat(usr, "<span class='rose'>The table is already occupied!</span>")
 		return
 
-	take_victim(usr,usr)
+	take_victim(usr, usr)
 
 /obj/machinery/optable/attackby(obj/item/weapon/W, mob/living/carbon/user)
 	if(isrobot(user))
 		return
 
-	if (istype(W, /obj/item/weapon/grab))
+	if(istype(W, /obj/item/weapon/grab))
 		if(iscarbon(W:affecting))
-			take_victim(W:affecting,usr)
+			take_victim(W:affecting, usr)
 			qdel(W)
 			return
 	user.drop_item()

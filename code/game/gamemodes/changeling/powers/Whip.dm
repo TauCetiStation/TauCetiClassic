@@ -39,7 +39,7 @@
 	if(!use_charge(user, 2))
 		return
 	next_click = world.time + 10
-	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
+	var/obj/item/projectile/changeling_whip/LE = new(get_turf(src))
 	if(user.a_intent == "grab")
 		LE.grabber = 1
 	else if(user.a_intent == "disarm" && prob(65))
@@ -77,7 +77,7 @@
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
 	if(in_range(T, host) && !host.get_inactive_hand() && !host.lying)
 		if(iscarbon(T))
-			var/obj/item/weapon/grab/G = new(host,T)
+			var/obj/item/weapon/grab/G = new(host, T)
 			host.put_in_inactive_hand(G)
 			G.state = GRAB_AGGRESSIVE
 			G.icon_state = "grabbed1"

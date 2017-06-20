@@ -47,7 +47,7 @@
 <A href='?src=\ref[src];make=12;dir=5'>Bent Pipe</A><BR>
 
 "}
-//What number the make points to is in the define # at the top of construction.dm in same folder
+// What number the make points to is in the define # at the top of construction.dm in same folder
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	onclose(user, "pipedispenser")
@@ -69,7 +69,7 @@
 		if(!wait)
 			var/p_type = text2num(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
-			var/obj/item/pipe/P = new (src.loc, pipe_type = p_type, dir = p_dir)
+			var/obj/item/pipe/P = new(src.loc, pipe_type = p_type, dir = p_dir)
 			P.update()
 			P.add_fingerprint(usr)
 			wait = 1
@@ -84,16 +84,16 @@
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(usr)
-	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
+	if(istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		to_chat(usr, "\blue You put [W] back to [src].")
 		user.drop_item()
 		qdel(W)
 		return
-	else if (istype(W, /obj/item/weapon/wrench))
-		if (unwrenched==0)
+	else if(istype(W, /obj/item/weapon/wrench))
+		if(unwrenched==0)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			to_chat(user, "\blue You begin to unfasten \the [src] from the floor...")
-			if (do_after(user, 40, target = src))
+			if(do_after(user, 40, target = src))
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
 					"\blue You have unfastened \the [src]. Now it can be pulled somewhere else.", \
@@ -101,12 +101,12 @@
 				src.anchored = 0
 				src.stat |= MAINT
 				src.unwrenched = 1
-				if (usr.machine==src)
+				if(usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
-		else /*if (unwrenched==1)*/
+		else /*if(unwrenched==1)*/
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			to_chat(user, "\blue You begin to fasten \the [src] to the floor...")
-			if (do_after(user, 20, target = src))
+			if(do_after(user, 20, target = src))
 				user.visible_message( \
 					"[user] fastens \the [src].", \
 					"\blue You have fastened \the [src]. Now it can dispense pipes.", \
@@ -126,7 +126,7 @@
 	anchored = 1.0
 
 /*
-//Allow you to push disposal pipes into it (for those with density 1)
+// Allow you to push disposal pipes into it(for those with density 1)
 /obj/machinery/pipedispenser/disposal/Crossed(var/obj/structure/disposalconstruct/pipe as obj)
 	if(istype(pipe) && !pipe.anchored)
 		qdel(pipe)
@@ -134,15 +134,15 @@
 Nah
 */
 
-//Allow you to drag-drop disposal pipes into it
+// Allow you to drag-drop disposal pipes into it
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/disposalconstruct/pipe, mob/usr)
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+	if(!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src, pipe) > 1 )
 		return
 
-	if (pipe.anchored)
+	if(pipe.anchored)
 		return
 
 	qdel(pipe)
@@ -179,7 +179,7 @@ Nah
 			return FALSE
 		if(!wait)
 			var/p_type = text2num(href_list["dmake"])
-			var/obj/structure/disposalconstruct/C = new (src.loc)
+			var/obj/structure/disposalconstruct/C = new(src.loc)
 			switch(p_type)
 				if(0)
 					C.ptype = 0

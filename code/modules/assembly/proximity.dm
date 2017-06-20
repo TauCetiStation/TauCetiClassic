@@ -18,7 +18,7 @@
 	var/range = 2
 
 /obj/item/device/assembly/prox_sensor/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())	return 0// Cooldown check
 	timing = !timing
 	update_icon()
 	return 0
@@ -35,8 +35,8 @@
 	return secured
 
 /obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM)
-	if (istype(AM, /obj/effect/beam))	return
-	if (AM.move_speed < 12)	sense()
+	if(istype(AM, /obj/effect/beam))	return
+	if(AM.move_speed < 12)	sense()
 	return
 
 /obj/item/device/assembly/prox_sensor/proc/sense()
@@ -51,18 +51,18 @@
 	spawn(10)
 		process_cooldown()
 
-//	var/time_pulse = time2text(world.realtime,"hh:mm:ss")
+//	var/time_pulse = time2text(world.realtime, "hh:mm:ss")
 //	var/turf/T = get_turf(src)
-//	lastsignalers.Add("[time_pulse] <B>:</B> [src] activated  @ location ([T.x],[T.y],[T.z])")
-//	message_admins("[src] activated  @ location ([T.x],[T.y],[T.z])",0,1)
-//	log_game("[src] activated  @ location ([T.x],[T.y],[T.z])")
+//	lastsignalers.Add("[time_pulse] <B>:</B> [src] activated  @ location([T.x],[T.y],[T.z])")
+//	message_admins("[src] activated  @ location([T.x],[T.y],[T.z])", 0, 1)
+//	log_game("[src] activated  @ location([T.x],[T.y],[T.z])")
 	return
 
 /obj/item/device/assembly/prox_sensor/process()
 	if(scanning)
 		var/turf/mainloc = get_turf(src)
-		for(var/mob/living/A in range(range,mainloc))
-			if (A.move_speed < 12)
+		for(var/mob/living/A in range(range, mainloc))
+			if(A.move_speed < 12)
 				sense()
 
 	if(timing && (time >= 0))
@@ -96,7 +96,7 @@
 		attached_overlays += "prox_scanning"
 	if(holder)
 		holder.update_icon()
-	if(holder && istype(holder.loc,/obj/item/weapon/grenade/chem_grenade))
+	if(holder && istype(holder.loc, /obj/item/weapon/grenade/chem_grenade))
 		var/obj/item/weapon/grenade/chem_grenade/grenade = holder.loc
 		grenade.primed(scanning)
 	return
@@ -106,7 +106,7 @@
 	sense()
 	return
 
-/obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
+/obj/item/device/assembly/prox_sensor/interact(mob/user)// TODO: Change this to the wires thingy
 	if(!secured)
 		user.show_message("\red The [name] is unsecured!")
 		return 0
@@ -130,30 +130,30 @@
 
 	if(href_list["scanning"])
 		toggle_scan()
-		var/time_scan = time2text(world.realtime,"hh:mm:ss")
+		var/time_scan = time2text(world.realtime, "hh:mm:ss")
 		var/turf/T = get_turf(src)
 		if(usr)
-			lastsignalers.Add("[time_scan] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("[key_name_admin(usr)] used [src] , location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-			log_game("[usr.ckey]([usr]) used [src], location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_scan] <B>:</B> [usr.key] used [src] @ location([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
+			message_admins("[key_name_admin(usr)] used [src] , location([T.x],[T.y],[T.z]) <B>:</B> time set: [time] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+			log_game("[usr.ckey]([usr]) used [src], location([T.x],[T.y],[T.z]), time set: [time]")
 		else
-			lastsignalers.Add("[time_scan] <B>:</B> (NO USER FOUND) set [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("( NO USER FOUND) used [src], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			log_game("(NO USER FOUND) used [src] , location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_scan] <B>:</B> (NO USER FOUND) set [src] @ location([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
+			message_admins("( NO USER FOUND) used [src], location([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
+			log_game("(NO USER FOUND) used [src] , location([T.x],[T.y],[T.z]), time set: [time]")
 
 	if(href_list["time"])
 		timing = text2num(href_list["time"])
 		update_icon()
-		var/time_start = time2text(world.realtime,"hh:mm:ss")
+		var/time_start = time2text(world.realtime, "hh:mm:ss")
 		var/turf/T = get_turf(src)
 		if(usr)
-			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("[key_name_admin(usr)] set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-			log_game("[usr.ckey]([usr]) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [timing?"On":"Off"] @ location([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
+			message_admins("[key_name_admin(usr)] set [src] [timing?"On":"Off"], location([T.x],[T.y],[T.z]) <B>:</B> time set: [time] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+			log_game("[usr.ckey]([usr]) set [src] [timing?"On":"Off"], location([T.x],[T.y],[T.z]), time set: [time]")
 		else
-			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("( NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			log_game("(NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
+			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [timing?"On":"Off"] @ location([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
+			message_admins("( NO USER FOUND) set [src] [timing?"On":"Off"], location([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
+			log_game("(NO USER FOUND) set [src] [timing?"On":"Off"], location([T.x],[T.y],[T.z]), time set: [time]")
 
 	if(href_list["tp"])
 		var/tp = text2num(href_list["tp"])

@@ -5,7 +5,7 @@
 /datum/construction/mecha/custom_action(step, atom/used_atom, mob/user)
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
-		if (W.remove_fuel(0, user))
+		if(W.remove_fuel(0, user))
 			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
 		else
 			return 0
@@ -38,7 +38,7 @@
 /datum/construction/reversible/mecha/custom_action(index, diff, atom/used_atom, mob/user)
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
-		if (W.remove_fuel(0, user))
+		if(W.remove_fuel(0, user))
 			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
 		else
 			return 0
@@ -70,10 +70,10 @@
 
 
 /datum/construction/mecha/ripley_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg),//4
+	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg), //4
 					 list("key"=/obj/item/mecha_parts/part/ripley_right_leg)//5
 					)
 
@@ -83,8 +83,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -158,14 +158,14 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
 			return 0
 
-		//TODO: better messages.
+		// TODO: better messages.
 		switch(index)
 			if(14)
 				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
@@ -274,17 +274,17 @@
 
 	spawn_result()
 		..()
-		feedback_inc("mecha_ripley_created",1)
+		feedback_inc("mecha_ripley_created", 1)
 		return
 
 
 
 /datum/construction/mecha/gygax_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/gygax_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/gygax_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/gygax_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/gygax_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/gygax_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/gygax_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/gygax_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/gygax_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/gygax_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/gygax_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/gygax_head)
 					)
 
@@ -294,8 +294,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -392,14 +392,14 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
 			return 0
 
-		//TODO: better messages.
+		// TODO: better messages.
 		switch(index)
 			if(20)
 				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
@@ -556,15 +556,15 @@
 
 	spawn_result()
 		..()
-		feedback_inc("mecha_gygax_created",1)
+		feedback_inc("mecha_gygax_created", 1)
 		return
 
 /datum/construction/mecha/firefighter_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/ripley_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/ripley_right_leg), //5
 					 list("key"=/obj/item/clothing/suit/fire)//6
 					)
 
@@ -575,8 +575,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -654,14 +654,14 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
 			return 0
 
-		//TODO: better messages.
+		// TODO: better messages.
 		switch(index)
 			if(15)
 				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
@@ -780,22 +780,22 @@
 
 	spawn_result()
 		..()
-		feedback_inc("mecha_firefighter_created",1)
+		feedback_inc("mecha_firefighter_created", 1)
 		return
 
 
 
 /datum/construction/mecha/honker_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/honker_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/honker_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/honker_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/honker_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/honker_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/honker_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/honker_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/honker_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/honker_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/honker_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/honker_head)
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	custom_action(step, atom/used_atom, mob/user)
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
@@ -814,21 +814,21 @@
 
 /datum/construction/mecha/honker
 	result = "/obj/mecha/combat/honker"
-	steps = list(list("key"=/obj/item/weapon/bikehorn),//1
-					 list("key"=/obj/item/clothing/shoes/clown_shoes),//2
-					 list("key"=/obj/item/weapon/bikehorn),//3
-					 list("key"=/obj/item/clothing/mask/gas/clown_hat),//4
-					 list("key"=/obj/item/weapon/bikehorn),//5
-					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/targeting),//6
-					 list("key"=/obj/item/weapon/bikehorn),//7
-					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/peripherals),//8
-					 list("key"=/obj/item/weapon/bikehorn),//9
-					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/main),//10
-					 list("key"=/obj/item/weapon/bikehorn),//11
+	steps = list(list("key"=/obj/item/weapon/bikehorn), //1
+					 list("key"=/obj/item/clothing/shoes/clown_shoes), //2
+					 list("key"=/obj/item/weapon/bikehorn), //3
+					 list("key"=/obj/item/clothing/mask/gas/clown_hat), //4
+					 list("key"=/obj/item/weapon/bikehorn), //5
+					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/targeting), //6
+					 list("key"=/obj/item/weapon/bikehorn), //7
+					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/peripherals), //8
+					 list("key"=/obj/item/weapon/bikehorn), //9
+					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/main), //10
+					 list("key"=/obj/item/weapon/bikehorn), //11
 					 )
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(step, atom/used_atom, mob/user)
 		if(!..())
@@ -838,7 +838,7 @@
 			playsound(holder, 'sound/items/bikehorn.ogg', 50, 1)
 			user.visible_message("HONK!")
 
-		//TODO: better messages.
+		// TODO: better messages.
 		switch(step)
 			if(10)
 				user.visible_message("[user] installs the central control module into [holder].", "You install the central control module into [holder].")
@@ -859,15 +859,15 @@
 
 	spawn_result()
 		..()
-		feedback_inc("mecha_honker_created",1)
+		feedback_inc("mecha_honker_created", 1)
 		return
 
 /datum/construction/mecha/durand_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/durand_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/durand_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/durand_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/durand_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/durand_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/durand_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/durand_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/durand_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/durand_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/durand_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/durand_head)
 					)
 
@@ -877,8 +877,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -975,14 +975,14 @@
 					)
 
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
 			return 0
 
-		//TODO: better messages.
+		// TODO: better messages.
 		switch(index)
 			if(20)
 				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
@@ -1139,17 +1139,17 @@
 
 	spawn_result()
 		..()
-		feedback_inc("mecha_durand_created",1)
+		feedback_inc("mecha_durand_created", 1)
 		return
 
 
 /datum/construction/mecha/phazon_chassis
 	result = "/obj/mecha/combat/phazon"
-	steps = list(list("key"=/obj/item/mecha_parts/part/phazon_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/phazon_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/phazon_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/phazon_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/phazon_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/phazon_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/phazon_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/phazon_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/phazon_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/phazon_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/phazon_head)
 					)
 
@@ -1159,18 +1159,18 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 
 
 
 /datum/construction/mecha/odysseus_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/odysseus_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/odysseus_head),//2
-					 list("key"=/obj/item/mecha_parts/part/odysseus_left_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/odysseus_right_arm),//4
-					 list("key"=/obj/item/mecha_parts/part/odysseus_left_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/odysseus_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/odysseus_head), //2
+					 list("key"=/obj/item/mecha_parts/part/odysseus_left_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/odysseus_right_arm), //4
+					 list("key"=/obj/item/mecha_parts/part/odysseus_left_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/odysseus_right_leg)//6
 					)
 
@@ -1180,8 +1180,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -1254,14 +1254,14 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
 			return 0
 
-		//TODO: better messages.
+		// TODO: better messages.
 		switch(index)
 			if(14)
 				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
@@ -1372,15 +1372,15 @@
 
 	spawn_result()
 		..()
-		feedback_inc("mecha_odysseus_created",1)
+		feedback_inc("mecha_odysseus_created", 1)
 		return
 
 /datum/construction/mecha/vindicator_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/vindicator_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/vindicator_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/vindicator_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/vindicator_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/vindicator_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/vindicator_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/vindicator_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/vindicator_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/vindicator_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/vindicator_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/vindicator_head)
 					)
 
@@ -1390,8 +1390,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -1488,14 +1488,14 @@
 					)
 
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
 			return 0
 
-		//TODO: better messages.
+		// TODO: better messages.
 		switch(index)
 			if(20)
 				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
@@ -1652,15 +1652,15 @@
 
 	spawn_result()
 		..()
-		feedback_inc("mecha_vindicator_created",1)
+		feedback_inc("mecha_vindicator_created", 1)
 		return
 
 /datum/construction/mecha/ultra_chassis
-	steps = list(list("key"=/obj/item/mecha_parts/part/ultra_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/ultra_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/ultra_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/ultra_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/ultra_right_leg),//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/ultra_torso), //1
+					 list("key"=/obj/item/mecha_parts/part/ultra_left_arm), //2
+					 list("key"=/obj/item/mecha_parts/part/ultra_right_arm), //3
+					 list("key"=/obj/item/mecha_parts/part/ultra_left_leg), //4
+					 list("key"=/obj/item/mecha_parts/part/ultra_right_leg), //5
 					 list("key"=/obj/item/mecha_parts/part/ultra_head)
 					)
 
@@ -1670,8 +1670,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -1768,14 +1768,14 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
 			return 0
 
-		//TODO: better messages.
+		// TODO: better messages.
 		switch(index)
 			if(20)
 				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
@@ -1932,5 +1932,5 @@
 
 	spawn_result()
 		..()
-		feedback_inc("mecha_ultra_created",1)
+		feedback_inc("mecha_ultra_created", 1)
 		return

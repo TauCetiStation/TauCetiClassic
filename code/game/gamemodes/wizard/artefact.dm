@@ -36,7 +36,7 @@
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
 
-	check_spooky()//clean out/refresh the list
+	check_spooky()// clean out/refresh the list
 	if(spooky_scaries.len >= 3 && !unlimited)
 		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
 		return
@@ -50,7 +50,7 @@
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
 /obj/item/device/necromantic_stone/proc/check_spooky()
-	if(unlimited) //no point, the list isn't used.
+	if(unlimited) // no point, the list isn't used.
 		return
 
 	for(var/X in spooky_scaries)
@@ -140,7 +140,7 @@
 			make_apprentice(H, href_list["school"])
 
 /obj/item/weapon/contract/proc/make_apprentice(mob/living/carbon/human/M, type = "")
-	new /obj/effect/effect/smoke (get_turf(src))
+	new /obj/effect/effect/smoke(get_turf(src))
 	var/wizard_name = "Grand Magus"
 	if(wizard)
 		wizard_name = wizard.name

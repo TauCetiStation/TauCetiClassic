@@ -6,7 +6,7 @@
 	suicide_act(mob/user)
 		to_chat(viewers(user), pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
 							"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>"))
-		return (BRUTELOSS|FIRELOSS)
+		return(BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
@@ -25,7 +25,7 @@
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "\red <b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b>")
-		return (BRUTELOSS|FIRELOSS)
+		return(BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
 	color
@@ -58,13 +58,13 @@
 	if(istype(W, /obj/item/device/multitool))
 		if(!hacked)
 			hacked = 1
-			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
+			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
 			item_color = "rainbow"
-			if (active)
+			if(active)
 				active = 0
 				icon_state = "sword0"
 		else
-			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
 	else
 		return ..()
 
@@ -80,13 +80,13 @@
 	name = "energy blade"
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
-	force = 70.0//Normal attacks deal very high damage.
+	force = 70.0// Normal attacks deal very high damage.
 	sharp = 1
 	edge = 1
-	throwforce = 1//Throwing or dropping the item deletes it.
+	throwforce = 1// Throwing or dropping the item deletes it.
 	throw_speed = 1
 	throw_range = 1
-	w_class = 4.0//So you can't hide it in your pocket or some such.
+	w_class = 4.0// So you can't hide it in your pocket or some such.
 	flags = NOSHIELD | NOBLOODY | DROPDEL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system

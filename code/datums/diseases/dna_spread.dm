@@ -17,7 +17,7 @@
 /datum/disease/dnaspread/stage_act()
 	..()
 	switch(stage)
-		if(2 || 3) //Pretend to be a cold and give time to spread.
+		if(2 || 3) // Pretend to be a cold and give time to spread.
 			if(prob(8))
 				affected_mob.emote("sneeze")
 			if(prob(8))
@@ -33,11 +33,11 @@
 					affected_mob.updatehealth()
 		if(4)
 			if(!src.transformed)
-				if ((!strain_data["name"]) || (!strain_data["UI"]) || (!strain_data["SE"]))
+				if((!strain_data["name"]) || (!strain_data["UI"]) || (!strain_data["SE"]))
 					qdel(affected_mob.virus)
 					return
 
-				//Save original dna for when the disease is cured.
+				// Save original dna for when the disease is cured.
 				src.original_dna["name"] = affected_mob.real_name
 				src.original_dna["UI"] = affected_mob.dna.UI.Copy()
 				src.original_dna["SE"] = affected_mob.dna.SE.Copy()
@@ -52,12 +52,12 @@
 				domutcheck(affected_mob)
 
 				src.transformed = 1
-				src.carrier = 1 //Just chill out at stage 4
+				src.carrier = 1 // Just chill out at stage 4
 
 	return
 
 /datum/disease/dnaspread/Destroy()
-	if ((original_dna["name"]) && (original_dna["UI"]) && (original_dna["SE"]))
+	if((original_dna["name"]) && (original_dna["UI"]) && (original_dna["SE"]))
 		var/list/newUI=original_dna["UI"]
 		var/list/newSE=original_dna["SE"]
 		affected_mob.UpdateAppearance(newUI.Copy())

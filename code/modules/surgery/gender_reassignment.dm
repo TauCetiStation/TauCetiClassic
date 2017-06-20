@@ -8,14 +8,14 @@
 	blood_level = 1
 
 /datum/surgery_step/gender_reassignment/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return 0
-	if (target_zone != BP_GROIN)
+	if(target_zone != BP_GROIN)
 		return 0
 	var/obj/item/organ/external/groin = target.get_bodypart(BP_GROIN)
-	if (!groin)
+	if(!groin)
 		return 0
-	if (groin.open < 1)
+	if(groin.open < 1)
 		return 0
 	return 1
 
@@ -41,16 +41,16 @@
 	else
 		user.visible_message("[user] begins to reshape [target]'s genitals to look more feminine with \the [tool].", \
 		"You start to reshape [target]'s genitals to look more feminine with \the [tool]." )
-	target.custom_pain("The pain in your groin is living hell!",1)
+	target.custom_pain("The pain in your groin is living hell!", 1)
 	..()
 
 /datum/surgery_step/gender_reassignment/reshape_genitals/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(target.gender == FEMALE)
-		user.visible_message("\blue [user] has made a man of [target] with \the [tool]." , \
+		user.visible_message("\blue [user] has made a man of [target] with \the [tool].", \
 		"\blue You have made a man of [target].")
 		target.gender = MALE
 	else
-		user.visible_message("\blue [user] has made a woman of [target] with \the [tool]." , \
+		user.visible_message("\blue [user] has made a woman of [target] with \the [tool].", \
 		"\blue You have made a woman of [target].")
 		target.gender = FEMALE
 

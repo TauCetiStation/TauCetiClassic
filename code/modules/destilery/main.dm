@@ -1,4 +1,4 @@
-//This dm file includes some food processing machines:
+// This dm file includes some food processing machines:
 // - I.   Mill
 // - II.  Fermenter
 // - III. Still
@@ -40,14 +40,14 @@
 		return
 
 	progress++
-	if(progress < 10)	//Edit this value to make milling faster or slower
-		return	//Not done yet.
+	if(progress < 10)	// Edit this value to make milling faster or slower
+		return	// Not done yet.
 
 	switch(milled_item.type)
-		if(/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)	//Wheat becomes flour
+		if(/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)	// Wheat becomes flour
 			var/obj/item/weapon/reagent_containers/food/condiment/flour/F = new(src)
 			output += F
-		if(/obj/item/weapon/reagent_containers/food/condiment/flour)	//Flour is still flour
+		if(/obj/item/weapon/reagent_containers/food/condiment/flour)	// Flour is still flour
 			var/obj/item/weapon/reagent_containers/food/condiment/flour/F = new(src)
 			output += F
 		else
@@ -57,7 +57,7 @@
 	busy = 0
 
 /obj/machinery/mill/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/reagent_containers/food))
+	if(istype(W, /obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
 		input += W
@@ -113,11 +113,11 @@
 	water_level--
 
 	progress++
-	if(progress < 10)	//Edit this value to make milling faster or slower
-		return	//Not done yet.
+	if(progress < 10)	// Edit this value to make milling faster or slower
+		return	// Not done yet.
 
 	switch(fermenting_item.type)
-		if(/obj/item/weapon/reagent_containers/food/condiment/flour)	//Flour is still flour
+		if(/obj/item/weapon/reagent_containers/food/condiment/flour)	// Flour is still flour
 			var/obj/item/weapon/reagent_containers/food/drinks/bottle/beer/B = new(src)
 			output += B
 		else
@@ -127,7 +127,7 @@
 	busy = 0
 
 /obj/machinery/fermenter/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/reagent_containers/food))
+	if(istype(W, /obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
 		input += W
@@ -174,11 +174,11 @@
 		return
 
 	progress++
-	if(progress < 10)	//Edit this value to make distilling faster or slower
-		return	//Not done yet.
+	if(progress < 10)	// Edit this value to make distilling faster or slower
+		return	// Not done yet.
 
 	switch(destilling_item.type)
-		if(/obj/item/weapon/reagent_containers/food/drinks/bottle/beer)	//Flour is still flour
+		if(/obj/item/weapon/reagent_containers/food/drinks/bottle/beer)	// Flour is still flour
 			var/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/V = new(src)
 			output += V
 		else
@@ -188,7 +188,7 @@
 	busy = 0
 
 /obj/machinery/still/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/reagent_containers/food))
+	if(istype(W, /obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
 		input += W
@@ -225,7 +225,7 @@
 
 
 
-// V. The centrifuge spins inserted food items. It is intended to squeeze out the reagents that are common food catalysts (enzymes currently)
+// V. The centrifuge spins inserted food items. It is intended to squeeze out the reagents that are common food catalysts(enzymes currently)
 
 /obj/machinery/centrifuge
 	var/list/obj/item/weapon/reagent_containers/food/input = list()
@@ -260,20 +260,20 @@
 		return
 
 	progress++
-	if(progress < 10)	//Edit this value to make milling faster or slower
-		return	//Not done yet.
+	if(progress < 10)	// Edit this value to make milling faster or slower
+		return	// Not done yet.
 
 	var/transfer_enzymes = spinning_item.reagents.get_reagent_amount("enzyme")
 
 	if(transfer_enzymes)
 		enzymes += transfer_enzymes
-		spinning_item.reagents.remove_reagent("enzyme",transfer_enzymes)
+		spinning_item.reagents.remove_reagent("enzyme", transfer_enzymes)
 
 	output += spinning_item
 	busy = 0
 
 /obj/machinery/centrifuge/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/reagent_containers/food))
+	if(istype(W, /obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
 		input += W

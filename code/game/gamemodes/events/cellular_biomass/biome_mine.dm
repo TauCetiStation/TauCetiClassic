@@ -25,7 +25,7 @@
 	icon = 'code/game/gamemodes/events/cellular_biomass/alien.dmi'
 	light_color = "#710F8C"
 
-/obj/effect/cellular_biomass_controller/mine/alive() //die only if all walls are removed
+/obj/effect/cellular_biomass_controller/mine/alive() // die only if all walls are removed
 	if(!growth_queue)
 		return 0
 	if(!growth_queue.len)
@@ -37,13 +37,13 @@
 	desc = "Pieces of some kind of alien lifeform."
 	icon = 'code/game/gamemodes/events/cellular_biomass/alien.dmi'
 	icon_state = "xeno_1"
-	random_icon_states = list("xeno_1", "xeno_2","xeno_3","xeno_4","xeno_5","xeno_6","xeno_7","xeno_8","xeno_9","xeno_10","xeno_11","xeno_12","xeno_13")
+	random_icon_states = list("xeno_1", "xeno_2", "xeno_3", "xeno_4", "xeno_5", "xeno_6", "xeno_7", "xeno_8", "xeno_9", "xeno_10", "xeno_11", "xeno_12", "xeno_13")
 
 /obj/structure/cellular_biomass/wall/mine/New()
 	icon_state = "wall"
 
 /obj/structure/cellular_biomass/grass/mine/New()
-	icon_state = "weed[pick(1,2,3)]"
+	icon_state = "weed[pick(1, 2, 3)]"
 
 /obj/structure/cellular_biomass/core/mine/New()
 	icon_state = "core"

@@ -36,10 +36,10 @@
 		return STATUS_INTERACTIVE
 	// robots can interact with things they can see within their view range
 	if((src_object in view(src)) && get_dist(src_object, src) <= src.client.view)
-		return STATUS_INTERACTIVE	// interactive (green visibility)
-	return STATUS_DISABLED			// no updates, completely disabled (red visibility)
+		return STATUS_INTERACTIVE	// interactive(green visibility)
+	return STATUS_DISABLED			// no updates, completely disabled(red visibility)
 
-//allowed() proc in robot already does everything that block below contains.
+// allowed() proc in robot already does everything that block below contains.
 /*/mob/living/silicon/robot/syndicate/can_use_topic(src_object)
 	. = ..()
 	if(. != STATUS_INTERACTIVE)
@@ -55,10 +55,10 @@
 	return STATUS_UPDATE*/
 
 /mob/living/silicon/ai/can_use_topic(src_object)
-	//if(!client || check_unable(1))
+	// if(!client || check_unable(1))
 	if(!client)
 		return STATUS_CLOSE
-	// Prevents the AI from using Topic on admin levels (by for example viewing through the court/thunderdome cameras)
+	// Prevents the AI from using Topic on admin levels(by for example viewing through the court/thunderdome cameras)
 	// unless it's on the same level as the object it's interacting with.
 	var/turf/T = get_turf(src_object)
 	if(!T || !(z == T.z || (T.z in config.player_levels)))
@@ -70,8 +70,8 @@
 
 	// If we're installed in a chassi, rather than transfered to an inteliCard or other container, then check if we have camera view
 	if(is_in_chassis())
-		//stop AIs from leaving windows open and using then after they lose vision
-		//apc_override is needed here because AIs use their own APC when powerless
+		// stop AIs from leaving windows open and using then after they lose vision
+		// apc_override is needed here because AIs use their own APC when powerless
 		if(cameranet && !cameranet.checkTurfVis(get_turf(src_object)))
 			return apc_override ? STATUS_INTERACTIVE : STATUS_CLOSE
 		return STATUS_INTERACTIVE
@@ -81,13 +81,13 @@
 	return 	STATUS_CLOSE
 
 /mob/living/proc/shared_living_nano_interaction(src_object)
-	if (src.stat != CONSCIOUS)
+	if(src.stat != CONSCIOUS)
 		return STATUS_CLOSE						// no updates, close the interface
-	else if (restrained() || lying || stat || stunned || weakened)
-		return STATUS_UPDATE					// update only (orange visibility)
+	else if(restrained() || lying || stat || stunned || weakened)
+		return STATUS_UPDATE					// update only(orange visibility)
 	return STATUS_INTERACTIVE
 
-//Some atoms such as vehicles might have special rules for how mobs inside them interact with NanoUI.
+// Some atoms such as vehicles might have special rules for how mobs inside them interact with NanoUI.
 /atom/proc/contents_nano_distance(src_object, mob/living/user)
 	return user.shared_living_nano_distance(src_object)
 
@@ -98,16 +98,16 @@
 		if(src.contents.Find(src_object.loc))	// A hidden uplink inside an item
 			return STATUS_INTERACTIVE
 
-	if (!(src_object in view(4, src))) 	// If the src object is not in visable, disable updates
+	if(!(src_object in view(4, src))) 	// If the src object is not in visable, disable updates
 		return STATUS_CLOSE
 
 	var/dist = get_dist(src_object, src)
-	if (dist <= 1)
-		return STATUS_INTERACTIVE	// interactive (green visibility)
-	else if (dist <= 2)
-		return STATUS_UPDATE 		// update only (orange visibility)
-	else if (dist <= 4)
-		return STATUS_DISABLED 		// no updates, completely disabled (red visibility)
+	if(dist <= 1)
+		return STATUS_INTERACTIVE	// interactive(green visibility)
+	else if(dist <= 2)
+		return STATUS_UPDATE 		// update only(orange visibility)
+	else if(dist <= 4)
+		return STATUS_DISABLED 		// no updates, completely disabled(red visibility)
 	return STATUS_CLOSE
 
 /mob/living/can_use_topic(src_object, datum/topic_state/custom_state)

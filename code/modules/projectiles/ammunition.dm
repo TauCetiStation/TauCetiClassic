@@ -1,4 +1,4 @@
-//TG-stuff
+// TG-stuff
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
@@ -8,11 +8,11 @@
 	slot_flags = SLOT_BELT
 	throwforce = 1
 	w_class = 1.0
-	var/caliber = null							//Which kind of guns it can be loaded into
-	var/projectile_type = null					//The bullet type to create when New() is called
-	var/obj/item/projectile/BB = null 			//The loaded bullet
-	var/pellets = 0								//Pellets for spreadshot
-	var/variance = 0							//Variance for inaccuracy fundamental to the casing
+	var/caliber = null							// Which kind of guns it can be loaded into
+	var/projectile_type = null					// The bullet type to create when New() is called
+	var/obj/item/projectile/BB = null 			// The loaded bullet
+	var/pellets = 0								// Pellets for spreadshot
+	var/variance = 0							// Variance for inaccuracy fundamental to the casing
 
 /obj/item/ammo_casing/New()
 	..()
@@ -28,8 +28,8 @@
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
-/obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
-	if (!BB)
+/obj/item/ammo_casing/proc/newshot() // For energy weapons and shotgun shells.
+	if(!BB)
 		BB = new projectile_type(src)
 	return
 
@@ -38,7 +38,7 @@
 		if(BB)
 			if(initial(BB.name) == "bullet")
 				var/tmp_label = ""
-				var/label_text = sanitize(copytext(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription",tmp_label), 1, MAX_NAME_LEN))
+				var/label_text = sanitize(copytext(input(user, "Inscribe some text into \the [initial(BB.name)]", "Inscription", tmp_label), 1, MAX_NAME_LEN))
 				if(length(label_text) > 20)
 					to_chat(user, "\red The inscription can be at most 20 characters long.")
 				else
@@ -49,13 +49,13 @@
 						to_chat(user, "\blue You inscribe \"[label_text]\" into \the [initial(BB.name)].")
 						BB.name = "[initial(BB.name)] \"[label_text]\""
 			else
-				to_chat(user, "\blue You can only inscribe a metal bullet.")//because inscribing beanbags is silly
+				to_chat(user, "\blue You can only inscribe a metal bullet.")// because inscribing beanbags is silly
 		else
 			to_chat(user, "\blue There is no bullet in the casing to inscribe anything into.")
 
-//Boxes of ammo
+// Boxes of ammo
 /obj/item/ammo_box
-	name = "ammo box (null_reference_exception)"
+	name = "ammo box(null_reference_exception)"
 	desc = "A box of ammo"
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
@@ -80,19 +80,19 @@
 	update_icon()
 
 /obj/item/ammo_box/proc/get_round(keep = 0)
-	if (!stored_ammo.len)
+	if(!stored_ammo.len)
 		return null
 	else
 		var/b = stored_ammo[stored_ammo.len]
 		stored_ammo -= b
-		if (keep)
-			stored_ammo.Insert(1,b)
+		if(keep)
+			stored_ammo.Insert(1, b)
 		return b
 
 /obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/r)
 	var/obj/item/ammo_casing/rb = r
-	if (rb)
-		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
+	if(rb)
+		if(stored_ammo.len < max_ammo && rb.caliber == caliber)
 			stored_ammo += rb
 			rb.loc = src
 			return 1
@@ -116,7 +116,7 @@
 			AC.loc = src
 			num_loaded++
 	if(num_loaded)
-		if (!silent)
+		if(!silent)
 			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		A.update_icon()
 		update_icon()
@@ -139,6 +139,6 @@
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
 	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
 
-//Behavior for magazines
+// Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()
 	return stored_ammo.len

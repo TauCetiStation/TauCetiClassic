@@ -1,4 +1,4 @@
-//GUNS RANDOM
+// GUNS RANDOM
 /obj/random/guns/handgun_security
 	name = "Random Handgun"
 	desc = "This is a random security sidearm."

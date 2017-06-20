@@ -22,7 +22,7 @@ AI MODULES
 
 
 /obj/item/weapon/aiModule/proc/install(obj/machinery/computer/C)
-	if (istype(C, /obj/machinery/computer/aiupload))
+	if(istype(C, /obj/machinery/computer/aiupload))
 		var/obj/machinery/computer/aiupload/comp = C
 		if(comp.stat & NOPOWER)
 			to_chat(usr, "The upload computer has no power!")
@@ -30,7 +30,7 @@ AI MODULES
 		if(comp.stat & BROKEN)
 			to_chat(usr, "The upload computer is broken!")
 			return
-		if (!comp.current)
+		if(!comp.current)
 			to_chat(usr, "You haven't selected an AI to transmit laws to!")
 			return
 
@@ -38,9 +38,9 @@ AI MODULES
 			to_chat(usr, "Law uploads have been disabled by NanoTrasen!")
 			return
 
-		if (comp.current.stat == DEAD || comp.current.control_disabled == 1)
+		if(comp.current.stat == DEAD || comp.current.control_disabled == 1)
 			to_chat(usr, "Upload failed. No signal is being detected from the AI.")
-		else if (comp.current.see_in_dark == 0)
+		else if(comp.current.see_in_dark == 0)
 			to_chat(usr, "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power.")
 		else
 			src.transmitInstructions(comp.current, usr)
@@ -53,7 +53,7 @@ AI MODULES
 			to_chat(usr, "Upload complete. The AI's laws have been modified.")
 
 
-	else if (istype(C, /obj/machinery/computer/borgupload))
+	else if(istype(C, /obj/machinery/computer/borgupload))
 		var/obj/machinery/computer/borgupload/comp = C
 		if(comp.stat & NOPOWER)
 			to_chat(usr, "The upload computer has no power!")
@@ -61,13 +61,13 @@ AI MODULES
 		if(comp.stat & BROKEN)
 			to_chat(usr, "The upload computer is broken!")
 			return
-		if (!comp.current)
+		if(!comp.current)
 			to_chat(usr, "You haven't selected a robot to transmit laws to!")
 			return
 
-		if (comp.current.stat == DEAD || comp.current.emagged)
+		if(comp.current.stat == DEAD || comp.current.emagged)
 			to_chat(usr, "Upload failed. No signal is being detected from the robot.")
-		else if (comp.current.connected_ai)
+		else if(comp.current.connected_ai)
 			to_chat(usr, "Upload failed. The robot is slaved to an AI.")
 		else
 			src.transmitInstructions(comp.current, usr)
@@ -78,7 +78,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	to_chat(target, "[sender] has uploaded a change to the laws you must follow, using a [name]. From now on: ")
-	var/time = time2text(world.realtime,"hh:mm:ss")
+	var/time = time2text(world.realtime, "hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
 
 
@@ -119,7 +119,7 @@ AI MODULES
 	name = "\improper 'OneHuman' AI module"
 	var/targetName = ""
 	desc = "A 'one human' AI module: 'Only <name> is human.'"
-	origin_tech = "programming=3;materials=6" //made with diamonds!
+	origin_tech = "programming=3;materials=6" // made with diamonds!
 
 /obj/item/weapon/aiModule/oneHuman/attack_self(mob/user)
 	..()
@@ -136,7 +136,7 @@ AI MODULES
 /obj/item/weapon/aiModule/oneHuman/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	var/law = "Only [targetName] is human."
-	if (!is_special_character(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
+	if(!is_special_character(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
 		to_chat(target, law)
 		target.set_zeroth_law(law)
 		lawchanges.Add("The law specified [targetName]")
@@ -150,7 +150,7 @@ AI MODULES
 /obj/item/weapon/aiModule/protectStation
 	name = "\improper 'ProtectStation' AI module"
 	desc = "A 'protect station' AI module: 'Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.'"
-	origin_tech = "programming=3;materials=4" //made of gold
+	origin_tech = "programming=3;materials=4" // made of gold
 
 /obj/item/weapon/aiModule/protectStation/attack_self(mob/user)
 	..()
@@ -257,11 +257,11 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeform/attack_self(mob/user)
 	..()
-	var/new_lawpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num
+	var/new_lawpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority(15+)", lawpos) as num
 	if(new_lawpos < 15)	return
 	lawpos = min(new_lawpos, 50)
 	var/newlaw = ""
-	var/targName = sanitize(copytext(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw),1,MAX_MESSAGE_LEN))
+	var/targName = sanitize(copytext(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw), 1, MAX_MESSAGE_LEN))
 	newFreeFormLaw = targName
 	desc = "A 'freeform' AI module: ([lawpos]) '[newFreeFormLaw]'"
 
@@ -290,7 +290,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	if (!is_special_character(target))
+	if(!is_special_character(target))
 		target.set_zeroth_law("")
 	target.clear_supplied_laws()
 	target.clear_ion_laws()
@@ -306,7 +306,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/purge/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	if (!is_special_character(target))
+	if(!is_special_character(target))
 		target.set_zeroth_law("")
 	to_chat(target, "[sender.real_name] attempted to wipe your laws using a purge module.")
 	target.clear_supplied_laws()
@@ -344,7 +344,7 @@ AI MODULES
 	target.add_inherent_law("Serve: Serve the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 	target.add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 	target.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
-	//target.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
+	// target.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
 	target.show_laws()
 
 /******************** Corporate ********************/
@@ -448,13 +448,13 @@ AI MODULES
 /obj/item/weapon/aiModule/syndicate/attack_self(mob/user)
 	..()
 	var/newlaw = ""
-	var/targName = stripped_input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw,MAX_MESSAGE_LEN)
+	var/targName = stripped_input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw, MAX_MESSAGE_LEN)
 	newFreeFormLaw = targName
 	desc = "A hacked AI law module:  '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-//	..()    //We don't want this module reporting to the AI who dun it. --NEO
-	var/time = time2text(world.realtime,"hh:mm:ss")
+//	..()    // We don't want this module reporting to the AI who dun it. --NEO
+	var/time = time2text(world.realtime, "hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
 	lawchanges.Add("The law is '[newFreeFormLaw]'")
 	to_chat(target, "\red BZZZZT")

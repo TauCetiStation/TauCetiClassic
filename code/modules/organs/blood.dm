@@ -1,16 +1,16 @@
 /****************************************************
 				BLOOD SYSTEM
 ****************************************************/
-//Blood levels
+// Blood levels
 var/const/BLOOD_VOLUME_SAFE = 501
 var/const/BLOOD_VOLUME_OKAY = 336
 var/const/BLOOD_VOLUME_BAD = 224
 var/const/BLOOD_VOLUME_SURVIVE = 122
 
-/mob/living/carbon/human/var/datum/reagents/vessel	//Container for blood and BLOOD ONLY. Do not transfer other chems here.
-/mob/living/carbon/human/var/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
+/mob/living/carbon/human/var/datum/reagents/vessel	// Container for blood and BLOOD ONLY. Do not transfer other chems here.
+/mob/living/carbon/human/var/var/pale = 0			// Should affect how mob sprite is drawn, but currently doesn't.
 
-//Initializes blood vessels
+// Initializes blood vessels
 /mob/living/carbon/human/proc/make_blood()
 
 	if(vessel)
@@ -19,38 +19,38 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	vessel = new/datum/reagents(600)
 	vessel.my_atom = src
 
-	if(species && species.flags[NO_BLOOD]) //We want the var for safety but we can do without the actual blood.
+	if(species && species.flags[NO_BLOOD]) // We want the var for safety but we can do without the actual blood.
 		return
 
-	vessel.add_reagent("blood",560)
+	vessel.add_reagent("blood", 560)
 	addtimer(CALLBACK(src, .proc/fixblood), 1)
 
-//Resets blood data
+// Resets blood data
 /mob/living/carbon/human/proc/fixblood()
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
-			B.data = list(	"donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.b_type,	\
-							"resistances"=null,"trace_chem"=null, "virus2" = null, "antibodies" = null)
+			B.data = list(	"donor"=src, "viruses"=null, "blood_DNA"=dna.unique_enzymes, "blood_type"=dna.b_type,	\
+							"resistances"=null, "trace_chem"=null, "virus2" = null, "antibodies" = null)
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/var/tmp/next_blood_squirt = 0 // until this moved to heart or not...
 /mob/living/carbon/human/proc/handle_blood(blood_volume = 0)
 
-	//Blood regeneration if there is some space
+	// Blood regeneration if there is some space
 	if(blood_volume < 560 && blood_volume)
-		var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
+		var/datum/reagent/blood/B = locate() in vessel.reagent_list // Grab some blood
 		if(B) // Make sure there's some blood at all
-			if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
+			if(B.data["donor"] != src) // If it's not theirs, then we look for theirs
 				for(var/datum/reagent/blood/D in vessel.reagent_list)
 					if(D.data["donor"] == src)
 						B = D
 						break
 
 			B.volume += 0.1 // regenerate blood VERY slowly
-			if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
+			if(reagents.has_reagent("nutriment"))	// Getting food speeds it up
 				B.volume += 0.4
 				reagents.remove_reagent("nutriment", 0.1)
-			if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
+			if(reagents.has_reagent("iron"))	// Hematogen candy anyone?
 				B.volume += 0.8
 				reagents.remove_reagent("iron", 0.1)
 
@@ -65,7 +65,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	else if(IO.damage >= IO.min_broken_damage && IO.damage < INFINITY)
 		blood_volume *= 0.3
 
-	//Effects of bloodloss
+	// Effects of bloodloss
 	switch(blood_volume)
 		if(BLOOD_VOLUME_SAFE to 10000)
 			if(pale)
@@ -75,10 +75,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if(!pale)
 				pale = 1
 				update_body()
-				var/word = pick("dizzy","woosey","faint")
+				var/word = pick("dizzy", "woosey", "faint")
 				to_chat(src, "\red You feel [word]")
 			if(prob(1))
-				var/word = pick("dizzy","woosey","faint")
+				var/word = pick("dizzy", "woosey", "faint")
 				to_chat(src, "\red You feel [word]")
 			if(oxyloss < 20)
 				oxyloss += 3
@@ -91,14 +91,14 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				oxyloss += 10
 			oxyloss += 1
 			if(prob(15))
-				Paralyse(rand(1,3))
-				var/word = pick("dizzy","woosey","faint")
+				Paralyse(rand(1, 3))
+				var/word = pick("dizzy", "woosey", "faint")
 				to_chat(src, "\red You feel extremely [word]")
 		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 			oxyloss += 5
 			toxloss += 3
 			if(prob(15))
-				var/word = pick("dizzy","woosey","faint")
+				var/word = pick("dizzy", "woosey", "faint")
 				to_chat(src, "\red You feel extremely [word]")
 		if(0 to BLOOD_VOLUME_SURVIVE)
 			// There currently is a strange bug here. If the mob is not below -100 health
@@ -114,7 +114,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		else if(nutrition >= 200)
 			nutrition -= 3
 
-	//Bleeding out
+	// Bleeding out
 	var/blood_max = 0
 	var/list/do_spray = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
@@ -135,9 +135,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						if(ishuman(BP.applied_pressure))
 							var/mob/living/carbon/human/H = BP.applied_pressure
 							H.bloody_hands(src, 0)
-						//somehow you can apply pressure to every wound on the organ at the same time
-						//you're basically forced to do nothing at all, so let's make it pretty effective
-						var/min_eff_damage = max(0, W.damage - 10) / 6 //still want a little bit to drip out, for effect
+						// somehow you can apply pressure to every wound on the organ at the same time
+						// you're basically forced to do nothing at all, so let's make it pretty effective
+						var/min_eff_damage = max(0, W.damage - 10) / 6 // still want a little bit to drip out, for effect
 						blood_max += max(min_eff_damage, W.damage - 30) / 40
 					else
 						blood_max += W.damage / 40
@@ -170,7 +170,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		blood_max *= 0.8
 
 	if(world.time >= next_blood_squirt && isturf(loc) && do_spray.len) // It becomes very spammy otherwise. Arterial bleeding will still happen outside of this block, just not the squirt effect.
-		if(prob(50)) // added 50 prob for message and halved delay between squit effects (difference between us and Bay12), lets see how this will be on live server.
+		if(prob(50)) // added 50 prob for message and halved delay between squit effects(difference between us and Bay12), lets see how this will be on live server.
 			visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
 		next_blood_squirt = world.time + 50
 		var/turf/sprayloc = get_turf(src)
@@ -182,7 +182,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	else
 		drip(blood_max)
 
-//Makes a blood drop, leaking certain amount of blood from the mob
+// Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
 	if(remove_blood(amt))
 		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, s_blood_color = species.blood_color)
@@ -200,7 +200,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	// Are we dripping or splattering?
 	var/list/drips = list()
-	// Only a certain number of drips (or one large splatter) can be on a given turf.
+	// Only a certain number of drips(or one large splatter) can be on a given turf.
 	for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
 		drips |= drop.drips
 		qdel(drop)
@@ -240,7 +240,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(source.data["virus2"])
 		B.virus2 = virus_copylist(source.data["virus2"])
 
-	//B.fluorescent = 0
+	// B.fluorescent = 0
 	B.invisibility = 0
 	return B
 
@@ -288,12 +288,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					hit_mob = TRUE
 
 			if(hit_mob || !A.CanPass(src, sprayloc))
-				CantPass = TRUE // this is mostly for DOORS, because Adjacent() test thinks they are passable, which is actually true for click purpose... ~ZVe (I really HATE pass checks in ss13 or missing something...)
+				CantPass = TRUE // this is mostly for DOORS, because Adjacent() test thinks they are passable, which is actually true for click purpose... ~ZVe(I really HATE pass checks in ss13 or missing something...)
 				break
 
 		if(CantPass || !old_sprayloc.Adjacent(sprayloc, src)) // so we don't spray blood thru windows or something similar, because CanPass() above fails with that task and i don't know why.
-			drip(amt, old_sprayloc) // current realization removes old one which looks awful, so lets drop normal drips instead (that doesn't fully fix this issue, but sometimes looks right).
-			sprayloc = old_sprayloc // pass check failed, need to reset current spray loc to a previous state and try again (because we want to spray all blood that for() is going to squirt anyway).
+			drip(amt, old_sprayloc) // current realization removes old one which looks awful, so lets drop normal drips instead(that doesn't fully fix this issue, but sometimes looks right).
+			sprayloc = old_sprayloc // pass check failed, need to reset current spray loc to a previous state and try again(because we want to spray all blood that for() is going to squirt anyway).
 		else
 			drip(amt, sprayloc, spraydir)
 		bled += amt
@@ -305,7 +305,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 #undef BLOOD_SPRAY_DISTANCE
 
 /mob/living/carbon/human/proc/remove_blood(amt)
-	if(!organs_by_name[O_HEART] || species.flags[NO_BLOOD]) //TODO: Make drips come from the reagents instead (Bay12 TODO).
+	if(!organs_by_name[O_HEART] || species.flags[NO_BLOOD]) // TODO: Make drips come from the reagents instead(Bay12 TODO).
 		return 0
 	if(!amt)
 		return 0
@@ -315,7 +315,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				BLOOD TRANSFERS
 ****************************************************/
 
-//Gets blood from mob to the container, preserving all data in it.
+// Gets blood from mob to the container, preserving all data in it.
 /mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, amount)
 
 	var/datum/reagent/B = get_blood(container.reagents)
@@ -323,19 +323,19 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	B.holder = container
 	B.volume += amount
 
-	//set reagent data
+	// set reagent data
 	B.data["donor"] = src
-	if (!B.data["virus2"])
+	if(!B.data["virus2"])
 		B.data["virus2"] = list()
 	B.data["virus2"] |= virus_copylist(src.virus2)
 	B.data["antibodies"] = src.antibodies
-	B.data["blood_DNA"] = copytext(src.dna.unique_enzymes,1,0)
+	B.data["blood_DNA"] = copytext(src.dna.unique_enzymes, 1, 0)
 	if(src.resistances && src.resistances.len)
 		if(B.data["resistances"])
 			B.data["resistances"] |= src.resistances.Copy()
 		else
 			B.data["resistances"] = src.resistances.Copy()
-	B.data["blood_type"] = copytext(src.dna.b_type,1,0)
+	B.data["blood_type"] = copytext(src.dna.b_type, 1, 0)
 
 	var/list/temp_chem = list()
 	for(var/datum/reagent/R in src.reagents.reagent_list)
@@ -344,7 +344,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	B.data["trace_chem"] = list2params(temp_chem)
 	return B
 
-//For humans, blood does not appear from blue, it comes from vessels.
+// For humans, blood does not appear from blue, it comes from vessels.
 /mob/living/carbon/human/take_blood(obj/item/weapon/reagent_containers/container, amount)
 
 	if(species && species.flags[NO_BLOOD])
@@ -354,28 +354,28 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return null
 
 	. = ..()
-	vessel.remove_reagent("blood",amount) // Removes blood if human
+	vessel.remove_reagent("blood", amount) // Removes blood if human
 
-//Transfers blood from container ot vessels
+// Transfers blood from container ot vessels
 /mob/living/carbon/proc/inject_blood(obj/item/weapon/reagent_containers/container, amount)
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
-	if (!injected)
+	if(!injected)
 		return
 	var/list/sniffles = virus_copylist(injected.data["virus2"])
 	for(var/ID in sniffles)
 		var/datum/disease2/disease/sniffle = sniffles[ID]
-		infect_virus2(src,sniffle,1)
-	if (injected.data["antibodies"] && prob(5))
+		infect_virus2(src, sniffle, 1)
+	if(injected.data["antibodies"] && prob(5))
 		antibodies |= injected.data["antibodies"]
 	var/list/chems = list()
 	chems = params2list(injected.data["trace_chem"])
 	for(var/C in chems)
-		src.reagents.add_reagent(C, (text2num(chems[C]) / 560) * amount)//adds trace chemicals to owner's blood
+		src.reagents.add_reagent(C, (text2num(chems[C]) / 560) * amount)// adds trace chemicals to owner's blood
 	reagents.update_total()
 
 	container.reagents.remove_reagent("blood", amount)
 
-//Transfers blood from container ot vessels, respecting blood types compatability.
+// Transfers blood from container ot vessels, respecting blood types compatability.
 /mob/living/carbon/human/inject_blood(obj/item/weapon/reagent_containers/container, amount)
 
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
@@ -396,28 +396,28 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		our = get_blood(vessel)
 	vessel.update_total()
 
-	if(blood_incompatible(injected.data["blood_type"],our.data["blood_type"]) )
-		reagents.add_reagent("toxin",amount * 0.5)
+	if(blood_incompatible(injected.data["blood_type"], our.data["blood_type"]) )
+		reagents.add_reagent("toxin", amount * 0.5)
 		reagents.update_total()
 	..()
 
-//Gets human's own blood.
+// Gets human's own blood.
 /mob/living/carbon/proc/get_blood(datum/reagents/container)
-	var/datum/reagent/blood/res = locate() in container.reagent_list //Grab some blood
+	var/datum/reagent/blood/res = locate() in container.reagent_list // Grab some blood
 	if(res) // Make sure there's some blood at all
-		if(res.data["donor"] != src) //If it's not theirs, then we look for theirs
+		if(res.data["donor"] != src) // If it's not theirs, then we look for theirs
 			for(var/datum/reagent/blood/D in container.reagent_list)
 				if(D.data["donor"] == src)
 					return D
 	return res
 
-proc/blood_incompatible(donor,receiver)
+proc/blood_incompatible(donor, receiver)
 	if(!donor || !receiver) return 0
 	var
-		donor_antigen = copytext(donor,1,lentext(donor))
-		receiver_antigen = copytext(receiver,1,lentext(receiver))
-		donor_rh = (findtext(donor,"+")>0)
-		receiver_rh = (findtext(receiver,"+")>0)
+		donor_antigen = copytext(donor, 1, lentext(donor))
+		receiver_antigen = copytext(receiver, 1, lentext(receiver))
+		donor_rh = (findtext(donor, "+")>0)
+		receiver_rh = (findtext(receiver, "+")>0)
 	if(donor_rh && !receiver_rh) return 1
 	switch(receiver_antigen)
 		if("A")
@@ -426,5 +426,5 @@ proc/blood_incompatible(donor,receiver)
 			if(donor_antigen != "B" && donor_antigen != "O") return 1
 		if("O")
 			if(donor_antigen != "O") return 1
-		//AB is a universal receiver.
+		// AB is a universal receiver.
 	return 0

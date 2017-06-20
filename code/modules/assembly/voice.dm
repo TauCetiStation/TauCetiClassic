@@ -8,7 +8,7 @@
 	g_amt = 50
 
 	var/listening = 0
-	var/recorded = "" //the activation message
+	var/recorded = "" // the activation message
 
 
 /obj/item/device/assembly/voice/hear_talk(mob/living/M, msg)
@@ -19,11 +19,11 @@
 		recorded = msg
 		listening = 0
 		for(var/mob/O in hearers(1, src.loc))
-			O.show_message(text("Activation message is '[recorded]'."),1)
+			O.show_message(text("Activation message is '[recorded]'."), 1)
 	else
 		if(findtext(msg, recorded))
 			for(var/mob/O in hearers(1, src.loc))
-				O.show_message(text("Beeeep"),1)
+				O.show_message(text("Beeeep"), 1)
 			spawn(10)
 				pulse(0)
 
@@ -32,7 +32,7 @@
 		if(!holder)
 			listening = !listening
 			for(var/mob/O in hearers(1, src.loc))
-				O.show_message(text("[listening ? "Now" : "No longer"] recording input."),1)
+				O.show_message(text("[listening ? "Now" : "No longer"] recording input."), 1)
 
 /obj/item/device/assembly/voice/attack_self(mob/user)
 	if(!user)

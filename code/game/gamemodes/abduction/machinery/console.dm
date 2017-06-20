@@ -1,4 +1,4 @@
-//Common
+// Common
 /obj/machinery/abductor
 	var/team = 0
 
@@ -45,7 +45,7 @@
 		return
 	if(!IsAbductor(user))
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
-		if(do_after(user,100,target = src))
+		if(do_after(user, 100, target = src))
 			TeleporterSend()
 		return
 	user.set_machine(src)
@@ -72,7 +72,7 @@
 		dat += "<H4> Teleport control</H4>"
 		dat += "<a href='?src=\ref[src];teleporter_send=1'>Activate Teleporter</A><br>"
 		dat += "<a href='?src=\ref[src];teleporter_set=1'>Set Teleporter</A><br>"
-		dat += "<font color = #7E8D9F><b>Set to: </b></font>[pad.teleport_target ? "[copytext("[pad.target_name]",3)]" : "Nothing"]<br>"
+		dat += "<font color = #7E8D9F><b>Set to: </b></font>[pad.teleport_target ? "[copytext("[pad.target_name]", 3)]" : "Nothing"]<br>"
 		if(gizmo!=null && gizmo.marked!=null)
 			dat += "<a href='?src=\ref[src];teleporter_retrieve=1'>Retrieve Mark</A><br>"
 		else
@@ -118,11 +118,11 @@
 	else if(href_list["dispense"])
 		switch(href_list["dispense"])
 			if("injector")
-				Dispense(/obj/item/weapon/lazarus_injector/alien,cost=4)
+				Dispense(/obj/item/weapon/lazarus_injector/alien, cost=4)
 			if("pistol")
-				Dispense(/obj/item/weapon/gun/energy/decloner/alien,cost=3)
+				Dispense(/obj/item/weapon/gun/energy/decloner/alien, cost=3)
 			if("baton")
-				Dispense(/obj/item/weapon/abductor_baton,cost=2)
+				Dispense(/obj/item/weapon/abductor_baton, cost=2)
 			if("helmet")
 				Dispense(/obj/item/clothing/head/helmet/abductor)
 			if("silencer")
@@ -197,7 +197,7 @@
 	entry.icon_state = target.icon_state
 	entry.overlays = target.overlays.Copy()
 	entry.overlays_standing = target.get_overlays_copy()
-	for(var/i=1,i<=disguises.len,i++)
+	for(var/i=1, i<=disguises.len, i++)
 		var/datum/icon_snapshot/temp = disguises[i]
 		if(temp.name == entry.name)
 			disguises[i] = entry
@@ -218,7 +218,7 @@
 	else
 		..()
 
-/obj/machinery/abductor/console/proc/Dispense(item,cost=1)
+/obj/machinery/abductor/console/proc/Dispense(item, cost=1)
 	if(experiment && experiment.points >= cost)
 		experiment.points-=cost
 		src.visible_message("Incoming supply!")

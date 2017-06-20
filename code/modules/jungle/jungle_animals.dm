@@ -1,5 +1,5 @@
 
-//spawns one of the specified animal type
+// spawns one of the specified animal type
 /obj/effect/landmark/animal_spawner
 	icon_state = "x3"
 	var/spawn_type
@@ -16,12 +16,12 @@
 	spawned_animal = new spawn_type(get_turf(src))
 
 /obj/effect/landmark/animal_spawner/process()
-	//if any of our animals are killed, spawn new ones
+	// if any of our animals are killed, spawn new ones
 	if(!spawned_animal || spawned_animal.stat == DEAD)
 		spawned_animal = new spawn_type(src)
-		//after a random timeout, and in a random position (6-30 seconds)
-		spawn(rand(1200,2400))
-			spawned_animal.loc = locate(src.x + rand(-12,12), src.y + rand(-12,12), src.z)
+		// after a random timeout, and in a random position(6-30 seconds)
+		spawn(rand(1200, 2400))
+			spawned_animal.loc = locate(src.x + rand(-12, 12), src.y + rand(-12, 12), src.z)
 
 /obj/effect/landmark/animal_spawner/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -72,7 +72,7 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bite.ogg'
 
-	layer = 3.1		//so they can stay hidde under the /obj/structure/bush
+	layer = 3.1		// so they can stay hidde under the /obj/structure/bush
 	var/stalk_tick_delay = 3
 
 /mob/living/simple_animal/hostile/panther/ListTargets()
@@ -130,7 +130,7 @@
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
 
-	layer = 3.1		//so they can stay hidde under the /obj/structure/bush
+	layer = 3.1		// so they can stay hidde under the /obj/structure/bush
 	var/stalk_tick_delay = 3
 
 /mob/living/simple_animal/hostile/snake/ListTargets()
@@ -148,7 +148,7 @@
 	. =..()
 	var/mob/living/L = .
 	if(istype(L))
-		L.apply_damage(rand(3,12), TOX)
+		L.apply_damage(rand(3, 12), TOX)
 
 /mob/living/simple_animal/hostile/snake/AttackTarget()
 	..()

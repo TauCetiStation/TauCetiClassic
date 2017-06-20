@@ -9,7 +9,7 @@
 	pressure_resistance = 2*ONE_ATMOSPHERE
 
 	var/amount_per_transfer_from_this = 10
-	var/possible_transfer_amounts = list(10,25,50,100)
+	var/possible_transfer_amounts = list(10, 25, 50, 100)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
 	return
@@ -18,16 +18,16 @@
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
-	if (!possible_transfer_amounts)
+	if(!possible_transfer_amounts)
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 	..()
 
-/obj/structure/reagent_dispensers/verb/set_APTFT() //set amount_per_transfer_from_this
+/obj/structure/reagent_dispensers/verb/set_APTFT() // set amount_per_transfer_from_this
 	set name = "Set transfer amount"
 	set category = "Object"
 	set src in view(1)
-	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
-	if (N)
+	var/N = input("Amount per transfer from this:", "[src]") as null|anything in possible_transfer_amounts
+	if(N)
 		amount_per_transfer_from_this = N
 
 /obj/structure/reagent_dispensers/ex_act(severity)
@@ -36,12 +36,12 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				new /obj/effect/effect/water(src.loc)
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				new /obj/effect/effect/water(src.loc)
 				qdel(src)
 				return
@@ -54,7 +54,7 @@
 		qdel(src)
 
 
-//Dispensers
+// Dispensers
 /obj/structure/reagent_dispensers/watertank
 	name = "watertank"
 	desc = "A watertank."
@@ -65,7 +65,7 @@
 
 /obj/structure/reagent_dispensers/watertank/New()
 	..()
-	reagents.add_reagent("water",1000)
+	reagents.add_reagent("water", 1000)
 
 /obj/structure/reagent_dispensers/watertank/examine(mob/user)
 	..()
@@ -73,11 +73,11 @@
 		to_chat(user, "\red Water faucet is wrenched open, leaking the water!")
 
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W,/obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = modded ? 0 : 1
-		if (modded)
+		if(modded)
 			START_PROCESSING(SSobj, src)
 			leak_water(amount_per_transfer_from_this)
 
@@ -92,15 +92,15 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/structure/reagent_dispensers/watertank/Move()
-	if (..() && modded)
+	if(..() && modded)
 		leak_water(1)
 
 /obj/structure/reagent_dispensers/watertank/proc/leak_water(amount)
-	if (reagents.total_volume == 0)
+	if(reagents.total_volume == 0)
 		return
 
 	amount = min(amount, reagents.total_volume)
-	reagents.remove_reagent("water",amount)
+	reagents.remove_reagent("water", amount)
 
 	create_water(src)
 
@@ -122,18 +122,18 @@
 	R.my_atom = src
 	if(!possible_transfer_amounts)
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
-	reagents.add_reagent("fuel",300)
+	reagents.add_reagent("fuel", 300)
 
 /obj/structure/reagent_dispensers/fueltank/examine(mob/user)
 	..()
 	if(src in oview(2, user))
-		if (modded)
+		if(modded)
 			to_chat(user, "<span class='red'>Fuel faucet is wrenched open, leaking the fuel!</span>")
 		if(rig)
 			to_chat(user, "<span class='notice'>There is some kind of device rigged to the tank.</span>")
 
 /obj/structure/reagent_dispensers/fueltank/attack_hand()
-	if (rig)
+	if(rig)
 		usr.visible_message("[usr] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
 		if(do_after(usr, 20, target = src))
 			usr.visible_message("\blue [usr] detaches [rig] from \the [src].", "\blue  You detach [rig] from \the [src]")
@@ -142,14 +142,14 @@
 			overlays = new/list()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W,/obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = modded ? 0 : 1
-		if (modded)
+		if(modded)
 			leak_fuel(amount_per_transfer_from_this)
-	if (istype(W,/obj/item/device/assembly_holder))
-		if (rig)
+	if(istype(W, /obj/item/device/assembly_holder))
+		if(rig)
 			to_chat(user, "\red There is another device in the way.")
 			return ..()
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
@@ -157,17 +157,17 @@
 			user.visible_message("\blue [user] rigs [W] to \the [src].", "\blue  You rig [W] to \the [src]")
 
 			var/obj/item/device/assembly_holder/H = W
-			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
-				message_admins("[key_name_admin(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-				log_game("[key_name(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion.")
+			if(istype(H.a_left, /obj/item/device/assembly/igniter) || istype(H.a_right, /obj/item/device/assembly/igniter))
+				message_admins("[key_name_admin(user)] rigged fueltank at([loc.x],[loc.y],[loc.z]) for explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				log_game("[key_name(user)] rigged fueltank at([loc.x],[loc.y],[loc.z]) for explosion.")
 
 			rig = W
 			user.drop_item()
 			W.loc = src
 
 			var/icon/test = getFlatIcon(W)
-			test.Shift(NORTH,1)
-			test.Shift(EAST,6)
+			test.Shift(NORTH, 1)
+			test.Shift(EAST, 6)
 			overlays += test
 
 	add_fingerprint(usr)
@@ -175,8 +175,8 @@
 
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+	if(istype(Proj, /obj/item/projectile/beam)||istype(Proj, /obj/item/projectile/bullet))
+		if(!istype(Proj, /obj/item/projectile/beam/lastertag) && !istype(Proj, /obj/item/projectile/beam/practice) )
 			explode()
 
 /obj/structure/reagent_dispensers/fueltank/blob_act()
@@ -186,12 +186,12 @@
 	explode()
 
 /obj/structure/reagent_dispensers/fueltank/proc/explode()
-	if (reagents.total_volume > 500)
-		explosion(src.loc,1,2,4)
-	else if (reagents.total_volume > 100)
-		explosion(src.loc,0,1,3)
+	if(reagents.total_volume > 500)
+		explosion(src.loc, 1, 2, 4)
+	else if(reagents.total_volume > 100)
+		explosion(src.loc, 0, 1, 3)
 	else
-		explosion(src.loc,-1,1,2)
+		explosion(src.loc,-1, 1, 2)
 	if(src)
 		qdel(src)
 
@@ -201,19 +201,19 @@
 	return ..()
 
 /obj/structure/reagent_dispensers/fueltank/tesla_act()
-	..() //extend the zap
+	..() // extend the zap
 	explode()
 
 /obj/structure/reagent_dispensers/fueltank/Move()
-	if (..() && modded)
+	if(..() && modded)
 		leak_fuel(amount_per_transfer_from_this/10.0)
 
 /obj/structure/reagent_dispensers/fueltank/proc/leak_fuel(amount)
-	if (reagents.total_volume == 0)
+	if(reagents.total_volume == 0)
 		return
 
 	amount = min(amount, reagents.total_volume)
-	reagents.remove_reagent("fuel",amount)
+	reagents.remove_reagent("fuel", amount)
 	new /obj/effect/decal/cleanable/liquid_fuel(src.loc, amount)
 
 
@@ -229,7 +229,7 @@
 
 /obj/structure/reagent_dispensers/peppertank/New()
 	..()
-	reagents.add_reagent("condensedcapsaicin",1000)
+	reagents.add_reagent("condensedcapsaicin", 1000)
 
 
 
@@ -244,7 +244,7 @@
 
 /obj/structure/reagent_dispensers/water_cooler/New()
 	..()
-	reagents.add_reagent("water",500)
+	reagents.add_reagent("water", 500)
 
 
 /obj/structure/reagent_dispensers/beerkeg
@@ -256,10 +256,10 @@
 
 /obj/structure/reagent_dispensers/beerkeg/New()
 	..()
-	reagents.add_reagent("beer",1000)
+	reagents.add_reagent("beer", 1000)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
-	explosion(src.loc,0,3,5,7,10)
+	explosion(src.loc, 0, 3, 5, 7, 10)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/virusfood

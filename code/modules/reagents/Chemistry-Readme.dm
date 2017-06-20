@@ -2,16 +2,16 @@
 NOTE: IF YOU UPDATE THE REAGENT-SYSTEM, ALSO UPDATE THIS README.
 
 Structure: ///////////////////          //////////////////////////
-		   // Mob or object // -------> // Reagents var (datum) // 	    Is a reference to the datum that holds the reagents.
+		   // Mob or object // -------> // Reagents var(datum) // 	    Is a reference to the datum that holds the reagents.
 		   ///////////////////          //////////////////////////
 		   			|				    			 |
     The object that holds everything.   			 V
-		   							      reagent_list var (list)   	A List of datums, each datum is a reagent.
+		   							      reagent_list var(list)   	A List of datums, each datum is a reagent.
 
 		   							      |          |          |
 		   							      V          V          V
 
-		   							         reagents (datums)	    	Reagents. I.e. Water , antitoxins or mercury.
+		   							         reagents(datums)	    	Reagents. I.e. Water, antitoxins or mercury.
 
 
 Random important notes:
@@ -21,7 +21,7 @@ Random important notes:
 
 About the Holder:
 
-	The holder (reagents datum) is the datum that holds a list of all reagents
+	The holder(reagents datum) is the datum that holds a list of all reagents
 	currently in the object.It also has all the procs needed to manipulate reagents
 
 		remove_any(amount)
@@ -30,9 +30,9 @@ About the Holder:
 
 		trans_to(obj/target, amount)
 			This proc equally transfers the contents of the holder to another
-			objects holder. You need to pass it the object (not the holder) you want
+			objects holder. You need to pass it the object(not the holder) you want
 			to transfer to and the amount you want to transfer. Its return value is the
-			actual amount transfered (if one of the objects is full/empty)
+			actual amount transfered(if one of the objects is full/empty)
 
 		trans_id_to(obj/target, reagent, amount)
 			Same as above but only for a specific reagent in the reagent list.
@@ -45,9 +45,9 @@ About the Holder:
 
 		handle_reactions()
 			This proc check all recipes and, on a match, uses them.
-			It will also call the recipe's on_reaction proc (for explosions or w/e).
+			It will also call the recipe's on_reaction proc(for explosions or w/e).
 			Currently, this proc is automatically called by trans_to.
-			- Modified from the original to preserve reagent data across reactions (originally for xenoarchaeology)
+			- Modified from the original to preserve reagent data across reactions(originally for xenoarchaeology)
 
 		isolate_reagent(reagent)
 			Pass it a reagent id and it will remove all reagents but that one.
@@ -86,7 +86,7 @@ About the Holder:
 
 		remove_reagent(reagent, amount)
 			The exact opposite of the add_reagent proc.
-			- Modified from original to return the reagent's data, in order to preserve reagent data across reactions (originally for xenoarchaeology)
+			- Modified from original to return the reagent's data, in order to preserve reagent data across reactions(originally for xenoarchaeology)
 
 		has_reagent(reagent, amount)
 			Returns 1 if the holder contains this reagent.
@@ -141,7 +141,7 @@ About Reagents:
 
 		on_mob_life(var/mob/M)
 			This proc is called everytime the mobs life proc executes.
-			This is the place where you put damage for toxins ,
+			This is the place where you put damage for toxins,
 			drowsyness for sleep toxins etc etc.
 			You'll want to call the parents proc by using ..() .
 			If you don't, the chemical will stay in the mob forever -
@@ -172,7 +172,7 @@ About Reagents:
 			you define it as "#RRGGBB", or, red green blue. You can also define it using the
 			rgb() proc, which returns a hexadecimal value too. The color is black by default.
 
-			A good website for color calculations: http://www.psyclops.com/tools/rgb/
+			A good website for color calculations: http:// www.psyclops.com/tools/rgb/
 
 
 
@@ -200,7 +200,7 @@ About Recipes:
 			of that reagent. The handle_reaction proc can detect mutiples of the same recipes
 			so for most cases you want to set the required amount to 1.
 
-		required_catalysts (Added May 2011)
+		required_catalysts(Added May 2011)
 			This is a list of the ids of the required catalysts.
 			Functionally similar to required_reagents, it is a list of reagents that are required
 			for the reaction. However, unlike required_reagents, catalysts are NOT consumed.
@@ -224,7 +224,7 @@ About the Tools:
 	By default, all atom have a reagents var - but its empty. if you want to use an object for the chem.
 	system you'll need to add something like this in its new proc:
 
-		var/datum/reagents/R = new/datum/reagents(100) <<<<< create a new datum , 100 is the maximum_volume of the new holder datum.
+		var/datum/reagents/R = new/datum/reagents(100) <<<<< create a new datum, 100 is the maximum_volume of the new holder datum.
 		reagents = R <<<<< assign the new datum to the objects reagents var
 		R.my_atom = src <<<<< set the holders my_atom to src so that we know where we are.
 
@@ -240,7 +240,7 @@ About the Tools:
 
 		atom/proc/is_open_container()
 			Checks atom/var/flags & OPENCONTAINER.
-			If this returns 1 , you can use syringes, beakers etc
+			If this returns 1, you can use syringes, beakers etc
 			to manipulate the contents of this object.
 			If it's 0, you'll need to write your own custom reagent
 			transfer code since you will not be able to use the standard

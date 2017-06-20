@@ -1,14 +1,14 @@
 /*
 plot_vector is a helper datum for plotting a path in a straight line towards a target turf.
-This datum converts from world space (turf.x and turf.y) to pixel space, which the datum keeps track of itself. This
-should work with any size turfs (i.e. 32x32, 64x64) as it references world.icon_size (note: not actually tested with
+This datum converts from world space(turf.x and turf.y) to pixel space, which the datum keeps track of itself. This
+should work with any size turfs(i.e. 32x32, 64x64) as it references world.icon_size (note: not actually tested with
 anything other than 32x32 turfs).
 
 setup()
 	This should be called after creating a new instance of a plot_vector datum.
 	This does the initial setup and calculations. Since we are travelling in a straight line we only need to calculate
 	the	vector and x/y steps once. x/y steps are capped to 1 full turf, whichever is further. If we are travelling along
-	the y axis each step will be +/- 1 y, and the x movement reduced based on the angle (tangent calculation). After
+	the y axis each step will be +/- 1 y, and the x movement reduced based on the angle(tangent calculation). After
 	this every subsequent step will be incremented based on these calculations.
 	Inputs:
 		source - the turf the object is starting from
@@ -20,7 +20,7 @@ increment()
 	Adds the offset to the current location - incrementing it by one step along the vector.
 
 return_angle()
-	Returns the direction (angle in degrees) the object is travelling in.
+	Returns the direction(angle in degrees) the object is travelling in.
 
              (N)
              90?
@@ -37,7 +37,7 @@ return_hypotenuse()
 	length. Currently used as a multiplier for scaling effects that should be contiguous, like laser beams.
 
 return_location()
-	Returns a vector_loc datum containing the current location data of the object (see /datum/vector_loc). This includes
+	Returns a vector_loc datum containing the current location data of the object(see /datum/vector_loc). This includes
 	the turf it currently should be at, as well as the pixel offset from the centre of that turf. Typically increment()
 	would be called before this if you are going to move an object based on it's vector data.
 */
@@ -48,7 +48,7 @@ return_location()
 	var/angle = 0	// direction of travel in degrees
 	var/loc_x = 0	// in pixels from the left edge of the map
 	var/loc_y = 0	// in pixels from the bottom edge of the map
-	var/loc_z = 0	// loc z is in world space coordinates (i.e. z level) - we don't care about measuring pixels for this
+	var/loc_z = 0	// loc z is in world space coordinates(i.e. z level) - we don't care about measuring pixels for this
 	var/offset_x = 0	// distance to increment each step
 	var/offset_y = 0
 
@@ -64,7 +64,7 @@ return_location()
 	if(!istype(source) || !istype(target))
 		return
 
-	// convert coordinates to pixel space (default is 32px/turf, 8160px across for a size 255 map)
+	// convert coordinates to pixel space(default is 32px/turf, 8160px across for a size 255 map)
 	loc_x = source.x * world.icon_size + xo
 	loc_y = source.y * world.icon_size + yo
 	loc_z = source.z

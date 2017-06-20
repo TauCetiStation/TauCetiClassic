@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /*
 	Hello, friends, this is Doohl from sexylands. You may be wondering what this
@@ -18,7 +18,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms
 	var/list/links = list() // list of machines this machine is linked to
 	var/traffic = 0 // value increases as traffic increases
-	var/netspeed = 5 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
+	var/netspeed = 5 // how much traffic to lose per tick(50 gigabytes/second * netspeed)
 	var/list/autolinkers = list() // list of text/number values to link with
 	var/id = "NULL" // identification string
 	var/network = "NULL" // the network of the machinery
@@ -43,7 +43,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 	if(!on)
 		return
-	//world << "[src] ([src.id]) - [signal.debug_print()]"
+	// world << "[src] ([src.id]) - [signal.debug_print()]"
 	var/send_count = 0
 
 	signal.data["slow"] += rand(0, round((100-integrity))) // apply some lag based on integrity
@@ -143,9 +143,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	telecomms_list += src
 	..()
 
-	//Set the listening_level if there's none.
+	// Set the listening_level if there's none.
 	if(!listening_level)
-		//Defaults to our Z level!
+		// Defaults to our Z level!
 		var/turf/position = get_turf(src)
 		listening_level = position.z
 
@@ -215,9 +215,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	// Checks heat from the environment and applies any integrity damage
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
-		if(T0C to (T20C + 20))
+		if(T0C to(T20C + 20))
 			integrity = between(0, integrity, 100)
-		if((T20C + 20) to (T0C + 70))
+		if((T20C + 20) to(T0C + 70))
 			integrity = max(0, integrity - 1)
 	if(delay)
 		delay--
@@ -231,7 +231,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	if(heatgen == 0)
 		return
 
-	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
+	if(!(stat & (NOPOWER|BROKEN))) // Blatently stolen from space heater.
 		var/turf/simulated/L = loc
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
@@ -283,7 +283,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 		if(is_freq_listening(signal)) // detect subspace signals
 
-			//Remove the level and then start adding levels that it is being broadcasted in.
+			// Remove the level and then start adding levels that it is being broadcasted in.
 			signal.data["level"] = list()
 
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub") // ideally relay the copied information to relays
@@ -333,7 +333,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(is_freq_listening(signal))
 		if(istype(machine_from, /obj/machinery/telecomms/receiver))
-			//If the signal is compressed, send it to the bus.
+			// If the signal is compressed, send it to the bus.
 			relay_information(signal, "/obj/machinery/telecomms/bus", 1) // ideally relay the copied information to bus units
 		else
 			// Get a list of relays that we're linked to, then send the signal to their levels.
@@ -423,7 +423,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		if(change_frequency)
 			signal.frequency = change_frequency
 
-		if(!istype(machine_from, /obj/machinery/telecomms/processor) && machine_from != src) // Signal must be ready (stupid assuming machine), let's send it
+		if(!istype(machine_from, /obj/machinery/telecomms/processor) && machine_from != src) // Signal must be ready(stupid assuming machine), let's send it
 			// send to one linked processor unit
 			var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor")
 
@@ -509,10 +509,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/list/stored_names = list()
 	var/list/TrafficActions = list()
 	var/logs = 0 // number of logs
-	var/totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
+	var/totaltraffic = 0 // gigabytes(if > 1024, divide by 1024 -> terrabytes)
 
 	var/list/memory = list()	// stored memory
-	var/rawcode = ""	// the code to compile (raw text)
+	var/rawcode = ""	// the code to compile(raw text)
 	var/datum/TCS_Compiler/Compiler	// the compiler that compiles and runs the code
 	var/autoruncode = 0		// 1 if the code is set to run every time a signal is picked up
 
@@ -544,7 +544,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			if(traffic > 0)
 				totaltraffic += traffic // add current traffic to total traffic
 
-			//Is this a test signal? Bypass logging
+			// Is this a test signal? Bypass logging
 			if(signal.data["type"] != 4)
 
 				// If signal has a message and appropriate frequency
@@ -586,8 +586,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				signal.data["server"] = src
 
 				// Give the log a name
-				var/identifier = num2text( rand(-1000,1000) + world.time )
-				log.name = "data packet ([md5(identifier)])"
+				var/identifier = num2text( rand(-1000, 1000) + world.time )
+				log.name = "data packet([md5(identifier)])"
 
 				if(Compiler && autoruncode)
 					Compiler.Run(signal)	// execute the code
@@ -618,7 +618,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/server/proc/add_entry(content, input)
 	var/datum/comm_log_entry/log = new
-	var/identifier = num2text( rand(-1000,1000) + world.time )
+	var/identifier = num2text( rand(-1000, 1000) + world.time )
 	log.name = "[input] ([md5(identifier)])"
 	log.input_type = input
 	log.parameters["message"] = content
@@ -632,6 +632,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /datum/comm_log_entry
 	var/parameters = list() // carbon-copy to signal.data[]
-	var/name = "data packet (#)"
+	var/name = "data packet(#)"
 	var/garbage_collector = 1 // if set to 0, will not be garbage collected
 	var/input_type = "Speech File"

@@ -1,5 +1,5 @@
 /**********************Ore Redemption Unit**************************/
-//Turns all the various mining machines into a single unit to speed up mining and establish a point system
+// Turns all the various mining machines into a single unit to speed up mining and establish a point system
 
 /obj/machinery/mineral/ore_redemption
 	name = "ore redemption machine"
@@ -15,7 +15,7 @@
 	var/obj/machinery/mineral/output = null
 	var/stk_types = list()
 	var/stk_amt   = list()
-	var/stack_list[0] //Key: Type.  Value: Instance of type.
+	var/stack_list[0] // Key: Type.  Value: Instance of type.
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 	var/ore_pickup_rate = 15
@@ -59,12 +59,12 @@
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/mineral/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
-		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
-			var/obj/item/stack/sheet/mineral/s = new processed_sheet(src,0)
+		if(!(processed_sheet in stack_list)) // It's the first of this sheet added
+			var/obj/item/stack/sheet/mineral/s = new processed_sheet(src, 0)
 			s.amount = 0
 			stack_list[processed_sheet] = s
 		var/obj/item/stack/sheet/mineral/storage = stack_list[processed_sheet]
-		storage.amount += sheet_per_ore //Stack the sheets
+		storage.amount += sheet_per_ore // Stack the sheets
 		qdel(O) //... garbage collect
 
 /obj/machinery/mineral/ore_redemption/process()
@@ -72,7 +72,7 @@
 	var/i
 	if(T)
 		if(locate(/obj/item/weapon/ore) in T)
-			for (i = 0; i < ore_pickup_rate; i++)
+			for(i = 0; i < ore_pickup_rate; i++)
 				var/obj/item/weapon/ore/O = locate() in T
 				if(O)
 					process_sheet(O)
@@ -81,7 +81,7 @@
 		else
 			var/obj/structure/ore_box/B = locate() in T
 			if(B)
-				for (i = 0; i < ore_pickup_rate; i++)
+				for(i = 0; i < ore_pickup_rate; i++)
 					var/obj/item/weapon/ore/O = locate() in B.contents
 					if(O)
 						process_sheet(O)
@@ -89,7 +89,7 @@
 						break
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
@@ -121,7 +121,7 @@
 		var/obj/item/stack/sheet/mineral/M = O.refined_type
 		points += O.points * point_upgrade
 		return M
-	qdel(O)//No refined type? Purge it.
+	qdel(O)// No refined type? Purge it.
 	return
 
 /obj/machinery/mineral/ore_redemption/attack_hand(user)
@@ -146,7 +146,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		s = stack_list[O]
 		if(s.amount > 0)
 			if(O == stack_list[1])
-				dat += "<br>"		//just looks nicer
+				dat += "<br>"		// just looks nicer
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
 	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
@@ -192,12 +192,12 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 				to_chat(usr, "<span class='warning'>No valid ID.</span>")
 
 	if(href_list["release"])
-		if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user.
+		if(check_access(inserted_id) || allowed(usr)) // Check the ID inside, otherwise check the user.
 			if(!(text2path(href_list["release"]) in stack_list)) return
 			var/obj/item/stack/sheet/mineral/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/mineral/out = new inp.type()
 			var/desired = input("How much?", "How much to eject?", 1) as num
-			out.amount = min(desired,50,inp.amount)
+			out.amount = min(desired, 50, inp.amount)
 			if(out.amount >= 1)
 				inp.amount -= out.amount
 				unload_mineral(out)
@@ -222,14 +222,14 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			empty_content()
 			qdel(src)
 
-//empty the redemption machine by stacks of at most max_amount (50 at this time) size
+// empty the redemption machine by stacks of at most max_amount(50 at this time) size
 /obj/machinery/mineral/ore_redemption/proc/empty_content()
 	var/obj/item/stack/sheet/mineral/s
 
 	for(var/O in stack_list)
 		s = stack_list[O]
 		while(s.amount > s.max_amount)
-			new s.type(loc,s.max_amount)
+			new s.type(loc, s.max_amount)
 			s.use(s.max_amount)
 		s.loc = loc
 		s.layer = initial(s.layer)
@@ -247,7 +247,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	anchored = 1.0
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
-//		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,100),
+//		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack, 100),
 		new /datum/data/mining_equipment("Chili",               /obj/item/weapon/reagent_containers/food/snacks/hotchili,           100),
 		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                     100),
 		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,     150),
@@ -346,7 +346,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
-			if (!prize || !(prize in prize_list))
+			if(!prize || !(prize in prize_list))
 				return
 			if(prize.cost > inserted_id.mining_points)
 			else
@@ -359,7 +359,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
 		return
-	if(istype(I,/obj/item/weapon/card/id))
+	if(istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = usr.get_active_hand()
 		if(istype(C) && !istype(inserted_id))
 			usr.drop_item()
@@ -380,7 +380,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	if(voucher.in_use)
 		return
 	voucher.in_use = 1
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone","Special Mining Rig", "Cancel")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone", "Special Mining Rig", "Cancel")
 	if(!selection || !Adjacent(redeemer))
 		voucher.in_use = 0
 		return
@@ -458,7 +458,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	throw_range = 5
 	origin_tech = "bluespace=2"
 
-	var/chosen_beacon = null	//Let's do some targeting
+	var/chosen_beacon = null	// Let's do some targeting
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	var/turf/device_turf = get_turf(user)
@@ -478,10 +478,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		if(!chosen_beacon)
 			chosen_beacon = pick(L)
 		var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon)
-		spawn(100) qdel(J)	//Portal will disappear after 10 sec
+		spawn(100) qdel(J)	// Portal will disappear after 10 sec
 		J.target = chosen_beacon
 		try_move_adjacent(J)
-		playsound(src,'sound/effects/sparks4.ogg',50,1)
+		playsound(src,'sound/effects/sparks4.ogg', 50, 1)
 		qdel(src)
 
 /obj/item/device/wormhole_jaunter/attackby(obj/item/B)
@@ -534,7 +534,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	if(cooldown <= 0)
-		playsound(src,'sound/effects/stealthoff.ogg',50,1)
+		playsound(src,'sound/effects/stealthoff.ogg', 50, 1)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
 		R.creator = creator
 		cooldown = 1
@@ -567,7 +567,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
-		playsound(src,'sound/effects/sparks4.ogg',50,1)
+		playsound(src,'sound/effects/sparks4.ogg', 50, 1)
 		M.GetDrilled()
 		spawn(5)
 			qdel(src)
@@ -578,7 +578,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			name = "strong resonance field"
 			resonance_damage = 60
 		spawn(50)
-			playsound(src,'sound/effects/sparks4.ogg',50,1)
+			playsound(src,'sound/effects/sparks4.ogg', 50, 1)
 			if(creator)
 				for(var/mob/living/L in src.loc)
 					usr.attack_log += text("\[[time_stamp()]\] used a resonator field on [L.name] ([L.ckey])")
@@ -602,7 +602,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
 
-/obj/item/clothing/mask/facehugger/toy/New()//to prevent deleting it if aliums are disabled
+/obj/item/clothing/mask/facehugger/toy/New()// to prevent deleting it if aliums are disabled
 	return
 
 /**********************Mining drone**********************/
@@ -725,7 +725,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	for(O in src.loc)
 		O.loc = src
 	for(var/dir in alldirs)
-		var/turf/T = get_step(src,dir)
+		var/turf/T = get_step(src, dir)
 		for(O in T)
 			O.loc = src
 	return
@@ -780,7 +780,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 					log_game("[user] has revived hostile mob [target] with a lazarus injector")
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
-				playsound(src,'sound/effects/refill.ogg',50,1)
+				playsound(src,'sound/effects/refill.ogg', 50, 1)
 				icon_state = "lazarus_empty"
 				return
 			else
@@ -822,7 +822,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			C.name = C.base_name
 			loaded = 0
 			user.visible_message("<span class='notice'>[user] fix [O] with [src].</span>")
-			playsound(src,'sound/effects/refill.ogg',50,1)
+			playsound(src,'sound/effects/refill.ogg', 50, 1)
 			icon_state = "patcher_empty"
 			return
 		else

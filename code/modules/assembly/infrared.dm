@@ -24,7 +24,7 @@
 
 /obj/item/device/assembly/infra/activate()
 	if(!..())
-		return 0//Cooldown check
+		return 0// Cooldown check
 	on = !on
 	update_icon()
 	return 1
@@ -52,7 +52,7 @@
 		holder.update_icon()
 	return
 
-/obj/item/device/assembly/infra/process()//Old code
+/obj/item/device/assembly/infra/process()// Old code
 	if(!on)
 		if(first)
 			qdel(first)
@@ -104,14 +104,14 @@
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
-	var/time_pulse = time2text(world.realtime,"hh:mm:ss")
+	var/time_pulse = time2text(world.realtime, "hh:mm:ss")
 	var/turf/T = get_turf(src)
-	lastsignalers.Add("[time_pulse] <B>:</B> [src] activated  @ location ([T.x],[T.y],[T.z])")
-	message_admins("[src] activated  @ location ([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
-	log_game("[src] activated  @ location ([T.x],[T.y],[T.z])")
+	lastsignalers.Add("[time_pulse] <B>:</B> [src] activated  @ location([T.x],[T.y],[T.z])")
+	message_admins("[src] activated  @ location([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
+	log_game("[src] activated  @ location([T.x],[T.y],[T.z])")
 	return
 
-/obj/item/device/assembly/infra/interact(mob/user)//TODO: change this this to the wire control panel
+/obj/item/device/assembly/infra/interact(mob/user)// TODO: change this this to the wire control panel
 	if(is_secured(user))
 		user.set_machine(src)
 		var/dat = "<TT><B>Infrared Laser</B>\n<B>Status</B>: [on ? "<A href='?src=\ref[src];state=0'>On</A>" : "<A href='?src=\ref[src];state=1'>Off</A>"]<BR>\n<B>Visibility</B>: [visible ? "<A href='?src=\ref[src];visible=0'>Visible</A>" : "<A href='?src=\ref[src];visible=1'>Invisible</A>"]<BR>\n</TT>"
@@ -131,16 +131,16 @@
 	if(href_list["state"])
 		on = !(on)
 		update_icon()
-		var/time_start = time2text(world.realtime,"hh:mm:ss")
+		var/time_start = time2text(world.realtime, "hh:mm:ss")
 		var/turf/T = get_turf(src)
 		if(usr)
-			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [on?"On":"Off"] @ location ([T.x],[T.y],[T.z])")
-			message_admins("[key_name_admin(usr)] set [src] [on?"On":"Off"], location ([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-			log_game("[usr.ckey]([usr]) set [src] [on?"On":"Off"], location ([T.x],[T.y],[T.z])")
+			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [on?"On":"Off"] @ location([T.x],[T.y],[T.z])")
+			message_admins("[key_name_admin(usr)] set [src] [on?"On":"Off"], location([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+			log_game("[usr.ckey]([usr]) set [src] [on?"On":"Off"], location([T.x],[T.y],[T.z])")
 		else
-			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [on?"On":"Off"] @ location ([T.x],[T.y],[T.z])")
-			message_admins("( NO USER FOUND) set [src] [on?"On":"Off"], location ([T.x],[T.y],[T.z])")
-			log_game("(NO USER FOUND) set [src] [on?"On":"Off"], location ([T.x],[T.y],[T.z])")
+			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [on?"On":"Off"] @ location([T.x],[T.y],[T.z])")
+			message_admins("( NO USER FOUND) set [src] [on?"On":"Off"], location([T.x],[T.y],[T.z])")
+			log_game("(NO USER FOUND) set [src] [on?"On":"Off"], location([T.x],[T.y],[T.z])")
 
 	if(href_list["visible"])
 		visible = !(visible)
@@ -153,7 +153,7 @@
 	if(usr)
 		attack_self(usr)
 
-/obj/item/device/assembly/infra/verb/rotate()//This could likely be better
+/obj/item/device/assembly/infra/verb/rotate()// This could likely be better
 	set name = "Rotate Infrared Laser"
 	set category = "Object"
 	set src in usr

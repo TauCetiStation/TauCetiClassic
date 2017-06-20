@@ -47,19 +47,19 @@
 		var/area/thearea = teleportlocs[A]
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
-			if(!istype(T,/turf/simulated/wall) && !istype(T, /turf/simulated/wall/r_wall) && !istype(T, /turf/space))
+			if(!istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/wall/r_wall) && !istype(T, /turf/space))
 				L+=T
 		var/loc = pick(L)
 		if(loc)
 			if(intensity)
 				command_alert("Bluespace artillery fire detected in [thearea.name]. Brace for impact.")
 				message_admins("[key_name_admin(usr)] has launched an artillery strike at [thearea.name].")
-				explosion(loc,2,5,11)
+				explosion(loc, 2, 5, 11)
 			else
-				explosion(loc,2,1,0)
+				explosion(loc, 2, 1, 0)
 			reload -= (intensity ? 180 : 90)
 		else
-			to_chat(usr,"There already everything is destroyed")
+			to_chat(usr, "There already everything is destroyed")
 
 /*mob/proc/openfire()
 	var/A
@@ -72,4 +72,4 @@
 	for(var/turf/T in get_area_turfs(thearea.type))
 		L+=T
 	var/loc = pick(L)
-	explosion(loc,2,5,11)*/
+	explosion(loc, 2, 5, 11)*/

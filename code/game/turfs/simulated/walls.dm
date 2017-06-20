@@ -6,19 +6,19 @@
 	var/rotting = 0
 
 	var/damage = 0
-	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
+	var/damage_cap = 100 // Wall will break down to girders if damage reaches this point
 
 	var/damage_overlay
 	var/global/damage_overlays[8]
 
-	var/max_temperature = 2200 //K, walls will take damage if they're next to a fire hotter than this
+	var/max_temperature = 2200 // K, walls will take damage if they're next to a fire hotter than this
 
 	opacity = 1
 	density = 1
 	blocks_air = 1
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
+	heat_capacity = 312500 // a little over 5 cm thick, 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
 	var/walltype = "metal"
 	var/sheet_type = /obj/item/stack/sheet/metal
@@ -40,7 +40,7 @@
 	..(newtype)
 	relativewall_neighbours()
 
-//Appearance
+// Appearance
 
 /turf/simulated/wall/examine(mob/user)
 	..()
@@ -60,7 +60,7 @@
 		to_chat(user, "<span class='warning'>There is fungus growing on [src].</span>")
 
 /turf/simulated/wall/proc/update_icon()
-	if(!damage_overlays[1]) //list hasn't been populated
+	if(!damage_overlays[1]) // list hasn't been populated
 		generate_overlays()
 
 	if(!damage)
@@ -71,7 +71,7 @@
 	if(overlay > damage_overlays.len)
 		overlay = damage_overlays.len
 
-	if(damage_overlay && overlay == damage_overlay) //No need to update.
+	if(damage_overlay && overlay == damage_overlay) // No need to update.
 		return
 
 	overlays.Cut()
@@ -89,7 +89,7 @@
 		img.alpha = (i * alpha_inc) - 1
 		damage_overlays[i] = img
 
-//Damage
+// Damage
 
 /turf/simulated/wall/proc/take_damage(dam)
 	if(dam)
@@ -123,8 +123,8 @@
 		var/newgirder = break_wall()
 		transfer_fingerprints_to(newgirder)
 
-	for(var/obj/O in src.contents) //Eject contents!
-		if(istype(O,/obj/structure/sign/poster))
+	for(var/obj/O in src.contents) // Eject contents!
+		if(istype(O, /obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 		else
@@ -134,11 +134,11 @@
 /turf/simulated/wall/proc/break_wall()
 	if(istype(src, /turf/simulated/wall/cult))
 		new /obj/effect/decal/cleanable/blood(src)
-		return (new /obj/structure/cultgirder(src))
+		return(new /obj/structure/cultgirder(src))
 
 	var/obj/item/stack/sheet/sheet = new sheet_type(src)
 	sheet.amount = 2
-	return (new /obj/structure/girder(src))
+	return(new /obj/structure/girder(src))
 
 /turf/simulated/wall/proc/devastate_wall()
 	if(istype(src, /turf/simulated/wall/cult))
@@ -158,7 +158,7 @@
 			if(prob(75))
 				take_damage(rand(150, 250))
 			else
-				dismantle_wall(1,1)
+				dismantle_wall(1, 1)
 		if(3.0)
 			take_damage(rand(0, 250))
 		else
@@ -173,7 +173,7 @@
 	if(!rotting)
 		rotting = 1
 
-		var/number_rots = rand(2,3)
+		var/number_rots = rand(2, 3)
 		for(var/i=0, i<number_rots, i++)
 			var/obj/effect/overlay/O = new/obj/effect/overlay(src)
 			O.name = "Wallrot"
@@ -207,11 +207,11 @@
 
 	spawn(100)
 		if(O)	qdel(O)
-//	F.sd_LumReset()		//TODO: ~Carn
+//	F.sd_LumReset()		// TODO: ~Carn
 	return
 
 /turf/simulated/wall/meteorhit(obj/M)
-	if (prob(15) && !rotting)
+	if(prob(15) && !rotting)
 		dismantle_wall()
 	else if(prob(70) && !rotting)
 		ChangeTurf(/turf/simulated/floor/plating)
@@ -219,7 +219,7 @@
 		ReplaceWithLattice()
 	return 0
 
-//Interactions
+// Interactions
 
 /turf/simulated/wall/attack_paw(mob/user)
 	return src.attack_hand(user) //#Z2
@@ -227,11 +227,11 @@
 /*
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	if(M.wall_smash)
-		if (istype(src, /turf/simulated/wall/r_wall) && !rotting)
+		if(istype(src, /turf/simulated/wall/r_wall) && !rotting)
 			to_chat(M, text("\blue This wall is far too strong for you to destroy."))
 			return
 		else
-			if (prob(40) || rotting)
+			if(prob(40) || rotting)
 				to_chat(M, text("\blue You smash through the wall."))
 				dismantle_wall(1)
 				return
@@ -248,7 +248,7 @@
 		if(istype(M, /mob/living/simple_animal/hulk))
 			var/mob/living/simple_animal/hulk/Hulk = M
 			playsound(Hulk, 'sound/weapons/tablehit1.ogg', 50, 1)
-			Hulk.health -= rand(4,10)
+			Hulk.health -= rand(4, 10)
 		playsound(M.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
@@ -257,7 +257,7 @@
 			else
 				to_chat(M, "<span class='info'>This wall is far too strong for you to destroy.</span>")
 		else
-			if (prob(40) || rotting)
+			if(prob(40) || rotting)
 				to_chat(M, text("\blue You smash through the wall."))
 				dismantle_wall(1)
 			else
@@ -289,18 +289,18 @@
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
 
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	//get the user's location
+	// get the user's location
 	if(!istype(user.loc, /turf))
-		return	//can't do this stuff whilst inside objects and such
+		return	// can't do this stuff whilst inside objects and such
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.remove_fuel(0,user))
+			if(WT.remove_fuel(0, user))
 				to_chat(user, "<span class='notice'>You burn away the fungi with \the [WT].</span>")
 				playsound(src, 'sound/items/Welder.ogg', 10, 1)
 				for(var/obj/effect/E in src) if(E.name == "Wallrot")
@@ -312,11 +312,11 @@
 			src.dismantle_wall(1)
 			return
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
+	// THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.remove_fuel(0,user))
+			if(WT.remove_fuel(0, user))
 				thermitemelt(user)
 				return
 
@@ -335,9 +335,9 @@
 			thermitemelt(user)
 			return
 
-	var/turf/T = user.loc	//get user's location for delay checks
+	var/turf/T = user.loc	// get user's location for delay checks
 
-	//DECONSTRUCTION
+	// DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/weldingtool))
 
 		var/response = "Dismantle"
@@ -346,7 +346,7 @@
 
 		var/obj/item/weapon/weldingtool/WT = W
 
-		if(WT.remove_fuel(0,user))
+		if(WT.remove_fuel(0, user))
 			if(response == "Repair")
 				to_chat(user, "<span class='notice'>You start repairing the damage to [src].</span>")
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -358,7 +358,7 @@
 				to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-				if(do_after(user,100, target = src))
+				if(do_after(user, 100, target = src))
 					if(!istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T)
 						return
 
@@ -375,8 +375,8 @@
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-		if(do_after(user,60,target = src))
-			if(mineral == "diamond")//Oh look, it's tougher
+		if(do_after(user, 60, target = src))
+			if(mineral == "diamond")// Oh look, it's tougher
 				sleep(60)
 			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
 				return
@@ -388,12 +388,12 @@
 					O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart.</span>", 2)
 		return
 
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	// DRILLING
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
 
-		if(do_after(user,60,target = src))
+		if(do_after(user, 60, target = src))
 			if(mineral == "diamond")
 				sleep(60)
 			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
@@ -413,7 +413,7 @@
 		to_chat(user, "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>")
 		playsound(src, "sparks", 50, 1)
 
-		if(do_after(user,70,target = src))
+		if(do_after(user, 70, target = src))
 			if(mineral == "diamond")
 				sleep(70)
 			if(!istype(src, /turf/simulated/wall) || !user || !EB || !T)
@@ -427,7 +427,7 @@
 				for(var/mob/O in viewers(user, 5))
 					O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", 2)
 		return
-	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
+	else if(istype(W, /obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W
 		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 		user.do_attack_animation(src)
@@ -436,39 +436,39 @@
 			take_damage(pick(10, 20, 30))
 		return
 
-	else if(istype(W,/obj/item/apc_frame))
+	else if(istype(W, /obj/item/apc_frame))
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/newscaster_frame))
+	else if(istype(W, /obj/item/newscaster_frame))
 		var/obj/item/newscaster_frame/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/alarm_frame))
+	else if(istype(W, /obj/item/alarm_frame))
 		var/obj/item/alarm_frame/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/firealarm_frame))
+	else if(istype(W, /obj/item/firealarm_frame))
 		var/obj/item/firealarm_frame/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame))
+	else if(istype(W, /obj/item/light_fixture_frame))
 		var/obj/item/light_fixture_frame/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame/small))
+	else if(istype(W, /obj/item/light_fixture_frame/small))
 		var/obj/item/light_fixture_frame/small/AH = W
 		AH.try_build(src)
 		return
 
-	//Poster stuff
-	else if(istype(W,/obj/item/weapon/poster))
-		place_poster(W,user)
+	// Poster stuff
+	else if(istype(W, /obj/item/weapon/poster))
+		place_poster(W, user)
 		return
 
 	else

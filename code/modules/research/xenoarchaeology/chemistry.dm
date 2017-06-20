@@ -1,5 +1,5 @@
 
-//chemistry stuff here so that it can be easily viewed/modified
+// chemistry stuff here so that it can be easily viewed/modified
 datum
 	reagent
 		tungsten
@@ -21,32 +21,32 @@ datum
 			id = "ground_rock"
 			description = "A fine dust made of ground up rock."
 			reagent_state = SOLID
-			color = "#A0522D"   //rgb: 160, 82, 45, brown
+			color = "#A0522D"   // rgb: 160, 82, 45, brown
 
 		density_separated_sample
 			name = "Density separated sample"
 			id = "density_separated_sample"
 			description = "A watery paste used in chemical analysis, there are some chunks floating in it."
 			reagent_state = LIQUID
-			color = "#DEB887"   //rgb: 222, 184, 135, light brown
+			color = "#DEB887"   // rgb: 222, 184, 135, light brown
 
 		analysis_sample
 			name = "Analysis liquid"
 			id = "analysis_sample"
 			description = "A watery paste used in chemical analysis."
 			reagent_state = LIQUID
-			color = "#F5FFFA"   //rgb: 245, 255, 250, almost white
+			color = "#F5FFFA"   // rgb: 245, 255, 250, almost white
 
 		chemical_waste
 			name = "Chemical Waste"
 			id = "chemical_waste"
 			description = "A viscous, toxic liquid left over from many chemical processes."
 			reagent_state = LIQUID
-			color = "#ADFF2F"   //rgb: 173, 255, 47, toxic green
+			color = "#ADFF2F"   // rgb: 173, 255, 47, toxic green
 
 datum
 	chemical_reaction
-		lithiumsodiumtungstate	//LiNa2WO4, not the easiest chem to mix
+		lithiumsodiumtungstate	// LiNa2WO4, not the easiest chem to mix
 			name = "Lithium Sodium Tungstate"
 			id = "lithiumsodiumtungstate"
 			result = "lithiumsodiumtungstate"
@@ -85,9 +85,9 @@ datum
 
 obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/W, mob/living/user)
 	if(istype(W, /obj/item/weapon/pen))
-		var/new_label = input("What should the new label be?","Label solution tray")
+		var/new_label = input("What should the new label be?", "Label solution tray")
 		if(new_label)
-			name = "solution tray ([new_label])"
+			name = "solution tray([new_label])"
 			to_chat(user, "\blue You write on the label of the solution tray.")
 	else
 		..(W, user)
@@ -96,21 +96,21 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 	name = "beaker 'tungsten'"
 	New()
 		..()
-		reagents.add_reagent("tungsten",50)
+		reagents.add_reagent("tungsten", 50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/oxygen
 	name = "beaker 'oxygen'"
 	New()
 		..()
-		reagents.add_reagent("oxygen",50)
+		reagents.add_reagent("oxygen", 50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/sodium
 	name = "beaker 'sodium'"
 	New()
 		..()
-		reagents.add_reagent("sodium",50)
+		reagents.add_reagent("sodium", 50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/lithium
@@ -118,7 +118,7 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 
 	New()
 		..()
-		reagents.add_reagent("lithium",50)
+		reagents.add_reagent("lithium", 50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/water
@@ -126,7 +126,7 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 
 	New()
 		..()
-		reagents.add_reagent("water",50)
+		reagents.add_reagent("water", 50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/water
@@ -134,7 +134,7 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 
 	New()
 		..()
-		reagents.add_reagent("water",50)
+		reagents.add_reagent("water", 50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/fuel
@@ -142,5 +142,5 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 
 	New()
 		..()
-		reagents.add_reagent("fuel",50)
+		reagents.add_reagent("fuel", 50)
 		update_icon()

@@ -23,10 +23,10 @@
 	var/on = 0
 	var/pulling = 0
 
-	// x, y modifiers to the center turf; (0, 0) is centered on the magnet, whereas (1, -1) is one tile right, one tile down
+	// x, y modifiers to the center turf; (0, 0) is centered on the magnet, whereas(1, -1) is one tile right, one tile down
 	var/center_x = 0
 	var/center_y = 0
-	var/max_dist = 20 // absolute value of center_x,y cannot exceed this integer
+	var/max_dist = 20 // absolute value of center_x, y cannot exceed this integer
 
 /obj/machinery/magnetic_module/New()
 	..()
@@ -319,7 +319,7 @@
 				if(speed <= 0)
 					speed = 1
 			if("setpath")
-				var/newpath = sanitize(copytext(input(usr, "Please define a new path!",,path) as text|null,1,MAX_MESSAGE_LEN))
+				var/newpath = sanitize(copytext(input(usr, "Please define a new path!",, path) as text|null, 1, MAX_MESSAGE_LEN))
 				if(newpath && newpath != "")
 					moving = 0 // stop moving
 					path = newpath
@@ -358,10 +358,10 @@
 
 		var/nextmove = uppertext(rpath[pathpos]) // makes it un-case-sensitive
 
-		if(!(nextmove in list("N","S","E","W","C","R")))
+		if(!(nextmove in list("N", "S", "E", "W", "C", "R")))
 			// N, S, E, W are directional
 			// C is center
-			// R is random (in magnetic field's bounds)
+			// R is random(in magnetic field's bounds)
 			qdel(signal)
 			break // break the loop if the character located is invalid
 

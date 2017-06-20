@@ -8,9 +8,9 @@
  *			worldtime2text
  */
 
-//Returns an integer given a hex input
+// Returns an integer given a hex input
 /proc/hex2num(hex)
-	if (!( istext(hex) ))
+	if(!( istext(hex) ))
 		return
 
 	var/num = 0
@@ -21,7 +21,7 @@
 		var/char = copytext(hex, i, i + 1)
 		switch(char)
 			if("0")
-				//Apparently, switch works with empty statements, yay! If that doesn't work, blame me, though. -- Urist
+				// Apparently, switch works with empty statements, yay! If that doesn't work, blame me, though. -- Urist
 			if("9", "8", "7", "6", "5", "4", "3", "2", "1")
 				num += text2num(char) * 16 ** power
 			if("a", "A")
@@ -42,14 +42,14 @@
 		i--
 	return num
 
-//Returns the hex value of a number given a value assumed to be a base-ten value
+// Returns the hex value of a number given a value assumed to be a base-ten value
 /proc/num2hex(num, placeholder)
 
-	if (placeholder == null)
+	if(placeholder == null)
 		placeholder = 2
-	if (!( isnum(num) ))
+	if(!( isnum(num) ))
 		return
-	if (!( num ))
+	if(!( num ))
 		return "0"
 	var/hex = ""
 	var/i = 0
@@ -87,12 +87,12 @@
 		num_list += text2num(x)
 	return num_list
 
-//Splits the text of a file at seperator and returns them in a list.
+// Splits the text of a file at seperator and returns them in a list.
 /proc/file2list(filename, seperator="\n")
-	return splittext(return_file_text(filename),seperator)
+	return splittext(return_file_text(filename), seperator)
 
 
-//Turns a direction into text
+// Turns a direction into text
 
 /proc/num2dir(direction)
 	switch(direction)
@@ -105,7 +105,7 @@
 
 
 
-//Turns a direction into text
+// Turns a direction into text
 /proc/dir2text(direction)
 	switch(direction)
 		if(1.0)
@@ -127,7 +127,7 @@
 		else
 	return
 
-//Turns text into proper directions
+// Turns text into proper directions
 /proc/text2dir(direction)
 	switch(uppertext(direction))
 		if("NORTH")
@@ -149,7 +149,7 @@
 		else
 	return
 
-//Converts an angle (degrees) into an ss13 direction
+// Converts an angle(degrees) into an ss13 direction
 /proc/angle2dir(degree)
 	degree = ((degree+22.5)%365)
 	if(degree < 45)		return NORTH
@@ -161,7 +161,7 @@
 	if(degree < 315)	return WEST
 	return NORTH|WEST
 
-//returns the north-zero clockwise angle in degrees, given a direction
+// returns the north-zero clockwise angle in degrees, given a direction
 
 /proc/dir2angle(D)
 	switch(D)
@@ -175,11 +175,11 @@
 		if(SOUTHWEST)	return 225
 		else			return null
 
-//Returns the angle in english
+// Returns the angle in english
 /proc/angle2text(degree)
 	return dir2text(angle2dir(degree))
 
-//Converts a blend_mode constant to one acceptable to icon.Blend()
+// Converts a blend_mode constant to one acceptable to icon.Blend()
 /proc/blendMode2iconMode(blend_mode)
 	switch(blend_mode)
 		if(BLEND_MULTIPLY) return ICON_MULTIPLY
@@ -187,8 +187,8 @@
 		if(BLEND_SUBTRACT) return ICON_SUBTRACT
 		else               return ICON_OVERLAY
 
-//Converts a rights bitfield into a string
-/proc/rights2text(rights,seperator="")
+// Converts a rights bitfield into a string
+/proc/rights2text(rights, seperator="")
 	if(rights & R_BUILDMODE)   . += "[seperator]+BUILDMODE"
 	if(rights & R_ADMIN)       . += "[seperator]+ADMIN"
 	if(rights & R_BAN)         . += "[seperator]+BAN"
@@ -213,7 +213,7 @@
 		else			return 'icons/mob/screen1_White.dmi'
 
 
-// heat2color functions. Adapted from: http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
+// heat2color functions. Adapted from: http:// www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
 /proc/heat2color(temp)
 	return rgb(heat2color_r(temp), heat2color_g(temp), heat2color_b(temp))
 
@@ -241,8 +241,8 @@
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
-//Converts a positive interger to its roman numeral equivilent. Ignores any decimals.
-//Numbers over 3999 will display with extra "M"s (don't tell the Romans) and can get comically long, so be careful.
+// Converts a positive interger to its roman numeral equivilent. Ignores any decimals.
+// Numbers over 3999 will display with extra "M"s(don't tell the Romans) and can get comically long, so be careful.
 /proc/num2roman(A)
 	var/list/values = list("M" = 1000, "CM" = 900, "D" = 500, "CD" = 400, "C" = 100, "XC" = 90, "L" = 50, "XL" = 40, "X" = 10, "IX" = 9, "V" = 5, "IV" = 4, "I" = 1)
 	if(!A || !isnum(A))

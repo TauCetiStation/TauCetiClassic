@@ -68,7 +68,7 @@
 						return
 					to_chat(user, "<span class='notice'>You dissasembled the airlock assembly!</span>")
 					new /obj/item/stack/sheet/metal(loc, 4)
-					qdel (src)
+					qdel(src)
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
 			return
@@ -134,7 +134,7 @@
 			to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 			state = ASSEMBLY_WIRED
 			var/obj/item/weapon/airlock_electronics/AE
-			if (!electronics)
+			if(!electronics)
 				AE = new /obj/item/weapon/airlock_electronics(loc)
 			else
 				AE = electronics

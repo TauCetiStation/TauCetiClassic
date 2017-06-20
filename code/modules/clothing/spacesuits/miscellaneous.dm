@@ -1,20 +1,20 @@
-//Deathsquad suit
+// Deathsquad suit
 /obj/item/clothing/head/helmet/space/deathsquad
 	name = "deathsquad helmet"
 	desc = "That's not red paint. That's real blood."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
-	armor = list(melee = 65, bullet = 40, laser = 35,energy = 20, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 65, bullet = 40, laser = 35, energy = 20, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/space/deathsquad/beret
 	name = "officer's beret"
 	desc = "An armored beret commonly used by special operations officers."
 	icon_state = "beret_badge"
-	armor = list(melee = 65, bullet = 15, laser = 35,energy = 20, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 65, bullet = 15, laser = 35, energy = 20, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES | BLOCKHAIR
 	siemens_coefficient = 0.9
 
-//Space santa outfit suit
+// Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
@@ -29,16 +29,16 @@
 	item_state = "santa"
 	slowdown = 0
 	flags = ONESIZEFITSALL
-	allowed = list(/obj/item) //for stuffing exta special presents
+	allowed = list(/obj/item) // for stuffing exta special presents
 
 
-//Space pirate outfit
+// Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
 	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 35, laser = 60, energy = 60, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES | BLOCKHAIR
 
 /obj/item/clothing/suit/space/pirate
@@ -47,12 +47,12 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box/magazine, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs, /obj/item/weapon/tank)
 	slowdown = 0
-	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 35, laser = 60, energy = 60, bomb = 30, bio = 30, rad = 30)
 	breach_threshold = 25
 
-//Buget suit
+// Buget suit
 
 /obj/item/clothing/suit/space/cheap
 	name = "Budget spacesuit"
@@ -63,7 +63,7 @@
 	name = "Budget spacesuit helmet"
 	desc = "It was an attempt to force the assistants to work in space. At least 60% of them survived in the spacesuit."
 
-//Mime's Hardsuit
+// Mime's Hardsuit
 /obj/item/clothing/head/helmet/space/mime
 	name = "mime hardsuit helmet"
 	desc = "A hardsuit helmet specifically designed for the mime."

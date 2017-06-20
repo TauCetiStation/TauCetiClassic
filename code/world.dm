@@ -3,13 +3,13 @@
 	turf = /turf/space
 	area = /area/space
 	view = "15x15"
-	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
+	cache_lifespan = 0	// stops player uploaded stuff from being kept in the rsc past the current session
 	fps = 20
 
 
 #define RECOMMENDED_VERSION 511
 /world/New()
-	//logs
+	// logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
@@ -19,7 +19,7 @@
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
 
-	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
+	make_datum_references_lists() // initialises global lists for referencing frequently used datums(so that we only ever do it once)
 
 	load_configuration()
 	load_stealth_keys()
@@ -40,7 +40,7 @@
 		config.server_name += " #[(world.port % 1000) / 100]"
 
 	if(config && config.log_runtime)
-		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
+		log = file("data/logs/runtime/[time2text(world.realtime, "YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
 
 	var/custom_items_file = file2text("config/custom_items.txt")
 	custom_items = splittext(custom_items_file, "\n")
@@ -68,14 +68,14 @@
 
 	src.update_status()
 
-	process_teleport_locs()			//Sets up the wizard teleport locations
-	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
+	process_teleport_locs()			// Sets up the wizard teleport locations
+	process_ghost_teleport_locs()	// Sets up ghost teleport locations.
 
 	. = ..()
 
 	sleep_offline = 1
 
-	spawn(3000)		//so we aren't adding to the round-start lag
+	spawn(3000)		// so we aren't adding to the round-start lag
 		if(config.kick_inactive)
 			KickInactiveClients()
 
@@ -83,7 +83,7 @@
 
 	return
 
-//world/Topic(href, href_list[])
+// world/Topic(href, href_list[])
 //		world << "Received a Topic() call!"
 //		world << "[href]"
 //		for(var/a in href_list)
@@ -100,9 +100,9 @@ var/world_topic_spam_protect_time = world.timeofday
 /world/Topic(T, addr, master, key)
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]"
 
-	if (T == "ping")
+	if(T == "ping")
 		var/x = 1
-		for (var/client/C)
+		for(var/client/C)
 			x++
 		return x
 
@@ -113,7 +113,7 @@ var/world_topic_spam_protect_time = world.timeofday
 				n++
 		return n
 
-	else if (T == "status")
+	else if(T == "status")
 		var/list/s = list()
 		s["version"] = game_version
 		s["mode"] = custom_event_msg ? "event" : master_mode
@@ -130,7 +130,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		for(var/client/C in clients)
 			if(C.holder)
 				if(C.holder.fakekey)
-					continue	//so stealthmins aren't revealed by the hub
+					continue	// so stealthmins aren't revealed by the hub
 				admins++
 			s["player[n]"] = C.key
 			n++
@@ -140,7 +140,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return list2params(s)
 
-	else if(copytext(T,1,9) == "adminmsg")
+	else if(copytext(T, 1, 9) == "adminmsg")
 		/*
 			We got an adminmsg from IRC bot lets split the input then validate the input.
 			expected output:
@@ -157,7 +157,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 				spawn(50)
 					world_topic_spam_protect_time = world.time
-					return "Bad Key (Throttled)"
+					return "Bad Key(Throttled)"
 
 			world_topic_spam_protect_time = world.time
 			world_topic_spam_protect_ip = addr
@@ -189,7 +189,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return "Message Successful"
 
-	else if(copytext(T,1,6) == "notes")
+	else if(copytext(T, 1, 6) == "notes")
 		/*
 			We got a request for notes from the IRC Bot
 			expected output:
@@ -202,7 +202,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 				spawn(50)
 					world_topic_spam_protect_time = world.time
-					return "Bad Key (Throttled)"
+					return "Bad Key(Throttled)"
 
 			world_topic_spam_protect_time = world.time
 			world_topic_spam_protect_ip = addr
@@ -220,7 +220,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		*/
 
 	for(var/client/C in clients)
-		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+		if(config.server)	// if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
 		else
 			C << link("byond://[world.address]:[world.port]")
@@ -228,10 +228,10 @@ var/world_topic_spam_protect_time = world.timeofday
 	..(reason)
 
 
-#define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
+#define INACTIVITY_KICK	6000	//10 minutes in ticks(approx.)
 /world/proc/KickInactiveClients()
 	spawn(-1)
-		//set background = 1
+		// set background = 1
 		while(1)
 			sleep(INACTIVITY_KICK)
 			for(var/client/C in clients)
@@ -280,7 +280,7 @@ var/world_topic_spam_protect_time = world.timeofday
 /world/proc/load_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")
-	config.load("config/game_options.txt","game_options")
+	config.load("config/game_options.txt", "game_options")
 	config.loadsql("config/dbconfig.txt")
 	config.loadforumsql("config/forumdbconfig.txt")
 	// apply some settings from config..
@@ -290,14 +290,14 @@ var/world_topic_spam_protect_time = world.timeofday
 /world/proc/update_status()
 	var/s = ""
 
-	if (config && config.server_name)
+	if(config && config.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"http://tauceti.ru\">" //Change this to wherever you want the hub to link to.
+	s += "<a href=\"http:// tauceti.ru\">" // Change this to wherever you want the hub to link to.
 //	s += "[game_version]"
-	s += "site"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "site"  // Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")"
 
@@ -309,41 +309,41 @@ var/world_topic_spam_protect_time = world.timeofday
 	else
 		features += "<b>STARTING</b>"
 
-	if (!enter_allowed)
+	if(!enter_allowed)
 		features += "closed"
 
 	features += abandon_allowed ? "respawn" : "no respawn"
 
-	if (config && config.allow_vote_mode)
+	if(config && config.allow_vote_mode)
 		features += "vote"
 
-	if (config && config.allow_ai)
+	if(config && config.allow_ai)
 		features += "AI allowed"
 
 	var/n = 0
-	for (var/mob/M in player_list)
-		if (M.client)
+	for(var/mob/M in player_list)
+		if(M.client)
 			n++
 
-	if (n > 1)
+	if(n > 1)
 		features += "~[n] players"
-	else if (n > 0)
+	else if(n > 0)
 		features += "~[n] player"
 
 	/*
 	is there a reason for this? the byond site shows 'hosted by X' when there is a proper host already.
-	if (host)
+	if(host)
 		features += "hosted by <b>[host]</b>"
 	*/
 
-	if (!host && config && config.hostedby)
+	if(!host && config && config.hostedby)
 		features += "hosted by <b>[config.hostedby]</b>"
 
-	if (features)
+	if(features)
 		s += ": [jointext(features, ", ")]"
 
 	/* does this help? I do not know */
-	if (src.status != s)
+	if(src.status != s)
 		src.status = s
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
@@ -352,7 +352,7 @@ var/failed_old_db_connections = 0
 
 proc/setup_database_connection()
 
-	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
+	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	// If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
 		return 0
 
 	if(!dbcon)
@@ -364,17 +364,17 @@ proc/setup_database_connection()
 	var/address = sqladdress
 	var/port = sqlport
 
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	dbcon.Connect("dbi:mysql:[db]:[address]:[port]", "[user]", "[pass]")
 	. = dbcon.IsConnected()
-	if ( . )
-		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
+	if( . )
+		failed_db_connections = 0	// If this connection succeeded, reset the failed connections counter.
 	else
-		failed_db_connections++		//If it failed, increase the failed connections counter.
+		failed_db_connections++		// If it failed, increase the failed connections counter.
 		world.log << dbcon.ErrorMsg()
 
 	return .
 
-//This proc ensures that the connection to the feedback database (global variable dbcon) is established
+// This proc ensures that the connection to the feedback database(global variable dbcon) is established
 proc/establish_db_connection()
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
@@ -384,10 +384,10 @@ proc/establish_db_connection()
 	else
 		return 1
 
-//These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
+// These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
 proc/setup_old_database_connection()
 
-	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
+	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)	// If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
 		return 0
 
 	if(!dbcon_old)
@@ -399,17 +399,17 @@ proc/setup_old_database_connection()
 	var/address = sqladdress
 	var/port = sqlport
 
-	dbcon_old.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	dbcon_old.Connect("dbi:mysql:[db]:[address]:[port]", "[user]", "[pass]")
 	. = dbcon_old.IsConnected()
-	if ( . )
-		failed_old_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
+	if( . )
+		failed_old_db_connections = 0	// If this connection succeeded, reset the failed connections counter.
 	else
-		failed_old_db_connections++		//If it failed, increase the failed connections counter.
+		failed_old_db_connections++		// If it failed, increase the failed connections counter.
 		world.log << dbcon.ErrorMsg()
 
 	return .
 
-//This proc ensures that the connection to the feedback database (global variable dbcon) is established
+// This proc ensures that the connection to the feedback database(global variable dbcon) is established
 proc/establish_old_db_connection()
 	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0

@@ -18,7 +18,7 @@
 
 /obj/item/gland/proc/Start()
 	active = 1
-	next_activation  = world.time + rand(cooldown_low,cooldown_high)
+	next_activation  = world.time + rand(cooldown_low, cooldown_high)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/gland/proc/Inject(mob/living/carbon/human/target)
@@ -31,13 +31,13 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(next_activation <= world.time)
-		//This gives a chance to transplant the gland active into someone else if you're fast
+		// This gives a chance to transplant the gland active into someone else if you're fast
 		if(!HostCheck())
 			active = 0
 			return
 		activate()
 		uses--
-		next_activation  = world.time + rand(cooldown_low,cooldown_high)
+		next_activation  = world.time + rand(cooldown_low, cooldown_high)
 	if(uses == 0)
 	 active = 0
 
@@ -45,7 +45,7 @@
 	return
 
 
-//HEAL
+// HEAL
 /obj/item/gland/heals
 	desc = "Heals the host."
 	cooldown_low = 200
@@ -60,7 +60,7 @@ obj/item/gland/heals/activate()
 	host.adjustFireLoss(-25)
 
 
-//SLIME
+// SLIME
 /obj/item/gland/slime
 	desc = "Host vomits slime."
 	cooldown_low = 600
@@ -84,7 +84,7 @@ obj/item/gland/slime/activate()
 	new/mob/living/simple_animal/slime(pos)
 
 
-//SLIME BOOM
+// SLIME BOOM
 /obj/item/gland/slime_boom
 	desc = "Explodes the host into slimes."
 	cooldown_low = 1200
@@ -107,7 +107,7 @@ obj/item/gland/slime/activate()
 	return
 
 
-//MINDSHOCK
+// MINDSHOCK
 /obj/item/gland/mindshock
 	desc = "Confuses everyone near host."
 	cooldown_low = 300
@@ -119,14 +119,14 @@ obj/item/gland/slime/activate()
 	to_chat(host, "<span class='notice'>You get a headache.</span>")
 
 	var/turf/T = get_turf(host)
-	for(var/mob/living/carbon/human/H in orange(4,T))
+	for(var/mob/living/carbon/human/H in orange(4, T))
 		if(H == host)
 			continue
 		to_chat(H, "<span class='alien'> You hear a buzz in your head </span>")
 		H.confused += 20
 
 
-//POP
+// POP
 /obj/item/gland/pop
 	desc = "Changes host species."
 	cooldown_low = 900
@@ -136,10 +136,10 @@ obj/item/gland/slime/activate()
 
 /obj/item/gland/pop/activate()
 	to_chat(host, "<span class='notice'>You feel unlike yourself.</span>")
-	host.set_species_soft(pick(HUMAN , UNATHI , TAJARAN , DIONA , VOX))
+	host.set_species_soft(pick(HUMAN, UNATHI, TAJARAN, DIONA, VOX))
 
 
-//VENTCRAWLING
+// VENTCRAWLING
 /obj/item/gland/ventcrawling
 	desc = "Gives the host ability to ventcrawl."
 	cooldown_low = 1800
@@ -153,7 +153,7 @@ obj/item/gland/slime/activate()
 	return
 
 
-//VIRAL
+// VIRAL
 /obj/item/gland/viral
 	desc = "Makes the host carrier of a virus."
 	cooldown_low = 1800
@@ -166,18 +166,18 @@ obj/item/gland/slime/activate()
 
 	var/datum/disease2/disease/D = new /datum/disease2/disease()
 	D.makerandom()
-	D.infectionchance = rand(1,100)
+	D.infectionchance = rand(1, 100)
 
-	if(istype(host,/mob/living/carbon/human))
+	if(istype(host, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = host
-		if (H.species)
+		if(H.species)
 			D.affected_species = list(H.species.name)
 
-	infect_virus2(host,D,1)
+	infect_virus2(host, D, 1)
 
 
-//EMP
-/obj/item/gland/emp //TODO : Replace with something more interesting
+// EMP
+/obj/item/gland/emp // TODO : Replace with something more interesting
 	desc = "Makes the host emmit emp pulse."
 	cooldown_low = 900
 	cooldown_high = 1600
@@ -189,7 +189,7 @@ obj/item/gland/slime/activate()
 	empulse(get_turf(host), 2, 5, 1)
 
 
-//SPIDERMAN
+// SPIDERMAN
 /obj/item/gland/spiderman
 	desc = "Makes host produce spiders."
 	cooldown_low = 450
@@ -204,7 +204,7 @@ obj/item/gland/slime/activate()
 	new /obj/effect/spider/spiderling(host.loc)
 
 
-//EGG
+// EGG
 /obj/item/gland/egg
 	desc = "Makes the host lay eggs filled with acid."
 	cooldown_low = 300
@@ -215,11 +215,11 @@ obj/item/gland/slime/activate()
 /obj/item/gland/egg/activate()
 	to_chat(host, "<span class='boldannounce'>You lay an egg!</span>")
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(host.loc)
-	egg.reagents.add_reagent("sacid",20)
+	egg.reagents.add_reagent("sacid", 20)
 	egg.desc += " It smells bad."
 
 
-//BLOODY
+// BLOODY
 /obj/item/gland/bloody
 	desc = "Sprays blood on everything in sight and deals damage to host."
 	cooldown_low = 200
@@ -233,9 +233,9 @@ obj/item/gland/slime/activate()
 	host.visible_message("<span class='danger'>[host]'s skin erupts with blood!</span>",\
 	"<span class='userdanger'>Blood pours from your skin!</span>")
 
-	for(var/turf/T in oview(2,host)) //Make this respect walls and such
+	for(var/turf/T in oview(2, host)) // Make this respect walls and such
 		T.add_blood(host)
-	for(var/mob/living/carbon/human/H in oview(3,host)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
+	for(var/mob/living/carbon/human/H in oview(3, host)) // Blood decals for simple animals would be neat. aka Carp with blood on it.
 		if(H.wear_suit)
 			H.wear_suit.add_blood(host)
 			H.update_inv_wear_suit()
@@ -244,7 +244,7 @@ obj/item/gland/slime/activate()
 			H.update_inv_w_uniform()
 
 
-//BODYSNATCH
+// BODYSNATCH
 /obj/item/gland/bodysnatch
 	desc = "Turns host into a cocoon from with hatches body looking like the host."
 	cooldown_low = 1800
@@ -254,7 +254,7 @@ obj/item/gland/slime/activate()
 /obj/item/gland/bodysnatch/activate()
 	to_chat(host, "<span class='warning'>You feel something moving around inside you...</span>")
 
-	var/obj/effect/cocoon/abductor/C = new (get_turf(host))
+	var/obj/effect/cocoon/abductor/C = new(get_turf(host))
 
 	host.ghostize()
 	host.revive()
@@ -271,7 +271,7 @@ obj/item/gland/slime/activate()
 	desc = "Something is moving inside."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cocoon_large3"
-	color = rgb(10,120,10)
+	color = rgb(10, 120, 10)
 	density = 1
 	var/hatch_time = 0
 

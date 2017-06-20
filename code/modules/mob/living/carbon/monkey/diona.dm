@@ -2,7 +2,7 @@
   Tiny babby plant critter plus procs.
 */
 
-//Mob defines.
+// Mob defines.
 /mob/living/carbon/monkey/diona
 	name = "diona nymph"
 	voice_name = "diona nymph"
@@ -16,7 +16,7 @@
 
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
 
-	//Let people pick the little buggers up.
+	// Let people pick the little buggers up.
 	if(M.a_intent == "help")
 		if(M.species && M.species.name == DIONA)
 			to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
@@ -36,7 +36,7 @@
 	add_language("Rootspeak")
 	src.verbs += /mob/living/carbon/monkey/diona/proc/merge
 
-//Verbs after this point.
+// Verbs after this point.
 
 /mob/living/carbon/monkey/diona/proc/merge()
 
@@ -44,25 +44,25 @@
 	set name = "Merge with gestalt"
 	set desc = "Merge with another diona."
 
-	if(istype(src.loc,/mob/living/carbon))
+	if(istype(src.loc, /mob/living/carbon))
 		src.verbs -= /mob/living/carbon/monkey/diona/proc/merge
 		return
 
 	var/list/choices = list()
-	for(var/mob/living/carbon/C in view(1,src))
+	for(var/mob/living/carbon/C in view(1, src))
 
 		if(!(src.Adjacent(C)) || !(C.client)) continue
 
-		if(istype(C,/mob/living/carbon/human))
+		if(istype(C, /mob/living/carbon/human))
 			var/mob/living/carbon/human/D = C
 			if(D.species && D.species.name == DIONA)
 				choices += C
 
-	var/mob/living/M = input(src,"Who do you wish to merge with?") in null|choices
+	var/mob/living/M = input(src, "Who do you wish to merge with?") in null|choices
 
 	if(!M || !src || !(src.Adjacent(M))) return
 
-	if(istype(M,/mob/living/carbon/human))
+	if(istype(M, /mob/living/carbon/human))
 		to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
 		M.status_flags |= PASSEMOTES
 
@@ -79,7 +79,7 @@
 	set name = "Split from gestalt"
 	set desc = "Split away from your gestalt as a lone nymph."
 
-	if(!(istype(src.loc,/mob/living/carbon)))
+	if(!(istype(src.loc, /mob/living/carbon)))
 		src.verbs -= /mob/living/carbon/monkey/diona/proc/split
 		return
 
@@ -94,7 +94,7 @@
 
 	if(istype(M))
 		for(var/atom/A in M.contents)
-			if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
+			if(istype(A, /mob/living/simple_animal/borer) || istype(A, /obj/item/weapon/holder))
 				return
 	M.status_flags &= ~PASSEMOTES
 
@@ -111,11 +111,11 @@
 
 	var/obj/machinery/hydroponics/target = input("Select a tray:") as null|anything in trays
 
-	if(!src || !target || target.nutrilevel == 10) return //Sanity check.
+	if(!src || !target || target.nutrilevel == 10) return // Sanity check.
 
 	src.nutrition -= ((10-target.nutrilevel)*5)
 	target.nutrilevel = 10
-	src.visible_message("\red [src] secretes a trickle of green liquid from its tail, refilling [target]'s nutrient tray.","\red You secrete a trickle of green liquid from your tail, refilling [target]'s nutrient tray.")
+	src.visible_message("\red [src] secretes a trickle of green liquid from its tail, refilling [target]'s nutrient tray.", "\red You secrete a trickle of green liquid from your tail, refilling [target]'s nutrient tray.")
 
 /mob/living/carbon/monkey/diona/verb/eat_weeds()
 
@@ -130,11 +130,11 @@
 
 	var/obj/machinery/hydroponics/target = input("Select a tray:") as null|anything in trays
 
-	if(!src || !target || target.weedlevel == 0) return //Sanity check.
+	if(!src || !target || target.weedlevel == 0) return // Sanity check.
 
 	src.reagents.add_reagent("nutriment", target.weedlevel)
 	target.weedlevel = 0
-	src.visible_message("\red [src] begins rooting through [target], ripping out weeds and eating them noisily.","\red You begin rooting through [target], ripping out weeds and eating them noisily.")
+	src.visible_message("\red [src] begins rooting through [target], ripping out weeds and eating them noisily.", "\red You begin rooting through [target], ripping out weeds and eating them noisily.")
 
 /mob/living/carbon/monkey/diona/verb/evolve()
 
@@ -155,12 +155,12 @@
 		return
 
 	src.split()
-	src.visible_message("\red [src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.","\red You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.")
+	src.visible_message("\red [src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.", "\red You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.")
 
 	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
 	adult.set_species(DIONA)
 
-	if(istype(loc,/obj/item/weapon/holder/diona))
+	if(istype(loc, /obj/item/weapon/holder/diona))
 		var/obj/item/weapon/holder/diona/L = loc
 		src.loc = L.loc
 		qdel(L)
@@ -169,11 +169,11 @@
 		adult.add_language(L.name)
 	adult.regenerate_icons()
 
-	adult.name = "diona ([rand(100,999)])"
+	adult.name = "diona([rand(100, 999)])"
 	adult.real_name = adult.name
 	adult.ckey = src.ckey
 
-	for (var/obj/item/W in src.contents)
+	for(var/obj/item/W in src.contents)
 		src.drop_from_inventory(W)
 	qdel(src)
 
@@ -183,10 +183,10 @@
 	set desc = "Take a blood sample from a suitable donor."
 
 	var/list/choices = list()
-	for(var/mob/living/carbon/human/H in oview(1,src))
+	for(var/mob/living/carbon/human/H in oview(1, src))
 		choices += H
 
-	var/mob/living/carbon/human/M = input(src,"Who do you wish to take a sample from?") in null|choices
+	var/mob/living/carbon/human/M = input(src, "Who do you wish to take a sample from?") in null|choices
 
 	if(!M || !src) return
 
@@ -198,7 +198,7 @@
 		to_chat(src, "\red That donor offers you nothing new.")
 		return
 
-	src.visible_message("\red [src] flicks out a feeler and neatly steals a sample of [M]'s blood.","\red You flick out a feeler and neatly steal a sample of [M]'s blood.")
+	src.visible_message("\red [src] flicks out a feeler and neatly steals a sample of [M]'s blood.", "\red You flick out a feeler and neatly steal a sample of [M]'s blood.")
 	donors += M.real_name
 	for(var/datum/language/L in M.languages)
 		languages |= L
@@ -221,9 +221,9 @@
 		to_chat(src, "\green The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.")
 
 
-/mob/living/carbon/monkey/diona/say_understands(mob/other,datum/language/speaking = null)
+/mob/living/carbon/monkey/diona/say_understands(mob/other, datum/language/speaking = null)
 
-	if (istype(other, /mob/living/carbon/human) && !speaking)
+	if(istype(other, /mob/living/carbon/human) && !speaking)
 		if(languages.len >= 2) // They have sucked down some blood.
 			return 1
 	return ..()
@@ -234,7 +234,7 @@
 
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (Muted).")
+			to_chat(src, "\red You cannot speak in IC(Muted).")
 			return
 
 	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))
@@ -245,7 +245,7 @@
 	var/datum/language/speaking = null
 
 	if(length(message) >= 2)
-		var/channel_prefix = copytext(message, 1 ,3)
+		var/channel_prefix = copytext(message, 1, 3)
 		if(languages.len)
 			for(var/datum/language/L in languages)
 				if(lowertext(channel_prefix) == ":[L.key]")
@@ -254,7 +254,7 @@
 					break
 
 	if(speaking)
-		message = trim(copytext(message,3))
+		message = trim(copytext(message, 3))
 
 	if(!message || stat)
 		return

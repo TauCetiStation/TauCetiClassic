@@ -12,7 +12,7 @@
 	FindDevices() // Update our devices list
 	var/data[0]
 
-	// SMES DATA (simplified view)
+	// SMES DATA(simplified view)
 	var/list/smeslist[0]
 	for(var/obj/machinery/power/smes/buildable/SMES in known_SMESs)
 		smeslist.Add(list(list(
@@ -27,7 +27,7 @@
 
 	data["smes_info"] = sortByKey(smeslist, "RCON_tag")
 
-	// BREAKER DATA (simplified view)
+	// BREAKER DATA(simplified view)
 	var/list/breakerlist[0]
 	for(var/obj/machinery/power/breakerbox/BR in known_breakers)
 		breakerlist.Add(list(list(
@@ -40,14 +40,14 @@
 	data["hide_breakers"] = hide_breakers
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "rcon.tmpl", "RCON Console", 600, 400)
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
 
 // Proc: Topic()
-// Parameters: 2 (href, href_list - allows us to process UI clicks)
+// Parameters: 2(href, href_list - allows us to process UI clicks)
 // Description: Allows us to process UI clicks, which are relayed in form of hrefs.
 /obj/nano_module/rcon/Topic(href, href_list)
 	if(..())
@@ -64,12 +64,12 @@
 	if(href_list["smes_in_set"])
 		var/obj/machinery/power/smes/buildable/SMES = GetSMESByTag(href_list["smes_in_set"])
 		if(SMES)
-			var/inputset = input(usr, "Enter new input level (0-[SMES.input_level_max])", "SMES Input Power Control") as num
+			var/inputset = input(usr, "Enter new input level(0-[SMES.input_level_max])", "SMES Input Power Control") as num
 			SMES.set_input(inputset)
 	if(href_list["smes_out_set"])
 		var/obj/machinery/power/smes/buildable/SMES = GetSMESByTag(href_list["smes_out_set"])
 		if(SMES)
-			var/outputset = input(usr, "Enter new output level (0-[SMES.output_level_max])", "SMES Input Power Control") as num
+			var/outputset = input(usr, "Enter new output level(0-[SMES.output_level_max])", "SMES Input Power Control") as num
 			SMES.set_output(outputset)
 
 	if(href_list["toggle_breaker"])
@@ -91,7 +91,7 @@
 
 
 // Proc: GetSMESByTag()
-// Parameters: 1 (tag - RCON tag of SMES we want to look up)
+// Parameters: 1(tag - RCON tag of SMES we want to look up)
 // Description: Looks up and returns SMES which has matching RCON tag
 /obj/nano_module/rcon/proc/GetSMESByTag(tag)
 	if(!tag)

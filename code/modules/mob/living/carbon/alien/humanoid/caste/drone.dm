@@ -11,14 +11,14 @@
 	reagents = R
 	R.my_atom = src
 	if(src.name == "alien drone")
-		src.name = text("alien drone ([rand(1, 1000)])")
+		src.name = text("alien drone([rand(1, 1000)])")
 	src.real_name = src.name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
+	verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin, /mob/living/carbon/alien/humanoid/proc/corrosive_acid)
 	..()
 
 /mob/living/carbon/alien/humanoid/drone/handle_hud_icons_health()
 	if(healths)
-		if (stat != DEAD)
+		if(stat != DEAD)
 			switch(health)
 				if(120 to INFINITY)
 					healths.icon_state = "health0"
@@ -37,15 +37,15 @@
 		else
 			healths.icon_state = "health7"
 
-//Drones use the same base as generic humanoids.
-//Drone verbs
+// Drones use the same base as generic humanoids.
+// Drone verbs
 /mob/living/carbon/alien/humanoid/drone/verb/evolve() // -- TLE
-	set name = "Evolve (500)"
+	set name = "Evolve(500)"
 	set desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
 	set category = "Alien"
 
 	if(!isturf(src.loc))
-		to_chat(src, "\red You cannot evolve when you are inside something.")//Silly aliens!
+		to_chat(src, "\red You cannot evolve when you are inside something.")// Silly aliens!
 		return
 
 	if(powerc(500))
@@ -65,7 +65,7 @@
 			to_chat(src, "\green You begin to evolve!")
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
-			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
+			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new(loc)
 			mind.transfer_to(new_xeno)
 			qdel(src)
 		else

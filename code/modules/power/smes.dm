@@ -3,7 +3,7 @@
 
 /obj/machinery/power/smes
 	name = "power storage unit"
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
+	desc = "A high-capacity superconducting magnetic energy storage(SMES) unit."
 	icon_state = "smes"
 	density = 1
 	anchored = 1
@@ -105,12 +105,12 @@
 		charge = c * 100
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user)
-	//opening using screwdriver
+	// opening using screwdriver
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		update_icon()
 		return
 
-	//changing direction using wrench
+	// changing direction using wrench
 	if(default_change_direction_wrench(user, I))
 		terminal = null
 		var/turf/T = get_step(src, dir)
@@ -127,27 +127,27 @@
 		update_icon()
 		return
 
-	//exchanging parts using the RPED
+	// exchanging parts using the RPED
 	if(exchange_parts(user, I))
 		return
 
 
-	//building and linking a terminal
+	// building and linking a terminal
 	if(istype(I, /obj/item/weapon/cable_coil))
-		var/dir = get_dir(user,src)
-		if(dir & (dir-1))//we don't want diagonal click
+		var/dir = get_dir(user, src)
+		if(dir & (dir-1))// we don't want diagonal click
 			return
 
-		if(terminal) //is there already a terminal ?
+		if(terminal) // is there already a terminal ?
 			to_chat(user, "<span class='warning'>This SMES already have a power terminal!</span>")
 			return
 
-		if(!panel_open) //is the panel open ?
+		if(!panel_open) // is the panel open ?
 			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
 			return
 
 		var/turf/T = get_turf(user)
-		if(T.intact) //is the floor plating removed ?
+		if(T.intact) // is the floor plating removed ?
 			to_chat(user, "<span class='warning'>You must first remove the floor plating!</span>")
 			return
 
@@ -161,8 +161,8 @@
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		if(do_after(user, 20, target = src) && C.amount >= 10)
-			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
-			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
+			var/obj/structure/cable/N = T.get_cable_node() // get the connecting node cable, if there's one
+			if(prob(50) && electrocute_mob(usr, N, N)) // animate the electrocution if uncautious and unlucky
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
@@ -173,21 +173,21 @@
 				"[user.name] has built a power terminal.",\
 				"<span class='notice'>You build the power terminal.</span>")
 
-			//build the terminal and link it to the network
+			// build the terminal and link it to the network
 			make_terminal(T)
 			terminal.connect_to_network()
 		return
 
-	//disassembling the terminal
+	// disassembling the terminal
 	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
 		terminal.dismantle(user)
 
-	//crowbarring it !
+	// crowbarring it !
 	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
-		message_admins("[src] has been deconstructed by [key_name_admin(user)] [ADMIN_QUE(user)] [ADMIN_FLW(user)] in ([T.x],[T.y],[T.z]) - [ADMIN_JMP(T)]")
+		message_admins("[src] has been deconstructed by [key_name_admin(user)] [ADMIN_QUE(user)] [ADMIN_FLW(user)] in([T.x],[T.y],[T.z]) - [ADMIN_JMP(T)]")
 		log_game("[src] has been deconstructed by [key_name(user)]")
-		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
+		investigate_log("SMES deconstructed by [key_name(user)]", "singulo")
 
 /obj/machinery/power/smes/construction()
 	charge = 0
@@ -199,9 +199,9 @@
 /obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		var/area/area = get_area(src)
-		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
-		log_game("SMES deleted at ([area.name])")
-		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
+		message_admins("SMES deleted at(<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
+		log_game("SMES deleted at([area.name])")
+		investigate_log("<font color='red'>deleted</font> at([area.name])", "singulo")
 	if(terminal)
 		disconnect_terminal()
 	return ..()
@@ -210,7 +210,7 @@
 // wires will attach to this
 /obj/machinery/power/smes/make_terminal(turf/T)
 	terminal = new/obj/machinery/power/terminal(T)
-	terminal.dir = get_dir(T,src)
+	terminal.dir = get_dir(T, src)
 	terminal.master = src
 
 /obj/machinery/power/smes/disconnect_terminal()
@@ -251,7 +251,7 @@
 
 	if(stat & BROKEN)	return
 
-	//store machine state to see if we need to update the icon overlays
+	// store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
 	var/last_chrg = charging
 	var/last_onln = online
@@ -274,7 +274,7 @@
 
 		else
 			if(chargemode)
-				if(chargecount > rand(3,6))
+				if(chargecount > rand(3, 6))
 					charging = 1
 					chargecount = 0
 
@@ -286,11 +286,11 @@
 				chargecount = 0
 
 	if(online)		// if outputting
-		lastout = min( charge/SMESRATE, output)		//limit output to that stored
+		lastout = min( charge/SMESRATE, output)		// limit output to that stored
 
-		charge -= lastout*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
+		charge -= lastout*SMESRATE		// reduce the storage(may be recovered in /restore() if excessive)
 
-		add_avail(lastout)				// add output to powernet (smes side)
+		add_avail(lastout)				// add output to powernet(smes side)
 
 		if(charge < 0.0001)
 			online = 0
@@ -318,7 +318,7 @@
 
 	excess = min(lastout, excess)				// clamp it to how much was actually output by this SMES last ptick
 
-	excess = min((capacity-charge)/SMESRATE, excess)	// for safety, also limit recharge by space capacity of SMES (shouldn't happen)
+	excess = min((capacity-charge)/SMESRATE, excess)	// for safety, also limit recharge by space capacity of SMES(shouldn't happen)
 
 	// now recharge this amount
 
@@ -369,7 +369,7 @@
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "smes.tmpl", "SMES Power Storage Unit", 540, 380)
@@ -388,7 +388,7 @@
 	if(!.)
 		return
 
-	//world << "[href] ; [href_list[href]]"
+	// world << "[href] ; [href_list[href]]"
 
 	for(var/area/A in all_areas)
 		A.master.powerupdate = 3
@@ -409,7 +409,7 @@
 			if("max")
 				chargelevel = max_input		//30000
 			if("set")
-				chargelevel = input(usr, "Enter new input level (0-[max_input])", "SMES Input Power Control", chargelevel) as num
+				chargelevel = input(usr, "Enter new input level(0-[max_input])", "SMES Input Power Control", chargelevel) as num
 		chargelevel = max(0, min(max_input, chargelevel))	// clamp to range
 
 	else if( href_list["output"] )
@@ -419,19 +419,19 @@
 			if("max")
 				output = max_output		//30000
 			if("set")
-				output = input(usr, "Enter new output level (0-[max_output])", "SMES Output Power Control", output) as num
+				output = input(usr, "Enter new output level(0-[max_output])", "SMES Output Power Control", output) as num
 		output = max(0, min(max_output, output))	// clamp to range
 
-	investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
+	investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]", "singulo")
 
 
 /obj/machinery/power/smes/proc/ion_act()
 	if(src.z == ZLEVEL_STATION)
-		if(prob(1)) //explosion
+		if(prob(1)) // explosion
 			to_chat(world, "\red SMES explosion in [src.loc.loc]")
 			for(var/mob/M in viewers(src))
 				M.show_message("\red The [src.name] is making strange noises!", 3, "\red You hear sizzling electronics.", 2)
-			sleep(10*pick(4,5,6,7,10,14))
+			sleep(10*pick(4, 5, 6, 7, 10, 14))
 			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)
 			smoke.attach(src)
@@ -439,7 +439,7 @@
 			explosion(src.loc, -1, 0, 1, 3, 0)
 			qdel(src)
 			return
-		if(prob(15)) //Power drain
+		if(prob(15)) // Power drain
 			to_chat(world, "\red SMES power drain in [src.loc.loc]")
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
@@ -448,7 +448,7 @@
 				emp_act(1)
 			else
 				emp_act(2)
-		if(prob(5)) //smoke only
+		if(prob(5)) // smoke only
 			to_chat(world, "\red SMES smoke in [src.loc.loc]")
 			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)
@@ -461,7 +461,7 @@
 	charging = 0
 	output = 0
 	charge -= 1e6/severity
-	if (charge < 0)
+	if(charge < 0)
 		charge = 0
 	spawn(100)
 		output = initial(output)
@@ -473,7 +473,7 @@
 
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
+	desc = "A high-capacity superconducting magnetic energy storage(SMES) unit. Magically produces power."
 	process()
 		charge = capacity
 		..()
@@ -482,7 +482,7 @@
 
 /proc/rate_control(S, V, C, Min=1, Max=5, Limit=null)
 	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
-	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C?C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"
+	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C ? C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"
 	if(Limit) return "[href]=-[Limit]'>-</A>"+rate+"[href]=[Limit]'>+</A>"
 	return rate
 

@@ -103,19 +103,19 @@ var/list/uristrune_cache = list()
 
 	if(animated == 1)
 		var/icon/I2 = icon(I, "")
-		I2.MapColors(rgb(0xff,0x0c,0,0), rgb(0,0,0,0), rgb(0,0,0,0), rgb(0,0,0,0xff))
+		I2.MapColors(rgb(0xff, 0x0c, 0, 0), rgb(0, 0, 0, 0), rgb(0, 0, 0, 0), rgb(0, 0, 0, 0xff))
 		I2.SetIntensity(1.04)
 
 		var/icon/I3 = icon(I, "")
-		I3.MapColors(rgb(0xff,0x18,0,0), rgb(0,0,0,0), rgb(0,0,0,0), rgb(0,0,0,0xff))
+		I3.MapColors(rgb(0xff, 0x18, 0, 0), rgb(0, 0, 0, 0), rgb(0, 0, 0, 0), rgb(0, 0, 0, 0xff))
 		I3.SetIntensity(1.08)
 
 		var/icon/I4 = icon(I, "")
-		I4.MapColors(rgb(0xff,0x24,0,0), rgb(0,0,0,0), rgb(0,0,0,0), rgb(0,0,0,0xff))
+		I4.MapColors(rgb(0xff, 0x24, 0, 0), rgb(0, 0, 0, 0), rgb(0, 0, 0, 0), rgb(0, 0, 0, 0xff))
 		I4.SetIntensity(1.12)
 
 		var/icon/I5 = icon(I, "")
-		I5.MapColors(rgb(0xff,0x30,0,0), rgb(0,0,0,0), rgb(0,0,0,0), rgb(0,0,0,0xff))
+		I5.MapColors(rgb(0xff, 0x30, 0, 0), rgb(0, 0, 0, 0), rgb(0, 0, 0, 0), rgb(0, 0, 0, 0xff))
 		I5.SetIntensity(1.16)
 
 		result.Insert(I2, "", frame = 2, delay = 4)

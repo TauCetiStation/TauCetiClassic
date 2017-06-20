@@ -1,5 +1,5 @@
-//node1, air1, network1 correspond to input
-//node2, air2, network2 correspond to output
+// node1, air1, network1 correspond to input
+// node2, air2, network2 correspond to output
 
 /obj/machinery/atmospherics/binary/circulator
 	name = "circulator/heat exchanger"
@@ -27,19 +27,19 @@
 		var/output_starting_pressure = air2.return_pressure()
 		last_pressure_delta = max(input_starting_pressure - output_starting_pressure + 10, 0)
 
-		//only circulate air if there is a pressure difference (plus 10 kPa to represent friction in the machine)
+		// only circulate air if there is a pressure difference(plus 10 kPa to represent friction in the machine)
 		if(air1.temperature > 0 && last_pressure_delta > 0)
 
-			//Calculate necessary moles to transfer using PV = nRT
+			// Calculate necessary moles to transfer using PV = nRT
 			recent_moles_transferred = last_pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
-			//Actually transfer the gas
+			// Actually transfer the gas
 			removed = air1.remove(recent_moles_transferred)
 			if(removed)
 				last_heat_capacity = removed.heat_capacity()
 				last_temperature = removed.temperature
 
-				//Update the gas networks.
+				// Update the gas networks.
 				if(network1)
 					network1.update = 1
 
@@ -83,10 +83,10 @@
 
 			initialize()
 			build_network()
-			if (node1)
+			if(node1)
 				node1.initialize()
 				node1.build_network()
-			if (node2)
+			if(node2)
 				node2.initialize()
 				node2.build_network()
 		else
@@ -105,10 +105,10 @@
 
 /obj/machinery/atmospherics/binary/circulator/verb/rotate_clockwise()
 	set category = "Object"
-	set name = "Rotate Circulator (Clockwise)"
+	set name = "Rotate Circulator(Clockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained() || anchored)
+	if(usr.stat || usr.restrained() || anchored)
 		return
 
 	src.dir = turn(src.dir, 90)
@@ -117,10 +117,10 @@
 
 /obj/machinery/atmospherics/binary/circulator/verb/rotate_anticlockwise()
 	set category = "Object"
-	set name = "Rotate Circulator (Counterclockwise)"
+	set name = "Rotate Circulator(Counterclockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained() || anchored)
+	if(usr.stat || usr.restrained() || anchored)
 		return
 
 	src.dir = turn(src.dir, -90)

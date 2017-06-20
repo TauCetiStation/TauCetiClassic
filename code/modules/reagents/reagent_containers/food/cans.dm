@@ -2,8 +2,8 @@
 	var/canopened = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
-	if (!canopened)
-		playsound(src.loc,'sound/effects/canopen.ogg', rand(10,50), 1)
+	if(!canopened)
+		playsound(src.loc,'sound/effects/canopen.ogg', rand(10, 50), 1)
 		to_chat(user, "<span class='notice'>You open the drink with an audible pop!</span>")
 		canopened = 1
 	else
@@ -13,7 +13,7 @@
 
 	if(!CanEat(user, M, src, "drink")) return
 
-	if (!canopened)
+	if(!canopened)
 		to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 		return
 	var/datum/reagents/R = src.reagents
@@ -30,9 +30,9 @@
 			reagents.reaction(M, INGEST)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, gulp_size), 5)
 
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		playsound(M.loc,'sound/items/drink.ogg', rand(10, 50), 1)
 		return 1
-	else if (!canopened)
+	else if(!canopened)
 		to_chat(user, "<span class='notice'> You need to open the drink!</span>")
 		return
 
@@ -50,13 +50,13 @@
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
 
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+		if(isrobot(user)) // Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
 			var/refill = R.get_master_reagent_id()
 			addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
 
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		playsound(M.loc,'sound/items/drink.ogg', rand(10, 50), 1)
 		return 1
 
 	return 0
@@ -65,7 +65,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return
 
-	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	if(istype(target, /obj/structure/reagent_dispensers)) // A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
 			to_chat(user, "\red [target] is empty.")
@@ -78,7 +78,7 @@
 			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
 			to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
 
-	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+	else if(target.is_open_container()) // Something like a glass. Player probably wants to transfer TO it.
 
 		if(!reagents.total_volume)
 			to_chat(user, "\red [src] is empty.")
@@ -99,16 +99,16 @@
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "\blue You transfer [trans] units of the solution to [target].")
 
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+		if(isrobot(user)) // Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
-			var/chargeAmount = max(30,4*trans)
+			var/chargeAmount = max(30, 4*trans)
 			bro.cell.use(chargeAmount)
 			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
 			addtimer(CALLBACK(src, .proc/refill_by_borg, user, refill, trans), 300)
 	return
 
 
-//DRINKS
+// DRINKS
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/cola
 	name = "Space Cola"

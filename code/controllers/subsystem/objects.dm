@@ -25,7 +25,7 @@ var/datum/subsystem/objects/SSobj
 	color_windows_init()
 	populate_gear_list()
 
-	global_announcer = new(null) //Doh...
+	global_announcer = new(null) // Doh...
 
 	for(var/thing in world)
 		var/atom/A = thing
@@ -39,9 +39,9 @@ var/datum/subsystem/objects/SSobj
 
 
 /datum/subsystem/objects/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = processing.Copy()
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed(lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
@@ -51,7 +51,7 @@ var/datum/subsystem/objects/SSobj
 			thing.process(wait)
 		else
 			SSobj.processing -= thing
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 	for(var/obj/item/dryingobj in SSobj.drying)
@@ -66,7 +66,7 @@ var/datum/subsystem/objects/SSobj
 		B.initialize()
 
 /datum/subsystem/objects/Recover()
-	if (istype(SSobj.processing))
+	if(istype(SSobj.processing))
 		processing = SSobj.processing
-	if (istype(SSobj.drying))
+	if(istype(SSobj.drying))
 		drying = SSobj.drying

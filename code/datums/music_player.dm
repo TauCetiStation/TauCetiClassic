@@ -106,18 +106,18 @@
 		else
 			html += "<a href='?src=\ref[src];show_help=0'>Hide Help</a><br>"
 			html += {"
-					Lines are a series of chords, separated by commas (,), each with notes seperated by hyphens (-).<br>
+					Lines are a series of chords, separated by commas(,), each with notes seperated by hyphens (-).<br>
 					Every note in a chord will play together, with chord timed by the tempo.<br>
 					<br>
 					Notes are played by the names of the note, and optionally, the accidental, and/or the octave number.<br>
 					By default, every note is natural and in octave 3. Defining otherwise is remembered for each note.<br>
-					Example: <i>C,D,E,F,G,A,B</i> will play a C major scale.<br>
-					After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is C3,C4,C4,C3</i><br>
-					Chords can be played simply by seperating each note with a hyphon: <i>A-C#,Cn-E,E-G#,Gn-B</i><br>
-					A pause may be denoted by an empty chord: <i>C,E,,C,G</i><br>
+					Example: <i>C, D, E, F, G, A, B</i> will play a C major scale.<br>
+					After a note has an accidental placed, it will be remembered: <i>C, C4, C, C3</i> is C3, C4, C4, C3</i><br>
+					Chords can be played simply by seperating each note with a hyphon: <i>A-C#, Cn-E, E-G#, Gn-B</i><br>
+					A pause may be denoted by an empty chord: <i>C, E,, C, G</i><br>
 					To make a chord be a different time, end it with /x, where the chord length will be length<br>
-					defined by tempo / x: <i>C,G/2,E/4</i><br>
-					Combined, an example is: <i>E-E4/4,/2,G#/8,B/8,E3-E4/4</i>
+					defined by tempo / x: <i>C, G/2, E/4</i><br>
+					Combined, an example is: <i>E-E4/4, /2, G#/8, B/8, E3-E4/4</i>
 					<br>
 					Lines may be up to [MAX_LINE_SIZE] characters.<br>
 					A song may only contain up to [MAX_LINES_COUNT] lines.<br>
@@ -186,7 +186,7 @@
 			var/line_num = text2num(href_list["modifyline"])
 			var/content = html_encode(input("Enter your line: ", "Change line [line_num]", song_lines[line_num]) as text|null)
 
-			if (!content || !in_range(instrument, usr))
+			if(!content || !in_range(instrument, usr))
 				return
 
 			if(lentext(content) > MAX_LINE_SIZE)
@@ -221,7 +221,7 @@
 			cur_acc[i] = "n"
 
 		for(var/line in song_lines)
-			for(var/beat in splittext(lowertext(line), ","))
+			for(var/beat in splittext(lowertext(line), ", "))
 				var/list/notes = splittext(beat, "/")
 
 				for(var/note in splittext(notes[1], "-"))
@@ -237,7 +237,7 @@
 						continue
 
 					for(var/i in 2 to lentext(note))
-						var/ni = copytext(note,i,i+1)
+						var/ni = copytext(note, i, i+1)
 
 						if(!text2num(ni))
 							if(ni == "#" || ni == "b" || ni == "n")

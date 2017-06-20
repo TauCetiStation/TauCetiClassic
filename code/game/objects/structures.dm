@@ -50,10 +50,10 @@
 		return ..()
 
 /obj/structure/proc/can_climb(mob/living/user, post_climb_check=0)
-	if (!can_touch(user) || !climbable || (!post_climb_check && (user in climbers)))
+	if(!can_touch(user) || !climbable || (!post_climb_check && (user in climbers)))
 		return 0
 
-	if (!user.Adjacent(src))
+	if(!user.Adjacent(src))
 		to_chat(user, "<span class='danger'>You can't climb there, the way is blocked.</span>")
 		return 0
 
@@ -68,7 +68,7 @@
 	if(!T || !istype(T))
 		return 0
 	for(var/obj/O in T.contents)
-		if(istype(O,/obj/structure))
+		if(istype(O, /obj/structure))
 			var/obj/structure/S = O
 			if(S.climbable) continue
 		if(O && O.density)
@@ -76,23 +76,23 @@
 	return 0
 
 /obj/structure/proc/do_climb(mob/living/user)
-	if (!can_climb(user))
+	if(!can_climb(user))
 		return
 
 	usr.visible_message("<span class='warning'>[user] starts climbing onto \the [src]!</span>")
 	climbers |= user
 
-	if(!do_after(user,50,target = user))
+	if(!do_after(user, 50, target = user))
 		climbers -= user
 		return
 
-	if (!can_climb(user, post_climb_check=1))
+	if(!can_climb(user, post_climb_check=1))
 		climbers -= user
 		return
 
 	usr.forceMove(get_turf(src))
 
-	if (get_turf(user) == get_turf(src))
+	if(get_turf(user) == get_turf(src))
 		usr.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
 	climbers -= user
 
@@ -100,16 +100,16 @@
 	for(var/mob/living/M in climbers)
 		M.Weaken(2)
 		to_chat(M, "<span class='danger'>You topple as you are shaken off \the [src]!</span>")
-		climbers.Cut(1,2)
+		climbers.Cut(1, 2)
 
 	for(var/mob/living/M in get_turf(src))
-		if(M.lying) return //No spamming this on people.
+		if(M.lying) return // No spamming this on people.
 		M.Weaken(5)
 		to_chat(M, "<span class='red'>You topple as \the [src] moves under you!</span>")
 
 		if(prob(25))
 
-			var/damage = rand(15,30)
+			var/damage = rand(15, 30)
 			var/mob/living/carbon/human/H = M
 			if(!istype(M))
 				to_chat(H, "<span class='red'>You land heavily!</span>")
@@ -118,15 +118,15 @@
 
 			var/obj/item/organ/external/BP
 
-			switch(pick(list("ankle","wrist","head","knee","elbow")))
+			switch(pick(list("ankle", "wrist", "head", "knee", "elbow")))
 				if("ankle")
-					BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
+					BP = H.bodyparts_by_name[pick(BP_L_FOOT, BP_R_FOOT)]
 				if("knee")
-					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
+					BP = H.bodyparts_by_name[pick(BP_L_LEG, BP_R_LEG)]
 				if("wrist")
-					BP = H.bodyparts_by_name[pick(BP_L_HAND , BP_R_HAND)]
+					BP = H.bodyparts_by_name[pick(BP_L_HAND, BP_R_HAND)]
 				if("elbow")
-					BP = H.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
+					BP = H.bodyparts_by_name[pick(BP_L_ARM, BP_R_ARM)]
 				if("head")
 					BP = H.bodyparts_by_name[BP_HEAD]
 

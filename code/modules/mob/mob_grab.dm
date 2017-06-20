@@ -11,8 +11,8 @@
 	var/allow_upgrade = 1
 	var/last_action = 0
 	var/last_hit_zone = 0
-	var/force_down //determines if the affecting mob will be pinned to the ground
-	var/dancing //determines if assailant and affecting keep looking at each other. Basically a wrestling position
+	var/force_down // determines if the affecting mob will be pinned to the ground
+	var/dancing // determines if assailant and affecting keep looking at each other. Basically a wrestling position
 
 	layer = 21
 	abstract = 1
@@ -36,16 +36,16 @@
 	hud.name = "reinforce grab"
 	hud.master = src
 
-	//check if assailant is grabbed by victim as well
+	// check if assailant is grabbed by victim as well
 	if(assailant.grabbed_by)
-		for (var/obj/item/weapon/grab/G in assailant.grabbed_by)
+		for(var/obj/item/weapon/grab/G in assailant.grabbed_by)
 			if(G.assailant == affecting && G.affecting == assailant)
 				G.dancing = 1
 				G.adjust_position()
 				dancing = 1
 	adjust_position()
 
-//Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
+// Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/throw_held()
 	if(affecting)
 		if(affecting.buckled)
@@ -56,7 +56,7 @@
 	return null
 
 
-//This makes sure that the grab screen object is displayed in the correct hand.
+// This makes sure that the grab screen object is displayed in the correct hand.
 /obj/item/weapon/grab/proc/synch()
 	if(affecting)
 		if(assailant.r_hand == src)
@@ -91,7 +91,7 @@
 
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
-		//disallow upgrading if we're grabbing more than one person
+		// disallow upgrading if we're grabbing more than one person
 		if((assailant.l_hand && assailant.l_hand != src && istype(assailant.l_hand, /obj/item/weapon/grab)))
 			var/obj/item/weapon/grab/G = assailant.l_hand
 			if(G.affecting != affecting)
@@ -101,7 +101,7 @@
 			if(G.affecting != affecting)
 				allow_upgrade = 0
 
-		//disallow upgrading past aggressive if we're being grabbed aggressively
+		// disallow upgrading past aggressive if we're being grabbed aggressively
 		for(var/obj/item/weapon/grab/G in affecting.grabbed_by)
 			if(G == src) continue
 			if(G.state >= GRAB_AGGRESSIVE)
@@ -151,9 +151,9 @@
 			L.adjustOxyLoss(1)
 
 	if(state >= GRAB_KILL)
-		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
-		affecting.stuttering = max(affecting.stuttering, 5) //It will hamper your voice, being choked and all.
-		affecting.Weaken(5)	//Should keep you down unless you get help.
+		// affecting.apply_effect(STUTTER, 5) // would do this, but affecting isn't declared as mob/living for some stupid reason.
+		affecting.stuttering = max(affecting.stuttering, 5) // It will hamper your voice, being choked and all.
+		affecting.Weaken(5)	// Should keep you down unless you get help.
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
 
 	adjust_position()
@@ -163,8 +163,8 @@
 	return s_click(hud)
 
 
-//Updating pixelshift, position and direction
-//Gets called on process, when the grab gets upgraded or the assailant moves
+// Updating pixelshift, position and direction
+// Gets called on process, when the grab gets upgraded or the assailant moves
 /obj/item/weapon/grab/proc/adjust_position()
 	if(!affecting)
 		return
@@ -174,7 +174,7 @@
 	if(affecting.lying && state != GRAB_KILL)
 //		animate(affecting, pixel_x = 0, pixel_y = 0, 5, 1, LINEAR_EASING)
 		if(force_down)
-			affecting.set_dir(SOUTH) //face up
+			affecting.set_dir(SOUTH) // face up
 		return
 	var/shift = 0
 	var/adir = get_dir(assailant, affecting)
@@ -182,7 +182,7 @@
 	switch(state)
 		if(GRAB_PASSIVE)
 			shift = 8
-			if(dancing) //look at partner
+			if(dancing) // look at partner
 				shift = 10
 				assailant.set_dir(get_dir(assailant, affecting))
 		if(GRAB_AGGRESSIVE)
@@ -195,7 +195,7 @@
 		if(GRAB_KILL)
 			shift = 0
 			adir = 1
-			affecting.set_dir(SOUTH) //face up
+			affecting.set_dir(SOUTH) // face up
 			affecting.loc = assailant.loc
 
 	switch(adir)
@@ -230,14 +230,14 @@
 		if(!allow_upgrade)
 			return
 		if(!affecting.lying)
-			assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>")
+			assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively(now hands)!</span>")
 		else
-			assailant.visible_message("<span class='warning'>[assailant] pins [affecting] down to the ground (now hands)!</span>")
+			assailant.visible_message("<span class='warning'>[assailant] pins [affecting] down to the ground(now hands)!</span>")
 			force_down = 1
 			affecting.Weaken(3)
 			step_to(assailant, affecting)
-			assailant.set_dir(EAST) //face the victim
-			affecting.set_dir(SOUTH) //face up
+			assailant.set_dir(EAST) // face the victim
+			affecting.set_dir(SOUTH) // face up
 		state = GRAB_AGGRESSIVE
 		icon_state = "grabbed1"
 		hud.icon_state = "reinforce1"
@@ -269,9 +269,9 @@
 
 		state = GRAB_KILL
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
-		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>"
-		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>"
-		msg_admin_attack("[key_name(assailant)] strangled (kill intent) [key_name(affecting)]")
+		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been strangled(kill intent) by [assailant.name] ([assailant.ckey])</font>"
+		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Strangled(kill intent) [affecting.name] ([affecting.ckey])</font>"
+		msg_admin_attack("[key_name(assailant)] strangled(kill intent) [key_name(affecting)]")
 
 		assailant.next_move = world.time + 10
 		affecting.losebreath += 1
@@ -279,7 +279,7 @@
 	adjust_position()
 
 
-//This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
+// This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/grab/proc/confirm()
 	if(!assailant || !affecting)
 		qdel(src)
@@ -335,7 +335,7 @@
 					var/armor = H.run_armor_check(H, "melee")
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
-						H.adjustHalLoss(Clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
+						H.adjustHalLoss(Clamp(0, 40 - H.halloss, 40)) // up to 40 halloss
 					return
 				if("hurt")
 
@@ -357,8 +357,8 @@
 						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had fingers pressed into their eyes by [assailant.name] ([assailant.ckey])</font>")
 						msg_admin_attack("[key_name(assailant)] has pressed his fingers into [key_name(affecting)]'s eyes.")
 						var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
-						IO.damage += rand(3,4)
-						if (IO.damage >= IO.min_broken_damage)
+						IO.damage += rand(3, 4)
+						if(IO.damage >= IO.min_broken_damage)
 							if(affecting.stat != DEAD)
 								to_chat(affecting, "\red You go blind!")
 //					else if(hit_zone != BP_HEAD)
@@ -402,8 +402,8 @@
 						affecting.Weaken(3)
 						affecting.lying = 1
 						step_to(assailant, affecting)
-						assailant.set_dir(EAST) //face the victim
-						affecting.set_dir(SOUTH) //face up
+						assailant.set_dir(EAST) // face the victim
+						affecting.set_dir(SOUTH) // face up
 						affecting.layer = 3.9
 						return
 					else
@@ -462,7 +462,7 @@
 		return
 
 	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [BP.name] carefully.</span>")
-	if(!do_mob(user,H, 30))
+	if(!do_mob(user, H, 30))
 		to_chat(user, "<span class='notice'>You must stand still to inspect [BP] for wounds.</span>")
 	else if(BP.wounds.len)
 		to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")

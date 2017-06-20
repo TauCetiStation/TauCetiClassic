@@ -26,4 +26,4 @@ turf/space/shuttle
 	icon_state = "1swall_s"
 
 	New()
-		icon_state = "[rand(1,4)]swall_s"
+		icon_state = "[rand(1, 4)]swall_s"

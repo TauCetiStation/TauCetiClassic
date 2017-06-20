@@ -14,7 +14,7 @@
 
 	update_light()
 
-// Will update the light (duh).
+// Will update the light(duh).
 // Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
 /atom/proc/update_light()
 	if(!light_power || !light_range) // We won't emit light anyways, destroy the light source.
@@ -57,7 +57,7 @@
 		T.reconsider_lights()
 
 // Should always be used to change the opacity of an atom.
-// It notifies (potentially) affected light sources so they can update (if needed).
+// It notifies(potentially) affected light sources so they can update (if needed).
 /atom/proc/set_opacity(new_opacity)
 	var/old_opacity = opacity
 	opacity = new_opacity
@@ -66,8 +66,8 @@
 		T.reconsider_lights()
 
 // This code makes the light be queued for update when it is moved.
-// Entered() should handle it, however Exited() can do it if it is being moved to nullspace (as there would be no Entered() call in that situation).
-/atom/Entered(atom/movable/Obj, atom/OldLoc) //Implemented here because forceMove() doesn't call Move()
+// Entered() should handle it, however Exited() can do it if it is being moved to nullspace(as there would be no Entered() call in that situation).
+/atom/Entered(atom/movable/Obj, atom/OldLoc) // Implemented here because forceMove() doesn't call Move()
 	. = ..()
 
 	if(Obj && OldLoc != src)

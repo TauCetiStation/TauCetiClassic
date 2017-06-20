@@ -23,7 +23,7 @@
 	prob(10);/obj/item/ammo_casing/caseless/rocket,\
 	prob(10);/obj/item/ammo_casing/caseless/rocket/emp,\
 	prob(12);/obj/item/weapon/melee/powerfist,\
-	prob(12);/obj/item/weapon/gun/projectile/revolver ,\
+	prob(12);/obj/item/weapon/gun/projectile/revolver,\
 	prob(12);/obj/item/ammo_box/magazine/m556/incendiary,\
 	prob(14);/obj/item/weapon/gun/projectile/automatic/c20r,\
 	prob(14);/obj/item/weapon/implanter/storage,\

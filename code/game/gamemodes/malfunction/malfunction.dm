@@ -15,11 +15,11 @@
 	uplink_welcome = "Crazy AI Uplink Console:"
 	uplink_uses = 20
 
-	var/AI_win_timeleft = 1800 //started at 1800, in case I change this for testing round end.
+	var/AI_win_timeleft = 1800 // started at 1800, in case I change this for testing round end.
 	var/malf_mode_declared = 0
 	var/station_captured = 0
 	var/to_nuke_or_not_to_nuke = 0
-	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
+	var/apcs = 0 // Adding dis to track how many APCs the AI hacks. --NeoFite
 
 
 /datum/game_mode/malfunction/announce()
@@ -43,7 +43,7 @@
 			to_chat(world, "Uh oh, its malfunction and there is no AI! Please report this.")
 			to_chat(world, "Rebooting world in 5 seconds.")
 
-			feedback_set_details("end_error","malf - no AI")
+			feedback_set_details("end_error", "malf - no AI")
 
 			if(blackbox)
 				blackbox.save_all_data_to_sql()
@@ -63,7 +63,7 @@
 
 /*		AI_mind.current.icon_state = "ai-malf"
 		spawn(10)
-			if(alert(AI_mind.current,"Do you want to use an alternative sprite for your real core?",,"Yes","No")=="Yes")
+			if(alert(AI_mind.current, "Do you want to use an alternative sprite for your real core?",, "Yes", "No")=="Yes")
 				AI_mind.current.icon_state = "ai-malf2"
 */
 	if(SSshuttle)
@@ -86,16 +86,16 @@
 
 
 /datum/game_mode/malfunction/process(seconds)
-	if (apcs >= APC_MIN_TO_MALDF_DECLARE && malf_mode_declared)
-		AI_win_timeleft -= (apcs / APC_MIN_TO_MALDF_DECLARE) * seconds //Victory timer now de-increments almost normally
+	if(apcs >= APC_MIN_TO_MALDF_DECLARE && malf_mode_declared)
+		AI_win_timeleft -= (apcs / APC_MIN_TO_MALDF_DECLARE) * seconds // Victory timer now de-increments almost normally
 	..()
-	if (AI_win_timeleft<=0)
+	if(AI_win_timeleft<=0)
 		check_win()
 	return
 
 
 /datum/game_mode/malfunction/check_win()
-	if (AI_win_timeleft <= 0 && !station_captured)
+	if(AI_win_timeleft <= 0 && !station_captured)
 		station_captured = 1
 		capture_the_station()
 		return 1
@@ -113,8 +113,8 @@
 		to_chat(AI, "Congratulations you have taken control of the station.")
 		to_chat(AI, "You may decide to blow up the station. You have 60 seconds to choose.")
 		to_chat(AI, "You should have a new verb in the Malfunction tab. If you dont - rejoin the game.")
-		AI.client.verbs += /datum/game_mode/malfunction/proc/ai_win	//We won't see verb, added to mob which is out of view, so we adding it to client.
-	spawn (600)
+		AI.client.verbs += /datum/game_mode/malfunction/proc/ai_win	// We won't see verb, added to mob which is out of view, so we adding it to client.
+	spawn(600)
 		for(var/datum/mind/AI_mind in malf_ai)
 			var/mob/living/silicon/ai/AI = AI_mind.current
 			AI.client.verbs -= /datum/game_mode/malfunction/proc/ai_win
@@ -125,27 +125,27 @@
 /datum/game_mode/proc/is_malf_ai_dead()
 	var/all_dead = 1
 	for(var/datum/mind/AI_mind in malf_ai)
-		if (istype(AI_mind.current,/mob/living/silicon/ai) && AI_mind.current.stat!=2)
+		if(istype(AI_mind.current, /mob/living/silicon/ai) && AI_mind.current.stat!=2)
 			all_dead = 0
 	return all_dead
 
 
 /datum/game_mode/malfunction/check_finished()
-	if (station_captured && !to_nuke_or_not_to_nuke)
+	if(station_captured && !to_nuke_or_not_to_nuke)
 		return 1
-	if (is_malf_ai_dead())
+	if(is_malf_ai_dead())
 		if(config.continous_rounds)
 			if(SSshuttle)
 				SSshuttle.always_fake_recall = 0
 			malf_mode_declared = 0
 		else
 			return 1
-	return ..() //check for shuttle and nuke
+	return ..() // check for shuttle and nuke
 
 
 /datum/game_mode/malfunction/Topic(href, href_list)
 	..()
-	if (href_list["ai_win"])
+	if(href_list["ai_win"])
 		ai_win()
 	return
 
@@ -154,17 +154,17 @@
 	set category = "Malfunction"
 	set name = "System Override"
 	set desc = "Start the victory timer."
-	if (!istype(ticker.mode,/datum/game_mode/malfunction))
+	if(!istype(ticker.mode, /datum/game_mode/malfunction))
 		to_chat(usr, "You cannot begin a takeover in this round type!")
 		return
-	if (ticker.mode:malf_mode_declared)
+	if(ticker.mode:malf_mode_declared)
 		to_chat(usr, "You've already begun your takeover.")
 		return
-	if (ticker.mode:apcs < APC_MIN_TO_MALDF_DECLARE)
+	if(ticker.mode:apcs < APC_MIN_TO_MALDF_DECLARE)
 		to_chat(usr, "You don't have enough hacked APCs to take over the station yet. You need to hack at least 3, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far.")
 		return
 
-	if (alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
+	if(alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
 		return
 
 	command_alert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert")
@@ -182,7 +182,7 @@
 	set category = "Malfunction"
 	set name = "Explode"
 	set desc = "Station go boom."
-	if (!ticker.mode:to_nuke_or_not_to_nuke)
+	if(!ticker.mode:to_nuke_or_not_to_nuke)
 		return
 	ticker.mode:to_nuke_or_not_to_nuke = 0
 	var/turf/malf_turf
@@ -196,13 +196,13 @@
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
 	to_chat(world, "Self-destructing in 10")
-	for (var/i=9 to 1 step -1)
+	for(var/i=9 to 1 step -1)
 		sleep(10)
 		to_chat(world, i)
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)
-		ticker.station_explosion_cinematic(0,null)
+		ticker.station_explosion_cinematic(0, null)
 		if(malf_turf)
 			sleep(20)
 			explosion(malf_turf, 15, 70, 200)
@@ -218,39 +218,39 @@
 	completion_text += "<B>Malfunction mode resume:</B><BR>"
 
 	if      ( station_captured &&                station_was_nuked)
-		feedback_set_details("round_end_result","win - AI win - nuke")
+		feedback_set_details("round_end_result", "win - AI win - nuke")
 		completion_text += "<FONT size = 3, color='red'><B>AI Victory!</B></FONT>"
 		completion_text += "<BR><B>Everyone was killed by the self-destruct!</B>"
 		score["roleswon"]++
 
-	else if ( station_captured &&  malf_dead && !station_was_nuked)
-		feedback_set_details("round_end_result","halfwin - AI killed, staff lost control")
+	else if( station_captured &&  malf_dead && !station_was_nuked)
+		feedback_set_details("round_end_result", "halfwin - AI killed, staff lost control")
 		completion_text += "<FONT size = 3, color='red'><B>Neutral Victory.</B></FONT>"
 		completion_text += "<BR><B>The AI has been killed!</B> The staff has lose control over the station."
 
-	else if ( station_captured && !malf_dead && !station_was_nuked)
-		feedback_set_details("round_end_result","win - AI win - no explosion")
+	else if( station_captured && !malf_dead && !station_was_nuked)
+		feedback_set_details("round_end_result", "win - AI win - no explosion")
 		completion_text += "<FONT size = 3, color='red'><B>AI Victory!</B></FONT>"
 		completion_text += "<BR><B>The AI has chosen not to explode you all!</B>"
 		score["roleswon"]++
 
-	else if (!station_captured &&                station_was_nuked)
-		feedback_set_details("round_end_result","halfwin - everyone killed by nuke")
+	else if(!station_captured &&                station_was_nuked)
+		feedback_set_details("round_end_result", "halfwin - everyone killed by nuke")
 		completion_text += "<FONT size = 3, color='red'><B>Neutral Victory.</B></FONT>"
 		completion_text += "<BR><B>Everyone was killed by the nuclear blast!</B>"
 
-	else if (!station_captured &&  malf_dead && !station_was_nuked)
-		feedback_set_details("round_end_result","loss - staff win")
+	else if(!station_captured &&  malf_dead && !station_was_nuked)
+		feedback_set_details("round_end_result", "loss - staff win")
 		completion_text += "<FONT size = 3, color='red'><B>Human Victory.</B></FONT>"
 		completion_text += "<BR><B>The AI has been killed!</B> The staff is victorious."
 
-	else if (!station_captured && !malf_dead && !station_was_nuked && crew_evacuated)
-		feedback_set_details("round_end_result","halfwin - evacuated")
+	else if(!station_captured && !malf_dead && !station_was_nuked && crew_evacuated)
+		feedback_set_details("round_end_result", "halfwin - evacuated")
 		completion_text += "<FONT size = 3, color='red'><B>Neutral Victory.</B></FONT>"
 		completion_text += "<BR><B>The Corporation has lose [station_name()]! All survived personnel will be fired!</B>"
 
-	else if (!station_captured && !malf_dead && !station_was_nuked && !crew_evacuated)
-		feedback_set_details("round_end_result","nalfwin - interrupted")
+	else if(!station_captured && !malf_dead && !station_was_nuked && !crew_evacuated)
+		feedback_set_details("round_end_result", "nalfwin - interrupted")
 		completion_text += "<FONT size = 3, color='red'><B>Neutral Victory.</B></FONT>"
 		completion_text += "<BR><B>Round was mysteriously interrupted!</B>"
 	..()
@@ -259,7 +259,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_malfunction()
 	var/text = ""
-	if( malf_ai.len || istype(ticker.mode,/datum/game_mode/malfunction) )
+	if( malf_ai.len || istype(ticker.mode, /datum/game_mode/malfunction) )
 		text += "<B>The malfunctioning AI were:</B>"
 
 		for(var/datum/mind/malf in malf_ai)

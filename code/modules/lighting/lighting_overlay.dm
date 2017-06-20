@@ -44,7 +44,7 @@
 	var/turf/T = loc
 	if(!istype(T)) // Erm...
 		if(loc)
-			warning("A lighting overlay realised its loc was NOT a turf (actual loc: [loc], [loc.type]) in update_overlay() and got pooled!")
+			warning("A lighting overlay realised its loc was NOT a turf(actual loc: [loc], [loc.type]) in update_overlay() and got pooled!")
 
 		else
 			warning("A lighting overlay realised it was in nullspace in update_overlay() and got pooled!")

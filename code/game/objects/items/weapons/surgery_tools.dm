@@ -72,7 +72,7 @@
 	suicide_act(mob/user)
 		to_chat(viewers(user), pick("\red <b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>"))
-		return (BRUTELOSS)
+		return(BRUTELOSS)
 
 /*
  * Scalpel
@@ -99,7 +99,7 @@
 		to_chat(viewers(user), pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
-		return (BRUTELOSS)
+		return(BRUTELOSS)
 
 /*
  * Researchable Scalpels
@@ -152,7 +152,7 @@
 	sharp = 1
 	edge = 1
 
-//misc, formerly from code/defines/weapons.dm
+// misc, formerly from code/defines/weapons.dm
 /obj/item/weapon/bonegel
 	name = "bone gel"
 	icon = 'icons/obj/surgery.dmi'

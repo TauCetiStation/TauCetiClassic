@@ -7,7 +7,7 @@
 	max_genetic_damage = 30
 	req_human = 1
 
-//Transform into a monkey.
+// Transform into a monkey.
 /obj/effect/proc_holder/changeling/lesserform/sting_action(mob/living/carbon/human/user)
 	var/datum/changeling/changeling = user.mind.changeling
 
@@ -15,13 +15,13 @@
 		to_chat(user, "<span class='warning'>We cannot perform this ability at the present time!</span>")
 		return
 	if(user.restrained())
-		to_chat(user,"<span class='warning'>We cannot perform this ability as you restrained!</span>")
+		to_chat(user, "<span class='warning'>We cannot perform this ability as you restrained!</span>")
 		return
 
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
 	to_chat(user, "<span class='warning'>Our genes cry out!</span>")
 
-	var/list/implants = list() //Try to preserve implants.
+	var/list/implants = list() // Try to preserve implants.
 	for(var/obj/item/weapon/implant/W in user)
 		implants += W
 
@@ -49,7 +49,7 @@
 		qdel(T)
 
 	O.loc = user.loc
-	O.name = "monkey ([copytext(md5(user.real_name), 2, 5)])"
+	O.name = "monkey([copytext(md5(user.real_name), 2, 5)])"
 	O.setToxLoss(user.getToxLoss())
 	O.adjustBruteLoss(user.getBruteLoss())
 	O.setOxyLoss(user.getOxyLoss())
@@ -60,14 +60,14 @@
 		I.loc = O
 		I.implanted = O
 
-		//transfer mind and delete old mob
+		// transfer mind and delete old mob
 	if(user.mind)
 		user.mind.transfer_to(O)
 		if(O.mind.changeling)
 			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 			O.changeling_update_languages(changeling.absorbed_languages)
 	. = O
-	feedback_add_details("changeling_powers","LF")
+	feedback_add_details("changeling_powers", "LF")
 	qdel(user)
 	return 1
 

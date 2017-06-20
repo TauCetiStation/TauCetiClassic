@@ -5,9 +5,9 @@
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
-	speak = list("Squeek!","SQUEEK!","Squeek?")
-	speak_emote = list("squeeks","squeeks","squiks")
-	emote_hear = list("squeeks","squeaks","squiks")
+	speak = list("Squeek!", "SQUEEK!", "Squeek?")
+	speak_emote = list("squeeks", "squeeks", "squiks")
+	emote_hear = list("squeeks", "squeaks", "squiks")
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
 	pass_flags = PASSTABLE
 	small = 1
@@ -21,11 +21,11 @@
 	response_disarm = "gently pushes aside the"
 	response_harm   = "stamps on the"
 	density = 0
-	var/body_color //brown, gray and white, leave blank for random
+	var/body_color // brown, gray and white, leave blank for random
 	layer = MOB_LAYER
-	min_oxy = 16 //Require atleast 16kPA oxygen
-	minbodytemp = 223		//Below -50 Degrees Celcius
-	maxbodytemp = 323	//Above 50 Degrees Celcius
+	min_oxy = 16 // Require atleast 16kPA oxygen
+	minbodytemp = 223		// Below -50 Degrees Celcius
+	maxbodytemp = 323	// Above 50 Degrees Celcius
 	universal_speak = 0
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
@@ -42,7 +42,7 @@
 		icon_state = "mouse_[body_color]_sleep"
 		wander = 0
 		speak_chance = 0
-		//snuffles
+		// snuffles
 	else if(stat == UNCONSCIOUS)
 		if(ckey || prob(1))
 			stat = CONSCIOUS
@@ -57,7 +57,7 @@
 	real_name = name
 
 	if(!body_color)
-		body_color = pick( list("brown","gray","white") )
+		body_color = pick( list("brown", "gray", "white") )
 		switch(body_color)
 			if("brown")
 				holder_type = /obj/item/weapon/holder/mouse/brown
@@ -93,22 +93,22 @@
 		return ..()
 
 /mob/living/simple_animal/mouse/get_scooped(mob/living/carbon/grabber)
-	if (stat >= DEAD)
+	if(stat >= DEAD)
 		return
 	..()
 
-//copy paste from alien/larva, if that func is updated please update this one alsoghost
+// copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/mouse/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Mouse"
 
-	if (layer != TURF_LAYER+0.2)
+	if(layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		to_chat(src, text("\blue You are now hiding."))
 		/*
 		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				to_chat(O, text("<B>[] scurries to the ground!</B>", src))
 		*/
 	else
@@ -116,34 +116,34 @@
 		to_chat(src, text("\blue You have stopped hiding."))
 		/*
 		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				to_chat(O, text("[] slowly peaks up from the ground...", src))
 		*/
 
-//make mice fit under tables etc? this was hacky, and not working
+// make mice fit under tables etc? this was hacky, and not working
 /*
 /mob/living/simple_animal/mouse/Move(var/dir)
 
-	var/turf/target_turf = get_step(src,dir)
-	//CanReachThrough(src.loc, target_turf, src)
+	var/turf/target_turf = get_step(src, dir)
+	// CanReachThrough(src.loc, target_turf, src)
 	var/can_fit_under = 0
-	if(target_turf.ZCanPass(get_turf(src),1))
+	if(target_turf.ZCanPass(get_turf(src), 1))
 		can_fit_under = 1
 
 	..(dir)
 	if(can_fit_under)
 		src.loc = target_turf
 	for(var/d in cardinal)
-		var/turf/O = get_step(T,d)
-		//Simple pass check.
+		var/turf/O = get_step(T, d)
+		// Simple pass check.
 		if(O.ZCanPass(T, 1) && !(O in open) && !(O in closed) && O in possibles)
 			open += O
 			*/
 
-///mob/living/simple_animal/mouse/restrained() //Hotfix to stop mice from doing things with MouseDrop
+/// mob/living/simple_animal/mouse/restrained() // Hotfix to stop mice from doing things with MouseDrop
 //	return 1
 
-/mob/living/simple_animal/mouse/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
+/mob/living/simple_animal/mouse/start_pulling(atom/movable/AM)// Prevents mouse from pulling things
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
 
@@ -180,7 +180,7 @@
 	icon_state = "mouse_brown"
 	holder_type = /obj/item/weapon/holder/mouse/brown
 
-//TOM IS ALIVE! SQUEEEEEEEE~K :)
+// TOM IS ALIVE! SQUEEEEEEEE~K :)
 /mob/living/simple_animal/mouse/brown/Tom
 	name = "Tom"
 	desc = "Jerry the cat is not amused."

@@ -1,6 +1,6 @@
 
 //---------- shield capacitor
-//pulls energy out of a power net and charges an adjacent generator
+// pulls energy out of a power net and charges an adjacent generator
 
 /obj/machinery/shield_capacitor
 	name = "shield capacitor"
@@ -80,8 +80,8 @@
 	interact(user)
 
 /obj/machinery/shield_capacitor/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
+	if( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+		if(!istype(user, /mob/living/silicon))
 			user.unset_machine()
 			user << browse(null, "window=shield_capacitor")
 			return
@@ -91,7 +91,7 @@
 	else
 		t += "This capacitor is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>"
 		t += "[time_since_fail > 2 ? "<font color=green>Charging stable.</font>" : "<font color=red>Warning, low charge!</font>"]<br>"
-		t += "Charge: [stored_charge] Watts ([100 * stored_charge/max_charge]%)<br>"
+		t += "Charge: [stored_charge] Watts([100 * stored_charge/max_charge]%)<br>"
 		t += "Charge rate: \
 		<a href='?src=\ref[src];charge_rate=-100000'>\[----\]</a> \
 		<a href='?src=\ref[src];charge_rate=-10000'>\[---\]</a> \
@@ -154,7 +154,7 @@
 		icon_state = "broke"
 	else
 		if( powered() )
-			if (src.active)
+			if(src.active)
 				icon_state = "capacitor"
 			else
 				icon_state = "capacitor"
@@ -169,7 +169,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored)
+	if(src.anchored)
 		to_chat(usr, "It is fastened to the floor!")
 		return
 	src.dir = turn(src.dir, 270)

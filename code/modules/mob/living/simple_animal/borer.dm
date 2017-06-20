@@ -4,22 +4,22 @@
 
 /mob/living/captive_brain/say(var/message)
 
-	if (src.client)
+	if(src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (muted).")
+			to_chat(src, "\red You cannot speak in IC(muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	message = sanitize(copytext(message, 1, MAX_MESSAGE_LEN))
 
-	if(istype(src.loc,/mob/living/simple_animal/borer))
+	if(istype(src.loc, /mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/B = src.loc
 		to_chat(src, "You whisper silently, \"[message]\"")
 		to_chat(B.host, "The captive mind of [src] whispers, \"[message]\"")
 
-		for (var/mob/M in player_list)
-			if (istype(M, /mob/new_player))
+		for(var/mob/M in player_list)
+			if(istype(M, /mob/new_player))
 				continue
 			else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "The captive mind of [src] whispers, \"[message]\"")
@@ -90,14 +90,14 @@
 					return
 
 				if(prob(5))
-					host.adjustBrainLoss(rand(1,2))
+					host.adjustBrainLoss(rand(1, 2))
 
 				if(prob(host.brainloss/20))
-					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
+					host.say("*[pick(list("blink", "blink_r", "choke", "aflap", "drool", "twitch", "twitch_s", "gasp"))]")
 
 /mob/living/simple_animal/borer/New()
 	..()
-	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
+	truename = "[pick("Primary", "Secondary", "Tertiary", "Quaternary")] [rand(1000, 9999)]"
 	host_brain = new/mob/living/captive_brain(src)
 
 	request_player()
@@ -111,34 +111,34 @@
 	if(!message)
 		return
 
-	if (stat == DEAD)
+	if(stat == DEAD)
 		return say_dead(message)
 
-	if (stat)
+	if(stat)
 		return
 
-	if (src.client)
+	if(src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (muted).")
+			to_chat(src, "\red You cannot speak in IC(muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
-	if (copytext(message, 1, 2) == "*")
+	if(copytext(message, 1, 2) == "*")
 		return emote(copytext(message, 2))
 
-	if (copytext(message, 1, 2) == ";") //Brain borer hivemind.
+	if(copytext(message, 1, 2) == ";") // Brain borer hivemind.
 		return borer_speak(message)
 
 	if(!host)
 		to_chat(src, "You have no host to speak to.")
-		return //No host, no audible speech.
+		return // No host, no audible speech.
 
 	to_chat(src, "You drop words into [host]'s mind: \"[message]\"")
 	to_chat(host, "Your own thoughts speak: \"[message]\"")
 
-	for (var/mob/M in player_list)
-		if (isnewplayer(M))
+	for(var/mob/M in player_list)
+		if(isnewplayer(M))
 			continue
 		else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			to_chat(M, "[src.truename] whispers to [host], \"[message]\"")
@@ -177,7 +177,7 @@
 		return
 
 	var/list/choices = list()
-	for(var/mob/living/carbon/C in view(3,src))
+	for(var/mob/living/carbon/C in view(3, src))
 		if(C.stat != DEAD)
 			choices += C
 
@@ -185,7 +185,7 @@
 		to_chat(src, "You cannot use that ability again so soon.")
 		return
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
+	var/mob/living/carbon/M = input(src, "Who do you wish to dominate?") in null|choices
 
 	if(!M || !src) return
 
@@ -212,7 +212,7 @@
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
-	if(!host.organs_by_name[O_BRAIN]) //this should only run in admin-weirdness situations, but it's here non the less - RR
+	if(!host.organs_by_name[O_BRAIN]) // this should only run in admin-weirdness situations, but it's here non the less - RR
 		to_chat(src, "<span class='warning'>There is no brain here for us to command!</span>")
 		return
 
@@ -257,9 +257,9 @@
 	if(chemicals < 50)
 		to_chat(src, "You don't have enough chemicals!")
 
-	var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","tramadol","hyperzine","alkysine")
+	var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine", "tramadol", "hyperzine", "alkysine")
 
-	if(chemicals < 50 || !host || controlling || !src || stat) //Sanity check.
+	if(chemicals < 50 || !host || controlling || !src || stat) // Sanity check.
 		return
 
 	to_chat(src, "\red <B>You squirt a measure of [chem] from your reservoirs into [host]'s bloodstream.</B>")
@@ -307,7 +307,7 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	if(!host) return
 
-	if(istype(host,/mob/living/carbon/human))
+	if(istype(host, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = host
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 		BP.implants -= src
@@ -336,7 +336,7 @@ mob/living/simple_animal/borer/proc/detatch()
 	host = null
 
 	for(var/atom/A in H.contents)
-		if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
+		if(istype(A, /mob/living/simple_animal/borer) || istype(A, /obj/item/weapon/holder))
 			return
 	H.status_flags &= ~PASSEMOTES
 
@@ -354,11 +354,11 @@ mob/living/simple_animal/borer/proc/detatch()
 		return
 
 	var/list/choices = list()
-	for(var/mob/living/carbon/C in view(1,src))
+	for(var/mob/living/carbon/C in view(1, src))
 		if(C.stat != DEAD && src.Adjacent(C))
 			choices += C
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to infest?") in null|choices
+	var/mob/living/carbon/M = input(src, "Who do you wish to infest?") in null|choices
 
 	if(!M || !src) return
 
@@ -368,7 +368,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		to_chat(src, "You cannot infest someone who is already infested!")
 		return
 
-	if(istype(M,/mob/living/carbon/human))
+	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(H.check_head_coverage())
 			to_chat(src, "You cannot get through that host's protective gear.")
@@ -377,7 +377,7 @@ mob/living/simple_animal/borer/proc/detatch()
 	to_chat(M, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(src, "You slither up [M] and begin probing at their ear canal...")
 
-	if(!do_after(src,50,target = M))
+	if(!do_after(src, 50, target = M))
 		to_chat(src, "As [M] moves away, you are dislodged and fall to the ground.")
 		return
 
@@ -399,7 +399,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		src.host = M
 		src.loc = M
 
-		if(istype(M,/mob/living/carbon/human))
+		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 			BP.implants += src
@@ -413,20 +413,20 @@ mob/living/simple_animal/borer/proc/detatch()
 		to_chat(src, "They are no longer in range!")
 		return
 
-//copy paste from alien/larva, if that func is updated please update this one alsoghost
+// copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/borer/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Alien"
 
-	if (layer != TURF_LAYER+0.2)
+	if(layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		to_chat(src, text("\blue You are now hiding."))
 	else
 		layer = MOB_LAYER
 		to_chat(src, text("\blue You have stopped hiding."))
 
-//Procs for grabbing players.
+// Procs for grabbing players.
 mob/living/simple_animal/borer/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
 		if(jobban_isbanned(O, "Syndicate") || jobban_isbanned(O, ROLE_ALIEN))
@@ -446,7 +446,7 @@ mob/living/simple_animal/borer/proc/question(client/C)
 			return
 		if(response == "Yes")
 			transfer_personality(C)
-		else if (response == "Never for this round")
+		else if(response == "Never for this round")
 			C.prefs.ignore_question += "borer"
 
 mob/living/simple_animal/borer/proc/transfer_personality(client/candidate)

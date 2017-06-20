@@ -15,8 +15,8 @@
 	attacktext = "mauls"
 	cold_damage_per_tick = 0
 	speak_chance = 5
-	speak = list("Hruuugh!","Hrunnph")
-	emote_see = list("paws the ground","shakes its mane","stomps")
+	speak = list("Hruuugh!", "Hrunnph")
+	emote_see = list("paws the ground", "shakes its mane", "stomps")
 	emote_hear = list("snuffles")
 
 /mob/living/simple_animal/hostile/diyaab
@@ -36,8 +36,8 @@
 	attacktext = "gouges"
 	cold_damage_per_tick = 0
 	speak_chance = 5
-	speak = list("Awrr?","Aowrl!","Worrl")
-	emote_see = list("sniffs the air cautiously","looks around")
+	speak = list("Awrr?", "Aowrl!", "Worrl")
+	emote_see = list("sniffs the air cautiously", "looks around")
 	emote_hear = list("snuffles")
 
 /mob/living/simple_animal/hostile/shantak
@@ -57,8 +57,8 @@
 	attacktext = "gouges"
 	cold_damage_per_tick = 0
 	speak_chance = 5
-	speak = list("Shuhn","Shrunnph?","Shunpf")
-	emote_see = list("scratches the ground","shakes out it's mane","tinkles gently")
+	speak = list("Shuhn", "Shrunnph?", "Shunpf")
+	emote_see = list("scratches the ground", "shakes out it's mane", "tinkles gently")
 
 /mob/living/simple_animal/yithian
 	name = "yithian"

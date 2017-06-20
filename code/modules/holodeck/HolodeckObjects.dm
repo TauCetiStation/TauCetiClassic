@@ -9,14 +9,14 @@
 	floor_type = /obj/item/stack/tile/grass
 
 	New()
-		icon_state = "grass[pick("1","2","3","4")]"
+		icon_state = "grass[pick("1", "2", "3", "4")]"
 		..()
 		spawn(4)
 			update_icon()
 			for(var/direction in cardinal)
-				if(istype(get_step(src,direction),/turf/simulated/floor))
-					var/turf/simulated/floor/FF = get_step(src,direction)
-					FF.update_icon() //so siding get updated properly
+				if(istype(get_step(src, direction), /turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src, direction)
+					FF.update_icon() // so siding get updated properly
 
 turf/simulated/floor/holofloor/update_icon()
 	if(icon_state in icons_to_ignore_at_floor_init)
@@ -40,7 +40,7 @@ turf/simulated/floor/holofloor/update_icon()
 /turf/simulated/floor/holofloor/desert/New()
 	..()
 	if(prob(10))
-		overlays += "asteroid[rand(0,9)]"
+		overlays += "asteroid[rand(0, 9)]"
 
 /turf/simulated/floor/holofloor/attackby(obj/item/weapon/W, mob/user)
 	return
@@ -54,14 +54,14 @@ turf/simulated/floor/holofloor/update_icon()
 	density = 1
 	anchored = 1.0
 	layer = 2.8
-	throwpass = 1	//You can throw objects over this, despite it's density.
+	throwpass = 1	// You can throw objects over this, despite it's density.
 
 /obj/structure/table/holotable/attack_hand(mob/user)
 	return // HOLOTABLE DOES NOT GIVE A FUCK
 
 
 /obj/structure/table/holotable/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		to_chat(user, "It's a holotable!  There are no bolts!")
 		return
 
@@ -92,21 +92,21 @@ turf/simulated/floor/holofloor/update_icon()
 	item_state = "boxing"
 
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
-	if(!istype(W)) return//I really wish I did not need this
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if(!istype(W)) return// I really wish I did not need this
+	if(istype(W, /obj/item/weapon/grab) && get_dist(src, user)<2)
 		var/obj/item/weapon/grab/G = W
-		if(istype(G.affecting,/mob/living))
+		if(istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			var/state = G.state
-			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
-			switch (state)
+			qdel(W)	// gotta delete it here because if window breaks, it won't get deleted
+			switch(state)
 				if(1)
 					M.visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
 					M.apply_damage(7)
 					take_damage(10)
 				if(2)
 					M.visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
-					if (prob(50))
+					if(prob(50))
 						M.Weaken(1)
 					M.apply_damage(10)
 					take_damage(25)
@@ -148,7 +148,7 @@ turf/simulated/floor/holofloor/update_icon()
 
 /obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I, mob/user)
 
-	if (src.operating == 1)
+	if(src.operating == 1)
 		return
 
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
@@ -160,16 +160,16 @@ turf/simulated/floor/holofloor/update_icon()
 		return
 
 	src.add_fingerprint(user)
-	if (!src.requiresID())
+	if(!src.requiresID())
 		user = null
 
-	if (src.allowed(user))
-		if (src.density)
+	if(src.allowed(user))
+		if(src.density)
 			open()
 		else
 			close()
 
-	else if (src.density)
+	else if(src.density)
 		flick(text("[]deny", src.base_state), src)
 
 	return
@@ -220,11 +220,11 @@ obj/structure/stool/bed/chair/holochair
 	..()
 
 /obj/item/weapon/holo/esword/New()
-	item_color = pick("red","blue","green","purple")
+	item_color = pick("red", "blue", "green", "purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user)
 	active = !active
-	if (active)
+	if(active)
 		force = 30
 		icon_state = "sword[item_color]"
 		w_class = 4
@@ -237,7 +237,7 @@ obj/structure/stool/bed/chair/holochair
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
@@ -245,7 +245,7 @@ obj/structure/stool/bed/chair/holochair
 	add_fingerprint(user)
 	return
 
-//BASKETBALL OBJECTS
+// BASKETBALL OBJECTS
 
 /obj/item/weapon/beach_ball/holoball
 	icon = 'icons/obj/basketball.dmi'
@@ -253,7 +253,7 @@ obj/structure/stool/bed/chair/holochair
 	name = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
-	w_class = 4 //Stops people from hiding it in their bags/pockets
+	w_class = 4 // Stops people from hiding it in their bags/pockets
 
 /obj/structure/holohoop
 	name = "basketball hoop"
@@ -265,7 +265,7 @@ obj/structure/stool/bed/chair/holochair
 	throwpass = 1
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if(istype(W, /obj/item/weapon/grab) && get_dist(src, user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
@@ -275,13 +275,13 @@ obj/structure/stool/bed/chair/holochair
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
-	else if (istype(W, /obj/item) && get_dist(src,user)<2)
+	else if(istype(W, /obj/item) && get_dist(src, user)<2)
 		user.drop_item(src.loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (istype(mover,/obj/item) && mover.throwing)
+	if(istype(mover, /obj/item) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
@@ -346,7 +346,7 @@ obj/structure/stool/bed/chair/holochair
 	var/numready = 0
 	for(var/obj/machinery/readybutton/button in currentarea)
 		numbuttons++
-		if (button.ready)
+		if(button.ready)
 			numready++
 
 	if(numbuttons == numready)
@@ -368,7 +368,7 @@ obj/structure/stool/bed/chair/holochair
 	for(var/mob/M in currentarea)
 		to_chat(M, "FIGHT!")
 
-//Holorack
+// Holorack
 /obj/structure/rack/holorack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
@@ -379,11 +379,11 @@ obj/structure/stool/bed/chair/holochair
 	return
 
 /obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
 		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 
-//Holocarp
+// Holocarp
 
 /mob/living/simple_animal/hostile/carp/holodeck
 	icon = 'icons/mob/AI.dmi'
@@ -397,24 +397,24 @@ obj/structure/stool/bed/chair/holochair
 
 /mob/living/simple_animal/hostile/carp/holodeck/New()
 	..()
-	set_light(2) //hologram lighting
+	set_light(2) // hologram lighting
 
 /mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)
-	if (safe)
+	if(safe)
 		faction = "neutral"
 		melee_damage_lower = 0
 		melee_damage_upper = 0
-		//wall_smash = 0
+		// wall_smash = 0
 		destroy_surroundings = 0
 	else
 		faction = "carp"
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
-		//wall_smash = initial(wall_smash)
+		// wall_smash = initial(wall_smash)
 		destroy_surroundings = initial(destroy_surroundings)
 
 /mob/living/simple_animal/hostile/carp/holodeck/gib()
-	derez() //holograms can't gib
+	derez() // holograms can't gib
 
 /mob/living/simple_animal/hostile/carp/holodeck/death()
 	..()

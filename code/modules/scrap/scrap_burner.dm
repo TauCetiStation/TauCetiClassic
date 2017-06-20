@@ -1,5 +1,5 @@
 /obj/item/weapon/circuitboard/pacman/scrap
-	name = "Scrapman Generator Board (PACMAN-type Generator)"
+	name = "Scrapman Generator Board(PACMAN-type Generator)"
 	build_path = /obj/machinery/power/port_gen/pacman/scrap
 	board_type = "machine"
 	origin_tech = "programming=2:powerstorage=3;phorontech=2;engineering=4"
@@ -11,7 +11,7 @@
 
 datum/design/pacman/scrap
 	name = "Scrapman Circuit Board"
-	desc = "Scrapman Generator Board (PACMAN-type Generator)"
+	desc = "Scrapman Generator Board(PACMAN-type Generator)"
 	id = "scrapman"
 	req_tech = list("programming" = 2, "phorontech" = 3, "powerstorage" = 2, "engineering" = 4)
 	build_type = IMPRINTER

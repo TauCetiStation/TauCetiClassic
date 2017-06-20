@@ -100,11 +100,11 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	w_class = 4//bulky item
+	w_class = 4// bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS // Needs gloves and shoes with cold protection to be fully protected.
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/under/acj
@@ -116,7 +116,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
+	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100)
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
@@ -327,7 +327,7 @@
 	item_color = "gladiator"
 	body_parts_covered = LOWER_TORSO
 
-//dress
+// dress
 /obj/item/clothing/under/dress/
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -413,7 +413,7 @@
 	item_color = "plaid_purple"
 	flags = ONESIZEFITSALL
 
-//wedding stuff
+// wedding stuff
 /obj/item/clothing/under/wedding/
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
@@ -483,7 +483,7 @@
 	icon_state = "forensicsred"
 	item_state = "r_suit"
 	item_color = "forensicsred"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
@@ -500,7 +500,7 @@
 	icon_state = "hos_f"
 	item_state = "r_suit"
 	item_color = "hos_f"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.8
 
 /obj/item/clothing/under/rank/warden_fem
@@ -509,7 +509,7 @@
 	icon_state = "warden_f"
 	item_state = "r_suit"
 	item_color = "warden_f"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/rank/roboticist_fem
@@ -562,7 +562,7 @@
 	item_state = "dg_suit"
 	item_color = "centcom_old"
 
-//Mafia
+// Mafia
 /obj/item/clothing/under/mafia
 	name = "mafia outfit"
 	desc = "The business of the mafia is business."

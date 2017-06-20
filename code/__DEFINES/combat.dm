@@ -1,5 +1,5 @@
-//Damage things
-//Way to waste perfectly good damagetype names (BRUTE) on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc...
+// Damage things
+// Way to waste perfectly good damagetype names(BRUTE) on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc...
 #define BRUTE     "brute"
 #define BURN      "fire"
 #define TOX       "tox"
@@ -34,27 +34,27 @@
 #define FLUIDLOSS_WIDE_BURN 0.2 // for burns from heat applied over a wider area, like from fire
 #define FLUIDLOSS_CONC_BURN 0.1 // for concentrated burns, like from lasers
 
-//I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
+// I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
 #define BRUTELOSS	1
 #define FIRELOSS	2
 #define TOXLOSS 	4
 #define OXYLOSS 	8
 
-//Bitflags defining which status effects could be or are inflicted on a mob
+// Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1
 #define CANWEAKEN	2
 #define CANPARALYSE	4
 #define CANPUSH		8
 #define LEAPING		16
-#define PASSEMOTES	32      //Mob has a cortical borer or holders inside of it that need to see emotes.
+#define PASSEMOTES	32      // Mob has a cortical borer or holders inside of it that need to see emotes.
 #define LOCKSTUN	64      // if Mob has this flag, then stunned cannot be modified using Stun() SetStun() AdjustStunned() procs.
 #define GODMODE		4096
-#define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
-#define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
-#define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
+#define FAKEDEATH	8192	// Replaces stuff like changeling.changeling_fakedeath
+#define DISFIGURED	16384	// I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
+#define XENO_HOST	32768	// Tracks whether we're gonna be a baby alien's mummy.
 #define MOB_STATUS_FLAGS_DEFAULT (CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH)
 
-//Grab levels
+// Grab levels
 #define GRAB_PASSIVE	1
 #define GRAB_AGGRESSIVE	2
 #define GRAB_NECK		3

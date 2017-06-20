@@ -5,23 +5,23 @@
 	desc = "A glass lab container for storing interesting creatures."
 	density = 1
 	anchored = 1
-	unacidable = 1//Dissolving the case would also delete Lamarr
+	unacidable = 1// Dissolving the case would also delete Lamarr
 	var/health = 30
 	var/occupied = 1
 	var/destroyed = 0
 
 /obj/structure/lamarr/ex_act(severity)
 	switch(severity)
-		if (1)
+		if(1)
 			new /obj/item/weapon/shard( src.loc )
 			Break()
 			qdel(src)
-		if (2)
-			if (prob(50))
+		if(2)
+			if(prob(50))
 				src.health -= 15
 				src.healthcheck()
-		if (3)
-			if (prob(50))
+		if(3)
+			if(prob(50))
 				src.health -= 5
 				src.healthcheck()
 
@@ -34,7 +34,7 @@
 
 
 /obj/structure/lamarr/blob_act()
-	if (prob(75))
+	if(prob(75))
 		new /obj/item/weapon/shard( src.loc )
 		Break()
 		qdel(src)
@@ -47,8 +47,8 @@
 
 
 /obj/structure/lamarr/proc/healthcheck()
-	if (src.health <= 0)
-		if (!( src.destroyed ))
+	if(src.health <= 0)
+		if(!( src.destroyed ))
 			src.density = 0
 			src.destroyed = 1
 			new /obj/item/weapon/shard( src.loc )
@@ -76,12 +76,12 @@
 	return src.attack_hand(user)
 
 /obj/structure/lamarr/attack_hand(mob/user)
-	if (src.destroyed)
+	if(src.destroyed)
 		return
 	else
 		to_chat(usr, text("\blue You kick the lab cage."))
 		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				to_chat(O, text("\red [] kicks the lab cage.", usr))
 		src.health -= 2
 		healthcheck()
@@ -96,9 +96,9 @@
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
-	desc = "The worst she might do is attempt to... couple with your head."//hope we don't get sued over a harmless reference, rite?
+	desc = "The worst she might do is attempt to... couple with your head."// hope we don't get sued over a harmless reference, rite?
 	sterile = 1
 	gender = FEMALE
 
-/obj/item/clothing/mask/facehugger/lamarr/New()//to prevent deleting it if aliums are disabled
+/obj/item/clothing/mask/facehugger/lamarr/New()// to prevent deleting it if aliums are disabled
 	return

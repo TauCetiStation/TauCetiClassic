@@ -19,7 +19,7 @@
 	set desc = "Make HONK!"
 	set category = "Object"
 
-	if (usr.stat != CONSCIOUS)
+	if(usr.stat != CONSCIOUS)
 		return
 
 	if(!ishuman(usr))
@@ -40,7 +40,7 @@
 	set desc = "Don't stare, just write."
 	set category = "Object"
 
-	if (usr.stat != CONSCIOUS)
+	if(usr.stat != CONSCIOUS)
 		return
 
 
@@ -52,24 +52,24 @@
 		to_chat(usr, "\blue The board is full! Clean it to write again.")
 		return
 
-	//part wrom paper/write
+	// part wrom paper/write
 	var/t =  input("What do you want to write here? 20 lines or 2000 symbols max.", "Write", null, null) as message
 
 	if(length(t) > 2048)
 		to_chat(usr, "\blue You can't post it all on board!")
 		return
 
-	t = sanitize(t, list("\n"="\[br\]","ÿ"=LETTER_255))
+	t = sanitize(t, list("\n"="\[br\]", "ÿ"=LETTER_255))
 
 	// check for exploits
 	for(var/bad in paper_blacklist)
-		if(findtext(t,bad))
+		if(findtext(t, bad))
 			to_chat(usr, "\blue You think to yourself, \"Hm.. this is only chalkboard...\"")
 			log_admin("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			message_admins("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			return
 
-	//t = replacetext(t, "\n", "<BR>")
+	// t = replacetext(t, "\n", "<BR>")
 	t = parsepencode(t) // Encode everything from pencode to html
 
 	if(!t)
@@ -92,7 +92,7 @@
 	set category = "Object"
 //	set src in usr
 
-	if (usr.stat != CONSCIOUS)
+	if(usr.stat != CONSCIOUS)
 		return
 
 	if(!ishuman(usr))
@@ -110,7 +110,7 @@
 
 /obj/structure/chalkboard/proc/update()
 
-	switch (status)
+	switch(status)
 		if(CB_CLEAN)
 			desc = "Don't eat the chalk. Just write something on it."
 			icon_state = "board_clean"

@@ -1,7 +1,7 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 //  Beacon randomly spawns in space
-//	When a non-traitor (no special role in /mind) uses it, he is given the choice to become a traitor
+//	When a non-traitor(no special role in /mind) uses it, he is given the choice to become a traitor
 //	If he accepts there is a random chance he will be accepted, rejected, or rejected and killed
 //	Bringing certain items can help improve the chance to become a traitor
 
@@ -56,11 +56,11 @@
 			src.updateUsrDialog()
 			return
 		charges -= 1
-		switch(rand(1,2))
+		switch(rand(1, 2))
 			if(1)
 				temptext = "<font color=red><i><b>Double-crosser. You planned to betray us from the start. Allow us to repay the favor in kind.</b></i></font>"
 				src.updateUsrDialog()
-				spawn(rand(50,200))
+				spawn(rand(50, 200))
 					selfdestruct()
 				return
 		if(istype(M, /mob/living/carbon/human))
@@ -69,7 +69,7 @@
 			ticker.mode.traitors += N.mind
 			N.mind.special_role = "traitor"
 			var/objective = "Free Objective"
-			switch(rand(1,100))
+			switch(rand(1, 100))
 				if(1 to 50)
 					objective = "Steal [pick("a hand teleporter", "the Captain's antique laser gun", "a jetpack", "the Captain's ID", "the Captain's jumpsuit")]."
 				if(51 to 60)
@@ -105,13 +105,13 @@
 
 /obj/machinery/syndicate_beacon/proc/selfdestruct()
 	selfdestructing = 1
-	spawn() explosion(src.loc, rand(3,8), rand(1,3), 1, 10)
+	spawn() explosion(src.loc, rand(3, 8), rand(1, 3), 1, 10)
 
 
 
 #define SCREWED 32
 
-/obj/machinery/singularity_beacon //not the best place for it but it's a hack job anyway -- Urist
+/obj/machinery/singularity_beacon // not the best place for it but it's a hack job anyway -- Urist
 	name = "ominous beacon"
 	desc = "This looks suspicious..."
 	icon = 'icons/obj/singularity.dmi'
@@ -119,10 +119,10 @@
 
 	anchored = 0
 	density = 1
-	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
+	layer = MOB_LAYER - 0.1 // so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
 
-	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
+	var/active = 0 // It doesn't use up power, so use_power wouldn't really suit it
 	var/icontype = "beacon"
 	var/obj/structure/cable/attached = null
 
@@ -164,7 +164,7 @@
 
 
 /obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/weapon/screwdriver))
 		if(active)
 			to_chat(user, "\red You need to deactivate the beacon first!")
 			return
@@ -197,7 +197,7 @@
 
 	/*
 	* Added for a simple way to check power. Verifies that the beacon
-	* is connected to a wire, the wire is part of a powernet (that part's
+	* is connected to a wire, the wire is part of a powernet(that part's
 	* sort of redundant, since all wires either join or create one when placed)
 	* and that the powernet has at least 1500 power units available for use.
 	* Doesn't use them, though, just makes sure they're there.

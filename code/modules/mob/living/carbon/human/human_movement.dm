@@ -29,7 +29,7 @@
 		tally += hungry / 50
 
 	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
-		for(var/bodypart_name in list(BP_L_HAND , BP_R_HAND , BP_L_ARM , BP_R_ARM))
+		for(var/bodypart_name in list(BP_L_HAND, BP_R_HAND, BP_L_ARM, BP_R_ARM))
 			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
 			if(!BP || (BP.status & ORGAN_DESTROYED))
 				tally += 4
@@ -38,7 +38,7 @@
 			else if(BP.status & ORGAN_BROKEN)
 				tally += 1.5
 	else
-		if(!species.flags[NO_BLOOD] && !( reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola") )) // hyperzine removes equipment slowdowns (no blood = no chemical effects).
+		if(!species.flags[NO_BLOOD] && !( reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola") )) // hyperzine removes equipment slowdowns(no blood = no chemical effects).
 
 			if(wear_suit && wear_suit.slowdown)
 				tally += wear_suit.slowdown
@@ -57,7 +57,7 @@
 		if(buckled) // so, if we buckled we have large debuff
 			tally += 5.5
 
-		for(var/bodypart_name in list(BP_L_FOOT , BP_R_FOOT , BP_L_LEG , BP_R_LEG))
+		for(var/bodypart_name in list(BP_L_FOOT, BP_R_FOOT, BP_L_LEG, BP_R_LEG))
 			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
 			if(!BP || (BP.status & ORGAN_DESTROYED))
 				tally += 4
@@ -67,7 +67,7 @@
 				tally += 1.5
 
 	if(shock_stage >= 10)
-		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
+		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and(starts at ~1.83)
 
 	if(pull_debuff)
 		tally += pull_debuff
@@ -78,15 +78,15 @@
 	if(bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
-	return (tally + config.human_delay)
+	return(tally + config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
 
 	if(..())
 		return 1
 
-	//Do we have a working jetpack
-	if(istype(back, /obj/item/weapon/tank/jetpack) && isturf(loc)) //Second check is so you can't use a jetpack in a mech
+	// Do we have a working jetpack
+	if(istype(back, /obj/item/weapon/tank/jetpack) && isturf(loc)) // Second check is so you can't use a jetpack in a mech
 		var/obj/item/weapon/tank/jetpack/J = back
 		if((movement_dir || J.stabilization_on) && J.allow_thrust(0.01, src))
 			return 1

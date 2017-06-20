@@ -17,11 +17,11 @@
 /datum/hud
 	var/mob/mymob
 
-	var/hud_shown = 1			//Used for the HUD toggle (F12)
-	var/hud_version = 1			//Current displayed version of the HUD
-	var/inventory_shown = 1		//the inventory
+	var/hud_shown = 1			// Used for the HUD toggle(F12)
+	var/hud_version = 1			// Current displayed version of the HUD
+	var/inventory_shown = 1		// the inventory
 	var/show_intent_icons = 0
-	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
+	var/hotkey_ui_hidden = 0	// This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
 	var/obj/screen/lingchemdisplay
 	var/obj/screen/lingstingdisplay
@@ -79,7 +79,7 @@
 	if(ishuman(mymob))
 		var/mob/living/carbon/human/H = mymob
 		if(H.handcuffed)
-			H.handcuffed.screen_loc = null	//no handcuffs in my UI!
+			H.handcuffed.screen_loc = null	// no handcuffs in my UI!
 		if(inventory_shown && hud_shown)
 			if(H.shoes)		H.shoes.screen_loc = ui_shoes
 			if(H.gloves)	H.gloves.screen_loc = ui_gloves
@@ -157,7 +157,7 @@
 	else if(isovermind(mymob))
 		blob_hud()
 
-	if(istype(mymob.loc,/obj/mecha))
+	if(istype(mymob.loc, /obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
 
 	if(plane_masters.len)
@@ -165,21 +165,21 @@
 			mymob.client.screen += plane_masters[thing]
 	create_parallax()
 
-//Version denotes which style should be displayed. blank or 0 means "next version"
+// Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0)
 	if(!ismob(mymob))
 		return 0
 	if(!mymob.client)
 		return 0
 	var/display_hud_version = version
-	if(!display_hud_version)	//If 0 or blank, display the next hud version
+	if(!display_hud_version)	// If 0 or blank, display the next hud version
 		display_hud_version = hud_version + 1
-	if(display_hud_version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
+	if(display_hud_version > HUD_VERSIONS)	// If the requested version number is greater than the available versions, reset back to the first version
 		display_hud_version = 1
 
 	switch(display_hud_version)
-		if(HUD_STYLE_STANDARD)	//Default HUD
-			hud_shown = 1	//Governs behavior of other procs
+		if(HUD_STYLE_STANDARD)	// Default HUD
+			hud_shown = 1	// Governs behavior of other procs
 			if(adding)
 				mymob.client.screen += adding
 			if(other && inventory_shown)
@@ -187,9 +187,9 @@
 			if(hotkeybuttons && !hotkey_ui_hidden)
 				mymob.client.screen += hotkeybuttons
 
-			action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
-			mymob.client.screen += mymob.healths				//As are the rest of these.
+			action_intent.screen_loc = ui_acti // Restore intent selection to the original position
+			mymob.client.screen += mymob.zone_sel				// This one is a special snowflake
+			mymob.client.screen += mymob.healths				// As are the rest of these.
 			mymob.client.screen += mymob.healthdoll
 			mymob.client.screen += mymob.internals
 			mymob.client.screen += lingstingdisplay
@@ -200,8 +200,8 @@
 			persistant_inventory_update()
 			mymob.update_action_buttons()
 			reorganize_alerts()
-		if(HUD_STYLE_REDUCED)	//Reduced HUD
-			hud_shown = 0	//Governs behavior of other procs
+		if(HUD_STYLE_REDUCED)	// Reduced HUD
+			hud_shown = 0	// Governs behavior of other procs
 			if(adding)
 				mymob.client.screen -= adding
 			if(other)
@@ -209,23 +209,23 @@
 			if(hotkeybuttons)
 				mymob.client.screen -= hotkeybuttons
 
-			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
-			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
+			// These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
+			mymob.client.screen -= mymob.zone_sel	// zone_sel is a mob variable for some reason.
 			mymob.client.screen -= lingstingdisplay
 			mymob.client.screen -= lingchemdisplay
 
-			//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
-			mymob.client.screen += l_hand_hud_object	//we want the hands to be visible
-			mymob.client.screen += r_hand_hud_object	//we want the hands to be visible
-			mymob.client.screen += action_intent		//we want the intent swticher visible
-			action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+			// These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
+			mymob.client.screen += l_hand_hud_object	// we want the hands to be visible
+			mymob.client.screen += r_hand_hud_object	// we want the hands to be visible
+			mymob.client.screen += action_intent		// we want the intent swticher visible
+			action_intent.screen_loc = ui_acti_alt	// move this to the alternative position, where zone_select usually is.
 
 			hidden_inventory_update()
 			persistant_inventory_update()
 			mymob.update_action_buttons()
 			reorganize_alerts()
-		if(HUD_STYLE_NOHUD)	//No HUD
-			hud_shown = 0	//Governs behavior of other procs
+		if(HUD_STYLE_NOHUD)	// No HUD
+			hud_shown = 0	// Governs behavior of other procs
 			if(adding)
 				mymob.client.screen -= adding
 			if(other)
@@ -233,8 +233,8 @@
 			if(hotkeybuttons)
 				mymob.client.screen -= hotkeybuttons
 
-			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
-			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
+			// These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
+			mymob.client.screen -= mymob.zone_sel	// zone_sel is a mob variable for some reason.
 			mymob.client.screen -= mymob.healths
 			mymob.client.screen -= mymob.healthdoll
 			mymob.client.screen -= mymob.internals
@@ -251,14 +251,14 @@
 			mymob.client.screen += plane_masters[thing]
 	hud_version = display_hud_version
 	create_parallax()
-//Triggered when F12 is pressed (Unless someone changed something in the DMF)
+// Triggered when F12 is pressed(Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12(var/full = 0 as null)
 	set name = "F12"
 	set hidden = 1
 
 	if(hud_used && client)
 		if(ishuman(src))
-			hud_used.show_hud() //Shows the next hud preset
+			hud_used.show_hud() // Shows the next hud preset
 			to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 		else
 			to_chat(usr, "<span class ='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>")

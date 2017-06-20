@@ -6,18 +6,18 @@
 
 /datum/artifact_effect/heat/New()
 	..()
-	effect_type = pick(6,7)
+	effect_type = pick(6, 7)
 
 /datum/artifact_effect/gasco2/New()
 	..()
 	effect = pick(EFFECT_TOUCH, EFFECT_AURA)
-	max_pressure = rand(115,1000)
+	max_pressure = rand(115, 1000)
 
 /datum/artifact_effect/gasco2/DoEffectTouch(mob/user)
 	if(holder)
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env)
-			env.carbon_dioxide += rand(2,15)
+			env.carbon_dioxide += rand(2, 15)
 
 /datum/artifact_effect/gasco2/DoEffectAura()
 	if(holder)

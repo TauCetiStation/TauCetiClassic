@@ -1,4 +1,4 @@
-//CONTAINS: Detective's Scanner
+// CONTAINS: Detective's Scanner
 
 
 /obj/item/device/detective_scanner
@@ -14,34 +14,34 @@
 
 /obj/item/device/detective_scanner/attackby(obj/item/weapon/f_card/W, mob/user)
 	..()
-	if (istype(W, /obj/item/weapon/f_card))
-		if (W.fingerprints)
+	if(istype(W, /obj/item/weapon/f_card))
+		if(W.fingerprints)
 			return
-		if (src.amount == 20)
+		if(src.amount == 20)
 			return
-		if (W.amount + src.amount > 20)
+		if(W.amount + src.amount > 20)
 			src.amount = 20
 			W.amount = W.amount + src.amount - 20
 		else
 			src.amount += W.amount
-			//W = null
+			// W = null
 			qdel(W)
 		add_fingerprint(user)
-		if (W)
+		if(W)
 			W.add_fingerprint(user)
 	return
 
 /obj/item/device/detective_scanner/attack(mob/living/carbon/human/M, mob/user)
-	if (!ishuman(M))
+	if(!ishuman(M))
 		to_chat(user, "\red [M] is not human and cannot have the fingerprints.")
-		flick("forensic0",src)
+		flick("forensic0", src)
 		return 0
-	if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
+	if(( !( istype(M.dna, /datum/dna) ) || M.gloves) )
 		to_chat(user, "\blue No fingerprints found on [M]")
-		flick("forensic0",src)
+		flick("forensic0", src)
 		return 0
 	else
-		if (src.amount < 1)
+		if(src.amount < 1)
 			to_chat(user, text("\blue Fingerprints scanned on [M]. Need more cards to print."))
 		else
 			src.amount--
@@ -53,7 +53,7 @@
 
 			to_chat(user, "\blue Done printing.")
 		to_chat(user, "\blue [M]'s Fingerprints: [md5(M.dna.uni_identity)]")
-	if ( !M.blood_DNA || !M.blood_DNA.len )
+	if( !M.blood_DNA || !M.blood_DNA.len )
 		to_chat(user, "\blue No blood found on [M]")
 		if(M.blood_DNA)
 			M.blood_DNA = null
@@ -68,39 +68,39 @@
 	if(!proximity) return
 	if(loc != user)
 		return
-	if(istype(A,/obj/machinery/computer/forensic_scanning)) //breaks shit.
+	if(istype(A, /obj/machinery/computer/forensic_scanning)) // breaks shit.
 		return
 
-	if(istype(A,/obj/item/weapon/f_card))
+	if(istype(A, /obj/item/weapon/f_card))
 		to_chat(user, "The scanner displays on the screen: \"ERROR 43: Object on Excluded Object List.\"")
-		flick("forensic0",src)
+		flick("forensic0", src)
 		return
 
 	add_fingerprint(user)
 
-	//Special case for blood splatters, runes and gibs.
-	if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable/blood/gibs))
+	// Special case for blood splatters, runes and gibs.
+	if(istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable/blood/gibs))
 		if(!isnull(A.blood_DNA))
 			for(var/blood in A.blood_DNA)
 				to_chat(user, "\blue Blood type: [A.blood_DNA[blood]]\nDNA: [blood]")
-				flick("forensic2",src)
+				flick("forensic2", src)
 		return
 
-	//General
-	if ((!A.fingerprints || !A.fingerprints.len) && !A.suit_fibers && !A.blood_DNA)
-		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
+	// General
+	if((!A.fingerprints || !A.fingerprints.len) && !A.suit_fibers && !A.blood_DNA)
+		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]",\
 		"\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!",\
 		"You hear a faint hum of electrical equipment.")
-		flick("forensic0",src)
+		flick("forensic0", src)
 		return 0
 
 	if(add_data(A))
 		to_chat(user, "\blue Object already in internal memory. Consolidating data...")
-		flick("forensic2",src)
+		flick("forensic2", src)
 		return
 
 
-	//PRINTS
+	// PRINTS
 	if(!A.fingerprints || !A.fingerprints.len)
 		if(A.fingerprints)
 			A.fingerprints = null
@@ -118,51 +118,51 @@
 			for(var/i in complete_prints)
 				to_chat(user, "\blue &nbsp;&nbsp;&nbsp;&nbsp;[i]")
 
-	//FIBERS
+	// FIBERS
 	if(A.suit_fibers)
 		to_chat(user, "\blue Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.")
-		flick("forensic2",src)
+		flick("forensic2", src)
 
-	//Blood
-	if (A.blood_DNA)
+	// Blood
+	if(A.blood_DNA)
 		to_chat(user, "\blue Blood found on [A]. Analysing...")
 		spawn(15)
 			for(var/blood in A.blood_DNA)
 				to_chat(user, "Blood type: \red [A.blood_DNA[blood]] &emsp; \black DNA: \red [blood]")
 	if(prob(80) || !A.fingerprints)
-		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
+		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]",\
 		"You finish scanning \the [A].",\
 		"You hear a faint hum of electrical equipment.")
-		flick("forensic2",src)
+		flick("forensic2", src)
 		return 0
 	else
-		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]\n[user.gender == MALE ? "He" : "She"] seems to perk up slightly at the readout." ,\
+		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]\n[user.gender == MALE ? "He" : "She"] seems to perk up slightly at the readout.",\
 		"The results of the scan pique your interest.",\
 		"You hear a faint hum of electrical equipment, and someone making a thoughtful noise.")
-		flick("forensic2",src)
+		flick("forensic2", src)
 		return 0
 	return
 
 /obj/item/device/detective_scanner/proc/add_data(atom/A)
-	//I love associative lists.
+	// I love associative lists.
 	var/list/data_entry = stored["\ref [A]"]
-	if(islist(data_entry)) //Yay, it was already stored!
-		//Merge the fingerprints.
+	if(islist(data_entry)) // Yay, it was already stored!
+		// Merge the fingerprints.
 		var/list/data_prints = data_entry[1]
 		for(var/print in A.fingerprints)
 			var/merged_print = data_prints[print]
 			if(!merged_print)
 				data_prints[print] = A.fingerprints[print]
 			else
-				data_prints[print] = stringmerge(data_prints[print],A.fingerprints[print])
+				data_prints[print] = stringmerge(data_prints[print], A.fingerprints[print])
 
-		//Now the fibers
+		// Now the fibers
 		var/list/fibers = data_entry[2]
 		if(!fibers)
 			fibers = list()
 		if(A.suit_fibers && A.suit_fibers.len)
-			for(var/j = 1, j <= A.suit_fibers.len, j++)	//Fibers~~~
-				if(!fibers.Find(A.suit_fibers[j]))	//It isn't!  Add!
+			for(var/j = 1, j <= A.suit_fibers.len, j++)	// Fibers~~~
+				if(!fibers.Find(A.suit_fibers[j]))	// It isn't!  Add!
 					fibers += A.suit_fibers[j]
 		var/list/blood = data_entry[3]
 		if(!blood)
@@ -172,7 +172,7 @@
 				if(!blood[main_blood])
 					blood[main_blood] = A.blood_DNA[blood]
 		return 1
-	var/list/sum_list[4]	//Pack it back up!
+	var/list/sum_list[4]	// Pack it back up!
 	sum_list[1] = A.fingerprints ? A.fingerprints.Copy() : null
 	sum_list[2] = A.suit_fibers ? A.suit_fibers.Copy() : null
 	sum_list[3] = A.blood_DNA ? A.blood_DNA.Copy() : null

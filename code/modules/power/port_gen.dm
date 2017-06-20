@@ -1,9 +1,9 @@
-//Previous code been here forever, adding new framework for portable generators
+// Previous code been here forever, adding new framework for portable generators
 
 
-//Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
+// Baseline portable generator. Has all the default handling. Not intended to be used on it's own(since it generates unlimited power).
 /obj/machinery/power/port_gen
-	name = "Placeholder Generator"	//seriously, don't use this. It can't be anchored without VV magic.
+	name = "Placeholder Generator"	// seriously, don't use this. It can't be anchored without VV magic.
 	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/power.dmi'
 	var/icon_state_on = "portgen1"
@@ -18,10 +18,10 @@
 	var/power_output = 1
 	var/consumption = 0
 
-/obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
+/obj/machinery/power/port_gen/proc/HasFuel() // Placeholder for fuel check.
 	return 1
 
-/obj/machinery/power/port_gen/proc/UseFuel() //Placeholder for fuel use.
+/obj/machinery/power/port_gen/proc/UseFuel() // Placeholder for fuel use.
 	return
 
 /obj/machinery/power/port_gen/proc/DropFuel()
@@ -51,7 +51,7 @@
 	..()
 	to_chat(user, "<span class='notice'>The generator is [active ? "on" : "off"].</span>")
 
-//A power generator that runs on solid plasma sheets.
+// A power generator that runs on solid plasma sheets.
 /obj/machinery/power/port_gen/pacman
 	name = "P.A.C.M.A.N.-type Portable Generator"
 	var/sheets = 0
@@ -124,33 +124,33 @@
 	sheet_left -= temp
 	sheets -= round(needed_sheets)
 	needed_sheets -= round(needed_sheets)
-	if (sheet_left <= 0 && sheets > 0)
+	if(sheet_left <= 0 && sheets > 0)
 		sheet_left = 1 - needed_sheets
 		sheets--
 
 	var/lower_limit = 56 + power_output * 10
 	var/upper_limit = 76 + power_output * 10
 	var/bias = 0
-	if (power_output > 4)
+	if(power_output > 4)
 		upper_limit = 400
 		bias = power_output - consumption * (4 - consumption)
-	if (heat < lower_limit)
+	if(heat < lower_limit)
 		heat += 4 - consumption
 	else
 		heat += rand(-7 + bias, 7 + bias)
-		if (heat < lower_limit)
+		if(heat < lower_limit)
 			heat = lower_limit
-		if (heat > upper_limit)
+		if(heat > upper_limit)
 			heat = upper_limit
 
-	if (heat > 300)
+	if(heat > 300)
 		overheat()
 		qdel(src)
 	return
 
 /obj/machinery/power/port_gen/pacman/handleInactive()
 
-	if (heat > 0)
+	if(heat > 0)
 		heat = max(heat - 2, 0)
 		src.updateDialog()
 
@@ -169,7 +169,7 @@
 		addstack.use(amount)
 		updateUsrDialog()
 		return
-	else if (istype(O, /obj/item/weapon/card/emag))
+	else if(istype(O, /obj/item/weapon/card/emag))
 		emagged = 1
 		emp_act(1)
 	else if(!active)
@@ -202,7 +202,7 @@
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
 	..()
-	if (!anchored)
+	if(!anchored)
 		return
 
 	interact(user)
@@ -214,8 +214,8 @@
 	interact(user)
 
 /obj/machinery/power/port_gen/pacman/interact(mob/user)
-	if (get_dist(src, user) > 1 )
-		if (!istype(user, /mob/living/silicon/ai))
+	if(get_dist(src, user) > 1 )
+		if(!istype(user, /mob/living/silicon/ai))
 			user.unset_machine(src)
 			user << browse(null, "window=port_gen")
 			return
@@ -223,7 +223,7 @@
 	user.set_machine(src)
 
 	var/dat = text("<b>[name]</b><br>")
-	if (active)
+	if(active)
 		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
 	else
 		dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
@@ -241,7 +241,7 @@
 	return TRUE
 
 /obj/machinery/power/port_gen/pacman/Topic(href, href_list)
-	if (href_list["action"] == "close")
+	if(href_list["action"] == "close")
 		usr << browse(null, "window=port_gen")
 		usr.unset_machine(src)
 		return FALSE
@@ -256,17 +256,17 @@
 				active = 1
 				icon_state = icon_state_on
 		if(href_list["action"] == "disable")
-			if (active)
+			if(active)
 				active = 0
 				icon_state = initial(icon_state)
 		if(href_list["action"] == "eject")
 			if(!active)
 				DropFuel()
 		if(href_list["action"] == "lower_power")
-			if (power_output > 1)
+			if(power_output > 1)
 				power_output--
-		if (href_list["action"] == "higher_power")
-			if (power_output < 4 || emagged)
+		if(href_list["action"] == "higher_power")
+			if(power_output < 4 || emagged)
 				power_output++
 
 	src.updateUsrDialog()

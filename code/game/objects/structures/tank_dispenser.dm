@@ -7,7 +7,7 @@
 	anchored = 1.0
 	var/oxygentanks = 10
 	var/phorontanks = 10
-	var/list/oxytanks = list()	//sorry for the similar var names
+	var/list/oxytanks = list()	// sorry for the similar var names
 	var/list/platanks = list()
 
 

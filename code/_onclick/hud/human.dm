@@ -2,7 +2,7 @@
 
 	src.adding = list()
 	src.other = list()
-	src.hotkeybuttons = list() //These can be disabled for hotkey usersx
+	src.hotkeybuttons = list() // These can be disabled for hotkey usersx
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
@@ -17,12 +17,12 @@
 	src.adding += using
 	action_intent = using
 
-//intent small hud objects
+// intent small hud objects
 	var/icon/ico
 
 	ico = new(ui_style, "black")
-	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
-	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
+	ico.MapColors(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255, 255, 255, 1), 1, ico.Height()/2, ico.Width()/2, ico.Height())
 	using = new /obj/screen( src )
 	using.name = "help"
 	using.icon = ico
@@ -33,8 +33,8 @@
 	help_intent = using
 
 	ico = new(ui_style, "black")
-	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
-	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
+	ico.MapColors(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255, 255, 255, 1), ico.Width()/2, ico.Height()/2, ico.Width(), ico.Height())
 	using = new /obj/screen( src )
 	using.name = "disarm"
 	using.icon = ico
@@ -45,8 +45,8 @@
 	disarm_intent = using
 
 	ico = new(ui_style, "black")
-	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
-	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
+	ico.MapColors(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255, 255, 255, 1), ico.Width()/2, 1, ico.Width(), ico.Height()/2)
 	using = new /obj/screen( src )
 	using.name = "grab"
 	using.icon = ico
@@ -57,8 +57,8 @@
 	grab_intent = using
 
 	ico = new(ui_style, "black")
-	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
-	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
+	ico.MapColors(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255, 255, 255, 1), 1, 1, ico.Width()/2, ico.Height()/2)
 	using = new /obj/screen( src )
 	using.name = "harm"
 	using.icon = ico
@@ -68,7 +68,7 @@
 	src.adding += using
 	hurt_intent = using
 
-//end intent small hud objects
+// end intent small hud objects
 
 	using = new /obj/screen()
 	using.name = "mov_intent"
@@ -121,7 +121,7 @@
 	inv_box.name = "r_hand"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hand_r_inactive"
-	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
+	if(mymob && !mymob.hand)	// This being 0 or null means the right hand is in use
 		inv_box.icon_state = "hand_r_active"
 	inv_box.screen_loc = ui_rhand
 	inv_box.slot_id = slot_r_hand
@@ -137,7 +137,7 @@
 	inv_box.name = "l_hand"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hand_l_inactive"
-	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
+	if(mymob && mymob.hand)	// This being 1 means the left hand is in use
 		inv_box.icon_state = "hand_l_active"
 	inv_box.screen_loc = ui_lhand
 	inv_box.slot_id = slot_l_hand
@@ -417,22 +417,22 @@
 	mymob.zone_sel.overlays.Cut()
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
-	//Handle the gun settings buttons
+	// Handle the gun settings buttons
 	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
-	if (mymob.client)
-		if (mymob.client.gun_mode) // If in aim mode, correct the sprite
+	if(mymob.client)
+		if(mymob.client.gun_mode) // If in aim mode, correct the sprite
 			mymob.gun_setting_icon.icon_state = "gun1"
 	for(var/obj/item/weapon/gun/G in mymob) // If targeting someone, display other buttons
-		if (G.target)
+		if(G.target)
 			mymob.item_use_icon = new /obj/screen/gun/item(null)
-			if (mymob.client.target_can_click)
+			if(mymob.client.target_can_click)
 				mymob.item_use_icon.icon_state = "gun0"
 			src.adding += mymob.item_use_icon
 			mymob.gun_move_icon = new /obj/screen/gun/move(null)
-			if (mymob.client.target_can_move)
+			if(mymob.client.target_can_move)
 				mymob.gun_move_icon.icon_state = "gun0"
 				mymob.gun_run_icon = new /obj/screen/gun/run(null)
-				if (mymob.client.target_can_run)
+				if(mymob.client.target_can_run)
 					mymob.gun_run_icon.icon_state = "gun0"
 				src.adding += mymob.gun_run_icon
 			src.adding += mymob.gun_move_icon

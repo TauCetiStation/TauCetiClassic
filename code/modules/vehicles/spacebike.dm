@@ -13,7 +13,7 @@
 	brute_dam_coeff = 0.5
 	var/protection_percent = 60
 
-	var/land_speed = 10 //if 0 it can't go on turf
+	var/land_speed = 10 // if 0 it can't go on turf
 	var/space_speed = 1
 	var/bike_icon = "bike"
 	var/obj/item/weapon/key/spacebike/key
@@ -39,7 +39,7 @@
 	ion = new /datum/effect/effect/system/ion_trail_follow()
 	ion.set_up(src)
 	turn_off()
-	id = rand(1,1000)
+	id = rand(1, 1000)
 	key = new(src)
 	key.id = id
 	overlays += image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1)
@@ -102,14 +102,14 @@
 	if(istype(loc, /turf/space) && isliving(load) && isliving(A))
 		var/mob/living/L = A
 		var/mob/living/Driver = load
-		if(istype(L,/mob/living/silicon/robot))
-			if(istype(L,/mob/living/silicon/robot/drone))
+		if(istype(L, /mob/living/silicon/robot))
+			if(istype(L, /mob/living/silicon/robot/drone))
 				visible_message("<span class='danger'>[Driver] drives over [L]!</span>")
 				L.gib()
 			else
 				unload(Driver)
 				visible_message("<span class='danger'>[Driver] crushes into [L]!</span>")
-				Driver.apply_effects(8,5)
+				Driver.apply_effects(8, 5)
 				Driver.lying = 1
 		else
 			if(Driver == L)
@@ -118,13 +118,13 @@
 
 			Driver.attack_log += text("\[[time_stamp()]\] <font color='red'>drives over [L.name] ([L.ckey])</font>")
 			L.attack_log += text("\[[time_stamp()]\] <font color='orange'>was driven over by [Driver.name] ([Driver.ckey])</font>")
-			msg_admin_attack("[key_name(Driver)] drives over [key_name(L)] with space bike (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+			msg_admin_attack("[key_name(Driver)] drives over [key_name(L)] with space bike(<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 			L.stop_pulling()
-			L.apply_effects(8,5)
+			L.apply_effects(8, 5)
 			L.lying = 1
-			var/damage = rand(5,15)
+			var/damage = rand(5, 15)
 			L.apply_damage(2*damage, BRUTE, BP_HEAD)
 			L.apply_damage(2*damage, BRUTE, BP_CHEST)
 			L.apply_damage(0.5*damage, BRUTE, BP_L_LEG)
@@ -138,8 +138,8 @@
 
 
 /obj/vehicle/space/spacebike/Move(var/turf/destination)
-	//these things like space, not turf. Dragging shouldn't weigh you down.
-	if(istype(destination,/turf/space) || pulledby)
+	// these things like space, not turf. Dragging shouldn't weigh you down.
+	if(istype(destination, /turf/space) || pulledby)
 		if(!space_speed)
 			return 0
 		move_delay = space_speed + slow_cooef
@@ -228,7 +228,7 @@
 	if(kickstand)
 		src.visible_message("[usr.name] puts up \the [src]'s kickstand.", "<span class='notice'>You put up \the [src]'s kickstand.</span>")
 	else
-		if(istype(src.loc,/turf/space))
+		if(istype(src.loc, /turf/space))
 			to_chat(usr, "<span class='warning'>You don't think kickstands work in space...</span>")
 			return
 		src.visible_message("[usr.name] puts down \the [src]'s kickstand.", "<span class='notice'>You put down \the [src]'s kickstand.</span>")

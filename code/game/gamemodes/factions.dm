@@ -7,7 +7,7 @@
 
 	var/list/restricted_species = list() // only members of these species can be recruited.
 	var/list/members = list() 	// a list of mind datums that belong to this faction
-	var/max_op = 0		// the maximum number of members a faction can have (0 for no max)
+	var/max_op = 0		// the maximum number of members a faction can have(0 for no max)
 
 // Factions, members of the syndicate coalition:
 
@@ -145,17 +145,17 @@ Devices and Tools;
 /obj/item/clothing/glasses/thermal/syndi:3:Thermal Imaging Glasses;
 /obj/item/device/encryptionkey/binary:3:Binary Translator Key;
 /obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;
-/obj/item/weapon/plastique:2:C-4 (Destroys walls);
-/obj/item/device/powersink:5:Powersink (DANGER!);
-/obj/item/device/radio/beacon/syndicate:7:Singularity Beacon (DANGER!);
+/obj/item/weapon/plastique:2:C-4(Destroys walls);
+/obj/item/device/powersink:5:Powersink(DANGER!);
+/obj/item/device/radio/beacon/syndicate:7:Singularity Beacon(DANGER!);
 /obj/item/weapon/circuitboard/teleporter:20:Teleporter Circuit Board;
 Whitespace:Seperator;
 Implants;
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom:3:Freedom Implant;
-/obj/item/weapon/storage/box/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
+/obj/item/weapon/storage/box/syndie_kit/imp_uplink:10:Uplink Implant(Contains 5 Telecrystals);
 Whitespace:Seperator;
 (Pointless) Badassery;
-/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
+/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS(Useless Balloon);"}
 
 	// Friendly to everyone. (with Tiger Cooperative too, only because they are a member of the coalition. This is the only reason why the Tiger Cooperative are even allowed in the coalition)
 
@@ -183,7 +183,7 @@ Whitespace:Seperator;
 
 	alliances = list("Gorlex Marauders")
 	friendly_identification = 2
-	operative_notes = "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives. We encourage humorous terrorism against Nanotrasen; we like to see our operatives creatively kill people while getting the job done."
+	operative_notes = "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co(but try not to rat them out), as they might have been assigned opposing objectives. We encourage humorous terrorism against Nanotrasen; we like to see our operatives creatively kill people while getting the job done."
 
 	// Neutral to everyone, friendly to Marauders
 

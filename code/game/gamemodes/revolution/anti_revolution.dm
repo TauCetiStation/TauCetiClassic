@@ -21,14 +21,14 @@
 	var/list/datum/mind/demote_targets = list()
 
 ///////////////////////////
-//Announces the game type//
+// Announces the game type//
 ///////////////////////////
 /datum/game_mode/anti_revolution/announce()
 	to_chat(world, "<B>The current game mode is - Anti-Revolution!</B>")
 	to_chat(world, "<B>Looks like CentComm has given a few new orders..</B>")
 
 ///////////////////////////////////////////////////////////////////////////////
-//Gets the round setup, cancelling if there's not enough players at the start//
+// Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/anti_revolution/pre_setup()
 	for(var/mob/new_player/player in world) if(player.mind)
@@ -94,7 +94,7 @@
 
 /datum/game_mode/proc/greet_head(datum/mind/head_mind, you_are=1)
 	var/obj_count = 1
-	if (you_are)
+	if(you_are)
 		to_chat(head_mind.current, "\blue It looks like this shift CentComm has some special orders for you.. check your objectives.")
 		to_chat(head_mind.current, "\blue Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse.")
 	for(var/datum/objective/objective in head_mind.objectives)
@@ -105,7 +105,7 @@
 	head_mind.current.verbs += /mob/proc/ResignFromHeadPosition
 
 //////////////////////////////////////
-//Checks if the revs have won or not//
+// Checks if the revs have won or not//
 //////////////////////////////////////
 /datum/game_mode/anti_revolution/check_win()
 	if(check_head_victory())
@@ -115,7 +115,7 @@
 	return
 
 ///////////////////////////////
-//Checks if the round is over//
+// Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/anti_revolution/check_finished()
 	if(finished != 0)
@@ -125,7 +125,7 @@
 
 
 //////////////////////////
-//Checks for crew victory//
+// Checks for crew victory//
 //////////////////////////
 /datum/game_mode/anti_revolution/proc/check_crew_victory()
 	for(var/datum/mind/head_mind in heads)
@@ -136,7 +136,7 @@
 	return 1
 
 /////////////////////////////
-//Checks for a head victory//
+// Checks for a head victory//
 /////////////////////////////
 /datum/game_mode/anti_revolution/proc/check_head_victory()
 	for(var/datum/mind/head_mind in heads)
@@ -176,15 +176,15 @@
 
 	to_chat(world, "<FONT size = 2><B>Their objectives were: </B></FONT>")
 	for(var/datum/mind/head_mind in heads)
-		if(head_mind.objectives.len)//If the traitor had no objectives, don't need to process this.
+		if(head_mind.objectives.len)// If the traitor had no objectives, don't need to process this.
 			var/count = 1
 			for(var/datum/objective/objective in head_mind.objectives)
 				if(objective.check_completion())
 					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-					feedback_add_details("head_objective","[objective.type]|SUCCESS")
+					feedback_add_details("head_objective", "[objective.type]|SUCCESS")
 				else
 					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-					feedback_add_details("head_objective","[objective.type]|FAIL")
+					feedback_add_details("head_objective", "[objective.type]|FAIL")
 				count++
 		break // just print once
 	return 1

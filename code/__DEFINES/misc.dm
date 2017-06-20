@@ -1,70 +1,70 @@
-//gets all subtypes of type
+// gets all subtypes of type
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
-//number of deciseconds in a day
+// number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
-//singularity defines
+// singularity defines
 #define STAGE_ONE	1
 #define STAGE_TWO	3
 #define STAGE_THREE	5
 #define STAGE_FOUR	7
 #define STAGE_FIVE	9
-#define STAGE_SIX	11 //From supermatter shard
+#define STAGE_SIX	11 // From supermatter shard
 
-//Ghost orbit types:
+// Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
 #define GHOST_ORBIT_TRIANGLE	"triangle"
 #define GHOST_ORBIT_HEXAGON		"hexagon"
 #define GHOST_ORBIT_SQUARE		"square"
 #define GHOST_ORBIT_PENTAGON	"pentagon"
 
-//zlevel defines, can be overriden for different maps in the appropriate _maps file.
+// zlevel defines, can be overriden for different maps in the appropriate _maps file.
 #define ZLEVEL_STATION  	1
-#define ZLEVEL_CENTCOMM 	2 //EI NATH!!
+#define ZLEVEL_CENTCOMM 	2 // EI NATH!!
 #define ZLEVEL_CENTCOM  	2
 #define ZLEVEL_TELECOMMS	3
 #define ZLEVEL_DERELICT		4
 #define ZLEVEL_ASTEROID 	5
 #define ZLEVEL_EMPTY	 	6
 
-#define TRANSITIONEDGE		7 //Distance from edge to move to another z-level
+#define TRANSITIONEDGE		7 // Distance from edge to move to another z-level
 
-#define ENGINE_EJECT_Z		3 //Unused now
+#define ENGINE_EJECT_Z		3 // Unused now
 
-//HUD styles. Please ensure HUD_VERSIONS is the same as the maximum index. Index order defines how they are cycled in F12.
+// HUD styles. Please ensure HUD_VERSIONS is the same as the maximum index. Index order defines how they are cycled in F12.
 #define HUD_STYLE_STANDARD 1
 #define HUD_STYLE_REDUCED 2
 #define HUD_STYLE_NOHUD 3
 
-#define HUD_VERSIONS 3	//used in show_hud()
+#define HUD_VERSIONS 3	// used in show_hud()
 //1 = standard hud
-//2 = reduced hud (just hands and intent switcher)
-//3 = no hud (for screenshots)
+//2 = reduced hud(just hands and intent switcher)
+//3 = no hud(for screenshots)
 
-//ticker.current_state values
+// ticker.current_state values
 #define GAME_STATE_STARTUP		0
 #define GAME_STATE_PREGAME		1
 #define GAME_STATE_SETTING_UP	2
 #define GAME_STATE_PLAYING		3
 #define GAME_STATE_FINISHED		4
 
-//Object specific defines
-#define CANDLE_LUM 3 //For how bright candles are
+// Object specific defines
+#define CANDLE_LUM 3 // For how bright candles are
 
-//Security levels
+// Security levels
 #define SEC_LEVEL_GREEN	0
 #define SEC_LEVEL_BLUE	1
 #define SEC_LEVEL_RED	2
 #define SEC_LEVEL_DELTA	3
 
-#define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
+#define ROUNDSTART_LOGOUT_REPORT_TIME 6000 // Amount of time(in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10
 
 #define DOOR_LAYER          2.82
-#define DOOR_CLOSED_MOD     0.3 //how much the layer is increased when the door is closed
+#define DOOR_CLOSED_MOD     0.3 // how much the layer is increased when the door is closed
 
 #define PODDOOR_CLOSED_MOD  0.3
 
@@ -82,9 +82,9 @@
 #define FIREDOOR_ALERT_COLD 2
 
 
-//Germs and infection
-#define GERM_LEVEL_AMBIENT		110		//maximum germ level you can reach by standing still
-#define GERM_LEVEL_MOVE_CAP		200		//maximum germ level you can reach by running around
+// Germs and infection
+#define GERM_LEVEL_AMBIENT		110		// maximum germ level you can reach by standing still
+#define GERM_LEVEL_MOVE_CAP		200		// maximum germ level you can reach by running around
 
 #define INFECTION_LEVEL_ONE		100
 #define INFECTION_LEVEL_TWO		500
@@ -95,12 +95,12 @@
 #define INFECTION_LEVEL_TWO_PLUS	INFECTION_LEVEL_TWO + ( (INFECTION_LEVEL_THREE - INFECTION_LEVEL_TWO) * 1/3 )
 #define INFECTION_LEVEL_TWO_PLUS_PLUS	INFECTION_LEVEL_TWO + ( (INFECTION_LEVEL_THREE - INFECTION_LEVEL_TWO) * 2/3 )
 
-//metal, glass, rod stacks
+// metal, glass, rod stacks
 #define MAX_STACK_AMOUNT_METAL	50
 #define MAX_STACK_AMOUNT_GLASS	50
 #define MAX_STACK_AMOUNT_RODS	60
 
-//some colors
+// some colors
 #define COLOR_RED 		"#FF0000"
 #define COLOR_GREEN 	"#00FF00"
 #define COLOR_BLUE 		"#0000FF"
@@ -111,13 +111,13 @@
 #define COLOR_WHITE 	"#FFFFFF"
 #define COLOR_GRAY      "#808080"
 
-//some arbitrary defines to be used by self-pruning global lists. (see master_controller)
-#define PROCESS_KILL 26	//Used to trigger removal from a processing list
+// some arbitrary defines to be used by self-pruning global lists. (see master_controller)
+#define PROCESS_KILL 26	// Used to trigger removal from a processing list
 
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
-//Flags for zone sleeping
+// Flags for zone sleeping
 #define ZONE_ACTIVE 	1
 #define ZONE_SLEEPING 	0
 
@@ -127,13 +127,13 @@
 	for(type in view(range, dview_mob))
 #define END_FOR_DVIEW dview_mob.loc = null
 
-//defines
+// defines
 #define RESIZE_DEFAULT_SIZE 1
 
-//Just space
+// Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
-//Material defines
+// Material defines
 #define MAT_METAL		"$metal"
 #define MAT_GLASS		"$glass"
 #define MAT_SILVER		"$silver"
@@ -155,10 +155,10 @@
 #define COIN_PLATINUM "Platunum coin"
 
 #define MINERAL_MATERIAL_AMOUNT 2000
-//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
+// The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 
 #define APC_MIN_TO_MALDF_DECLARE 3
-//if malf apcs < than this, makf can't begin the takeover attempt
+// if malf apcs < than this, makf can't begin the takeover attempt
 
 // Maploader bounds indices
 #define MAP_MINX 1
@@ -184,13 +184,13 @@
 #define ABOVE_NORMAL_TURF_LAYER 2.08
 #define BELOW_MOB_LAYER 3.7
 
-//teleport checks
+// teleport checks
 #define TELE_CHECK_NONE 0
 #define TELE_CHECK_TURFS 1
 #define TELE_CHECK_ALL 2
 
-//get_turf(): Returns the turf that contains the atom.
-//Example: A fork inside a box inside a locker will return the turf the locker is standing on.
+// get_turf(): Returns the turf that contains the atom.
+// Example: A fork inside a box inside a locker will return the turf the locker is standing on.
 #define get_turf(A) (get_step(A, 0))
 
 // Door assembly states
@@ -198,7 +198,7 @@
 #define ASSEMBLY_WIRED         1
 #define ASSEMBLY_NEAR_FINISHED 2
 
-//Wet floor states/severity
+// Wet floor states/severity
 #define WATER_FLOOR 1
 #define LUBE_FLOOR  2
 
@@ -207,5 +207,5 @@
 
 #define COORD(A) "([A.x],[A.y],[A.z])"
 
-//Error handler defines
+// Error handler defines
 #define ERROR_USEFUL_LEN 2

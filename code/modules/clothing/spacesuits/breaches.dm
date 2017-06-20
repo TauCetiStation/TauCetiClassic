@@ -1,6 +1,6 @@
-//A 'wound' system for space suits.
-//Breaches greatly increase the amount of lost gas and decrease the armour rating of the suit.
-//They can be healed with plastic or metal sheeting.
+// A 'wound' system for space suits.
+// Breaches greatly increase the amount of lost gas and decrease the armour rating of the suit.
+// They can be healed with plastic or metal sheeting.
 
 /datum/breach
 	var/class = 0                           // Size. Lower is smaller.
@@ -23,7 +23,7 @@
 	..()
 	base_name = "[name]"
 
-//Some simple descriptors for breaches. Global because lazy, TODO: work out a better way to do this.
+// Some simple descriptors for breaches. Global because lazy, TODO: work out a better way to do this.
 
 var/global/list/breach_brute_descriptors = list(
 	"tiny puncture",
@@ -43,15 +43,15 @@ var/global/list/breach_burn_descriptors = list(
 
 /datum/breach/proc/update_descriptor()
 
-	//Sanity...
-	class = max(1,min(class,5))
-	//Apply the correct descriptor.
+	// Sanity...
+	class = max(1, min(class, 5))
+	// Apply the correct descriptor.
 	if(damtype == BURN)
 		descriptor = breach_burn_descriptors[class]
 	else if(damtype == BRUTE)
 		descriptor = breach_brute_descriptors[class]
 
-//Repair a certain amount of brute or burn damage to the suit.
+// Repair a certain amount of brute or burn damage to the suit.
 /obj/item/clothing/suit/space/proc/repair_breaches(damtype, amount, mob/user)
 
 	if(!can_breach || !breaches || !breaches.len || !damage)
@@ -92,7 +92,7 @@ var/global/list/breach_burn_descriptors = list(
 	if(!breaches)
 		breaches = list()
 
-	if(damage > 25) return //We don't need to keep tracking it when it's at 250% pressure loss, really.
+	if(damage > 25) return // We don't need to keep tracking it when it's at 250% pressure loss, really.
 
 	if(!loc) return
 	var/turf/T = get_turf(src)
@@ -100,13 +100,13 @@ var/global/list/breach_burn_descriptors = list(
 
 	amount = amount * src.resilience
 
-	//Increase existing breaches.
+	// Increase existing breaches.
 	for(var/datum/breach/existing in breaches)
 
 		if(existing.damtype != damtype)
 			continue
 
-		if (existing.class < 5)
+		if(existing.class < 5)
 			var/needs = 5 - existing.class
 			if(amount < needs)
 				existing.class += amount
@@ -120,12 +120,12 @@ var/global/list/breach_burn_descriptors = list(
 			else if(existing.damtype == BURN)
 				T.visible_message("<span class = 'warning'>\The [existing.descriptor] on [src] widens!</span>")
 
-	if (amount)
-		//Spawn a new breach.
+	if(amount)
+		// Spawn a new breach.
 		var/datum/breach/B = new()
 		breaches += B
 
-		B.class = min(amount,5)
+		B.class = min(amount, 5)
 
 		B.damtype = damtype
 		B.update_descriptor()
@@ -138,7 +138,7 @@ var/global/list/breach_burn_descriptors = list(
 
 	calc_breach_damage()
 
-//Calculates the current extent of the damage to the suit.
+// Calculates the current extent of the damage to the suit.
 /obj/item/clothing/suit/space/proc/calc_breach_damage()
 
 	damage = 0
@@ -172,12 +172,12 @@ var/global/list/breach_burn_descriptors = list(
 
 	return damage
 
-//Handles repairs (and also upgrades).
+// Handles repairs(and also upgrades).
 
 /obj/item/clothing/suit/space/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/stack/sheet/mineral/plastic) || istype(W,/obj/item/stack/sheet/metal))
+	if(istype(W, /obj/item/stack/sheet/mineral/plastic) || istype(W, /obj/item/stack/sheet/metal))
 
-		if(istype(src.loc,/mob/living))
+		if(istype(src.loc, /mob/living))
 			to_chat(user, "\red How do you intend to patch a hardsuit while someone is wearing it?")
 			return
 
@@ -188,19 +188,19 @@ var/global/list/breach_burn_descriptors = list(
 		var/obj/item/stack/sheet/P = W
 		if(P.amount < 3)
 			P.use(P.amount)
-			repair_breaches(BURN, ( istype(P,/obj/item/stack/sheet/mineral/plastic) ? P.amount : (P.amount*2) ), user)
+			repair_breaches(BURN, ( istype(P, /obj/item/stack/sheet/mineral/plastic) ? P.amount : (P.amount*2) ), user)
 		else
 			P.use(3)
-			repair_breaches(BURN, ( istype(P,/obj/item/stack/sheet/mineral/plastic) ? 3 : 5), user)
+			repair_breaches(BURN, ( istype(P, /obj/item/stack/sheet/mineral/plastic) ? 3 : 5), user)
 		return
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
 
-		if(istype(src.loc,/mob/living))
+		if(istype(src.loc, /mob/living))
 			to_chat(user, "\red How do you intend to patch a hardsuit while someone is wearing it?")
 			return
 
-		if (!damage || ! brute_damage)
+		if(!damage || ! brute_damage)
 			to_chat(user, "There is no structural damage on \the [src] to repair.")
 			return
 

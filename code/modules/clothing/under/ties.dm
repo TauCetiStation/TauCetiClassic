@@ -3,18 +3,18 @@
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/ties.dmi'
 	icon_state = "bluetie"
-	item_state = ""	//no inhands
+	item_state = ""	// no inhands
 	item_color = "bluetie"
 	slot_flags = 0
 	w_class = 2.0
-	var/obj/item/clothing/under/has_suit = null		//the suit the tie may be attached to
-	var/image/inv_overlay = null	//overlay used when attached to clothing.
+	var/obj/item/clothing/under/has_suit = null		// the suit the tie may be attached to
+	var/image/inv_overlay = null	// overlay used when attached to clothing.
 
 /obj/item/clothing/tie/New()
 	..()
 	inv_overlay = image("icon" = 'icons/obj/clothing/ties_overlay.dmi', "icon_state" = "[item_color? "[item_color]" : "[icon_state]"]")
 
-//when user attached an accessory to S
+// when user attached an accessory to S
 /obj/item/clothing/tie/proc/on_attached(obj/item/clothing/under/S, mob/user)
 	if(!istype(S))
 		return
@@ -33,15 +33,15 @@
 	usr.put_in_hands(src)
 	src.add_fingerprint(user)
 
-//default attackby behaviour
+// default attackby behaviour
 /obj/item/clothing/tie/attackby(obj/item/I, mob/user)
 	..()
 
-//default attack_hand behaviour
+// default attack_hand behaviour
 /obj/item/clothing/tie/attack_hand(mob/user)
 	if(has_suit)
 		has_suit.remove_accessory(user)
-		return	//we aren't an object on the ground so don't call parent
+		return	// we aren't an object on the ground so don't call parent
 	..()
 
 /obj/item/clothing/tie/blue
@@ -97,10 +97,10 @@
 
 				user.visible_message("[user] places [src] against [M]'s [target_zone] and listens attentively.", "You place [src] against [their] [target_zone]. You [sound_strength] [sound].")
 				return
-	return ..(M,user)
+	return ..(M, user)
 
 
-//Medals
+// Medals
 /obj/item/clothing/tie/medal
 	name = "bronze medal"
 	desc = "A bronze medal."
@@ -149,7 +149,7 @@
 	name = "medal of exceptional heroism"
 	desc = "An extremely rare golden medal awarded only by CentComm. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
 
-//Armbands
+// Armbands
 /obj/item/clothing/tie/armband
 	name = "red armband"
 	desc = "A fancy red armband!"
@@ -192,7 +192,7 @@
 	icon_state = "medgreen"
 	item_color = "medgreen"
 
-//holsters
+// holsters
 /obj/item/clothing/tie/holster
 	name = "shoulder holster"
 	desc = "A handgun holster."
@@ -200,7 +200,7 @@
 	item_color = "holster"
 	var/obj/item/weapon/gun/holstered = null
 
-//subtypes can override this to specify what can be holstered
+// subtypes can override this to specify what can be holstered
 /obj/item/clothing/tie/holster/proc/can_holster(obj/item/weapon/gun/W)
 	return W.isHandgun()
 
@@ -209,12 +209,12 @@
 		to_chat(user, "\red There is already a [holstered] holstered here!")
 		return
 
-	if (!istype(I, /obj/item/weapon/gun))
+	if(!istype(I, /obj/item/weapon/gun))
 		to_chat(user, "\red Only guns can be holstered!")
 		return
 
 	var/obj/item/weapon/gun/W = I
-	if (!can_holster(W))
+	if(!can_holster(W))
 		to_chat(user, "\red This [W] won't fit in the [src]!")
 		return
 
@@ -228,7 +228,7 @@
 	if(!holstered)
 		return
 
-	if(istype(user.get_active_hand(),/obj) && istype(user.get_inactive_hand(),/obj))
+	if(istype(user.get_active_hand(), /obj) && istype(user.get_inactive_hand(), /obj))
 		to_chat(user, "\red You need an empty hand to draw the [holstered]!")
 	else
 		if(user.a_intent == "hurt")
@@ -242,8 +242,8 @@
 		holstered = null
 
 /obj/item/clothing/tie/holster/attack_hand(mob/user)
-	if (has_suit)	//if we are part of a suit
-		if (holstered)
+	if(has_suit)	// if we are part of a suit
+		if(holstered)
 			unholster(user)
 		return
 
@@ -253,13 +253,13 @@
 	holster(W, user)
 
 /obj/item/clothing/tie/holster/emp_act(severity)
-	if (holstered)
+	if(holstered)
 		holstered.emp_act(severity)
 	..()
 
 /obj/item/clothing/tie/holster/examine(mob/user)
 	..()
-	if (holstered)
+	if(holstered)
 		to_chat(user, "A [holstered] is holstered here.")
 	else
 		to_chat(user, "It is empty.")
@@ -272,7 +272,7 @@
 	has_suit.verbs -= /obj/item/clothing/tie/holster/verb/holster_verb
 	..()
 
-//For the holster hotkey
+// For the holster hotkey
 /obj/item/clothing/tie/holster/verb/holster_verb()
 	set name = "Holster"
 	set category = "Object"
@@ -281,14 +281,14 @@
 	if(usr.stat) return
 
 	var/obj/item/clothing/tie/holster/H = null
-	if (istype(src, /obj/item/clothing/tie/holster))
+	if(istype(src, /obj/item/clothing/tie/holster))
 		H = src
-	else if (istype(src, /obj/item/clothing/under))
+	else if(istype(src, /obj/item/clothing/under))
 		var/obj/item/clothing/under/S = src
-		if (S.hastie)
+		if(S.hastie)
 			H = S.hastie
 
-	if (!H)
+	if(!H)
 		to_chat(usr, "/red Something is very wrong.")
 
 	if(!H.holstered)
@@ -326,18 +326,18 @@
 	hold.storage_slots = slots
 
 /obj/item/clothing/tie/storage/attack_hand(mob/user)
-	if (has_suit)	//if we are part of a suit
+	if(has_suit)	// if we are part of a suit
 		hold.open(user)
 		return
 
-	if (hold.handle_attack_hand(user))	//otherwise interact as a regular storage item
+	if(hold.handle_attack_hand(user))	// otherwise interact as a regular storage item
 		..(user)
 
 /obj/item/clothing/tie/storage/MouseDrop(obj/over_object as obj)
-	if (has_suit)
+	if(has_suit)
 		return
 
-	if (hold.handle_mousedrop(usr, over_object))
+	if(hold.handle_mousedrop(usr, over_object))
 		..(over_object)
 
 /obj/item/clothing/tie/storage/attackby(obj/item/W, mob/user)
@@ -392,7 +392,7 @@
 	item_color = "holobadge"
 	slot_flags = SLOT_BELT
 
-	var/emagged = 0 //Emagging removes Sec check.
+	var/emagged = 0 // Emagging removes Sec check.
 	var/stored_name = null
 
 /obj/item/clothing/tie/holobadge/cord
@@ -405,12 +405,12 @@
 		to_chat(user, "Waving around a badge before swiping an ID would be pretty pointless.")
 		return
 	if(isliving(user))
-		user.visible_message("\red [user] displays their NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.","\red You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.")
+		user.visible_message("\red [user] displays their NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.", "\red You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.")
 
 /obj/item/clothing/tie/holobadge/attackby(obj/item/O, mob/user)
 
-	if (istype(O, /obj/item/weapon/card/emag))
-		if (emagged)
+	if(istype(O, /obj/item/weapon/card/emag))
+		if(emagged)
 			to_chat(user, "\red [src] is already cracked.")
 			return
 		else
@@ -431,7 +431,7 @@
 		if(access_security in id_card.access || emagged)
 			to_chat(user, "You imprint your ID details onto the badge.")
 			stored_name = id_card.registered_name
-			name = "holobadge ([stored_name])"
+			name = "holobadge([stored_name])"
 			desc = "This glowing blue badge marks [stored_name] as THE LAW."
 		else
 			to_chat(user, "[src] rejects your insufficient access rights.")
@@ -440,7 +440,7 @@
 
 /obj/item/clothing/tie/holobadge/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
-		user.visible_message("\red [user] invades [M]'s personal space, thrusting [src] into their face insistently.","\red You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.")
+		user.visible_message("\red [user] invades [M]'s personal space, thrusting [src] into their face insistently.", "\red You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.")
 
 /obj/item/clothing/tie/storage/knifeharness
 	name = "decorated harness"

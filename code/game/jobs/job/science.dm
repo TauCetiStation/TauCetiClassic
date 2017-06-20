@@ -125,8 +125,8 @@
 	spawn_positions = 2
 	supervisors = "research director"
 	selection_color = "#ffeeff"
-	access = list(access_robotics, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
-	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
+	access = list(access_robotics, access_morgue, access_research) // As a job that handles so many corpses, it makes sense for them to have morgue access.
+	alt_titles = list("Biomechanical Engineer", "Mechatronic Engineer")
 	minimal_player_ingame_minutes = 1560
 
 /datum/job/roboticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

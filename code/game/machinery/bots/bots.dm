@@ -1,4 +1,4 @@
-// AI (i.e. game AI, not the AI player) controlled bots
+// AI(i.e. game AI, not the AI player) controlled bots
 
 /obj/machinery/bot
 	icon = 'icons/obj/aibots.dmi'
@@ -7,13 +7,13 @@
 	use_power = 0
 	var/obj/item/weapon/card/id/botcard			// the ID card that the bot "holds"
 	var/on = 1
-	var/health = 0 //do not forget to set health for your bot!
+	var/health = 0 // do not forget to set health for your bot!
 	var/maxhealth = 0
 	var/fire_dam_coeff = 1.0
 	var/brute_dam_coeff = 1.0
-	var/open = 0//Maint panel
+	var/open = 0// Maint panel
 	var/locked = 1
-	//var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
+	// var/emagged = 0 // Urist: Moving that var to the general /bot tree as it's used by most bots
 	var/x_last
 	var/y_last
 	var/same_pos_count
@@ -33,7 +33,7 @@
 	qdel(src)
 
 /obj/machinery/bot/proc/healthcheck()
-	if (src.health <= 0)
+	if(src.health <= 0)
 		src.explode()
 
 /obj/machinery/bot/proc/Emag(mob/user)
@@ -46,15 +46,15 @@
 
 /obj/machinery/bot/examine(mob/user)
 	..()
-	if (health < maxhealth)
-		if (health > maxhealth/3)
+	if(health < maxhealth)
+		if(health > maxhealth/3)
 			to_chat(user, "<span class='warning'>[src]'s parts look loose.</span>")
 		else
 			to_chat(user, "<span class='danger'>[src]'s parts look very loose!</span>")
 
 /obj/machinery/bot/attack_alien(mob/living/carbon/alien/user)
 	user.do_attack_animation(src)
-	src.health -= rand(15,30)*brute_dam_coeff
+	src.health -= rand(15, 30)*brute_dam_coeff
 	src.visible_message("\red <B>[user] has slashed [src]!</B>")
 	playsound(src.loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 	if(prob(10))
@@ -84,15 +84,15 @@
 		if(health < maxhealth)
 			if(open)
 				health = min(maxhealth, health+10)
-				user.visible_message("\red [user] repairs [src]!","\blue You repair [src]!")
+				user.visible_message("\red [user] repairs [src]!", "\blue You repair [src]!")
 			else
 				to_chat(user, "<span class='notice'>Unable to repair with the maintenance panel closed.</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
-	else if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
+	else if(istype(W, /obj/item/weapon/card/emag) && emagged < 2)
 		Emag(user)
 	else
-		if(hasvar(W,"force") && hasvar(W,"damtype"))
+		if(hasvar(W, "force") && hasvar(W, "damtype"))
 			switch(W.damtype)
 				if("fire")
 					src.health -= W.force * fire_dam_coeff
@@ -113,7 +113,7 @@
 	return
 
 /obj/machinery/bot/blob_act()
-	src.health -= rand(20,40)*fire_dam_coeff
+	src.health -= rand(20, 40)*fire_dam_coeff
 	healthcheck()
 	return
 
@@ -123,14 +123,14 @@
 			src.explode()
 			return
 		if(2.0)
-			src.health -= rand(5,10)*fire_dam_coeff
-			src.health -= rand(10,20)*brute_dam_coeff
+			src.health -= rand(5, 10)*fire_dam_coeff
+			src.health -= rand(10, 20)*brute_dam_coeff
 			healthcheck()
 			return
 		if(3.0)
-			if (prob(50))
-				src.health -= rand(1,5)*fire_dam_coeff
-				src.health -= rand(1,5)*brute_dam_coeff
+			if(prob(50))
+				src.health -= rand(1, 5)*fire_dam_coeff
+				src.health -= rand(1, 5)*brute_dam_coeff
 				healthcheck()
 				return
 	return
@@ -147,11 +147,11 @@
 
 	spawn(10)
 		qdel(pulse2)
-	if (on)
+	if(on)
 		turn_off()
 	spawn(severity*300)
 		stat &= ~EMPED
-		if (was_on)
+		if(was_on)
 			turn_on()
 
 

@@ -17,10 +17,10 @@
 	var/list/forbidden_type = list()
 
 /obj/item/device/modkit/afterattack(obj/O, mob/user)
-	if(get_dist(src,O)>1)
+	if(get_dist(src, O)>1)
 		return
-	if (!target_species)
-		return	//it shouldn't be null, okay?
+	if(!target_species)
+		return	// it shouldn't be null, okay?
 
 	if(!parts)
 		to_chat(user, "<span class='warning'>This kit has no parts for this modification left.</span>")
@@ -29,18 +29,18 @@
 		return
 
 	var/allowed = 0
-	for (var/permitted_type in permitted_types)
+	for(var/permitted_type in permitted_types)
 		if(istype(O, permitted_type) && !(O.type in forbidden_type))
 			allowed = 1
 
 	var/obj/item/clothing/I = O
-	if (!istype(I) || !allowed)
+	if(!istype(I) || !allowed)
 		to_chat(user, "<span class='notice'>[src] is unable to modify that.</span>")
 		return
 
 	var/excluding = ("exclude" in I.species_restricted)
 	var/in_list = (target_species in I.species_restricted)
-	if (excluding ^ in_list)
+	if(excluding ^ in_list)
 		to_chat(user, "<span class='notice'>[I] is already modified.</span>")
 
 	if(!isturf(O.loc))
@@ -49,13 +49,13 @@
 
 	playsound(user.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 
-	user.visible_message("<span class='red'>[user] opens \the [src] and modifies \the [O].</span>","<span class='red'> You open \the [src] and modify \the [O].</span>")
+	user.visible_message("<span class='red'>[user] opens \the [src] and modifies \the [O].</span>", "<span class='red'> You open \the [src] and modify \the [O].</span>")
 
 	I.refit_for_species(target_species)
 
-	if (istype(I, /obj/item/clothing/head/helmet))
+	if(istype(I, /obj/item/clothing/head/helmet))
 		parts &= ~MODKIT_HELMET
-	if (istype(I, /obj/item/clothing/suit))
+	if(istype(I, /obj/item/clothing/suit))
 		parts &= ~MODKIT_SUIT
 
 	if(!parts)

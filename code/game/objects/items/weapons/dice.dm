@@ -1,4 +1,4 @@
-//from tg
+// from tg
 /obj/item/weapon/dice
 	name = "d6"
 	desc = "A die with six sides. Basic and servicable."
@@ -70,20 +70,20 @@
 	icon_state = "[initial(icon_state)][result]"
 	if(initial(icon_state) == "d00")
 		result = (result - 1)*10
-	if(user) //Dice was rolled in someone's hand
+	if(user) // Dice was rolled in someone's hand
 		user.visible_message("<span class='notice'>[user] has thrown [src]. It lands on [result]. [comment]</span>", \
 							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
 							 "<span class='notice'>You hear [src] landing on [result]. [comment]</span>")
-	else //Dice was thrown and is coming to rest
+	else // Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
 /obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
 	if(istype(H) && !H.shoes)
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
-		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
+		H.apply_damage(4, BRUTE, pick(BP_L_LEG, BP_R_LEG))
 		H.Weaken(3)
 
-//bag
+// bag
 /obj/item/weapon/storage/pill_bottle/dice
 	name = "bag of dice"
 	desc = "Contains all the luck you'll ever need."

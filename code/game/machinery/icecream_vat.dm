@@ -69,10 +69,10 @@ var/list/ingredients_source = list(
 
 /obj/machinery/icecream_vat/interact(mob/user)
 	var/dat
-	dat += "<a href='?src=\ref[src];dispense=[ICECREAM_VANILLA]'><b>Dispense vanilla icecream</b></a> There is [ingredients[ICECREAM_VANILLA]] scoops of vanilla icecream left (made from milk and ice).<br>"
-	dat += "<a href='?src=\ref[src];dispense=[FLAVOUR_STRAWBERRY]'><b>Dispense strawberry icecream</b></a> There is [ingredients[FLAVOUR_STRAWBERRY]] dollops of strawberry flavouring left (obtained from berry juice.<br>"
-	dat += "<a href='?src=\ref[src];dispense=[FLAVOUR_CHOCOLATE]'><b>Dispense chocolate icecream</b></a> There is [ingredients[FLAVOUR_CHOCOLATE]] dollops of chocolate flavouring left (obtained from cocoa powder).<br>"
-	dat += "<a href='?src=\ref[src];dispense=[FLAVOUR_BLUE]'><b>Dispense blue icecream</b></a> There is [ingredients[FLAVOUR_BLUE]] dollops of blue flavouring left (obtained from bluespace tomato singulo).<br>"
+	dat += "<a href='?src=\ref[src];dispense=[ICECREAM_VANILLA]'><b>Dispense vanilla icecream</b></a> There is [ingredients[ICECREAM_VANILLA]] scoops of vanilla icecream left(made from milk and ice).<br>"
+	dat += "<a href='?src=\ref[src];dispense=[FLAVOUR_STRAWBERRY]'><b>Dispense strawberry icecream</b></a> There is [ingredients[FLAVOUR_STRAWBERRY]] dollops of strawberry flavouring left(obtained from berry juice.<br>"
+	dat += "<a href='?src=\ref[src];dispense=[FLAVOUR_CHOCOLATE]'><b>Dispense chocolate icecream</b></a> There is [ingredients[FLAVOUR_CHOCOLATE]] dollops of chocolate flavouring left(obtained from cocoa powder).<br>"
+	dat += "<a href='?src=\ref[src];dispense=[FLAVOUR_BLUE]'><b>Dispense blue icecream</b></a> There is [ingredients[FLAVOUR_BLUE]] dollops of blue flavouring left(obtained from bluespace tomato singulo).<br>"
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];cone=[CONE_WAFFLE]'><b>Dispense waffle cones</b></a> There are [ingredients[CONE_WAFFLE]] waffle cones left. <br>"
 	dat += "<a href='?src=\ref[src];cone=[CONE_CHOC]'><b>Dispense chocolate cones</b></a> There are [ingredients[CONE_CHOC]] chocolate cones left.<br>"
@@ -87,7 +87,7 @@ var/list/ingredients_source = list(
 		dat += "No beaker inserted. "
 	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
 
-	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 400, src)
+	var/datum/browser/popup = new(user, "icecreamvat", "Icecream Vat", 700, 400, src)
 	popup.set_content(dat)
 	popup.open()
 
@@ -126,7 +126,7 @@ var/list/ingredients_source = list(
 			var/obj/item/weapon/reagent_containers/R = O
 			if(R.reagents)
 				src.visible_message("<span class='info'>[user] has emptied all of [R] into [src].</span>")
-				for (var/datum/reagent/current_reagent in R.reagents.reagent_list)
+				for(var/datum/reagent/current_reagent in R.reagents.reagent_list)
 					if(ingredients_source[current_reagent.id])
 						add(ingredients_source[current_reagent.id], current_reagent.volume / 2)
 					else
@@ -178,7 +178,7 @@ var/list/ingredients_source = list(
 /obj/machinery/icecream_vat/Topic(href, href_list)
 	if(href_list["close"])
 		usr.unset_machine(src)
-		usr << browse(null,"window=icecreamvat")
+		usr << browse(null, "window=icecreamvat")
 		return FALSE
 
 	. = ..()
@@ -214,7 +214,7 @@ var/list/ingredients_source = list(
 	name = "ice cream cone"
 	desc = "Delicious waffle cone, but no ice cream."
 	icon = 'icons/obj/icecream.dmi'
-	icon_state = "icecream_cone_waffle" //default for admin-spawned cones, href_list["cone"] should overwrite this all the time
+	icon_state = "icecream_cone_waffle" // default for admin-spawned cones, href_list["cone"] should overwrite this all the time
 	layer = 3.1
 	var/ice_creamed = 0
 	var/cone_type

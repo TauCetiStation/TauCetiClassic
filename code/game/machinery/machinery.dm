@@ -5,36 +5,36 @@ Overview:
    of 'Del' removes reference to src machine in global 'machines list'.
 
 Class Variables:
-   use_power (num)
+   use_power(num)
       current state of auto power use.
       Possible Values:
          0 -- no auto power use
          1 -- machine is using power at its idle power level
          2 -- machine is using power at its active power level
 
-   active_power_usage (num)
+   active_power_usage(num)
       Value for the amount of power to use when in active power mode
 
-   idle_power_usage (num)
+   idle_power_usage(num)
       Value for the amount of power to use when in idle power mode
 
-   power_channel (num)
+   power_channel(num)
       What channel to draw from when drawing power for power mode
       Possible Values:
          EQUIP:0 -- Equipment Channel
          LIGHT:2 -- Lighting Channel
          ENVIRON:3 -- Environment Channel
 
-   component_parts (list)
+   component_parts(list)
       A list of component parts of machine used by frame based machines.
 
-   uid (num)
+   uid(num)
       Unique id of machine across all machines.
 
-   gl_uid (global num)
+   gl_uid(global num)
       Next uid value in sequence
 
-   stat (bitflag)
+   stat(bitflag)
       Machine status bit flags.
       Possible bit flags:
          BROKEN:1 -- Machine is broken
@@ -43,7 +43,7 @@ Class Variables:
          MAINT:8 -- machine is currently under going maintenance.
          EMPED:16 -- temporary broken by EMP pulse
 
-   manual (num)
+   manual(num)
       Currently unused.
 
 Class Procs:
@@ -74,7 +74,7 @@ Class Procs:
 
    power_change()               'modules/power/power.dm'
       Called by the area that contains the object when ever that area under goes a
-      power state change (area runs out of power, or area channel is turned off).
+      power state change(area runs out of power, or area channel is turned off).
 
    RefreshParts()               'game/machinery/machine.dm'
       Called to refresh the variables in the machine that are contributed to by parts
@@ -105,8 +105,8 @@ Class Procs:
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
 	var/power_channel = EQUIP
-		//EQUIP,ENVIRON or LIGHT
-	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
+		// EQUIP, ENVIRON or LIGHT
+	var/list/component_parts = null // list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
 	var/global/gl_uid = 1
@@ -145,7 +145,7 @@ Class Procs:
 /obj/machinery/proc/locate_machinery()
 	return
 
-/obj/machinery/process()//If you dont use process or power why are you here
+/obj/machinery/process()// If you dont use process or power why are you here
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
@@ -205,11 +205,11 @@ Class Procs:
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				qdel(src)
 				return
 		else
@@ -219,18 +219,18 @@ Class Procs:
 	if(prob(50))
 		qdel(src)
 
-//sets the use_power var and then forces an area power update @ 7e65984ae2ec4e7eaaecc8da0bfa75642c3489c7 bay12
+// sets the use_power var and then forces an area power update @ 7e65984ae2ec4e7eaaecc8da0bfa75642c3489c7 bay12
 /obj/machinery/proc/update_use_power(new_use_power, force_update = 0)
-	if ((new_use_power == use_power) && !force_update)
-		return	//don't need to do anything
+	if((new_use_power == use_power) && !force_update)
+		return	// don't need to do anything
 
 	use_power = new_use_power
 
-	//force area power update
-	//use_power() forces an area power update on the next tick so have to pass the correct power amount for this tick
-	if (use_power >= 2)
+	// force area power update
+	// use_power() forces an area power update on the next tick so have to pass the correct power amount for this tick
+	if(use_power >= 2)
 		use_power(active_power_usage)
-	else if (use_power == 1)
+	else if(use_power == 1)
 		use_power(idle_power_usage)
 	else
 		use_power(0)
@@ -239,13 +239,13 @@ Class Procs:
 	if(!powered(power_channel))
 		return 0
 	if(src.use_power == 1)
-		use_power(idle_power_usage,power_channel, 1)
+		use_power(idle_power_usage, power_channel, 1)
 	else if(src.use_power >= 2)
-		use_power(active_power_usage,power_channel, 1)
+		use_power(active_power_usage, power_channel, 1)
 	return 1
 
-//By default, we check everything.
-//But sometimes, we need to override this check.
+// By default, we check everything.
+// But sometimes, we need to override this check.
 /obj/machinery/proc/is_operational_topic()
 	return !(stat & (NOPOWER|BROKEN|MAINT|EMPED))
 
@@ -301,18 +301,18 @@ Class Procs:
 		return 1
 	if((user.lying || user.stat) && !IsAdminGhost(user))
 		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
+	if( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey) || \
 			istype(user, /mob/living/carbon/alien/humanoid/queen) ))
 		to_chat(usr, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return 1
 /*
-	//distance checks are made by atom/proc/DblClick
-	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !istype(user, /mob/living/silicon))
+	// distance checks are made by atom/proc/DblClick
+	if((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !istype(user, /mob/living/silicon))
 		return 1
 */
-	if (ishuman(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
 			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
@@ -328,7 +328,7 @@ Class Procs:
 	user.set_machine(src)
 	return ..()
 
-/obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
+/obj/machinery/proc/RefreshParts() // Placeholder proc for machines that are built using frames.
 	return
 
 /obj/machinery/proc/assign_uid()
@@ -415,7 +415,7 @@ Class Procs:
 							component_parts += B
 							B.loc = null
 							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
-							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
+							shouldplaysound = 1 // Only play the sound when parts are actually replaced!
 							break
 			RefreshParts()
 		else
@@ -432,11 +432,11 @@ Class Procs:
 	for(var/obj/item/C in component_parts)
 		to_chat(user, "<span class='notice'>[bicon(C)] [C.name]</span>")
 
-//called on machinery construction (i.e from frame to machinery) but not on initialization
+// called on machinery construction(i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/construction()
 	return
 
-//called on deconstruction before the final deletion
+// called on deconstruction before the final deletion
 /obj/machinery/proc/deconstruction()
 	return
 
@@ -445,7 +445,7 @@ Class Procs:
 		O.show_message("[bicon(src)] <span class = 'notice'>[msg]</span>", 2)
 
 /obj/machinery/proc/ping(text=null)
-	if (!text)
+	if(!text)
 		text = "\The [src] pings."
 
 	state(text, "blue")

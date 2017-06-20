@@ -22,7 +22,7 @@
 	if(loaded_stuff && loaded_stuff.len)
 		var/list/bounds = loaded_stuff["bounds"]
 		if(bounds && bounds.len)
-			width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
+			width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1, 1, 1
 			height = bounds[MAP_MAXY]
 			. = bounds
 			loaded_stuff.Cut()
@@ -41,10 +41,10 @@
 		var/turf/B = L
 		for(var/A in B)
 			atoms += A
-			if(istype(A,/obj/structure/cable))
+			if(istype(A, /obj/structure/cable))
 				cables += A
 				continue
-			if(istype(A,/obj/machinery/atmospherics))
+			if(istype(A, /obj/machinery/atmospherics))
 				atmos_machines += A
 				continue
 
@@ -72,7 +72,7 @@
 
 	var/list/stuff = loaded_stuff["stuff"]
 	. = stuff
-	//initialize things that are normally initialized after map load
+	// initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
@@ -96,7 +96,7 @@
 	return block(placement, locate(placement.x+width-1, placement.y+height-1, placement.z))
 
 
-/proc/preloadTemplates(path = "maps/templates/") //see master controller setup
+/proc/preloadTemplates(path = "maps/templates/") // see master controller setup
 	var/list/filelist = flist(path)
 	for(var/map in filelist)
 		var/datum/map_template/T = new /datum/map_template(path = "[path][map]", rename = "[map]")

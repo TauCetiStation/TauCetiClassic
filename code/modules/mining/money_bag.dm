@@ -18,53 +18,53 @@
 	var/amt_uranium = 0
 	var/amt_clown = 0
 
-	for (var/obj/item/weapon/coin/C in contents)
-		if (istype(C,/obj/item/weapon/coin/diamond))
+	for(var/obj/item/weapon/coin/C in contents)
+		if(istype(C, /obj/item/weapon/coin/diamond))
 			amt_diamond++;
-		if (istype(C,/obj/item/weapon/coin/phoron))
+		if(istype(C, /obj/item/weapon/coin/phoron))
 			amt_phoron++;
-		if (istype(C,/obj/item/weapon/coin/iron))
+		if(istype(C, /obj/item/weapon/coin/iron))
 			amt_iron++;
-		if (istype(C,/obj/item/weapon/coin/silver))
+		if(istype(C, /obj/item/weapon/coin/silver))
 			amt_silver++;
-		if (istype(C,/obj/item/weapon/coin/gold))
+		if(istype(C, /obj/item/weapon/coin/gold))
 			amt_gold++;
-		if (istype(C,/obj/item/weapon/coin/uranium))
+		if(istype(C, /obj/item/weapon/coin/uranium))
 			amt_uranium++;
-		if (istype(C,/obj/item/weapon/coin/clown))
+		if(istype(C, /obj/item/weapon/coin/clown))
 			amt_clown++;
-		if (istype(C,/obj/item/weapon/coin/platinum))
+		if(istype(C, /obj/item/weapon/coin/platinum))
 			amt_clown++;
 
 	var/dat = text("<b>The contents of the moneybag reveal...</b><br>")
-	if (amt_gold)
+	if(amt_gold)
 		dat += text("Gold coins: [amt_gold] <A href='?src=\ref[src];remove=gold'>Remove one</A><br>")
-	if (amt_silver)
+	if(amt_silver)
 		dat += text("Silver coins: [amt_silver] <A href='?src=\ref[src];remove=silver'>Remove one</A><br>")
-	if (amt_iron)
+	if(amt_iron)
 		dat += text("Metal coins: [amt_iron] <A href='?src=\ref[src];remove=iron'>Remove one</A><br>")
-	if (amt_diamond)
+	if(amt_diamond)
 		dat += text("Diamond coins: [amt_diamond] <A href='?src=\ref[src];remove=diamond'>Remove one</A><br>")
-	if (amt_phoron)
+	if(amt_phoron)
 		dat += text("Phoron coins: [amt_phoron] <A href='?src=\ref[src];remove=phoron'>Remove one</A><br>")
-	if (amt_uranium)
+	if(amt_uranium)
 		dat += text("Uranium coins: [amt_uranium] <A href='?src=\ref[src];remove=uranium'>Remove one</A><br>")
-	if (amt_clown)
+	if(amt_clown)
 		dat += text("Bananium coins: [amt_clown] <A href='?src=\ref[src];remove=clown'>Remove one</A><br>")
-	if (amt_clown)
+	if(amt_clown)
 		dat += text("Platinum coins: [amt_clown] <A href='?src=\ref[src];remove=platinum'>Remove one</A><br>")
 	user << browse("[dat]", "window=moneybag")
 
 /obj/item/weapon/moneybag/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if (istype(W, /obj/item/weapon/coin))
+	if(istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W
 		to_chat(user, "\blue You add the [C.name] into the bag.")
 		usr.drop_item()
 		contents += C
-	if (istype(W, /obj/item/weapon/moneybag))
+	if(istype(W, /obj/item/weapon/moneybag))
 		var/obj/item/weapon/moneybag/C = W
-		for (var/obj/O in C.contents)
+		for(var/obj/O in C.contents)
 			contents += O;
 		to_chat(user, "\blue You empty the [C.name] into the bag.")
 	return
@@ -78,21 +78,21 @@
 		var/obj/item/weapon/coin/COIN
 		switch(href_list["remove"])
 			if("gold")
-				COIN = locate(/obj/item/weapon/coin/gold,src.contents)
+				COIN = locate(/obj/item/weapon/coin/gold, src.contents)
 			if("silver")
-				COIN = locate(/obj/item/weapon/coin/silver,src.contents)
+				COIN = locate(/obj/item/weapon/coin/silver, src.contents)
 			if("iron")
-				COIN = locate(/obj/item/weapon/coin/iron,src.contents)
+				COIN = locate(/obj/item/weapon/coin/iron, src.contents)
 			if("diamond")
-				COIN = locate(/obj/item/weapon/coin/diamond,src.contents)
+				COIN = locate(/obj/item/weapon/coin/diamond, src.contents)
 			if("phoron")
-				COIN = locate(/obj/item/weapon/coin/phoron,src.contents)
+				COIN = locate(/obj/item/weapon/coin/phoron, src.contents)
 			if("uranium")
-				COIN = locate(/obj/item/weapon/coin/uranium,src.contents)
+				COIN = locate(/obj/item/weapon/coin/uranium, src.contents)
 			if("clown")
-				COIN = locate(/obj/item/weapon/coin/clown,src.contents)
+				COIN = locate(/obj/item/weapon/coin/clown, src.contents)
 			if("platinum")
-				COIN = locate(/obj/item/weapon/coin/platinum,src.contents)
+				COIN = locate(/obj/item/weapon/coin/platinum, src.contents)
 		if(!COIN)
 			return
 		COIN.loc = src.loc

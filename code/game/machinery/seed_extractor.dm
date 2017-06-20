@@ -45,7 +45,7 @@ obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
 		var/seed = text2path(F.seed)
 		var/t_amount = 0
-		var/t_max = rand(1,4)
+		var/t_max = rand(1, 4)
 		while(t_amount < t_max)
 			var/obj/item/seeds/t_prod = new seed(loc)
 			t_prod.species = F.species
@@ -64,7 +64,7 @@ obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
 		var/seed = text2path(F.seed)
 		var/t_amount = 0
-		var/t_max = rand(1,4)
+		var/t_max = rand(1, 4)
 		while(t_amount < t_max)
 			var/obj/item/seeds/t_prod = new seed(loc)
 			t_prod.species = F.species

@@ -13,13 +13,13 @@
 /atom/proc/Adjacent(atom/neighbor) // basic inheritance, unused
 	return 0
 
-// Not a sane use of the function and (for now) indicative of an error elsewhere
+// Not a sane use of the function and(for now) indicative of an error elsewhere
 /area/Adjacent(atom/neighbor)
 	CRASH("Call to /area/Adjacent(), unimplemented proc")
 
 
 /*
-	Adjacency (to turf):
+	Adjacency(to turf):
 	* If you are in the same turf, always true
 	* If you are vertically/horizontally adjacent, ensure there are no border objects
 	* If you are diagonally adjacent, ensure you can pass through at least one of the mutually adjacent square.
@@ -29,34 +29,34 @@
 	var/turf/T0 = get_turf(neighbor)
 	if(T0 == src)
 		return 1
-	if(get_dist(src,T0) > 1)
+	if(get_dist(src, T0) > 1)
 		return 0
 
 	if(T0.x == x || T0.y == y)
 		// Check for border blockages
-		return T0.ClickCross(get_dir(T0,src), border_only = 1) && src.ClickCross(get_dir(src,T0), border_only = 1, target_atom = target)
+		return T0.ClickCross(get_dir(T0, src), border_only = 1) && src.ClickCross(get_dir(src, T0), border_only = 1, target_atom = target)
 
 	// Not orthagonal
-	var/in_dir = get_dir(neighbor,src) // eg. northwest (1+8)
+	var/in_dir = get_dir(neighbor, src) // eg. northwest(1+8)
 	var/d1 = in_dir&(in_dir-1)		// eg west		(1+8)&(8) = 8
 	var/d2 = in_dir - d1			// eg north		(1+8) - 8 = 1
 
-	for(var/d in list(d1,d2))
+	for(var/d in list(d1, d2))
 		if(!T0.ClickCross(d, border_only = 1))
 			continue // could not leave T0 in that direction
 
-		var/turf/T1 = get_step(T0,d)
-		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) | get_dir(T1,src), border_only = 0))
+		var/turf/T1 = get_step(T0, d)
+		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1, T0) | get_dir(T1, src), border_only = 0))
 			continue // couldn't enter or couldn't leave T1
 
-		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target))
+		if(!src.ClickCross(get_dir(src, T1), border_only = 1, target_atom = target))
 			continue // could not enter src
 
 		return 1 // we don't care about our own density
 	return 0
 
 /*
-Quick adjacency (to turf):
+Quick adjacency(to turf):
 * If you are in the same turf, always true
 * If you are not adjacent, then false
 */
@@ -65,13 +65,13 @@ Quick adjacency (to turf):
 	if(T0 == src)
 		return 1
 
-	if(get_dist(src,T0) > 1)
+	if(get_dist(src, T0) > 1)
 		return 0
 
 	return 1
 
 /*
-	Adjacency (to anything else):
+	Adjacency(to anything else):
 	* Must be on a turf
 	* In the case of a multiple-tile object, all valid locations are checked for adjacency.
 
@@ -83,15 +83,15 @@ Quick adjacency (to turf):
 	if(!isturf(loc)) return 0
 	for(var/turf/T in locs)
 		if(isnull(T)) continue
-		if(T.Adjacent(neighbor,src)) return 1
+		if(T.Adjacent(neighbor, src)) return 1
 	return 0
 
 // This is necessary for storage items not on your person.
 /obj/item/Adjacent(atom/neighbor, recurse = 1)
 	if(neighbor == loc) return 1
-	if(istype(loc,/obj/item))
+	if(istype(loc, /obj/item))
 		if(recurse > 0)
-			return loc.Adjacent(neighbor,recurse - 1)
+			return loc.Adjacent(neighbor, recurse - 1)
 		return 0
 	return ..()
 
@@ -99,7 +99,7 @@ Quick adjacency (to turf):
 /*
 	This checks if you there is uninterrupted airspace between that turf and this one.
 	This is defined as any dense ON_BORDER object, or any dense object without throwpass.
-	The border_only flag allows you to not objects (for source and destination squares)
+	The border_only flag allows you to not objects(for source and destination squares)
 */
 /turf/proc/ClickCross(target_dir, border_only, target_atom = null)
 	for(var/obj/O in src)
@@ -109,7 +109,7 @@ Quick adjacency (to turf):
 			if( O.dir & target_dir || O.dir&(O.dir-1) ) // full tile windows are just diagonals mechanically
 				var/obj/structure/window/W = target_atom
 				if(istype(W))
-					if(!W.is_fulltile())	//exception for breaking full tile windows on top of single pane windows
+					if(!W.is_fulltile())	// exception for breaking full tile windows on top of single pane windows
 						return 0
 				else
 					return 0
@@ -122,7 +122,7 @@ Quick adjacency (to turf):
 	a thrown object should stop after already successfully entering a square.  Currently the throw code involved
 	only seems to affect hitting mobs, because the checks performed against objects are already performed when
 	entering or leaving the square.  Since throwpass isn't used on mobs, but only on objects, it is effectively
-	useless.  Throwpass may later need to be removed and replaced with a passcheck (bitfield on movable atom passflags).
+	useless.  Throwpass may later need to be removed and replaced with a passcheck(bitfield on movable atom passflags).
 
 	Since I don't want to complicate the click code rework by messing with unrelated systems it won't be changed here.
 */

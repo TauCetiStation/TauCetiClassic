@@ -5,7 +5,7 @@
 	cure = "Rest & Spaceacillin"
 	cure_id = "spaceacillin"
 	agent = "XY-rhinovirus"
-	affected_species = list(HUMAN , MONKEY)
+	affected_species = list(HUMAN, MONKEY)
 	permeability_mod = 0.5
 	desc = "If left untreated the subject will contract the flu."
 	severity = "Minor"
@@ -15,12 +15,12 @@
 	switch(stage)
 		if(2)
 /*
-			if(affected_mob.sleeping && prob(40))  //removed until sleeping is fixed
+			if(affected_mob.sleeping && prob(40))  // removed until sleeping is fixed
 				to_chat(affected_mob, "\blue You feel better.")
 				cure()
 				return
 */
-			if(affected_mob.lying && prob(40))  //changed FROM prob(10) until sleeping is fixed
+			if(affected_mob.lying && prob(40))  // changed FROM prob(10) until sleeping is fixed
 				to_chat(affected_mob, "\blue You feel better.")
 				cure()
 				return
@@ -38,12 +38,12 @@
 				to_chat(affected_mob, "\red Mucous runs down the back of your throat.")
 		if(3)
 /*
-			if(affected_mob.sleeping && prob(25))  //removed until sleeping is fixed
+			if(affected_mob.sleeping && prob(25))  // removed until sleeping is fixed
 				to_chat(affected_mob, "\blue You feel better.")
 				cure()
 				return
 */
-			if(affected_mob.lying && prob(25))  //changed FROM prob(5) until sleeping is fixed
+			if(affected_mob.lying && prob(25))  // changed FROM prob(5) until sleeping is fixed
 				to_chat(affected_mob, "\blue You feel better.")
 				cure()
 				return
@@ -62,5 +62,5 @@
 			if(prob(1) && prob(50))
 				if(!affected_mob.resistances.Find(/datum/disease/flu))
 					var/datum/disease/Flu = new /datum/disease/flu(0)
-					affected_mob.contract_disease(Flu,1)
+					affected_mob.contract_disease(Flu, 1)
 					cure()

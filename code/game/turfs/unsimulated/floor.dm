@@ -9,7 +9,7 @@
 
 /turf/unsimulated/floor/abductor/New()
 	..()
-	icon_state = "alienpod[rand(1,9)]"
+	icon_state = "alienpod[rand(1, 9)]"
 
 /turf/unsimulated/floor/attack_paw(user)
 	return src.attack_hand(user)

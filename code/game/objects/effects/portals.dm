@@ -4,7 +4,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	density = 1
-	unacidable = 1//Can't destroy energy portals.
+	unacidable = 1// Can't destroy energy portals.
 	var/failchance = 5
 	var/obj/item/target = null
 	var/creator = null
@@ -29,23 +29,23 @@
 	return
 
 /obj/effect/portal/proc/teleport(atom/movable/M, density_check = TELE_CHECK_NONE, respect_entrydir = FALSE, use_forceMove = TRUE)
-	if (istype(M, /obj/effect)) //sparks don't teleport
+	if(istype(M, /obj/effect)) // sparks don't teleport
 		return FALSE
-	if (M.anchored && istype(M, /obj/mecha))
+	if(M.anchored && istype(M, /obj/mecha))
 		return FALSE
-	if (icon_state == "portal1")
+	if(icon_state == "portal1")
 		return FALSE
-	if (!( target ))
+	if(!( target ))
 		qdel(src)
 		return FALSE
-	if (istype(M, /atom/movable))
-		if(prob(failchance)) //oh dear a problem, put em in deep space
+	if(istype(M, /atom/movable))
+		if(prob(failchance)) // oh dear a problem, put em in deep space
 			src.icon_state = "portal1"
 			return do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0, use_forceMove, adest_checkdensity = density_check, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
 		else
 			return do_teleport(M, target, 1, use_forceMove, adest_checkdensity = density_check, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
 
-//Telescience wormhole
+// Telescience wormhole
 /obj/effect/portal/tsci_wormhole
 	name = "wormhole"
 	icon = 'icons/obj/objects.dmi'
@@ -98,6 +98,6 @@
 			to_chat(H, "<span class='warning'>[msg]</span>")
 		if(prob(20))
 			bad_effects += 1
-			H.vomit() //No msg required, since vomit() will handle this.
+			H.vomit() // No msg required, since vomit() will handle this.
 		if(bad_effects == 2)
 			H.Paralyse(3)

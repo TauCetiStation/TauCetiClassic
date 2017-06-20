@@ -4,7 +4,7 @@
 	Note currently ai restrained() returns 0 in all cases,
 	therefore restrained code has been removed
 
-	The AI can double click to move the camera (this was already true but is cleaner),
+	The AI can double click to move the camera(this was already true but is cleaner),
 	or double click a mob to track them.
 
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
@@ -19,7 +19,7 @@
 
 	if(ismob(A))
 		ai_actual_track(A)
-	else if (!istype(A, /obj/screen))
+	else if(!istype(A, /obj/screen))
 		A.move_camera_by_click()
 
 
@@ -45,7 +45,7 @@
 	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+	if(modifiers["alt"]) // alt and alt-gr(rightalt)
 		AltClickOn(A)
 		return
 	if(modifiers["ctrl"])
@@ -114,7 +114,7 @@
 
 /obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
 	if(density)
-		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
+		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window(consistency!)
 	else
 		Topic("aiDisable=7", list("aiDisable"="7"), 1)
 	return
@@ -125,12 +125,12 @@
 
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
 	if(locked)
-		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
+		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window(consistency!)
 	else
 		Topic("aiDisable=4", list("aiDisable"="4"), 1)
 
 /obj/machinery/power/apc/AICtrlClick() // turns off APCs.
-	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
+	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window(consistency! wait...)
 
 
 /atom/proc/AIAltClick()
@@ -139,7 +139,7 @@
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
 	if(!secondsElectrified)
 		// permenant shock
-		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
+		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window(consistency!)
 	else
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
@@ -150,4 +150,4 @@
 //
 
 /mob/living/silicon/ai/TurfAdjacent(turf/T)
-	return (cameranet && cameranet.checkTurfVis(T))
+	return(cameranet && cameranet.checkTurfVis(T))

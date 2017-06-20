@@ -2,9 +2,9 @@
 	name = "Genetic"
 	desc = "This spell inflicts a set of mutations and disabilities upon the target."
 
-	var/disabilities = 0 //bits
-	var/list/mutations = list() //mutation strings
-	var/duration = 100 //deciseconds
+	var/disabilities = 0 // bits
+	var/list/mutations = list() // mutation strings
+	var/duration = 100 // deciseconds
 	/*
 		Disabilities
 			1st bit - ?
@@ -21,7 +21,7 @@
 		for(var/x in mutations)
 			target.mutations.Add(x)
 		target.disabilities |= disabilities
-		target.update_mutations()	//update target's mutation overlays
+		target.update_mutations()	// update target's mutation overlays
 		addtimer(CALLBACK(src, .proc/remove_mutations, target, mutations), duration)
 
 	return

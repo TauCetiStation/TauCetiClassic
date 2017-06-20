@@ -10,15 +10,15 @@
 	..(spawnloc)
 	falling_type = type
 	new falling_type(src)
-	var/atom/movable/dropped = pick(src.contents) //stupid, but allows to get spawn result without efforts if it is other type
+	var/atom/movable/dropped = pick(src.contents) // stupid, but allows to get spawn result without efforts if it is other type
 	dropped.loc = get_turf_loc(src)
 	var/initial_x = dropped.pixel_x
 	var/initial_y = dropped.pixel_y
 	dropped.pixel_x = rand(-150, 150)
-	dropped.pixel_y = 500 //when you think that pixel_z is height but you are wrong
+	dropped.pixel_y = 500 // when you think that pixel_z is height but you are wrong
 	dropped.density = 0
 	dropped.opacity = 0
-	animate(dropped, pixel_y = initial_y, pixel_x = initial_x , time = 7)
+	animate(dropped, pixel_y = initial_y, pixel_x = initial_x, time = 7)
 	spawn(7)
 		for(var/atom/movable/T in dropped.loc)
 			if(T != dropped)

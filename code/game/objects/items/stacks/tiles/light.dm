@@ -17,17 +17,17 @@
 /obj/item/stack/tile/light/New(var/loc, var/amount=null)
 	..()
 	if(prob(5))
-		state = 3 //broken
+		state = 3 // broken
 	else if(prob(5))
-		state = 2 //breaking
+		state = 2 // breaking
 	else if(prob(10))
-		state = 1 //flickering occasionally
+		state = 1 // flickering occasionally
 	else
-		state = 0 //fine
+		state = 0 // fine
 
 /obj/item/stack/tile/light/attackby(obj/item/O, mob/user)
 	..()
-	if(istype(O,/obj/item/weapon/crowbar))
+	if(istype(O, /obj/item/weapon/crowbar))
 		if(!use(1))
 			return
 		new/obj/item/stack/sheet/metal(user.loc)

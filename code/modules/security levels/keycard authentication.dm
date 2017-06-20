@@ -3,12 +3,12 @@
 	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	var/active = 0 //This gets set to 1 on all devices except the one where the initial request was made.
+	var/active = 0 // This gets set to 1 on all devices except the one where the initial request was made.
 	var/event = ""
 	var/screen = 1
-	var/confirmed = 0 //This variable is set by the device that confirms the request.
+	var/confirmed = 0 // This variable is set by the device that confirms the request.
 	var/confirm_delay = 20 //(2 seconds)
-	var/busy = 0 //Busy when waiting for authentication or an event request has been sent from this device.
+	var/busy = 0 // Busy when waiting for authentication or an event request has been sent from this device.
 	var/obj/machinery/keycard_auth/event_source
 	var/mob/event_triggered_by
 	var/mob/event_confirmed_by
@@ -32,17 +32,17 @@
 	if(stat & (NOPOWER|BROKEN))
 		to_chat(user, "This device is not powered.")
 		return
-	if(istype(W,/obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/ID = W
 		if(access_keycard_auth in ID.access)
 			if(active == 1)
-				//This is not the device that made the initial request. It is the device confirming the request.
+				// This is not the device that made the initial request. It is the device confirming the request.
 				if(event_source)
 					event_source.confirmed = 1
 					event_source.event_confirmed_by = usr
 			else if(screen == 2)
 				event_triggered_by = usr
-				broadcast_request() //This is the device making the initial event request. It needs to broadcast to other devices
+				broadcast_request() // This is the device making the initial event request. It needs to broadcast to other devices
 
 /obj/machinery/keycard_auth/power_change()
 	if(powered(ENVIRON))
@@ -145,23 +145,23 @@
 	switch(event)
 		if("Red alert")
 			set_security_level(SEC_LEVEL_RED)
-			feedback_inc("alert_keycard_auth_red",1)
+			feedback_inc("alert_keycard_auth_red", 1)
 		if("Grant Emergency Maintenance Access")
 			make_maint_all_access(TRUE)
-			feedback_inc("alert_keycard_auth_maintGrant",1)
+			feedback_inc("alert_keycard_auth_maintGrant", 1)
 		if("Revoke Emergency Maintenance Access")
 			if(timer_maint_revoke_id)
 				deltimer(timer_maint_revoke_id)
 				timer_maint_revoke_id = 0
 			revoke_maint_all_access(TRUE)
-			feedback_inc("alert_keycard_auth_maintRevoke",1)
+			feedback_inc("alert_keycard_auth_maintRevoke", 1)
 		if("Emergency Response Team")
 			if(is_ert_blocked())
 				to_chat(usr, "\red All emergency response teams are dispatched and can not be called at this time.")
 				return
 
 			trigger_armed_response_team(1)
-			feedback_inc("alert_keycard_auth_ert",1)
+			feedback_inc("alert_keycard_auth_ert", 1)
 
 /obj/machinery/keycard_auth/proc/is_ert_blocked()
 	if(config.ert_admin_call_only) return 1

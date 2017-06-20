@@ -12,7 +12,7 @@
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "\red <b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b>")
-		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
+		return(BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/nullrod
 	name = "null rod"
@@ -28,26 +28,26 @@
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "\red <b>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>")
-		return (BRUTELOSS|FIRELOSS)
+		return(BRUTELOSS|FIRELOSS)
 
-/obj/item/weapon/nullrod/attack(mob/M, mob/living/user) //Paste from old-code to decult with a null rod.
+/obj/item/weapon/nullrod/attack(mob/M, mob/living/user) // Paste from old-code to decult with a null rod.
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
 	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 
-	if ((CLUMSY in user.mutations) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red The rod slips out of your hand and hits your head.")
 		user.take_bodypart_damage(10)
 		user.Paralyse(20)
 		return
 
-	if (M.stat !=2)
+	if(M.stat !=2)
 		if((M.mind in ticker.mode.cult) && prob(33))
 			to_chat(M, "\red The power of [src] clears your mind of the cult's influence!")
 			to_chat(user, "\red You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.")
@@ -64,7 +64,7 @@
 			return
 
 /obj/item/weapon/nullrod/afterattack(atom/A, mob/user)
-	if (istype(A, /turf/simulated/floor))
+	if(istype(A, /turf/simulated/floor))
 		to_chat(user, "\blue You hit the floor with the [src].")
 		call(/obj/effect/rune/proc/revealrunes)(src)
 
@@ -153,7 +153,7 @@
 	force = 20
 	throwforce = 15
 	w_class = 3
-	attack_verb = list("jabbed","stabbed","ripped")
+	attack_verb = list("jabbed", "stabbed", "ripped")
 
 /obj/item/weapon/switchblade
 	name = "switchblade"
@@ -191,4 +191,4 @@
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	return (BRUTELOSS)
+	return(BRUTELOSS)

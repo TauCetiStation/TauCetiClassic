@@ -1,5 +1,5 @@
-//http://www.youtube.com/watch?v=-1GadTfGFvU
-//i could have done these as just an ordinary plant, but fuck it - there would have been too much snowflake code
+// http:// www.youtube.com/watch?v=-1GadTfGFvU
+// i could have done these as just an ordinary plant, but fuck it - there would have been too much snowflake code
 
 /obj/machinery/apiary
 	name = "apiary tray"
@@ -24,21 +24,21 @@
 	var/list/owned_bee_swarms = list()
 	var/hydrotray_type = /obj/machinery/hydroponics
 
-//overwrite this after it's created if the apiary needs a custom machinery sprite
+// overwrite this after it's created if the apiary needs a custom machinery sprite
 /obj/machinery/apiary/New()
 	..()
 	overlays += image('icons/obj/apiary_bees_etc.dmi', icon_state="apiary")
 
-/obj/machinery/apiary/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
-	if(istype(Proj ,/obj/item/projectile/energy/floramut))
+/obj/machinery/apiary/bullet_act(obj/item/projectile/Proj) // Works with the Somatoray to modify plant variables.
+	if(istype(Proj, /obj/item/projectile/energy/floramut))
 		mut++
-	else if(istype(Proj ,/obj/item/projectile/energy/florayield))
+	else if(istype(Proj, /obj/item/projectile/energy/florayield))
 		if(!yieldmod)
 			yieldmod += 1
-			//world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
-		else if (prob(1/(yieldmod * yieldmod) *100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+			// world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
+		else if(prob(1/(yieldmod * yieldmod) *100))// This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			yieldmod += 1
-			//world << "Yield increased by 1, to a total of [myseed.yield]"
+			// world << "Yield increased by 1, to a total of [myseed.yield]"
 	else
 		..()
 		return
@@ -90,8 +90,8 @@
 				angry_swarm(user)
 			else
 				to_chat(user, "\blue You begin to harvest the honey.")
-			if(do_after(user,50,target = src))
-				G.reagents.add_reagent("honey",harvestable_honey)
+			if(do_after(user, 50, target = src))
+				G.reagents.add_reagent("honey", harvestable_honey)
 				harvestable_honey = 0
 				to_chat(user, "\blue You successfully harvest the honey.")
 		else
@@ -126,7 +126,7 @@
 		if(health < 0)
 			return
 
-		//magical bee formula
+		// magical bee formula
 		if(beezeez > 0)
 			beezeez -= 1
 
@@ -134,21 +134,21 @@
 			health += 1
 			toxic = max(0, toxic - 1)
 
-		//handle nutrients
+		// handle nutrients
 		nutrilevel -= bees_in_hive / 10 + owned_bee_swarms.len / 5
 		if(nutrilevel > 0)
 			bees_in_hive += 1 * yieldmod
 			if(health < maxhealth)
 				health++
 		else
-			//nutrilevel is less than 1, so we're effectively subtracting here
+			// nutrilevel is less than 1, so we're effectively subtracting here
 			health += max(nutrilevel - 1, round(-health / 2))
 			bees_in_hive += max(nutrilevel - 1, round(-bees_in_hive / 2))
 			if(owned_bee_swarms.len)
 				var/mob/living/simple_animal/bee/B = pick(owned_bee_swarms)
 				B.target_turf = get_turf(src)
 
-		//clear out some toxins
+		// clear out some toxins
 		if(toxic > 0)
 			toxic -= 1
 			health -= 1
@@ -156,11 +156,11 @@
 		if(health <= 0)
 			return
 
-		//make a bit of honey
+		// make a bit of honey
 		if(harvestable_honey < 50)
 			harvestable_honey += 0.5
 
-		//make some new bees
+		// make some new bees
 		if(bees_in_hive >= 10 && prob(bees_in_hive * 10))
 			var/mob/living/simple_animal/bee/B = new(get_turf(src), src)
 			owned_bee_swarms.Add(B)
@@ -168,7 +168,7 @@
 			B.toxic = toxic
 			bees_in_hive -= 1
 
-		//find some plants, harvest
+		// find some plants, harvest
 		for(var/obj/machinery/hydroponics/H in view(7, src))
 			if(H.planted && !H.dead && H.myseed && prob(owned_bee_swarms.len * 10))
 				src.nutrilevel++
@@ -178,13 +178,13 @@
 				else if(mut > H.mutmod - 1)
 					H.mutmod = mut
 
-				//flowers give us pollen (nutrients)
+				// flowers give us pollen(nutrients)
 /* - All plants should be giving nutrients to the hive.
 				if(H.myseed.type == /obj/item/seeds/harebell || H.myseed.type == /obj/item/seeds/sunflowerseed)
 					src.nutrilevel++
 					H.nutrilevel++
 */
-				//have a few beneficial effects on nearby plants
+				// have a few beneficial effects on nearby plants
 				if(prob(10))
 					H.lastcycle -= 5
 				if(prob(10))

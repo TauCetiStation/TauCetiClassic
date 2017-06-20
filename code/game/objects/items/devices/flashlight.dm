@@ -11,7 +11,7 @@
 	g_amt = 20
 	action_button_name = "Toggle Flashlight"
 	var/on = 0
-	var/brightness_on = 5 //luminosity when on
+	var/brightness_on = 5 // luminosity when on
 
 /obj/item/device/flashlight/initialize()
 	..()
@@ -32,7 +32,7 @@
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
-		to_chat(user, "You cannot turn the light on while in this [user.loc].")//To prevent some lighting anomalities.
+		to_chat(user, "You cannot turn the light on while in this [user.loc].")// To prevent some lighting anomalities.
 		return 0
 	on = !on
 	update_brightness(user)
@@ -49,19 +49,19 @@
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == O_EYES)
 
-		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
-			return ..()	//just hit them in the head
+		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	// too dumb to use flashlight properly
+			return ..()	// just hit them in the head
 
-		if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")	//don't have dexterity
+		if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")	// don't have dexterity
 			to_chat(user, "<span class='notice'>You don't have the dexterity to do this!</span>")
 			return
 
-		var/mob/living/carbon/human/H = M	//mob has protective eyewear
+		var/mob/living/carbon/human/H = M	// mob has protective eyewear
 		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 			to_chat(user, "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
 			return
 
-		if(M == user)	//they're using it on themselves
+		if(M == user)	// they're using it on themselves
 			if(!M.blinded)
 				M.flash_eyes()
 				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
@@ -74,15 +74,15 @@
 		user.visible_message("<span class='notice'>[user] directs [src] to [M]'s eyes.</span>", \
 							 "<span class='notice'>You direct [src] to [M]'s eyes.</span>")
 
-		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
-			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind
+		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	// robots and aliens are unaffected
+			if(M.stat == DEAD || M.sdisabilities & BLIND)	// mob is dead or fully blind
 				to_chat(user, "<span class='notice'>[M] pupils does not react to the light!</span>")
-			else if(XRAY in M.mutations)	//mob has X-RAY vision
-				M.flash_eyes() //Yes, you can still get flashed wit X-Ray.
+			else if(XRAY in M.mutations)	// mob has X-RAY vision
+				M.flash_eyes() // Yes, you can still get flashed wit X-Ray.
 				to_chat(user, "<span class='notice'>[M] pupils give an eerie glow!</span>")
-			else	//they're okay!
+			else	// they're okay!
 				if(!M.blinded)
-					M.flash_eyes()	//flash the affected mob
+					M.flash_eyes()	// flash the affected mob
 					to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
 	else
 		return ..()
@@ -145,7 +145,7 @@
 	brightness_on = 4
 	icon_state = "flare"
 	item_state = "flare"
-	action_button_name = null //just pull it manually, neckbeard.
+	action_button_name = null // just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
@@ -201,22 +201,22 @@
 	name = "glowing slime extract"
 	desc = "A glowing ball of what appears to be amber."
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "floor1" //not a slime extract sprite but... something close enough!
+	icon_state = "floor1" // not a slime extract sprite but... something close enough!
 	item_state = "slime"
 	w_class = 1
 	m_amt = 0
 	g_amt = 0
 	brightness_on = 6
-	on = 1 //Bio-luminesence has one setting, on.
+	on = 1 // Bio-luminesence has one setting, on.
 
 /obj/item/device/flashlight/slime/New()
 	set_light(brightness_on)
-	spawn(1) //Might be sloppy, but seems to be necessary to prevent further runtimes and make these work as intended... don't judge me!
+	spawn(1) // Might be sloppy, but seems to be necessary to prevent further runtimes and make these work as intended... don't judge me!
 		update_brightness()
 		icon_state = initial(icon_state)
 
 /obj/item/device/flashlight/slime/attack_self(mob/user)
-	return //Bio-luminescence does not toggle.
+	return // Bio-luminescence does not toggle.
 
 /obj/item/device/flashlight/emp
 	origin_tech = "magnets=3;syndicate=1"
@@ -257,7 +257,7 @@
 			var/mob/M = A
 			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
 			M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been attacked with Emp-light by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked with Emp-light [M.name]'s ([M.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked with Emp-light [M.name]'s([M.ckey])</font>")
 			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [A]</span>")
 		else
 			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>")

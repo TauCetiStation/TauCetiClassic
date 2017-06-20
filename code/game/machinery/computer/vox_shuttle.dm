@@ -1,9 +1,9 @@
 #define VOX_SHUTTLE_MOVE_TIME 375
 #define VOX_SHUTTLE_COOLDOWN 1200
 
-//Copied from Syndicate shuttle.
+// Copied from Syndicate shuttle.
 var/global/vox_shuttle_location
-var/global/announce_vox_departure = 0 //Stealth systems - give an announcement or not.
+var/global/announce_vox_departure = 0 // Stealth systems - give an announcement or not.
 
 /obj/machinery/computer/vox_stealth
 	name = "skipjack cloaking field terminal"
@@ -41,7 +41,7 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	var/area/curr_location
 	var/moving = 0
 	var/lastMove = 0
-	var/warning //Warning about the end of the round.
+	var/warning // Warning about the end of the round.
 
 /obj/machinery/computer/vox_station/New()
 	curr_location= locate(/area/shuttle/vox/station)
@@ -53,7 +53,7 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	var/area/dest_location = locate(destination)
 	if(curr_location == dest_location)	return
 
-	//if(announce_vox_departure)
+	// if(announce_vox_departure)
 	//	if(curr_location == locate(/area/shuttle/vox/station))
 	//		command_alert("Attention, Exodus, we just tracked a small target bypassing our defensive perimeter. Can't fire on it without hitting the station - you've got incoming visitors, like it or not.", "NSV Icarus")
 	//	else if(dest_location == locate(/area/shuttle/vox/station))
@@ -83,7 +83,7 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	return attack_hand(user)
 
 /obj/machinery/computer/vox_station/attack_ai(mob/user)
-	to_chat(user, "<span class='red'><b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..</span>")//Totally not stolen from ninja.
+	to_chat(user, "<span class='red'><b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..</span>")// Totally not stolen from ninja.
 	return
 
 /obj/machinery/computer/vox_station/attack_paw(mob/user)
@@ -118,7 +118,7 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 
 	vox_shuttle_location = "station"
 	if(href_list["start"])
-		if(ticker && (istype(ticker.mode,/datum/game_mode/heist)))
+		if(ticker && (istype(ticker.mode, /datum/game_mode/heist)))
 			if(!warning)
 				to_chat(usr, "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>")
 				warning = 1

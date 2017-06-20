@@ -1,4 +1,4 @@
-//Items from RnD. NOT techs!
+// Items from RnD. NOT techs!
 
 /datum/export/rnd/bluespace_crystal
 	cost = 10000

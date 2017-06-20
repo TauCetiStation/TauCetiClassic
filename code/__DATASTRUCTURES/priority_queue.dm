@@ -26,13 +26,13 @@
 	while(i < j)
 		mid = round((i+j)/2)
 
-		if(call(cmp)(L[mid],A) < 0)
+		if(call(cmp)(L[mid], A) < 0)
 			i = mid + 1
 		else
 			j = mid
 
 	if(i == 1 || i ==  L.len)  // Edge cases
-		return (call(cmp)(L[i],A) > 0) ? i : i+1
+		return(call(cmp)(L[i], A) > 0) ? i : i+1
 	else
 		return i
 
@@ -45,7 +45,7 @@
 		L += A
 		return
 
-	L.Insert(FindElementIndex(A),A)
+	L.Insert(FindElementIndex(A), A)
 
 /**
  * Removes and returns the first element in the queue
@@ -92,9 +92,9 @@
 	if(i == 0)
 		return
 
-	while(i < L.len && call(cmp)(L[i],L[i+1]) > 0)
-		L.Swap(i,i+1)
+	while(i < L.len && call(cmp)(L[i], L[i+1]) > 0)
+		L.Swap(i, i+1)
 		i++
-	while(i > 1 && call(cmp)(L[i],L[i-1]) <= 0) //last inserted element being first in case of ties (optimization)
-		L.Swap(i,i-1)
+	while(i > 1 && call(cmp)(L[i], L[i-1]) <= 0) // last inserted element being first in case of ties(optimization)
+		L.Swap(i, i-1)
 		i--

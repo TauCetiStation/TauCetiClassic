@@ -39,13 +39,13 @@
 	events |= E
 
 /datum/stock/proc/addArticle(datum/article/A)
-	if (!(A in articles))
+	if(!(A in articles))
 		articles.Insert(1, A)
 	A.ticks = world.time
 
 /datum/stock/proc/generateEvents()
 	var/list/types = subtypesof(/datum/stockEvent)
-	for (var/T in types)
+	for(var/T in types)
 		generateEvent(T)
 
 /datum/stock/proc/generateEvent(T)
@@ -53,24 +53,24 @@
 	addEvent(E)
 
 /datum/stock/proc/affectPublicOpinion(boost)
-	changeOptimism(rand(0, 100) * 0.003 * boost) //0.003 = 0.01*0.3 (for balance)
+	changeOptimism(rand(0, 100) * 0.003 * boost) //0.003 = 0.01*0.3(for balance)
 
 /datum/stock/proc/generateIndustry()
-	if (findtext(name, "Farms"))
+	if(findtext(name, "Farms"))
 		industry = new /datum/industry/agriculture
-	else if (findtext(name, "Software") || findtext(name, "Programming")  || findtext(name, "IT Group") || findtext(name, "Electronics") || findtext(name, "Electric") || findtext(name, "Nanotechnology"))
+	else if(findtext(name, "Software") || findtext(name, "Programming")  || findtext(name, "IT Group") || findtext(name, "Electronics") || findtext(name, "Electric") || findtext(name, "Nanotechnology"))
 		industry = new /datum/industry/it
-	else if (findtext(name, "Mobile") || findtext(name, "Communications"))
+	else if(findtext(name, "Mobile") || findtext(name, "Communications"))
 		industry = new /datum/industry/communications
-	else if (findtext(name, "Pharmaceuticals") || findtext(name, "Health"))
+	else if(findtext(name, "Pharmaceuticals") || findtext(name, "Health"))
 		industry = new /datum/industry/health
-	else if (findtext(name, "Wholesale") || findtext(name, "Stores"))
+	else if(findtext(name, "Wholesale") || findtext(name, "Stores"))
 		industry = new /datum/industry/consumer
 	else
 		var/ts = typesof(/datum/industry) - /datum/industry
 		var/in_t = pick(ts)
 		industry = new in_t
-	for (var/i = 0, i < rand(2, 5), i++)
+	for(var/i = 0, i < rand(2, 5), i++)
 		products += industry.generateProductName(name)
 
 /datum/stock/proc/supplyGrowth(amt)
@@ -88,12 +88,12 @@
 			changeOptimism(0.01)
 
 	if(performance)
-		performance = Clamp(rand(900,1050) * 0.001 * performance, PERFORMANCE_MIN, PERFORMANCE_MAX)
+		performance = Clamp(rand(900, 1050) * 0.001 * performance, PERFORMANCE_MIN, PERFORMANCE_MAX)
 
 	disp_value_change = (change > 0) ? 1 : ((change < 0) ? -1 : 0)
 	last_value = current_value
 	if(values.len >= 50)
-		values.Cut(1,2)
+		values.Cut(1, 2)
 	values += current_value
 
 /datum/stock/process()
@@ -108,8 +108,8 @@
 		fluctuate()
 
 /datum/stock/proc/modifyAccount(whose, by, force = 0)
-	if (SSshuttle.points)
-		if (by < 0 && SSshuttle.points + by < 0 && !force)
+	if(SSshuttle.points)
+		if(by < 0 && SSshuttle.points + by < 0 && !force)
 			return 0
 		SSshuttle.points += by
 		stockExchange.balanceLog(whose, by)
@@ -117,15 +117,15 @@
 	return 0
 
 /datum/stock/proc/buyShares(who, howmany)
-	if (howmany <= 0)
+	if(howmany <= 0)
 		return
 	howmany = round(howmany)
 	var/loss = howmany * current_value
-	if (available_shares < howmany)
+	if(available_shares < howmany)
 		return 0
-	if (modifyAccount(who, -loss))
+	if(modifyAccount(who, -loss))
 		supplyDrop(howmany)
-		if (!(who in shareholders))
+		if(!(who in shareholders))
 			shareholders[who] = howmany
 		else
 			shareholders[who] += howmany

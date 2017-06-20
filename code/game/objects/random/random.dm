@@ -9,7 +9,7 @@
 // creates a new object and deletes itself
 /obj/random/New()
 	..()
-	if (!prob(spawn_nothing_percentage))
+	if(!prob(spawn_nothing_percentage))
 		spawn_item()
 	qdel(src)
 
@@ -22,4 +22,4 @@
 // creates the random item
 /obj/random/proc/spawn_item()
 	var/build_path = item_to_spawn()
-	return (new build_path(src.loc))
+	return(new build_path(src.loc))

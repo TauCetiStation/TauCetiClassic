@@ -11,14 +11,14 @@
 	throw_range = 2
 
 	var/fuel = 10000
-	var/fuel_max = 10000//Lets try this for now
-	var/stability = 100//TODO: add all the stability things to this so its not very safe if you keep hitting in on things
+	var/fuel_max = 10000// Lets try this for now
+	var/stability = 100// TODO: add all the stability things to this so its not very safe if you keep hitting in on things
 
 
 /obj/item/weapon/am_containment/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			explosion(get_turf(src), 1, 2, 3, 5)//Should likely be larger but this works fine for now I guess
+			explosion(get_turf(src), 1, 2, 3, 5)// Should likely be larger but this works fine for now I guess
 			if(src)
 				qdel(src)
 			return
@@ -31,7 +31,7 @@
 			stability -= 40
 		if(3.0)
 			stability -= 20
-	//check_stability()
+	// check_stability()
 	return
 
 /obj/item/weapon/am_containment/proc/usefuel(wanted)

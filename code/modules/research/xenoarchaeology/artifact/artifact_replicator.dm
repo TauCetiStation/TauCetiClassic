@@ -69,22 +69,22 @@
 	/obj/item/weapon/grenade/chem_grenade/metalfoam\
 	)
 
-	var/quantity = rand(5,15)
+	var/quantity = rand(5, 15)
 	for(var/i=0, i<quantity, i++)
-		var/button_desc = "a [pick("yellow","purple","green","blue","red","orange","white")], "
-		button_desc += "[pick("round","square","diamond","heart","dog","human")] shaped "
-		button_desc += "[pick("toggle","switch","lever","button","pad","hole")]"
+		var/button_desc = "a [pick("yellow", "purple", "green", "blue", "red", "orange", "white")], "
+		button_desc += "[pick("round", "square", "diamond", "heart", "dog", "human")] shaped "
+		button_desc += "[pick("toggle", "switch", "lever", "button", "pad", "hole")]"
 		var/type = pick(viables)
 		viables.Remove(type)
 		construction[button_desc] = type
 
-	fail_message = "\blue [bicon(src)] a [pick("loud","soft","sinister","eery","triumphant","depressing","cheerful","angry")] \
-		[pick("horn","beep","bing","bleep","blat","honk","hrumph","ding")] sounds and a \
-		[pick("yellow","purple","green","blue","red","orange","white")] \
-		[pick("light","dial","meter","window","protrusion","knob","antenna","swirly thing")] \
-		[pick("swirls","flashes","whirrs","goes schwing","blinks","flickers","strobes","lights up")] on the \
-		[pick("front","side","top","bottom","rear","inside")] of [src]. A [pick("slot","funnel","chute","tube")] opens up in the \
-		[pick("front","side","top","bottom","rear","inside")]."
+	fail_message = "\blue [bicon(src)] a [pick("loud", "soft", "sinister", "eery", "triumphant", "depressing", "cheerful", "angry")] \
+		[pick("horn", "beep", "bing", "bleep", "blat", "honk", "hrumph", "ding")] sounds and a \
+		[pick("yellow", "purple", "green", "blue", "red", "orange", "white")] \
+		[pick("light", "dial", "meter", "window", "protrusion", "knob", "antenna", "swirly thing")] \
+		[pick("swirls", "flashes", "whirrs", "goes schwing", "blinks", "flickers", "strobes", "lights up")] on the \
+		[pick("front", "side", "top", "bottom", "rear", "inside")] of [src]. A [pick("slot", "funnel", "chute", "tube")] opens up in the \
+		[pick("front", "side", "top", "bottom", "rear", "inside")]."
 
 /obj/machinery/replicator/process()
 	if(spawning_types.len && powered())
@@ -106,14 +106,14 @@
 				source_material.loc = null
 
 			spawn_progress_time = 0
-			max_spawn_time = rand(30,100)
+			max_spawn_time = rand(30, 100)
 
 			if(!spawning_types.len || !stored_materials.len)
 				use_power = 1
 				icon_state = "borgcharger0(old)"
 
 		else if(prob(5))
-			src.visible_message("\blue [bicon(src)] [src] [pick("clicks","whizzes","whirrs","whooshes","clanks","clongs","clonks","bangs")].")
+			src.visible_message("\blue [bicon(src)] [src] [pick("clicks", "whizzes", "whirrs", "whooshes", "clanks", "clongs", "clonks", "bangs")].")
 
 	last_process_time = world.time
 
@@ -147,7 +147,7 @@
 		if(index > 0 && index <= construction.len)
 			if(stored_materials.len > spawning_types.len)
 				if(spawning_types.len)
-					src.visible_message("\blue [bicon(src)] a [pick("light","dial","display","meter","pad")] on [src]'s front [pick("blinks","flashes")] [pick("red","yellow","blue","orange","purple","green","white")].")
+					src.visible_message("\blue [bicon(src)] a [pick("light", "dial", "display", "meter", "pad")] on [src]'s front [pick("blinks", "flashes")] [pick("red", "yellow", "blue", "orange", "purple", "green", "white")].")
 				else
 					src.visible_message("\blue [bicon(src)] [src]'s front compartment slides shut.")
 

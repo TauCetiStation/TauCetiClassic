@@ -33,7 +33,7 @@
 	return ..()
 
 /obj/item/device/radio/headset/receive_range(freq, level, aiOverride = 0)
-	if (aiOverride)
+	if(aiOverride)
 		return ..(freq, level)
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
@@ -122,7 +122,7 @@
 	ks2type = /obj/item/device/encryptionkey/heads/captain
 	grid = TRUE
 
-/obj/item/device/radio/headset/heads/ai_integrated //No need to care about icons, it should be hidden inside the AI anyway.
+/obj/item/device/radio/headset/heads/ai_integrated // No need to care about icons, it should be hidden inside the AI anyway.
 	name = "AI Subspace Transceiver"
 	desc = "Integrated AI radio transceiver."
 	icon = 'icons/obj/robot_component.dmi'
@@ -133,8 +133,8 @@
 	var/disabledAi = 0 // Atlantis: Used to manually disable AI's integrated radio via intellicard menu.
 
 /obj/item/device/radio/headset/heads/ai_integrated/receive_range(freq, level)
-	if (disabledAi)
-		return -1 //Transciever Disabled.
+	if(disabledAi)
+		return -1 // Transciever Disabled.
 	return ..(freq, level, 1)
 
 /obj/item/device/radio/headset/heads/ai_integrated/emp_act()
@@ -277,7 +277,7 @@
 			translate_hive = 1
 		if(Slot.syndie)
 			syndie = 1
-	for (var/ch_name in channels)
+	for(var/ch_name in channels)
 		if(!radio_controller)
 			sleep(30) // Waiting for the radio_controller to be created.
 		if(!radio_controller)

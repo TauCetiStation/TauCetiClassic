@@ -12,20 +12,20 @@
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	var/datum/mind/M = user.mind
-	for(var/mob/living/carbon/human/H in range(2,user))
-		to_chat(H,"<span class='userdanger'>You are blinded by a shower of blood!</span>")
+	for(var/mob/living/carbon/human/H in range(2, user))
+		to_chat(H, "<span class='userdanger'>You are blinded by a shower of blood!</span>")
 		H.Stun(1)
-		H.apply_effect(20,EYE_BLUR)
+		H.apply_effect(20, EYE_BLUR)
 		H.confused += 3
-	for(var/mob/living/silicon/S in range(2,user))
-		to_chat(S,"<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
+	for(var/mob/living/silicon/S in range(2, user))
+		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
 		S.Weaken(3)
 
 	var/mob/living/simple_animal/headcrab/crab = new(get_turf(user))
 	crab.origin = M
 	M.transfer_to(crab)
-	to_chat(crab,"<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>")
-	feedback_add_details("changeling_powers","LR")
+	to_chat(crab, "<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>")
+	feedback_add_details("changeling_powers", "LR")
 	if(ismob(user))
 		playsound(user, 'sound/effects/blobattack.ogg', 100, 1)
 		user.gib()
@@ -57,7 +57,7 @@
 	if(egg_lain)
 		return
 	if(victim.stat == DEAD)
-		to_chat(src,"<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>")
+		to_chat(src, "<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>")
 		var/obj/item/changeling_egg/egg = new(victim)
 		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim

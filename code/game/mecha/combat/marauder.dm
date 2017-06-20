@@ -6,7 +6,7 @@
 	step_in = 5
 	health = 500
 	deflect_chance = 25
-	damage_absorption = list("brute"=0.5,"fire"=0.7,"bullet"=0.45,"laser"=0.6,"energy"=0.7,"bomb"=0.7)
+	damage_absorption = list("brute"=0.5, "fire"=0.7, "bullet"=0.45, "laser"=0.6, "energy"=0.7, "bomb"=0.7)
 	max_temperature = 60000
 	infra_luminosity = 3
 	var/zoom = 0
@@ -74,9 +74,9 @@
 	return
 
 /obj/mecha/combat/marauder/seraph/New()
-	..()//Let it equip whatever is needed.
+	..()// Let it equip whatever is needed.
 	var/obj/item/mecha_parts/mecha_equipment/ME
-	if(equipment.len)//Now to remove it and equip anew.
+	if(equipment.len)// Now to remove it and equip anew.
 		for(ME in equipment)
 			equipment -= ME
 			qdel(ME)
@@ -92,7 +92,7 @@
 	ME.attach(src)
 	return
 
-/obj/mecha/combat/marauder/relaymove(mob/user,direction)
+/obj/mecha/combat/marauder/relaymove(mob/user, direction)
 	if(zoom)
 		if(world.time - last_message > 20)
 			src.occupant_message("Unable to move while in zoom mode.")
@@ -149,9 +149,9 @@
 		src.occupant_message("<font color='[src.zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 		if(zoom)
 			src.occupant.client.view = 12
-			src.occupant << sound('sound/mecha/imag_enh.ogg',volume=50)
+			src.occupant << sound('sound/mecha/imag_enh.ogg', volume=50)
 		else
-			src.occupant.client.view = world.view//world.view - default mob view size
+			src.occupant.client.view = world.view// world.view - default mob view size
 	return
 
 
@@ -187,10 +187,10 @@
 
 /obj/mecha/combat/marauder/Topic(href, href_list)
 	..()
-	if (href_list["toggle_thrusters"])
+	if(href_list["toggle_thrusters"])
 		src.toggle_thrusters()
-	if (href_list["smoke"])
+	if(href_list["smoke"])
 		src.smoke()
-	if (href_list["toggle_zoom"])
+	if(href_list["toggle_zoom"])
 		src.zoom()
 	return

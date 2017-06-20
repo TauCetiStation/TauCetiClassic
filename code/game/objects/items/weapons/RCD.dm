@@ -1,11 +1,11 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /*
 CONTAINS:
 RCD
 */
 /obj/item/weapon/rcd
-	name = "rapid-construction-device (RCD)"
+	name = "rapid-construction-device(RCD)"
 	desc = "A device used to rapidly build walls/floor."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
@@ -58,7 +58,7 @@ RCD
 
 
 	attack_self(mob/user)
-		//Change the mode
+		// Change the mode
 		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 		switch(mode)
 			if(1)
@@ -88,7 +88,7 @@ RCD
 		if(!proximity) return
 		if(disabled && !isrobot(user))
 			return 0
-		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
+		if(istype(A, /area/shuttle)||istype(A, /turf/space/transit))
 			return 0
 		if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
 			return 0

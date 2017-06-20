@@ -15,13 +15,13 @@ var/datum/subsystem/diseases/SSdisease
 	..("P:[processing.len]")
 
 /datum/subsystem/diseases/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = processing.Copy()
 
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed(lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	while (currentrun.len)
+	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
 
@@ -30,5 +30,5 @@ var/datum/subsystem/diseases/SSdisease
 		else
 			processing -= thing
 
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return

@@ -47,19 +47,19 @@
 
 
 /obj/machinery/gravity_generator/proc/locatelocalareas()
-	for(var/area/A in range(src,effectiverange))
+	for(var/area/A in range(src, effectiverange))
 		if(A.name == "Space")
-			continue // No (de)gravitizing space.
+			continue // No(de)gravitizing space.
 		if(A.master && !( A.master in localareas) )
 			localareas += A.master
 
 /obj/machinery/computer/gravity_control_computer/proc/findgenerator()
 	var/obj/machinery/gravity_generator/foundgenerator = null
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		//world << "SEARCHING IN [dir]"
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
+		// world << "SEARCHING IN [dir]"
 		foundgenerator = locate(/obj/machinery/gravity_generator/, get_step(src, dir))
-		if (!isnull(foundgenerator))
-			//world << "FOUND"
+		if(!isnull(foundgenerator))
+			// world << "FOUND"
 			break
 	return foundgenerator
 
@@ -80,7 +80,7 @@
 	updatemodules()
 
 	var/dat = "<h3>Generator Control System</h3>"
-	//dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
+	// dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
 	if(gravity_generator)
 		if(gravity_generator:on)
 			dat += "<font color=green><br><tt>Gravity Status: ON</tt></font><br>"
@@ -93,7 +93,7 @@
 			if(A.has_gravity && gravity_generator:on)
 				dat += "<tt><font color=green>[A]</tt></font><br>"
 
-			else if (A.has_gravity)
+			else if(A.has_gravity)
 				dat += "<tt><font color=yellow>[A]</tt></font><br>"
 
 			else
@@ -127,12 +127,12 @@
 					if((A.master in G.localareas) && (G.on))
 						break
 				if(!G)
-					A.gravitychange(0,A)
+					A.gravitychange(0, A)
 
 
 		else
 			for(var/area/A in gravity_generator:localareas)
 				gravity_generator:on = 1
-				A.gravitychange(1,A)
+				A.gravitychange(1, A)
 
 	src.updateUsrDialog()

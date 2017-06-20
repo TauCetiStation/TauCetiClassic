@@ -1,8 +1,8 @@
-//from old nanotrasen
+// from old nanotrasen
 /obj/item/weapon/defibrillator
 	name = "defibrillator"
 	desc = "Device to treat ventricular fibrillation or pulseless ventricular tachycardia."
-	//icon_state = "Defibunit"
+	// icon_state = "Defibunit"
 	item_state = "defibunit"
 	icon_state = "defibunit"
 	var/state_on = "defibunit_on"
@@ -37,7 +37,7 @@
 						discharge()
 						return
 					charged = 2
-					//icon_state = "Defibunit_on"
+					// icon_state = "Defibunit_on"
 					icon_state = state_on
 					damtype = "fire"
 					force = 20
@@ -45,7 +45,7 @@
 				to_chat(user, "Internal battery worn out. Recharge needed.")
 
 	proc/discharge()
-		//icon_state = "Defibunit"
+		// icon_state = "Defibunit"
 		icon_state = initial(icon_state)
 		damtype = "brute"
 		charged = 0
@@ -53,14 +53,14 @@
 		charges--
 
 	attack(mob/M, mob/user)
-		if(charged == 2 && istype(M,/mob/living/carbon))
+		if(charged == 2 && istype(M, /mob/living/carbon))
 			var/mob/living/carbon/C = M
 			playsound(src, 'sound/items/defib_zap.ogg', 50, 1, 1)
 			user.visible_message("[user] shocks [M] with [src].", "You shock [M] with [src].</span>", "You hear electricity zaps flesh.")
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> Shock [M.name] ([M.ckey]) with [src.name]</font>"
 			msg_admin_attack("[user.name] ([user.ckey]) shock [M.name] ([M.ckey]) with [src.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-			if((world.time - C.timeofdeath) < 3600 || C.stat != DEAD)	//if he is dead no more than 6 minutes
+			if((world.time - C.timeofdeath) < 3600 || C.stat != DEAD)	// if he is dead no more than 6 minutes
 				if(!(NOCLONE in C.mutations))
 					if(C.health<=config.health_threshold_crit || prob(10))
 						var/suff = min(C.getOxyLoss(), 20)
@@ -97,16 +97,16 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, C)
 			s.start()
-		else return ..(M,user)
+		else return ..(M, user)
 
 	proc/return_to_body_dialog(mob/living/carbon/returnable)
-		if (returnable.key) //in body?
+		if(returnable.key) // in body?
 			returnable << 'sound/misc/mario_1up.ogg'
 		else if(returnable.mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
 					ghost << 'sound/misc/mario_1up.ogg'
-					var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
+					var/answer = alert(ghost, "You have been reanimated. Do you want to return to body?", "Reanimate", "Yes", "No")
 					if(answer == "Yes")
 						ghost.reenter_corpse()
 					break

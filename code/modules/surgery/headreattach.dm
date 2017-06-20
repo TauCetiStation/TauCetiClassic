@@ -1,4 +1,4 @@
-//This is an uguu head restoration surgery TOTALLY not yoinked from chinsky's limb reattacher
+// This is an uguu head restoration surgery TOTALLY not yoinked from chinsky's limb reattacher
 
 
 /datum/surgery_step/head
@@ -9,12 +9,12 @@
 	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return 0
-	if (!(BP.status & ORGAN_DESTROYED))
+	if(!(BP.status & ORGAN_DESTROYED))
 		return 0
-	if (BP.parent)
-		if (BP.parent.status & ORGAN_DESTROYED)
+	if(BP.parent)
+		if(BP.parent.status & ORGAN_DESTROYED)
 			return 0
 	return BP.body_zone == BP_HEAD
 
@@ -47,7 +47,7 @@
 
 /datum/surgery_step/head/peel/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.parent)
+	if(BP.parent)
 		BP = BP.parent
 		user.visible_message("\red [user]'s hand slips, ripping [target]'s [BP.name] open!", \
 		"\red Your hand slips,  ripping [target]'s [BP.name] open!")
@@ -66,7 +66,7 @@
 /datum/surgery_step/head/shape/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		return (BP.status & ORGAN_CUT_AWAY) && BP.open < 3 && !(BP.status & ORGAN_ATTACHABLE)
+		return(BP.status & ORGAN_CUT_AWAY) && BP.open < 3 && !(BP.status & ORGAN_ATTACHABLE)
 
 /datum/surgery_step/head/shape/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -82,7 +82,7 @@
 
 /datum/surgery_step/head/shape/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.parent)
+	if(BP.parent)
 		BP = BP.parent
 		user.visible_message("\red [user]'s hand slips, further rending flesh on [target]'s neck!", \
 		"\red Your hand slips, further rending flesh on [target]'s neck!")
@@ -117,7 +117,7 @@
 
 /datum/surgery_step/head/suture/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.parent)
+	if(BP.parent)
 		BP = BP.parent
 		user.visible_message("\red [user]'s hand slips, ripping apart flesh on [target]'s neck!", \
 		"\red Your hand slips, ripping apart flesh on [target]'s neck!")
@@ -155,7 +155,7 @@
 
 /datum/surgery_step/head/prepare/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.parent)
+	if(BP.parent)
 		BP = BP.parent
 		user.visible_message("\red [user]'s hand slips, searing [target]'s neck!", \
 		"\red Your hand slips, searing [target]'s [BP.name]!")
@@ -189,7 +189,7 @@
 	target.updatehealth()
 	target.UpdateDamageIcon(BP)
 	var/obj/item/weapon/organ/head/B = tool
-	if (B.brainmob.mind)
+	if(B.brainmob.mind)
 		B.brainmob.mind.transfer_to(target)
 	qdel(B)
 

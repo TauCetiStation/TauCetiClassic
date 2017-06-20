@@ -12,8 +12,8 @@
 	walltype = "gold"
 	mineral = "gold"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
-	//var/electro = 1
-	//var/shocked = null
+	// var/electro = 1
+	// var/shocked = null
 
 /turf/simulated/wall/mineral/silver
 	name = "silver wall"
@@ -22,8 +22,8 @@
 	walltype = "silver"
 	mineral = "silver"
 	sheet_type = /obj/item/stack/sheet/mineral/silver
-	//var/electro = 0.75
-	//var/shocked = null
+	// var/electro = 0.75
+	// var/shocked = null
 
 /turf/simulated/wall/mineral/diamond
 	name = "diamond wall"
@@ -61,9 +61,9 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.apply_effect(12,IRRADIATE,0)
-			for(var/turf/simulated/wall/mineral/uranium/T in range(3,src))
+			for(var/mob/living/L in range(3, src))
+				L.apply_effect(12, IRRADIATE, 0)
+			for(var/turf/simulated/wall/mineral/uranium/T in range(3, src))
 				T.radiate()
 			last_event = world.time
 			active = null
@@ -91,7 +91,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/phoron
 
 /turf/simulated/wall/mineral/phoron/attackby(obj/item/weapon/W, mob/user)
-	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
+	if(is_hot(W) > 300)// If the temperature of the object is over 300, then ignite
 		ignite(is_hot(W))
 		return
 	..()
@@ -100,7 +100,7 @@
 	spawn(2)
 	new /obj/structure/girder(src)
 	src.ChangeTurf(/turf/simulated/floor)
-	for(var/turf/simulated/floor/target_tile in range(0,src))
+	for(var/turf/simulated/floor/target_tile in range(0, src))
 		/*if(target_tile.parent && target_tile.parent.group_processing)
 			target_tile.parent.suspend_group_processing()*/
 		var/datum/gas_mixture/napalm = new
@@ -108,17 +108,17 @@
 		napalm.phoron = phoronToDeduce
 		napalm.temperature = 400+T0C
 		target_tile.assume_air(napalm)
-		spawn (0) target_tile.hotspot_expose(temperature, 400)
-	for(var/obj/structure/falsewall/phoron/F in range(3,src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
+		spawn(0) target_tile.hotspot_expose(temperature, 400)
+	for(var/obj/structure/falsewall/phoron/F in range(3, src))// Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
 		T.ChangeTurf(/turf/simulated/wall/mineral/phoron/)
 		qdel(F)
-	for(var/turf/simulated/wall/mineral/phoron/W in range(3,src))
-		W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame
-	for(var/obj/machinery/door/airlock/phoron/D in range(3,src))
+	for(var/turf/simulated/wall/mineral/phoron/W in range(3, src))
+		W.ignite((temperature/4))// Added so that you can't set off a massive chain reaction with a small flame
+	for(var/obj/machinery/door/airlock/phoron/D in range(3, src))
 		D.ignite(temperature/4)
 
-/turf/simulated/wall/mineral/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(
+/turf/simulated/wall/mineral/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)// Doesn't fucking work because walls don't interact with air :(
 	if(exposed_temperature > 300)
 		PhoronBurn(exposed_temperature)
 
@@ -127,15 +127,15 @@
 		PhoronBurn(exposed_temperature)
 
 /turf/simulated/wall/mineral/phoron/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj,/obj/item/projectile/beam))
+	if(istype(Proj, /obj/item/projectile/beam))
 		PhoronBurn(2500)
-	else if(istype(Proj,/obj/item/projectile/ion))
+	else if(istype(Proj, /obj/item/projectile/ion))
 		PhoronBurn(500)
 	..()
 
 /*
 /turf/simulated/wall/mineral/proc/shock()
-	if (electrocute_mob(user, C, src))
+	if(electrocute_mob(user, C, src))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()

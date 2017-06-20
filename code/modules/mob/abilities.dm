@@ -15,16 +15,16 @@ Creature-level abilities.
 	set desc = "An ability for testing."
 
 	// Check if the client has a mob and if the mob is valid and alive.
-	if(!mob || !istype(mob,/mob/living) || mob.stat)
+	if(!mob || !istype(mob, /mob/living) || mob.stat)
 		to_chat(src, "\red You must be corporeal and alive to do that.")
 		return 0
 
-	//Handcuff check.
+	// Handcuff check.
 	if(mob.restrained())
 		to_chat(src, "\red You cannot do this while restrained.")
 		return 0
 
-	if(istype(mob,/mob/living/carbon))
+	if(istype(mob, /mob/living/carbon))
 		var/mob/living/carbon/M = mob
 		if(M.handcuffed)
 			to_chat(src, "\red You cannot do this while cuffed.")

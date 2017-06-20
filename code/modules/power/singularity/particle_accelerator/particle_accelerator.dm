@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /*Composed of 7 parts
 3 Particle emitters
@@ -42,7 +42,7 @@ PE|PE|PE
 Icon Addemdum
 Icon system is much more robust, and the icons are all variable based.
 Each part has a reference string, powered, strength, and contruction values.
-Using this the update_icon() proc is simplified a bit (using for absolutely was problematic with naming),
+Using this the update_icon() proc is simplified a bit(using for absolutely was problematic with naming),
 so the icon_state comes out be:
 "[reference][strength]", with a switch controlling construction_states and ensuring that it doesn't
 power on while being contructed, and all these variables are set by the computer through it's scan list
@@ -52,7 +52,7 @@ Wrenched - [reference]
 Wired    - [reference]w
 Closed   - [reference]c
 Powered  - [reference]p[strength]
-Strength being set by the computer and a null strength (Computer is powered off or inactive) returns a 'null', counting as empty
+Strength being set by the computer and a null strength(Computer is powered off or inactive) returns a 'null', counting as empty
 So, hopefully this is helpful if any more icons are to be added/changed/wondering what the hell is going on here
 
 */
@@ -93,7 +93,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if(src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 270)
@@ -104,7 +104,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if(src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
@@ -127,7 +127,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user)
 	if(istool(W))
-		if(src.process_tool_hit(W,user))
+		if(src.process_tool_hit(W, user))
 			return
 	..()
 	return
@@ -137,7 +137,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	..()
 	if(master && master.active)
 		master.toggle_power()
-		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.","singulo")
+		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.", "singulo")
 
 /obj/structure/particle_accelerator/ex_act(severity)
 	switch(severity)
@@ -145,11 +145,11 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				qdel(src)
 				return
 		else
@@ -169,7 +169,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/update_icon()
 	switch(construction_state)
-		if(0,1)
+		if(0, 1)
 			icon_state="[reference]"
 		if(2)
 			icon_state="[reference]w"
@@ -200,7 +200,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 
 /obj/structure/particle_accelerator/proc/connect_master(obj/O)
-	if(O && istype(O,/obj/machinery/particle_accelerator/control_box))
+	if(O && istype(O, /obj/machinery/particle_accelerator/control_box))
 		if(O.dir == src.dir)
 			master = O
 			return 1
@@ -214,7 +214,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		return 0
 	var/temp_state = src.construction_state
 
-	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
+	switch(src.construction_state)// TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -230,12 +230,12 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 					"You remove the external bolts.")
 				temp_state--
 			else if(iscoil(O))
-				if(O:use(1,user))
+				if(O:use(1, user))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
 						"You add some wires.")
 					temp_state++
 		if(2)
-			if(iswirecutter(O))//TODO:Shock user if its on?
+			if(iswirecutter(O))// TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [src.name].", \
 					"You remove some wires.")
 				temp_state--
@@ -248,11 +248,11 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 				user.visible_message("[user.name] opens the [src.name]'s access panel.", \
 					"You open the access panel.")
 				temp_state--
-	if(temp_state == src.construction_state)//Nothing changed
+	if(temp_state == src.construction_state)// Nothing changed
 		return 0
 	else
 		src.construction_state = temp_state
-		if(src.construction_state < 3)//Was taken apart, update state
+		if(src.construction_state < 3)// Was taken apart, update state
 			update_state()
 		update_icon()
 		return 1
@@ -283,7 +283,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if(src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 270)
@@ -294,7 +294,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if(src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
@@ -320,7 +320,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user)
 	if(istool(W))
-		if(src.process_tool_hit(W,user))
+		if(src.process_tool_hit(W, user))
 			return
 	..()
 	return
@@ -331,11 +331,11 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				qdel(src)
 				return
 		else
@@ -364,7 +364,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if(!ismob(user) || !isobj(O))
 		return 0
 	var/temp_state = src.construction_state
-	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
+	switch(src.construction_state)// TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -385,7 +385,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 						"You add some wires.")
 					temp_state++
 		if(2)
-			if(iswirecutter(O))//TODO:Shock user if its on?
+			if(iswirecutter(O))// TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [src.name].", \
 					"You remove some wires.")
 				temp_state--
@@ -399,10 +399,10 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 					"You open the access panel.")
 				temp_state--
 				active = 0
-	if(temp_state == src.construction_state)//Nothing changed
+	if(temp_state == src.construction_state)// Nothing changed
 		return 0
 	else
-		if(src.construction_state < 3)//Was taken apart, update state
+		if(src.construction_state < 3)// Was taken apart, update state
 			update_state()
 			if(use_power)
 				use_power = 0

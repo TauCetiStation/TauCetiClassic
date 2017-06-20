@@ -1,4 +1,4 @@
-//Procedures in this file: Fracture repair surgery
+// Procedures in this file: Fracture repair surgery
 //////////////////////////////////////////////////////////////////
 //						BONE SURGERY							//
 //////////////////////////////////////////////////////////////////
@@ -21,10 +21,10 @@
 
 /datum/surgery_step/glue_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.stage == 0)
-		user.visible_message("[user] starts applying medication to the damaged bones in [target]'s [BP.name] with \the [tool]." , \
+	if(BP.stage == 0)
+		user.visible_message("[user] starts applying medication to the damaged bones in [target]'s [BP.name] with \the [tool].", \
 		"You start applying medication to the damaged bones in [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("Something in your [BP.name] is causing you a lot of pain!",1)
+	target.custom_pain("Something in your [BP.name] is causing you a lot of pain!", 1)
 	..()
 
 /datum/surgery_step/glue_bone/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -35,7 +35,7 @@
 
 /datum/surgery_step/glue_bone/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!" , \
+	user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!", \
 	"\red Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!")
 
 /datum/surgery_step/set_bone
@@ -54,14 +54,14 @@
 
 /datum/surgery_step/set_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] is beginning to set the bone in [target]'s [BP.name] in place with \the [tool]." , \
+	user.visible_message("[user] is beginning to set the bone in [target]'s [BP.name] in place with \the [tool].", \
 		"You are beginning to set the bone in [target]'s [BP.name] in place with \the [tool].")
-	target.custom_pain("The pain in your [BP.name] is going to make you pass out!",1)
+	target.custom_pain("The pain in your [BP.name] is going to make you pass out!", 1)
 	..()
 
 /datum/surgery_step/set_bone/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.status & ORGAN_BROKEN)
+	if(BP.status & ORGAN_BROKEN)
 		user.visible_message("\blue [user] sets the bone in [target]'s [BP.name] in place with \the [tool].", \
 			"\blue You set the bone in [target]'s [BP.name] in place with \the [tool].")
 		BP.stage = 2
@@ -72,7 +72,7 @@
 
 /datum/surgery_step/set_bone/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, damaging the bone in [target]'s [BP.name] with \the [tool]!" , \
+	user.visible_message("\red [user]'s hand slips, damaging the bone in [target]'s [BP.name] with \the [tool]!", \
 		"\red Your hand slips, damaging the bone in [target]'s [BP.name] with \the [tool]!")
 	BP.createwound(BRUISE, 5)
 
@@ -91,19 +91,19 @@
 	return BP.body_zone == BP_HEAD && BP.open >= 2 && BP.stage == 1
 
 /datum/surgery_step/mend_skull/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] is beginning to piece together [target]'s skull with \the [tool]."  , \
+	user.visible_message("[user] is beginning to piece together [target]'s skull with \the [tool].", \
 		"You are beginning to piece together [target]'s skull with \the [tool].")
 	..()
 
 /datum/surgery_step/mend_skull/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] sets [target]'s skull with \the [tool]." , \
+	user.visible_message("\blue [user] sets [target]'s skull with \the [tool].", \
 		"\blue You set [target]'s skull with \the [tool].")
 	BP.stage = 2
 
 /datum/surgery_step/mend_skull/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, damaging [target]'s face with \the [tool]!"  , \
+	user.visible_message("\red [user]'s hand slips, damaging [target]'s face with \the [tool]!", \
 		"\red Your hand slips, damaging [target]'s face with \the [tool]!")
 	var/obj/item/organ/external/head/H = BP
 	H.createwound(BRUISE, 10)
@@ -133,7 +133,7 @@
 
 /datum/surgery_step/finish_bone/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has mended the damaged bones in [target]'s [BP.name] with \the [tool]."  , \
+	user.visible_message("\blue [user] has mended the damaged bones in [target]'s [BP.name] with \the [tool].", \
 		"\blue You have mended the damaged bones in [target]'s [BP.name] with \the [tool]." )
 	BP.status &= ~(ORGAN_BROKEN | ORGAN_SPLINTED)
 	BP.stage = 0
@@ -141,5 +141,5 @@
 
 /datum/surgery_step/finish_bone/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!" , \
+	user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!", \
 	"\red Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!")

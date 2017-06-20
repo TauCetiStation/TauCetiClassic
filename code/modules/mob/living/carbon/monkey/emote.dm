@@ -1,55 +1,55 @@
-/mob/living/carbon/monkey/emote(act,m_type=1,message = null)
+/mob/living/carbon/monkey/emote(act, m_type=1, message = null)
 
 	var/param = null
-	if (findtext(act, "-", 1, null))
+	if(findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
+	if(findtext(act, "s",-1) && !findtext(act, "_",-2))// Removes ending s's unless they are prefixed with a '_'
+		act = copytext(act, 1, length(act))
 
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 
 	switch(act)
-		if ("me")
+		if("me")
 			if(silent)
 				return
-			if (src.client)
-				if (client.prefs.muted & MUTE_IC)
-					to_chat(src, "\red You cannot send IC messages (muted).")
+			if(src.client)
+				if(client.prefs.muted & MUTE_IC)
+					to_chat(src, "\red You cannot send IC messages(muted).")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if(src.client.handle_spam_prevention(message, MUTE_IC))
 					return
-			if (stat)
+			if(stat)
 				return
 			if(!(message))
 				return
 			return custom_emote(m_type, message)
 
 
-		if ("custom")
+		if("custom")
 			return custom_emote(m_type, message)
 
-		if ("chirp")
-			if(istype(src,/mob/living/carbon/monkey/diona))
+		if("chirp")
+			if(istype(src, /mob/living/carbon/monkey/diona))
 				message = "<B>The [src.name]</B> chirps!"
 				playsound(src.loc, 'sound/misc/nymphchirp.ogg', 50, 0)
 				m_type = 2
 		if("sign")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = text("<B>The monkey</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
 		if("scratch")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> scratches."
 				m_type = 1
 		if("whimper")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B> whimpers."
 				m_type = 2
 		if("roar")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B> roars."
 				m_type = 2
 		if("tail")
@@ -65,11 +65,11 @@
 			message = "<B>The [src.name]</B> drools."
 			m_type = 1
 		if("paw")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> flails his paw."
 				m_type = 1
 		if("scretch")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B> scretches."
 				m_type = 2
 		if("choke")
@@ -94,18 +94,18 @@
 			message = "<B>The [src.name]</B> twitches violently."
 			m_type = 1
 		if("dance")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> dances around happily."
 				m_type = 1
 		if("roll")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> rolls."
 				m_type = 1
 		if("shake")
 			message = "<B>The [src.name]</B> shakes his head."
 			m_type = 1
 		if("gnarl")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B> gnarls and shows his teeth.."
 				m_type = 2
 		if("jump")
@@ -119,7 +119,7 @@
 			message = "<b>The [src.name]</b> lets out a faint chimper as it collapses and stops moving..."
 			m_type = 1
 		if("cough")
-			if(istype(src,/mob/living/carbon/monkey/diona))
+			if(istype(src, /mob/living/carbon/monkey/diona))
 				message = "<B>The [src.name]</B> shrinks and twitches slightly"
 				m_type = 1
 			else
@@ -127,21 +127,21 @@
 				m_type = 2
 		if("help")
 			var/text = "choke, "
-			if(istype(src,/mob/living/carbon/monkey/diona))
+			if(istype(src, /mob/living/carbon/monkey/diona))
 				text += "chirp, "
 			text += "collapse, cough, dance, deathgasp, drool, gasp, shiver, gnarl, jump, paw, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
 			to_chat(src, text)
 		else
 			to_chat(src, text("Invalid Emote: []", act))
-	if ((message && src.stat == CONSCIOUS))
+	if((message && src.stat == CONSCIOUS))
 		if(src.client)
 			log_emote("[name]/[key] : [message]")
-		if (m_type & 1)
+		if(m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
-				//Foreach goto(703)
+				// Foreach goto(703)
 		else
 			for(var/mob/O in hearers(src, null))
 				O.show_message(message, m_type)
-				//Foreach goto(746)
+				// Foreach goto(746)
 	return

@@ -1,7 +1,7 @@
 /obj/nano_module/power_monitor
 	name = "Power monitor"
 	var/list/grid_sensors
-	var/active_sensor = null	//name_tag of the currently selected sensor
+	var/active_sensor = null	// name_tag of the currently selected sensor
 
 /obj/nano_module/power_monitor/New()
 	..()
@@ -27,7 +27,7 @@
 		data["focus"] = focus.return_reading_data()
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "power_monitor.tmpl", "Power Monitoring Console", 800, 500)
 		ui.set_initial_data(data)
 		ui.open()
@@ -47,7 +47,7 @@
 				grid_sensors += S
 
 // Proc: Topic()
-// Parameters: 2 (href, href_list - allows us to process UI clicks)
+// Parameters: 2(href, href_list - allows us to process UI clicks)
 // Description: Allows us to process UI clicks, which are relayed in form of hrefs.
 /obj/nano_module/power_monitor/Topic(href, href_list)
 	if(..())

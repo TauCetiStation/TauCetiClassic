@@ -1,6 +1,6 @@
-//Let's get some REAL contraband stuff in here. Because come on, getting brigged for LIPSTICK is no fun.
+// Let's get some REAL contraband stuff in here. Because come on, getting brigged for LIPSTICK is no fun.
 
-//Illicit drugs~
+// Illicit drugs~
 /obj/item/weapon/storage/pill_bottle/happy
 	name = "Happy pills"
 	desc = "Highly illegal drug. When you want to see the rainbow."

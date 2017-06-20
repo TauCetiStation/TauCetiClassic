@@ -1,6 +1,6 @@
 // Script -> BYOND code procs
 #define SCRIPT_MAX_REPLACEMENTS_ALLOWED 200
-// --- List operations (lists known as vectors in n_script) ---
+// --- List operations(lists known as vectors in n_script) ---
 
 // Clone of list()
 /proc/n_list()
@@ -135,7 +135,7 @@
 		return uppertext_plus(string)
 
 /*
-//Makes a list where all indicies in a string is a seperate index in the list
+// Makes a list where all indicies in a string is a seperate index in the list
 // JUST A HELPER DON'T ADD TO NTSCRIPT
 proc/string_tolist(string)
 	var/list/L = new/list()
@@ -242,50 +242,50 @@ proc/n_clamp(num, min=-1, max=1)
 // Returns 1 if N is inbetween Min and Max
 proc/n_inrange(num, min=-1, max=1)
 	if(isnum(num)&&isnum(min)&&isnum(max))
-		return ((min <= num) && (num <= max))
+		return((min <= num) && (num <= max))
 // END OF BY DONKIE :(
 
 // Non-recursive
 // Imported from Mono string.ReplaceUnchecked
-/proc/string_replacetext(haystack,a,b)
+/proc/string_replacetext(haystack, a, b)
 	if(istext(haystack)&&istext(a)&&istext(b))
 		var/i = 1
 		var/lenh=lentext(haystack)
 		var/lena=lentext(a)
-		//var/lenb=lentext(b)
+		// var/lenb=lentext(b)
 		var/count = 0
 		var/list/dat = list()
-		while (i < lenh)
+		while(i < lenh)
 			var/found = findtext(haystack, a, i, 0)
-			//log_misc("findtext([haystack], [a], [i], 0)=[found]")
-			if (found == 0) // Not found
+			// log_misc("findtext([haystack], [a], [i], 0)=[found]")
+			if(found == 0) // Not found
 				break
 			else
-				if (count < SCRIPT_MAX_REPLACEMENTS_ALLOWED)
+				if(count < SCRIPT_MAX_REPLACEMENTS_ALLOWED)
 					dat+=found
 					count+=1
 				else
-					//log_misc("Script found [a] [count] times, aborted")
+					// log_misc("Script found [a] [count] times, aborted")
 					break
-			//log_misc("Found [a] at [found]! Moving up...")
+			// log_misc("Found [a] at [found]! Moving up...")
 			i = found + lena
-		if (count == 0)
+		if(count == 0)
 			return haystack
-		//var/nlen = lenh + ((lenb - lena) * count)
-		var/buf = copytext(haystack,1,dat[1]) // Prefill
+		// var/nlen = lenh + ((lenb - lena) * count)
+		var/buf = copytext(haystack, 1, dat[1]) // Prefill
 		var/lastReadPos = 0
-		for (i = 1, i <= count, i++)
+		for(i = 1, i <= count, i++)
 			var/precopy = dat[i] - lastReadPos-1
-			//internal static unsafe void CharCopy (String target, int targetIndex, String source, int sourceIndex, int count)
-			//fixed (char* dest = target, src = source)
-			//CharCopy (dest + targetIndex, src + sourceIndex, count);
-			//CharCopy (dest + curPos, source + lastReadPos, precopy);
-			buf+=copytext(haystack,lastReadPos,precopy)
+			// internal static unsafe void CharCopy(String target, int targetIndex, String source, int sourceIndex, int count)
+			// fixed(char* dest = target, src = source)
+			// CharCopy(dest + targetIndex, src + sourceIndex, count);
+			// CharCopy(dest + curPos, source + lastReadPos, precopy);
+			buf+=copytext(haystack, lastReadPos, precopy)
 			log_misc("buf+=copytext([haystack],[lastReadPos],[precopy])")
 			log_misc("[buf]")
 			lastReadPos = dat[i] + lena
-			//CharCopy (dest + curPos, replace, newValue.length);
+			// CharCopy(dest + curPos, replace, newValue.length);
 			buf+=b
 			log_misc("[buf]")
-		buf+=copytext(haystack,lastReadPos, 0)
+		buf+=copytext(haystack, lastReadPos, 0)
 		return buf

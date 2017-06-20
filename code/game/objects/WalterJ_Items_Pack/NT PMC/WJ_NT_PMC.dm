@@ -23,7 +23,7 @@
 	item_state = "nt_pmc_uniform"
 	item_color = "nt_pmc_uniform"
 
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/nt_pmc_uniform_light
 	icon = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
@@ -35,7 +35,7 @@
 	item_state = "nt_pmc_uniform_light"
 	item_color = "nt_pmc_uniform_light"
 
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/M89_Helmet
 	icon = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'

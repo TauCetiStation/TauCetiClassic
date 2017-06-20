@@ -6,7 +6,7 @@ various procs used to manipulate it. It has four variables and seven procs:
 Variables:
 - possible_tech is a list of all the /datum/tech that can potentially be researched by the player. The RefreshResearch() proc
 (explained later) only goes through those when refreshing what you know. Generally, possible_tech contains ALL of the existing tech
-but it is possible to add tech to the game that DON'T start in it (example: Xeno tech). Generally speaking, you don't want to mess
+but it is possible to add tech to the game that DON'T start in it(example: Xeno tech). Generally speaking, you don't want to mess
 with these since they should be the default version of the datums. They're actually stored in a list rather then using typesof to
 refer to them since it makes it a bit easier to search through them for specific information.
 - know_tech is the companion list to possible_tech. It's the tech you can actually research and improve. Until it's added to this
@@ -15,11 +15,11 @@ list, it can't be improved. All the tech in this list are visible to the player.
 - known_designs is functionally identical to known_tech except it's for /datum/design
 
 Procs:
-- TechHasReqs: Used by other procs (specifically RefreshResearch) to see whether all of a tech's requirements are currently in
+- TechHasReqs: Used by other procs(specifically RefreshResearch) to see whether all of a tech's requirements are currently in
 known_tech and at a high enough level.
 - DesignHasReqs: Same as TechHasReqs but for /datum/design and known_design.
-- AddTech2Known: Adds a /datum/tech to known_tech. It checks to see whether it already has that tech (if so, it just replaces it). If
-it doesn't have it, it adds it. Note: It does NOT check possible_tech at all. So if you want to add something strange to it (like
+- AddTech2Known: Adds a /datum/tech to known_tech. It checks to see whether it already has that tech(if so, it just replaces it). If
+it doesn't have it, it adds it. Note: It does NOT check possible_tech at all. So if you want to add something strange to it(like
 a player made tech?) you can.
 - AddDesign2Known: Same as AddTech2Known except for /datum/design and known_designs.
 - RefreshResearch: This is the workhorse of the R&D system. It updates the /datum/research holder and adds any unlocked tech paths
@@ -27,7 +27,7 @@ and designs you have reached the requirements for. It only checks through possib
 accidentally add "secret" tech to it.
 - UpdateTech is used as part of the actual researching process. It takes an ID and finds techs with that same ID in known_tech. When
 it finds it, it checks to see whether it can improve it at all. If the known_tech's level is less then or equal to
-the inputted level, it increases the known tech's level to the inputted level -1 or know tech's level +1 (whichever is higher).
+the inputted level, it increases the known tech's level to the inputted level -1 or know tech's level +1(whichever is higher).
 
 The tech datums are the actual "tech trees" that you improve through researching. Each one has five variables:
 - Name:		Pretty obvious. This is often viewable to the players.
@@ -44,15 +44,15 @@ research holder datum.
 **	Includes all the helper procs and basic tech processing.  **
 ***************************************************************/
 
-/datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
+/datum/research								// Holder for all the existing, archived, and known tech. Individual to console.
 
-									//Datum/tech go here.
-	var/list/possible_tech = list()			//List of all tech in the game that players have access to (barring special events).
-	var/list/known_tech = list()				//List of locally known tech.
-	var/list/possible_designs = list()		//List of all designs (at base reliability).
-	var/list/known_designs = list()			//List of available designs (at base reliability).
+									// Datum/tech go here.
+	var/list/possible_tech = list()			// List of all tech in the game that players have access to(barring special events).
+	var/list/known_tech = list()				// List of locally known tech.
+	var/list/possible_designs = list()		// List of all designs(at base reliability).
+	var/list/known_designs = list()			// List of available designs(at base reliability).
 
-/datum/research/New()		//Insert techs into possible_tech here. Known_tech automatically updated.
+/datum/research/New()		// Insert techs into possible_tech here. Known_tech automatically updated.
 	for(var/T in typesof(/datum/tech) - /datum/tech)
 		possible_tech += new T(src)
 	for(var/D in typesof(/datum/design) - /datum/design)
@@ -61,8 +61,8 @@ research holder datum.
 
 
 
-//Checks to see if tech has all the required pre-reqs.
-//Input: datum/tech; Output: 0/1 (false/true)
+// Checks to see if tech has all the required pre-reqs.
+// Input: datum/tech; Output: 0/1(false/true)
 /datum/research/proc/TechHasReqs(datum/tech/T)
 	if(T.req_tech.len == 0)
 		return 1
@@ -77,8 +77,8 @@ research holder datum.
 	else
 		return 0
 
-//Checks to see if design has all the required pre-reqs.
-//Input: datum/design; Output: 0/1 (false/true)
+// Checks to see if design has all the required pre-reqs.
+// Input: datum/design; Output: 0/1(false/true)
 /datum/research/proc/DesignHasReqs(datum/design/D)
 	if(D.req_tech.len == 0)
 		return 1
@@ -94,8 +94,8 @@ research holder datum.
 	else
 		return 0
 /*
-//Checks to see if design has all the required pre-reqs.
-//Input: datum/design; Output: 0/1 (false/true)
+// Checks to see if design has all the required pre-reqs.
+// Input: datum/design; Output: 0/1(false/true)
 /datum/research/proc/DesignHasReqs(datum/design/D)
 	if(D.req_tech.len == 0)
 		return 1
@@ -110,8 +110,8 @@ research holder datum.
 	else
 		return 0
 */
-//Adds a tech to known_tech list. Checks to make sure there aren't duplicates and updates existing tech's levels if needed.
-//Input: datum/tech; Output: Null
+// Adds a tech to known_tech list. Checks to make sure there aren't duplicates and updates existing tech's levels if needed.
+// Input: datum/tech; Output: Null
 /datum/research/proc/AddTech2Known(datum/tech/T)
 	for(var/datum/tech/known in known_tech)
 		if(T.id == known.id)
@@ -130,8 +130,8 @@ research holder datum.
 	known_designs += D
 	return
 
-//Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
-//Input/Output: n/a
+// Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
+// Input/Output: n/a
 /datum/research/proc/RefreshResearch()
 	for(var/datum/tech/PT in possible_tech)
 		if(TechHasReqs(PT))
@@ -140,13 +140,13 @@ research holder datum.
 		if(DesignHasReqs(PD))
 			AddDesign2Known(PD)
 	for(var/datum/tech/T in known_tech)
-		T = between(1,T.level,20)
+		T = between(1, T.level, 20)
 	for(var/datum/design/D in known_designs)
 		D.CalcReliability(known_tech)
 	return
 
-//Refreshes the levels of a given tech.
-//Input: Tech's ID and Level; Output: null
+// Refreshes the levels of a given tech.
+// Input: Tech's ID and Level; Output: null
 /datum/research/proc/UpdateTech(ID, level)
 	for(var/datum/tech/KT in known_tech)
 		if(KT.id == ID)
@@ -154,8 +154,8 @@ research holder datum.
 				KT.level = max((KT.level + 1), (level - 1))
 	return
 
-//Checks if the origin level can raise current tech levels
-//Input: Tech's ID and Level; Output: TRUE for yes, FALSE for no
+// Checks if the origin level can raise current tech levels
+// Input: Tech's ID and Level; Output: TRUE for yes, FALSE for no
 /datum/research/proc/IsTechHigher(ID, level)
 	for(var/datum/tech/KT in known_tech)
 		if(KT.id == ID)
@@ -168,7 +168,7 @@ research holder datum.
 				if(D.req_tech[T])
 					D.reliability = min(100, D.reliability + 1)
 					if(D.build_path == I.type)
-						D.reliability = min(100, D.reliability + rand(1,3))
+						D.reliability = min(100, D.reliability + rand(1, 3))
 						if(I.crit_fail)
 							D.reliability = min(100, D.reliability + rand(3, 5))
 
@@ -178,16 +178,16 @@ research holder datum.
 **	Includes all the various technoliges and what they make.  **
 ***************************************************************/
 
-datum/tech	//Datum of individual technologies.
-	var/name = "name"					//Name of the technology.
-	var/desc = "description"			//General description of what it does and what it makes.
-	var/id = "id"						//An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
-	var/level = 1						//A simple number scale of the research level. Level 0 = Secret tech.
-	var/rare = 1						//How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
-	var/list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
+datum/tech	// Datum of individual technologies.
+	var/name = "name"					// Name of the technology.
+	var/desc = "description"			// General description of what it does and what it makes.
+	var/id = "id"						// An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
+	var/level = 1						// A simple number scale of the research level. Level 0 = Secret tech.
+	var/rare = 1						// How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
+	var/list/req_tech = list()			// List of ids associated values of techs required to research this tech. "id" = #
 
 
-//Trunk Technologies (don't require any other techs and you start knowning them).
+// Trunk Technologies(don't require any other techs and you start knowning them).
 
 datum/tech/materials
 	name = "Materials Research"
@@ -246,9 +246,9 @@ datum/tech/arcane
 	name = "Arcane Research"
 	desc = "Research into the occult and arcane field for use in practical science."
 	id = "arcane"
-	level = 0 //It didn't become "secret" as advertised.
+	level = 0 // It didn't become "secret" as advertised.
 
-//Branch Techs
+// Branch Techs
 datum/tech/explosives
 	name = "Explosives Research"
 	desc = "The creation and application of explosive materials."

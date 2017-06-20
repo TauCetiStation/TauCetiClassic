@@ -23,7 +23,7 @@
 	desc = "This one protects your head and makes your enemies tremble."
 	icon_state = "battle_bucket"
 	item_state = "bucket"
-	armor = list(melee = 20, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
+	armor = list(melee = 20, bullet = 5, laser = 5, energy = 3, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/weapon/handcuffs/cable/attackby(obj/item/I, mob/user)
 	..()
@@ -150,10 +150,10 @@
 		return
 
 	if(status)
-		//H.Stun(stunforce)
-		//H.Weaken(stunforce)
-		//H.apply_effect(STUTTER, stunforce)
-		H.apply_effect(60,AGONY,0)
+		// H.Stun(stunforce)
+		// H.Weaken(stunforce)
+		// H.apply_effect(STUTTER, stunforce)
+		H.apply_effect(60, AGONY, 0)
 		user.lastattacked = M
 		H.lastattacker = user
 		if(isrobot(src.loc))

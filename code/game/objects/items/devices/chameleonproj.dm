@@ -53,7 +53,7 @@
 	if(!active_dummy)
 		active_dummy = new
 	if(active_dummy.current_type != target.type)
-		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
+		if(istype(target, /obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
 			copy_item(target)
@@ -86,7 +86,7 @@
 	playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 	var/obj/effect/overlay/T = new /obj/effect/overlay(get_turf(src))
 	T.icon = 'icons/effects/effects.dmi'
-	flick("emppulse",T)
+	flick("emppulse", T)
 	spawn(8)
 		qdel(T)
 

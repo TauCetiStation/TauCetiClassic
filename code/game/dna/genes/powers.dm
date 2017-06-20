@@ -2,7 +2,7 @@
 // POWERS
 ///////////////////////////////////
 //#Z2
-//Added activation chance for every power
+// Added activation chance for every power
 
 /datum/dna/gene/basic/nobreath
 	name="No Breathing"
@@ -23,11 +23,11 @@
 		block=REMOTEVIEWBLOCK
 
 	activate(mob/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.verbs += /mob/living/carbon/human/proc/remoteobserve
 
 	deactivate(mob/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.verbs -= /mob/living/carbon/human/proc/remoteobserve
 
 /datum/dna/gene/basic/regenerate
@@ -39,10 +39,10 @@
 	New()
 		block=REGENERATEBLOCK
 
-	can_activate(mob/M,flags)
+	can_activate(mob/M, flags)
 		if((SMALLSIZE in M.mutations))
 			return 0
-		return ..(M,flags)
+		return ..(M, flags)
 
 	OnMobLife(mob/living/carbon/human/M)
 		if(!istype(M)) return
@@ -66,8 +66,8 @@
 		else
 			if(prob(20))
 				if(M.getOxyLoss() < 126) M.adjustOxyLoss(-1)
-				if(M.getBruteLoss() < 126) M.heal_bodypart_damage(1,0)
-				if(M.getFireLoss() < 126) M.heal_bodypart_damage(0,1)
+				if(M.getBruteLoss() < 126) M.heal_bodypart_damage(1, 0)
+				if(M.getFireLoss() < 126) M.heal_bodypart_damage(0, 1)
 				if(M.getToxLoss() < 126) M.adjustToxLoss(-1)
 				if(M.getCloneLoss() < 126) M.adjustCloneLoss(-1)
 			if(M.getBrainLoss()) M.adjustBrainLoss(-0.10)
@@ -91,11 +91,11 @@
 		block=REMOTETALKBLOCK
 
 	activate(mob/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.verbs += /mob/living/carbon/human/proc/remotesay
 
 	deactivate(mob/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.verbs -= /mob/living/carbon/human/proc/remotesay
 
 /datum/dna/gene/basic/morph
@@ -124,12 +124,12 @@
 	New()
 		block=COLDBLOCK
 
-	can_activate(mob/M,flags)
+	can_activate(mob/M, flags)
 		if(COLD_RESISTANCE in M.mutations)
 			return 0
-		return ..(M,flags)
+		return ..(M, flags)
 
-	OnDrawUnderlays(mob/M,g,fat)
+	OnDrawUnderlays(mob/M, g, fat)
 		return "fire[fat]_s"
 
 /datum/dna/gene/basic/cold_resist
@@ -141,12 +141,12 @@
 	New()
 		block=FIREBLOCK
 
-	can_activate(mob/M,flags)
+	can_activate(mob/M, flags)
 		if(RESIST_HEAT in M.mutations)
 			return 0
-		return ..(M,flags)
+		return ..(M, flags)
 
-	OnDrawUnderlays(mob/M,g,fat)
+	OnDrawUnderlays(mob/M, g, fat)
 		return "fire[fat]_s"
 
 /datum/dna/gene/basic/noprints
@@ -176,14 +176,14 @@
 	New()
 		block=SMALLSIZEBLOCK
 
-	can_activate(mob/M,flags)
+	can_activate(mob/M, flags)
 		// Can't be big, small and regenerate.
 		if( (REGEN in M.mutations)) //#Z2
 			return 0
-		return ..(M,flags)
+		return ..(M, flags)
 
 	activate(mob/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.pass_flags |= 1
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -191,20 +191,20 @@
 			to_chat(H, "\blue \b Ventcrawling allowed")
 
 		var/matrix/Mx = matrix()
-		Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
+		Mx.Scale(0.8) // Makes our hulk to be bigger than any normal human.
 		Mx.Translate(0,-2)
 		M.transform = Mx
 
 	deactivate(mob/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.pass_flags &= ~1
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.ventcrawler = 0
 
 		var/matrix/Mx = matrix()
-		Mx.Scale(1) ////Reset size of our halfling
-		Mx.Translate(0,0)
+		Mx.Scale(1) //// Reset size of our halfling
+		Mx.Translate(0, 0)
 		M.transform = Mx
 
 /datum/dna/gene/basic/hulk
@@ -216,11 +216,11 @@
 /datum/dna/gene/basic/hulk/New()
 	block=HULKBLOCK
 
-	/*can_activate(mob/M,flags)
+	/*can_activate(mob/M, flags)
 		// Can't be big, small and regenerate.
 		if( (SMALLSIZE in M.mutations) || (REGEN in M.mutations)) //#Z2
 			return 0
-		return ..(M,flags)*/
+		return ..(M, flags)*/
 
 /datum/dna/gene/basic/hulk/activate(mob/M, connected, flags)
 	if(!M.mind)
@@ -229,15 +229,15 @@
 		return
 	M.mind.hulkizing = 1
 
-	..(M,connected,flags)
+	..(M, connected, flags)
 
 	addtimer(CALLBACK(src, .proc/mutate_user, M), rand(600, 900), TIMER_UNIQUE)
 
 /datum/dna/gene/basic/hulk/proc/mutate_user(mob/M)
 	if(!M)
 		return
-	if(!(HULK in M.mutations)) //If user cleans hulk mutation before timer runs out, then there is no mutation.
-		M.mind.hulkizing = 0   //We don't want to waste user's try, so user can mutate once later.
+	if(!(HULK in M.mutations)) // If user cleans hulk mutation before timer runs out, then there is no mutation.
+		M.mind.hulkizing = 0   // We don't want to waste user's try, so user can mutate once later.
 		return
 
 	message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span> (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
@@ -287,5 +287,5 @@
 	New()
 		block=TELEBLOCK
 
-	OnDrawUnderlays(mob/M,g,fat)
+	OnDrawUnderlays(mob/M, g, fat)
 		return "telekinesishead[fat]_s"

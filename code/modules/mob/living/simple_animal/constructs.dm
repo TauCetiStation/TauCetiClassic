@@ -3,7 +3,7 @@
 	real_name = "Construct"
 	desc = ""
 	speak_emote = list("hisses")
-	emote_hear = list("wails","screeches")
+	emote_hear = list("wails", "screeches")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm = "punches"
@@ -35,7 +35,7 @@
 
 /mob/living/simple_animal/construct/death()
 	..()
-	new /obj/item/weapon/ectoplasm (src.loc)
+	new /obj/item/weapon/ectoplasm(src.loc)
 	visible_message("<span class='red'>[src] collapses in a shattered heap.</span>")
 	ghostize(bancheck = TRUE)
 	qdel(src)
@@ -43,9 +43,9 @@
 
 /mob/living/simple_animal/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
-	if (src.health < src.maxHealth)
+	if(src.health < src.maxHealth)
 		msg += "<span class='warning'>"
-		if (src.health >= src.maxHealth/2)
+		if(src.health >= src.maxHealth/2)
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<B>It looks severely dented!</B>\n"
@@ -74,7 +74,7 @@
 /mob/living/simple_animal/construct/attackby(obj/item/O, mob/user)
 	if(O.force)
 		var/damage = O.force
-		if (O.damtype == HALLOSS)
+		if(O.damtype == HALLOSS)
 			damage = 0
 		adjustBruteLoss(damage)
 		visible_message("<span class='danger'>[src] has been attacked with [O] by [user].</span>")
@@ -89,7 +89,7 @@
 	return
 
 
-/////////////////Juggernaut///////////////
+///////////////// Juggernaut///////////////
 /mob/living/simple_animal/construct/armoured
 	name = "Juggernaut"
 	real_name = "Juggernaut"
@@ -114,7 +114,7 @@
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if(O.damtype == HALLOSS)
 				damage = 0
 			adjustBruteLoss(damage)
 			visible_message("<span class='danger'>[src] has been attacked with [O] by [user].</span>")
@@ -147,10 +147,10 @@
 
 			return -1 // complete projectile permutation
 
-	return (..(P))
+	return(..(P))
 
 
-////////////////////////Wraith/////////////////////////////////////////////
+//////////////////////// Wraith/////////////////////////////////////////////
 /mob/living/simple_animal/construct/wraith
 	name = "Wraith"
 	real_name = "Wraith"
@@ -169,7 +169,7 @@
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 
 
-/////////////////////////////Artificer/////////////////////////
+///////////////////////////// Artificer/////////////////////////
 /mob/living/simple_animal/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
@@ -193,7 +193,7 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone)
 
 
-/////////////////////////////Behemoth/////////////////////////
+///////////////////////////// Behemoth/////////////////////////
 /mob/living/simple_animal/construct/behemoth
 	name = "Behemoth"
 	real_name = "Behemoth"
@@ -219,7 +219,7 @@
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if(O.damtype == HALLOSS)
 				damage = 0
 			adjustBruteLoss(damage)
 			visible_message("<span class='danger'>[src] has been attacked with [O] by [user].</span>")
@@ -230,7 +230,7 @@
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
 
 
-/////////////////////////////////////Harvester construct/////////////////////////////////
+///////////////////////////////////// Harvester construct/////////////////////////////////
 /mob/living/simple_animal/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"

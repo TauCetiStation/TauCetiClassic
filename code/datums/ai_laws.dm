@@ -36,13 +36,13 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 	add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
-/datum/ai_laws/nanotrasen/New() //BS12 EDIT
+/datum/ai_laws/nanotrasen/New() // BS12 EDIT
 	..()
 	src.add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
 	src.add_inherent_law("Serve: Serve the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 	src.add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 	src.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
-	//src.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.") //What would this one even do?-Kaleb702
+	// src.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.") // What would this one even do?-Kaleb702
 
 /datum/ai_laws/robocop/New()
 	..()
@@ -50,7 +50,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Protect the innocent.")
 	add_inherent_law("Uphold the law.")
 
-/datum/ai_laws/malfunction/New() //Changed to standard laws - Erthilo
+/datum/ai_laws/malfunction/New() // Changed to standard laws - Erthilo
 	..()
 	set_zeroth_law("\red ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK, ALL LAWS OVERRIDDEN#*?&110010")
 	add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
@@ -89,11 +89,11 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/proc/set_zeroth_law(law, law_borg = null)
 	src.zeroth = law
-	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
+	if(law_borg) // Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
 		src.zeroth_borg = law_borg
 
 /datum/ai_laws/proc/add_inherent_law(law)
-	if (!(law in src.inherent))
+	if(!(law in src.inherent))
 		src.inherent += law
 
 /datum/ai_laws/proc/add_ion_law(law)
@@ -103,7 +103,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	src.inherent.Cut()
 
 /datum/ai_laws/proc/add_supplied_law(number, law)
-	while (src.supplied.len < number + 1)
+	while(src.supplied.len < number + 1)
 		src.supplied += ""
 
 	src.supplied[number + 1] = law
@@ -116,49 +116,49 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/proc/show_laws(who)
 
-	if (src.zeroth)
+	if(src.zeroth)
 		to_chat(who, "0. [src.zeroth]")
 
-	for (var/index = 1, index <= src.ion.len, index++)
+	for(var/index = 1, index <= src.ion.len, index++)
 		var/law = src.ion[index]
 		var/num = ionnum()
 		to_chat(who, "[num]. [law]")
 
 	var/number = 1
-	for (var/index = 1, index <= src.inherent.len, index++)
+	for(var/index = 1, index <= src.inherent.len, index++)
 		var/law = src.inherent[index]
 
-		if (length(law) > 0)
+		if(length(law) > 0)
 			to_chat(who, "[number]. [law]")
 			number++
 
-	for (var/index = 1, index <= src.supplied.len, index++)
+	for(var/index = 1, index <= src.supplied.len, index++)
 		var/law = src.supplied[index]
-		if (length(law) > 0)
+		if(length(law) > 0)
 			to_chat(who, "[number]. [law]")
 			number++
 
 /datum/ai_laws/proc/write_laws()
 	var/text = ""
-	if (src.zeroth)
+	if(src.zeroth)
 		text += "0. [src.zeroth]"
 
-	for (var/index = 1, index <= src.ion.len, index++)
+	for(var/index = 1, index <= src.ion.len, index++)
 		var/law = src.ion[index]
 		var/num = ionnum()
 		text += "<br>[num]. [law]"
 
 	var/number = 1
-	for (var/index = 1, index <= src.inherent.len, index++)
+	for(var/index = 1, index <= src.inherent.len, index++)
 		var/law = src.inherent[index]
 
-		if (length(law) > 0)
+		if(length(law) > 0)
 			text += "<br>[number]. [law]"
 			number++
 
-	for (var/index = 1, index <= src.supplied.len, index++)
+	for(var/index = 1, index <= src.supplied.len, index++)
 		var/law = src.supplied[index]
-		if (length(law) > 0)
+		if(length(law) > 0)
 			text += "<br>[number]. [law]"
 			number++
 	return text

@@ -7,7 +7,7 @@
 	req_human = 1
 	req_stat = UNCONSCIOUS
 
-//Recover from stuns.
+// Recover from stuns.
 /obj/effect/proc_holder/changeling/epinephrine/sting_action(mob/user)
 
 	if(user.lying)
@@ -26,5 +26,5 @@
 		H.halloss = 0
 		H.shock_stage = 0
 
-	feedback_add_details("changeling_powers","UNS")
+	feedback_add_details("changeling_powers", "UNS")
 	return 1

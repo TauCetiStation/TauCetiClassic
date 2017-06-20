@@ -21,9 +21,9 @@
 		if(B.feral < 0)
 			caught_bees += B.strength
 			qdel(B)
-			user.visible_message("\blue [user] nets some bees.","\blue You net up some of the becalmed bees.")
+			user.visible_message("\blue [user] nets some bees.", "\blue You net up some of the becalmed bees.")
 		else
-			user.visible_message("\red [user] swings at some bees, they don't seem to like it.","\red You swing at some bees, they don't seem to like it.")
+			user.visible_message("\red [user] swings at some bees, they don't seem to like it.", "\red You swing at some bees, they don't seem to like it.")
 			B.feral = 5
 			B.target_mob = user
 
@@ -36,7 +36,7 @@
 		M = usr
 
 	while(caught_bees > 0)
-		//release a few super massive swarms
+		// release a few super massive swarms
 		while(caught_bees > 5)
 			var/mob/living/simple_animal/bee/B = new(src.loc)
 			B.feral = 5
@@ -45,7 +45,7 @@
 			B.icon_state = "bees_swarm"
 			caught_bees -= 6
 
-		//what's left over
+		// what's left over
 		var/mob/living/simple_animal/bee/B = new(src.loc)
 		B.strength = caught_bees
 		B.icon_state = "bees[B.strength]"
@@ -79,7 +79,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/honeycomb/New()
 	..()
-	reagents.add_reagent("honey",10)
+	reagents.add_reagent("honey", 10)
 	reagents.add_reagent("nutriment", 0.5)
 	reagents.add_reagent("sugar", 2)
 	bitesize = 2

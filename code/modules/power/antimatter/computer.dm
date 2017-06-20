@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+// This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
 #define STATE_DEFAULT 1
 #define STATE_INJECTOR  2
 #define STATE_ENGINE 3
@@ -46,7 +46,7 @@
 		if("login")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
-			if (I && istype(I))
+			if(I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
 		if("deactivate")
@@ -69,7 +69,7 @@
 	var/dat = "<head><title>Engine Computer</title></head><body>"
 	switch(src.state)
 		if(STATE_DEFAULT)
-			if (src.authenticated)
+			if(src.authenticated)
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]<br>"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=engine'>Engine Menu</A> \]"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=injector'>Injector Menu</A> \]"

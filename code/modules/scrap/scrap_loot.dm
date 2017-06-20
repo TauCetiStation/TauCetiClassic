@@ -1,4 +1,4 @@
-//item holders generators
+// item holders generators
 /obj/preset/storage/
 	var/ammo_type = ""
 /obj/preset/storage/New(var/newloc)

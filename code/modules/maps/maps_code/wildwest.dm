@@ -34,25 +34,25 @@
 	else if(is_special_character(user))
 		user << "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away."
 
-	else if (!insistinga)
+	else if(!insistinga)
 		user << "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?"
 		insistinga++
 
 	else
 		chargesa--
 		insistinga = 0
-		var/wish = input("You want...","Wish") as null|anything in list("Power","Wealth","Immortality","To Kill","Peace")
+		var/wish = input("You want...", "Wish") as null|anything in list("Power", "Wealth", "Immortality", "To Kill", "Peace")
 		switch(wish)
 			if("Power")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
-				if (!(LASEREYES in user.mutations))
+				if(!(LASEREYES in user.mutations))
 					user.mutations.Add(LASEREYES)
 					user << "\blue You feel pressure building behind your eyes."
-				if (!(COLD_RESISTANCE in user.mutations))
+				if(!(COLD_RESISTANCE in user.mutations))
 					user.mutations.Add(COLD_RESISTANCE)
 					user << "\blue Your body feels warm."
-				if (!(XRAY in user.mutations))
+				if(!(XRAY in user.mutations))
 					user.mutations.Add(XRAY)
 					user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 					user.see_in_dark = 8
@@ -96,7 +96,7 @@
 					F.icon_state = "faithless_dead"
 
 
-///////////////Meatgrinder//////////////
+/////////////// Meatgrinder//////////////
 
 
 /obj/effect/meatgrinder
@@ -107,7 +107,7 @@
 	layer = 3
 	icon = 'icons/mob/critter.dmi'
 	icon_state = "blob"
-	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
+	var/triggerproc = "explode" // name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
 /obj/effect/meatgrinder/New()
@@ -124,7 +124,7 @@
 		for(var/mob/O in viewers(world.view, src.loc))
 			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
 		triggered = 1
-		call(src,triggerproc)(M)
+		call(src, triggerproc)(M)
 
 /obj/effect/meatgrinder/proc/triggerrad1(mob)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -141,7 +141,7 @@
 	triggerproc = "triggerrad1"
 
 
-/////For the Wishgranter///////////
+///// For the Wishgranter///////////
 
 /mob/living/carbon/proc/immortality()
 	set category = "Immortality"
@@ -153,7 +153,7 @@
 		return
 	C << "<span class='notice'>Death is not your end!</span>"
 
-	spawn(rand(800,1200))
+	spawn(rand(800, 1200))
 		if(C.stat == DEAD)
 			dead_mob_list -= C
 			living_mob_list += C

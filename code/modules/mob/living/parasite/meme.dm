@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+// This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
 
 // === MEMETIC ANOMALY ===
 // =======================
@@ -67,7 +67,7 @@ mob/living/parasite/meme/var/list/indoctrinated = list()
 
 mob/living/parasite/meme/New()
 	..()
-	name = "[pick("Meme")] [rand(1000,9999)]"
+	name = "[pick("Meme")] [rand(1000, 9999)]"
 
 mob/living/parasite/meme/Life()
 	..()
@@ -89,12 +89,12 @@ mob/living/parasite/meme/Life()
 	meme_points = min(meme_points + gain, MAXIMUM_MEME_POINTS)
 	// if there are sleep toxins in the host's body, that's bad
 
-	if (meme_death == "bdam")
+	if(meme_death == "bdam")
 		if(host.brainloss > 60)
 			to_chat(src, "\red <b>Something in your host's brain makes you lose consciousness.. you fade away..</b>")
 			src.death()
 			return
-	else if (meme_death == "burns")
+	else if(meme_death == "burns")
 		if(host.on_fire)
 			to_chat(src, "\red <b>Something on your host's skin makes you unstable.. you fade away..</b>")
 			src.death()
@@ -209,7 +209,7 @@ mob/living/parasite/meme/proc/select_indoctrinated(title, message)
 			text_candidates += M.real_name
 			map_text_to_mob[M.real_name] = M
 
-		selected = input(message,title) as null|anything in text_candidates
+		selected = input(message, title) as null|anything in text_candidates
 		if(!selected)
 			return null
 
@@ -250,9 +250,9 @@ mob/living/parasite/meme/verb/Thought()
 	if(!use_points(50))
 		return
 
-	//message = say_quote(message)
+	// message = say_quote(message)
 	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'><i>[sanitize_plus_chat(message)]</i></span></span>"
-	//target.show_message(rendered)
+	// target.show_message(rendered)
 	to_chat(target, rendered)
 	to_chat(usr, "<i>You make [target] hear:</i> [rendered]")
 	for(var/mob/dead/observer/G in mob_list)
@@ -417,7 +417,7 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 		return
 
 	// Find out whether we can speak
-	if (host.silent || (host.disabilities & 64))
+	if(host.silent || (host.disabilities & 64))
 		to_chat(src, "<b>Your host can't speak..</b>")
 		return
 
@@ -425,7 +425,7 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 		return
 
 	for(var/mob/M in view(1, host))
-		M.show_message("<B>[host]</B> whispers something incoherent.",2) // 2 stands for hearable message
+		M.show_message("<B>[host]</B> whispers something incoherent.", 2) // 2 stands for hearable message
 
 	// Find out whether the target can hear
 	if(target.disabilities & 32 || target.ear_deaf)
@@ -457,7 +457,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 		return
 
 	// Find out whether we can speak
-	if (host.silent || (host.disabilities & 64))
+	if(host.silent || (host.disabilities & 64))
 		to_chat(src, "<b>Your host can't speak..</b>")
 		return
 
@@ -465,7 +465,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 		return
 
 	for(var/mob/M in view(host)+src)
-		M.show_message("<B>[host]</B> screams something incoherent!",2) // 2 stands for hearable message
+		M.show_message("<B>[host]</B> screams something incoherent!", 2) // 2 stands for hearable message
 
 	// Find out whether the target can hear
 	if(target.disabilities & 32 || target.ear_deaf)

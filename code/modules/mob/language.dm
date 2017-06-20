@@ -48,9 +48,9 @@
 	scrambled_text = trim(scrambled_text)
 	var/ending = copytext(scrambled_text, length(scrambled_text))
 	if(ending == ".")
-		scrambled_text = copytext(scrambled_text,1,length(scrambled_text)-1)
+		scrambled_text = copytext(scrambled_text, 1, length(scrambled_text)-1)
 	var/input_ending = copytext(input, input_size)
-	if(input_ending in list("!","?","."))
+	if(input_ending in list("!", "?", "."))
 		scrambled_text += input_ending
 	return scrambled_text
 
@@ -71,7 +71,7 @@
 	colour = "soghun"
 	key = list("o", "ù")
 	flags = WHITELISTED
-	syllables = list("ss","ss","ss","ss","skak","seeki","resh","las","esi","kor","sh")
+	syllables = list("ss", "ss", "ss", "ss", "skak", "seeki", "resh", "las", "esi", "kor", "sh")
 
 /datum/language/tajaran
 	name = "Siik'maas"
@@ -82,10 +82,10 @@
 	colour = "tajaran"
 	key = list("j", "î")
 	flags = WHITELISTED
-	syllables = list("rr","rr","tajr","kir","raj","kii","mir","kra","ahk","nal","vah","khaz","jri","ran","darr", \
-	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mah","sanu","dra","ii'r", \
-	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mak","hrar","nja","rir","khan","jun","dar","rik","kah", \
-	"hal","ket","jurl","mah","tul","cresh","azu","ragh")
+	syllables = list("rr", "rr", "tajr", "kir", "raj", "kii", "mir", "kra", "ahk", "nal", "vah", "khaz", "jri", "ran", "darr", \
+	"mi", "jri", "dynh", "manq", "rhe", "zar", "rrhaz", "kal", "chur", "eech", "thaa", "dra", "jurl", "mah", "sanu", "dra", "ii'r", \
+	"ka", "aasi", "far", "wa", "baq", "ara", "qara", "zir", "sam", "mak", "hrar", "nja", "rir", "khan", "jun", "dar", "rik", "kah", \
+	"hal", "ket", "jurl", "mah", "tul", "cresh", "azu", "ragh")
 
 /datum/language/tajaran_sign
 	name = "Siik'tajr"
@@ -94,8 +94,8 @@
 	ask_verb = "mrowls"
 	exclaim_verb = "yowls"
 	colour = "tajaran_signlang"
-	key = list("y", "í")		//only "dfpqxyz" left.
-	//need to find a way to resolve possesive macros
+	key = list("y", "í")		// only "dfpqxyz" left.
+	// need to find a way to resolve possesive macros
 	signlang_verb = list("flicks their left ear", "flicks their right ear", "swivels their ears", "twitches their tail", "curls the end of their tail", "arches their tail", "wiggles the end of their tail", "waves their tail about", "holds up a claw", "gestures with their left hand", "gestures with their right hand", "gestures with their tail", "gestures with their ears")
 	flags = WHITELISTED | NONVERBAL
 
@@ -108,7 +108,7 @@
 	colour = "skrell"
 	key = list("k", "ë")
 	flags = WHITELISTED
-	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","zix","*","!")
+	syllables = list("qr", "qrr", "xuq", "qil", "quum", "xuqm", "vol", "xrim", "zaoo", "qu-uu", "qix", "qoo", "zix", "*", "!")
 
 /datum/language/vox
 	name = "Vox-pidgin"
@@ -119,8 +119,8 @@
 	colour = "vox"
 	key = list("v", "ì")
 	flags = RESTRICTED
-	syllables = list("ti","ti","ti","hi","hi","ki","ki","ki","ki","ya","ta","ha","ka","ya","chi","cha","kah", \
-	"SKRE","AHK","EHK","RAWK","KRA","AAA","EEE","KI","II","KRI","KA")
+	syllables = list("ti", "ti", "ti", "hi", "hi", "ki", "ki", "ki", "ki", "ya", "ta", "ha", "ka", "ya", "chi", "cha", "kah", \
+	"SKRE", "AHK", "EHK", "RAWK", "KRA", "AAA", "EEE", "KI", "II", "KRI", "KA")
 
 /datum/language/diona
 	name = "Rootspeak"
@@ -131,7 +131,7 @@
 	colour = "soghun"
 	key = list("q", "é")
 	flags = RESTRICTED
-	syllables = list("hs","zt","kr","st","sh")
+	syllables = list("hs", "zt", "kr", "st", "sh")
 
 /datum/language/human
 	name = "Sol Common"
@@ -139,9 +139,9 @@
 	colour = "rough"
 	key = list("1")
 	flags = RESTRICTED
-	syllables = list("tao","shi","tzu","yi","com","be","is","i","op","vi","ed","lec","mo","cle","te","dis","e")
+	syllables = list("tao", "shi", "tzu", "yi", "com", "be", "is", "i", "op", "vi", "ed", "lec", "mo", "cle", "te", "dis", "e")
 
-// Galactic common languages (systemwide accepted standards).
+// Galactic common languages(systemwide accepted standards).
 /datum/language/trader
 	name = "Tradeband"
 	desc = "Maintained by the various trading cartels in major systems, this elegant, structured language is used for bartering and bargaining."
@@ -163,7 +163,7 @@
 	speech_verb = "growls"
 	colour = "rough"
 	key = list("3")
-	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
+	syllables = list("gra", "ba", "ba", "breh", "bra", "rah", "dur", "ra", "ro", "gro", "go", "ber", "bar", "geh", "heh", "gra")
 
 // Language handling.
 /mob/proc/add_language(language)
@@ -185,9 +185,9 @@
 // Can we speak this language, as opposed to just understanding it?
 /mob/proc/can_speak(datum/language/speaking)
 
-	return (universal_speak || speaking in src.languages)
+	return(universal_speak || speaking in src.languages)
 
-//TBD
+// TBD
 /mob/verb/check_languages()
 	set name = "Check Known Languages"
 	set category = "IC"
@@ -197,7 +197,7 @@
 
 	for(var/datum/language/L in languages)
 		dat += "<b>[L.name] "
-		if (L.key.len)
+		if(L.key.len)
 			dat += "(:[L.key[1]])"
 		dat += "</b><br/>[L.desc]<br/><br/>"
 

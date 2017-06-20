@@ -1,4 +1,4 @@
-var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
+var/list/possible_uplinker_IDs = list("Alfa", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Zero", "Niner")
 
 
 /obj/machinery/computer/telecrystals
@@ -24,7 +24,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		possible_uplinker_IDs -= ID
 		name = "[name] [ID]"
 	else
-		name = "[name] [rand(1,999)]"
+		name = "[name] [rand(1, 999)]"
 
 
 /obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user)
@@ -144,11 +144,11 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		getDangerous()
 		virgin = 0
 
-/obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
+/obj/machinery/computer/telecrystals/boss/proc/getDangerous()// This scales the TC assigned with the round population.
 	..()
 	var/danger
 	danger = player_list.len
-	while(!IsMultiple(++danger,10))//Just round up to the nearest multiple of ten.
+	while(!IsMultiple(++danger, 10))// Just round up to the nearest multiple of ten.
 	storedcrystals += danger
 
 /////////
@@ -208,7 +208,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		var/sanity = 0
 		while(storedcrystals && sanity < 100)
 			for(var/obj/machinery/computer/telecrystals/uplinker/A in TCstations)
-				A.giveTC(1,0)
+				A.giveTC(1, 0)
 			sanity++
 		logTransfer("[src] evenly distributed telecrystals.")
 

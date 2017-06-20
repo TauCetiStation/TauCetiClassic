@@ -3,7 +3,7 @@
 	desc = "A helmet worn by members of the NanoTrasen Emergency Response Team. Armoured and space ready."
 	icon_state = "rig0-ert_commander"
 	item_state = "helm-command"
-	armor = list(melee = 50, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
+	armor = list(melee = 50, bullet = 35, laser = 30, energy = 15, bomb = 30, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/obj/machinery/camera/camera
 
@@ -28,14 +28,14 @@
 	icon_state = "ert_commander"
 	item_state = "suit-command"
 	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,
-	/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,
-	/obj/item/weapon/tank,/obj/item/weapon/rcd)
+	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box/magazine, /obj/item/ammo_casing,
+	/obj/item/weapon/melee/baton, /obj/item/weapon/melee/energy/sword, /obj/item/weapon/handcuffs,
+	/obj/item/weapon/tank, /obj/item/weapon/rcd)
 	slowdown = 1
-	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
+	armor = list(melee = 60, bullet = 35, laser = 30, energy = 15, bomb = 30, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
-//Commander
+// Commander
 /obj/item/clothing/head/helmet/space/rig/ert/commander
 	name = "emergency response team commander helmet"
 	desc = "A helmet worn by the commander of a NanoTrasen Emergency Response Team. Has blue highlights. Armoured and space ready."
@@ -52,7 +52,7 @@
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
 	breach_threshold = 28
 
-//Security
+// Security
 /obj/item/clothing/head/helmet/space/rig/ert/security
 	name = "emergency response team security helmet"
 	desc = "A helmet worn by security members of a NanoTrasen Emergency Response Team. Has red highlights. Armoured and space ready."
@@ -70,23 +70,23 @@
 	breach_threshold = 25
 	slowdown = 1.4
 
-//Engineer
+// Engineer
 /obj/item/clothing/head/helmet/space/rig/ert/engineer
 	name = "emergency response team engineer helmet"
 	desc = "A helmet worn by engineering members of a NanoTrasen Emergency Response Team. Has orange highlights. Armoured and space ready."
 	icon_state = "rig0-ert_engineer"
 	item_color = "ert_engineer"
 	siemens_coefficient = 0
-	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 75)
+	armor = list(melee = 60, bullet = 35, laser = 30, energy = 15, bomb = 30, bio = 100, rad = 75)
 
 /obj/item/clothing/suit/space/rig/ert/engineer
 	name = "emergency response team engineer suit"
 	desc = "A suit worn by the engineering of a NanoTrasen Emergency Response Team. Has orange highlights. Armoured, space ready, and fire resistant."
 	icon_state = "ert_engineer"
 	siemens_coefficient = 0
-	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 75)
+	armor = list(melee = 60, bullet = 35, laser = 30, energy = 15, bomb = 30, bio = 100, rad = 75)
 
-//Medical
+// Medical
 /obj/item/clothing/head/helmet/space/rig/ert/medical
 	name = "emergency response team medical helmet"
 	desc = "A helmet worn by medical members of a NanoTrasen Emergency Response Team. Has white highlights. Armoured and space ready."

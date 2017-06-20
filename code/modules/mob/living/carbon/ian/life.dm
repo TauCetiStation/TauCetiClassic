@@ -1,10 +1,10 @@
 /mob/living/carbon/ian/Life()
 	..()
 
-	if(soap_eaten) //Yeshhh, even dead, as long as body exist or timer runs out, its a chemical reaction after all!
+	if(soap_eaten) // Yeshhh, even dead, as long as body exist or timer runs out, its a chemical reaction after all!
 		hiccup()
 
-	//Feeding, chasing food, FOOOOODDDD
+	// Feeding, chasing food, FOOOOODDDD
 	if(!incapacitated() && !resting && !buckled && !lying)
 		turns_since_scan++
 		if(turns_since_scan > 5)
@@ -15,26 +15,26 @@
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
 				stop_automated_movement = FALSE
-				for(var/obj/item/weapon/reagent_containers/food/snacks/S in oview(src,3))
+				for(var/obj/item/weapon/reagent_containers/food/snacks/S in oview(src, 3))
 					if(isturf(S.loc) || ishuman(S.loc))
 						movement_target = S
 						break
 			if(movement_target)
 				stop_automated_movement = TRUE
-				step_to(src,movement_target,1)
+				step_to(src, movement_target, 1)
 				sleep(3)
-				step_to(src,movement_target,1)
+				step_to(src, movement_target, 1)
 				sleep(3)
-				step_to(src,movement_target,1)
+				step_to(src, movement_target, 1)
 
 				if(movement_target) // Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					if (movement_target.loc.x < src.x)
+					if(movement_target.loc.x < src.x)
 						dir = WEST
-					else if (movement_target.loc.x > src.x)
+					else if(movement_target.loc.x > src.x)
 						dir = EAST
-					else if (movement_target.loc.y < src.y)
+					else if(movement_target.loc.y < src.y)
 						dir = SOUTH
-					else if (movement_target.loc.y > src.y)
+					else if(movement_target.loc.y > src.y)
 						dir = NORTH
 					else
 						dir = SOUTH
@@ -43,28 +43,28 @@
 						movement_target.attack_animal(src)
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
-							emote("me",1,"stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
+							emote("me", 1, "stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
 
 		if(prob(1))
-			emote("me",1,pick("dances around","chases its tail"))
-			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
+			emote("me", 1, pick("dances around", "chases its tail"))
+			for(var/i in list(1, 2, 4, 8, 4, 2, 1, 2, 4, 8, 4, 2, 1, 2, 4, 8, 4, 2))
 				dir = i
 				sleep(1)
 
-	//Movement - this, speaking, simple_animal_A.I. code - should be converted into A.I. datum later on, for now - dirty copypasta of simple_animal.dm Life() proc.
+	// Movement - this, speaking, simple_animal_A.I. code - should be converted into A.I. datum later on, for now - dirty copypasta of simple_animal.dm Life() proc.
 	if(!client && !stop_automated_movement && wander && !anchored)
-		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(src.loc) && !resting && !buckled && canmove)		// This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
-				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
+				if(!(stop_automated_movement_when_pulled && pulledby)) // Soma animals don't move when pulled
 					var/anydir = pick(cardinal)
 					if(Process_Spacemove(anydir))
-						Move(get_step(src,anydir), anydir)
+						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
 
-	//Speaking
+	// Speaking
 	if(!client && speak_chance)
-		if(rand(0,200) < speak_chance)
+		if(rand(0, 200) < speak_chance)
 			if(speak && speak.len)
 				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
 					var/length = speak.len
@@ -72,35 +72,35 @@
 						length += emote_hear.len
 					if(emote_see && emote_see.len)
 						length += emote_see.len
-					var/randomValue = rand(1,length)
+					var/randomValue = rand(1, length)
 					if(randomValue <= speak.len)
 						say(pick(speak))
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote(pick(emote_see),1)
+							emote(pick(emote_see), 1)
 						else
-							emote(pick(emote_hear),2)
+							emote(pick(emote_hear), 2)
 				else
 					say(pick(speak))
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					emote(pick(emote_see),1)
+					emote(pick(emote_see), 1)
 				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					emote(pick(emote_hear),2)
+					emote(pick(emote_hear), 2)
 				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					var/length = emote_hear.len + emote_see.len
-					var/pick = rand(1,length)
+					var/pick = rand(1, length)
 					if(pick <= emote_see.len)
-						emote(pick(emote_see),1)
+						emote(pick(emote_see), 1)
 					else
-						emote(pick(emote_hear),2)
+						emote(pick(emote_hear), 2)
 
-	if (stat != DEAD)
+	if(stat != DEAD)
 		if(SSmob.times_fired%4==2)
-			//Only try to take a breath every 4 seconds, unless suffocating
+			// Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
-		else if(isobj(loc)) //Still give containing object the chance to interact
+		else if(isobj(loc)) // Still give containing object the chance to interact
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src, 0)
 
@@ -122,19 +122,19 @@
 	handle_regular_status_updates()
 	update_canmove()
 
-	//handle_regular_hud_updates() mob/living/Life() handles this already. i'l leave this as reminder. need to fix for human, monkey and maybe aliens also.
+	// handle_regular_hud_updates() mob/living/Life() handles this already. i'l leave this as reminder. need to fix for human, monkey and maybe aliens also.
 
 /mob/living/carbon/ian/handle_regular_hud_updates()
 	if(!..())
 		return FALSE
 
-	if (stat == DEAD || (XRAY in mutations))
+	if(stat == DEAD || (XRAY in mutations))
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
+	else if(stat != DEAD)
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_MOBS
 		sight &= ~SEE_OBJS
@@ -192,9 +192,9 @@
 	var/datum/gas_mixture/breath
 	if(health < 0)
 		losebreath++
-	if(losebreath > 0) //Suffocating so do not take a breath
+	if(losebreath > 0) // Suffocating so do not take a breath
 		losebreath--
-		if (prob(75)) //High chance of gasping for air
+		if(prob(75)) // High chance of gasping for air
 			emote("gasp")
 		if(isobj(loc))
 			var/obj/location_as_object = loc
@@ -248,20 +248,20 @@
 	var/oxygen_used = 0
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
-	//Partial pressure of the O2 in our breath
+	// Partial pressure of the O2 in our breath
 	var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
 	// Same, but for the phoron
 	var/Toxins_pp = (breath.phoron/breath.total_moles())*breath_pressure
-	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
+	// And CO2, lets say a PP of more than 10 will be bad(It's a little less really, but eh, being passed out all round aint no fun)
 	var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure
 
 	if(O2_pp < safe_oxygen_min) 			// Too little oxygen
 		if(prob(20))
 			emote("gasp")
-		if (O2_pp == 0)
+		if(O2_pp == 0)
 			O2_pp = 0.01
 		var/ratio = safe_oxygen_min/O2_pp
-		adjustOxyLoss(min(5 * ratio, 7)) // Don't fuck them up too fast (space only does 7 after all!)
+		adjustOxyLoss(min(5 * ratio, 7)) // Don't fuck them up too fast(space only does 7 after all!)
 		oxygen_used = breath.oxygen * ratio / 6
 		oxygen_alert = TRUE
 	else // We're in safe limits
@@ -288,7 +288,7 @@
 
 	if(Toxins_pp > safe_phoron_max) // Too much phoron
 		var/ratio = (breath.phoron/safe_phoron_max) * 10
-		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+		// adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	// Limit amount of damage toxin exposure can do per second
 		if(reagents)
 			reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		phoron_alert = TRUE
@@ -327,14 +327,14 @@
 				if(1 to 50)
 					adjustFireLoss(-1)
 
-	if ((HULK in mutations) && health <= 25)
+	if((HULK in mutations) && health <= 25)
 		mutations.Remove(HULK)
 		to_chat(src, "<span class='warning'>You suddenly feel very weak.</span>")
 		Weaken(3)
 		emote("collapse")
 
-	if (radiation)
-		if (radiation > 100)
+	if(radiation)
+		if(radiation > 100)
 			radiation = 100
 			Weaken(10)
 			if(!lying)
@@ -363,7 +363,7 @@
 				if(prob(1))
 					to_chat(src, "<span class='warning'>You mutate!</span>")
 					randmutb(src)
-					domutcheck(src,null)
+					domutcheck(src, null)
 					emote("gasp")
 
 /mob/living/carbon/ian/proc/handle_chemicals_in_body()
@@ -377,27 +377,27 @@
 		adjustToxLoss(total_phoronloss)
 
 	// nutrition decrease
-	if (nutrition > 0)
+	if(nutrition > 0)
 		nutrition = max(0, nutrition - HUNGER_FACTOR)
 
-	if (nutrition > 450)
+	if(nutrition > 450)
 		if(overeatduration < 600)
 			overeatduration++
 	else
 		if(overeatduration > 1)
-			overeatduration = max(0, overeatduration - 2) //doubled the unfat rate
+			overeatduration = max(0, overeatduration - 2) // doubled the unfat rate
 
-	if (drowsyness)
+	if(drowsyness)
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
+		if(prob(5))
 			sleeping += 1
 			Paralyse(5)
 
 	if(confused)
 		confused = max(0, confused - 1)
 
-	stamina = min(stamina + 1, 100) //i don't want a whole new proc just for one variable, so i leave this here.
+	stamina = min(stamina + 1, 100) // i don't want a whole new proc just for one variable, so i leave this here.
 
 	if(resting)
 		dizziness = max(0, dizziness - 5)
@@ -407,20 +407,20 @@
 		jitteriness = max(0, jitteriness - 1)
 
 /mob/living/carbon/ian/proc/handle_disabilities()
-	if (disabilities & EPILEPSY)
-		if (prob(1) && paralysis < 10)
+	if(disabilities & EPILEPSY)
+		if(prob(1) && paralysis < 10)
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
-	if (disabilities & COUGHING)
-		if (prob(5) && paralysis <= 1)
+	if(disabilities & COUGHING)
+		if(prob(5) && paralysis <= 1)
 			drop_item()
 			emote("cough")
-	if (disabilities & TOURETTES)
-		if (prob(10) && paralysis <= 1)
+	if(disabilities & TOURETTES)
+		if(prob(10) && paralysis <= 1)
 			Stun(10)
 			emote("twitch")
-	if (disabilities & NERVOUS)
-		if (prob(10))
+	if(disabilities & NERVOUS)
+		if(prob(10))
 			stuttering = max(10, stuttering)
 
 /mob/living/carbon/ian/proc/handle_virus_updates()
@@ -429,28 +429,28 @@
 	if(bodytemperature > 406)
 		for(var/datum/disease/D in viruses)
 			D.cure()
-		for (var/ID in virus2)
+		for(var/ID in virus2)
 			var/datum/disease2/disease/V = virus2[ID]
 			V.cure(src)
 
-	for(var/obj/effect/decal/cleanable/O in view(1,src))
-		if(istype(O,/obj/effect/decal/cleanable/blood))
+	for(var/obj/effect/decal/cleanable/O in view(1, src))
+		if(istype(O, /obj/effect/decal/cleanable/blood))
 			var/obj/effect/decal/cleanable/blood/B = O
 			if(B.virus2.len)
-				for (var/ID in B.virus2)
+				for(var/ID in B.virus2)
 					var/datum/disease2/disease/V = B.virus2[ID]
-					infect_virus2(src,V)
+					infect_virus2(src, V)
 
-		else if(istype(O,/obj/effect/decal/cleanable/mucus))
+		else if(istype(O, /obj/effect/decal/cleanable/mucus))
 			var/obj/effect/decal/cleanable/mucus/M = O
 
 			if(M.virus2.len)
-				for (var/ID in M.virus2)
+				for(var/ID in M.virus2)
 					var/datum/disease2/disease/V = M.virus2[ID]
-					infect_virus2(src,V)
+					infect_virus2(src, V)
 
 	if(virus2.len)
-		for (var/ID in virus2)
+		for(var/ID in virus2)
 			var/datum/disease2/disease/V = virus2[ID]
 			if(isnull(V)) // Trying to figure out a runtime error that keeps repeating
 				CRASH("virus2 nulled before calling activate()")
@@ -469,7 +469,7 @@
 		return
 
 	var/pressure = environment.return_pressure()
-	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+	var/adjusted_pressure = calculate_affecting_pressure(pressure) // Returns how much pressure actually affects the mob.
 
 	if(istype(head, /obj/item/clothing/head/helmet/space) || (adjusted_pressure < WARNING_HIGH_PRESSURE && adjusted_pressure > WARNING_LOW_PRESSURE && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5 && environment.phoron < MOLES_PHORON_VISIBLE))
 		clear_alert("pressure")
@@ -487,23 +487,23 @@
 	if(stat == DEAD)
 		bodytemperature += 0.1 * (environment.temperature - bodytemperature) * environment_heat_capacity / (environment_heat_capacity + 270000)
 
-	//Account for massive pressure differences
+	// Account for massive pressure differences
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure","highpressure",2)
+			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) )
+			throw_alert("pressure", "highpressure", 2)
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			throw_alert("pressure","highpressure",1)
+			throw_alert("pressure", "highpressure", 1)
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
 			clear_alert("pressure")
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			throw_alert("pressure","lowpressure",1)
+			throw_alert("pressure", "lowpressure", 1)
 		else
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure","lowpressure",2)
+				throw_alert("pressure", "lowpressure", 2)
 			else
-				throw_alert("pressure","lowpressure",1)
+				throw_alert("pressure", "lowpressure", 1)
 
 /mob/living/carbon/ian/handle_fire()
 	if(..())
@@ -568,29 +568,29 @@
 			if(halloss > 0)
 				adjustHalLoss(-1)
 
-		//Eyes
-		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
+		// Eyes
+		if(sdisabilities & BLIND)	// disabled-blind, doesn't get better on its own
 			blinded = TRUE
-		else if(eye_blind)			//blindness, heals slowly over time
-			eye_blind = max(eye_blind - 1,0)
+		else if(eye_blind)			// blindness, heals slowly over time
+			eye_blind = max(eye_blind - 1, 0)
 			blinded = TRUE
-		else if(eye_blurry)			//blurry eyes heal slowly
+		else if(eye_blurry)			// blurry eyes heal slowly
 			eye_blurry = max(eye_blurry - 1, 0)
 
-		//Ears
-		if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
+		// Ears
+		if(sdisabilities & DEAF)		// disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
-		else if(ear_deaf)			//deafness, heals slowly over time
+		else if(ear_deaf)			// deafness, heals slowly over time
 			ear_deaf = max(ear_deaf - 1, 0)
-		else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
+		else if(ear_damage < 25)	// ear damage heals slowly under this threshold. otherwise you'll need earmuffs
 			ear_damage = max(ear_damage - 0.05, 0)
 
-		//Other
+		// Other
 		if(stunned)
 			AdjustStunned(-1)
 
 		if(weakened)
-			weakened = max(weakened - 1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+			weakened = max(weakened - 1, 0)	// before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
 		if(stuttering)
 			stuttering = max(stuttering - 1, 0)
@@ -613,7 +613,7 @@
 	else
 		adjustFireLoss(5.0 * discomfort)
 
-//and death!
+// and death!
 /mob/living/carbon/ian/death(gibbed)
 	if(stat == DEAD)
 		return
@@ -630,6 +630,6 @@
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
 	if(ticker.mode)
-		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+		ticker.mode.check_win()		// Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 	return ..(gibbed)

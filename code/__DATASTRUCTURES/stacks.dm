@@ -14,7 +14,7 @@
 	if(is_empty())
 		return null
 	. = stack[stack.len]
-	stack.Cut(stack.len,0)
+	stack.Cut(stack.len, 0)
 
 /datum/stack/proc/Push(element)
 	if(max_elements && (stack.len+1 > max_elements))
@@ -36,7 +36,7 @@
 	if(is_empty())
 		return 0
 	. = stack[1]
-	stack.Cut(1,2)
+	stack.Cut(1, 2)
 	Push(.)
 
 /**
@@ -46,7 +46,7 @@
 	if(is_empty())
 		return 0
 	. = stack[stack.len]
-	stack.Cut(stack.len,0)
+	stack.Cut(stack.len, 0)
 	stack.Insert(1,.)
 
 

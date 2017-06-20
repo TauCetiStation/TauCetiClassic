@@ -10,7 +10,7 @@
 		src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchenknife))
+	if(istype(W, /obj/item/weapon/kitchenknife))
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
@@ -30,7 +30,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
-	//same as plain meat
+	// same as plain meat
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "meat"

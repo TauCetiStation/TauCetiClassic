@@ -1,4 +1,4 @@
-//var/list/uplink_items = list()
+// var/list/uplink_items = list()
 
 /proc/get_uplink_items(obj/item/device/uplink/uplink)
 	// If not already initialized..
@@ -50,9 +50,9 @@
 	var/cost = 0
 	var/last = 0 // Appear last
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
-	var/list/excludefrom = list()//Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
-	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
-	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available.
+	var/list/excludefrom = list()// Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
+	var/list/uplink_types = list() // Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
+	var/list/excludefrom_uplinks = list() // Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available.
 
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
@@ -67,14 +67,14 @@
 	if(!istype(U))
 		return 0
 
-	if (!user || user.stat || user.restrained())
+	if(!user || user.stat || user.restrained())
 		return 0
 
-	if (!( istype(user, /mob/living/carbon/human)))
+	if(!( istype(user, /mob/living/carbon/human)))
 		return 0
 
 	// If the uplink's holder is in the user's contents
-	if ((U.loc in user.contents || (in_range(U.loc, user) && istype(U.loc.loc, /turf))))
+	if((U.loc in user.contents || (in_range(U.loc, user) && istype(U.loc.loc, /turf))))
 		user.set_machine(U)
 		if(cost > U.uses)
 			return 0
@@ -268,7 +268,7 @@
 	cost = 36
 	gamemodes = list(/datum/game_mode/nuclear)
 
-//for refunding the syndieborg teleporter
+// for refunding the syndieborg teleporter
 /datum/uplink_item/dangerous/syndieborg/spawn_item()
 	var/obj/item/weapon/antag_spawner/borg_tele/T = ..()
 	if(istype(T))
@@ -791,5 +791,5 @@
 	if(possible_items.len)
 		var/datum/uplink_item/I = pick(possible_items)
 		U.uses -= max(0, I.cost)
-		feedback_add_details("traitor_uplink_items_bought","RN")
+		feedback_add_details("traitor_uplink_items_bought", "RN")
 		return new I.item(loc)

@@ -22,7 +22,7 @@
 	return 0*/
 
 /obj/machinery/bodyscanner/relaymove(mob/user)
-	if (user.stat)
+	if(user.stat)
 		return
 	src.go_out()
 	return
@@ -32,7 +32,7 @@
 	set category = "Object"
 	set name = "Eject Body Scanner"
 
-	if (usr.stat != CONSCIOUS)
+	if(usr.stat != CONSCIOUS)
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -43,12 +43,12 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if (usr.stat != CONSCIOUS)
+	if(usr.stat != CONSCIOUS)
 		return
-	if (src.occupant)
+	if(src.occupant)
 		to_chat(usr, "\blue <B>The scanner is already occupied!</B>")
 		return
-	if (usr.abiotic())
+	if(usr.abiotic())
 		to_chat(usr, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
 	usr.client.perspective = EYE_PERSPECTIVE
@@ -57,19 +57,19 @@
 	src.occupant = usr
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)
-		//O = null
+		// O = null
 		qdel(O)
-		//Foreach goto(124)
+		// Foreach goto(124)
 	src.add_fingerprint(usr)
 	return
 
 /obj/machinery/bodyscanner/proc/go_out()
-	if ((!( src.occupant ) || src.locked))
+	if((!( src.occupant ) || src.locked))
 		return
 	for(var/obj/O in src)
 		O.loc = src.loc
-		//Foreach goto(30)
-	if (src.occupant.client)
+		// Foreach goto(30)
+	if(src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
 	src.occupant.loc = src.loc
@@ -78,16 +78,16 @@
 	return
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, user)
-	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
+	if((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
-	if (src.occupant)
+	if(src.occupant)
 		to_chat(user, "\blue <B>The scanner is already occupied!</B>")
 		return
-	if (G.affecting.abiotic())
+	if(G.affecting.abiotic())
 		to_chat(user, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
 	var/mob/M = G.affecting
-	if (M.client)
+	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
 	M.loc = src
@@ -95,9 +95,9 @@
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)
 		O.loc = src.loc
-		//Foreach goto(154)
+		// Foreach goto(154)
 	src.add_fingerprint(user)
-	//G = null
+	// G = null
 	qdel(G)
 	return
 
@@ -107,26 +107,26 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-				//Foreach goto(35)
-			//SN src = null
+				// Foreach goto(35)
+			// SN src = null
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-					//Foreach goto(108)
-				//SN src = null
+					// Foreach goto(108)
+				// SN src = null
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-					//Foreach goto(181)
-				//SN src = null
+					// Foreach goto(181)
+				// SN src = null
 				qdel(src)
 				return
 		else
@@ -142,12 +142,12 @@
 
 	switch(severity)
 		if(1.0)
-			//SN src = null
+			// SN src = null
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
-				//SN src = null
+			if(prob(50))
+				// SN src = null
 				qdel(src)
 				return
 		else
@@ -191,19 +191,19 @@
 
 /*
 
-/obj/machinery/body_scanconsole/process() //not really used right now
+/obj/machinery/body_scanconsole/process() // not really used right now
 	if(stat & (NOPOWER|BROKEN))
 		return
-	//use_power(250) // power stuff
+	// use_power(250) // power stuff
 
-//	var/mob/M //occupant
-//	if (!( src.status )) //remove this
+//	var/mob/M // occupant
+//	if(!( src.status )) // remove this
 //		return
-//	if ((src.connected && src.connected.occupant)) //connected & occupant ok
+//	if((src.connected && src.connected.occupant)) // connected & occupant ok
 //		M = src.connected.occupant
 //	else
-//		if (istype(M, /mob))
-//		//do stuff
+//		if(istype(M, /mob))
+//		// do stuff
 //		else
 ///			src.temphtml = "Process terminated due to lack of occupant in scanning chamber."
 //			src.status = null
@@ -226,15 +226,15 @@
 		to_chat(user, "\red This device can only scan compatible lifeforms.")
 		return
 	var/dat
-	if (src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
+	if(src.delete && src.temphtml) // Window in buffer but its just simple message, so nothing
 		src.delete = src.delete
-	else if (!src.delete && src.temphtml) //Window in buffer - its a menu, dont add clear message
+	else if(!src.delete && src.temphtml) // Window in buffer - its a menu, dont add clear message
 		dat = text("[]<BR><BR><A href='?src=\ref[];clear=1'>Main Menu</A>", src.temphtml, src)
 	else
-		if (src.connected) //Is something connected?
+		if(src.connected) // Is something connected?
 			var/mob/living/carbon/human/occupant = src.connected.occupant
-			dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>" //Blah obvious
-			if (istype(occupant)) //is there REALLY someone in there?
+			dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>" // Blah obvious
+			if(istype(occupant)) // is there REALLY someone in there?
 				var/t1
 				switch(occupant.stat) // obvious, see what their status is
 					if(0)
@@ -243,12 +243,12 @@
 						t1 = "Unconscious"
 					else
 						t1 = "*dead*"
-				if (!istype(occupant,/mob/living/carbon/human))
+				if(!istype(occupant, /mob/living/carbon/human))
 					dat += "<font color='red'>This device can only scan human occupants.</FONT>"
 				else
 					dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
 
-					//if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
+					// if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
 					if(occupant.mind && occupant.mind.changeling && occupant.fake_death)
 						dat += text("<font color='red'>Abnormal bio-chemical activity detected!</font><BR>")
 
@@ -264,7 +264,7 @@
 					dat += text("[]\tGenetic Tissue Damage %: []</FONT><BR>", (occupant.getCloneLoss() < 1 ?"<font color='blue'>" : "<font color='red'>"), occupant.getCloneLoss())
 					dat += text("[]\tApprox. Brain Damage %: []</FONT><BR>", (occupant.getBrainLoss() < 1 ?"<font color='blue'>" : "<font color='red'>"), occupant.getBrainLoss())
 					dat += text("Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
-					dat += text("Body Temperature: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>")
+					dat += text("Body Temperature: [occupant.bodytemperature-T0C]&deg;C([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>")
 
 					if(occupant.has_brain_worms())
 						dat += "Large growth detected in frontal lobe, possibly cancerous. Surgical removal is recommended.<BR/>"
@@ -276,7 +276,7 @@
 						dat += text("[]\tBlood Level %: [] ([] units)</FONT><BR>", (blood_volume > 448 ?"<font color='blue'>" : "<font color='red'>"), blood_percent, blood_volume)
 					if(occupant.reagents)
 						dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
-						dat += text("Soporific (Sleep Toxin): [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
+						dat += text("Soporific(Sleep Toxin): [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
 						dat += text("[]\tDermaline: [] units</FONT><BR>", (occupant.reagents.get_reagent_amount("dermaline") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("dermaline"))
 						dat += text("[]\tBicaridine: [] units<BR>", (occupant.reagents.get_reagent_amount("bicaridine") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("bicaridine"))
 						dat += text("[]\tDexalin: [] units<BR>", (occupant.reagents.get_reagent_amount("dexalin") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("dexalin"))
@@ -329,25 +329,25 @@
 							robot = "Prosthetic:"
 						if(BP.open)
 							open = "Open:"
-						switch (BP.germ_level)
-							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
+						switch(BP.germ_level)
+							if(INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infected = "Mild Infection:"
-							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
+							if(INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
 								infected = "Mild Infection+:"
-							if (INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
+							if(INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
 								infected = "Mild Infection++:"
-							if (INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
+							if(INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
 								infected = "Acute Infection:"
-							if (INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
+							if(INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
 								infected = "Acute Infection+:"
-							if (INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
+							if(INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
 								infected = "Acute Infection++:"
-							if (INFECTION_LEVEL_THREE to INFINITY)
+							if(INFECTION_LEVEL_THREE to INFINITY)
 								infected = "Septic:"
 
 						var/unknown_body = 0
 						for(var/I in BP.implants)
-							if(is_type_in_list(I,known_implants))
+							if(is_type_in_list(I, known_implants))
 								imp += "[I] implanted:"
 							else
 								unknown_body++
@@ -372,20 +372,20 @@
 							mech = "Mechanical:"
 
 						var/infection = "None"
-						switch (IO.germ_level)
-							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
+						switch(IO.germ_level)
+							if(INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infection = "Mild Infection:"
-							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
+							if(INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
 								infection = "Mild Infection+:"
-							if (INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
+							if(INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
 								infection = "Mild Infection++:"
-							if (INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
+							if(INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
 								infection = "Acute Infection:"
-							if (INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
+							if(INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
 								infection = "Acute Infection+:"
-							if (INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
+							if(INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
 								infection = "Acute Infection++:"
-							if (INFECTION_LEVEL_THREE to INFINITY)
+							if(INFECTION_LEVEL_THREE to INFINITY)
 								infection = "Necrotic:"
 
 						dat += "<tr>"
@@ -414,8 +414,8 @@
 	. = ..()
 	if(!.)
 		return
-	if (href_list["print"])
-		if (src.latestprint + 100 < world.time) //10sec cooldown
+	if(href_list["print"])
+		if(src.latestprint + 100 < world.time) //10sec cooldown
 			src.latestprint = world.time
 			to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
 			spawn(10)

@@ -8,25 +8,25 @@ var/list/ul_FastRoot = list(0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4
 							7, 7)
 
 /atom/proc/ul_FalloffAmount(atom/ref)
-	if (ul_FalloffStyle == UL_I_FALLOFF_ROUND)
+	if(ul_FalloffStyle == UL_I_FALLOFF_ROUND)
 		var/delta_x = (ref.x - src.x)
 		var/delta_y = (ref.y - src.y)
 
 		#ifdef ul_LightingResolution
-		if (round((delta_x*delta_x + delta_y*delta_y)*ul_LightingResolutionSqrt,1) > ul_FastRoot.len)
-			for(var/i = ul_FastRoot.len, i <= round(delta_x*delta_x+delta_y*delta_y*ul_LightingResolutionSqrt,1), i++)
+		if(round((delta_x*delta_x + delta_y*delta_y)*ul_LightingResolutionSqrt, 1) > ul_FastRoot.len)
+			for(var/i = ul_FastRoot.len, i <= round(delta_x*delta_x+delta_y*delta_y*ul_LightingResolutionSqrt, 1), i++)
 				ul_FastRoot += round(sqrt(i))
 		return ul_FastRoot[round((delta_x*delta_x + delta_y*delta_y)*ul_LightingResolutionSqrt, 1) + 1]/ul_LightingResolution
 
 		#else
-		if ((delta_x*delta_x + delta_y*delta_y) > ul_FastRoot.len)
+		if((delta_x*delta_x + delta_y*delta_y) > ul_FastRoot.len)
 			for(var/i = ul_FastRoot.len, i <= delta_x*delta_x+delta_y*delta_y, i++)
 				ul_FastRoot += round(sqrt(i))
 		return ul_FastRoot[delta_x*delta_x + delta_y*delta_y + 1]
 
 		#endif
 
-	else if (ul_FalloffStyle == UL_I_FALLOFF_SQUARE)
+	else if(ul_FalloffStyle == UL_I_FALLOFF_SQUARE)
 		return get_dist(src, ref)
 
 	return 0

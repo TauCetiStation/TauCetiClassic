@@ -44,7 +44,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/sigi/attack_self(mob/user)
-	if (magazine)
+	if(magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
 		magazine.update_icon()
@@ -57,9 +57,9 @@
 	return
 
 /obj/item/weapon/gun/projectile/sigi/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
+	if(istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
-		if ((!magazine && istype(AM, mag_type) || istype(AM, mag_type2)))
+		if((!magazine && istype(AM, mag_type) || istype(AM, mag_type2)))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
@@ -70,7 +70,7 @@
 			update_icon()
 			playsound(src.loc, 'sound/weapons/pistol_reload.ogg', 50, 1, 1)
 			return 1
-		else if (magazine)
+		else if(magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
@@ -108,9 +108,9 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/deagle/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
+	if(istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
+		if(!magazine && istype(AM, mag_type))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
@@ -119,7 +119,7 @@
 			A.update_icon()
 			update_icon(1)
 			return 1
-		else if (magazine)
+		else if(magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
@@ -172,7 +172,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
-		silencer_attackby(I,user)
+		silencer_attackby(I, user)
 	..()
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
@@ -207,9 +207,9 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
+	if(istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && (istype(AM, mag_type) || istype(AM, mag_type2)))
+		if(!magazine && (istype(AM, mag_type) || istype(AM, mag_type2)))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
@@ -218,7 +218,7 @@
 			A.update_icon()
 			update_icon(1)
 			return 1
-		else if (magazine)
+		else if(magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
@@ -253,9 +253,9 @@
 	return
 
 /obj/item/weapon/gun/projectile/sec_pistol/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
+	if(istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
+		if(!magazine && istype(AM, mag_type))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
@@ -264,7 +264,7 @@
 			A.update_icon()
 			update_icon(1)
 			return 1
-		else if (magazine)
+		else if(magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 

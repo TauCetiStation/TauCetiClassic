@@ -1,6 +1,6 @@
 
-//moved these here from code/defines/obj/weapon.dm
-//please preference put stuff where it's easy to find - C
+// moved these here from code/defines/obj/weapon.dm
+// please preference put stuff where it's easy to find - C
 
 /obj/item/weapon/autopsy_scanner
 	name = "autopsy scanner"
@@ -80,7 +80,7 @@
 	set category = "Object"
 	set src in view(usr, 1)
 	set name = "Print Data"
-	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
+	if(usr.stat || !(istype(usr, /mob/living/carbon/human)))
 		to_chat(usr, "No.")
 		return
 
@@ -156,11 +156,11 @@
 	sleep(10)
 
 	var/obj/item/weapon/paper/P = new(usr.loc)
-	P.name = "Autopsy Data ([target_name])"
+	P.name = "Autopsy Data([target_name])"
 	P.info = "<tt>[scan_data]</tt>"
 	P.icon_state = "paper_words"
 
-	if(istype(usr,/mob/living/carbon))
+	if(istype(usr, /mob/living/carbon))
 		// place the item in the usr's hand if possible
 		if(!usr.r_hand)
 			P.loc = usr
@@ -173,7 +173,7 @@
 			P.layer = ABOVE_HUD_LAYER
 			P.plane = ABOVE_HUD_PLANE
 
-	if(istype(usr,/mob/living/carbon/human))
+	if(istype(usr, /mob/living/carbon/human))
 		usr:update_inv_l_hand()
 		usr:update_inv_r_hand()
 

@@ -17,7 +17,7 @@
 	var/cores_type =     /obj/structure/cellular_biomass/core
 
 /obj/effect/cellular_biomass_controller/New()
-	if(!istype(src.loc,/turf/simulated/floor))
+	if(!istype(src.loc, /turf/simulated/floor))
 		qdel(src)
 		return
 	spawn_cellular_biomass_core(src.loc)
@@ -99,7 +99,7 @@
 	return 1
 
 /obj/effect/cellular_biomass_controller/proc/calcEnergy(turf/S)
-	return (getEnergy(S, 1) + getEnergy(S, 2) + getEnergy(S, 4) + getEnergy(S, 8))
+	return(getEnergy(S, 1) + getEnergy(S, 2) + getEnergy(S, 4) + getEnergy(S, 8))
 
 /obj/effect/cellular_biomass_controller/proc/getEnergy(turf/S, side)
 	if(locate(/obj/structure/cellular_biomass) in get_step(S, side))
@@ -108,20 +108,20 @@
 
 /obj/effect/cellular_biomass_controller/proc/spread_wall(obj/structure/cellular_biomass/wall/growing)
 	var/turf/T = growing.loc
-	var/turf/S = get_step(T,pick(1,2,4,8))
+	var/turf/S = get_step(T, pick(1, 2, 4, 8))
 	if(locate(/obj/structure/cellular_biomass, S))
 		return
-	if(istype(S,/turf/simulated/wall) || istype(S,/turf/simulated/mineral))
+	if(istype(S, /turf/simulated/wall) || istype(S, /turf/simulated/mineral))
 		if(calcEnergy(S)==3)
 			S.blob_act()
 		return
-	if(T.CanPass(growing,S))
-		for(var/obj/A in S) //Del everything.
+	if(T.CanPass(growing, S))
+		for(var/obj/A in S) // Del everything.
 			qdel(A)
 		spawn_cellular_biomass_piece(S, growing)
-	if ((locate(/obj/machinery/door, S) || locate(/obj/structure/window, S)) && prob(90))
+	if((locate(/obj/machinery/door, S) || locate(/obj/structure/window, S)) && prob(90))
 		return
-	for(var/atom/A in S) //Hit everything in the turf
+	for(var/atom/A in S) // Hit everything in the turf
 		A.blob_act()
 
 
@@ -166,14 +166,14 @@
 
 /obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_piece(turf/location, obj/structure/cellular_biomass/parent)
 	var/newgrip = 0
-	if (parent)
-		if(istype(location,/turf/simulated))
+	if(parent)
+		if(istype(location, /turf/simulated))
 			newgrip = grip_streingth
 		else
 			newgrip = parent.grip - 1
 	if(!parent || newgrip > 0)
 		var/obj/structure/cellular_biomass/BM = new walls_type(location)
-		if (istype(location,/turf/space))
+		if(istype(location, /turf/space))
 			location:ChangeTurf(/turf/simulated/floor/plating/ironsand)
 		BM.grip = newgrip
 		growth_queue += BM

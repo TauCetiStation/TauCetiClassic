@@ -35,7 +35,7 @@
 		if(!newname)
 			return
 		else
-			name = ("bookcase ([sanitize(newname)])")
+			name = ("bookcase([sanitize(newname)])")
 	else
 		..()
 
@@ -61,12 +61,12 @@
 			return
 		if(2.0)
 			for(var/obj/item/weapon/book/b in contents)
-				if (prob(50)) b.loc = (get_turf(src))
+				if(prob(50)) b.loc = (get_turf(src))
 				else del(b)
 			qdel(src)
 			return
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				for(var/obj/item/weapon/book/b in contents)
 					b.loc = (get_turf(src))
 				qdel(src)
@@ -126,7 +126,7 @@
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	w_class = 3		 // upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
 	var/dat			 // Actual page content
 	var/due_date = 0 // Game time in 1/10th seconds
@@ -134,7 +134,7 @@
 	var/unique = 0   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title		 // The real name of the book.
 	var/carved = 0	 // Has the book been hollowed out for use as a secret storage item?
-	var/obj/item/store	//What's in the book?
+	var/obj/item/store	// What's in the book?
 
 /obj/item/weapon/book/attack_self(mob/user)
 	if(carved)
@@ -183,14 +183,14 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = sanitize_alt(copytext(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null,1, 8192))
+				var/content = sanitize_alt(copytext(input(usr, "Write your book's contents(HTML NOT allowed):") as message|null, 1, 8192))
 				if(!content)
 					to_chat(usr, "The content is invalid.")
 					return
 				else
 					src.dat += content
 			if("Author")
-				var/newauthor = sanitize_alt(copytext(input(usr, "Write the author's name:"),1, MAX_NAME_LEN))
+				var/newauthor = sanitize_alt(copytext(input(usr, "Write the author's name:"), 1, MAX_NAME_LEN))
 				if(!newauthor)
 					to_chat(usr, "The name is invalid.")
 					return

@@ -1,6 +1,6 @@
 
 /obj/item/weapon/circuitboard/miningdrill
-	name = "circuit board (mining drill head)"
+	name = "circuit board(mining drill head)"
 	build_path = /obj/machinery/mining/drill
 	board_type = "machine"
 	origin_tech = "engineering=1;programming=1"
@@ -13,7 +13,7 @@
 							)
 
 /obj/item/weapon/circuitboard/miningdrillbrace
-	name = "circuit board (mining drill brace)"
+	name = "circuit board(mining drill brace)"
 	build_path = /obj/machinery/mining/brace
 	board_type = "machine"
 	origin_tech = "engineering=1;programming=1"

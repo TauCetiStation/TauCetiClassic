@@ -3,16 +3,16 @@
 
 	icon = 'icons/obj/atmospherics/Atmos_pipes.dmi'
 
-	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
+	var/datum/gas_mixture/air_temporary // used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent
 
 	var/volume = 0
 	force = 20
 
-	layer = 2.4 //under wires with their 2.44
+	layer = 2.4 // under wires with their 2.44
 	use_power = 0
 
-	var/alert_pressure = 80*ONE_ATMOSPHERE	//minimum pressure before check_pressure(...) should be called
+	var/alert_pressure = 80*ONE_ATMOSPHERE	// minimum pressure before check_pressure(...) should be called
 
 	can_buckle = 1
 	buckle_require_restraints = 1
@@ -24,8 +24,8 @@
 	return null
 
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
-	//Return 1 if parent should continue checking other pipes
-	//Return null if parent should stop checking other pipes. Recall: qdel(src) will by default return null
+	// Return 1 if parent should continue checking other pipes
+	// Return null if parent should stop checking other pipes. Recall: qdel(src) will by default return null
 
 	return 1
 
@@ -74,36 +74,36 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
-	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
+	if(istype(src, /obj/machinery/atmospherics/pipe/tank))
 		return ..()
-	if (istype(src, /obj/machinery/atmospherics/pipe/vent))
+	if(istype(src, /obj/machinery/atmospherics/pipe/vent))
 		return ..()
 
-	if(istype(W,/obj/item/device/pipe_painter))
+	if(istype(W, /obj/item/device/pipe_painter))
 		return 0
 
-	if (!istype(W, /obj/item/weapon/wrench))
+	if(!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	var/turf/T = src.loc
-	if (level==1 && isturf(T) && T.intact)
+	if(level==1 && isturf(T) && T.intact)
 		to_chat(user, "\red You must remove the plating first.")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
-	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+	if((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], it is too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'> You begin to unfasten \the [src]...</span>")
-	if (do_after(user, 40, target = src))
+	if(do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
 			"<span class='notice'>You have unfastened \the [src].</span>", \
 			"You hear ratchet.")
 		new /obj/item/pipe(loc, make_from=src)
-		for (var/obj/machinery/meter/meter in T)
-			if (meter.target == src)
+		for(var/obj/machinery/meter/meter in T)
+			if(meter.target == src)
 				new /obj/item/pipe_meter(T)
 				qdel(meter)
 		qdel(src)
@@ -125,7 +125,7 @@
 	var/obj/machinery/atmospherics/node2
 
 	var/minimum_temperature_difference = 300
-	var/thermal_conductivity = 0 //WALL_HEAT_TRANSFER_COEFFICIENT No
+	var/thermal_conductivity = 0 // WALL_HEAT_TRANSFER_COEFFICIENT No
 
 	var/maximum_pressure = 70*ONE_ATMOSPHERE
 	var/fatigue_pressure = 55*ONE_ATMOSPHERE
@@ -160,7 +160,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/simple/process()
-	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
+	if(!parent) // This should cut back on the overhead calling build_network thousands of times per cycle
 		..()
 	else
 		. = PROCESS_KILL
@@ -174,7 +174,7 @@
 		burst()
 
 	else if(pressure_difference > fatigue_pressure)
-		//TODO: leak to turf, doing pfshhhhh
+		// TODO: leak to turf, doing pfshhhhh
 		if(prob(5))
 			burst()
 
@@ -184,7 +184,7 @@
 	src.visible_message("\red \bold [src] bursts!");
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 	var/datum/effect/effect/system/smoke_spread/smoke = new
-	smoke.set_up(1,0, src.loc, 0)
+	smoke.set_up(1, 0, src.loc, 0)
 	smoke.start()
 	qdel(src)
 
@@ -209,19 +209,19 @@
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
 	switch(pipe_color)
-		if ("red") color = COLOR_RED
-		if ("blue") color = COLOR_BLUE
-		if ("cyan") color = COLOR_CYAN
-		if ("green") color = COLOR_GREEN
-		if ("yellow") color = "#FFCC00"
-		if ("purple") color = "#5C1EC0"
-		if ("grey") color = null
+		if("red") color = COLOR_RED
+		if("blue") color = COLOR_BLUE
+		if("cyan") color = COLOR_CYAN
+		if("green") color = COLOR_GREEN
+		if("yellow") color = "#FFCC00"
+		if("purple") color = "#5C1EC0"
+		if("grey") color = null
 
 	if(node1 && node2)
 		icon_state = "intact[invisibility ? "-f" : "" ]"
 	else
-		var/have_node1 = node1?1:0
-		var/have_node2 = node2?1:0
+		var/have_node1 = node1 ? 1 : 0
+		var/have_node2 = node2 ? 1 : 0
 		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
 
 
@@ -232,17 +232,17 @@
 
 	for(var/direction in cardinal)
 		if(direction&initialize_directions)
-			if (!node1_dir)
+			if(!node1_dir)
 				node1_dir = direction
-			else if (!node2_dir)
+			else if(!node2_dir)
 				node2_dir = direction
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node1_dir))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node2_dir))
+		if(target.initialize_directions & get_dir(target, src))
 			node2 = target
 			break
 
@@ -266,7 +266,7 @@
 	..()
 
 
-/////Visible simple pipe
+///// Visible simple pipe
 /obj/machinery/atmospherics/pipe/simple/visible
 	level = 2
 	icon_state = "intact"
@@ -289,11 +289,11 @@
 	color=COLOR_GREEN
 
 
-/////Hidden simple pipe
+///// Hidden simple pipe
 /obj/machinery/atmospherics/pipe/simple/hidden
 	level = 1
 	icon_state = "intact-f"
-	alpha = 192		//set for the benefit of mapping - this is reset to opaque when the pipe is spawned in game
+	alpha = 192		// set for the benefit of mapping - this is reset to opaque when the pipe is spawned in game
 
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers
 	name="Scrubbers pipe"
@@ -313,7 +313,7 @@
 	color=COLOR_GREEN
 
 
-/////Insulted simple pipe
+///// Insulted simple pipe
 /obj/machinery/atmospherics/pipe/simple/insulated
 	icon = 'icons/obj/atmospherics/red_pipe.dmi'
 	icon_state = "intact"
@@ -343,7 +343,7 @@
 	var/obj/machinery/atmospherics/node3
 
 	level = 1
-	layer = 2.4 //under wires with their 2.44
+	layer = 2.4 // under wires with their 2.44
 
 /obj/machinery/atmospherics/pipe/manifold/New()
 	alpha = 255
@@ -409,13 +409,13 @@
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
 	if( node1 && node2 && node3)
 		switch(pipe_color)
-			if ("red") color = COLOR_RED
-			if ("blue") color = COLOR_BLUE
-			if ("cyan") color = COLOR_CYAN
-			if ("green") color = COLOR_GREEN
-			if ("yellow") color = "#FFCC00"
-			if ("purple") color = "#5C1EC0"
-			if ("grey") color = null
+			if("red") color = COLOR_RED
+			if("blue") color = COLOR_BLUE
+			if("cyan") color = COLOR_CYAN
+			if("green") color = COLOR_GREEN
+			if("yellow") color = "#FFCC00"
+			if("purple") color = "#5C1EC0"
+			if("grey") color = null
 		icon_state = "manifold[invisibility ? "-f" : "" ]"
 
 	else if(!node1 && !node2 && !node3)
@@ -446,34 +446,34 @@
 
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-				if(target.initialize_directions & get_dir(target,src))
+			for(var/obj/machinery/atmospherics/target in get_step(src, direction))
+				if(target.initialize_directions & get_dir(target, src))
 					node1 = target
 					connect_directions &= ~direction
 					break
-			if (node1)
+			if(node1)
 				break
 
 
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-				if(target.initialize_directions & get_dir(target,src))
+			for(var/obj/machinery/atmospherics/target in get_step(src, direction))
+				if(target.initialize_directions & get_dir(target, src))
 					node2 = target
 					connect_directions &= ~direction
 					break
-			if (node2)
+			if(node2)
 				break
 
 
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-				if(target.initialize_directions & get_dir(target,src))
+			for(var/obj/machinery/atmospherics/target in get_step(src, direction))
+				if(target.initialize_directions & get_dir(target, src))
 					node3 = target
 					connect_directions &= ~direction
 					break
-			if (node3)
+			if(node3)
 				break
 
 	var/turf/T = src.loc			// hide if turf is not intact
@@ -481,7 +481,7 @@
 	update_icon()
 
 
-/////Manifold visible pipe
+///// Manifold visible pipe
 /obj/machinery/atmospherics/pipe/manifold/visible
 	level = 2
 	icon_state = "manifold"
@@ -504,11 +504,11 @@
 	color=COLOR_GREEN
 
 
-/////Manifold hidden pipe
+///// Manifold hidden pipe
 /obj/machinery/atmospherics/pipe/manifold/hidden
 	level = 1
 	icon_state = "manifold-f"
-	alpha = 192		//set for the benefit of mapping - this is reset to opaque when the pipe is spawned in game
+	alpha = 192		// set for the benefit of mapping - this is reset to opaque when the pipe is spawned in game
 
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply
 	name="Air supply pipe"
@@ -547,7 +547,7 @@
 	var/obj/machinery/atmospherics/node4
 
 	level = 1
-	layer = 2.4 //under wires with their 2.44
+	layer = 2.4 // under wires with their 2.44
 
 obj/machinery/atmospherics/pipe/manifold4w/New()
 	..()
@@ -612,47 +612,47 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 	overlays.Cut()
 	if(node1&&node2&&node3&&node4)
 		switch(pipe_color)
-			if ("red") color = COLOR_RED
-			if ("blue") color = COLOR_BLUE
-			if ("cyan") color = COLOR_CYAN
-			if ("green") color = COLOR_GREEN
-			if ("yellow") color = "#FFCC00"
-			if ("purple") color = "#5C1EC0"
-			if ("grey") color = null
+			if("red") color = COLOR_RED
+			if("blue") color = COLOR_BLUE
+			if("cyan") color = COLOR_CYAN
+			if("green") color = COLOR_GREEN
+			if("yellow") color = "#FFCC00"
+			if("purple") color = "#5C1EC0"
+			if("grey") color = null
 		icon_state = "manifold4w[invisibility ? "-f" : "" ]"
 
 	else
 		icon_state = "manifold4w_ex"
-		var/icon/con = new/icon('icons/obj/atmospherics/pipe_manifold.dmi',"manifold4w_con") //Since 4-ways are supposed to be directionless, they need an overlay instead it seems.
+		var/icon/con = new/icon('icons/obj/atmospherics/pipe_manifold.dmi', "manifold4w_con") // Since 4-ways are supposed to be directionless, they need an overlay instead it seems.
 
 		if(node1)
-			overlays += new/image(con,dir=1)
+			overlays += new/image(con, dir=1)
 		if(node2)
-			overlays += new/image(con,dir=2)
+			overlays += new/image(con, dir=2)
 		if(node3)
-			overlays += new/image(con,dir=4)
+			overlays += new/image(con, dir=4)
 		if(node4)
-			overlays += new/image(con,dir=8)
+			overlays += new/image(con, dir=8)
 	return
 
 /obj/machinery/atmospherics/pipe/manifold4w/initialize()
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,1))
+	for(var/obj/machinery/atmospherics/target in get_step(src, 1))
 		if(target.initialize_directions & 2)
 			node1 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,2))
+	for(var/obj/machinery/atmospherics/target in get_step(src, 2))
 		if(target.initialize_directions & 1)
 			node2 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,4))
+	for(var/obj/machinery/atmospherics/target in get_step(src, 4))
 		if(target.initialize_directions & 8)
 			node3 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,8))
+	for(var/obj/machinery/atmospherics/target in get_step(src, 8))
 		if(target.initialize_directions & 4)
 			node4 = target
 			break
@@ -662,7 +662,7 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 	update_icon()
 
 
-/////Manifold4w visible pipe
+///// Manifold4w visible pipe
 /obj/machinery/atmospherics/pipe/manifold4w/visible
 	level = 2
 	icon_state = "manifold4w"
@@ -685,11 +685,11 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 	color=COLOR_GREEN
 
 
-/////Manifold4w hidden pipe
+///// Manifold4w hidden pipe
 /obj/machinery/atmospherics/pipe/manifold4w/hidden
 	level = 1
 	icon_state = "manifold4w-f"
-	alpha = 192		//set for the benefit of mapping - this is reset to opaque when the pipe is spawned in game
+	alpha = 192		// set for the benefit of mapping - this is reset to opaque when the pipe is spawned in game
 
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply
 	name="Air supply pipe"
@@ -717,7 +717,7 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 	icon = 'icons/obj/pipes.dmi'
 	icon_state = "cap"
 	level = 2
-	layer = 2.4 //under wires with their 2.44
+	layer = 2.4 // under wires with their 2.44
 
 	volume = 35
 
@@ -776,7 +776,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 /obj/machinery/atmospherics/pipe/cap/initialize()
 	for(var/obj/machinery/atmospherics/target in get_step(src, dir))
-		if(target.initialize_directions & get_dir(target,src))
+		if(target.initialize_directions & get_dir(target, src))
 			node = target
 			break
 
@@ -785,13 +785,13 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	update_icon()
 
 
-/////Cap visible pipe
+///// Cap visible pipe
 /obj/machinery/atmospherics/pipe/cap/visible
 	level = 2
 	icon_state = "cap"
 
 
-/////Cap hidden pipe
+///// Cap hidden pipe
 /obj/machinery/atmospherics/pipe/cap/hidden
 	level = 1
 	icon_state = "cap-f"
@@ -806,7 +806,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	name = "Pressure Tank"
 	desc = "A large vessel containing pressurized gas."
 
-	volume = 2000 //in liters, 1 meters by 1 meters by 2 meters
+	volume = 2000 // in liters, 1 meters by 1 meters by 2 meters
 
 	dir = SOUTH
 	initialize_directions = SOUTH
@@ -825,9 +825,9 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 		. = PROCESS_KILL
 
 
-/////Carbon dioxide tank
+///// Carbon dioxide tank
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide
-	name = "Pressure Tank (Carbon Dioxide)"
+	name = "Pressure Tank(Carbon Dioxide)"
 
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide/New()
 	air_temporary = new
@@ -839,10 +839,10 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	..()
 
 
-/////Phoron tank
+///// Phoron tank
 /obj/machinery/atmospherics/pipe/tank/phoron
 	icon = 'icons/obj/atmospherics/orange_pipe_tank.dmi'
-	name = "Pressure Tank (Phoron)"
+	name = "Pressure Tank(Phoron)"
 
 /obj/machinery/atmospherics/pipe/tank/phoron/New()
 	air_temporary = new
@@ -854,10 +854,10 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	..()
 
 
-/////Oxygen agent_b tank
+///// Oxygen agent_b tank
 /obj/machinery/atmospherics/pipe/tank/oxygen_agent_b
 	icon = 'icons/obj/atmospherics/red_orange_pipe_tank.dmi'
-	name = "Pressure Tank (Oxygen + Phoron)"
+	name = "Pressure Tank(Oxygen + Phoron)"
 
 /obj/machinery/atmospherics/pipe/tank/oxygen_agent_b/New()
 	air_temporary = new
@@ -872,10 +872,10 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	..()
 
 
-/////Oxygen tank
+///// Oxygen tank
 /obj/machinery/atmospherics/pipe/tank/oxygen
 	icon = 'icons/obj/atmospherics/blue_pipe_tank.dmi'
-	name = "Pressure Tank (Oxygen)"
+	name = "Pressure Tank(Oxygen)"
 
 /obj/machinery/atmospherics/pipe/tank/oxygen/New()
 	air_temporary = new
@@ -887,10 +887,10 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	..()
 
 
-/////Nitrogen tank
+///// Nitrogen tank
 /obj/machinery/atmospherics/pipe/tank/nitrogen
 	icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
-	name = "Pressure Tank (Nitrogen)"
+	name = "Pressure Tank(Nitrogen)"
 
 /obj/machinery/atmospherics/pipe/tank/nitrogen/New()
 	air_temporary = new
@@ -902,10 +902,10 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	..()
 
 
-/////Air tank
+///// Air tank
 /obj/machinery/atmospherics/pipe/tank/air
 	icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
-	name = "Pressure Tank (Air)"
+	name = "Pressure Tank(Air)"
 
 /obj/machinery/atmospherics/pipe/tank/air/New()
 	air_temporary = new
@@ -940,8 +940,8 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 	var/connect_direction = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, connect_direction))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
 
@@ -958,15 +958,15 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	return null
 
 /obj/machinery/atmospherics/pipe/tank/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
-		for (var/mob/O in viewers(user, null))
+	if(istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
+		for(var/mob/O in viewers(user, null))
 			to_chat(O, "\red [user] has used the analyzer on [bicon(icon)]")
 
 		var/pressure = parent.air.return_pressure()
 		var/total_moles = parent.air.total_moles()
 
 		to_chat(user, "\blue Results of analysis of [bicon(icon)]")
-		if (total_moles>0)
+		if(total_moles>0)
 			var/o2_concentration = parent.air.oxygen/total_moles
 			var/n2_concentration = parent.air.nitrogen/total_moles
 			var/co2_concentration = parent.air.carbon_dioxide/total_moles
@@ -974,7 +974,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 			var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 
-			to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
+			to_chat(user, "\blue Pressure: [round(pressure, 0.1)] kPa")
 			to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
 			to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
 			to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
@@ -1047,8 +1047,8 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 /obj/machinery/atmospherics/pipe/vent/initialize()
 	var/connect_direction = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, connect_direction))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
 
@@ -1064,7 +1064,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 	return null
 
-/obj/machinery/atmospherics/pipe/vent/hide(i) //to make the little pipe section invisible, the icon changes.
+/obj/machinery/atmospherics/pipe/vent/hide(i) // to make the little pipe section invisible, the icon changes.
 	if(node1)
 		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
 		dir = get_dir(src, node1)

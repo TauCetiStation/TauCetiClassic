@@ -28,10 +28,10 @@ var/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if pulsed,
 				else
 					S.defused = TRUE
 			if(mended)
-				S.defused = FALSE //cutting and mending all the wires of an inactive bomb will thus cure any sabotage
+				S.defused = FALSE // cutting and mending all the wires of an inactive bomb will thus cure any sabotage
 
 		if(SYNDIEBOMB_WIRE_UNBOLT)
-			if (!mended && S.anchored)
+			if(!mended && S.anchored)
 				playsound(S.loc, 'sound/effects/stealthoff.ogg', 30, 1)
 				S.loc.visible_message("<span class='notice'>[bicon(holder)] The bolts lift out of the ground!</span>")
 				S.anchored = FALSE
@@ -42,9 +42,9 @@ var/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if pulsed,
 				S.timer = 0
 
 		if(SYNDIEBOMB_WIRE_ACTIVATE)
-			if (!mended && S.active)
+			if(!mended && S.active)
 				S.loc.visible_message("<span class='notice'>[bicon(holder)] The timer stops! The bomb has been defused!</span>")
-				S.icon_state = "syndicate-bomb-inactive-wires" //no cutting possible with the panel closed
+				S.icon_state = "syndicate-bomb-inactive-wires" // no cutting possible with the panel closed
 				S.active = FALSE
 				S.defused = TRUE
 
@@ -53,7 +53,7 @@ var/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if pulsed,
 
 	switch(index)
 		if(SYNDIEBOMB_WIRE_BOOM)
-			if (S.active)
+			if(S.active)
 				S.loc.visible_message("<span class='warning'>[bicon(holder)] An alarm sounds! It's go-</span>")
 				S.timer = 0
 
@@ -69,11 +69,11 @@ var/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if pulsed,
 			playsound(S.loc, 'sound/machines/buzz-sigh.ogg', 30, 1)
 			S.loc.visible_message("<span class='warning'>[bicon(holder)] The bomb buzzes ominously!</span>")
 
-			if (S.timer >= 61) //Long fuse bombs can suddenly become more dangerous if you tinker with them
+			if(S.timer >= 61) // Long fuse bombs can suddenly become more dangerous if you tinker with them
 				S.timer = 60
-			if (S.timer >= 21)
+			if(S.timer >= 21)
 				S.timer -= 10
-			else if (S.timer >= 11) //both to prevent negative timers and to have a little mercy
+			else if(S.timer >= 11) // both to prevent negative timers and to have a little mercy
 				S.timer = 10
 
 		if(SYNDIEBOMB_WIRE_ACTIVATE)
@@ -82,7 +82,7 @@ var/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if pulsed,
 				S.loc.visible_message("<span class='warning'>[bicon(holder)] You hear the bomb start ticking!</span>")
 				S.active = TRUE
 
-				if(!S.open_panel) //Needs to exist in case the wire is pulsed with a signaler while the panel is closed
+				if(!S.open_panel) // Needs to exist in case the wire is pulsed with a signaler while the panel is closed
 					S.icon_state = "syndicate-bomb-active"
 				else
 					S.icon_state = "syndicate-bomb-active-wires"

@@ -5,25 +5,25 @@
 	desc = "A display case for prized possessions. It taunts you to kick it."
 	density = 1
 	anchored = 1
-	unacidable = 1//Dissolving the case would also delete the gun.
+	unacidable = 1// Dissolving the case would also delete the gun.
 	var/health = 30
 	var/occupied = 1
 	var/destroyed = 0
 
 /obj/structure/displaycase/ex_act(severity)
 	switch(severity)
-		if (1)
+		if(1)
 			new /obj/item/weapon/shard( src.loc )
-			if (occupied)
+			if(occupied)
 				new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
 				occupied = 0
 			qdel(src)
-		if (2)
-			if (prob(50))
+		if(2)
+			if(prob(50))
 				src.health -= 15
 				src.healthcheck()
-		if (3)
-			if (prob(50))
+		if(3)
+			if(prob(50))
 				src.health -= 5
 				src.healthcheck()
 
@@ -36,9 +36,9 @@
 
 
 /obj/structure/displaycase/blob_act()
-	if (prob(75))
+	if(prob(75))
 		new /obj/item/weapon/shard( src.loc )
-		if (occupied)
+		if(occupied)
 			new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
 			occupied = 0
 		qdel(src)
@@ -51,8 +51,8 @@
 
 
 /obj/structure/displaycase/proc/healthcheck()
-	if (src.health <= 0)
-		if (!( src.destroyed ))
+	if(src.health <= 0)
+		if(!( src.destroyed ))
 			src.density = 0
 			src.destroyed = 1
 			new /obj/item/weapon/shard( src.loc )
@@ -80,7 +80,7 @@
 	return src.attack_hand(user)
 
 /obj/structure/displaycase/attack_hand(mob/user)
-	if (src.destroyed && src.occupied)
+	if(src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
 		to_chat(user, "\b You deactivate the hover field built into the case.")
 		src.occupied = 0
@@ -90,7 +90,7 @@
 	else
 		to_chat(usr, text("\blue You kick the display case."))
 		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				to_chat(O, text("\red [] kicks the display case.", usr))
 		src.health -= 2
 		healthcheck()

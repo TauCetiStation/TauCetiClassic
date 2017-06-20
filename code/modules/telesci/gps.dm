@@ -14,7 +14,7 @@ var/list/GPS_list = list()
 /obj/item/device/gps/New()
 	..()
 	GPS_list.Add(src)
-	name = "global positioning system ([gpstag])"
+	name = "global positioning system([gpstag])"
 	overlays += "working"
 
 /obj/item/device/gps/Destroy()
@@ -62,7 +62,7 @@ var/list/GPS_list = list()
 		a = uppertext(copytext(sanitize(a), 1, 5))
 		if(src.loc == usr)
 			gpstag = a
-			name = "global positioning system ([gpstag])"
+			name = "global positioning system([gpstag])"
 			attack_self(usr)
 
 /obj/item/device/gps/science

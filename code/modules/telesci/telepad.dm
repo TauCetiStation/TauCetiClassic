@@ -1,4 +1,4 @@
-///SCI TELEPAD///
+/// SCI TELEPAD///
 /obj/machinery/telepad
 	name = "telepad"
 	desc = "A bluespace telepad used for teleporting objects to and from a location."
@@ -51,7 +51,7 @@
 	default_deconstruction_crowbar(I)
 
 
-//CARGO TELEPAD//
+// CARGO TELEPAD//
 /obj/machinery/telepad_cargo
 	name = "cargo telepad"
 	desc = "A telepad used by the Rapid Crate Sender."
@@ -88,7 +88,7 @@
 		new /obj/item/stack/sheet/glass(get_turf(src))
 		qdel(src)
 
-///TELEPAD CALLER///
+/// TELEPAD CALLER///
 /obj/item/device/telepad_beacon
 	name = "telepad beacon"
 	desc = "Use to warp in a cargo telepad."
@@ -105,9 +105,9 @@
 		qdel(src)
 	return
 
-///HANDHELD TELEPAD USER///
+/// HANDHELD TELEPAD USER///
 /obj/item/weapon/rcs
-	name = "rapid-crate-sender (RCS)"
+	name = "rapid-crate-sender(RCS)"
 	desc = "Use this to send crates and closets to cargo telepads."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "rcs"

@@ -24,7 +24,7 @@
 	H.emote("me", 1, "starts turning very red..")
 
 /datum/genetics/side_effect/genetic_burn/finish(mob/living/carbon/human/H)
-	for(var/bodypart in list(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN))
+	for(var/bodypart in list(BP_CHEST, BP_L_ARM, BP_R_ARM, BP_R_LEG, BP_L_LEG, BP_HEAD, BP_GROIN))
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
 		if(prob(85))//#Z2 - now 15% chance even for more burn
 			BP.take_damage(0, 5, 0)
@@ -42,7 +42,7 @@
 	H.emote("me", 1, "'s limbs start shivering uncontrollably.")
 
 /datum/genetics/side_effect/bone_snap/finish(mob/living/carbon/human/H)
-	var/bodypart = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
+	var/bodypart = pick(BP_CHEST, BP_L_ARM, BP_R_ARM, BP_R_LEG, BP_L_LEG, BP_HEAD, BP_GROIN)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
 	if(prob(85))
 		BP.take_damage(20)

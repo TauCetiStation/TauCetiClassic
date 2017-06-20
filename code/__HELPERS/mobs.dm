@@ -48,11 +48,11 @@ proc/random_skin_tone()
 		if("african")		. = -165
 		if("latino")		. = -55
 		if("albino")		. = 34
-		else				. = rand(-185,34)
-	return min(max( .+rand(-25, 25), -185),34)
+		else				. = rand(-185, 34)
+	return min(max( .+rand(-25, 25), -185), 34)
 
 proc/skintone2racedescription(tone)
-	switch (tone)
+	switch(tone)
 		if(30 to INFINITY)		return "albino"
 		if(20 to 30)			return "pale"
 		if(5 to 15)				return "light skinned"
@@ -118,10 +118,10 @@ proc/RoundHealth(health)
 			return "health-100"
 	return "0"
 
-//helper for inverting armor blocked values into a multiplier
+// helper for inverting armor blocked values into a multiplier
 #define blocked_mult(blocked) max(1 - (blocked / 100), 0)
 
-/proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE)
+/proc/do_mob(mob/user, mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE)
 	if(!user || !target)
 		return FALSE
 
@@ -136,7 +136,7 @@ proc/RoundHealth(health)
 
 	var/holding = user.get_active_hand()
 	var/datum/progressbar/progbar
-	if (progress)
+	if(progress)
 		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = new(user, time, target)
 		else
@@ -145,9 +145,9 @@ proc/RoundHealth(health)
 	var/endtime = world.time+time
 	var/starttime = world.time
 	. = TRUE
-	while (world.time < endtime)
+	while(world.time < endtime)
 		stoplag()
-		if (progress)
+		if(progress)
 			progbar.update(world.time - starttime)
 		if(!user || !target)
 			. = FALSE
@@ -181,12 +181,12 @@ proc/RoundHealth(health)
 
 	var/holding = user.get_active_hand()
 
-	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
+	var/holdingnull = 1 // User's hand started out empty, check for an empty hand
 	if(holding)
-		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
+		holdingnull = 0 // Users hand started holding something, check to see if it's still holding that
 
 	var/datum/progressbar/progbar
-	if (progress)
+	if(progress)
 		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = new(user, delay, target)
 		else
@@ -195,9 +195,9 @@ proc/RoundHealth(health)
 	var/endtime = world.time + delay
 	var/starttime = world.time
 	. = 1
-	while (world.time < endtime)
+	while(world.time < endtime)
 		stoplag()
-		if (progress)
+		if(progress)
 			progbar.update(world.time - starttime)
 
 		if(!user || user.stat || user.weakened || user.stunned)
@@ -213,8 +213,8 @@ proc/RoundHealth(health)
 			break
 
 		if(needhand)
-			//This might seem like an odd check, but you can still need a hand even when it's empty
-			//i.e the hand is used to pull some item/tool out of the construction
+			// This might seem like an odd check, but you can still need a hand even when it's empty
+			// i.e the hand is used to pull some item/tool out of the construction
 			if(!holdingnull)
 				if(!holding)
 					. = 0

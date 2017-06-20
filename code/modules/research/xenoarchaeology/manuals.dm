@@ -32,10 +32,10 @@
 				and get it to the site the first time. You learn quick that time is money, when you've got a shipful of bandits searching for you the next valley over,
 				but don't be afraid to clear some space if there are any inconvenient boulders in the way.<br>
 				<ul>
-					<li>Floodlights (if it's dark)</li>
-					<li>Wooden trestle tables (for holding tools and finds)</li>
+					<li>Floodlights(if it's dark)</li>
+					<li>Wooden trestle tables(for holding tools and finds)</li>
 					<li>Suspension field generator</li>
-					<li>Load bearing servitors (such as a mulebot, or hover-tray)</li>
+					<li>Load bearing servitors(such as a mulebot, or hover-tray)</li>
 					<li>Spare energy packs</li>
 				</ul><br>
 				<a href="#Contents">Contents</a>
@@ -71,7 +71,7 @@
 						gather dust on a shelf.</li>
 					<li><b>Check the obvious areas first</b> - even if you're pressed for time, these ones are the generally easiest to search, and the most likely targets
 						of your rivals.</li>
-					<li><b>Do some prospecting</b> - the earth mother isn't in the habit of displaying her secrets to the world (although sometimes you get lucky).
+					<li><b>Do some prospecting</b> - the earth mother isn't in the habit of displaying her secrets to the world(although sometimes you get lucky).
 						Drop a shaft and clear away a bit of surface rock here and there, you never know what might be lurking below the surface.</li>
 					<li><b>Tips on unearthing a deposit</b> - How do you know when you're golden? Look for telltale white strata that looks strange or out of place, or if
 						something has broken under your pick while you're digging. Your depth scanner is your best friend, but even it can't distinguish between
@@ -98,7 +98,7 @@
 					<li><b>Choose stasis field</b> - Chemical analysis on a core sample from the rock face will tell you which field is necessary to extract the find safely.</li>
 					<li><b>Setup field gen</b> - Bolt it down, choose the field, check the charge, and activate it. If you forget it, you'll wish you hadn't when that priceless
 						Uryom vase crumbles as it sees the light of day.</li>
-					<li><b>FUNCTIONAL AND SAFE digging</b> - Dig into the rock until you've cleared away a depth equal to (the anomaly depth MINUS the clearance range). The find
+					<li><b>FUNCTIONAL AND SAFE digging</b> - Dig into the rock until you've cleared away a depth equal to(the anomaly depth MINUS the clearance range). The find
 						should come loose on it's own, but it will be in the midst of a chunk of rock. Use a welder or miniature excavation tool to clear away the excess.</li>
 					<li><b>FANCY AND SPEEDY digging</b> - Dig into the rock until you've cleared away a depth equal to the anomaly depth, but without any of your strokes
 						entering the clearance range.</li>
@@ -268,12 +268,12 @@
 				Using our vast, telescopic array installations and deep space satellite networks, we are able to detect anomalous energy fields and formations in deep space,
 				but are limited to those that are large enough to output energy that will stretch across light years worth of distance between stars.<br>
 				<br>
-				While some sectors (such as the Hydrolian Rift and Keppel's Run) are replete with inexplicable energetic activity and unique phenomena found nowhere else in
+				While some sectors(such as the Hydrolian Rift and Keppel's Run) are replete with inexplicable energetic activity and unique phenomena found nowhere else in
 				the galaxy, the majority of space is dry, barren and cold - and if past experience has told us anything, it is that there are always more things we are
 				unable to explain.<br>
 				<br>
 				Indeed, a great source of knowledge and technology has always been those who come before us, in the form of the multitudinous ancient alien precursors that
-				have left scattered remnants of their great past all over settled (and unexplored) space.<br>
+				have left scattered remnants of their great past all over settled(and unexplored) space.<br>
 				<br>
 				It is from xenoarchaeologists, high energy materials researchers, and technology reconstruction authorities that we are able to theorise on the gifts these
 				species have left behind, and in some cases even reverse engineer or rebuild the technology in question. My colleague, Doctor Raymond Ward of the
@@ -300,11 +300,11 @@
 
 				<h1><a name="Synthetic">Harvesting and utilising anomalous energy signatures</a></h1>
 				As mentioned in the foreword, my colleague from the Tyrolian Institute on Saturn's moon of Titan, in the Sol System, Doctor Raymond Ward has made great strides
-				in the area of harvesting and application of the energy emitted by anomalous phenomena from around the galaxy (although I profess I have not yet seen him
+				in the area of harvesting and application of the energy emitted by anomalous phenomena from around the galaxy(although I profess I have not yet seen him
 				venture further from his birthplace on Earth than the comfortable distance of the Sol Cis-Oort Satellite Sphere).<br>
 				<br>
 				By employing a patented semi-phased alloy with unique and fascinating bluespace interaction properties, Ward's contraption is able to 'harvest' energy, store
-				it and redirect it later at will (with appropriate electronic mechanisms, of course). Although he professes to see or desire no commercial or material gain
+				it and redirect it later at will(with appropriate electronic mechanisms, of course). Although he professes to see or desire no commercial or material gain
 				for the application and use of said energy once it is harvested, there are no doubt myriad ways we can come to benefit from such things beyond mere research,
 				such as the reconstruction of torn cartilaginous tissue that a peculiar radiation from an amphibious species on Brachis IV was found to emit.<br>
 				<a href="#Contents">Contents</a>
@@ -355,8 +355,8 @@
 				<a href="#Contents">Contents</a>
 
 				<h1><a name="Application">Applying this new principle</a></h1>
-				When combined with an appropriate energy-effect replicate for cryogenics (slowing down biological activity, thus stabilising the organics), the effect is
-				effectively identical to cryogenics, and while it consumes vastly more power and requires extremely complex equipment, it's (for all intents and purposes) superior
+				When combined with an appropriate energy-effect replicate for cryogenics(slowing down biological activity, thus stabilising the organics), the effect is
+				effectively identical to cryogenics, and while it consumes vastly more power and requires extremely complex equipment, it's(for all intents and purposes) superior
 				to cryogenics, all that remains is to 'commercialise' the process by enabling cheaper development and mass production.<br>
 				The Effete Hoffman Principle can be tweak-combined with other effects however, for different purposes. A division of PMC Research initially developed the application
 				in prisons as a literal 'suspension field' where convicts are held immobile in the air, and the use quickly spread to numerous other areas.<br>

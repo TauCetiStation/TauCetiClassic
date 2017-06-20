@@ -19,19 +19,19 @@
 	var/scrub_N2O = 0
 
 	var/volume_rate = 120
-	var/panic = 0 //is this scrubber panicked?
+	var/panic = 0 // is this scrubber panicked?
 
 	var/area_uid
 
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
 	initial_loc = get_area(loc)
-	if (initial_loc.master)
+	if(initial_loc.master)
 		initial_loc = initial_loc.master
 	area_uid = initial_loc.uid
-	if (!id_tag)
+	if(!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
-	if(ticker && ticker.current_state == 3)//if the game is running
+	if(ticker && ticker.current_state == 3)// if the game is running
 		src.initialize()
 		src.broadcast_status()
 	..()
@@ -51,7 +51,7 @@
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 	signal.data = list(
 		"area" = area_uid,
@@ -79,16 +79,16 @@
 	..()
 	radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
-	if (frequency)
+	if(frequency)
 		set_frequency(frequency)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/process()
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!node)
+	if(!node)
 		on = 0
-	//broadcast_status()
+	// broadcast_status()
 	if(!on)
 		return 0
 
@@ -98,12 +98,12 @@
 		if((environment.phoron>0.001) || (environment.carbon_dioxide>0.001) || (environment.trace_gases.len>0))
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
-			//Take a gas sample
+			// Take a gas sample
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
-			if (isnull(removed)) //in space
+			if(isnull(removed)) // in space
 				return
 
-			//Filter it
+			// Filter it
 			var/datum/gas_mixture/filtered_out = new
 			filtered_out.temperature = removed.temperature
 			if(scrub_Toxins)
@@ -122,7 +122,7 @@
 						removed.trace_gases -= trace_gas
 						filtered_out.trace_gases += trace_gas
 
-			//Remix the resulting gases
+			// Remix the resulting gases
 			air_contents.merge(filtered_out)
 
 			loc.assume_air(removed)
@@ -130,8 +130,8 @@
 			if(network)
 				network.update = 1
 
-	else //Just siphoning all air
-		if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
+	else // Just siphoning all air
+		if(air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
 			return
 
 		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
@@ -156,7 +156,7 @@
 	if(signal.data["power_toggle"] != null)
 		on = !on
 
-	if(signal.data["panic_siphon"] != null) //must be before if("scrubbing" thing
+	if(signal.data["panic_siphon"] != null) // must be before if("scrubbing" thing
 		panic = text2num(signal.data["panic_siphon"])
 		if(panic)
 			on = 1
@@ -184,7 +184,7 @@
 
 	if(signal.data["status"] != null)
 		addtimer(CALLBACK(src, .proc/broadcast_status), 2)
-		return //do not update_icon
+		return // do not update_icon
 
 //			log_admin("DEBUG \[[world.timeofday]\]: vent_scrubber/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
@@ -199,24 +199,24 @@
 	update_icon()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
+	if(!istype(W, /obj/item/weapon/wrench))
 		return ..()
-	if (!(stat & NOPOWER) && on)
+	if(!(stat & NOPOWER) && on)
 		to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>")
 		return 1
 	var/turf/T = src.loc
-	if (level==1 && isturf(T) && T.intact)
+	if(level==1 && isturf(T) && T.intact)
 		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
-	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+	if((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
 		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-	if (do_after(user, 40, target = src))
+	if(do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
 			"<span class='notice'>You have unfastened \the [src].</span>", \

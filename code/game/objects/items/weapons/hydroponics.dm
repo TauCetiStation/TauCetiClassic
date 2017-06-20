@@ -11,7 +11,7 @@
 /*
  * SeedBag
  */
-//uncomment when this is updated to match storage update
+// uncomment when this is updated to match storage update
 /*
 /obj/item/weapon/seedbag
 	icon = 'icons/obj/hydroponics.dmi'
@@ -19,7 +19,7 @@
 	name = "Seed Bag"
 	desc = "A small satchel made for organizing seeds."
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
-	var/capacity = 500; //the number of seeds it can carry.
+	var/capacity = 500; // the number of seeds it can carry.
 	slot_flags = SLOT_BELT
 	w_class = 1
 	var/list/item_quants = list()
@@ -33,7 +33,7 @@
 	set category = "Object"
 
 	mode = !mode
-	switch (mode)
+	switch(mode)
 		if(1)
 			to_chat(usr, "The bag now picks up all seeds in a tile at once.")
 		if(0)
@@ -41,11 +41,11 @@
 
 /obj/item/seeds/attackby(obj/item/O, mob/user)
 	..()
-	if (istype(O, /obj/item/weapon/seedbag))
+	if(istype(O, /obj/item/weapon/seedbag))
 		var/obj/item/weapon/seedbag/S = O
-		if (S.mode == 1)
-			for (var/obj/item/seeds/G in locate(src.x,src.y,src.z))
-				if (S.contents.len < S.capacity)
+		if(S.mode == 1)
+			for(var/obj/item/seeds/G in locate(src.x, src.y, src.z))
+				if(S.contents.len < S.capacity)
 					S.contents += G;
 					if(S.item_quants[G.name])
 						S.item_quants[G.name]++
@@ -57,7 +57,7 @@
 					return
 			to_chat(user, "\blue You pick up all the seeds.")
 		else
-			if (S.contents.len < S.capacity)
+			if(S.contents.len < S.capacity)
 				S.contents += src;
 				if(S.item_quants[name])
 					S.item_quants[name]++
@@ -72,10 +72,10 @@
 
 	var/dat = "<TT><b>Select an item:</b><br>"
 
-	if (contents.len == 0)
+	if(contents.len == 0)
 		dat += "<font color = 'red'>No seeds loaded!</font>"
 	else
-		for (var/O in item_quants)
+		for(var/O in item_quants)
 			if(item_quants[O] > 0)
 				var/N = item_quants[O]
 				dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
@@ -94,7 +94,7 @@
 		return
 
 	usr.machine = src
-	if ( href_list["vend"] )
+	if( href_list["vend"] )
 		var/N = href_list["vend"]
 
 		if(item_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
@@ -107,7 +107,7 @@
 				usr.put_in_hands(O)
 				break
 
-	else if ( href_list["unload"] )
+	else if( href_list["unload"] )
 		item_quants.Cut()
 		for(var/obj/O in contents )
 			O.loc = get_turf(src)
@@ -118,7 +118,7 @@
 /obj/item/weapon/seedbag/updateUsrDialog()
 	var/list/nearby = range(1, src)
 	for(var/mob/M in nearby)
-		if ((M.client && M.machine == src))
+		if((M.client && M.machine == src))
 			src.attack_self(M)
 */
 /*
@@ -189,7 +189,7 @@
 
 /obj/item/weapon/grown/deathnettle/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
-	if (force > 0)
+	if(force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 
 	else
@@ -208,6 +208,6 @@
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/kitchenknife/ritual))
 		to_chat(user, "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>")
-		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
+		new /obj/item/clothing/mask/cigarette/pipe/cobpipe(user.loc)
 		qdel(src)
 		return

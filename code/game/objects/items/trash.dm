@@ -1,7 +1,7 @@
-//Items labled as 'trash' for the trash bag.
-//TODO: Make this an item var or something...
+// Items labled as 'trash' for the trash bag.
+// TODO: Make this an item var or something...
 
-//Added by Jack Rost
+// Added by Jack Rost
 /obj/item/trash
 	icon = 'icons/obj/trash.dmi'
 	w_class = 2.0

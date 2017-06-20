@@ -7,7 +7,7 @@
 	volume = 60
 
 /obj/item/weapon/reagent_containers/hypospray/combat/New()
-	if (!possible_transfer_amounts)
+	if(!possible_transfer_amounts)
 		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 	var/datum/reagents/R = new/datum/reagents(volume)
 	reagents = R
@@ -17,7 +17,7 @@
 	reagents.add_reagent("oxycodone", 15)
 	reagents.add_reagent("anti_toxin", 25)
 
-//PILL
+// PILL
 /obj/item/weapon/reagent_containers/pill/dermaline
 	name = "Dermaline pill"
 	desc = "Used to treat burns."
@@ -55,7 +55,7 @@
 	new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
 	new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
 
-//FIRST-AID KIT
+// FIRST-AID KIT
 /obj/item/weapon/storage/firstaid/tactical
 	name = "first-aid kit"
 	icon_state = "bezerk"
@@ -64,7 +64,7 @@
 
 /obj/item/weapon/storage/firstaid/tactical/New()
 	..()
-	if (empty)
+	if(empty)
 		return
 	new /obj/item/weapon/reagent_containers/hypospray/combat( src )
 	new /obj/item/weapon/storage/pill_bottle/bicaridine( src )
@@ -84,7 +84,7 @@
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat/New()
 	..()
 
-	if (empty)
+	if(empty)
 		return
 
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/combat( src )
@@ -105,7 +105,7 @@
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space/New()
 	..()
 
-	if (empty)
+	if(empty)
 		return
 
 	new /obj/item/weapon/patcher( src )
@@ -126,7 +126,7 @@
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/New()
 	..()
 
-	if (empty)
+	if(empty)
 		return
 
 	new /obj/item/stack/medical/ointment( src )

@@ -1,4 +1,4 @@
-//Procedures in this file: Appendectomy
+// Procedures in this file: Appendectomy
 //////////////////////////////////////////////////////////////////
 //						APPENDECTOMY							//
 //////////////////////////////////////////////////////////////////
@@ -9,14 +9,14 @@
 	blood_level = 1
 
 /datum/surgery_step/appendectomy/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return 0
-	if (target_zone != BP_GROIN)
+	if(target_zone != BP_GROIN)
 		return 0
 	var/obj/item/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
-	if (!BP)
+	if(!BP)
 		return 0
-	if (BP.open < 2)
+	if(BP.open < 2)
 		return 0
 	return 1
 
@@ -37,11 +37,11 @@
 /datum/surgery_step/appendectomy/cut_appendix/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to separate [target]'s appendix from the abdominal wall with \the [tool].", \
 	"You start to separate [target]'s appendix from the abdominal wall with \the [tool]." )
-	target.custom_pain("The pain in your abdomen is living hell!",1)
+	target.custom_pain("The pain in your abdomen is living hell!", 1)
 	..()
 
 /datum/surgery_step/appendectomy/cut_appendix/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\blue [user] has separated [target]'s appendix with \the [tool]." , \
+	user.visible_message("\blue [user] has separated [target]'s appendix with \the [tool].", \
 	"\blue You have separated [target]'s appendix with \the [tool].")
 	target.op_stage.appendix = 1
 
@@ -68,7 +68,7 @@
 /datum/surgery_step/appendectomy/remove_appendix/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts removing [target]'s appendix with \the [tool].", \
 	"You start removing [target]'s appendix with \the [tool].")
-	target.custom_pain("Someone's ripping out your bowels!",1)
+	target.custom_pain("Someone's ripping out your bowels!", 1)
 	..()
 
 /datum/surgery_step/appendectomy/remove_appendix/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -79,7 +79,7 @@
 		app = 1
 		appendicitis.cure()
 		target.resistances += appendicitis
-	if (app)
+	if(app)
 		new /obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed(get_turf(target))
 	else
 		new /obj/item/weapon/reagent_containers/food/snacks/appendix(get_turf(target))

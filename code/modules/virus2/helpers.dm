@@ -1,13 +1,13 @@
-//Returns 1 if mob can be infected, 0 otherwise. Checks his clothing.
+// Returns 1 if mob can be infected, 0 otherwise. Checks his clothing.
 proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 	var/score = 0
-	if (!istype(M))
+	if(!istype(M))
 		return 0
 
 	if(istype(M, /mob/living/carbon/human))
 
-		if (vector == "Airborne")
-			if(M.internal)	//not breathing infected air helps greatly
+		if(vector == "Airborne")
+			if(M.internal)	// not breathing infected air helps greatly
 				score = 30
 			if(M.wear_mask)
 				score += 5
@@ -19,7 +19,7 @@ proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 				score += 30
 
 
-		if (vector == "Contact")
+		if(vector == "Contact")
 			if(M:gloves) score += 15
 			if(istype(M:wear_suit, /obj/item/clothing/suit/space) && istype(M:head, /obj/item/clothing/head/helmet/space))
 				score += 15
@@ -44,7 +44,7 @@ proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 //	log_debug("Infection got through")
 	return 1
 
-//Checks if table-passing table can reach target (5 tile radius)
+// Checks if table-passing table can reach target(5 tile radius)
 proc/airborne_can_reach(turf/source, turf/target)
 	var/obj/dummy = new(source)
 	dummy.pass_flags = PASSTABLE
@@ -56,15 +56,15 @@ proc/airborne_can_reach(turf/source, turf/target)
 	dummy = null
 	return rval
 
-//Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothnig
-/proc/infect_virus2(mob/living/carbon/M,datum/disease2/disease/disease,forced = 0)
+// Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothnig
+/proc/infect_virus2(mob/living/carbon/M, datum/disease2/disease/disease, forced = 0)
 	if(!istype(disease))
 //		log_debug("Bad virus")
 		return
 	if(!istype(M))
 //		log_debug("Bad mob")
 		return
-	if ("[disease.uniqueID]" in M.virus2)
+	if("[disease.uniqueID]" in M.virus2)
 		return
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
 	if((M.antibodies & disease.antigen) != 0)
@@ -72,14 +72,14 @@ proc/airborne_can_reach(turf/source, turf/target)
 	if(M.reagents.has_reagent("spaceacillin"))
 		return
 
-	if(istype(M,/mob/living/carbon/monkey))
+	if(istype(M, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/chimp = M
-		if (!(chimp.greaterform in disease.affected_species))
+		if(!(chimp.greaterform in disease.affected_species))
 			return
 
-	if(istype(M,/mob/living/carbon/human))
+	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/chump = M
-		if (!(chump.species.name in disease.affected_species))
+		if(!(chump.species.name in disease.affected_species))
 			return
 
 //	log_debug("Infecting [M]")
@@ -95,54 +95,54 @@ proc/airborne_can_reach(turf/source, turf/target)
 		M.virus2["[D.uniqueID]"] = D
 		M.hud_updateflag |= 1 << STATUS_HUD
 
-//Infects mob M with random lesser disease, if he doesn't have one
+// Infects mob M with random lesser disease, if he doesn't have one
 /proc/infect_mob_random_lesser(mob/living/carbon/M)
 	var/datum/disease2/disease/D = new /datum/disease2/disease
 	D.makerandom()
 	D.infectionchance = 1
-	infect_virus2(M,D,1)
+	infect_virus2(M, D, 1)
 	M.hud_updateflag |= 1 << STATUS_HUD
 
-//Infects mob M with random greated disease, if he doesn't have one
+// Infects mob M with random greated disease, if he doesn't have one
 /proc/infect_mob_random_greater(mob/living/carbon/M)
 	var/datum/disease2/disease/D = new /datum/disease2/disease
 	D.makerandom(1)
-	infect_virus2(M,D,1)
+	infect_virus2(M, D, 1)
 	M.hud_updateflag |= 1 << STATUS_HUD
 
-//Fancy prob() function.
+// Fancy prob() function.
 /proc/dprob(p)
 	return(prob(sqrt(p)) && prob(sqrt(p)))
 
 /mob/living/carbon/proc/spread_disease_to(mob/living/carbon/victim, vector = "Airborne")
-	if (src == victim)
+	if(src == victim)
 		return "retardation"
 
 //	log_debug("Spreading [vector] diseases from [src] to [victim]")
-	if (virus2.len > 0)
-		for (var/ID in virus2)
+	if(virus2.len > 0)
+		for(var/ID in virus2)
 //			log_debug("Attempting virus [ID]")
 			var/datum/disease2/disease/V = virus2[ID]
 			if(V.spreadtype != vector) continue
 
-			if (vector == "Airborne")
+			if(vector == "Airborne")
 				if(airborne_can_reach(get_turf(src), get_turf(victim)))
 //					log_debug("In range, infecting")
-					infect_virus2(victim,V)
+					infect_virus2(victim, V)
 				else
 //					log_debug("Could not reach target")
 
-			if (vector == "Contact")
-				if (in_range(src, victim))
+			if(vector == "Contact")
+				if(in_range(src, victim))
 //					log_debug("In range, infecting")
-					infect_virus2(victim,V)
+					infect_virus2(victim, V)
 
-	//contact goes both ways
-	if (victim.virus2.len > 0 && vector == "Contact")
+	// contact goes both ways
+	if(victim.virus2.len > 0 && vector == "Contact")
 //		log_debug("Spreading [vector] diseases from [victim] to [src]")
 		var/nudity = 1
 
-		if (ishuman(victim))
+		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
 			var/obj/item/organ/external/BP = H.get_bodypart(zone_sel.selecting)
 			var/list/clothes = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes)
@@ -150,8 +150,8 @@ proc/airborne_can_reach(turf/source, turf/target)
 				if(C && istype(C))
 					if(C.body_parts_covered & BP.body_part)
 						nudity = 0
-		if (nudity)
-			for (var/ID in victim.virus2)
+		if(nudity)
+			for(var/ID in victim.virus2)
 				var/datum/disease2/disease/V = victim.virus2[ID]
 				if(V && V.spreadtype != vector) continue
-				infect_virus2(src,V)
+				infect_virus2(src, V)

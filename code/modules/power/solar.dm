@@ -61,7 +61,7 @@
 
 	if(iscrowbar(W))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		if(do_after(user, 50,target = src))
+		if(do_after(user, 50, target = src))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
@@ -70,7 +70,7 @@
 			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
 			qdel(src)
 		return
-	else if (W)
+	else if(W)
 		src.add_fingerprint(user)
 		src.health -= W.force
 		src.healthcheck()
@@ -84,7 +84,7 @@
 
 
 /obj/machinery/power/solar/proc/healthcheck()
-	if (src.health <= 0)
+	if(src.health <= 0)
 		if(!(stat & BROKEN))
 			broken()
 		else
@@ -119,12 +119,12 @@
 	sunfrac = cos(p_angle) ** 2
 
 
-/obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
+/obj/machinery/power/solar/process()// TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
 	if(stat & BROKEN)	return
 	if(!control)	return
 
 	if(adir != ndir)
-		adir = (360+adir+dd_range(-10,10,ndir-adir))%360
+		adir = (360+adir+dd_range(-10, 10, ndir-adir))%360
 		update_icon()
 		update_solar_exposure()
 
@@ -158,14 +158,14 @@
 				new /obj/item/weapon/shard( src.loc )
 			return
 		if(2.0)
-			if (prob(25))
+			if(prob(25))
 				new /obj/item/weapon/shard( src.loc )
 				qdel(src)
 				return
-			if (prob(50))
+			if(prob(50))
 				broken()
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				broken()
 	return
 
@@ -276,7 +276,7 @@
 	var/gen = 0
 	var/lastgen = 0
 	var/track = 0			// 0=off  1=manual  2=automatic
-	var/trackrate = 60		// Measured in tenths of degree per minute (i.e. defaults to 6.0 deg/min)
+	var/trackrate = 60		// Measured in tenths of degree per minute(i.e. defaults to 6.0 deg/min)
 	var/trackdir = 1		// -1=CCW, 1=CW
 	var/nexttime = 0		// Next clock time that manual tracking will move the array
 
@@ -337,12 +337,12 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
-			if (src.stat & BROKEN)
+			if(src.stat & BROKEN)
 				to_chat(user, "\blue The broken glass falls out.")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				new /obj/item/weapon/shard( src.loc )
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
-				for (var/obj/C in src)
+				for(var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
 				A.state = 3
@@ -353,7 +353,7 @@
 				to_chat(user, "\blue You disconnect the monitor.")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
-				for (var/obj/C in src)
+				for(var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
 				A.state = 4
@@ -372,7 +372,7 @@
 	if(stat & (NOPOWER | BROKEN))
 		return
 
-	//use_power(250)
+	// use_power(250)
 	if(track==1 && nexttime < world.time && trackdir*trackrate)
 		// Increments nexttime using itself and not world.time to prevent drift
 		nexttime = nexttime + 6000/trackrate
@@ -396,8 +396,8 @@
 
 /obj/machinery/power/solar_control/interact(mob/user)
 	if(stat & (BROKEN | NOPOWER)) return
-	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
+	if( (get_dist(src, user) > 1 ))
+		if(!istype(user, /mob/living/silicon))
 			user.unset_machine()
 			user << browse(null, "window=solcon")
 			return
@@ -409,8 +409,8 @@
 	t += "<B>Generated power</B> : [round(lastgen)] W<BR>"
 	t += "Station Rotational Period: [60/abs(SSsun.rate)] minutes<BR>"
 	t += "Station Rotational Direction: [SSsun.rate<0 ? "CCW" : "CW"]<BR>"
-	t += "Star Orientation: [SSsun.angle]&deg ([angle2text(SSsun.angle)])<BR>"
-	t += "Array Orientation: [rate_control(src,"cdir","[cdir]&deg",1,10,60)] ([angle2text(cdir)])<BR>"
+	t += "Star Orientation: [SSsun.angle]&deg([angle2text(SSsun.angle)])<BR>"
+	t += "Array Orientation: [rate_control(src, "cdir", "[cdir]&deg", 1, 10, 60)] ([angle2text(cdir)])<BR>"
 	t += "<BR><HR><BR>"
 	t += "Tracking: "
 	switch(track)
@@ -421,7 +421,7 @@
 		if(2)
 			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Manual</A> <B>Automatic</B><BR>"
 
-	t += "Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]<BR>"
+	t += "Manual Tracking Rate: [rate_control(src, "tdir", "[trackrate/10]&deg/min([trackdir<0 ? "CCW" : "CW"])", 1, 10)]<BR>"
 	t += "Manual Tracking Direction: "
 	switch(trackdir)
 		if(-1)
@@ -465,7 +465,7 @@
 			nexttime = world.time + 6000 / trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
-			if(!SSsun.solars.Find(src,1,0))
+			if(!SSsun.solars.Find(src, 1, 0))
 				SSsun.solars.Add(src)
 			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
 				if(powernet.nodes[T])
@@ -513,20 +513,20 @@
 /obj/machinery/power/solar_control/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			//SN src = null
+			// SN src = null
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				broken()
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				broken()
 	return
 
 
 /obj/machinery/power/solar_control/blob_act()
-	if (prob(75))
+	if(prob(75))
 		broken()
 		src.density = 0
 

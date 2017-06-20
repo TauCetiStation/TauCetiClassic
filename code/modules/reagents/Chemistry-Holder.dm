@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 var/const/TOUCH = 1
 var/const/INGEST = 2
@@ -14,16 +14,16 @@ var/const/INGEST = 2
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
 
-	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
+	// I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!chemical_reagents_list)
-		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
+		// Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 		var/paths = typesof(/datum/reagent) - /datum/reagent
 		chemical_reagents_list = list()
 		for(var/path in paths)
 			var/datum/reagent/D = new path()
 			chemical_reagents_list[D.id] = D
 	if(!chemical_reactions_list)
-		//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
+		// Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 		// It is filtered into multiple lists within a list.
 		// For example:
 		// chemical_reaction_list["phoron"] is a list of all reactions relating to phoron
@@ -51,7 +51,7 @@ var/const/INGEST = 2
 	var/total_transfered = 0
 	var/current_list_element = 1
 
-	current_list_element = rand(1,reagent_list.len)
+	current_list_element = rand(1, reagent_list.len)
 
 	while(total_transfered != amount)
 		if(total_transfered >= amount) break
@@ -89,25 +89,25 @@ var/const/INGEST = 2
 
 	return the_id
 
-/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-	if (!target )
+/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1)// if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+	if(!target )
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
 	var/datum/reagents/R
-	if(istype(target,/datum/reagents/))
+	if(istype(target, /datum/reagents/))
 		R = target
 	else
-		if (!target.reagents || src.total_volume<=0)
+		if(!target.reagents || src.total_volume<=0)
 			return
 		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
 	var/trans_data = null
-	for (var/datum/reagent/current_reagent in src.reagent_list)
-		if (!current_reagent)
+	for(var/datum/reagent/current_reagent in src.reagent_list)
+		if(!current_reagent)
 			continue
-		if (current_reagent.id == "blood" && ishuman(target))
+		if(current_reagent.id == "blood" && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			H.inject_blood(my_atom, amount)
 			continue
@@ -115,7 +115,7 @@ var/const/INGEST = 2
 		if(preserve_data)
 			trans_data = copy_data(current_reagent)
 
-		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, safety = 1)	//safety checks on these so all chemicals are transferred
+		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, safety = 1)	// safety checks on these so all chemicals are transferred
 		src.remove_reagent(current_reagent.id, current_reagent_transfer, safety = 1)							// to the target container before handling reactions
 
 	src.update_total()
@@ -124,16 +124,16 @@ var/const/INGEST = 2
 	src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_to_ingest(obj/target, amount=1, multiplier=1, preserve_data=1)//For items ingested. A delay is added between ingestion and addition of the reagents
-	if (!target )
+/datum/reagents/proc/trans_to_ingest(obj/target, amount=1, multiplier=1, preserve_data=1)// For items ingested. A delay is added between ingestion and addition of the reagents
+	if(!target )
 		return
-	if (!target.reagents || src.total_volume<=0)
+	if(!target.reagents || src.total_volume<=0)
 		return
 
 	if(amount < 0) return
 	if(amount > 2000) return
 
-	var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B = new /obj/item/weapon/reagent_containers/glass/beaker/noreact //temporary holder
+	var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B = new /obj/item/weapon/reagent_containers/glass/beaker/noreact // temporary holder
 	B.volume = 1000
 
 	var/datum/reagents/BR = B.reagents
@@ -167,11 +167,11 @@ var/const/INGEST = 2
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
 	var/trans_data = null
-	for (var/datum/reagent/current_reagent in src.reagent_list)
+	for(var/datum/reagent/current_reagent in src.reagent_list)
 		var/current_reagent_transfer = current_reagent.volume * part
 		if(preserve_data)
 			trans_data = copy_data(current_reagent)
-		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, safety = 1)	//safety check so all chemicals are transferred before reacting
+		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, safety = 1)	// safety check so all chemicals are transferred before reacting
 
 	src.update_total()
 	R.update_total()
@@ -180,10 +180,10 @@ var/const/INGEST = 2
 		src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
-	if (!target)
+/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)// Not sure why this proc didn't exist before. It does now! /N
+	if(!target)
 		return
-	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+	if(!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
@@ -193,7 +193,7 @@ var/const/INGEST = 2
 		amount = src.get_reagent_amount(reagent)
 	amount = min(amount, R.maximum_volume-R.total_volume)
 	var/trans_data = null
-	for (var/datum/reagent/current_reagent in src.reagent_list)
+	for(var/datum/reagent/current_reagent in src.reagent_list)
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = copy_data(current_reagent)
@@ -204,7 +204,7 @@ var/const/INGEST = 2
 	src.update_total()
 	R.update_total()
 	R.handle_reactions()
-	//src.handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating and) transferring a specific reagent.
+	// src.handle_reactions() Don't need to handle reactions on the source since you're(presumably isolating and) transferring a specific reagent.
 	return amount
 
 /datum/reagents/proc/metabolize(mob/M, alien)
@@ -217,16 +217,16 @@ var/const/INGEST = 2
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	for(var/datum/reagent/R in reagent_list)
-		R.on_move (A, Running)
+		R.on_move(A, Running)
 	update_total()
 
 /datum/reagents/proc/conditional_update(atom/A, )
 	for(var/datum/reagent/R in reagent_list)
-		R.on_update (A)
+		R.on_update(A)
 	update_total()
 
 /datum/reagents/proc/handle_reactions()
-	if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
+	if(my_atom.flags & NOREACT) return // Yup, no reactions here. No siree.
 
 	var/reaction_occured = 0
 	do
@@ -239,7 +239,7 @@ var/const/INGEST = 2
 
 				var/datum/chemical_reaction/C = reaction
 
-				//check if this recipe needs to be heated to mix
+				// check if this recipe needs to be heated to mix
 				if(C.requires_heating)
 					if(istype(my_atom.loc, /obj/machinery/bunsen_burner))
 						if(!my_atom.loc:heated)
@@ -298,12 +298,12 @@ var/const/INGEST = 2
 
 					var/created_volume = C.result_amount*multiplier
 					if(C.result)
-						feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
-						multiplier = max(multiplier, 1) //this shouldnt happen ...
+						feedback_add_details("chemical_reaction", "[C.result]|[C.result_amount*multiplier]")
+						multiplier = max(multiplier, 1) // this shouldnt happen ...
 						add_reagent(C.result, C.result_amount*multiplier)
 						set_data(C.result, preserved_data)
 
-						//add secondary products
+						// add secondary products
 						for(var/S in C.secondary_results)
 							add_reagent(S, C.result_amount * C.secondary_results[S] * multiplier)
 
@@ -340,14 +340,14 @@ var/const/INGEST = 2
 /datum/reagents/proc/isolate_reagent(reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id != reagent)
+		if(R.id != reagent)
 			del_reagent(R.id)
 			update_total()
 
 /datum/reagents/proc/del_reagent(reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			reagent_list -= R
 			qdel(R)
 			update_total()
@@ -414,12 +414,12 @@ var/const/INGEST = 2
 	if(amount < 0) return 0
 	if(amount > 2000) return
 	update_total()
-	if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
+	if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) // Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
 	for(var/A in reagent_list)
 
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			R.volume += amount
 			update_total()
 			my_atom.on_reagent_change()
@@ -462,11 +462,11 @@ var/const/INGEST = 2
 		R.volume = amount
 		SetViruses(R, data) // Includes setting data
 
-		//debug
-		//world << "Adding data"
-		//for(var/D in R.data)
+		// debug
+		// world << "Adding data"
+		// for(var/D in R.data)
 		//	world << "Container data: [D] = [R.data[D]]"
-		//debug
+		// debug
 		update_total()
 		my_atom.on_reagent_change()
 		if(!safety)
@@ -480,16 +480,16 @@ var/const/INGEST = 2
 
 	return 1
 
-/datum/reagents/proc/remove_reagent(reagent, amount, safety = 0)//Added a safety check for the trans_id_to
+/datum/reagents/proc/remove_reagent(reagent, amount, safety = 0)// Added a safety check for the trans_id_to
 	if(!isnum(amount) || amount < 0 || amount > 2000)
 		return FALSE
 
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			R.volume -= amount
 			update_total()
-			if(!safety)//So it does not handle reactions when it need not to
+			if(!safety)// So it does not handle reactions when it need not to
 				handle_reactions()
 			my_atom.on_reagent_change()
 			return TRUE
@@ -508,7 +508,7 @@ var/const/INGEST = 2
 /datum/reagents/proc/get_reagent_amount(reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			return R.volume
 
 	return 0
@@ -516,7 +516,7 @@ var/const/INGEST = 2
 /datum/reagents/proc/get_reagents()
 	var/res = ""
 	for(var/datum/reagent/A in reagent_list)
-		if (res != "") res += ","
+		if(res != "") res += ", "
 		res += A.name
 
 	return res
@@ -544,17 +544,17 @@ var/const/INGEST = 2
 
 	return has_removed_reagent
 
-//two helper functions to preserve data across reactions (needed for xenoarch)
+// two helper functions to preserve data across reactions(needed for xenoarch)
 /datum/reagents/proc/get_data(reagent_id)
 	for(var/datum/reagent/D in reagent_list)
 		if(D.id == reagent_id)
-			//world << "proffering a data-carrying reagent ([reagent_id])"
+			// world << "proffering a data-carrying reagent([reagent_id])"
 			return D.data
 
 /datum/reagents/proc/set_data(reagent_id, new_data)
 	for(var/datum/reagent/D in reagent_list)
 		if(D.id == reagent_id)
-			//world << "reagent data set ([reagent_id])"
+			// world << "reagent data set([reagent_id])"
 			D.data = new_data
 
 /datum/reagents/proc/delete()
@@ -564,8 +564,8 @@ var/const/INGEST = 2
 		my_atom.reagents = null
 
 /datum/reagents/proc/copy_data(datum/reagent/current_reagent)
-	if (!current_reagent || !current_reagent.data) return null
-	if (!istype(current_reagent.data, /list)) return current_reagent.data
+	if(!current_reagent || !current_reagent.data) return null
+	if(!istype(current_reagent.data, /list)) return current_reagent.data
 
 	var/list/trans_data = current_reagent.data.Copy()
 
@@ -576,7 +576,7 @@ var/const/INGEST = 2
 	// Technically we should probably copy all data lists, but
 	// that could possibly eat up a lot of memory needlessly
 	// if most data lists are read-only.
-	if (trans_data["virus2"])
+	if(trans_data["virus2"])
 		var/list/v = trans_data["virus2"]
 		trans_data["virus2"] = v.Copy()
 

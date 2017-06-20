@@ -21,7 +21,7 @@
 	var/normalspeed = 1
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
 	var/air_properties_vary_with_direction = 0
-	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
+	var/block_air_zones = 1 // If set, air zones cannot merge across the door even when it is opened.
 	var/emergency = 0 // Emergency access override
 
 	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
@@ -30,11 +30,11 @@
 /obj/machinery/door/New()
 	. = ..()
 	if(density)
-		layer = base_layer + DOOR_CLOSED_MOD //Above most items if closed
+		layer = base_layer + DOOR_CLOSED_MOD // Above most items if closed
 		explosion_resistance = initial(explosion_resistance)
 		update_heat_protection(get_turf(src))
 	else
-		layer = base_layer //Under all objects if opened. 2.7 due to tables being at 2.6
+		layer = base_layer // Under all objects if opened. 2.7 due to tables being at 2.6
 		explosion_resistance = 0
 
 	update_nearby_tiles(need_rebuild=1)
@@ -46,14 +46,14 @@
 	update_nearby_tiles()
 	return ..()
 
-//process()
-	//return
+// process()
+	// return
 
 /obj/machinery/door/Bumped(atom/AM)
 	if(p_open || operating) return
 	if(ismob(AM))
 		var/mob/M = AM
-		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
+		if(world.time - M.last_bumped <= 10) return	// Can bump-open one airlock per second. This is to prevent shock spam.
 		M.last_bumped = world.time
 		if(!M.restrained() && !M.small)
 			bumpopen(M)
@@ -95,7 +95,7 @@
 
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)	return
-	if(user.last_airflow > world.time - vsc.airflow_delay) //Fakkit
+	if(user.last_airflow > world.time - vsc.airflow_delay) // Fakkit
 		return
 	src.add_fingerprint(user)
 	if(!src.requiresID())
@@ -133,7 +133,7 @@
 /obj/machinery/door/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
-	if(src.operating || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
+	if(src.operating || isrobot(user))	return // borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	src.add_fingerprint(user)
 	if(!Adjacent(user))
 		user = null
@@ -164,7 +164,7 @@
 
 
 /obj/machinery/door/emp_act(severity)
-	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
+	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		open()
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
@@ -339,7 +339,7 @@
  */
 
 /obj/machinery/door/proc/do_afterclose()
-	//I shall not add a check every x ticks if a door has closed over some fire.
+	// I shall not add a check every x ticks if a door has closed over some fire.
 	var/obj/fire/fire = locate() in locs
 	if(fire)
 		qdel(fire)

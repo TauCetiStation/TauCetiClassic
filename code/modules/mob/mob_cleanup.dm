@@ -1,33 +1,33 @@
-//Methods that need to be cleaned.
+// Methods that need to be cleaned.
 /* INFORMATION
-Put (mob/proc)s here that are in dire need of a code cleanup.
+Put(mob/proc)s here that are in dire need of a code cleanup.
 */
 
 /mob/proc/has_disease(datum/disease/virus)
 	for(var/datum/disease/D in viruses)
 		if(D.IsSame(virus))
-			//error("[D.name]/[D.type] is the same as [virus.name]/[virus.type]")
+			// error("[D.name]/[D.type] is the same as [virus.name]/[virus.type]")
 			return 1
 	return 0
 
 // This proc has some procs that should be extracted from it. I believe we can develop some helper procs from it - Rockdtben
 /mob/proc/contract_disease(datum/disease/virus, skip_this = 0, force_species_check=1, spread_type = -5)
-	//world << "Contract_disease called by [src] with virus [virus]"
+	// world << "Contract_disease called by [src] with virus [virus]"
 	if(stat >=2)
-		//world << "He's dead jim."
+		// world << "He's dead jim."
 		return
 	if(istype(virus, /datum/disease/advance))
-		//world << "It's an advance virus."
+		// world << "It's an advance virus."
 		var/datum/disease/advance/A = virus
 		if(A.GetDiseaseID() in resistances)
-			//world << "It resisted us!"
+			// world << "It resisted us!"
 			return
 		if(count_by_type(viruses, /datum/disease/advance) >= 3)
 			return
 
 	else
 		if(src.resistances.Find(virus.type))
-			//world << "Normal virus and resisted"
+			// world << "Normal virus and resisted"
 			return
 
 
@@ -45,9 +45,9 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 		if(fail) return
 
 	if(skip_this == 1)
-		//world << "infectin"
-		//if(src.virus)				< -- this used to replace the current disease. Not anymore!
-			//src.virus.cure(0)
+		// world << "infectin"
+		// if(src.virus)				< -- this used to replace the current disease. Not anymore!
+			// src.virus.cure(0)
 		var/datum/disease/v = new virus.type(1, virus, 0)
 		src.viruses += v
 		v.affected_mob = src
@@ -56,14 +56,14 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 		if(v.can_carry && prob(5))
 			v.carrier = 1
 		return
-	//world << "Not skipping."
-	//if(src.virus) //
-		//return //
+	// world << "Not skipping."
+	// if(src.virus) //
+		// return //
 
 
 /*
 	var/list/clothing_areas	= list()
-	var/list/covers = list(UPPER_TORSO,LOWER_TORSO,LEGS,FEET,ARMS,HANDS)
+	var/list/covers = list(UPPER_TORSO, LOWER_TORSO, LEGS, FEET, ARMS, HANDS)
 	for(var/Covers in covers)
 		clothing_areas[Covers] = list()
 
@@ -74,12 +74,12 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 					clothing_areas[Covers] += Clothing
 
 */
-	if(prob(15/virus.permeability_mod)) return //the power of immunity compels this disease! but then you forgot resistances
-	//world << "past prob()"
+	if(prob(15/virus.permeability_mod)) return // the power of immunity compels this disease! but then you forgot resistances
+	// world << "past prob()"
 	var/obj/item/clothing/Cl = null
 	var/passed = 1
 
-	//chances to target this zone
+	// chances to target this zone
 	var/head_ch
 	var/body_ch
 	var/hands_ch
@@ -106,7 +106,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 			feet_ch = 25
 
 
-	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)//1 - head, 2 - body, 3 - hands, 4- feet
+	var/target_zone = pick(head_ch;1, body_ch;2, hands_ch;3, feet_ch;4)//1 - head, 2 - body, 3 - hands, 4- feet
 
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
@@ -119,7 +119,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 				if(passed && isobj(H.wear_mask))
 					Cl = H.wear_mask
 					passed = prob((Cl.permeability_coefficient*100) - 1)
-			if(2)//arms and legs included
+			if(2)// arms and legs included
 				if(isobj(H.wear_suit))
 					Cl = H.wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
@@ -159,13 +159,13 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 				if(M.wear_mask && isobj(M.wear_mask))
 					Cl = M.wear_mask
 					passed = prob((Cl.permeability_coefficient*100) - 1)
-					//world << "Mask pass [passed]"
+					// world << "Mask pass [passed]"
 
 	if(!passed && spread_type == AIRBORNE && !internals)
 		passed = (prob((50*virus.permeability_mod) - 1))
 
 	if(passed)
-		//world << "Infection in the mob [src]. YAY"
+		// world << "Infection in the mob [src]. YAY"
 
 		var/datum/disease/v = new virus.type(1, virus, 0)
 		src.viruses += v

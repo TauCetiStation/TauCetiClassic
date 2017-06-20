@@ -7,7 +7,7 @@
 	anchored = 0
 
 	use_power = 1
-	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
+	idle_power_usage = 100 // Watts, I hope.  Just enough to do the computer and display things.
 
 	var/obj/machinery/atmospherics/binary/circulator/circ1
 	var/obj/machinery/atmospherics/binary/circulator/circ2
@@ -19,19 +19,19 @@
 	..()
 	addtimer(CALLBACK(src, .proc/reconnect), 1)
 
-//generators connect in dir and reverse_dir(dir) directions
-//mnemonic to determine circulator/generator directions: the cirulators orbit clockwise around the generator
-//so a circulator to the NORTH of the generator connects first to the EAST, then to the WEST
-//and a circulator to the WEST of the generator connects first to the NORTH, then to the SOUTH
-//note that the circulator's outlet dir is it's always facing dir, and it's inlet is always the reverse
+// generators connect in dir and reverse_dir(dir) directions
+// mnemonic to determine circulator/generator directions: the cirulators orbit clockwise around the generator
+// so a circulator to the NORTH of the generator connects first to the EAST, then to the WEST
+// and a circulator to the WEST of the generator connects first to the NORTH, then to the SOUTH
+// note that the circulator's outlet dir is it's always facing dir, and it's inlet is always the reverse
 /obj/machinery/power/generator/proc/reconnect()
 	circ1 = null
 	circ2 = null
 	if(src.loc && anchored)
 		power_change()
 		if(src.dir & (EAST|WEST))
-			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,EAST)
-			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,WEST)
+			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src, EAST)
+			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src, WEST)
 
 			if(circ1 && circ2)
 				if(circ1.dir != SOUTH || circ2.dir != NORTH)
@@ -39,8 +39,8 @@
 					circ2 = null
 
 		else if(src.dir & (NORTH|SOUTH))
-			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,NORTH)
-			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,SOUTH)
+			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src, NORTH)
+			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src, SOUTH)
 
 			if(circ1 && circ2 && (circ1.dir != EAST || circ2.dir != WEST))
 				circ1 = null
@@ -83,11 +83,11 @@
 				air2.temperature = air2.temperature + heat/air2_heat_capacity
 				air1.temperature = air1.temperature - energy_transfer/air1_heat_capacity
 
-			//Transfer the air
+			// Transfer the air
 			circ1.air2.merge(air1)
 			circ2.air2.merge(air2)
 
-			//Update the gas networks
+			// Update the gas networks
 			if(circ1.network2)
 				circ1.network2.update = 1
 			if(circ2.network2)
@@ -127,7 +127,7 @@
 
 
 /obj/machinery/power/generator/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) && (!istype(user, /mob/living/silicon/ai)))
+	if( (get_dist(src, user) > 1 ) && (!istype(user, /mob/living/silicon/ai)))
 		user.unset_machine(src)
 		user << browse(null, "window=teg")
 		return
@@ -139,13 +139,13 @@
 	if(circ1 && circ2)
 		t += "Output : [round(lastgen)] W<BR><BR>"
 
-		t += "<B>Primary Circulator (top or right)</B><BR>"
+		t += "<B>Primary Circulator(top or right)</B><BR>"
 		t += "Inlet Pressure: [round(circ1.air1.return_pressure(), 0.1)] kPa<BR>"
 		t += "Inlet Temperature: [round(circ1.air1.temperature, 0.1)] K<BR>"
 		t += "Outlet Pressure: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>"
 		t += "Outlet Temperature: [round(circ1.air2.temperature, 0.1)] K<BR>"
 
-		t += "<B>Secondary Circulator (bottom or left)</B><BR>"
+		t += "<B>Secondary Circulator(bottom or left)</B><BR>"
 		t += "Inlet Pressure: [round(circ2.air1.return_pressure(), 0.1)] kPa<BR>"
 		t += "Inlet Temperature: [round(circ2.air1.temperature, 0.1)] K<BR>"
 		t += "Outlet Pressure: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>"
@@ -184,20 +184,20 @@
 
 /obj/machinery/power/generator/verb/rotate_clock()
 	set category = "Object"
-	set name = "Rotate Generator (Clockwise)"
+	set name = "Rotate Generator(Clockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if(usr.stat || usr.restrained()  || anchored)
 		return
 
 	src.dir = turn(src.dir, 90)
 
 /obj/machinery/power/generator/verb/rotate_anticlock()
 	set category = "Object"
-	set name = "Rotate Generator (Counterclockwise)"
+	set name = "Rotate Generator(Counterclockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if(usr.stat || usr.restrained()  || anchored)
 		return
 
 	src.dir = turn(src.dir, -90)

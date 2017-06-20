@@ -7,7 +7,7 @@
 	health = 140
 	deflect_chance = 60
 	internal_damage_threshold = 60
-	damage_absorption = list("brute"=1.2,"fire"=1.5,"bullet"=1,"laser"=1,"energy"=1,"bomb"=1)
+	damage_absorption = list("brute"=1.2, "fire"=1.5, "bullet"=1, "laser"=1, "energy"=1, "bomb"=1)
 	max_temperature = 25000
 	infra_luminosity = 5
 	operation_req_access = list(access_clown)
@@ -32,15 +32,15 @@
 	if(!melee_can_hit)
 		return
 	else if(istype(target, /mob))
-		step_away(target,src,15)
+		step_away(target, src, 15)
 	return
 
 /obj/mecha/combat/honker/get_stats_part()
 	var/integrity = health/initial(health)*100
 	var/cell_charge = get_charge()
-	var/tank_pressure = internal_tank ? round(internal_tank.return_pressure(),0.01) : "None"
+	var/tank_pressure = internal_tank ? round(internal_tank.return_pressure(), 0.01) : "None"
 	var/tank_temperature = internal_tank ? internal_tank.return_temperature() : "Unknown"
-	var/cabin_pressure = round(return_pressure(),0.01)
+	var/cabin_pressure = round(return_pressure(), 0.01)
 	var/output = {"[report_internal_damage()]
 						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font><br>":null]
 						[internal_damage&MECHA_INT_TEMP_CONTROL?"<font color='red'><b>CLOWN SUPPORT SYSTEM MALFUNCTION</b></font><br>":null]
@@ -62,7 +62,7 @@
 	var/output = {"<html>
 						<head><title>[src.name] data</title>
 						<style>
-						body {color: #00ff00; background: #32CD32; font-family:"Courier",monospace; font-size: 12px;}
+						body {color: #00ff00; background: #32CD32; font-family:"Courier", monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #fff; background-color: #000;}
 						a {padding:2px 5px;;color:#0f0;}
 						.wr {margin-bottom: 5px;}
@@ -137,7 +137,7 @@
 
 
 /obj/mecha/combat/honker/mechstep(direction)
-	var/result = step(src,direction)
+	var/result = step(src, direction)
 	if(result)
 		if(!squeak)
 			playsound(src, "clownstep", 70, 1)
@@ -148,16 +148,16 @@
 
 obj/mecha/combat/honker/Topic(href, href_list)
 	..()
-	if (href_list["play_sound"])
+	if(href_list["play_sound"])
 		switch(href_list["play_sound"])
 			if("sadtrombone")
 				playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 	return
 
 proc/rand_hex_color()
-	var/list/colors = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
+	var/list/colors = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
 	var/color=""
-	for (var/i=0;i<6;i++)
+	for(var/i=0;i<6;i++)
 		color = color+pick(colors)
 	return color
 

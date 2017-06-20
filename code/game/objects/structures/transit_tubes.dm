@@ -1,6 +1,6 @@
 
 // Basic transit tubes. Straight pieces, curved sections,
-//  and basic splits/joins (no routing logic).
+//  and basic splits/joins(no routing logic).
 // Mappers: you can use "Generate Instances from Icon-states"
 //  to get the different pieces.
 /obj/structure/transit_tube
@@ -82,7 +82,7 @@
 		if(M)
 			to_chat(M, "<span class='warning'>Someone is trying to get you out of the [src].</span>")
 
-		if (do_after(user, 50, target = src) && contents.len)
+		if(do_after(user, 50, target = src) && contents.len)
 			visible_message("<span class='notice'>[user] took out everything from the [src].</span>")
 			move_out_content()
 
@@ -148,7 +148,7 @@
 	close_animation()
 	sleep(CLOSE_DURATION + 2)
 
-	//reverse directions for automated cycling
+	// reverse directions for automated cycling
 	var/turf/next_loc = get_step(loc, pod.dir)
 	var/obj/structure/transit_tube/nexttube
 	for(var/obj/structure/transit_tube/tube in next_loc)
@@ -263,7 +263,7 @@
 	return enter_delay
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
-	if(moving) //No drifting while moving in the tubes
+	if(moving) // No drifting while moving in the tubes
 		return 1
 	else return ..()
 
@@ -328,7 +328,7 @@
 /obj/structure/transit_tube_pod/return_air()
 	return air_contents
 
-// For now, copying what I found in an unused FEA file (and almost identical in a
+// For now, copying what I found in an unused FEA file(and almost identical in a
 //  used ZAS file). Means that assume_air and remove_air don't actually alter the
 //  air contents.
 /obj/structure/transit_tube_pod/assume_air(datum/gas_mixture/giver)
@@ -379,7 +379,7 @@
 			move_out_content()
 			mob.client.Move(get_step(loc, direction), direction)
 
-			//if(moving && istype(loc, /turf/space))
+			// if(moving && istype(loc, /turf/space))
 				// Todo: If you get out of a moving pod in space, you should move as well.
 				//  Same direction as pod? Direcion you moved? Halfway between?
 

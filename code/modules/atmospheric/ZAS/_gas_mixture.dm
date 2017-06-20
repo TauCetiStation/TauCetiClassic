@@ -7,14 +7,14 @@ What are the archived variables for?
 #define SPECIFIC_HEAT_TOXIN		200
 #define SPECIFIC_HEAT_AIR		20
 #define SPECIFIC_HEAT_CDO		30
-#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,phoron) \
+#define HEAT_CAPACITY_CALCULATION(oxygen, carbon_dioxide, nitrogen, phoron) \
 	max(0, carbon_dioxide * SPECIFIC_HEAT_CDO + (oxygen + nitrogen) * SPECIFIC_HEAT_AIR + phoron * SPECIFIC_HEAT_TOXIN)
 
 #define MINIMUM_HEAT_CAPACITY	0.0003
-#define QUANTIZE(variable)		(round(variable,0.0001))
-#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
+#define QUANTIZE(variable)		(round(variable, 0.0001))
+#define TRANSFER_FRACTION 5 // What fraction(1/#) of the air difference to try and transfer
 
-/datum/gas/sleeping_agent/specific_heat = 40 //These are used for the "Trace Gases" stuff, but is buggy.
+/datum/gas/sleeping_agent/specific_heat = 40 // These are used for the "Trace Gases" stuff, but is buggy.
 
 /datum/gas/oxygen_agent_b/specific_heat = 300
 
@@ -28,26 +28,26 @@ What are the archived variables for?
 	var/moles_archived = 0
 
 /datum/gas_mixture/
-	var/oxygen = 0		//Holds the "moles" of each of the four gases.
+	var/oxygen = 0		// Holds the "moles" of each of the four gases.
 	var/carbon_dioxide = 0
 	var/nitrogen = 0
 	var/phoron = 0
 
-	var/total_moles = 0	//Updated when a reaction occurs.
+	var/total_moles = 0	// Updated when a reaction occurs.
 
 	var/volume = CELL_VOLUME
 
-	var/temperature = 0 //in Kelvin, use calculate_temperature() to modify
+	var/temperature = 0 // in Kelvin, use calculate_temperature() to modify
 
 	var/group_multiplier = 1
-				//Size of the group this gas_mixture is representing.
+				// Size of the group this gas_mixture is representing.
 				//=1 for singletons
 
 	var/graphic
 
-	var/list/datum/gas/trace_gases = list() //Seemed to be a good idea that was abandoned
+	var/list/datum/gas/trace_gases = list() // Seemed to be a good idea that was abandoned
 
-	var/tmp/oxygen_archived //These are variables for use with the archived data
+	var/tmp/oxygen_archived // These are variables for use with the archived data
 	var/tmp/carbon_dioxide_archived
 	var/tmp/nitrogen_archived
 	var/tmp/phoron_archived
@@ -62,21 +62,21 @@ What are the archived variables for?
 /datum/gas_mixture/New(vol = CELL_VOLUME)
 	volume = vol
 
-//FOR THE LOVE OF GOD PLEASE USE THIS PROC
-//Call it with negative numbers to remove gases.
+// FOR THE LOVE OF GOD PLEASE USE THIS PROC
+// Call it with negative numbers to remove gases.
 
 /datum/gas_mixture/proc/adjust(o2 = 0, co2 = 0, n2 = 0, tx = 0, list/datum/gas/traces = list())
-	//Purpose: Adjusting the gases within a airmix
-	//Called by: Nothing, yet!
-	//Inputs: The values of the gases to adjust
-	//Outputs: null
+	// Purpose: Adjusting the gases within a airmix
+	// Called by: Nothing, yet!
+	// Inputs: The values of the gases to adjust
+	// Outputs: null
 
 	oxygen = max(0, oxygen + o2)
 	carbon_dioxide = max(0, carbon_dioxide + co2)
 	nitrogen = max(0, nitrogen + n2)
 	phoron = max(0, phoron + tx)
 
-	//handle trace gasses
+	// handle trace gasses
 	for(var/datum/gas/G in traces)
 		var/datum/gas/T = locate(G.type) in trace_gases
 		if(T)
@@ -86,7 +86,7 @@ What are the archived variables for?
 	update_values()
 	return
 
-		//tg seems to like using these a lot
+		// tg seems to like using these a lot
 /datum/gas_mixture/proc/return_temperature()
 	return temperature
 
@@ -99,36 +99,36 @@ What are the archived variables for?
 	return temperature*heat_capacity()
 
 ///////////////////////////////
-//PV=nRT - related procedures//
+// PV=nRT - related procedures//
 ///////////////////////////////
 
 /datum/gas_mixture/proc/heat_capacity()
-	//Purpose: Returning the heat capacity of the gas mix
-	//Called by: UNKNOWN
-	//Inputs: None
-	//Outputs: Heat capacity
+	// Purpose: Returning the heat capacity of the gas mix
+	// Called by: UNKNOWN
+	// Inputs: None
+	// Outputs: Heat capacity
 
-	var/heat_capacity = HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,phoron)
+	var/heat_capacity = HEAT_CAPACITY_CALCULATION(oxygen, carbon_dioxide, nitrogen, phoron)
 
 	if(trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
 			heat_capacity += trace_gas.moles*trace_gas.specific_heat
 
-	return max(MINIMUM_HEAT_CAPACITY,heat_capacity)
+	return max(MINIMUM_HEAT_CAPACITY, heat_capacity)
 
 /datum/gas_mixture/proc/heat_capacity_archived()
-	//Purpose: Returning the archived heat capacity of the gas mix
-	//Called by: UNKNOWN
-	//Inputs: None
-	//Outputs: Archived heat capacity
+	// Purpose: Returning the archived heat capacity of the gas mix
+	// Called by: UNKNOWN
+	// Inputs: None
+	// Outputs: Archived heat capacity
 
-	var/heat_capacity_archived = HEAT_CAPACITY_CALCULATION(oxygen_archived,carbon_dioxide_archived,nitrogen_archived,phoron_archived)
+	var/heat_capacity_archived = HEAT_CAPACITY_CALCULATION(oxygen_archived, carbon_dioxide_archived, nitrogen_archived, phoron_archived)
 
 	if(trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
 			heat_capacity_archived += trace_gas.moles_archived*trace_gas.specific_heat
 
-	return max(MINIMUM_HEAT_CAPACITY,heat_capacity_archived)
+	return max(MINIMUM_HEAT_CAPACITY, heat_capacity_archived)
 
 /datum/gas_mixture/proc/total_moles()
 	return total_moles
@@ -140,41 +140,41 @@ What are the archived variables for?
 	return moles*/
 
 /datum/gas_mixture/proc/return_pressure()
-	//Purpose: Calculating Current Pressure
-	//Called by:
-	//Inputs: None
-	//Outputs: Gas pressure.
+	// Purpose: Calculating Current Pressure
+	// Called by:
+	// Inputs: None
+	// Outputs: Gas pressure.
 
 	if(volume>0)
 		return total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume
 	return 0
 
 //		proc/return_temperature()
-			//Purpose:
-			//Inputs:
-			//Outputs:
+			// Purpose:
+			// Inputs:
+			// Outputs:
 
 //			return temperature
 
 //		proc/return_volume()
-			//Purpose:
-			//Inputs:
-			//Outputs:
+			// Purpose:
+			// Inputs:
+			// Outputs:
 
 //			return max(0, volume)
 
 //		proc/thermal_energy()
-			//Purpose:
-			//Inputs:
-			//Outputs:
+			// Purpose:
+			// Inputs:
+			// Outputs:
 
 //			return temperature*heat_capacity()
 
 /datum/gas_mixture/proc/update_values()
-	//Purpose: Calculating and storing values which were normally called CONSTANTLY
-	//Called by: Anything that changes values within a gas mix.
-	//Inputs: None
-	//Outputs: None
+	// Purpose: Calculating and storing values which were normally called CONSTANTLY
+	// Called by: Anything that changes values within a gas mix.
+	// Inputs: None
+	// Outputs: None
 
 	total_moles = oxygen + carbon_dioxide + nitrogen + phoron
 
@@ -185,14 +185,14 @@ What are the archived variables for?
 	return
 
 ////////////////////////////////////////////
-//Procedures used for very specific events//
+// Procedures used for very specific events//
 ////////////////////////////////////////////
 
 /datum/gas_mixture/proc/check_tile_graphic()
-	//Purpose: Calculating the graphic for a tile
-	//Called by: Turfs updating
-	//Inputs: None
-	//Outputs: 1 if graphic changed, 0 if unchanged
+	// Purpose: Calculating the graphic for a tile
+	// Called by: Turfs updating
+	// Inputs: None
+	// Outputs: 1 if graphic changed, 0 if unchanged
 
 	graphic = 0
 	if(phoron > MOLES_PHORON_VISIBLE)
@@ -207,12 +207,12 @@ What are the archived variables for?
 	return graphic != graphic_archived
 
 /datum/gas_mixture/proc/react(atom/dump_location)
-	//Purpose: Calculating if it is possible for a fire to occur in the airmix
-	//Called by: Air mixes updating?
-	//Inputs: None
-	//Outputs: If a fire occured
+	// Purpose: Calculating if it is possible for a fire to occur in the airmix
+	// Called by: Air mixes updating?
+	// Inputs: None
+	// Outputs: If a fire occured
 
-	 //set to 1 if a notable reaction occured (used by pipe_network)
+	 // set to 1 if a notable reaction occured(used by pipe_network)
 
 	zburn(null)
 
@@ -220,10 +220,10 @@ What are the archived variables for?
 
 /*
 /datum/gas_mixture/proc/fire()
-	//Purpose: Calculating any fire reactions.
-	//Called by: react() (See above)
-	//Inputs: None
-	//Outputs: How much fuel burned
+	// Purpose: Calculating any fire reactions.
+	// Called by: react() (See above)
+	// Inputs: None
+	// Outputs: How much fuel burned
 
 	return zburn(null)
 
@@ -231,7 +231,7 @@ What are the archived variables for?
 	var/old_heat_capacity = heat_capacity()
 
 	var/datum/gas/volatile_fuel/fuel_store = locate(/datum/gas/volatile_fuel) in trace_gases
-	if(fuel_store) //General volatile gas burn
+	if(fuel_store) // General volatile gas burn
 		var/burned_fuel = 0
 
 		if(oxygen < fuel_store.moles)
@@ -247,11 +247,11 @@ What are the archived variables for?
 		carbon_dioxide += burned_fuel
 		fuel_burnt += burned_fuel
 
-	//Handle phoron burning
+	// Handle phoron burning
 	if(toxins > MINIMUM_HEAT_CAPACITY)
 		var/phoron_burn_rate = 0
 		var/oxygen_burn_rate = 0
-		//more phoron released at higher temperatures
+		// more phoron released at higher temperatures
 		var/temperature_scale
 		if(temperature > PLASMA_UPPER_TEMPERATURE)
 			temperature_scale = 1
@@ -281,15 +281,15 @@ What are the archived variables for?
 	return fuel_burnt*/
 
 //////////////////////////////////////////////
-//Procs for general gas spread calculations.//
+// Procs for general gas spread calculations.//
 //////////////////////////////////////////////
 
 
 /datum/gas_mixture/proc/archive()
-	//Purpose: Archives the current gas values
-	//Called by: UNKNOWN
-	//Inputs: None
-	//Outputs: 1
+	// Purpose: Archives the current gas values
+	// Called by: UNKNOWN
+	// Inputs: None
+	// Outputs: 1
 
 	oxygen_archived = oxygen
 	carbon_dioxide_archived = carbon_dioxide
@@ -307,11 +307,11 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/check_then_merge(datum/gas_mixture/giver)
-	//Purpose: Similar to merge(...) but first checks to see if the amount of air assumed is small enough
-	//	that group processing is still accurate for source (aborts if not)
-	//Called by: airgroups/machinery expelling air, ?
-	//Inputs: The gas to try and merge
-	//Outputs: 1 on successful merge.  0 otherwise.
+	// Purpose: Similar to merge(...) but first checks to see if the amount of air assumed is small enough
+	//	that group processing is still accurate for source(aborts if not)
+	// Called by: airgroups/machinery expelling air, ?
+	// Inputs: The gas to try and merge
+	// Outputs: 1 on successful merge.  0 otherwise.
 
 	if(!giver)
 		return 0
@@ -332,10 +332,10 @@ What are the archived variables for?
 	return merge(giver)
 
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
-	//Purpose: Merges all air from giver into self. Deletes giver.
-	//Called by: Machinery expelling air, check_then_merge, ?
-	//Inputs: The gas to merge.
-	//Outputs: 1
+	// Purpose: Merges all air from giver into self. Deletes giver.
+	// Called by: Machinery expelling air, check_then_merge, ?
+	// Inputs: The gas to merge.
+	// Outputs: 1
 
 	if(!giver)
 		return 0
@@ -368,17 +368,17 @@ What are the archived variables for?
 	update_values()
 
 	// Let the garbage collector handle it, faster according to /tg/ testers
-	//del(giver)
+	// del(giver)
 	return 1
 
 /datum/gas_mixture/proc/remove(amount)
-	//Purpose: Removes a certain number of moles from the air.
-	//Called by: ?
-	//Inputs: How many moles to remove.
-	//Outputs: Removed air.
+	// Purpose: Removes a certain number of moles from the air.
+	// Called by: ?
+	// Inputs: How many moles to remove.
+	// Outputs: Removed air.
 
 	var/sum = total_moles()
-	amount = min(amount,sum) //Can not take more air than tile has!
+	amount = min(amount, sum) // Can not take more air than tile has!
 	if(amount <= 0)
 		return null
 
@@ -410,10 +410,10 @@ What are the archived variables for?
 	return removed
 
 /datum/gas_mixture/proc/remove_ratio(ratio)
-	//Purpose: Removes a certain ratio of the air.
-	//Called by: ?
-	//Inputs: Percentage to remove.
-	//Outputs: Removed air.
+	// Purpose: Removes a certain ratio of the air.
+	// Called by: ?
+	// Inputs: Percentage to remove.
+	// Outputs: Removed air.
 
 	if(ratio <= 0)
 		return null
@@ -447,13 +447,13 @@ What are the archived variables for?
 	return removed
 
 /datum/gas_mixture/proc/check_then_remove(amount)
-	//Purpose: Similar to remove(...) but first checks to see if the amount of air removed is small enough
-	//	that group processing is still accurate for source (aborts if not)
-	//Called by: ?
-	//Inputs: Number of moles to remove
-	//Outputs: Removed air or 0 if it can remove air or not.
+	// Purpose: Similar to remove(...) but first checks to see if the amount of air removed is small enough
+	//	that group processing is still accurate for source(aborts if not)
+	// Called by: ?
+	// Inputs: Number of moles to remove
+	// Outputs: Removed air or 0 if it can remove air or not.
 
-	amount = min(amount,total_moles()) //Can not take more air than tile has!
+	amount = min(amount, total_moles()) // Can not take more air than tile has!
 
 	if((amount > MINIMUM_AIR_RATIO_TO_SUSPEND) && (amount > total_moles()*MINIMUM_AIR_RATIO_TO_SUSPEND))
 		return 0
@@ -461,10 +461,10 @@ What are the archived variables for?
 	return remove(amount)
 
 /datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample)
-	//Purpose: Duplicates the sample air mixture.
-	//Called by: airgroups splitting, ?
-	//Inputs: Gas to copy
-	//Outputs: 1
+	// Purpose: Duplicates the sample air mixture.
+	// Called by: airgroups splitting, ?
+	// Inputs: Gas to copy
+	// Outputs: 1
 
 	oxygen = sample.oxygen
 	carbon_dioxide = sample.carbon_dioxide
@@ -485,12 +485,12 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/check_gas_mixture(datum/gas_mixture/sharer)
-	//Purpose: Telling if one or both airgroups needs to disable group processing.
-	//Called by: Airgroups sharing air, checking if group processing needs disabled.
-	//Inputs: Gas to compare from other airgroup
-	//Outputs: 0 if the self-check failed (local airgroup breaks?)
-	//   then -1 if sharer-check failed (sharing airgroup breaks?)
-	//   then 1 if both checks pass (share succesful?)
+	// Purpose: Telling if one or both airgroups needs to disable group processing.
+	// Called by: Airgroups sharing air, checking if group processing needs disabled.
+	// Inputs: Gas to compare from other airgroup
+	// Outputs: 0 if the self-check failed(local airgroup breaks?)
+	//   then -1 if sharer-check failed(sharing airgroup breaks?)
+	//   then 1 if both checks pass(share succesful?)
 	if(!istype(sharer))
 		return
 
@@ -545,10 +545,10 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/check_turf(turf/model)
-	//Purpose: Used to compare the gases in an unsimulated turf with the gas in a simulated one.
-	//Called by: Sharing air (mimicing) with adjacent unsimulated turfs
-	//Inputs: Unsimulated turf
-	//Outputs: 1 if safe to mimic, 0 if needs to break airgroup.
+	// Purpose: Used to compare the gases in an unsimulated turf with the gas in a simulated one.
+	// Called by: Sharing air(mimicing) with adjacent unsimulated turfs
+	// Inputs: Unsimulated turf
+	// Outputs: 1 if safe to mimic, 0 if needs to break airgroup.
 
 	var/delta_oxygen = (oxygen_archived - model.oxygen)/TRANSFER_FRACTION
 	var/delta_carbon_dioxide = (carbon_dioxide_archived - model.carbon_dioxide)/TRANSFER_FRACTION
@@ -573,11 +573,11 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
-	//Purpose: Used to transfer gas from a more pressurised tile to a less presurised tile
+	// Purpose: Used to transfer gas from a more pressurised tile to a less presurised tile
 	//    (Two directional, if the other tile is more pressurised, air travels to current tile)
-	//Called by: Sharing air with adjacent simulated turfs
-	//Inputs: Air datum to share with
-	//Outputs: Amount of gas exchanged (Negative if lost air, positive if gained.)
+	// Called by: Sharing air with adjacent simulated turfs
+	// Inputs: Air datum to share with
+	// Outputs: Amount of gas exchanged(Negative if lost air, positive if gained.)
 
 
 	if(!istype(sharer))
@@ -693,7 +693,7 @@ What are the archived variables for?
 				trace_gas.moles -= delta/sharer.group_multiplier
 				corresponding.moles += delta/group_multiplier
 
-				//Guaranteed transfer from sharer to self
+				// Guaranteed transfer from sharer to self
 				var/individual_heat_capacity = trace_gas.specific_heat*delta
 				heat_sharer_to_self += individual_heat_capacity*sharer.temperature_archived
 				heat_capacity_sharer_to_self += individual_heat_capacity
@@ -724,10 +724,10 @@ What are the archived variables for?
 		return 0
 
 /datum/gas_mixture/proc/mimic(turf/model, border_multiplier)
-	//Purpose: Used transfer gas from a more pressurised tile to a less presurised unsimulated tile.
-	//Called by: "sharing" from unsimulated to simulated turfs.
-	//Inputs: Unsimulated turf, Multiplier for gas transfer (optional)
-	//Outputs: Amount of gas exchanged
+	// Purpose: Used transfer gas from a more pressurised tile to a less presurised unsimulated tile.
+	// Called by: "sharing" from unsimulated to simulated turfs.
+	// Inputs: Unsimulated turf, Multiplier for gas transfer(optional)
+	// Outputs: Amount of gas exchanged
 
 	var/delta_oxygen = QUANTIZE(oxygen_archived - model.oxygen)/TRANSFER_FRACTION
 	var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - model.carbon_dioxide)/TRANSFER_FRACTION
@@ -836,7 +836,7 @@ What are the archived variables for?
 	sharer.temperature += sharer_temperature_delta
 
 	return 1
-	//Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
+	// Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/check_me_then_temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
@@ -864,7 +864,7 @@ What are the archived variables for?
 	sharer.temperature += sharer_temperature_delta
 
 	return 1
-	//Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
+	// Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/check_me_then_temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature)
@@ -892,7 +892,7 @@ What are the archived variables for?
 	sharer.temperature += sharer_temperature_delta
 
 	return 1
-	//Logic integrated from: temperature_turf_share(sharer, conduction_coefficient) for efficiency
+	// Logic integrated from: temperature_turf_share(sharer, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/check_me_then_temperature_mimic(turf/model, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - model.temperature)
@@ -914,7 +914,7 @@ What are the archived variables for?
 	temperature += self_temperature_delta
 
 	return 1
-	//Logic integrated from: temperature_mimic(model, conduction_coefficient) for efficiency
+	// Logic integrated from: temperature_mimic(model, conduction_coefficient) for efficiency
 
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
@@ -922,7 +922,7 @@ What are the archived variables for?
 		var/self_heat_capacity = heat_capacity_archived()
 		var/sharer_heat_capacity = sharer.heat_capacity_archived()
 		if(!group_multiplier)
-			message_admins("Error!  The gas mixture (ref \ref[src]) has no group multiplier!")
+			message_admins("Error!  The gas mixture(ref \ref[src]) has no group multiplier!")
 			return
 
 		if((sharer_heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
@@ -937,7 +937,7 @@ What are the archived variables for?
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()//_archived()
 		if(!group_multiplier)
-			message_admins("Error!  The gas mixture (ref \ref[src]) has no group multiplier!")
+			message_admins("Error!  The gas mixture(ref \ref[src]) has no group multiplier!")
 			return
 
 		if((model.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
@@ -962,10 +962,10 @@ What are the archived variables for?
 			sharer.temperature += heat/sharer.heat_capacity
 
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
-	//Purpose: Compares sample to self to see if within acceptable ranges that group processing may be enabled
-	//Called by: Airgroups trying to rebuild
-	//Inputs: Gas mix to compare
-	//Outputs: 1 if can rebuild, 0 if not.
+	// Purpose: Compares sample to self to see if within acceptable ranges that group processing may be enabled
+	// Called by: Airgroups trying to rebuild
+	// Inputs: Gas mix to compare
+	// Outputs: 1 if can rebuild, 0 if not.
 	if(!sample) return 0
 
 
@@ -986,7 +986,7 @@ What are the archived variables for?
 	if(total_moles() > MINIMUM_AIR_TO_SUSPEND)
 		if((abs(temperature-sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
 			((temperature < (1-MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature) || (temperature > (1+MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature)))
-			//world << "temp fail [temperature] & [sample.temperature]"
+			// world << "temp fail [temperature] & [sample.temperature]"
 			return 0
 	var/check_moles
 	if(sample.trace_gases.len)
@@ -1033,10 +1033,10 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/subtract(datum/gas_mixture/right_side)
-	//Purpose: Subtracts right_side from air_mixture. Used to help turfs mingle
-	//Called by: Pipelines ending in a break (or something)
-	//Inputs: Gas mix to remove
-	//Outputs: 1
+	// Purpose: Subtracts right_side from air_mixture. Used to help turfs mingle
+	// Called by: Pipelines ending in a break(or something)
+	// Inputs: Gas mix to remove
+	// Outputs: 1
 
 	oxygen = max(oxygen - right_side.oxygen)
 	carbon_dioxide = max(carbon_dioxide - right_side.carbon_dioxide)
@@ -1081,7 +1081,7 @@ What are the archived variables for?
 /proc/GenerateGasOverlays()
 	plmaster = new /obj/effect/overlay()
 	plmaster.icon = 'icons/effects/tile_effects.dmi'
-	plmaster.icon_state = "plasma-purple"  //fuck phoron!
+	plmaster.icon_state = "plasma-purple"  // fuck phoron!
 	plmaster.layer = FLY_LAYER
 	plmaster.mouse_opacity = 0
 

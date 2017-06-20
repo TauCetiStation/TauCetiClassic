@@ -6,15 +6,15 @@
 /datum/artifact_effect/gasoxy/New()
 	..()
 	effect = pick(EFFECT_TOUCH, EFFECT_AURA)
-	max_pressure = rand(115,1000)
-	effect_type = pick(6,7)
+	max_pressure = rand(115, 1000)
+	effect_type = pick(6, 7)
 
 
 /datum/artifact_effect/gasoxy/DoEffectTouch(mob/user)
 	if(holder)
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env)
-			env.oxygen += rand(2,15)
+			env.oxygen += rand(2, 15)
 
 /datum/artifact_effect/gasoxy/DoEffectAura()
 	if(holder)

@@ -1,16 +1,16 @@
 /*
 	File: AST Nodes
-	An abstract syntax tree (AST) is a representation of source code in a computer-friendly format. It is composed of nodes,
+	An abstract syntax tree(AST) is a representation of source code in a computer-friendly format. It is composed of nodes,
 	each of which represents a certain part of the source code. For example, an <IfStatement> node represents an if statement in the
 	script's source code. Because it is a representation of the source code in memory, it is independent of any specific scripting language.
 	This allows a script in any language for which a parser exists to be run by the interpreter.
 
 	The AST is produced by an <n_Parser> object. It consists of a <GlobalBlock> with an arbitrary amount of statements. These statements are
-	run in order by an <n_Interpreter> object. A statement may in turn run another block (such as an if statement might if its condition is
+	run in order by an <n_Interpreter> object. A statement may in turn run another block(such as an if statement might if its condition is
 	met).
 
 	Articles:
-	- <http://en.wikipedia.org/wiki/Abstract_syntax_tree>
+	- <http:// en.wikipedia.org/wiki/Abstract_syntax_tree>
 */
 var
 	const
@@ -85,7 +85,7 @@ var
 	Class: FunctionCall
 */
 /node/expression/FunctionCall
-	//Function calls can also be expressions or statements.
+	// Function calls can also be expressions or statements.
 	var
 		func_name
 		node/identifier/object
@@ -111,7 +111,7 @@ var
 /node/expression/value/variable
 	var
 		node
-			object		//Either a node/identifier or another node/expression/value/variable which points to the object
+			object		// Either a node/identifier or another node/expression/value/variable which points to the object
 		node/identifier
 			id
 

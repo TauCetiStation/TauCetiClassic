@@ -11,7 +11,7 @@
 	var/node1_concentration = 0.5
 	var/node2_concentration = 0.5
 
-	//node 3 is the outlet, nodes 1 & 2 are intakes
+	// node 3 is the outlet, nodes 1 & 2 are intakes
 
 /obj/machinery/atmospherics/trinary/mixer/update_icon()
 	if(stat & NOPOWER)
@@ -42,10 +42,10 @@
 	var/output_starting_pressure = air3.return_pressure()
 
 	if(output_starting_pressure >= target_pressure)
-		//No need to mix if target is already full!
+		// No need to mix if target is already full!
 		return 1
 
-	//Calculate necessary moles to transfer using PV=nRT
+	// Calculate necessary moles to transfer using PV=nRT
 
 	var/pressure_delta = target_pressure - output_starting_pressure
 	var/transfer_moles1 = 0
@@ -67,7 +67,7 @@
 		transfer_moles1 *= ratio
 		transfer_moles2 *= ratio
 
-	//Actually transfer the gas
+	// Actually transfer the gas
 
 	if(transfer_moles1 > 0)
 		var/datum/gas_mixture/removed1 = air1.remove(transfer_moles1)
@@ -89,21 +89,21 @@
 	return 1
 
 /obj/machinery/atmospherics/trinary/mixer/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
+	if(!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	var/turf/T = src.loc
-	if (level==1 && isturf(T) && T.intact)
+	if(level==1 && isturf(T) && T.intact)
 		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
-	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+	if((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
 		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-	if (do_after(user, 40, target = src))
+	if(do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
 			"<span class='notice'>You have unfastened \the [src].</span>", \
@@ -142,14 +142,14 @@
 	onclose(user, "atmo_mixer")
 	return
 
-/obj/machinery/atmospherics/trinary/mixer/Topic(href,href_list)
+/obj/machinery/atmospherics/trinary/mixer/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
 	if(href_list["power"])
 		on = !on
 	else if(href_list["set_press"])
-		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
+		var/new_pressure = input(usr, "Enter new output pressure(0-4500kPa)", "Pressure control", src.target_pressure) as num
 		src.target_pressure = max(0, min(4500, new_pressure))
 	else if(href_list["node1_c"])
 		var/value = text2num(href_list["node1_c"])
@@ -169,7 +169,7 @@
 	dir = SOUTH
 	initialize_directions = SOUTH|EAST|WEST
 
-	//node 3 is the outlet, nodes 1 & 2 are intakes
+	// node 3 is the outlet, nodes 1 & 2 are intakes
 
 /obj/machinery/atmospherics/trinary/mixer/t_mixer/New()
 	..()
@@ -190,18 +190,18 @@
 	var/node2_connect = turn(dir, 90)
 	var/node3_connect = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node1_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node2_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node2 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node3_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node3 = target
 			break
 
@@ -214,7 +214,7 @@
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|EAST
 
-	//node 3 is the outlet, nodes 1 & 2 are intakes
+	// node 3 is the outlet, nodes 1 & 2 are intakes
 
 obj/machinery/atmospherics/trinary/mixer/m_mixer/New()
 	..()
@@ -235,18 +235,18 @@ obj/machinery/atmospherics/trinary/mixer/m_mixer/New()
 	var/node2_connect = turn(dir, 90)
 	var/node3_connect = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node1_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node2_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node2 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node3_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node3 = target
 			break
 

@@ -20,9 +20,9 @@
 	..()
 
 /obj/machinery/suspension_gen/process()
-	//set background = 1
+	// set background = 1
 
-	if (suspension_field)
+	if(suspension_field)
 		cell.charge -= power_use
 
 		var/turf/T = get_turf(suspension_field)
@@ -31,14 +31,14 @@
 				M.weakened = max(M.weakened, 3)
 				cell.charge -= power_use
 				if(prob(5))
-					to_chat(M, "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
+					to_chat(M, "\blue [pick("You feel tingly.", "You feel like floating.", "It is hard to speak.", "You can barely move.")]")
 
 		if(field_type == "iron")
 			for(var/mob/living/silicon/M in T)
 				M.weakened = max(M.weakened, 3)
 				cell.charge -= power_use
 				if(prob(5))
-					to_chat(M, "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
+					to_chat(M, "\blue [pick("You feel tingly.", "You feel like floating.", "It is hard to speak.", "You can barely move.")]")
 
 		for(var/obj/item/I in T)
 			if(!suspension_field.contents.len)
@@ -50,7 +50,7 @@
 			M.weakened = max(M.weakened, 3)
 			cell.charge -= power_use
 			if(prob(5))
-				to_chat(M, "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
+				to_chat(M, "\blue [pick("You feel tingly.", "You feel like floating.", "It is hard to speak.", "You can barely move.")]")
 
 		if(cell.charge <= 0)
 			deactivate()
@@ -136,7 +136,7 @@
 		field_type = href_list["select_field"]
 	else if(href_list["insertcard"])
 		var/obj/item/I = usr.get_active_hand()
-		if (istype(I, /obj/item/weapon/card))
+		if(istype(I, /obj/item/weapon/card))
 			usr.drop_item()
 			I.loc = src
 			auth_card = I
@@ -172,14 +172,14 @@
 		to_chat(user, "<span class='info'>You remove the power cell</span>")
 
 /obj/machinery/suspension_gen/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/weapon/screwdriver))
 		if(!open)
 			if(screwed)
 				screwed = 0
 			else
 				screwed = 1
 			to_chat(user, "<span class='info'>You [screwed ? "screw" : "unscrew"] the battery panel.</span>")
-	else if (istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/weapon/crowbar))
 		if(!locked)
 			if(!screwed)
 				if(!suspension_field)
@@ -195,7 +195,7 @@
 				to_chat(user, "<span class='warning'>Unscrew [src]'s battery panel first.</span>")
 		else
 			to_chat(user, "<span class='warning'>[src]'s security locks are engaged.</span>")
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/weapon/wrench))
 		if(!suspension_field)
 			if(anchored)
 				anchored = 0
@@ -208,7 +208,7 @@
 				desc = "It has stubby legs bolted up against it's body for stabilising."
 		else
 			to_chat(user, "<span class='warning'>You are unable to secure [src] while it is active!</span>")
-	else if (istype(W, /obj/item/weapon/stock_parts/cell))
+	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(open)
 			if(cell)
 				to_chat(user, "<span class='warning'>There is a power cell already installed.</span>")
@@ -231,7 +231,7 @@
 /obj/machinery/suspension_gen/proc/attempt_unlock(obj/item/weapon/card/C)
 	if(!open)
 		if(istype(C, /obj/item/weapon/card/emag) && cell.charge > 0)
-			//put sparks here
+			// put sparks here
 			if(prob(95))
 				locked = 0
 		else if(istype(C, /obj/item/weapon/card/id) && check_access(C))
@@ -240,10 +240,10 @@
 		if(!locked)
 			return 1
 
-//checks for whether the machine can be activated or not should already have occurred by this point
+// checks for whether the machine can be activated or not should already have occurred by this point
 /obj/machinery/suspension_gen/proc/activate()
-	//depending on the field type, we might pickup certain items
-	var/turf/T = get_turf(get_step(src,dir))
+	// depending on the field type, we might pickup certain items
+	var/turf/T = get_turf(get_step(src, dir))
 	var/success = 0
 	var/collected = 0
 	switch(field_type)
@@ -251,7 +251,7 @@
 			success = 1
 			for(var/mob/living/carbon/C in T)
 				C.weakened += 5
-				C.visible_message("\blue [bicon(C)] [C] begins to float in the air!","You feel tingly and light, but it is difficult to move.")
+				C.visible_message("\blue [bicon(C)] [C] begins to float in the air!", "You feel tingly and light, but it is difficult to move.")
 		if("nitrogen")
 			success = 1
 			//
@@ -274,14 +274,14 @@
 			success = 1
 			for(var/mob/living/silicon/R in T)
 				R.weakened += 5
-				R.visible_message("\blue [bicon(R)] [R] begins to float in the air!","You feel tingly and light, but it is difficult to move.")
+				R.visible_message("\blue [bicon(R)] [R] begins to float in the air!", "You feel tingly and light, but it is difficult to move.")
 			//
-	//in case we have a bad field type
+	// in case we have a bad field type
 	if(!success)
 		return
 
 	for(var/mob/living/simple_animal/C in T)
-		C.visible_message("\blue [bicon(C)] [C] begins to float in the air!","You feel tingly and light, but it is difficult to move.")
+		C.visible_message("\blue [bicon(C)] [C] begins to float in the air!", "You feel tingly and light, but it is difficult to move.")
 		C.weakened += 5
 
 	suspension_field = new(T)
@@ -298,13 +298,13 @@
 		suspension_field.overlays += "shield2"
 		src.visible_message("\blue [bicon(suspension_field)] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].")
 	else
-		if(istype(T,/turf/simulated/mineral) || istype(T,/turf/simulated/wall))
+		if(istype(T, /turf/simulated/mineral) || istype(T, /turf/simulated/wall))
 			suspension_field.icon_state = "shieldsparkles"
 		else
 			suspension_field.icon_state = "shield2"
 
 /obj/machinery/suspension_gen/proc/deactivate()
-	//drop anything we picked up
+	// drop anything we picked up
 	if(suspension_field)
 		var/turf/T = get_turf(suspension_field)
 
@@ -318,13 +318,13 @@
 		icon_state = "suspension2"
 
 /obj/machinery/suspension_gen/Destroy()
-	//safety checks: clear the field and drop anything it's holding
+	// safety checks: clear the field and drop anything it's holding
 	deactivate()
 	return ..()
 
 /obj/machinery/suspension_gen/verb/rotate_ccw()
 	set src in view(1)
-	set name = "Rotate suspension gen (counter-clockwise)"
+	set name = "Rotate suspension gen(counter-clockwise)"
 	set category = "Object"
 
 	if(anchored)
@@ -334,7 +334,7 @@
 
 /obj/machinery/suspension_gen/verb/rotate_cw()
 	set src in view(1)
-	set name = "Rotate suspension gen (clockwise)"
+	set name = "Rotate suspension gen(clockwise)"
 	set category = "Object"
 
 	if(anchored)

@@ -9,7 +9,7 @@
 	item_state = "M35_Filde_Jacket"
 	item_color = "M35_Filde_Jacket"
 
-	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 10, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/M35_Jacket_Oficer
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
@@ -21,7 +21,7 @@
 	item_state = "M35_Filde_Jacket_Officer"
 	item_color = "M35_Filde_Jacket_Officer"
 
-	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 10, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/Waffen_SS_Form
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
@@ -33,7 +33,7 @@
 	item_state = "WAFFEN_SS_Form"
 	item_color = "WAFFEN_SS_Form"
 
-	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 10, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/tie/storage/black_vest/mauser_belt
 	name = "Mauser holster"

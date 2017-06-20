@@ -1,4 +1,4 @@
-//Cargo
+// Cargo
 /datum/job/qm
 	title = "Quartermaster"
 	flag = QUARTERMASTER
@@ -88,7 +88,7 @@
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo (H), slot_l_ear)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/shaftminer(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/survivalcapsule(H), slot_in_backpack)
@@ -130,7 +130,7 @@
 
 	return 1
 
-//Food
+// Food
 /datum/job/bartender
 	title = "Bartender"
 	flag = BARTENDER
@@ -215,7 +215,7 @@
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
-	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
+	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // // Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT // Given Morgue access because they have a viable means of cloning.
 	alt_titles = list("Hydroponicist")
 	minimal_player_ingame_minutes = 480
 
@@ -270,7 +270,7 @@
 	return 1
 
 
-//More or less assistants
+// More or less assistants
 /datum/job/librarian
 	title = "Librarian"
 	flag = LIBRARIAN
@@ -302,7 +302,7 @@
 	return 1
 
 
-//var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
+// var/global/lawyer = 0// Checks for another lawyer // This changed clothes on 2nd lawyer, both IA get the same dreds.
 /datum/job/lawyer
 	title = "Internal Affairs Agent"
 	flag = LAWYER

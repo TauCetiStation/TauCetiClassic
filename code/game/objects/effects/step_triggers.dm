@@ -89,7 +89,7 @@
 /* Instant teleporter */
 
 /obj/effect/step_trigger/teleporter
-	var/teleport_x = 0	// teleportation coordinates (if one is null, then no teleport!)
+	var/teleport_x = 0	// teleportation coordinates(if one is null, then no teleport!)
 	var/teleport_y = 0
 	var/teleport_z = 0
 

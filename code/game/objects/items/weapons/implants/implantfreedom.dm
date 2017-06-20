@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/weapon/implant/freedom
 	name = "freedom implant"
@@ -16,8 +16,8 @@
 
 
 	trigger(emote, mob/living/carbon/source)
-		if (src.uses < 1)	return 0
-		if (emote == src.activation_emote)
+		if(src.uses < 1)	return 0
+		if(emote == src.activation_emote)
 			src.uses--
 			to_chat(source, "You feel a faint click.")
 			source.uncuff()

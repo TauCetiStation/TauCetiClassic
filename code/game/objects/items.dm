@@ -1,7 +1,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
-	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
+	var/image/blood_overlay = null // this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
 	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -14,35 +14,35 @@
 	var/wet = 0
 	var/w_class = 3.0
 	var/can_embed = 1
-	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
+	var/slot_flags = 0		// This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 5
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 
 	var/flags_pressure = 0
-	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
-	var/cold_protection = 0 //flags which determine which body parts are protected from cold. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
-	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
-	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
+	var/heat_protection = 0 // flags which determine which body parts are protected from heat. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
+	var/cold_protection = 0 // flags which determine which body parts are protected from cold. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
+	var/max_heat_protection_temperature // Set this variable to determine up to which temperature(IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
+	var/min_cold_protection_temperature // Set this variable to determine down to which temperature(IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
 	var/datum/action/item_action/action = null
-	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
-	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
+	var/action_button_name // It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
+	var/action_button_is_hands_free = 0 // If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
 
-	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
-	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
+	// Since any item can now be a piece of clothing, this has to be put here so all items share it.
+	var/flags_inv // This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 	var/item_color = null
-	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
-	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
-	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
+	var/body_parts_covered = 0 // see setup.dm for appropriate bit flags
+	// var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
+	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa(for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
-	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
+	var/siemens_coefficient = 1 // for electrical admittance/conductance(electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
-	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
-	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/canremove = 1 // Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
+	var/armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/materials = list()
-	var/list/allowed = null //suit storage stuff.
+	var/list/allowed = null // suit storage stuff.
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,
 		/obj/structure/rack,
@@ -59,7 +59,7 @@
 
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
-	/* Species-specific sprites, concept stolen from Paradise//vg/.
+	/* Species-specific sprites, concept stolen from Paradise// vg/.
 	ex:
 	sprite_sheets = list(
 		TAJARAN = 'icons/cat/are/bad'
@@ -67,7 +67,7 @@
 	If index term exists and icon_override is not set, this sprite sheet will be used.
 	*/
 	var/list/sprite_sheets = null
-	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
+	var/icon_override = null  // Used to override hardcoded clothing dmis in human clothing proc.
 
 	/* Species-specific sprite sheets for inventory sprites
 	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
@@ -96,11 +96,11 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				qdel(src)
 				return
 		else
@@ -109,13 +109,13 @@
 /obj/item/blob_act()
 	return
 
-//user: The mob that is suiciding
-//damagetype: The type of damage the item will inflict on the user
-//BRUTELOSS = 1
-//FIRELOSS = 2
-//TOXLOSS = 4
-//OXYLOSS = 8
-//Output a creative message and then return the damagetype done
+// user: The mob that is suiciding
+// damagetype: The type of damage the item will inflict on the user
+// BRUTELOSS = 1
+// FIRELOSS = 2
+// TOXLOSS = 4
+// OXYLOSS = 8
+// Output a creative message and then return the damagetype done
 /obj/item/proc/suicide_act(mob/user)
 	return
 
@@ -156,7 +156,7 @@
 	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
-	if (!user || anchored)
+	if(!user || anchored)
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
@@ -169,7 +169,7 @@
 				user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
 			qdel(src)
-			//user << "\red \The [src] is far too small for you to pick up."
+			// user << "\red \The [src] is far too small for you to pick up."
 			return
 		else if(istype(src, /obj/item/clothing/))
 			if(prob(20))
@@ -199,10 +199,10 @@
 
 	src.throwing = 0
 	if(src.loc == user)
-		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
+		// canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(!src.canremove)
 			return
-		if(istype(user,/mob/living/carbon/human))
+		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = user
 			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
 				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
@@ -219,7 +219,7 @@
 	else
 		if(isliving(src.loc))
 			return
-		user.next_move = max(user.next_move+2,world.time + 2)
+		user.next_move = max(user.next_move+2, world.time + 2)
 
 	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
 		return
@@ -231,7 +231,7 @@
 
 
 /obj/item/attack_paw(mob/user)
-	if (!user || anchored)
+	if(!user || anchored)
 		return
 
 	if(isalien(user)) // -- TLE
@@ -243,14 +243,14 @@
 			to_chat(user, "Your claws aren't capable of such fine manipulation.")
 			return
 
-	if (istype(src.loc, /obj/item/weapon/storage))
+	if(istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
-			if (M.s_active == src.loc)
-				if (M.client)
+			if(M.s_active == src.loc)
+				if(M.client)
 					M.client.screen -= src
 	src.throwing = 0
-	if (src.loc == user)
-		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
+	if(src.loc == user)
+		// canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(istype(src, /obj/item/clothing) && !src:canremove)
 			return
 		else
@@ -259,7 +259,7 @@
 		if(istype(src.loc, /mob/living))
 			return
 
-		user.next_move = max(user.next_move+2,world.time + 2)
+		user.next_move = max(user.next_move+2, world.time + 2)
 
 	if(QDELETED(src) || freeze_movement) // no item - no pickup, you dummy!
 		return
@@ -270,8 +270,8 @@
 
 
 /obj/item/attack_ai(mob/user)
-	if (istype(src.loc, /obj/item/weapon/robot_module))
-		//If the item is part of a cyborg module, equip it
+	if(istype(src.loc, /obj/item/weapon/robot_module))
+		// If the item is part of a cyborg module, equip it
 		if(!isrobot(user))
 			return
 		var/mob/living/silicon/robot/R = user
@@ -281,10 +281,10 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/storage))
+	if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
-			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
+			if(S.collection_mode) // Mode is set to collect all items on a tile and we clicked on a valid one.
 				if(isturf(src.loc))
 					var/list/rejections = list()
 					var/success = 0
@@ -298,7 +298,7 @@
 							failure = 1
 							continue
 						success = 1
-						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
+						S.handle_item_insertion(I, 1)	// The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 					if(success && !failure)
 						to_chat(user, "<span class='notice'>You put everything in [S].</span>")
 					else if(success)
@@ -315,7 +315,7 @@
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
 /obj/item/proc/after_throw(datum/callback/callback)
-	if (callback) //call the original callback
+	if(callback) // call the original callback
 		. = callback.Invoke()
 
 /obj/item/proc/talk_into(mob/M, text)
@@ -329,7 +329,7 @@
 	if(DROPDEL & flags)
 		qdel(src)
 
-// called just as an item is picked up (loc is not yet changed)
+// called just as an item is picked up(loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	return
 
@@ -353,22 +353,22 @@
 /obj/item/proc/equipped(mob/user, slot)
 	return
 
-//the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
-//If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
-//Set disable_warning to 1 if you wish it to not give you outputs.
+// the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
+// If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
+// Set disable_warning to 1 if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(M, slot, disable_warning = 0)
 	if(!slot) return 0
 	if(!M) return 0
 
 	if(ishuman(M))
-		//START HUMAN
+		// START HUMAN
 		var/mob/living/carbon/human/H = M
 		if(!H.has_bodypart_for_slot(slot))
 			return 0
-		//fat mutation
+		// fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
 			if(FAT in H.mutations)
-				//testing("[M] TOO FAT TO WEAR [src]!")
+				// testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
 						to_chat(H, "\red You're too fat to wear the [name].")
@@ -521,16 +521,16 @@
 					return 0
 				return 1
 			if(slot_in_backpack)
-				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
+				if(H.back && istype(H.back, /obj/item/weapon/storage/backpack))
 					var/obj/item/weapon/storage/backpack/B = H.back
 					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
 						return 1
 				return 0
-		return 0 //Unsupported slot
-		//END HUMAN
+		return 0 // Unsupported slot
+		// END HUMAN
 
 	else if(ismonkey(M))
-		//START MONKEY
+		// START MONKEY
 		var/mob/living/carbon/monkey/MO = M
 		switch(slot)
 			if(slot_l_hand)
@@ -553,9 +553,9 @@
 				if( !(slot_flags & SLOT_BACK) )
 					return 0
 				return 1
-		return 0 //Unsupported slot
+		return 0 // Unsupported slot
 
-		//END MONKEY
+		// END MONKEY
 	else if(isIAN(M))
 		var/mob/living/carbon/ian/C = M
 		switch(slot)
@@ -594,40 +594,40 @@
 	set category = "Object"
 	set name = "Pick up"
 
-	if(!(usr)) //BS12 EDIT
+	if(!(usr)) // BS12 EDIT
 		return
 	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
 		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
+	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))// Is humanoid, and is not a brain
 		to_chat(usr, "\red You can't pick things up!")
 		return
-	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
+	if( usr.stat || usr.restrained() )// Is not asleep/dead and is not restrained
 		to_chat(usr, "\red You can't pick things up!")
 		return
-	if(src.anchored) //Object isn't anchored
+	if(src.anchored) // Object isn't anchored
 		to_chat(usr, "\red You can't pick that up!")
 		return
-	if(!usr.hand && usr.r_hand) //Right hand is not full
+	if(!usr.hand && usr.r_hand) // Right hand is not full
 		to_chat(usr, "\red Your right hand is full.")
 		return
-	if(usr.hand && usr.l_hand) //Left hand is not full
+	if(usr.hand && usr.l_hand) // Left hand is not full
 		to_chat(usr, "\red Your left hand is full.")
 		return
-	if(!istype(src.loc, /turf)) //Object is on a turf
+	if(!istype(src.loc, /turf)) // Object is on a turf
 		to_chat(usr, "\red You can't pick that up!")
 		return
-	//All checks are done, time to pick it up!
+	// All checks are done, time to pick it up!
 	usr.UnarmedAttack(src)
 	return
 
 
-//This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'icon_action_button' to the icon_state of the image of the button in screen1_action.dmi
-//The default action is attack_self().
-//Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
+// This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'icon_action_button' to the icon_state of the image of the button in screen1_action.dmi
+// The default action is attack_self().
+// Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click()
 	attack_self(usr)
 
-/obj/item/proc/IsReflect(def_zone, hol_dir, hit_dir) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
+/obj/item/proc/IsReflect(def_zone, hol_dir, hit_dir) // This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand, r_hand or wear_suit
 	return FALSE
 
 /obj/item/proc/Get_shield_chance()
@@ -656,16 +656,16 @@
 		to_chat(user, "\red You're going to need to remove the eye covering first.")
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
+	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))// Aliens don't have eyes./N     slimes also don't have eyes!
 		to_chat(user, "\red You cannot locate any eyes on this creature!")
 		return
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)") //BS12 EDIT ALG
+	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)") // BS12 EDIT ALG
 
 	src.add_fingerprint(user)
-	//if((CLUMSY in user.mutations) && prob(50))
+	// if((CLUMSY in user.mutations) && prob(50))
 	//	M = user
 		/*
 		to_chat(M, "\red You stab yourself in the eye.")
@@ -674,7 +674,7 @@
 		M.adjustBruteLoss(10)
 		*/
 	if(M != user)
-		for(var/mob/O in (viewers(M) - user - M))
+		for(var/mob/O in(viewers(M) - user - M))
 			O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
 		to_chat(M, "\red [user] stabs you in the eye with [src]!")
 		to_chat(user, "\red You stab [M] in the eye with [src]!")
@@ -686,10 +686,10 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-		IO.damage += rand(3,4)
+		IO.damage += rand(3, 4)
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
-				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
+				if(IO.robotic <= 1) // robot eyes bleeding might be a bit silly
 					to_chat(H, "\red Your eyes start to bleed profusely!")
 			if(prob(50))
 				if(H.stat != DEAD)
@@ -698,14 +698,14 @@
 				H.eye_blurry += 10
 				H.Paralyse(1)
 				H.Weaken(4)
-			if (IO.damage >= IO.min_broken_damage)
+			if(IO.damage >= IO.min_broken_damage)
 				if(H.stat != DEAD)
 					to_chat(H, "\red You go blind!")
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 		BP.take_damage(7)
 	else
 		M.take_bodypart_damage(7)
-	M.eye_blurry += rand(3,4)
+	M.eye_blurry += rand(3, 4)
 	return
 
 /obj/item/clean_blood()
@@ -720,27 +720,27 @@
 
 
 /obj/item/add_blood(mob/living/carbon/human/M)
-	if (!..())
+	if(!..())
 		return 0
 
 	if(istype(src, /obj/item/weapon/melee/energy))
 		return
 
-	//if we haven't made our blood_overlay already
+	// if we haven't made our blood_overlay already
 	if( !blood_overlay )
 		generate_blood_overlay()
 
-	//apply the blood-splatter overlay if it isn't already in there
+	// apply the blood-splatter overlay if it isn't already in there
 	if(!blood_DNA.len)
 		blood_overlay.color = blood_color
 		overlays += blood_overlay
 
-	//if this blood isn't already in the list, add it
+	// if this blood isn't already in the list, add it
 
 	if(blood_DNA[M.dna.unique_enzymes])
-		return 0 //already bloodied with this blood. Cannot add more.
+		return 0 // already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-	return 1 //we applied blood to the item
+	return 1 // we applied blood to the item
 
 var/global/list/items_blood_overlay_by_type = list()
 /obj/item/proc/generate_blood_overlay()
@@ -752,15 +752,15 @@ var/global/list/items_blood_overlay_by_type = list()
 		blood_overlay = IMG
 	else
 		var/icon/ICO = new /icon(icon, icon_state)
-		ICO.Blend(new /icon('icons/effects/blood.dmi', rgb(255, 255, 255)), ICON_ADD) // fills the icon_state with white (except where it's transparent)
+		ICO.Blend(new /icon('icons/effects/blood.dmi', rgb(255, 255, 255)), ICON_ADD) // fills the icon_state with white(except where it's transparent)
 		ICO.Blend(new /icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY)   // adds blood and the remaining white areas become transparant
 		IMG = image("icon" = ICO)
 		items_blood_overlay_by_type[type] = IMG
 		blood_overlay = IMG
 
 /obj/item/proc/showoff(mob/user)
-	for (var/mob/M in view(user))
-		M.show_message("[user] holds up [src]. <a HREF=?src=\ref[M];lookitem=\ref[src]>Take a closer look.</a>",1)
+	for(var/mob/M in view(user))
+		M.show_message("[user] holds up [src]. <a HREF=?src=\ref[M];lookitem=\ref[src]>Take a closer look.</a>", 1)
 
 /mob/living/carbon/verb/showoff()
 	set name = "Show Held Item"
