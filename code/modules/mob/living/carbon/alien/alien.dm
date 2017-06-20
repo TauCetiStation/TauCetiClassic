@@ -66,10 +66,17 @@
 		if(health >= maxHealth)
 			adjustToxLoss(plasma_rate)
 		else
-			adjustBruteLoss(-heal_rate)
-			adjustFireLoss(-heal_rate)
-			adjustOxyLoss(-heal_rate)
-			adjustCloneLoss(-heal_rate)
+			if(storedPlasma >= max_plasma)
+				adjustBruteLoss(-heal_rate*2)
+				adjustFireLoss(-heal_rate*2)
+				adjustOxyLoss(-heal_rate*2)
+				adjustCloneLoss(-heal_rate*2)
+			else
+				adjustBruteLoss(-heal_rate)
+				adjustFireLoss(-heal_rate)
+				adjustOxyLoss(-heal_rate)
+				adjustCloneLoss(-heal_rate)
+				adjustToxLoss(plasma_rate/2)
 
 	if(!environment)
 		return
