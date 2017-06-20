@@ -19,11 +19,6 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	for(var/mob/living/target in targets)
 		spawn(0)
-
-			if(target.buckled)
-				var/obj/structure/stool/bed/buckled_to = target.buckled.
-				buckled_to.unbuckle_mob()
-
 			var/mobloc = get_turf(target.loc)
 			var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt( mobloc )
 			var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
@@ -36,10 +31,12 @@
 			animation.master = holder
 			target.ExtinguishMob()			//This spell can extinguish mob
 			target.status_flags ^= GODMODE	//Protection from any kind of damage, caused you in astral world
-			if(phaseshift == 1)
+			var/image/I = image('icons/mob/blob.dmi', holder, "marker", LIGHTING_LAYER+1)
+			target.client.images += I
+			if(phaseshift)
 				animation.dir = target.dir
 				flick("phase_shift",animation)
-				target.loc = holder
+				target.forceMove(holder)
 				target.client.eye = holder
 				sleep(jaunt_duration)
 				mobloc = get_turf(target.loc)
@@ -48,21 +45,9 @@
 				sleep(20)
 				animation.dir = target.dir
 				flick("phase_shift2",animation)
-				sleep(5)
-				if(!target.Move(mobloc))
-					for(var/direction in list(1,2,4,8,5,6,9,10))
-						var/turf/T = get_step(mobloc, direction)
-						if(T)
-							if(target.Move(T))
-								break
-				target.canmove = 1
-				target.client.eye = target
-				target.status_flags ^= GODMODE	//Turn off this cheat
-				qdel(animation)
-				qdel(holder)
 			else
 				flick("liquify",animation)
-				target.loc = holder
+				target.forceMove(holder)
 				target.client.eye = holder
 				var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 				steam.set_up(10, 0, mobloc)
@@ -75,18 +60,14 @@
 				target.canmove = 0
 				sleep(20)
 				flick("reappear",animation)
-				sleep(5)
-				if(!target.Move(mobloc))
-					for(var/direction in list(1,2,4,8,5,6,9,10))
-						var/turf/T = get_step(mobloc, direction)
-						if(T)
-							if(target.Move(T))
-								break
-				target.canmove = 1
-				target.client.eye = target
-				target.status_flags ^= GODMODE	//Turn off this cheat
-				qdel(animation)
-				qdel(holder)
+			sleep(5)
+			target.client.images -= I
+			target.forceMove(mobloc)
+			target.canmove = 1
+			target.client.eye = target
+			target.status_flags ^= GODMODE	//Turn off this cheat
+			qdel(animation)
+			qdel(holder)
 
 /obj/effect/dummy/spell_jaunt
 	name = "water"

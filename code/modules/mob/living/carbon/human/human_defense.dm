@@ -48,7 +48,9 @@
 
 		if(P.agony) // No effect against full protection.
 			if(prob(max(P.agony, 20)))
-				drop_item()
+				var/obj/item/hand = get_active_hand()
+				if(hand && !(hand.flags & ABSTRACT))
+					drop_item()
 		P.on_hit(src)
 		flash_pain()
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")

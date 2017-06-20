@@ -94,6 +94,12 @@
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
 
+/obj/item/weapon/shield/riot/roman
+	name = "roman shield"
+	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
+	icon_state = "roman_shield"
+	item_state = "roman_shield"
+
 /*
 /obj/item/weapon/cloaking_device
 	name = "cloaking device"

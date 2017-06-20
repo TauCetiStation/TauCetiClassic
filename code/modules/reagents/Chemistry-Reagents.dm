@@ -717,23 +717,7 @@ datum
 				if(!..())
 					return
 
-				var/needs_update = M.mutations.len > 0
-
-				//M.mutations = list()
-				//M.disabilities = 0
-				//M.sdisabilities = 0
-				M.dna.ResetSE()
-				for(var/datum/dna/gene/gene in dna_genes)
-					if(!M || !M.dna)
-						return
-					if(!gene.block)
-						continue
-					genemutcheck(M,gene.block,null,MUTCHK_FORCED)
-
-				// Might need to update appearance for hulk etc.
-				if(needs_update && ishuman(M))
-					var/mob/living/carbon/human/H = M
-					H.update_mutations()
+				M.remove_any_mutations()
 				holder.del_reagent(id)
 
 		thermite

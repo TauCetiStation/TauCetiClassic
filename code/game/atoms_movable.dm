@@ -20,12 +20,13 @@
 	var/inertia_move_delay = 5
 
 	var/list/client_mobs_in_contents
+	var/freeze_movement = FALSE
 
 /atom/movable/New()
 	. = ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
+	if(!loc || !newloc || freeze_movement) return 0
 	var/atom/oldloc = loc
 
 	if(loc != newloc)

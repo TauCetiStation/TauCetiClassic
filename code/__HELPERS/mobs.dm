@@ -165,17 +165,19 @@ proc/RoundHealth(health)
 	if(user)
 		user.busy_with_action = FALSE
 
-/proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, can_move = FALSE, progress = TRUE)
 	if(!user)
 		return 0
 
 	user.busy_with_action = TRUE
 
 	var/atom/Tloc = null
-	if(target)
+	if(target && (target != user))
 		Tloc = target.loc
 
-	var/atom/Uloc = user.loc
+	var/atom/Uloc = null
+	if(!can_move)
+		Uloc = user.loc
 
 	var/holding = user.get_active_hand()
 
@@ -198,7 +200,11 @@ proc/RoundHealth(health)
 		if (progress)
 			progbar.update(world.time - starttime)
 
-		if(!user || user.stat || user.weakened || user.stunned  || user.loc != Uloc)
+		if(!user || user.stat || user.weakened || user.stunned)
+			. = 0
+			break
+
+		if(Uloc && (user.loc != Uloc))
 			. = 0
 			break
 

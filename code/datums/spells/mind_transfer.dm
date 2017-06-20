@@ -7,6 +7,7 @@
 	clothes_req = 0
 	invocation = "GIN'YU CAPAN"
 	invocation_type = "whisper"
+	sound = 'sound/magic/MandSwap.ogg'
 	range = 1
 	action_icon_state = "mindswap"
 	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
