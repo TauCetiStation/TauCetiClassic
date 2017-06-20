@@ -13,7 +13,7 @@
 	var/toggleable = 0
 	var/off_state = "degoggles"
 	var/active = 1
-	var/activation_sound = 'sound/effects/glasses_switch.ogg'
+	var/activation_sound = 'sound/items/buttonclick.ogg'
 
 /obj/item/clothing/glasses/attack_self(mob/user)
 	if(toggleable)
@@ -244,8 +244,9 @@
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	body_parts_covered = 0
-	toggleable = 0
-	action_button_name = null
+	toggleable = 1
+	off_state = "thermoncle_off"
+	action_button_name = "Toggle Monocle"
 
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "Optical Thermal Eyepatch"

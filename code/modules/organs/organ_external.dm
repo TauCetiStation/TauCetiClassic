@@ -250,7 +250,7 @@ This function completely restores a damaged organ to perfect condition.
 	// remove embedded objects and drop them on the floor
 	for(var/obj/implanted_object in implants)
 		if(!istype(implanted_object,/obj/item/weapon/implant))	// We don't want to remove REAL implants. Just shrapnel etc.
-			implanted_object.loc = owner.loc
+			implanted_object.forceMove(owner.loc)
 			implants -= implanted_object
 
 	owner.updatehealth()
@@ -982,7 +982,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		else
 			owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
 
-	if(!supplied_wound)
+	if(!istype(supplied_wound))
+		supplied_wound = null // in case something returns numbers or anything thats not datum.
 		for(var/datum/wound/wound in wounds)
 			if((wound.damage_type == CUT || wound.damage_type == PIERCE) && wound.damage >= W.w_class * 5)
 				supplied_wound = wound

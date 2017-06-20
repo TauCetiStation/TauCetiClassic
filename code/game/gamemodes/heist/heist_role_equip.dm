@@ -1,3 +1,4 @@
+/* disabled due to pirate gamemode switching back to vox, leaving this for reference.
 var/global/raider_tick = 1
 
 /mob/living/carbon/human/proc/equip_raider()
@@ -38,7 +39,7 @@ var/global/raider_tick = 1
 	equip_to_slot_or_del(W, slot_wear_id)
 
 	raider_tick = 2
-	return 1
+	return 1*/
 
 /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
 	name = "A28 assault rifle NL"

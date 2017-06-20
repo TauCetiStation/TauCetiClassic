@@ -1,4 +1,11 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// ===================================
+// GLOBAL MACRO HELPERS
+// ===================================
+
+// A = thing to stop | B = thing to hit. | finialize() calls A.throw_impact(B)
+#define STOP_THROWING(A, B) if(A.throwing) {var/datum/thrownthing/TT = SSthrowing.processing[A]; if(TT) {TT.finialize(null, B);}}
+
+// ===================================
 
 /*
  * A large number of misc global procs.
