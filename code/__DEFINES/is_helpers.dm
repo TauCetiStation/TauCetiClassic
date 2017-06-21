@@ -5,6 +5,13 @@
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
 // CARBON
+#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/queen))
+
+#define isaliendrone(A) (istype(A, /mob/living/carbon/alien/humanoid/drone))
+
+#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+
+#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
 
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
 

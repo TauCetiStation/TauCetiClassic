@@ -140,6 +140,25 @@
 	tracer_type = /obj/effect/projectile/laser/tracer
 	impact_type = /obj/effect/projectile/laser/impact
 
+/obj/item/projectile/beam/rails
+	name = "rails beam"
+	icon_state = "omnilaser"
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
+
+	damage = 50
+	stun = 5
+	weaken = 5
+	stutter = 5
+
+	flag = "bullet"
+	pass_flags = PASSTABLE
+	damage_type = BRUTE
+	sharp = TRUE
+
+	tracer_type = /obj/effect/projectile/rails/tracer
+	impact_type = /obj/effect/projectile/rails/impact
+
 /obj/item/projectile/beam/stun
 	name = "stun beam"
 	icon_state = "stun"

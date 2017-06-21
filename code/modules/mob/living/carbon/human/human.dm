@@ -106,11 +106,9 @@
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
-		if(mind)
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
+
+		CHANGELING_STATPANEL_STATS(null)
+
 		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
 			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
@@ -131,6 +129,7 @@
 				stat("Radiation Levels:","[radiation] rad")
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
+	CHANGELING_STATPANEL_POWERS(null)
 
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)
@@ -1086,44 +1085,6 @@
 	else
 		germ_level += n
 
-/mob/living/carbon/human/revive()
-	for (var/obj/item/organ/external/BP in bodyparts)
-		BP.status &= ~ORGAN_BROKEN
-		BP.status &= ~ORGAN_BLEEDING
-		BP.status &= ~ORGAN_SPLINTED
-		BP.status &= ~ORGAN_CUT_AWAY
-		BP.status &= ~ORGAN_ATTACHABLE
-		if (!BP.amputated)
-			BP.status &= ~ORGAN_DESTROYED
-			BP.destspawn = 0
-		BP.wounds.Cut()
-		BP.heal_damage(1000,1000,1,1)
-
-	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	BP.disfigured = 0
-
-	if(species && !species.flags[NO_BLOOD])
-		vessel.add_reagent("blood",560-vessel.total_volume)
-		fixblood()
-
-	for (var/obj/item/weapon/organ/head/H in world)
-		if(H.brainmob)
-			if(H.brainmob.real_name == src.real_name)
-				if(H.brainmob.mind)
-					H.brainmob.mind.transfer_to(src)
-					qdel(H)
-
-	for(var/obj/item/organ/internal/IO in organs)
-		IO.damage = 0
-
-	for (var/datum/disease/virus in viruses)
-		virus.cure()
-	for (var/ID in virus2)
-		var/datum/disease2/disease/V = virus2[ID]
-		V.cure(src)
-
-	..()
-
 /mob/living/carbon/human/proc/is_lung_ruptured()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 	return IO.is_bruised()
@@ -1402,71 +1363,114 @@
  		// Might need re-wording.
 		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [target_zone == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 
+/obj/screen/leap
+	name = "toggle leap"
+	icon = 'icons/mob/screen1_action.dmi'
+	icon_state = "action"
 
-//Putting a couple of procs here that I don't know where else to dump.
-//Mostly going to be used for Vox and Vox Armalis, but other human mobs might like them (for adminbuse).
-
-/mob/living/carbon/human/proc/leap()
-	set category = "IC"
-	set name = "Leap"
-	set desc = "Leap at a target and grab them aggressively."
-
-	if(last_special > world.time)
-		return
-
-	if(stat || paralysis || stunned || weakened || lying)
-		to_chat(src, "You cannot leap in your current state.")
-		return
-
-	var/list/choices = list()
-	for(var/mob/living/M in view(6,src))
-		if(!istype(M,/mob/living/silicon))
-			choices += M
-	choices -= src
-
-	var/mob/living/T = input(src,"Who do you wish to leap at?") in null|choices
-
-	if(!T || !src || src.stat) return
-
-	if(get_dist(get_turf(T), get_turf(src)) > 6) return
-
-	last_special = world.time + 100
-	status_flags |= LEAPING
-
-	src.visible_message("<span class='warning'><b>\The [src]</b> leaps at [T]!</span>")
-	src.throw_at(get_step(get_turf(T),get_turf(src)), 5, 1, src, spin = FALSE, callback = CALLBACK(src, .end_leaping, T))
-	playsound(src.loc, 'sound/voice/shriek1.ogg', 50, 1)
+	var/on = FALSE
+	var/time_used = 0
+	var/cooldown = 10 SECONDS
 
 
-/mob/living/carbon/human/proc/end_leaping(mob/living/T)
-	if(status_flags & LEAPING)
-		status_flags &= ~LEAPING
+/obj/screen/leap/New()
+	..()
+	overlays += image(icon, "leap")
+	update_icon()
 
-	if(!src.Adjacent(T))
-		to_chat(src, "<span class='warning'>You miss!</span>")
-		return
+/obj/screen/leap/update_icon()
+	icon_state = "[initial(icon_state)]_[on]"
 
-	T.Weaken(5)
+/obj/screen/leap/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.toggle_leap()
 
-	var/use_hand = "left"
-	if(l_hand)
-		if(r_hand)
-			to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
-			return
-		else
-			use_hand = "right"
+/mob/living/carbon/human/proc/toggle_leap(message = 1)
+	leap_icon.on = !leap_icon.on
+	leap_icon.update_icon()
+	if(message)
+		to_chat(src, "<span class='notice'>You will [leap_icon.on ? "now" : "no longer"] leap at enemies!</span>")
 
-	visible_message("<span class='warning'><b>\The [src]</b> seizes [T] aggressively!</span>")
-
-	var/obj/item/weapon/grab/G = new(src,T)
-	if(use_hand == "left")
-		l_hand = G
+/mob/living/carbon/human/ClickOn(atom/A, params)
+	if(leap_icon && leap_icon.on && A != src)
+		leap_at(A)
 	else
-		r_hand = G
+		..()
 
-	G.state = GRAB_AGGRESSIVE
-	G.icon_state = "grabbed1"
-	G.synch()
+#define MAX_LEAP_DIST 4
+
+/mob/living/carbon/human/proc/leap_at(atom/A)
+	if(leap_icon.time_used > world.time)
+		to_chat(src, "<span class='warning'>You are too fatigued to leap right now!</span>")
+		return
+
+	if(status_flags & LEAPING) // Leap while you leap, so you can leap while you leap
+		return
+
+	if(!has_gravity(src))
+		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
+		return
+
+	if(stat || stunned || lying)
+		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
+		return
+
+	leap_icon.time_used = world.time + leap_icon.cooldown
+	status_flags |= LEAPING
+	stop_pulling()
+
+	var/prev_intent = a_intent
+	a_intent_change("hurt")
+
+	if(species.name == VOX)
+		playsound(src, 'sound/voice/shriek1.ogg', 50, 1)
+
+	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
+
+/mob/living/carbon/human/proc/leap_end(prev_intent)
+	status_flags &= ~LEAPING
+	a_intent_change(prev_intent)
+
+/mob/living/carbon/human/throw_impact(atom/A)
+	if(!(status_flags & LEAPING))
+		return ..()
+
+	if(isliving(A))
+		var/mob/living/L = A
+		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
+		L.Weaken(5)
+		sleep(2) // Runtime prevention (infinite bump() calls on hulks)
+		step_towards(src, L)
+		toggle_leap(FALSE)
+
+		var/use_hand = "left"
+		if(l_hand)
+			if(r_hand)
+				to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
+				return
+			else
+				use_hand = "right"
+
+		visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
+
+		var/obj/item/weapon/grab/G = new(src, L)
+		if(use_hand == "left")
+			l_hand = G
+		else
+			r_hand = G
+
+		G.state = GRAB_AGGRESSIVE
+		G.icon_state = "grabbed1"
+		G.synch()
+
+	else if(A.density)
+		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")
+		weakened = 2
+
+	update_canmove()
+
+#undef MAX_LEAP_DIST
 
 /mob/living/carbon/human/proc/gut()
 	set category = "IC"

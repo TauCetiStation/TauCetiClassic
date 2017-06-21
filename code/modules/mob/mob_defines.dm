@@ -34,7 +34,7 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
-	var/obj/screen/leap_icon = null
+	var/obj/screen/leap/leap_icon = null
 	var/obj/screen/neurotoxin_icon = null
 	var/obj/screen/healthdoll = null
 

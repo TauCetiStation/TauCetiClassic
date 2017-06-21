@@ -479,7 +479,7 @@ datum/objective/steal
 	var/target_name
 
 	var/global/possible_items[] = list(
-		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/captain,
+		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/selfcharging/captain,
 		"a hand teleporter" = /obj/item/weapon/hand_tele,
 		"an RCD" = /obj/item/weapon/rcd,
 		"a jetpack" = /obj/item/weapon/tank/jetpack,
@@ -763,168 +763,163 @@ datum/objective/meme_attune
 
 //Vox heist objectives.
 
-datum/objective/heist
-	proc/choose_target()
-		return
+/datum/objective/heist/proc/choose_target()
+	return
 
-datum/objective/heist/kidnap
-	choose_target()
-		var/list/roles = list("Chief Engineer","Research Director","Roboticist","Chemist","Station Engineer")
-		var/list/possible_targets = list()
-		var/list/priority_targets = list()
+/datum/objective/heist/kidnap/choose_target()
+	var/list/roles = list("Chief Engineer","Research Director","Roboticist","Chemist","Station Engineer")
+	var/list/possible_targets = list()
+	var/list/priority_targets = list()
 
-		for(var/datum/mind/possible_target in ticker.minds)
-			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && (possible_target.assigned_role != "MODE"))
-				possible_targets += possible_target
-				for(var/role in roles)
-					if(possible_target.assigned_role == role)
-						priority_targets += possible_target
-						continue
+	for(var/datum/mind/possible_target in ticker.minds)
+		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && (possible_target.assigned_role != "MODE"))
 
-		if(priority_targets.len > 0)
-			target = pick(priority_targets)
-		else if(possible_targets.len > 0)
-			target = pick(possible_targets)
+			possible_targets += possible_target
+			for(var/role in roles)
+				if(possible_target.assigned_role == role)
+					priority_targets += possible_target
+					continue
 
-		if(target && target.current)
-			explanation_text = "You need a new recruit: [target.current.real_name], the [target.assigned_role]. Grab them and bring into the ship. They must be alive!"
-		else
-			explanation_text = "Free Objective"
-		return target
+	if(priority_targets.len > 0)
+		target = pick(priority_targets)
+	else if(possible_targets.len > 0)
+		target = pick(possible_targets)
 
-	check_completion()
-		if(target && target.current)
-			if (target.current.stat == DEAD)
-				return 0 // They're dead. Fail.
-			//if (!target.current.restrained())
-			//	return 0 // They're loose. Close but no cigar.
+	if(target && target.current)
+		explanation_text = "You need a new recruit: [target.current.real_name], the [target.assigned_role]. Grab them and bring into the ship. They must be alive!"
+	else
+		explanation_text = "Free Objective"
+	return target
 
-			var/area/shuttle/vox/station/A = locate()
-			for(var/mob/living/carbon/human/M in A)
-				if(target.current == M)
-					return 1 //They're restrained on the shuttle. Success.
-		else
-			return 0
+/datum/objective/heist/kidnap/check_completion()
+	if(target && target.current)
+		if (target.current.stat == DEAD)
+			return FALSE // They're dead. Fail.
+		//if (!target.current.restrained())
+		//	return 0 // They're loose. Close but no cigar.
+		if(get_area(target) == locate(/area/shuttle/vox/station))
+			return TRUE
+	else
+		return FALSE
 
-datum/objective/heist/loot
+/datum/objective/heist/loot/choose_target()
+	var/loot = "an object"
+	switch(rand(1, 8))
+		if(1)
+			target = /obj/structure/particle_accelerator
+			target_amount = 6
+			loot = "a complete particle accelerator"
+		if(2)
+			target = /obj/machinery/the_singularitygen
+			target_amount = 1
+			loot = "a Gravitational Singularity Generator"
+		if(3)
+			target = /obj/machinery/power/emitter
+			target_amount = 4
+			loot = "four emitters"
+		if(4)
+			target = /obj/machinery/nuclearbomb
+			target_amount = 1
+			loot = "a nuclear bomb"
+		if(5)
+			target = /obj/item/weapon/gun
+			target_amount = 6
+			loot = "six guns"
+		if(6)
+			target = /obj/item/weapon/gun/energy
+			target_amount = 4
+			loot = "four energy guns"
+		if(7)
+			target = /obj/item/weapon/gun/energy/laser
+			target_amount = 2
+			loot = "two laser guns"
+		if(8)
+			target = /obj/item/weapon/gun/energy/ionrifle
+			target_amount = 1
+			loot = "an ion gun"
 
-	choose_target()
-		var/loot = "an object"
-		switch(rand(1,8))
-			if(1)
-				target = /obj/structure/particle_accelerator
-				target_amount = 6
-				loot = "a complete particle accelerator"
-			if(2)
-				target = /obj/machinery/the_singularitygen
-				target_amount = 1
-				loot = "a Gravitational Singularity Generator"
-			if(3)
-				target = /obj/machinery/power/emitter
-				target_amount = 4
-				loot = "four emitters"
-			if(4)
-				target = /obj/machinery/nuclearbomb
-				target_amount = 1
-				loot = "a nuclear bomb"
-			if(5)
-				target = /obj/item/weapon/gun
-				target_amount = 6
-				loot = "six guns"
-			if(6)
-				target = /obj/item/weapon/gun/energy
-				target_amount = 4
-				loot = "four energy guns"
-			if(7)
-				target = /obj/item/weapon/gun/energy/laser
-				target_amount = 2
-				loot = "two laser guns"
-			if(8)
-				target = /obj/item/weapon/gun/energy/ionrifle
-				target_amount = 1
-				loot = "an ion gun"
+	explanation_text = "We are lacking in hardware. Steal [loot]."
 
-		explanation_text = "We are lacking in hardware. Steal [loot]."
+/datum/objective/heist/loot/check_completion()
+	var/total_amount = 0
 
-	check_completion()
+	for(var/obj/O in locate(/area/shuttle/vox/station))
+		if(istype(O,target)) total_amount++
+		for(var/obj/I in O.contents)
+			if(istype(I, target))
+				total_amount++
+		if(total_amount >= target_amount)
+			return TRUE
 
-		var/total_amount = 0
+	var/datum/game_mode/heist/H = ticker.mode
+	for(var/datum/mind/raider in H.raiders)
+		if(raider.current)
+			for(var/obj/O in raider.current.get_contents())
+				if(istype(O,target))
+					total_amount++
+				if(total_amount >= target_amount)
+					return TRUE
 
-		for(var/obj/O in locate(/area/shuttle/vox/station))
-			if(istype(O,target)) total_amount++
-			for(var/obj/I in O.contents)
-				if(istype(I,target)) total_amount++
-			if(total_amount >= target_amount) return 1
+	return FALSE
 
-		var/datum/game_mode/heist/H = ticker.mode
-		for(var/datum/mind/raider in H.raiders)
-			if(raider.current)
-				for(var/obj/O in raider.current.get_contents())
-					if(istype(O,target)) total_amount++
-					if(total_amount >= target_amount) return 1
+/datum/objective/heist/salvage/choose_target()
+	switch(rand(1,4))
+		if(1)
+			target = "metal"
+			target_amount = 300
+		if(2)
+			target = "glass"
+			target_amount = 200
+		if(3)
+			target = "plasteel"
+			target_amount = 100
+		if(4)
+			target = "phoron"
+			target_amount = 100
+		if(5)
+			target = "silver"
+			target_amount = 50
+		if(6)
+			target = "gold"
+			target_amount = 20
+		if(7)
+			target = "uranium"
+			target_amount = 20
+		if(8)
+			target = "diamond"
+			target_amount = 1
 
-		return 0
+	explanation_text = "Ransack the station and escape with [target_amount] [target]."
 
-datum/objective/heist/salvage
+/datum/objective/heist/salvage/check_completion()
+	var/total_amount = 0
 
-	choose_target()
-		switch(rand(1,4))
-			if(1)
-				target = "metal"
-				target_amount = 300
-			if(2)
-				target = "glass"
-				target_amount = 200
-			if(3)
-				target = "plasteel"
-				target_amount = 100
-			if(4)
-				target = "phoron"
-				target_amount = 100
-			//if(5)
-			//	target = "silver"
-			//	target_amount = 50
-			//if(6)
-			//	target = "gold"
-			//	target_amount = 20
-			//if(7)
-			//	target = "uranium"
-			//	target_amount = 20
-			//if(8)
-			//	target = "diamond"
-			//	target_amount = 20
+	for(var/obj/item/O in locate(/area/shuttle/vox/station))
 
-		explanation_text = "Ransack the station and escape with [target_amount] [target]."
-
-	check_completion()
-
-		var/total_amount = 0
-
-		for(var/obj/item/O in locate(/area/shuttle/vox/station))
-
-			var/obj/item/stack/sheet/S
-			if(istype(O,/obj/item/stack/sheet))
-				if(O.name == target)
-					S = O
+		var/obj/item/stack/sheet/S
+		if(istype(O, /obj/item/stack/sheet))
+			if(O.name == target)
+				S = O
+				total_amount += S.amount
+		for(var/obj/I in O.contents)
+			if(istype(I, /obj/item/stack/sheet))
+				if(I.name == target)
+					S = I
 					total_amount += S.amount
-			for(var/obj/I in O.contents)
-				if(istype(I,/obj/item/stack/sheet))
-					if(I.name == target)
-						S = I
+
+	var/datum/game_mode/heist/H = ticker.mode
+	for(var/datum/mind/raider in H.raiders)
+		if(raider.current)
+			for(var/obj/item/O in raider.current.get_contents())
+				if(istype(O,/obj/item/stack/sheet))
+					if(O.name == target)
+						var/obj/item/stack/sheet/S = O
 						total_amount += S.amount
 
-		var/datum/game_mode/heist/H = ticker.mode
-		for(var/datum/mind/raider in H.raiders)
-			if(raider.current)
-				for(var/obj/item/O in raider.current.get_contents())
-					if(istype(O,/obj/item/stack/sheet))
-						if(O.name == target)
-							var/obj/item/stack/sheet/S = O
-							total_amount += S.amount
-
-		if(total_amount >= target_amount) return 1
-		return 0
-
+	if(total_amount >= target_amount)
+		return TRUE
+	return FALSE
+/*
 var/heist_rob_total = 0
 /proc/heist_recursive_price_check(atom/movable/AM,loop=0)
 	loop++
@@ -964,22 +959,25 @@ var/heist_rob_total = 0
 		heist_recursive_price_check(AM)
 
 	if(heist_rob_total >= target_amount) return 1
-	return 0
+	return 0*/
 
-datum/objective/heist/inviolate_crew
+/datum/objective/heist/inviolate_crew
 	explanation_text = "Do not leave any Vox behind, alive or dead."
 
-	check_completion()
-		var/datum/game_mode/heist/H = ticker.mode
-		if(H.is_raider_crew_safe()) return 1
-		return 0
+/datum/objective/heist/inviolate_crew/check_completion()
+	var/datum/game_mode/heist/H = ticker.mode
+	if(H.is_raider_crew_safe())
+		return TRUE
+	return FALSE
 
 #define MAX_VOX_KILLS 10 //Number of kills during the round before the Inviolate is broken.
 						 //Would be nice to use vox-specific kills but is currently not feasible.
 var/global/vox_kills = 0 //Used to check the Inviolate.
 
-datum/objective/heist/inviolate_death
+/datum/objective/heist/inviolate_death
 	explanation_text = "Follow the Inviolate. Minimise death and loss of resources."
-	check_completion()
-		if(vox_kills > MAX_VOX_KILLS) return 0
-		return 1
+
+/datum/objective/heist/inviolate_death/check_completion()
+	if(vox_kills > MAX_VOX_KILLS)
+		return FALSE
+	return TRUE

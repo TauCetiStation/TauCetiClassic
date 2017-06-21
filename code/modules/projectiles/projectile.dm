@@ -40,6 +40,7 @@
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
 	var/projectile_type = "/obj/item/projectile"
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
+	var/paused = FALSE //for suspending the projectile midair
 		//Effects
 	var/stun = 0
 	var/weaken = 0
@@ -241,6 +242,9 @@
 	setup_trajectory()
 
 	spawn while(src && src.loc)
+		if(paused)
+			sleep(1)
+			continue
 		if(kill_count-- < 1)
 			on_impact(src.loc) //for any final impact behaviours
 			qdel(src)
@@ -250,7 +254,6 @@
 		if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 			qdel(src)
 			return
-
 		trajectory.increment()	// increment the current location
 		location = trajectory.return_location(location)		// update the locally stored location data
 
@@ -325,6 +328,18 @@
 			P.pixel_x = location.pixel_x
 			P.pixel_y = location.pixel_y
 			P.activate()
+
+/obj/item/projectile/proc/Fire(atom/A, mob/living/user)
+	var/turf/T = get_turf(user)
+	var/turf/U = get_turf(A)
+	firer = user
+	def_zone = check_zone(user.zone_sel.selecting)
+	starting = T
+	original = A
+	current = T
+	yo = U.y - T.y
+	xo = U.x - T.x
+	INVOKE_ASYNC(src, .process)
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!

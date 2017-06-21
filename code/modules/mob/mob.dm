@@ -638,17 +638,18 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/Stat()
 	..()
+
 	if(statpanel("Status"))
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client && client.holder)
-			if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
-				if(ticker.mode:malf_mode_declared)
-					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/APC_MIN_TO_MALDF_DECLARE), 0)]")
-			if(SSshuttle)
-				if(SSshuttle.online && SSshuttle.location < 2)
-					var/timeleft = SSshuttle.timeleft()
-					if(timeleft)
-						stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+			if(ticker.mode && ticker.mode.config_tag == "malfunction")
+				var/datum/game_mode/malfunction/GM = ticker.mode
+				if(GM.malf_mode_declared)
+					stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALDF_DECLARE), 0)]")
+			if(SSshuttle.online && SSshuttle.location < 2)
+				var/timeleft = SSshuttle.timeleft()
+				if(timeleft)
+					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 	if(client && client.holder)
 		if((client.holder.rights & R_ADMIN))
@@ -687,11 +688,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					continue
 				statpanel(listed_turf.name, null, A)
 
-	if(mind)
-		if(mind.changeling)
-			add_stings_to_statpanel(mind.changeling.purchasedpowers)
-
-	if(spell_list && spell_list.len)
+	if(spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
 			switch(S.charge_type)
 				if("recharge")
@@ -700,13 +697,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
-
-/mob/proc/add_stings_to_statpanel(list/stings)
-	for(var/obj/effect/proc_holder/changeling/S in stings)
-		if(S.chemical_cost >=0 && S.can_be_used_by(src))
-			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
-
-
 
 // facing verbs
 /mob/proc/canface()
@@ -725,14 +715,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 
-	lying = (ko || crawling || resting) && !captured && !buckled
-	canmove = !(ko || resting || stunned || captured)
+	lying = (ko || crawling || resting) && !captured && !buckled && !pinned.len
+	canmove = !(ko || resting || stunned || captured || pinned.len)
+	anchored = captured || pinned.len
 
 	if(buckled)
 		if(buckled.buckle_lying != -1)
 			lying = buckled.buckle_lying
 		canmove = canmove && buckled.buckle_movable
-		anchored = buckled.buckle_movable
+		anchored = anchored || buckled.buckle_movable
 
 		if(istype(buckled, /obj/vehicle))
 			var/obj/vehicle/V = buckled
@@ -746,7 +737,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if(C.flipped)
 					lying = 1
 
-	anchored = anchored || captured
 	density = !lying
 
 	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isalien(src))
@@ -805,21 +795,51 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return 0
 
 // ========== STUN ==========
-/mob/proc/Stun(amount)
-	if(status_flags & CANSTUN)
+/mob/proc/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
+	if(!isnull(lock))
+		if(lock)
+			status_flags |= LOCKSTUN
+		else
+			status_flags &= ~LOCKSTUN
+	else if(status_flags & LOCKSTUN)
+		return
+
+	if(status_flags & CANSTUN || ignore_canstun)
 		stunned = max(max(stunned, amount), 0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+		if(updating)
+			update_canmove()
 	else
 		stunned = 0
 
-/mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(status_flags & CANSTUN)
+/mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0, lock = null) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
+	if(!isnull(lock))
+		if(lock)
+			status_flags |= LOCKSTUN
+		else
+			status_flags &= ~LOCKSTUN
+	else if(status_flags & LOCKSTUN)
+		return
+
+	if(status_flags & CANSTUN || ignore_canstun)
 		stunned = max(amount, 0)
+		if(updating)
+			update_canmove()
 	else
 		stunned = 0
 
-/mob/proc/AdjustStunned(amount)
-	if(status_flags & CANSTUN)
+/mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0, lock = null)
+	if(!isnull(lock))
+		if(lock)
+			status_flags |= LOCKSTUN
+		else
+			status_flags &= ~LOCKSTUN
+	else if(status_flags & LOCKSTUN)
+		return
+
+	if(status_flags & CANSTUN || ignore_canstun)
 		stunned = max(stunned + amount, 0)
+		if(updating)
+			update_canmove()
 	else
 		stunned = 0
 

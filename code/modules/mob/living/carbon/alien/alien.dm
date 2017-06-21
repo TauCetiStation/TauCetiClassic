@@ -66,10 +66,17 @@
 		if(health >= maxHealth)
 			adjustToxLoss(plasma_rate)
 		else
-			adjustBruteLoss(-heal_rate)
-			adjustFireLoss(-heal_rate)
-			adjustOxyLoss(-heal_rate)
-			adjustCloneLoss(-heal_rate)
+			if(storedPlasma >= max_plasma)
+				adjustBruteLoss(-heal_rate*2)
+				adjustFireLoss(-heal_rate*2)
+				adjustOxyLoss(-heal_rate*2)
+				adjustCloneLoss(-heal_rate*2)
+			else
+				adjustBruteLoss(-heal_rate)
+				adjustFireLoss(-heal_rate)
+				adjustOxyLoss(-heal_rate)
+				adjustCloneLoss(-heal_rate)
+				adjustToxLoss(plasma_rate/2)
 
 	if(!environment)
 		return
@@ -150,27 +157,33 @@
 	..()
 
 	if(statpanel("Status"))
-		var/baby = 0
-		var/drone = 0
-		var/sentinel = 0
-		var/hunter = 0
+		if(isalienqueen(src))
+			var/hugger = 0
+			var/larva = 0
+			var/drone = 0
+			var/sentinel = 0
+			var/hunter = 0
 
-		if(istype(src, /mob/living/carbon/alien/humanoid/queen))
 			for(var/mob/living/carbon/alien/A in living_mob_list)
-				if(istype(A, /mob/living/carbon/alien/humanoid/queen))
+				if(A.stat == DEAD)
 					continue
 				if(!A.key && A.brain_op_stage != 4)
 					continue
-				if(istype(A, /mob/living/carbon/alien/facehugger) || istype(A, /mob/living/carbon/alien/larva))
-					baby++
-				if(istype(A, /mob/living/carbon/alien/humanoid/drone))
+
+				if(isfacehugger(A))
+					hugger++
+				else if(islarva(A))
+					larva++
+				else if(isaliendrone(A))
 					drone++
-				if(istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+				else if(isaliensentinel(A))
 					sentinel++
-				if(istype(A, /mob/living/carbon/alien/humanoid/hunter))
+				else if(isalienhunter(A))
 					hunter++
+
 			stat(null, "Hive Status:")
-			stat(null, "Babies: [baby]")
+			stat(null, "Huggers: [hugger]")
+			stat(null, "Larvas: [larva]")
 			stat(null, "Drones: [drone]")
 			stat(null, "Sentinels: [sentinel]")
 			stat(null, "Hunters: [hunter]")
