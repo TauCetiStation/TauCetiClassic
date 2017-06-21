@@ -6,12 +6,22 @@
 	item_state = "utility"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
+	var/use_item_overlays = 0
+
+/obj/item/weapon/storage/belt/update_icon()
+	if(use_item_overlays)
+		overlays.Cut()
+		for(var/obj/item/I in contents)
+			overlays += "[I.name]"
+
+	..()
 
 /obj/item/weapon/storage/belt/utility
 	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Can hold various tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	use_item_overlays = 1
 	can_hold = list(
 		"/obj/item/weapon/crowbar",
 		"/obj/item/weapon/screwdriver",
@@ -34,6 +44,7 @@
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/weapon/cable_coil(src, 30, pick(COLOR_RED, COLOR_YELLOW, COLOR_ORANGE))
+	update_icon()
 
 
 /obj/item/weapon/storage/belt/utility/atmostech/New()
