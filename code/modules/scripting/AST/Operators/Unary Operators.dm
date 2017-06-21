@@ -15,7 +15,7 @@
 	Example:
 	!true = false and !false = true
 */
-//
+// 
 	LogicalNot
 		name="logical not"
 
@@ -26,7 +26,7 @@
 	Example:
 	~10 (decimal 2) = 01 (decimal 1).
 */
-//
+// 
 	BitwiseNot
 		name="bitwise not"
 
@@ -34,7 +34,7 @@
 	Class: Minus
 	Returns -x.
 */
-//
+// 
 	Minus
 		name="minus"
 
@@ -42,7 +42,7 @@
 	Class: group
 	A special unary operator representing a value in parentheses.
 */
-//
+// 
 	group
 		precedence=OOP_GROUP
 

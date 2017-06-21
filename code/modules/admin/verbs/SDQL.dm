@@ -1,11 +1,11 @@
 
-//Structured Datum Query Language. Basically SQL meets BYOND objects.
+// Structured Datum Query Language. Basically SQL meets BYOND objects.
 
-//Note: For use in BS12, need text_starts_with proc, and to modify the action on select to use BS12's object edit command(s).
+// Note: For use in BS12, need text_starts_with proc, and to modify the action on select to use BS12's object edit command(s).
 
 /client/proc/SDQL_query(query_text as message)
 	set category = "Admin"
-	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
+	if(!check_rights(R_DEBUG))  // Shouldn't happen... but just to be safe.
 		message_admins("\red ERROR: Non-admin [usr.key] attempted to execute a SDQL query!")
 		log_admin("Non-admin [usr.key] attempted to execute a SDQL query!")
 
@@ -323,7 +323,7 @@
 				else
 					text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t]<br>"
 
-				//text += "[t]<br>"
+				// text += "[t]<br>"
 			usr << browse(text, "window=sdql_result")
 
 

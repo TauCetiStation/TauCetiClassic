@@ -83,7 +83,7 @@ Thus, the two variables affect pump operation are set in New():
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 
 	signal.data = list(
@@ -130,7 +130,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	if("status" in signal.data)
 		addtimer(CALLBACK(src, .proc/broadcast_status), 2)
-		return //do not update_icon
+		return // do not update_icon
 
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 	update_icon()

@@ -1,4 +1,4 @@
-//random plants
+// random plants
 /obj/structure/flora/plant
 	name = "marvelous potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
@@ -8,7 +8,7 @@
 	..()
 	icon_state = "plant-[rand(1, 26)]"
 
-//trees
+// trees
 /obj/structure/flora/tree
 	name = "tree"
 	anchored = 1
@@ -43,7 +43,7 @@
 	icon_state = "tree_[rand(1, 6)]"
 
 
-//grass
+// grass
 /obj/structure/flora/grass
 	name = "grass"
 	icon = 'icons/obj/flora/snowflora.dmi'
@@ -72,7 +72,7 @@
 	icon_state = "snowgrassall[rand(1, 3)]"
 
 
-//bushes
+// bushes
 /obj/structure/flora/bush
 	name = "bush"
 	icon = 'icons/obj/flora/snowflora.dmi'
@@ -88,7 +88,7 @@
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-26"
 
-//newbushes
+// newbushes
 
 /obj/structure/flora/ausbushes
 	name = "bush"

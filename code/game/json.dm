@@ -1,19 +1,19 @@
 
 var/jsonpath = "/home/bay12/public_html"
 var/dmepath = "/home/bay12/git/taucetistation.dme"
-var/makejson = 1 //temp
+var/makejson = 1 // temp
 proc/makejson()
 
 	if(!makejson)
 		return
 	fdel("[jsonpath]/info.json")
-		//usr << "Error cant delete json"
-	//else
-		//usr << "Deleted json in public html"
+		// usr << "Error cant delete json"
+	// else
+		// usr << "Deleted json in public html"
 	fdel("info.json")
-		//usr << "error cant delete local json"
-	//else
-		//usr << "Deleted local json"
+		// usr << "error cant delete local json"
+	// else
+		// usr << "Deleted local json"
 	var/F = file("info.json")
 	if(!isfile(F))
 		return

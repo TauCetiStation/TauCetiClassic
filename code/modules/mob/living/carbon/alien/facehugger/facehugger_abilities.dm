@@ -1,6 +1,6 @@
 #define UPGRADE_TAIL_TIMER	100
 
-//Grab levels
+// Grab levels
 /*
 #define GRAB_PASSIVE	1
 #define GRAB_AGGRESSIVE	2
@@ -168,7 +168,7 @@ This is chestburster mechanic for damaging
 	if(ishuman(affecting))
 		var/mob/living/carbon/human/H = affecting
 		var/obj/item/organ/external/chest/BP = H.bodyparts_by_name[BP_CHEST]
-		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but bodyparts can't be broken, when human is dead.
+		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) // I don't know why, but bodyparts can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
 			chestburster << sound('sound/voice/hiss5.ogg',0,0,0,100)
@@ -355,13 +355,13 @@ This is facehugger Attach procs
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
-	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
+	w_class = 1 // note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
 	body_parts_covered = FACE|EYES
 	throw_range = 5
-	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
+	var/stat = CONSCIOUS // UNCONSCIOUS is the idle state in this case
 	var/sterile = 0
-	var/real = 1 //0 for the toy, 1 for real
+	var/real = 1 // 0 for the toy, 1 for real
 	var/strength = 5
 	var/current_hugger
 
@@ -399,7 +399,7 @@ This is facehugger Attach procs
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
 	..()
-	if(!real)//So that giant red text about probisci doesn't show up.
+	if(!real)// So that giant red text about probisci doesn't show up.
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
@@ -449,7 +449,7 @@ This is facehugger Attach procs
 		C.regenerate_icons()
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target, mob/living/FH)
-	if(!target || target.stat == DEAD) //was taken off or something
+	if(!target || target.stat == DEAD) // was taken off or something
 		return
 
 	var/mob/living/carbon/ian/IAN = target
@@ -640,7 +640,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(state == GRAB_PASSIVE)
 		assailant.visible_message("<span class='warning'>[assailant] leaps at [affecting] face!</span>")
 		var/mob/living/carbon/alien/facehugger/FH = assailant
-		if(isIAN(affecting)) //CP, we need helpers! I repeat, we need helpers! CP? CP!!
+		if(isIAN(affecting)) // CP, we need helpers! I repeat, we need helpers! CP? CP!!
 			var/mob/living/carbon/ian/IAN = affecting
 			if(!istype(IAN.head, /obj/item/clothing/mask/facehugger))
 				var/obj/item/clothing/mask/victim_mask = IAN.head
@@ -681,7 +681,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 				FH_mask.canremove = 0
 			assailant.visible_message("<span class='danger'>[assailant] has tightened \his tail on [affecting]'s neck!</span>")
 			assailant.next_move = world.time + 10
-			//affecting.losebreath += 1
+			// affecting.losebreath += 1
 		else
 			assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
 			hud.icon_state = "grab/neck"
@@ -703,7 +703,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 				FH_mask.canremove = 1
 				FH_mask.Impregnate(affecting, assailant)
 
-//This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
+// This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/fh_grab/proc/confirm()
 	if(!assailant || !affecting)
 		qdel(src)

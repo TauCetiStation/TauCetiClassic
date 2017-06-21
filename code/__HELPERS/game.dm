@@ -1,4 +1,4 @@
-//supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
+// supposedly the fastest way to do this according to https:// gist.github.com/Giacom/be635398926bb463b42a
 #define RANGE_TURFS(RADIUS, CENTER) \
   block( \
     locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
@@ -35,7 +35,7 @@
 		var/area/res = loc.loc
 		. = res
 
-/proc/get_area_name(N) //get area by its name
+/proc/get_area_name(N) // get area by its name
 	for(var/area/A in all_areas)
 		if(A.name == N)
 			return A
@@ -45,7 +45,7 @@
 	if(get_dist(source, user) <= 1)
 		return 1
 
-	return 0 //not in range and not telekinetic
+	return 0 // not in range and not telekinetic
 
 // Like view but bypasses luminosity check
 
@@ -86,7 +86,7 @@
 		if(dx*dx + dy*dy <= rsq)
 			turfs += T
 
-	//turfs += centerturf
+	// turfs += centerturf
 	return turfs
 
 /proc/circleview(center=usr,radius=3)
@@ -101,7 +101,7 @@
 		if(dx*dx + dy*dy <= rsq)
 			atoms += A
 
-	//turfs += centerturf
+	// turfs += centerturf
 	return atoms
 
 /proc/get_dist_euclidian(atom/Loc1,atom/Loc2)
@@ -125,7 +125,7 @@
 			turfs += T
 	return turfs
 
-/proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
+/proc/circleviewturfs(center=usr,radius=3)		// Is there even a diffrence between this proc and circlerangeturfs()?
 
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
@@ -140,7 +140,7 @@
 
 
 
-//var/debug_mob = 0
+// var/debug_mob = 0
 
 // Will recursively loop through an atom's contents and check for mobs, then it will loop through every atom in that atom's contents.
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
@@ -148,7 +148,7 @@
 
 /proc/recursive_mob_check(atom/O,  list/L = list(), recursion_limit = 3, client_check = 1, sight_check = 1, include_radio = 1)
 
-	//debug_mob += O.contents.len
+	// debug_mob += O.contents.len
 	if(!recursion_limit)
 		return L
 	for(var/atom/A in O.contents)
@@ -161,7 +161,7 @@
 			if(sight_check && !isInSight(A, O))
 				continue
 			L |= M
-			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+			// world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 
 		else if(include_radio && istype(A, /obj/item/device/radio))
 			if(sight_check && !isInSight(A, O))
@@ -191,7 +191,7 @@
 			var/mob/M = A
 			if(M.client)
 				hear += M
-			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+			// world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 		else if(istype(A, /obj/item/device/radio))
 			hear += A
 
@@ -218,22 +218,22 @@
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
 
-	//set background = 1
+	// set background = 1
 
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
 	for(var/obj/item/device/radio/R in radios)
 		if(R)
-			//Cyborg checks. Receiving message uses a bit of cyborg's charge.
+			// Cyborg checks. Receiving message uses a bit of cyborg's charge.
 			var/obj/item/device/radio/borg/BR = R
 			if(istype(BR) && BR.myborg)
 				var/mob/living/silicon/robot/borg = BR.myborg
 				var/datum/robot_component/CO = borg.get_component("radio")
 				if(!CO)
-					continue //No radio component (Shouldn't happen)
+					continue // No radio component (Shouldn't happen)
 				if(!borg.is_component_functioning("radio") || !borg.cell_use_power(CO.active_usage))
-					continue //No power.
+					continue // No power.
 
 			var/turf/speaker = get_turf(R)
 			if(speaker)
@@ -281,7 +281,7 @@ proc
 		var/turf/T
 		if(X1==X2)
 			if(Y1==Y2)
-				return 1 //Light cannot be blocked on same tile
+				return 1 // Light cannot be blocked on same tile
 			else
 				var/s = SIGN(Y2-Y1)
 				Y1+=s
@@ -292,16 +292,16 @@ proc
 					Y1+=s
 		else
 			var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
+			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) // In tiles
 			var/signX = SIGN(X2-X1)
 			var/signY = SIGN(Y2-Y1)
 			if(X1<X2)
 				b+=m
 			while(X1!=X2 || Y1!=Y2)
 				if(round(m*X1+b-Y1))
-					Y1+=signY //Line exits tile vertically
+					Y1+=signY // Line exits tile vertically
 				else
-					X1+=signX //Line exits tile horizontally
+					X1+=signX // Line exits tile horizontally
 				T=locate(X1,Y1,Z)
 				if(T.opacity)
 					return 0
@@ -332,11 +332,11 @@ proc/isInSight(atom/A, atom/B)
 		mobs_found += M
 	return mobs_found
 
-/proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
-	//returns only NORTH, SOUTH, EAST, or WEST
+/proc/get_cardinal_step_away(atom/start, atom/finish) // returns the position of a step from start away from finish, in one of the cardinal directions
+	// returns only NORTH, SOUTH, EAST, or WEST
 	var/dx = finish.x - start.x
 	var/dy = finish.y - start.y
-	if(abs(dy) > abs (dx)) //slope is above 1:1 (move horizontally in a tie)
+	if(abs(dy) > abs (dx)) // slope is above 1:1 (move horizontally in a tie)
 		if(dy > 0)
 			return get_step(start, SOUTH)
 		else
@@ -363,7 +363,7 @@ proc/isInSight(atom/A, atom/B)
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
 /proc/get_active_candidates(buffer = 1)
 
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
+	var/list/candidates = list() // List of candidate KEYS to assume control of the new larva ~Carn
 	var/i = 0
 	while(candidates.len <= 0 && i < 5)
 		for(var/mob/dead/observer/G in player_list)
@@ -377,7 +377,7 @@ proc/isInSight(atom/A, atom/B)
 
 /proc/get_alien_candidates()
 
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
+	var/list/candidates = list() // List of candidate KEYS to assume control of the new larva ~Carn
 	var/i = 0
 	while(candidates.len <= 0 && i < 5)
 		for(var/mob/dead/observer/G in player_list)
@@ -388,7 +388,7 @@ proc/isInSight(atom/A, atom/B)
 		i++
 	return candidates
 
-/proc/get_candidates(be_role_type, afk_bracket=3000) //Get candidates for Blob
+/proc/get_candidates(be_role_type, afk_bracket=3000) // Get candidates for Blob
 	var/list/candidates = list()
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
@@ -446,7 +446,7 @@ proc/isInSight(atom/A, atom/B)
 
 	var/power_x = power * cos(angle)
 	var/power_y = power * sin(angle)
-	var/time = 2* power_y / 10 //10 = g
+	var/time = 2* power_y / 10 // 10 = g
 
 	var/distance = time * power_x
 
@@ -493,14 +493,14 @@ proc/isInSight(atom/A, atom/B)
 	return "#" + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand)
 
 /proc/noob_notify(mob/M)
-	//todo: check db before
+	// todo: check db before
 	if(!M.client)
 		return
 	if(M.client.holder)
 		return
 	if(M.client.player_age == 0)
 		var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
-		var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
+		var/player_byond_profile = "http:// www.byond.com/members/[M.ckey]"
 
 		var/msg = {"New player notify
 					Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
@@ -508,7 +508,7 @@ proc/isInSight(atom/A, atom/B)
 
 		message_admins(msg)
 
-//============VG PORTS============
+// ============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)
 	var/list/processed_list = new/list()
@@ -535,7 +535,7 @@ proc/isInSight(atom/A, atom/B)
 	else
 		return new/list()
 
-//============TG PORTS============
+// ============TG PORTS============
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
@@ -544,7 +544,7 @@ proc/isInSight(atom/A, atom/B)
 			C.images -= I
 
 
-//============Bay12 atmos=============
+// ============Bay12 atmos=============
 /proc/convert_k2c(temp)
 	return ((temp - T0C))
 

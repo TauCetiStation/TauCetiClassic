@@ -52,7 +52,7 @@
 		to_chat(usr, "\blue The board is full! Clean it to write again.")
 		return
 
-	//part wrom paper/write
+	// part wrom paper/write
 	var/t =  input("What do you want to write here? 20 lines or 2000 symbols max.", "Write", null, null) as message
 
 	if(length(t) > 2048)
@@ -69,7 +69,7 @@
 			message_admins("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			return
 
-	//t = replacetext(t, "\n", "<BR>")
+	// t = replacetext(t, "\n", "<BR>")
 	t = parsepencode(t) // Encode everything from pencode to html
 
 	if(!t)

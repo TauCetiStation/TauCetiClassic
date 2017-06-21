@@ -1,4 +1,4 @@
-//update_state
+// update_state
 #define UPSTATE_CELL_IN 1
 #define UPSTATE_OPENED1 2
 #define UPSTATE_OPENED2 4
@@ -8,7 +8,7 @@
 #define UPSTATE_WIREEXP 64
 #define UPSTATE_ALLGOOD 128
 
-//update_overlay
+// update_overlay
 #define APC_UPOVERLAY_CHARGEING0 1
 #define APC_UPOVERLAY_CHARGEING1 2
 #define APC_UPOVERLAY_CHARGEING2 4
@@ -35,7 +35,7 @@
 // three different channels (lighting/equipment/environ) - may each be set to on, off, or auto
 
 
-//NOTE: STUFF STOLEN FROM AIRLOCK.DM thx
+// NOTE: STUFF STOLEN FROM AIRLOCK.DM thx
 
 
 /obj/machinery/power/apc
@@ -51,7 +51,7 @@
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = 5000				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
-	var/opened = 0 //0=closed, 1=opened, 2=cover removed
+	var/opened = 0 // 0=closed, 1=opened, 2=cover removed
 	var/shorted = 0
 	var/lighting = 3
 	var/equipment = 3
@@ -71,14 +71,14 @@
 	var/lastused_total = 0
 	var/main_status = 0
 	var/wiresexposed = 0
-	powernet = 0		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
-	var/malfhack = 0 //New var for my changes to AI malf. --NeoFite
-	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
+	powernet = 0		// set so that APCs aren't found as powernet nodes // Hackish, Horrible, was like this before I changed it :(
+	var/malfhack = 0 // New var for my changes to AI malf. --NeoFite
+	var/mob/living/silicon/ai/malfai = null // See above --NeoFite
 	var/debug= 0
 	var/autoflag= 0		// 0 = off, 1= eqp and lights off, 2 = eqp off, 3 = all on.
 //	luminosity = 1
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
-	var/overload = 1 //used for the Blackout malf module
+	var/overload = 1 // used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
 	var/longtermpower = 10
@@ -127,7 +127,7 @@
 /obj/machinery/power/apc/Destroy()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (src.z == ZLEVEL_STATION) // if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--
 	area.apc = null
 	area.power_light = 0
@@ -155,7 +155,7 @@
 	terminal.master = src
 
 /obj/machinery/power/apc/proc/init()
-	has_electronics = 2 //installed and secured
+	has_electronics = 2 // installed and secured
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
 		src.cell = new/obj/item/weapon/stock_parts/cell(src)
@@ -165,7 +165,7 @@
 	var/area/A = src.loc.loc
 
 
-	//if area isn't specified use current
+	// if area isn't specified use current
 	if(isarea(A) && src.areastring == null)
 		src.area = A
 		name = "\improper [area.name] APC"
@@ -244,7 +244,7 @@
 
 
 
-	var/update = check_updates() 		//returns 0 if no need to update icons.
+	var/update = check_updates() 		// returns 0 if no need to update icons.
 						// 1 if we need to update the icon_state
 						// 2 if we need to update the overlays
 	if(!update)
@@ -257,7 +257,7 @@
 			var/basestate = "apc[ cell ? "2" : "1" ]"
 			if(update_state & UPSTATE_OPENED1)
 				if(update_state & (UPSTATE_MAINT|UPSTATE_BROKE))
-					icon_state = "apcmaint" //disabled APC cannot hold cell
+					icon_state = "apcmaint" // disabled APC cannot hold cell
 				else
 					icon_state = basestate
 			else if(update_state & UPSTATE_OPENED2)
@@ -371,7 +371,7 @@
 		updating_icon = 0
 
 
-//attack with an item - open/close cover, insert cell, or (un)lock interface
+// attack with an item - open/close cover, insert cell, or (un)lock interface
 
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
 
@@ -384,7 +384,7 @@
 				to_chat(user, "\red Disconnect wires first.")
 				return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			to_chat(user, "You are trying to remove the power control board...")//lpeters - fixed grammar issues
+			to_chat(user, "You are trying to remove the power control board...")// lpeters - fixed grammar issues
 			if(do_after(user, 50, target = src))
 				has_electronics = 0
 				if ((stat & BROKEN) || malfhack)
@@ -392,13 +392,13 @@
 						"\red [user.name] has broken the power control board inside [src.name]!",\
 						"You broke the charred power control board and remove the remains.",
 						"You hear a crack!")
-					//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
+					// ticker.mode:apcs-- // XSI said no and I agreed. -rastaf0
 				else
 					user.visible_message(\
 						"\red [user.name] has removed the power control board from [src.name]!",\
 						"You remove the power control board.")
 					new /obj/item/weapon/module/power_control(loc)
-		else if (opened!=2) //cover isn't removed
+		else if (opened!=2) // cover isn't removed
 			opened = 0
 			update_icon()
 	else if (istype(W, /obj/item/weapon/crowbar) && !((stat & BROKEN) || malfhack) )
@@ -427,7 +427,7 @@
 	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
 		if(opened)
 			if (cell)
-				to_chat(user, "\red Close the APC first.")//Less hints more mystery!
+				to_chat(user, "\red Close the APC first.")// Less hints more mystery!
 				return
 			else
 				if (has_electronics==1 && terminal)
@@ -599,7 +599,7 @@
 		return
 	src.add_fingerprint(user)
 
-	//Synthetic human mob goes here.
+	// Synthetic human mob goes here.
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
@@ -638,7 +638,7 @@
 
 			src.cell = null
 			user.visible_message("\red [user.name] removes the power cell from [src.name]!", "You remove the power cell.")
-			//user << "You remove the power cell."
+			// user << "You remove the power cell."
 			charging = 0
 			src.update_icon()
 		return
@@ -774,7 +774,7 @@
 //			world << "[area.power_equip]"
 	area.power_change()
 
-/obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
+/obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) // used by attack_hand() and Topic()
 	if (IsAdminGhost(user))
 		return 1
 	if(!user.client)
@@ -822,7 +822,7 @@
 		operating = !operating
 		if(malfai)
 			if (ticker.mode.config_tag == "malfunction")
-				if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
+				if (src.z == ZLEVEL_STATION) // if (is_type_in_list(get_area(src), the_station_areas))
 					operating ? ticker.mode:apcs++ : ticker.mode:apcs--
 
 		src.update()
@@ -879,7 +879,7 @@
 					malfai.malfhack = null
 					malfai.malfhacking = 0
 					if (ticker.mode.config_tag == "malfunction")
-						if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
+						if (src.z == ZLEVEL_STATION) // if (is_type_in_list(get_area(src), the_station_areas))
 							ticker.mode:apcs++
 					if(usr:parent)
 						src.malfai = usr:parent
@@ -940,7 +940,7 @@
 
 
 /obj/machinery/power/apc/proc/ion_act()
-	//intended to be exactly the same as an AI malf attack
+	// intended to be exactly the same as an AI malf attack
 	if(!src.malfhack && src.z == ZLEVEL_STATION)
 		if(prob(3))
 			src.locked = 1
@@ -997,7 +997,7 @@
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
 
-	//store states to update icon if any change
+	// store states to update icon if any change
 	var/last_lt = lighting
 	var/last_eq = equipment
 	var/last_en = environ
@@ -1020,7 +1020,7 @@
 		log_debug( "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light]")
 
 	if(cell && !shorted)
-		//var/cell_charge = cell.charge
+		// var/cell_charge = cell.charge
 		var/cell_maxcharge = cell.maxcharge
 
 		// draw power from cell as before
@@ -1038,7 +1038,7 @@
 
 			if( (cell.charge/CELLRATE+perapc) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
 
-				cell.give(CELLRATE * perapc)	//recharge with what we can
+				cell.give(CELLRATE * perapc)	// recharge with what we can
 				add_load(perapc)		// so draw what we can from the grid
 				charging = 0
 
@@ -1195,7 +1195,7 @@
 
 	switch(severity)
 		if(1.0)
-			//set_broken() //now Destroy() do what we need
+			// set_broken() // now Destroy() do what we need
 			if (cell)
 				cell.ex_act(1.0) // more lags woohoo
 			qdel(src)
@@ -1221,7 +1221,7 @@
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (src.z == ZLEVEL_STATION) // if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--
 	stat |= BROKEN
 	operating = 0

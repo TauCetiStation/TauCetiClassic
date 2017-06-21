@@ -35,7 +35,7 @@
 		to_chat(user, "<span class='notice'>It'd be stupid to curse [target] head!</span>")
 		return
 
-	if(!(target in oview(range)))//If they are not  in overview after selection.
+	if(!(target in oview(range)))// If they are not  in overview after selection.
 		to_chat(user, "<span class='notice'>They are too far away!</span>")
 		return
 

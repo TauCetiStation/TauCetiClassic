@@ -20,19 +20,19 @@
 		if (computer)
 			computer.table = src
 			break
-//	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
+//	spawn(100) // Wont the MC just call this process() before and at the 10 second mark anyway?
 //		process()
 
 /obj/machinery/optable/ex_act(severity)
 
 	switch(severity)
 		if(1.0)
-			//SN src = null
+			// SN src = null
 			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				//SN src = null
+				// SN src = null
 				qdel(src)
 				return
 		if(3.0)

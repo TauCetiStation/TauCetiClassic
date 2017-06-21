@@ -16,7 +16,7 @@
 	var/access_janitor = 0
 //	var/access_flora = 0
 	var/access_reagent_scanner = 0
-	var/access_remote_door = 0 //Control some blast doors remotely!!
+	var/access_remote_door = 0 // Control some blast doors remotely!!
 	var/remote_door_id = ""
 	var/access_status_display = 0
 	var/access_quartermaster = 0
@@ -25,9 +25,9 @@
 	var/charges = 0
 	var/mode = null
 	var/menu
-	var/datum/data/record/active1 = null //General
-	var/datum/data/record/active2 = null //Medical
-	var/datum/data/record/active3 = null //Security
+	var/datum/data/record/active1 = null // General
+	var/datum/data/record/active2 = null // Medical
+	var/datum/data/record/active3 = null // Security
 	var/obj/machinery/computer/monitor/powmonitor = null // Power Monitor
 	var/list/powermonitors = list()
 	var/message1	// used for status_displays
@@ -205,7 +205,7 @@
 	icon_state = "cart"
 	access_remote_door = 1
 	access_detonate_pda = 1
-	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
+	remote_door_id = "smindicate" // Make sure this matches the syndicate shuttle's shield/door id!!	// don't ask about the name, testing.
 	charges = 4
 
 /obj/item/weapon/cartridge/proc/post_status(command, data1, data2)

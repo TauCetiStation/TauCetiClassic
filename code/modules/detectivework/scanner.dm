@@ -1,4 +1,4 @@
-//CONTAINS: Detective's Scanner
+// CONTAINS: Detective's Scanner
 
 
 /obj/item/device/detective_scanner
@@ -24,7 +24,7 @@
 			W.amount = W.amount + src.amount - 20
 		else
 			src.amount += W.amount
-			//W = null
+			// W = null
 			qdel(W)
 		add_fingerprint(user)
 		if (W)
@@ -68,7 +68,7 @@
 	if(!proximity) return
 	if(loc != user)
 		return
-	if(istype(A,/obj/machinery/computer/forensic_scanning)) //breaks shit.
+	if(istype(A,/obj/machinery/computer/forensic_scanning)) // breaks shit.
 		return
 
 	if(istype(A,/obj/item/weapon/f_card))
@@ -78,7 +78,7 @@
 
 	add_fingerprint(user)
 
-	//Special case for blood splatters, runes and gibs.
+	// Special case for blood splatters, runes and gibs.
 	if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable/blood/gibs))
 		if(!isnull(A.blood_DNA))
 			for(var/blood in A.blood_DNA)
@@ -86,7 +86,7 @@
 				flick("forensic2",src)
 		return
 
-	//General
+	// General
 	if ((!A.fingerprints || !A.fingerprints.len) && !A.suit_fibers && !A.blood_DNA)
 		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
 		"\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!",\
@@ -100,7 +100,7 @@
 		return
 
 
-	//PRINTS
+	// PRINTS
 	if(!A.fingerprints || !A.fingerprints.len)
 		if(A.fingerprints)
 			A.fingerprints = null
@@ -118,12 +118,12 @@
 			for(var/i in complete_prints)
 				to_chat(user, "\blue &nbsp;&nbsp;&nbsp;&nbsp;[i]")
 
-	//FIBERS
+	// FIBERS
 	if(A.suit_fibers)
 		to_chat(user, "\blue Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.")
 		flick("forensic2",src)
 
-	//Blood
+	// Blood
 	if (A.blood_DNA)
 		to_chat(user, "\blue Blood found on [A]. Analysing...")
 		spawn(15)
@@ -144,10 +144,10 @@
 	return
 
 /obj/item/device/detective_scanner/proc/add_data(atom/A)
-	//I love associative lists.
+	// I love associative lists.
 	var/list/data_entry = stored["\ref [A]"]
-	if(islist(data_entry)) //Yay, it was already stored!
-		//Merge the fingerprints.
+	if(islist(data_entry)) // Yay, it was already stored!
+		// Merge the fingerprints.
 		var/list/data_prints = data_entry[1]
 		for(var/print in A.fingerprints)
 			var/merged_print = data_prints[print]
@@ -156,13 +156,13 @@
 			else
 				data_prints[print] = stringmerge(data_prints[print],A.fingerprints[print])
 
-		//Now the fibers
+		// Now the fibers
 		var/list/fibers = data_entry[2]
 		if(!fibers)
 			fibers = list()
 		if(A.suit_fibers && A.suit_fibers.len)
-			for(var/j = 1, j <= A.suit_fibers.len, j++)	//Fibers~~~
-				if(!fibers.Find(A.suit_fibers[j]))	//It isn't!  Add!
+			for(var/j = 1, j <= A.suit_fibers.len, j++)	// Fibers~~~
+				if(!fibers.Find(A.suit_fibers[j]))	// It isn't!  Add!
 					fibers += A.suit_fibers[j]
 		var/list/blood = data_entry[3]
 		if(!blood)
@@ -172,7 +172,7 @@
 				if(!blood[main_blood])
 					blood[main_blood] = A.blood_DNA[blood]
 		return 1
-	var/list/sum_list[4]	//Pack it back up!
+	var/list/sum_list[4]	// Pack it back up!
 	sum_list[1] = A.fingerprints ? A.fingerprints.Copy() : null
 	sum_list[2] = A.suit_fibers ? A.suit_fibers.Copy() : null
 	sum_list[3] = A.blood_DNA ? A.blood_DNA.Copy() : null

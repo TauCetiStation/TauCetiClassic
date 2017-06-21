@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/power/emitter
 	name = "Emitter"
@@ -105,7 +105,7 @@
 		return 1
 
 
-/obj/machinery/power/emitter/emp_act(severity)//Emitters are hardened but still might have issues
+/obj/machinery/power/emitter/emp_act(severity)// Emitters are hardened but still might have issues
 //	add_load(1000)
 /*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)
@@ -235,7 +235,7 @@
 				src.locked = !src.locked
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 			else
-				src.locked = 0 //just in case it somehow gets locked
+				src.locked = 0 // just in case it somehow gets locked
 				to_chat(user, "\red The controls can only be locked when the [src] is online")
 		else
 			to_chat(user, "\red Access denied.")

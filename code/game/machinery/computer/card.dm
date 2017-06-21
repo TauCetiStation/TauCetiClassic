@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/card
 	name = "Identification Computer"
@@ -190,7 +190,7 @@
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
 					var/temp_t = sanitize(copytext(input("Enter a custom job assignment.","Assignment"),1,45))
-					//let custom jobs function as an impromptu alt title, mainly for sechuds
+					// let custom jobs function as an impromptu alt title, mainly for sechuds
 					if(temp_t && modify)
 						modify.assignment = temp_t
 				else

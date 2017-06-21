@@ -47,7 +47,7 @@
 <A href='?src=\ref[src];make=12;dir=5'>Bent Pipe</A><BR>
 
 "}
-//What number the make points to is in the define # at the top of construction.dm in same folder
+// What number the make points to is in the define # at the top of construction.dm in same folder
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	onclose(user, "pipedispenser")
@@ -126,7 +126,7 @@
 	anchored = 1.0
 
 /*
-//Allow you to push disposal pipes into it (for those with density 1)
+// Allow you to push disposal pipes into it (for those with density 1)
 /obj/machinery/pipedispenser/disposal/Crossed(var/obj/structure/disposalconstruct/pipe as obj)
 	if(istype(pipe) && !pipe.anchored)
 		qdel(pipe)
@@ -134,7 +134,7 @@
 Nah
 */
 
-//Allow you to drag-drop disposal pipes into it
+// Allow you to drag-drop disposal pipes into it
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/disposalconstruct/pipe, mob/usr)
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return

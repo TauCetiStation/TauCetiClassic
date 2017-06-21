@@ -154,7 +154,7 @@
 	item_state = "bowler"
 	body_parts_covered = 0
 
-//stylish bs12 hats
+// stylish bs12 hats
 
 /obj/item/clothing/head/bowlerhat
 	name = "bowler hat"
@@ -187,7 +187,7 @@
 	item_state = "fez"
 	desc = "You should wear a fez. Fezzes are cool."
 
-//end bs12 hats
+// end bs12 hats
 
 /obj/item/clothing/head/witchwig
 	name = "witch costume wig"

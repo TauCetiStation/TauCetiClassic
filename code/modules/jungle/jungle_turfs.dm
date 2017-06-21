@@ -59,7 +59,7 @@
 	if(probability <= 0)
 		return
 
-	//world << "\blue Spread([probability])"
+	// world << "\blue Spread([probability])"
 	for(var/turf/unsimulated/jungle/J in orange(1, src))
 		if(!J.bushes_spawn)
 			continue
@@ -82,7 +82,7 @@
 		var/obj/structure/bush/B = new(src)
 		B.indestructable = 1
 
-//copy paste from asteroid mineral turfs
+// copy paste from asteroid mineral turfs
 /turf/unsimulated/jungle/rock
 	bushes_spawn = 0
 	plants_spawn = 0
@@ -129,11 +129,11 @@
 	..()
 	if(istype(O, /mob/living/))
 		var/mob/living/M = O
-		//slip in the murky water if we try to run through it
+		// slip in the murky water if we try to run through it
 		if(prob(10 + (M.m_intent == "run" ? 40 : 0)))
 			M.slip("something slimy", 2, 1)
 
-		//piranhas - 25% chance to be an omnipresent risk, although they do practically no damage
+		// piranhas - 25% chance to be an omnipresent risk, although they do practically no damage
 		if(prob(25))
 			to_chat(M, "\blue You feel something slithering around your legs.")
 			if(prob(50))

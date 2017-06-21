@@ -1,4 +1,4 @@
-//TODO: разложить все по полочкам
+// TODO: разложить все по полочкам
 /obj/structure/sign/directions/velocity
 	name = "Direction sign"
 	icon = 'code/modules/locations/centcomm/tablo.dmi'
@@ -35,14 +35,14 @@
 /obj/structure/sign/tablo/display/display_90
 	icon = 'code/modules/locations/centcomm/monitor_90.dmi'*/
 
-//надеюсь в скором времени переписать
+// надеюсь в скором времени переписать
 /obj/machinery/information_display
 	anchored = 1
 	density = 0
 	use_power = 1
 	idle_power_usage = 25
-	var/mode = 1//1 - on
-				//2 - off
+	var/mode = 1// 1 - on
+				// 2 - off
 	name = "Information display"
 
 	icon = 'code/modules/locations/centcomm/monitor_90.dmi'
@@ -76,13 +76,13 @@
 
 	proc/switch_display(new_mode = 0)
 		switch(new_mode)
-			if(1)//on
+			if(1)// on
 				if(stat & (NOPOWER|BROKEN))		return
 				use_power = 1
 				icon_state = icon_state_on
 				mode = new_mode
 
-			if(2)//off
+			if(2)// off
 				use_power = 0
 				icon_state = "monitor_off"
 				mode = new_mode

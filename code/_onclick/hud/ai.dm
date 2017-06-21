@@ -4,7 +4,7 @@
 
 	var/obj/screen/using
 
-//AI core
+// AI core
 	using = new /obj/screen()
 	using.name = "AI Core"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -14,7 +14,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//Camera list
+// Camera list
 	using = new /obj/screen()
 	using.name = "Show Camera List"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -24,7 +24,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//Track
+// Track
 	using = new /obj/screen()
 	using.name = "Track With Camera"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -34,7 +34,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//Camera light
+// Camera light
 	using = new /obj/screen()
 	using.name = "Toggle Camera Light"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -44,7 +44,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//Crew Monitorting
+// Crew Monitorting
 	using = new /obj/screen()
 	using.name = "Radio Settings"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -54,7 +54,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//Crew Manifest
+// Crew Manifest
 	using = new /obj/screen()
 	using.name = "Show Crew Manifest"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -64,7 +64,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//Alerts
+// Alerts
 	using = new /obj/screen()
 	using.name = "Show Alerts"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -74,7 +74,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//Announcement
+// Announcement
 	using = new /obj/screen()
 	using.name = "Announcement"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -84,7 +84,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//Shuttle
+// Shuttle
 	using = new /obj/screen()
 	using.name = "Call Emergency Shuttle"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -94,7 +94,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//Laws
+// Laws
 	using = new /obj/screen()
 	using.name = "State Laws"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -104,7 +104,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//PDA message
+// PDA message
 	using = new /obj/screen()
 	using.name = "PDA - Send Message"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -114,7 +114,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//PDA log
+// PDA log
 	using = new /obj/screen()
 	using.name = "PDA - Show Message Log"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -124,7 +124,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//Take image
+// Take image
 	using = new /obj/screen()
 	using.name = "Take Image"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -134,7 +134,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//View images
+// View images
 	using = new /obj/screen()
 	using.name = "View Images"
 	using.icon = 'icons/mob/screen_ai.dmi'
@@ -144,7 +144,7 @@
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
-//Medical/Security sensors
+// Medical/Security sensors
 	using = new /obj/screen()
 	using.name = "Sensor Augmentation"
 	using.icon = 'icons/mob/screen_ai.dmi'

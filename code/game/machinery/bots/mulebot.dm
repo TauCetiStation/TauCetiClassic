@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 // Mulebot - carries crates around for Quartermaster
 // Navigates via floor navbeacons
@@ -16,7 +16,7 @@
 	density = 1
 	anchored = 1
 	animate_movement=1
-	health = 150 //yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
+	health = 150 // yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
 	maxhealth = 150
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
@@ -33,20 +33,20 @@
 	var/new_destination = ""	// pending new destination (waiting for beacon response)
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
+	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr // I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
 	var/path[] = new()
 
-	var/mode = 0		//0 = idle/ready
-						//1 = loading/unloading
-						//2 = moving to deliver
-						//3 = returning to home
-						//4 = blocked
-						//5 = computing navigation
-						//6 = waiting for nav computation
-						//7 = no destination beacon found (or no route)
+	var/mode = 0		// 0 = idle/ready
+						// 1 = loading/unloading
+						// 2 = moving to deliver
+						// 3 = returning to home
+						// 4 = blocked
+						// 5 = computing navigation
+						// 6 = waiting for nav computation
+						// 7 = no destination beacon found (or no route)
 
-	var/blockcount	= 0		//number of times retried a blocked path
-	var/reached_target = 1 	//true if already reached the target
+	var/blockcount	= 0		// number of times retried a blocked path
+	var/reached_target = 1 	// true if already reached the target
 
 	var/refresh = 1		// true to refresh dialogue
 	var/auto_return = 1	// true if auto return to home beacon after unload
@@ -63,7 +63,7 @@
 	botcard = new(src)
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
 	botcard.access = J.get_access()
-//	botcard.access += access_robotics //Why --Ikki
+//	botcard.access += access_robotics // Why --Ikki
 	cell = new(src)
 	cell.charge = 2000
 	cell.maxcharge = 2000
@@ -204,22 +204,22 @@
 		dat += "Power level: [cell ? cell.percent() : 0]%<BR>"
 
 		if(locked && !ai)
-			dat += "<HR>Controls are locked <A href='byond://?src=\ref[src];op=unlock'><I>(unlock)</I></A>"
+			dat += "<HR>Controls are locked <A href='byond:// ?src=\ref[src];op=unlock'><I>(unlock)</I></A>"
 		else
-			dat += "<HR>Controls are unlocked <A href='byond://?src=\ref[src];op=lock'><I>(lock)</I></A><BR><BR>"
+			dat += "<HR>Controls are unlocked <A href='byond:// ?src=\ref[src];op=lock'><I>(lock)</I></A><BR><BR>"
 
-			dat += "<A href='byond://?src=\ref[src];op=power'>Toggle Power</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=stop'>Stop</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=go'>Proceed</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=home'>Return to Home</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=destination'>Set Destination</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=setid'>Set Bot ID</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=sethome'>Set Home</A><BR>"
-			dat += "<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
-			dat += "<A href='byond://?src=\ref[src];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
+			dat += "<A href='byond:// ?src=\ref[src];op=power'>Toggle Power</A><BR>"
+			dat += "<A href='byond:// ?src=\ref[src];op=stop'>Stop</A><BR>"
+			dat += "<A href='byond:// ?src=\ref[src];op=go'>Proceed</A><BR>"
+			dat += "<A href='byond:// ?src=\ref[src];op=home'>Return to Home</A><BR>"
+			dat += "<A href='byond:// ?src=\ref[src];op=destination'>Set Destination</A><BR>"
+			dat += "<A href='byond:// ?src=\ref[src];op=setid'>Set Bot ID</A><BR>"
+			dat += "<A href='byond:// ?src=\ref[src];op=sethome'>Set Home</A><BR>"
+			dat += "<A href='byond:// ?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
+			dat += "<A href='byond:// ?src=\ref[src];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
 
 			if(load)
-				dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
+				dat += "<A href='byond:// ?src=\ref[src];op=unload'>Unload Now</A><BR>"
 			dat += "<HR>The maintenance hatch is closed.<BR>"
 
 	else
@@ -227,9 +227,9 @@
 			dat += "The maintenance hatch is open.<BR><BR>"
 			dat += "Power cell: "
 			if(cell)
-				dat += "<A href='byond://?src=\ref[src];op=cellremove'>Installed</A><BR>"
+				dat += "<A href='byond:// ?src=\ref[src];op=cellremove'>Installed</A><BR>"
 			else
-				dat += "<A href='byond://?src=\ref[src];op=cellinsert'>Removed</A><BR>"
+				dat += "<A href='byond:// ?src=\ref[src];op=cellinsert'>Removed</A><BR>"
 		else
 			dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
@@ -378,7 +378,7 @@
 /obj/machinery/bot/mulebot/proc/load(atom/movable/AM)
 	if(load ||  AM.anchored)
 		return
-	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
+	if(!isturf(AM.loc)) // To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
 	var/obj/structure/closet/crate/CRATE
@@ -394,7 +394,7 @@
 
 	if(isobj(AM))
 		var/obj/O = AM
-		if(O.buckled_mob || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+		if(O.buckled_mob || (locate(/mob) in AM)) // can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
@@ -426,12 +426,12 @@
 
 
 /obj/machinery/bot/mulebot/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob) //post buckling
+	if(M == buckled_mob) // post buckling
 		M.pixel_y = initial(M.pixel_y) + 9
 		if(M.layer < layer)
 			M.layer = layer + 0.1
 
-	else //post unbuckling
+	else // post unbuckling
 		load = null
 		M.layer = initial(M.layer)
 		M.plane = initial(M.plane)
@@ -459,7 +459,7 @@
 	if(dirn)
 		var/turf/T = loc
 		var/turf/newT = get_step(T,dirn)
-		if(load.CanPass(load,newT)) //Can't get off onto anything that wouldn't let you pass normally
+		if(load.CanPass(load,newT)) // Can't get off onto anything that wouldn't let you pass normally
 			step(load, dirn)
 
 	load = null
@@ -471,7 +471,7 @@
 		return
 	if(on)
 		var/speed = (wires.motor1() ? 1 : 0) + (wires.motor2() ? 2 : 0)
-		//world << "speed: [speed]"
+		// world << "speed: [speed]"
 		switch(speed)
 			if(0)
 				// do nothing
@@ -667,7 +667,7 @@
 
 // called when bot bumps into anything
 /obj/machinery/bot/mulebot/Bump(atom/obs)
-	if(!wires.mob_avoid())		//usually just bumps, but if avoidance disabled knock over mobs
+	if(!wires.mob_avoid())		// usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
 			if(istype(M,/mob/living/silicon/robot))
@@ -804,10 +804,10 @@
 	var/datum/signal/signal = new()
 	signal.source = src
 	signal.transmission_method = 1
-	//for(var/key in keyval)
+	// for(var/key in keyval)
 	//	signal.data[key] = keyval[key]
 	signal.data = keyval
-		//world << "sent [key],[keyval[key]] on [freq]"
+		// world << "sent [key],[keyval[key]] on [freq]"
 	if (signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
 	else if (signal.data["type"] == "mulebot")

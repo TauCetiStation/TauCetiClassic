@@ -12,19 +12,19 @@
 	var/pass_flags = 0
 	var/throwpass = 0
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
-	var/simulated = 1 //filter for actions - used by lighting overlays
+	var/simulated = 1 // filter for actions - used by lighting overlays
 
-	var/resize = 1		//don't abuse this shit
-	var/resize_rev = 1	//helps to restore default size
+	var/resize = 1		// don't abuse this shit
+	var/resize_rev = 1	// helps to restore default size
 
-	///Chemistry.
+	// /Chemistry.
 	var/datum/reagents/reagents = null
 
-	//var/chem_is_open_container = 0
+	// var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
-	///Chemistry.
+	// /Chemistry.
 
-	//Detective Work, used for the duplicate data points kept in the scanners
+	// Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
@@ -56,7 +56,7 @@
 /atom/proc/is_open_container()
 	return flags & OPENCONTAINER
 
-/*//Convenience proc to see whether a container can be accessed in a certain way.
+/*// Convenience proc to see whether a container can be accessed in a certain way.
 
 	proc/can_subract_container()
 		return flags & EXTRACT_CONTAINER
@@ -86,7 +86,7 @@
 	P.on_hit(src, 0, def_zone)
 	. = 0
 
-/atom/proc/in_contents_of(container)//can take class or object instance as argument
+/atom/proc/in_contents_of(container)// can take class or object instance as argument
 	if(ispath(container))
 		if(istype(src.loc, container))
 			return 1
@@ -120,20 +120,20 @@
 	return found
 
 /atom/proc/examine(mob/user)
-	//This reformat names to get a/an properly working on item descriptions when they are bloody
+	// This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
 	if(src.blood_DNA)
 		if(gender == PLURAL)
 			f_name = "some "
 		else
 			f_name = "a "
-		if(!src.blood_color) //Oil and blood puddles got 'blood_color = NULL', however they got 'color' instead
+		if(!src.blood_color) // Oil and blood puddles got 'blood_color = NULL', however they got 'color' instead
 			if(src.color == "#030303")
 				f_name += "<span class='warning'>[name]</span>!"
 			else
 				f_name += "<span class='danger'>[name]</span>!"
 		else
-			if(src.blood_color == "#030303")	//TODO: Define blood colors or make oil != blood
+			if(src.blood_color == "#030303")	// TODO: Define blood colors or make oil != blood
 				f_name += "<span class='warning'>oil-stained</span> [name]!"
 			else
 				f_name += "<span class='danger'>blood-stained</span> [name]!"
@@ -143,12 +143,12 @@
 	if(desc)
 		to_chat(user, desc)
 	// *****RM
-	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
+	// user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 
-	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+	if(reagents && is_open_container()) // is_open_container() isn't really the right proc for this, but w/e
 		to_chat(user, "It contains:")
 		if(reagents.reagent_list.len)
-			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
+			if(istype(src, /obj/structure/reagent_dispensers)) // watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
 					to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
 			else
@@ -156,7 +156,7 @@
 		else
 			to_chat(user, "Nothing.")
 
-//called to set the atom's dir and used to add behaviour to dir-changes
+// called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)
 	. = new_dir != dir
 	dir = new_dir
@@ -210,20 +210,20 @@
 	if(isAI(M)) return
 	if(isnull(M.key)) return
 	if (ishuman(M))
-		//Add the list if it does not exist.
+		// Add the list if it does not exist.
 		if(!fingerprintshidden)
 			fingerprintshidden = list()
 
-		//Fibers~
+		// Fibers~
 		add_fibers(M)
 
-		//He has no prints!
+		// He has no prints!
 		if (FINGERPRINTS in M.mutations)
 			if(fingerprintslast != M.key)
 				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
 				fingerprintslast = M.key
-			return 0		//Now, lets get to the dirty work.
-		//First, make sure their DNA makes sense.
+			return 0		// Now, lets get to the dirty work.
+		// First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
@@ -231,14 +231,14 @@
 				H.dna.real_name = H.real_name
 		H.check_dna()
 
-		//Now, deal with gloves.
+		// Now, deal with gloves.
 		if (H.gloves && H.gloves != src)
 			if(fingerprintslast != H.key)
 				fingerprintshidden += text("\[[]\](Wearing gloves). Real name: [], Key: []",time_stamp(), H.real_name, H.key)
 				fingerprintslast = H.key
 			H.gloves.add_fingerprint(M)
 
-		//Deal with gloves the pass finger/palm prints.
+		// Deal with gloves the pass finger/palm prints.
 		if(!ignoregloves)
 			if(H.gloves != src)
 				if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
@@ -246,22 +246,22 @@
 				else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
 					return 0
 
-		//More adminstuffz
+		// More adminstuffz
 		if(fingerprintslast != H.key)
 			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), H.real_name, H.key)
 			fingerprintslast = H.key
 
-		//Make the list if it does not exist.
+		// Make the list if it does not exist.
 		if(!fingerprints)
 			fingerprints = list()
 
-		//Hash this shit.
+		// Hash this shit.
 		var/full_print = md5(H.dna.uni_identity)
 
 		// Add the fingerprints
-		//
+		// 
 		if(fingerprints[full_print])
-			switch(stringpercent(fingerprints[full_print]))		//tells us how many stars are in the current prints.
+			switch(stringpercent(fingerprints[full_print]))		// tells us how many stars are in the current prints.
 
 				if(28 to 32)
 					if(prob(1))
@@ -271,19 +271,19 @@
 
 				if(24 to 27)
 					if(prob(3))
-						fingerprints[full_print] = full_print     	//Sucks to be you.
+						fingerprints[full_print] = full_print     	// Sucks to be you.
 					else
 						fingerprints[full_print] = stars(full_print, rand(15, 55)) // 20 to 29
 
 				if(20 to 23)
 					if(prob(5))
-						fingerprints[full_print] = full_print		//Had a good run didn't ya.
+						fingerprints[full_print] = full_print		// Had a good run didn't ya.
 					else
 						fingerprints[full_print] = stars(full_print, rand(30, 70)) // 15 to 25
 
 				if(16 to 19)
 					if(prob(5))
-						fingerprints[full_print] = full_print		//Welp.
+						fingerprints[full_print] = full_print		// Welp.
 					else
 						fingerprints[full_print]  = stars(full_print, rand(40, 100))  // 0 to 21
 
@@ -294,17 +294,17 @@
 						fingerprints[full_print] = full_print
 
 		else
-			fingerprints[full_print] = stars(full_print, rand(0, 20))	//Initial touch, not leaving much evidence the first time.
+			fingerprints[full_print] = stars(full_print, rand(0, 20))	// Initial touch, not leaving much evidence the first time.
 
 
 		return 1
 	else
-		//Smudge up dem prints some
+		// Smudge up dem prints some
 		if(fingerprintslast != M.key)
 			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), M.real_name, M.key)
 			fingerprintslast = M.key
 
-	//Cleaning up shit.
+	// Cleaning up shit.
 	if(fingerprints && !fingerprints.len)
 		fingerprints = null
 	return
@@ -321,16 +321,16 @@
 	if(!istype(fingerprintshidden, /list))
 		fingerprintshidden = list()
 
-	//skytodo
-	//A.fingerprints |= fingerprints            //detective
-	//A.fingerprintshidden |= fingerprintshidden    //admin
+	// skytodo
+	// A.fingerprints |= fingerprints            // detective
+	// A.fingerprintshidden |= fingerprintshidden    // admin
 	if(A.fingerprints && fingerprints)
-		A.fingerprints |= fingerprints.Copy()            //detective
+		A.fingerprints |= fingerprints.Copy()            // detective
 	if(A.fingerprintshidden && fingerprintshidden)
-		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin	A.fingerprintslast = fingerprintslast
+		A.fingerprintshidden |= fingerprintshidden.Copy()    // admin	A.fingerprintslast = fingerprintslast
 
 
-//returns 1 if made bloody, returns 0 otherwise
+// returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M)
 	if(flags & NOBLOODY) return 0
 	.=1
@@ -340,7 +340,7 @@
 		M.dna = new /datum/dna(null)
 		M.dna.real_name = M.real_name
 	M.check_dna()
-	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
+	if(!blood_DNA || !istype(blood_DNA, /list))	// if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
 	blood_color = "#A10808"
 	if (M.species)
@@ -398,19 +398,19 @@
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
 
-//This proc is called on the location of an atom when the atom is Destroy()'d
+// This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
 
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.
 // So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
+// See: http:// www.byond.com/docs/ref/info.html#/client/proc/Stat
 /atom/Stat()
 	. = ..()
 	sleep(1)
 	stoplag()
 
-//This will be called after the map and objects are loaded
+// This will be called after the map and objects are loaded
 /atom/proc/initialize()
 	return
 
@@ -419,7 +419,7 @@
 	var/changed = 0
 
 	if(resize != RESIZE_DEFAULT_SIZE)
-		resize_rev *= 1/resize	//saving revert parameter for restoring size
+		resize_rev *= 1/resize	// saving revert parameter for restoring size
 		changed++
 		ntransform.Scale(resize)
 		resize = RESIZE_DEFAULT_SIZE

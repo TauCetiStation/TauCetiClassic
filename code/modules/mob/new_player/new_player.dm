@@ -1,9 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /mob/new_player
 	var/ready = 0
-	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
-	var/totalPlayers = 0		 //Player counts for the Lobby tab
+	var/spawning = 0// Referenced when you want to delete the new_player later on in the code.
+	var/totalPlayers = 0		 // Player counts for the Lobby tab
 	var/totalPlayersReady = 0
 	universal_speak = 1
 
@@ -26,17 +26,17 @@
 /mob/new_player/proc/new_player_panel_proc()
 	var/output = "<div align='center'><B>New Player Options</B>"
 	output +="<hr>"
-	output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
+	output += "<p><a href='byond:// ?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
 	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
-		if(!ready)	output += "<p><a href='byond://?src=\ref[src];ready=1'>Declare Ready</A></p>"
-		else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)</p>"
+		if(!ready)	output += "<p><a href='byond:// ?src=\ref[src];ready=1'>Declare Ready</A></p>"
+		else	output += "<p><b>You are ready</b> (<a href='byond:// ?src=\ref[src];ready=2'>Cancel</A>)</p>"
 
 	else
-		output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
-		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
+		output += "<a href='byond:// ?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
+		output += "<p><a href='byond:// ?src=\ref[src];late_join=1'>Join Game!</A></p>"
 
-	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
+	output += "<p><a href='byond:// ?src=\ref[src];observe=1'>Observe</A></p>"
 
 	if(!IsGuestKey(src.key))
 		establish_db_connection()
@@ -53,9 +53,9 @@
 				break
 
 			if(newpoll)
-				output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
+				output += "<p><b><a href='byond:// ?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
 			else
-				output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
+				output += "<p><a href='byond:// ?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
 
 	output += "</div>"
 
@@ -94,7 +94,7 @@
 			ready = !ready
 
 	if(href_list["refresh"])
-		src << browse(null, "window=playersetup") //closes the player setup window
+		src << browse(null, "window=playersetup") // closes the player setup window
 		new_player_panel_proc()
 
 	if(href_list["observe"])
@@ -117,8 +117,8 @@
 			observer.loc = O.loc
 			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
-			//client.prefs.update_preview_icon()
-			//observer.icon = client.prefs.preview_icon
+			// client.prefs.update_preview_icon()
+			// observer.icon = client.prefs.preview_icon
 			observer.icon = 'icons/mob/mob.dmi'
 			observer.icon_state = "ghost"
 			observer.alpha = 127
@@ -169,14 +169,14 @@
 			return
 		var/voted = 0
 
-		//First check if the person has not voted yet.
+		// First check if the person has not voted yet.
 		var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
 		query.Execute()
 		while(query.NextRow())
 			voted = 1
 			break
 
-		//This is a safety switch, so only valid options pass through
+		// This is a safety switch, so only valid options pass through
 		var/option = "UNKNOWN"
 		switch(href_list["privacy_poll"])
 			if("signed")
@@ -235,12 +235,12 @@
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
 
-				if( (id_max - id_min) > 100 )	//Basic exploit prevention
+				if( (id_max - id_min) > 100 )	// Basic exploit prevention
 					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
-					if(!isnull(href_list["o[optionid]"]))	//Test if this optionid was replied to
+					if(!isnull(href_list["o[optionid]"]))	// Test if this optionid was replied to
 						var/rating
 						if(href_list["o[optionid]"] == "abstain")
 							rating = null
@@ -254,12 +254,12 @@
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
 
-				if( (id_max - id_min) > 100 )	//Basic exploit prevention
+				if( (id_max - id_min) > 100 )	// Basic exploit prevention
 					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
-					if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
+					if(!isnull(href_list["option_[optionid]"]))	// Test if this optionid was selected
 						vote_on_poll(pollid, optionid, 1)
 
 /mob/new_player/proc/IsJobAvailable(rank)
@@ -289,8 +289,8 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+	var/mob/living/carbon/human/character = create_character()	// creates the human and transfers vars and mind
+	SSjob.EquipRank(character, rank, 1)					// equips the human
 	EquipCustomItems(character)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
@@ -304,7 +304,7 @@
 
 		character.loc = C.loc
 
-		//AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
+		// AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
 		ticker.mode.latespawn(character)
 
 		qdel(C)
@@ -320,11 +320,11 @@
 
 	ticker.mode.latespawn(character)
 
-	//ticker.mode.latespawn(character)
+	// ticker.mode.latespawn(character)
 
 	if(character.mind.assigned_role != "Cyborg")
 		data_core.manifest_inject(character)
-		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
+		ticker.minds += character.mind// Cyborgs and AIs handle this in the transform proc.	// TODO!!!!! ~Carn
 	//	AnnounceArrival(character, rank)
 
 	else
@@ -344,15 +344,15 @@
 
 /mob/new_player/proc/LateChoices()
 	var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
-	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
+	// var/secs = ((mills % 36000) % 600) / 10 // Not really needed, but I'll leave it here for refrence.. or something
 	var/mins = (mills % 36000) / 600
 	var/hours = mills / 36000
 
 	var/dat = "<html><body><center>"
 	dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
 
-	if(SSshuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
-		if(SSshuttle.direction == 2) //Shuttle is going to centcomm, not recalled
+	if(SSshuttle) // In case Nanotrasen decides reposess CentComm's shuttles.
+		if(SSshuttle.direction == 2) // Shuttle is going to centcomm, not recalled
 			dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
 		if(SSshuttle.direction == 1 && SSshuttle.timeleft() < 300 && SSshuttle.alert == 0) // Emergency shuttle is past the point of no recall
 			dat += "<font color='red'>The station is currently undergoing evacuation procedures.</font><br>"
@@ -366,7 +366,7 @@
 			// Only players with the job assigned and AFK for less than 10 minutes count as active
 			for(var/mob/M in player_list) if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
 				active++
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions]) (Active: [active])</a><br>"
+			dat += "<a href='byond:// ?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions]) (Active: [active])</a><br>"
 
 	dat += "</center>"
 	src << browse(dat, "window=latechoices;size=300x640;can_close=1")
@@ -408,12 +408,12 @@
 	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
 	if(mind)
-		mind.active = 0					//we wish to transfer the key manually
-		if(mind.assigned_role == "Clown")				//give them a clownname if they are a clown
-			new_character.real_name = pick(clown_names)	//I hate this being here of all places but unfortunately dna is based on real_name!
+		mind.active = 0					// we wish to transfer the key manually
+		if(mind.assigned_role == "Clown")				// give them a clownname if they are a clown
+			new_character.real_name = pick(clown_names)	// I hate this being here of all places but unfortunately dna is based on real_name!
 			new_character.rename_self("clown")
 		mind.original = new_character
-		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
+		mind.transfer_to(new_character)					// won't transfer key since the mind is not active
 
 	new_character.name = real_name
 	new_character.dna.ready_dna(new_character)
@@ -447,7 +447,7 @@
 	// And uncomment this, too.
 	new_character.dna.UpdateSE()
 	if(key)
-		new_character.key = key		//Manually transfer the key to log them in
+		new_character.key = key		// Manually transfer the key to log them in
 
 	return new_character
 
@@ -462,8 +462,8 @@
 	return 0
 
 /mob/new_player/proc/close_spawn_windows()
-	src << browse(null, "window=latechoices") //closes late choices window
-	src << browse(null, "window=playersetup") //closes the player setup window
+	src << browse(null, "window=latechoices") // closes late choices window
+	src << browse(null, "window=playersetup") // closes the player setup window
 
 /mob/new_player/proc/has_admin_rights()
 	return (client && client.holder && (client.holder.rights & R_ADMIN))

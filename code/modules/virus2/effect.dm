@@ -1,10 +1,10 @@
 /datum/disease2/effectholder
 	var/name = "Holder"
 	var/datum/disease2/effect/effect
-	var/chance = 0 //Chance in percentage each tick
-	var/cure = "" //Type of cure it requires
+	var/chance = 0 // Chance in percentage each tick
+	var/cure = "" // Type of cure it requires
 	var/happensonce = 0
-	var/multiplier = 1 //The chance the effects are WORSE
+	var/multiplier = 1 // The chance the effects are WORSE
 	var/stage = 0
 
 /datum/disease2/effectholder/proc/runeffect(mob/living/carbon/human/mob,stage)
@@ -17,7 +17,7 @@
 	var/list/datum/disease2/effect/list = list()
 	for(var/e in (typesof(/datum/disease2/effect) - /datum/disease2/effect))
 		var/datum/disease2/effect/f = new e
-		if (f.badness > badness)	//we don't want such strong effects
+		if (f.badness > badness)	// we don't want such strong effects
 			continue
 		if(f.stage == src.stage)
 			list += f
@@ -36,7 +36,7 @@
 	getrandomeffect(2)
 
 ////////////////////////////////////////////////////////////////
-////////////////////////EFFECTS/////////////////////////////////
+/////////////////////// /EFFECTS//////////////////////////////// /
 ////////////////////////////////////////////////////////////////
 
 /datum/disease2/effect
@@ -54,7 +54,7 @@
 	activate(mob/living/carbon/mob,multiplier)
 		return
 
-////////////////////////STAGE 4/////////////////////////////////
+/////////////////////// /STAGE 4//////////////////////////////// /
 
 /datum/disease2/effect/gibbingtons
 	name = "Gibbingtons Syndrome"
@@ -91,11 +91,11 @@
 	badness = 2
 	activate(mob/living/carbon/mob,multiplier)
 		mob.suiciding = 1
-		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
+		// instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		to_chat(viewers(mob), "\red <b>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</b>")
 		mob.adjustOxyLoss(175 - mob.getToxLoss() - mob.getFireLoss() - mob.getBruteLoss() - mob.getOxyLoss())
 		mob.updatehealth()
-		spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
+		spawn(200) // in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
 			mob.suiciding = 0
 
 /datum/disease2/effect/killertoxins
@@ -157,7 +157,7 @@
 		var/backlash_amt = 5*multiplier
 		mob.apply_damages(backlash_amt,backlash_amt,backlash_amt,backlash_amt)
 
-////////////////////////STAGE 3/////////////////////////////////
+/////////////////////// /STAGE 3//////////////////////////////// /
 
 /datum/disease2/effect/bones
 	name = "Fragile Bones Syndrome"
@@ -245,7 +245,7 @@
 	stage = 3
 	activate(mob/living/carbon/mob,multiplier)
 		mob.say("*groan")
-////////////////////////STAGE 2/////////////////////////////////
+/////////////////////// /STAGE 2//////////////////////////////// /
 
 /datum/disease2/effect/scream
 	name = "Loudness Syndrome"
@@ -313,7 +313,7 @@
 		if (prob(30))
 			mob.jitteriness += 10
 
-////////////////////////STAGE 1/////////////////////////////////
+/////////////////////// /STAGE 1//////////////////////////////// /
 
 /datum/disease2/effect/sneeze
 	name = "Coldingtons Effect"

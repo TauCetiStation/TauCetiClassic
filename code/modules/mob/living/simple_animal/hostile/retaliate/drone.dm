@@ -1,5 +1,5 @@
 
-//malfunctioning combat drones
+// malfunctioning combat drones
 /mob/living/simple_animal/hostile/retaliate/malf_drone
 	name = "combat drone"
 	desc = "An automated combat drone armed with state of the art weaponry and shielding."
@@ -25,17 +25,17 @@
 	destroy_surroundings = 0
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail
 
-	//the drone randomly switches between these states because it's malfunctioning
+	// the drone randomly switches between these states because it's malfunctioning
 	var/hostile_drone = 0
-	//0 - retaliate, only attack enemies that attack it
-	//1 - hostile, attack everything that comes near
+	// 0 - retaliate, only attack enemies that attack it
+	// 1 - hostile, attack everything that comes near
 
 	var/turf/patrol_target
 	var/explode_chance = 1
 	var/disabled = 0
 	var/exploding = 0
 
-	//Drones aren't affected by atmos.
+	// Drones aren't affected by atmos.
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -67,10 +67,10 @@
 	else
 		return ..()
 
-//self repair systems have a chance to bring the drone back to life
+// self repair systems have a chance to bring the drone back to life
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Life()
 
-	//emps and lots of damage can temporarily shut us down
+	// emps and lots of damage can temporarily shut us down
 	if(disabled > 0)
 		stat = UNCONSCIOUS
 		icon_state = "drone_dead"
@@ -83,7 +83,7 @@
 			wander = 1
 			speak_chance = 5
 
-	//repair a bit of damage
+	// repair a bit of damage
 	if(prob(1))
 		src.visible_message("\red [bicon(src)] [src] shudders and shakes as some of it's damaged systems come back online.")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -91,13 +91,13 @@
 		s.start()
 		health += rand(25,100)
 
-	//spark for no reason
+	// spark for no reason
 	if(prob(5))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
 
-	//sometimes our targetting sensors malfunction, and we attack anyone nearby
+	// sometimes our targetting sensors malfunction, and we attack anyone nearby
 	if(prob(disabled ? 0 : 1))
 		if(hostile_drone)
 			src.visible_message("\blue [bicon(src)] [src] retracts several targetting vanes, and dulls it's running lights.")
@@ -119,7 +119,7 @@
 		icon_state = "drone0"
 		explode_chance = 5
 	else if(health > 0)
-		//if health gets too low, shut down
+		// if health gets too low, shut down
 		icon_state = "drone_dead"
 		exploding = 0
 		if(!disabled)
@@ -147,10 +147,10 @@
 		spawn(rand(50,150))
 			if(!disabled && exploding)
 				explosion(get_turf(src), 0, 1, 4, 7)
-				//proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
+				// proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
 	..()
 
-//ion rifle!
+// ion rifle!
 /mob/living/simple_animal/hostile/retaliate/malf_drone/emp_act(severity)
 	health -= rand(3,15) * (severity + 1)
 	disabled = rand(150, 600)
@@ -163,14 +163,14 @@
 	qdel(src)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Destroy()
-	//some random debris left behind
+	// some random debris left behind
 	if(has_loot)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
 		var/obj/O
 
-		//shards
+		// shards
 		O = new /obj/item/weapon/shard(src.loc)
 		step_to(O, get_turf(pick(view(7, src))))
 		if(prob(75))
@@ -183,7 +183,7 @@
 			O = new /obj/item/weapon/shard(src.loc)
 			step_to(O, get_turf(pick(view(7, src))))
 
-		//rods
+		// rods
 		O = new /obj/item/stack/rods(src.loc)
 		step_to(O, get_turf(pick(view(7, src))))
 		if(prob(75))
@@ -196,7 +196,7 @@
 			O = new /obj/item/stack/rods(src.loc)
 			step_to(O, get_turf(pick(view(7, src))))
 
-		//plasteel
+		// plasteel
 		O = new /obj/item/stack/sheet/plasteel(src.loc)
 		step_to(O, get_turf(pick(view(7, src))))
 		if(prob(75))
@@ -209,10 +209,10 @@
 			O = new /obj/item/stack/sheet/plasteel(src.loc)
 			step_to(O, get_turf(pick(view(7, src))))
 
-		//also drop dummy circuit boards deconstructable for research (loot)
+		// also drop dummy circuit boards deconstructable for research (loot)
 		var/obj/item/weapon/circuitboard/C
 
-		//spawn 1-4 boards of a random type
+		// spawn 1-4 boards of a random type
 		var/spawnees = 0
 		var/num_boards = rand(1,4)
 		var/list/options = list(1,2,4,8,16,32,64,128,256, 512)

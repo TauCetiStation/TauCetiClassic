@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /*
 Research and Development (R&D) Console
@@ -36,22 +36,22 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	icon_state = "rdcomp"
 	light_color = "#a97faa"
 	circuit = /obj/item/weapon/circuitboard/rdconsole
-	var/datum/research/files							//Stores all the collected research data.
-	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
-	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
+	var/datum/research/files							// Stores all the collected research data.
+	var/obj/item/weapon/disk/tech_disk/t_disk = null	// Stores the technology disk.
+	var/obj/item/weapon/disk/design_disk/d_disk = null	// Stores the design disk.
 
-	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
-	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
-	var/obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
+	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	// Linked Destructive Analyzer
+	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				// Linked Protolathe
+	var/obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	// Linked Circuit Imprinter
 
-	var/screen = 1.0	//Which screen is currently showing.
-	var/id = 0			//ID of the computer (for server restrictions).
-	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
+	var/screen = 1.0	// Which screen is currently showing.
+	var/id = 0			// ID of the computer (for server restrictions).
+	var/sync = 1		// If sync = 0, it doesn't show up on Server Control Console
 
-	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
+	req_access = list(access_research)	// Data and setting manipulation requires scientist access.
 
 
-/obj/machinery/computer/rdconsole/proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
+/obj/machinery/computer/rdconsole/proc/CallTechName(ID) // A simple helper proc to find the name of a tech with a given ID.
 	var/datum/tech/check_tech
 	var/return_name = null
 	for(var/T in typesof(/datum/tech) - /datum/tech)
@@ -98,7 +98,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				break
 	return return_name
 
-/obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
+/obj/machinery/computer/rdconsole/proc/SyncRDevices() // Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/D in oview(3,src))
 		if(D.linked_console != null || D.disabled || D.panel_open)
 			continue
@@ -116,7 +116,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				D.linked_console = src
 	return
 
-//Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work --NEO
+// Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work --NEO
 /obj/machinery/computer/rdconsole/proc/griefProtection()
 	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
 		for(var/datum/tech/T in files.known_tech)
@@ -128,7 +128,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/New()
 	..()
-	files = new /datum/research(src) //Setup the research data holder.
+	files = new /datum/research(src) // Setup the research data holder.
 	if(!id)
 		for(var/obj/machinery/r_n_d/server/centcom/S in machines)
 			S.initialize()
@@ -143,7 +143,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 */
 
 /obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user)
-	//Loading a disk into it.
+	// Loading a disk into it.
 	if(istype(D, /obj/item/weapon/disk))
 		if(t_disk || d_disk)
 			to_chat(user, "A disk is already loaded into the machine.")
@@ -165,7 +165,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		emagged = 1
 		to_chat(user, "\blue You you disable the security protocols")
 	else
-		//The construction/deconstruction of the console code.
+		// The construction/deconstruction of the console code.
 		..()
 	src.updateUsrDialog()
 	return
@@ -175,60 +175,60 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(!.)
 		return
 
-	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
+	if(href_list["menu"]) // Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
 		var/temp_screen = text2num(href_list["menu"])
-		if(temp_screen <= 1.1 || (3 <= temp_screen && 4.9 >= temp_screen) || src.allowed(usr) || emagged) //Unless you are making something, you need access.
+		if(temp_screen <= 1.1 || (3 <= temp_screen && 4.9 >= temp_screen) || src.allowed(usr) || emagged) // Unless you are making something, you need access.
 			screen = temp_screen
 		else
 			to_chat(usr, "Unauthorized Access.")
 
-	else if(href_list["updt_tech"]) //Update the research holder with information from the technology disk.
+	else if(href_list["updt_tech"]) // Update the research holder with information from the technology disk.
 		screen = 0.0
 		spawn(50)
 			screen = 1.2
 			files.AddTech2Known(t_disk.stored)
 			updateUsrDialog()
-			griefProtection() //Update centcomm too
+			griefProtection() // Update centcomm too
 
-	else if(href_list["clear_tech"]) //Erase data on the technology disk.
+	else if(href_list["clear_tech"]) // Erase data on the technology disk.
 		t_disk.stored = null
 
-	else if(href_list["eject_tech"]) //Eject the technology disk.
+	else if(href_list["eject_tech"]) // Eject the technology disk.
 		t_disk:loc = src.loc
 		t_disk = null
 		screen = 1.0
 
-	else if(href_list["copy_tech"]) //Copys some technology data from the research holder to the disk.
+	else if(href_list["copy_tech"]) // Copys some technology data from the research holder to the disk.
 		for(var/datum/tech/T in files.known_tech)
 			if(href_list["copy_tech_ID"] == T.id)
 				t_disk.stored = T
 				break
 		screen = 1.2
 
-	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
+	else if(href_list["updt_design"]) // Updates the research holder with design data from the design disk.
 		screen = 0.0
 		spawn(50)
 			screen = 1.4
 			files.AddDesign2Known(d_disk.blueprint)
 			updateUsrDialog()
-			griefProtection() //Update centcomm too
+			griefProtection() // Update centcomm too
 
-	else if(href_list["clear_design"]) //Erases data on the design disk.
+	else if(href_list["clear_design"]) // Erases data on the design disk.
 		d_disk.blueprint = null
 
-	else if(href_list["eject_design"]) //Eject the design disk.
+	else if(href_list["eject_design"]) // Eject the design disk.
 		d_disk:loc = src.loc
 		d_disk = null
 		screen = 1.0
 
-	else if(href_list["copy_design"]) //Copy design data from the research holder to the design disk.
+	else if(href_list["copy_design"]) // Copy design data from the research holder to the design disk.
 		for(var/datum/design/D in files.known_designs)
 			if(href_list["copy_design_ID"] == D.id)
 				d_disk.blueprint = D
 				break
 		screen = 1.4
 
-	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
+	else if(href_list["eject_item"]) // Eject the item inside the destructive analyzer.
 		if(linked_destroy)
 			if(linked_destroy.busy)
 				to_chat(usr, "\red The destructive analyzer is busy at the moment.")
@@ -239,7 +239,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_destroy.icon_state = "d_analyzer"
 				screen = 2.1
 
-	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
+	else if(href_list["deconstruct"]) // Deconstruct the item in the destructive analyzer and update the research holder.
 		if(linked_destroy)
 			if(linked_destroy.busy)
 				to_chat(usr, "\red The destructive analyzer is busy at the moment.")
@@ -269,13 +269,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								return
 							if((linked_destroy.loaded_item.reliability >= 99 - (linked_destroy.decon_mod * 3)) || linked_destroy.loaded_item.crit_fail)
 								for(var/T in temp_tech)
-									if(prob(linked_destroy.loaded_item.reliability))               //If deconstructed item is not reliable enough its just being wasted, else it is pocessed
-										files.UpdateTech(T, temp_tech[T])                          //Check if deconstructed item has research levels higher/same/one less than current ones
-								files.UpdateDesigns(linked_destroy.loaded_item, temp_tech, src)    //If if such reseach type found all the known designs are checked for having this research type in them
-								screen = 1.0                                                       //If design have it it gains some reliability
-							else                                                                   //Same design always gain quality
-								screen = 2.3                                                       //Crit fail gives the same design a lot of reliability, like really a lot
-							if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
+									if(prob(linked_destroy.loaded_item.reliability))               // If deconstructed item is not reliable enough its just being wasted, else it is pocessed
+										files.UpdateTech(T, temp_tech[T])                          // Check if deconstructed item has research levels higher/same/one less than current ones
+								files.UpdateDesigns(linked_destroy.loaded_item, temp_tech, src)    // If if such reseach type found all the known designs are checked for having this research type in them
+								screen = 1.0                                                       // If design have it it gains some reliability
+							else                                                                   // Same design always gain quality
+								screen = 2.3                                                       // Crit fail gives the same design a lot of reliability, like really a lot
+							if(linked_lathe) // Also sends salvaged materials to a linked protolathe, if any.
 								linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*(linked_destroy.decon_mod/10)))
 								linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*(linked_destroy.decon_mod/10)))
 							linked_destroy.loaded_item = null
@@ -284,7 +284,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						for(var/obj/I in linked_destroy.contents)
 							for(var/mob/M in I.contents)
 								M.death()
-							if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
+							if(istype(I,/obj/item/stack/sheet))// Only deconsturcts one sheet at a time instead of the entire stack
 								var/obj/item/stack/sheet/S = I
 								if(S.amount > 1)
 									S.amount--
@@ -299,18 +299,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						use_power(250)
 						updateUsrDialog()
 
-	else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
+	else if(href_list["lock"]) // Lock the console from use by anyone without tox access.
 		if(src.allowed(usr))
 			screen = text2num(href_list["lock"])
 		else
 			to_chat(usr, "Unauthorized Access.")
 
-	else if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
+	else if(href_list["sync"]) // Sync the research holder with all the R&D consoles in the game that aren't sync protected.
 		screen = 0.0
 		if(!sync)
 			to_chat(usr, "\red You must connect to the network first!")
 		else
-			griefProtection() //Putting this here because I dont trust the sync process
+			griefProtection() // Putting this here because I dont trust the sync process
 			spawn(30)
 				if(src)
 					for(var/obj/machinery/r_n_d/server/S in machines)
@@ -336,10 +336,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					screen = 1.6
 					updateUsrDialog()
 
-	else if(href_list["togglesync"]) //Prevents the console from being synced by other consoles. Can still send data.
+	else if(href_list["togglesync"]) // Prevents the console from being synced by other consoles. Can still send data.
 		sync = !sync
 
-	else if(href_list["build"]) //Causes the Protolathe to build something.
+	else if(href_list["build"]) // Causes the Protolathe to build something.
 		var/coeff = linked_lathe.efficiency_coeff
 		var/g2g = 1
 		if(linked_lathe)
@@ -358,12 +358,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				screen = 0.3
 				if(linked_lathe.busy)
 					g2g = 0
-				var/key = usr.key	//so we don't lose the info during the spawn delay
+				var/key = usr.key	// so we don't lose the info during the spawn delay
 				if (!(being_built.build_type & PROTOLATHE))
 					g2g = 0
 					message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
 
-				if (g2g) //If input is incorrect, nothing happens
+				if (g2g) // If input is incorrect, nothing happens
 					linked_lathe.busy = 1
 					flick("protolathe_n",linked_lathe)
 					use_power(power)
@@ -393,10 +393,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							else
 								linked_lathe.reagents.remove_reagent(M, being_built.materials[M]/coeff*amount)
 
-					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+					var/P = being_built.build_path // lets save these values before the spawn() just in case. Nobody likes runtimes.
 					var/R = being_built.reliability
 					spawn(32 * amount / coeff)
-						if(g2g) //And if we only fail the material requirements, we still spend time and power
+						if(g2g) // And if we only fail the material requirements, we still spend time and power
 							for(var/i = 1 to amount)
 								var/obj/new_item = new P(src)
 								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
@@ -411,7 +411,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						screen = 3.1
 						updateUsrDialog()
 
-	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
+	else if(href_list["imprint"]) // Causes the Circuit Imprinter to build something.
 		var/coeff = linked_imprinter.efficiency_coeff
 		var/g2g = 1
 		if(linked_imprinter)
@@ -432,7 +432,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					g2g = 0
 					message_admins("Circuit imprinter exploit attempted by [key_name(usr, usr.client)]!")
 
-				if (g2g) //Again, if input is wrong, do nothing
+				if (g2g) // Again, if input is wrong, do nothing
 					linked_imprinter.busy = 1
 					flick("circuit_imprinter_ani",linked_imprinter)
 					use_power(power)
@@ -452,7 +452,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							else
 								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M]/coeff)
 
-					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+					var/P = being_built.build_path // lets save these values before the spawn() just in case. Nobody likes runtimes.
 					var/R = being_built.reliability
 					spawn(16)
 						if(g2g)
@@ -463,19 +463,19 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						screen = 4.1
 						updateUsrDialog()
 
-	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
+	else if(href_list["disposeI"] && linked_imprinter)  // Causes the circuit imprinter to dispose of a single reagent (all of it)
 		linked_imprinter.reagents.del_reagent(href_list["dispose"])
 
-	else if(href_list["disposeallI"] && linked_imprinter) //Causes the circuit imprinter to dispose of all it's reagents.
+	else if(href_list["disposeallI"] && linked_imprinter) // Causes the circuit imprinter to dispose of all it's reagents.
 		linked_imprinter.reagents.clear_reagents()
 
-	else if(href_list["disposeP"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
+	else if(href_list["disposeP"] && linked_lathe)  // Causes the protolathe to dispose of a single reagent (all of it)
 		linked_lathe.reagents.del_reagent(href_list["dispose"])
 
-	else if(href_list["disposeallP"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
+	else if(href_list["disposeallP"] && linked_lathe) // Causes the protolathe to dispose of all it's reagents.
 		linked_lathe.reagents.clear_reagents()
 
-	else if(href_list["lathe_ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
+	else if(href_list["lathe_ejectsheet"] && linked_lathe) // Causes the protolathe to eject a sheet of material
 		var/desired_num_sheets = text2num(href_list["lathe_ejectsheet_amt"])
 		var/res_amount, type
 		switch(href_list["lathe_ejectsheet"])
@@ -511,7 +511,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_lathe.vars[res_amount] = max(0, (linked_lathe.vars[res_amount] - sheet.amount * sheet.perunit))
 			else
 				qdel(sheet)
-	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
+	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) // Causes the protolathe to eject a sheet of material
 		var/desired_num_sheets = text2num(href_list["imprinter_ejectsheet_amt"])
 		var/res_amount, type
 		switch(href_list["imprinter_ejectsheet"])
@@ -536,14 +536,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			else
 				qdel(sheet)
 
-	else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
+	else if(href_list["find_device"]) // The R&D console looks for devices nearby to link up with.
 		screen = 0.0
 		spawn(20)
 			SyncRDevices()
 			screen = 1.7
 			updateUsrDialog()
 
-	else if(href_list["disconnect"]) //The R&D console disconnects with a specific device.
+	else if(href_list["disconnect"]) // The R&D console disconnects with a specific device.
 		switch(href_list["disconnect"])
 			if("destroy")
 				linked_destroy.linked_console = null
@@ -555,7 +555,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter.linked_console = null
 				linked_imprinter = null
 
-	else if(href_list["reset"]) //Reset the R&D console's database.
+	else if(href_list["reset"]) // Reset the R&D console's database.
 		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
@@ -576,7 +576,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	user.set_machine(src)
 	var/dat = ""
 	files.RefreshResearch()
-	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
+	switch(screen) // A quick check to make sure you get the right screen when a device is disconnected.
 		if(2 to 2.9)
 			if(screen == 2.3)
 				;
@@ -595,7 +595,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	switch(screen)
 
-		//////////////////////R&D CONSOLE SCREENS//////////////////
+		//////////////////////R&D CONSOLE SCREENS///////////////// /
 		if(0.0) dat += "<div class='statusDisplay'>Updating Database....</div>"
 
 		if(0.1) dat += "<div class='statusDisplay'>Processing and Updating Database...</div>"
@@ -610,7 +610,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(0.4)
 			dat += "<div class='statusDisplay'>Imprinting Circuit. Please Wait...</div>"
 
-		if(1.0) //Main Menu
+		if(1.0) // Main Menu
 			dat += "<div class='statusDisplay'>"
 			dat += "<h3>Main Menu:</h3><BR>"
 			dat += "<A href='?src=\ref[src];menu=1.1'>Current Research Levels</A><BR>"
@@ -635,7 +635,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.6'>Settings</A>"
 			dat += "</div>"
 
-		if(1.1) //Research viewer
+		if(1.1) // Research viewer
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<h3>Current Research Levels:</h3><BR><div class='statusDisplay'>"
 			for(var/datum/tech/T in files.known_tech)
@@ -644,7 +644,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat +=  "* Summary: [T.desc]<HR>"
 			dat += "</div>"
 
-		if(1.2) //Technology Disk Menu
+		if(1.2) // Technology Disk Menu
 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 			dat += "<div class='statusDisplay'>Technology Data Disk Contents:<BR><BR>"
@@ -661,7 +661,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<A href='?src=\ref[src];clear_tech=1'>Clear Disk</A>"
 			dat += "<A href='?src=\ref[src];eject_tech=1'>Eject Disk</A>"
 
-		if(1.3) //Technology Disk submenu
+		if(1.3) // Technology Disk submenu
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=1.2'>Return to Disk Operations</A><div class='statusDisplay'>"
 			dat += "<h3>Load Technology to Disk:</h3><BR>"
@@ -670,7 +670,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<A href='?src=\ref[src];copy_tech=1;copy_tech_ID=[T.id]'>Copy to Disk</A><BR>"
 			dat += "</div>"
 
-		if(1.4) //Design Disk menu.
+		if(1.4) // Design Disk menu.
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><div class='statusDisplay'>"
 			if(d_disk.blueprint == null)
 				dat += "The disk has no data stored on it.</div>"
@@ -692,7 +692,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<A href='?src=\ref[src];clear_design=1'>Clear Disk</A>"
 			dat += "<A href='?src=\ref[src];eject_design=1'>Eject Disk</A>"
 
-		if(1.5) //Technology disk submenu
+		if(1.5) // Technology disk submenu
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=1.4'>Return to Disk Operations</A><div class='statusDisplay'>"
 			dat += "<h3>Load Design to Disk:</h3><BR>"
@@ -701,7 +701,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<A href='?src=\ref[src];copy_design=1;copy_design_ID=[D.id]'>Copy to Disk</A><BR>"
 			dat += "</div>"
 
-		if(1.6) //R&D console settings
+		if(1.6) // R&D console settings
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><div class='statusDisplay'>"
 			dat += "<h3>R&D Console Setting:</h3><BR>"
 			if(sync)
@@ -716,7 +716,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];lock=0.2'>Lock Console</A><BR>"
 			dat += "<A href='?src=\ref[src];reset=1'>Reset R&D Database</A></div>"
 
-		if(1.7) //R&D device linkage
+		if(1.7) // R&D device linkage
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=1.6'>Settings Menu</A><div class='statusDisplay'> "
 			dat += "<h3>R&D Console Device Linkage Menu:</h3><BR>"
@@ -736,7 +736,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "* No Circuit Imprinter Linked<BR>"
 			dat += "</div>"
 
-		////////////////////DESTRUCTIVE ANALYZER SCREENS////////////////////////////
+		//////////////////// DESTRUCTIVE ANALYZER SCREENS////////////////////////////
 		if(2.0)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<div class='statusDisplay'>NO DESTRUCTIVE ANALYZER LINKED TO CONSOLE</div>"
@@ -761,7 +761,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<div class='statusDisplay'>Item is neither reliable enough or broken enough to learn from.</div>"
 
-		/////////////////////PROTOLATHE SCREENS/////////////////////////
+		//////////////////// /PROTOLATHE SCREENS/////////////////////////
 		if(3.0)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 			dat += "<div class='statusDisplay'>NO PROTOLATHE LINKED TO CONSOLE</div>"
@@ -801,60 +801,60 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<BR>"
 			dat += "</div>"
 
-		if(3.2) //Protolathe Material Storage Sub-menu
+		if(3.2) // Protolathe Material Storage Sub-menu
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A><div class='statusDisplay'>"
 			dat += "<h3>Material Storage:</h3><BR><HR>"
-			//Metal
+			// Metal
 			dat += "* [linked_lathe.m_amount] of Metal: "
 			if(linked_lathe.m_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=1'>Eject</A> "
 			if(linked_lathe.m_amount >= 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=5'>5x</A> "
 			if(linked_lathe.m_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=50'>All</A>"
 			dat += "<BR>"
-			//Glass
+			// Glass
 			dat += "* [linked_lathe.g_amount] of Glass: "
 			if(linked_lathe.g_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=1'>Eject</A> "
 			if(linked_lathe.g_amount >= 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=5'>5x</A> "
 			if(linked_lathe.g_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=50'>All</A>"
 			dat += "<BR>"
-			//Gold
+			// Gold
 			dat += "* [linked_lathe.gold_amount] of Gold: "
 			if(linked_lathe.gold_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=1'>Eject</A> "
 			if(linked_lathe.gold_amount >= 10000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=5'>5x</A> "
 			if(linked_lathe.gold_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=50'>All</A>"
 			dat += "<BR>"
-			//Silver
+			// Silver
 			dat += "* [linked_lathe.silver_amount] of Silver: "
 			if(linked_lathe.silver_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=silver;lathe_ejectsheet_amt=1'>Eject</A> "
 			if(linked_lathe.silver_amount >= 10000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=silver;lathe_ejectsheet_amt=5'>5x</A> "
 			if(linked_lathe.silver_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=silver;lathe_ejectsheet_amt=50'>All</A>"
 			dat += "<BR>"
-			//Phoron
+			// Phoron
 			dat += "* [linked_lathe.phoron_amount] of Solid Phoron: "
 			if(linked_lathe.phoron_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=phoron;lathe_ejectsheet_amt=1'>Eject</A> "
 			if(linked_lathe.phoron_amount >= 10000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=phoron;lathe_ejectsheet_amt=5'>5x</A> "
 			if(linked_lathe.phoron_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=phoron;lathe_ejectsheet_amt=50'>All</A>"
 			dat += "<BR>"
-			//Uranium
+			// Uranium
 			dat += "* [linked_lathe.uranium_amount] of Uranium: "
 			if(linked_lathe.uranium_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=uranium;lathe_ejectsheet_amt=1'>Eject</A> "
 			if(linked_lathe.uranium_amount >= 10000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=uranium;lathe_ejectsheet_amt=5'>5x</A> "
 			if(linked_lathe.uranium_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=uranium;lathe_ejectsheet_amt=50'>All</A>"
 			dat += "<BR>"
-			//Diamond
+			// Diamond
 			dat += "* [linked_lathe.diamond_amount] of Diamond: "
 			if(linked_lathe.diamond_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=diamond;lathe_ejectsheet_amt=1'>Eject</A> "
 			if(linked_lathe.diamond_amount >= 10000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=diamond;lathe_ejectsheet_amt=5'>5x</A> "
 			if(linked_lathe.diamond_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=diamond;lathe_ejectsheet_amt=50'>All</A>"
 			dat += "<BR>"
-			//Bananium
+			// Bananium
 			dat += "* [linked_lathe.clown_amount] of Bananium: "
 			if(linked_lathe.clown_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=1'>Eject</A> "
 			if(linked_lathe.clown_amount >= 10000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=5'>5x</A> "
 			if(linked_lathe.clown_amount >= 2000) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=50'>All</A>"
 			dat += "</div>"
 
-		///////////////////CIRCUIT IMPRINTER SCREENS////////////////////
+		///////////////////CIRCUIT IMPRINTER SCREENS//////////////////// 
 		if(4.0)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 			dat += "<div class='statusDisplay'>NO CIRCUIT IMPRINTER LINKED TO CONSOLE</div>"
@@ -898,19 +898,19 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A><div class='statusDisplay'>"
 			dat += "<h3>Material Storage:</h3><BR><HR>"
-			//Glass
+			// Glass
 			dat += "* [linked_imprinter.g_amount]  glass: "
 			if(linked_imprinter.g_amount >= 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=1'>Eject</A> "
 			if(linked_imprinter.g_amount >= 18750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=5'>5x</A> "
 			if(linked_imprinter.g_amount >= 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=50'>All</A>"
 			dat += "<BR>"
-			//Gold
+			// Gold
 			dat += "* [linked_imprinter.gold_amount] gold: "
 			if(linked_imprinter.gold_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=1'>Eject</A> "
 			if(linked_imprinter.gold_amount >= 10000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=5'>5x</A> "
 			if(linked_imprinter.gold_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=50'>All</A>"
 			dat += "<BR>"
-			//Diamond
+			// Diamond
 			dat += "* [linked_imprinter.diamond_amount] diamond: "
 			if(linked_imprinter.diamond_amount >= 2000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=1'>Eject</A> "
 			if(linked_imprinter.diamond_amount >= 10000) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=5'>5x</A> "

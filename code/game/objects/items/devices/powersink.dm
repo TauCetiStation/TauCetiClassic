@@ -79,7 +79,7 @@
 				icon_state = "powersink1"
 				START_PROCESSING(SSobj, src)
 
-			if(2)  //This switch option wasn't originally included. It exists now. --NeoFite
+			if(2)  // This switch option wasn't originally included. It exists now. --NeoFite
 				to_chat(user, "You deactivate the device!")
 				for(var/mob/M in viewers(user))
 					if(M == user) continue

@@ -1,4 +1,4 @@
-//I still dont think this should be a closet but whatever
+// I still dont think this should be a closet but whatever
 /obj/structure/closet/fireaxecabinet
 	name = "Fire Axe Cabinet"
 	desc = "There is small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
@@ -8,7 +8,7 @@
 	icon_opened = "fireaxe1100"
 	anchored = 1
 	density = 0
-	var/localopened = 0 //Setting this to keep it from behaviouring like a normal closet and obstructing movement in the map. -Agouri
+	var/localopened = 0 // Setting this to keep it from behaviouring like a normal closet and obstructing movement in the map. -Agouri
 	opened = 1
 	var/hitstaken = 0
 	locked = 1
@@ -18,10 +18,10 @@
 		..()
 		fireaxe = new /obj/item/weapon/twohanded/fireaxe(src)
 
-	attackby(obj/item/O, mob/user)  //Marker -Agouri
-		//..() //That's very useful, Erro
+	attackby(obj/item/O, mob/user)  // Marker -Agouri
+		// ..() // That's very useful, Erro
 
-		var/hasaxe = 0       //gonna come in handy later~
+		var/hasaxe = 0       // gonna come in handy later~
 		if(fireaxe)
 			hasaxe = 1
 
@@ -44,13 +44,13 @@
 					return
 				else
 					user.do_attack_animation(src)
-					playsound(user, 'sound/effects/Glasshit.ogg', 100, 1) //We don't want this playing every time
+					playsound(user, 'sound/effects/Glasshit.ogg', 100, 1) // We don't want this playing every time
 				if(W.force < 15)
 					to_chat(user, "\blue The cabinet's protective glass glances off the hit.")
 				else
 					src.hitstaken++
 					if(src.hitstaken == 4)
-						playsound(user, 'sound/effects/Glassbr3.ogg', 100, 1) //Break cabinet, receive goodies. Cabinet's fucked for life after that.
+						playsound(user, 'sound/effects/Glassbr3.ogg', 100, 1) // Break cabinet, receive goodies. Cabinet's fucked for life after that.
 						src.smashed = 1
 						src.locked = 0
 						src.localopened = 1
@@ -134,7 +134,7 @@
 						spawn(10) update_icon()
 
 		else
-			localopened = !localopened //I'm pretty sure we don't need an if(src.smashed) in here. In case I'm wrong and it fucks up teh cabinet, **MARKER**. -Agouri
+			localopened = !localopened // I'm pretty sure we don't need an if(src.smashed) in here. In case I'm wrong and it fucks up teh cabinet, **MARKER**. -Agouri
 			if(localopened)
 				src.icon_state = text("fireaxe[][][][]opening",hasaxe,src.localopened,src.hitstaken,src.smashed)
 				spawn(10) update_icon()
@@ -151,7 +151,7 @@
 			return
 		attack_hand(user)
 
-	verb/toggle_openness() //nice name, huh? HUH?! -Erro //YEAH -Agouri
+	verb/toggle_openness() // nice name, huh? HUH?! -Erro // YEAH -Agouri
 		set name = "Open/Close"
 		set category = "Object"
 
@@ -199,7 +199,7 @@
 				to_chat(user, "\blue Cabinet unlocked.")
 			return
 
-	update_icon() //Template: fireaxe[has fireaxe][is opened][hits taken][is smashed]. If you want the opening or closing animations, add "opening" or "closing" right after the numbers
+	update_icon() // Template: fireaxe[has fireaxe][is opened][hits taken][is smashed]. If you want the opening or closing animations, add "opening" or "closing" right after the numbers
 		var/hasaxe = 0
 		if(fireaxe)
 			hasaxe = 1

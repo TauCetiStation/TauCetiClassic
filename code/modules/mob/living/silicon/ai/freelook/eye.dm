@@ -1,5 +1,5 @@
 // AI EYE
-//
+// 
 // A mob that the AI controls to look around the station with.
 // It streams chunks as it moves around, which will show it what the AI can and cannot see.
 
@@ -15,8 +15,8 @@
 
 /mob/camera/aiEye/New()
 	ghostimage = image(src.icon,src,src.icon_state)
-	ghost_darkness_images |= ghostimage //so ghosts can see the AI eye when they disable darkness
-	ghost_sightless_images |= ghostimage //so ghosts can see the AI eye when they disable ghost sight
+	ghost_darkness_images |= ghostimage // so ghosts can see the AI eye when they disable darkness
+	ghost_sightless_images |= ghostimage // so ghosts can see the AI eye when they disable ghost sight
 	updateallghostimages()
 	..()
 
@@ -57,7 +57,7 @@
 		if(ai.client)
 			ai.client.eye = src
 		update_parallax_contents()
-		//Holopad
+		// Holopad
 		if(ai.holo)
 			ai.holo.move_hologram()
 
@@ -125,8 +125,8 @@
 
 	user.cameraFollow = null
 
-	//user.unset_machine() //Uncomment this if it causes problems.
-	//user.lightNearbyCamera()
+	// user.unset_machine() // Uncomment this if it causes problems.
+	// user.lightNearbyCamera()
 
 
 // Return to the Core.

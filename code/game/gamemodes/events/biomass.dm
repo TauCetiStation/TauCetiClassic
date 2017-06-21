@@ -30,13 +30,13 @@
 		if(/obj/item/weapon/hatchet) qdel(src)
 		if(/obj/item/weapon/melee/energy) qdel(src)
 
-		//less effective weapons
+		// less effective weapons
 		if(/obj/item/weapon/wirecutters)
 			if(prob(25)) qdel(src)
 		if(/obj/item/weapon/shard)
 			if(prob(25)) qdel(src)
 
-		else //weapons with subtypes
+		else // weapons with subtypes
 			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
 			else if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
@@ -50,8 +50,8 @@
 	var/list/growth_queue = list()
 	var/reached_collapse_size
 	var/reached_slowdown_size
-	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
-	//meaning if you get the biomasssss..s' size to something less than 20 plots, it won't grow anymore.
+	// What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
+	// meaning if you get the biomasssss..s' size to something less than 20 plots, it won't grow anymore.
 
 	New()
 		if(!istype(src.loc,/turf/simulated/floor))
@@ -72,10 +72,10 @@
 
 	process()
 		if(!vines)
-			qdel(src) //space  vines exterminated. Remove the controller
+			qdel(src) // space  vines exterminated. Remove the controller
 			return
 		if(!growth_queue)
-			qdel(src) //Sanity check
+			qdel(src) // Sanity check
 			return
 		if(vines.len >= 250 && !reached_collapse_size)
 			reached_collapse_size = 1
@@ -101,7 +101,7 @@
 			i++
 			queue_end += BM
 			growth_queue -= BM
-			if(BM.energy < 2) //If tile isn't fully grown
+			if(BM.energy < 2) // If tile isn't fully grown
 				if(prob(20))
 					BM.grow()
 
@@ -154,14 +154,14 @@
 				return
 	return
 
-/obj/effect/biomass/fire_act(null, temperature, volume) //hotspots kill biomass
+/obj/effect/biomass/fire_act(null, temperature, volume) // hotspots kill biomass
 	if(temperature > T0C+100)
 		qdel(src)
 
 /proc/biomass_infestation()
 
-	spawn() //to stop the secrets panel hanging
-		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
+	spawn() // to stop the secrets panel hanging
+		var/list/turf/simulated/floor/turfs = list() // list of all the empty floor turfs in the hallway areas
 		for(var/areapath in typesof(/area/hallway))
 			var/area/A = locate(areapath)
 			for(var/area/B in A.related)
@@ -169,7 +169,7 @@
 					if(!F.contents.len)
 						turfs += F
 
-		if(turfs.len) //Pick a turf to spawn at if we can
+		if(turfs.len) // Pick a turf to spawn at if we can
 			var/turf/simulated/floor/T = pick(turfs)
-			new/obj/effect/biomass_controller(T) //spawn a controller at turf
+			new/obj/effect/biomass_controller(T) // spawn a controller at turf
 			message_admins("\blue Event: Biomass spawned at [T.loc.loc] ([T.x],[T.y],[T.z])")

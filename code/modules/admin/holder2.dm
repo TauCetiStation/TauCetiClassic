@@ -9,10 +9,10 @@ var/list/admin_datums = list()
 
 	var/datum/marked_datum
 
-	var/admincaster_screen = 0	//See newscaster.dm under machinery for a full description
-	var/datum/feed_message/admincaster_feed_message = new /datum/feed_message   //These two will act as holders.
+	var/admincaster_screen = 0	// See newscaster.dm under machinery for a full description
+	var/datum/feed_message/admincaster_feed_message = new /datum/feed_message   // These two will act as holders.
 	var/datum/feed_channel/admincaster_feed_channel = new /datum/feed_channel
-	var/admincaster_signature	//What you'll sign the newsfeeds as
+	var/admincaster_signature	// What you'll sign the newsfeeds as
 
 /datum/admins/New(initial_rank = "Temporary Admin", initial_rights = 0, ckey)
 	if(!ckey)
@@ -28,7 +28,7 @@ var/list/admin_datums = list()
 	if(istype(C))
 		owner = C
 		owner.holder = src
-		owner.add_admin_verbs()	//TODO
+		owner.add_admin_verbs()	// TODO
 		admins |= C
 
 /datum/admins/proc/disassociate()
@@ -77,7 +77,7 @@ you will have to do something like if(client.holder.rights & R_ADMIN) yourself.
 					to_chat(usr, "<font color='red'>Error: You are not an admin.</font>")
 	return 0
 
-//probably a bit iffy - will hopefully figure out a better solution
+// probably a bit iffy - will hopefully figure out a better solution
 /proc/check_if_greater_rights_than(client/other)
 	if(usr && usr.client)
 		if(usr.client.holder)
@@ -85,12 +85,12 @@ you will have to do something like if(client.holder.rights & R_ADMIN) yourself.
 				return 1
 			if(usr.client.holder.rights != other.holder.rights)
 				if( (usr.client.holder.rights & other.holder.rights) == other.holder.rights )
-					return 1	//we have all the rights they have and more
+					return 1	// we have all the rights they have and more
 		to_chat(usr, "<font color='red'>Error: Cannot proceed. They have more or equal rights to us.</font>")
 	return 0
 
 /client/proc/deadmin()
 	if(holder)
 		holder.disassociate()
-		//qdel(holder)
+		// qdel(holder)
 	return 1

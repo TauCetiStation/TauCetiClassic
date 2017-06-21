@@ -1,4 +1,4 @@
-//print an error message to world.log
+// print an error message to world.log
 
 
 // On Linux/Unix systems the line endings are LF, on windows it's CRLF, admins that don't use notepad++
@@ -7,17 +7,17 @@
 
 /var/global/log_end= world.system_type == UNIX ? ascii2text(13) : ""
 
-//print an error message to world.log
+// print an error message to world.log
 #define ERROR(MSG) error("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
 /proc/error(msg)
 	world.log << "## ERROR: [msg][log_end]"
 
-//print a warning message to world.log
+// print a warning message to world.log
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
 /proc/warning(msg)
 	world.log << "## WARNING: [msg][log_end]"
 
-//print a testing-mode debug message to world.log
+// print a testing-mode debug message to world.log
 /proc/testing(msg)
 	world.log << "## TESTING: [msg][log_end]"
 
@@ -66,7 +66,7 @@
 
 /proc/log_attack(text)
 	if (config.log_attack)
-		diary << "\[[time_stamp()]]ATTACK: [text][log_end]" //Seperate attack logs? Why?  FOR THE GLORY OF SATAN!
+		diary << "\[[time_stamp()]]ATTACK: [text][log_end]" // Seperate attack logs? Why?  FOR THE GLORY OF SATAN!
 
 /proc/log_adminsay(text)
 	if (config.log_adminchat)
@@ -83,7 +83,7 @@
 /proc/log_misc(text)
 	diary << "\[[time_stamp()]]MISC: [text][log_end]"
 
-//pretty print a direction bitflag, can be useful for debugging.
+// pretty print a direction bitflag, can be useful for debugging.
 /proc/print_dir(dir)
 	var/list/comps = list()
 	if(dir & NORTH) comps += "NORTH"

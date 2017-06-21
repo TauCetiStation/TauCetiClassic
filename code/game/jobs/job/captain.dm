@@ -9,7 +9,7 @@
 	selection_color = "#ccccff"
 	idtype = /obj/item/weapon/card/id/gold
 	req_admin_notify = 1
-	access = list() 			//See get_access()
+	access = list() 			// See get_access()
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
 

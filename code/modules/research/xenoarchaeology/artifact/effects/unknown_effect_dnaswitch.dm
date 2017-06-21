@@ -1,5 +1,5 @@
 
-//todo
+// todo
 /datum/artifact_effect/dnaswitch
 	effecttype = "dnaswitch"
 	effect_type = 5

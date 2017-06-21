@@ -1,5 +1,5 @@
 // CAMERA NET
-//
+// 
 // The datum containing all the chunks.
 
 var/datum/cameranet/cameranet = new()
@@ -98,7 +98,7 @@ var/datum/cameranet/cameranet = new()
 /datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c)
 	if(c.can_use())
 		majorChunkChange(c, 1)
-	//else
+	// else
 	//	majorChunkChange(c, 0)
 
 // Never access this proc directly!!!!
@@ -119,7 +119,7 @@ var/datum/cameranet/cameranet = new()
 		var/x2 = min(world.maxx, T.x + 8) & ~0xf
 		var/y2 = min(world.maxy, T.y + 8) & ~0xf
 
-		//world << "X1: [x1] - Y1: [y1] - X2: [x2] - Y2: [y2]"
+		// world << "X1: [x1] - Y1: [y1] - X2: [x2] - Y2: [y2]"
 
 		for(var/x = x1; x <= x2; x += 16)
 			for(var/y = y1; y <= y2; y += 16)
@@ -146,7 +146,7 @@ var/datum/cameranet/cameranet = new()
 		if(chunk.visibleTurfs[position])
 			return 1
 	return 0
-//tg-stuff
+// tg-stuff
 /datum/cameranet/proc/checkTurfVis(turf/position)
 	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
 	if(chunk)

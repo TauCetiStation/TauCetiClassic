@@ -23,7 +23,7 @@
 /obj/item/weapon/gun/syringe/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
-		if(S.mode != 2)//SYRINGE_BROKEN in syringes.dm
+		if(S.mode != 2)// SYRINGE_BROKEN in syringes.dm
 			if(syringes.len < max_syringes)
 				user.drop_item()
 				I.loc = src
@@ -44,7 +44,7 @@
 	return syringes.len
 
 /obj/item/weapon/gun/syringe/can_hit(mob/living/target, mob/living/user)
-	return 1		//SHOOT AND LET THE GOD GUIDE IT (probably will hit a wall anyway)
+	return 1		// SHOOT AND LET THE GOD GUIDE IT (probably will hit a wall anyway)
 
 /obj/item/weapon/gun/syringe/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(syringes.len)
@@ -61,7 +61,7 @@
 		var/turf/trg = get_turf(target)
 		var/obj/effect/syringe_gun_dummy/D = new/obj/effect/syringe_gun_dummy(get_turf(src))
 		var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
-		if((!S) || (!S.reagents))	//ho boy! wot runtimes!
+		if((!S) || (!S.reagents))	// ho boy! wot runtimes!
 			return
 		S.reagents.trans_to(D, S.reagents.total_volume)
 		syringes -= S
@@ -79,7 +79,7 @@
 				for(var/mob/living/carbon/M in D.loc)
 					if(!istype(M,/mob/living/carbon)) continue
 					if(M == user) continue
-					//Syringe gun attack logging by Yvarov
+					// Syringe gun attack logging by Yvarov
 					var/R
 					if(D.reagents)
 						for(var/datum/reagent/A in D.reagents.reagent_list)

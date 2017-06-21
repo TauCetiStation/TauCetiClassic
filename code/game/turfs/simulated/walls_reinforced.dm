@@ -14,7 +14,7 @@
 	var/d_state = 0
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
-	if(HULK in user.mutations) //#Z2
+	if(HULK in user.mutations) // #Z2
 		if(user.a_intent == "hurt")
 			to_chat(user, text("\blue You punch the wall."))
 			take_damage(rand(5, 25))
@@ -28,7 +28,7 @@
 				to_chat(user, text("\red Ouch!!"))
 			else
 				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-			return //##Z2
+			return // ##Z2
 
 	if(rotting)
 		to_chat(user, "\blue This wall feels rather unstable.")
@@ -36,7 +36,7 @@
 
 	/*user << "\blue You push the wall but nothing happens!"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
-	src.add_fingerprint(user)*/ //this code is in standard wall attack_hand proc
+	src.add_fingerprint(user)*/ // this code is in standard wall attack_hand proc
 	..()
 	return
 
@@ -47,9 +47,9 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	//get the user's location
+	// get the user's location
 	if(!istype(user.loc, /turf))
-		return	//can't do this stuff whilst inside objects and such
+		return	// can't do this stuff whilst inside objects and such
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool))
@@ -66,7 +66,7 @@
 			src.dismantle_wall()
 			return
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
+	// THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -106,9 +106,9 @@
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			return
 
-	var/turf/T = user.loc	//get user's location for delay checks
+	var/turf/T = user.loc	// get user's location for delay checks
 
-	//DECONSTRUCTION
+	// DECONSTRUCTION
 	switch(d_state)
 		if(0)
 			if (istype(W, /obj/item/weapon/wirecutters))
@@ -134,12 +134,12 @@
 						to_chat(user, "<span class='notice'>You remove the support lines.</span>")
 				return
 
-			//REPAIRING (replacing the outer grille for cosmetic damage)
+			// REPAIRING (replacing the outer grille for cosmetic damage)
 			else if(istype(W, /obj/item/stack/rods))
 				var/obj/item/stack/O = W
 				src.d_state = 0
 				src.icon_state = "r_wall"
-				relativewall_neighbours()	//call smoothwall stuff
+				relativewall_neighbours()	// call smoothwall stuff
 				to_chat(user, "<span class='notice'>You replace the outer grille.</span>")
 				if (O.amount > 1)
 					O.amount--
@@ -266,9 +266,9 @@
 						dismantle_wall()
 				return
 
-//vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
+// vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
 
-	//DRILLING
+	// DRILLING
 	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W
 		user.do_attack_animation(src)
@@ -289,32 +289,32 @@
 				to_chat(user, "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>")
 				dismantle_wall()
 
-	//REPAIRING
+	// REPAIRING
 	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)
 		var/obj/item/stack/sheet/metal/MS = W
 
 		to_chat(user, "<span class='notice'>You begin patching-up the wall with \a [MS].</span>")
 
-		if(do_after(user,(max(20*d_state,100)),target = src))	//time taken to repair is proportional to the damage! (max 10 seconds)
+		if(do_after(user,(max(20*d_state,100)),target = src))	// time taken to repair is proportional to the damage! (max 10 seconds)
 			if(!istype(src, /turf/simulated/wall/r_wall) || !user || !MS || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == MS && d_state)
 				src.d_state = 0
 				src.icon_state = "r_wall"
-				relativewall_neighbours()	//call smoothwall stuff
+				relativewall_neighbours()	// call smoothwall stuff
 				to_chat(user, "<span class='notice'>You repair the last of the damage.</span>")
 				if (MS.amount > 1)
 					MS.amount--
 				else
 					qdel(MS)
 
-	//APC
+	// APC
 	else if(istype(W,/obj/item/apc_frame))
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)
 
-	else if(istype(W,/obj/item/newscaster_frame))     //Be damned the man who thought only mobs need attack() and walls dont need inheritance, hitler incarnate
+	else if(istype(W,/obj/item/newscaster_frame))     // Be damned the man who thought only mobs need attack() and walls dont need inheritance, hitler incarnate
 		var/obj/item/newscaster_frame/AH = W
 		AH.try_build(src)
 		return
@@ -338,12 +338,12 @@
 		AH.try_build(src)
 		return
 
-	//Poster stuff
+	// Poster stuff
 	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
 		return
 
-	//Finally, CHECKING FOR FALSE WALLS if it isn't damaged
+	// Finally, CHECKING FOR FALSE WALLS if it isn't damaged
 	else if(!d_state)
 		return attack_hand(user)
 	return

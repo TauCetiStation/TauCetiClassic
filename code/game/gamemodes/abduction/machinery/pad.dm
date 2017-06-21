@@ -1,4 +1,4 @@
-//*************-Pad-*************//
+// *************-Pad-*************// 
 
 /obj/machinery/abductor/pad
 	name = "alien telepad"
@@ -45,7 +45,7 @@
 /obj/machinery/abductor/pad/proc/Warp(mob/living/target)
 	if(target)
 
-		//prevent from teleporting victim though the grab on neck
+		// prevent from teleporting victim though the grab on neck
 		if(istype(target.get_active_hand(), /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = target.get_active_hand()
 			if(G.state >= GRAB_PASSIVE)

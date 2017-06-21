@@ -1,6 +1,6 @@
-////////////////////////////////////////////////////////////////////////////////
-/// Droppers.
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////// 
+// / Droppers.
+//////////////////////////////////////////////////////////////////////////////// 
 /obj/item/weapon/reagent_containers/dropper
 	name = "Dropper"
 	desc = "A dropper. Transfers 5 units."
@@ -21,7 +21,7 @@
 			to_chat(user, "\red [target] is full.")
 			return
 
-		if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
+		if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) // You can inject humans and food but you cant remove the shit.
 			to_chat(user, "\red You cannot directly fill this object.")
 			return
 
@@ -29,7 +29,7 @@
 
 		if(ismob(target))
 
-			var/time = 20 //2/3rds the time of a syringe
+			var/time = 20 // 2/3rds the time of a syringe
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message(text("\red <B>[] is trying to squirt something into []'s eyes!</B>", user, target), 1)
 
@@ -105,9 +105,9 @@
 	return
 
 
-////////////////////////////////////////////////////////////////////////////////
-/// Pipette
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////// 
+// / Pipette
+//////////////////////////////////////////////////////////////////////////////// 
 
 /obj/item/weapon/reagent_containers/dropper/precision
 	name = "pipette"

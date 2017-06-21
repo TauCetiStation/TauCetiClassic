@@ -1,6 +1,6 @@
 
 /datum/event/economic_event
-	endWhen = 50			//this will be set randomly, later
+	endWhen = 50			// this will be set randomly, later
 	announceWhen = 15
 	var/event_type = 0
 	var/list/cheaper_goods = list()
@@ -52,12 +52,12 @@
 			affected_dest.temp_price_change[good_type] = rand(1,100) / 100
 
 /datum/event/economic_event/announce()
-	//copy-pasted from the admin verbs to submit new newscaster messages
+	// copy-pasted from the admin verbs to submit new newscaster messages
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = "Tau Ceti Daily"
 	newMsg.is_admin_message = 1
 
-	//see if our location has custom event info for this event
+	// see if our location has custom event info for this event
 	newMsg.body = affected_dest.get_custom_eventstring()
 	if(!newMsg.body)
 		switch(event_type)

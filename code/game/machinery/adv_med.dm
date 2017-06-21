@@ -57,9 +57,9 @@
 	src.occupant = usr
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)
-		//O = null
+		// O = null
 		qdel(O)
-		//Foreach goto(124)
+		// Foreach goto(124)
 	src.add_fingerprint(usr)
 	return
 
@@ -68,7 +68,7 @@
 		return
 	for(var/obj/O in src)
 		O.loc = src.loc
-		//Foreach goto(30)
+		// Foreach goto(30)
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
@@ -95,9 +95,9 @@
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)
 		O.loc = src.loc
-		//Foreach goto(154)
+		// Foreach goto(154)
 	src.add_fingerprint(user)
-	//G = null
+	// G = null
 	qdel(G)
 	return
 
@@ -107,8 +107,8 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-				//Foreach goto(35)
-			//SN src = null
+				// Foreach goto(35)
+			// SN src = null
 			qdel(src)
 			return
 		if(2.0)
@@ -116,8 +116,8 @@
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-					//Foreach goto(108)
-				//SN src = null
+					// Foreach goto(108)
+				// SN src = null
 				qdel(src)
 				return
 		if(3.0)
@@ -125,8 +125,8 @@
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-					//Foreach goto(181)
-				//SN src = null
+					// Foreach goto(181)
+				// SN src = null
 				qdel(src)
 				return
 		else
@@ -142,12 +142,12 @@
 
 	switch(severity)
 		if(1.0)
-			//SN src = null
+			// SN src = null
 			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				//SN src = null
+				// SN src = null
 				qdel(src)
 				return
 		else
@@ -191,21 +191,21 @@
 
 /*
 
-/obj/machinery/body_scanconsole/process() //not really used right now
+/obj/machinery/body_scanconsole/process() // not really used right now
 	if(stat & (NOPOWER|BROKEN))
 		return
-	//use_power(250) // power stuff
+	// use_power(250) // power stuff
 
-//	var/mob/M //occupant
-//	if (!( src.status )) //remove this
+//	var/mob/M // occupant
+//	if (!( src.status )) // remove this
 //		return
-//	if ((src.connected && src.connected.occupant)) //connected & occupant ok
+//	if ((src.connected && src.connected.occupant)) // connected & occupant ok
 //		M = src.connected.occupant
 //	else
 //		if (istype(M, /mob))
-//		//do stuff
+//		// do stuff
 //		else
-///			src.temphtml = "Process terminated due to lack of occupant in scanning chamber."
+// /			src.temphtml = "Process terminated due to lack of occupant in scanning chamber."
 //			src.status = null
 //	src.updateDialog()
 //	return
@@ -226,15 +226,15 @@
 		to_chat(user, "\red This device can only scan compatible lifeforms.")
 		return
 	var/dat
-	if (src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
+	if (src.delete && src.temphtml) // Window in buffer but its just simple message, so nothing
 		src.delete = src.delete
-	else if (!src.delete && src.temphtml) //Window in buffer - its a menu, dont add clear message
+	else if (!src.delete && src.temphtml) // Window in buffer - its a menu, dont add clear message
 		dat = text("[]<BR><BR><A href='?src=\ref[];clear=1'>Main Menu</A>", src.temphtml, src)
 	else
-		if (src.connected) //Is something connected?
+		if (src.connected) // Is something connected?
 			var/mob/living/carbon/human/occupant = src.connected.occupant
-			dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>" //Blah obvious
-			if (istype(occupant)) //is there REALLY someone in there?
+			dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>" // Blah obvious
+			if (istype(occupant)) // is there REALLY someone in there?
 				var/t1
 				switch(occupant.stat) // obvious, see what their status is
 					if(0)
@@ -248,7 +248,7 @@
 				else
 					dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
 
-					//if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
+					// if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
 					if(occupant.mind && occupant.mind.changeling && occupant.fake_death)
 						dat += text("<font color='red'>Abnormal bio-chemical activity detected!</font><BR>")
 
@@ -415,7 +415,7 @@
 	if(!.)
 		return
 	if (href_list["print"])
-		if (src.latestprint + 100 < world.time) //10sec cooldown
+		if (src.latestprint + 100 < world.time) // 10sec cooldown
 			src.latestprint = world.time
 			to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
 			spawn(10)

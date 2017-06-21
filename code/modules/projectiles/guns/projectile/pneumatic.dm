@@ -25,7 +25,7 @@
 	tank_container = new(src)
 	tank_container.tag = "gas_tank_holder"
 
-/obj/item/weapon/storage/pneumatic/verb/set_pressure() //set amount of tank pressure.
+/obj/item/weapon/storage/pneumatic/verb/set_pressure() // set amount of tank pressure.
 
 	set name = "Set valve pressure"
 	set category = "Object"
@@ -35,7 +35,7 @@
 		pressure_setting = N
 		to_chat(usr, "You dial the pressure valve to [pressure_setting]%.")
 
-/obj/item/weapon/storage/pneumatic/verb/eject_tank() //Remove the tank.
+/obj/item/weapon/storage/pneumatic/verb/eject_tank() // Remove the tank.
 
 	set name = "Eject tank"
 	set category = "Object"
@@ -125,8 +125,8 @@
 		return 0
 
 	var/obj/item/object = contents[1]
-	var/speed = ((fire_pressure*tank.volume)/object.w_class)/force_divisor //projectile speed.
-	if(speed>80) speed = 80 //damage cap.
+	var/speed = ((fire_pressure*tank.volume)/object.w_class)/force_divisor // projectile speed.
+	if(speed>80) speed = 80 // damage cap.
 
 	user.visible_message("<span class='danger'>[user] fires [src] and launches [object] at [target]!</span>","<span class='danger'>You fire [src] and launch [object] at [target]!</span>")
 
@@ -142,7 +142,7 @@
 		cooldown = 0
 		to_chat(user, "[src]'s gauge informs you it's ready to be fired again.")
 
-//Constructable pneumatic cannon.
+// Constructable pneumatic cannon.
 
 /obj/item/weapon/cannonframe
 	name = "pneumatic cannon frame"

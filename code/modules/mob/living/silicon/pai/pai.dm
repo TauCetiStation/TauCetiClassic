@@ -1,6 +1,6 @@
 /mob/living/silicon/pai
 	name = "pAI"
-	icon = 'icons/mob/mob.dmi'//
+	icon = 'icons/mob/mob.dmi'// 
 	icon_state = "shadow"
 
 	robot_talk_understand = 0
@@ -65,12 +65,12 @@
 			card.radio = new /obj/item/device/radio(src.card)
 		radio = card.radio
 
-	//Default languages without universal translator software
+	// Default languages without universal translator software
 	add_language("Sol Common", 1)
 	add_language("Tradeband", 1)
 	add_language("Gutter", 1)
 
-	//PDA
+	// PDA
 	pda = new(src)
 	spawn(5)
 		pda.ownjob = "Personal Assistant"
@@ -86,7 +86,7 @@
 			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
 			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
-		if(proc_holder_list.len)//Generic list for proc_holder objects.
+		if(proc_holder_list.len)// Generic list for proc_holder objects.
 			for(var/obj/effect/proc_holder/P in proc_holder_list)
 				statpanel("[P.panel]","",P)
 
@@ -169,7 +169,7 @@
 		src.updatehealth()
 	return
 
-//mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
+// mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
 
 /mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
@@ -187,7 +187,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src]'s casing with its scythe like arm."), 1)
 
-		else //harm
+		else // harm
 			var/damage = rand(10, 20)
 			if (prob(90))
 				playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
@@ -205,7 +205,7 @@
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
 	return
 
-///mob/living/silicon/pai/attack_hand(mob/living/carbon/M)
+// /mob/living/silicon/pai/attack_hand(mob/living/carbon/M)
 
 /mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
 	if(istype(usr, /mob/living))
@@ -232,7 +232,7 @@
 	src.unset_machine()
 	src.cameraFollow = null
 
-//Addition by Mord_Sith to define AI's network change ability
+// Addition by Mord_Sith to define AI's network change ability
 /*
 /mob/living/silicon/pai/proc/pai_network_change()
 	set category = "pAI Commands"
@@ -255,7 +255,7 @@
 
 	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist
 	to_chat(src, "\blue Switched to [src.network] camera network.")
-//End of code by Mord_Sith
+// End of code by Mord_Sith
 */
 
 

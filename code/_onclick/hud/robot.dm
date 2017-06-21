@@ -8,7 +8,7 @@ var/obj/screen/robot_inventory
 	var/obj/screen/using
 
 
-//Radio
+// Radio
 	using = new /obj/screen()
 	using.name = "radio"
 	using.icon = 'icons/mob/screen1_robot.dmi'
@@ -18,7 +18,7 @@ var/obj/screen/robot_inventory
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 
-//Module select
+// Module select
 
 	using = new /obj/screen()
 	using.name = "module1"
@@ -50,9 +50,9 @@ var/obj/screen/robot_inventory
 	src.adding += using
 	mymob:inv3 = using
 
-//End of module select
+// End of module select
 
-//Intent
+// Intent
 	using = new /obj/screen()
 	using.name = "act_intent"
 	using.icon = 'icons/mob/screen1_robot.dmi'
@@ -63,21 +63,21 @@ var/obj/screen/robot_inventory
 	src.adding += using
 	action_intent = using
 
-//Health
+// Health
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_borg_health
 
-//Installed Module
+// Installed Module
 	mymob.hands = new /obj/screen()
 	mymob.hands.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.hands.icon_state = "nomod"
 	mymob.hands.name = "module"
 	mymob.hands.screen_loc = ui_borg_module
 
-//Module Panel
+// Module Panel
 	using = new /obj/screen()
 	using.name = "panel"
 	using.icon = 'icons/mob/screen1_robot.dmi'
@@ -87,14 +87,14 @@ var/obj/screen/robot_inventory
 	using.plane = HUD_PLANE
 	src.adding += using
 
-//Store
+// Store
 	mymob.throw_icon = new /obj/screen()
 	mymob.throw_icon.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.throw_icon.icon_state = "store"
 	mymob.throw_icon.name = "store"
 	mymob.throw_icon.screen_loc = ui_borg_store
 
-//Inventory
+// Inventory
 	robot_inventory = new /obj/screen()
 	robot_inventory.name = "inventory"
 	robot_inventory.icon = 'icons/mob/screen1_robot.dmi'
@@ -111,7 +111,7 @@ var/obj/screen/robot_inventory
 	mymob.zone_sel.overlays.Cut()
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
-	//Handle the gun settings buttons
+	// Handle the gun settings buttons
 	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
 	if (mymob.client)
 		if (mymob.client.gun_mode) // If in aim mode, correct the sprite
@@ -133,7 +133,7 @@ var/obj/screen/robot_inventory
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.hands, mymob.healths, mymob.pullin, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.hands, mymob.healths, mymob.pullin, mymob.gun_setting_icon, robot_inventory) // , mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 	mymob.client.screen += mymob.client.void
 
@@ -157,8 +157,8 @@ var/obj/screen/robot_inventory
 	var/mob/living/silicon/robot/r = mymob
 
 	if(r.shown_robot_modules)
-		//Modules display is shown
-		//r.client.screen += robot_inventory	//"store" icon
+		// Modules display is shown
+		// r.client.screen += robot_inventory	// "store" icon
 
 		if(!r.module)
 			to_chat(usr, "<span class='danger'>No module selected</span>")
@@ -171,15 +171,15 @@ var/obj/screen/robot_inventory
 		if(!r.robot_modules_background)
 			return
 
-		var/display_rows = round((r.module.modules.len) / 8) +1 //+1 because round() returns floor of number
+		var/display_rows = round((r.module.modules.len) / 8) +1 // +1 because round() returns floor of number
 		r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 		r.client.screen += r.robot_modules_background
 
-		var/x = -4	//Start at CENTER-4,SOUTH+1
+		var/x = -4	// Start at CENTER-4,SOUTH+1
 		var/y = 1
 
-		//Unfortunately adding the emag module to the list of modules has to be here. This is because a borg can
-		//be emagged before they actually select a module. - or some situation can cause them to get a new module
+		// Unfortunately adding the emag module to the list of modules has to be here. This is because a borg can
+		// be emagged before they actually select a module. - or some situation can cause them to get a new module
 		// - or some situation might cause them to get de-emagged or something.
 		if(r.emagged)
 			if(!(r.module.emag in r.module.modules))
@@ -190,7 +190,7 @@ var/obj/screen/robot_inventory
 
 		for(var/atom/movable/A in r.module.modules)
 			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
-				//Module is not currently active
+				// Module is not currently active
 				r.client.screen += A
 				if(x < 0)
 					A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
@@ -205,11 +205,11 @@ var/obj/screen/robot_inventory
 					y++
 
 	else
-		//Modules display is hidden
-		//r.client.screen -= robot_inventory	//"store" icon
+		// Modules display is hidden
+		// r.client.screen -= robot_inventory	// "store" icon
 		for(var/atom/A in r.module.modules)
 			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
-				//Module is not currently active
+				// Module is not currently active
 				r.client.screen -= A
 		r.shown_robot_modules = 0
 		r.client.screen -= r.robot_modules_background

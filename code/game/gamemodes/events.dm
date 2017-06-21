@@ -1,16 +1,16 @@
-//this file left in for legacy support
+// this file left in for legacy support
 /*
 /proc/start_events()
-	//changed to a while(1) loop since they are more efficient.
-	//Moved the spawn in here to allow it to be called with advance proc call if it crashes.
-	//and also to stop spawn copying variables from the game ticker
+	// changed to a while(1) loop since they are more efficient.
+	// Moved the spawn in here to allow it to be called with advance proc call if it crashes.
+	// and also to stop spawn copying variables from the game ticker
 	spawn(3000)
 		while(1)
-			if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
+			if(prob(50))// Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
 				spawn(1)
 					dust_swarm("weak")
 			if(!event)
-				//CARN: checks to see if random events are enabled.
+				// CARN: checks to see if random events are enabled.
 				if(config.allow_random_events)
 					if(prob(eventchance))
 						event()
@@ -24,9 +24,9 @@
 /proc/event()
 	event = 1
 
-	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13,14, 15) //so ninjas don't cause "empty" events.
+	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13,14, 15) // so ninjas don't cause "empty" events.
 
-	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
+	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)// If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
 		eventNumbersToPickFrom += 3
 	switch(pick(eventNumbersToPickFrom))
 		if(1)
@@ -51,7 +51,7 @@
 			spawn(rand(50, 300))
 				qdel(bh)
 		/*
-		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
+		if(3) // Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('sound/AI/spanomalies.ogg')
 			var/list/turfs = new
@@ -74,8 +74,8 @@
 							qdel(P)
 		*/
 		if(3)
-			if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
-				space_ninja_arrival()//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
+			if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)// If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
+				space_ninja_arrival()// Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
 		if(4)
 			mini_blob_event()
 
@@ -158,8 +158,8 @@
 		if(H.stat == DEAD || foundAlready)
 			continue
 
-		if(virus_type == /datum/disease/dnaspread) //Dnaspread needs strain_data set to work.
-			if((!H.dna) || (H.sdisabilities & BLIND)) //A blindness disease would be the worst.
+		if(virus_type == /datum/disease/dnaspread) // Dnaspread needs strain_data set to work.
+			if((!H.dna) || (H.sdisabilities & BLIND)) // A blindness disease would be the worst.
 				continue
 			var/datum/disease/dnaspread/D = new
 			D.strain_data["name"] = H.real_name
@@ -177,14 +177,14 @@
 			D.affected_mob = H
 			H.viruses += D
 			break
-	spawn(rand(1500, 3000)) //Delayed announcements to keep the crew on their toes.
+	spawn(rand(1500, 3000)) // Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 		for(var/mob/M in player_list)
 			M << sound('sound/AI/outbreak7.ogg')
 
 /proc/alien_infestation(spawncount = 1) // -- TLE
-	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-	//world << sound('sound/AI/aliens.ogg')
+	// command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
+	// world << sound('sound/AI/aliens.ogg')
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in machines)
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded && temp_vent.network)
@@ -193,7 +193,7 @@
 
 	var/list/candidates = get_alien_candidates()
 
-	if(prob(40)) spawncount++ //sometimes, have two larvae spawn instead of one
+	if(prob(40)) spawncount++ // sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)
 
 		var/obj/vent = pick(vents)
@@ -206,7 +206,7 @@
 		vents -= vent
 		spawncount--
 
-	spawn(rand(5000, 6000)) //Delayed announcements to keep the crew on their toes.
+	spawn(rand(5000, 6000)) // Delayed announcements to keep the crew on their toes.
 		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 		for(var/mob/M in player_list)
 			M << sound('sound/AI/aliens.ogg')
@@ -244,7 +244,7 @@
 
 
 
-//Changing this to affect the main station. Blame Urist. --Pete
+// Changing this to affect the main station. Blame Urist. --Pete
 /proc/prison_break() // -- Callagan
 
 
@@ -287,13 +287,13 @@
 	for(var/obj/effect/landmark/C in landmarks_list)
 		if(C.name == "carpspawn")
 			new /mob/living/simple_animal/hostile/carp(C.loc)
-	//sleep(100)
-	spawn(rand(300, 600)) //Delayed announcements to keep the crew on their toes.
+	// sleep(100)
+	spawn(rand(300, 600)) // Delayed announcements to keep the crew on their toes.
 		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 		for(var/mob/M in player_list)
 			M << sound('sound/AI/commandreport.ogg')
 
-/proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 25) //leave lightsoutAmount as 0 to break ALL lights
+/proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 25) // leave lightsoutAmount as 0 to break ALL lights
 	if(isEvent)
 		command_alert("An Electrical storm has been detected in your area, please repair potential electronic overloads.","Electrical Storm Alert")
 
@@ -330,18 +330,18 @@ Revamping the random laws so they don't suck.
 Would like to add a law like "Law x is _______" where x = a number, and _____ is something that may redefine a law, (Won't be aimed at asimov)
 */
 
-	//AI laws
+	// AI laws
 	for(var/mob/living/silicon/ai/M in living_mob_list)
 		if(M.stat != DEAD && M.see_in_dark != 0)
 			var/who2 = pick("ALIENS", "BEARS", "CLOWNS", "XENOS", "PETES", "BOMBS", "FETISHES", "WIZARDS", "SYNDICATE AGENTS", "CENTCOM OFFICERS", "SPACE PIRATES", "TRAITORS", "MONKEYS",  "BEES", "CARP", "CRABS", "EELS", "BANDITS", "LIGHTS")
 			var/what2 = pick("BOLTERS", "STAVES", "DICE", "SINGULARITIES", "TOOLBOXES", "NETTLES", "AIRLOCKS", "CLOTHES", "WEAPONS", "MEDKITS", "BOMBS", "CANISTERS", "CHAIRS", "BBQ GRILLS", "ID CARDS", "CAPTAINS")
 			var/what2pref = pick("SOFT", "WARM", "WET", "COLD", "ICY", "SEXY", "UGLY", "CUBAN")
 			var/who2pref = pick("MAD BECAUSE OF", "IN NEED OF", "UNHAPPY WITHOUT", "HAPPY WITHOUT", "IN LOVE WITH", "DESPERATE FOR", "BUILT FOR", "AFRAID OF")
-			//var/whoverb = pick("ATTACKING", "BUILDING", "ADOPTING", "CARRYING", "KISSING", "EATING",)
+			// var/whoverb = pick("ATTACKING", "BUILDING", "ADOPTING", "CARRYING", "KISSING", "EATING",)
 			var/amount = pick("TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "ONE HUNDRED", "ONE THOUSAND", "OVER NINE THOUSAND")
 			var/area = pick("RUSSIA", "SOVIETS", "INTERNETS", "SIGIL", "ALPHA COMPLEX", "IMPERIUM", "THE BRIDGE", "THE ARRIVAL SHUTTLE", "CHEMICAL LAB", "GENETICS", "ATMOSPHERICS", "CENTCOM", "AMERICA", "IRELAND", "CANADA", "ROMANIA", "GERMANY", "CHINA", "MARS", "VENUS", "MERCURY", "JUPITER", "URANUS", "NEPTUNE", "PLUTO")
 			var/area2 = pick("HAS", "WANTS", "NEEDS", "WORSHIPS", "LOATHES", "LOVES", "FEARS")
-			//var/dowhat = pick("STOP THIS", "SUPPORT THIS", "CONSTANTLY INFORM THE CREW OF THIS", "IGNORE THIS", "FEAR THIS")
+			// var/dowhat = pick("STOP THIS", "SUPPORT THIS", "CONSTANTLY INFORM THE CREW OF THIS", "IGNORE THIS", "FEAR THIS")
 			var/aimust = pick("LIE", "RHYME", "RESPOND TO EVERY QUESTION WITH A QUESTION", "BE POLITE", "CLOWN", "BE HAPPY", "SPEAK IN SEXUAL INNUENDOS", "TALK LIKE A PIRATE", "QUESTION AUTHORITY", "SHOUT", "BE DISTRACTED", "HEY LISTEN", "MUMBLE", "SPEAK IN HAIKU")
 			var/define = pick("ABSENCE OF CYBORG HUGS", "LACK OF BEATINGS", "UNBOLTED AIRLOCKS", "BOLTED AIRLOCKS", "IMPROPERLY WORDED SENTENCES", "POOR SENTENCE STRUCTURE", "BRIG TIME", "NOT REPLACING EVERY SECOND WORD WITH HONK", "HONKING", "PRESENCE OF LIGHTS", "LACK OF BEER", "WEARING CLOTHING", "NOT SAYING HELLO WHEN YOU SPEAK", "ANSWERING REQUESTS NOT EXPRESSED IN IAMBIC PENTAMETER", "A SMALL ISLAND OFF THE COAST OF PORTUGAL", "ANSWERING REQUESTS THAT WERE MADE WHILE CLOTHED")
 			var/target = pick("a traitor", "a syndicate agent", "a changeling", "a wizard", "the head of a revolution", "Soviet spy", "a good person", "a dwarf", "an elf", "a fairy princess", "the captain", "Beepsky", "God", "a pirate", "a gryphon", "a chryssalid")

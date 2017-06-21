@@ -26,25 +26,25 @@
  *
  *  Functions you do not need to call directly but could:
  *  /datum/recipe/proc/check_reagents(datum/reagents/avail_reagents)
- *    //1=precisely,  0=insufficiently, -1=superfluous
+ *    // 1=precisely,  0=insufficiently, -1=superfluous
  *
  *  /datum/recipe/proc/check_items(obj/container)
- *    //1=precisely, 0=insufficiently, -1=superfluous
+ *    // 1=precisely, 0=insufficiently, -1=superfluous
  *
  * */
 
 /datum/recipe
 	var/list/reagents // example:  = list("berryjuice" = 5) // do not list same reagent twice
 	var/list/items // example: =list(/obj/item/weapon/crowbar, /obj/item/weapon/welder) // place /foo/bar before /foo
-	var/result //example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
+	var/result // example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 	var/time = 100 // 1/10 part of second
 	var/byproduct		// example: = /obj/item/weapon/kitchen/mould		// byproduct to return, such as a mould or trash
 
-/datum/recipe/proc/check_reagents(datum/reagents/avail_reagents) //1=precisely, 0=insufficiently, -1=superfluous
+/datum/recipe/proc/check_reagents(datum/reagents/avail_reagents) // 1=precisely, 0=insufficiently, -1=superfluous
 	. = 1
 	for (var/r_r in reagents)
 		var/aval_r_amnt = avail_reagents.get_reagent_amount(r_r)
-		if (!(abs(aval_r_amnt - reagents[r_r])<0.5)) //if NOT equals
+		if (!(abs(aval_r_amnt - reagents[r_r])<0.5)) // if NOT equals
 			if (aval_r_amnt>reagents[r_r])
 				. = -1
 			else
@@ -53,7 +53,7 @@
 		return -1
 	return .
 
-/datum/recipe/proc/check_items(obj/container) //1=precisely, 0=insufficiently, -1=superfluous
+/datum/recipe/proc/check_items(obj/container) // 1=precisely, 0=insufficiently, -1=superfluous
 	if (!items)
 		if (locate(/obj/) in container)
 			return -1
@@ -74,7 +74,7 @@
 		return 0
 	return .
 
-//general version
+// general version
 /datum/recipe/proc/make(obj/container)
 	var/obj/result_obj = new result(container)
 	for (var/obj/O in (container.contents-result_obj))
@@ -106,7 +106,7 @@
 		return null
 	else if (possible_recipes.len==1)
 		return possible_recipes[1]
-	else //okay, let's select the most complicated recipe
+	else // okay, let's select the most complicated recipe
 		var/r_count = 0
 		var/i_count = 0
 		. = possible_recipes[1]

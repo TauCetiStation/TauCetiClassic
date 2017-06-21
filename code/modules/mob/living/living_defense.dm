@@ -12,7 +12,7 @@
 			to_chat(src, "<span class='userdanger'>Your armor softens the blow!</span>")
 	return armor
 
-//if null is passed for def_zone, then this should return something appropriate for all zones (e.g. area effect damage)
+// if null is passed for def_zone, then this should return something appropriate for all zones (e.g. area effect damage)
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
 
@@ -20,7 +20,7 @@
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	flash_weak_pain()
 
-	//Being hit while using a deadman switch
+	// Being hit while using a deadman switch
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
@@ -30,14 +30,14 @@
 			src.visible_message("\red [src] triggers their deadman's switch!")
 			signaler.signal()
 
-	//Armor
+	// Armor
 	var/damage = P.damage
 	var/flags = P.damage_flags()
 	var/absorb = run_armor_check(def_zone, P.flag)
 	if (prob(absorb))
 		if(flags & DAM_LASER)
-			//the armour causes the heat energy to spread out, which reduces the damage (and the blood loss)
-			//this is mostly so that armour doesn't cause people to lose MORE fluid from lasers than they would otherwise
+			// the armour causes the heat energy to spread out, which reduces the damage (and the blood loss)
+			// this is mostly so that armour doesn't cause people to lose MORE fluid from lasers than they would otherwise
 			damage *= FLUIDLOSS_CONC_BURN / FLUIDLOSS_WIDE_BURN
 		flags &= ~(DAM_SHARP | DAM_EDGE | DAM_LASER)
 
@@ -47,8 +47,8 @@
 
 	return absorb
 
-//this proc handles being hit by a thrown atom
-/mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
+// this proc handles being hit by a thrown atom
+/mob/living/hitby(atom/movable/AM)// Standardization and logging -Sieve
 	if(istype(AM,/obj/))
 		var/obj/O = AM
 		var/dtype = BRUTE
@@ -64,7 +64,7 @@
 		else
 			zone = ran_zone(BP_CHEST, 75) // Hits a random part of the body, geared towards the chest
 
-		//check if we hit
+		// check if we hit
 		if(O.throw_source)
 			var/distance = get_dist(O.throw_source, loc)
 			zone = get_zone_with_miss_chance(zone, src, min(15 * (distance - 2), 0))
@@ -112,7 +112,7 @@
 
 	var/created_wound = apply_damage(throw_damage, dtype, null, armor, damage_flags, O)
 
-	//thrown weapon embedded object code.
+	// thrown weapon embedded object code.
 	if(dtype == BRUTE && istype(O, /obj/item))
 		var/obj/item/I = O
 		if(!I.can_embed || I.is_robot_module())
@@ -120,16 +120,16 @@
 
 		var/sharp = is_sharp(I)
 
-		var/damage = throw_damage //the effective damage used for embedding purposes, no actual damage is dealt here
+		var/damage = throw_damage // the effective damage used for embedding purposes, no actual damage is dealt here
 		if (armor)
 			damage *= blocked_mult(armor)
 
-		//blunt objects should really not be embedding in things unless a huge amount of force is involved
+		// blunt objects should really not be embedding in things unless a huge amount of force is involved
 		var/embed_chance = sharp ? (damage / (I.w_class / 2)) : (damage / (I.w_class * 3))
 		var/embed_threshold = sharp ? 5 * I.w_class : 15 * I.w_class
 
-		//Sharp objects will always embed if they do enough damage.
-		//Thrown sharp objects have some momentum already and have a small chance to embed even if the damage is below the threshold
+		// Sharp objects will always embed if they do enough damage.
+		// Thrown sharp objects have some momentum already and have a small chance to embed even if the damage is below the threshold
 		if(sharp && prob(damage / (10 * I.w_class) * 100) || (damage > embed_threshold && prob(embed_chance)))
 			embed(I, zone, created_wound)
 
@@ -157,7 +157,7 @@
 		pinned += I
 		update_canmove() // instant update, no need to wait Life() tick
 
-//This is called when the mob is thrown into a dense turf
+// This is called when the mob is thrown into a dense turf
 /mob/living/proc/turf_collision(turf/T)
 	visible_message("<span class='warning'>[src] crashed into \the [T]!</span>","<span class='danger'>You are crashed into \the [T]!</span>")
 	take_bodypart_damage(fly_speed * 5)
@@ -168,7 +168,7 @@
 	var/i = 1
 
 	while(i > 0 && i <= distance)
-		if(T.density) //Turf is a wall!
+		if(T.density) // Turf is a wall!
 			return last_turf
 		if(check_dense_objs)
 			for(var/obj/O in T.contents)
@@ -185,7 +185,7 @@
 /mob/living/proc/check_shields(damage = 0, attack_text = "the attack", hit_dir = 0)
 	return FALSE
 
-//Mobs on Fire
+// Mobs on Fire
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
@@ -199,25 +199,25 @@
 		set_light(max(0, light_range - 3))
 		update_fire()
 
-/mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
+/mob/living/proc/adjust_fire_stacks(add_fire_stacks) // Adjusting the amount of fire_stacks we have on person
     fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0)
-		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
-		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
+		fire_stacks++ // If we've doused ourselves in water to avoid fire, dry off slowly
+		fire_stacks = min(0, fire_stacks)// So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
 		return 1
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 	if(G.oxygen < 1)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+		ExtinguishMob() // If there's no oxygen in the tile we're on, put out the fire
 		return
 	for(var/obj/item/I in contents)
 		if(I.wet)
 			ExtinguishMob()
 			break
 	if(fire_stacks == 0)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+		ExtinguishMob() // If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 50, 1)
@@ -226,7 +226,7 @@
 	adjust_fire_stacks(0.5)
 	IgniteMob()
 
-//Mobs on Fire end
+// Mobs on Fire end
 
 /mob/living/regular_hud_updates()
 	..()
@@ -236,7 +236,7 @@
 	if(!hud_used) return
 	if(!client) return
 
-	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
+	if(hud_used.hud_shown != 1)	// Hud toggled to minimal
 		return
 
 	client.screen -= hud_used.hide_actions_toggle
@@ -251,7 +251,7 @@
 
 		if(!hud_used.hide_actions_toggle.moved)
 			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(1)
-			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,1)
+			// hud_used.SetButtonCoords(hud_used.hide_actions_toggle,1)
 
 		client.screen += hud_used.hide_actions_toggle
 		return
@@ -274,7 +274,7 @@
 
 		if(!B.moved)
 			B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
-			//hud_used.SetButtonCoords(B,button_number)
+			// hud_used.SetButtonCoords(B,button_number)
 
 	if(button_number > 0)
 		if(!hud_used.hide_actions_toggle)
@@ -282,7 +282,7 @@
 			hud_used.hide_actions_toggle.InitialiseIcon(src)
 		if(!hud_used.hide_actions_toggle.moved)
 			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
-			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
+			// hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
 		client.screen += hud_used.hide_actions_toggle
 
 /mob/living/incapacitated()

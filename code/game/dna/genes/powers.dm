@@ -1,8 +1,8 @@
-///////////////////////////////////
+/////////////////////////////////// 
 // POWERS
-///////////////////////////////////
-//#Z2
-//Added activation chance for every power
+/////////////////////////////////// 
+// #Z2
+// Added activation chance for every power
 
 /datum/dna/gene/basic/nobreath
 	name="No Breathing"
@@ -178,7 +178,7 @@
 
 	can_activate(mob/M,flags)
 		// Can't be big, small and regenerate.
-		if( (REGEN in M.mutations)) //#Z2
+		if( (REGEN in M.mutations)) // #Z2
 			return 0
 		return ..(M,flags)
 
@@ -191,7 +191,7 @@
 			to_chat(H, "\blue \b Ventcrawling allowed")
 
 		var/matrix/Mx = matrix()
-		Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
+		Mx.Scale(0.8) // Makes our hulk to be bigger than any normal human.
 		Mx.Translate(0,-2)
 		M.transform = Mx
 
@@ -218,7 +218,7 @@
 
 	/*can_activate(mob/M,flags)
 		// Can't be big, small and regenerate.
-		if( (SMALLSIZE in M.mutations) || (REGEN in M.mutations)) //#Z2
+		if( (SMALLSIZE in M.mutations) || (REGEN in M.mutations)) // #Z2
 			return 0
 		return ..(M,flags)*/
 
@@ -236,8 +236,8 @@
 /datum/dna/gene/basic/hulk/proc/mutate_user(mob/M)
 	if(!M)
 		return
-	if(!(HULK in M.mutations)) //If user cleans hulk mutation before timer runs out, then there is no mutation.
-		M.mind.hulkizing = 0   //We don't want to waste user's try, so user can mutate once later.
+	if(!(HULK in M.mutations)) // If user cleans hulk mutation before timer runs out, then there is no mutation.
+		M.mind.hulkizing = 0   // We don't want to waste user's try, so user can mutate once later.
 		return
 
 	message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span> (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")

@@ -37,23 +37,23 @@
 #define O_KIDNEYS  "kidneys"
 #define O_APPENDIX "appendix"
 
-#define AGE_MIN 25			//youngest a character can be
-#define AGE_MAX 85			//oldest a character can be
+#define AGE_MIN 25			// youngest a character can be
+#define AGE_MAX 85			// oldest a character can be
 
 #define LEFT  1
 #define RIGHT 2
 
-//Pulse levels, very simplified
-#define PULSE_NONE		0	//so !M.pulse checks would be possible
-#define PULSE_SLOW		1	//<60 bpm
-#define PULSE_NORM		2	//60-90 bpm
-#define PULSE_FAST		3	//90-120 bpm
-#define PULSE_2FAST		4	//>120 bpm
-#define PULSE_THREADY	5	//occurs during hypovolemic shock
+// Pulse levels, very simplified
+#define PULSE_NONE		0	// so !M.pulse checks would be possible
+#define PULSE_SLOW		1	// <60 bpm
+#define PULSE_NORM		2	// 60-90 bpm
+#define PULSE_FAST		3	// 90-120 bpm
+#define PULSE_2FAST		4	// >120 bpm
+#define PULSE_THREADY	5	// occurs during hypovolemic shock
 
-//proc/get_pulse methods
-#define GETPULSE_HAND	0	//less accurate (hand)
-#define GETPULSE_TOOL	1	//more accurate (med scanner, sleeper, etc)
+// proc/get_pulse methods
+#define GETPULSE_HAND	0	// less accurate (hand)
+#define GETPULSE_TOOL	1	// more accurate (med scanner, sleeper, etc)
 
 // Species Names (keep in mind, that whitelist and preferences DB depends on this names too, and if anything is renamed, update MYSQL tables or is_alien_whitelisted() proc and preferences).
 #define HUMAN       "Human"
@@ -70,19 +70,19 @@
 #define MONKEY      "Monkey"
 #define GOLEM       "Adamantine Golem"
 
-//Some on_mob_life() procs check for alien races.
+// Some on_mob_life() procs check for alien races.
 #define IS_DIONA  1
 #define IS_VOX	  2
 #define IS_SKRELL 3
 #define IS_UNATHI 4
 
-#define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
+#define HUMAN_STRIP_DELAY 40 // takes 40ds = 4s to strip someone.
 
 #define ALIEN_SELECT_AFK_BUFFER 1 // How many minutes that a person can be AFK before not being allowed to be an alien.
 
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 
-//Nutrition levels for humans.
+// Nutrition levels for humans.
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
 #define NUTRITION_LEVEL_WELL_FED 450
@@ -100,7 +100,7 @@
 // all effects according to how they originally were with the 0.4 metabolism
 #define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
 
-//Ian can lick or sniff
+// Ian can lick or sniff
 #define IAN_STANDARD 0
 #define IAN_LICK     1
 #define IAN_SNIFF    2

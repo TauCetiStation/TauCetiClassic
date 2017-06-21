@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /*
 Destructive Analyzer
@@ -62,7 +62,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		to_chat(user, "<span class='warning'> The protolathe is busy right now.</span>")
 		return
 	if (istype(O, /obj/item) && !loaded_item)
-		if(isrobot(user)) //Don't put your module items in there!
+		if(isrobot(user)) // Don't put your module items in there!
 			return
 		if(!O.origin_tech)
 			to_chat(user, "<span class='warning'> This doesn't seem to have a tech origin!</span>")
@@ -85,7 +85,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	icon_state = "d_analyzer_l"
 	busy = 0
 
-//For testing purposes only.
+// For testing purposes only.
 /*/obj/item/weapon/deconstruction_test
 	name = "Test Item"
 	desc = "WTF?"

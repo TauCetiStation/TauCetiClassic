@@ -1,5 +1,5 @@
-//conveyor2 is pretty much like the original, except it supports corners, but not diverters.
-//note that corner pieces transfer stuff clockwise when running forward, and anti-clockwise backwards.
+// conveyor2 is pretty much like the original, except it supports corners, but not diverters.
+// note that corner pieces transfer stuff clockwise when running forward, and anti-clockwise backwards.
 
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
@@ -131,7 +131,7 @@
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
 			return
 	if(isrobot(user))
-		return //Carn: fix for borgs dropping their modules on conveyor belts
+		return // Carn: fix for borgs dropping their modules on conveyor belts
 	if(!user.drop_item())
 		to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>")
 		return
@@ -159,7 +159,7 @@
 		C.set_operable(turn(dir,180), id, 0)
 
 
-//set the operable var if ID matches, propagating in the given direction
+// set the operable var if ID matches, propagating in the given direction
 
 /obj/machinery/conveyor/proc/set_operable(stepdir, match_id, op)
 
@@ -183,8 +183,8 @@
 	update()
 
 // the conveyor control switch
-//
-//
+// 
+// 
 
 /obj/machinery/conveyor_switch
 
@@ -248,7 +248,7 @@
 		return
 
 	if(position == 0)
-		if(convdir)   //is it a oneway switch
+		if(convdir)   // is it a oneway switch
 			position = convdir
 		else
 			if(last_pos < 0)
@@ -279,12 +279,12 @@
 		qdel(src)
 
 /obj/machinery/conveyor_switch/oneway
-	convdir = 1 //Set to 1 or -1 depending on which way you want the convayor to go. (In other words keep at 1 and set the proper dir on the belts.)
+	convdir = 1 // Set to 1 or -1 depending on which way you want the convayor to go. (In other words keep at 1 and set the proper dir on the belts.)
 	desc = "A conveyor control switch. It appears to only go in one direction."
 
-//
+// 
 // CONVEYOR CONSTRUCTION STARTS HERE
-//
+// 
 
 /obj/item/conveyor_construct
 	icon = 'icons/obj/recycling.dmi'
@@ -292,7 +292,7 @@
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
 	w_class = 4
-	var/id = "" //inherited by the belt
+	var/id = "" // inherited by the belt
 
 /obj/item/conveyor_construct/attackby(obj/item/I, mob/user)
 	..()
@@ -319,11 +319,11 @@
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
 	w_class = 4
-	var/id = "" //inherited by the switch
+	var/id = "" // inherited by the switch
 
 /obj/item/conveyor_switch_construct/New()
 	..()
-	id = rand() //this couldn't possibly go wrong
+	id = rand() // this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
 	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))

@@ -63,7 +63,7 @@
 		if(S && S.amount < stacktypes[T])
 			S.amount++
 
-/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
+/obj/item/weapon/robot_module/proc/rebuild()// Rebuilds the list so it's possible to add/remove items from the module
 	var/list/temp_list = modules
 	modules = list()
 	for(var/obj/O in temp_list)
@@ -298,7 +298,7 @@
 		return
 
 	add_languages(mob/living/silicon/robot/R)
-		//full set of languages
+		// full set of languages
 		R.add_language("Sol Common", 1)
 		R.add_language("Sinta'unathi", 1)
 		R.add_language("Siik'maas", 1)
@@ -329,7 +329,7 @@
 		src.modules += new /obj/item/weapon/pickaxe/drill/borgdrill(src)
 		src.modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 		src.modules += new /obj/item/device/geoscanner(src)
-		src.modules += new /obj/item/weapon/shovel(src)//Need to buff borgdrill, so it can get sand instead shovel
+		src.modules += new /obj/item/weapon/shovel(src)// Need to buff borgdrill, so it can get sand instead shovel
 		src.emag = new /obj/item/borg/stun(src)
 		return
 
@@ -372,27 +372,27 @@
 		src.modules += new /obj/item/device/assembly/signaler(src)
 		src.modules += new /obj/item/device/ano_scanner(src)
 
-	//To fuck anomalies up
+	// To fuck anomalies up
 
 		src.modules += new /obj/item/device/reagent_scanner/adv(src)
 		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
-		src.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src) //To fuck chemistry up
+		src.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src) // To fuck chemistry up
 
 		src.modules += new /obj/item/device/depth_scanner(src)
 		src.modules += new /obj/item/weapon/pickaxe/cyb(src)
-		src.modules += new /obj/item/device/measuring_tape(src) //To unfuck xenoarcheology up
+		src.modules += new /obj/item/device/measuring_tape(src) // To unfuck xenoarcheology up
 
 		src.modules += new /obj/item/weapon/circular_saw(src)
 		src.modules += new /obj/item/weapon/scalpel(src)
-		src.modules += new /obj/item/weapon/extinguisher/mini(src) //To unfuck xenobiology up
+		src.modules += new /obj/item/weapon/extinguisher/mini(src) // To unfuck xenobiology up
 
 		src.modules += new /obj/item/weapon/crowbar/red(src)
 		src.modules += new /obj/item/weapon/wrench(src)
 		src.modules += new /obj/item/weapon/screwdriver(src)
 		src.modules += new /obj/item/weapon/wirecutters(src)
-		src.modules += new /obj/item/weapon/weldingtool/largetank(src) //To fuck and unfuck (but mostly fuck) shit up
+		src.modules += new /obj/item/weapon/weldingtool/largetank(src) // To fuck and unfuck (but mostly fuck) shit up
 
-		src.emag = new /obj/item/device/lustmodule(src) //To fuck people's shit up
+		src.emag = new /obj/item/device/lustmodule(src) // To fuck people's shit up
 
 		src.emag.name = "Slime bloodlust pulse emitter"
 		return
@@ -439,7 +439,7 @@
 		return
 
 	add_languages(mob/living/silicon/robot/R)
-		return	//not much ROM to spare in that tiny microprocessor!
+		return	// not much ROM to spare in that tiny microprocessor!
 
 /obj/item/weapon/robot_module/drone/respawn_consumable(mob/living/silicon/robot/R)
 	var/obj/item/weapon/reagent_containers/spray/cleaner/C = locate() in src.modules
@@ -452,7 +452,7 @@
 
 	return
 
-//checks whether this item is a module of the robot it is located in.
+// checks whether this item is a module of the robot it is located in.
 /obj/item/proc/is_robot_module()
 	if (!istype(src.loc, /mob/living/silicon/robot))
 		return 0

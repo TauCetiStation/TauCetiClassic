@@ -1,4 +1,4 @@
-//Cat
+// Cat
 /mob/living/simple_animal/cat
 	name = "cat"
 	desc = "A domesticated, feline pet. Has a tendency to adopt crewmembers."
@@ -18,14 +18,14 @@
 	response_harm   = "kicks the"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
-	min_oxy = 16 //Require atleast 16kPA oxygen
-	minbodytemp = 223		//Below -50 Degrees Celcius
-	maxbodytemp = 323	//Above 50 Degrees Celcius
+	min_oxy = 16 // Require atleast 16kPA oxygen
+	minbodytemp = 223		// Below -50 Degrees Celcius
+	maxbodytemp = 323	// Above 50 Degrees Celcius
 	holder_type = /obj/item/weapon/holder/cat
 	var/obj/item/inventory_mouth
 
 /mob/living/simple_animal/cat/Life()
-	//MICE!
+	// MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
@@ -75,7 +75,7 @@
 	if(!istype(H) || !Adjacent(H))
 		return ..()
 
-	//This REALLY needs to be moved to a general mob proc somewhere.
+	// This REALLY needs to be moved to a general mob proc somewhere.
 	if(H.a_intent == "help")
 		get_scooped(H)
 		return
@@ -94,7 +94,7 @@
 	else
 		dat = "<br><b>Mouth:</b><a href='?src=\ref[src];add_inv=mouth'>Nothing</a>"
 
-	//dat += "<br><a href='?src=\ref[user];mach_close=mob[type]'>Close</a>"
+	// dat += "<br><a href='?src=\ref[user];mach_close=mob[type]'>Close</a>"
 
 	var/datum/browser/popup = new(user, "mob[type]", "Inventory of [name]", 325, 500)
 	popup.set_content(dat)
@@ -104,7 +104,7 @@
 	if(usr.stat || stat || !Adjacent(usr) || !(ishuman(usr) || ismonkey(usr)))
 		return
 
-	//Removing from inventory
+	// Removing from inventory
 	if(href_list["remove_inv"])
 		if(inventory_mouth)
 			inventory_mouth.loc = src.loc
@@ -133,7 +133,7 @@
 	if(inventory_mouth)
 		overlays += image('icons/mob/animal.dmi',inventory_mouth.icon_state)
 
-//RUNTIME IS ALIVE! SQUEEEEEEEE~
+// RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/cat/Runtime
 	name = "Runtime"
 	desc = "Its fur has the look and feel of velvet, and its tail quivers occasionally."
@@ -144,11 +144,11 @@
 	icon_state = "Syndicat"
 	icon_living = "Syndicat"
 	icon_dead = "Syndicat_dead"
-	//gender = FEMALE
+	// gender = FEMALE
 	flags = list(
 	 IS_SYNTHETIC = TRUE
 	,NO_BREATHE = TRUE
 	)
 	faction = list("syndicate")
-	//var/turns_since_scan = 0
-	//var/mob/living/simple_animal/mouse/movement_target
+	// var/turns_since_scan = 0
+	// var/mob/living/simple_animal/mouse/movement_target

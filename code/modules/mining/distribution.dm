@@ -41,10 +41,10 @@ Deep minerals:
 
 /datum/ore_distribution
 
-	var/real_size = 65     //Overall map size ((must be power of 2)+1)
-	var/chunk_size = 4     //Size each cell represents on map (like hell we're generating up to 100 256^2 grids at roundstart)
-	var/list/map[4225]     //The actual map. real_size squared.
-	var/range = 255        //Max random range of cells in map.
+	var/real_size = 65     // Overall map size ((must be power of 2)+1)
+	var/chunk_size = 4     // Size each cell represents on map (like hell we're generating up to 100 256^2 grids at roundstart)
+	var/list/map[4225]     // The actual map. real_size squared.
+	var/range = 255        // Max random range of cells in map.
 
 	var/random_variance_chance = 25
 	var/random_element = 0.5
@@ -69,10 +69,10 @@ Deep minerals:
 	if(deep_count < MIN_DEEP_COUNT || deep_count > MAX_DEEP_COUNT) return 0
 	return 1
 
-//Halfassed diamond-square algorithm with some fuckery since it's a single dimension array.
+// Halfassed diamond-square algorithm with some fuckery since it's a single dimension array.
 /datum/ore_distribution/proc/populate_distribution_map()
 
-	//Seed beginning values.
+	// Seed beginning values.
 	var/x = 1
 	var/y = 1
 	var/size = real_size - 1
@@ -81,7 +81,7 @@ Deep minerals:
 	map[MAP_BOTTOM_LEFT]  = (range / 3) + rand(range/5)
 	map[MAP_BOTTOM_RIGHT] = (range / 3) + rand(range/5)
 
-	//Fill in and smooth it out.
+	// Fill in and smooth it out.
 	var/attempts = 0
 	do
 		attempts++
@@ -135,11 +135,11 @@ Deep minerals:
 	// ORIGIN IS THE BOTTOM LEFT CORNER OF THE SQUARE CONTAINING ALL ASTEROID
 	// TILES YOU WISH TO APPLY THE DISTRIBUTION MAP TO.
 
-	var/origin_x = 17  //We start here...
-	var/origin_y = 32  //...and here...
-	var/limit_x = 218  //...and iterate until here...
-	var/limit_y = 223  //...and here...
-	var/asteroid_z = 5 //...on this Z-level.
+	var/origin_x = 17  // We start here...
+	var/origin_y = 32  // ...and here...
+	var/limit_x = 218  // ...and iterate until here...
+	var/limit_y = 223  // ...and here...
+	var/asteroid_z = 5 // ...on this Z-level.
 
 	var/tx = origin_x
 	var/ty = origin_y
@@ -171,24 +171,24 @@ Deep minerals:
 								target_turf.resources["gold"] =       rand(RESOURCE_LOW_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["silver"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								target_turf.resources["uranium"] =    rand(RESOURCE_LOW_MIN,RESOURCE_MID_MAX)
-								//target_turf.resources["diamond"] =    0
-								//target_turf.resources["phoron"] =     o
-								//target_turf.resources["osmium"] =     0
-								//target_turf.resources["hydrogen"] =   0
+								// target_turf.resources["diamond"] =    0
+								// target_turf.resources["phoron"] =     o
+								// target_turf.resources["osmium"] =     0
+								// target_turf.resources["hydrogen"] =   0
 							if(71 to 125)
 								target_turf.resources["iron"] =       rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
-								//target_turf.resources["gold"] =       0
+								// target_turf.resources["gold"] =       0
 								target_turf.resources["silver"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
-								//target_turf.resources["uranium"] =    0
-								//target_turf.resources["diamond"] =    0
+								// target_turf.resources["uranium"] =    0
+								// target_turf.resources["diamond"] =    0
 								target_turf.resources["phoron"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
-								//target_turf.resources["osmium"] =     0
-								//target_turf.resources["hydrogen"] =   0
+								// target_turf.resources["osmium"] =     0
+								// target_turf.resources["hydrogen"] =   0
 							if(126 to 255)
-								//target_turf.resources["iron"] =       0
-								//target_turf.resources["gold"] =       0
-								//target_turf.resources["silver"] =     0
-								//target_turf.resources["uranium"] =    0
+								// target_turf.resources["iron"] =       0
+								// target_turf.resources["gold"] =       0
+								// target_turf.resources["silver"] =     0
+								// target_turf.resources["uranium"] =    0
 								target_turf.resources["diamond"] =    rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								target_turf.resources["phoron"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["osmium"] =     rand(RESOURCE_LOW_MIN,RESOURCE_MID_MIN)

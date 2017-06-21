@@ -10,7 +10,7 @@
 	. += 				"<tr><td colspan='3'><a href='?_src_=prefs;task=reset'>Reset custom UI</a></td></tr>"
 	if(config.allow_Metadata)
 		. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[sanitize_popup(copytext(metadata, 1, 3))]...":"\[...\]"]</a></td></tr>"
-	//if(user.client) TG
+	// if(user.client) TG
 	//	if(user.client.holder)
 	//		. += "<b>Adminhelp Sound:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 	//		. += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
@@ -100,7 +100,7 @@
 				if(!isnull(new_metadata))
 					metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
-			//if(href_list["preference"] == "ghostorbit")
+			// if(href_list["preference"] == "ghostorbit")
 			//	if(unlock_content)
 			//		var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in ghost_orbits
 			//		if(new_orbit)

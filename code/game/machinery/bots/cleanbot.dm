@@ -1,4 +1,4 @@
-//Cleanbot assembly
+// Cleanbot assembly
 /obj/item/weapon/bucket_sensor
 	desc = "It's a bucket. With a sensor attached."
 	name = "proxy bucket"
@@ -12,7 +12,7 @@
 	var/created_name = "Cleanbot"
 
 
-//Cleanbot
+// Cleanbot
 /obj/machinery/bot/cleanbot
 	name = "Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
@@ -21,7 +21,7 @@
 	layer = MOB_LAYER
 	density = 0
 	anchored = 0
-	//weight = 1.0E7
+	// weight = 1.0E7
 	health = 25
 	maxhealth = 25
 	var/cleaning = 0
@@ -183,7 +183,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(src.oddbutton && prob(5))
 		visible_message("Something flies out of [src]. He seems to be acting oddly.")
 		var/obj/effect/decal/cleanable/blood/gibs/gib = new /obj/effect/decal/cleanable/blood/gibs(src.loc)
-		//gib.streak(list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+		// gib.streak(list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 		src.oldtarget = gib
 	if(!src.target || src.target == null)
 		for (var/obj/effect/decal/cleanable/D in view(7,src))

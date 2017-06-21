@@ -116,7 +116,7 @@
 	caliber = "shotgun"
 	max_ammo = 5
 
-///////////EXTERNAL MAGAZINES////////////////
+/////////// EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/m9mm
 	name = "magazine (9mm)"
 	icon_state = "9x19p"

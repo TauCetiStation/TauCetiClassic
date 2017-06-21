@@ -16,7 +16,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 
 /datum/recipe/microwave/dionaroast
-	reagents = list("facid" = 5) //It dissolves the carapace. Still poisonous, though.
+	reagents = list("facid" = 5) // It dissolves the carapace. Still poisonous, though.
 	items = list(
 		/obj/item/weapon/holder/diona,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple
@@ -61,7 +61,7 @@
 /datum/recipe/microwave/plainburger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
-		/obj/item/weapon/reagent_containers/food/snacks/meat //do not place this recipe before /datum/recipe/microwave/humanburger
+		/obj/item/weapon/reagent_containers/food/snacks/meat // do not place this recipe before /datum/recipe/microwave/humanburger
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 
@@ -110,7 +110,7 @@
 /datum/recipe/microwave/ghostburger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
-		/obj/item/weapon/ectoplasm //where do you even find this stuff
+		/obj/item/weapon/ectoplasm // where do you even find this stuff
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/ghostburger
 
@@ -146,11 +146,11 @@
 		return being_cooked
 
 /datum/recipe/microwave/donkpocket/warm
-	reagents = list() //This is necessary since this is a child object of the above recipe and we don't want donk pockets to need flour
+	reagents = list() // This is necessary since this is a child object of the above recipe and we don't want donk pockets to need flour
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
+	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket // SPECIAL
 	make_food(obj/container)
 		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = locate() in container
 		if(being_cooked && !being_cooked.warm)
@@ -677,9 +677,9 @@ datum/recipe/microwave/slimesandwich
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/tofurkey
 
-//////////////////////////////////////////
+///////////////////////////////////////// /
 // bs12 food port stuff
-//////////////////////////////////////////
+///////////////////////////////////////// /
 
 /datum/recipe/microwave/taco
 	items = list(

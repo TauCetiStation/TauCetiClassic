@@ -22,9 +22,9 @@
  * - /turf/proc/reachableAdjacentTurfs : returns reachable turfs in cardinal directions (uses simulated_only)
  */
 
-/////////////////
-//PathNode object
-/////////////////
+///////////////// 
+// PathNode object
+///////////////// 
 
 /PathNode
 	var/turf/source       // Turf associated with the PathNode
@@ -48,7 +48,7 @@
 	f = g + h
 
 //////////
-//A* procs
+// A* procs
 //////////
 
 /**

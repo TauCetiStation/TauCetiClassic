@@ -4,7 +4,7 @@
 	icon_state = "gygax"
 	initial_icon = "gygax"
 	step_in = 3
-	dir_in = 1 //Facing North.
+	dir_in = 1 // Facing North.
 	health = 300
 	deflect_chance = 15
 	damage_absorption = list("brute"=0.75,"fire"=1,"bullet"=0.8,"laser"=0.7,"energy"=0.85,"bomb"=1)

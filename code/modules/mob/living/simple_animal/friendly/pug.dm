@@ -1,4 +1,4 @@
-//Corgi
+// Corgi
 /mob/living/simple_animal/pug
 	name = "\improper pug"
 	real_name = "pug"
@@ -30,7 +30,7 @@
 					dir = i
 					sleep(1)
 
-/mob/living/simple_animal/pug/attackby(obj/item/O, mob/user)  //Marker -Agouri
+/mob/living/simple_animal/pug/attackby(obj/item/O, mob/user)  // Marker -Agouri
 	if(istype(O, /obj/item/weapon/newspaper))
 		if(!stat)
 			user.visible_message("\blue [user] baps [name] on the nose with the rolled up [O]")

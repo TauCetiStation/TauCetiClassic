@@ -1,6 +1,6 @@
 #define MIN_SANDWICH_LIMIT 4
 #define SANDWICH_GROWTH_BY_SLICE 4
-#define MAX_SANDWICH_LIMIT 124 //30 breadslices + 4 base size
+#define MAX_SANDWICH_LIMIT 124 // 30 breadslices + 4 base size
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/W, mob/user)
 
@@ -48,7 +48,7 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/proc/update()
-	var/fullname = "" //We need to build this from the contents of the var.
+	var/fullname = "" // We need to build this from the contents of the var.
 	var/i = 0
 
 	overlays.Cut()
@@ -93,18 +93,18 @@
 		return
 	var/obj/item/weapon/shard/shard = locate() in contents
 
-	if(isliving(M) && shard && M == user) //This needs a check for feeding the food to other people, but that could be abusable.
+	if(isliving(M) && shard && M == user) // This needs a check for feeding the food to other people, but that could be abusable.
 		var/mob/living/L = M
 		to_chat(L, "<span class='red'>You lacerate your mouth on a [shard.name] in the sandwich!</span>")
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-			if(!BP) //Impossible, but...
+			if(!BP) // Impossible, but...
 				H.adjustBruteLoss(5)
 			else
 				BP.take_damage(5, null, shard.damage_flags(), "[shard.name]")
 		else
-			L.adjustBruteLoss(5) //TODO: Target head if human.
+			L.adjustBruteLoss(5) // TODO: Target head if human.
 	..()
 
 #undef MIN_SANDWICH_LIMIT

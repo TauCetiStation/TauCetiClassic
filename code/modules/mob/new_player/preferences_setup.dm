@@ -1,5 +1,5 @@
 datum/preferences
-	//The mob should have a gender you want before running this proc. Will run fine without H
+	// The mob should have a gender you want before running this proc. Will run fine without H
 	proc/randomize_appearance_for(mob/living/carbon/human/H)
 		if(H)
 			if(H.gender == MALE)
@@ -179,7 +179,7 @@ datum/preferences
 		b_skin = blue
 
 
-/datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
+/datum/preferences/proc/update_preview_icon()		// seriously. This is horrendous.
 	// Silicons only need a very basic preview since there is no customization for them.
 	if(job_engsec_high)
 		switch(job_engsec_high)

@@ -3,7 +3,7 @@
 	desc = "a basic weapon designed kill with concentrated energy bolts."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "laser"
-	item_state = null	//so the human update icon uses the icon_state instead.
+	item_state = null	// so the human update icon uses the icon_state instead.
 	w_class = 3.0
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
@@ -86,7 +86,7 @@ obj/item/weapon/gun/energy/laser/retro
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] // Necessary to find cost of shot
 			if(R.cell.use(shot.e_cost))
 				chambered = shot
 				chambered.newshot()
@@ -140,7 +140,7 @@ obj/item/weapon/gun/energy/laser/retro
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] // Necessary to find cost of shot
 			if(R.cell.use(shot.e_cost))
 				chambered = shot
 				chambered.newshot()
@@ -154,7 +154,7 @@ obj/item/weapon/gun/energy/laser/retro
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 
-////////Laser Tag////////////////////
+//////// Laser Tag//////////////////// 
 
 /obj/item/weapon/gun/energy/laser/bluetag
 	name = "laser tag gun"

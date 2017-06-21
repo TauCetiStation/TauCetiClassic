@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/structure/computerframe
 	density = 1
@@ -87,7 +87,7 @@
 /obj/item/weapon/circuitboard/card/centcom
 	name = "Circuit board (CentCom ID Computer)"
 	build_path = /obj/machinery/computer/card/centcom
-//obj/item/weapon/circuitboard/shield
+// obj/item/weapon/circuitboard/shield
 //	name = "Circuit board (Shield Control)"
 //	build_path = /obj/machinery/computer/stationshield
 /obj/item/weapon/circuitboard/teleporter
@@ -135,11 +135,11 @@
 	name = "Circuit board (Turbine control)"
 	build_path = /obj/machinery/computer/turbine_computer
 /obj/item/weapon/circuitboard/solar_control
-	name = "Circuit board (Solar Control)"  //name fixed 250810
+	name = "Circuit board (Solar Control)"  // name fixed 250810
 	build_path = /obj/machinery/power/solar_control
 	origin_tech = "programming=2;powerstorage=2"
 /obj/item/weapon/circuitboard/powermonitor
-	name = "Circuit board (Power Monitor)"  //name fixed 250810
+	name = "Circuit board (Power Monitor)"  // name fixed 250810
 	build_path = /obj/machinery/computer/monitor
 /obj/item/weapon/circuitboard/olddoor
 	name = "Circuit board (DoorMex)"
@@ -262,7 +262,7 @@
 			catastasis = "STANDARD"
 
 		switch( alert("Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface","Switch to [opposite_catastasis]","Cancel") )
-		//switch( alert("Current receiver spectrum is set to: " {(src.contraband_enabled) ? ("BROAD") : ("STANDARD")} , "Multitool-Circuitboard interface" , "Switch to " {(src.contraband_enabled) ? ("STANDARD") : ("BROAD")}, "Cancel") )
+		// switch( alert("Current receiver spectrum is set to: " {(src.contraband_enabled) ? ("BROAD") : ("STANDARD")} , "Multitool-Circuitboard interface" , "Switch to " {(src.contraband_enabled) ? ("STANDARD") : ("BROAD")}, "Cancel") )
 			if("Switch to STANDARD","Switch to BROAD")
 				src.contraband_enabled = !src.contraband_enabled
 

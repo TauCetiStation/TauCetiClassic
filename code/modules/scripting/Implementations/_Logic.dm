@@ -135,7 +135,7 @@
 		return uppertext_plus(string)
 
 /*
-//Makes a list where all indicies in a string is a seperate index in the list
+// Makes a list where all indicies in a string is a seperate index in the list
 // JUST A HELPER DON'T ADD TO NTSCRIPT
 proc/string_tolist(string)
 	var/list/L = new/list()
@@ -252,12 +252,12 @@ proc/n_inrange(num, min=-1, max=1)
 		var/i = 1
 		var/lenh=lentext(haystack)
 		var/lena=lentext(a)
-		//var/lenb=lentext(b)
+		// var/lenb=lentext(b)
 		var/count = 0
 		var/list/dat = list()
 		while (i < lenh)
 			var/found = findtext(haystack, a, i, 0)
-			//log_misc("findtext([haystack], [a], [i], 0)=[found]")
+			// log_misc("findtext([haystack], [a], [i], 0)=[found]")
 			if (found == 0) // Not found
 				break
 			else
@@ -265,26 +265,26 @@ proc/n_inrange(num, min=-1, max=1)
 					dat+=found
 					count+=1
 				else
-					//log_misc("Script found [a] [count] times, aborted")
+					// log_misc("Script found [a] [count] times, aborted")
 					break
-			//log_misc("Found [a] at [found]! Moving up...")
+			// log_misc("Found [a] at [found]! Moving up...")
 			i = found + lena
 		if (count == 0)
 			return haystack
-		//var/nlen = lenh + ((lenb - lena) * count)
+		// var/nlen = lenh + ((lenb - lena) * count)
 		var/buf = copytext(haystack,1,dat[1]) // Prefill
 		var/lastReadPos = 0
 		for (i = 1, i <= count, i++)
 			var/precopy = dat[i] - lastReadPos-1
-			//internal static unsafe void CharCopy (String target, int targetIndex, String source, int sourceIndex, int count)
-			//fixed (char* dest = target, src = source)
-			//CharCopy (dest + targetIndex, src + sourceIndex, count);
-			//CharCopy (dest + curPos, source + lastReadPos, precopy);
+			// internal static unsafe void CharCopy (String target, int targetIndex, String source, int sourceIndex, int count)
+			// fixed (char* dest = target, src = source)
+			// CharCopy (dest + targetIndex, src + sourceIndex, count);
+			// CharCopy (dest + curPos, source + lastReadPos, precopy);
 			buf+=copytext(haystack,lastReadPos,precopy)
 			log_misc("buf+=copytext([haystack],[lastReadPos],[precopy])")
 			log_misc("[buf]")
 			lastReadPos = dat[i] + lena
-			//CharCopy (dest + curPos, replace, newValue.length);
+			// CharCopy (dest + curPos, replace, newValue.length);
 			buf+=b
 			log_misc("[buf]")
 		buf+=copytext(haystack,lastReadPos, 0)

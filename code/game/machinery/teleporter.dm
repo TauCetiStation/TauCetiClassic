@@ -8,8 +8,8 @@
 	var/id = null
 	var/obj/machinery/teleport/station/power_station
 	var/calibrating
-	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
-						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
+	var/turf/target // Used for one-time-use teleport cards (such as clown planet coordinates.)
+						 // Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
@@ -129,7 +129,7 @@
 		to_chat(usr, "<span class='notice'>Processing hub calibration to target...</span>")
 
 		calibrating = 1
-		spawn(50 * (3 - power_station.teleporter_hub.accurate)) //Better parts mean faster calibration
+		spawn(50 * (3 - power_station.teleporter_hub.accurate)) // Better parts mean faster calibration
 			calibrating = 0
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1
@@ -245,7 +245,7 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/obj/machinery/teleport/station/power_station
-	var/calibrated //Calibration prevents mutation
+	var/calibrated // Calibration prevents mutation
 
 /obj/machinery/teleport/hub/New()
 	..()
@@ -308,10 +308,10 @@
 		return
 	if (istype(M, /atom/movable))
 		if(do_teleport(M, com.target))
-			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
-				if(ishuman(M))//don't remove people from the round randomly you jerks
+			if(!calibrated && prob(30 - ((accurate) * 10))) // oh dear a problem
+				if(ishuman(M))// don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
-					//Effects similar to mutagen.
+					// Effects similar to mutagen.
 					randmuti(human)
 					randmutb(human)
 					domutcheck(human)
@@ -339,14 +339,14 @@
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
-//obj/machinery/teleport/hub/syndicate/New()
+// obj/machinery/teleport/hub/syndicate/New()
 //	..()
 //	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
 //	RefreshParts()
 
 /obj/machinery/teleport/station
 	name = "station"
-	desc = "It's the station thingy of a teleport thingy." //seriously, wtf.
+	desc = "It's the station thingy of a teleport thingy." // seriously, wtf.
 	icon_state = "controller"
 	var/engaged = 0
 	use_power = 1

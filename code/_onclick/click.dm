@@ -323,7 +323,7 @@
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)
 	if(C.cob.busy)
-		//do nothing
+		// do nothing
 	else if(modifiers["left"])
 		if(modifiers["alt"])
 			C.cob.rotate_object()

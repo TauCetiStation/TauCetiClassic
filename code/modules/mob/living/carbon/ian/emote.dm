@@ -5,7 +5,7 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act, "s", -1) && !findtext(act, "_", -2))//Removes ending s's unless they are prefixed with a '_'
+	if(findtext(act, "s", -1) && !findtext(act, "_", -2))// Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act, 1, length(act))
 
 	if(src.stat == DEAD && (act != "deathgasp"))
@@ -146,7 +146,7 @@
 
 		for(var/mob/M in dead_mob_list)
 			if(!M.client || isnewplayer(M))
-				continue //skip monkeys, leavers and new players
+				continue // skip monkeys, leavers and new players
 			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 

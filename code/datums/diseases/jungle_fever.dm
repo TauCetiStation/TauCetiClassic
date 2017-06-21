@@ -8,5 +8,5 @@
 	curable = 0
 	desc = "Monkeys with this disease will bite humans, causing humans to spontaneously mutate into a monkey."
 	severity = "Medium"
-	//stage_prob = 100
+	// stage_prob = 100
 	agent = "Kongey Vibrion M-909"

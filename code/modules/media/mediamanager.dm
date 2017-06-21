@@ -26,11 +26,11 @@ function SetVolume(volume) {
 	</script>"}
 
 /mob/living/proc/update_music()
-	//world << "Update start"
+	// world << "Update start"
 	if (client && client.media)
-		//world << "Media Exists"
+		// world << "Media Exists"
 		client.media.update_music()
-	//else
+	// else
 	//	testing("[src] - client: [client?"Y":"N"]; client.media: [client && client.media ? "Y":"N"]")
 
 /area
@@ -54,7 +54,7 @@ function SetVolume(volume) {
 	var/mob/living/mob
 
 	var/const/window = "rpane.hosttracker"
-	//var/const/window = "mediaplayer" // For debugging.
+	// var/const/window = "mediaplayer" // For debugging.
 
 /datum/media_manager/New(mob/living/holder)
 	if(!istype(holder))
@@ -83,35 +83,35 @@ function SetVolume(volume) {
 /datum/media_manager/proc/update_music()
 	var/targetURL = ""
 	var/targetStartTime = 0
-	//var/targetVolume = volume
+	// var/targetVolume = volume
 
 	if (!owner)
-		//testing("owner is null")
+		// testing("owner is null")
 		return
 	if(!isliving(mob))
 		return
 	var/area/A = get_area_master(mob)
 	if(!A)
-		//testing("[owner] in [mob.loc].  Aborting.")
+		// testing("[owner] in [mob.loc].  Aborting.")
 		stop_music()
 		return
 	var/obj/machinery/media/M = A.media_source
 	if(M && M.playing)
 		targetURL = M.media_url
 		targetStartTime = M.media_start_time
-		//owner << "Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s."
-	//else
+		// owner << "Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s."
+	// else
 	//	testing("M is not playing or null.")
 	if (url != targetURL || abs(targetStartTime - start_time) > 1)
 		url = targetURL
 		start_time = targetStartTime
-		//volume = targetVolume
+		// volume = targetVolume
 		send_update()
 
 /datum/media_manager/proc/update_volume(value)
 	volume = value
 	owner << output(list2params(list(volume)), "[window]:SetVolume")
-	//send_update()
+	// send_update()
 
 /client/verb/change_volume()
 	set name = "Set Volume"

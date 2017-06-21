@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 // The communications computer
 /obj/machinery/computer/communications
@@ -65,7 +65,7 @@
 			if (I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
-				if(20 in I.access || 57 in I.access || 58 in I.access)//cap, hop, hos
+				if(20 in I.access || 57 in I.access || 58 in I.access)// cap, hop, hos
 					authenticated = 2
 		if("logout")
 			authenticated = 0
@@ -77,14 +77,14 @@
 				var/obj/item/device/pda/pda = I
 				I = pda.id
 			if (I && istype(I))
-				if(access_heads in I.access) //Let heads change the alert level.
+				if(access_heads in I.access) // Let heads change the alert level.
 					var/old_level = security_level
 					if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
 					if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN
-					if(tmp_alertlevel > SEC_LEVEL_BLUE) tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
+					if(tmp_alertlevel > SEC_LEVEL_BLUE) tmp_alertlevel = SEC_LEVEL_BLUE // Cannot engage delta with this
 					set_security_level(tmp_alertlevel)
 					if(security_level != old_level)
-						//Only notify the admins if an actual change happened
+						// Only notify the admins if an actual change happened
 						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
 						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 						switch(security_level)
@@ -106,11 +106,11 @@
 				var/input = stripped_input(usr, "Please choose a message to announce to the station crew.", "What?")
 				if(!input || !(usr in view(1,src)))
 					return
-				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
+				captain_announce(input)// This should really tell who is, IE HoP, CE, HoS, RD, Captain
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 				message_cooldown = 1
-				spawn(600)//One minute cooldown
+				spawn(600)// One minute cooldown
 					message_cooldown = 0
 
 		if("callshuttle")
@@ -203,7 +203,7 @@
 				Syndicate_announce(input, usr)
 				to_chat(usr, "\blue Message transmitted.")
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
-				CM.cooldown = 55 //about one minute
+				CM.cooldown = 55 // about one minute
 
 		if("RestoreBackup")
 			to_chat(usr, "Backup routing data restored!")
@@ -464,7 +464,7 @@
 			return
 
 		if(world.time < 54000) // 30 minute grace period to let the game get going
-			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
+			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")// may need to change "/600"
 			return
 
 		if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
@@ -485,7 +485,7 @@
 	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))
 		return
 
-	if(SSshuttle.direction != -1 && SSshuttle.online) //check that shuttle isn't already heading to centcomm
+	if(SSshuttle.direction != -1 && SSshuttle.online) // check that shuttle isn't already heading to centcomm
 		SSshuttle.recall()
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -514,7 +514,7 @@
 			status_signal.data["msg1"] = data1
 			status_signal.data["msg2"] = data2
 			log_admin("STATUS: [src.fingerprintslast] set status screen message with [src]: [data1] [data2]")
-			//message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
+			// message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
 		if("alert")
 			status_signal.data["picture_state"] = data1
 

@@ -13,12 +13,12 @@
 /obj/item/weapon/fuel/H
 	name = "Hydrogen storage ring"
 	content = "Hydrogen"
-	fuel = 1e-12		//pico-kilogram
+	fuel = 1e-12		// pico-kilogram
 
 /obj/item/weapon/fuel/antiH
 	name = "Anti-Hydrogen storage ring"
 	content = "Anti-Hydrogen"
-	fuel = 1e-12		//pico-kilogram
+	fuel = 1e-12		// pico-kilogram
 
 /obj/item/weapon/fuel/attackby(obj/item/weapon/fuel/F, mob/user)
 	..()
@@ -62,7 +62,7 @@
 	var/ground_zero_range = round(strength / 387)
 	explosion(ground_zero, ground_zero_range, ground_zero_range*2, ground_zero_range*3, ground_zero_range*4)
 
-	//SN src = null
+	// SN src = null
 	qdel(src)
 	return
 

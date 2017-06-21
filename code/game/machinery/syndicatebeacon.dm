@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 //  Beacon randomly spawns in space
 //	When a non-traitor (no special role in /mind) uses it, he is given the choice to become a traitor
@@ -111,7 +111,7 @@
 
 #define SCREWED 32
 
-/obj/machinery/singularity_beacon //not the best place for it but it's a hack job anyway -- Urist
+/obj/machinery/singularity_beacon // not the best place for it but it's a hack job anyway -- Urist
 	name = "ominous beacon"
 	desc = "This looks suspicious..."
 	icon = 'icons/obj/singularity.dmi'
@@ -119,10 +119,10 @@
 
 	anchored = 0
 	density = 1
-	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
+	layer = MOB_LAYER - 0.1 // so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
 
-	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
+	var/active = 0 // It doesn't use up power, so use_power wouldn't really suit it
 	var/icontype = "beacon"
 	var/obj/structure/cable/attached = null
 

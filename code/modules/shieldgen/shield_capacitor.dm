@@ -1,6 +1,6 @@
 
-//---------- shield capacitor
-//pulls energy out of a power net and charges an adjacent generator
+// ---------- shield capacitor
+// pulls energy out of a power net and charges an adjacent generator
 
 /obj/machinery/shield_capacitor
 	name = "shield capacitor"
@@ -14,10 +14,10 @@
 	var/max_charge = 5e6
 	var/charge_limit = 200000
 	var/locked = 0
-	//
-	use_power = 1			//0 use nothing
-							//1 use idle power
-							//2 use active power
+	// 
+	use_power = 1			// 0 use nothing
+							// 1 use idle power
+							// 2 use active power
 	idle_power_usage = 10
 	active_power_usage = 100
 	var/charge_rate = 100
@@ -109,7 +109,7 @@
 	user.set_machine(src)
 
 /obj/machinery/shield_capacitor/process()
-	//
+	// 
 	if(active)
 		use_power = 2
 		if(stored_charge + charge_rate > max_charge)

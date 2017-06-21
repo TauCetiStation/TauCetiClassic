@@ -68,16 +68,16 @@
 
 //	testing("Assigning DNA blocks:")
 
-	//#Z2 A bit of sorting.
+	// #Z2 A bit of sorting.
 	// Standard muts, imported from older code above.
-	//Major Powers (DAC)
+	// Major Powers (DAC)
 	HULKBLOCK          = getAssignedBlock("HULK",          numsToAssign, DNA_HARD_BOUNDS)
 	TELEBLOCK          = getAssignedBlock("TELE",          numsToAssign, DNA_HARD_BOUNDS)
 	FIREBLOCK          = getAssignedBlock("FIRE",          numsToAssign, DNA_HARD_BOUNDS)
 	XRAYBLOCK          = getAssignedBlock("XRAY",          numsToAssign, DNA_HARD_BOUNDS)
 	COLDBLOCK          = getAssignedBlock("COLD",          numsToAssign, DNA_HARD_BOUNDS)
 	SHOCKIMMUNITYBLOCK = getAssignedBlock("SHOCKIMMUNITY", numsToAssign, DNA_HARD_BOUNDS)
-	//Minor Powers (BEA)
+	// Minor Powers (BEA)
 	NOBREATHBLOCK      = getAssignedBlock("NOBREATH",      numsToAssign, DNA_HARDER_BOUNDS)
 	REMOTEVIEWBLOCK    = getAssignedBlock("REMOTEVIEW",    numsToAssign, DNA_HARDER_BOUNDS)
 	REGENERATEBLOCK    = getAssignedBlock("REGENERATE",    numsToAssign, DNA_HARDER_BOUNDS)
@@ -86,7 +86,7 @@
 	MORPHBLOCK         = getAssignedBlock("MORPH",         numsToAssign, DNA_HARDER_BOUNDS)
 	NOPRINTSBLOCK      = getAssignedBlock("NOPRINTS",      numsToAssign, DNA_HARDER_BOUNDS)
 	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign, DNA_HARDER_BOUNDS)
-	//Disabilities (802)
+	// Disabilities (802)
 	BLINDBLOCK         = getAssignedBlock("BLIND",         numsToAssign)
 	DEAFBLOCK          = getAssignedBlock("DEAF",          numsToAssign)
 	CLUMSYBLOCK        = getAssignedBlock("CLUMSY",        numsToAssign)
@@ -97,11 +97,11 @@
 	NERVOUSBLOCK       = getAssignedBlock("NERVOUS",       numsToAssign)
 	HEADACHEBLOCK      = getAssignedBlock("HEADACHE",      numsToAssign)
 	HALLUCINATIONBLOCK = getAssignedBlock("HALLUCINATION", numsToAssign)
-	FAKEBLOCK          = getAssignedBlock("FAKE",          numsToAssign) //##Z2
+	FAKEBLOCK          = getAssignedBlock("FAKE",          numsToAssign) // ##Z2
 
-	//
+	// 
 	// Static Blocks
-	/////////////////////////////////////////////.
+	//////////////////////////////////////////// /.
 
 	// Monkeyblock is always last.
 	MONKEYBLOCK = DNA_SE_LENGTH
@@ -119,15 +119,15 @@
 				assignedToBlock=blocks_assigned[G.block]
 			assignedToBlock.Add(G.name)
 			blocks_assigned[G.block]=assignedToBlock
-			//testing("DNA2: Gene [G.name] assigned to block [G.block].")
-	for(var/block=1;block<=DNA_SE_LENGTH;block++) //#Z2
+			// testing("DNA2: Gene [G.name] assigned to block [G.block].")
+	for(var/block=1;block<=DNA_SE_LENGTH;block++) // #Z2
 		var/name = assigned_blocks[block]
 		for(var/datum/dna/gene/gene in dna_genes)
 			if(gene.name == name || gene.block == block)
 				if(gene.block in assigned_gene_blocks)
 					warning("DNA2: Gene [gene.name] trying to add to already assigned gene block list (used by [english_list(assigned_gene_blocks[block])])")
 				assigned_gene_blocks[block] = gene
-	//testing("DNA2: [numsToAssign.len] blocks are unused: [english_list(numsToAssign)]") //##Z2
+	// testing("DNA2: [numsToAssign.len] blocks are unused: [english_list(numsToAssign)]") // ##Z2
 
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
 

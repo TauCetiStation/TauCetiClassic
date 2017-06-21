@@ -12,12 +12,12 @@ datum/event/viral_outbreak/announce()
 	world << sound('sound/AI/outbreak7.ogg')
 
 datum/event/viral_outbreak/start()
-	var/list/candidates = list()	//list of candidate keys
+	var/list/candidates = list()	// list of candidate keys
 	for(var/mob/living/carbon/human/G in player_list)
 		if(G.client && G.stat != DEAD)
 			candidates += G
 	if(!candidates.len)	return
-	candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
+	candidates = shuffle(candidates)// Incorporating Donkie's list shuffle
 
 	while(severity > 0 && candidates.len)
 		if(prob(33))

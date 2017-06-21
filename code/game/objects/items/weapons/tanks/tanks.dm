@@ -19,13 +19,13 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
-	var/manipulated_by = null		//Used by _onclick/hud/screen_objects.dm internals to determine if someone has messed with our tank or not.
-						//If they have and we haven't scanned it with the PDA or gas analyzer then we might just breath whatever they put in it.
+	var/manipulated_by = null		// Used by _onclick/hud/screen_objects.dm internals to determine if someone has messed with our tank or not.
+						// If they have and we haven't scanned it with the PDA or gas analyzer then we might just breath whatever they put in it.
 /obj/item/weapon/tank/New()
 	..()
 
 	src.air_contents = new /datum/gas_mixture()
-	src.air_contents.volume = volume //liters
+	src.air_contents.volume = volume // liters
 	src.air_contents.temperature = T20C
 
 	START_PROCESSING(SSobj, src)
@@ -89,7 +89,7 @@
 			to_chat(O, "\red [user] has used [W] on [bicon(icon)] [src]")
 
 		var/pressure = air_contents.return_pressure()
-		manipulated_by = user.real_name			//This person is aware of the contents of the tank.
+		manipulated_by = user.real_name			// This person is aware of the contents of the tank.
 		var/total_moles = air_contents.total_moles()
 
 		to_chat(user, "\blue Results of analysis of [bicon(icon)]")
@@ -224,13 +224,13 @@
 	return remove_air(moles_needed)
 
 /obj/item/weapon/tank/process()
-	//Allow for reactions
+	// Allow for reactions
 	air_contents.react()
 	check_status()
 
 
 /obj/item/weapon/tank/proc/check_status()
-	//Handle exploding, leaking, and rupturing of the tank
+	// Handle exploding, leaking, and rupturing of the tank
 
 	if(!air_contents)
 		return 0
@@ -240,8 +240,8 @@
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 			log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
-		//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
-		//Give the gas a chance to build up more pressure through reacting
+		// world << "\blue[x],[y] tank is exploding: [pressure] kPa"
+		// Give the gas a chance to build up more pressure through reacting
 		air_contents.react()
 		air_contents.react()
 		air_contents.react()
@@ -250,13 +250,13 @@
 		range = min(range, MAX_EXPLOSION_RANGE)		// was 8 - - - Changed to a configurable define -- TLE
 		var/turf/epicenter = get_turf(loc)
 
-		//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
+		// world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 		qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
-		//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
+		// world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
 		if(integrity <= 0)
 			var/turf/simulated/T = get_turf(src)
 			if(!T)
@@ -268,7 +268,7 @@
 			integrity--
 
 	else if(pressure > TANK_LEAK_PRESSURE)
-		//world << "\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]"
+		// world << "\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]"
 		if(integrity <= 0)
 			var/turf/simulated/T = get_turf(src)
 			if(!T)

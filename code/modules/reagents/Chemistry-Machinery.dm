@@ -184,7 +184,7 @@
 		return
 	ui_interact(user)
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 
 /obj/machinery/chem_dispenser/constructable
 	name = "portable chem dispenser"
@@ -250,12 +250,12 @@
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		temp_energy += M.rating
 	temp_energy--
-	max_energy = temp_energy * 5  //max energy = (bin1.rating + bin2.rating - 1) * 5, 5 on lowest 25 on highest
+	max_energy = temp_energy * 5  // max energy = (bin1.rating + bin2.rating - 1) * 5, 5 on lowest 25 on highest
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		time += C.rating
 	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
 		time += round(P.maxcharge, 10000) / 10000
-	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
+	recharge_delay /= time/2         // delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]
@@ -278,7 +278,7 @@
 			default_deconstruction_crowbar(I)
 			return 1
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 
 /obj/machinery/chem_dispenser/soda
 	icon_state = "soda_dispenser"
@@ -341,8 +341,8 @@
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 		return
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
@@ -449,7 +449,7 @@
 			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			P.name = trim("[name] bottle")
 			P.icon_state = "bottle[bottlesprite]"
-			P.pixel_x = rand(-7, 7) //random position
+			P.pixel_x = rand(-7, 7) // random position
 			P.pixel_y = rand(-7, 7)
 			reagents.trans_to(P, 30)
 		else
@@ -461,7 +461,7 @@
 
 		dat += "<TABLE><TR>"
 		for(var/i = 1 to MAX_PILL_SPRITE)
-			if(!((i-1)%9)) //New row every 9 icons
+			if(!((i-1)%9)) // New row every 9 icons
 				dat +="</TR><TR>"
 			dat += "<TD><A href='?src=\ref[src];set=1;value=[i] '><IMG src=pill[i].png></A></TD>"
 		dat += "</TR></TABLE>"
@@ -479,7 +479,7 @@
 
 		dat += "<TABLE><TR>"
 		for(var/i = 1 to MAX_BOTTLE_SPRITE)
-			if(!((i-1)%9)) //New row every 9 icons
+			if(!((i-1)%9)) // New row every 9 icons
 				dat += "</TR><TR>"
 			dat += "<TD><A href='?src=\ref[src];set=2;value=[i] '><IMG src=bottle[i].png></A></TD>"
 
@@ -532,11 +532,11 @@
 						var/B = G.data["blood_DNA"]
 						dat += "<B>Blood Type:</B> [A]<br>"
 						dat += "<B>DNA:</B> [B]<BR><BR><BR>"
-					var/const/P = 3 //The number of seconds between life ticks
+					var/const/P = 3 // The number of seconds between life ticks
 					var/T = initial(R.custom_metabolism) * (60 / P)
 					dat += "<B>Metabolization Rate:</B> [T]u/minute<BR>"
 					dat += "<B>Overdose Threshold:</B> [initial(R.overdose) ? "[initial(R.overdose)]u" : "none"]<BR>"
-					//dat += "<B>Addiction Threshold:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"
+					// dat += "<B>Addiction Threshold:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"
 					dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
 					var/datum/browser/popup = new(usr, "chem_master", name)
 					popup.set_content(dat)
@@ -597,7 +597,7 @@
 				reagents.clear_reagents()
 				icon_state = "mixer0"
 
-		else if(href_list["createpill"]) //Also used for condiment packs.
+		else if(href_list["createpill"]) // Also used for condiment packs.
 			if(reagents.total_volume == 0)
 				return FALSE
 			if(!condi)
@@ -620,7 +620,7 @@
 						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 					P.name = trim("[name] pill")
 					P.icon_state = "pill[pillsprite]"
-					P.pixel_x = rand(-7, 7) //random position
+					P.pixel_x = rand(-7, 7) // random position
 					P.pixel_y = rand(-7, 7)
 					reagents.trans_to(P,vol_each)
 
@@ -728,7 +728,7 @@
 	name = "CondiMaster 3000"
 	condi = 1
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
@@ -789,8 +789,8 @@
 
 	return
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////// /
+/////////////////////////////////////////////////////////////////////// /
 
 /obj/machinery/computer/pandemic
 	name = "PanD.E.M.I.C 2200"
@@ -799,8 +799,8 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	circuit = /obj/item/weapon/circuitboard/pandemic
-	//use_power = 1
-	//idle_power_usage = 20		//defaults make more sense.
+	// use_power = 1
+	// idle_power_usage = 20		// defaults make more sense.
 	var/temphtml = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
@@ -868,7 +868,7 @@
 		if(!wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			B.icon_state = "bottle3"
-			var/type = text2path(href_list["create_virus_culture"])//the path is received as string - converting
+			var/type = text2path(href_list["create_virus_culture"])// the path is received as string - converting
 			var/datum/disease/D = null
 			if(!type)
 				var/datum/disease/advance/A = archive_diseases[href_list["create_virus_culture"]]
@@ -1034,8 +1034,8 @@
 	else
 		..()
 	return
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////// /
+/////////////////////////////////////////////////////////////////////// /
 /obj/machinery/reagentgrinder
 
 	name = "All-In-One Grinder"
@@ -1053,7 +1053,7 @@
 	var/limit = 10
 	var/list/blend_items = list (
 
-		//Sheets
+		// Sheets
 		/obj/item/stack/sheet/mineral/phoron = list("phoron" = 20),
 		/obj/item/stack/sheet/mineral/uranium = list("uranium" = 20),
 		/obj/item/stack/sheet/mineral/clown = list("banana" = 20),
@@ -1062,29 +1062,29 @@
 		/obj/item/weapon/grown/nettle = list("sacid" = 0),
 		/obj/item/weapon/grown/deathnettle = list("pacid" = 0),
 
-		//Blender Stuff
+		// Blender Stuff
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
-		///obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
+		// /obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk = list("rice" = -5),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = list("plasticide" = 5),
 
 
-		//archaeology!
+		// archaeology!
 		/obj/item/weapon/rocksliver = list("ground_rock" = 50),
 
 
 
-		//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
+		// All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 		/obj/item/weapon/reagent_containers/pill = list(),
 		/obj/item/weapon/reagent_containers/food = list()
 	)
 
 	var/list/juice_items = list (
 
-		//Juicer Stuff
+		// Juicer Stuff
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("carrotjuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
@@ -1139,14 +1139,14 @@
 		to_chat(usr, "The machine cannot hold anymore items.")
 		return 1
 
-	//Fill machine with the plantbag!
+	// Fill machine with the plantbag!
 	if(istype(O, /obj/item/weapon/storage/bag/plants))
 
 		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
 			O.contents -= G
 			G.loc = src
 			holdingitems += G
-			if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
+			if(holdingitems && holdingitems.len >= limit) // Sanity checking so the blender doesn't overfill
 				to_chat(user, "You fill the All-In-One grinder to the brim.")
 				break
 
@@ -1310,13 +1310,13 @@
 		return
 	playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
 	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) // start shaking
 	inuse = 1
 	spawn(50)
-		pixel_x = initial(pixel_x) //return to its spot after shaking
+		pixel_x = initial(pixel_x) // return to its spot after shaking
 		inuse = 0
 		interact(usr)
-	//Snacks
+	// Snacks
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
@@ -1346,13 +1346,13 @@
 		return
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) // start shaking
 	inuse = 1
 	spawn(60)
-		pixel_x = initial(pixel_x) //return to its spot after shaking
+		pixel_x = initial(pixel_x) // return to its spot after shaking
 		inuse = 0
 		interact(usr)
-	//Snacks and Plants
+	// Snacks and Plants
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
@@ -1384,7 +1384,7 @@
 		if(O.reagents.reagent_list.len == 0)
 			remove_object(O)
 
-	//Sheets
+	// Sheets
 	for (var/obj/item/stack/sheet/O in holdingitems)
 		var/allowed = get_allowed_by_id(O)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
@@ -1399,7 +1399,7 @@
 			if (i == round(O.amount, 1))
 				remove_object(O)
 				break
-	//Plants
+	// Plants
 	for (var/obj/item/weapon/grown/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
@@ -1417,7 +1417,7 @@
 				break
 		remove_object(O)
 
-	//xenoarch
+	// xenoarch
 	for(var/obj/item/weapon/rocksliver/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
@@ -1431,7 +1431,7 @@
 				break
 		remove_object(O)
 
-	//Everything else - Transfers reagents from it into beaker
+	// Everything else - Transfers reagents from it into beaker
 	for (var/obj/item/weapon/reagent_containers/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break

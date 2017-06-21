@@ -8,7 +8,7 @@
 			var/list/ban = list()
 			ban["admin"] = usr.key
 			ban["type"] = "sticky"
-			ban["reason"] = "(InGameBan)([usr.key])" //this will be display in dd only
+			ban["reason"] = "(InGameBan)([usr.key])" // this will be display in dd only
 			var/ckey
 			if (data["ckey"])
 				ckey = data["ckey"]
@@ -73,7 +73,7 @@
 
 			var/found = 0
 
-			//we have to do it this way because byond keeps the case in its sticky ban matches WHY!!!
+			// we have to do it this way because byond keeps the case in its sticky ban matches WHY!!!
 			for (var/key in ban["keys"])
 				if (ckey(key) == alt)
 					found = 1
@@ -104,7 +104,7 @@
 			var/reason = input(usr,"Reason","Reason","[ban["message"]]") as text|null
 			if (!reason || reason == oldreason)
 				return
-			//we have to do this again incase something changed while we waited for input
+			// we have to do this again incase something changed while we waited for input
 			ban = params2list(world.GetConfig("ban",ckey))
 			ban["message"] = "[reason]"
 
@@ -136,7 +136,7 @@
 	var/banhtml = ""
 	for(var/ckey in bans)
 		var/ban = params2list(world.GetConfig("ban",ckey))
-		if (banhtml != "") //no need to do a border above the first ban.
+		if (banhtml != "") // no need to do a border above the first ban.
 			banhtml += "<br><hr/></br>\n"
 		banhtml += stickyban_gethtml(ckey,ban)
 
@@ -151,7 +151,7 @@
 	"}
 	usr << browse(html,"window=stickybans;size=700x400")
 
-//returns true if and only if the game added the sticky ban.
+// returns true if and only if the game added the sticky ban.
 /proc/is_stickyban_from_game(ban)
 	if (!ban || !islist(ban))
 		return 0

@@ -1,4 +1,4 @@
-//Define all tape types in policetape.dm
+// Define all tape types in policetape.dm
 /obj/item/taperoll
 	name = "tape roll"
 	icon = 'icons/policetape.dmi'
@@ -93,8 +93,8 @@
 				var/obj/item/tape/P = new tape_type(cur)
 				P.icon_state = "[P.icon_base]_[dir]"
 			cur = get_step_towards(cur,end)
-	//is_blocked_turf(turf/T)
-		to_chat(usr, "\blue You finish placing the [src].")//Git Test
+	// is_blocked_turf(turf/T)
+		to_chat(usr, "\blue You finish placing the [src].")// Git Test
 
 /obj/item/taperoll/afterattack(atom/A, mob/user)
 	if (istype(A, /obj/machinery/door/airlock))

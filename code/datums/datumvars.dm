@@ -1,12 +1,12 @@
 // reference: /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 
-datum/proc/on_varedit(modified_var) //called whenever a var is edited
+datum/proc/on_varedit(modified_var) // called whenever a var is edited
 	return
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
-	//set src in world
+	// set src in world
 
 
 	if(!usr.client || !usr.client.holder)
@@ -42,7 +42,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 					var filter_text = document.getElementById('filter');
 					var filter = filter_text.value.toLowerCase();
 
-					if(event.keyCode == 13){	//Enter / return
+					if(event.keyCode == 13){	// Enter / return
 						var vars_ol = document.getElementById('vars');
 						var lis = vars_ol.getElementsByTagName("li");
 						for ( var i = 0; i < lis.length; ++i )
@@ -61,7 +61,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 						return
 					}
 
-					if(event.keyCode == 38){	//Up arrow
+					if(event.keyCode == 38){	// Up arrow
 						var vars_ol = document.getElementById('vars');
 						var lis = vars_ol.getElementsByTagName("li");
 						for ( var i = 0; i < lis.length; ++i )
@@ -82,7 +82,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 						return
 					}
 
-					if(event.keyCode == 40){	//Down arrow
+					if(event.keyCode == 40){	// Down arrow
 						var vars_ol = document.getElementById('vars');
 						var lis = vars_ol.getElementsByTagName("li");
 						for ( var i = 0; i < lis.length; ++i )
@@ -103,7 +103,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 						return
 					}
 
-					//This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
+					// This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
 					if(complete_list != null && complete_list != ""){
 						var vars_ol1 = document.getElementById("vars");
 						vars_ol1.innerHTML = complete_list
@@ -208,7 +208,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 		if(splitpoint)
 			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
 		else
-			formatted_type = "Type too long" //No suitable splitpoint (/) found.
+			formatted_type = "Type too long" // No suitable splitpoint (/) found.
 
 	body += "<div align='center'><b><font size='1'>[formatted_type]</font></b>"
 
@@ -221,7 +221,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 
 	body += "<td width='50%'><div align='center'><a href='?_src_=vars;datumrefresh=\ref[D]'>Refresh</a>"
 
-	//if(ismob(D))
+	// if(ismob(D))
 	//	body += "<br><a href='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
 
 	body += {"	<form>
@@ -381,14 +381,14 @@ body
 	else if (istype(value, /client))
 		var/client/C = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
-//
+// 
 	else if (istype(value, /list))
 		var/list/L = value
 		html += "[name] = /list ([L.len])"
 
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
 			// not sure if this is completely right...
-			if(0)   //(L.vars.len > 0)
+			if(0)   // (L.vars.len > 0)
 				html += "<ol>"
 				html += "</ol>"
 			else
@@ -397,7 +397,7 @@ body
 				for (var/entry in L)
 					if(istext(entry))
 						html += debug_variable(entry, L[entry], level + 1)
-					//html += debug_variable("[index]", L[index], level + 1)
+					// html += debug_variable("[index]", L[index], level + 1)
 					else
 						html += debug_variable(index, L[index], level + 1)
 					index++
@@ -414,7 +414,7 @@ body
 	return html
 
 /client/proc/view_var_Topic(href, href_list, hsrc)
-	//This should all be moved over to datum/admins/Topic() or something ~Carn
+	// This should all be moved over to datum/admins/Topic() or something ~Carn
 	if( (usr.client != src) || !src.holder )
 		return
 	if(href_list["Vars"])
@@ -427,7 +427,7 @@ body
 			return
 		view_flags_variables(href_list["view_flags"])
 
-	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
+	// ~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 	else if(href_list["rename"])
 		if(!check_rights(R_VAREDIT))	return
 
@@ -583,7 +583,7 @@ body
 			usr.client.cmd_assume_direct_control(M)
 
 	else if(href_list["delthis"])
-		//Rights check are in cmd_admin_delete() proc
+		// Rights check are in cmd_admin_delete() proc
 		var/atom/A = locate(href_list["delthis"])
 		cmd_admin_delete(A)
 

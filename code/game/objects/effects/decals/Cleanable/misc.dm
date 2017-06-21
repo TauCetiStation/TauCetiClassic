@@ -89,7 +89,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb2"
 
-//Vomit (sorry)
+// Vomit (sorry)
 /obj/effect/decal/cleanable/vomit
 	name = "vomit"
 	desc = "Gosh, how unpleasant."
@@ -131,7 +131,7 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_egg1", "smashed_egg2", "smashed_egg3")
 
-/obj/effect/decal/cleanable/pie_smudge //honk
+/obj/effect/decal/cleanable/pie_smudge // honk
 	name = "smashed pie"
 	desc = "It's pie cream from a cream pie."
 	density = 0
@@ -475,7 +475,7 @@
 	var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
 	var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
 
-	//mainOverlay.Blend(main,ICON_ADD)
+	// mainOverlay.Blend(main,ICON_ADD)
 	shadeOverlay.Blend(shade,ICON_ADD)
 
 	overlays += mainOverlay

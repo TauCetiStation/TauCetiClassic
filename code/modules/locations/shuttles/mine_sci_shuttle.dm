@@ -70,9 +70,9 @@ var/global/area/mine_sci_curr_location = null
 
 	updateUsrDialog()
 
-//-------------------------------------------
-//------------FLIGHT COMPUTER----------------
-//-------------------------------------------
+// -------------------------------------------
+// ------------FLIGHT COMPUTER----------------
+// -------------------------------------------
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp
 	name = "Shuttle Console"
@@ -86,14 +86,14 @@ var/global/area/mine_sci_curr_location = null
 	..()
 	var/area/my_area = get_area(src)
 	if(istype(get_turf(src),M_S_SHUTTLE_FLOOR) &&\
-		   is_type_in_list(my_area,list(STATION_DOCK, MINE_DOCK, SCI_DOCK))) //if we build console not in shuttle area
+		   is_type_in_list(my_area,list(STATION_DOCK, MINE_DOCK, SCI_DOCK))) // if we build console not in shuttle area
 		autopilot = src
 		dir = WEST
 		if(!mine_sci_curr_location)
 			mine_sci_curr_location = my_area
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp/Destroy()
-	if(autopilot == src) //if we have more than one flight comp! (look imbossible)
+	if(autopilot == src) // if we have more than one flight comp! (look imbossible)
 		autopilot = null
 	return ..()
 

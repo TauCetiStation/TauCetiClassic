@@ -1,4 +1,4 @@
-//Captain's Spacesuit
+// Captain's Spacesuit
 /obj/item/clothing/head/helmet/space/capspace
 	name = "space helmet"
 	icon_state = "capspace"
@@ -11,7 +11,7 @@
 	armor = list(melee = 65, bullet = 35, laser = 35,energy = 25, bomb = 50, bio = 100, rad = 50)
 	siemens_coefficient = 0.4
 
-//Captain's space suit This is not the proper path but I don't currently know enough about how this all works to mess with it.
+// Captain's space suit This is not the proper path but I don't currently know enough about how this all works to mess with it.
 /obj/item/clothing/suit/armor/captain
 	name = "Captain's armor"
 	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"

@@ -33,4 +33,4 @@
 		new /obj/item/weapon/shard(src.loc)
 	return ..()
 
-//todo: laser_act
+// todo: laser_act

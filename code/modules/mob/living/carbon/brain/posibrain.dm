@@ -11,14 +11,14 @@
 	mob/living/carbon/brain/brainmob = null
 	req_access = list(access_robotics)
 	locked = 0
-	mecha = null//This does not appear to be used outside of reference in mecha.dm.
+	mecha = null// This does not appear to be used outside of reference in mecha.dm.
 
-	var/ping_cd = 0//attack_ghost cooldown
+	var/ping_cd = 0// attack_ghost cooldown
 
 
 	attack_self(mob/user)
 		if(brainmob && !brainmob.key && searching == 0)
-			//Start the process of searching for a new user.
+			// Start the process of searching for a new user.
 			to_chat(user, "\blue You carefully locate the manual activation switch and start the positronic brain's boot process.")
 			icon_state = "posibrain-searching"
 			src.searching = 1
@@ -41,7 +41,7 @@
 	proc/question(client/C)
 		if(!C)	return
 		var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "No", "Yes", "Never for this round")
-		if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+		if(!C || brainmob.key || 0 == searching)	return		// handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 		if(response == "Yes")
 			transfer_personality(C.mob)
 		else if (response == "Never for this round")
@@ -67,7 +67,7 @@
 
 		src.searching = 0
 		src.brainmob.mind = candidate.mind
-		//src.brainmob.key = candidate.key
+		// src.brainmob.key = candidate.key
 		src.brainmob.ckey = candidate.ckey
 		src.name = "positronic brain ([src.brainmob.name])"
 
@@ -82,7 +82,7 @@
 			M.show_message("\blue The positronic brain chimes quietly.")
 		icon_state = "posibrain-occupied"
 
-	proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
+	proc/reset_search() // We give the players sixty seconds to decide, then reset the timer.
 
 		if(src.brainmob && src.brainmob.key) return
 
@@ -101,7 +101,7 @@
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
-					msg += "It appears to be in stand-by mode.\n" //afk
+					msg += "It appears to be in stand-by mode.\n" // afk
 			if(UNCONSCIOUS)
 				msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
 			if(DEAD)

@@ -20,7 +20,7 @@
 
 	time_per_spawn = rand(1200,3600)
 
-	//33% chance to spawn nasties
+	// 33% chance to spawn nasties
 	if(prob(33))
 		spawn_type = pick(\
 		/mob/living/simple_animal/hostile/giant_spider/nurse,\
@@ -45,7 +45,7 @@
 		/mob/living/carbon/monkey\
 		)
 
-//todo: how the hell is the asteroid permanently powered?
+// todo: how the hell is the asteroid permanently powered?
 /obj/machinery/auto_cloner/process()
 	if(powered(power_channel))
 		if(!previous_power_state)
@@ -53,11 +53,11 @@
 			icon_state = "cellold1"
 			src.visible_message("\blue [bicon(src)] [src] suddenly comes to life!")
 
-		//slowly grow a mob
+		// slowly grow a mob
 		if(prob(5))
 			src.visible_message("\blue [bicon(src)] [src] [pick("gloops","glugs","whirrs","whooshes","hisses","purrs","hums","gushes")].")
 
-		//if we've finished growing...
+		// if we've finished growing...
 		if(time_spent_spawning >= time_per_spawn)
 			time_spent_spawning = 0
 			use_power = 1
@@ -67,7 +67,7 @@
 			if(spawn_type)
 				new spawn_type(src.loc)
 
-		//if we're getting close to finished, kick into overdrive power usage
+		// if we're getting close to finished, kick into overdrive power usage
 		if(time_spent_spawning / time_per_spawn > 0.75)
 			use_power = 2
 			icon_state = "cellold2"
@@ -84,7 +84,7 @@
 			icon_state = "cellold0"
 			src.visible_message("\blue [bicon(src)] [src] suddenly shuts down.")
 
-		//cloned mob slowly breaks down
+		// cloned mob slowly breaks down
 		time_spent_spawning = max(time_spent_spawning + last_process - world.time, 0)
 
 	last_process = world.time

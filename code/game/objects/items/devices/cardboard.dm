@@ -6,7 +6,7 @@
 	w_class = 4
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
 		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Ian")
-	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
+	var/pushed_over = FALSE // If the cutout is pushed over and has to be righted
 
 	var/lastattacker = null
 
@@ -115,7 +115,7 @@
 			desc = "A cardboard cutout of a xenomorph."
 			icon_state = "cutout_fukken_xeno"
 			if(prob(25))
-				alpha = 75 //Spooky sneaking!
+				alpha = 75 // Spooky sneaking!
 		if("Deathsquad Officer")
 			name = pick(commando_names)
 			desc = "A cardboard cutout of a death commando."

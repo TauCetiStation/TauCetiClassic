@@ -153,7 +153,7 @@
 	else
 		color = rgb(255,255,255,255)
 
-//Hide/Show Action Buttons ... Button
+// Hide/Show Action Buttons ... Button
 /obj/screen/movable/action_button/hide_toggle
 	name = "Hide Buttons"
 	icon = 'icons/mob/actions.dmi'
@@ -185,7 +185,7 @@
 	overlays += img
 	return
 
-//This is the proc used to update all the action buttons. Properly defined in /mob/living/
+// This is the proc used to update all the action buttons. Properly defined in /mob/living/
 /mob/proc/update_action_buttons()
 	return
 
@@ -212,7 +212,7 @@
 	M.Translate(x_offset,y_offset)
 	button.transform = M
 
-//Presets for item actions
+// Presets for item actions
 /datum/action/item_action
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
@@ -222,7 +222,7 @@
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
-//Preset for spells
+// Preset for spells
 /datum/action/spell_action
 	action_type = AB_SPELL
 	check_flags = 0

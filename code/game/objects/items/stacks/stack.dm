@@ -14,7 +14,7 @@
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
-	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/max_amount // also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
@@ -42,7 +42,7 @@
 		return
 	if (!src || amount<=0)
 		user << browse(null, "window=stack")
-	user.set_machine(src) //for correct work of onclose
+	user.set_machine(src) // for correct work of onclose
 	var/list/recipe_list = recipes
 	if (recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
 		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
@@ -142,12 +142,12 @@
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
 		O.add_fingerprint(usr)
-		//BubbleWrap - so newly formed boxes are empty
+		// BubbleWrap - so newly formed boxes are empty
 		if ( istype(O, /obj/item/weapon/storage) )
 			for (var/obj/item/I in O)
 				qdel(I)
-		//BubbleWrap END
-	if (src && usr.machine==src) //do not reopen closed window
+		// BubbleWrap END
+	if (src && usr.machine==src) // do not reopen closed window
 		INVOKE_ASYNC(src, .proc/interact, usr)
 		return
 	return
@@ -228,7 +228,7 @@
 	src.fingerprints  = from.fingerprints
 	src.fingerprintshidden  = from.fingerprintshidden
 	src.fingerprintslast  = from.fingerprintslast
-	//TODO bloody overlay
+	// TODO bloody overlay
 
 /*
  * Recipe datum

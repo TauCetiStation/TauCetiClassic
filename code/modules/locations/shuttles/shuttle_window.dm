@@ -4,7 +4,7 @@
 	can_merge = 0
 
 /obj/structure/window/reinforced/shuttle/attackby(obj/item/weapon/W, mob/user)
-	if(!istype(W)) return//I really wish I did not need this
+	if(!istype(W)) return// I really wish I did not need this
 
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
@@ -15,7 +15,7 @@
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			var/state = G.state
-			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
+			qdel(W)	// gotta delete it here because if window breaks, it won't get deleted
 			switch (state)
 				if(1)
 					M.apply_damage(7)

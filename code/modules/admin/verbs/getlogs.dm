@@ -14,10 +14,10 @@
 */
 
 
-//This proc allows Game Masters to grant a client access to the .getruntimelog verb
-//Permissions expire at the end of each round.
-//Runtimes can be used to meta or spot game-crashing exploits so it's advised to only grant coders that
-//you trust access. Also, it may be wise to ensure that they are not going to play in the current round.
+// This proc allows Game Masters to grant a client access to the .getruntimelog verb
+// Permissions expire at the end of each round.
+// Runtimes can be used to meta or spot game-crashing exploits so it's advised to only grant coders that
+// you trust access. Also, it may be wise to ensure that they are not going to play in the current round.
 /client/proc/giveruntimelog()
 	set name = ".giveruntimelog"
 	set desc = "Give somebody access to any session logfiles saved to the /log/runtime/ folder."
@@ -37,8 +37,8 @@
 	return
 
 
-//This proc allows download of runtime logs saved within the data/logs/ folder by dreamdeamon.
-//It works similarly to show-server-log.
+// This proc allows download of runtime logs saved within the data/logs/ folder by dreamdeamon.
+// It works similarly to show-server-log.
 /client/proc/getruntimelog()
 	set name = ".getruntimelog"
 	set desc = "Retrieve any session logfiles saved by dreamdeamon."
@@ -57,8 +57,8 @@
 	return
 
 
-//This proc allows download of past server logs saved within the data/logs/ folder.
-//It works similarly to show-server-log.
+// This proc allows download of past server logs saved within the data/logs/ folder.
+// It works similarly to show-server-log.
 /client/proc/getserverlog()
 	set name = ".getserverlog"
 	set desc = "Fetch logfiles from data/logs"
@@ -77,9 +77,9 @@
 	return
 
 
-//Other log stuff put here for the sake of organisation
+// Other log stuff put here for the sake of organisation
 
-//Shows today's server log
+// Shows today's server log
 /datum/admins/proc/view_txt_log()
 	set category = "Admin"
 	set name = "Show Server Log"
@@ -91,10 +91,10 @@
 	else
 		to_chat(src, "<font color='red'>Error: view_txt_log(): File not found/Invalid path([path]).</font>")
 		return
-	feedback_add_details("admin_verb","VTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","VTL") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-//Shows today's attack log
+// Shows today's attack log
 /datum/admins/proc/view_atk_log()
 	set category = "Admin"
 	set name = "Show Server Attack Log"
@@ -107,5 +107,5 @@
 		to_chat(src, "<font color='red'>Error: view_atk_log(): File not found/Invalid path([path]).</font>")
 		return
 	usr << run( file(path) )
-	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","SSAL") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

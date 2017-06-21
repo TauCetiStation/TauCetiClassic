@@ -5,7 +5,7 @@
 	update_icons()
 
 /mob/living/carbon/alien/facehugger/update_icons()
-	update_hud()		//TODO: remove the need for this to be here
+	update_hud()		// TODO: remove the need for this to be here
 	overlays.Cut()
 	if(stat == DEAD)
 		icon_state = "facehugger_dead"
@@ -15,10 +15,10 @@
 		icon_state = "facehugger"
 
 /mob/living/carbon/alien/facehugger/update_hud()
-	//TODO
+	// TODO
 	if (client)
-//		if(other)	client.screen |= hud_used.other		//Not used
-//		else		client.screen -= hud_used.other		//Not used
+//		if(other)	client.screen |= hud_used.other		// Not used
+//		else		client.screen -= hud_used.other		// Not used
 		client.screen |= contents
 
 /*----------------------------------------

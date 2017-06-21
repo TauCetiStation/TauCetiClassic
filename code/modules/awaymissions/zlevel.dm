@@ -1,5 +1,5 @@
 proc/createRandomZlevel()
-	if(awaydestinations.len)	//crude, but it saves another var!
+	if(awaydestinations.len)	// crude, but it saves another var!
 		return
 
 	var/list/potentialRandomZlevels = list()

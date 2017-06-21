@@ -17,11 +17,11 @@
 	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 20
 
-	var/const/agents_possible = 5 //If we ever need more syndicate agents.
+	var/const/agents_possible = 5 // If we ever need more syndicate agents.
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
-	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
-	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
+	var/nuke_off_station = 0 // Used for tracking if the syndies actually haul the nuke to the station
+	var/syndies_didnt_escape = 0 // Used for tracking if the syndies got the shuttle off of the z-level
 
 
 /datum/game_mode/nuclear/announce()
@@ -29,7 +29,7 @@
 	to_chat(world, "<B>Gorlex Maradeurs are approaching NSS Exodus!</B>")
 	to_chat(world, "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!")
 
-/datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
+/datum/game_mode/nuclear/can_start()// This could be better, will likely have to recode it later
 	if(!..())
 		return 0
 
@@ -45,7 +45,7 @@
 	 *	agent_number = n_players/2
 	 */
 
-	//Antag number should scale to active crew.
+	// Antag number should scale to active crew.
 	var/n_players = num_players()
 	agent_number = Clamp((n_players/5), 2, 6)
 
@@ -55,12 +55,12 @@
 	while(agent_number > 0)
 		var/datum/mind/new_syndicate = pick(antag_candidates)
 		syndicates += new_syndicate
-		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
+		antag_candidates -= new_syndicate // So it doesn't pick the same guy each time.
 		agent_number--
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
-		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
+		synd_mind.assigned_role = "MODE" // So they aren't chosen for other jobs.
+		synd_mind.special_role = "Syndicate"// So they actually have a special role/N
 	//	log_game("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative")
 	//	message_admins("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative",0,1)
 	return 1
@@ -119,7 +119,7 @@
 	var/list/turf/synd_spawn = list()
 	var/turf/synd_comm_spawn
 
-	for(var/obj/effect/landmark/A in landmarks_list) //Add commander spawn places first, really should only be one though.
+	for(var/obj/effect/landmark/A in landmarks_list) // Add commander spawn places first, really should only be one though.
 		if(A.name == "Syndicate-Commander")
 			synd_comm_spawn = get_turf(A)
 			qdel(A)
@@ -131,7 +131,7 @@
 			qdel(A)
 			continue
 
-	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
+	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	// i will be rewriting this shortly
 	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
 
 	var/nuke_code = "[rand(10000, 99999)]"
@@ -178,7 +178,7 @@
 
 	if(uplinklocker)
 		var/obj/structure/closet/C = new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
-		spawn(10) //gives time for the contents to spawn properly
+		spawn(10) // gives time for the contents to spawn properly
 			for(var/obj/item/thing in C)
 				if(thing.hidden_uplink)
 					nuclear_uplink = thing
@@ -308,13 +308,13 @@
 			disk_rescued = 0
 			break
 	var/crew_evacuated = (SSshuttle.location==2)
-	//var/operatives_are_dead = is_operatives_are_dead()
+	// var/operatives_are_dead = is_operatives_are_dead()
 
 
-	//nukes_left
-	//station_was_nuked
-	//derp //Used for tracking if the syndies actually haul the nuke to the station	//no
-	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
+	// nukes_left
+	// station_was_nuked
+	// derp // Used for tracking if the syndies actually haul the nuke to the station	// no
+	// herp // Used for tracking if the syndies got the shuttle off of the z-level	// NO, DON'T FUCKING NAME VARS LIKE THIS
 
 	if      (!disk_rescued &&  station_was_nuked &&          !syndies_didnt_escape)
 		feedback_set_details("round_end_result","win - syndicate nuke")
@@ -385,7 +385,7 @@
 	return text
 
 
-/*/proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
+/*/proc/nukelastname(mob/M) // --All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
 	var/randomname = pick(last_names)
 	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
 

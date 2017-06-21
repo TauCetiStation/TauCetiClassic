@@ -108,13 +108,13 @@ var/list/radiochannels = list(
 	"Syndicate" = 1213,
 	"Supply" = 1347,
 )
-//depenging helpers
+// depenging helpers
 var/list/DEPT_FREQS = list(1351, 1355, 1357, 1359, 1213, 1345, 1341, 1347)
 
 // central command channels, i.e deathsquid & response teams
 var/list/CENT_FREQS = list(1345, 1341)
 
-var/const/COMM_FREQ = 1353 //command, colored gold in chat window
+var/const/COMM_FREQ = 1353 // command, colored gold in chat window
 var/const/SYND_FREQ = 1213
 
 // department channels
@@ -184,7 +184,7 @@ var/global/datum/controller/radio/radio_controller
 	var/list/list/obj/devices = list()
 
 /datum/radio_frequency/proc/post_signal(obj/source, datum/signal/signal, filter = null, range = null)
-	//log_admin("DEBUG \[[world.timeofday]\]: post_signal {source=\"[source]\", [signal.debug_print()], filter=[filter]}")
+	// log_admin("DEBUG \[[world.timeofday]\]: post_signal {source=\"[source]\", [signal.debug_print()], filter=[filter]}")
 //	var/N_f=0
 //	var/N_nf=0
 //	var/Nt=0
@@ -194,7 +194,7 @@ var/global/datum/controller/radio/radio_controller
 		if(!start_point)
 			qdel(signal)
 			return 0
-	if (filter) //here goes some copypasta. It is for optimisation. -rastaf0
+	if (filter) // here goes some copypasta. It is for optimisation. -rastaf0
 		for(var/obj/device in devices[filter])
 			if(device == source)
 				continue
@@ -202,7 +202,7 @@ var/global/datum/controller/radio/radio_controller
 				var/turf/end_point = get_turf(device)
 				if(!end_point)
 					continue
-				//if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
+				// if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
 				if(start_point.z!=end_point.z || get_dist(start_point, end_point) > range)
 					continue
 			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
@@ -213,7 +213,7 @@ var/global/datum/controller/radio/radio_controller
 				var/turf/end_point = get_turf(device)
 				if(!end_point)
 					continue
-				//if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
+				// if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
 				if(start_point.z!=end_point.z || get_dist(start_point, end_point) > range)
 					continue
 			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
@@ -229,7 +229,7 @@ var/global/datum/controller/radio/radio_controller
 					var/turf/end_point = get_turf(device)
 					if(!end_point)
 						continue
-					//if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
+					// if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
 					if(start_point.z!=end_point.z || get_dist(start_point, end_point) > range)
 						continue
 				device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
@@ -243,7 +243,7 @@ var/global/datum/controller/radio/radio_controller
 /datum/radio_frequency/proc/add_listener(obj/device, filter)
 	if (!filter)
 		filter = "_default"
-	//log_admin("add_listener(device=[device],filter=[filter]) frequency=[frequency]")
+	// log_admin("add_listener(device=[device],filter=[filter]) frequency=[frequency]")
 	var/list/obj/devices_line = devices[filter]
 	if (!devices_line)
 		devices_line = new
@@ -251,8 +251,8 @@ var/global/datum/controller/radio/radio_controller
 	devices_line+=device
 //	var/list/obj/devices_line___ = devices[filter_str]
 //	var/l = devices_line___.len
-	//log_admin("DEBUG: devices_line.len=[devices_line.len]")
-	//log_admin("DEBUG: devices(filter_str).len=[l]")
+	// log_admin("DEBUG: devices_line.len=[devices_line.len]")
+	// log_admin("DEBUG: devices(filter_str).len=[l]")
 
 /datum/radio_frequency/proc/remove_listener(obj/device)
 	for(var/devices_filter in devices)
@@ -271,9 +271,9 @@ var/global/datum/controller/radio/radio_controller
 	var/obj/source
 
 	var/transmission_method = 0
-	//0 = wire
-	//1 = radio transmission
-	//2 = subspace transmission
+	// 0 = wire
+	// 1 = radio transmission
+	// 2 = subspace transmission
 
 	var/data = list()
 	var/encryption

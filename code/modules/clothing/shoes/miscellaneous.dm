@@ -25,7 +25,7 @@
 	siemens_coefficient = 0.6
 	clipped_status = CLIPPABLE
 
-/obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
+/obj/item/clothing/shoes/combat // Basically SWAT shoes combined with galoshes.
 	name = "combat boots"
 	desc = "When you REALLY want to turn up the heat"
 	icon_state = "swat"
@@ -92,7 +92,7 @@
 	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
-//	var/footstep = 1	//used for squeeks whilst walking
+//	var/footstep = 1	// used for squeeks whilst walking
 	species_restricted = null
 
 /obj/item/clothing/shoes/jackboots

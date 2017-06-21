@@ -1,10 +1,10 @@
-//put this here because i needed specific functionality, and i wanted to avoid the hassle of getting it onto svn
+// put this here because i needed specific functionality, and i wanted to avoid the hassle of getting it onto svn
 
 
 /area/proc/copy_turfs_to(area/A , platingRequired = 0 )
-	//Takes: Area. Optional: If it should copy to areas that don't have plating
-	//Returns: Nothing.
-	//Notes: Attempts to move the contents of one area to another area.
+	// Takes: Area. Optional: If it should copy to areas that don't have plating
+	// Returns: Nothing.
+	// Notes: Attempts to move the contents of one area to another area.
 	//       Movement based on lower left corner. Tiles that do not fit
 	//		 into the new area will not be moved.
 
@@ -64,7 +64,7 @@
 					var/turf/X = new T.type(B)
 					X.dir = old_dir1
 					X.icon_state = old_icon_state1
-					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
+					X.icon = old_icon1 // Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
 
 					var/list/mobs = new/list()
@@ -91,7 +91,7 @@
 
 //					if(AR.lighting_use_dynamic)
 //						X.opacity = !X.opacity
-//						X.sd_set_opacity(!X.opacity)			//TODO: rewrite this code so it's not messed by lighting ~Carn
+//						X.sd_set_opacity(!X.opacity)			// TODO: rewrite this code so it's not messed by lighting ~Carn
 
 					toupdate += X
 

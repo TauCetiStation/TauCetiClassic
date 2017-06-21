@@ -16,11 +16,11 @@
 	var/max_grown = 200
 	var/time_of_birth
 
-	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
+	var/obj/item/clothing/suit/wear_suit = null		// TODO: necessary? Are they even used? ~Carn
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
 
-//This is fine right now, if we're adding organ specific damage this needs to be updated
+// This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
@@ -31,7 +31,7 @@
 	regenerate_icons()
 	..()
 
-//This needs to be fixed
+// This needs to be fixed
 /mob/living/carbon/alien/larva/Stat()
 	..()
 	if(statpanel("Status"))
@@ -44,7 +44,7 @@
 				amount_grown++
 	return
 
-/mob/living/carbon/alien/larva/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
+/mob/living/carbon/alien/larva/start_pulling(atom/movable/AM)// Prevents mouse from pulling things
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
 
@@ -53,6 +53,6 @@
 
 /mob/living/carbon/alien/larva/movement_delay()
 	var/tally = 0
-	if (istype(src, /mob/living/carbon/alien/larva/)) //just in case
+	if (istype(src, /mob/living/carbon/alien/larva/)) // just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)

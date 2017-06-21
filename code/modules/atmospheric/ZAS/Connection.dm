@@ -73,11 +73,11 @@ Class Procs:
 
 /connection/proc/mark_direct()
 	state |= CONNECTION_DIRECT
-	//world << "Marked direct."
+	// world << "Marked direct."
 
 /connection/proc/mark_indirect()
 	state &= ~CONNECTION_DIRECT
-	//world << "Marked indirect."
+	// world << "Marked indirect."
 
 /connection/proc/mark_space()
 	state |= CONNECTION_SPACE
@@ -91,18 +91,18 @@ Class Procs:
 /connection/proc/erase()
 	edge.remove_connection(src)
 	state |= CONNECTION_INVALID
-	//world << "Connection Erased: [state]"
+	// world << "Connection Erased: [state]"
 
 /connection/proc/update()
-	//world << "Updated, \..."
+	// world << "Updated, \..."
 	if(!istype(A,/turf/simulated))
-		//world << "Invalid A."
+		// world << "Invalid A."
 		erase()
 		return
 
 	var/block_status = SSair.air_blocked(A,B)
 	if(block_status & AIR_BLOCKED)
-		//world << "Blocked connection."
+		// world << "Blocked connection."
 		erase()
 		return
 	else if(block_status & ZONE_BLOCKED)
@@ -115,14 +115,14 @@ Class Procs:
 
 	if(state & CONNECTION_SPACE)
 		if(!b_is_space)
-			//world << "Invalid B."
+			// world << "Invalid B."
 			erase()
 			return
 		if(A.zone != zoneA)
-			//world << "Zone changed, \..."
+			// world << "Zone changed, \..."
 			if(!A.zone)
 				erase()
-				//world << "erased."
+				// world << "erased."
 				return
 			else
 				edge.remove_connection(src)
@@ -130,22 +130,22 @@ Class Procs:
 				edge.add_connection(src)
 				zoneA = A.zone
 
-		//world << "valid."
+		// world << "valid."
 		return
 
 	else if(b_is_space)
-		//world << "Invalid B."
+		// world << "Invalid B."
 		erase()
 		return
 
 	if(A.zone == B.zone)
-		//world << "A == B"
+		// world << "A == B"
 		erase()
 		return
 
 	if(A.zone != zoneA || (zoneB && (B.zone != zoneB)))
 
-		//world << "Zones changed, \..."
+		// world << "Zones changed, \..."
 		if(A.zone && B.zone)
 			edge.remove_connection(src)
 			edge = SSair.get_edge(A.zone, B.zone)
@@ -153,9 +153,9 @@ Class Procs:
 			zoneA = A.zone
 			zoneB = B.zone
 		else
-			//world << "erased."
+			// world << "erased."
 			erase()
 			return
 
 
-	//world << "valid."
+	// world << "valid."

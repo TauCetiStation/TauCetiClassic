@@ -1,4 +1,4 @@
-//Cyborg
+// Cyborg
 /datum/design/borg_suit
 	name = "Cyborg Endoskeleton"
 	id = "borg_suit"
@@ -62,7 +62,7 @@
 	construction_time = 200
 	category = list("Cyborg")
 
-//Cyborg Components
+// Cyborg Components
 /datum/design/borg_binary
 	name = "Binary Communication Device"
 	id = "borg_binary"
@@ -118,7 +118,7 @@
 	category = list("Cyborg Components")
 
 
-//Ripley
+// Ripley
 /datum/design/ripley_chassis
 	name = "Exosuit Chassis (APLU \"Ripley\")"
 	id = "ripley_chassis"
@@ -174,7 +174,7 @@
 	category = list("Ripley")
 
 
-//Odysseus
+// Odysseus
 /datum/design/odysseus_chassis
 	name = "Exosuit Chassis (\"Odysseus\")"
 	id = "odysseus_chassis"
@@ -239,7 +239,7 @@
 	category = list("Odysseus")
 
 
-//Gygax
+// Gygax
 /datum/design/gygax_chassis
 	name = "Exosuit Chassis (\"Gygax\")"
 	id = "gygax_chassis"
@@ -312,7 +312,7 @@
 	construction_time = 600
 	category = list("Gygax")
 
-//Gygax Ultra
+// Gygax Ultra
 /datum/design/ultra_chassis
 	name = "Exosuit Chassis (\"Gygax Ultra\")"
 	id = "ultra_chassis"
@@ -385,7 +385,7 @@
 	construction_time = 600
 	category = list("Gygax Ultra")
 
-//Durand
+// Durand
 /datum/design/durand_chassis
 	name = "Exosuit Chassis (\"Durand\")"
 	id = "durand_chassis"
@@ -458,7 +458,7 @@
 	category = list("Durand")
 
 
-//Vindicator
+// Vindicator
 /datum/design/vindicator_chassis
 	name = "Exosuit Chassis (\"Vindicator\")"
 	id = "vindicator_chassis"
@@ -532,7 +532,7 @@
 	category = list("Vindicator")
 
 
-//Exosuit Equipment
+// Exosuit Equipment
 /datum/design/firefighter_chassis
 	name = "Exosuit Chassis (\"Firefighter\")"
 	id = "firefighter_chassis"
@@ -843,7 +843,7 @@
 	construction_time = 100
 	category = list("Exosuit_Equipment")
 
-//Cyborg Upgrade Modules
+// Cyborg Upgrade Modules
 /datum/design/borg_upgrade_reset
 	name = "Cyborg Upgrade Module (Reset Module)"
 	id = "borg_upgrade_reset"
@@ -899,7 +899,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 
-//Misc
+// Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"
 	id = "mecha_tracking"

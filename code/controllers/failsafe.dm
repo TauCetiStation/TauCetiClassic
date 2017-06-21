@@ -32,7 +32,7 @@ var/datum/controller/failsafe/Failsafe
 /datum/controller/failsafe/proc/LaunchLoop()
 	set waitfor = 0
 	Failsafe.Loop()
-	qdel(Failsafe) //when Loop() returns, we delete ourselves and let the mc recreate us
+	qdel(Failsafe) // when Loop() returns, we delete ourselves and let the mc recreate us
 
 /datum/controller/failsafe/Destroy()
 	..()
@@ -70,9 +70,9 @@ var/datum/controller/failsafe/Failsafe
 							else if(rtn < 0)
 								log_game("FailSafe: Could not restart MC, runtime encountered. Entering defcon 0")
 								to_chat(admins, "<span class='boldannounce'>ERROR: DEFCON [defcon_pretty()]. Could not restart MC, runtime encountered. I will silently keep retrying.</span>")
-							//if the return number was 0, it just means the mc was restarted too recently, and it just needs some time before we try again
-							//no need to handle that specially when defcon 0 can handle it
-						if(0) //DEFCON 0! (mc failed to restart)
+							// if the return number was 0, it just means the mc was restarted too recently, and it just needs some time before we try again
+							// no need to handle that specially when defcon 0 can handle it
+						if(0) // DEFCON 0! (mc failed to restart)
 							var/rtn = Recreate_MC()
 							if(rtn > 0)
 								defcon = 4

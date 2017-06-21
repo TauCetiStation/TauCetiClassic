@@ -47,15 +47,15 @@
 		else
 			un_equip_or_action(usr, add_to, item_to_add)
 
-//Returns the thing in our active hand (errr... mouth!)
+// Returns the thing in our active hand (errr... mouth!)
 /mob/living/carbon/ian/get_active_hand()
 	return mouth
 
-//Returns the thing in our inactive hand (errr... mouth!)
+// Returns the thing in our inactive hand (errr... mouth!)
 /mob/living/carbon/ian/get_inactive_hand()
 	return mouth
 
-//Drops the item in our active hand (errr... mouth!)
+// Drops the item in our active hand (errr... mouth!)
 /mob/living/carbon/ian/drop_item(atom/Target)
 	return drop_from_inventory(mouth, Target)
 
@@ -93,7 +93,7 @@
 				who.visible_message(text("<span class='danger'>[] is trying to take off \a [] from []'s []!</span>", who, slot_ref, src, lowertext(where)))
 				slot_ref.add_fingerprint(who)
 			else
-				who.isHandsBusy = FALSE //invalid slot
+				who.isHandsBusy = FALSE // invalid slot
 				return
 
 	if(do_after(who, HUMAN_STRIP_DELAY, target = src))
@@ -125,7 +125,7 @@
 		switch(where)
 			if("CPR")
 				if(src.health > config.health_threshold_dead && src.health < config.health_threshold_crit)
-					var/suff = min(src.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
+					var/suff = min(src.getOxyLoss(), 5) // Pre-merge level, less healing, more prevention of dieing.
 					src.adjustOxyLoss(-suff)
 					src.updatehealth()
 					who.visible_message("<span class='warning'>[who] performs CPR on [src]!</span>")
@@ -192,7 +192,7 @@
 
 	if(W == mouth)
 		src.mouth = null
-		update_inv_mouth() //So items actually disappear from mouth.
+		update_inv_mouth() // So items actually disappear from mouth.
 
 	W.screen_loc = null // will get moved if inventory is visible
 
@@ -227,7 +227,7 @@
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
 
-//Puts the item into our active hand (errr... mouth!) if possible. returns 1 on success.
+// Puts the item into our active hand (errr... mouth!) if possible. returns 1 on success.
 /mob/living/carbon/ian/put_in_active_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))
 		return FALSE
@@ -299,7 +299,7 @@
 		name = "Ianknown"
 		return
 
-	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
+	// Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
 	switch(head.type)
 		if(/obj/item/clothing/head/caphat, /obj/item/clothing/head/collectable/captain)
 			name = "Captain [real_name]"

@@ -2,7 +2,7 @@
 	name = "flash"
 	desc = "Used for blinding and being an asshole."
 	icon_state = "flash"
-	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
+	item_state = "flashbang"	// looks exactly like a flash (and nothing like a flashbang)
 	throwforce = 5
 	w_class = 2.0
 	throw_speed = 4
@@ -12,9 +12,9 @@
 
 	action_button_name = "Toggle Flash"
 
-	var/times_used = 0 //Number of times it's been used.
-	var/broken = 0     //Is the flash burnt out?
-	var/last_used = 0 //last world.time it was used.
+	var/times_used = 0 // Number of times it's been used.
+	var/broken = 0     // Is the flash burnt out?
+	var/last_used = 0 // last world.time it was used.
 
 /obj/item/device/flash/proc/clown_check(mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
@@ -24,18 +24,18 @@
 	return 1
 
 /obj/item/device/flash/proc/flash_recharge()
-	//capacitor recharges over time
+	// capacitor recharges over time
 	for(var/i=0, i<3, i++)
 		if(last_used+600 > world.time)
 			break
 		last_used += 600
 		times_used -= 2
 	last_used = world.time
-	times_used = max(0,round(times_used)) //sanity
+	times_used = max(0,round(times_used)) // sanity
 
 
 /obj/item/device/flash/attack(mob/living/M, mob/user)
-	if(!user || !M)	return	//sanity
+	if(!user || !M)	return	// sanity
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [M.name] ([M.ckey])</font>")
@@ -48,18 +48,18 @@
 
 	flash_recharge()
 
-	//spamming the flash before it's fully charged (60seconds) increases the chance of it  breaking
-	//It will never break on the first use.
+	// spamming the flash before it's fully charged (60seconds) increases the chance of it  breaking
+	// It will never break on the first use.
 	switch(times_used)
 		if(0 to 5)
 			last_used = world.time
-			if(prob(times_used))	//if you use it 5 times in a minute it has a 10% chance to break!
+			if(prob(times_used))	// if you use it 5 times in a minute it has a 10% chance to break!
 				broken = 1
 				to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 				icon_state = "flashburnt"
 				return
 			times_used++
-		else	//can only use it  5 times a minute
+		else	// can only use it  5 times a minute
 			to_chat(user, "<span class='warning'>*click* *click*</span>")
 			return
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
@@ -76,7 +76,7 @@
 				if(user.mind && (user.mind in ticker.mode.head_revolutionaries) && ticker.mode.name == "revolution")
 					if(M.client)
 						if(M.stat == CONSCIOUS)
-							M.mind_initialize()		//give them a mind datum if they don't have one.
+							M.mind_initialize()		// give them a mind datum if they don't have one.
 							var/resisted
 							if(!isloyal(M) && !jobban_isbanned(M, ROLE_REV) && !jobban_isbanned(M, "Syndicate") && !role_available_in_minutes(M, ROLE_REV))
 								if(user.mind in ticker.mode.head_revolutionaries)
@@ -92,7 +92,7 @@
 			flashfail = 1
 
 	else if(issilicon(M))
-		//M.Weaken(rand(5,10))
+		// M.Weaken(rand(5,10))
 		var/power = rand(7,13)
 		M.confused = min(M.confused + power, 20)
 		M.eye_blind = min(M.eye_blind + power, 20)
@@ -135,17 +135,17 @@
 
 	flash_recharge()
 
-	//spamming the flash before it's fully charged (60seconds) increases the chance of it  breaking
-	//It will never break on the first use.
+	// spamming the flash before it's fully charged (60seconds) increases the chance of it  breaking
+	// It will never break on the first use.
 	switch(times_used)
 		if(0 to 5)
-			if(prob(2*times_used))	//if you use it 5 times in a minute it has a 10% chance to break!
+			if(prob(2*times_used))	// if you use it 5 times in a minute it has a 10% chance to break!
 				broken = 1
 				to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 				icon_state = "flashburnt"
 				return
 			times_used++
-		else	//can only use it  5 times a minute
+		else	// can only use it  5 times a minute
 			user.show_message("<span class='warning'>*click* *click*</span>", 2)
 			return
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)

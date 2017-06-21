@@ -12,5 +12,5 @@ var/list/clown_names = file2list("config/names/clown.txt")
 
 var/list/verbs = file2list("config/names/verbs.txt")
 var/list/adjectives = file2list("config/names/adjectives.txt")
-//loaded on startup because of "
-//would include in rsc if ' was used
+// loaded on startup because of "
+// would include in rsc if ' was used

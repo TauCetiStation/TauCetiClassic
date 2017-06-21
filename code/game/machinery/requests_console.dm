@@ -12,14 +12,14 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	anchored = 1
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
-	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
-	var/list/messages = list() //List of all messages
+	var/department = "Unknown" // The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
+	var/list/messages = list() // List of all messages
 	var/departmentType = 0
 		// 0 = none (not listed, can only repeplied to)
 		// 1 = assistance
 		// 2 = supplies
 		// 3 = info
-		// 4 = ass + sup //Erro goddamn you just HAD to shorten "assistance" down to "ass"
+		// 4 = ass + sup // Erro goddamn you just HAD to shorten "assistance" down to "ass"
 		// 5 = ass + info
 		// 6 = sup + info
 		// 7 = ass + sup + info
@@ -48,12 +48,12 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		// 0 = This console cannot be used to send department announcements
 		// 1 = This console can send department announcementsf
 	var/open = 0 // 1 if open
-	var/announceAuth = 0 //Will be set to 1 when you authenticate yourself for announcements
-	var/msgVerified = "" //Will contain the name of the person who varified it
-	var/msgStamped = "" //If a message is stamped, this will contain the stamp name
+	var/announceAuth = 0 // Will be set to 1 when you authenticate yourself for announcements
+	var/msgVerified = "" // Will contain the name of the person who varified it
+	var/msgStamped = "" // If a message is stamped, this will contain the stamp name
 	var/message = "";
-	var/dpt = ""; //the department which will be receiving the message
-	var/priority = -1 ; //Priority of the message being sent
+	var/dpt = ""; // the department which will be receiving the message
+	var/priority = -1 ; // Priority of the message being sent
 	light_range = 0
 
 /obj/machinery/requests_console/power_change()
@@ -72,7 +72,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	..()
 	name = "[department] Requests Console"
 	allConsoles += src
-	//req_console_departments += department
+	// req_console_departments += department
 	switch(departmentType)
 		if(1)
 			req_console_assistance += department
@@ -125,7 +125,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	dat = text("<HEAD><TITLE>Requests Console</TITLE></HEAD><H3>[department] Requests Console</H3>")
 	if(!open)
 		switch(screen)
-			if(1)	//req. assistance
+			if(1)	// req. assistance
 				dat += text("Which department do you need assistance from?<BR><BR>")
 				for(var/dpt in req_console_assistance)
 					if (dpt != department)
@@ -136,7 +136,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 						dat += text(")<BR>")
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
 
-			if(2)	//req. supplies
+			if(2)	// req. supplies
 				dat += text("Which department do you need supplies from?<BR><BR>")
 				for(var/dpt in req_console_supplies)
 					if (dpt != department)
@@ -147,7 +147,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 						dat += text(")<BR>")
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
 
-			if(3)	//relay information
+			if(3)	// relay information
 				dat += text("Which department would you like to send information to?<BR><BR>")
 				for(var/dpt in req_console_information)
 					if (dpt != department)
@@ -158,15 +158,15 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 						dat += text(")<BR>")
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
 
-			if(6)	//sent successfully
+			if(6)	// sent successfully
 				dat += text("<FONT COLOR='GREEN'>Message sent</FONT><BR><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>")
 
-			if(7)	//unsuccessful; not sent
+			if(7)	// unsuccessful; not sent
 				dat += text("<FONT COLOR='RED'>An error occurred. </FONT><BR><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>")
 
-			if(8)	//view messages
+			if(8)	// view messages
 				for (var/obj/machinery/requests_console/Console in allConsoles)
 					if (Console.department == department)
 						Console.newmessagepriority = 0
@@ -178,7 +178,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += text("[msg]<BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=0'>Back to main menu</A><BR>")
 
-			if(9)	//authentication before sending
+			if(9)	// authentication before sending
 				dat += text("<B>Message Authentication</B><BR><BR>")
 				dat += text("<b>Message for [dpt]: </b>[message]<BR><BR>")
 				dat += text("You may authenticate your message now by scanning your ID or your stamp<BR><BR>")
@@ -187,7 +187,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				dat += text("<A href='?src=\ref[src];department=[dpt]'>Send</A><BR>");
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
 
-			if(10)	//send announcement
+			if(10)	// send announcement
 				dat += text("<B>Station wide announcement</B><BR><BR>")
 				if(announceAuth)
 					dat += text("<b>Authentication accepted</b><BR><BR>")
@@ -198,7 +198,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += text("<A href='?src=\ref[src];sendAnnouncement=1'>Announce</A><BR>");
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
 
-			else	//main menu
+			else	// main menu
 				screen = 0
 				announceAuth = 0
 				if (newmessagepriority == 1)
@@ -227,7 +227,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		return
 
 	if(reject_bad_text(href_list["write"]))
-		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
+		dpt = ckey(href_list["write"]) // write contains the string of the receiving department's name
 
 		var/new_message = sanitize_alt(copytext(input(usr, "Write your message:", "Awaiting Input", ""),1,MAX_MESSAGE_LEN))
 		if(new_message)
@@ -279,7 +279,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if (msgStamped)
 			sending += msgStamped
 			sending += "<br>"
-		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
+		screen = 7 // if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (sending)
 			var/pass = 0
 			for (var/obj/machinery/message_server/MS in machines)
@@ -294,7 +294,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (ckey(Console.department) == ckey(href_list["department"]))
 
 						switch(priority)
-							if("2")		//High priority
+							if("2")		// High priority
 								if(Console.newmessagepriority < 2)
 									Console.newmessagepriority = 2
 									Console.icon_state = "req_comp2"
@@ -304,7 +304,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
 								Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
 
-		//					if("3")		//Not implemanted, but will be 		//Removed as it doesn't look like anybody intends on implimenting it ~Carn
+		//					if("3")		// Not implemanted, but will be 		// Removed as it doesn't look like anybody intends on implimenting it ~Carn
 		//						if(Console.newmessagepriority < 3)
 		//							Console.newmessagepriority = 3
 		//							Console.icon_state = "req_comp3"
@@ -332,32 +332,32 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					O.show_message(text("[bicon(src)] *The Requests Console beeps: 'NOTICE: No server detected!'"))
 
 
-	//Handle screen switching
+	// Handle screen switching
 	switch(text2num(href_list["setScreen"]))
-		if(null)	//skip
-		if(1)		//req. assistance
+		if(null)	// skip
+		if(1)		// req. assistance
 			screen = 1
-		if(2)		//req. supplies
+		if(2)		// req. supplies
 			screen = 2
-		if(3)		//relay information
+		if(3)		// relay information
 			screen = 3
-//		if(4)		//write message
+//		if(4)		// write message
 //			screen = 4
-		if(5)		//choose priority
+		if(5)		// choose priority
 			screen = 5
-		if(6)		//sent successfully
+		if(6)		// sent successfully
 			screen = 6
-		if(7)		//unsuccessfull; not sent
+		if(7)		// unsuccessfull; not sent
 			screen = 7
-		if(8)		//view messages
+		if(8)		// view messages
 			screen = 8
-		if(9)		//authentication
+		if(9)		// authentication
 			screen = 9
-		if(10)		//send announcement
+		if(10)		// send announcement
 			if(!announcementConsole)
 				return FALSE
 			screen = 10
-		else		//main menu
+		else		// main menu
 			dpt = ""
 			msgVerified = ""
 			msgStamped = ""
@@ -365,9 +365,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			priority = -1
 			screen = 0
 
-	//Handle silencing the console
+	// Handle silencing the console
 	switch( href_list["setSilent"] )
-		if(null)	//skip
+		if(null)	// skip
 		if("1")
 			silent = 1
 		else
@@ -375,7 +375,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	updateUsrDialog()
 
-					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
+					// err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
 /obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user)
 	/*
 	if (istype(O, /obj/item/weapon/crowbar))

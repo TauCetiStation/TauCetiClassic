@@ -352,7 +352,7 @@
 	icon_broken = "wall-lockerbroken"
 	icon_off = "wall-lockeroff"
 
-	//too small to put a man in
+	// too small to put a man in
 	large = 0
 
 /obj/structure/closet/secure_closet/wall/update_icon()

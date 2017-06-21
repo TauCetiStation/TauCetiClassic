@@ -15,8 +15,8 @@
 	door_open_sound  = 'sound/machines/electric_door_open.ogg'
 	door_close_sound = 'sound/machines/electric_door_open.ogg'
 
-	//These are frequenly used with windows, so make sure zones can pass.
-	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
+	// These are frequenly used with windows, so make sure zones can pass.
+	// Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
 	block_air_zones = 0
 
 	var/hatch_open = 0
@@ -86,7 +86,7 @@
 		var/obj/mecha/mecha = AM
 		if (mecha.occupant)
 			var/mob/M = mecha.occupant
-			if(world.time - M.last_bumped <= 10) return //Can bump-open one airlock per second. This is to prevent popup message spam.
+			if(world.time - M.last_bumped <= 10) return // Can bump-open one airlock per second. This is to prevent popup message spam.
 			M.last_bumped = world.time
 			attack_hand(M)
 	return 0
@@ -122,7 +122,7 @@
 /obj/machinery/door/firedoor/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(operating)
-		return//Already doing something.
+		return// Already doing something.
 
 	if(blocked)
 		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
@@ -135,7 +135,7 @@
 
 	var/alarmed = 0
 
-	for(var/area/A in areas_added)		//Checks if there are fire alarms in any areas associated with that firedoor
+	for(var/area/A in areas_added)		// Checks if there are fire alarms in any areas associated with that firedoor
 		if(A.fire || A.air_doors_activated)
 			alarmed = 1
 
@@ -160,7 +160,7 @@
 	if(needs_to_close)
 		spawn(50)
 			alarmed = 0
-			for(var/area/A in areas_added)		//Just in case a fire alarm is turned off while the firedoor is going through an autoclose cycle
+			for(var/area/A in areas_added)		// Just in case a fire alarm is turned off while the firedoor is going through an autoclose cycle
 				if(A.fire || A.air_doors_activated)
 					alarmed = 1
 			if(alarmed)
@@ -170,7 +170,7 @@
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user)
 	add_fingerprint(user)
 	if(operating)
-		return//Already doing something.
+		return// Already doing something.
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.remove_fuel(0, user))

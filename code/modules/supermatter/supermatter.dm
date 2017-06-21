@@ -1,20 +1,20 @@
 
-#define NITROGEN_RETARDATION_FACTOR 4        //Higher == N2 slows reaction more
-#define THERMAL_RELEASE_MODIFIER 10                //Higher == less heat released during reaction
-#define PHORON_RELEASE_MODIFIER 1500                //Higher == less phoron released by reaction
-#define OXYGEN_RELEASE_MODIFIER 750        //Higher == less oxygen released at high temperature/power
-#define THERMAL_RELEASE_MODIFIER 750               //Higher == more heat released during reaction
-#define PLASMA_RELEASE_MODIFIER 1500                //Higher == less plasma released by reaction
-#define OXYGEN_RELEASE_MODIFIER 1500        //Higher == less oxygen released at high temperature/power
-#define REACTION_POWER_MODIFIER 1.1                //Higher == more overall power
+#define NITROGEN_RETARDATION_FACTOR 4        // Higher == N2 slows reaction more
+#define THERMAL_RELEASE_MODIFIER 10                // Higher == less heat released during reaction
+#define PHORON_RELEASE_MODIFIER 1500                // Higher == less phoron released by reaction
+#define OXYGEN_RELEASE_MODIFIER 750        // Higher == less oxygen released at high temperature/power
+#define THERMAL_RELEASE_MODIFIER 750               // Higher == more heat released during reaction
+#define PLASMA_RELEASE_MODIFIER 1500                // Higher == less plasma released by reaction
+#define OXYGEN_RELEASE_MODIFIER 1500        // Higher == less oxygen released at high temperature/power
+#define REACTION_POWER_MODIFIER 1.1                // Higher == more overall power
 
 
-//These would be what you would get at point blank, decreases with distance
+// These would be what you would get at point blank, decreases with distance
 #define DETONATION_RADS 200
 #define DETONATION_HALLUCINATION 600
 
 
-#define WARNING_DELAY 30 		//seconds between warnings.
+#define WARNING_DELAY 30 		// seconds between warnings.
 
 /obj/machinery/power/supermatter
 	name = "Supermatter"
@@ -49,17 +49,17 @@
 
 	var/oxygen = 0				  // Moving this up here for easier debugging.
 
-	//Temporary values so that we can optimize this
-	//How much the bullets damage should be multiplied by when it is added to the internal variables
+	// Temporary values so that we can optimize this
+	// How much the bullets damage should be multiplied by when it is added to the internal variables
 	var/config_bullet_energy = 2
-	//How much of the power is left after processing is finished?
+	// How much of the power is left after processing is finished?
 //        var/config_power_reduction_per_tick = 0.5
-	//How much hallucination should it produce per unit of power?
+	// How much hallucination should it produce per unit of power?
 	var/config_hallucination_power = 0.1
 
 	var/obj/item/device/radio/radio
 
-	shard //Small subtype, less efficient and more sensitive, but less boom.
+	shard // Small subtype, less efficient and more sensitive, but less boom.
 		name = "Supermatter Shard"
 		desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. \red You get headaches just from looking at it."
 		icon_state = "darkmatter_shard"
@@ -71,7 +71,7 @@
 
 		gasefficency = 0.125
 
-		explosion_power = 3 //3,6,9,12? Or is that too small?
+		explosion_power = 3 // 3,6,9,12? Or is that too small?
 
 
 /obj/machinery/power/supermatter/New()
@@ -95,8 +95,8 @@
 	if(isnull(L))		// We have a null turf...something is wrong, stop processing this entity.
 		return PROCESS_KILL
 
-	if(!istype(L)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
-		return  //Yeah just stop.
+	if(!istype(L)) 	// We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
+		return  // Yeah just stop.
 
 	if(istype(L, /turf/space))	// Stop processing this stuff if we've been ejected.
 		return
@@ -121,17 +121,17 @@
 		if(damage > explosion_point)
 			for(var/mob/living/mob in living_mob_list)
 				if(istype(mob, /mob/living/carbon/human))
-					//Hilariously enough, running into a closet should make you get hit the hardest.
+					// Hilariously enough, running into a closet should make you get hit the hardest.
 					mob:hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
 				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
 				mob.apply_effect(rads, IRRADIATE)
 
 			explode()
 
-	//Ok, get the air from the turf
+	// Ok, get the air from the turf
 	var/datum/gas_mixture/env = L.return_air()
 
-	//Remove gas from surrounding area
+	// Remove gas from surrounding area
 	var/datum/gas_mixture/removed = env.remove(gasefficency * env.total_moles)
 
 	if(!removed || !removed.total_moles)
@@ -144,8 +144,8 @@
 
 	damage_archived = damage
 	damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
-	//Ok, 100% oxygen atmosphere = best reaction
-	//Maxes out at 100% oxygen pressure
+	// Ok, 100% oxygen atmosphere = best reaction
+	// Maxes out at 100% oxygen pressure
 	oxygen = max(min((removed.oxygen - (removed.nitrogen * NITROGEN_RETARDATION_FACTOR)) / MOLES_CELLSTANDARD, 1), 0)
 
 	var/temp_factor = 100
@@ -158,29 +158,29 @@
 		temp_factor = 60
 		icon_state = base_icon_state
 
-	power = max( (removed.temperature * temp_factor / T0C) * oxygen + power, 0) //Total laser power plus an overload
+	power = max( (removed.temperature * temp_factor / T0C) * oxygen + power, 0) // Total laser power plus an overload
 
-	//We've generated power, now let's transfer it to the collectors for storing/usage
+	// We've generated power, now let's transfer it to the collectors for storing/usage
 	transfer_energy()
 
 	var/device_energy = power * REACTION_POWER_MODIFIER
 
-	//To figure out how much temperature to add each tick, consider that at one atmosphere's worth
-	//of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
-	//that the device energy is around 2140. At that stage, we don't want too much heat to be put out
-	//Since the core is effectively "cold"
+	// To figure out how much temperature to add each tick, consider that at one atmosphere's worth
+	// of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
+	// that the device energy is around 2140. At that stage, we don't want too much heat to be put out
+	// Since the core is effectively "cold"
 
-	//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
-	//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
+	// Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
+	// is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
 	
 	var/thermal_power = THERMAL_RELEASE_MODIFIER
-	if(removed.total_moles < 35) thermal_power += 750   //If you don't add coolant, you are going to have a bad time.
+	if(removed.total_moles < 35) thermal_power += 750   // If you don't add coolant, you are going to have a bad time.
 
 	removed.temperature += ((device_energy * thermal_power) / max(1, removed.heat_capacity()))
 
 	removed.temperature = max(0, min(removed.temperature, 10000))
 
-	//Calculate how much gas to release
+	// Calculate how much gas to release
 	removed.phoron += max(device_energy / PHORON_RELEASE_MODIFIER, 0)
 
 	removed.oxygen += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
@@ -275,7 +275,7 @@
 
 	power += 200
 
-		//Some poor sod got eaten, go ahead and irradiate people nearby.
+		// Some poor sod got eaten, go ahead and irradiate people nearby.
 	for(var/mob/living/l in range(10))
 		if(l in view())
 			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\

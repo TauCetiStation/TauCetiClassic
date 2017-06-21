@@ -1,4 +1,4 @@
-//generic procs copied from obj/effect/alien
+// generic procs copied from obj/effect/alien
 /obj/effect/spider
 	name = "web"
 	desc = "It's stringy and sticky."
@@ -7,7 +7,7 @@
 	density = 0
 	var/health = 15
 
-//similar to weeds, but only barfed out by nurses manually
+// similar to weeds, but only barfed out by nurses manually
 /obj/effect/spider/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -102,7 +102,7 @@
 		pixel_x = rand(6,-6)
 		pixel_y = rand(6,-6)
 		START_PROCESSING(SSobj, src)
-		//50% chance to grow up
+		// 50% chance to grow up
 		if(prob(50))
 			amount_grown = 1
 
@@ -164,7 +164,7 @@
 							new_area.Entered(src)
 			else
 				entry_vent = null
-	//=================
+	// =================
 
 	else if(prob(25))
 		var/list/nearby = oview(5, src)
@@ -174,7 +174,7 @@
 			if(prob(25))
 				src.visible_message("\blue \the [src] skitters[pick(" away"," around","")].")
 	else if(prob(5))
-		//ventcrawl!
+		// ventcrawl!
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
 			if(!v.welded)
 				entry_vent = v

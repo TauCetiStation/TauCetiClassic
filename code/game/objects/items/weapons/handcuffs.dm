@@ -13,7 +13,7 @@
 	m_amt = 500
 	origin_tech = "materials=1"
 	var/dispenser = 0
-	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes
+	var/breakouttime = 1200 // Deciseconds = 120s = 2 minutes
 	var/cuff_sound = 'sound/weapons/handcuffs.ogg'
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
@@ -31,7 +31,7 @@
 			place_handcuffs(C, user)
 			return
 
-		//check for an aggressive grab
+		// check for an aggressive grab
 		for (var/obj/item/weapon/grab/G in C.grabbed_by)
 			if (G.loc == user && G.state >= GRAB_AGGRESSIVE)
 				place_handcuffs(C, user)
@@ -107,7 +107,7 @@ var/last_chew = 0
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_white"
-	breakouttime = 300 //Deciseconds = 30s
+	breakouttime = 300 // Deciseconds = 30s
 	cuff_sound = 'sound/weapons/cablecuff.ogg'
 
 /obj/item/weapon/handcuffs/cable/red

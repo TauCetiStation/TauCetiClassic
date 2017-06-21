@@ -7,7 +7,7 @@
 
 
 
-//NEEDS SPRITE! (When this gets ticked in search for 'TODO MECHA JETPACK SPRITE MISSING' through code to uncomment the place where it's missing.)
+// NEEDS SPRITE! (When this gets ticked in search for 'TODO MECHA JETPACK SPRITE MISSING' through code to uncomment the place where it's missing.)
 /obj/item/mecha_parts/mecha_equipment/jetpack
 	name = "Jetpack"
 	desc = "Using directed ion bursts and cunning solar wind reflection technique, this device enables controlled space flight."

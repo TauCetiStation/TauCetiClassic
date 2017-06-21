@@ -17,7 +17,7 @@
 	var/last_use = 1.0
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
-	var/spray_amount = 1	//units of liquid per particle
+	var/spray_amount = 1	// units of liquid per particle
 	var/spray_range = 4
 
 /obj/item/weapon/extinguisher/mini
@@ -25,7 +25,7 @@
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
 	item_state = "miniFE"
-	hitsound = null	//it is much lighter, after all.
+	hitsound = null	// it is much lighter, after all.
 	throwforce = 2
 	w_class = 2.0
 	force = 3.0
@@ -52,7 +52,7 @@
 	return
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
-	//TODO; Add support for reagents in water.
+	// TODO; Add support for reagents in water.
 
 	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
 		var/obj/O = target
@@ -133,7 +133,7 @@
 						if(!W) return
 						if(!W.reagents) break
 						W.reagents.reaction(atm)
-						if(isliving(atm)) //For extinguishing mobs on fire
+						if(isliving(atm)) // For extinguishing mobs on fire
 							var/mob/living/M = atm
 							M.ExtinguishMob()
 					if(W.loc == my_target) break

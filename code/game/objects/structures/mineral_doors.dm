@@ -1,5 +1,5 @@
-//NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly based on its
-//machineryness
+// NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly based on its
+// machineryness
 
 /obj/structure/mineral_door
 	name = "mineral door"
@@ -12,7 +12,7 @@
 
 	var/operating_sound = 'sound/effects/stonedoor_openclose.ogg'
 	var/mineralType = "metal"
-	var/state = 0 //closed, 1 == open
+	var/state = 0 // closed, 1 == open
 	var/isSwitchingStates = 0
 	var/oreAmount = 7
 
@@ -34,11 +34,11 @@
 		return TryToSwitchState(user)
 	return
 
-/obj/structure/mineral_door/attack_ai(mob/user) //those aren't machinery, they're just big fucking slabs of a mineral
-	if(isAI(user)) //so the AI can't open it
+/obj/structure/mineral_door/attack_ai(mob/user) // those aren't machinery, they're just big fucking slabs of a mineral
+	if(isAI(user)) // so the AI can't open it
 		return
-	else if(isrobot(user)) //but cyborgs can
-		if(get_dist(user,src) <= 1) //not remotely though
+	else if(isrobot(user)) // but cyborgs can
+		if(get_dist(user,src) <= 1) // not remotely though
 			return TryToSwitchState(user)
 
 /obj/structure/mineral_door/attack_paw(mob/user)
@@ -57,7 +57,7 @@
 	if(isSwitchingStates) return
 	if(ismob(user))
 		var/mob/M = user
-		if(world.time - user.last_bumped <= 60) return //NOTE do we really need that?
+		if(world.time - user.last_bumped <= 60) return // NOTE do we really need that?
 		if(M.client)
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M
@@ -190,7 +190,7 @@
 			CheckHealth()
 	return
 
-/obj/structure/mineral_door/proc/update_nearby_tiles(need_rebuild) //Copypasta from airlock code
+/obj/structure/mineral_door/proc/update_nearby_tiles(need_rebuild) // Copypasta from airlock code
 	if(!SSair)
 		return 0
 	SSair.mark_for_update(get_turf(src))

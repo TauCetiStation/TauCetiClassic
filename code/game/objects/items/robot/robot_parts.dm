@@ -6,7 +6,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/list/part = null
-	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
+	var/sabotaged = 0 // Emagging limbs can have repercussions when installed as prosthetics.
 
 /obj/item/robot_parts/l_arm
 	name = "robot left arm"
@@ -235,7 +235,7 @@
 
 			O.cell = chest.cell
 			O.cell.loc = O
-			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			W.loc = O// Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 
 			// Since we "magically" installed a cell, we also have to update the correct component.
 			if(O.cell)

@@ -2,7 +2,7 @@
 Use the regular_hud_updates() proc before process_med_hud(mob) or process_sec_hud(mob) so
 the HUD updates properly! */
 
-//Medical HUD outputs. Called by the Life() proc of the mob using it, usually.
+// Medical HUD outputs. Called by the Life() proc of the mob using it, usually.
 /proc/process_med_hud(mob/M, local_scanner, mob/Alt, crit_fail = 0)
 	if(!can_process_hud(M))
 		return
@@ -26,7 +26,7 @@ the HUD updates properly! */
 		P.Client.images += patient.hud_list[HEALTH_HUD]
 
 
-//Security HUDs. Pass a value for the second argument to enable implant viewing or other special features.
+// Security HUDs. Pass a value for the second argument to enable implant viewing or other special features.
 /proc/process_sec_hud(mob/M, advanced_mode, mob/Alt, crit_fail = 0)
 	if(!can_process_hud(M))
 		return
@@ -75,8 +75,8 @@ the HUD updates properly! */
 		return 0
 	return 1
 
-//Deletes the current HUD images so they can be refreshed with new ones.
-/mob/proc/regular_hud_updates() //Used in the life.dm of mobs that can use HUDs.
+// Deletes the current HUD images so they can be refreshed with new ones.
+/mob/proc/regular_hud_updates() // Used in the life.dm of mobs that can use HUDs.
 	if(client)
 		for(var/image/hud in client.images)
 			if(copytext(hud.icon_state,1,4) == "hud")

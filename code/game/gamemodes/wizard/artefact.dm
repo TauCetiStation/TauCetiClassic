@@ -36,7 +36,7 @@
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
 
-	check_spooky()//clean out/refresh the list
+	check_spooky()// clean out/refresh the list
 	if(spooky_scaries.len >= 3 && !unlimited)
 		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
 		return
@@ -50,7 +50,7 @@
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
 /obj/item/device/necromantic_stone/proc/check_spooky()
-	if(unlimited) //no point, the list isn't used.
+	if(unlimited) // no point, the list isn't used.
 		return
 
 	for(var/X in spooky_scaries)
@@ -75,7 +75,7 @@
 	H.put_in_any_hand_if_possible(new /obj/item/weapon/claymore/light(H))
 	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////// 
 
 /obj/item/weapon/contract
 	name = "contract"
@@ -98,16 +98,16 @@
 		dat += "<I>Using this contract, you agree to become an apprentice .</I><BR>"
 		dat += "<B>Which school of magic you want to studying?:</B><BR>"
 		if(free_school_flags & SCHOOL_DESTRUCTION)
-			dat += "<A href='byond://?src=\ref[src];school=destruction'>Destruction</A><BR>"
+			dat += "<A href='byond:// ?src=\ref[src];school=destruction'>Destruction</A><BR>"
 			dat += "<I>You will follow the path in offensive magic. They know Magic Missile and Fireball.</I><BR>"
 		if(free_school_flags & SCHOOL_BLUESPACE)
-			dat += "<A href='byond://?src=\ref[src];school=bluespace'>Bluespace Manipulation</A><BR>"
+			dat += "<A href='byond:// ?src=\ref[src];school=bluespace'>Bluespace Manipulation</A><BR>"
 			dat += "<I>You will follow the path in defy physics, melting through solid objects and travelling great distances in the blink of an eye. you will know Teleport and Ethereal Jaunt.</I><BR>"
 		if(free_school_flags & SCHOOL_HEAL)
-			dat += "<A href='byond://?src=\ref[src];school=healing'>Healing</A><BR>"
+			dat += "<A href='byond:// ?src=\ref[src];school=healing'>Healing</A><BR>"
 			dat += "<I>You will learn to cast spells that will aid your master survival. You will know Charge, ressurection and healing.</I><BR>"
 		if(free_school_flags & SCHOOL_ROBELESS)
-			dat += "<A href='byond://?src=\ref[src];school=robeless'>Robeless</A><BR>"
+			dat += "<A href='byond:// ?src=\ref[src];school=robeless'>Robeless</A><BR>"
 			dat += "<I>You will be able to cast spells without robes. You will know Knock and Mindswap.</I><BR>"
 	dat += "<BR>"
 	for(var/datum/mind/M in previous_users)

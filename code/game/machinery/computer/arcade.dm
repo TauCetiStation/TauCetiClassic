@@ -5,13 +5,13 @@
 	icon_state = "arcade"
 	circuit = /obj/item/weapon/circuitboard/arcade
 	var/enemy_name = "Space Villian"
-	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
-	var/player_hp = 30 //Player health/attack points
+	var/temp = "Winners Don't Use Spacedrugs" // Temporary message, for attack messages, etc
+	var/player_hp = 30 // Player health/attack points
 	var/player_mp = 10
-	var/enemy_hp = 45 //Enemy health/attack points
+	var/enemy_hp = 45 // Enemy health/attack points
 	var/enemy_mp = 20
 	var/gameover = 0
-	var/blocked = 0 //Player cannot attack/heal while set
+	var/blocked = 0 // Player cannot attack/heal while set
 	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops			= 2,
 							/obj/item/toy/blink								= 2,
 							/obj/item/clothing/under/syndicate/tacticool	= 2,
@@ -110,18 +110,18 @@
 	if(..())
 		return
 	user.set_machine(src)
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
+	var/dat = "<a href='byond:// ?src=\ref[src];close=1'>Close</a>"
 	dat += "<center><h4>[src.enemy_name]</h4></center>"
 
 	dat += "<br><center><h3>[src.temp]</h3></center>"
 	dat += "<br><center>Health: [src.player_hp] | Magic: [src.player_mp] | Enemy Health: [src.enemy_hp]</center>"
 
 	if (src.gameover)
-		dat += "<center><b><a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
+		dat += "<center><b><a href='byond:// ?src=\ref[src];newgame=1'>New Game</a>"
 	else
-		dat += "<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
-		dat += "<a href='byond://?src=\ref[src];heal=1'>Heal</a> | "
-		dat += "<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"
+		dat += "<center><b><a href='byond:// ?src=\ref[src];attack=1'>Attack</a> | "
+		dat += "<a href='byond:// ?src=\ref[src];heal=1'>Heal</a> | "
+		dat += "<a href='byond:// ?src=\ref[src];charge=1'>Recharge Power</a>"
 
 	dat += "</b></center>"
 
@@ -178,7 +178,7 @@
 		usr.unset_machine()
 		usr << browse(null, "window=arcade")
 
-	else if (href_list["newgame"]) //Reset everything
+	else if (href_list["newgame"]) // Reset everything
 		temp = "New Round"
 		player_hp = 30
 		player_mp = 10
@@ -212,10 +212,10 @@
 				var/prizeselect = pickweight(prizes)
 				new prizeselect(src.loc)
 
-				if(istype(prizeselect, /obj/item/toy/gun)) //Ammo comes with the gun
+				if(istype(prizeselect, /obj/item/toy/gun)) // Ammo comes with the gun
 					new /obj/item/toy/ammo/gun(src.loc)
 
-				else if(istype(prizeselect, /obj/item/clothing/suit/syndicatefake)) //Helmet is part of the suit
+				else if(istype(prizeselect, /obj/item/clothing/suit/syndicatefake)) // Helmet is part of the suit
 					new	/obj/item/clothing/head/syndicatefake(src.loc)
 
 			else

@@ -22,9 +22,9 @@
 	animation.master = src
 	flick("h2monkey", animation)
 	sleep(48)
-	//animation = null
+	// animation = null
 
-	if(!species.primitive) //If the creature in question has no primitive set, this is going to be messy.
+	if(!species.primitive) // If the creature in question has no primitive set, this is going to be messy.
 		gib()
 		return
 
@@ -42,14 +42,14 @@
 	for(var/datum/disease/D in O.viruses)
 		D.affected_mob = O
 
-	//if (client) //#Z2.1 fix Players can't get back in the body,
-	//	client.mob = O//when we transform them back to human using genetics. So they forever ghosts, if someone un_monkeyize them.
+	// if (client) // #Z2.1 fix Players can't get back in the body,
+	//	client.mob = O// when we transform them back to human using genetics. So they forever ghosts, if someone un_monkeyize them.
 	if(mind)
 		mind.transfer_to(O)
 
 	to_chat(O, "<B>You are now [O]. </B>")
 
-	spawn(0)//To prevent the proc from returning null.
+	spawn(0)// To prevent the proc from returning null.
 		qdel(src)
 	qdel(animation)
 
@@ -81,7 +81,7 @@
 /mob/proc/AIize(move=1)
 	if(client)
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jams for AIs
-	var/mob/living/silicon/ai/O = new (loc, base_law_type,,1)//No MMI but safety is in effect.
+	var/mob/living/silicon/ai/O = new (loc, base_law_type,,1)// No MMI but safety is in effect.
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0
 
@@ -132,7 +132,7 @@
 		qdel(src)
 	return O
 
-//human -> robot
+// human -> robot
 /mob/living/carbon/human/proc/Robotize()
 	if (monkeyizing)
 		return
@@ -157,7 +157,7 @@
 	O.gender = gender
 	O.invisibility = 0
 
-	if(mind)		//TODO
+	if(mind)		// TODO
 		mind.transfer_to(O)
 		if(O.mind.assigned_role == "Cyborg")
 			O.mind.original = O
@@ -172,11 +172,11 @@
 		if(O.mind.role_alt_title == "Android")
 			O.mmi = new /obj/item/device/mmi/posibrain(O)
 		else if(O.mind.role_alt_title == "Robot")
-			O.mmi = null //Robots do not have removable brains.
+			O.mmi = null // Robots do not have removable brains.
 		else
 			O.mmi = new /obj/item/device/mmi(O)
 
-		if(O.mmi) O.mmi.transfer_identity(src) //Does not transfer key/client.
+		if(O.mmi) O.mmi.transfer_identity(src) // Does not transfer key/client.
 
 	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 	if(mode)
@@ -184,11 +184,11 @@
 
 	O.Namepick()
 
-	spawn(0)//To prevent the proc from returning null.
+	spawn(0)// To prevent the proc from returning null.
 		qdel(src)
 	return O
 
-//human -> alien
+// human -> alien
 /mob/living/carbon/human/proc/Alienize()
 	if (monkeyizing)
 		return
@@ -216,7 +216,7 @@
 	new_xeno.key = key
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
-	spawn(0)//To prevent the proc from returning null.
+	spawn(0)// To prevent the proc from returning null.
 		qdel(src)
 	return
 
@@ -235,7 +235,7 @@
 
 	var/mob/living/carbon/slime/new_slime
 	if(reproduce)
-		var/number = pick(14;2,3,4)	//reproduce (has a small chance of producing 3 or 4 offspring)
+		var/number = pick(14;2,3,4)	// reproduce (has a small chance of producing 3 or 4 offspring)
 		var/list/babies = list()
 		for(var/i=1,i<=number,i++)
 			var/mob/living/carbon/slime/M = new/mob/living/carbon/slime(loc)
@@ -252,7 +252,7 @@
 	new_slime.key = key
 
 	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
-	spawn(0)//To prevent the proc from returning null.
+	spawn(0)// To prevent the proc from returning null.
 		qdel(src)
 	return
 
@@ -266,7 +266,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in bodyparts)	//this really should not be necessary
+	for(var/t in bodyparts)	// this really should not be necessary
 		qdel(t)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
@@ -274,7 +274,7 @@
 	new_corgi.key = key
 
 	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
-	spawn(0)//To prevent the proc from returning null.
+	spawn(0)// To prevent the proc from returning null.
 		qdel(src)
 	return
 
@@ -336,26 +336,26 @@
  */
 /mob/proc/safe_animal(MP)
 
-//Bad mobs! - Remember to add a comment explaining what's wrong with the mob
+// Bad mobs! - Remember to add a comment explaining what's wrong with the mob
 	if(!MP)
-		return 0	//Sanity, this should never happen.
+		return 0	// Sanity, this should never happen.
 
 	if(ispath(MP, /mob/living/simple_animal/space_worm))
-		return 0 //Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
+		return 0 // Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
 
 	if(ispath(MP, /mob/living/simple_animal/construct/behemoth))
-		return 0 //I think this may have been an unfinished WiP or something. These constructs should really have their own class simple_animal/construct/subtype
+		return 0 // I think this may have been an unfinished WiP or something. These constructs should really have their own class simple_animal/construct/subtype
 
 	if(ispath(MP, /mob/living/simple_animal/construct/armoured))
-		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
+		return 0 // Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
 
 	if(ispath(MP, /mob/living/simple_animal/construct/wraith))
-		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
+		return 0 // Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
 
 	if(ispath(MP, /mob/living/simple_animal/construct/builder))
-		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
+		return 0 // Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
 
-//Good mobs!
+// Good mobs!
 	if(ispath(MP, /mob/living/simple_animal/cat))
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/corgi))
@@ -368,16 +368,16 @@
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/shade))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/hostile/tomato)) //no good anymore
+	if(ispath(MP, /mob/living/simple_animal/hostile/tomato)) // no good anymore
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/mouse))
-		return 1 //It is impossible to pull up the player panel for mice (Fixed! - Nodrak)
+		return 1 // It is impossible to pull up the player panel for mice (Fixed! - Nodrak)
 	if(ispath(MP, /mob/living/simple_animal/hostile/bear))
-		return 1 //Bears will auto-attack mobs, even if they're player controlled (Fixed! - Nodrak)
+		return 1 // Bears will auto-attack mobs, even if they're player controlled (Fixed! - Nodrak)
 	if(ispath(MP, /mob/living/simple_animal/parrot))
-		return 1 //Parrots are no longer unfinished! -Nodrak
+		return 1 // Parrots are no longer unfinished! -Nodrak
 
-	//Not in here? Must be untested!
+	// Not in here? Must be untested!
 	return 1
 
 

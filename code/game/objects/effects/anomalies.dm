@@ -1,4 +1,4 @@
-//Anomalies, used for events. Note that these DO NOT work by themselves; their procs are called by the event datum.
+// Anomalies, used for events. Note that these DO NOT work by themselves; their procs are called by the event datum.
 
 /obj/effect/anomaly
 	name = "anomaly"
@@ -19,7 +19,7 @@
 	aSignal.code = rand(1,100)
 
 	aSignal.frequency = rand(1200, 1599)
-	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
+	if(IsMultiple(aSignal.frequency, 2))// signaller frequencies are always uneven!
 		aSignal.frequency++
 
 /obj/effect/anomaly/Destroy()
@@ -44,7 +44,7 @@
 	if(istype(I, /obj/item/device/analyzer))
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [aSignal.code]:[format_frequency(aSignal.frequency)].</span>")
 
-///////////////////////
+/////////////////////// 
 
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
@@ -82,7 +82,7 @@
 		boing = 0
 		return
 
-/////////////////////
+//////////////////// /
 
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
@@ -92,7 +92,7 @@
 	..()
 	aSignal.origin_tech = "powerstorage=5;programming=3;phorontech=2"
 
-/////////////////////
+//////////////////// /
 
 /obj/effect/anomaly/bluespace
 	name = "bluespace anomaly"
@@ -108,7 +108,7 @@
 		do_teleport(A, locate(A.x, A.y, A.z), 10)
 	return
 
-/////////////////////
+//////////////////// /
 
 /obj/effect/anomaly/pyro
 	name = "pyroclastic anomaly"
@@ -128,7 +128,7 @@
 		T.hotspot_expose(1000, CELL_VOLUME)
 
 
-/////////////////////
+//////////////////// /
 
 /obj/effect/anomaly/bhole
 	name = "vortex anomaly"
@@ -141,13 +141,13 @@
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()
-	if(!isturf(loc)) //blackhole cannot be contained inside anything. Weird stuff might happen
+	if(!isturf(loc)) // blackhole cannot be contained inside anything. Weird stuff might happen
 		qdel(src)
 		return
 
 	grav(rand(0,3), rand(2,3), 50, 25)
 
-	//Throwing stuff around!
+	// Throwing stuff around!
 	for(var/obj/O in orange(1,src))
 		if(!O.anchored)
 			var/mob/living/target = locate() in view(5,src)
@@ -167,11 +167,11 @@
 	return
 
 /obj/effect/anomaly/bhole/proc/affect_coord(x, y, ex_act_force, pull_chance, turf_removal_chance)
-	//Get turf at coordinate
+	// Get turf at coordinate
 	var/turf/T = locate(x, y, z)
 	if(isnull(T))	return
 
-	//Pulling and/or ex_act-ing movable atoms in that turf
+	// Pulling and/or ex_act-ing movable atoms in that turf
 	if(prob(pull_chance))
 		for(var/obj/O in T.contents)
 			if(O.anchored)
@@ -181,7 +181,7 @@
 		for(var/mob/living/M in T.contents)
 			step_towards(M,src)
 
-	//Damaging the turf
+	// Damaging the turf
 	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
 	return

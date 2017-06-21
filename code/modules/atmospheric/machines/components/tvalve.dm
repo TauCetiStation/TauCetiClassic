@@ -314,7 +314,7 @@
 		return
 	..()
 
-//Radio remote control
+// Radio remote control
 
 /obj/machinery/atmospherics/tvalve/digital/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -406,7 +406,7 @@
 		return
 	..()
 
-//Radio remote control -eh?
+// Radio remote control -eh?
 
 /obj/machinery/atmospherics/tvalve/mirrored/digital/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)

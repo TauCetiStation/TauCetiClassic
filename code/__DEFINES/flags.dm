@@ -1,9 +1,9 @@
-//PREASSURE_FLAGS BITMASK
-#define STOPS_HIGHPRESSUREDMAGE 1    //These flags is used on the flags_pressure variable for SUIT and HEAD items which stop (high/low/all) pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
-#define STOPS_LOWPRESSUREDMAGE  2    //To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
-#define STOPS_PRESSUREDMAGE     3    //Used against both, high and low pressure.
+// PREASSURE_FLAGS BITMASK
+#define STOPS_HIGHPRESSUREDMAGE 1    // These flags is used on the flags_pressure variable for SUIT and HEAD items which stop (high/low/all) pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
+#define STOPS_LOWPRESSUREDMAGE  2    // To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
+#define STOPS_PRESSUREDMAGE     3    // Used against both, high and low pressure.
 
-//FLAGS BITMASK
+// FLAGS BITMASK
 #define NOBLUDGEON        2    // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 #define MASKINTERNALS     4    // Mask allows internals.
 #define USEDELAY          8    // 1 second extra delay on use. (Can be used once every 2s)
@@ -30,9 +30,9 @@
 #define PHORONGUARD             4096    // Does not get contaminated by phoron.
 #define DROPDEL                 8192    // When dropped, it calls qdel on itself
 
-#define	NOREACT  4096    //Reagents dont' react inside this container.
+#define	NOREACT  4096    // Reagents dont' react inside this container.
 
-//Species flags.
+// Species flags.
 #define NO_BLOOD           "no_blood"
 #define NO_BREATHE         "no_breathe"
 #define NO_SCAN            "no_scan"
@@ -53,14 +53,14 @@
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define HAS_HAIR           "has_hair"
 
-//bitflags for door switches.
+// bitflags for door switches.
 #define OPEN     1
 #define IDSCAN   2
 #define BOLTS    4
 #define SHOCK    8
 #define SAFE    16
 
-//flags for pass_flags
+// flags for pass_flags
 #define PASSTABLE    1
 #define PASSGLASS    2
 #define PASSGRILLE   4
@@ -68,10 +68,10 @@
 #define PASSCRAWL   16
 #define PASSMOB     32
 
-//turf-only flags
+// turf-only flags
 #define NOJAUNT  1
 
-//ITEM INVENTORY SLOT BITMASKS
+// ITEM INVENTORY SLOT BITMASKS
 #define SLOT_OCLOTHING       1
 #define SLOT_ICLOTHING       2
 #define SLOT_GLOVES          4

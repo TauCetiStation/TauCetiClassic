@@ -1,4 +1,4 @@
-//Foxxy
+// Foxxy
 /mob/living/simple_animal/fox
 	name = "fox"
 	desc = "It's a fox. I wonder what it says?"
@@ -16,11 +16,11 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
-	min_oxy = 16 //Require atleast 16kPA oxygen
-	minbodytemp = 223		//Below -50 Degrees Celcius
-	maxbodytemp = 323	//Above 50 Degrees Celcius
+	min_oxy = 16 // Require atleast 16kPA oxygen
+	minbodytemp = 223		// Below -50 Degrees Celcius
+	maxbodytemp = 323	// Above 50 Degrees Celcius
 
-//Captain fox
+// Captain fox
 /mob/living/simple_animal/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"

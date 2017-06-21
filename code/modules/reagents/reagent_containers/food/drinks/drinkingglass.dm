@@ -16,7 +16,7 @@
 			for(var/datum/reagent/R in reagents.reagent_list)
 				switch(R.id)*/
 		if (reagents.reagent_list.len > 0)
-			//mrid = R.get_master_reagent_id()
+			// mrid = R.get_master_reagent_id()
 			switch(reagents.get_master_reagent_id())
 				if("beer")
 					icon_state = "beerglass"

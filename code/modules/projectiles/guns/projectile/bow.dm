@@ -10,7 +10,7 @@
 	sharp = 1
 	edge = 0
 
-/obj/item/weapon/arrow/proc/removed() //Helper for metal rods falling apart.
+/obj/item/weapon/arrow/proc/removed() // Helper for metal rods falling apart.
 	return
 
 /obj/item/weapon/arrow/quill
@@ -140,7 +140,7 @@
 
 /obj/item/weapon/crossbow/proc/increase_tension(mob/user)
 
-	if(!arrow || !tension || current_user != user) //Arrow has been fired, bow has been relaxed or user has changed.
+	if(!arrow || !tension || current_user != user) // Arrow has been fired, bow has been relaxed or user has changed.
 		return
 
 	tension++

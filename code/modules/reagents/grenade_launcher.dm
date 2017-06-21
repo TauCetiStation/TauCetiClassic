@@ -48,7 +48,7 @@
 	for(var/mob/O in viewers(world.view, user))
 		O.show_message(text("\red [] fired a grenade!", user), 1)
 	to_chat(user, "\red You fire the grenade launcher!")
-	var/obj/item/weapon/grenade/chem_grenade/F = grenades[1] //Now with less copypasta!
+	var/obj/item/weapon/grenade/chem_grenade/F = grenades[1] // Now with less copypasta!
 	grenades -= F
 	F.loc = user.loc
 	F.throw_at(target, 30, 2, user)

@@ -17,7 +17,7 @@
 	reagents.add_reagent("oxycodone", 15)
 	reagents.add_reagent("anti_toxin", 25)
 
-//PILL
+// PILL
 /obj/item/weapon/reagent_containers/pill/dermaline
 	name = "Dermaline pill"
 	desc = "Used to treat burns."
@@ -55,7 +55,7 @@
 	new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
 	new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
 
-//FIRST-AID KIT
+// FIRST-AID KIT
 /obj/item/weapon/storage/firstaid/tactical
 	name = "first-aid kit"
 	icon_state = "bezerk"

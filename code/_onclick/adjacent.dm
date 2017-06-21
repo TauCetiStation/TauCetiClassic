@@ -109,7 +109,7 @@ Quick adjacency (to turf):
 			if( O.dir & target_dir || O.dir&(O.dir-1) ) // full tile windows are just diagonals mechanically
 				var/obj/structure/window/W = target_atom
 				if(istype(W))
-					if(!W.is_fulltile())	//exception for breaking full tile windows on top of single pane windows
+					if(!W.is_fulltile())	// exception for breaking full tile windows on top of single pane windows
 						return 0
 				else
 					return 0

@@ -1,6 +1,6 @@
-//TODO: Add critfail checks and reliability
-//DO NOT ADD MECHA PARTS TO THE GAME WITH THE DEFAULT "SPRITE ME" SPRITE!
-//I'm annoyed I even have to tell you this! SPRITE FIRST, then commit.
+// TODO: Add critfail checks and reliability
+// DO NOT ADD MECHA PARTS TO THE GAME WITH THE DEFAULT "SPRITE ME" SPRITE!
+// I'm annoyed I even have to tell you this! SPRITE FIRST, then commit.
 
 /obj/item/mecha_parts/mecha_equipment
 	name = "mecha equipment"
@@ -12,7 +12,7 @@
 	var/equip_ready = 1
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
-	var/range = MELEE //bitflags
+	var/range = MELEE // bitflags
 	reliability = 1000
 	var/salvageable = 1
 
@@ -42,7 +42,7 @@
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/destroy()//missiles detonating, teleporter creating singularity?
+/obj/item/mecha_parts/mecha_equipment/proc/destroy()// missiles detonating, teleporter creating singularity?
 	if(chassis)
 		chassis.equipment -= src
 		listclearnulls(chassis.equipment)
@@ -68,7 +68,7 @@
 	if(!chassis) return
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[chassis.selected==src?"<b>":"<a href='?src=\ref[chassis];select_equip=\ref[src]'>"][src.name][chassis.selected==src?"</b>":"</a>"]"
 
-/obj/item/mecha_parts/mecha_equipment/proc/is_ranged()//add a distance restricted equipment. Why not?
+/obj/item/mecha_parts/mecha_equipment/proc/is_ranged()// add a distance restricted equipment. Why not?
 	return range&RANGED
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_melee()

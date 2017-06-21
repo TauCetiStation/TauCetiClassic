@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /*
  * GAMEMODES (by Rastaf0)
@@ -19,15 +19,15 @@
 	var/votable = 1
 	var/playable_mode = 1
 	var/probability = 0
-	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
-	var/explosion_in_progress = 0 //sit back and relax
-	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
+	var/station_was_nuked = 0 // see nuclearbomb.dm and malfunction.dm
+	var/explosion_in_progress = 0 // sit back and relax
+	var/nar_sie_has_risen = 0 // check, if there is already one god in the world who was summoned (only for tomes)
 	var/completion_text = ""
 	var/list/datum/mind/modePlayer = new
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
 	var/required_players = 0
-	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
+	var/required_players_secret = 0 // Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
@@ -78,12 +78,12 @@ Implants;
 (Pointless) Badassery;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 
-/datum/game_mode/proc/announce() //to be calles when round starts
+/datum/game_mode/proc/announce() // to be calles when round starts
 	to_chat(world, "<B>Notice</B>: [src] did not define announce()")
 
 
-///can_start()
-///Checks to see if the game can be setup and ran with the current number of players or whatnot.
+// /can_start()
+// /Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
 	for(var/mob/new_player/player in player_list)
@@ -103,14 +103,14 @@ Implants;
 	return 0
 
 
-///pre_setup()
-///Attempts to select players for special roles the mode might have.
+// /pre_setup()
+// /Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
 	return 1
 
 
-///post_setup()
-///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
+// /post_setup()
+// /Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup()
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
@@ -126,13 +126,13 @@ Implants;
 	return 1
 
 
-///process()
-///Called by the gameticker
+// /process()
+// /Called by the gameticker
 /datum/game_mode/process()
 	return 0
 
 
-/datum/game_mode/proc/check_finished() //to be called by ticker
+/datum/game_mode/proc/check_finished() // to be called by ticker
 	if(SSshuttle.location==2 || station_was_nuked)
 		return 1
 	return 0
@@ -207,7 +207,7 @@ Implants;
 	return 0
 
 
-/datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
+/datum/game_mode/proc/check_win() // universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
 	return 0
 
 
@@ -230,7 +230,7 @@ Implants;
 										)
 		var/special_role = man.mind.special_role
 		if (special_role in invisible_roles)
-			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
+			continue	// NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
 		for(var/spec_role in gang_name_pool)
 			if (special_role == "[spec_role] Gang (A) Boss")
 				continue
@@ -335,9 +335,9 @@ Implants;
 			. ++
 
 
-///////////////////////////////////
-//Keeps track of all living heads//
-///////////////////////////////////
+/////////////////////////////////// 
+// Keeps track of all living heads// 
+/////////////////////////////////// 
 /datum/game_mode/proc/get_living_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player in mob_list)
@@ -347,7 +347,7 @@ Implants;
 
 
 ////////////////////////////
-//Keeps track of all heads//
+// Keeps track of all heads// 
 ////////////////////////////
 /datum/game_mode/proc/get_all_heads()
 	var/list/heads = list()
@@ -362,9 +362,9 @@ Implants;
 /datum/game_mode/New()
 	newscaster_announcements = pick(newscaster_standard_feeds)
 
-//////////////////////////
-//Reports player logouts//
-//////////////////////////
+////////////////////////// 
+// Reports player logouts// 
+////////////////////////// 
 proc/display_roundstart_logout_report()
 	var/msg = "\blue <b>Roundstart logout report\n\n"
 	for(var/mob/living/L in mob_list)
@@ -380,37 +380,37 @@ proc/display_roundstart_logout_report()
 
 
 		if(L.ckey && L.client)
-			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))	//Connected, but inactive (alt+tabbed or something)
+			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))	// Connected, but inactive (alt+tabbed or something)
 				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
-				continue //AFK client
+				continue // AFK client
 			if(L.stat)
-				if(L.suiciding)	//Suicider
+				if(L.suiciding)	// Suicider
 					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='red'><b>Suicide</b></font>)\n"
-					continue //Disconnected client
+					continue // Disconnected client
 				if(L.stat == UNCONSCIOUS)
 					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (Dying)\n"
-					continue //Unconscious
+					continue // Unconscious
 				if(L.stat == DEAD)
 					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (Dead)\n"
-					continue //Dead
+					continue // Dead
 
-			continue //Happy connected client
+			continue // Happy connected client
 		for(var/mob/dead/observer/D in mob_list)
 			if(D.mind && (D.mind.original == L || D.mind.current == L))
 				if(L.stat == DEAD)
-					if(L.suiciding)	//Suicider
+					if(L.suiciding)	// Suicider
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>Suicide</b></font>)\n"
-						continue //Disconnected client
+						continue // Disconnected client
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (Dead)\n"
-						continue //Dead mob, ghost abandoned
+						continue // Dead mob, ghost abandoned
 				else
 					if(D.can_reenter_corpse)
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>This shouldn't appear.</b></font>)\n"
-						continue //Lolwhat
+						continue // Lolwhat
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>Ghosted</b></font>)\n"
-						continue //Ghosted while alive
+						continue // Ghosted while alive
 
 
 
@@ -430,9 +430,9 @@ proc/get_nt_opposed()
 	if(dudes.len == 0) return null
 	return pick(dudes)
 
-///////////////////////////
-//Misc stuff and TG ports//
-///////////////////////////
+////////////////////////// /
+// Misc stuff and TG ports// 
+////////////////////////// /
 
 /datum/game_mode/proc/printplayer(datum/mind/ply)
 	var/role = "[ply.special_role]"
@@ -461,7 +461,7 @@ proc/get_nt_opposed()
 		count++
 	return text
 
-//Used for printing player with there icons in round ending staticstic
+// Used for printing player with there icons in round ending staticstic
 /datum/game_mode/proc/printplayerwithicon(datum/mind/ply)
 	var/text = ""
 	var/tempstate = end_icons.len
@@ -487,7 +487,7 @@ proc/get_nt_opposed()
 	text += ")"
 	return text
 
-//Used for printing antag logo
+// Used for printing antag logo
 /datum/game_mode/proc/printlogo(logoname, antagname)
 	var/icon/logo = icon('icons/mob/mob.dmi', "[logoname]-logo")
 	end_icons += logo

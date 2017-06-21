@@ -1,6 +1,6 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+++++++++++++++++++++++++++++++++++++//                //++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++//                // ++++++++++++++++++++++++++++++++++
 ======================================SPACE NINJA SETUP====================================
 ___________________________________________________________________________________________
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,15 +83,15 @@ ________________________________________________________________________________
 				Remove cloak failure rate.
 */
 
-//=======//RANDOM EVENT//=======//
+// =======// RANDOM EVENT// =======// 
 /*
 Also a dynamic ninja mission generator.
 I decided to scrap round-specific objectives since keeping track of them would require some form of tracking.
 When I already created about 4 new objectives, this doesn't seem terribly important or needed.
 */
 
-/var/global/toggle_space_ninja = 0//If ninjas can spawn or not.
-/var/global/sent_ninja_to_station = 0//If a ninja is already on the station.
+/var/global/toggle_space_ninja = 0// If ninjas can spawn or not.
+/var/global/sent_ninja_to_station = 0// If a ninja is already on the station.
 
 var/ninja_selection_id = 1
 var/ninja_selection_active = 0
@@ -110,13 +110,13 @@ var/ninja_confirmed_selection = 0
 	Their directives also influence behavior. At least in theory.*/
 	var/side = pick("face","heel")
 
-	var/antagonist_list[] = list()//The main bad guys. Evil minds that plot destruction.
-	var/protagonist_list[] = current_mode.get_living_heads()//The good guys. Mostly Heads. Who are alive.
+	var/antagonist_list[] = list()// The main bad guys. Evil minds that plot destruction.
+	var/protagonist_list[] = current_mode.get_living_heads()// The good guys. Mostly Heads. Who are alive.
 
-	var/xeno_list[] = list()//Aliens.
-	var/commando_list[] = list()//Commandos.
+	var/xeno_list[] = list()// Aliens.
+	var/commando_list[] = list()// Commandos.
 
-	//We want the ninja to appear only in certain modes.
+	// We want the ninja to appear only in certain modes.
 //	var/acceptable_modes_list[] = list("traitor","revolution","cult","wizard","changeling","traitorchan","nuclear","malfunction","monkey")  // Commented out for both testing and ninjas
 //	if(!(current_mode.config_tag in acceptable_modes_list))
 //		return
@@ -126,20 +126,20 @@ var/ninja_confirmed_selection = 0
 
 	var/possible_bad_dudes[] = list(current_mode.traitors,current_mode.head_revolutionaries,current_mode.head_revolutionaries,
 	                                current_mode.cult,current_mode.wizards,current_mode.changelings,current_mode.syndicates)
-	for(var/list in possible_bad_dudes)//For every possible antagonist type.
-		for(current_mind in list)//For each mind in that list.
-			if(current_mind.current&&current_mind.current.stat!=2)//If they are not destroyed and not dead.
-				antagonist_list += current_mind//Add them.
+	for(var/list in possible_bad_dudes)// For every possible antagonist type.
+		for(current_mind in list)// For each mind in that list.
+			if(current_mind.current&&current_mind.current.stat!=2)// If they are not destroyed and not dead.
+				antagonist_list += current_mind// Add them.
 
-	if(protagonist_list.len)//If the mind is both a protagonist and antagonist.
+	if(protagonist_list.len)// If the mind is both a protagonist and antagonist.
 		for(current_mind in protagonist_list)
 			if(current_mind in antagonist_list)
-				protagonist_list -= current_mind//We only want it in one list.
+				protagonist_list -= current_mind// We only want it in one list.
 /*
 Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective completion. Only humans are added.
 */
 
-	//Here we pick a location and spawn the ninja.
+	// Here we pick a location and spawn the ninja.
 	if(ninjastart.len == 0)
 		for(var/obj/effect/landmark/L in landmarks_list)
 			if(L.name == "carpspawn")
@@ -152,13 +152,13 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 		ninja_key = assign_key
 	else
 
-		var/list/candidates = list()	//list of candidate keys
+		var/list/candidates = list()	// list of candidate keys
 		for(var/mob/dead/observer/G in player_list)
 			if(G.client && !G.client.holder && !G.client.is_afk() && (ROLE_NINJA in G.client.prefs.be_role))
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 					candidates += G
 		if(!candidates.len)	return
-		candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
+		candidates = shuffle(candidates)// Incorporating Donkie's list shuffle
 
 		while(!ninja_key && candidates.len)
 			candidate_mob = pick(candidates)
@@ -205,20 +205,20 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 		ninja_selection_active = 0
 
-		//The ninja will be created on the right spawn point or at late join.
+		// The ninja will be created on the right spawn point or at late join.
 		var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 		new_ninja.key = ninja_key
-		new_ninja.wear_suit:randomize_param()//Give them a random set of suit parameters.
-		new_ninja.internal = new_ninja.s_store //So the poor ninja has something to breath when they spawn in spess.
+		new_ninja.wear_suit:randomize_param()// Give them a random set of suit parameters.
+		new_ninja.internal = new_ninja.s_store // So the poor ninja has something to breath when they spawn in spess.
 		new_ninja.internals.icon_state = "internal1"
 
-		//Now for the rest of the stuff.
+		// Now for the rest of the stuff.
 
-		var/datum/mind/ninja_mind = new_ninja.mind//For easier reference.
-		var/mission_set = 0//To determine if we need to do further processing.
-		//Xenos and deathsquads take precedence over everything else.
+		var/datum/mind/ninja_mind = new_ninja.mind// For easier reference.
+		var/mission_set = 0// To determine if we need to do further processing.
+		// Xenos and deathsquads take precedence over everything else.
 
-		//Unless the xenos are hiding in a locker somewhere, this'll find em.
+		// Unless the xenos are hiding in a locker somewhere, this'll find em.
 		for(var/mob/living/carbon/alien/humanoid/xeno in player_list)
 			if(istype(xeno))
 				xeno_list += xeno
@@ -227,27 +227,27 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			new_ninja.mind.store_memory("<B>Mission:</B> \red [assign_mission].<br>")
 			to_chat(new_ninja, "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[assign_mission]</B>")
 		else
-			if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
-				//Here we want the ninja to murder all the queens. The other aliens don't really matter.
+			if(xeno_list.len>3)// If there are more than three humanoid xenos on the station, time to get dangerous.
+				// Here we want the ninja to murder all the queens. The other aliens don't really matter.
 				var/xeno_queen_list[] = list()
 				for(var/mob/living/carbon/alien/humanoid/queen/xeno_queen in xeno_list)
 					if(xeno_queen.mind&&xeno_queen.stat!=2)
 						xeno_queen_list += xeno_queen
-				if(xeno_queen_list.len&&side=="face")//If there are queen about and the probability is 50.
+				if(xeno_queen_list.len&&side=="face")// If there are queen about and the probability is 50.
 					for(var/mob/living/carbon/alien/humanoid/queen/xeno_queen in xeno_queen_list)
 						var/datum/objective/assassinate/ninja_objective = new
 						ninja_objective.owner = ninja_mind
-						//We'll do some manual overrides to properly set it up.
+						// We'll do some manual overrides to properly set it up.
 						ninja_objective.target = xeno_queen.mind
 						ninja_objective.explanation_text = "Kill \the [xeno_queen]."
 						ninja_mind.objectives += ninja_objective
 					mission_set = 1
 
-			if(sent_strike_team&&side=="heel"&&antagonist_list.len)//If a strike team was sent, murder them all like a champ.
-				for(current_mind in antagonist_list)//Search and destroy. Since we already have an antagonist list, they should appear there.
+			if(sent_strike_team&&side=="heel"&&antagonist_list.len)// If a strike team was sent, murder them all like a champ.
+				for(current_mind in antagonist_list)// Search and destroy. Since we already have an antagonist list, they should appear there.
 					if(current_mind && current_mind.special_role=="Death Commando")
 						commando_list += current_mind
-				if(commando_list.len)//If there are living commandos still in play.
+				if(commando_list.len)// If there are living commandos still in play.
 					for(var/mob/living/carbon/human/commando in commando_list)
 						var/datum/objective/assassinate/ninja_objective = new
 						ninja_objective.owner = ninja_mind
@@ -260,47 +260,47 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			B) The round is still going and ghosts are probably rioting for something to happen.
 		In either case, it's a good idea to spawn the ninja with a semi-random set of objectives.
 		*/
-			if(!mission_set)//If mission was not set.
+			if(!mission_set)// If mission was not set.
 
-				var/current_minds[]//List being looked on in the following code.
-				var/side_list = side=="face" ? 2 : 1//For logic gating.
-				var/hostile_targets[] = list()//The guys actually picked for the assassination or whatever.
-				var/friendly_targets[] = list()//The guys the ninja must protect.
+				var/current_minds[]// List being looked on in the following code.
+				var/side_list = side=="face" ? 2 : 1// For logic gating.
+				var/hostile_targets[] = list()// The guys actually picked for the assassination or whatever.
+				var/friendly_targets[] = list()// The guys the ninja must protect.
 
-				for(var/i=2,i>0,i--)//Two lists.
-					current_minds = i==2 ? antagonist_list : protagonist_list//Which list are we looking at?
-					for(var/t=3,(current_minds.len&&t>0),t--)//While the list is not empty and targets remain. Also, 3 targets is good.
-						current_mind = pick(current_minds)//Pick a random person.
+				for(var/i=2,i>0,i--)// Two lists.
+					current_minds = i==2 ? antagonist_list : protagonist_list// Which list are we looking at?
+					for(var/t=3,(current_minds.len&&t>0),t--)// While the list is not empty and targets remain. Also, 3 targets is good.
+						current_mind = pick(current_minds)// Pick a random person.
 						/*I'm creating a logic gate here based on the ninja affiliation that compares the list being
 						looked at to the affiliation. Affiliation is just a number used to compare. Meaning comes from the logic involved.
 						If the list being looked at is equal to the ninja's affiliation, add the mind to hostiles.
 						If not, add the mind to friendlies. Since it can't be both, it will be added only to one or the other.*/
-						hostile_targets += i==side_list ? current_mind : null//Adding null doesn't add anything.
+						hostile_targets += i==side_list ? current_mind : null// Adding null doesn't add anything.
 						friendly_targets += i!=side_list ? current_mind : null
-						current_minds -= current_mind//Remove the mind so it's not picked again.
+						current_minds -= current_mind// Remove the mind so it's not picked again.
 
-				var/objective_list[] = list(1,2,3,4,5,6)//To remove later.
-				for(var/i=rand(1,3),i>0,i--)//Want to get a few random objectives. Currently up to 3.
-					if(!hostile_targets.len)//Remove appropriate choices from switch list if the target lists are empty.
+				var/objective_list[] = list(1,2,3,4,5,6)// To remove later.
+				for(var/i=rand(1,3),i>0,i--)// Want to get a few random objectives. Currently up to 3.
+					if(!hostile_targets.len)// Remove appropriate choices from switch list if the target lists are empty.
 						objective_list -= 1
 						objective_list -= 4
 					if(!friendly_targets.len)
 						objective_list -= 3
 					switch(pick(objective_list))
-						if(1)//kill
+						if(1)// kill
 							current_mind = pick(hostile_targets)
 
 							if(current_mind)
 								var/datum/objective/assassinate/ninja_objective = new
 								ninja_objective.owner = ninja_mind
-								ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))//If they have a special role, use that instead to find em.
+								ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))// If they have a special role, use that instead to find em.
 								ninja_mind.objectives += ninja_objective
 
 							else
 								i++
 
-							hostile_targets -= current_mind//Remove them from the list.
-						if(2)//Steal
+							hostile_targets -= current_mind// Remove them from the list.
+						if(2)// Steal
 							var/datum/objective/steal/ninja_objective = new
 							ninja_objective.owner = ninja_mind
 							var/target_item = pick(ninja_objective.possible_items_special)
@@ -308,7 +308,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 							ninja_mind.objectives += ninja_objective
 
 							objective_list -= 2
-						if(3)//Protect. Keeping people alive can be pretty difficult.
+						if(3)// Protect. Keeping people alive can be pretty difficult.
 							current_mind = pick(friendly_targets)
 
 							if(current_mind)
@@ -322,7 +322,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 								i++
 
 							friendly_targets -= current_mind
-						if(4)//Debrain
+						if(4)// Debrain
 							current_mind = pick(hostile_targets)
 
 							if(current_mind)
@@ -335,15 +335,15 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 							else
 								i++
 
-							hostile_targets -= current_mind//Remove them from the list.
-						if(5)//Download research
+							hostile_targets -= current_mind// Remove them from the list.
+						if(5)// Download research
 							var/datum/objective/download/ninja_objective = new
 							ninja_objective.owner = ninja_mind
 							ninja_objective.gen_amount_goal()
 							ninja_mind.objectives += ninja_objective
 
 							objective_list -= 5
-						if(6)//Capture
+						if(6)// Capture
 							var/datum/objective/capture/ninja_objective = new
 							ninja_objective.owner = ninja_mind
 							ninja_objective.gen_amount_goal()
@@ -351,23 +351,23 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 							objective_list -= 6
 
-				if(ninja_mind.objectives.len)//If they got some objectives out of that.
+				if(ninja_mind.objectives.len)// If they got some objectives out of that.
 					mission_set = 1
 
-			if(!ninja_mind.objectives.len||!mission_set)//If they somehow did not get an objective at this point, time to destroy the station.
+			if(!ninja_mind.objectives.len||!mission_set)// If they somehow did not get an objective at this point, time to destroy the station.
 				var/nuke_code
 				var/temp_code
 				for(var/obj/machinery/nuclearbomb/N in machines)
 					temp_code = text2num(N.r_code)
-					if(temp_code)//if it's actually a number. It won't convert any non-numericals.
+					if(temp_code)// if it's actually a number. It won't convert any non-numericals.
 						nuke_code = N.r_code
 						break
-				if(nuke_code)//If there is a nuke device in world and we got the code.
-					var/datum/objective/nuclear/ninja_objective = new//Fun.
+				if(nuke_code)// If there is a nuke device in world and we got the code.
+					var/datum/objective/nuclear/ninja_objective = new// Fun.
 					ninja_objective.owner = ninja_mind
-					ninja_objective.explanation_text = "Destroy the station with a nuclear device. The code is [nuke_code]." //Let them know what the code is.
+					ninja_objective.explanation_text = "Destroy the station with a nuclear device. The code is [nuke_code]." // Let them know what the code is.
 
-			//Finally add a survival objective since it's usually broad enough for any round type.
+			// Finally add a survival objective since it's usually broad enough for any round type.
 			var/datum/objective/survive/ninja_objective = new
 			ninja_objective.owner = ninja_mind
 			ninja_mind.objectives += ninja_objective
@@ -382,8 +382,8 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 				to_chat(new_ninja, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++
 
-		sent_ninja_to_station = 1//And we're done.
-		return new_ninja//Return the ninja in case we need to reference them later.
+		sent_ninja_to_station = 1// And we're done.
+		return new_ninja// Return the ninja in case we need to reference them later.
 
 /*
 This proc will give the ninja a directive to follow. They are not obligated to do so but it's a fun roleplay reminder.
@@ -391,7 +391,7 @@ Making this random or semi-random will probably not work without it also being i
 As such, it's hard-coded for now. No reason for it not to be, really.
 */
 /proc/generate_ninja_directive(side)
-	var/directive = "[side=="face"?"Nanotrasen":"The Syndicate"] is your employer. "//Let them know which side they're on.
+	var/directive = "[side=="face"?"Nanotrasen":"The Syndicate"] is your employer. "// Let them know which side they're on.
 	switch(rand(1,19))
 		if(1)
 			directive += "The Spider Clan must not be linked to this operation. Remain hidden and covert when possible."
@@ -434,7 +434,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			directive += "There are no special supplemental instructions at this time."
 	return directive
 
-//=======//CURRENT PLAYER VERB//=======//
+// =======// CURRENT PLAYER VERB// =======// 
 
 /client/proc/cmd_admin_ninjafy(mob/M in player_list)
 	set category = null
@@ -462,7 +462,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	else
 		alert("Invalid mob")
 
-//=======//CURRENT GHOST VERB//=======//
+// =======// CURRENT GHOST VERB// =======// 
 
 /client/proc/send_space_ninja()
 	set category = "Fun"
@@ -500,7 +500,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	return
 
-//=======//NINJA CREATION PROCS//=======//
+// =======// NINJA CREATION PROCS// =======// 
 
 /proc/create_space_ninja(obj/spawn_point)
 	var/mob/living/carbon/human/new_ninja = new(spawn_point.loc)
@@ -508,7 +508,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	var/ninja_name = pick(ninja_names)
 	new_ninja.gender = pick(MALE, FEMALE)
 
-	var/datum/preferences/A = new()//Randomize appearance for the ninja.
+	var/datum/preferences/A = new()// Randomize appearance for the ninja.
 	A.randomize_appearance_for(new_ninja)
 	new_ninja.real_name = "[ninja_title] [ninja_name]"
 	new_ninja.dna.ready_dna(new_ninja)
@@ -521,10 +521,10 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	mind.assigned_role = "MODE"
 	mind.special_role = "Ninja"
 
-	//ticker.mode.ninjas |= mind
+	// ticker.mode.ninjas |= mind
 	return 1
 
-/mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.
+/mob/living/carbon/human/proc/equip_space_ninja(safety=0)// Safety in case you need to unequip stuff for existing characters.
 	if(safety)
 		qdel(w_uniform)
 		qdel(wear_suit)
@@ -556,9 +556,9 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	L.part = BP
 	return 1
 
-//=======//HELPER PROCS//=======//
+// =======// HELPER PROCS// =======// 
 
-//Randomizes suit parameters.
+// Randomizes suit parameters.
 /obj/item/clothing/suit/space/space_ninja/proc/randomize_param()
 	s_cost = rand(1,20)
 	s_acost = rand(20,100)
@@ -568,9 +568,9 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	s_bombs = rand(5,20)
 	a_boost = rand(1,7)
 
-//This proc prevents the suit from being taken off.
+// This proc prevents the suit from being taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/U, X = 0)
-	if(X)//If you want to check for icons.
+	if(X)// If you want to check for icons.
 		if(U.mind.protector_role == 1)
 			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
 			U:gloves.icon_state = "s-ninjak"
@@ -607,13 +607,13 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	return 1
 
-//This proc allows the suit to be taken off.
+// This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
 	canremove = 1
 	slowdown = 1
 	icon_state = "s-ninja"
-	if(n_hood)//Should be attached, might not be attached.
+	if(n_hood)// Should be attached, might not be attached.
 		n_hood.canremove=1
 	if(n_shoes)
 		n_shoes.canremove=1
@@ -625,17 +625,17 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		n_gloves.candrain=0
 		n_gloves.draining=0
 
-//Allows the mob to grab a stealth icon.
-/mob/proc/NinjaStealthActive(atom/A)//A is the atom which we are using as the overlay.
-	invisibility = INVISIBILITY_LEVEL_TWO//Set ninja invis to 2.
+// Allows the mob to grab a stealth icon.
+/mob/proc/NinjaStealthActive(atom/A)// A is the atom which we are using as the overlay.
+	invisibility = INVISIBILITY_LEVEL_TWO// Set ninja invis to 2.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)
 	var/icon/alpha_mask = getIconMask(src)
 	var/icon/alpha_mask_2 = new('icons/effects/effects.dmi', "at_shield1")
 	alpha_mask.AddAlphaMask(alpha_mask_2)
 	opacity_icon.AddAlphaMask(alpha_mask)
-	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
-		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
-		switch(i)//Now to determine offset so the result is somewhat blurred.
+	for(var/i=0,i<5,i++)// And now we add it as overlays. It's faster than creating an icon and then merging it.
+		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)// So it's above other stuff but below weapons and the like.
+		switch(i)// Now to determine offset so the result is somewhat blurred.
 			if(1)
 				I.pixel_x -= 1
 			if(2)
@@ -645,16 +645,16 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			if(4)
 				I.pixel_y += 1
 
-		overlays += I//And finally add the overlay.
+		overlays += I// And finally add the overlay.
 	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
 
-//When ninja steal malfunctions.
+// When ninja steal malfunctions.
 /mob/proc/NinjaStealthMalf()
-	invisibility = 0//Set ninja invis to 0.
+	invisibility = 0// Set ninja invis to 0.
 	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
 	playsound(loc, 'sound/effects/stealthoff.ogg', 75, 1)
 
-//=======//GENERIC VERB MODIFIERS//=======//
+// =======// GENERIC VERB MODIFIERS// =======// 
 
 /obj/item/clothing/suit/space/space_ninja/proc/grant_equip_verbs()
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
@@ -695,7 +695,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
 
-//=======//KAMIKAZE VERBS//=======//
+// =======// KAMIKAZE VERBS// =======// 
 
 /obj/item/clothing/suit/space/space_ninja/proc/grant_kamikaze(mob/living/carbon/U)
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
@@ -739,7 +739,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		k_unlock = 0
 		to_chat(U, "\blue Disengaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>")
 
-//=======//AI VERBS//=======//
+// =======// AI VERBS// =======// 
 
 /obj/item/clothing/suit/space/space_ninja/proc/grant_AI_verbs()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_hack_ninja
@@ -754,7 +754,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	s_control = 1
 
-//=======//OLD & UNUSED//=======//
+// =======// OLD & UNUSED// =======// 
 
 /*
 
@@ -762,25 +762,25 @@ Deprecated. get_dir() does the same thing. Still a nice proc.
 Returns direction that the mob or whomever should be facing in relation to the target.
 This proc does not grant absolute direction and is mostly useful for 8dir sprite positioning.
 I personally used it with getline() to great effect.
-/proc/get_dir_to(turf/start,turf/end)//N
-	var/xdiff = start.x - end.x//The sign is important.
+/proc/get_dir_to(turf/start,turf/end)// N
+	var/xdiff = start.x - end.x// The sign is important.
 	var/ydiff = start.y - end.y
 
-	var/direction_x = xdiff<1 ? 4:8//East - west
-	var/direction_y = ydiff<1 ? 1:2//North - south
-	var/direction_xy = xdiff==0 ? -4:0//If x is the same, subtract 4.
-	var/direction_yx = ydiff==0 ? -1:0//If y is the same, subtract 1.
-	var/direction_f = direction_x+direction_y+direction_xy+direction_yx//Finally direction tally.
-	direction_f = direction_f==0 ? 1:direction_f//If direction is 0(same spot), return north. Otherwise, direction.
+	var/direction_x = xdiff<1 ? 4:8// East - west
+	var/direction_y = ydiff<1 ? 1:2// North - south
+	var/direction_xy = xdiff==0 ? -4:0// If x is the same, subtract 4.
+	var/direction_yx = ydiff==0 ? -1:0// If y is the same, subtract 1.
+	var/direction_f = direction_x+direction_y+direction_xy+direction_yx// Finally direction tally.
+	direction_f = direction_f==0 ? 1:direction_f// If direction is 0(same spot), return north. Otherwise, direction.
 
 	return direction_f
 
 Alternative and inferior method of calculating spideros.
 var/temp = num2text(spideros)
-var/return_to = copytext(temp, 1, (length(temp)))//length has to be to the length of the thing because by default it's length+1
-spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to specify larger strings if needed.
+var/return_to = copytext(temp, 1, (length(temp)))// length has to be to the length of the thing because by default it's length+1
+spideros = text2num(return_to)// Maximum length here is 6. Use (return_to, X) to specify larger strings if needed.
 
-//Old way of draining from wire.
+// Old way of draining from wire.
 /obj/item/clothing/gloves/space_ninja/proc/drain_wire()
 	set name = "Drain From Wire"
 	set desc = "Drain energy directly from an exposed wire."
@@ -835,7 +835,7 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 
 	s_control = 1
 
-//Workaround
+// Workaround
 /obj/effect/proc_holder/ai_holo_clear
 	name = "Clear Hologram"
 	desc = "Stops projecting the current holographic image."
@@ -845,14 +845,14 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 
 
 /obj/effect/proc_holder/ai_holo_clear/Click()
-	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc//This is so stupid but makes sure certain things work. AI.SUIT
+	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc// This is so stupid but makes sure certain things work. AI.SUIT
 	qdel(S.hologram.i_attached)
 	qdel(S.hologram)
 	var/obj/effect/proc_holder/ai_holo_clear/D_C = locate() in S.AI
 	S.AI.proc_holder_list -= D_C
 	return
 
-/obj/effect/proc_holder/ai_instruction//Let's the AI know what they can do.
+/obj/effect/proc_holder/ai_instruction// Let's the AI know what they can do.
 	name = "Instructions"
 	desc = "Displays a list of helpful information."
 	panel = "AI Ninja Equip"
@@ -862,14 +862,14 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 /obj/effect/proc_holder/ai_instruction/Click()
 	to_chat(loc, "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away.")
 
-/obj/effect/proc_holder/ai_hack_ninja//Generic proc holder to make sure the two verbs below work propely.
+/obj/effect/proc_holder/ai_hack_ninja// Generic proc holder to make sure the two verbs below work propely.
 	name = "Hack SpiderOS"
 	desc = "Hack directly into the Black Widow(tm) neuro-interface."
 	panel = "AI Ninja Equip"
 	density = 0
 	opacity = 0
 
-/obj/effect/proc_holder/ai_hack_ninja/Click()//When you click on it.
+/obj/effect/proc_holder/ai_hack_ninja/Click()// When you click on it.
 	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc
 	S.hack_spideros()
 	return
@@ -884,19 +884,19 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 /obj/effect/proc_holder/ai_return_control/Click()
 	var/mob/living/silicon/ai/A = loc
 	var/obj/item/clothing/suit/space/space_ninja/S = A.loc
-	A << browse(null, "window=hack spideros")//Close window
+	A << browse(null, "window=hack spideros")// Close window
 	to_chat(A, "You have seized your hacking attempt. [S.affecting] has regained control.")
 	to_chat(S.affecting, "<b>UPDATE</b>: [A.real_name] has ceased hacking attempt. All systems clear.")
 	S.remove_AI_verbs()
 	return
 */
 
-//=======//DEBUG//=======//
+// =======// DEBUG// =======// 
 /*
 /obj/item/clothing/suit/space/space_ninja/proc/display_verb_procs()
-//DEBUG
-//Does nothing at the moment. I am trying to see if it's possible to mess around with verbs as variables.
-	//for(var/P in verbs)
+// DEBUG
+// Does nothing at the moment. I am trying to see if it's possible to mess around with verbs as variables.
+	// for(var/P in verbs)
 //		if(P.set.name)
 //			usr << "[P.set.name], path: [P]"
 	return
@@ -919,8 +919,8 @@ mob/verb/remove_object_panel()
 	var/obj/effect/proc_holder/ai_hack_ninja/B = locate() in src
 	usr:proc_holder_list -= A
 	usr:proc_holder_list -= B
-	qdel(A)//First.
-	qdel(B)//Second, to keep the proc going.
+	qdel(A)// First.
+	qdel(B)// Second, to keep the proc going.
 	return
 
 /client/verb/grant_verb_ninja_debug1(var/mob/M in view())
@@ -953,7 +953,7 @@ mob/verb/remove_object_panel()
 
 	to_chat(world, "DIR: [get_dir_to(src.loc,M.loc)]")
 	return
-//
+// 
 /mob/verb/kill_self_debug()
 	set name = "DEBUG Kill Self"
 	set category = "Ninja Debug"
@@ -979,7 +979,7 @@ mob/verb/remove_object_panel()
 	var/mob/last_mob = mob
 	mob = M
 	last_mob:wear_suit:AI:key = key
-//
+// 
 /client/verb/ninjaget(var/mob/M in oview())
 	set name = "DEBUG Ninja GET"
 	set category = "Ninja Debug"
@@ -992,7 +992,7 @@ mob/verb/remove_object_panel()
 	set name = "Set Debug Target"
 	set category = "Ninja Debug"
 
-	ninja_debug_target = src//The target is you, brohime.
+	ninja_debug_target = src// The target is you, brohime.
 	to_chat(world, "Target: [src]")
 
 /mob/verb/hack_spideros_debug()
@@ -1007,17 +1007,17 @@ mob/verb/remove_object_panel()
 			loc:affecting:client:mob = A
 	return
 
-//Tests the net and what it does.
+// Tests the net and what it does.
 /mob/verb/ninjanet_debug()
 	set name = "Energy Net Debug"
 	set category = "Ninja Debug"
 
 	var/obj/effect/energy_net/E = new /obj/effect/energy_net(loc)
-	E.layer = layer+1//To have it appear one layer above the mob.
-	stunned = 10//So they are stunned initially but conscious.
-	anchored = 1//Anchors them so they can't move.
+	E.layer = layer+1// To have it appear one layer above the mob.
+	stunned = 10// So they are stunned initially but conscious.
+	anchored = 1// Anchors them so they can't move.
 	E.affecting = src
-	spawn(0)//Parallel processing.
+	spawn(0)// Parallel processing.
 		E.process(src)
 	return
 
@@ -1044,7 +1044,7 @@ That is why you attached them to objects.
 			if(safety<=0)	break
 	return */
 
-//Alternate ninja speech replacement.
+// Alternate ninja speech replacement.
 /*This text is hilarious but also absolutely retarded.
 message = replacetext(message, "l", "r")
 message = replacetext(message, "rr", "ru")

@@ -1,10 +1,10 @@
 /mob/living/carbon/ian/Life()
 	..()
 
-	if(soap_eaten) //Yeshhh, even dead, as long as body exist or timer runs out, its a chemical reaction after all!
+	if(soap_eaten) // Yeshhh, even dead, as long as body exist or timer runs out, its a chemical reaction after all!
 		hiccup()
 
-	//Feeding, chasing food, FOOOOODDDD
+	// Feeding, chasing food, FOOOOODDDD
 	if(!incapacitated() && !resting && !buckled && !lying)
 		turns_since_scan++
 		if(turns_since_scan > 5)
@@ -51,18 +51,18 @@
 				dir = i
 				sleep(1)
 
-	//Movement - this, speaking, simple_animal_A.I. code - should be converted into A.I. datum later on, for now - dirty copypasta of simple_animal.dm Life() proc.
+	// Movement - this, speaking, simple_animal_A.I. code - should be converted into A.I. datum later on, for now - dirty copypasta of simple_animal.dm Life() proc.
 	if(!client && !stop_automated_movement && wander && !anchored)
-		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(src.loc) && !resting && !buckled && canmove)		// This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
-				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
+				if(!(stop_automated_movement_when_pulled && pulledby)) // Soma animals don't move when pulled
 					var/anydir = pick(cardinal)
 					if(Process_Spacemove(anydir))
 						Move(get_step(src,anydir), anydir)
 						turns_since_move = 0
 
-	//Speaking
+	// Speaking
 	if(!client && speak_chance)
 		if(rand(0,200) < speak_chance)
 			if(speak && speak.len)
@@ -98,9 +98,9 @@
 
 	if (stat != DEAD)
 		if(SSmob.times_fired%4==2)
-			//Only try to take a breath every 4 seconds, unless suffocating
+			// Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
-		else if(isobj(loc)) //Still give containing object the chance to interact
+		else if(isobj(loc)) // Still give containing object the chance to interact
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src, 0)
 
@@ -122,7 +122,7 @@
 	handle_regular_status_updates()
 	update_canmove()
 
-	//handle_regular_hud_updates() mob/living/Life() handles this already. i'l leave this as reminder. need to fix for human, monkey and maybe aliens also.
+	// handle_regular_hud_updates() mob/living/Life() handles this already. i'l leave this as reminder. need to fix for human, monkey and maybe aliens also.
 
 /mob/living/carbon/ian/handle_regular_hud_updates()
 	if(!..())
@@ -192,9 +192,9 @@
 	var/datum/gas_mixture/breath
 	if(health < 0)
 		losebreath++
-	if(losebreath > 0) //Suffocating so do not take a breath
+	if(losebreath > 0) // Suffocating so do not take a breath
 		losebreath--
-		if (prob(75)) //High chance of gasping for air
+		if (prob(75)) // High chance of gasping for air
 			emote("gasp")
 		if(isobj(loc))
 			var/obj/location_as_object = loc
@@ -248,7 +248,7 @@
 	var/oxygen_used = 0
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
-	//Partial pressure of the O2 in our breath
+	// Partial pressure of the O2 in our breath
 	var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
 	// Same, but for the phoron
 	var/Toxins_pp = (breath.phoron/breath.total_moles())*breath_pressure
@@ -288,7 +288,7 @@
 
 	if(Toxins_pp > safe_phoron_max) // Too much phoron
 		var/ratio = (breath.phoron/safe_phoron_max) * 10
-		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+		// adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	// Limit amount of damage toxin exposure can do per second
 		if(reagents)
 			reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		phoron_alert = TRUE
@@ -385,7 +385,7 @@
 			overeatduration++
 	else
 		if(overeatduration > 1)
-			overeatduration = max(0, overeatduration - 2) //doubled the unfat rate
+			overeatduration = max(0, overeatduration - 2) // doubled the unfat rate
 
 	if (drowsyness)
 		drowsyness--
@@ -397,7 +397,7 @@
 	if(confused)
 		confused = max(0, confused - 1)
 
-	stamina = min(stamina + 1, 100) //i don't want a whole new proc just for one variable, so i leave this here.
+	stamina = min(stamina + 1, 100) // i don't want a whole new proc just for one variable, so i leave this here.
 
 	if(resting)
 		dizziness = max(0, dizziness - 5)
@@ -469,7 +469,7 @@
 		return
 
 	var/pressure = environment.return_pressure()
-	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+	var/adjusted_pressure = calculate_affecting_pressure(pressure) // Returns how much pressure actually affects the mob.
 
 	if(istype(head, /obj/item/clothing/head/helmet/space) || (adjusted_pressure < WARNING_HIGH_PRESSURE && adjusted_pressure > WARNING_LOW_PRESSURE && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5 && environment.phoron < MOLES_PHORON_VISIBLE))
 		clear_alert("pressure")
@@ -487,7 +487,7 @@
 	if(stat == DEAD)
 		bodytemperature += 0.1 * (environment.temperature - bodytemperature) * environment_heat_capacity / (environment_heat_capacity + 270000)
 
-	//Account for massive pressure differences
+	// Account for massive pressure differences
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
@@ -568,29 +568,29 @@
 			if(halloss > 0)
 				adjustHalLoss(-1)
 
-		//Eyes
-		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
+		// Eyes
+		if(sdisabilities & BLIND)	// disabled-blind, doesn't get better on its own
 			blinded = TRUE
-		else if(eye_blind)			//blindness, heals slowly over time
+		else if(eye_blind)			// blindness, heals slowly over time
 			eye_blind = max(eye_blind - 1,0)
 			blinded = TRUE
-		else if(eye_blurry)			//blurry eyes heal slowly
+		else if(eye_blurry)			// blurry eyes heal slowly
 			eye_blurry = max(eye_blurry - 1, 0)
 
-		//Ears
-		if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
+		// Ears
+		if(sdisabilities & DEAF)		// disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
-		else if(ear_deaf)			//deafness, heals slowly over time
+		else if(ear_deaf)			// deafness, heals slowly over time
 			ear_deaf = max(ear_deaf - 1, 0)
-		else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
+		else if(ear_damage < 25)	// ear damage heals slowly under this threshold. otherwise you'll need earmuffs
 			ear_damage = max(ear_damage - 0.05, 0)
 
-		//Other
+		// Other
 		if(stunned)
 			AdjustStunned(-1)
 
 		if(weakened)
-			weakened = max(weakened - 1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+			weakened = max(weakened - 1,0)	// before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
 		if(stuttering)
 			stuttering = max(stuttering - 1, 0)
@@ -613,7 +613,7 @@
 	else
 		adjustFireLoss(5.0 * discomfort)
 
-//and death!
+// and death!
 /mob/living/carbon/ian/death(gibbed)
 	if(stat == DEAD)
 		return
@@ -630,6 +630,6 @@
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
 	if(ticker.mode)
-		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+		ticker.mode.check_win()		// Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 	return ..(gibbed)

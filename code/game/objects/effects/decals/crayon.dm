@@ -9,11 +9,11 @@
 		..()
 		loc = location
 
-		//name = type
+		// name = type
 		name = e_name
 		desc = "A [type] drawn in crayon."
 		if(type == "poseur tag")
-			gang_name() //Generate gang names so they get removed from the pool
+			gang_name() // Generate gang names so they get removed from the pool
 			type = pick(gang_name_pool)
 		icon_state = type
 
@@ -38,7 +38,7 @@
 
 
 /obj/effect/decal/cleanable/crayon/gang
-	layer = 3.6 //Harder to hide
+	layer = 3.6 // Harder to hide
 	var/gang
 
 /obj/effect/decal/cleanable/crayon/gang/New(location, var/type, var/e_name = "gang tag")

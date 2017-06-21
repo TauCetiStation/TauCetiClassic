@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /*
 CONTAINS:
@@ -58,7 +58,7 @@ RCD
 
 
 	attack_self(mob/user)
-		//Change the mode
+		// Change the mode
 		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 		switch(mode)
 			if(1)

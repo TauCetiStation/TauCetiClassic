@@ -16,7 +16,7 @@
 	..()
 	health = rand(150,300)
 	my_effect = new /datum/artifact_effect/tesla(src)
-	my_effect.trigger = 13 //TRIGGER_NEAR
+	my_effect.trigger = 13 // TRIGGER_NEAR
 	desc = "A blue strange crystal"
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "ano120"

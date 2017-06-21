@@ -1,6 +1,6 @@
-//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
+// handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
 /mob/proc/update_Login_details()
-	//Multikey checks and logging
+	// Multikey checks and logging
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id
 	log_access("Login: [key_name(src)] from [lastKnownIP ? lastKnownIP : "localhost"]-[computer_id] || BYOND v[client.byond_version]")
@@ -29,9 +29,9 @@
 	update_Login_details()
 	world.update_status()
 
-	client.images = null				//remove the images such as AIs being unable to see runes
-	client.screen = list()				//remove hud items just in case
-	if(hud_used)	qdel(hud_used)		//remove the hud objects
+	client.images = null				// remove the images such as AIs being unable to see runes
+	client.screen = list()				// remove hud items just in case
+	if(hud_used)	qdel(hud_used)		// remove the hud objects
 	hud_used = new /datum/hud(src)
 	client.pixel_x = 0
 	client.pixel_y = 0
@@ -48,7 +48,7 @@
 
 	client.screen += client.void
 
-	//Some weird magic to block users who cant see lighting normally
+	// Some weird magic to block users who cant see lighting normally
 	var/obj/screen/blocker = new /obj/screen()
 	blocker.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	blocker.icon = 'icons/effects/chaos.dmi'
@@ -62,7 +62,7 @@
 
 	client.screen += blocker
 
-	//Clear ability list and update from mob.
+	// Clear ability list and update from mob.
 	client.verbs -= ability_verbs
 
 	if(abilities)

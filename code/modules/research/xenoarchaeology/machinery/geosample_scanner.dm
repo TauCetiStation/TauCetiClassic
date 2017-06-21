@@ -7,40 +7,40 @@
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
 
-	use_power = 1			//1 = idle, 2 = active
+	use_power = 1			// 1 = idle, 2 = active
 	idle_power_usage = 20
 	active_power_usage = 300
 
-	//var/obj/item/weapon/reagent_containers/glass/coolant_container
+	// var/obj/item/weapon/reagent_containers/glass/coolant_container
 	var/scanning = 0
 	var/report_num = 0
-	//
+	// 
 	var/obj/item/scanned_item
 	var/last_scan_data = "No scans on record."
-	//
+	// 
 	var/last_process_worldtime = 0
-	//
+	// 
 	var/scanner_progress = 0
-	var/scanner_rate = 1.25			//80 seconds per scan
+	var/scanner_rate = 1.25			// 80 seconds per scan
 	var/scanner_rpm = 0
 	var/scanner_rpm_dir = 1
 	var/scanner_temperature = 0
 	var/scanner_seal_integrity = 100
-	//
-	var/coolant_usage_rate = 0		//measured in u/microsec
+	// 
+	var/coolant_usage_rate = 0		// measured in u/microsec
 	var/fresh_coolant = 0
 	var/coolant_purity = 0
 	var/datum/reagents/coolant_reagents
 	var/used_coolant = 0
 	var/list/coolant_reagents_purity = list()
-	//
+	// 
 	var/maser_wavelength = 0
 	var/optimal_wavelength = 0
 	var/optimal_wavelength_target = 0
 	var/tleft_retarget_optimal_wavelength = 0
 	var/maser_efficiency = 0
-	//
-	var/radiation = 0				//0-100 mSv
+	// 
+	var/radiation = 0				// 0-100 mSv
 	var/t_left_radspike = 0
 	var/rad_shield = 0
 
@@ -124,23 +124,23 @@
 	data["scanned_item"] = (scanned_item ? scanned_item.name : "")
 	data["scanned_item_desc"] = (scanned_item ? (scanned_item.desc ? scanned_item.desc : "No information on record.") : "")
 	data["last_scan_data"] = last_scan_data
-	//
+	// 
 	data["scan_progress"] = round(scanner_progress)
 	data["scanning"] = scanning
-	//
+	// 
 	data["scanner_seal_integrity"] = round(scanner_seal_integrity)
 	data["scanner_rpm"] = round(scanner_rpm)
 	data["scanner_temperature"] = round(scanner_temperature)
-	//
+	// 
 	data["coolant_usage_rate"] = "[coolant_usage_rate]"
 	data["unused_coolant_abs"] = round(fresh_coolant)
 	data["unused_coolant_per"] = round(fresh_coolant / reagents.maximum_volume * 100)
 	data["coolant_purity"] = "[coolant_purity * 100]"
-	//
+	// 
 	data["optimal_wavelength"] = round(optimal_wavelength)
 	data["maser_wavelength"] = round(maser_wavelength)
 	data["maser_efficiency"] = round(maser_efficiency * 100)
-	//
+	// 
 	data["radiation"] = round(radiation)
 	data["t_left_radspike"] = round(t_left_radspike)
 	data["rad_shield_on"] = rad_shield
@@ -166,11 +166,11 @@
 		else if(scanner_progress >= 100)
 			complete_scan()
 		else
-			//calculate time difference
+			// calculate time difference
 			var/deltaT = (world.time - last_process_worldtime) * 0.1
 
-			//modify the RPM over time
-			//i want 1u to last for 10 sec at 500 RPM, scaling linearly
+			// modify the RPM over time
+			// i want 1u to last for 10 sec at 500 RPM, scaling linearly
 			scanner_rpm += scanner_rpm_dir * 50 * deltaT
 			if(scanner_rpm > 1000)
 				scanner_rpm = 1000
@@ -179,27 +179,27 @@
 				scanner_rpm = 1
 				scanner_rpm_dir = 1 * pick(0.5, 2.5, 5.5)
 
-			//heat up according to RPM
-			//each unit of coolant
+			// heat up according to RPM
+			// each unit of coolant
 			scanner_temperature += scanner_rpm * deltaT * 0.05
 
-			//radiation
+			// radiation
 			t_left_radspike -= deltaT
 			if(t_left_radspike > 0)
-				//ordinary radiation
+				// ordinary radiation
 				radiation = rand() * 15
 			else
-				//radspike
+				// radspike
 				if(t_left_radspike > -5)
 					radiation = rand() * 15 + 85
 					if(!rad_shield)
-						//irradiate nearby mobs
+						// irradiate nearby mobs
 						for(var/mob/living/M in view(7,src))
 							M.apply_effect(radiation / 25, IRRADIATE, 0)
 				else
 					t_left_radspike = pick(10,15,25)
 
-			//use some coolant to cool down
+			// use some coolant to cool down
 			if(coolant_usage_rate > 0)
 				var/coolant_used = min(fresh_coolant, coolant_usage_rate * deltaT)
 				if(coolant_used > 0)
@@ -207,28 +207,28 @@
 					used_coolant += coolant_used
 					scanner_temperature = max(scanner_temperature - coolant_used * coolant_purity * 20, 0)
 
-			//modify the optimal wavelength
+			// modify the optimal wavelength
 			tleft_retarget_optimal_wavelength -= deltaT
 			if(tleft_retarget_optimal_wavelength <= 0)
 				tleft_retarget_optimal_wavelength = pick(4,8,15)
 				optimal_wavelength_target = rand() * 9900 + 100
-			//
+			// 
 			if(optimal_wavelength < optimal_wavelength_target)
 				optimal_wavelength = min(optimal_wavelength + 700 * deltaT, optimal_wavelength_target)
 			else if(optimal_wavelength > optimal_wavelength_target)
 				optimal_wavelength = max(optimal_wavelength - 700 * deltaT, optimal_wavelength_target)
-			//
+			// 
 			maser_efficiency = 1 - max(min(10000, abs(optimal_wavelength - maser_wavelength) * 3), 1) / 10000
 
-			//make some scan progress
+			// make some scan progress
 			if(!rad_shield)
 				scanner_progress = min(100, scanner_progress + scanner_rate * maser_efficiency * deltaT)
 
-				//degrade the seal over time according to temperature
-				//i want temperature of 50K to degrade at 1%/sec
+				// degrade the seal over time according to temperature
+				// i want temperature of 50K to degrade at 1%/sec
 				scanner_seal_integrity -= (max(scanner_temperature, 1) / 1000) * deltaT
 
-			//emergency stop if seal integrity reaches 0
+			// emergency stop if seal integrity reaches 0
 			if(scanner_seal_integrity <= 0 || (scanner_temperature >= 1273 && !rad_shield))
 				stop_scanning()
 				src.visible_message("\blue [bicon(src)] buzzes unhappily. It has failed mid-scan!", 2)
@@ -236,7 +236,7 @@
 			if(prob(5))
 				src.visible_message("\blue [bicon(src)] [pick("whirrs","chuffs","clicks")][pick(" excitedly"," energetically"," busily")].", 2)
 	else
-		//gradually cool down over time
+		// gradually cool down over time
 		if(scanner_temperature > 0)
 			scanner_temperature = max(scanner_temperature - 5 - 10 * rand(), 0)
 		if(prob(0.75))
@@ -261,14 +261,14 @@
 	src.visible_message("\blue [bicon(src)] makes an insistent chime.", 2)
 
 	if(scanned_item)
-		//create report
+		// create report
 		var/obj/item/weapon/paper/P = new(src)
 		P.name = "[src] report #[++report_num]: [scanned_item.name]"
 
 		var/obj/item/weapon/stamp/S = new
 		S.stamp_paper(P)
 
-		//work out data
+		// work out data
 		var/data = " - Mundane object: [scanned_item.desc ? scanned_item.desc : "No information on record."]<br>"
 		var/datum/geosample/G
 		switch(scanned_item.type)

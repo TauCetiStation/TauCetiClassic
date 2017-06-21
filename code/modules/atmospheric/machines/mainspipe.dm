@@ -16,7 +16,7 @@
 		mains_burst()
 
 	else if(pressure_difference > parent_pipe.fatigue_pressure)
-		//TODO: leak to turf, doing pfshhhhh
+		// TODO: leak to turf, doing pfshhhhh
 		if(prob(5))
 			mains_burst()
 
@@ -37,7 +37,7 @@
 /************-Mains pipe-************/
 /obj/machinery/atmospherics/mains_pipe
 	icon = 'icons/obj/atmospherics/mainspipe.dmi'
-	layer = 2.4 //under wires with their 2.5
+	layer = 2.4 // under wires with their 2.5
 
 	force = 20
 
@@ -53,7 +53,7 @@
 	var/obj/machinery/atmospherics/pipe/mains_component/aux
 
 	var/minimum_temperature_difference = 300
-	var/thermal_conductivity = 0 //WALL_HEAT_TRANSFER_COEFFICIENT No
+	var/thermal_conductivity = 0 // WALL_HEAT_TRANSFER_COEFFICIENT No
 
 	var/maximum_pressure = 70*ONE_ATMOSPHERE
 	var/fatigue_pressure = 55*ONE_ATMOSPHERE
@@ -91,7 +91,7 @@
 		burst()
 
 	else if(pressure_difference > fatigue_pressure)
-		//TODO: leak to turf, doing pfshhhhh
+		// TODO: leak to turf, doing pfshhhhh
 		if(prob(5))
 			burst()
 
@@ -151,14 +151,14 @@
 	if(nodes[1] && nodes[2])
 		icon_state = "intact[invisibility ? "-f" : "" ]"
 
-		//var/node1_direction = get_dir(src, node1)
-		//var/node2_direction = get_dir(src, node2)
+		// var/node1_direction = get_dir(src, node1)
+		// var/node2_direction = get_dir(src, node2)
 
-		//dir = node1_direction|node2_direction
+		// dir = node1_direction|node2_direction
 
 	else
 		if(!nodes[1]&&!nodes[2])
-			qdel(src) //TODO: silent deleting looks weird
+			qdel(src) // TODO: silent deleting looks weird
 		var/have_node1 = nodes[1]?1:0
 		var/have_node2 = nodes[2]?1:0
 		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"

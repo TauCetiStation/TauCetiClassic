@@ -12,7 +12,7 @@ Note: Must be placed west/left of and R&D console to function.
 	icon_state = "protolathe"
 	flags = OPENCONTAINER
 
-	var/max_material_storage = 100000 //All this could probably be done better with a list but meh.
+	var/max_material_storage = 100000 // All this could probably be done better with a list but meh.
 	var/m_amount = 0.0
 	var/g_amount = 0.0
 	var/gold_amount = 0.0
@@ -38,7 +38,7 @@ Note: Must be placed west/left of and R&D console to function.
 	RefreshParts()
 	reagents.my_atom = src
 
-/obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
+/obj/machinery/r_n_d/protolathe/proc/TotalMaterials() // returns the total of all the stored materials. Makes code neater.
 	return m_amount + g_amount + gold_amount + silver_amount + phoron_amount + uranium_amount + diamond_amount + clown_amount
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
@@ -74,7 +74,7 @@ Note: Must be placed west/left of and R&D console to function.
 			A = clown_amount
 		else
 			A = reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff))
-			//return reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff))
+			// return reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff))
 	A = A / max(1 , (being_built.materials[M]/efficiency_coeff))
 	return A
 
@@ -146,16 +146,16 @@ Note: Must be placed west/left of and R&D console to function.
 			return 1
 
 	var/obj/item/stack/sheet/stack = I
-	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
+	var/amount = round(input("How many sheets do you want to add?") as num)// No decimals
 	if(!I)
 		return
-	if(amount < 0)//No negative numbers
+	if(amount < 0)// No negative numbers
 		amount = 0
 	if(amount == 0)
 		return
 	if(amount > stack.amount)
 		amount = stack.amount
-	if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
+	if(max_material_storage - TotalMaterials() < (amount*stack.perunit))// Can't overfill
 		amount = min(stack.amount, round((max_material_storage-TotalMaterials())/stack.perunit))
 
 	busy = TRUE

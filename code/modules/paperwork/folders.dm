@@ -81,7 +81,7 @@
 				P.attack_self(usr)
 				onclose(usr, "[P.name]")
 
-		//Update everything
+		// Update everything
 		attack_self(usr)
 		update_icon()
 	return

@@ -32,8 +32,8 @@
 	icon_state = "tomealtar"
 //	luminosity = 5
 
-//sprites for this no longer exist	-Pete
-//(they were stolen from another game anyway)
+// sprites for this no longer exist	-Pete
+// (they were stolen from another game anyway)
 /*
 /obj/structure/cult/pillar
 	name = "Pillar"

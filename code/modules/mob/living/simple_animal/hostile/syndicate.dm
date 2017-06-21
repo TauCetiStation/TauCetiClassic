@@ -46,7 +46,7 @@
 	qdel(src)
 	return
 
-///////////////Sword and shield////////////
+////////////// /Sword and shield/////////// /
 
 /mob/living/simple_animal/hostile/syndicate/melee
 	melee_damage_lower = 20

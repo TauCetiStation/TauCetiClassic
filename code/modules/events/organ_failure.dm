@@ -11,19 +11,19 @@ datum/event/organ_failure/announce()
 	world << sound('sound/AI/outbreak5.ogg')
 
 datum/event/organ_failure/start()
-	var/list/candidates = list()	//list of candidate keys
+	var/list/candidates = list()	// list of candidate keys
 	for(var/mob/living/carbon/human/G in player_list)
 		if(G.mind && G.mind.current && G.mind.current.stat != DEAD && G.health > 70 && G.organs)
 			candidates += G
 	if(!candidates.len)	return
-	candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
+	candidates = shuffle(candidates)// Incorporating Donkie's list shuffle
 
 	while(severity > 0 && candidates.len)
 		var/mob/living/carbon/human/C = candidates[1]
 
 		var/acute = prob(15)
 		if (prob(75))
-			//internal organ infection
+			// internal organ infection
 			var/obj/item/organ/internal/IO = pick(C.organs)
 
 			if (acute)
@@ -31,7 +31,7 @@ datum/event/organ_failure/start()
 			else
 				IO.germ_level = max(rand(INFECTION_LEVEL_ONE,INFECTION_LEVEL_ONE*2), IO.germ_level)
 		else
-			//external organ infection
+			// external organ infection
 			var/obj/item/organ/external/BP = pick(C.bodyparts)
 
 			if (acute)

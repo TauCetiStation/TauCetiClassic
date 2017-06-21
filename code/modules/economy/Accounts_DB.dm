@@ -145,10 +145,10 @@
 				var/starting_funds = min(max(text2num(href_list["starting_funds"]), 0), station_account.money)
 				create_account(account_name, starting_funds, src)
 				if(starting_funds > 0)
-					//subtract the money
+					// subtract the money
 					station_account.money -= starting_funds
 
-					//create a transaction log entry
+					// create a transaction log entry
 					var/trx = create_transation(account_name, "New account activation", "([starting_funds])")
 					station_account.transaction_log.Add(trx)
 

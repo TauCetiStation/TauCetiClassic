@@ -23,7 +23,7 @@ var/datum/subsystem/mobs/SSmob
 	if (!resumed)
 		src.currentrun = mob_list.Copy()
 
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)

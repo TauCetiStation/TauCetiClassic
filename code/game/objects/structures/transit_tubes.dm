@@ -148,7 +148,7 @@
 	close_animation()
 	sleep(CLOSE_DURATION + 2)
 
-	//reverse directions for automated cycling
+	// reverse directions for automated cycling
 	var/turf/next_loc = get_step(loc, pod.dir)
 	var/obj/structure/transit_tube/nexttube
 	for(var/obj/structure/transit_tube/tube in next_loc)
@@ -263,7 +263,7 @@
 	return enter_delay
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
-	if(moving) //No drifting while moving in the tubes
+	if(moving) // No drifting while moving in the tubes
 		return 1
 	else return ..()
 
@@ -379,7 +379,7 @@
 			move_out_content()
 			mob.client.Move(get_step(loc, direction), direction)
 
-			//if(moving && istype(loc, /turf/space))
+			// if(moving && istype(loc, /turf/space))
 				// Todo: If you get out of a moving pod in space, you should move as well.
 				//  Same direction as pod? Direcion you moved? Halfway between?
 

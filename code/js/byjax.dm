@@ -1,4 +1,4 @@
-//this function places received data into element with specified id.
+// this function places received data into element with specified id.
 var/const/js_byjax = {"
 
 function replaceContent() {

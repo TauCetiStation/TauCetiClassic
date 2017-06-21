@@ -7,9 +7,9 @@
 	m_amt = 1000
 	fire_delay = 0
 	recoil = 1
-	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
+	var/mag_type = /obj/item/ammo_box/magazine/m9mm // Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
-	var/energy_gun = 0 //Used in examine, if 1 - no ammo count.
+	var/energy_gun = 0 // Used in examine, if 1 - no ammo count.
 
 /obj/item/weapon/gun/projectile/New()
 	..()
@@ -24,14 +24,14 @@
 	if(crit_fail && prob(50))  // IT JAMMED GODDAMIT
 		last_fired += pick(20,40,60)
 		return
-	var/obj/item/ammo_casing/AC = chambered //Find chambered round
+	var/obj/item/ammo_casing/AC = chambered // Find chambered round
 	if(isnull(AC) || !istype(AC))
 		chamber_round()
 		return
 	if(eject_casing)
-		AC.loc = get_turf(src) //Eject casing onto ground.
-		AC.SpinAnimation(10, 1) //next gen special effects
-		spawn(3) //next gen sound effects
+		AC.loc = get_turf(src) // Eject casing onto ground.
+		AC.SpinAnimation(10, 1) // next gen special effects
+		spawn(3) // next gen sound effects
 			playsound(src.loc, 'sound/weapons/shell_drop.ogg', 50, 1)
 	if(empty_chamber)
 		chambered = null
@@ -49,7 +49,7 @@
 		if(chambered.BB)
 			if(chambered.reagents && chambered.BB.reagents)
 				var/datum/reagents/casting_reagents = chambered.reagents
-				casting_reagents.trans_to(chambered.BB, casting_reagents.total_volume) //For chemical darts/bullets
+				casting_reagents.trans_to(chambered.BB, casting_reagents.total_volume) // For chemical darts/bullets
 				casting_reagents.delete()
 	return
 
@@ -96,7 +96,7 @@
 		to_chat(user, "Has [get_ammo()] round\s remaining.")
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
-	var/boolets = 0 //mature var names for mature people
+	var/boolets = 0 // mature var names for mature people
 	if (chambered && countchambered)
 		boolets++
 	if (magazine)

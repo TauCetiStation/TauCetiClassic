@@ -12,8 +12,8 @@
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	unacidable = 1
-	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
-	var/gun_click_time = -100 //I'm lazy.
+	var/obj/master = null	// A reference to the object in the slot. Grabs or items, generally.
+	var/gun_click_time = -100 // I'm lazy.
 	appearance_flags = APPEARANCE_UI
 
 /obj/screen/Destroy()
@@ -30,7 +30,7 @@
 
 
 /obj/screen/inventory
-	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
+	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
 
 
 /obj/screen/close
@@ -101,7 +101,7 @@
 		name = "Toggle Gun Mode"
 		icon_state = "gun0"
 		screen_loc = ui_gun_select
-		//dir = 1
+		// dir = 1
 
 /obj/screen/zone_sel
 	name = "damage zone"
@@ -113,10 +113,10 @@
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])
-	var/old_selecting = selecting //We're only going to update_icon() if there's been a change
+	var/old_selecting = selecting // We're only going to update_icon() if there's been a change
 
 	switch(icon_y)
-		if(1 to 3) //Feet
+		if(1 to 3) // Feet
 			switch(icon_x)
 				if(10 to 15)
 					selecting = BP_R_FOOT
@@ -124,7 +124,7 @@
 					selecting = BP_L_FOOT
 				else
 					return 1
-		if(4 to 9) //Legs
+		if(4 to 9) // Legs
 			switch(icon_x)
 				if(10 to 15)
 					selecting = BP_R_LEG
@@ -132,7 +132,7 @@
 					selecting = BP_L_LEG
 				else
 					return 1
-		if(10 to 13) //Hands and groin
+		if(10 to 13) // Hands and groin
 			switch(icon_x)
 				if(8 to 11)
 					selecting = BP_R_HAND
@@ -142,7 +142,7 @@
 					selecting = BP_L_HAND
 				else
 					return 1
-		if(14 to 22) //Chest and arms to shoulders
+		if(14 to 22) // Chest and arms to shoulders
 			switch(icon_x)
 				if(8 to 11)
 					selecting = BP_R_ARM
@@ -152,14 +152,14 @@
 					selecting = BP_L_ARM
 				else
 					return 1
-		if(23 to 30) //Head, but we need to check for eye or mouth
+		if(23 to 30) // Head, but we need to check for eye or mouth
 			if(icon_x in 12 to 20)
 				selecting = BP_HEAD
 				switch(icon_y)
 					if(23 to 24)
 						if(icon_x in 15 to 17)
 							selecting = O_MOUTH
-					if(26) //Eyeline, eyes are on 15 and 17
+					if(26) // Eyeline, eyes are on 15 and 17
 						if(icon_x in 14 to 18)
 							selecting = O_EYES
 					if(25 to 27)
@@ -224,7 +224,7 @@
 				var/mob/living/carbon/C = usr
 				if(C.legcuffed)
 					to_chat(C, "<span class='notice'>You are legcuffed! You cannot run until you get [C.legcuffed] removed!</span>")
-					C.m_intent = "walk"	//Just incase
+					C.m_intent = "walk"	// Just incase
 					C.hud_used.move_intent.icon_state = "walking"
 					return 1
 				switch(usr.m_intent)
@@ -274,7 +274,7 @@
 						else
 							var/list/nicename = null
 							var/list/tankcheck = null
-							var/breathes = "oxygen"    //default, we'll check later
+							var/breathes = "oxygen"    // default, we'll check later
 							var/list/contents = list()
 
 							if(ishuman(C))
@@ -292,11 +292,11 @@
 								if(istype(tankcheck[i], /obj/item/weapon/tank))
 									var/obj/item/weapon/tank/t = tankcheck[i]
 									if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes))
-										contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
-										continue					//in it, so we're going to believe the tank is what it says it is
+										contents.Add(t.air_contents.total_moles)	// Someone messed with the tank and put unknown gasses
+										continue					// in it, so we're going to believe the tank is what it says it is
 									switch(breathes)
-																		//These tanks we're sure of their contents
-										if("nitrogen") 							//So we're a bit more picky about them.
+																		// These tanks we're sure of their contents
+										if("nitrogen") 							// So we're a bit more picky about them.
 
 											if(t.air_contents.nitrogen && !t.air_contents.oxygen)
 												contents.Add(t.air_contents.nitrogen)
@@ -318,10 +318,10 @@
 
 
 								else
-									//no tank so we set contents to 0
+									// no tank so we set contents to 0
 									contents.Add(0)
 
-							//Alright now we know the contents of the tanks so we have to pick the best one.
+							// Alright now we know the contents of the tanks so we have to pick the best one.
 
 							var/best = 0
 							var/bestcontents = 0
@@ -333,7 +333,7 @@
 									bestcontents = contents[i]
 
 
-							//We've determined the best container now we set it as our internals
+							// We've determined the best container now we set it as our internals
 
 							if(best)
 								to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>")
@@ -493,7 +493,7 @@
 				AI.sensor_mode()
 
 		if("Allow Walking")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+			if(gun_click_time > world.time - 30)	// give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				to_chat(usr, "You need your gun in your active hand to do that!")
@@ -502,7 +502,7 @@
 			gun_click_time = world.time
 
 		if("Disallow Walking")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+			if(gun_click_time > world.time - 30)	// give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				to_chat(usr, "You need your gun in your active hand to do that!")
@@ -511,7 +511,7 @@
 			gun_click_time = world.time
 
 		if("Allow Running")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+			if(gun_click_time > world.time - 30)	// give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				to_chat(usr, "You need your gun in your active hand to do that!")
@@ -520,7 +520,7 @@
 			gun_click_time = world.time
 
 		if("Disallow Running")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+			if(gun_click_time > world.time - 30)	// give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				to_chat(usr, "You need your gun in your active hand to do that!")
@@ -529,7 +529,7 @@
 			gun_click_time = world.time
 
 		if("Allow Item Use")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+			if(gun_click_time > world.time - 30)	// give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				to_chat(usr, "You need your gun in your active hand to do that!")
@@ -539,7 +539,7 @@
 
 
 		if("Disallow Item Use")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+			if(gun_click_time > world.time - 30)	// give them 3 seconds between mode changes.
 				return
 			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				to_chat(usr, "You need your gun in your active hand to do that!")

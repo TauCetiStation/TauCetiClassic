@@ -72,7 +72,7 @@
 /datum/food_processor_process/mob/process_food(loc, what, processor)
 	..()
 
-//datum/food_processor_process/mob/slime/process_food(loc, what, obj/machinery/processor/processor)
+// datum/food_processor_process/mob/slime/process_food(loc, what, obj/machinery/processor/processor)
 //	var/mob/living/simple_animal/slime/S = what
 //	var/C = S.cores
 //	if(S.stat != DEAD)
@@ -94,7 +94,7 @@
 
 /datum/food_processor_process/mob/monkey/process_food(loc, what, processor)
 	var/mob/living/carbon/monkey/O = what
-	if (O.client) //grief-proof
+	if (O.client) // grief-proof
 		O.loc = loc
 		O.visible_message("\blue Suddenly [O] jumps out from the processor!", \
 				"You jump out from the processor", \
@@ -104,7 +104,7 @@
 	var/datum/reagent/blood/B = new()
 	B.holder = bucket_of_blood
 	B.volume = 70
-	//set reagent data
+	// set reagent data
 	B.data["donor"] = O
 
 	for(var/datum/disease/D in O.viruses)
@@ -117,7 +117,7 @@
 	bucket_of_blood.reagents.reagent_list += B
 	bucket_of_blood.reagents.update_total()
 	bucket_of_blood.on_reagent_change()
-	//bucket_of_blood.reagents.handle_reactions() //blood doesn't react
+	// bucket_of_blood.reagents.handle_reactions() // blood doesn't react
 	..()
 
 
@@ -148,7 +148,7 @@
 
 	default_deconstruction_crowbar(O)
 
-	if(src.contents.len > 0) //TODO: several items at once? several different items?
+	if(src.contents.len > 0) // TODO: several items at once? several different items?
 		to_chat(user, "\red Something is already in the processing chamber.")
 		return 1
 	var/what = O
@@ -167,7 +167,7 @@
 	return
 
 /obj/machinery/processor/attack_hand(mob/user)
-	if (src.stat != CONSCIOUS) //NOPOWER etc
+	if (src.stat != CONSCIOUS) // NOPOWER etc
 		return
 	if(src.processing)
 		to_chat(user, "\red The processor is in the process of processing.")
@@ -185,14 +185,14 @@
 	for(var/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
-			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0 // DEAR GOD THIS BURNS MY EYES HAVE YOU EVER LOOKED IN AN ENGLISH DICTONARY BEFORE IN YOUR LIFE AAAAAAAAAAAAAAAAAAAAA - Iamgoofball
+			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") // -rastaf0 // DEAR GOD THIS BURNS MY EYES HAVE YOU EVER LOOKED IN AN ENGLISH DICTONARY BEFORE IN YOUR LIFE AAAAAAAAAAAAAAAAAAAAA - Iamgoofball
 			continue
 		total_time += P.time
 	sleep(total_time / rating_speed)
 	for(var/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
-			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0
+			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") // -rastaf0
 			continue
 		P.process_food(src.loc, O, src)
 	src.processing = 0

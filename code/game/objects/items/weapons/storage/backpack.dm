@@ -9,7 +9,7 @@
 	icon_state = "backpack"
 	item_state = "backpack"
 	w_class = 4.0
-	slot_flags = SLOT_BACK	//ERROOOOO
+	slot_flags = SLOT_BACK	// ERROOOOO
 	action_button_name = "Storage"
 	max_w_class = 3
 	max_combined_w_class = 21
@@ -67,12 +67,12 @@
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))
-		return 1 //No failure
+		return 1 // No failure
 	if (prob(src.reliability))
-		to_chat(user, "<spam class='red'>The Bluespace portal resists your attempt to add another item.</span>")//light failure
+		to_chat(user, "<spam class='red'>The Bluespace portal resists your attempt to add another item.</span>")// light failure
 	else
 		to_chat(user, "<spam class='red'>The Bluespace generator malfunctions!</span>")
-		for (var/obj/O in src.contents) //it broke, delete what was in it
+		for (var/obj/O in src.contents) // it broke, delete what was in it
 			qdel(O)
 		crit_fail = 1
 		icon_state = "brokenpack"
@@ -196,31 +196,31 @@
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
 
-//ERT backpacks.
+// ERT backpacks.
 /obj/item/weapon/storage/backpack/ert
 	name = "emergency response team backpack"
 	desc = "A spacious backpack with lots of pockets, used by members of the Nanotrasen Emergency Response Team."
 	icon_state = "ert_commander"
 	item_state = "backpack"
 
-//Commander
+// Commander
 /obj/item/weapon/storage/backpack/ert/commander
 	name = "emergency response team commander backpack"
 	desc = "A spacious backpack with lots of pockets, worn by the commander of a Nanotrasen Emergency Response Team."
 
-//Security
+// Security
 /obj/item/weapon/storage/backpack/ert/security
 	name = "emergency response team security backpack"
 	desc = "A spacious backpack with lots of pockets, worn by security members of a Nanotrasen Emergency Response Team."
 	icon_state = "ert_security"
 
-//Engineering
+// Engineering
 /obj/item/weapon/storage/backpack/ert/engineer
 	name = "emergency response team engineer backpack"
 	desc = "A spacious backpack with lots of pockets, worn by engineering members of a Nanotrasen Emergency Response Team."
 	icon_state = "ert_engineering"
 
-//Medical
+// Medical
 /obj/item/weapon/storage/backpack/ert/medical
 	name = "emergency response team medical backpack"
 	desc = "A spacious backpack with lots of pockets, worn by medical members of a Nanotrasen Emergency Response Team."
@@ -279,15 +279,15 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	item_state = "satchel-flat"
-	w_class = 3 //Can fit in backpacks itself.
+	w_class = 3 // Can fit in backpacks itself.
 	max_combined_w_class = 15
 	level = 1
-	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
+	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) // muh recursive backpacks
 
 /obj/item/weapon/storage/backpack/satchel/flat/hide(var/intact)
 	if(intact)
 		invisibility = 101
-		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
+		anchored = 1 // otherwise you can start pulling, cover it, and drag around an invisible backpack.
 		icon_state = "[initial(icon_state)]2"
 	else
 		invisibility = initial(invisibility)

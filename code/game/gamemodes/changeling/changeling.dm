@@ -32,10 +32,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/const/prob_right_sab_target_l = 25 // lower bound on probability of naming right sabotage target
 	var/const/prob_right_sab_target_h = 50 // upper bound on probability of naming right sabotage target
 
-	var/const/prob_right_killer_l = 25 //lower bound on probability of naming the right operative
-	var/const/prob_right_killer_h = 50 //upper bound on probability of naming the right operative
-	var/const/prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
-	var/const/prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
+	var/const/prob_right_killer_l = 25 // lower bound on probability of naming the right operative
+	var/const/prob_right_killer_h = 50 // upper bound on probability of naming the right operative
+	var/const/prob_right_objective_l = 25 // lower bound on probability of determining the objective correctly
+	var/const/prob_right_objective_h = 50 // upper bound on probability of determining the objective correctly
 
 	var/changeling_amount = 4
 
@@ -49,7 +49,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		restricted_jobs += protected_jobs
 
 	for(var/datum/mind/player in antag_candidates)
-		if(player.assigned_role in restricted_jobs)	//Removing robots from the list
+		if(player.assigned_role in restricted_jobs)	// Removing robots from the list
 			antag_candidates -= player
 
 	changeling_amount = 1 + round(num_players() / 10)
@@ -77,10 +77,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 
 /datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling)
-	//OBJECTIVES - Always absorb 5 genomes, plus random traitor objectives.
-	//If they have two objectives as well as absorb, they must survive rather than escape
-	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
-	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
+	// OBJECTIVES - Always absorb 5 genomes, plus random traitor objectives.
+	// If they have two objectives as well as absorb, they must survive rather than escape
+	// No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
+	// If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
 
 	if (config.objectives_disabled)
 		return
@@ -206,7 +206,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			var/changelingwin = 1
 			if(!changeling.current)
 				changelingwin = 0
-			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
+			// Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 			text += "<BR><B>Changeling ID:</B> [changeling.changeling.changelingID]"
 			text += "<BR><B>Genomes Absorbed:</B> [changeling.changeling.absorbedcount]"
 			if(!config.objectives_disabled)
@@ -260,7 +260,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		text += "<BR><HR>"
 	return text
 
-/datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
+/datum/changeling // stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
 	var/list/absorbed_dna = list()
 	var/list/absorbed_species = list()
 	var/list/absorbed_languages = list()
@@ -309,7 +309,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			break
 	return chosen_dna
 /*
-//Checks if the target DNA is valid and absorbable.
+// Checks if the target DNA is valid and absorbable.
 /datum/changeling/proc/can_absorb_dna(mob/living/carbon/T, mob/living/carbon/U)
 	if(T)
 		if(NOCLONE in T.mutations || HUSK in T.mutations)

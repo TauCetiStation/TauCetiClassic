@@ -1,7 +1,7 @@
 /* SURGERY STEPS */
 
 /datum/surgery_step
-	var/priority = 0	//steps with higher priority would be attempted first
+	var/priority = 0	// steps with higher priority would be attempted first
 
 	// type path referencing tools that can be used for this step, and how well are they suited for it
 	var/list/allowed_tools = null
@@ -15,10 +15,10 @@
 
 	// evil infection stuff that will make everyone hate me
 	var/can_infect = 0
-	//How much blood this step can get on surgeon. 1 - hands, 2 - full body.
+	// How much blood this step can get on surgeon. 1 - hands, 2 - full body.
 	var/blood_level = 0
 
-	//Cloth check
+	// Cloth check
 	var/clothless = 1
 
 // returns how well tool is suited for this step
@@ -76,22 +76,22 @@
 	if(user.gloves)
 		germ_level = user.gloves.germ_level
 
-	BP.germ_level = max(germ_level, BP.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
+	BP.germ_level = max(germ_level, BP.germ_level) // as funny as scrubbing microbes out with clean gloves is - no.
 	if(BP.germ_level)
 		BP.owner.bad_bodyparts |= BP
 
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	if(!istype(M))
 		return 0
-	if (user.a_intent == "hurt")	//check for Hippocratic Oath
+	if (user.a_intent == "hurt")	// check for Hippocratic Oath
 		return 0
 	var/target_zone = user.zone_sel.selecting
-	if(target_zone in M.op_stage.in_progress)		//Can't operate on someone repeatedly.
+	if(target_zone in M.op_stage.in_progress)		// Can't operate on someone repeatedly.
 		to_chat(user, "\red You can't operate on the patient while surgery is already in progress.")
 		return 1
 
 	for(var/datum/surgery_step/S in surgery_steps)
-		//check, if target undressed for clothless operations
+		// check, if target undressed for clothless operations
 		if(ishuman(M))
 			var/mob/living/carbon/human/T = M
 			if(S.clothless)
@@ -109,22 +109,22 @@
 						if(T.gloves)
 							return 0
 
-		//check if tool is right or close enough and if this step is possible
+		// check if tool is right or close enough and if this step is possible
 		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M))
-			M.op_stage.in_progress += target_zone						//begin step and...
-			S.begin_step(user, M, user.zone_sel.selecting, tool)		//...start on it
-			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
+			M.op_stage.in_progress += target_zone						// begin step and...
+			S.begin_step(user, M, user.zone_sel.selecting, tool)		// ...start on it
+			// We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if( prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)))
-				S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
-			else if((tool in user.contents) && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
-				S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
+				S.end_step(user, M, user.zone_sel.selecting, tool)		// finish successfully
+			else if((tool in user.contents) && user.Adjacent(M))		// or (also check for tool in hands and being near the target)
+				S.fail_step(user, M, user.zone_sel.selecting, tool)		// malpractice~
 			else	// this failing silently was a pain.
 				to_chat(user, "\red You must remain close to your patient to conduct surgery.")
-			M.op_stage.in_progress -= target_zone						//end step
+			M.op_stage.in_progress -= target_zone						// end step
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.update_surgery()										//shows surgery results
-			return	1	  												//don't want to do weapony things after surgery
+				H.update_surgery()										// shows surgery results
+			return	1	  												// don't want to do weapony things after surgery
 	return 0
 
 /proc/sort_surgeries()
@@ -137,8 +137,8 @@
 		if(gap < 1)
 			gap = 1
 		for(var/i = 1; gap + i <= surgery_steps.len; i++)
-			var/datum/surgery_step/l = surgery_steps[i]		//Fucking hate
-			var/datum/surgery_step/r = surgery_steps[gap+i]	//how lists work here
+			var/datum/surgery_step/l = surgery_steps[i]		// Fucking hate
+			var/datum/surgery_step/r = surgery_steps[gap+i]	// how lists work here
 			if(l.priority < r.priority)
 				surgery_steps.Swap(i, gap + i)
 				swapped = 1

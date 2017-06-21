@@ -86,7 +86,7 @@ var/global/vs_control/vsc = new
 	. = ..()
 	settings = vars.Copy()
 
-	var/datum/D = new() //Ensure only unique vars are put through by making a datum and removing all common vars.
+	var/datum/D = new() // Ensure only unique vars are put through by making a datum and removing all common vars.
 	for(var/V in D.vars)
 		settings -= V
 
@@ -99,7 +99,7 @@ var/global/vs_control/vsc = new
 	settings -= "plc"
 
 /vs_control/proc/ChangeSettingsDialog(mob/user,list/L)
-	//var/which = input(user,"Choose a setting:") in L
+	// var/which = input(user,"Choose a setting:") in L
 	var/dat = ""
 	for(var/ch in L)
 		if(findtextEx(ch,"_RANDOM") || findtextEx(ch,"_DESC") || findtextEx(ch,"_METHOD") || findtextEx(ch,"_NAME")) continue
@@ -202,38 +202,38 @@ var/global/vs_control/vsc = new
 		return
 	switch(def)
 		if("Phoron - Standard")
-			plc.CLOTH_CONTAMINATION = 1 //If this is on, phoron does damage by getting into cloth.
+			plc.CLOTH_CONTAMINATION = 1 // If this is on, phoron does damage by getting into cloth.
 			plc.PHORONGUARD_ONLY = 0
-			plc.GENETIC_CORRUPTION = 0 //Chance of genetic corruption as well as toxic damage, X in 1000.
-			plc.SKIN_BURNS = 0       //Phoron has an effect similar to mustard gas on the un-suited.
-			plc.EYE_BURNS = 1 //Phoron burns the eyes of anyone not wearing eye protection.
+			plc.GENETIC_CORRUPTION = 0 // Chance of genetic corruption as well as toxic damage, X in 1000.
+			plc.SKIN_BURNS = 0       // Phoron has an effect similar to mustard gas on the un-suited.
+			plc.EYE_BURNS = 1 // Phoron burns the eyes of anyone not wearing eye protection.
 			plc.PHORON_HALLUCINATION = 0
 			plc.CONTAMINATION_LOSS = 0.02
 
 		if("Phoron - Low Hazard")
-			plc.CLOTH_CONTAMINATION = 0 //If this is on, phoron does damage by getting into cloth.
+			plc.CLOTH_CONTAMINATION = 0 // If this is on, phoron does damage by getting into cloth.
 			plc.PHORONGUARD_ONLY = 0
-			plc.GENETIC_CORRUPTION = 0 //Chance of genetic corruption as well as toxic damage, X in 1000
-			plc.SKIN_BURNS = 0       //Phoron has an effect similar to mustard gas on the un-suited.
-			plc.EYE_BURNS = 1 //Phoron burns the eyes of anyone not wearing eye protection.
+			plc.GENETIC_CORRUPTION = 0 // Chance of genetic corruption as well as toxic damage, X in 1000
+			plc.SKIN_BURNS = 0       // Phoron has an effect similar to mustard gas on the un-suited.
+			plc.EYE_BURNS = 1 // Phoron burns the eyes of anyone not wearing eye protection.
 			plc.PHORON_HALLUCINATION = 0
 			plc.CONTAMINATION_LOSS = 0.01
 
 		if("Phoron - High Hazard")
-			plc.CLOTH_CONTAMINATION = 1 //If this is on, phoron does damage by getting into cloth.
+			plc.CLOTH_CONTAMINATION = 1 // If this is on, phoron does damage by getting into cloth.
 			plc.PHORONGUARD_ONLY = 0
-			plc.GENETIC_CORRUPTION = 0 //Chance of genetic corruption as well as toxic damage, X in 1000.
-			plc.SKIN_BURNS = 1       //Phoron has an effect similar to mustard gas on the un-suited.
-			plc.EYE_BURNS = 1 //Phoron burns the eyes of anyone not wearing eye protection.
+			plc.GENETIC_CORRUPTION = 0 // Chance of genetic corruption as well as toxic damage, X in 1000.
+			plc.SKIN_BURNS = 1       // Phoron has an effect similar to mustard gas on the un-suited.
+			plc.EYE_BURNS = 1 // Phoron burns the eyes of anyone not wearing eye protection.
 			plc.PHORON_HALLUCINATION = 1
 			plc.CONTAMINATION_LOSS = 0.05
 
 		if("Phoron - Oh Shit!")
-			plc.CLOTH_CONTAMINATION = 1 //If this is on, phoron does damage by getting into cloth.
+			plc.CLOTH_CONTAMINATION = 1 // If this is on, phoron does damage by getting into cloth.
 			plc.PHORONGUARD_ONLY = 1
-			plc.GENETIC_CORRUPTION = 5 //Chance of genetic corruption as well as toxic damage, X in 1000.
-			plc.SKIN_BURNS = 1       //Phoron has an effect similar to mustard gas on the un-suited.
-			plc.EYE_BURNS = 1 //Phoron burns the eyes of anyone not wearing eye protection.
+			plc.GENETIC_CORRUPTION = 5 // Chance of genetic corruption as well as toxic damage, X in 1000.
+			plc.SKIN_BURNS = 1       // Phoron has an effect similar to mustard gas on the un-suited.
+			plc.EYE_BURNS = 1 // Phoron burns the eyes of anyone not wearing eye protection.
 			plc.PHORON_HALLUCINATION = 1
 			plc.CONTAMINATION_LOSS = 0.075
 
@@ -333,7 +333,7 @@ var/global/vs_control/vsc = new
 	. = ..()
 	settings = vars.Copy()
 
-	var/datum/D = new() //Ensure only unique vars are put through by making a datum and removing all common vars.
+	var/datum/D = new() // Ensure only unique vars are put through by making a datum and removing all common vars.
 	for(var/V in D.vars)
 		settings -= V
 

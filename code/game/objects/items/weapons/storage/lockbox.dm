@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/weapon/storage/lockbox
 	name = "lockbox"
@@ -7,7 +7,7 @@
 	item_state = "syringe_kit"
 	w_class = 4
 	max_w_class = 3
-	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
+	max_combined_w_class = 14 // The sum of the w_classes of all the items in this storage item.
 	storage_slots = 4
 	req_access = list(access_armory)
 	var/locked = 1

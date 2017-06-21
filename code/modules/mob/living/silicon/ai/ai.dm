@@ -16,7 +16,7 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/change_floor
 )
 
-//Not sure why this is necessary...
+// Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
 	var/is_in_use = 0
 	if (subject!=null)
@@ -29,7 +29,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'//
+	icon = 'icons/mob/AI.dmi'// 
 	icon_state = "ai"
 	anchored = 1 // -- TLE
 	density = 1
@@ -39,19 +39,19 @@ var/list/ai_verbs_default = list(
 	var/obj/machinery/camera/camera = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
-	//var/list/laws = list()
+	// var/list/laws = list()
 	var/viewalerts = 0
 	var/lawcheck[1]
 	var/ioncheck[1]
 	var/lawchannel = "Common" // Default channel on which to state laws
-	var/icon/holo_icon//Default is assigned when AI is created.
+	var/icon/holo_icon// Default is assigned when AI is created.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/radio/headset/heads/ai_integrated/aiRadio = null
-	var/custom_sprite = 0 //For our custom sprites
-//Hud stuff
+	var/custom_sprite = 0 // For our custom sprites
+// Hud stuff
 
-	//MALFUNCTION
+	// MALFUNCTION
 	var/datum/AI_Module/module_picker/malf_picker
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
@@ -61,13 +61,13 @@ var/list/ai_verbs_default = list(
 	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
 
 	var/obj/machinery/power/apc/malfhack = null
-	var/explosive = 0 //does the AI explode when it dies?
+	var/explosive = 0 // does the AI explode when it dies?
 
 	var/mob/living/silicon/ai/parent = null
 
-	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
+	var/apc_override = 0 // hack for letting the AI use its APC even when visionless
 
-	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.
+	var/camera_light_on = 0	// Defines if the AI toggled the light on the camera it's looking through.
 	var/datum/trackable/track = null
 	var/last_announcement = ""
 	var/wipe_timer_id = 0
@@ -85,7 +85,7 @@ var/list/ai_verbs_default = list(
 	while(!pickedName)
 		pickedName = pick(ai_names)
 		for (var/mob/living/silicon/ai/A in mob_list)
-			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
+			if (A.real_name == pickedName && possibleNames.len > 1) // fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
 
@@ -120,7 +120,7 @@ var/list/ai_verbs_default = list(
 	if (istype(loc, /turf))
 		add_ai_verbs(src)
 
-	//Languages
+	// Languages
 	add_language("Sol Common", 0)
 	add_language("Sinta'unathi", 0)
 	add_language("Siik'maas", 0)
@@ -130,10 +130,10 @@ var/list/ai_verbs_default = list(
 	add_language("Tradeband", 1)
 	add_language("Gutter", 0)
 
-	if(!safety)//Only used by AIize() to successfully spawn an AI.
-		if (!B)//If there is no player/brain inside.
-			empty_playable_ai_cores += new/obj/structure/AIcore/deactivated(loc)//New empty terminal.
-			qdel(src)//Delete AI.
+	if(!safety)// Only used by AIize() to successfully spawn an AI.
+		if (!B)// If there is no player/brain inside.
+			empty_playable_ai_cores += new/obj/structure/AIcore/deactivated(loc)// New empty terminal.
+			qdel(src)// Delete AI.
 			return
 		else
 			if (B.brainmob.mind)
@@ -212,7 +212,7 @@ var/list/ai_verbs_default = list(
 	set name = "Set AI Core Display"
 	if(stat || aiRestorePowerRoutine)
 		return
-	if(!custom_sprite) //Check to see if custom sprite time, checking the appopriate file to change a var
+	if(!custom_sprite) // Check to see if custom sprite time, checking the appopriate file to change a var
 		var/file = file2text("config/custom_sprites.txt")
 		var/lines = splittext(file, "\n")
 
@@ -226,12 +226,12 @@ var/list/ai_verbs_default = list(
 				continue;
 
 			if(Entry[1] == src.ckey && Entry[2] == src.real_name)
-				custom_sprite = 1 //They're in the list? Custom sprite time
+				custom_sprite = 1 // They're in the list? Custom sprite time
 				icon = 'icons/mob/custom-synthetic.dmi'
 
-		//if(icon_state == initial(icon_state))
+		// if(icon_state == initial(icon_state))
 	var/icontype = ""
-	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
+	if (custom_sprite == 1) icontype = ("Custom")// automagically selects custom sprite if one is available
 	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Rainbow","Clown", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static", "Soviet", "Trapped", "Heartline","No Pulse","President","BANNED","Helios","House","Yuki","Hiss!","Alter Ego","Urist","Totally Not A Malf","Fuzz","Goon","Database","Glitchman","AmericAI","NT","Gentoo")
 	switch(icontype)
 		if("Custom") icon_state = "[src.ckey]-ai"
@@ -275,9 +275,9 @@ var/list/ai_verbs_default = list(
 		if("NT") icon_state = "ai-nanotrasen"
 		if("Gentoo") icon_state = "ai-gentoo"
 		else icon_state = "ai"
-	//else
-			//usr <<"You can only change your display once!"
-			//return
+	// else
+			// usr <<"You can only change your display once!"
+			// return
 
 
 // displays the malf_ai information if the AI is the malf
@@ -342,7 +342,7 @@ var/list/ai_verbs_default = list(
 	log_say("[key_name(usr)] has made an AI announcement: [input]")
 	message_admins("[key_name_admin(usr)] has made an AI announcement.")
 	message_cooldown = 1
-	spawn(600)//One minute cooldown
+	spawn(600)// One minute cooldown
 		message_cooldown = 0
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
@@ -451,12 +451,12 @@ var/list/ai_verbs_default = list(
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
 	if (href_list["showalerts"])
 		ai_alerts()
-	//Carn: holopad requests
+	// Carn: holopad requests
 	if (href_list["jumptoholopad"])
 		var/obj/machinery/hologram/holopad/H = locate(href_list["jumptoholopad"])
 		if(stat == CONSCIOUS)
 			if(H)
-				H.attack_ai(src) //may as well recycle
+				H.attack_ai(src) // may as well recycle
 			else
 				to_chat(src, "<span class='notice'>Unable to locate the holopad.</span>")
 
@@ -475,7 +475,7 @@ var/list/ai_verbs_default = list(
 		lawchannel = setchannel
 		checklaws()
 
-	//Uncomment this line of code if you are enabling the AI Vocal (VOX) announcements.
+	// Uncomment this line of code if you are enabling the AI Vocal (VOX) announcements.
 /*
 	if(href_list["say_word"])
 		play_vox_word(href_list["say_word"], null, src)
@@ -523,7 +523,7 @@ var/list/ai_verbs_default = list(
 /mob/living/silicon/ai/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
-		//Foreach goto(19)
+		// Foreach goto(19)
 	if (health > 0)
 		adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
@@ -552,7 +552,7 @@ var/list/ai_verbs_default = list(
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
 
-		else //harm
+		else // harm
 			var/damage = rand(10, 20)
 			if (prob(90))
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
@@ -599,7 +599,7 @@ var/list/ai_verbs_default = list(
 
 	src.cameraFollow = null
 
-	if (!C || stat == DEAD) //C.can_use())
+	if (!C || stat == DEAD) // C.can_use())
 		return 0
 
 	if(!src.eyeobj)
@@ -607,7 +607,7 @@ var/list/ai_verbs_default = list(
 		return
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
-	//machine = src
+	// machine = src
 
 	return 1
 
@@ -638,13 +638,13 @@ var/list/ai_verbs_default = list(
 	set category = "AI Commands"
 	set name = "Cancel Camera View"
 
-	//src.cameraFollow = null
+	// src.cameraFollow = null
 	src.view_core()
 
 
-//Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
-//Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
-//Addition by Mord_Sith to define AI's network change ability
+// Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
+// Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
+// Addition by Mord_Sith to define AI's network change ability
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
 	set name = "Jump To Network"
@@ -686,7 +686,7 @@ var/list/ai_verbs_default = list(
 				U.eyeobj.setLoc(get_turf(C))
 				break
 	to_chat(src, "\blue Switched to [network] camera network.")
-//End of code by Mord_Sith
+// End of code by Mord_Sith
 
 
 /mob/living/silicon/ai/proc/choose_modules()
@@ -704,11 +704,11 @@ var/list/ai_verbs_default = list(
 
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
-	for (var/obj/machinery/M in machines) //change status
+	for (var/obj/machinery/M in machines) // change status
 		if(istype(M, /obj/machinery/ai_status_display))
 			var/obj/machinery/ai_status_display/AISD = M
 			AISD.emotion = emote
-		//if Friend Computer, change ALL displays
+		// if Friend Computer, change ALL displays
 		else if(istype(M, /obj/machinery/status_display))
 
 			var/obj/machinery/status_display/SD = M
@@ -718,7 +718,7 @@ var/list/ai_verbs_default = list(
 				SD.friendc = 0
 	return
 
-//I am the icon meister. Bow fefore me.	//>fefore
+// I am the icon meister. Bow fefore me.	// >fefore
 /mob/living/silicon/ai/proc/ai_hologram_change()
 	set name = "Change Hologram"
 	set desc = "Change the default hologram available to AI to something else."
@@ -732,14 +732,14 @@ var/list/ai_verbs_default = list(
 
 		var/personnel_list[] = list()
 
-		for(var/datum/data/record/t in data_core.locked)//Look in data core locked.
-			personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
+		for(var/datum/data/record/t in data_core.locked)// Look in data core locked.
+			personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]// Pull names, rank, and image.
 
 		if(personnel_list.len)
 			input = input("Select a crew member:") as null|anything in personnel_list
 			var/icon/character_icon = personnel_list[input]
 			if(character_icon)
-				qdel(holo_icon)//Clear old icon so we're not storing it in memory.
+				qdel(holo_icon)// Clear old icon so we're not storing it in memory.
 				holo_icon = getHologramIcon(icon(character_icon))
 		else
 			alert("No suitable records found. Aborting.")
@@ -775,7 +775,7 @@ var/list/ai_verbs_default = list(
 		return
 	apc.malfvacate()*/
 
-//Toggles the luminosity and applies it by re-entereing the camera.
+// Toggles the luminosity and applies it by re-entereing the camera.
 /mob/living/silicon/ai/proc/toggle_camera_light()
 
 	if(check_unable())

@@ -19,7 +19,7 @@
 	return QDEL_HINT_LETMELIVE
 
 /turf/space/proc/update_starlight()
-	for(var/turf/simulated/T in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+	for(var/turf/simulated/T in RANGE_TURFS(1,src)) // RANGE_TURFS is in code\__HELPERS\game.dm
 		set_light(2,2)
 		return
 	set_light(0)
@@ -71,7 +71,7 @@
 
 /turf/space/Entered(atom/movable/A as mob|obj)
 	if(movement_disabled)
-		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
+		to_chat(usr, "\red Movement is admin-disabled.")// This is to identify lag problems
 		return
 	..()
 	if ((!(A) || src != A.loc))	return
@@ -87,7 +87,7 @@
 				return
 
 			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
-				qdel(A) //The disk's Destroy() proc ensures a new one is created
+				qdel(A) // The disk's Destroy() proc ensures a new one is created
 				return
 
 			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
@@ -106,10 +106,10 @@
 							MM.inertia_dir = 2
 					else
 						for(var/obj/item/weapon/disk/nuclear/N in disk_search)
-							qdel(N)//Make the disk respawn it is on a clientless mob or corpse
+							qdel(N)// Make the disk respawn it is on a clientless mob or corpse
 				else
 					for(var/obj/item/weapon/disk/nuclear/N in disk_search)
-						qdel(N)//Make the disk respawn if it is floating on its own
+						qdel(N)// Make the disk respawn if it is floating on its own
 				return
 
 			var/move_to_z = src.z
@@ -144,7 +144,7 @@
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
 
-			stoplag()//Let a diagonal move finish, if necessary
+			stoplag()// Let a diagonal move finish, if necessary
 			A.newtonian_move(A.inertia_dir)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A)
@@ -168,11 +168,11 @@
 		y_arr = global_map[next_x]
 		target_z = y_arr[cur_y]
 /*
-		//debug
+		// debug
 		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
 		to_chat(world, "Target Z = [target_z]")
 		to_chat(world, "Next X = [next_x]")
-		//debug
+		// debug
 */
 		if(target_z)
 			A.z = target_z
@@ -193,11 +193,11 @@
 		y_arr = global_map[next_x]
 		target_z = y_arr[cur_y]
 /*
-		//debug
+		// debug
 		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
 		to_chat(world, "Target Z = [target_z]")
 		to_chat(world, "Next X = [next_x]")
-		//debug
+		// debug
 */
 		if(target_z)
 			A.z = target_z
@@ -217,11 +217,11 @@
 		next_y = (--cur_y||y_arr.len)
 		target_z = y_arr[next_y]
 /*
-		//debug
+		// debug
 		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
 		to_chat(world, "Next Y = [next_y]")
 		to_chat(world, "Target Z = [target_z]")
-		//debug
+		// debug
 */
 		if(target_z)
 			A.z = target_z
@@ -242,11 +242,11 @@
 		next_y = (++cur_y > y_arr.len ? 1 : cur_y)
 		target_z = y_arr[next_y]
 /*
-		//debug
+		// debug
 		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
 		to_chat(world, "Next Y = [next_y]")
 		to_chat(world, "Target Z = [target_z]")
-		//debug
+		// debug
 */
 		if(target_z)
 			A.z = target_z

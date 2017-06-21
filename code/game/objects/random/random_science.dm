@@ -1,4 +1,4 @@
-//SCIENCE
+// SCIENCE
 /obj/random/science/matter_bin
 	name = "Random matter bin"
 	desc = "This is a random tool."

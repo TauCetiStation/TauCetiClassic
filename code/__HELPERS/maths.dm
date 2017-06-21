@@ -1,5 +1,5 @@
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
-#define ACCURACY 10000 //accuracy for normal distribution
+#define ACCURACY 10000 // accuracy for normal distribution
 
 var/const/E		= 2.71828183
 var/const/Sqrt2	= 1.41421356
@@ -68,13 +68,13 @@ var/const/Sqrt2	= 1.41421356
 	return sum / values
 
 var/normal_next
-/proc/NormalDistr(mean = 0, stddev = 1) //because gaussian() looks... strange. This is Box-Muller transform
+/proc/NormalDistr(mean = 0, stddev = 1) // because gaussian() looks... strange. This is Box-Muller transform
 	if(normal_next != null)
 		. = mean + normal_next * stddev
 		normal_next = null
 	else
 		var/R1 = sqrt(-2.0 * log(rand(1, ACCURACY) / ACCURACY))
-		var/R2 = 360 * (rand(0, ACCURACY) / ACCURACY) //because BYOND's cos() and sin() accepts degrees
+		var/R2 = 360 * (rand(0, ACCURACY) / ACCURACY) // because BYOND's cos() and sin() accepts degrees
 		. = mean + (R1 * cos(R2)) * stddev
 		normal_next = R1 * sin(R2)
 	return .
@@ -118,13 +118,13 @@ var/normal_next
 	var/t = Floor((val - min) / d)
 	return val - (t * d)
 
-//converts a uniform distributed random number into a normal distributed one
-//since this method produces two random numbers, one is saved for subsequent calls
-//(making the cost negligble for every second call)
-//This will return +/- decimals, situated about mean with standard deviation stddev
-//68% chance that the number is within 1stddev
-//95% chance that the number is within 2stddev
-//98% chance that the number is within 3stddev...etc
+// converts a uniform distributed random number into a normal distributed one
+// since this method produces two random numbers, one is saved for subsequent calls
+// (making the cost negligble for every second call)
+// This will return +/- decimals, situated about mean with standard deviation stddev
+// 68% chance that the number is within 1stddev
+// 95% chance that the number is within 2stddev
+// 98% chance that the number is within 3stddev...etc
 var/gaussian_next
 /proc/gaussian(mean, stddev)
 	var/R1;var/R2;var/working

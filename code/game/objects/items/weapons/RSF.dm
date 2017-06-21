@@ -72,7 +72,7 @@ RSF
 			new /obj/item/weapon/spacecash/c10( A.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
-				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!
+				engy.cell.charge -= 200 // once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!
 			else
 				matter--
 				to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
@@ -86,7 +86,7 @@ RSF
 			new /obj/item/weapon/spacecash/c10( A )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
-				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!
+				engy.cell.charge -= 200 // once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!
 			else
 				matter--
 				to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")

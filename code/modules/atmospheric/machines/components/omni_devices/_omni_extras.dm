@@ -1,6 +1,6 @@
-//--------------------------------------------
+// --------------------------------------------
 // Omni device port types
-//--------------------------------------------
+// --------------------------------------------
 #define ATM_NONE	0
 #define ATM_INPUT	1
 #define ATM_OUTPUT	2
@@ -8,12 +8,12 @@
 #define ATM_O2		3
 #define ATM_N2		4
 #define ATM_CO2		5
-#define ATM_P		6	//Phoron
+#define ATM_P		6	// Phoron
 #define ATM_N2O		7
 
-//--------------------------------------------
+// --------------------------------------------
 // Omni device cached icon list
-//--------------------------------------------
+// --------------------------------------------
 var/global/list/omni_icons[]
 
 /proc/gen_omni_icons()
@@ -38,12 +38,12 @@ var/global/list/omni_icons[]
 			omni_icons[state] = I
 
 
-//--------------------------------------------
+// --------------------------------------------
 // Omni port datum
-//
+// 
 // Used by omni devices to manage connections
 //  to other atmospheric objects.
-//--------------------------------------------
+// --------------------------------------------
 /datum/omni_port
 	var/obj/machinery/atmospherics/omni/master
 	var/dir
@@ -79,9 +79,9 @@ var/global/list/omni_icons[]
 		master.disconnect(node)
 
 
-//--------------------------------------------
+// --------------------------------------------
 // Need to find somewhere else for these
-//--------------------------------------------
+// --------------------------------------------
 
 #define PIPE_COLOR_RED		"#ff0000"
 #define PIPE_COLOR_BLUE		"#0000ff"
@@ -93,7 +93,7 @@ var/global/list/omni_icons[]
 var/global/list/pipe_colors = list("grey" = null, "red" = PIPE_COLOR_RED, "blue" = PIPE_COLOR_BLUE, "cyan" = PIPE_COLOR_CYAN, "green" = PIPE_COLOR_GREEN, "yellow" = PIPE_COLOR_YELLOW, "purple" = PIPE_COLOR_PURPLE)
 
 
-//returns a text string based on the direction flag input
+// returns a text string based on the direction flag input
 // if capitalize is true, it will return the string capitalized
 // otherwise it will return the direction string in lower case
 /proc/dir_name(dir, capitalize = 0)
@@ -113,7 +113,7 @@ var/global/list/pipe_colors = list("grey" = null, "red" = PIPE_COLOR_RED, "blue"
 
 	return string
 
-//returns a direction flag based on the string passed to it
+// returns a direction flag based on the string passed to it
 // case insensitive
 /proc/dir_flag(dir)
 	dir = lowertext(dir)

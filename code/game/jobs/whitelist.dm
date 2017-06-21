@@ -25,7 +25,7 @@ var/list/whitelist = list()
 	else
 		to_chat(src, "<font color='red'>Error: get_whitelist(): File not found/Invalid path([path]).</font>")
 		return
-	feedback_add_details("admin_verb","GWL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","GWL") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 

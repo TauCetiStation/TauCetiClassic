@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 
 /*
@@ -125,7 +125,7 @@
 		dat += "<br>Prefabrication: [autolinkers.len ? "TRUE" : "FALSE"]"
 		if(hide) dat += "<br>Shadow Link: ACTIVE</a>"
 
-		//Show additional options for certain machines.
+		// Show additional options for certain machines.
 		dat += Options_Menu()
 
 		dat += "<br>Linked Network Entities: <ol>"
@@ -167,7 +167,7 @@
 
 
 // Off-Site Relays
-//
+// 
 // You are able to send/receive signals from the station's z level (changeable in the STATION_Z #define) if
 // the relay is on the telecomm satellite (changable in the TELECOMM_Z #define)
 
@@ -245,8 +245,8 @@
 		broadcasting = !broadcasting
 		temp = "<font color = #666633>-% Broadcasting mode changed. %-</font color>"
 	if(href_list["change_listening"])
-		//Lock to the station OR lock to the current position!
-		//You need at least two receivers and two broadcasters for this to work, this includes the machine.
+		// Lock to the station OR lock to the current position!
+		// You need at least two receivers and two broadcasters for this to work, this includes the machine.
 		var/result = toggle_level()
 		if(result)
 			temp = "<font color = #666633>-% [src]'s signal has been successfully changed.</font color>"

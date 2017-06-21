@@ -1,6 +1,6 @@
-//see also config.serverwhitelist
+// see also config.serverwhitelist
 
-//return 1, if player in server db, or 0
+// return 1, if player in server db, or 0
 proc/check_if_a_new_player(key)
 	if(!establish_db_connection())
 		world.log << "Ban database connection failure. Key [key] not checked"

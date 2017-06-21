@@ -116,7 +116,7 @@ var/tick_multiplier = 2
 					if(src:wear_suit:magpulse)
 						return
 		to_chat(src, "<span class='red'>You are sucked away by airflow!</span>")
-	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
+	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) // It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
 		return
@@ -190,7 +190,7 @@ var/tick_multiplier = 2
 						return
 		to_chat(src, "<span class='red'>You are pushed away by airflow!</span>")
 		last_airflow = world.time
-	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
+	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) // It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
 		return
@@ -244,7 +244,7 @@ var/tick_multiplier = 2
 	for(var/mob/M in hearers(src))
 		M.show_message("<span class='danger'>\The [src] slams into \a [A]!</span>",1,"<span class='red'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
-	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
+	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) // Heheheh
 	. = ..()
 
 /obj/airflow_hit(atom/A)

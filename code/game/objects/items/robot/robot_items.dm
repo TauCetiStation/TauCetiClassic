@@ -1,9 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /**********************************************************************
 						Cyborg Spec Items
 ***********************************************************************/
-//Might want to move this into several files later but for now it works here
+// Might want to move this into several files later but for now it works here
 /obj/item/borg/stun
 	name = "electrified arm"
 	icon = 'icons/obj/decals.dmi'

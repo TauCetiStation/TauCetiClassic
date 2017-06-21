@@ -1,19 +1,19 @@
-/////////////////////////// DNA DATUM
+////////////////////////// / DNA DATUM
 /datum/dna
 	var/unique_enzymes = null
 	var/struc_enzymes = null
 	var/uni_identity = null
 	var/b_type = "A+"
-	var/mutantrace = null  //The type of mutant race the player is if applicable (i.e. potato-man)
-	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
+	var/mutantrace = null  // The type of mutant race the player is if applicable (i.e. potato-man)
+	var/real_name // Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 
 /datum/dna/proc/check_integrity(mob/living/carbon/human/character)
 	if(character)
 		if(length(uni_identity) != 39)
-			//Lazy.
+			// Lazy.
 			var/temp
 
-			//Hair
+			// Hair
 			var/hair	= 0
 			if(!character.h_style)
 				character.h_style = "Skinhead"
@@ -23,7 +23,7 @@
 			if(index)
 				hair = index * hrange - rand(1,hrange-1)
 
-			//Facial Hair
+			// Facial Hair
 			var/beard	= 0
 			if(!character.f_style)
 				character.f_style = "Shaved"
@@ -71,7 +71,7 @@
 /datum/dna/proc/ready_dna(mob/living/carbon/human/character)
 	var/temp
 
-	//Hair
+	// Hair
 	var/hair	= 0
 	if(!character.h_style)
 		character.h_style = "Bald"
@@ -81,7 +81,7 @@
 	if(index)
 		hair = index * hrange - rand(1,hrange-1)
 
-	//Facial Hair
+	// Facial Hair
 	var/beard	= 0
 	if(!character.f_style)
 		character.f_style = "Shaved"
@@ -125,4 +125,4 @@
 	unique_enzymes = md5(character.real_name)
 	reg_dna[unique_enzymes] = character.real_name
 
-/////////////////////////// DNA DATUM
+////////////////////////// / DNA DATUM

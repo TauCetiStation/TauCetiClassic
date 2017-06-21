@@ -5,8 +5,8 @@
 // Automatically recharges air (unless off), will flush when ready if pre-set
 // Can hold items and human size things, no other draggables
 // Toilets are a type of disposal bin for small objects only and work on magic. By magic, I mean torque rotation
-#define SEND_PRESSURE (need_env_pressure ? (700 + ONE_ATMOSPHERE) : 0) //kPa - assume the inside of a dispoal pipe is 1 atm, so that needs to be added.
-#define PRESSURE_TANK_VOLUME 150	//L
+#define SEND_PRESSURE (need_env_pressure ? (700 + ONE_ATMOSPHERE) : 0) // kPa - assume the inside of a dispoal pipe is 1 atm, so that needs to be added.
+#define PRESSURE_TANK_VOLUME 150	// L
 
 /obj/machinery/disposal
 	name = "disposal unit"
@@ -20,8 +20,8 @@
 	var/flush = 0	// true if flush handle is pulled
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
 	var/flushing = 0	// true if flushing in progress
-	var/flush_every_ticks = 30 //Every 30 ticks it will look whether it is ready to flush
-	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
+	var/flush_every_ticks = 30 // Every 30 ticks it will look whether it is ready to flush
+	var/flush_count = 0 // this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
 	var/last_sound = 0
 	var/need_env_pressure = 1
 	active_power_usage = 600
@@ -140,13 +140,13 @@
 	update()
 
 // mouse drop another mob or self
-//
+// 
 /obj/machinery/disposal/proc/MouseDrop_T2(mob/target, mob/user)
 	if(user.stat || !user.canmove || !istype(target))
 		return
 	if(target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1)
 		return
-	//animals cannot put mobs other than themselves into disposal
+	// animals cannot put mobs other than themselves into disposal
 	if(isanimal(user) && target != user)
 		return
 
@@ -188,7 +188,7 @@
 	update()
 	return
 
-//tc, temporary hack
+// tc, temporary hack
 /obj/machinery/disposal/MouseDrop_T(atom/A, mob/user)
 	if(ismob(A))
 		MouseDrop_T2(A, user)
@@ -214,8 +214,8 @@
 		to_chat(user, "<span class='notice'>You stuff [target.name] into the [src]!</span>")
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [target.name] () in disposals.</font>")
-		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
-		//msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		// target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
+		// msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 		target.loc = src
 
@@ -385,7 +385,7 @@
 	if(stat & BROKEN)			// nothing can happen if broken
 		return
 
-	if(!air_contents) // Potentially causes a runtime otherwise (if this is really shitty, blame pete //Donkie)
+	if(!air_contents) // Potentially causes a runtime otherwise (if this is really shitty, blame pete // Donkie)
 		return
 
 	flush_count++
@@ -421,7 +421,7 @@
 		if(env.temperature > 0)
 			var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
 
-			//Actually transfer the gas
+			// Actually transfer the gas
 			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 			air_contents.merge(removed)
 
@@ -441,7 +441,7 @@
 	var/wrapcheck = 0
 	var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 												// travels through the pipes.
-	//Hacky test to get drones to mail themselves through disposals.
+	// Hacky test to get drones to mail themselves through disposals.
 	for(var/mob/living/silicon/robot/drone/D in src)
 		wrapcheck = 1
 
@@ -491,7 +491,7 @@
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 			AM.forceMove(src.loc)
 			AM.pipe_eject(0)
-			if(!isdrone(AM)) //Poor drones kept smashing windows and taking system damage being fired out of disposals. ~Z
+			if(!isdrone(AM)) // Poor drones kept smashing windows and taking system damage being fired out of disposals. ~Z
 				AM.throw_at(target, 5, 2)
 
 		H.vent_gas(loc)
@@ -523,14 +523,14 @@
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
-	var/count = 2048	//*** can travel 2048 steps before going inactive (in case of loops)
+	var/count = 2048	// *** can travel 2048 steps before going inactive (in case of loops)
 	var/has_fat_guy = 0	// true if contains a fat person
 	var/destinationTag = "" // changes if contains a delivery container
-	var/tomail = 0 //changes if contains wrapped package
-	var/hasmob = 0 //If it contains a mob
+	var/tomail = 0 // changes if contains wrapped package
+	var/hasmob = 0 // If it contains a mob
 	var/has_bodybag = 0 // if it contains a bodybag
 
-	var/partialTag = "" //set by a partial tagger the first time round, then put in destinationTag if it goes through again.
+	var/partialTag = "" // set by a partial tagger the first time round, then put in destinationTag if it goes through again.
 
 /obj/structure/disposalholder/Destroy()
 	qdel(gas)
@@ -541,8 +541,8 @@
 /obj/structure/disposalholder/proc/init(obj/machinery/disposal/D, datum/gas_mixture/flush_gas)
 	gas = flush_gas	// transfer gas resv. into holder object -- let's be explicit about the data this proc consumes, please.
 
-	//Check for any living mobs trigger hasmob.
-	//hasmob effects whether the package goes to cargo or its tagged destination.
+	// Check for any living mobs trigger hasmob.
+	// hasmob effects whether the package goes to cargo or its tagged destination.
 	for(var/mob/living/M in D)
 		if(M && M.stat != DEAD && !istype(M,/mob/living/silicon/robot/drone))
 			hasmob = 1
@@ -561,7 +561,7 @@
 		if(istype(AM, /obj/item/smallDelivery) && !hasmob)
 			var/obj/item/smallDelivery/T = AM
 			src.destinationTag = T.sortTag
-		//Drones can mail themselves through maint.
+		// Drones can mail themselves through maint.
 		if(istype(AM, /mob/living/silicon/robot/drone))
 			var/mob/living/silicon/robot/drone/drone = AM
 			src.destinationTag = drone.mail_destination
@@ -590,8 +590,8 @@
 
 		if(hasmob && prob(3))
 			for(var/mob/living/H in src)
-				if(!istype(H,/mob/living/silicon/robot/drone)) //Drones use the mailing code to move through the disposal system,
-					H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
+				if(!istype(H,/mob/living/silicon/robot/drone)) // Drones use the mailing code to move through the disposal system,
+					H.take_overall_damage(20, 0, "Blunt Trauma")// horribly maim any living creature jumping down disposals.  c'est la vie
 
 		if(has_bodybag && prob(3))
 			for(var/obj/structure/closet/body_bag/B in src)
@@ -616,7 +616,7 @@
 		if(!curr)
 			last.expel(src, loc, dir)
 
-		//
+		// 
 		if(!(count--))
 			active = 0
 	return
@@ -742,7 +742,7 @@
 
 // transfer the holder through this pipe segment
 // overriden for special behaviour
-//
+// 
 /obj/structure/disposalpipe/proc/transfer(obj/structure/disposalholder/H)
 	var/nextdir = nextdir(H.dir)
 	H.dir = nextdir
@@ -788,7 +788,7 @@
 
 // expel the held objects into a turf
 // called when there is a break in the pipe
-//
+// 
 
 /obj/structure/disposalpipe/proc/expel(obj/structure/disposalholder/H, turf/T, direction)
 	if(!istype(H))
@@ -802,9 +802,9 @@
 			AM.pipe_eject(0)
 		qdel(H)
 		return
-	if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
+	if(T.intact && istype(T,/turf/simulated/floor)) // intact floor, pop the tile
 		var/turf/simulated/floor/F = T
-		//F.health	= 100
+		// F.health	= 100
 		F.burnt	= 1
 		F.intact	= 0
 		F.levelupdate()
@@ -901,8 +901,8 @@
 		broken(1)
 	return
 
-//attack by item
-//weldingtool: unfasten and convert to obj/disposalconstruct
+// attack by item
+// weldingtool: unfasten and convert to obj/disposalconstruct
 
 /obj/structure/disposalpipe/attackby(obj/item/I, mob/user)
 
@@ -961,7 +961,7 @@
 	qdel(src)
 
 // *** TEST verb
-//client/verb/dispstop()
+// client/verb/dispstop()
 //	for(var/obj/structure/disposalholder/H in world)
 //		H.active = 0
 
@@ -979,7 +979,7 @@
 	update()
 	return
 
-//a three-way junction with dir being the dominant direction
+// a three-way junction with dir being the dominant direction
 /obj/structure/disposalpipe/junction
 	icon_state = "pipe-j1"
 
@@ -1071,12 +1071,12 @@
 			H.settag(sort_tag)
 	return ..()
 
-/obj/structure/disposalpipe/tagger/partial //needs two passes to tag
+/obj/structure/disposalpipe/tagger/partial // needs two passes to tag
 	name = "partial package tagger"
 	icon_state = "pipe-tagger-partial"
 	partial = 1
 
-//a three-way junction that sorts objects
+// a three-way junction that sorts objects
 /obj/structure/disposalpipe/sortjunction
 	name = "sorting junction"
 	icon_state = "pipe-j1s"
@@ -1169,7 +1169,7 @@
 
 	return P
 
-//a three-way junction that filters all wrapped and tagged items
+// a three-way junction that filters all wrapped and tagged items
 /obj/structure/disposalpipe/sortjunction/wildcard
 	name = "wildcard sorting junction"
 	desc = "An underfloor disposal pipe which filters all wrapped and tagged items."
@@ -1177,7 +1177,7 @@
 /obj/structure/disposalpipe/sortjunction/wildcard/divert_check(checkTag)
 	return checkTag != ""
 
-//junction that filters all untagged items
+// junction that filters all untagged items
 /obj/structure/disposalpipe/sortjunction/untagged
 	name = "untagged sorting junction"
 	desc = "An underfloor disposal pipe which filters all untagged items."
@@ -1185,7 +1185,7 @@
 /obj/structure/disposalpipe/sortjunction/untagged/divert_check(checkTag)
 	return checkTag == ""
 
-/obj/structure/disposalpipe/sortjunction/flipped //for easier and cleaner mapping
+/obj/structure/disposalpipe/sortjunction/flipped // for easier and cleaner mapping
 	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/wildcard/flipped
@@ -1194,7 +1194,7 @@
 /obj/structure/disposalpipe/sortjunction/untagged/flipped
 	icon_state = "pipe-j2s"
 
-//a trunk joining to a disposal bin or outlet on the same turf
+// a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
@@ -1226,20 +1226,20 @@
 	// Override attackby so we disallow trunkremoval when somethings ontop
 /obj/structure/disposalpipe/trunk/attackby(obj/item/I, mob/user)
 
-	//Disposal bins or chutes
+	// Disposal bins or chutes
 	/*
 	These shouldn't be required
 	var/obj/machinery/disposal/D = locate() in src.loc
 	if(D && D.anchored)
 		return
 
-	//Disposal outlet
+	// Disposal outlet
 	var/obj/structure/disposaloutlet/O = locate() in src.loc
 	if(O && O.anchored)
 		return
 	*/
 
-	//Disposal constructors
+	// Disposal constructors
 	var/obj/structure/disposalconstruct/C = locate() in src.loc
 	if(C && C.anchored)
 		return
@@ -1345,14 +1345,14 @@
 
 	flick("outlet-open", src)
 	playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
-	sleep(20)	//wait until correct animation frame
+	sleep(20)	// wait until correct animation frame
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 
 	if(H)
 		for(var/atom/movable/AM in H)
 			AM.forceMove(src.loc)
 			AM.pipe_eject(dir)
-			if(!isdrone(AM)) //Drones keep smashing windows from being fired out of chutes. Bad for the station. ~Z
+			if(!isdrone(AM)) // Drones keep smashing windows from being fired out of chutes. Bad for the station. ~Z
 				AM.throw_at(target, 3, 2)
 		H.vent_gas(src.loc)
 		qdel(H)

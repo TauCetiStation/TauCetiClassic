@@ -17,7 +17,7 @@ var/datum/subsystem/parallax/SSparallax
 	if (!resumed)
 		src.currentrun = clients.Copy()
 
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	while(length(currentrun))

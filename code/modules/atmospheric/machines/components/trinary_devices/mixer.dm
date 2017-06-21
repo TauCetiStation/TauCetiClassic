@@ -11,7 +11,7 @@
 	var/node1_concentration = 0.5
 	var/node2_concentration = 0.5
 
-	//node 3 is the outlet, nodes 1 & 2 are intakes
+	// node 3 is the outlet, nodes 1 & 2 are intakes
 
 /obj/machinery/atmospherics/trinary/mixer/update_icon()
 	if(stat & NOPOWER)
@@ -42,10 +42,10 @@
 	var/output_starting_pressure = air3.return_pressure()
 
 	if(output_starting_pressure >= target_pressure)
-		//No need to mix if target is already full!
+		// No need to mix if target is already full!
 		return 1
 
-	//Calculate necessary moles to transfer using PV=nRT
+	// Calculate necessary moles to transfer using PV=nRT
 
 	var/pressure_delta = target_pressure - output_starting_pressure
 	var/transfer_moles1 = 0
@@ -67,7 +67,7 @@
 		transfer_moles1 *= ratio
 		transfer_moles2 *= ratio
 
-	//Actually transfer the gas
+	// Actually transfer the gas
 
 	if(transfer_moles1 > 0)
 		var/datum/gas_mixture/removed1 = air1.remove(transfer_moles1)
@@ -169,7 +169,7 @@
 	dir = SOUTH
 	initialize_directions = SOUTH|EAST|WEST
 
-	//node 3 is the outlet, nodes 1 & 2 are intakes
+	// node 3 is the outlet, nodes 1 & 2 are intakes
 
 /obj/machinery/atmospherics/trinary/mixer/t_mixer/New()
 	..()
@@ -214,7 +214,7 @@
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|EAST
 
-	//node 3 is the outlet, nodes 1 & 2 are intakes
+	// node 3 is the outlet, nodes 1 & 2 are intakes
 
 obj/machinery/atmospherics/trinary/mixer/m_mixer/New()
 	..()

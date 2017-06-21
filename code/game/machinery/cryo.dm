@@ -44,7 +44,7 @@
 	T.contents += contents
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
-		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+		B.loc = get_step(loc, SOUTH) // Beaker is carefully ejected from the wreckage of the cryotube
 	return ..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
@@ -101,12 +101,12 @@
 	set desc = "Begin the release sequence inside the cryo tube."
 	set category = "Object"
 	set src in oview(1)
-	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
-		if(usr.stat == DEAD)	//and he's not dead....
+	if(usr == occupant || contents.Find(usr))	// If the user is inside the tube...
+		if(usr.stat == DEAD)	// and he's not dead....
 			return
 		to_chat(usr, "<span class='notice'>Release sequence activated. This will take about a minute.</span>")
 		sleep(600)
-		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
+		if(!src || !usr || (!occupant && !contents.Find(usr)))	// Check if someone's released/replaced/bombed him already
 			return
 		open_machine()
 		add_fingerprint(usr)
@@ -326,7 +326,7 @@
 				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 			else
 				occupant.adjustOxyLoss(-1)
-			//severe damage should heal waaay slower without proper chemicals
+			// severe damage should heal waaay slower without proper chemicals
 			if(occupant.bodytemperature < 225)
 				if (occupant.getToxLoss())
 					occupant.adjustToxLoss(max(-efficiency, (-20*(efficiency ** 2)) / occupant.getToxLoss()))
@@ -354,4 +354,4 @@
 		return
 
 /obj/machinery/atmospherics/unary/cryo_cell/can_crawl_through()
-	return //can't ventcrawl in or out of cryo.
+	return // can't ventcrawl in or out of cryo.

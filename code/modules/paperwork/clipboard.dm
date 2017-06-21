@@ -7,14 +7,14 @@
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 10
-	var/obj/item/weapon/pen/haspen		//The stored pen.
-	var/obj/item/weapon/toppaper	//The topmost piece of paper.
+	var/obj/item/weapon/pen/haspen		// The stored pen.
+	var/obj/item/weapon/toppaper	// The topmost piece of paper.
 	slot_flags = SLOT_BELT
 
 /obj/item/weapon/clipboard/New()
 	update_icon()
 
-/obj/item/weapon/clipboard/MouseDrop(obj/over_object as obj) //Quick clipboard fix. -Agouri
+/obj/item/weapon/clipboard/MouseDrop(obj/over_object as obj) // Quick clipboard fix. -Agouri
 	if(ishuman(usr))
 		var/mob/M = usr
 		if(!(istype(over_object, /obj/screen) ))
@@ -63,7 +63,7 @@
 	else
 		dat += "<A href='?src=\ref[src];addpen=1'>Add Pen</A><BR><HR>"
 
-	//The topmost paper. I don't think there's any way to organise contents in byond, so this is what we're stuck with.	-Pete
+	// The topmost paper. I don't think there's any way to organise contents in byond, so this is what we're stuck with.	-Pete
 	if(toppaper)
 		var/obj/item/weapon/paper/P = toppaper
 		dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[sanitize_popup(P.name)]</A><BR><HR>"
@@ -137,7 +137,7 @@
 				toppaper = P
 				to_chat(usr, "<span class='notice'>You move [P.name] to the top.</span>")
 
-		//Update everything
+		// Update everything
 		attack_self(usr)
 		update_icon()
 	return

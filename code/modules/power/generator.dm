@@ -7,7 +7,7 @@
 	anchored = 0
 
 	use_power = 1
-	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
+	idle_power_usage = 100 // Watts, I hope.  Just enough to do the computer and display things.
 
 	var/obj/machinery/atmospherics/binary/circulator/circ1
 	var/obj/machinery/atmospherics/binary/circulator/circ2
@@ -19,11 +19,11 @@
 	..()
 	addtimer(CALLBACK(src, .proc/reconnect), 1)
 
-//generators connect in dir and reverse_dir(dir) directions
-//mnemonic to determine circulator/generator directions: the cirulators orbit clockwise around the generator
-//so a circulator to the NORTH of the generator connects first to the EAST, then to the WEST
-//and a circulator to the WEST of the generator connects first to the NORTH, then to the SOUTH
-//note that the circulator's outlet dir is it's always facing dir, and it's inlet is always the reverse
+// generators connect in dir and reverse_dir(dir) directions
+// mnemonic to determine circulator/generator directions: the cirulators orbit clockwise around the generator
+// so a circulator to the NORTH of the generator connects first to the EAST, then to the WEST
+// and a circulator to the WEST of the generator connects first to the NORTH, then to the SOUTH
+// note that the circulator's outlet dir is it's always facing dir, and it's inlet is always the reverse
 /obj/machinery/power/generator/proc/reconnect()
 	circ1 = null
 	circ2 = null
@@ -83,11 +83,11 @@
 				air2.temperature = air2.temperature + heat/air2_heat_capacity
 				air1.temperature = air1.temperature - energy_transfer/air1_heat_capacity
 
-			//Transfer the air
+			// Transfer the air
 			circ1.air2.merge(air1)
 			circ2.air2.merge(air2)
 
-			//Update the gas networks
+			// Update the gas networks
 			if(circ1.network2)
 				circ1.network2.update = 1
 			if(circ2.network2)

@@ -1,4 +1,4 @@
-//Common
+// Common
 /obj/machinery/abductor
 	var/team = 0
 
@@ -17,7 +17,7 @@
 		return H.scientist
 	return 0
 
-//*************-Console-*************//
+// *************-Console-*************// 
 
 /obj/machinery/abductor/console
 	name = "abductor console"

@@ -7,7 +7,7 @@
 	force = 10
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=8;materials=2;syndicate=8"
-	recoil = 3 //extra kickback
+	recoil = 3 // extra kickback
 	mag_type = /obj/item/ammo_box/magazine/internal/heavyrifle
 	fire_sound = 'sound/weapons/heavysniper_shot.ogg'
 	var/bolt_open = 0
@@ -34,9 +34,9 @@
 	if(num_loaded)
 		playsound(src.loc, 'sound/weapons/heavybolt_in.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
-		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
+		var/obj/item/ammo_casing/AC = magazine.get_round() // load next casing.
 		chambered = AC
-		update_icon()	//I.E. fix the desc
+		update_icon()	// I.E. fix the desc
 		A.update_icon()
 
 /obj/item/weapon/gun/projectile/heavyrifle/attack_self(mob/user)
@@ -47,7 +47,7 @@
 			spawn(3)
 				playsound(src.loc, 'sound/weapons/shell_drop.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You work the bolt open, ejecting [chambered]!</span>")
-			chambered.loc = get_turf(src)//Eject casing
+			chambered.loc = get_turf(src)// Eject casing
 			chambered.SpinAnimation(5, 1)
 			chambered = null
 		else

@@ -24,9 +24,9 @@
 	desc = "A small gas-powered dartgun, capable of delivering chemical cocktails swiftly across short distances."
 	icon_state = "dartgun-empty"
 
-	var/list/beakers = list() //All containers inside the gun.
-	var/list/mixing = list() //Containers being used for mixing.
-	var/obj/item/weapon/dart_cartridge/cartridge = null //Container of darts.
+	var/list/beakers = list() // All containers inside the gun.
+	var/list/mixing = list() // Containers being used for mixing.
+	var/obj/item/weapon/dart_cartridge/cartridge = null // Container of darts.
 	var/max_beakers = 3
 	var/dart_reagent_amount = 15
 	var/container_type = /obj/item/weapon/reagent_containers/glass/beaker
@@ -166,7 +166,7 @@
 				for(var/mob/living/carbon/M in D.loc)
 					if(!istype(M,/mob/living/carbon)) continue
 					if(M == user) continue
-					//Syringe gun attack logging by Yvarov
+					// Syringe gun attack logging by Yvarov
 					var/R
 					if(D.reagents)
 						for(var/datum/reagent/A in D.reagents.reagent_list)

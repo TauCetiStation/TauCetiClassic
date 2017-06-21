@@ -80,7 +80,7 @@
 						src.l_hacking = 0
 				else	src.l_hacking = 0
 				return
-			//At this point you have exhausted all the special things to do when locked
+			// At this point you have exhausted all the special things to do when locked
 			// ... but it's still locked.
 			return
 
@@ -195,7 +195,7 @@
 		M.update_inv_l_hand()
 		M.update_inv_r_hand()
 
-//Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
+// Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/weapon/storage/secure/briefcase/syndie
 	force = 15.0
 
@@ -233,4 +233,4 @@
 
 /obj/item/weapon/storage/secure/safe/HoS/New()
 	..()
-	//new /obj/item/weapon/storage/lockbox/clusterbang(src) This item is currently broken... and probably shouldnt exist to begin with (even though it's cool)
+	// new /obj/item/weapon/storage/lockbox/clusterbang(src) This item is currently broken... and probably shouldnt exist to begin with (even though it's cool)

@@ -16,7 +16,7 @@
 			for(var/direction in cardinal)
 				if(istype(get_step(src,direction),/turf/simulated/floor))
 					var/turf/simulated/floor/FF = get_step(src,direction)
-					FF.update_icon() //so siding get updated properly
+					FF.update_icon() // so siding get updated properly
 
 turf/simulated/floor/holofloor/update_icon()
 	if(icon_state in icons_to_ignore_at_floor_init)
@@ -54,7 +54,7 @@ turf/simulated/floor/holofloor/update_icon()
 	density = 1
 	anchored = 1.0
 	layer = 2.8
-	throwpass = 1	//You can throw objects over this, despite it's density.
+	throwpass = 1	// You can throw objects over this, despite it's density.
 
 /obj/structure/table/holotable/attack_hand(mob/user)
 	return // HOLOTABLE DOES NOT GIVE A FUCK
@@ -92,13 +92,13 @@ turf/simulated/floor/holofloor/update_icon()
 	item_state = "boxing"
 
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
-	if(!istype(W)) return//I really wish I did not need this
+	if(!istype(W)) return// I really wish I did not need this
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(istype(G.affecting,/mob/living))
 			var/mob/living/M = G.affecting
 			var/state = G.state
-			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
+			qdel(W)	// gotta delete it here because if window breaks, it won't get deleted
 			switch (state)
 				if(1)
 					M.visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
@@ -245,7 +245,7 @@ obj/structure/stool/bed/chair/holochair
 	add_fingerprint(user)
 	return
 
-//BASKETBALL OBJECTS
+// BASKETBALL OBJECTS
 
 /obj/item/weapon/beach_ball/holoball
 	icon = 'icons/obj/basketball.dmi'
@@ -253,7 +253,7 @@ obj/structure/stool/bed/chair/holochair
 	name = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
-	w_class = 4 //Stops people from hiding it in their bags/pockets
+	w_class = 4 // Stops people from hiding it in their bags/pockets
 
 /obj/structure/holohoop
 	name = "basketball hoop"
@@ -368,7 +368,7 @@ obj/structure/stool/bed/chair/holochair
 	for(var/mob/M in currentarea)
 		to_chat(M, "FIGHT!")
 
-//Holorack
+// Holorack
 /obj/structure/rack/holorack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
@@ -383,7 +383,7 @@ obj/structure/stool/bed/chair/holochair
 		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 
-//Holocarp
+// Holocarp
 
 /mob/living/simple_animal/hostile/carp/holodeck
 	icon = 'icons/mob/AI.dmi'
@@ -397,24 +397,24 @@ obj/structure/stool/bed/chair/holochair
 
 /mob/living/simple_animal/hostile/carp/holodeck/New()
 	..()
-	set_light(2) //hologram lighting
+	set_light(2) // hologram lighting
 
 /mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)
 	if (safe)
 		faction = "neutral"
 		melee_damage_lower = 0
 		melee_damage_upper = 0
-		//wall_smash = 0
+		// wall_smash = 0
 		destroy_surroundings = 0
 	else
 		faction = "carp"
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
-		//wall_smash = initial(wall_smash)
+		// wall_smash = initial(wall_smash)
 		destroy_surroundings = initial(destroy_surroundings)
 
 /mob/living/simple_animal/hostile/carp/holodeck/gib()
-	derez() //holograms can't gib
+	derez() // holograms can't gib
 
 /mob/living/simple_animal/hostile/carp/holodeck/death()
 	..()

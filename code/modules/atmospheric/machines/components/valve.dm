@@ -271,7 +271,7 @@
 		return
 	..()
 
-//Radio remote control
+// Radio remote control
 
 /obj/machinery/atmospherics/valve/digital/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)

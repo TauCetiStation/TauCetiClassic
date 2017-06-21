@@ -18,7 +18,7 @@
 	density = 1
 	anchored = 1.0
 	layer = 2.8
-	throwpass = 1	//You can throw objects over this, despite it's density.")
+	throwpass = 1	// You can throw objects over this, despite it's density.")
 	climbable = 1
 
 	var/parts = /obj/item/weapon/table_parts
@@ -54,7 +54,7 @@
 	qdel(src)
 
 /obj/structure/table/update_icon()
-	spawn(2) //So it properly updates when deleting
+	spawn(2) // So it properly updates when deleting
 
 		if(flipped)
 			var/type = 0
@@ -84,10 +84,10 @@
 		for(var/direction in list(1,2,4,8,5,6,9,10))
 			var/skip_sum = 0
 			for(var/obj/structure/window/W in src.loc)
-				if(W.dir == direction) //So smooth tables don't go smooth through windows
+				if(W.dir == direction) // So smooth tables don't go smooth through windows
 					skip_sum = 1
 					continue
-			var/inv_direction //inverse direction
+			var/inv_direction // inverse direction
 			switch(direction)
 				if(1)
 					inv_direction = 2
@@ -106,45 +106,45 @@
 				if(10)
 					inv_direction = 5
 			for(var/obj/structure/window/W in get_step(src,direction))
-				if(W.dir == inv_direction) //So smooth tables don't go smooth through windows when the window is on the other table's tile
+				if(W.dir == inv_direction) // So smooth tables don't go smooth through windows when the window is on the other table's tile
 					skip_sum = 1
 					continue
-			if(!skip_sum) //means there is a window between the two tiles in this direction
+			if(!skip_sum) // means there is a window between the two tiles in this direction
 				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 				if(T && !T.flipped)
 					if(direction <5)
 						dir_sum += direction
 					else
-						if(direction == 5)	//This permits the use of all table directions. (Set up so clockwise around the central table is a higher value, from north)
+						if(direction == 5)	// This permits the use of all table directions. (Set up so clockwise around the central table is a higher value, from north)
 							dir_sum += 16
 						if(direction == 6)
 							dir_sum += 32
-						if(direction == 8)	//Aherp and Aderp.  Jezes I am stupid.  -- SkyMarshal
+						if(direction == 8)	// Aherp and Aderp.  Jezes I am stupid.  -- SkyMarshal
 							dir_sum += 8
 						if(direction == 10)
 							dir_sum += 64
 						if(direction == 9)
 							dir_sum += 128
 
-		var/table_type = 0 //stand_alone table
+		var/table_type = 0 // stand_alone table
 		if(dir_sum%16 in cardinal)
-			table_type = 1 //endtable
+			table_type = 1 // endtable
 			dir_sum %= 16
 		if(dir_sum%16 in list(3,12))
-			table_type = 2 //1 tile thick, streight table
-			if(dir_sum%16 == 3) //3 doesn't exist as a dir
+			table_type = 2 // 1 tile thick, streight table
+			if(dir_sum%16 == 3) // 3 doesn't exist as a dir
 				dir_sum = 2
-			if(dir_sum%16 == 12) //12 doesn't exist as a dir.
+			if(dir_sum%16 == 12) // 12 doesn't exist as a dir.
 				dir_sum = 4
 		if(dir_sum%16 in list(5,6,9,10))
 			if(locate(/obj/structure/table,get_step(src.loc,dir_sum%16)))
-				table_type = 3 //full table (not the 1 tile thick one, but one of the 'tabledir' tables)
+				table_type = 3 // full table (not the 1 tile thick one, but one of the 'tabledir' tables)
 			else
-				table_type = 2 //1 tile thick, corner table (treated the same as streight tables in code later on)
+				table_type = 2 // 1 tile thick, corner table (treated the same as streight tables in code later on)
 			dir_sum %= 16
-		if(dir_sum%16 in list(13,14,7,11)) //Three-way intersection
-			table_type = 5 //full table as three-way intersections are not sprited, would require 64 sprites to handle all combinations.  TOO BAD -- SkyMarshal
-			switch(dir_sum%16)	//Begin computation of the special type tables.  --SkyMarshal
+		if(dir_sum%16 in list(13,14,7,11)) // Three-way intersection
+			table_type = 5 // full table as three-way intersections are not sprited, would require 64 sprites to handle all combinations.  TOO BAD -- SkyMarshal
+			switch(dir_sum%16)	// Begin computation of the special type tables.  --SkyMarshal
 				if(7)
 					if(dir_sum == 23)
 						table_type = 6
@@ -192,9 +192,9 @@
 						dir_sum = 2
 						table_type = 3
 					else
-						dir_sum = 2 //These translate the dir_sum to the correct dirs from the 'tabledir' icon_state.
+						dir_sum = 2 // These translate the dir_sum to the correct dirs from the 'tabledir' icon_state.
 		if(dir_sum%16 == 15)
-			table_type = 4 //4-way intersection, the 'middle' table sprites will be used.
+			table_type = 4 // 4-way intersection, the 'middle' table sprites will be used.
 
 		switch(table_type)
 			if(0)
@@ -293,22 +293,22 @@
 			return 1
 	return 0
 
-//checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
+// checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = flipped ? get_turf(src) : get_step(loc, get_dir(from, loc))
-	if (get_dist(P.starting, loc) <= 1) //Tables won't help you if people are THIS close
+	if (get_dist(P.starting, loc) <= 1) // Tables won't help you if people are THIS close
 		return 1
 	if (get_turf(P.original) == cover)
 		var/chance = 20
 		if (ismob(P.original))
 			var/mob/M = P.original
 			if (M.lying)
-				chance += 20				//Lying down lets you catch less bullets
+				chance += 20				// Lying down lets you catch less bullets
 		if(flipped)
-			if(get_dir(loc, from) == dir)	//Flipped tables catch mroe bullets
+			if(get_dir(loc, from) == dir)	// Flipped tables catch mroe bullets
 				chance += 20
 			else
-				return 1					//But only from one side
+				return 1					// But only from one side
 		if(prob(chance))
 			health -= P.damage/2
 			if (health > 0)
@@ -407,7 +407,7 @@
 		if(user.drop_item())
 			W.Move(loc)
 			var/list/click_params = params2list(params)
-			//Center the icon where the user clicked.
+			// Center the icon where the user clicked.
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 				return
 			W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
@@ -534,7 +534,7 @@
 	parts = /obj/item/weapon/table_parts/wood
 	health = 50
 
-/obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
+/obj/structure/table/woodentable/poker // No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
 	icon_state = "pokertable"
@@ -609,7 +609,7 @@
 	icon_state = "rack"
 	density = 1
 	anchored = 1.0
-	throwpass = 1	//You can throw objects over this, despite it's density.
+	throwpass = 1	// You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
 
 /obj/structure/rack/ex_act(severity)
@@ -636,7 +636,7 @@
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
-	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
+	if(src.density == 0) // Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1

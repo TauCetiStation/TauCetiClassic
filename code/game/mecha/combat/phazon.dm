@@ -4,7 +4,7 @@
 	icon_state = "phazon"
 	initial_icon = "phazon"
 	step_in = 1
-	dir_in = 1 //Facing North.
+	dir_in = 1 // Facing North.
 	step_energy_drain = 3
 	health = 200
 	deflect_chance = 30
@@ -13,7 +13,7 @@
 	infra_luminosity = 3
 	wreckage = /obj/effect/decal/mecha_wreckage/phazon
 	add_req_access = 1
-	//operation_req_access = list()
+	// operation_req_access = list()
 	internal_damage_threshold = 25
 	force = 15
 	var/phasing = 0

@@ -1,7 +1,7 @@
 #define UPDATE_BUFFER 25 // 2.5 seconds
 
 // CAMERA CHUNK
-//
+// 
 // A 16x16 grid of the map with a list of turfs that can be seen, are visible and are dimmed.
 // Allows the AI Eye to stream these chunks and know what it can and cannot see.
 
@@ -68,7 +68,7 @@
 
 /datum/camerachunk/proc/update()
 
-	//set background = 1
+	// set background = 1
 
 	var/list/newVisibleTurfs = list()
 

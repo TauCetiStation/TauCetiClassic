@@ -1,4 +1,4 @@
-//Monkey Overlays Indexes////////
+// Monkey Overlays Indexes//////// 
 #define M_MASK_LAYER			1
 #define M_BACK_LAYER			2
 #define M_HANDCUFF_LAYER		3
@@ -7,7 +7,7 @@
 #define TARGETED_LAYER			6
 #define M_FIRE_LAYER			7
 #define M_TOTAL_LAYERS			7
-/////////////////////////////////
+//////////////////////////////// /
 
 /mob/living/carbon/monkey
 	var/list/overlays_standing[M_TOTAL_LAYERS]
@@ -21,21 +21,21 @@
 	update_inv_handcuffed(0)
 	update_icons()
 	update_transform()
-	//Hud Stuff
+	// Hud Stuff
 	update_hud()
 	return
 
 /mob/living/carbon/monkey/update_icons()
 	..()
 	update_hud()
-	//lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
+	// lying_prev = lying	// so we don't update overlays for lying/standing unless our stance changes again
 	overlays.Cut()
 	for(var/image/I in overlays_standing)
 		overlays += I
 
 
 
-////////
+//////// 
 /mob/living/carbon/monkey/update_inv_wear_mask(var/update_icons=1)
 	if( wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
 		if(wear_mask:icon_custom)
@@ -105,7 +105,7 @@
 	if (client)
 		client.screen |= contents
 
-//Call when target overlay should be added/removed
+// Call when target overlay should be added/removed
 /mob/living/carbon/monkey/update_targeted(var/update_icons=1)
 	if (targeted_by && target_locked)
 		overlays_standing[TARGETED_LAYER]	= target_locked
@@ -124,7 +124,7 @@
 	else
 		overlays_standing[M_FIRE_LAYER]		= null
 
-//Monkey Overlays Indexes////////
+// Monkey Overlays Indexes//////// 
 #undef M_MASK_LAYER
 #undef M_BACK_LAYER
 #undef M_HANDCUFF_LAYER

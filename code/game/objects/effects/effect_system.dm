@@ -10,7 +10,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	name = "effect"
 	icon = 'icons/effects/effects.dmi'
 	mouse_opacity = 0
-	unacidable = 1//So effect are not targeted by alien acid.
+	unacidable = 1// So effect are not targeted by alien acid.
 	pass_flags = PASSTABLE | PASSGRILLE
 
 /obj/effect/effect/water
@@ -26,11 +26,11 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	return ..()
 
 /obj/effect/effect/water/Move(turf/newloc)
-	//var/turf/T = src.loc
-	//if (istype(T, /turf))
-	//	T.firelevel = 0 //TODO: FIX
+	// var/turf/T = src.loc
+	// if (istype(T, /turf))
+	//	T.firelevel = 0 // TODO: FIX
 	if (--src.life < 1)
-		//SN src = null
+		// SN src = null
 		qdel(src)
 	if(newloc.density)
 		return 0
@@ -67,10 +67,10 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	location = null
 	return ..()
 
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 // GENERIC STEAM SPREAD SYSTEM
 
-//Usage: set_up(number of bits of steam, use North/South/East/West only, spawn location)
+// Usage: set_up(number of bits of steam, use North/South/East/West only, spawn location)
 // The attach(atom/atom) proc is optional, and can be called to attach the effect
 // to something, like a smoking beaker, so then you can just call start() and the steam
 // will always spawn at the items location, even if it's moved.
@@ -81,7 +81,7 @@ steam.set_up(5, 0, mob.loc) -- sets up variables
 OPTIONAL: steam.attach(mob)
 steam.start() -- spawns the effect
 */
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 /obj/effect/effect/steam
 	name = "steam"
 	icon = 'icons/effects/effects.dmi'
@@ -114,12 +114,12 @@ steam.start() -- spawns the effect
 					step(steam,direction)
 				QDEL_IN(steam, 20)
 
-/////////////////////////////////////////////
-//SPARK SYSTEM (like steam system)
+//////////////////////////////////////////// /
+// SPARK SYSTEM (like steam system)
 // The attach(atom/atom) proc is optional, and can be called to attach the effect
 // to something, like the RCD, so then you can just call start() and the sparks
 // will always spawn at the items location.
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 
 /obj/effect/effect/sparks
 	name = "sparks"
@@ -188,11 +188,11 @@ steam.start() -- spawns the effect
 		qdel(sparks)
 	total_sparks--
 
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 //// SMOKE SYSTEMS
 // direct can be optinally added when set_up, to make the smoke always travel in one direction
 // in case you wanted a vent to always smoke north for example
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 
 
 /obj/effect/effect/smoke
@@ -204,7 +204,7 @@ steam.start() -- spawns the effect
 	var/amount = 6.0
 	var/time_to_live = 100
 
-	//Remove this bit to use the old smoke
+	// Remove this bit to use the old smoke
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
@@ -226,9 +226,9 @@ steam.start() -- spawns the effect
 		return 0
 	return 1
 
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 // Bad smoke
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 
 /obj/effect/effect/smoke/bad
 	time_to_live = 200
@@ -255,9 +255,9 @@ steam.start() -- spawns the effect
 		var/obj/item/projectile/beam/B = mover
 		B.damage = (B.damage/2)
 	return 1
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 // Sleep smoke
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 
 /obj/effect/effect/smoke/sleepy
 
@@ -277,9 +277,9 @@ steam.start() -- spawns the effect
 		M.emote("cough")
 		spawn ( 20 )
 			M.coughedtime = 0
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 // Mustard Gas
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 
 
 /obj/effect/effect/smoke/mustard
@@ -306,9 +306,9 @@ steam.start() -- spawns the effect
 	R.updatehealth()
 	return
 
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 // Smoke spread
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 
 /datum/effect/effect/system/smoke_spread
 	var/total_smoke = 0 // To stop it being spammed and lagging!
@@ -362,12 +362,12 @@ steam.start() -- spawns the effect
 	smoke_type = /obj/effect/effect/smoke/mustard
 
 
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 //////// Attach an Ion trail to any object, that spawns when it moves (like for the jetpack)
-/// just pass in the object to attach it to in set_up
-/// Then do start() to start it and stop() to stop it, obviously
-/// and don't call start() in a loop that will be repeated otherwise it'll get spammed!
-/////////////////////////////////////////////
+// / just pass in the object to attach it to in set_up
+// / Then do start() to start it and stop() to stop it, obviously
+// / and don't call start() in a loop that will be repeated otherwise it'll get spammed!
+//////////////////////////////////////////// /
 /obj/effect/effect/ion_trails
 	name = "ion trails"
 	icon_state = "ion_trails"
@@ -385,7 +385,7 @@ steam.start() -- spawns the effect
 /datum/effect/effect/system/ion_trail_follow/set_up(atom/atom)
 	attach(atom)
 
-/datum/effect/effect/system/ion_trail_follow/start() //Whoever is responsible for this abomination of code should become an hero
+/datum/effect/effect/system/ion_trail_follow/start() // Whoever is responsible for this abomination of code should become an hero
 	if(!src.on)
 		src.on = 1
 		src.processing = 1
@@ -410,10 +410,10 @@ steam.start() -- spawns the effect
 	src.on = 0
 	oldposition = null
 
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 //////// Attach a steam trail to an object (eg. a reacting beaker) that will follow it
 // even if it's carried of thrown.
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 
 /datum/effect/effect/system/steam_trail_follow
 	var/turf/oldposition
@@ -528,7 +528,7 @@ steam.start() -- spawns the effect
 			F.create_reagents(10)
 			if (reagents)
 				for(var/datum/reagent/R in reagents.reagent_list)
-					F.reagents.add_reagent(R.id, 1, safety = 1)		//added safety check since reagents in the foam have already had a chance to react
+					F.reagents.add_reagent(R.id, 1, safety = 1)		// added safety check since reagents in the foam have already had a chance to react
 
 // foam disolves when heated
 // except metal foams
@@ -598,7 +598,7 @@ steam.start() -- spawns the effect
 
 				if(carried_reagents)
 					for(var/id in carried_reagents)
-						F.reagents.add_reagent(id, 1, null, 1) //makes a safety call because all reagents should have already reacted anyway
+						F.reagents.add_reagent(id, 1, null, 1) // makes a safety call because all reagents should have already reacted anyway
 				else
 					F.reagents.add_reagent("water", 1, safety = 1)
 

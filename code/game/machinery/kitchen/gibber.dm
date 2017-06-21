@@ -6,7 +6,7 @@
 	icon_state = "grinder"
 	density = 1
 	anchored = 1
-	var/operating = 0 //Is it on?
+	var/operating = 0 // Is it on?
 	var/dirty = 0 // Does it need cleaning?
 
 	var/gibtime = 80 // Time from starting until meat appears
@@ -17,7 +17,7 @@
 	idle_power_usage = 2
 	active_power_usage = 500
 
-//auto-gibs anything that bumps into it
+// auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
 	var/turf/input_plate
 
@@ -186,7 +186,7 @@
 	src.operating = 1
 	update_icon()
 	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = gibtime / 100, loop = gibtime) //start shaking
+	animate(src, pixel_x = pixel_x + offset, time = gibtime / 100, loop = gibtime) // start shaking
 	playsound(src.loc, 'sound/effects/gibber.ogg', 100, 1)
 
 	var/slab_name = occupant.name
@@ -221,7 +221,7 @@
 			if(src.occupant.reagents)
 				src.occupant.reagents.trans_to(new_meat, round(occupant.reagents.total_volume/slab_count,1))
 
-		src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
+		src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" // One shall not simply gib a mob unnoticed!
 		user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
 		msg_admin_attack("[user.name] ([user.ckey]) gibbed [src.occupant] ([src.occupant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
@@ -238,7 +238,7 @@
 			thing.loc = get_turf(thing) // Drop it onto the turf for throwing.
 			thing.throw_at(get_edge_target_turf(src,gib_throw_dir),rand(1,5),15) // Being pelted with bits of meat and bone would hurt.
 
-		pixel_x = initial(pixel_x) //return to it's spot after shaking
+		pixel_x = initial(pixel_x) // return to it's spot after shaking
 		update_icon()
 
 

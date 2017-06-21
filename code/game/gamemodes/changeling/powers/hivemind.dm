@@ -41,7 +41,7 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!..())
 		return
 	var/datum/changeling/changeling = user.mind.changeling
-	if(changeling.absorbed_dna[1] == user.dna)//If our current DNA is the stalest, we gotta ditch it.
+	if(changeling.absorbed_dna[1] == user.dna)// If our current DNA is the stalest, we gotta ditch it.
 		to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
 		return
 	return 1

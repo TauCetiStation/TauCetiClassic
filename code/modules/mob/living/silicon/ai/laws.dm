@@ -78,13 +78,13 @@
 	if(src.say("[prefix]Current Active Laws:") != 1)
 		return
 
-	//src.laws_sanity_check()
-	//src.laws.show_laws(world)
+	// src.laws_sanity_check()
+	// src.laws.show_laws(world)
 	var/number = 1
 	sleep(10)
 
 	if (src.laws.zeroth)
-		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
+		if (src.lawcheck[1] == "Yes") // This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
 			src.say("[prefix]0. [src.laws.zeroth]")
 			sleep(10)
 
@@ -116,7 +116,7 @@
 				number++
 
 
-/mob/living/silicon/ai/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
+/mob/living/silicon/ai/proc/checklaws() // Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
@@ -124,8 +124,8 @@
 
 	if (src.laws.zeroth)
 		if (!src.lawcheck[1])
-			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
-		list += {"<A href='byond://?src=\ref[src];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws.zeroth]<BR>"}
+			src.lawcheck[1] = "No" // Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
+		list += {"<A href='byond:// ?src=\ref[src];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws.zeroth]<BR>"}
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
 		var/law = src.laws.ion[index]
@@ -135,7 +135,7 @@
 
 			if (!src.ioncheck[index])
 				src.ioncheck[index] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
+			list += {"<A href='byond:// ?src=\ref[src];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
 			src.ioncheck.len += 1
 
 	var/number = 1
@@ -147,7 +147,7 @@
 
 			if (!src.lawcheck[number+1])
 				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			list += {"<A href='byond:// ?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
 
 	for (var/index = 1, index <= src.laws.supplied.len, index++)
@@ -156,10 +156,10 @@
 			src.lawcheck.len += 1
 			if (!src.lawcheck[number+1])
 				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			list += {"<A href='byond:// ?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
 
-	list += {"<br><A href='byond://?src=\ref[src];lawr=1'>Channel: [src.lawchannel]</A><br>"}
-	list += {"<A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
+	list += {"<br><A href='byond:// ?src=\ref[src];lawr=1'>Channel: [src.lawchannel]</A><br>"}
+	list += {"<A href='byond:// ?src=\ref[src];laws=1'>State Laws</A>"}
 
 	usr << browse(list, "window=laws")

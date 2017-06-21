@@ -26,7 +26,7 @@
 /datum/genetics/side_effect/genetic_burn/finish(mob/living/carbon/human/H)
 	for(var/bodypart in list(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN))
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
-		if(prob(85))//#Z2 - now 15% chance even for more burn
+		if(prob(85))// #Z2 - now 15% chance even for more burn
 			BP.take_damage(0, 5, 0)
 		else
 			BP.take_damage(0, 20, 0)
@@ -50,7 +50,7 @@
 	else
 		BP.take_damage(70)
 
-/datum/genetics/side_effect/monkey //#Z2 Random monkey transform is back
+/datum/genetics/side_effect/monkey // #Z2 Random monkey transform is back
 	name = "Monkey"
 	symptom = "Subject starts drooling uncontrollably."
 	treatment = "None."

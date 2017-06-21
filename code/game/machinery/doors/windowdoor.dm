@@ -4,7 +4,7 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
 	var/base_state = "left"
-	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	var/health = 150.0 // If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
 	visible = 0.0
 	flags = ON_BORDER
 	opacity = 0
@@ -42,7 +42,7 @@
 	open()
 	if(src.check_access(null))
 		sleep(50)
-	else //secure doors close faster
+	else // secure doors close faster
 		sleep(20)
 	close()
 
@@ -82,7 +82,7 @@
 		visible_message("[src] shatters!")
 	qdel(src)
 
-//painter
+// painter
 /obj/machinery/door/window/proc/change_paintjob(obj/item/C, mob/user)
 	var/obj/item/weapon/airlock_painter/W
 	if(istype(C, /obj/item/weapon/airlock_painter))
@@ -141,8 +141,8 @@
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
-	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		//if(air_group) return 0
+	if(get_dir(loc, target) == dir) // Make sure looking at appropriate border
+		// if(air_group) return 0
 		return !density
 	else
 		return 1
@@ -213,7 +213,7 @@
 		take_damage(round(Proj.damage / 2))
 	..()
 
-//When an object is thrown at the window
+// When an object is thrown at the window
 /obj/machinery/door/window/hitby(AM)
 
 	..()
@@ -225,7 +225,7 @@
 		tforce = AM:throwforce
 	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	take_damage(tforce)
-	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
+	// ..() // Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
 
 
@@ -269,7 +269,7 @@
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/user)
 
-	//If it's in the process of opening/closing, ignore the click
+	// If it's in the process of opening/closing, ignore the click
 	if (src.operating == 1)
 		return
 
@@ -285,7 +285,7 @@
 			shatter()
 		return
 
-	//Emags and ninja swords? You may pass.
+	// Emags and ninja swords? You may pass.
 	if (density && ((istype(I, /obj/item/weapon/card/emag) && hasPower()) || istype(I, /obj/item/weapon/melee/energy/blade)))
 		flick("[src.base_state]spark", src)
 		sleep(6)
@@ -365,7 +365,7 @@
 				return
 
 
-	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
+	// If windoor is unpowered, crowbar, fireaxe and armblade can force it.
 	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(!hasPower())
 			if(density)
@@ -374,7 +374,7 @@
 				close(1)
 			return
 
-	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
+	// If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		user.do_attack_animation(src)
 		if( (I.flags&NOBLUDGEON) || !I.force )
@@ -388,7 +388,7 @@
 
 	src.add_fingerprint(user)
 	if (!src.requiresID())
-		//don't care who they are or what they have, act as if they're NOTHING
+		// don't care who they are or what they have, act as if they're NOTHING
 		user = null
 
 	if (src.allowed(user))
@@ -409,7 +409,7 @@
 	base_state = "leftsecure"
 	req_access = list(access_security)
 	var/id = null
-	health = 300.0 //Stronger doors for prison (regular window door health is 200)
+	health = 300.0 // Stronger doors for prison (regular window door health is 200)
 
 
 /obj/machinery/door/window/northleft

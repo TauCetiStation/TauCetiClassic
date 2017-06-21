@@ -1,4 +1,4 @@
-//AUTOINJECTOR
+// AUTOINJECTOR
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/combat
 	name = "combat autoinjector"
 	desc = "Younger brother of combat autoinjector."

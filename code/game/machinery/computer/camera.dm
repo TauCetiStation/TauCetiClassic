@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /proc/invalidateCameraCache()
 	for(var/obj/machinery/computer/security/s in machines)
@@ -15,14 +15,14 @@
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
 	var/list/network = list("SS13")
-	var/mapping = 0//For the overview file, interesting bit of code.
+	var/mapping = 0// For the overview file, interesting bit of code.
 
 	var/camera_cache = null
 
 /obj/machinery/computer/security/check_eye(mob/user)
 	if ((get_dist(user, src) > 1 || (user.incapacitated()) || user.blinded) && !istype(user, /mob/living/silicon))
 		return null
-	if ( !current || !current.can_use() ) //camera doesn't work
+	if ( !current || !current.can_use() ) // camera doesn't work
 		reset_current()
 	var/list/viewing = viewers(src)
 	if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
@@ -123,7 +123,7 @@
 	return 0
 
 /obj/machinery/computer/security/proc/switch_to_camera(mob/user, obj/machinery/camera/C)
-	//don't need to check if the camera works for AI because the AI jumps to the camera location and doesn't actually look through cameras.
+	// don't need to check if the camera works for AI because the AI jumps to the camera location and doesn't actually look through cameras.
 	if(isAI(user))
 		var/mob/living/silicon/ai/A = user
 		// Only allow non-carded AIs to view because the interaction with the eye gets all wonky otherwise.
@@ -139,7 +139,7 @@
 	use_power(50)
 	return 1
 
-//Camera control: moving.
+// Camera control: moving.
 /obj/machinery/computer/security/proc/jump_on_click(mob/user,A)
 	if(user.machine != src)
 		return
@@ -189,7 +189,7 @@
 			L.tracking_cancelled()
 	current = null
 
-//Camera control: mouse.
+// Camera control: mouse.
 /atom/DblClick()
 	..()
 	if(istype(usr.machine,/obj/machinery/computer/security))

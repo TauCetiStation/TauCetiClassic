@@ -1,4 +1,4 @@
-//separate dm since hydro is getting bloated already
+// separate dm since hydro is getting bloated already
 
 /obj/effect/glowshroom
 	name = "glowshroom"
@@ -29,7 +29,7 @@
 	dir = CalcDir()
 
 	if(!floor)
-		switch(dir) //offset to make it be on the wall rather than on the floor
+		switch(dir) // offset to make it be on the wall rather than on the floor
 			if(NORTH)
 				pixel_y = 32
 			if(SOUTH)
@@ -39,7 +39,7 @@
 			if(WEST)
 				pixel_x = -32
 		icon_state = "glowshroom[rand(1,3)]"
-	else //if on the floor, glowshroom on-floor sprite
+	else // if on the floor, glowshroom on-floor sprite
 		icon_state = "glowshroomf"
 
 	START_PROCESSING(SSobj, src)
@@ -76,7 +76,7 @@
 
 				var/turf/newLoc = pick(possibleLocs)
 
-				var/shroomCount = 0 //hacky
+				var/shroomCount = 0 // hacky
 				var/placeCount = 1
 				for(var/obj/effect/glowshroom/shroom in newLoc)
 					shroomCount++
@@ -95,11 +95,11 @@
 
 				spreaded++
 
-		if(prob(evolveChance)) //very low chance to evolve on its own
+		if(prob(evolveChance)) // very low chance to evolve on its own
 			potency += rand(4,6)
 
 /obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
-	//set background = 1
+	// set background = 1
 	var/direction = 16
 
 	for(var/wallDir in cardinal)
@@ -110,7 +110,7 @@
 	for(var/obj/effect/glowshroom/shroom in location)
 		if(shroom == src)
 			continue
-		if(shroom.floor) //special
+		if(shroom.floor) // special
 			direction &= ~16
 		else
 			direction &= ~shroom.dir

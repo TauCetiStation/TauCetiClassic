@@ -1,4 +1,4 @@
-//cleansed 9/15/2012 17:48
+// cleansed 9/15/2012 17:48
 
 /*
 CONTAINS:
@@ -12,9 +12,9 @@ ZIPPO
 CIGARETTE PACKETS ARE IN FANCY.DM
 */
 
-///////////
-//MATCHES//
-///////////
+/////////// 
+// MATCHES// 
+/////////// 
 /obj/item/weapon/match
 	name = "match"
 	desc = "A simple match stick, used for lighting fine smokables."
@@ -52,9 +52,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A match. This one has seen better days."
 	STOP_PROCESSING(SSobj, src)
 
-//////////////////
-//FINE SMOKABLES//
-//////////////////
+///////////////// /
+// FINE SMOKABLES// 
+///////////////// /
 /obj/item/clothing/mask/cigarette
 	name = "cigarette"
 	desc = "A roll of tobacco and nicotine."
@@ -65,7 +65,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	body_parts_covered = 0
 	attack_verb = list("burnt", "singed")
 	var/lit = 0
-	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
+	var/icon_on = "cigon"  // Note - these are in masks.dmi not in cigarette.dmi
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
@@ -82,7 +82,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.isOn())//Badasses dont get blinded while lighting their cig with a welding tool
+		if(WT.isOn())// Badasses dont get blinded while lighting their cig with a welding tool
 			light("<span class='notice'>[user] casually lights the [name] with [W].</span>")
 
 	else if(istype(W, /obj/item/weapon/lighter/zippo))
@@ -108,7 +108,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(W, /obj/item/device/assembly/igniter))
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>")
 
-	//can't think of any other way to update the overlays :<
+	// can't think of any other way to update the overlays :<
 	user.update_inv_l_hand()
 	user.update_inv_r_hand()
 	return
@@ -117,11 +117,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user, proximity)
 	..()
 	if(!proximity) return
-	if(istype(glass))	//you can dip cigarettes into beakers
+	if(istype(glass))	// you can dip cigarettes into beakers
 		var/transfered = glass.reagents.trans_to(src, chem_volume)
-		if(transfered)	//if reagents were transfered, show the message
+		if(transfered)	// if reagents were transfered, show the message
 			to_chat(user, "<span class='notice'>You dip \the [src] into \the [glass].</span>")
-		else			//if not, either the beaker was empty, or the cigarette was full
+		else			// if not, either the beaker was empty, or the cigarette was full
 			if(!glass.reagents.total_volume)
 				to_chat(user, "<span class='notice'>[glass] is empty.</span>")
 			else
@@ -162,7 +162,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/turf/location = get_turf(src)
 	var/mob/living/M = loc
 	if(isliving(loc))
-		M.IgniteMob()	//Cigs can ignite mobs splashed with fuel
+		M.IgniteMob()	// Cigs can ignite mobs splashed with fuel
 	smoketime--
 	if(smoketime < 1)
 		die()
@@ -199,14 +199,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(ismob(loc))
 		var/mob/living/M = loc
 		to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
-		M.remove_from_mob(src)	//un-equip it so the overlays can update
+		M.remove_from_mob(src)	// un-equip it so the overlays can update
 		M.update_inv_wear_mask(0)
 	STOP_PROCESSING(SSobj, src)
 	qdel(src)
 
-////////////
-// CIGARS //
-////////////
+/////////// /
+// CIGARS // 
+/////////// /
 /obj/item/clothing/mask/cigarette/cigar
 	name = "premium cigar"
 	desc = "A brown roll of tobacco and... well, you're not quite sure. This thing's huge!"
@@ -284,15 +284,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(W, /obj/item/device/assembly/igniter))
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name] with the power of science.</span>")
 
-/////////////////
-//SMOKING PIPES//
-/////////////////
+///////////////// 
+// SMOKING PIPES// 
+///////////////// 
 /obj/item/clothing/mask/cigarette/pipe
 	name = "smoking pipe"
 	desc = "A pipe, for smoking. Probably made of meershaum or something."
 	icon_state = "pipeoff"
 	item_state = "pipeoff"
-	icon_on = "pipeon"  //Note - these are in masks.dmi
+	icon_on = "pipeon"  // Note - these are in masks.dmi
 	icon_off = "pipeoff"
 	smoketime = 100
 
@@ -327,7 +327,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		location.hotspot_expose(700, 5)
 	return
 
-/obj/item/clothing/mask/cigarette/pipe/attack_self(mob/user) //Refills the pipe. Can be changed to an attackby later, if loose tobacco is added to vendors or something.
+/obj/item/clothing/mask/cigarette/pipe/attack_self(mob/user) // Refills the pipe. Can be changed to an attackby later, if loose tobacco is added to vendors or something.
 	if(lit == 1)
 		user.visible_message("<span class='notice'>[user] puts out [src].</span>")
 		lit = 0
@@ -343,7 +343,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.isOn())//
+		if(WT.isOn())// 
 			light("<span class='notice'>[user] recklessly lights [name] with [W].</span>")
 
 	else if(istype(W, /obj/item/weapon/lighter/zippo))
@@ -369,15 +369,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A nicotine delivery system popularized by folksy backwoodsmen, kept popular in the modern age and beyond by space hipsters."
 	icon_state = "cobpipeoff"
 	item_state = "cobpipeoff"
-	icon_on = "cobpipeon"  //Note - these are in masks.dmi
+	icon_on = "cobpipeon"  // Note - these are in masks.dmi
 	icon_off = "cobpipeoff"
 	smoketime = 400
 
 
 
-/////////
-//ZIPPO//
-/////////
+//////// /
+// ZIPPO// 
+//////// /
 /obj/item/weapon/lighter
 	name = "cheap lighter"
 	desc = "A cheap-as-free lighter."
@@ -454,7 +454,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M, /mob))
 		return
-	M.IgniteMob()	//Lighters can ignite mobs splashed with fuel
+	M.IgniteMob()	// Lighters can ignite mobs splashed with fuel
 	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == O_MOUTH && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)

@@ -6,7 +6,7 @@
 	genomecost = 3
 	req_dna = 4
 
-//Makes some spiderlings. Good for setting traps and causing general trouble.
+// Makes some spiderlings. Good for setting traps and causing general trouble.
 /obj/effect/proc_holder/changeling/spiders/sting_action(mob/user)
 	var/turf = get_turf(user)
 	for(var/I in 1 to 2)

@@ -122,7 +122,7 @@
 			continue
 		if(M == usr)
 			continue
-		if(M.invisibility)//cloaked
+		if(M.invisibility)// cloaked
 			continue
 		if(M.digitalcamo)
 			continue
@@ -132,7 +132,7 @@
 		if(istype(M, /mob/living/carbon/human))
 			human = 1
 			var/mob/living/carbon/human/H = M
-			//Cameras can't track people wearing an agent card or hat with blockTracking.
+			// Cameras can't track people wearing an agent card or hat with blockTracking.
 			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 				continue
 			if(istype(H.head, /obj/item/clothing/head))

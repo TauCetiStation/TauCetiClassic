@@ -1,10 +1,10 @@
-	////////////
-	//SECURITY//
-	////////////
-#define TOPIC_SPAM_DELAY	2		//2 ticks is about 2/10ths of a second; it was 4 ticks, but that caused too many clicks to be lost due to lag
-#define UPLOAD_LIMIT		10485760	//Restricts client uploads to the server to 10MB //Boosted this thing. What's the worst that can happen?
-#define MIN_CLIENT_VERSION	0		//Just an ambiguously low version for now, I don't want to suddenly stop people playing.
-									//I would just like the code ready should it ever need to be used.
+	/////////// /
+	// SECURITY// 
+	/////////// /
+#define TOPIC_SPAM_DELAY	2		// 2 ticks is about 2/10ths of a second; it was 4 ticks, but that caused too many clicks to be lost due to lag
+#define UPLOAD_LIMIT		10485760	// Restricts client uploads to the server to 10MB // Boosted this thing. What's the worst that can happen?
+#define MIN_CLIENT_VERSION	0		// Just an ambiguously low version for now, I don't want to suddenly stop people playing.
+									// I would just like the code ready should it ever need to be used.
 	/*
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
@@ -21,34 +21,34 @@
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 /client/Topic(href, href_list, hsrc)
-	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
+	if(!usr || usr != mob)	// stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 
 	if(href_list["_src_"] == "chat")
 		return chatOutput.Topic(href, href_list)
 
-	//Reduces spamming of links by dropping calls that happen during the delay period
+	// Reduces spamming of links by dropping calls that happen during the delay period
 	if(next_allowed_topic_time > world.time)
 		return
 	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
 
-	//search the href for script injection
+	// search the href for script injection
 	if( findtext(href,"<script",1,0) )
 		world.log << "Attempted use of scripts within a topic call, by [src]"
 		message_admins("Attempted use of scripts within a topic call, by [src]")
-		//del(usr)
+		// del(usr)
 		return
 
 	if(href_list["asset_cache_confirm_arrival"])
-		//to_chat(src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")
+		// to_chat(src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])
 		completed_asset_jobs += job
 		return
 
-	//Admin PM
+	// Admin PM
 	if(href_list["priv_msg"])
 		var/client/C = locate(href_list["priv_msg"])
-		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
+		if(ismob(C)) 		// Old stuff can feed-in mobs instead of clients
 			var/mob/M = C
 			C = M.client
 		if(href_list["ahelp_reply"])
@@ -58,7 +58,7 @@
 		return
 
 	if(href_list["irc_msg"])
-		if(!holder && received_irc_pm < world.time - 6000) //Worse they can do is spam IRC for 10 minutes
+		if(!holder && received_irc_pm < world.time - 6000) // Worse they can do is spam IRC for 10 minutes
 			to_chat(usr, "<span class='warning'>You are no longer able to use this, it's been more then 10 minutes since an admin on IRC has responded to you</span>")
 			return
 		if(mute_irc)
@@ -67,7 +67,7 @@
 		cmd_admin_irc_pm()
 		return
 
-	//Logs all hrefs
+	// Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
@@ -81,7 +81,7 @@
 		if ("openLink")
 			src << link(href_list["link"])
 
-	..()	//redirect to hsrc.Topic()
+	..()	// redirect to hsrc.Topic()
 
 /client/proc/handle_spam_prevention(message, mute_type)
 	if(global_message_cooldown && (world.time < last_message_time + 5))
@@ -101,13 +101,13 @@
 		src.last_message_count = 0
 		return 0
 
-//This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
+// This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	if(filelength > UPLOAD_LIMIT)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
 		return 0
-/*	//Don't need this at the moment. But it's here if it's needed later.
-	//Helps prevent multiple files being uploaded at once. Or right after eachother.
+/*	// Don't need this at the moment. But it's here if it's needed later.
+	// Helps prevent multiple files being uploaded at once. Or right after eachother.
 	var/time_to_wait = fileaccess_timer - world.time
 	if(time_to_wait > 0)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>")
@@ -116,21 +116,21 @@
 	return 1
 
 
-	///////////
-	//CONNECT//
-	///////////
+	/////////// 
+	// CONNECT// 
+	/////////// 
 /client/New(TopicData)
 	chatOutput = new /datum/chatOutput(src) // Right off the bat.
-	var/tdata = TopicData //save this for later use
-	TopicData = null							//Prevent calls to client.Topic from connect
+	var/tdata = TopicData // save this for later use
+	TopicData = null							// Prevent calls to client.Topic from connect
 
-	if(connection != "seeker")					//Invalid connection type.
+	if(connection != "seeker")					// Invalid connection type.
 		return null
-	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
+	if(byond_version < MIN_CLIENT_VERSION)		// Out of date client.
 		return null
 
 	if(IsGuestKey(key))
-		alert(src,"This server doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
+		alert(src,"This server doesn't allow guest accounts to play. Please go to http:// www.byond.com/ and register for a key.","Guest","OK")
 		qdel(src)
 		return
 
@@ -145,7 +145,7 @@
 	clients += src
 	directory[ckey] = src
 
-	//Admin Authorisation
+	// Admin Authorisation
 	holder = admin_datums[ckey]
 	if(holder)
 		holder.owner = src
@@ -157,13 +157,13 @@
 	if(ckey in mentor_ckeys)
 		mentors += src
 
-	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
+	// preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
 	if(!prefs)
 		prefs = new /datum/preferences(src)
 		preferences_datums[ckey] = prefs
-	prefs.last_ip = address				//these are gonna be used for banning
-	prefs.last_id = computer_id			//these are gonna be used for banning
+	prefs.last_ip = address				// these are gonna be used for banning
+	prefs.last_id = computer_id			// these are gonna be used for banning
 
 	var/cur_date = time2text(world.realtime, "YYYY/MM/DD hh:mm:ss")
 	if("[computer_id]" in prefs.cid_list)
@@ -177,7 +177,7 @@
 
 	prefs.save_preferences()
 
-	. = ..()	//calls mob.Login()
+	. = ..()	// calls mob.Login()
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
@@ -211,7 +211,7 @@
 	if(!geoip)
 		geoip = new(src, address)
 
-		//This is down here because of the browse() calls in tooltip/New()
+		// This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
@@ -224,9 +224,9 @@
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
 
-	//////////////
-	//DISCONNECT//
-	//////////////
+	////////////// 
+	// DISCONNECT// 
+	////////////// 
 /client/Del()
 	log_client_ingame_age_to_db()
 	if(cob && cob.in_building_mode)
@@ -286,7 +286,7 @@
 	else if (check_randomizer(connectiontopic))
 		return
 
-	//Just the standard check to see if it's actually a number
+	// Just the standard check to see if it's actually a number
 	if(sql_id)
 		if(istext(sql_id))
 			sql_id = text2num(sql_id)
@@ -299,15 +299,15 @@
 
 
 	if(sql_id)
-		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
+		// Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
 	else if(!config.serverwhitelist)
-		//New player!! Need to insert all the stuff
+		// New player!! Need to insert all the stuff
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[player_ingame_age]')")
 		query_insert.Execute()
 
-	//Logging player access
+	// Logging player access
 	var/serverip = "[world.internet_address]:[world.port]"
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
@@ -319,7 +319,7 @@
 	topic = params2list(topic)
 	var/static/cidcheck = list()
 	var/static/tokens = list()
-	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
+	var/static/cidcheck_failedckeys = list() // to avoid spamming the admins if the same guy keeps trying.
 	var/static/cidcheck_spoofckeys = list()
 
 	var/oldcid = cidcheck[ckey]
@@ -332,12 +332,12 @@
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
 
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			sleep(10) // browse is queued, we don't want them to disconnect before getting the browse() command.
 			del(src)
 			return TRUE
 
-		if (oldcid != computer_id) //IT CHANGED!!!
-			cidcheck -= ckey //so they can try again after removing the cid randomizer.
+		if (oldcid != computer_id) // IT CHANGED!!!
+			cidcheck -= ckey // so they can try again after removing the cid randomizer.
 
 			to_chat(src, "<span class='userdanger'>Connection Error:</span>")
 			to_chat(src, "<span class='danger'>Invalid ComputerID(spoofed). Please remove the ComputerID spoofer from your byond installation and try again.</span>")
@@ -374,7 +374,7 @@
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
 
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			sleep(10) // browse is queued, we don't want them to disconnect before getting the browse() command.
 			del(src)
 			return TRUE
 
@@ -383,9 +383,9 @@
 	. = token
 	log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
 	var/url = winget(src, null, "url")
-	//special javascript to make them reconnect under a new window.
-	src << browse("<a id='link' href='byond://[url]?token=[token]'>byond://[url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
-	to_chat(src, "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
+	// special javascript to make them reconnect under a new window.
+	src << browse("<a id='link' href='byond:// [url]?token=[token]'>byond:// [url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond:// winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
+	to_chat(src, "<a href='byond:// [url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
 
 /client/proc/log_client_ingame_age_to_db()
 	if ( IsGuestKey(src.key) )
@@ -409,8 +409,8 @@
 #undef UPLOAD_LIMIT
 #undef MIN_CLIENT_VERSION
 
-//checks if a client is afk
-//3000 frames = 5 minutes
+// checks if a client is afk
+// 3000 frames = 5 minutes
 /client/proc/is_afk(duration=3000)
 	if(inactivity > duration)	return inactivity
 	return 0
@@ -418,7 +418,7 @@
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.
 // So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
+// See: http:// www.byond.com/docs/ref/info.html#/client/proc/Stat
 /client/Stat()
 	. = ..()
 	if (holder)
@@ -435,6 +435,6 @@
 		'html/panels.css' // Used for styling certain panels, such as in the new player panel
 	)
 
-	spawn (10) //removing this spawn causes all clients to not get verbs.
-		//Precache the client with all other assets slowly, so as to not block other browse() calls
+	spawn (10) // removing this spawn causes all clients to not get verbs.
+		// Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSasset.cache, register_asset = FALSE)

@@ -101,7 +101,7 @@
 	chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]</b></font>", "You hear the drill.")
 	occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
 	var/T = chassis.loc
-	var/C = target.loc	//why are these backwards? we may never know -Pete
+	var/C = target.loc	// why are these backwards? we may never know -Pete
 	if(do_after_cooldown(target))
 		if(T == chassis.loc && src == chassis.selected)
 			if(istype(target, /turf/simulated/wall/r_wall))
@@ -166,11 +166,11 @@
 	chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]</b></font>", "You hear the drill.")
 	occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
 	var/T = chassis.loc
-	var/C = target.loc	//why are these backwards? we may never know -Pete
+	var/C = target.loc	// why are these backwards? we may never know -Pete
 	if(do_after_cooldown(target))
 		if(T == chassis.loc && src == chassis.selected)
 			if(istype(target, /turf/simulated/wall/r_wall))
-				if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
+				if(do_after_cooldown(target))// To slow down how fast mechs can drill through the station
 					log_message("Drilled through [target]")
 					target.ex_act(3)
 			else if(istype(target, /turf/simulated/mineral))
@@ -227,7 +227,7 @@
 	..()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/action(atom/target) // copypasted from extinguisher. TODO: Rewrite from scratch.
 	if(!action_checks(target) || get_dist(chassis, target)>3) return
 	if(get_dist(chassis, target)>2) return
 	set_ready_state(0)
@@ -262,7 +262,7 @@
 							W.reagents.reaction(get_turf(W))
 							for(var/atom/atm in get_turf(W))
 								W.reagents.reaction(atm)
-								if(isliving(atm)) //For extinguishing mobs on fire
+								if(isliving(atm)) // For extinguishing mobs on fire
 									var/mob/living/M = atm
 									M.ExtinguishMob()
 							if(W.loc == my_target)	break
@@ -292,11 +292,11 @@
 	equip_cooldown = 10
 	energy_drain = 250
 	range = MELEE|RANGED
-	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
-	var/disabled = 0 //malf
+	var/mode = 0 // 0 - deconstruct, 1 - wall or floor, 2 - airlock.
+	var/disabled = 0 // malf
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd/action(atom/target)
-	if(istype(target,/area/shuttle)||istype(target, /turf/space/transit))//>implying these are ever made -Sieve
+	if(istype(target,/area/shuttle)||istype(target, /turf/space/transit))// >implying these are ever made -Sieve
 		disabled = 1
 	else
 		disabled = 0
@@ -304,7 +304,7 @@
 		target = get_turf(target)
 	if(!action_checks(target) || disabled || get_dist(chassis, target)>3) return
 	playsound(chassis, 'sound/machines/click.ogg', 50, 1)
-	//meh
+	// meh
 	switch(mode)
 		if(0)
 			if (istype(target, /turf/simulated/wall))
@@ -466,10 +466,10 @@
 	energy_drain = 100
 	range = MELEE|RANGED
 	var/atom/movable/locked
-	var/mode = 1 //1 - gravsling 2 - gravpush
+	var/mode = 1 // 1 - gravsling 2 - gravpush
 
-	var/last_fired = 0  //Concept stolen from guns.
-	var/fire_delay = 10 //Used to prevent spam-brute against humans.
+	var/last_fired = 0  // Concept stolen from guns.
+	var/fire_delay = 10 // Used to prevent spam-brute against humans.
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/action(atom/movable/target)
 
@@ -534,7 +534,7 @@
 
 
 /********Armor booster module (Close Combat Weaponry)********/
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster //what is that noise? A BAWWW from TK mutants.
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster // what is that noise? A BAWWW from TK mutants.
 	name = "closed armor booster module"
 	desc = "Boosts exosuit armor against armed melee attacks. Requires energy to operate."
 	icon_state = "mecha_abooster_ccw"
@@ -781,13 +781,13 @@
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/dyngetcharge()
-	if(equip_ready) //disabled
+	if(equip_ready) // disabled
 		return chassis.dyngetcharge()
 	var/area/A = get_area(chassis)
 	var/pow_chan = get_power_channel(A)
 	var/charge = 0
 	if(pow_chan)
-		charge = 1000 //making magic
+		charge = 1000 // making magic
 	else
 		return chassis.dyngetcharge()
 	return charge
@@ -817,7 +817,7 @@
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_relay=1'>[pr_energy_relay.active()?"Dea":"A"]ctivate</a>"
 
 /*	proc/dynusepower(amount)
-		if(!equip_ready) //enabled
+		if(!equip_ready) // enabled
 			var/area/A = get_area(chassis)
 			var/pow_chan = get_power_channel(A)
 			if(pow_chan)
@@ -949,7 +949,7 @@
 	var/datum/gas_mixture/GM = new
 	if(prob(10))
 		GM.phoron += 100
-		GM.temperature = 1500+T0C //should be enough to start a fire
+		GM.temperature = 1500+T0C // should be enough to start a fire
 		T.visible_message("The [src] suddenly disgorges a cloud of heated phoron.")
 		destroy()
 	else
@@ -1022,7 +1022,7 @@
 
 
 /********KILL CLAMP********/
-//This is pretty much just for the death-ripley so that it is harmless
+// This is pretty much just for the death-ripley so that it is harmless
 /obj/item/mecha_parts/mecha_equipment/tool/safety_clamp
 	name = "KILL CLAMP"
 	icon_state = "mecha_clamp"
@@ -1090,14 +1090,14 @@
 
 
 /********Mecha customisation kit********/
-/obj/item/weapon/paintkit //Please don't use this for anything, it's a base type for custom mech paintjobs.
+/obj/item/weapon/paintkit // Please don't use this for anything, it's a base type for custom mech paintjobs.
 	name = "mecha customisation kit"
 	desc = "A generic kit containing all the needed tools and parts to turn a mech into another mech."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "royce_kit"
 
-	var/new_name = "mech"    //What is the variant called?
-	var/new_desc = "A mech." //How is the new mech described?
-	var/new_icon = "ripley"  //What base icon will the new mech use?
-	var/removable = null     //Can the kit be removed?
-	var/list/allowed_types = list() //Types of mech that the kit will work on.
+	var/new_name = "mech"    // What is the variant called?
+	var/new_desc = "A mech." // How is the new mech described?
+	var/new_icon = "ripley"  // What base icon will the new mech use?
+	var/removable = null     // Can the kit be removed?
+	var/list/allowed_types = list() // Types of mech that the kit will work on.

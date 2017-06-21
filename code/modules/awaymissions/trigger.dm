@@ -1,5 +1,5 @@
 /obj/effect/step_trigger/message
-	var/message	//the message to give to the mob
+	var/message	// the message to give to the mob
 	var/once = 1
 
 /obj/effect/step_trigger/message/Trigger(mob/M)
@@ -11,7 +11,7 @@
 /obj/effect/step_trigger/teleport_fancy
 	var/locationx
 	var/locationy
-	var/uses = 1	//0 for infinite uses
+	var/uses = 1	// 0 for infinite uses
 	var/entersparks = 0
 	var/exitsparks = 0
 	var/entersmoke = 0

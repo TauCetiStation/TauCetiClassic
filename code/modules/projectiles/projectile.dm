@@ -15,13 +15,13 @@
 	icon_state = "bullet"
 	density = 1
 	unacidable = 1
-	anchored = 1 //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
+	anchored = 1 // There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
-	var/bumped = 0		//Prevents it from hitting more than one guy at once
-	var/def_zone = ""	//Aiming at
-	var/mob/firer = null//Who shot it
-	var/silenced = 0	//Attack message
+	var/bumped = 0		// Prevents it from hitting more than one guy at once
+	var/def_zone = ""	// Aiming at
+	var/mob/firer = null// Who shot it
+	var/silenced = 0	// Attack message
 	var/yo = null
 	var/xo = null
 	var/current = null
@@ -34,14 +34,14 @@
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
 
 	var/damage = 10
-	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
-	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
-	var/fake = 0 //Fake projectile won't spam chat for admins with useless logs
-	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
+	var/damage_type = BRUTE // BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
+	var/nodamage = 0 // Determines if the projectile will skip any damage inflictions
+	var/fake = 0 // Fake projectile won't spam chat for admins with useless logs
+	var/flag = "bullet" // Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	// Cael - bio and rad are also valid
 	var/projectile_type = "/obj/item/projectile"
-	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
-	var/paused = FALSE //for suspending the projectile midair
-		//Effects
+	var/kill_count = 50 // This will de-increment every process(). When 0, it will delete the projectile.
+	var/paused = FALSE // for suspending the projectile midair
+		// Effects
 	var/stun = 0
 	var/weaken = 0
 	var/paralyze = 0
@@ -92,40 +92,40 @@
 	var/mob/living/L = target
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
-	//called when the projectile stops flying because it collided with something
+	// called when the projectile stops flying because it collided with something
 /obj/item/projectile/proc/on_impact(atom/A)
 	impact_effect(effect_transform)		// generate impact effect
 	return
 
-/obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
+/obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  // Checks if you can hit them or not.
 	if(!istype(target) || !istype(user))
 		return 0
-	var/obj/item/projectile/test/in_chamber = new /obj/item/projectile/test(get_step_to(user,target)) //Making the test....
+	var/obj/item/projectile/test/in_chamber = new /obj/item/projectile/test(get_step_to(user,target)) // Making the test....
 	in_chamber.target = target
-	in_chamber.flags = flags //Set the flags...
-	in_chamber.pass_flags = pass_flags //And the pass flags to that of the real projectile...
+	in_chamber.flags = flags // Set the flags...
+	in_chamber.pass_flags = pass_flags // And the pass flags to that of the real projectile...
 	in_chamber.firer = user
-	var/output = in_chamber.process() //Test it!
-	qdel(in_chamber) //No need for it anymore
-	return output //Send it back to the gun!
+	var/output = in_chamber.process() // Test it!
+	qdel(in_chamber) // No need for it anymore
+	return output // Send it back to the gun!
 
-/proc/check_trajectory(atom/target, atom/firer, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = null) //Spherical test in vacuum
+/proc/check_trajectory(atom/target, atom/firer, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = null) // Spherical test in vacuum
 	if(!istype(target) || !istype(firer))
 		return 0
 
-	var/obj/item/projectile/test/dummy/trace = new /obj/item/projectile/test/dummy(get_turf(firer)) //Making the test....
+	var/obj/item/projectile/test/dummy/trace = new /obj/item/projectile/test/dummy(get_turf(firer)) // Making the test....
 
-	//Set the flags and pass flags to that of the real projectile...
+	// Set the flags and pass flags to that of the real projectile...
 	if(!isnull(flags))
 		trace.flags = flags
 	trace.target = target
 	trace.pass_flags = pass_flags
 
-	var/output = trace.process() //Test it!
-	qdel(trace) //No need for it anymore
-	return output //Send it back to the gun!
+	var/output = trace.process() // Test it!
+	qdel(trace) // No need for it anymore
+	return output // Send it back to the gun!
 
-//Used to change the direction of the projectile in flight.
+// Used to change the direction of the projectile in flight.
 /obj/item/projectile/proc/redirect(new_x, new_y, atom/starting_loc, mob/new_firer=null)
 	original = locate(new_x, new_y, src.z)
 	starting = starting_loc
@@ -142,11 +142,11 @@
 
 /obj/item/projectile/Bump(atom/A, forced=0)
 	if(A == src)
-		return 0 //no
+		return 0 // no
 
 	if(A == firer)
 		loc = A.loc
-		return 0 //cannot shoot yourself
+		return 0 // cannot shoot yourself
 
 	if((bumped && !forced) || (A in permutated))
 		return 0
@@ -158,15 +158,15 @@
 		if(!istype(A, /mob/living))
 			loc = A.loc
 			return 0// nope.avi
-		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
+		var/distance = get_dist(starting,loc) // More distance = less damage, except for high fire power weapons.
 		var/miss_modifier = 0
 		if(damage && (distance > 7))
 			if(damage < 55)
 				damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
 				miss_modifier = - 100 // so sniper rifle and PTR-rifle projectiles cannot miss
-		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
-			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
-			if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
+		if (istype(shot_from,/obj/item/weapon/gun))	// If you aim at someone beforehead, it'll hit more often.
+			var/obj/item/weapon/gun/daddy = shot_from // Kinda balanced by fact you need like 2 seconds to aim
+			if (daddy.target && original in daddy.target) // As opposed to no-delay pew pew
 				miss_modifier += -60
 		if(distance > 1)
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
@@ -199,16 +199,16 @@
 			to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
 		else
 			visible_message("<span class = 'red'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
-			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+			// X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		if(firer)
 			M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 			firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 			if(!fake)
-				msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
+				msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") // BS12 EDIT ALG
 		else
 			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 			if(!fake)
-				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
+				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") // BS12 EDIT ALG
 
 
 	if(istype(A,/turf))
@@ -217,7 +217,7 @@
 		for(var/mob/Mob in A)
 			Mob.bullet_act(src, def_zone)
 
-	//stop flying
+	// stop flying
 	on_impact(A)
 
 	density = 0
@@ -238,7 +238,7 @@
 /obj/item/projectile/process()
 	var/first_step = 1
 
-	//plot the initial trajectory
+	// plot the initial trajectory
 	setup_trajectory()
 
 	spawn while(src && src.loc)
@@ -246,7 +246,7 @@
 			sleep(1)
 			continue
 		if(kill_count-- < 1)
-			on_impact(src.loc) //for any final impact behaviours
+			on_impact(src.loc) // for any final impact behaviours
 			qdel(src)
 			return
 		if((!( current ) || loc == current))
@@ -279,7 +279,7 @@
 		Range()
 
 		if(!hitscan)
-			sleep(step_delay)	//add delay between movement iterations if it's not a hitscan weapon
+			sleep(step_delay)	// add delay between movement iterations if it's not a hitscan weapon
 
 /obj/item/projectile/proc/before_move()
 	return
@@ -294,7 +294,7 @@
 	// generate this now since all visual effects the projectile makes can use it
 	effect_transform = new()
 	effect_transform.Scale(trajectory.return_hypotenuse(), 1)
-	effect_transform.Turn(-trajectory.return_angle())		//no idea why this has to be inverted, but it works
+	effect_transform.Turn(-trajectory.return_angle())		// no idea why this has to be inverted, but it works
 
 /obj/item/projectile/proc/muzzle_effect(var/matrix/T)
 	if(silenced)
@@ -341,21 +341,21 @@
 	xo = U.x - T.x
 	INVOKE_ASYNC(src, .process)
 
-/obj/item/projectile/test //Used to see if you can hit them.
-	invisibility = 101 //Nope!  Can't see me!
+/obj/item/projectile/test // Used to see if you can hit them.
+	invisibility = 101 // Nope!  Can't see me!
 	yo = null
 	xo = null
 	var/target = null
-	var/result = 0 //To pass the message back to the gun.
+	var/result = 0 // To pass the message back to the gun.
 
 /obj/item/projectile/test/Bump(atom/A)
 	if(A == firer)
 		loc = A.loc
-		return //cannot shoot yourself
+		return // cannot shoot yourself
 	if(istype(A, /obj/item/projectile))
 		return
 	if(istype(A, /mob/living))
-		result = 2 //We hit someone, return 1!
+		result = 2 // We hit someone, return 1!
 		return
 	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
 		return
@@ -375,14 +375,14 @@
 	original = target
 	starting = curloc
 
-	//plot the initial trajectory
+	// plot the initial trajectory
 	setup_trajectory()
 
-	while(src) //Loop on through!
+	while(src) // Loop on through!
 		if(result)
 			return (result - 1)
 		if((!( target ) || loc == target))
-			target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
+			target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) // Finding the target turf at map edge
 
 		trajectory.increment()	// increment the current location
 		location = trajectory.return_location(location)		// update the locally stored location data
@@ -390,14 +390,14 @@
 		Move(location.return_turf())
 
 		var/mob/living/M = locate() in get_turf(src)
-		if(istype(M)) //If there is someting living...
-			return 1 //Return 1
+		if(istype(M)) // If there is someting living...
+			return 1 // Return 1
 		else
 			M = locate() in get_step(src,target)
 			if(istype(M))
 				return 1
 
-/obj/item/projectile/test/dummy/Bump(atom/A) //Another test projectile with increased checklist
+/obj/item/projectile/test/dummy/Bump(atom/A) // Another test projectile with increased checklist
 	..()
 	if(result != 1)
 		return
@@ -405,8 +405,8 @@
 		result = 2
 	return
 
-/obj/item/projectile/proc/Range() ///tg/
+/obj/item/projectile/proc/Range() // /tg/
 	return
 
 /obj/item/projectile/Process_Spacemove(movement_dir = 0)
-	return 1 //Bullets don't drift in space
+	return 1 // Bullets don't drift in space

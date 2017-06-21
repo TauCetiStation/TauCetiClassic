@@ -1,4 +1,4 @@
-//Redefining some robot procs, since drones can't be repaired and really shouldn't take component damage.
+// Redefining some robot procs, since drones can't be repaired and really shouldn't take component damage.
 /mob/living/silicon/robot/drone/take_overall_damage(brute = 0, burn = 0, sharp = 0, used_weapon = null)
 	bruteloss += brute
 	fireloss += burn

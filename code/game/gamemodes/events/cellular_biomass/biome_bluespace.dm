@@ -1,5 +1,5 @@
 /obj/effect/cellular_biomass_controller/bluespace
-	living_grow_chance = 10 //more then average enemies amount
+	living_grow_chance = 10 // more then average enemies amount
 	core_grow_chance = 4
 	walls_type =     /obj/structure/cellular_biomass/wall/bluespace
 	insides_type =   /obj/structure/cellular_biomass/grass/bluespace
@@ -57,7 +57,7 @@
 /obj/structure/cellular_biomass/lair/bluespace/New()
 	var/type = pick(subtypesof(/mob/living/simple_animal/hostile/cellular/bluespace/))
 	new type(src.loc)
-	qdel(src) //glitches are self-replicating, no need for lair
+	qdel(src) // glitches are self-replicating, no need for lair
 
 /obj/effect/decal/cleanable/bluespace
 	name = "Glitch"

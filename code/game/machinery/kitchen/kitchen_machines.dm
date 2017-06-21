@@ -13,13 +13,13 @@
 	var/broken = 0 // ={0,1,2} How broken is it???
 	var/efficiency = 0
 	var/list/cook_verbs = list("Cooking")
-	//Recipe & Item vars
-	var/recipe_type		//Make sure to set this on the machine definition, or else you're gonna runtime on New()
+	// Recipe & Item vars
+	var/recipe_type		// Make sure to set this on the machine definition, or else you're gonna runtime on New()
 	var/list/datum/recipe/available_recipes // List of the recipes you can use
 	var/list/acceptable_items // List of the items you can put in
 	var/list/acceptable_reagents // List of the reagents you can put in
 	var/max_n_of_items = 10
-	//Icon states
+	// Icon states
 	var/off_icon
 	var/on_icon
 	var/broken_icon
@@ -103,7 +103,7 @@
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
 				src.flags = OPENCONTAINER
-				return 0 //to use some fuel
+				return 0 // to use some fuel
 		else
 			to_chat(user, "<span class='danger'>It's broken!</span>")
 			return 1
@@ -168,7 +168,7 @@
 			if (!(R.id in acceptable_reagents))
 				to_chat(user, "Your [O] contains components unsuitable for cookery")
 				return 1
-		//G.reagents.trans_to(src,G.amount_per_transfer_from_this)
+		// G.reagents.trans_to(src,G.amount_per_transfer_from_this)
 	else if(istype(O,/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		to_chat(user, "<span class='danger'>You can not fit \the [G.affecting] in this [src].</span>")
@@ -214,7 +214,7 @@
 			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/tofu))
 				items_measures[display_name] = "tofu chunk"
 				items_measures_p[display_name] = "tofu chunks"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat)) //any meat
+			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat)) // any meat
 				items_measures[display_name] = "slab of meat"
 				items_measures_p[display_name] = "slabs of meat"
 			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/donkpocket))
@@ -264,7 +264,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	start()
-	if (reagents.total_volume==0 && !(locate(/obj) in contents)) //dry run
+	if (reagents.total_volume==0 && !(locate(/obj) in contents)) // dry run
 		if (!cook_process(10))
 			abort()
 			return
@@ -384,7 +384,7 @@
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	src.visible_message("\red [src] gets covered in muck!")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
-	src.flags = null //So you can't add condiments
+	src.flags = null // So you can't add condiments
 	src.icon_state = dirty_icon // Make it look dirty too
 	src.operating = 0 // Turn it off again aferwards
 	src.updateUsrDialog()
@@ -394,9 +394,9 @@
 	s.set_up(2, 1, src)
 	s.start()
 	src.icon_state = broken_icon // Make it look all busted up and shit
-	src.visible_message("\red [src] breaks!") //Let them know they're stupid
+	src.visible_message("\red [src] breaks!") // Let them know they're stupid
 	src.broken = 2 // Make it broken so it can't be used util fixed
-	src.flags = null //So you can't add condiments
+	src.flags = null // So you can't add condiments
 	src.operating = 0 // Turn it off again aferwards
 	src.updateUsrDialog()
 

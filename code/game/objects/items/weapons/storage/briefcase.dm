@@ -15,7 +15,7 @@
 	..()
 
 /obj/item/weapon/storage/briefcase/attack(mob/living/M, mob/living/user)
-	//..()
+	// ..()
 
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red The [src] slips out of your hand and hits your head.")

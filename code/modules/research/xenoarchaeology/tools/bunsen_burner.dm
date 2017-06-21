@@ -4,8 +4,8 @@
 	desc = "A flat, self-heating device designed for bringing chemical mixtures to boil."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "bunsen0"
-	var/heating = 0		//whether the bunsen is turned on
-	var/heated = 0		//whether the bunsen has been on long enough to let stuff react
+	var/heating = 0		// whether the bunsen is turned on
+	var/heated = 0		// whether the bunsen has been on long enough to let stuff react
 	var/obj/item/weapon/reagent_containers/held_container
 	var/heat_time = 50
 

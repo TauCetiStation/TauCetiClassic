@@ -32,7 +32,7 @@
 	..()
 	return QDEL_HINT_QUEUE
 
-//Mob anal probe
+// Mob anal probe
 
 /obj/lair_life_monitor
 	var/obj/structure/cellular_biomass/lair/lair_to_report

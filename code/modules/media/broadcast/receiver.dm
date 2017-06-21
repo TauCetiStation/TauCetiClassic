@@ -2,9 +2,9 @@
 var/global/media_receivers=list()
 
 
-///////////////////////
+/////////////////////// 
 // RECEIVERS
-///////////////////////
+/////////////////////// 
 
 /obj/machinery/media/receiver
 	var/media_frequency = 1015 // 123.4 MHz

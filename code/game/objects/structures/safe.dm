@@ -4,7 +4,7 @@ SAFES
 FLOOR SAFES
 */
 
-//SAFES
+// SAFES
 /obj/structure/safe
 	name = "safe"
 	desc = "A huge chunk of metal with a dial embedded in it. Fine print on the dial reads \"Scarborough Arms - 2 tumbler safe, guaranteed thermite resistant, explosion resistant, and assistant resistant.\""
@@ -12,14 +12,14 @@ FLOOR SAFES
 	icon_state = "safe"
 	anchored = 1
 	density = 1
-	var/open = 0		//is the safe open?
-	var/tumbler_1_pos	//the tumbler position- from 0 to 72
-	var/tumbler_1_open	//the tumbler position to open at- 0 to 72
+	var/open = 0		// is the safe open?
+	var/tumbler_1_pos	// the tumbler position- from 0 to 72
+	var/tumbler_1_open	// the tumbler position to open at- 0 to 72
 	var/tumbler_2_pos
 	var/tumbler_2_open
-	var/dial = 0		//where is the dial pointing?
-	var/space = 0		//the combined w_class of everything in the safe
-	var/maxspace = 24	//the maximum combined w_class of stuff in the safe
+	var/dial = 0		// where is the dial pointing?
+	var/space = 0		// the combined w_class of everything in the safe
+	var/maxspace = 24	// the maximum combined w_class of stuff in the safe
 
 
 /obj/structure/safe/New()
@@ -172,12 +172,12 @@ obj/structure/safe/meteorhit(obj/O)
 	return
 
 
-//FLOOR SAFES
+// FLOOR SAFES
 /obj/structure/safe/floor
 	name = "floor safe"
 	icon_state = "floorsafe"
 	density = 0
-	level = 1	//underfloor
+	level = 1	// underfloor
 	layer = 2.5
 
 

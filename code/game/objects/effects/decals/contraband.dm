@@ -1,5 +1,5 @@
 
-//########################## CONTRABAND ;3333333333333333333 -Agouri ###################################################
+// ########################## CONTRABAND ;3333333333333333333 -Agouri ###################################################
 
 #define POSTERNAME "name"
 
@@ -98,7 +98,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	icon = 'icons/obj/contraband.dmi'
 	icon_state = "rolled_poster"
 	var/serial_number = 0
-	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
+	var/obj/structure/sign/poster/resulting_poster = null // The poster that will be created is initialised and stored through contraband/poster's constructor
 	var/official = FALSE
 
 /obj/item/weapon/poster/contraband
@@ -119,19 +119,19 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		resulting_poster = new(serial_number, official)
 	else
 		serial_number = given_serial
-		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
+		// We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
 	name += " - No. [serial_number]"
 	..(loc)
 
 
-//############################## THE ACTUAL DECALS ###########################
+// ############################## THE ACTUAL DECALS ###########################
 
 /obj/structure/sign/poster
 	name = "poster"
 	desc = "A large piece of space-resistant printed paper. "
 	icon = 'icons/obj/contraband.dmi'
 	anchored = TRUE
-	var/serial_number	//Will hold the value of src.loc if nobody initialises it
+	var/serial_number	// Will hold the value of src.loc if nobody initialises it
 	var/ruined = FALSE
 	var/official = FALSE
 	var/placespeed = 30 // don't change this, otherwise the animation will not sync to the progress bar
@@ -144,7 +144,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	if(rolled_official)
 		official = rolled_official
 	if(serial_number == loc)
-		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)	//This is for the mappers that want individual posters without having to use rolled posters.
+		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)	// This is for the mappers that want individual posters without having to use rolled posters.
 	if(official)
 		icon_state = "poster[serial_number]_legit"
 		name += legitposters[serial_number][POSTERNAME]
@@ -197,22 +197,22 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		P.loc = newloc
 		src.loc = P
 
-//separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
+// separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/simulated/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
 	if(!P.resulting_poster)	return
 
 	if((x - user.x) != 0 && (y - user.y) != 0) // check if user not on the axis with wall
 		return
-	for(var/obj/structure/sign/poster/PO in user.loc.contents) //Let's see if it already has a poster
+	for(var/obj/structure/sign/poster/PO in user.loc.contents) // Let's see if it already has a poster
 		if(istype(PO, /obj/structure/sign/poster) && \
 		PO.pixel_x == (x - user.x) * P.resulting_poster.bound_width && \
 		PO.pixel_y == (y - user.y) * P.resulting_poster.bound_height)
 			to_chat(user, "<span class='notice'>The wall is already has a poster!</span>")
 			return
 
-	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>")//Looks like it's uncluttered enough. Place the poster.
+	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>")// Looks like it's uncluttered enough. Place the poster.
 
-	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
+	// declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
 	var/obj/structure/sign/poster/D = P.resulting_poster
 
 	var/temp_loc = user.loc
@@ -221,7 +221,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	D.pixel_x = (x - D.x) * D.bound_width
 	D.pixel_y = (y - D.y) * D.bound_height
 	D.official = P.official
-	qdel(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
+	qdel(P)	// delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
 	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 
 	if(do_after(user, D.placespeed, target=src))

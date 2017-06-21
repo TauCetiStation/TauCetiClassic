@@ -1,8 +1,8 @@
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 // Depth scanner - scans rock turfs / boulders and tells players if there is anything interesting inside, logs all finds + coordinates + times
 
-//also known as the x-ray diffractor
+// also known as the x-ray diffractor
 /obj/item/device/depth_scanner
 	name = "depth analysis scanner"
 	desc = "Used to check spatial depth and density of rock outcroppings."
@@ -29,17 +29,17 @@
 		var/turf/simulated/mineral/M = A
 		if((M.finds && M.finds.len) || M.artifact_find)
 
-			//create a new scanlog entry
+			// create a new scanlog entry
 			var/datum/depth_scan/D = new()
 			D.coords = "[M.x].[rand(0,9)]:[M.y].[rand(0,9)]:[10 * M.z].[rand(0,9)]"
 			D.time = worldtime2text()
 			D.record_index = positive_locations.len + 1
 			D.material = M.mineral ? M.mineral.display_name : "Rock"
 
-			//find the first artifact and store it
+			// find the first artifact and store it
 			if(M.finds.len)
 				var/datum/find/F = M.finds[1]
-				D.depth = F.excavation_required * 2		//0-100% and 0-200cm
+				D.depth = F.excavation_required * 2		// 0-100% and 0-200cm
 				D.clearance = F.clearance_range * 2
 				D.material = get_responsive_reagent(F.find_type)
 
@@ -51,13 +51,13 @@
 	else if(istype(A,/obj/structure/boulder))
 		var/obj/structure/boulder/B = A
 		if(B.artifact_find)
-			//create a new scanlog entry
+			// create a new scanlog entry
 			var/datum/depth_scan/D = new()
 			D.coords = "[10 * B.x].[rand(0,9)]:[10 * B.y].[rand(0,9)]:[10 * B.z].[rand(0,9)]"
 			D.time = worldtime2text()
 			D.record_index = positive_locations.len + 1
 
-			//these values are arbitrary
+			// these values are arbitrary
 			D.depth = rand(75,100)
 			D.clearance = rand(5,25)
 			D.dissonance_spread = rand(750,2500) / 100
@@ -120,7 +120,7 @@
 				positive_locations.Remove(D)
 				qdel(D)
 		else
-			//GC will hopefully pick them up before too long
+			// GC will hopefully pick them up before too long
 			positive_locations = list()
 			qdel(current)
 	else if(href_list["close"])

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/pod
 	name = "Pod Launch Control"
@@ -58,7 +58,7 @@
 	user.set_machine(src)
 	if(connected)
 		var/d2
-		if(timing)	//door controls do not need timers.
+		if(timing)	// door controls do not need timers.
 			d2 = "<A href='?src=\ref[src];time=0'>Stop Time Launch</A>"
 		else
 			d2 = "<A href='?src=\ref[src];time=1'>Initiate Time Launch</A>"

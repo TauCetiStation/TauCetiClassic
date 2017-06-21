@@ -34,7 +34,7 @@
 			M.client.screen += D
 			H.cl = M.client
 
-/obj/effect/bmode//Cleaning up the tree a bit
+/obj/effect/bmode// Cleaning up the tree a bit
 	density = 1
 	anchored = 1
 	layer = ABOVE_HUD_LAYER
@@ -255,7 +255,7 @@
 				if(isobj(object)) qdel(object)
 
 		if(3)
-			if(pa.Find("left")) //I cant believe this shit actually compiles.
+			if(pa.Find("left")) // I cant believe this shit actually compiles.
 				if(object.vars.Find(holder.buildmode.varholder))
 					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
 					object.vars[holder.buildmode.varholder] = holder.buildmode.valueholder

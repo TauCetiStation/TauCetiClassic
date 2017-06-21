@@ -1,5 +1,5 @@
 // The lighting system
-//
+// 
 // consists of light fixtures (/obj/machinery/light) and light tube/bulb items (/obj/item/weapon/light)
 
 
@@ -194,7 +194,7 @@
 	use_power = 2
 	idle_power_usage = 2
 	active_power_usage = 20
-	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
+	power_channel = LIGHT // Lights are calc'd via area so they dont need to be in the machine list
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
 	var/static_power_used = 0
@@ -315,7 +315,7 @@
 		on_gs = on
 
 		if(on)
-			static_power_used = ((light_range + light_power) * 20) //20W per unit luminosity
+			static_power_used = ((light_range + light_power) * 20) // 20W per unit luminosity
 			addStaticPower(static_power_used, STATIC_LIGHT)
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
@@ -347,7 +347,7 @@
 
 /obj/machinery/light/attackby(obj/item/W, mob/user)
 
-	//Light replacer code
+	// Light replacer code
 	if(istype(W, /obj/item/device/lightreplacer))
 		var/obj/item/device/lightreplacer/LR = W
 		if(isliving(user))
@@ -374,7 +374,7 @@
 				on = has_power()
 				update()
 
-				user.drop_item()	//drop the item to update overlays and such
+				user.drop_item()	// drop the item to update overlays and such
 				qdel(L)
 
 				if(on && rigged)
@@ -388,7 +388,7 @@
 				return
 
 		// attempt to break the light
-		//If xenos decide they want to smash a light bulb with a toolbox, who am I to stop them? /N
+		// If xenos decide they want to smash a light bulb with a toolbox, who am I to stop them? /N
 
 	else if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
 
@@ -402,7 +402,7 @@
 					continue
 				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 			if(on && (W.flags & CONDUCT))
-				//if(!user.mutations & COLD_RESISTANCE)
+				// if(!user.mutations & COLD_RESISTANCE)
 				if (prob(12))
 					electrocute_mob(user, get_area(src), src, 0.3)
 			broken()
@@ -412,7 +412,7 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
+		if(istype(W, /obj/item/weapon/screwdriver)) // If it's a screwdriver open it.
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")
@@ -438,7 +438,7 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-			//if(!user.mutations & COLD_RESISTANCE)
+			// if(!user.mutations & COLD_RESISTANCE)
 			if (prob(75))
 				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
 
@@ -470,7 +470,7 @@
 	return
 
 // Aliens smash the bulb but do not get electrocuted./N
-/obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.
+/obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)// So larva don't go breaking light bulbs.
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
 		to_chat(user, "\green That object is useless to you.")
 		return
@@ -542,7 +542,7 @@
 	L.update()
 	L.add_fingerprint(user)
 
-	if(!user.put_in_active_hand(L))	//puts it in our active hand (don't forget check)
+	if(!user.put_in_active_hand(L))	// puts it in our active hand (don't forget check)
 		L.loc = get_turf(user)
 
 	status = LIGHT_EMPTY
@@ -613,7 +613,7 @@
 				broken()
 	return
 
-//blob effect
+// blob effect
 
 /obj/machinery/light/blob_act()
 	if(prob(75))
@@ -632,7 +632,7 @@
 // called when on fire
 
 /obj/machinery/light/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
+	if(prob(max(0, exposed_temperature - 673)))   // 0% at <400C, 100% at >500C
 		broken()
 
 // explode the light
@@ -661,7 +661,7 @@
 	var/switchcount = 0	// number of times switched
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
-	var/brightness_range = 2 //how much light it gives off
+	var/brightness_range = 2 // how much light it gives off
 	var/brightness_power = 1
 	var/brightness_color = null
 

@@ -7,13 +7,13 @@
 	use_power = 0
 	var/obj/item/weapon/card/id/botcard			// the ID card that the bot "holds"
 	var/on = 1
-	var/health = 0 //do not forget to set health for your bot!
+	var/health = 0 // do not forget to set health for your bot!
 	var/maxhealth = 0
 	var/fire_dam_coeff = 1.0
 	var/brute_dam_coeff = 1.0
-	var/open = 0//Maint panel
+	var/open = 0// Maint panel
 	var/locked = 1
-	//var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
+	// var/emagged = 0 // Urist: Moving that var to the general /bot tree as it's used by most bots
 	var/x_last
 	var/y_last
 	var/same_pos_count

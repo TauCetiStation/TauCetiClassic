@@ -56,7 +56,7 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 obj/machinery/door/airlock/proc/send_status()
 	if(radio_connection)
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.data["tag"] = id_tag
 		signal.data["timestamp"] = world.time
 
@@ -86,7 +86,7 @@ obj/machinery/door/airlock/Bumped(atom/AM)
 		var/obj/mecha/mecha = AM
 		if(density && radio_connection && mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
 			var/datum/signal/signal = new
-			signal.transmission_method = 1 //radio signal
+			signal.transmission_method = 1 // radio signal
 			signal.data["tag"] = id_tag
 			signal.data["timestamp"] = world.time
 
@@ -152,7 +152,7 @@ obj/machinery/airlock_sensor/update_icon()
 
 obj/machinery/airlock_sensor/attack_hand(mob/user)
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.data["tag"] = master_tag
 	signal.data["command"] = command
 
@@ -166,7 +166,7 @@ obj/machinery/airlock_sensor/process()
 
 		if(abs(pressure - previousPressure) > 0.001 || previousPressure == null)
 			var/datum/signal/signal = new
-			signal.transmission_method = 1 //radio signal
+			signal.transmission_method = 1 // radio signal
 			signal.data["tag"] = id_tag
 			signal.data["timestamp"] = world.time
 			signal.data["pressure"] = num2text(pressure)
@@ -208,7 +208,7 @@ obj/machinery/access_button
 	icon_state = "access_button_standby"
 	name = "access button"
 
-	layer = 3.3	//Above windows
+	layer = 3.3	// Above windows
 	anchored = 1
 	power_channel = ENVIRON
 
@@ -235,7 +235,7 @@ obj/machinery/access_button/attack_hand(mob/user)
 
 	else if(radio_connection)
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.data["tag"] = master_tag
 		signal.data["command"] = command
 

@@ -2,7 +2,7 @@
 #Z2 miscellaneous stuff
 **/
 
-//New Hulk stuff...
+// New Hulk stuff...
 /mob
 	var/hulk_cd = 0
 
@@ -437,9 +437,9 @@
 
 	return
 
-//Girders!!!!!
+// Girders!!!!!
 /obj/structure/girder/attack_paw(mob/user)
-	return src.attack_hand(user) //#Z2
+	return src.attack_hand(user) // #Z2
 
 /obj/structure/girder/attack_hand(mob/user)
 	if (HULK in user.mutations)

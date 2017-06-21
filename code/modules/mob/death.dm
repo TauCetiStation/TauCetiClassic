@@ -1,5 +1,5 @@
-//This is the proc for gibbing a mob. Cannot gib ghosts.
-//added different sort of gibs and animations. N
+// This is the proc for gibbing a mob. Cannot gib ghosts.
+// added different sort of gibs and animations. N
 /mob/proc/gib()
 	death(1)
 	var/atom/movable/overlay/animation = null
@@ -22,9 +22,9 @@
 		if(src)			qdel(src)
 
 
-//This is the proc for turning a mob into ash. Mostly a copy of gib code (above).
-//Originally created for wizard disintegrate. I've removed the virus code since it's irrelevant here.
-//Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
+// This is the proc for turning a mob into ash. Mostly a copy of gib code (above).
+// Originally created for wizard disintegrate. I've removed the virus code since it's irrelevant here.
+// Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
 /mob/proc/dust()
 	death(1)
 	var/atom/movable/overlay/animation = null
@@ -49,10 +49,10 @@
 
 /mob/proc/death(gibbed)
 
-	//Quick fix for corpses kept propped up in chairs. ~Z
+	// Quick fix for corpses kept propped up in chairs. ~Z
 	drop_r_hand()
 	drop_l_hand()
-	//End of fix.
+	// End of fix.
 
 	timeofdeath = world.time
 

@@ -116,12 +116,12 @@
 			S.blob_act()
 		return
 	if(T.CanPass(growing,S))
-		for(var/obj/A in S) //Del everything.
+		for(var/obj/A in S) // Del everything.
 			qdel(A)
 		spawn_cellular_biomass_piece(S, growing)
 	if ((locate(/obj/machinery/door, S) || locate(/obj/structure/window, S)) && prob(90))
 		return
-	for(var/atom/A in S) //Hit everything in the turf
+	for(var/atom/A in S) // Hit everything in the turf
 		A.blob_act()
 
 

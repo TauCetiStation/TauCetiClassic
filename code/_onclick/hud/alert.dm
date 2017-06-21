@@ -1,6 +1,6 @@
-//A system to manage and display alerts on screen without needing you to do it yourself
+// A system to manage and display alerts on screen without needing you to do it yourself
 
-//PUBLIC -  call these wherever you want
+// PUBLIC -  call these wherever you want
 
 
 /mob/proc/throw_alert(category, id, severity, obj/new_master)
@@ -101,9 +101,9 @@
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please."
-	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
+	var/timeout = 0 // If set to a number, this alert will clear itself after that many deciseconds
 
-//Gas alerts
+// Gas alerts
 /obj/screen/alert/oxy
 	name = "Choking"
 	desc = "You're not getting enough oxygen. Find some good air before you pass out! \
@@ -150,7 +150,7 @@
 	name = "High"
 	desc = "Woah man, you're tripping balls! Careful you don't get addicted to this... if you aren't already."
 
-/obj/screen/alert/drunk //Not implemented
+/obj/screen/alert/drunk // Not implemented
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
 
@@ -170,7 +170,7 @@
 			magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extuingisher, \
 			or shoot a gun to move around via Newton's 3rd Law of motion."
 
-//ALIENS
+// ALIENS
 
 /obj/screen/alert/alien_tox
 	name = "Plasma"
@@ -181,7 +181,7 @@
 	name = "Burning"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you up."
 
-//IANS
+// IANS
 /obj/screen/alert/ian_oxy
 	name = "Choking"
 	desc = "You're not getting enough oxygen."
@@ -198,7 +198,7 @@
 	name = "Too Cold"
 	desc = "You're freezing cold!"
 
-//SILICONS
+// SILICONS
 
 /obj/screen/alert/nocell
 	name = "Missing Power Cell"
@@ -213,7 +213,7 @@
 	name = "Low Charge"
 	desc = "Unit's power cell is running low. Reharging stations are available in robotics, the dormitory's bathrooms. and the AI satelite."
 
-//Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
+// Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /obj/screen/alert/hacked
 	name = "Hacked"
 	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."
@@ -229,7 +229,7 @@
 			so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
 
-//OBJECT-BASED
+// OBJECT-BASED
 
 /obj/screen/alert/buckled
 	name = "Buckled"

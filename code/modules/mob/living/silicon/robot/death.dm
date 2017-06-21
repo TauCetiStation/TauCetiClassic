@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/gib()
-	//robots don't die when gibbed. instead they drop their MMI'd brain
+	// robots don't die when gibbed. instead they drop their MMI'd brain
 	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
@@ -35,7 +35,7 @@
 
 	flick("dust-r", animation)
 	new /obj/effect/decal/remains/robot(loc)
-	if(mmi)		qdel(mmi)	//Delete the MMI first so that it won't go popping out.
+	if(mmi)		qdel(mmi)	// Delete the MMI first so that it won't go popping out.
 
 	dead_mob_list -= src
 	spawn(15)
@@ -59,7 +59,7 @@
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	updateicon()
 
-	tod = worldtime2text() //weasellos time of death patch
+	tod = worldtime2text() // weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 
 	sql_report_cyborg_death(src)

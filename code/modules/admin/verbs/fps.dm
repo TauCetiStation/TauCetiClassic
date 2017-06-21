@@ -1,4 +1,4 @@
-//replaces the old Ticklag verb, fps is easier to understand
+// replaces the old Ticklag verb, fps is easier to understand
 /client/proc/set_fps()
 	set category = "Debug"
 	set name = "Set fps"
@@ -19,6 +19,6 @@
 	var/msg = "[key_name(src)] has modified world.fps to [fps]"
 	log_admin(msg)
 	message_admins(msg)
-	feedback_add_details("admin_verb","TICKLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","TICKLAG") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	world.fps = fps

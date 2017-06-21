@@ -7,7 +7,7 @@
 	spawn_positions = -1
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
-	access = list()			//See /datum/job/assistant/get_access()
+	access = list()			// See /datum/job/assistant/get_access()
 	alt_titles = list("Technical Assistant","Medical Intern","Research Assistant","Security Cadet",
 	"Lawyer","Mecha Operator","Private Eye","Reporter","Security Cadet","Waiter","Vice Officer","Paranormal Investigator")
 

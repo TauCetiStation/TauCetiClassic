@@ -24,8 +24,8 @@ proc/d2sm_prepmap(filename)
 	return txt
 
 proc/dmp2swapmap(filename)
-	//var/txt = file2text(filename)
-	//if(!txt) return
+	// var/txt = file2text(filename)
+	// if(!txt) return
 	var/txt = d2sm_prepmap(filename)
 	var/mapname="[filename]"
 	var/i,j,k
@@ -132,7 +132,7 @@ proc/dmp2swapmap(filename)
 			i=findtext(txt,"\n")
 			txt=i?copytext(txt,i+1):null
 	to_chat(world, "Map size: [X],[Y],[Z]")
-	//for(var/code in codes)
+	// for(var/code in codes)
 	//	world << "Code \"[code]\":\n[codes[code]]"
 	fdel("map_[mapname].txt")
 	var/F = file("map_[mapname].txt")

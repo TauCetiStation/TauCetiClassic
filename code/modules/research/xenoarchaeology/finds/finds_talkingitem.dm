@@ -1,10 +1,10 @@
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 // Formerly talking crystals - these procs are now modular so that you can make any /obj/item/weapon 'parrot' player speech back to them
 // This could be extended to atoms, but it's bad enough as is
 // I genuinely tried to Add and Remove them from var and proc lists, but just couldn't get it working
 
-//for easy reference
+// for easy reference
 /obj/var/datum/talking_atom/talking_atom
 
 /datum/talking_atom
@@ -52,7 +52,7 @@
 		var/list/w = heard_words["[lowertext(seperate[Xa])]"]
 		if(w)
 			w.Add("[lowertext(seperate[next])]")
-		//world << "Adding [lowertext(seperate[next])] to [lowertext(seperate[Xa])]"
+		// world << "Adding [lowertext(seperate[next])] to [lowertext(seperate[Xa])]"
 
 	if(prob(30))
 		var/list/options = list("[holder_atom] seems to be listening intently to [source]...",\
@@ -65,7 +65,7 @@
 			SaySomething(pick(seperate))
 
 /*/obj/item/weapon/talkingcrystal/proc/debug()
-	//set src in view()
+	// set src in view()
 	for(var/v in heard_words)
 		to_chat(world, "[uppertext(v)]")
 		var/list/d = heard_words["[v]"]
@@ -93,7 +93,7 @@
 		text=cap
 	var/q = 0
 	msg+=text
-	//TODO:CYRILLIC
+	// TODO:CYRILLIC
 	if(msg=="What" | msg == "Who" | msg == "How" | msg == "Why" | msg == "Are")
 		q=1
 
@@ -117,7 +117,7 @@
 	var/list/listening = viewers(holder_atom)
 	for(var/mob/M in mob_list)
 		if (!M.client)
-			continue //skip monkeys and leavers
+			continue // skip monkeys and leavers
 		if (isnewplayer(M))
 			continue
 		if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)

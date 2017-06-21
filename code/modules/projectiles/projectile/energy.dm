@@ -18,7 +18,7 @@
 	stutter = 10
 	agony = 120
 	damage_type = HALLOSS
-	//Damage will be handled on the MOB side, to prevent window shattering.
+	// Damage will be handled on the MOB side, to prevent window shattering.
 
 /obj/item/projectile/energy/declone
 	name = "declone"

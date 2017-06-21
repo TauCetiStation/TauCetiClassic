@@ -19,7 +19,7 @@
 	spawn(0)
 		print_reference()
 
-		//create a short manual as well
+		// create a short manual as well
 		var/obj/item/weapon/paper/R = new(src.loc)
 		R.name = "Steps to success: Correct EFTPOS Usage"
 		/*
@@ -35,7 +35,7 @@
 		R.info += "5. Give your EFTPOS device to the customer, they must authenticate the transaction by swiping their ID card and entering their PIN number.<br>"
 		R.info += "6. If done correctly, the transaction will be logged to both accounts with the reference you have entered, the terminal ID of your EFTPOS device and the money transferred across accounts.<br>"
 		*/
-		//Temptative new manual:
+		// Temptative new manual:
 		R.info += "<b>First EFTPOS setup:</b><br>"
 		R.info += "1. Memorise your EFTPOS command code (provided with all EFTPOS devices).<br>"
 		R.info += "2. Connect the EFTPOS to the account in which you want to receive the funds.<br><br>"
@@ -46,12 +46,12 @@
 		R.info += "4. If everything is done correctly, the money will be transferred. To unlock the device you will have to reset the EFTPOS device.<br>"
 
 
-		//stamp the paper
+		// stamp the paper
 		var/obj/item/weapon/stamp/centcomm/S = new
 		S.stamp_paper(R, "This paper has been stamped by the EFTPOS device.")
 
-	//by default, connect to the station account
-	//the user of the EFTPOS device can change the target account though, and no-one will be the wiser (except whoever's being charged)
+	// by default, connect to the station account
+	// the user of the EFTPOS device can change the target account though, and no-one will be the wiser (except whoever's being charged)
 	linked_account = station_account
 
 /obj/item/device/eftpos/proc/print_reference()
@@ -61,7 +61,7 @@
 	R.info += "Access code: [access_code]<br><br>"
 	R.info += "<b>Do not lose or misplace this code.</b><br>"
 
-	//stamp the paper
+	// stamp the paper
 	var/obj/item/weapon/stamp/centcomm/S = new
 	S.stamp_paper(R, "This paper has been stamped by the EFTPOS device.")
 
@@ -115,13 +115,13 @@
 						src.visible_message("[bicon(src)] The [src] chimes.")
 						transaction_paid = 1
 
-						//transfer the money
+						// transfer the money
 						E.worth -= transaction_amount
 						linked_account.money += transaction_amount
 
-						//create entry in the EFTPOS linked account transaction log
+						// create entry in the EFTPOS linked account transaction log
 						var/datum/transaction/T = new()
-						T.target_name = E.owner_name //D.owner_name
+						T.target_name = E.owner_name // D.owner_name
 						T.purpose = transaction_purpose
 						T.amount = transaction_amount
 						T.source_terminal = machine_id
@@ -196,7 +196,7 @@
 				else
 					to_chat(usr, "[bicon(src)]<span class='warning'>Unable to link accounts.</span>")
 			if("reset")
-				//reset the access code - requires HoP/captain access
+				// reset the access code - requires HoP/captain access
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card))
 					var/obj/item/weapon/card/id/C = I
@@ -225,11 +225,11 @@
 								src.visible_message("[bicon(src)] The [src] chimes.")
 								transaction_paid = 1
 
-								//transfer the money
+								// transfer the money
 								D.money -= transaction_amount
 								linked_account.money += transaction_amount
 
-								//create entries in the two account transaction logs
+								// create entries in the two account transaction logs
 								var/datum/transaction/T = new()
 								T.target_name = "[linked_account.owner_name] (via [eftpos_name])"
 								T.purpose = transaction_purpose
@@ -241,7 +241,7 @@
 								T.date = current_date_string
 								T.time = worldtime2text()
 								D.transaction_log.Add(T)
-								//
+								// 
 								T = new()
 								T.target_name = D.owner_name
 								T.purpose = transaction_purpose
@@ -274,4 +274,4 @@
 	else
 		..()
 
-	//emag?
+	// emag?

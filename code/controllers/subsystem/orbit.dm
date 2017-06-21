@@ -23,7 +23,7 @@ var/datum/subsystem/orbit/SSorbit
 	if (!resumed)
 		src.currentrun = orbits.Copy()
 
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	while (currentrun.len)

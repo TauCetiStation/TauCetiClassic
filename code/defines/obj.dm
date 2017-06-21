@@ -23,11 +23,11 @@
 	anchored = 1
 	layer = 99
 	mouse_opacity = 0
-	unacidable = 1//Just to be sure.
+	unacidable = 1// Just to be sure.
 
 /obj/effect/beam
 	name = "beam"
-	unacidable = 1//Just to be sure.
+	unacidable = 1// Just to be sure.
 	var/def_zone
 	pass_flags = PASSTABLE
 
@@ -48,7 +48,7 @@
 	var/medical[] = list()
 	var/general[] = list()
 	var/security[] = list()
-	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
+	// This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
 	var/locked[] = list()
 
 
@@ -90,8 +90,8 @@
 			isactive[name] = active ? "Active" : "Inactive"
 		else
 			isactive[name] = t.fields["p_stat"]
-			//world << "[name]: [rank]"
-			//cael - to prevent multiple appearances of a player/job combination, add a continue after each line
+			// world << "[name]: [rank]"
+			// cael - to prevent multiple appearances of a player/job combination, add a continue after each line
 		var/department = 0
 		if(real_rank in command_positions)
 			heads[name] = rank
@@ -279,7 +279,7 @@ var/global/ManifestJSON
 	desc = "A stand with the empty body of a cyborg bolted to it."
 	density = 1
 	anchored = 1
-	unacidable = 1//temporary until I decide whether the borg can be removed. -veyveyr
+	unacidable = 1// temporary until I decide whether the borg can be removed. -veyveyr
 
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 

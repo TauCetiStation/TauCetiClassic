@@ -1,5 +1,5 @@
 
-//todo
+// todo
 /datum/artifact_effect/celldrain
 	effecttype = "celldrain"
 	effect_type = 3

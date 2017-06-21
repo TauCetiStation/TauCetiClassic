@@ -14,8 +14,8 @@
 	circuit = /obj/item/weapon/circuitboard/powermonitor
 	var/datum/powernet/powernet = null
 
-//fix for issue 521, by QualityVan.
-//someone should really look into why circuits have a powernet var, it's several kinds of retarded.
+// fix for issue 521, by QualityVan.
+// someone should really look into why circuits have a powernet var, it's several kinds of retarded.
 /obj/machinery/computer/monitor/New()
 	..()
 	var/obj/structure/cable/attached = null
@@ -25,7 +25,7 @@
 	if(attached)
 		powernet = attached.get_powernet()
 
-/obj/machinery/computer/monitor/process() //oh shit, somehow we didnt end up with a powernet... lets look for one.
+/obj/machinery/computer/monitor/process() // oh shit, somehow we didnt end up with a powernet... lets look for one.
 	if(!powernet)
 		var/obj/structure/cable/attached = null
 		var/turf/T = loc

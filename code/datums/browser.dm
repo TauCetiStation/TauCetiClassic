@@ -36,7 +36,7 @@
 	window_options = nwindow_options
 
 /datum/browser/proc/set_title_image(ntitle_image)
-	//title_image = ntitle_image
+	// title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
 	stylesheets[name] = file
@@ -67,7 +67,7 @@
 	if (title_image)
 		title_attributes = "class='uiTitle icon' style='background-image: url([title_image]);'"
 
-	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	return {"<!DOCTYPE HTML PUBLIC "-// W3C// DTD HTML 4.01 Transitional// EN" "http:// www.w3.org/TR/html4/loose.dtd">
 <html>
 	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
 	<head>
@@ -124,18 +124,18 @@
 
 // Registers the on-close verb for a browse window (client/verb/.windowclose)
 // this will be called when the close-button of a window is pressed.
-//
+// 
 // This is usually only needed for devices that regularly update the browse window,
 // e.g. canisters, timers, etc.
-//
+// 
 // windowid should be the specified window name
 // e.g. code is	: user << browse(text, "window=fred")
 // then use 	: onclose(user, "fred")
-//
+// 
 // Optionally, specify the "ref" parameter as the controlled atom (usually src)
 // to pass a "close=1" parameter to the atom's Topic() proc for special handling.
 // Otherwise, the user mob's machine var will be reset directly.
-//
+// 
 /proc/onclose(mob/user, windowid, atom/ref=null)
 	if(!user.client) return
 	var/param = "null"
@@ -144,24 +144,24 @@
 
 	winset(user, windowid, "on-close=\".windowclose [param]\"")
 
-	//world << "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]"
+	// world << "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]"
 
 
 // the on-close client verb
 // called when a browser popup window is closed after registering with proc/onclose()
 // if a valid atom reference is supplied, call the atom's Topic() with "close=1"
 // otherwise, just reset the client mob's machine var.
-//
+// 
 /client/verb/windowclose(atomref as text)
 	set hidden = 1						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 
-	//world << "windowclose: [atomref]"
+	// world << "windowclose: [atomref]"
 	if(atomref!="null")				// if passed a real atomref
 		var/hsrc = locate(atomref)	// find the reffed atom
 		var/href = "close=1"
 		if(hsrc)
-			//world << "[src] Topic [href] [hsrc]"
+			// world << "[src] Topic [href] [hsrc]"
 			usr = src.mob
 			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
 			return										// Topic() proc via client.Topic()
@@ -169,6 +169,6 @@
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
 	if(src && src.mob)
-		//world << "[src] was [src.mob.machine], setting to null"
+		// world << "[src] was [src.mob.machine], setting to null"
 		src.mob.unset_machine()
 	return

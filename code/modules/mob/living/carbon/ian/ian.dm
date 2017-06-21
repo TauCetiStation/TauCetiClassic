@@ -122,13 +122,13 @@
 	NORMAL ATTACK
 */
 			if(IAN_SNIFF)
-				if(A == src) //Resets current smell in memory.
+				if(A == src) // Resets current smell in memory.
 					nose_memory = null
 					to_chat(src, "<span class='notice'>Dropped current smell.</span>")
 					isHandsBusy = FALSE
 					return
 
-				if(isturf(A)) //Visualize smells in X range around us.
+				if(isturf(A)) // Visualize smells in X range around us.
 					if(nose_last_sniff > world.time)
 						to_chat(src, "<span class='warning'>Nose is on cooldown.</span>")
 					else
@@ -142,7 +142,7 @@
 					return
 
 				var/smell
-				if(ishuman(A)) //If human - just add his smell to database as known or compare it with nose_smell.
+				if(ishuman(A)) // If human - just add his smell to database as known or compare it with nose_smell.
 					var/mob/living/carbon/human/H = A
 					if(!istype(H.dna, /datum/dna))
 						to_chat(src, "<span class='warning'>This humanoid has no smell at all!</span>")
@@ -284,7 +284,7 @@
 
 	client.images -= I
 
-//Standard procs, etc.
+// Standard procs, etc.
 /mob/living/carbon/ian/IsAdvancedToolUser()
 	return FALSE
 
@@ -347,11 +347,11 @@
 	if (M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == "hurt")// Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					if(is_armored(M, 40))
-						//do nothing
+						// do nothing
 					else
 						apply_effects(0,0,0,0,5,0,0,150)
 						M.visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>", , "<span class='red'>You hear someone fall</span>")

@@ -5,7 +5,7 @@
 	icon_state = "power_mod"
 	var/obj/item/device/pda/hostpda = null
 
-	var/on = 0 //Are we currently active??
+	var/on = 0 // Are we currently active??
 	var/menu_message = ""
 
 /obj/item/radio/integrated/New()
@@ -15,7 +15,7 @@
 
 /obj/item/radio/integrated/proc/post_signal(freq, key, value, key2, value2, key3, value3, s_filter)
 
-	//world << "Post: [freq]: [key]=[value], [key2]=[value2]"
+	// world << "Post: [freq]: [key]=[value], [key2]=[value2]"
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
 	if(!frequency) return

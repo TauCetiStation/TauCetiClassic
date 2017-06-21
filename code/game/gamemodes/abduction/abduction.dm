@@ -49,14 +49,14 @@
 	return 1
 
 /datum/game_mode/abduction/proc/make_abductor_team(team_number,preset_agent=null,preset_scientist=null)
-	//Team Name
-	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
+	// Team Name
+	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" // TODO Ensure unique and actual alieny names
 	abduction_teams += team_names[team_number]
-	//Team Objective
+	// Team Objective
 	var/datum/objective/experiment/team_objective = new
 	team_objective.team = team_number
 	team_objectives[team_number] = team_objective
-	//Team Members
+	// Team Members
 	if(antag_candidates.len >= 2)
 		var/datum/mind/scientist = pick(antag_candidates)
 		antag_candidates -= scientist
@@ -80,7 +80,7 @@
 	return 0
 
 /datum/game_mode/abduction/post_setup()
-	//Spawn Team
+	// Spawn Team
 	var/list/obj/effect/landmark/abductor/agent_landmarks = new
 	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
 	agent_landmarks.len = max_teams
@@ -130,7 +130,7 @@
 
 	return ..()
 
-//Used for create antag buttons
+// Used for create antag buttons
 /datum/game_mode/abduction/proc/post_setup_team(team_number)
 	var/list/obj/effect/landmark/abductor/agent_landmarks = new
 	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
@@ -209,7 +209,7 @@
 	R.set_frequency(radio_freq)
 	agent.equip_to_slot_or_del(R, slot_l_ear)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(agent), slot_shoes)
-	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(agent), slot_w_uniform) //they're greys gettit
+	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(agent), slot_w_uniform) // they're greys gettit
 	agent.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(agent), slot_back)
 
 /datum/game_mode/abduction/proc/get_team_console(team)
@@ -336,7 +336,7 @@
 		text += "<BR><HR>"
 	return text
 
-//Landmarks
+// Landmarks
 // TODO: Split into seperate landmarks for prettier ships
 /obj/effect/landmark/abductor
 	var/team = 1

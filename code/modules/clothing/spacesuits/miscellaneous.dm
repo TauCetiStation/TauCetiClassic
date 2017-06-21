@@ -1,4 +1,4 @@
-//Deathsquad suit
+// Deathsquad suit
 /obj/item/clothing/head/helmet/space/deathsquad
 	name = "deathsquad helmet"
 	desc = "That's not red paint. That's real blood."
@@ -14,7 +14,7 @@
 	flags = HEADCOVERSEYES | BLOCKHAIR
 	siemens_coefficient = 0.9
 
-//Space santa outfit suit
+// Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
@@ -29,10 +29,10 @@
 	item_state = "santa"
 	slowdown = 0
 	flags = ONESIZEFITSALL
-	allowed = list(/obj/item) //for stuffing exta special presents
+	allowed = list(/obj/item) // for stuffing exta special presents
 
 
-//Space pirate outfit
+// Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
 	name = "pirate hat"
 	desc = "Yarr."
@@ -52,7 +52,7 @@
 	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
 	breach_threshold = 25
 
-//Buget suit
+// Buget suit
 
 /obj/item/clothing/suit/space/cheap
 	name = "Budget spacesuit"
@@ -63,7 +63,7 @@
 	name = "Budget spacesuit helmet"
 	desc = "It was an attempt to force the assistants to work in space. At least 60% of them survived in the spacesuit."
 
-//Mime's Hardsuit
+// Mime's Hardsuit
 /obj/item/clothing/head/helmet/space/mime
 	name = "mime hardsuit helmet"
 	desc = "A hardsuit helmet specifically designed for the mime."

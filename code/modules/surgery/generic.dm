@@ -1,7 +1,7 @@
-//Procedures in this file: Gneric surgery steps
-//////////////////////////////////////////////////////////////////
-//						COMMON STEPS							//
-//////////////////////////////////////////////////////////////////
+// Procedures in this file: Gneric surgery steps
+///////////////////////////////////////////////////////////////// /
+//						COMMON STEPS							// 
+///////////////////////////////////////////////////////////////// /
 
 /datum/surgery_step/generic
 	can_infect = 1
@@ -9,7 +9,7 @@
 /datum/surgery_step/generic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (isslime(target))
 		return 0
-	if (target_zone == O_EYES)	//there are specific steps for eye surgery
+	if (target_zone == O_EYES)	// there are specific steps for eye surgery
 		return 0
 	if (!ishuman(target))
 		return 0
@@ -51,7 +51,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("\blue [user] has made a bloodless incision on [target]'s [BP.name] with \the [tool].", \
 	"\blue You have made a bloodless incision on [target]'s [BP.name] with \the [tool].",)
-	//Could be cleaner ...
+	// Could be cleaner ...
 	BP.open = 1
 	BP.status |= ORGAN_BLEEDING
 	BP.createwound(CUT, 1)

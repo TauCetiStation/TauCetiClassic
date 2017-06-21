@@ -180,7 +180,7 @@
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hulk/attack_animal(mob/living/simple_animal/M)
-	if(M == src) //No punching myself to avoid hulk transformation!
+	if(M == src) // No punching myself to avoid hulk transformation!
 		return
 	if(M.melee_damage_upper <= 0)
 		M.emote("[M.friendly] \the <EM>[src]</EM>")
@@ -201,8 +201,8 @@
 /mob/living/simple_animal/hulk/airflow_hit(atom/A)
 	return
 
-//mob/living/simple_animal/hulk/Process_Spacemove(movement_dir = 0)
-//	return 1 //copypasta from carp code
+// mob/living/simple_animal/hulk/Process_Spacemove(movement_dir = 0)
+//	return 1 // copypasta from carp code
 
 /mob/living/simple_animal/hulk/attackby(obj/item/O, mob/user)
 	if(O.force)

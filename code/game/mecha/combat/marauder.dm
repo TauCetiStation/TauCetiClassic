@@ -74,9 +74,9 @@
 	return
 
 /obj/mecha/combat/marauder/seraph/New()
-	..()//Let it equip whatever is needed.
+	..()// Let it equip whatever is needed.
 	var/obj/item/mecha_parts/mecha_equipment/ME
-	if(equipment.len)//Now to remove it and equip anew.
+	if(equipment.len)// Now to remove it and equip anew.
 		for(ME in equipment)
 			equipment -= ME
 			qdel(ME)
@@ -151,7 +151,7 @@
 			src.occupant.client.view = 12
 			src.occupant << sound('sound/mecha/imag_enh.ogg',volume=50)
 		else
-			src.occupant.client.view = world.view//world.view - default mob view size
+			src.occupant.client.view = world.view// world.view - default mob view size
 	return
 
 

@@ -215,7 +215,7 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/process()
 	if(!playlist)
 		var/url="[config.media_base_url]/index.php?playlist=[playlist_id]"
-		//testing("[src] - Updating playlist from [url]...")
+		// testing("[src] - Updating playlist from [url]...")
 		var/response = world.Export(url)
 		playlist=list()
 		if(response)
@@ -241,7 +241,7 @@ var/global/loopModeNames=list(
 				playing=1
 				autoplay=0
 		else
-			//testing("[src] failed to update playlist: Response null.")
+			// testing("[src] failed to update playlist: Response null.")
 			stat &= BROKEN
 			update_icon()
 			return
@@ -268,14 +268,14 @@ var/global/loopModeNames=list(
 		media_url = song.url
 		media_start_time = world.time
 		visible_message("<span class='notice'>[bicon(src)] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
-		//visible_message("<span class='notice'>[bicon(src)] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
+		// visible_message("<span class='notice'>[bicon(src)] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
 	else
 		media_url=""
 		media_start_time = 0
 	..()
 
 /obj/machinery/media/jukebox/proc/stop_playing()
-	//current_song=0
+	// current_song=0
 	playing=0
 	update_music()
 	return

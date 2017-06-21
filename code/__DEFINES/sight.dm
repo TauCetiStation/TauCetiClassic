@@ -14,7 +14,7 @@
 #define SEE_INVISIBLE_MINIMUM 5
 #define INVISIBILITY_MAXIMUM  100
 
-//Some mob defines below
+// Some mob defines below
 #define AI_CAMERA_LUMINOSITY 6
 
 #define BORGMESON 1
@@ -22,7 +22,7 @@
 #define BORGXRAY  4
 #define BORGNIGHT 8
 
-//Disabling certain features
+// Disabling certain features
 #define APPEARANCE_IGNORE_TRANSFORM			RESET_TRANSFORM
 #define APPEARANCE_IGNORE_COLOUR			RESET_COLOR
 #define	APPEARANCE_IGNORE_CLIENT_COLOUR		NO_CLIENT_COLOR
@@ -30,7 +30,7 @@
 #define APPEARANCE_IGNORE_ALPHA				RESET_ALPHA
 #define APPEARANCE_NORMAL_GLIDE				~LONG_GLIDE
 
-//Enabling certain features
+// Enabling certain features
 #define APPEARANCE_CONSIDER_TRANSFORM		~RESET_TRANSFORM
 #define APPEARANCE_CONSIDER_COLOUR			~RESET_COLOUR
 #define APPEARANCE_CONSIDER_CLIENT_COLOUR	~NO_CLIENT_COLOR
@@ -38,6 +38,6 @@
 #define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
 #define APPEARANCE_LONG_GLIDE				LONG_GLIDE
 
-//Consider these images/atoms as part of the UI/HUD
+// Consider these images/atoms as part of the UI/HUD
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
 #define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR

@@ -16,7 +16,7 @@
 	src.adding += using
 	action_intent = using
 
-//intent small hud objects
+// intent small hud objects
 	var/icon/ico
 
 	ico = new(ui_style, "black")
@@ -67,7 +67,7 @@
 	src.adding += using
 	hurt_intent = using
 
-//end intent small hud objects
+// end intent small hud objects
 
 	using = new /obj/screen()
 	using.name = "mov_intent"
@@ -92,7 +92,7 @@
 	inv_box.name = "r_hand"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hand_r_inactive"
-	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
+	if(mymob && !mymob.hand)	// This being 0 or null means the right hand is in use
 		inv_box.icon_state = "hand_r_active"
 	inv_box.screen_loc = ui_rhand
 	inv_box.slot_id = slot_r_hand
@@ -105,7 +105,7 @@
 	inv_box.name = "l_hand"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hand_l_inactive"
-	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
+	if(mymob && mymob.hand)	// This being 1 means the left hand is in use
 		inv_box.icon_state = "hand_l_active"
 	inv_box.screen_loc = ui_lhand
 	inv_box.slot_id = slot_l_hand
@@ -197,7 +197,7 @@
 	mymob.zone_sel.overlays.Cut()
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
-	//Handle the gun settings buttons
+	// Handle the gun settings buttons
 	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
 	if (mymob.client)
 		if (mymob.client.gun_mode) // If in aim mode, correct the sprite
@@ -219,6 +219,6 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) // , mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 	mymob.client.screen += mymob.client.void

@@ -1,6 +1,6 @@
-//STRIKE TEAMS
+// STRIKE TEAMS
 
-var/const/syndicate_commandos_possible = 6 //if more Commandos are needed in the future
+var/const/syndicate_commandos_possible = 6 // if more Commandos are needed in the future
 var/global/sent_syndicate_strike_team = 0
 /client/proc/syndicate_strike_team()
 	set category = "Fun"
@@ -38,31 +38,31 @@ var/global/sent_syndicate_strike_team = 0
 	if (SSshuttle.direction == 1 && SSshuttle.online == 1)
 		SSshuttle.recall()
 
-	var/syndicate_commando_number = syndicate_commandos_possible //for selecting a leader
-	var/syndicate_leader_selected = 0 //when the leader is chosen. The last person spawned.
+	var/syndicate_commando_number = syndicate_commandos_possible // for selecting a leader
+	var/syndicate_leader_selected = 0 // when the leader is chosen. The last person spawned.
 
-//Code for spawning a nuke auth code.
+// Code for spawning a nuke auth code.
 	var/nuke_code
 	var/temp_code
 	for(var/obj/machinery/nuclearbomb/N in world)
 		temp_code = text2num(N.r_code)
-		if(temp_code)//if it's actually a number. It won't convert any non-numericals.
+		if(temp_code)// if it's actually a number. It won't convert any non-numericals.
 			nuke_code = N.r_code
 			break
 
-//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
-	var/list/candidates = list()	//candidates for being a commando out of all the active ghosts in world.
-	var/list/commandos = list()			//actual commando ghosts as picked by the user.
+// Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
+	var/list/candidates = list()	// candidates for being a commando out of all the active ghosts in world.
+	var/list/commandos = list()			// actual commando ghosts as picked by the user.
 	for(var/mob/dead/observer/G	 in player_list)
-		if(!G.client.holder && !G.client.is_afk())	//Whoever called/has the proc won't be added to the list.
+		if(!G.client.holder && !G.client.is_afk())	// Whoever called/has the proc won't be added to the list.
 			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 				candidates += G.key
-	for(var/i=commandos_possible,(i>0&&candidates.len),i--)//Decrease with every commando selected.
-		var/candidate = input("Pick characters to spawn as the commandos. This will go on until there either no more ghosts to pick from or the slots are full.", "Active Players") as null|anything in candidates	//It will auto-pick a person when there is only one candidate.
-		candidates -= candidate		//Subtract from candidates.
-		commandos += candidate//Add their ghost to commandos.
+	for(var/i=commandos_possible,(i>0&&candidates.len),i--)// Decrease with every commando selected.
+		var/candidate = input("Pick characters to spawn as the commandos. This will go on until there either no more ghosts to pick from or the slots are full.", "Active Players") as null|anything in candidates	// It will auto-pick a person when there is only one candidate.
+		candidates -= candidate		// Subtract from candidates.
+		commandos += candidate// Add their ghost to commandos.
 
-//Spawns commandos and equips them.
+// Spawns commandos and equips them.
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(syndicate_commando_number<=0)	break
 		if (L.name == "Syndicate-Commando")
@@ -76,7 +76,7 @@ var/global/sent_syndicate_strike_team = 0
 				new_syndicate_commando.internal = new_syndicate_commando.s_store
 				new_syndicate_commando.internals.icon_state = "internal1"
 
-			//So they don't forget their code or mission.
+			// So they don't forget their code or mission.
 			if(nuke_code)
 				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
 			new_syndicate_commando.mind.store_memory("<B>Mission:</B> \red [input].")
@@ -85,10 +85,10 @@ var/global/sent_syndicate_strike_team = 0
 
 			syndicate_commando_number--
 
-//Spawns the rest of the commando gear.
+// Spawns the rest of the commando gear.
 //	for (var/obj/effect/landmark/L)
 	//	if (L.name == "Commando_Manual")
-			//new /obj/item/weapon/gun/energy/pulse_rifle(L.loc)
+			// new /obj/item/weapon/gun/energy/pulse_rifle(L.loc)
 		//	var/obj/item/weapon/paper/P = new(L.loc)
 		//	P.info = "<p><b>Good morning soldier!</b>. This compact guide will familiarize you with standard operating procedure. There are three basic rules to follow:<br>#1 Work as a team.<br>#2 Accomplish your objective at all costs.<br>#3 Leave no witnesses.<br>You are fully equipped and stocked for your mission--before departing on the Spec. Ops. Shuttle due South, make sure that all operatives are ready. Actual mission objective will be relayed to you by Central Command through your headsets.<br>If deemed appropriate, Central Command will also allow members of your team to equip assault power-armor for the mission. You will find the armor storage due West of your position. Once you are ready to leave, utilize the Special Operations shuttle console and toggle the hull doors via the other console.</p><p>In the event that the team does not accomplish their assigned objective in a timely manner, or finds no other way to do so, attached below are instructions on how to operate a Nanotrasen Nuclear Device. Your operations <b>LEADER</b> is provided with a nuclear authentication disk and a pin-pointer for this reason. You may easily recognize them by their rank: Lieutenant, Captain, or Major. The nuclear device itself will be present somewhere on your destination.</p><p>Hello and thank you for choosing Nanotrasen for your nuclear information needs. Today's crash course will deal with the operation of a Fission Class Nanotrasen made Nuclear Device.<br>First and foremost, <b>DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE.</b> Pressing any button on the compacted bomb will cause it to extend and bolt itself into place. If this is done to unbolt it one must completely log in which at this time may not be possible.<br>To make the device functional:<br>#1 Place bomb in designated detonation zone<br> #2 Extend and anchor bomb (attack with hand).<br>#3 Insert Nuclear Auth. Disk into slot.<br>#4 Type numeric code into keypad ([nuke_code]).<br>Note: If you make a mistake press R to reset the device.<br>#5 Press the E button to log onto the device.<br>You now have activated the device. To deactivate the buttons at anytime, for example when you have already prepped the bomb for detonation, remove the authentication disk OR press the R on the keypad. Now the bomb CAN ONLY be detonated using the timer. A manual detonation is not an option.<br>Note: Toggle off the <b>SAFETY</b>.<br>Use the - - and + + to set a detonation time between 5 seconds and 10 minutes. Then press the timer toggle button to start the countdown. Now remove the authentication disk so that the buttons deactivate.<br>Note: <b>THE BOMB IS STILL SET AND WILL DETONATE</b><br>Now before you remove the disk if you need to move the bomb you can: Toggle off the anchor, move it, and re-anchor.</p><p>The nuclear authorization code is: <b>[nuke_code ? nuke_code : "None provided"]</b></p><p><b>Good luck, soldier!</b></p>"
 		//	P.name = "Spec. Ops. Manual"
@@ -100,7 +100,7 @@ var/global/sent_syndicate_strike_team = 0
 
 	message_admins("\blue [key_name_admin(usr)] has spawned a Syndicate strike squad.")
 	log_admin("[key_name(usr)] used Spawn Syndicate Squad.")
-	feedback_add_details("admin_verb","SDTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","SDTHS") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/create_syndicate_death_commando(obj/spawn_location, syndicate_leader_selected = 0)
 	var/mob/living/carbon/human/new_syndicate_commando = new(spawn_location.loc)
@@ -110,19 +110,19 @@ var/global/sent_syndicate_strike_team = 0
 
 	new_syndicate_commando.gender = pick(MALE, FEMALE)
 
-	var/datum/preferences/A = new()//Randomize appearance for the commando.
+	var/datum/preferences/A = new()// Randomize appearance for the commando.
 	A.randomize_appearance_for(new_syndicate_commando)
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
 	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
 
-	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
+	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)// Creates DNA.
 
-	//Creates mind stuff.
+	// Creates mind stuff.
 	new_syndicate_commando.mind_initialize()
 	new_syndicate_commando.mind.assigned_role = "MODE"
 	new_syndicate_commando.mind.special_role = "Syndicate Commando"
-	ticker.mode.traitors |= new_syndicate_commando.mind	//Adds them to current traitor list. Which is really the extra antagonist list.
+	ticker.mode.traitors |= new_syndicate_commando.mind	// Adds them to current traitor list. Which is really the extra antagonist list.
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 	qdel(spawn_location)
 	return new_syndicate_commando
@@ -130,7 +130,7 @@ var/global/sent_syndicate_strike_team = 0
 /mob/living/carbon/human/proc/equip_syndicate_commando(syndicate_leader_selected = 0)
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
-	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
+	R.set_frequency(SYND_FREQ) // Same frequency as the syndicate team in Nuke mode.
 	equip_to_slot_or_del(R, slot_l_ear)
 	equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(src), slot_w_uniform)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), slot_shoes)
@@ -164,13 +164,13 @@ var/global/sent_syndicate_strike_team = 0
 	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
 	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/silenced(src), slot_belt)
 
-	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), slot_r_hand) //Will change to something different at a later time -- Superxpdude
+	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), slot_r_hand) // Will change to something different at a later time -- Superxpdude
 
-	var/obj/item/weapon/card/id/syndicate/W = new(src) //Untrackable by AI
+	var/obj/item/weapon/card/id/syndicate/W = new(src) // Untrackable by AI
 	W.name = "[real_name]'s ID Card"
 	W.icon_state = "id"
-	W.access = get_all_accesses()//They get full station access because obviously the syndicate has HAAAX, and can make special IDs for their most elite members.
-	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage, access_syndicate)//Let's add their forged CentCom access and syndicate access.
+	W.access = get_all_accesses()// They get full station access because obviously the syndicate has HAAAX, and can make special IDs for their most elite members.
+	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage, access_syndicate)// Let's add their forged CentCom access and syndicate access.
 	W.assignment = "Syndicate Commando"
 	W.registered_name = real_name
 	equip_to_slot_or_del(W, slot_wear_id)

@@ -1,4 +1,4 @@
-///////////////ANTIBODY SCANNER///////////////
+////////////// /ANTIBODY SCANNER////////////// /
 
 /obj/item/device/antibody_scanner
 	name = "\improper Antibody Scanner"
@@ -33,7 +33,7 @@
 /obj/item/device/antibody_scanner/proc/report(text, mob/user)
 	to_chat(user, "\blue [bicon(src)] \The [src] beeps, \"[text]\"")
 
-///////////////VIRUS DISH///////////////
+////////////// /VIRUS DISH////////////// /
 
 /obj/item/weapon/virusdish
 	name = "virus containment/growth dish"
@@ -88,7 +88,7 @@
 		to_chat(user, "\The [src] shatters!")
 		qdel(src)
 
-///////////////GNA DISK///////////////
+////////////// /GNA DISK////////////// /
 
 /obj/item/weapon/diseasedisk
 	name = "blank GNA disk"

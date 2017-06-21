@@ -77,7 +77,7 @@
 		return
 
 	if(!dbg_output)
-		dbg_output = 1 //Don't want to be spammed when someone investigates a zone...
+		dbg_output = 1 // Don't want to be spammed when someone investigates a zone...
 
 		if(!client.zone_debug_images)
 			client.zone_debug_images = list()
@@ -208,7 +208,7 @@
 		else
 			final_arrangement[current_identifier] += current
 
-	//lazy but fast
+	// lazy but fast
 	final_arrangement.Remove(null)
 
 	to_chat(src, "There are [final_arrangement.len] unique segments.")

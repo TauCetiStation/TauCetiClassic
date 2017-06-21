@@ -11,17 +11,17 @@
 #define FIND_NOTHING 10
 */
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 // Rock sliver
 
 /obj/item/weapon/rocksliver
 	name = "rock sliver"
 	desc = "It looks extremely delicate."
 	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "sliver1"	//0-4
+	icon_state = "sliver1"	// 0-4
 	w_class = 1
 	sharp = 1
-	//item_state = "electronic"
+	// item_state = "electronic"
 	var/source_rock = "/turf/simulated/mineral/"
 	var/datum/geosample/geological_data
 
@@ -30,29 +30,29 @@
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 // Geosample datum
 
 /datum/geosample
-	var/age = 0								//age can correspond to different archaeological finds
+	var/age = 0								// age can correspond to different archaeological finds
 	var/age_thousand = 0
 	var/age_million = 0
 	var/age_billion = 0
-	var/artifact_id = ""					//id of a nearby artifact, if there is one
-	var/artifact_distance = -1				//proportional to distance
-	var/source_mineral = "chlorine"			//machines will pop up a warning telling players that the sample may be confused
-	//
-	//var/source_mineral
-	//all potential finds are initialised to null, so nullcheck before you access them
+	var/artifact_id = ""					// id of a nearby artifact, if there is one
+	var/artifact_distance = -1				// proportional to distance
+	var/source_mineral = "chlorine"			// machines will pop up a warning telling players that the sample may be confused
+	// 
+	// var/source_mineral
+	// all potential finds are initialised to null, so nullcheck before you access them
 	var/list/find_presence = list()
 
 /datum/geosample/New(var/turf/simulated/mineral/container)
 
 	UpdateTurf(container)
 
-//this should only need to be called once
+// this should only need to be called once
 /datum/geosample/proc/UpdateTurf(turf/simulated/mineral/container)
-	//set background = 1
+	// set background = 1
 	if(!container || !istype(container))
 		return
 
@@ -93,7 +93,7 @@
 				find_presence["phoron"] = rand(1,1000) / 100
 				source_mineral = "phoron"
 			if("Clown")
-				age = rand(-1,-999)				//thats the joke
+				age = rand(-1,-999)				// thats the joke
 				age_thousand = rand(-1,-999)
 				find_presence["phoron"] = rand(1,1000) / 100
 				source_mineral = "phoron"
@@ -104,12 +104,12 @@
 		find_presence["mercury"] = rand(1,500) / 100
 	find_presence["chlorine"] = rand(500,2500) / 100
 
-	//loop over finds, grab any relevant stuff
+	// loop over finds, grab any relevant stuff
 	for(var/datum/find/F in container.finds)
 		var/responsive_reagent = get_responsive_reagent(F.find_type)
 		find_presence[responsive_reagent] = F.dissonance_spread
 
-	//loop over again to reset values to percentages
+	// loop over again to reset values to percentages
 	var/total_presence = 0
 	for(var/carrier in find_presence)
 		total_presence += find_presence[carrier]
@@ -119,7 +119,7 @@
 	/*for(var/entry in find_presence)
 		total_spread += find_presence[entry]*/
 
-//have this separate from UpdateTurf() so that we dont have a billion turfs being updated (redundantly) every time an artifact spawns
+// have this separate from UpdateTurf() so that we dont have a billion turfs being updated (redundantly) every time an artifact spawns
 /datum/geosample/proc/UpdateNearbyArtifactInfo(turf/simulated/mineral/container)
 	if(!container || !istype(container))
 		return

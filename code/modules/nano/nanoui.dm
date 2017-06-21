@@ -358,7 +358,7 @@ nanoui is used to open and update nano browser uis
 	var/url_parameters_json = list2json(list("src" = "\ref[src]"))
 
 	return {"
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-// W3C// DTD HTML 4.01 Transitional// EN" "http:// www.w3.org/TR/html4/loose.dtd">
 <html>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<head>
@@ -405,7 +405,7 @@ nanoui is used to open and update nano browser uis
 	user << browse(get_html(), "window=[window_id];[window_size][window_options]")
 	winset(user, "mapwindow.map", "focus=true") // return keyboard focus to map
 	on_close_winset()
-	//onclose(user, window_id)
+	// onclose(user, window_id)
 	nanomanager.ui_opened(src)
 
  /**
@@ -458,7 +458,7 @@ nanoui is used to open and update nano browser uis
 
 	var/list/send_data = get_send_data(data)
 
-	//user << list2json(data) // used for debugging
+	// user << list2json(data) // used for debugging
 	user << output(list2params(list(list2json(send_data,cached_data))),"[window_id].browser:receiveUpdateData")
 
  /**

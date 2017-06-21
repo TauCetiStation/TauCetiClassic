@@ -11,7 +11,7 @@
 	var/health = 1000
 
 /obj/structure/pbag/New()
-	//color = pick("#aaffaa", "#aaaaff", "#ff3030", "#ff1010", "#ffffff")
+	// color = pick("#aaffaa", "#aaaaff", "#ff3030", "#ff1010", "#ffffff")
 	color = random_color()
 
 /obj/structure/pbag/attack_hand(mob/user)

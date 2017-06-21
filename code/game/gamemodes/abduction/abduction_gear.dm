@@ -4,7 +4,7 @@
 #define GIZMO_MARK 2
 
 
-//AGENT VEST
+// AGENT VEST
 /obj/item/clothing/suit/armor/abductor/vest
 	name = "agent vest"
 	desc = "A vest outfitted with mind influence stealth technology. It has two modes - combat and stealth."
@@ -139,7 +139,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 
-//SCIENCE TOOL
+// SCIENCE TOOL
 /obj/item/device/abductor/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -239,7 +239,7 @@
 		to_chat(user, "<span class='notice'>You finish preparing [target] for transport.</span>")
 
 
-//SILENCER
+// SILENCER
 /obj/item/device/abductor/silencer
 	name = "abductor silencer"
 	desc = "A compact device used to shut down communications equipment."
@@ -282,7 +282,7 @@
 			r.on = 0
 
 
-//RECALL IMPLANT
+// RECALL IMPLANT
 /obj/item/weapon/implant/abductor
 	name = "recall implant"
 	desc = "Returns you to the mothership."
@@ -313,7 +313,7 @@
 			STOP_PROCESSING(SSobj, src)
 
 
-//ALIEN DECLONER
+// ALIEN DECLONER
 /obj/item/weapon/gun/energy/decloner/alien
 	name = "alien weapon"
 	desc = "An odd device that resembles human weapon."
@@ -331,7 +331,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/declone/light)
 
 
-//AGENT HELMET
+// AGENT HELMET
 /obj/item/clothing/head/helmet/abductor
 	name = "agent headgear"
 	desc = "Abduct with style - spiky style. Prevents digital tracking."
@@ -379,7 +379,7 @@
 	return 1
 
 
-//ADVANCED BATON
+// ADVANCED BATON
 #define BATON_STUN 0
 #define BATON_SLEEP 1
 #define BATON_CUFF 2
@@ -553,7 +553,7 @@
 			to_chat(user, "<span class='warning'>The baton is in probing mode.</span>")
 
 
-//HANDCUFFS
+// HANDCUFFS
 /obj/item/weapon/handcuffs/alien
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
@@ -607,7 +607,7 @@
 	if(!victim && !fastened)
 		return
 
-	//exclusion any bugs with grab
+	// exclusion any bugs with grab
 	var/mob/living/carbon/C = usr
 	if(istype(C.get_active_hand(),/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = C.get_active_hand()
@@ -631,7 +631,7 @@
 
 	if(holding)
 		fastened = victim
-		//correction position of victim
+		// correction position of victim
 		switch(fastened.lying_current)
 			if(90)
 				if(fastened.pixel_x != 2)

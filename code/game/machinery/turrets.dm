@@ -65,8 +65,8 @@
 	var/popping = 0
 	var/wasvalid = 0
 	var/lastfired = 0
-	var/shot_delay = 30 //3 seconds between shots
-	var/silic_targets = 0 //shooting robots
+	var/shot_delay = 30 // 3 seconds between shots
+	var/silic_targets = 0 // shooting robots
 	var/datum/effect/effect/system/spark_spread/spark_system
 	use_power = 1
 	idle_power_usage = 50
@@ -149,7 +149,7 @@
 		var/area/area_T = get_area(T)
 		if(!area_T || (area_T.type != protected_area.type))
 			protected_area.Exited(T)
-			return 0 //If the guy is somehow not in the turret's area (teleportation), get them out the damn list. --NEO
+			return 0 // If the guy is somehow not in the turret's area (teleportation), get them out the damn list. --NEO
 		if(iscarbon(T))
 			var/mob/living/carbon/MC = T
 			if(!MC.stat)
@@ -203,16 +203,16 @@
 		if(!isDown() && !isPopping())
 			popDown()
 		return
-	if(!check_target(cur_target)) //if current target fails target check
-		cur_target = get_new_target() //get new target
+	if(!check_target(cur_target)) // if current target fails target check
+		cur_target = get_new_target() // get new target
 
-	if(cur_target) //if it's found, proceed
+	if(cur_target) // if it's found, proceed
 //		world << "[cur_target]"
 		if(!isPopping())
 			if(isDown())
 				popUp()
 				use_power = 2
-			//else
+			// else
 				spawn()
 					if(!targeting_active)
 						targeting_active = 1
@@ -224,7 +224,7 @@
 				playsound(src.loc, 'sound/effects/turret/move1.wav', 60, 1)
 			else
 				playsound(src.loc, 'sound/effects/turret/move2.wav', 60, 1)
-	else if(!isPopping())//else, pop down
+	else if(!isPopping())// else, pop down
 		if(!isDown())
 			popDown()
 			use_power = 1
@@ -309,7 +309,7 @@
 		src.die()
 	return
 
-/obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
+/obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)// I can't believe no one added this before/N
 	..()
 	playsound(src.loc, 'sound/weapons/smash.ogg', 60, 1)
 	src.spark_system.start()
@@ -352,8 +352,8 @@
 	var/lethal = 0
 	var/locked = 1
 	var/silicon = 0
-	var/special_control = 0 //turrets can shoot robots only at AI Sattelite
-	var/control_area //can be area name, path or nothing.
+	var/special_control = 0 // turrets can shoot robots only at AI Sattelite
+	var/control_area // can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
 
@@ -370,7 +370,7 @@
 			if(A.name && A.name==control_area)
 				control_area = A
 				break
-	//don't have to check if control_area is path, since get_area_all_atoms can take path.
+	// don't have to check if control_area is path, since get_area_all_atoms can take path.
 	return
 
 /obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
@@ -448,7 +448,7 @@
 	if(!(stat & BROKEN))
 		visible_message("\red <B>[M] [M.attacktext] [src]!</B>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
-		//src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
+		// src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		src.health -= M.melee_damage_upper
 		if(src.health <= 0)
 			src.die()
@@ -606,7 +606,7 @@
 			return 0
 		if(istype(target, /mob))
 			var/mob/M = target
-			if(!M.stat && !M.lying)//ninjas can't catch you if you're lying
+			if(!M.stat && !M.lying)// ninjas can't catch you if you're lying
 				return 1
 		else if(istype(target, /obj/mecha))
 			return 1

@@ -1,4 +1,4 @@
-//*************-Gland dispenser-*************//
+// *************-Gland dispenser-*************// 
 
 /obj/machinery/abductor/gland_dispenser
 	name = "Replacement Organ Storage"
@@ -12,7 +12,7 @@
 	var/list/amounts
 
 /obj/machinery/abductor/gland_dispenser/proc/random_color()
-	//TODO : replace with presets or spectrum
+	// TODO : replace with presets or spectrum
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
 /obj/machinery/abductor/gland_dispenser/New()

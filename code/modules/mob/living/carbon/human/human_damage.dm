@@ -1,4 +1,4 @@
-//Updates the mob's health from bodyparts and mob damage variables
+// Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/human/updatehealth()
 	if(status_flags & GODMODE)
 		health = maxHealth
@@ -15,7 +15,7 @@
 
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 
-	//TODO: fix husking
+	// TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD)
 		ChangeToHusk()
 	return
@@ -58,7 +58,7 @@
 
 // =============================================
 
-//These procs fetch a cumulative total damage from all bodyparts
+// These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
@@ -187,9 +187,9 @@
 	else
 		..()
 
-////////////////////////////////////////////
+//////////////////////////////////////////// 
 
-//Returns a list of damaged bodyparts
+// Returns a list of damaged bodyparts
 /mob/living/carbon/human/proc/get_damaged_bodyparts(brute, burn)
 	var/list/parts = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
@@ -197,7 +197,7 @@
 			parts += BP
 	return parts
 
-//Returns a list of damageable bodyparts
+// Returns a list of damageable bodyparts
 /mob/living/carbon/human/proc/get_damageable_bodyparts()
 	var/list/parts = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
@@ -205,9 +205,9 @@
 			parts += BP
 	return parts
 
-//Heals ONE external organ, organ gets randomly selected from damaged ones.
-//It automatically updates damage overlays if necesary
-//It automatically updates health status
+// Heals ONE external organ, organ gets randomly selected from damaged ones.
+// It automatically updates damage overlays if necesary
+// It automatically updates health status
 /mob/living/carbon/human/heal_bodypart_damage(brute, burn)
 	var/list/parts = get_damaged_bodyparts(brute, burn)
 	if(!parts.len)
@@ -217,9 +217,9 @@
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
 
-//Damages ONE external organ, organ gets randomly selected from damagable ones.
-//It automatically updates damage overlays if necesary
-//It automatically updates health status
+// Damages ONE external organ, organ gets randomly selected from damagable ones.
+// It automatically updates damage overlays if necesary
+// It automatically updates health status
 /mob/living/carbon/human/take_bodypart_damage(brute, burn, sharp = 0, edge = 0)
 	var/list/parts = get_damageable_bodyparts()
 	if(!parts.len)
@@ -234,7 +234,7 @@
 		speech_problem_flag = 1
 
 
-//Heal MANY external bodyparts, in random order
+// Heal MANY external bodyparts, in random order
 /mob/living/carbon/human/heal_overall_damage(brute, burn)
 	var/list/parts = get_damaged_bodyparts(brute, burn)
 	while(parts.len && (brute > 0 || burn > 0))
@@ -277,7 +277,7 @@
 	hud_updateflag |= 1 << HEALTH_HUD
 
 
-////////////////////////////////////////////
+//////////////////////////////////////////// 
 
 /*
 This function restores the subjects blood to max.
@@ -312,7 +312,7 @@ This function restores all bodyparts.
 
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
 
-	//Handle other types of damage or healing
+	// Handle other types of damage or healing
 	if(damage < 0 || !(damagetype in list(BRUTE, BURN)))
 		..(damage, damagetype, def_zone, blocked)
 		return TRUE

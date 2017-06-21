@@ -18,12 +18,12 @@
 	reagents = R
 	R.my_atom = src
 
-	//there should only be one queen
+	// there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
 		if(Q == src)		continue
 		if(Q.stat == DEAD)	continue
 		if(Q.client)
-			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
+			name = "alien princess ([rand(1, 999)])"	// if this is too cutesy feel free to change it/remove it.
 			break
 
 	real_name = src.name
@@ -53,7 +53,7 @@
 			src.healths.icon_state = "health7"
 
 
-//Queen verbs
+// Queen verbs
 /mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
 
 	set name = "Lay Egg (75)"
@@ -64,7 +64,7 @@
 		to_chat(src, "There's already an egg here.")
 		return
 
-	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
+	if(powerc(75,1))// Can't plant eggs on spess tiles. That's silly.
 		adjustToxLoss(-75)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
@@ -72,7 +72,7 @@
 	return
 
 /mob/living/carbon/alien/humanoid/queen/update_icons()
-	update_hud()		//TODO: remove the need for this to be here
+	update_hud()		// TODO: remove the need for this to be here
 	overlays.Cut()
 	if(stat == DEAD)
 		icon_state = "queen_dead"
@@ -92,7 +92,7 @@
 	pixel_x = -16
 
 /mob/living/carbon/alien/humanoid/queen/large/update_icons()
-	update_hud()		//TODO: remove the need for this to be here
+	update_hud()		// TODO: remove the need for this to be here
 	overlays.Cut()
 	if(stat == DEAD)
 		icon_state = "queen_dead-old"

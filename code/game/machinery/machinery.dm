@@ -99,14 +99,14 @@ Class Procs:
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
-		//0 = dont run the auto
-		//1 = run auto, use idle
-		//2 = run auto, use active
+		// 0 = dont run the auto
+		// 1 = run auto, use idle
+		// 2 = run auto, use active
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
 	var/power_channel = EQUIP
-		//EQUIP,ENVIRON or LIGHT
-	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
+		// EQUIP,ENVIRON or LIGHT
+	var/list/component_parts = null // list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
 	var/global/gl_uid = 1
@@ -145,7 +145,7 @@ Class Procs:
 /obj/machinery/proc/locate_machinery()
 	return
 
-/obj/machinery/process()//If you dont use process or power why are you here
+/obj/machinery/process()// If you dont use process or power why are you here
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
@@ -219,15 +219,15 @@ Class Procs:
 	if(prob(50))
 		qdel(src)
 
-//sets the use_power var and then forces an area power update @ 7e65984ae2ec4e7eaaecc8da0bfa75642c3489c7 bay12
+// sets the use_power var and then forces an area power update @ 7e65984ae2ec4e7eaaecc8da0bfa75642c3489c7 bay12
 /obj/machinery/proc/update_use_power(new_use_power, force_update = 0)
 	if ((new_use_power == use_power) && !force_update)
-		return	//don't need to do anything
+		return	// don't need to do anything
 
 	use_power = new_use_power
 
-	//force area power update
-	//use_power() forces an area power update on the next tick so have to pass the correct power amount for this tick
+	// force area power update
+	// use_power() forces an area power update on the next tick so have to pass the correct power amount for this tick
 	if (use_power >= 2)
 		use_power(active_power_usage)
 	else if (use_power == 1)
@@ -244,8 +244,8 @@ Class Procs:
 		use_power(active_power_usage,power_channel, 1)
 	return 1
 
-//By default, we check everything.
-//But sometimes, we need to override this check.
+// By default, we check everything.
+// But sometimes, we need to override this check.
 /obj/machinery/proc/is_operational_topic()
 	return !(stat & (NOPOWER|BROKEN|MAINT|EMPED))
 
@@ -281,7 +281,7 @@ Class Procs:
 		return TRUE
 	return FALSE
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////// 
 
 
 /obj/machinery/attack_ai(mob/user)
@@ -308,7 +308,7 @@ Class Procs:
 		to_chat(usr, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return 1
 /*
-	//distance checks are made by atom/proc/DblClick
+	// distance checks are made by atom/proc/DblClick
 	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !istype(user, /mob/living/silicon))
 		return 1
 */
@@ -328,7 +328,7 @@ Class Procs:
 	user.set_machine(src)
 	return ..()
 
-/obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
+/obj/machinery/proc/RefreshParts() // Placeholder proc for machines that are built using frames.
 	return
 
 /obj/machinery/proc/assign_uid()
@@ -415,7 +415,7 @@ Class Procs:
 							component_parts += B
 							B.loc = null
 							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
-							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
+							shouldplaysound = 1 // Only play the sound when parts are actually replaced!
 							break
 			RefreshParts()
 		else
@@ -432,11 +432,11 @@ Class Procs:
 	for(var/obj/item/C in component_parts)
 		to_chat(user, "<span class='notice'>[bicon(C)] [C.name]</span>")
 
-//called on machinery construction (i.e from frame to machinery) but not on initialization
+// called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/construction()
 	return
 
-//called on deconstruction before the final deletion
+// called on deconstruction before the final deletion
 /obj/machinery/proc/deconstruction()
 	return
 

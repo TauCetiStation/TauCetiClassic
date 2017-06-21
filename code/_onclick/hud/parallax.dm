@@ -4,9 +4,9 @@
 	var/list/parallax_layers_cached
 	var/atom/movable/movingmob
 	var/turf/previous_turf
-	var/dont_animate_parallax //world.time of when we can state animate()ing parallax again
-	var/last_parallax_shift //world.time of last update
-	var/parallax_throttle = 0 //ds between updates
+	var/dont_animate_parallax // world.time of when we can state animate()ing parallax again
+	var/last_parallax_shift // world.time of last update
+	var/parallax_throttle = 0 // ds between updates
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
@@ -106,7 +106,7 @@
 		animate(L, transform = matrix(), time = T, easing = QUAD_EASING | (new_parallax_movedir ? EASE_IN : EASE_OUT), flags = ANIMATION_END_NOW)
 		if (new_parallax_movedir)
 			L.transform = newtransform
-			animate(transform = matrix(), time = T) //queue up another animate so lag doesn't create a shutter
+			animate(transform = matrix(), time = T) // queue up another animate so lag doesn't create a shutter
 
 	C.parallax_movedir = new_parallax_movedir
 	if (C.parallax_animate_timer)
@@ -154,7 +154,7 @@
 	if (!force && world.time < C.last_parallax_shift+C.parallax_throttle)
 		return
 
-	//Doing it this way prevents parallax layers from "jumping" when you change Z-Levels.
+	// Doing it this way prevents parallax layers from "jumping" when you change Z-Levels.
 	var/offset_x = posobj.x - C.previous_turf.x
 	var/offset_y = posobj.y - C.previous_turf.y
 

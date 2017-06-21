@@ -2,7 +2,7 @@
   Tiny babby plant critter plus procs.
 */
 
-//Mob defines.
+// Mob defines.
 /mob/living/carbon/monkey/diona
 	name = "diona nymph"
 	voice_name = "diona nymph"
@@ -16,7 +16,7 @@
 
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
 
-	//Let people pick the little buggers up.
+	// Let people pick the little buggers up.
 	if(M.a_intent == "help")
 		if(M.species && M.species.name == DIONA)
 			to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
@@ -36,7 +36,7 @@
 	add_language("Rootspeak")
 	src.verbs += /mob/living/carbon/monkey/diona/proc/merge
 
-//Verbs after this point.
+// Verbs after this point.
 
 /mob/living/carbon/monkey/diona/proc/merge()
 
@@ -111,7 +111,7 @@
 
 	var/obj/machinery/hydroponics/target = input("Select a tray:") as null|anything in trays
 
-	if(!src || !target || target.nutrilevel == 10) return //Sanity check.
+	if(!src || !target || target.nutrilevel == 10) return // Sanity check.
 
 	src.nutrition -= ((10-target.nutrilevel)*5)
 	target.nutrilevel = 10
@@ -130,7 +130,7 @@
 
 	var/obj/machinery/hydroponics/target = input("Select a tray:") as null|anything in trays
 
-	if(!src || !target || target.weedlevel == 0) return //Sanity check.
+	if(!src || !target || target.weedlevel == 0) return // Sanity check.
 
 	src.reagents.add_reagent("nutriment", target.weedlevel)
 	target.weedlevel = 0

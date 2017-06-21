@@ -126,7 +126,7 @@
 							if(!D) return
 							D.vars[stmt.var_name.id_name] = Eval(stmt.value)
 					else if(istype(S, /node/statement/VariableDeclaration))
-						//VariableDeclaration nodes are used to forcibly declare a local variable so that one in a higher scope isn't used by default.
+						// VariableDeclaration nodes are used to forcibly declare a local variable so that one in a higher scope isn't used by default.
 						var/node/statement/VariableDeclaration/dec=S
 						if(!dec.object)
 							AssignVariable(dec.var_name.id_name, null, curScope)
@@ -137,7 +137,7 @@
 					else if(istype(S, /node/statement/FunctionCall))
 						RunFunction(S)
 					else if(istype(S, /node/statement/FunctionDefinition))
-						//do nothing
+						// do nothing
 					else if(istype(S, /node/statement/WhileLoop))
 						RunWhile(S)
 					else if(istype(S, /node/statement/IfStatement))
@@ -167,7 +167,7 @@
 	Runs a function block or a proc with the arguments specified in the script.
 */
 		RunFunction(node/statement/FunctionCall/stmt)
-			//Note that anywhere /node/statement/FunctionCall/stmt is used so may /node/expression/FunctionCall
+			// Note that anywhere /node/statement/FunctionCall/stmt is used so may /node/expression/FunctionCall
 
 			// If recursion gets too high (max 50 nested functions) throw an error
 			if(cur_recursion >= max_recursion)
@@ -175,11 +175,11 @@
 				return 0
 
 			var/node/statement/FunctionDefinition/def
-			if(!stmt.object)							//A scope's function is being called, stmt.object is null
+			if(!stmt.object)							// A scope's function is being called, stmt.object is null
 				def = GetFunction(stmt.func_name)
-			else if(istype(stmt.object))				//A method of an object exposed as a variable is being called, stmt.object is a /node/identifier
-				var/O = GetVariable(stmt.object.id_name)	//Gets a reference to the object which is the target of the function call.
-				if(!O) return							//Error already thrown in GetVariable()
+			else if(istype(stmt.object))				// A method of an object exposed as a variable is being called, stmt.object is a /node/identifier
+				var/O = GetVariable(stmt.object.id_name)	// Gets a reference to the object which is the target of the function call.
+				if(!O) return							// Error already thrown in GetVariable()
 				def = Eval(O)
 
 			if(!def) return
@@ -192,12 +192,12 @@
 					var/val
 					if(stmt.parameters.len>=i)
 						val = stmt.parameters[i]
-					//else
+					// else
 					//	unspecified param
 					AssignVariable(def.parameters[i], new/node/expression/value/literal(Eval(val)), S)
 				curFunction=stmt
 				RunBlock(def.block, S)
-				//Handle return value
+				// Handle return value
 				. = returnVal
 				status &= ~RETURNING
 				returnVal=null
@@ -208,14 +208,14 @@
 				var/list/params=new
 				for(var/node/expression/P in stmt.parameters)
 					params+=list(Eval(P))
-				if(isobject(def))	//def is an object which is the target of a function call
+				if(isobject(def))	// def is an object which is the target of a function call
 					if( !hascall(def, stmt.func_name) )
 						RaiseError(new/runtimeError/UndefinedFunction("[stmt.object.id_name].[stmt.func_name]"))
 						return
 					return call(def, stmt.func_name)(arglist(params))
-				else										//def is a path to a global proc
+				else										// def is a path to a global proc
 					return call(def)(arglist(params))
-			//else
+			// else
 			//	RaiseError(new/runtimeError/UnknownInstruction())
 
 /*
@@ -276,7 +276,7 @@
 				S = S.parent
 			RaiseError(new/runtimeError/UndefinedVariable(name))
 
-		GetVariableScope(name) //needed for when you reassign a variable in a higher scope
+		GetVariableScope(name) // needed for when you reassign a variable in a higher scope
 			var/scope/S = curScope
 			while(S)
 				if(S.variables.Find(name))
@@ -309,5 +309,5 @@
 			ASSERT(istype(S))
 			if(istext(value) || isnum(value) || isnull(value))	value = new/node/expression/value/literal(value)
 			else if(!istype(value) && isobject(value))			value = new/node/expression/value/reference(value)
-			//TODO: check for invalid name
+			// TODO: check for invalid name
 			S.variables["[name]"] = value

@@ -94,7 +94,7 @@
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
 		triggered(finder, finder.hand ? BP_L_HAND : BP_R_HAND)
-		return 1	//end the search!
+		return 1	// end the search!
 	return 0
 
 /obj/item/device/assembly/mousetrap/hitby(A)

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /*
 	The broadcaster sends processed messages to all radio devices in the game. They
@@ -302,7 +302,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	  /* --- Loop through the receivers and categorize them --- */
 
-		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) // Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
 		if(istype(R, /mob/new_player)) // we don't want new players to hear messages. rare but generates runtimes.
@@ -371,7 +371,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Response Team"
 			if(1447)
 				freq_text = "AI Private"
-		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
+		// There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 
 		// --- If the frequency has not been assigned a name, just use the frequency as the name ---
@@ -435,9 +435,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/blackbox_msg = "[part_a][name][part_blackbox_b][quotedmsg][part_c]"
-		//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
+		// var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
 
-		//BR.messages_admin += blackbox_admin_msg
+		// BR.messages_admin += blackbox_admin_msg
 		if(istype(blackbox))
 			switch(display_freq)
 				if(1459)
@@ -461,7 +461,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				else
 					blackbox.messages += blackbox_msg
 
-		//End of research and feedback code.
+		// End of research and feedback code.
 
 	 /* ###### Send the message ###### */
 
@@ -568,7 +568,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	  /* --- Loop through the receivers and categorize them --- */
 
-		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) // Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
 
@@ -616,7 +616,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Security"
 			if(1347)
 				freq_text = "Supply"
-		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
+		// There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 
 		// --- If the frequency has not been assigned a name, just use the frequency as the name ---
@@ -647,9 +647,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/blackbox_msg = "[part_a][source][part_blackbox_b]\"[text]\"[part_c]"
-		//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
+		// var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
 
-		//BR.messages_admin += blackbox_admin_msg
+		// BR.messages_admin += blackbox_admin_msg
 		if(istype(blackbox))
 			switch(display_freq)
 				if(1459)
@@ -673,7 +673,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				else
 					blackbox.messages += blackbox_msg
 
-		//End of research and feedback code.
+		// End of research and feedback code.
 
 	 /* ###### Send the message ###### */
 
@@ -705,7 +705,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			for (var/mob/R in heard_gibberish)
 				R.show_message(rendered, 2)
 
-//Use this to test if an obj can communicate with a Telecommunications Network
+// Use this to test if an obj can communicate with a Telecommunications Network
 
 /atom/proc/test_telecomms()
 	var/datum/signal/signal = src.telecomms_process()
@@ -732,12 +732,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	)
 	signal.frequency = 1459// Common channel
 
-  //#### Sending the signal to all subspace receivers ####//
+  // #### Sending the signal to all subspace receivers ####// 
 	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
 		R.receive_signal(signal)
 
 	sleep(rand(10,25))
 
-	//world.log << "Level: [signal.data["level"]] - Done: [signal.data["done"]]"
+	// world.log << "Level: [signal.data["level"]] - Done: [signal.data["done"]]"
 
 	return signal

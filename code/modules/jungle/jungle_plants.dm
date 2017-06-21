@@ -1,6 +1,6 @@
-//*********************//
-// Generic undergrowth //
-//*********************//
+// *********************// 
+// Generic undergrowth // 
+// *********************// 
 
 /obj/structure/bush
 	name = "foliage"
@@ -26,10 +26,10 @@
 		A.loc = get_turf(src)
 
 /obj/structure/bush/attackby(obj/I, mob/user)
-	//hatchets can clear away undergrowth
+	// hatchets can clear away undergrowth
 	if(istype(I, /obj/item/weapon/hatchet) && !stump)
 		if(indestructable)
-			//this bush marks the edge of the map, you can't destroy it
+			// this bush marks the edge of the map, you can't destroy it
 			to_chat(user, "\red You flail away at the undergrowth, but it's too thick here.")
 		else
 			user.visible_message("\red <b>[user] begins clearing away [src].</b>","\red <b>You begin clearing away [src].</b>")
@@ -51,9 +51,9 @@
 	else
 		return ..()
 
-//*******************************//
-// Strange, fruit-bearing plants //
-//*******************************//
+// *******************************// 
+// Strange, fruit-bearing plants // 
+// *******************************// 
 
 var/list/fruit_icon_states = list("badrecipe","kudzupod","reishi","lime","grapes","boiledrorocore","chocolateegg")
 var/list/reagent_effects = list("toxin","anti_toxin","stoxin","space_drugs","mindbreaker","zombiepowder","impedrezene")

@@ -13,13 +13,13 @@
 	frequency = 1439
 
 	var/on = 0
-	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
+	var/scrubbing = 1 // 0 = siphoning, 1 = scrubbing
 	var/scrub_CO2 = 1
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
 
 	var/volume_rate = 120
-	var/panic = 0 //is this scrubber panicked?
+	var/panic = 0 // is this scrubber panicked?
 
 	var/area_uid
 
@@ -31,7 +31,7 @@
 	if (!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
-	if(ticker && ticker.current_state == 3)//if the game is running
+	if(ticker && ticker.current_state == 3)// if the game is running
 		src.initialize()
 		src.broadcast_status()
 	..()
@@ -51,7 +51,7 @@
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 	signal.data = list(
 		"area" = area_uid,
@@ -88,7 +88,7 @@
 		return
 	if (!node)
 		on = 0
-	//broadcast_status()
+	// broadcast_status()
 	if(!on)
 		return 0
 
@@ -98,12 +98,12 @@
 		if((environment.phoron>0.001) || (environment.carbon_dioxide>0.001) || (environment.trace_gases.len>0))
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
-			//Take a gas sample
+			// Take a gas sample
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
-			if (isnull(removed)) //in space
+			if (isnull(removed)) // in space
 				return
 
-			//Filter it
+			// Filter it
 			var/datum/gas_mixture/filtered_out = new
 			filtered_out.temperature = removed.temperature
 			if(scrub_Toxins)
@@ -122,7 +122,7 @@
 						removed.trace_gases -= trace_gas
 						filtered_out.trace_gases += trace_gas
 
-			//Remix the resulting gases
+			// Remix the resulting gases
 			air_contents.merge(filtered_out)
 
 			loc.assume_air(removed)
@@ -130,7 +130,7 @@
 			if(network)
 				network.update = 1
 
-	else //Just siphoning all air
+	else // Just siphoning all air
 		if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
 			return
 
@@ -156,7 +156,7 @@
 	if(signal.data["power_toggle"] != null)
 		on = !on
 
-	if(signal.data["panic_siphon"] != null) //must be before if("scrubbing" thing
+	if(signal.data["panic_siphon"] != null) // must be before if("scrubbing" thing
 		panic = text2num(signal.data["panic_siphon"])
 		if(panic)
 			on = 1
@@ -184,7 +184,7 @@
 
 	if(signal.data["status"] != null)
 		addtimer(CALLBACK(src, .proc/broadcast_status), 2)
-		return //do not update_icon
+		return // do not update_icon
 
 //			log_admin("DEBUG \[[world.timeofday]\]: vent_scrubber/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)

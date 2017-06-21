@@ -14,16 +14,16 @@
 	var/stage = 0
 	var/doctors = 0
 
-///////////////////////////
-//Announces the game type//
-///////////////////////////
+////////////////////////// /
+// Announces the game type// 
+////////////////////////// /
 /datum/game_mode/epidemic/announce()
 	to_chat(world, "<B>The current game mode is - Epidemic!</B>")
 	to_chat(world, "<B>A deadly epidemic is spreading on the station. Find a cure as fast as possible, and keep your distance to anyone who speaks in a hoarse voice!</B>")
 
 
 ///////////////////////////////////////////////////////////////////////////////
-//Gets the round setup, cancelling if there's not enough players at the start//
+// Gets the round setup, cancelling if there's not enough players at the start// 
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/epidemic/pre_setup()
 	doctors = 0
@@ -40,9 +40,9 @@
 /datum/game_mode/epidemic/proc/cruiser_seconds()
 	return (cruiser_arrival - world.time) / 10
 
-////////////////////// INTERCEPT ////////////////////////
-/// OVERWRITE THE INTERCEPT WITH A QUARANTINE WARNING ///
-/////////////////////////////////////////////////////////
+////////////////////// INTERCEPT /////////////////////// /
+// / OVERWRITE THE INTERCEPT WITH A QUARANTINE WARNING // /
+//////////////////////////////////////////////////////// /
 
 /datum/game_mode/epidemic/send_intercept()
 	var/intercepttext = "<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</FONT><HR>"
@@ -156,9 +156,9 @@
 		checkwin_counter = 0
 	return 0
 
-//////////////////////////////////////
-//Checks if the revs have won or not//
-//////////////////////////////////////
+////////////////////////////////////// 
+// Checks if the revs have won or not// 
+////////////////////////////////////// 
 /datum/game_mode/epidemic/check_win()
 	var/alive = 0
 	var/sick = 0
@@ -173,7 +173,7 @@
 	return
 
 ///////////////////////////////
-//Checks if the round is over//
+// Checks if the round is over// 
 ///////////////////////////////
 /datum/game_mode/epidemic/check_finished()
 	if(finished != 0)
@@ -182,7 +182,7 @@
 		return 0
 
 ///////////////////////////////////////////
-///Handle crew failure(station explodes)///
+// /Handle crew failure(station explodes)// /
 ///////////////////////////////////////////
 /datum/game_mode/epidemic/proc/crew_lose()
 	ticker.mode:explosion_in_progress = 1
@@ -205,7 +205,7 @@
 
 
 //////////////////////////////////////////////////////////////////////
-//Announces the end of the game with all relavent information stated//
+// Announces the end of the game with all relavent information stated// 
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/epidemic/declare_completion()
 	if(finished == 1)

@@ -1,4 +1,4 @@
-//The effect when you wrap a dead body in gift wrap
+// The effect when you wrap a dead body in gift wrap
 /obj/effect/spresent
 	name = "strange present"
 	desc = "It's a ... present?"

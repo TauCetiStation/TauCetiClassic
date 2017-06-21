@@ -1,6 +1,6 @@
-////////////////////////////////////////////////////////////////////////////////
-/// (Mixing)Glass.
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////// 
+// / (Mixing)Glass.
+//////////////////////////////////////////////////////////////////////////////// 
 /obj/item/weapon/reagent_containers/glass
 	name = " "
 	var/base_name = " "
@@ -17,7 +17,7 @@
 
 	var/label_text = ""
 
-	//var/list/
+	// var/list/
 	can_be_placed_into = list(
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
@@ -91,7 +91,7 @@
 		src.reagents.reaction(target, TOUCH)
 		spawn(5) src.reagents.clear_reagents()
 		return
-	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	else if(istype(target, /obj/structure/reagent_dispensers)) // A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume && target.reagents)
 			to_chat(user, "<span class = 'rose'>[target] is empty.</span>")
@@ -104,7 +104,7 @@
 		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
-	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+	else if(target.is_open_container() && target.reagents) // Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class = 'rose'>[src] is empty.</span>")
 			return
@@ -116,7 +116,7 @@
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>You transfer [trans] units of the solution to [target].</span>")
 
-	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
+	// Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
 		return
 
@@ -149,7 +149,7 @@
 			src.update_name_label()
 	if (istype(W, /obj/item/stack/nanopaste))
 		var/obj/item/stack/nanopaste/N = W
-		if(src.is_open_container() && src.reagents) //Something like a glass. Player probably wants to transfer TO it.
+		if(src.is_open_container() && src.reagents) // Something like a glass. Player probably wants to transfer TO it.
 			if(src.reagents.total_volume >= src.reagents.maximum_volume)
 				to_chat(user, "<span class = 'rose'>[src] is full.</span>")
 				return

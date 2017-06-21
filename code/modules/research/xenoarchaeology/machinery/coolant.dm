@@ -38,7 +38,7 @@ datum/chemical_reaction/coolant
 
 /obj/structure/reagent_dispensers/coolanttank/proc/explode()
 	var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
-	//S.attach(src)
+	// S.attach(src)
 	S.set_up(5, 0, src.loc)
 	S.start()
 	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)

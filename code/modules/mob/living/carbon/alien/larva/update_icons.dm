@@ -5,7 +5,7 @@
 	update_icons()
 
 /mob/living/carbon/alien/larva/update_icons()
-	update_hud()		//TODO: remove the need for this to be here
+	update_hud()		// TODO: remove the need for this to be here
 	overlays.Cut()
 	var/state = 0
 	if(amount_grown > 150)
@@ -15,7 +15,7 @@
 
 	if(stat == DEAD)
 		icon_state = "larva[state]_dead"
-	else if (handcuffed || legcuffed) //This should be an overlay. Who made this an icon_state?
+	else if (handcuffed || legcuffed) // This should be an overlay. Who made this an icon_state?
 		icon_state = "larva[state]_cuff"
 	else if(stat == UNCONSCIOUS || lying || resting)
 		icon_state = "larva[state]_sleep"
@@ -24,12 +24,12 @@
 	else
 		icon_state = "larva[state]"
 
-/mob/living/carbon/alien/larva/update_transform() //All this is handled in update_icons()
+/mob/living/carbon/alien/larva/update_transform() // All this is handled in update_icons()
 	return update_icons() 
 
 /mob/living/carbon/alien/larva/update_hud()
-	//TODO
+	// TODO
 	if (client)
-//		if(other)	client.screen |= hud_used.other		//Not used
-//		else		client.screen -= hud_used.other		//Not used
+//		if(other)	client.screen |= hud_used.other		// Not used
+//		else		client.screen -= hud_used.other		// Not used
 		client.screen |= contents

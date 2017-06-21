@@ -1,11 +1,11 @@
 /datum/game_mode/blob/check_finished()
-	if(!declared)//No blobs have been spawned yet
+	if(!declared)// No blobs have been spawned yet
 		return 0
-	if(blobwincount <= blobs.len)//Blob took over
+	if(blobwincount <= blobs.len)// Blob took over
 		return 1
 	if(!blob_cores.len) // blob is dead
 		return 1
-	if(station_was_nuked)//Nuke went off
+	if(station_was_nuked)// Nuke went off
 		return 1
 	return 0
 

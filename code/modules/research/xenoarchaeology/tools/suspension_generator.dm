@@ -20,7 +20,7 @@
 	..()
 
 /obj/machinery/suspension_gen/process()
-	//set background = 1
+	// set background = 1
 
 	if (suspension_field)
 		cell.charge -= power_use
@@ -231,7 +231,7 @@
 /obj/machinery/suspension_gen/proc/attempt_unlock(obj/item/weapon/card/C)
 	if(!open)
 		if(istype(C, /obj/item/weapon/card/emag) && cell.charge > 0)
-			//put sparks here
+			// put sparks here
 			if(prob(95))
 				locked = 0
 		else if(istype(C, /obj/item/weapon/card/id) && check_access(C))
@@ -240,9 +240,9 @@
 		if(!locked)
 			return 1
 
-//checks for whether the machine can be activated or not should already have occurred by this point
+// checks for whether the machine can be activated or not should already have occurred by this point
 /obj/machinery/suspension_gen/proc/activate()
-	//depending on the field type, we might pickup certain items
+	// depending on the field type, we might pickup certain items
 	var/turf/T = get_turf(get_step(src,dir))
 	var/success = 0
 	var/collected = 0
@@ -254,29 +254,29 @@
 				C.visible_message("\blue [bicon(C)] [C] begins to float in the air!","You feel tingly and light, but it is difficult to move.")
 		if("nitrogen")
 			success = 1
-			//
+			// 
 		if("mercury")
 			success = 1
-			//
+			// 
 		if("chlorine")
 			success = 1
-			//
+			// 
 		if("potassium")
 			success = 1
-			//
+			// 
 		if("phoron")
 			success = 1
-			//
+			// 
 		if("calcium")
 			success = 1
-			//
+			// 
 		if("iron")
 			success = 1
 			for(var/mob/living/silicon/R in T)
 				R.weakened += 5
 				R.visible_message("\blue [bicon(R)] [R] begins to float in the air!","You feel tingly and light, but it is difficult to move.")
-			//
-	//in case we have a bad field type
+			// 
+	// in case we have a bad field type
 	if(!success)
 		return
 
@@ -304,7 +304,7 @@
 			suspension_field.icon_state = "shield2"
 
 /obj/machinery/suspension_gen/proc/deactivate()
-	//drop anything we picked up
+	// drop anything we picked up
 	if(suspension_field)
 		var/turf/T = get_turf(suspension_field)
 
@@ -318,7 +318,7 @@
 		icon_state = "suspension2"
 
 /obj/machinery/suspension_gen/Destroy()
-	//safety checks: clear the field and drop anything it's holding
+	// safety checks: clear the field and drop anything it's holding
 	deactivate()
 	return ..()
 

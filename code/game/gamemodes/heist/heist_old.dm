@@ -17,7 +17,7 @@ VOX HEIST ROUNDTYPE
 	votable = 0
 
 	var/list/raid_objectives = list()
-	var/list/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
+	var/list/cortical_stacks = list() // Stacks for 'leave nobody behind' objective.
 
 /datum/game_mode/heist/announce()
 	to_chat(world, "<B>The current game mode is - Heist!</B>")
@@ -33,7 +33,7 @@ VOX HEIST ROUNDTYPE
 
 	var/raider_num = 0
 
-	//Check that we have enough vox.
+	// Check that we have enough vox.
 	if(antag_candidates.len < required_enemies)
 		return 0
 	else if(antag_candidates.len < recommended_enemies)
@@ -41,7 +41,7 @@ VOX HEIST ROUNDTYPE
 	else
 		raider_num = recommended_enemies
 
-	//Grab candidates randomly until we have enough.
+	// Grab candidates randomly until we have enough.
 	while(raider_num > 0)
 		var/datum/mind/new_raider = pick(antag_candidates)
 		raiders += new_raider
@@ -58,7 +58,7 @@ VOX HEIST ROUNDTYPE
 
 /datum/game_mode/heist/post_setup()
 
-	//Build a list of spawn points.
+	// Build a list of spawn points.
 	var/list/turf/raider_spawn = list()
 
 	for(var/obj/effect/landmark/L in landmarks_list)
@@ -67,13 +67,13 @@ VOX HEIST ROUNDTYPE
 			qdel(L)
 			continue
 
-	//Generate objectives for the group.
+	// Generate objectives for the group.
 	if(!config.objectives_disabled)
 		raid_objectives = forge_vox_objectives()
 
 	var/index = 1
 
-	//Spawn the vox!
+	// Spawn the vox!
 	for(var/datum/mind/raider in raiders)
 
 		if(index > raider_spawn.len)
@@ -109,7 +109,7 @@ VOX HEIST ROUNDTYPE
 			BP.status = 0 // rejuvenate() saves prostethic limbs, so we tell it NO.
 			BP.rejuvenate()
 
-		//Now apply cortical stack.
+		// Now apply cortical stack.
 		var/obj/item/organ/external/BP = vox.bodyparts_by_name[BP_HEAD]
 
 		var/obj/item/weapon/implant/cortical/I = new(vox)
@@ -169,7 +169,7 @@ VOX HEIST ROUNDTYPE
 
 		i++
 
-	//-All- vox raids have these two (one) objectives. Failing them loses the game.
+	// -All- vox raids have these two (one) objectives. Failing them loses the game.
 	objs += new /datum/objective/heist/inviolate_crew
 	objs += new /datum/objective/heist/inviolate_death
 
@@ -180,7 +180,7 @@ VOX HEIST ROUNDTYPE
 	to_chat(raider.current, "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.")
 	to_chat(raider.current, "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.")
 	to_chat(raider.current, "\blue Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!")
-	//to_chat(raider.current, "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http://baystation12.net/forums/viewtopic.php?f=6&t=8657.")
+	// to_chat(raider.current, "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http:// baystation12.net/forums/viewtopic.php?f=6&t=8657.")
 	var/obj_count = 1
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in raider.objectives)
@@ -192,7 +192,7 @@ VOX HEIST ROUNDTYPE
 
 /datum/game_mode/heist/declare_completion()
 
-	//No objectives, go straight to the feedback.
+	// No objectives, go straight to the feedback.
 	if(!(raid_objectives.len)) return ..()
 
 	var/win_type = "Major"
@@ -201,11 +201,11 @@ VOX HEIST ROUNDTYPE
 
 	var/success = raid_objectives.len
 
-	//Decrease success for failed objectives.
+	// Decrease success for failed objectives.
 	for(var/datum/objective/O in raid_objectives)
 		if(!(O.check_completion())) success--
 
-	//Set result by objectives.
+	// Set result by objectives.
 	if(success == raid_objectives.len)
 		win_type = "Major"
 		win_group = "Vox"
@@ -216,7 +216,7 @@ VOX HEIST ROUNDTYPE
 		win_type = "Minor"
 		win_group = "Crew"
 
-	//Now we modify that result by the state of the vox crew.
+	// Now we modify that result by the state of the vox crew.
 	if(!is_raider_crew_alive())
 
 		win_type = "Major"

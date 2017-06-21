@@ -6,19 +6,19 @@
 	var/rotting = 0
 
 	var/damage = 0
-	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
+	var/damage_cap = 100 // Wall will break down to girders if damage reaches this point
 
 	var/damage_overlay
 	var/global/damage_overlays[8]
 
-	var/max_temperature = 2200 //K, walls will take damage if they're next to a fire hotter than this
+	var/max_temperature = 2200 // K, walls will take damage if they're next to a fire hotter than this
 
 	opacity = 1
 	density = 1
 	blocks_air = 1
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
+	heat_capacity = 312500 // a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
 	var/walltype = "metal"
 	var/sheet_type = /obj/item/stack/sheet/metal
@@ -40,7 +40,7 @@
 	..(newtype)
 	relativewall_neighbours()
 
-//Appearance
+// Appearance
 
 /turf/simulated/wall/examine(mob/user)
 	..()
@@ -60,7 +60,7 @@
 		to_chat(user, "<span class='warning'>There is fungus growing on [src].</span>")
 
 /turf/simulated/wall/proc/update_icon()
-	if(!damage_overlays[1]) //list hasn't been populated
+	if(!damage_overlays[1]) // list hasn't been populated
 		generate_overlays()
 
 	if(!damage)
@@ -71,7 +71,7 @@
 	if(overlay > damage_overlays.len)
 		overlay = damage_overlays.len
 
-	if(damage_overlay && overlay == damage_overlay) //No need to update.
+	if(damage_overlay && overlay == damage_overlay) // No need to update.
 		return
 
 	overlays.Cut()
@@ -89,7 +89,7 @@
 		img.alpha = (i * alpha_inc) - 1
 		damage_overlays[i] = img
 
-//Damage
+// Damage
 
 /turf/simulated/wall/proc/take_damage(dam)
 	if(dam)
@@ -123,7 +123,7 @@
 		var/newgirder = break_wall()
 		transfer_fingerprints_to(newgirder)
 
-	for(var/obj/O in src.contents) //Eject contents!
+	for(var/obj/O in src.contents) // Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
@@ -207,7 +207,7 @@
 
 	spawn(100)
 		if(O)	qdel(O)
-//	F.sd_LumReset()		//TODO: ~Carn
+//	F.sd_LumReset()		// TODO: ~Carn
 	return
 
 /turf/simulated/wall/meteorhit(obj/M)
@@ -219,10 +219,10 @@
 		ReplaceWithLattice()
 	return 0
 
-//Interactions
+// Interactions
 
 /turf/simulated/wall/attack_paw(mob/user)
-	return src.attack_hand(user) //#Z2
+	return src.attack_hand(user) // #Z2
 
 /*
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
@@ -267,14 +267,14 @@
 			return
 
 /turf/simulated/wall/attack_hand(mob/user)
-	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
+	if(HULK in user.mutations) // #Z2 No more chances, just randomized damage and hurt intent
 		if(user.a_intent == "hurt")
 			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 			to_chat(user, text("\blue You punch the wall."))
 			take_damage(rand(15, 50))
 			if(prob(25))
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			return //##Z2
+			return // ##Z2
 
 	if(rotting)
 		to_chat(user, "\blue The wall crumbles under your touch.")
@@ -293,9 +293,9 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	//get the user's location
+	// get the user's location
 	if(!istype(user.loc, /turf))
-		return	//can't do this stuff whilst inside objects and such
+		return	// can't do this stuff whilst inside objects and such
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool))
@@ -312,7 +312,7 @@
 			src.dismantle_wall(1)
 			return
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
+	// THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -335,9 +335,9 @@
 			thermitemelt(user)
 			return
 
-	var/turf/T = user.loc	//get user's location for delay checks
+	var/turf/T = user.loc	// get user's location for delay checks
 
-	//DECONSTRUCTION
+	// DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/weldingtool))
 
 		var/response = "Dismantle"
@@ -376,7 +376,7 @@
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 		if(do_after(user,60,target = src))
-			if(mineral == "diamond")//Oh look, it's tougher
+			if(mineral == "diamond")// Oh look, it's tougher
 				sleep(60)
 			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
 				return
@@ -388,7 +388,7 @@
 					O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart.</span>", 2)
 		return
 
-	//DRILLING
+	// DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
@@ -466,7 +466,7 @@
 		AH.try_build(src)
 		return
 
-	//Poster stuff
+	// Poster stuff
 	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
 		return

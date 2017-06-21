@@ -12,7 +12,7 @@
 	throw_range = 7
 	w_class = 4.0
 
-	var/charges = 0		//how many restocking "charges" the refill has
+	var/charges = 0		// how many restocking "charges" the refill has
 
 /obj/item/weapon/vending_refill/New()
 	..()
@@ -26,26 +26,26 @@
 		else
 			to_chat(user, "It's empty!")
 
-//NOTE I decided to go for about 1/3 of a machine's capacity
+// NOTE I decided to go for about 1/3 of a machine's capacity
 
 /obj/item/weapon/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
-	charges = 50//of 138
+	charges = 50// of 138
 
 /obj/item/weapon/vending_refill/coffee
 	machine_name = "hot drinks"
 	icon_state = "refill_joe"
-	charges = 30//of 85
+	charges = 30// of 85
 
 /obj/item/weapon/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
-	charges = 15//of 48
+	charges = 15// of 48
 
 /obj/item/weapon/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"
-	charges = 20//of 65
+	charges = 20// of 65
 
 /obj/item/weapon/vending_refill/cigarette
 	machine_name = "cigarette"

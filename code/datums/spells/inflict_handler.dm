@@ -6,7 +6,7 @@
 	var/amt_paralysis = 0
 	var/amt_stunned = 0
 
-	//set to negatives for healing
+	// set to negatives for healing
 	var/amt_dam_fire = 0
 	var/amt_dam_brute = 0
 	var/amt_dam_oxy = 0
@@ -15,7 +15,7 @@
 	var/amt_eye_blind = 0
 	var/amt_eye_blurry = 0
 
-	var/destroys = "none" //can be "none", "gib" or "disintegrate"
+	var/destroys = "none" // can be "none", "gib" or "disintegrate"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets)
 
@@ -35,7 +35,7 @@
 
 		if(!target)
 			continue
-		//damage
+		// damage
 		if(amt_dam_brute > 0)
 			if(amt_dam_fire >= 0)
 				target.take_overall_damage(amt_dam_brute,amt_dam_fire)
@@ -50,7 +50,7 @@
 				target.heal_overall_damage(amt_dam_brute,amt_dam_fire)
 		target.adjustToxLoss(amt_dam_tox)
 		target.oxyloss += amt_dam_oxy
-		//disabling
+		// disabling
 		target.Weaken(amt_weakened)
 		target.Paralyse(amt_paralysis)
 		target.Stun(amt_stunned)

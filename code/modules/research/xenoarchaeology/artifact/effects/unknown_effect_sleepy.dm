@@ -1,5 +1,5 @@
 
-//todo
+// todo
 /datum/artifact_effect/sleepy
 	effecttype = "sleepy"
 

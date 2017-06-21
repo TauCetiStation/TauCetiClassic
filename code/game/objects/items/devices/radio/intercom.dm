@@ -9,7 +9,7 @@
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
-	var/last_tick //used to delay the powercheck
+	var/last_tick // used to delay the powercheck
 
 /obj/item/device/radio/intercom/New()
 	..()
@@ -44,7 +44,7 @@
 		return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))
-			return -1//Prevents broadcast of messages over devices lacking the encryption
+			return -1// Prevents broadcast of messages over devices lacking the encryption
 
 	return canhear_range
 

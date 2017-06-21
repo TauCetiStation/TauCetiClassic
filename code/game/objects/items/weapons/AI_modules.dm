@@ -119,7 +119,7 @@ AI MODULES
 	name = "\improper 'OneHuman' AI module"
 	var/targetName = ""
 	desc = "A 'one human' AI module: 'Only <name> is human.'"
-	origin_tech = "programming=3;materials=6" //made with diamonds!
+	origin_tech = "programming=3;materials=6" // made with diamonds!
 
 /obj/item/weapon/aiModule/oneHuman/attack_self(mob/user)
 	..()
@@ -150,7 +150,7 @@ AI MODULES
 /obj/item/weapon/aiModule/protectStation
 	name = "\improper 'ProtectStation' AI module"
 	desc = "A 'protect station' AI module: 'Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.'"
-	origin_tech = "programming=3;materials=4" //made of gold
+	origin_tech = "programming=3;materials=4" // made of gold
 
 /obj/item/weapon/aiModule/protectStation/attack_self(mob/user)
 	..()
@@ -344,7 +344,7 @@ AI MODULES
 	target.add_inherent_law("Serve: Serve the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 	target.add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 	target.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
-	//target.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
+	// target.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
 	target.show_laws()
 
 /******************** Corporate ********************/
@@ -453,7 +453,7 @@ AI MODULES
 	desc = "A hacked AI law module:  '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-//	..()    //We don't want this module reporting to the AI who dun it. --NEO
+//	..()    // We don't want this module reporting to the AI who dun it. --NEO
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
 	lawchanges.Add("The law is '[newFreeFormLaw]'")

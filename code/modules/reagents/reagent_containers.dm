@@ -8,7 +8,7 @@
 	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/volume = 30
 
-/obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
+/obj/item/weapon/reagent_containers/verb/set_APTFT() // set amount_per_transfer_from_this
 	set name = "Set transfer amount"
 	set category = "Object"
 	set src in range(0)
@@ -40,10 +40,10 @@
 /obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
 	return
 
-/obj/item/weapon/reagent_containers/proc/reagentlist(obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
+/obj/item/weapon/reagent_containers/proc/reagentlist(obj/item/weapon/reagent_containers/snack) // Attack logs for regents in pills
 	var/data
-	if(snack.reagents.reagent_list && snack.reagents.reagent_list.len) //find a reagent list if there is and check if it has entries
-		for (var/datum/reagent/R in snack.reagents.reagent_list) //no reagents will be left behind
-			data += "[R.id]([R.volume] units); " //Using IDs because SOME chemicals(I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
+	if(snack.reagents.reagent_list && snack.reagents.reagent_list.len) // find a reagent list if there is and check if it has entries
+		for (var/datum/reagent/R in snack.reagents.reagent_list) // no reagents will be left behind
+			data += "[R.id]([R.volume] units); " // Using IDs because SOME chemicals(I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 		return data
 	else return "No reagents"

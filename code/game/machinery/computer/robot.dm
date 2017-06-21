@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 
 /obj/machinery/computer/robotics
@@ -35,7 +35,7 @@
 		if(screen == 1)
 			for(var/mob/living/silicon/robot/R in mob_list)
 				if(istype(R, /mob/living/silicon/robot/drone))
-					continue //There's a specific console for drones.
+					continue // There's a specific console for drones.
 				if(istype(user, /mob/living/silicon/ai))
 					if (R.connected_ai != user)
 						continue

@@ -90,21 +90,21 @@
 	if(gang == "B")
 		mode.B_timer = "OFFLINE"
 	if(gang)
-		//SSshuttle.emergencyNoEscape = 0
-		//if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-		//SSshuttle.location!=0
+		// SSshuttle.emergencyNoEscape = 0
+		// if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+		// SSshuttle.location!=0
 		if(!isnum(mode.A_timer) && !isnum(mode.B_timer))
 
-			//if(SSshuttle.direction == 1)
+			// if(SSshuttle.direction == 1)
 			//	SSshuttle.settimeleft(0)
-				//SSshuttle.emergency.mode = SHUTTLE_DOCKED
-				//SSshuttle.emergency.timer = world.time
-				//priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-				//captain_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.")
-				//world << sound('sound/AI/shuttledock.ogg')
-			//else
-				//priority_announce("All hostile activity within station systems have ceased.","Network Alert")
-				//captain_announce("All hostile activity within station systems have ceased.")
+				// SSshuttle.emergency.mode = SHUTTLE_DOCKED
+				// SSshuttle.emergency.timer = world.time
+				// priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+				// captain_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.")
+				// world << sound('sound/AI/shuttledock.ogg')
+			// else
+				// priority_announce("All hostile activity within station systems have ceased.","Network Alert")
+				// captain_announce("All hostile activity within station systems have ceased.")
 			if(get_security_level() == "delta")
 				set_security_level("red")
 
@@ -142,7 +142,7 @@
 	if(Proj.damage)
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			var/damage = Proj.damage
-			//if(Proj.forcedodge)
+			// if(Proj.forcedodge)
 			//	damage *= 0.5
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 			visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
@@ -220,14 +220,14 @@
 		return
 	healthcheck(M.melee_damage_upper)
 
-//obj/machinery/dominator/mech_melee_attack(obj/mecha/M)
+// obj/machinery/dominator/mech_melee_attack(obj/mecha/M)
 //	if(M.damtype == "brute")
 //		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 //		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 //		healthcheck(M.force)
 //	return
 
-//obj/machinery/dominator/attack_hulk(mob/user)
+// obj/machinery/dominator/attack_hulk(mob/user)
 //	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 //	user.visible_message("<span class='danger'>[user] smashes [src].</span>",\
 //	"<span class='danger'>You punch [src].</span>",\
@@ -237,7 +237,7 @@
 /obj/machinery/dominator/attackby(obj/item/weapon/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon))
 		add_fingerprint(user)
-		//user.changeNext_move(CLICK_CD_MELEE)
+		// user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return

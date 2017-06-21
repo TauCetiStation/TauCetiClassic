@@ -1,8 +1,8 @@
-//Config stuff
-#define SPECOPS_MOVETIME 600	//Time to station is milliseconds. 60 seconds, enough time for everyone to be on the shuttle before it leaves.
-#define SPECOPS_STATION_AREATYPE "/area/shuttle/specops/station" //Type of the spec ops shuttle area for station
-#define SPECOPS_DOCK_AREATYPE "/area/shuttle/specops/centcom"	//Type of the spec ops shuttle area for dock
-#define SPECOPS_RETURN_DELAY 6000 //Time between the shuttle is capable of moving.
+// Config stuff
+#define SPECOPS_MOVETIME 600	// Time to station is milliseconds. 60 seconds, enough time for everyone to be on the shuttle before it leaves.
+#define SPECOPS_STATION_AREATYPE "/area/shuttle/specops/station" // Type of the spec ops shuttle area for station
+#define SPECOPS_DOCK_AREATYPE "/area/shuttle/specops/centcom"	// Type of the spec ops shuttle area for dock
+#define SPECOPS_RETURN_DELAY 6000 // Time between the shuttle is capable of moving.
 
 var/specops_shuttle_moving_to_station = 0
 var/specops_shuttle_moving_to_centcom = 0
@@ -23,11 +23,11 @@ var/specops_shuttle_timeleft = 0
 	var/specops_shuttle_timereset = 0
 
 /proc/specops_return()
-	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
+	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)// We need a fake AI to announce some stuff below. Otherwise it will be wonky.
 	announcer.config(list("Response Team" = 0))
 
-	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
-	var/message = "\"THE SPECIAL OPERATIONS SHUTTLE IS PREPARING TO RETURN\""//Initial message shown.
+	var/message_tracker[] = list(0,1,2,3,5,10,30,45)// Create a a list with potential time values.
+	var/message = "\"THE SPECIAL OPERATIONS SHUTTLE IS PREPARING TO RETURN\""// Initial message shown.
 	if(announcer)
 		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 
@@ -38,16 +38,16 @@ var/specops_shuttle_timeleft = 0
 			specops_shuttle_time = world.timeofday + 10	// midnight rollover
 		specops_shuttle_timeleft = (ticksleft / 10)
 
-		//All this does is announce the time before launch.
+		// All this does is announce the time before launch.
 		if(announcer)
-			var/rounded_time_left = round(specops_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
-			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
+			var/rounded_time_left = round(specops_shuttle_timeleft)// Round time so that it will report only once, not in fractions.
+			if(rounded_time_left in message_tracker)// If that time is in the list for message announce.
 				message = "\"ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN\""
 				if(rounded_time_left==0)
 					message = "\"ALERT: TAKEOFF\""
 				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
-				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
-				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
+				message_tracker -= rounded_time_left// Remove the number from the list so it won't be called again next cycle.
+				// Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
 		sleep(5)
 
@@ -71,7 +71,7 @@ var/specops_shuttle_timeleft = 0
 	for(var/turf/T in dstturfs)
 					// find the turf to move things to
 		var/turf/D = locate(T.x, throwy - 1, 1)
-					//var/turf/E = get_step(D, SOUTH)
+					// var/turf/E = get_step(D, SOUTH)
 		for(var/atom/movable/AM as mob|obj in T)
 			AM.Move(D)
 		if(istype(T, /turf/simulated))
@@ -97,11 +97,11 @@ var/specops_shuttle_timeleft = 0
 	qdel(announcer)
 
 /proc/specops_process()
-	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
+	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)// We need a fake AI to announce some stuff below. Otherwise it will be wonky.
 	announcer.config(list("Response Team" = 0))
 
-	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
-	var/message = "\"THE SPECIAL OPERATIONS SHUTTLE IS PREPARING FOR LAUNCH\""//Initial message shown.
+	var/message_tracker[] = list(0,1,2,3,5,10,30,45)// Create a a list with potential time values.
+	var/message = "\"THE SPECIAL OPERATIONS SHUTTLE IS PREPARING FOR LAUNCH\""// Initial message shown.
 	if(announcer)
 		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 //		message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
@@ -114,16 +114,16 @@ var/specops_shuttle_timeleft = 0
 			specops_shuttle_time = world.timeofday + 10	// midnight rollover
 		specops_shuttle_timeleft = (ticksleft / 10)
 
-		//All this does is announce the time before launch.
+		// All this does is announce the time before launch.
 		if(announcer)
-			var/rounded_time_left = round(specops_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
-			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
+			var/rounded_time_left = round(specops_shuttle_timeleft)// Round time so that it will report only once, not in fractions.
+			if(rounded_time_left in message_tracker)// If that time is in the list for message announce.
 				message = "\"ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN\""
 				if(rounded_time_left==0)
 					message = "\"ALERT: TAKEOFF\""
 				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
-				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
-				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
+				message_tracker -= rounded_time_left// Remove the number from the list so it won't be called again next cycle.
+				// Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
 		sleep(5)
 
@@ -153,7 +153,7 @@ var/specops_shuttle_timeleft = 0
 	for(var/turf/T in dstturfs)
 					// find the turf to move things to
 		var/turf/D = locate(T.x, throwy - 1, 1)
-					//var/turf/E = get_step(D, SOUTH)
+					// var/turf/E = get_step(D, SOUTH)
 		for(var/atom/movable/AM as mob|obj in T)
 			AM.Move(D)
 		if(istype(T, /turf/simulated))

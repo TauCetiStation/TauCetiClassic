@@ -146,7 +146,7 @@
 		return round(5*sqrt(O.potency))
 
 /obj/machinery/juicer/proc/juice()
-	power_change() //it is a portable machine
+	power_change() // it is a portable machine
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!beaker || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)

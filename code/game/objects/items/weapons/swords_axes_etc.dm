@@ -110,7 +110,7 @@
 		for(var/mob/O in viewers(M))
 			if (O.client)	O.show_message("\red <B>[M] has been stunned with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
 
-//Telescopic baton
+// Telescopic baton
 /obj/item/weapon/melee/telebaton
 	name = "telescopic baton"
 	desc = "A compact yet rebalanced personal defense weapon. Can be concealed when folded."
@@ -132,7 +132,7 @@
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
 		w_class = 3
-		force = 15//quite robust
+		force = 15// quite robust
 		attack_verb = list("smacked", "struck", "slapped")
 	else
 		user.visible_message("\blue [user] collapses their telescopic baton.",\
@@ -141,7 +141,7 @@
 		icon_state = "telebaton_0"
 		item_state = null
 		w_class = 2
-		force = 3//not so robust now
+		force = 3// not so robust now
 		attack_verb = list("hit", "punched")
 
 	if(istype(user,/mob/living/carbon/human))
@@ -152,8 +152,8 @@
 	playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)
 
-	if(blood_overlay && blood_DNA && (blood_DNA.len >= 1)) //updates blood overlay, if any
-		overlays.Cut()//this might delete other item overlays as well but eeeeeeeh
+	if(blood_overlay && blood_DNA && (blood_DNA.len >= 1)) // updates blood overlay, if any
+		overlays.Cut()// this might delete other item overlays as well but eeeeeeeh
 
 		var/icon/I = new /icon(src.icon, src.icon_state)
 		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD)
@@ -185,7 +185,7 @@
 /*
  *Energy Blade
  */
-//Most of the other special functions are handled in their own files.
+// Most of the other special functions are handled in their own files.
 
 /obj/item/weapon/melee/energy/sword/green/New()
 	item_color = "green"

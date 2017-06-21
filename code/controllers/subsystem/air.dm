@@ -17,7 +17,7 @@ var/datum/subsystem/air/SSair
 	flags = SS_BACKGROUND
 
 	var/current_cycle = 0
-	var/next_id       = 1 //Used to keep track of zone UIDs.
+	var/next_id       = 1 // Used to keep track of zone UIDs.
 
 	var/cost_pipenets   = 0
 	var/cost_tiles_curr = 0

@@ -1,4 +1,4 @@
-//This proc is called whenever someone clicks an inventory ui slot.
+// This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
 	if(istype(W))
@@ -26,10 +26,10 @@
 		return 1
 	return 0
 
-//This is a SAFE proc. Use this instead of equip_to_slot()!
-//set del_on_fail to have it delete W if it fails to equip
-//set disable_warning to disable the 'you are unable to equip that' warning.
-//unset redraw_mob to prevent the mob from being redrawn at the end.
+// This is a SAFE proc. Use this instead of equip_to_slot()!
+// set del_on_fail to have it delete W if it fails to equip
+// set disable_warning to disable the 'you are unable to equip that' warning.
+// unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W)) return 0
 
@@ -38,22 +38,22 @@
 			qdel(W)
 		else
 			if(!disable_warning)
-				to_chat(src, "<span class='red'>You are unable to equip that.</span>")//Only print if del_on_fail is false
+				to_chat(src, "<span class='red'>You are unable to equip that.</span>")// Only print if del_on_fail is false
 		return 0
 
-	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+	equip_to_slot(W, slot, redraw_mob) // This proc should not ever fail.
 	return 1
 
-//This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
-//In most cases you will want to use equip_to_slot_if_possible()
+// This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
+// In most cases you will want to use equip_to_slot_if_possible()
 /mob/proc/equip_to_slot(obj/item/W, slot)
 	return
 
-//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
+// This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
 /mob/proc/equip_to_slot_or_del(obj/item/W, slot)
 	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
-//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
+// The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
 var/list/slot_equipment_priority = list( \
 		slot_back,\
 		slot_wear_id,\
@@ -72,8 +72,8 @@ var/list/slot_equipment_priority = list( \
 		slot_r_store\
 	)
 
-//puts the item "W" into an appropriate slot in a human's inventory
-//returns 0 if it cannot, 1 if successful
+// puts the item "W" into an appropriate slot in a human's inventory
+// returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
 	if(!istype(W)) return 0
 
@@ -87,44 +87,44 @@ var/list/slot_equipment_priority = list( \
 // Used in job equipping so shit doesn't pile up at the start loc.
 /mob/living/carbon/human/proc/equip_or_collect(obj/item/W, slot)
 	if(W.mob_can_equip(src, slot, 1))
-		//Mob can equip.  Equip it.
+		// Mob can equip.  Equip it.
 		equip_to_slot_or_del(W, slot)
 	else
-		//Mob can't equip it.  Put it in a bag B.
+		// Mob can't equip it.  Put it in a bag B.
 		// Do I have a backpack?
 		var/obj/item/weapon/storage/B
 		if(istype(back,/obj/item/weapon/storage))
-			//Mob is wearing backpack
+			// Mob is wearing backpack
 			B = back
 		else
-			//not wearing backpack.  Check if player holding plastic bag
+			// not wearing backpack.  Check if player holding plastic bag
 			B=is_in_hands(/obj/item/weapon/storage/bag/plasticbag)
-			if(!B) //If not holding plastic bag, give plastic bag
+			if(!B) // If not holding plastic bag, give plastic bag
 				B=new /obj/item/weapon/storage/bag/plasticbag(null) // Null in case of failed equip.
 				if(!put_in_hands(B))
 					return // Bag could not be placed in players hands.  I don't know what to do here...
-		//Now, B represents a container we can insert W into.
+		// Now, B represents a container we can insert W into.
 		B.handle_item_insertion(W,1)
 		return B
 
 
-//These procs handle putting s tuff in your hand. It's probably best to use these rather than setting l_hand = ...etc
-//as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
+// These procs handle putting s tuff in your hand. It's probably best to use these rather than setting l_hand = ...etc
+// as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
-//Returns the thing in our active hand
+// Returns the thing in our active hand
 
 
-//Returns the thing in our active hand
+// Returns the thing in our active hand
 /mob/proc/get_active_hand()
 	if(hand)	return l_hand
 	else		return r_hand
 
-//Returns the thing in our inactive hand
+// Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
 	if(hand)	return r_hand
 	else		return l_hand
 
-//Checks if thing in mob's hands
+// Checks if thing in mob's hands
 /mob/living/carbon/human/proc/is_in_hands(typepath)
 	if(istype(l_hand,typepath))
 		return l_hand
@@ -132,15 +132,15 @@ var/list/slot_equipment_priority = list( \
 		return r_hand
 	return 0
 
-//Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
+// Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))	return 0
 	if(!istype(W))		return 0
-	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
+	if(W.anchored)		return 0	// Anchored things shouldn't be picked up because they... anchored?!
 	if(!l_hand)
-		W.loc = src		//TODO: move to equipped?
+		W.loc = src		// TODO: move to equipped?
 		l_hand = W
-		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
+		W.layer = ABOVE_HUD_LAYER	// TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 //		l_hand.screen_loc = ui_lhand
@@ -153,11 +153,11 @@ var/list/slot_equipment_priority = list( \
 		return 1
 	return 0
 
-//Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
+// Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))	return 0
 	if(!istype(W))		return 0
-	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
+	if(W.anchored)		return 0	// Anchored things shouldn't be picked up because they... anchored?!
 	if(!r_hand)
 		W.loc = src
 		r_hand = W
@@ -174,19 +174,19 @@ var/list/slot_equipment_priority = list( \
 		return 1
 	return 0
 
-//Puts the item into our active hand if possible. returns 1 on success.
+// Puts the item into our active hand if possible. returns 1 on success.
 /mob/proc/put_in_active_hand(obj/item/W)
 	if(hand)	return put_in_l_hand(W)
 	else		return put_in_r_hand(W)
 
-//Puts the item into our inactive hand if possible. returns 1 on success.
+// Puts the item into our inactive hand if possible. returns 1 on success.
 /mob/proc/put_in_inactive_hand(obj/item/W)
 	if(hand)	return put_in_r_hand(W)
 	else		return put_in_l_hand(W)
 
-//Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
-//If both fail it drops it on the floor and returns 0.
-//This is probably the main one you need to know :)
+// Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
+// If both fail it drops it on the floor and returns 0.
+// This is probably the main one you need to know :)
 /mob/proc/put_in_hands(obj/item/W)
 	if(!W)		return 0
 	if(put_in_active_hand(W))
@@ -211,15 +211,15 @@ var/list/slot_equipment_priority = list( \
 		return 1
 	return 0
 
-//Drops the item in our left hand
+// Drops the item in our left hand
 /mob/proc/drop_l_hand(atom/Target)
 	return drop_from_inventory(l_hand, Target)
 
-//Drops the item in our right hand
+// Drops the item in our right hand
 /mob/proc/drop_r_hand(atom/Target)
 	return drop_from_inventory(r_hand, Target)
 
-//Drops the item in our active hand.
+// Drops the item in our active hand.
 /mob/proc/drop_item(atom/Target)
 	if(hand)	return drop_l_hand(Target)
 	else		return drop_r_hand(Target)
@@ -250,9 +250,9 @@ var/list/slot_equipment_priority = list( \
 		update_inv_wear_mask()
 	return
 
-//This differs from remove_from_mob() in that it checks canremove first.
-/mob/proc/unEquip(obj/item/I, force = 0) //Force overrides NODROP for things like wizarditis and admin undress.
-	if(!I) //If there's nothing to drop, the drop is automatically successful.
+// This differs from remove_from_mob() in that it checks canremove first.
+/mob/proc/unEquip(obj/item/I, force = 0) // Force overrides NODROP for things like wizarditis and admin undress.
+	if(!I) // If there's nothing to drop, the drop is automatically successful.
 		return 1
 
 	if(!I.canremove && !force)
@@ -281,7 +281,7 @@ var/list/slot_equipment_priority = list( \
 	return 1
 
 
-//Outdated but still in use apparently. This should at least be a human proc.
+// Outdated but still in use apparently. This should at least be a human proc.
 /mob/proc/get_equipped_items()
 	var/list/items = new/list()
 
@@ -304,7 +304,7 @@ var/list/slot_equipment_priority = list( \
 
 	return items
 
-//Create delay for equipping
+// Create delay for equipping
 /mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/
 
 	if(!istype(C)) return 0

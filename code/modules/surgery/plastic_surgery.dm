@@ -1,6 +1,6 @@
-//////////////////////////////////////////////////////////////////
-//						Plastic Surgery							//
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////// /
+//						Plastic Surgery							// 
+///////////////////////////////////////////////////////////////// /
 /datum/surgery_status
 	var/plasticsur = 0
 
@@ -89,7 +89,7 @@
 	"\red Your hand slips, clamping [user]'s trachea shut for a moment with \the [tool]!")
 	target.losebreath += 10
 
-//reshape_face
+// reshape_face
 /datum/surgery_step/plastic_surgery/reshape_face
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\

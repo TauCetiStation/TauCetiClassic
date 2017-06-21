@@ -1,6 +1,6 @@
 /obj/item/latexballon
 	name = "Latex glove"
-	desc = "" //todo
+	desc = "" // todo
 	icon_state = "latexballon"
 	item_state = "lgloves"
 	force = 0

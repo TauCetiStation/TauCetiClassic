@@ -1,7 +1,7 @@
-//Procedures in this file: Brain extraction. Brain fixing. Slime Core extraction.
-//////////////////////////////////////////////////////////////////
-//						BRAIN SURGERY							//
-//////////////////////////////////////////////////////////////////
+// Procedures in this file: Brain extraction. Brain fixing. Slime Core extraction.
+///////////////////////////////////////////////////////////////// /
+//						BRAIN SURGERY							// 
+///////////////////////////////////////////////////////////////// /
 
 /datum/surgery_step/brain
 	clothless = 0
@@ -95,7 +95,7 @@
 	var/mob/living/simple_animal/borer/borer = target.has_brain_worms()
 
 	if(borer)
-		borer.detatch() //Should remove borer if the brain is removed - RR
+		borer.detatch() // Should remove borer if the brain is removed - RR
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -117,7 +117,7 @@
 	target.organs_by_name -= O_BRAIN // this is SOOO wrong.
 
 	target:brain_op_stage = 4.0
-	target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
+	target.death()// You want them to die after the brain was transferred, so not to trigger client death() twice.
 
 /datum/surgery_step/brain/saw_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
@@ -128,9 +128,9 @@
 		user:bloody_hands(target, 0)
 
 
-//////////////////////////////////////////////////////////////////
-//				BRAIN DAMAGE FIXING								//
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////// /
+//				BRAIN DAMAGE FIXING								// 
+///////////////////////////////////////////////////////////////// /
 
 /datum/surgery_step/brain/bone_chips
 	allowed_tools = list(
@@ -193,9 +193,9 @@
 	"\red Your hand slips, bruising [target]'s brain with \the [tool]!")
 	target.apply_damage(20, BRUTE, BP_HEAD, 1, DAM_SHARP)
 
-//////////////////////////////////////////////////////////////////
-//				SLIME CORE EXTRACTION							//
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////// /
+//				SLIME CORE EXTRACTION							// 
+///////////////////////////////////////////////////////////////// /
 
 /datum/surgery_step/slime/can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 	return istype(target, /mob/living/carbon/slime/) && target.stat == DEAD

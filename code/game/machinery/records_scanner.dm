@@ -1,4 +1,4 @@
-//not a computer
+// not a computer
 obj/machinery/scanner
 	name = "Identity Analyser"
 	var/outputdir = 0
@@ -119,7 +119,7 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	S.fields["ma_crim_d"] = "No major crime convictions."
 	S.fields["notes"] = "No notes."
 
-	//Begin locked reporting
+	// Begin locked reporting
 	L.fields["name"] = mname
 	L.fields["sex"] = gender
 	L.fields["age"] = age
@@ -130,8 +130,8 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	L.fields["b_dna"] = dna
 	L.fields["enzymes"] = user.dna.struc_enzymes
 	L.fields["identity"] = user.dna.uni_identity
-	L.fields["image"] = getFlatIcon(user,0)//What the person looks like. Naked, in this case.
-	//End locked reporting
+	L.fields["image"] = getFlatIcon(user,0)// What the person looks like. Naked, in this case.
+	// End locked reporting
 
 	data_core.general += G
 	data_core.medical += M

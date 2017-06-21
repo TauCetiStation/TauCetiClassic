@@ -9,7 +9,7 @@
 		src.be_role = list()
 	else
 		for (var/i in special_roles)
-			if(special_roles[i]) //if mode is available on the server
+			if(special_roles[i]) // if mode is available on the server
 				var/available_in_minutes = role_available_in_minutes(user, i)
 				if(jobban_isbanned(user, i))
 					. += 	"<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font></td></tr>"

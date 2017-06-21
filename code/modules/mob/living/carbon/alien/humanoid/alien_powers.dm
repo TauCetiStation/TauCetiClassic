@@ -6,7 +6,7 @@ These are general powers. Specific powers are stored under the appropriate alien
 Doesn't work on other aliens/AI.*/
 
 
-/mob/living/carbon/alien/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
+/mob/living/carbon/alien/proc/powerc(X, Y)// Y is optional, checks for weed planting. X can be null.
 	if(stat)
 		to_chat(src, "\green You must be conscious to do this.")
 		return 0
@@ -77,7 +77,7 @@ Doesn't work on other aliens/AI.*/
 	return
 
 
-/mob/living/carbon/alien/humanoid/proc/corrosive_acid(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
+/mob/living/carbon/alien/humanoid/proc/corrosive_acid(O in oview(1)) // If they right click to corrode, an error will flash if its an invalid target./N
 	set name = "Corrossive Acid (200)"
 	set desc = "Drench an object in acid, destroying it over time."
 	set category = "Alien"
@@ -87,7 +87,7 @@ Doesn't work on other aliens/AI.*/
 			// OBJ CHECK
 			if(isobj(O))
 				var/obj/I = O
-				if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
+				if(I.unacidable)	// So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
 					to_chat(src, "\green You cannot dissolve this object.")
 					return
 			// TURF CHECK
@@ -126,7 +126,7 @@ Doesn't work on other aliens/AI.*/
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
 				to_chat(O, "\red [src] spits neurotoxin at [target]!")
-		//I'm not motivated enough to revise this. Prjectile code in general needs update.
+		// I'm not motivated enough to revise this. Prjectile code in general needs update.
 		var/turf/T = loc
 		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 
@@ -217,7 +217,7 @@ Doesn't work on other aliens/AI.*/
 		to_chat(src, "You are not ready.")
 		return
 
-		//I'm not motivated enough to revise this. Prjectile code in general needs update.
+		// I'm not motivated enough to revise this. Prjectile code in general needs update.
 	var/turf/T = loc
 	var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 
@@ -250,11 +250,11 @@ Doesn't work on other aliens/AI.*/
 
 	visible_message("\red <B> [src] spits [BB.name] at [target]!</B>")
 
-	//prepare "bullet"
+	// prepare "bullet"
 	BB.original = target
 	BB.firer = src
 	BB.def_zone = src.zone_sel.selecting
-	//shoot
+	// shoot
 	BB.loc = T
 	BB.starting = T
 	BB.current = loc
@@ -274,7 +274,7 @@ Doesn't work on other aliens/AI.*/
 	set category = "Alien"
 
 	if(powerc(75))
-		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
+		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") // would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
 		if(!choice || !powerc(75))	return
 		adjustToxLoss(-75)
 		to_chat(src, "\green You shape a [choice].")
@@ -302,7 +302,7 @@ Doesn't work on other aliens/AI.*/
 				if(M in stomach_contents)
 					stomach_contents.Remove(M)
 					M.loc = loc
-					//M.update_pipe_vision()
-					//Paralyse(10)
+					// M.update_pipe_vision()
+					// Paralyse(10)
 			src.visible_message("\green <B>[src] hurls out the contents of their stomach!</B>")
 	return

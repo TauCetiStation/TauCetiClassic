@@ -21,7 +21,7 @@
 	var/tried_to_add_revheads = 0
 
 ///////////////////////////////////////////////////////////////////////////////
-//Gets the round setup, cancelling if there's not enough players at the start//
+// Gets the round setup, cancelling if there's not enough players at the start// 
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/rp_revolution/pre_setup()
 
@@ -38,14 +38,14 @@
 			break
 
 	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
+		for(var/job in restricted_jobs)// Removing heads and such from the list
 			if(player.assigned_role == job)
 				antag_candidates -= player
 
 	for (var/i=1 to max_headrevs)
 		if (antag_candidates.len==0)
 			break
-		var/datum/mind/lenin = pick(antag_candidates)	//>lenin LMAO
+		var/datum/mind/lenin = pick(antag_candidates)	// >lenin LMAO
 		antag_candidates -= lenin
 		head_revolutionaries += lenin
 
@@ -71,7 +71,7 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
 		rev_mind.current.verbs += /mob/living/carbon/human/proc/RevConvert
-		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
+		equip_traitor(rev_mind.current, 1) // changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 
 	modePlayer += head_revolutionaries
 	return ..()
@@ -99,12 +99,12 @@
 			to_chat(rev_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
-///////////////////////////////////////////////////
-//Deals with converting players to the revolution//
-///////////////////////////////////////////////////
+////////////////////////////////////////////////// /
+// Deals with converting players to the revolution// 
+////////////////////////////////////////////////// /
 /datum/game_mode/revolution/rp_revolution/add_revolutionary(datum/mind/rev_mind)
 	// overwrite this func to make it so even heads can be converted
-	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
+	var/mob/living/carbon/human/H = rev_mind.current// Check to see if the potential rev is implanted
 	if(isloyal(H))
 		return 0
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
@@ -118,9 +118,9 @@
 	H.hud_updateflag |= 1 << SPECIALROLE_HUD
 	return 1
 
-/////////////////////////////
-//Checks for a head victory//
-/////////////////////////////
+///////////////////////////// 
+// Checks for a head victory// 
+///////////////////////////// 
 /datum/game_mode/revolution/rp_revolution/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
@@ -128,21 +128,21 @@
 			// TODO: add a similar check that also checks whether they're without ID in the brig..
 			//       probably wanna export this stuff into a separate function for use by both
 			//       revs and heads
-			//assume that only carbon mobs can become rev heads for now
+			// assume that only carbon mobs can become rev heads for now
 			if(!rev_mind.current:handcuffed && T && T.z == ZLEVEL_STATION)
 				return 0
 	return 1
 
-///////////////////////////
-//Announces the game type//
-///////////////////////////
+////////////////////////// /
+// Announces the game type// 
+////////////////////////// /
 /datum/game_mode/revolution/rp_revolution/announce()
 	to_chat(world, "<B>The current game mode is - Revolution!</B>")
 	to_chat(world, "<B>Some crewmembers are attempting to start a revolution!</B>")
 
 
 //////////////////////////////////////////////////////////////////////
-//Announces the end of the game with all relavent information stated//
+// Announces the end of the game with all relavent information stated// 
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/rp_revolution/declare_completion()
 	completion_text += "<B>RP-revolution mode resume:</B><BR>"

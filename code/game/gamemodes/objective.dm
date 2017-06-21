@@ -1,12 +1,12 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 var/global/list/all_objectives = list()
 
 datum/objective
-	var/datum/mind/owner = null			//Who owns the objective.
-	var/explanation_text = "Nothing"	//What that person is supposed to do.
-	var/datum/mind/target = null		//If they are focused on a particular person.
-	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
-	var/completed = 0					//currently only used for custom objectives.
+	var/datum/mind/owner = null			// Who owns the objective.
+	var/explanation_text = "Nothing"	// What that person is supposed to do.
+	var/datum/mind/target = null		// If they are focused on a particular person.
+	var/target_amount = 0				// If they are focused on a particular number. Steal objectives have their own counter.
+	var/completed = 0					// currently only used for custom objectives.
 
 	New(var/text)
 		all_objectives |= src
@@ -29,7 +29,7 @@ datum/objective
 			target = pick(possible_targets)
 
 
-	proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
+	proc/find_target_by_role(role, role_type=0)// Option sets either to check assigned role or special role. Default to assigned.
 		for(var/datum/mind/possible_target in ticker.minds)
 			if((possible_target != owner) && ishuman(possible_target.current) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
 				target = possible_target
@@ -58,7 +58,7 @@ datum/objective/assassinate
 
 	check_completion()
 		if(target && target.current)
-			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > ZLEVEL_EMPTY || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > ZLEVEL_EMPTY || !target.current.ckey) // Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 				return 1
 			return 0
 		return 1
@@ -88,7 +88,7 @@ datum/objective/mutiny/check_completion()
 		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 			return 1
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
+		if(T && (T.z != ZLEVEL_STATION))			// If they leave the station they count as dead for this
 			return 2
 		return 0
 	return 1
@@ -114,7 +114,7 @@ datum/objective/mutiny/rp/find_target_by_role(role, role_type=0)
 	// less violent rev objectives
 datum/objective/mutiny/rp/check_completion()
 	if(target && target.current)
-		//assume that only carbon mobs can become rev heads for now
+		// assume that only carbon mobs can become rev heads for now
 		if(target.current.stat == DEAD || target.current:handcuffed || !ishuman(target.current))
 			return TRUE
 		// Check if they're converted
@@ -122,7 +122,7 @@ datum/objective/mutiny/rp/check_completion()
 			if(target in ticker.mode:head_revolutionaries)
 				return TRUE
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
+		if(T && (T.z != ZLEVEL_STATION))			// If they leave the station they count as dead for this
 			return TRUE
 		return FALSE
 	return TRUE
@@ -217,7 +217,7 @@ datum/objective/anti_revolution/demote
 				return 0
 		return 1
 
-datum/objective/debrain//I want braaaainssss
+datum/objective/debrain// I want braaaainssss
 	find_target()
 		..()
 		if(target && target.current)
@@ -236,21 +236,21 @@ datum/objective/debrain//I want braaaainssss
 		return target
 
 	check_completion()
-		if(!target)//If it's a free objective.
+		if(!target)// If it's a free objective.
 			return 1
-		if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
+		if( !owner.current || owner.current.stat==DEAD )// If you're otherwise dead.
 			return 0
 		if( !target.current || !isbrain(target.current) )
 			return 0
 		var/atom/A = target.current
-		while(A.loc)			//check to see if the brainmob is on our person
+		while(A.loc)			// check to see if the brainmob is on our person
 			A = A.loc
 			if(A == owner.current)
 				return 1
 		return 0
 
 
-datum/objective/protect//The opposite of killing a dude.
+datum/objective/protect// The opposite of killing a dude.
 	find_target()
 		..()
 		if(target && target.current)
@@ -269,7 +269,7 @@ datum/objective/protect//The opposite of killing a dude.
 		return target
 
 	check_completion()
-		if(!target)			//If it's a free objective.
+		if(!target)			// If it's a free objective.
 			return 1
 		if(target.current)
 			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current))
@@ -293,7 +293,7 @@ datum/objective/hijack
 		for(var/mob/living/player in player_list)
 			if(player.type in protected_mobs)	continue
 			if (player.mind && (player.mind != owner))
-				if(player.stat != DEAD)			//they're not dead!
+				if(player.stat != DEAD)			// they're not dead!
 					if(get_turf(player) in shuttle)
 						return 0
 		return 1
@@ -385,7 +385,7 @@ datum/objective/survive
 
 	check_completion()
 		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
-			return 0		//Brains no longer win survive objectives. --NEO
+			return 0		// Brains no longer win survive objectives. --NEO
 		if(issilicon(owner.current) && owner.current != owner.original)
 			return 0
 		return 1
@@ -502,7 +502,7 @@ datum/objective/steal
 	)
 
 	var/global/possible_items_special[] = list(
-		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
+		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*// /Broken with the change to nuke disk making it respawn on z level change.
 		"nuclear gun" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"diamond drill" = /obj/item/weapon/pickaxe/drill/diamond_drill,
 		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
@@ -551,10 +551,10 @@ datum/objective/steal
 		var/list/all_items = owner.current.get_contents()
 		switch (target_name)
 			if("28 moles of phoron (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
-				var/target_amount = text2num(target_name)//Non-numbers are ignored.
-				var/found_amount = 0.0//Always starts as zero.
+				var/target_amount = text2num(target_name)// Non-numbers are ignored.
+				var/found_amount = 0.0// Always starts as zero.
 
-				for(var/obj/item/I in all_items) //Check for phoron tanks
+				for(var/obj/item/I in all_items) // Check for phoron tanks
 					if(istype(I, steal_target))
 						found_amount += (target_name=="28 moles of phoron (full tank)" ? (I:air_contents:phoron) : (I:amount))
 				return found_amount>=target_amount
@@ -570,12 +570,12 @@ datum/objective/steal
 					return found_amount>=target
 
 			if("a functional AI")
-				for(var/obj/item/device/aicard/C in all_items) //Check for ai card
+				for(var/obj/item/device/aicard/C in all_items) // Check for ai card
 					for(var/mob/living/silicon/ai/M in C)
-						if(istype(M, /mob/living/silicon/ai) && M.stat != DEAD) //See if any AI's are alive inside that card.
+						if(istype(M, /mob/living/silicon/ai) && M.stat != DEAD) // See if any AI's are alive inside that card.
 							return 1
 
-				for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) //Let an AI downloaded into a space ninja suit count
+				for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) // Let an AI downloaded into a space ninja suit count
 					if(S.AI && S.AI.stat != DEAD)
 						return 1
 				for(var/mob/living/silicon/ai/ai in living_mob_list)
@@ -593,7 +593,7 @@ datum/objective/steal
 							return 1
 			else
 
-				for(var/obj/I in all_items) //Check for items
+				for(var/obj/I in all_items) // Check for items
 					if(istype(I, steal_target))
 						return 1
 		return 0
@@ -633,23 +633,23 @@ datum/objective/capture
 		return target_amount
 
 
-	check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
+	check_completion()// Basically runs through all the mobs in the area to determine how much they are worth.
 		var/captured_amount = 0
 		var/area/centcom/holding/A = locate()
-		for(var/mob/living/carbon/human/M in A)//Humans.
-			if(M.stat==2)//Dead folks are worth less.
+		for(var/mob/living/carbon/human/M in A)// Humans.
+			if(M.stat==2)// Dead folks are worth less.
 				captured_amount+=0.5
 				continue
 			captured_amount+=1
-		for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
+		for(var/mob/living/carbon/monkey/M in A)// Monkeys are almost worthless, you failure.
 			captured_amount+=0.1
-		for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
+		for(var/mob/living/carbon/alien/larva/M in A)// Larva are important for research.
 			if(M.stat==2)
 				captured_amount+=0.5
 				continue
 			captured_amount+=1
-		for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
-			if(istype(M, /mob/living/carbon/alien/humanoid/queen))//Queens are worth three times as much as humans.
+		for(var/mob/living/carbon/alien/humanoid/M in A)// Aliens are worth twice as much as humans.
+			if(istype(M, /mob/living/carbon/alien/humanoid/queen))// Queens are worth three times as much as humans.
 				if(M.stat==2)
 					captured_amount+=1.5
 				else
@@ -669,7 +669,7 @@ datum/objective/absorb
 	proc/gen_amount_goal(lowbound = 4, highbound = 6)
 		target_amount = rand (lowbound,highbound)
 		if (ticker)
-			var/n_p = 1 //autowin
+			var/n_p = 1 // autowin
 			if (ticker.current_state == GAME_STATE_SETTING_UP)
 				for(var/mob/new_player/P in player_list)
 					if(P.client && P.ready && P.mind!=owner)
@@ -698,7 +698,7 @@ datum/objective/absorb
 			explanation_text = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
 
 			check_completion()
-				if(eldergod) //global var, defined in rune4.dm
+				if(eldergod) // global var, defined in rune4.dm
 					return 1
 				return 0
 
@@ -724,9 +724,9 @@ datum/objective/absorb
 
 				return 0
 
-		sacrifice //stolen from traitor target objective
+		sacrifice // stolen from traitor target objective
 
-			proc/find_target() //I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
+			proc/find_target() // I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
 				var/list/possible_targets = call(/datum/game_mode/cult/proc/get_unconvertables)()
 
 				if(possible_targets.len > 0)
@@ -739,7 +739,7 @@ datum/objective/absorb
 
 				return sacrifice_target
 
-			check_completion() //again, calling on a global list defined in rune15.dm
+			check_completion() // again, calling on a global list defined in rune15.dm
 				if(sacrifice_target.current in sacrificed)
 					return 1
 				else
@@ -747,7 +747,7 @@ datum/objective/absorb
 
 /*-------ENDOF CULTIST------*/
 */
-//Meme objectives
+// Meme objectives
 datum/objective/meme_attune
 	proc/gen_amount_goal(lowbound = 4, highbound = 6)
 		target_amount = rand (lowbound,highbound)
@@ -761,7 +761,7 @@ datum/objective/meme_attune
 			return 0
 
 
-//Vox heist objectives.
+// Vox heist objectives.
 
 /datum/objective/heist/proc/choose_target()
 	return
@@ -795,7 +795,7 @@ datum/objective/meme_attune
 	if(target && target.current)
 		if (target.current.stat == DEAD)
 			return FALSE // They're dead. Fail.
-		//if (!target.current.restrained())
+		// if (!target.current.restrained())
 		//	return 0 // They're loose. Close but no cigar.
 		if(get_area(target) == locate(/area/shuttle/vox/station))
 			return TRUE
@@ -970,9 +970,9 @@ var/heist_rob_total = 0
 		return TRUE
 	return FALSE
 
-#define MAX_VOX_KILLS 10 //Number of kills during the round before the Inviolate is broken.
-						 //Would be nice to use vox-specific kills but is currently not feasible.
-var/global/vox_kills = 0 //Used to check the Inviolate.
+#define MAX_VOX_KILLS 10 // Number of kills during the round before the Inviolate is broken.
+						 // Would be nice to use vox-specific kills but is currently not feasible.
+var/global/vox_kills = 0 // Used to check the Inviolate.
 
 /datum/objective/heist/inviolate_death
 	explanation_text = "Follow the Inviolate. Minimise death and loss of resources."

@@ -1,16 +1,16 @@
-//Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES		1	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDETAIL 		16	//APPLIES ONLY TO THE EXTERIOR SUIT!!
+// Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
+#define HIDEGLOVES		1	// APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDESUITSTORAGE	2	// APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDEJUMPSUIT	4	// APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDESHOES		8	// APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDETAIL 		16	// APPLIES ONLY TO THE EXTERIOR SUIT!!
 
-#define HIDEMASK	1	//APPLIES ONLY TO HELMETS/MASKS!!
-#define HIDEEARS	2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
-#define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
-#define HIDEFACE	8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
+#define HIDEMASK	1	// APPLIES ONLY TO HELMETS/MASKS!!
+#define HIDEEARS	2	// APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
+#define HIDEEYES	4	// APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
+#define HIDEFACE	8	// APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
 
-//slots
+// slots
 #define slot_back			1
 #define slot_wear_mask 		2
 #define slot_handcuffed 	3
@@ -33,11 +33,11 @@
 #define slot_r_ear 			20
 #define slot_legs 			21
 
-//Sol translation for dog slots.
+// Sol translation for dog slots.
 #define slot_mouth slot_wear_mask  // 2
 #define slot_neck  slot_handcuffed // 3 (Ian actually is a cat! ~if you know what i mean)
 
-//Cant seem to find a mob bitflags area other than the powers one
+// Cant seem to find a mob bitflags area other than the powers one
 
 // bitflags for clothing parts
 #define HEAD			1

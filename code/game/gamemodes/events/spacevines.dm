@@ -31,13 +31,13 @@
 		if(/obj/item/weapon/hatchet) qdel(src)
 		if(/obj/item/weapon/melee/energy) qdel(src)
 
-		//less effective weapons
+		// less effective weapons
 		if(/obj/item/weapon/wirecutters)
 			if(prob(25)) qdel(src)
 		if(/obj/item/weapon/shard)
 			if(prob(25)) qdel(src)
 
-		else //weapons with subtypes
+		else // weapons with subtypes
 			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
 			else if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
@@ -45,7 +45,7 @@
 			else
 				user_unbuckle_mob(user)
 				return
-		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
+		// Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
 	..()
 
 /obj/effect/spacevine/attack_hand(mob/user)
@@ -59,8 +59,8 @@
 	var/list/growth_queue = list()
 	var/reached_collapse_size
 	var/reached_slowdown_size
-	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
-	//meaning if you get the spacevines' size to something less than 20 plots, it won't grow anymore.
+	// What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
+	// meaning if you get the spacevines' size to something less than 20 plots, it won't grow anymore.
 
 /obj/effect/spacevine_controller/New()
 	if(!istype(src.loc,/turf/simulated/floor))
@@ -81,10 +81,10 @@
 
 /obj/effect/spacevine_controller/process()
 	if(!vines)
-		qdel(src) //space  vines exterminated. Remove the controller
+		qdel(src) // space  vines exterminated. Remove the controller
 		return
 	if(!growth_queue)
-		qdel(src) //Sanity check
+		qdel(src) // Sanity check
 		return
 	if(vines.len >= 250 && !reached_collapse_size)
 		reached_collapse_size = 1
@@ -109,20 +109,20 @@
 		i++
 		queue_end += SV
 		growth_queue -= SV
-		if(SV.energy < 2) //If tile isn't fully grown
+		if(SV.energy < 2) // If tile isn't fully grown
 			if(prob(20))
 				SV.grow()
-		else //If tile is fully grown
+		else // If tile is fully grown
 			SV.buckle_mob()
 
-		//if(prob(25))
+		// if(prob(25))
 		SV.spread()
 		if(i >= length)
 			break
 
 	growth_queue = growth_queue + queue_end
-	//sleep(5)
-	//src.process()
+	// sleep(5)
+	// src.process()
 
 /obj/effect/spacevine/proc/grow()
 	if(!energy)
@@ -137,13 +137,13 @@
 /obj/effect/spacevine/buckle_mob()
 	if(!buckled_mob && prob(25))
 		for(var/mob/living/carbon/V in src.loc)
-			if((V.stat != DEAD)  && (V.buckled != src)) //if mob not dead or captured
+			if((V.stat != DEAD)  && (V.buckled != src)) // if mob not dead or captured
 				V.buckled = src
 				V.loc = src.loc
 				V.update_canmove()
 				src.buckled_mob = V
 				to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
-				break //only capture one mob at a time.
+				break // only capture one mob at a time.
 
 /obj/effect/spacevine/proc/spread()
 	var/direction = pick(cardinal)
@@ -204,14 +204,14 @@
 				return
 	return
 
-/obj/effect/spacevine/fire_act(null, temperature, volume) //hotspots kill vines
+/obj/effect/spacevine/fire_act(null, temperature, volume) // hotspots kill vines
 	if(temperature > T0C+100)
 		qdel(src)
 
-//Carn: Spacevines random event.
+// Carn: Spacevines random event.
 /proc/spacevine_infestation()
-	spawn() //to stop the secrets panel hanging
-		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
+	spawn() // to stop the secrets panel hanging
+		var/list/turf/simulated/floor/turfs = list() // list of all the empty floor turfs in the hallway areas
 		for(var/areapath in typesof(/area/hallway))
 			var/area/A = locate(areapath)
 			for(var/area/B in A.related)
@@ -219,7 +219,7 @@
 					if(!F.contents.len)
 						turfs += F
 
-		if(turfs.len) //Pick a turf to spawn at if we can
+		if(turfs.len) // Pick a turf to spawn at if we can
 			var/turf/simulated/floor/T = pick(turfs)
-			new/obj/effect/spacevine_controller(T) //spawn a controller at turf
+			new/obj/effect/spacevine_controller(T) // spawn a controller at turf
 			message_admins("\blue Event: Spacevines spawned at [T.loc] ([T.x],[T.y],[T.z])")

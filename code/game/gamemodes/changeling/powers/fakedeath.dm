@@ -8,7 +8,7 @@
 	req_stat = DEAD
 	max_genetic_damage = 100
 
-//Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
+// Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
 
 	if(user.fake_death)
@@ -23,14 +23,14 @@
 			if("clone")
 				user.adjustCloneLoss(rand(200,300))
 
-		//user.death(0)
-		//dead_mob_list -= user
-		//living_mob_list += user
-		//user.status_flags |= FAKEDEATH		//play dead
-		//user.fake_death = 1
-		//user.update_canmove()
+		// user.death(0)
+		// dead_mob_list -= user
+		// living_mob_list += user
+		// user.status_flags |= FAKEDEATH		// play dead
+		// user.fake_death = 1
+		// user.update_canmove()
 
-		//if(user.stat != DEAD)
+		// if(user.stat != DEAD)
 		//	user.emote("deathgasp")
 		//	user.tod = worldtime2text()
 
@@ -46,7 +46,7 @@
 		if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
 			user.mind.changeling.instatis = 0
 			user.fake_death = 0
-			if(user.stat != DEAD) //Player was resurrected before stasis completion
+			if(user.stat != DEAD) // Player was resurrected before stasis completion
 				to_chat(user, "<span class='notice'>Our stasis was interrupted.</span>")
 				return
 			else
@@ -60,8 +60,8 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
-	//if(user.status_flags & FAKEDEATH)
-	if(user.mind.changeling.instatis) //We already regenerating, no need to start second time in a row.
+	// if(user.status_flags & FAKEDEATH)
+	if(user.mind.changeling.instatis) // We already regenerating, no need to start second time in a row.
 		return
 
 	for(var/obj/effect/proc_holder/changeling/revive/ability_to_check in user.mind.changeling.purchasedpowers)
@@ -71,18 +71,18 @@
 
 	if(user.fake_death == 1)
 		return
-	//if(!user.stat && alert("Are we sure we wish to fake our death?",,"Yes","No") == "No")//Confirmation for living changeling if they want to fake their death
+	// if(!user.stat && alert("Are we sure we wish to fake our death?",,"Yes","No") == "No")// Confirmation for living changeling if they want to fake their death
 	//	return
 	if(user.stat != DEAD)
 		switch(alert("Are we sure we wish to fake our death?",null,"Yes","No"))
 			if("No")
 				return
 			if("Yes")
-				if(user.mind.changeling.instatis) //In case if user clicked ability several times without making a choice.
+				if(user.mind.changeling.instatis) // In case if user clicked ability several times without making a choice.
 					return
 				else
 					user.mind.changeling.instatis = 1
-					if(user.stat == DEAD)//In case player gave answer too late
+					if(user.stat == DEAD)// In case player gave answer too late
 						user.fake_death = 0
 					else
 						user.fake_death = 1

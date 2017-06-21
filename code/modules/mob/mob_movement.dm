@@ -55,7 +55,7 @@
 		to_chat(usr, "\red This mob type cannot drop items.")
 	return
 
-//This gets called when you press the delete button.
+// This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
 	set hidden = 1
 
@@ -142,11 +142,11 @@
 	if(isAI(mob))
 		return AIMove(n,direct,mob)
 
-	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
+	if(mob.monkeyizing)	return// This is sota the goto stop mobs from moving var
 
 	if(isliving(mob))
 		var/mob/living/L = mob
-		if(L.incorporeal_move)//Move though walls
+		if(L.incorporeal_move)// Move though walls
 			Process_Incorpmove(direct)
 			return
 		if(mob.client)
@@ -160,10 +160,10 @@
 		return
 
 	if(istype(mob.buckled, /obj/vehicle))
-		//manually set move_delay for vehicles so we don't inherit any mob movement penalties
-		//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
+		// manually set move_delay for vehicles so we don't inherit any mob movement penalties
+		// specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
 		move_delay = world.time
-		//drunk driving
+		// drunk driving
 		if(mob.confused)
 			direct = pick(cardinal)
 		return mob.buckled.relaymove(mob,direct)
@@ -174,7 +174,7 @@
 	if(!mob.lastarea)
 		mob.lastarea = get_area(mob.loc)
 
-	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
+	if(isobj(mob.loc) || ismob(mob.loc))// Inside an object, tell it we moved
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
 
@@ -183,7 +183,7 @@
 
 	if(isturf(mob.loc))
 
-		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
+		if(mob.restrained())// Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.restrained() && M.stat == CONSCIOUS && M.canmove && mob.Adjacent(M))
@@ -196,7 +196,7 @@
 			to_chat(src, "\blue You're pinned to a wall by [mob.pinned[1]]!")
 			return 0
 
-		move_delay = world.time//set move delay
+		move_delay = world.time// set move delay
 		mob.last_move_intent = world.time + 10
 		switch(mob.m_intent)
 			if("run")
@@ -222,9 +222,9 @@
 				move_delay += 2
 				return mob.buckled.relaymove(mob,direct)
 
-		//We are now going to move
+		// We are now going to move
 		moving = 1
-		//Something with pulling things
+		// Something with pulling things
 		if(locate(/obj/item/weapon/grab, mob))
 			move_delay = max(move_delay, world.time + 7)
 			var/list/L = mob.ret_grab()
@@ -281,7 +281,7 @@
 	return Move(n, direct)
 
 /mob/Move(n,direct)
-	//Camera control: arrow keys.
+	// Camera control: arrow keys.
 	if (machine && istype(machine, /obj/machinery/computer/security))
 		var/obj/machinery/computer/security/console = machine
 		var/turf/T = get_turf(console.current)
@@ -295,19 +295,19 @@
 
 	return ..(n,direct)
 
-///Process_Grab()
-///Called by client/Move()
-///Checks to see if you are grabbing anything and if moving will affect your grab.
+// /Process_Grab()
+// /Called by client/Move()
+// /Checks to see if you are grabbing anything and if moving will affect your grab.
 /client/proc/Process_Grab()
 	for(var/obj/item/weapon/grab/G in list(mob.l_hand, mob.r_hand))
-		if(G.state == GRAB_KILL) //no wandering across the station/asteroid while choking someone
+		if(G.state == GRAB_KILL) // no wandering across the station/asteroid while choking someone
 			mob.visible_message("<span class='warning'>[mob] lost \his tight grip on [G.affecting]'s neck!</span>")
 			G.hud.icon_state = "kill"
 			G.state = GRAB_NECK
 
-///Process_Incorpmove
-///Called by client/Move()
-///Allows mobs to run though walls
+// /Process_Incorpmove
+// /Called by client/Move()
+// /Allows mobs to run though walls
 /client/proc/Process_Incorpmove(direct)
 	var/turf/mobloc = get_turf(mob)
 	if(!isliving(mob))
@@ -346,7 +346,7 @@
 						return
 				L.loc = locate(locx,locy,mobloc.z)
 				spawn(0)
-					var/limit = 2//For only two trailing shadows.
+					var/limit = 2// For only two trailing shadows.
 					for(var/turf/T in getline(mobloc, L.loc))
 						spawn(0)
 							anim(T,L,'icons/mob/mob.dmi',,"shadow",,L.dir)
@@ -360,14 +360,14 @@
 	return 1
 
 
-///Process_Spacemove
-///Called by /client/Move()
-///For moving in space
-///Return 1 for movement 0 for none
-///Process_Spacemove
-///Called by /client/Move()
-///For moving in space
-///Return 1 for movement 0 for none
+// /Process_Spacemove
+// /Called by /client/Move()
+// /For moving in space
+// /Return 1 for movement 0 for none
+// /Process_Spacemove
+// /Called by /client/Move()
+// /For moving in space
+// /Return 1 for movement 0 for none
 /mob/Process_Spacemove(movement_dir = 0)
 
 	if(..())
@@ -390,7 +390,7 @@
 
 		else
 			var/atom/movable/AM = A
-			if(AM == buckled || AM.type == /obj/effect/portal/tsci_wormhole) //hardcoded type check, since idk if we need such feature for something else at all.
+			if(AM == buckled || AM.type == /obj/effect/portal/tsci_wormhole) // hardcoded type check, since idk if we need such feature for something else at all.
 				continue
 			if(AM.density)
 				if(AM.anchored)
@@ -400,7 +400,7 @@
 				dense_object_backup = AM
 
 	if(movement_dir && dense_object_backup)
-		if(dense_object_backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
+		if(dense_object_backup.newtonian_move(turn(movement_dir, 180))) // You're pushing off something movable, so it moves
 			to_chat(src, "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>")
 
 		return 1

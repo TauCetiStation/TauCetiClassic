@@ -1,4 +1,4 @@
-//admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
+// admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 var/list/admin_verbs_default = list(
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
 	/client/proc/deadmin_self,			/*destroys our own admin datum so we can play as a regular player*/
@@ -29,7 +29,7 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
 	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
 	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
-	/client/proc/get_whitelist, 			//Whitelist
+	/client/proc/get_whitelist, 			// Whitelist
 	/client/proc/add_to_whitelist,
 	/datum/admins/proc/whitelist_panel,
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
@@ -180,7 +180,7 @@ var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character
 	)
 
-//verbs which can be hidden - needs work
+// verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
 	/client/proc/set_ooc,
 	/client/proc/deadmin_self,
@@ -210,7 +210,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
-	/client/proc/get_whitelist, 			//Whitelist
+	/client/proc/get_whitelist, 			// Whitelist
 	/client/proc/add_to_whitelist,
 	/datum/admins/proc/whitelist_panel,
 	/client/proc/gsw_add,
@@ -319,7 +319,7 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/cmd_admin_areatest
 		)
 
-/client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
+/client/proc/hide_most_verbs()// Allows you to keep some functionality while hiding some verbs
 	set name = "Adminverbs - Hide Most"
 	set category = "Admin"
 
@@ -327,7 +327,7 @@ var/list/admin_verbs_hideable = list(
 	verbs += /client/proc/show_verbs
 
 	to_chat(src, "<span class='interface'>Most of your adminverbs have been hidden.</span>")
-	feedback_add_details("admin_verb","HMV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","HMV") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/hide_verbs()
@@ -338,7 +338,7 @@ var/list/admin_verbs_hideable = list(
 	verbs += /client/proc/show_verbs
 
 	to_chat(src, "<span class='interface'>Almost all of your adminverbs have been hidden.</span>")
-	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","TAVVH") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/show_verbs()
@@ -349,7 +349,7 @@ var/list/admin_verbs_hideable = list(
 	add_admin_verbs()
 
 	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>")
-	feedback_add_details("admin_verb","TAVVS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","TAVVS") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 
@@ -360,22 +360,22 @@ var/list/admin_verbs_hideable = list(
 	set name = "Aghost"
 	if(!holder)	return
 	if(istype(mob,/mob/dead/observer))
-		//re-enter
+		// re-enter
 		var/mob/dead/observer/ghost = mob
 		ghost.can_reenter_corpse = TRUE
 		ghost.reenter_corpse()
 
-		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","P") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	else if(istype(mob,/mob/new_player))
 		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>")
 	else
-		//ghostize
+		// ghostize
 		var/mob/body = mob
 		body.ghostize(can_reenter_corpse = TRUE)
 		if(body && !body.key)
-			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
-		feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			body.key = "@[key]"	// Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
+		feedback_add_details("admin_verb","O") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/invisimin()
@@ -398,7 +398,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	if(holder)
 		holder.player_panel_old()
-	feedback_add_details("admin_verb","PP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","PP") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/player_panel_new()
@@ -406,7 +406,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	if(holder)
 		holder.player_panel_new()
-	feedback_add_details("admin_verb","PPN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","PPN") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/check_antagonists()
@@ -414,8 +414,8 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	if(holder)
 		holder.check_antagonists()
-		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
-	feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(usr)] checked antagonists.")	// for tsar~
+	feedback_add_details("admin_verb","CHA") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/unban_panel()
@@ -426,7 +426,7 @@ var/list/admin_verbs_hideable = list(
 			holder.unbanpanel()
 		else
 			holder.DB_ban_panel()
-	feedback_add_details("admin_verb","UBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","UBP") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/game_panel()
@@ -434,7 +434,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	if(holder)
 		holder.Game()
-	feedback_add_details("admin_verb","GP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","GP") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/secrets()
@@ -442,7 +442,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	if (holder)
 		holder.Secrets()
-	feedback_add_details("admin_verb","S") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","S") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/colorooc()
@@ -453,7 +453,7 @@ var/list/admin_verbs_hideable = list(
 	if(new_ooccolor)
 		prefs.ooccolor = new_ooccolor
 		prefs.save_preferences()
-	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","OC") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/stealth()
@@ -463,7 +463,7 @@ var/list/admin_verbs_hideable = list(
 		if(holder.fakekey)
 			holder.fakekey = null
 			mob.invisibility = initial(mob.invisibility)
-			mob.alpha = 127//initial(mob.alpha)
+			mob.alpha = 127// initial(mob.alpha)
 			mob.name = initial(mob.name)
 		else
 			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
@@ -471,12 +471,12 @@ var/list/admin_verbs_hideable = list(
 			if(length(new_key) >= 26)
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
-			mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
-			mob.alpha = 0 //JUUUUST IN CASE
+			mob.invisibility = INVISIBILITY_MAXIMUM + 1 // JUST IN CASE
+			mob.alpha = 0 // JUUUUST IN CASE
 			mob.name = " "
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","SM") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #define MAX_WARNS 3
 #define AUTOBANTIME 15
@@ -500,7 +500,7 @@ var/list/admin_verbs_hideable = list(
 		to_chat(src, "<font color='red'>Error: warn(): No such ckey found.</font>")
 		return
 
-	if(++D.warns >= MAX_WARNS)					//uh ohhhh...you'reee iiiiin trouuuubble O:)
+	if(++D.warns >= MAX_WARNS)					// uh ohhhh...you'reee iiiiin trouuuubble O:)
 		var/bantime = (++D.warnbans * AUTOBANTIME)
 		D.warns = 1
 		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [bantime] minute autoban.")
@@ -527,7 +527,7 @@ var/list/admin_verbs_hideable = list(
 			log_admin("[src.key] has warned [C.key]")
 			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC). They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
 		D.save_preferences()
-	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","WARN") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/unwarn(warned_ckey)
 	if(!check_rights(R_ADMIN))
@@ -561,7 +561,7 @@ var/list/admin_verbs_hideable = list(
 		log_admin("[src.key] has unwarned [warned_ckey] (DC)")
 		message_admins("[key_name_admin(src)] has unwarned [warned_ckey] (DC). They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
 	D.save_preferences()
-	feedback_add_details("admin_verb","UNWARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","UNWARN") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #undef MAX_WARNS
 #undef AUTOBANTIME
@@ -593,7 +593,7 @@ var/list/admin_verbs_hideable = list(
 			return 0
 	log_admin("[ckey] creating an admin explosion at [epicenter.loc].")
 	message_admins("\blue [ckey] creating an admin explosion at [epicenter.loc].")
-	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","DB") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
 	set category = "Fun"
@@ -607,7 +607,7 @@ var/list/admin_verbs_hideable = list(
 	if(!S) return
 	var/path = text2path("/obj/effect/proc_holder/spell/[S]")
 	T.AddSpell(new path)
-	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","GS") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].")
 
@@ -623,7 +623,7 @@ var/list/admin_verbs_hideable = list(
 	if(!D) return
 	var/path = text2path("/datum/disease/[D]")
 	T.contract_disease(new path, 1)
-	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","GD") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
 	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the disease [D].")
 
@@ -651,7 +651,7 @@ var/list/admin_verbs_hideable = list(
 		D.affected_species = list(M.greaterform)
 	infect_virus2(T,D,1)
 
-	feedback_add_details("admin_verb","GD2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","GD2") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] a [(greater)? "greater":"lesser"] disease2 with infection chance [D.infectionchance].")
 	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [(greater)? "greater":"lesser"] disease2 with infection chance [D.infectionchance].")
 
@@ -667,7 +667,7 @@ var/list/admin_verbs_hideable = list(
 			V.show_message(message, 2)
 		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
 		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound")
-		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","MS") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/togglebuildmodeself()
@@ -675,7 +675,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Special Verbs"
 	if(src.mob)
 		togglebuildmode(src.mob)
-	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","TBMS") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/object_talk(msg as text) // -- TLE
 	set category = "Special Verbs"
@@ -686,7 +686,7 @@ var/list/admin_verbs_hideable = list(
 			return
 		for (var/mob/V in hearers(mob.control_object))
 			V.show_message("<b>[mob.control_object.name]</b> says: \"" + msg + "\"", 2)
-	feedback_add_details("admin_verb","OT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","OT") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/readmin_self()
 	set name = "Re-admin self"
@@ -698,7 +698,7 @@ var/list/admin_verbs_hideable = list(
 		message_admins("[src] re-admined themself.")
 		to_chat(src, "<span class='interface'>You now have the keys to control the planet, or at least a small space station.</span>")
 		verbs -= /client/proc/readmin_self
-		feedback_add_details("admin_verb","RAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","RAS") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/deadmin_self()
 	set name = "De-admin self"
@@ -711,7 +711,7 @@ var/list/admin_verbs_hideable = list(
 			deadmin()
 			to_chat(src, "<span class='interface'>You are now a normal player.</span>")
 			verbs += /client/proc/readmin_self
-			feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			feedback_add_details("admin_verb","DAS") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_log_hrefs()
 	set name = "Toggle href logging"
@@ -743,14 +743,14 @@ var/list/admin_verbs_hideable = list(
 		log_admin("[key_name(usr)] changed the security level to code [sec_level].")
 
 
-//---- bs12 verbs ----
+// ---- bs12 verbs ----
 
 /client/proc/mod_panel()
 	set name = "Moderator Panel"
 	set category = "Admin"
 /*	if(holder)
 		holder.mod_panel()*/
-//	feedback_add_details("admin_verb","MP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+//	feedback_add_details("admin_verb","MP") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/editappear(mob/living/carbon/human/M as mob in world)

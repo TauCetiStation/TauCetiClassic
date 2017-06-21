@@ -90,7 +90,7 @@
 					to_chat(user, "\red Can't let you do that.")
 					return 1
 
-			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
+			// Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 			var/dir_to_set = 2
 			for(var/direction in list(user.dir, turn(user.dir,90), turn(user.dir,180), turn(user.dir,270)))
 				var/found = 0
@@ -203,7 +203,7 @@
 					to_chat(user, "\red Can't let you do that.")
 					return 1
 
-			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
+			// Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 			var/dir_to_set = 2
 			for(var/direction in list( user.dir, turn(user.dir,90), turn(user.dir,180), turn(user.dir,270) ))
 				var/found = 0
@@ -276,7 +276,7 @@
 				if(WEST)
 					WD.dir = WEST
 					WD.ini_dir = WEST
-				else//If the user is facing northeast. northwest, southeast, southwest or north, default to north
+				else// If the user is facing northeast. northwest, southeast, southwest or north, default to north
 					WD.dir = NORTH
 					WD.ini_dir = NORTH
 		else
@@ -324,7 +324,7 @@
 					continue
 				G.attackby(NG, user)
 				to_chat(usr, "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets.")
-			//SN src = null
+			// SN src = null
 			qdel(src)
 			return
 	return ..()

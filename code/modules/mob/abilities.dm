@@ -19,7 +19,7 @@ Creature-level abilities.
 		to_chat(src, "\red You must be corporeal and alive to do that.")
 		return 0
 
-	//Handcuff check.
+	// Handcuff check.
 	if(mob.restrained())
 		to_chat(src, "\red You cannot do this while restrained.")
 		return 0

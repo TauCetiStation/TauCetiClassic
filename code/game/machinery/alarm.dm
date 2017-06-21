@@ -10,13 +10,13 @@
 #define RCON_AUTO	2
 #define RCON_YES	3
 
-//1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
+// 1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
 #define MAX_ENERGY_CHANGE 1000
 
 #define MAX_TEMPERATURE 90
 #define MIN_TEMPERATURE -40
 
-//all air alarms in area are connected via magic
+// all air alarms in area are connected via magic
 /area
 	var/obj/machinery/alarm/master_air_alarm
 	var/list/air_vent_names = list()
@@ -36,7 +36,7 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	var/breach_detection = TRUE // Whether to use automatic breach detection or not
 	frequency = 1439
-	//var/skipprocess = 0 //Experimenting
+	// var/skipprocess = 0 // Experimenting
 	var/alarm_frequency = 1437
 	var/remote_control = FALSE
 	var/rcon_setting = 2
@@ -53,11 +53,11 @@
 	var/screen = AALARM_SCREEN_MAIN
 	var/area_uid
 	var/area/alarm_area
-	var/buildstage = 2 //2 is built, 1 is building, 0 is frame.
+	var/buildstage = 2 // 2 is built, 1 is building, 0 is frame.
 
 	var/target_temperature = T0C+20
 	var/regulating_temperature = 0
-	var/allow_regulate = 0 //Is thermoregulation enabled?
+	var/allow_regulate = 0 // Is thermoregulation enabled?
 
 	var/list/TLV = list()
 
@@ -96,7 +96,7 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		update_icon()
-		if(ticker && ticker.current_state == 3)//if the game is running
+		if(ticker && ticker.current_state == 3)// if the game is running
 			src.initialize()
 		return
 
@@ -140,13 +140,13 @@
 		return
 
 	var/turf/simulated/location = loc
-	if(!istype(location))	return//returns if loc is not simulated
+	if(!istype(location))	return// returns if loc is not simulated
 
 	var/datum/gas_mixture/environment = location.return_air()
 
-	//Handle temperature adjustment here.
+	// Handle temperature adjustment here.
 	if( (environment.temperature < target_temperature - 2 || environment.temperature > target_temperature + 2 || regulating_temperature) && allow_regulate)
-		//If it goes too far, we should adjust ourselves back before stopping.
+		// If it goes too far, we should adjust ourselves back before stopping.
 		if(get_danger_level(target_temperature, TLV["temperature"]))
 			return
 
@@ -167,10 +167,10 @@
 			var/heat_capacity = gas.heat_capacity()
 			var/energy_used = min( abs( heat_capacity*(gas.temperature - target_temperature) ), MAX_ENERGY_CHANGE)
 
-			//Use power.  Assuming that each power unit represents 1 watts....
+			// Use power.  Assuming that each power unit represents 1 watts....
 			use_power(energy_used, ENVIRON)
 
-			//We need to cool ourselves.
+			// We need to cool ourselves.
 			if(environment.temperature > target_temperature)
 				gas.temperature -= energy_used/heat_capacity
 			else
@@ -203,7 +203,7 @@
 		apply_mode()
 
 
-	//atmos computer remote controll stuff
+	// atmos computer remote controll stuff
 	switch(rcon_setting)
 		if(RCON_NO)
 			remote_control = 0
@@ -220,7 +220,7 @@
 
 /obj/machinery/alarm/proc/overall_danger_level()
 	var/turf/simulated/location = loc
-	if(!istype(location))	return//returns if loc is not simulated
+	if(!istype(location))	return// returns if loc is not simulated
 
 	var/datum/gas_mixture/environment = location.return_air()
 
@@ -260,7 +260,7 @@
 	var/environment_pressure = environment.return_pressure()
 	var/pressure_levels = TLV["pressure"]
 
-	if (environment_pressure <= pressure_levels[1])		//low pressures
+	if (environment_pressure <= pressure_levels[1])		// low pressures
 		if (!(mode == AALARM_MODE_PANIC || mode == AALARM_MODE_CYCLE))
 			return 1
 
@@ -298,13 +298,13 @@
 
 	var/icon_level = danger_level
 	if (alarm_area.atmosalm)
-		icon_level = max(icon_level, 1)	//if there's an atmos alarm but everything is okay locally, no need to go past yellow
+		icon_level = max(icon_level, 1)	// if there's an atmos alarm but everything is okay locally, no need to go past yellow
 
 	switch(icon_level)
 		if (0)
 			icon_state = "alarm0"
 		if (1)
-			icon_state = "alarm2" //yes, alarm2 is yellow alarm
+			icon_state = "alarm2" // yes, alarm2 is yellow alarm
 		if (2)
 			icon_state = "alarm1"
 
@@ -366,12 +366,12 @@
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_TO_AIRALARM)
 
-/obj/machinery/alarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+/obj/machinery/alarm/proc/send_signal(target, list/command)// sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 
 	signal.data = command
@@ -384,8 +384,8 @@
 	return 1
 
 /obj/machinery/alarm/proc/apply_mode()
-	//propagate mode to other air alarms in the area
-	//TODO: make it so that players can choose between applying the new mode to the room they are in (related area) vs the entire alarm area
+	// propagate mode to other air alarms in the area
+	// TODO: make it so that players can choose between applying the new mode to the room they are in (related area) vs the entire alarm area
 	for (var/area/RA in alarm_area.related)
 		for (var/obj/machinery/alarm/AA in RA)
 			AA.mode = mode
@@ -451,17 +451,17 @@
 	if((stat & (NOPOWER)))		// unpowered, no shock
 		return 0
 	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
+		return 0 // you lucked out, no shock for you
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
-	s.start() //sparks always.
+	s.start() // sparks always.
 	if (electrocute_mob(user, get_area(src), src))
 		return 1
 	else
 		return 0
-///////////////
-//END HACKING//
-///////////////
+////////////// /
+// END HACKING// 
+////////////// /
 
 /obj/machinery/alarm/attack_ai(mob/user)
 	return interact(user)
@@ -564,7 +564,7 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 
 	output += "Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]</span>K ([round(environment.temperature - T0C, 0.1)]C)<br>"
 
-	//'Local Status' should report the LOCAL status, damnit.
+	// 'Local Status' should report the LOCAL status, damnit.
 	output += "Local Status: "
 	switch(max(pressure_dangerlevel,oxygen_dangerlevel,co2_dangerlevel,phoron_dangerlevel,other_dangerlevel,temperature_dangerlevel))
 		if(2)
@@ -601,14 +601,14 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 	else
 		dat += "<a href='?src=\ref[src];rcon=[RCON_YES]'>On</a></td>"
 
-	//Hackish, I know.  I didn't feel like bothering to rework all of this.
+	// Hackish, I know.  I didn't feel like bothering to rework all of this.
 	dat += "<td align=\"center\"><b>Thermostat:</b><br><a href='?src=\ref[src];temperature=1'>[target_temperature - T0C]C</a></td>"
 
 	dat += "<td align=\"center\"><b>Toggle thermoregulation:</b><br><a href='?src=\ref[src];allow_regulate=1'>[allow_regulate?"On":"Off"]</a></td></table>"
 	return dat
 
 /obj/machinery/alarm/proc/return_controls()
-	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
+	var/output = ""// "<B>[alarm_zone] Air [name]</B><HR>"
 
 	switch(screen)
 		if (AALARM_SCREEN_MAIN)
@@ -916,7 +916,7 @@ table tr:first-child th:first-child { border: none;}
 	switch(buildstage)
 		if(2)
 			if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
-				//user << "You pop the Air Alarm's maintence panel open."
+				// user << "You pop the Air Alarm's maintence panel open."
 				wiresexposed = !wiresexposed
 				to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 				update_icon()
@@ -1185,7 +1185,7 @@ FIRE ALARM
 	src.alarm()
 	return
 
-/obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
+/obj/machinery/firealarm/process()// Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(stat & (NOPOWER|BROKEN))
 		return
 

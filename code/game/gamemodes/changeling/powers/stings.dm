@@ -42,7 +42,7 @@
 	if(!isturf(user.loc))
 		return
 	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = FALSE))
-		return //hope this ancient magic still works
+		return // hope this ancient magic still works
 	if(target.mind && target.mind.changeling)
 		sting_feedback(user,target)
 		take_chemical_cost(user.mind.changeling)

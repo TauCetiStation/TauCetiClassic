@@ -35,18 +35,18 @@
 		icon_state = "[mineral]fwall_open"
 		return
 
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+	var/junction = 0 // will be used to determine from which side the wall is connected to other walls
 
 	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
+			if(src.mineral == W.mineral)// Only 'like' walls connect -Sieve
 				junction |= get_dir(src,W)
 	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
 			if(src.mineral == W.mineral)
 				junction |= get_dir(src,W)
 	for(var/obj/structure/falserwall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
 			if(src.mineral == W.mineral)
 				junction |= get_dir(src,W)
 	icon_state = "[mineral][junction]"
@@ -74,7 +74,7 @@
 		src.relativewall()
 		opening = 0
 
-/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+/obj/structure/falsewall/update_icon()// Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	..()
 	if(density)
 		icon_state = "[mineral]0"
@@ -107,7 +107,7 @@
 					T.ChangeTurf(/turf/simulated/wall)
 				else
 					T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-				if(mineral != "phoron")//Stupid shit keeps me from pushing the attackby() to phoron walls -Sieve
+				if(mineral != "phoron")// Stupid shit keeps me from pushing the attackby() to phoron walls -Sieve
 					T = get_turf(src)
 					T.attackby(W,user)
 				qdel(src)
@@ -125,7 +125,7 @@
 			T.attackby(W,user)
 		qdel(src)
 
-	//DRILLING
+	// DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		var/turf/T = get_turf(src)
 		if(!mineral)
@@ -147,7 +147,7 @@
 			T.attackby(W,user)
 		qdel(src)
 
-/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+/obj/structure/falsewall/update_icon()// Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	..()
 	if(density)
 		icon_state = "[mineral]0"
@@ -204,18 +204,18 @@
 		icon_state = "frwall_open"
 		return
 
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+	var/junction = 0 // will be used to determine from which side the wall is connected to other walls
 
 	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
+			if(src.mineral == W.mineral)// Only 'like' walls connect -Sieve
 				junction |= get_dir(src,W)
 	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
 			if(src.mineral == W.mineral)
 				junction |= get_dir(src,W)
 	for(var/obj/structure/falserwall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+		if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
 			if(src.mineral == W.mineral)
 				junction |= get_dir(src,W)
 	icon_state = "rwall[junction]"
@@ -250,7 +250,7 @@
 		T.attackby(W,user)
 		qdel(src)
 
-	//DRILLING
+	// DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(/turf/simulated/wall/r_wall)
@@ -326,7 +326,7 @@
 	icon_state = ""
 	mineral = "phoron"
 
-//-----------wtf?-----------start
+// -----------wtf?-----------start
 /obj/structure/falsewall/clown
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
@@ -338,4 +338,4 @@
 	desc = "A wall with sandstone plating."
 	icon_state = ""
 	mineral = "sandstone"
-//------------wtf?------------end
+// ------------wtf?------------end

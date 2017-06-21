@@ -11,7 +11,7 @@
 	throw_speed = 2
 	throw_range = 10
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10) //Set to null instead of list, if there is only one.
+	possible_transfer_amounts = list(5,10) // Set to null instead of list, if there is only one.
 	var/spray_size = 3
 	var/list/spray_sizes = list(1,3)
 	volume = 250
@@ -32,7 +32,7 @@
 	if(istype(A, /obj/effect/proc_holder/spell))
 		return
 
-	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
+	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) // this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)
 			to_chat(user, "<span class='notice'>\The [A] is empty.</span>")
 			return
@@ -74,7 +74,7 @@
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
 	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
-	var/turf/A_turf = get_turf(A)//BS12
+	var/turf/A_turf = get_turf(A)// BS12
 
 	spawn(0)
 		for(var/i=0, i<spray_size, i++)
@@ -114,7 +114,7 @@
 		reagents.reaction(usr.loc)
 		spawn(5) src.reagents.clear_reagents()
 
-//space cleaner
+// space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
@@ -127,7 +127,7 @@
 /obj/item/weapon/reagent_containers/spray/cleaner/New()
 	..()
 	reagents.add_reagent("cleaner", src.volume)
-//pepperspray
+// pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper
 	name = "pepperspray"
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly."
@@ -155,7 +155,7 @@
 /obj/item/weapon/reagent_containers/spray/pepper/Spray_at(atom/A)
 	..()
 
-//water flower
+// water flower
 /obj/item/weapon/reagent_containers/spray/waterflower
 	name = "water flower"
 	desc = "A seemingly innocent sunflower...with a twist."
@@ -170,7 +170,7 @@
 	..()
 	reagents.add_reagent("water", 10)
 
-//chemsprayer
+// chemsprayer
 /obj/item/weapon/reagent_containers/spray/chemsprayer
 	name = "chem sprayer"
 	desc = "A utility used to spray large amounts of reagent in a given area."
@@ -184,7 +184,7 @@
 	origin_tech = "combat=3;materials=3;engineering=3"
 
 
-//this is a big copypasta clusterfuck, but it's still better than it used to be!
+// this is a big copypasta clusterfuck, but it's still better than it used to be!
 /obj/item/weapon/reagent_containers/spray/chemsprayer/Spray_at(atom/A)
 	var/Sprays[3]
 	for(var/i=1, i<=3, i++) // intialize sprays

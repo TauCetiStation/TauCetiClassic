@@ -42,7 +42,7 @@
 
 	var/savefile/F = new /savefile(path)
 
-	if(!F) return //Not everyone has a pai savefile.
+	if(!F) return // Not everyone has a pai savefile.
 
 	var/version = null
 	F["version"] >> version

@@ -18,7 +18,7 @@ var/datum/subsystem/diseases/SSdisease
 	if (!resumed)
 		src.currentrun = processing.Copy()
 
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	while (currentrun.len)

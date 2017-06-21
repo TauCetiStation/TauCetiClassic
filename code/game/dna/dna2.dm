@@ -12,9 +12,9 @@
 
 // Define block bounds (off-low,off-high,on-low,on-high)
 // Used in setupgame.dm
-#define DNA_DEFAULT_BOUNDS list(1,2049,2050,4095) //2050 = 8 0 2 #Z2(Added some comments)
-#define DNA_HARDER_BOUNDS  list(1,3049,3050,4095) //3050 = B E A
-#define DNA_HARD_BOUNDS    list(1,3490,3500,4095) //3500 = D A C ##Z2
+#define DNA_DEFAULT_BOUNDS list(1,2049,2050,4095) // 2050 = 8 0 2 #Z2(Added some comments)
+#define DNA_HARDER_BOUNDS  list(1,3049,3050,4095) // 3050 = B E A
+#define DNA_HARD_BOUNDS    list(1,3490,3500,4095) // 3500 = D A C ##Z2
 
 // UI Indices (can change to mutblock style, if desired)
 #define DNA_UI_HAIR_R      1
@@ -37,7 +37,7 @@
 
 #define DNA_SE_LENGTH 27
 // For later:
-//#define DNA_SE_LENGTH 50 // Was STRUCDNASIZE, size 27. 15 new blocks added = 42, plus room to grow.
+// #define DNA_SE_LENGTH 50 // Was STRUCDNASIZE, size 27. 15 new blocks added = 42, plus room to grow.
 
 
 // Defines which values mean "on" or "off".
@@ -45,16 +45,16 @@
 //  and to tell our new DNA datum which values to set in order to turn something
 //  on or off.
 var/global/list/dna_activity_bounds[DNA_SE_LENGTH]
-var/global/list/assigned_gene_blocks[DNA_SE_LENGTH]//#Z2
+var/global/list/assigned_gene_blocks[DNA_SE_LENGTH]// #Z2
 
 // Used to determine what each block means (admin hax and species stuff on /vg/, mostly)
 var/global/list/assigned_blocks[DNA_SE_LENGTH]
 
 var/global/list/datum/dna/gene/dna_genes[0]
 
-/////////////////
+///////////////// 
 // GENE DEFINES
-/////////////////
+///////////////// 
 // Skip checking if it's already active.
 // Used for genes that check for value rather than a binary on/off.
 #define GENE_ALWAYS_ACTIVATE 1
@@ -104,9 +104,9 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	new_dna.UpdateUI()
 	new_dna.UpdateSE()
 	return new_dna
-///////////////////////////////////////
+////////////////////////////////////// /
 // UNIQUE IDENTITY
-///////////////////////////////////////
+////////////////////////////////////// /
 
 // Create random UI.
 /datum/dna/proc/ResetUI(defer=0)
@@ -235,9 +235,9 @@ var/global/list/datum/dna/gene/dna_genes[0]
 			newBlock+=copytext(oldBlock,i,i+1)
 	SetUIBlock(block,newBlock,defer)
 
-///////////////////////////////////////
+////////////////////////////////////// /
 // STRUCTURAL ENZYMES
-///////////////////////////////////////
+////////////////////////////////////// /
 
 // "Zeroes out" all of the blocks.
 /datum/dna/proc/ResetSE()
@@ -303,7 +303,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 /datum/dna/proc/SetSEBlock(block,value,defer=0)
 	if (block<=0) return
 	var/nval=hex2num(value)
-	//testing("SetSEBlock([block],[value],[defer]): [value] -> [nval]")
+	// testing("SetSEBlock([block],[value],[defer]): [value] -> [nval]")
 	return SetSEValue(block,nval,defer)
 
 /datum/dna/proc/GetSESubBlock(block,subBlock)
@@ -321,7 +321,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 			newBlock+=newSubBlock
 		else
 			newBlock+=copytext(oldBlock,i,i+1)
-	//testing("SetSESubBlock([block],[subBlock],[newSubBlock],[defer]): [oldBlock] -> [newBlock]")
+	// testing("SetSESubBlock([block],[subBlock],[newSubBlock],[defer]): [oldBlock] -> [newBlock]")
 	SetSEBlock(block,newBlock,defer)
 
 
@@ -332,16 +332,16 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	src.uni_identity=""
 	for(var/block in UI)
 		uni_identity += EncodeDNABlock(block)
-	//testing("New UI: [uni_identity]")
+	// testing("New UI: [uni_identity]")
 	dirtyUI=0
 
 /datum/dna/proc/UpdateSE()
-	//var/oldse=struc_enzymes
+	// var/oldse=struc_enzymes
 	struc_enzymes=""
 	for(var/block in SE)
 		struc_enzymes += EncodeDNABlock(block)
-	//testing("Old SE: [oldse]")
-	//testing("New SE: [struc_enzymes]")
+	// testing("Old SE: [oldse]")
+	// testing("New SE: [struc_enzymes]")
 	dirtySE=0
 
 // BACK-COMPAT!

@@ -15,7 +15,7 @@
 	if(istype(I) && ismob(user))
 		I.attack(src, user)
 
-		if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
+		if(ishuman(user))	// When abductor will hit someone from stelth he will reveal himself
 			var/mob/living/carbon/human/H = user
 			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
 				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
@@ -42,7 +42,7 @@
 	if (!istype(M)) // not sure if this is the right thing...
 		return 0
 	var/messagesource = M
-	if (can_operate(M))        //Checks if mob is lying down on table for surgery
+	if (can_operate(M))        // Checks if mob is lying down on table for surgery
 		if (do_surgery(M,user,src))
 			return 0
 
@@ -56,7 +56,7 @@
 					if(AH.is_in_space_suit())
 						protected = 1
 				if(!protected)
-					//TODO: better alternative for applying damage multiple times? Nice knifing sound?
+					// TODO: better alternative for applying damage multiple times? Nice knifing sound?
 					var/damage_flags = damage_flags()
 					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
 					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
@@ -179,7 +179,7 @@
 
 
 	if(istype(M, /mob/living/carbon/human))
-		return M:attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
+		return M:attacked_by(src, user, def_zone)	// make sure to return whether we have hit or miss
 	else
 		switch(damtype)
 			if("brute")

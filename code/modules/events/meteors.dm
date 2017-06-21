@@ -1,6 +1,6 @@
-//cael - two events here
+// cael - two events here
 
-//meteor storms are much heavier
+// meteor storms are much heavier
 /datum/event/meteor_wave
 	startWhen		= 6
 	endWhen			= 33
@@ -19,7 +19,7 @@
 /datum/event/meteor_wave/end()
 	command_alert("The station has cleared the meteor storm.", "Meteor Alert")
 
-//
+// 
 /datum/event/meteor_shower
 	startWhen		= 5
 	endWhen 		= 7
@@ -32,7 +32,7 @@
 /datum/event/meteor_shower/announce()
 	command_alert("The station is now in a meteor shower.", "Meteor Alert")
 
-//meteor showers are lighter and more common,
+// meteor showers are lighter and more common,
 /datum/event/meteor_shower/tick()
 	if(activeFor >= next_meteor)
 		spawn_meteors(rand(1,4))

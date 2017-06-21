@@ -159,7 +159,7 @@
 	node_amt = 0
 
 //////////////////////
-//Some debugging tools
+// Some debugging tools
 //////////////////////
 
 /datum/linked_list/proc/CheckNodeLinks()

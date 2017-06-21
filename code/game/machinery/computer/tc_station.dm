@@ -6,7 +6,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	desc = "A device used to manage telecrystals during group operations. You shouldn't be looking at this particular one..."
 	icon_state = "tcstation"
 
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 /obj/machinery/computer/telecrystals/uplinker
 	name = "\improper Telecrystal upload/recieve station"
 	desc = "A device used to manage telecrystals during group operations. To use, simply insert your uplink. With your uplink installed \
@@ -92,8 +92,8 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	if(uplinkholder)
 		dat += "[uplinkholder.hidden_uplink.uses] telecrystals remain in this uplink.<BR>"
 		if(linkedboss)
-			dat += "Donate TC: <a href='byond://?src=\ref[src];donate1=1'>1</a> | <a href='byond://?src=\ref[src];donate5=1'>5</a>"
-		dat += "<br><a href='byond://?src=\ref[src];eject=1'>Eject Uplink</a>"
+			dat += "Donate TC: <a href='byond:// ?src=\ref[src];donate1=1'>1</a> | <a href='byond:// ?src=\ref[src];donate5=1'>5</a>"
+		dat += "<br><a href='byond:// ?src=\ref[src];eject=1'>Eject Uplink</a>"
 
 
 	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Recieve Station", 700, 500)
@@ -119,7 +119,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	src.updateUsrDialog()
 
 
-/////////////////////////////////////////
+///////////////////////////////////////// 
 /obj/machinery/computer/telecrystals/boss
 	name = "team Telecrystal management console"
 	desc = "A device used to manage telecrystals during group operations. To use, simply initialize the machine by scanning for nearby uplink stations. \
@@ -144,14 +144,14 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		getDangerous()
 		virgin = 0
 
-/obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
+/obj/machinery/computer/telecrystals/boss/proc/getDangerous()// This scales the TC assigned with the round population.
 	..()
 	var/danger
 	danger = player_list.len
-	while(!IsMultiple(++danger,10))//Just round up to the nearest multiple of ten.
+	while(!IsMultiple(++danger,10))// Just round up to the nearest multiple of ten.
 	storedcrystals += danger
 
-/////////
+//////// /
 
 /obj/machinery/computer/telecrystals/boss/attack_hand(mob/user)
 	if(..())
@@ -161,7 +161,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 
 	var/dat = ""
-	dat += "<a href='byond://?src=\ref[src];scan=1'>Scan for TC stations.</a><BR>"
+	dat += "<a href='byond:// ?src=\ref[src];scan=1'>Scan for TC stations.</a><BR>"
 	dat += "This [src] has [storedcrystals] telecrystals available for distribution. <BR>"
 	dat += "<BR><BR>"
 
@@ -175,7 +175,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		dat += "<BR>"
 
 	if(TCstations.len)
-		dat += "<BR><BR><a href='byond://?src=\ref[src];distrib=1'>Evenly distribute remaining TC.</a><BR><BR>"
+		dat += "<BR><BR><a href='byond:// ?src=\ref[src];distrib=1'>Evenly distribute remaining TC.</a><BR><BR>"
 
 
 	for(var/entry in transferlog)

@@ -46,9 +46,9 @@ Made by Xhuis
 	var/list/datum/mind/shadows = list()
 	var/list/datum/mind/thralls = list()
 	var/list/shadow_objectives = list()
-	var/required_thralls = 15 //How many thralls are needed (hardcoded for now)
-	var/shadowling_ascended = 0 //If at least one shadowling has ascended
-	var/shadowling_dead = 0 //is shadowling kill
+	var/required_thralls = 15 // How many thralls are needed (hardcoded for now)
+	var/shadowling_ascended = 0 // If at least one shadowling has ascended
+	var/shadowling_dead = 0 // is shadowling kill
 	var/objective_explanation
 
 /proc/is_thrall(mob/living/M)
@@ -86,15 +86,15 @@ Made by Xhuis
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	//if(config.protect_assistant_from_antagonist)//TG feature?
-		//restricted_jobs += "Assistant"
+	// if(config.protect_assistant_from_antagonist)// TG feature?
+		// restricted_jobs += "Assistant"
 
 	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)
 			if(player.assigned_role == job)
 				antag_candidates -= player
 
-	var/shadowlings = 2 //How many shadowlings there are; hardcoded to 2
+	var/shadowlings = 2 // How many shadowlings there are; hardcoded to 2
 
 	while(shadowlings)
 		var/datum/mind/shadow = pick(antag_candidates)
@@ -116,7 +116,7 @@ Made by Xhuis
 		finalize_shadowling(shadow)
 		process_shadow_objectives(shadow)
 		update_shadows_icons_added(shadow)
-		//give_shadowling_abilities(shadow)
+		// give_shadowling_abilities(shadow)
 
 	return ..()
 
@@ -124,11 +124,11 @@ Made by Xhuis
 	to_chat(shadow.current, "<b>Currently, you are disguised as an employee aboard [world.name].</b>")
 	to_chat(shadow.current, "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>")
 	to_chat(shadow.current, "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>")
-	to_chat(shadow.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at http://tauceti.ru/wiki/Shadowling</b><br>")
+	to_chat(shadow.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at http:// tauceti.ru/wiki/Shadowling</b><br>")
 
 
 /datum/game_mode/proc/process_shadow_objectives(datum/mind/shadow_mind)
-	var/objective = "enthrall" //may be devour later, but for now it seems murderbone-y
+	var/objective = "enthrall" // may be devour later, but for now it seems murderbone-y
 
 	if(objective == "enthrall")
 		objective_explanation = "Ascend to your true form by use of the Ascendance ability. This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
@@ -145,8 +145,8 @@ Made by Xhuis
 		S.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		if(shadow_mind.assigned_role == "Clown")
 			to_chat(S, "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>")
-			//S.dna.remove_mutation(CLOWNMUT) //TG
-			S.mutations.Remove(CLUMSY) //Bay
+			// S.dna.remove_mutation(CLOWNMUT) // TG
+			S.mutations.Remove(CLUMSY) // Bay
 
 /datum/game_mode/proc/add_thrall(datum/mind/new_thrall_mind)
 	var/mob/living/carbon/human/H = new_thrall_mind.current
@@ -170,8 +170,8 @@ Made by Xhuis
 
 /*
 /datum/game_mode/shadowling/check_finished()
-	var/shadows_alive = 0 //and then shadowling was kill
-	for(var/datum/mind/shadow in shadows) //but what if shadowling was not kill?
+	var/shadows_alive = 0 // and then shadowling was kill
+	for(var/datum/mind/shadow in shadows) // but what if shadowling was not kill?
 		if(!istype(shadow.current,/mob/living/carbon/human) && !istype(shadow.current,/mob/living/simple_animal/ascendant_shadowling))
 			continue
 		if(shadow.current.stat == DEAD)
@@ -180,12 +180,12 @@ Made by Xhuis
 	if(shadows_alive)
 		return ..()
 	else
-		shadowling_dead = 1 //but shadowling was kill :(
+		shadowling_dead = 1 // but shadowling was kill :(
 		return 1*/
 
 /datum/game_mode/shadowling/proc/check_shadow_killed()
-	var/shadows_alive = 0 //and then shadowling was kill
-	for(var/datum/mind/shadow in shadows) //but what if shadowling was not kill?
+	var/shadows_alive = 0 // and then shadowling was kill
+	for(var/datum/mind/shadow in shadows) // but what if shadowling was not kill?
 		if(!istype(shadow.current,/mob/living/carbon/human) && !istype(shadow.current,/mob/living/simple_animal/ascendant_shadowling))
 			continue
 		if(shadow.current.stat == DEAD)
@@ -197,22 +197,22 @@ Made by Xhuis
 		return 1
 
 /datum/game_mode/shadowling/proc/check_shadow_victory()
-	var/success = 0 //Did they win?
+	var/success = 0 // Did they win?
 	if(shadow_objectives.Find("enthrall"))
 		success = shadowling_ascended
 	return success
 
 
 /datum/game_mode/shadowling/declare_completion()
-	//if(check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
+	// if(check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE) // Doesn't end instantly - this is hacky and I don't know of a better way ~X
 	completion_text += "<B>Shadowling mode resume:</B><BR>"
 	if(check_shadow_victory() && SSshuttle.location==2)
 		completion_text += "<font size=3, color=green><B>The shadowlings have ascended and taken over the station!</FONT></B>"
 		score["roleswon"]++
-	//else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
+	// else if(shadowling_dead && !check_shadow_victory()) // If the shadowlings have ascended, they can not lose the round
 	else if(check_shadow_killed() && !check_shadow_victory())
 		completion_text += "<font size=3, color=red><B>The shadowlings have been killed by the crew!</B></FONT>"
-	//else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
+	// else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
 	else if(!check_shadow_victory() && SSshuttle.location==2)
 		completion_text += "<font size=3, color=red><B>The crew has escaped the station before the shadowlings could ascend!</B></FONT>"
 	..()
@@ -239,7 +239,7 @@ Made by Xhuis
 */
 // Revs antag icons copypasta
 /////////////////////////////////////////////////////////////////////////////////////////////////
-//Keeps track of players having the correct icons////////////////////////////////////////////////
+// Keeps track of players having the correct icons/////////////////////////////////////////////// /
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/update_all_shadows_icons()
 	spawn(0)

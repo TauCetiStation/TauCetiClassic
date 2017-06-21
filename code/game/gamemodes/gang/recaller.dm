@@ -1,4 +1,4 @@
-//gangtool device
+// gangtool device
 /obj/item/device/gangtool
 	name = "suspicious device"
 	desc = "A strange device of sorts. Hard to really make out what it actually does just by looking."
@@ -9,13 +9,13 @@
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
-	var/gang //Which gang uses this?
-	var/boss = 1 //Is this the original boss?
+	var/gang // Which gang uses this?
+	var/boss = 1 // Is this the original boss?
 	var/recalling = 0
 	var/outfits = 3
 	var/free_pen = 0
 
-/obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
+/obj/item/device/gangtool/New() // Initialize supply point income if it hasn't already been started
 	if(!ticker.mode.gang_points)
 		ticker.mode.gang_points = new /datum/gang_points(ticker.mode)
 		ticker.mode.gang_points.start()
@@ -169,7 +169,7 @@
 	if(href_list["register"])
 		register_device(usr)
 
-	else if(!gang) //Gangtool must be registered before you can use the functions below
+	else if(!gang) // Gangtool must be registered before you can use the functions below
 		return
 
 	if(href_list["purchase"])
@@ -351,7 +351,7 @@
 
 	sleep(rand(100,300))
 
-	if(SSshuttle.location!=0) //Shuttle can only be recalled when it's moving to the station
+	if(SSshuttle.location!=0) // Shuttle can only be recalled when it's moving to the station
 		to_chat(user, "<span class='info'>[bicon(src)]Emergency shuttle cannot be recalled at this time.</span>")
 		recalling = 0
 		return 0
@@ -365,13 +365,13 @@
 		return 0
 
 	var/turf/userturf = get_turf(user)
-	if(userturf.z != ZLEVEL_STATION) //Shuttle can only be recalled while on station
+	if(userturf.z != ZLEVEL_STATION) // Shuttle can only be recalled while on station
 		to_chat(user, "<span class='info'>[bicon(src)]Error: Device out of range of station communication arrays.</span>")
 		recalling = 0
 		return 0
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	if((100 *  start_state.score(end_state)) < 70) //Shuttle cannot be recalled if the station is too damaged
+	if((100 *  start_state.score(end_state)) < 70) // Shuttle cannot be recalled if the station is too damaged
 		to_chat(user, "<span class='info'>[bicon(src)]Error: Station communication systems compromised. Unable to establish connection.</span>")
 		recalling = 0
 		return 0
@@ -383,7 +383,7 @@
 	log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
 	message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
 	userturf = get_turf(user)
-	if(userturf.z == ZLEVEL_STATION) //Check one more time that they are on station.
+	if(userturf.z == ZLEVEL_STATION) // Check one more time that they are on station.
 		if(cancel_call_proc(user))
 			return 1
 

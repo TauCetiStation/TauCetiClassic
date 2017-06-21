@@ -1,4 +1,4 @@
-//Nanomachines!
+// Nanomachines!
 
 /datum/disease/robotic_transformation
 	name = "Robotic Transformation"
@@ -51,7 +51,7 @@
 			to_chat(affected_mob, "\red Your skin feels as if it's about to burst off...")
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
-			if(prob(40)) //So everyone can feel like robot Seth Brundle
+			if(prob(40)) // So everyone can feel like robot Seth Brundle
 				if(src.gibbed != 0) return 0
 				var/turf/T = find_loc(affected_mob)
 				gibs(T)

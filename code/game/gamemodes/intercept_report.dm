@@ -108,7 +108,7 @@
 
 /datum/intercept_text/proc/pick_fingerprints()
 	var/mob/living/carbon/human/dude = src.pick_mob()
-	//if (!dude) return pick_fingerprints() //who coded that is totally crasy or just a traitor. -- rastaf0
+	// if (!dude) return pick_fingerprints() // who coded that is totally crasy or just a traitor. -- rastaf0
 	if(dude)
 		return num2text(md5(dude.dna.uni_identity))
 	else

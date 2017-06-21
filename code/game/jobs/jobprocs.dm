@@ -1,6 +1,6 @@
 
 
-//TODO: put these somewhere else
+// TODO: put these somewhere else
 /client/proc/mimewall()
 	set category = "Mime"
 	set name = "Invisible wall"
@@ -27,7 +27,7 @@
 	if(H.mind)
 		H.mind.special_verbs  += /client/proc/mimewall
 
-///////////Mimewalls///////////
+/////////// Mimewalls/////////// 
 
 /obj/effect/forcefield/magic/mime
 	icon_state = "empty"

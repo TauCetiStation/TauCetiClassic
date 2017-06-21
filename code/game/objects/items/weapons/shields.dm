@@ -18,7 +18,7 @@
 	m_amt = 1000
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
-	var/cooldown = 0 //shield bash cooldown. based on world.time
+	var/cooldown = 0 // shield bash cooldown. based on world.time
 
 	Get_shield_chance()
 		return block_chance

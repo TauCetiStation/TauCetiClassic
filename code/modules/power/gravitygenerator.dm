@@ -56,10 +56,10 @@
 /obj/machinery/computer/gravity_control_computer/proc/findgenerator()
 	var/obj/machinery/gravity_generator/foundgenerator = null
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		//world << "SEARCHING IN [dir]"
+		// world << "SEARCHING IN [dir]"
 		foundgenerator = locate(/obj/machinery/gravity_generator/, get_step(src, dir))
 		if (!isnull(foundgenerator))
-			//world << "FOUND"
+			// world << "FOUND"
 			break
 	return foundgenerator
 
@@ -80,7 +80,7 @@
 	updatemodules()
 
 	var/dat = "<h3>Generator Control System</h3>"
-	//dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
+	// dat += "<font size=-1><a href='byond:// ?src=\ref[src];refresh=1'>Refresh</a></font>"
 	if(gravity_generator)
 		if(gravity_generator:on)
 			dat += "<font color=green><br><tt>Gravity Status: ON</tt></font><br>"
@@ -101,9 +101,9 @@
 
 		dat += "<br><tt>Maintainence Functions:</tt><br>"
 		if(gravity_generator:on)
-			dat += "<a href='byond://?src=\ref[src];gentoggle=1'><font color=red> TURN GRAVITY GENERATOR OFF. </font></a>"
+			dat += "<a href='byond:// ?src=\ref[src];gentoggle=1'><font color=red> TURN GRAVITY GENERATOR OFF. </font></a>"
 		else
-			dat += "<a href='byond://?src=\ref[src];gentoggle=1'><font color=green> TURN GRAVITY GENERATOR ON. </font></a>"
+			dat += "<a href='byond:// ?src=\ref[src];gentoggle=1'><font color=green> TURN GRAVITY GENERATOR ON. </font></a>"
 
 	else
 		dat += "No local gravity generator detected!"

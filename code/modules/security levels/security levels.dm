@@ -12,7 +12,7 @@
 		if("delta")
 			level = SEC_LEVEL_DELTA
 
-	//Will not be announced if you try to set to the same level as it already is
+	// Will not be announced if you try to set to the same level as it already is
 	if(level >= SEC_LEVEL_GREEN && level <= SEC_LEVEL_DELTA && level != security_level)
 		switch(level)
 			if(SEC_LEVEL_GREEN)

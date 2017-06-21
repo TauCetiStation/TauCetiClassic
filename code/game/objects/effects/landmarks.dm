@@ -11,7 +11,7 @@
 	tag = text("landmark*[]", name)
 	invisibility = 101
 	landmarks_list += src
-	switch(name)			//some of these are probably obsolete
+	switch(name)			// some of these are probably obsolete
 		if("shuttle")
 			shuttle_z = z
 			qdel(src)
@@ -40,7 +40,7 @@
 			latejoin += loc
 			qdel(src)
 			return
-		//prisoners
+		// prisoners
 		if("prisonwarp")
 			prisonwarp += loc
 			qdel(src)
@@ -57,7 +57,7 @@
 			tdomeadmin	+= loc
 		if("tdomeobserve")
 			tdomeobserve += loc
-		//not prisoners
+		// not prisoners
 		if("prisonsecuritywarp")
 			prisonsecuritywarp += loc
 			qdel(src)
@@ -94,16 +94,16 @@
 
 	return 1
 
-//Costume spawner landmarks
+// Costume spawner landmarks
 
-/obj/effect/landmark/costume/New() //costume spawner, selects a random subclass and disappears
+/obj/effect/landmark/costume/New() // costume spawner, selects a random subclass and disappears
 
 	var/list/options = typesof(/obj/effect/landmark/costume)
 	var/PICK= options[rand(1,options.len)]
 	new PICK(src.loc)
 	qdel(src)
 
-//SUBCLASSES.  Spawn a bunch of items and disappear likewise
+// SUBCLASSES.  Spawn a bunch of items and disappear likewise
 /obj/effect/landmark/costume/chicken/New()
 	new /obj/item/clothing/suit/chickensuit(src.loc)
 	new /obj/item/clothing/head/chicken(src.loc)

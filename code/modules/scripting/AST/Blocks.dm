@@ -34,7 +34,7 @@
 	Class: GlobalBlock
 	A block object representing the global scope.
 */
-//
+// 
 	GlobalBlock
 		New()
 			initial_variables["null"]=null
@@ -44,5 +44,5 @@
 	Class: FunctionBlock
 	A block representing a function body.
 */
-//
+// 
 	FunctionBlock

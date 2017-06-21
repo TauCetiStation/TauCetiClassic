@@ -1,9 +1,9 @@
-/mob/living/carbon/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
-	name = "Pun Pun" //C A N O N
+/mob/living/carbon/monkey/punpun // except for a few special persistence features, pun pun is just a normal monkey
+	name = "Pun Pun" // C A N O N
 	icon_state = "punpun1"
 	var/ancestor_name
 	var/ancestor_chain = 1
-	var/relic_hat	//Note: these two are paths
+	var/relic_hat	// Note: these two are paths
 	var/relic_mask
 	var/memory_saved = 0
 	var/list/pet_monkey_names = list("Pun Pun", "Bubbles", "Mojo", "George", "Darwin", "Aldo", "Caeser", "Kanzi", "Kong", "Terk", "Grodd", "Mala", "Bojangles", "Coco", "Able", "Baker", "Scatter", "Norbit", "Travis")
@@ -51,7 +51,7 @@
 	if(dead)
 		S["ancestor_name"] 		<< ancestor_name
 		S["ancestor_chain"]		<< ancestor_chain + 1
-	if(!ancestor_name)	//new monkey name this round
+	if(!ancestor_name)	// new monkey name this round
 		S["ancestor_name"] 		<< name
 	if(wear_mask)
 		S["relic_mask"]			<< wear_mask.type

@@ -157,7 +157,7 @@ client/proc/one_click_antag()
 			spawn(0)
 				switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
 					if("Yes")
-						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+						if((world.time-time_passed)>300)// If more than 30 game seconds passed.
 							return
 						candidates += G
 					if("No")
@@ -170,7 +170,7 @@ client/proc/one_click_antag()
 	if(candidates.len)
 		shuffle(candidates)
 		for(var/mob/i in candidates)
-			if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
+			if(!i || !i.client) continue // Dont bother removing them from the list since we only grab one wizard
 
 			theghost = i
 			break
@@ -227,7 +227,7 @@ client/proc/one_click_antag()
 			spawn(0)
 				switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
 					if("Yes")
-						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+						if((world.time-time_passed)>300)// If more than 30 game seconds passed.
 							return
 						candidates += G
 					if("No")
@@ -242,7 +242,7 @@ client/proc/one_click_antag()
 		var/agentcount = 0
 
 		for(var/i = 0, i<numagents,i++)
-			shuffle(candidates) //More shuffles means more randoms
+			shuffle(candidates) // More shuffles means more randoms
 			for(var/mob/j in candidates)
 				if(!j || !j.client)
 					candidates.Remove(j)
@@ -273,7 +273,7 @@ client/proc/one_click_antag()
 		if(closet_spawn)
 			new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
 
-		for (var/obj/effect/landmark/A in /area/syndicate_station/start)//Because that's the only place it can BE -Sieve
+		for (var/obj/effect/landmark/A in /area/syndicate_station/start)// Because that's the only place it can BE -Sieve
 			if (A.name == "Syndicate-Gear-Closet")
 				new /obj/structure/closet/syndicate/personal(A.loc)
 				qdel(A)
@@ -324,14 +324,14 @@ client/proc/one_click_antag()
 	if(prob(10))
 		input = "Save Runtime and any other cute things on the station."
 
-	var/syndicate_leader_selected = 0 //when the leader is chosen. The last person spawned.
+	var/syndicate_leader_selected = 0 // when the leader is chosen. The last person spawned.
 
-	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
+	// Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
 	for(var/mob/dead/observer/G in player_list)
 		spawn(0)
 			switch(alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
 				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+					if((world.time-time_passed)>300)// If more than 30 game seconds passed.
 						return
 					candidates += G
 				if("No")
@@ -346,7 +346,7 @@ client/proc/one_click_antag()
 
 	if(candidates.len)
 		var/numagents = 6
-		//Spawns commandos and equips them.
+		// Spawns commandos and equips them.
 		for (var/obj/effect/landmark/L in /area/syndicate_mothership/elite_squad)
 			if(numagents<=0)
 				break
@@ -368,7 +368,7 @@ client/proc/one_click_antag()
 				new_syndicate_commando.internal = new_syndicate_commando.s_store
 				new_syndicate_commando.internals.icon_state = "internal1"
 
-				//So they don't forget their code or mission.
+				// So they don't forget their code or mission.
 
 
 				to_chat(new_syndicate_commando, "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B>")
@@ -416,8 +416,8 @@ client/proc/one_click_antag()
 /datum/admins/proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
 
-	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
+	// First we spawn a dude.
+	var/mob/living/carbon/human/new_character = new(pick(latejoin))// The mob being spawned.
 
 	new_character.gender = pick(MALE,FEMALE)
 
@@ -443,21 +443,21 @@ client/proc/one_click_antag()
 
 	new_syndicate_commando.gender = pick(MALE, FEMALE)
 
-	var/datum/preferences/A = new()//Randomize appearance for the commando.
+	var/datum/preferences/A = new()// Randomize appearance for the commando.
 	A.randomize_appearance_for(new_syndicate_commando)
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
 	new_syndicate_commando.name = new_syndicate_commando.real_name
 	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
 
-	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
+	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)// Creates DNA.
 
-	//Creates mind stuff.
+	// Creates mind stuff.
 	new_syndicate_commando.mind_initialize()
 	new_syndicate_commando.mind.assigned_role = "MODE"
 	new_syndicate_commando.mind.special_role = "Syndicate Commando"
 
-	//Adds them to current traitor list. Which is really the extra antagonist list.
+	// Adds them to current traitor list. Which is really the extra antagonist list.
 	ticker.mode.traitors += new_syndicate_commando.mind
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 
@@ -470,14 +470,14 @@ client/proc/one_click_antag()
 	var/time_passed = world.time
 	var/input = "Disregard shinies, acquire hardware."
 
-	var/leader_chosen = 0 //when the leader is chosen. The last person spawned.
+	var/leader_chosen = 0 // when the leader is chosen. The last person spawned.
 
-	//Generates a list of candidates from active ghosts.
+	// Generates a list of candidates from active ghosts.
 	for(var/mob/dead/observer/G in player_list)
 		spawn(0)
 			switch(alert(G,"Do you wish to be considered for a vox raiding party arriving on the station?","Please answer in 30 seconds!","Yes","No"))
 				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+					if((world.time-time_passed)>300)// If more than 30 game seconds passed.
 						return
 					candidates += G
 				if("No")
@@ -485,7 +485,7 @@ client/proc/one_click_antag()
 				else
 					return
 
-	sleep(300) //Debug.
+	sleep(300) // Debug.
 
 	for(var/mob/dead/observer/G in candidates)
 		if(!G.key)
@@ -494,7 +494,7 @@ client/proc/one_click_antag()
 	if(candidates.len)
 		var/max_raiders = 1
 		var/raiders = max_raiders
-		//Spawns vox raiders and equips them.
+		// Spawns vox raiders and equips them.
 		for (var/obj/effect/landmark/L in world)
 			if(L.name == "voxstart")
 				if(raiders<=0)
@@ -546,12 +546,12 @@ client/proc/one_click_antag()
 	new_vox.mind_initialize()
 	new_vox.mind.assigned_role = "MODE"
 	new_vox.mind.special_role = "Vox Raider"
-	new_vox.mutations |= NOCLONE //Stops the station crew from messing around with their DNA.
+	new_vox.mutations |= NOCLONE // Stops the station crew from messing around with their DNA.
 
-	//Now apply cortical stack.
+	// Now apply cortical stack.
 	var/obj/item/organ/external/BP = new_vox.bodyparts_by_name[BP_HEAD]
 
-	//To avoid duplicates.
+	// To avoid duplicates.
 	for(var/obj/item/weapon/implant/cortical/imp in new_vox.contents)
 		BP.implants -= imp
 		qdel(imp)
@@ -580,7 +580,7 @@ datum/admins/proc/makeAbductorTeam()
 		spawn(0)
 			switch(alert(G,"Do you wish to be considered for Abductor Team?","Please answer in 30 seconds!","Yes","No"))
 				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+					if((world.time-time_passed)>300)// If more than 30 game seconds passed.
 						return
 					candidates += G
 				if("No")

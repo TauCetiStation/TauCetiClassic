@@ -1,10 +1,10 @@
 /obj/item/clothing/glasses/hud
 	name = "HUD"
 	desc = "A heads-up display that provides important info in (almost) real time."
-	flags = null //doesn't protect eyes because it's a monocle, duh
+	flags = null // doesn't protect eyes because it's a monocle, duh
 	origin_tech = "magnets=3;biotech=2"
 	var/fixtime = 0
-	var/list/icon/current = list() //the current hud icons
+	var/list/icon/current = list() // the current hud icons
 
 /obj/item/clothing/glasses/hud/proc/process_hud(mob/M)
 	return

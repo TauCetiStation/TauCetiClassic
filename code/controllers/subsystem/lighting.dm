@@ -10,10 +10,10 @@ var/datum/subsystem/lighting/SSlighting
 
 	flags = SS_POST_FIRE_TIMING
 
-	var/list/changed_lights = list()		//list of all datum/light_source that need updating
-	var/changed_lights_workload = 0			//stats on the largest number of lights (max changed_lights.len)
-	var/list/changed_overlays = list()		//list of all turfs which may have a different light level
-	var/changed_turfs_workload = 0			//stats on the largest number of turfs changed (max changed_turfs.len)
+	var/list/changed_lights = list()		// list of all datum/light_source that need updating
+	var/changed_lights_workload = 0			// stats on the largest number of lights (max changed_lights.len)
+	var/list/changed_overlays = list()		// list of all turfs which may have a different light level
+	var/changed_turfs_workload = 0			// stats on the largest number of turfs changed (max changed_turfs.len)
 
 
 /datum/subsystem/lighting/New()
@@ -23,7 +23,7 @@ var/datum/subsystem/lighting/SSlighting
 /datum/subsystem/lighting/stat_entry()
 	..("L:[round(changed_lights_workload,1)]|T:[round(changed_turfs_workload,1)]")
 
-//Does not loop. Should be run prior to process() being called for the first time.
+// Does not loop. Should be run prior to process() being called for the first time.
 /datum/subsystem/lighting/Initialize(timeofday)
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 
@@ -65,10 +65,10 @@ var/datum/subsystem/lighting/SSlighting
 		CHECK_TICK
 	..()
 
-//Workhorse of lighting. It cycles through each light that needs updating. It updates their
-//effects and then processes every turf in the queue, updating their lighting object's appearance
-//Any light that returns 1 in check() deletes itself
-//By using queues we are ensuring we don't perform more updates than are necessary
+// Workhorse of lighting. It cycles through each light that needs updating. It updates their
+// effects and then processes every turf in the queue, updating their lighting object's appearance
+// Any light that returns 1 in check() deletes itself
+// By using queues we are ensuring we don't perform more updates than are necessary
 /datum/subsystem/lighting/fire(resumed = 0)
 	var/list/changed_lights = src.changed_lights
 
@@ -116,10 +116,10 @@ var/datum/subsystem/lighting/SSlighting
 /turf/proc/init_lighting_overlays()
 	new/atom/movable/lighting_overlay(src, TRUE)
 
-//Used to strip valid information from an existing instance and transfer it to the replacement. i.e. when a crash occurs
-//It works by using spawn(-1) to transfer the data, if there is a runtime the data does not get transfered but the loop
-//does not crash
-//Not sure if i done this right. ~Zve
+// Used to strip valid information from an existing instance and transfer it to the replacement. i.e. when a crash occurs
+// It works by using spawn(-1) to transfer the data, if there is a runtime the data does not get transfered but the loop
+// does not crash
+// Not sure if i done this right. ~Zve
 /datum/subsystem/lighting/Recover()
 	if(!istype(SSlighting.changed_overlays))
 		SSlighting.changed_overlays = list()
@@ -128,7 +128,7 @@ var/datum/subsystem/lighting/SSlighting
 
 	for(var/thing in SSlighting.changed_lights)
 		var/datum/light_source/LS = thing
-		spawn(-1)			//so we don't crash the loop (inefficient)
+		spawn(-1)			// so we don't crash the loop (inefficient)
 			if(LS.check() || LS.destroyed || LS.force_update)
 				LS.remove_lum()
 				if(!LS.destroyed)

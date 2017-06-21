@@ -23,7 +23,7 @@
 
 	switch(src.stat)
 		if(CONSCIOUS)
-			if(!src.client)	msg += "It appears to be in stand-by mode.\n" //afk
+			if(!src.client)	msg += "It appears to be in stand-by mode.\n" // afk
 		if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responding.</span>\n"
 		if(DEAD)			msg += "<span class='deadsay'>It looks completely unsalvageable.</span>\n"
 	msg += "*---------*</span>"
@@ -32,7 +32,7 @@
 
 	if (pose)
 		if( findtext(pose,".",lentext(pose)) == 0 && findtext(pose,"!",lentext(pose)) == 0 && findtext(pose,"?",lentext(pose)) == 0 )
-			pose = addtext(pose,".") //Makes sure all emotes end with a period.
+			pose = addtext(pose,".") // Makes sure all emotes end with a period.
 		msg += "\nIt is [pose]"
 
 	to_chat(user, msg)

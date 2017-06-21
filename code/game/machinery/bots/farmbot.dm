@@ -1,4 +1,4 @@
-//Farmbots by GauHelldragon - 12/30/2012
+// Farmbots by GauHelldragon - 12/30/2012
 // A new type of buildable aiBot that helps out in hydroponics
 
 // Made by using a robot arm on a water tank and then adding:
@@ -19,9 +19,9 @@
 #define FARMBOT_MODE_REFILL			4
 #define FARMBOT_MODE_WAITING		5
 
-#define FARMBOT_ANIMATION_TIME		25 //How long it takes to use one of the action animations
-#define FARMBOT_EMAG_DELAY			60 //How long of a delay after doing one of the emagged attack actions
-#define FARMBOT_ACTION_DELAY		35 //How long of a delay after doing one of the normal actions
+#define FARMBOT_ANIMATION_TIME		25 // How long it takes to use one of the action animations
+#define FARMBOT_EMAG_DELAY			60 // How long of a delay after doing one of the emagged attack actions
+#define FARMBOT_ACTION_DELAY		35 // How long of a delay after doing one of the normal actions
 
 /obj/machinery/bot/farmbot
 	name = "Farmbot"
@@ -44,8 +44,8 @@
 	var/setting_ignoreWeeds = 1
 	var/setting_ignoreMushrooms = 1
 
-	var/atom/target //Current target, can be a human, a hydroponics tray, or a sink
-	var/mode //Which mode is being used, 0 means it is looking for work
+	var/atom/target // Current target, can be a human, a hydroponics tray, or a sink
+	var/mode // Which mode is being used, 0 means it is looking for work
 
 	var/obj/structure/reagent_dispensers/watertank/tank // the water tank that was used to make it, remains inside the bot.
 
@@ -59,12 +59,12 @@
 		src.botcard = new /obj/item/weapon/card/id(src)
 		src.botcard.access = req_access
 
-		if ( !tank ) //Should be set as part of making it... but lets check anyway
+		if ( !tank ) // Should be set as part of making it... but lets check anyway
 			tank = locate(/obj/structure/reagent_dispensers/watertank/) in contents
-		if ( !tank ) //An admin must have spawned the farmbot! Better give it a tank.
+		if ( !tank ) // An admin must have spawned the farmbot! Better give it a tank.
 			tank = new /obj/structure/reagent_dispensers/watertank(src)
 
-/obj/machinery/bot/farmbot/Bump(atom/M) //Leave no door unopened!
+/obj/machinery/bot/farmbot/Bump(atom/M) // Leave no door unopened!
 	if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
 		var/obj/machinery/door/D = M
 		if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
@@ -189,7 +189,7 @@
 	src.on = 1
 	src.icon_state = "farmbot[src.on]"
 	target = null
-	mode = FARMBOT_MODE_WAITING //Give the emagger a chance to get away! 15 seconds should be good.
+	mode = FARMBOT_MODE_WAITING // Give the emagger a chance to get away! 15 seconds should be good.
 	spawn(150)
 		mode = 0
 
@@ -220,7 +220,7 @@
 	return
 
 /obj/machinery/bot/farmbot/process()
-	//set background = 1
+	// set background = 1
 
 	if(!src.on)
 		return
@@ -231,7 +231,7 @@
 	if ( mode == FARMBOT_MODE_WAITING )
 		return
 
-	if ( !mode || !target || !(target in view(7,src)) ) //Don't bother chasing down targets out of view
+	if ( !mode || !target || !(target in view(7,src)) ) // Don't bother chasing down targets out of view
 
 		mode = 0
 		target = null
@@ -267,7 +267,7 @@
 		return 0
 
 	if ( mode == FARMBOT_MODE_FERTILIZE )
-		//Find which fertilizer to use
+		// Find which fertilizer to use
 		var/obj/item/nutrient/fert
 		for ( var/obj/item/nutrient/nut in contents )
 			fert = nut
@@ -291,7 +291,7 @@
 
 
 /obj/machinery/bot/farmbot/proc/find_target()
-	if ( emagged ) //Find a human and help them!
+	if ( emagged ) // Find a human and help them!
 		for ( var/mob/living/carbon/human/human in view(7,src) )
 			if (human.stat == DEAD)
 				continue
@@ -339,7 +339,7 @@
 	return 0
 
 /obj/machinery/bot/farmbot/proc/move_to_target()
-	//Mostly copied from medibot code.
+	// Mostly copied from medibot code.
 
 	if(src.frustration > 8)
 		target = null
@@ -350,12 +350,12 @@
 		src.path = new()
 	if(src.target && src.path.len == 0 && (get_dist(src,src.target) > 1))
 		spawn(0)
-			var/turf/dest = get_step_towards(target,src)  //Can't pathfind to a tray, as it is dense, so pathfind to the spot next to the tray
+			var/turf/dest = get_step_towards(target,src)  // Can't pathfind to a tray, as it is dense, so pathfind to the spot next to the tray
 
 			src.path = get_path_to(src, dest, /turf/proc/Distance, 0, 30,id=botcard)
 			if(src.path.len == 0)
-				for ( var/turf/spot in orange(1,target) ) //The closest one is unpathable, try  the other spots
-					if ( spot == dest ) //We already tried this spot
+				for ( var/turf/spot in orange(1,target) ) // The closest one is unpathable, try  the other spots
+					if ( spot == dest ) // We already tried this spot
 						continue
 					if ( spot.density )
 						continue
@@ -462,9 +462,9 @@
 		src.visible_message("\red [src] splashes [target] with a bucket of water!")
 		playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)
 		if ( prob(50) )
-			tank.reagents.reaction(target, TOUCH) //splash the human!
+			tank.reagents.reaction(target, TOUCH) // splash the human!
 		else
-			tank.reagents.reaction(target.loc, TOUCH) //splash the human's roots!
+			tank.reagents.reaction(target.loc, TOUCH) // splash the human's roots!
 		spawn(5)
 			tank.reagents.remove_any(splashAmount)
 
@@ -513,7 +513,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "water_arm"
 	var/build_step = 0
-	var/created_name = "Farmbot" //To preserve the name if it's a unique farmbot I guess
+	var/created_name = "Farmbot" // To preserve the name if it's a unique farmbot I guess
 	w_class = 3.0
 
 	New()
@@ -530,13 +530,13 @@
 		..()
 		return
 
-	//Making a farmbot!
+	// Making a farmbot!
 
 	var/obj/item/weapon/farmbot_arm_assembly/A = new /obj/item/weapon/farmbot_arm_assembly
 
 	A.loc = src.loc
 	to_chat(user, "You add the robot arm to the [src]")
-	src.loc = A //Place the water tank into the assembly, it will be needed for the finished bot
+	src.loc = A // Place the water tank into the assembly, it will be needed for the finished bot
 	user.remove_from_mob(S)
 	qdel(S)
 
@@ -587,4 +587,4 @@
 		src.created_name = t
 
 /obj/item/weapon/farmbot_arm_assembly/attack_hand(mob/user)
-	return //it's a converted watertank, no you cannot pick it up and put it in your backpack
+	return // it's a converted watertank, no you cannot pick it up and put it in your backpack

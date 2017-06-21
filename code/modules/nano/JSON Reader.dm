@@ -65,7 +65,7 @@ json_reader
 							val += char
 						else
 							// TODO: support octal, hex, unicode sequences
-							//testing("Having trouble with \"\\[char]\" in string \"[val]\"")
+							// testing("Having trouble with \"\\[char]\" in string \"[val]\"")
 							ASSERT(sequences.Find(char))
 							val += ascii2text(sequences[char])
 				else

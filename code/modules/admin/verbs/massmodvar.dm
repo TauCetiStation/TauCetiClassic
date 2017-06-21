@@ -3,7 +3,7 @@
 	set name = "Mass Edit Variables"
 	set desc="(target) Edit all instances of a target item's variables"
 
-	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL itms)
+	var/method = 0	// 0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL itms)
 
 	if(!check_rights(R_VAREDIT))	return
 
@@ -20,7 +20,7 @@
 					return
 
 	src.massmodify_variables(A, var_name, method)
-	feedback_add_details("admin_verb","MEV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","MEV") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/massmodify_variables(atom/O, var_name = "", method = 0)

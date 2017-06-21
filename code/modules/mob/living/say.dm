@@ -33,8 +33,8 @@ var/list/department_radio_keys = list(
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":D" = "dronechat",	"#D" = "dronechat",		".D" = "dronechat",
 
-	  //kinda localization -- rastaf0
-	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
+	  // kinda localization -- rastaf0
+	  // same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	  ":ê" = "right ear",	"#ê" = "right ear",		".ê" = "right ear",
 	  ":ä" = "left ear",	"#ä" = "left ear",		".ä" = "left ear",
 	  ":ø" = "intercom",	"#ø" = "intercom",		".ø" = "intercom",
@@ -119,7 +119,7 @@ var/list/department_radio_keys = list(
 
 	var/turf/T = get_turf(src)
 
-	//handle nonverbal and sign languages here
+	// handle nonverbal and sign languages here
 	if (speaking)
 		if (speaking.flags & NONVERBAL)
 			if (prob(30))
@@ -129,7 +129,7 @@ var/list/department_radio_keys = list(
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
 			return 1
 
-	//speaking into radios
+	// speaking into radios
 	if(used_radios.len)
 		italics = 1
 		message_range = 1
@@ -141,9 +141,9 @@ var/list/department_radio_keys = list(
 				if (speech_sound)
 					src.playsound_local(get_turf(src), speech_sound, sound_vol * 0.5, 1)
 
-		speech_sound = null	//so we don't play it twice.
+		speech_sound = null	// so we don't play it twice.
 
-	//make sure the air can transmit speech
+	// make sure the air can transmit speech
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment)
 		var/pressure = environment.return_pressure()
@@ -152,7 +152,7 @@ var/list/department_radio_keys = list(
 			message_range = 1
 
 			if (speech_sound)
-				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
+				sound_vol *= 0.5	// muffle the sound a bit, so it's like we're actually talking through contact
 
 	var/list/listening = list()
 	var/list/listening_obj = list()
@@ -180,7 +180,7 @@ var/list/department_radio_keys = list(
 			if(M.loc && M.locs[1] in hearturfs)
 				listening |= M
 
-	//speech bubble
+	// speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
 		if(M.client)
@@ -196,7 +196,7 @@ var/list/department_radio_keys = list(
 
 	for(var/obj/O in listening_obj)
 		spawn(0)
-			if(O) //It's possible that it could be deleted in the meantime.
+			if(O) // It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
 
 	log_say("[name]/[key] : [message]")

@@ -11,7 +11,7 @@
 	anchored = 1.0
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
 	var/obj/machinery/alarm/current
-	var/overridden = 0 //not set yet, can't think of a good way to do it
+	var/overridden = 0 // not set yet, can't think of a good way to do it
 	req_access = list(access_ce)
 
 
@@ -69,7 +69,7 @@
 		dat += "<hr>[return_controls()]"
 	return dat
 
-//a bunch of this is copied from atmos alarms
+// a bunch of this is copied from atmos alarms
 /obj/machinery/computer/atmoscontrol/Topic(href, href_list)
 	. = ..()
 	if(!.)
@@ -95,7 +95,7 @@
 					current.send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
 					spawn(3)
 						src.updateUsrDialog()
-				//if("adjust_threshold") //was a good idea but required very wide window
+				// if("adjust_threshold") // was a good idea but required very wide window
 				if("set_threshold")
 					var/env = href_list["env"]
 					var/threshold = text2num(href_list["var"])
@@ -144,7 +144,7 @@
 						if(selected[3] > selected[4])
 							selected[3] = selected[4]
 
-					//Sets the temperature the built-in heater/cooler tries to maintain.
+					// Sets the temperature the built-in heater/cooler tries to maintain.
 					if(env == "temperature")
 						if(current.target_temperature < selected[2])
 							current.target_temperature = selected[2]
@@ -161,9 +161,9 @@
 				src.updateUsrDialog()
 			return
 
-		//commenting this out because it causes compile errors
-		//I tried fixing it but wasn't sucessful.
-		//if(href_list["atmos_unlock"])
+		// commenting this out because it causes compile errors
+		// I tried fixing it but wasn't sucessful.
+		// if(href_list["atmos_unlock"])
 		//	switch(href_list["atmos_unlock"])
 		//		if("0")
 		//			current.alarm_area.air_doors_close()
@@ -193,11 +193,11 @@
 			return
 	updateUsrDialog()
 
-//copypasta from alarm code, changed to work with this without derping hard
-//---START COPYPASTA----
+// copypasta from alarm code, changed to work with this without derping hard
+// ---START COPYPASTA----
 
 /obj/machinery/computer/atmoscontrol/proc/return_controls()
-	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
+	var/output = ""// "<B>[alarm_zone] Air [name]</B><HR>"
 
 	switch(current.screen)
 		if (AALARM_SCREEN_MAIN)
@@ -228,7 +228,7 @@
 					var/state = ""
 					if(!data)
 						state = "<font color='red'> can not be found!</font>"
-						data = list("external" = 0) //for "0" instead of empty string
+						data = list("external" = 0) // for "0" instead of empty string
 					else if (data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
 						state = "<font color='red'> not responding!</font>"
 					sensor_data += {"
@@ -271,7 +271,7 @@ siphoning
 					var/state = ""
 					if(!data)
 						state = "<font color='red'> can not be found!</font>"
-						data = list("external" = 0) //for "0" instead of empty string
+						data = list("external" = 0) // for "0" instead of empty string
 					else if (data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
 						state = "<font color='red'> not responding!</font>"
 
@@ -364,4 +364,4 @@ table tr:first-child th:first-child { border: none;}
 			output += "</table>"
 
 	return output
-//---END COPYPASTA----
+// ---END COPYPASTA----

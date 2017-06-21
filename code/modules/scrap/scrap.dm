@@ -6,7 +6,7 @@
 	density = 0
 	icon_state = "small"
 	icon = 'icons/obj/structures/scrap/base.dmi'
-	var/obj/item/weapon/storage/internal/updating/loot	//the visible loot
+	var/obj/item/weapon/storage/internal/updating/loot	// the visible loot
 	var/loot_min = 3
 	var/loot_max = 5
 	var/list/loot_list = list(
@@ -20,9 +20,9 @@
 	)
 	var/dig_amount = 7
 	var/parts_icon = 'icons/obj/structures/scrap/trash.dmi'
-	var/base_min = 5	//min and max number of random pieces of base icon
+	var/base_min = 5	// min and max number of random pieces of base icon
 	var/base_max = 8
-	var/base_spread = 12 //limits on pixel offsets of base pieces
+	var/base_spread = 12 // limits on pixel offsets of base pieces
 	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
 	var/list/diggers = list()
 
@@ -49,7 +49,7 @@
 		qdel(item)
 	return ..()
 
-//stupid shard copypaste
+// stupid shard copypaste
 /obj/structure/scrap/Crossed(AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM

@@ -1,4 +1,4 @@
-//Food items that are eaten normally and don't leave anything behind.
+// Food items that are eaten normally and don't leave anything behind.
 /obj/item/weapon/reagent_containers/food/snacks
 	name = "snack"
 	desc = "Yummy!"
@@ -11,7 +11,7 @@
 	var/slices_num
 	var/deepfried = 0
 
-	//Placeholder for effect that trigger on eating that aren't tied to reagents.
+	// Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
 	if(!usr)	return
 	if(!reagents.total_volume)
@@ -19,7 +19,7 @@
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
 		score["foodeaten"]++
-		usr.drop_from_inventory(src)	//so icons update :[
+		usr.drop_from_inventory(src)	// so icons update :[
 
 		if(trash)
 			if(ispath(trash,/obj/item))
@@ -34,17 +34,17 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
-	if(!reagents || !reagents.total_volume)				//Shouldn't be needed but it checks to see if it has anything left in it.
+	if(!reagents || !reagents.total_volume)				// Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='rose'>None of [src] left, oh no!</span>")
-		M.drop_from_inventory(src)	//so icons update :[
+		M.drop_from_inventory(src)	// so icons update :[
 		qdel(src)
 		return 0
 
-	if(!CanEat(user, M, src, "eat")) return	//tc code
+	if(!CanEat(user, M, src, "eat")) return	// tc code
 
 	if(istype(M, /mob/living/carbon))
 		var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
-		if(M == user)								//If you're eating it yourself
+		if(M == user)								// If you're eating it yourself
 			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags[IS_SYNTHETIC])
@@ -68,7 +68,7 @@
 					to_chat(H, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
 					return
 
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
+			if(!istype(M, /mob/living/carbon/slime))		// If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
 					for(var/mob/O in viewers(world.view, user))
@@ -91,7 +91,7 @@
 				to_chat(user, "This creature does not seem to have a mouth!</span>")
 				return
 
-		if(reagents)								//Handle ingestion of the reagent.
+		if(reagents)								// Handle ingestion of the reagent.
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
 				if(reagents.total_volume > bitesize)
@@ -208,9 +208,9 @@
 		N.health = min(N.health + 1, N.maxHealth)
 
 
-////////////////////////////////////////////////////////////////////////////////
-/// FOOD END
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////// 
+// / FOOD END
+//////////////////////////////////////////////////////////////////////////////// 
 
 
 
@@ -222,32 +222,32 @@
 
 
 
-//////////////////////////////////////////////////
-////////////////////////////////////////////Snacks
-//////////////////////////////////////////////////
-//Items in the "Snacks" subcategory are food items that people actually eat. The key points are that they are created
+////////////////////////////////////////////////// 
+//////////////////////////////////////////// Snacks
+////////////////////////////////////////////////// 
+// Items in the "Snacks" subcategory are food items that people actually eat. The key points are that they are created
 //	already filled with reagents and are destroyed when empty. Additionally, they make a "munching" noise when eaten.
 
-//Notes by Darem: Food in the "snacks" subtype can hold a maximum of 50 units Generally speaking, you don't want to go over 40
+// Notes by Darem: Food in the "snacks" subtype can hold a maximum of 50 units Generally speaking, you don't want to go over 40
 //	total for the item because you want to leave space for extra condiments. If you want effect besides healing, add a reagent for
 //	it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use Tricordrazine). On use
 //	effect (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).
 
-//The nutriment reagent and bitesize variable replace the old heal_amt and amount variables. Each unit of nutriment is equal to
+// The nutriment reagent and bitesize variable replace the old heal_amt and amount variables. Each unit of nutriment is equal to
 //	2 of the old heal_amt variable. Bitesize is the rate at which the reagents are consumed. So if you have 6 nutriment and a
 //	bitesize of 2, then it'll take 3 bites to eat. Unlike the old system, the contained reagents are evenly spread among all
 //	the bites. No more contained reagents = no more bites.
 
-//Here is an example of the new formatting for anyone who wants to add more food items.
-///obj/item/weapon/reagent_containers/food/snacks/xenoburger			//Identification path for the object.
-//	name = "Xenoburger"													//Name that displays in the UI.
-//	desc = "Smells caustic. Tastes like heresy."						//Duh
-//	icon_state = "xburger"												//Refers to an icon in food.dmi
-//	New()																//Don't mess with this.
-//		..()															//Same here.
-//		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
+// Here is an example of the new formatting for anyone who wants to add more food items.
+// /obj/item/weapon/reagent_containers/food/snacks/xenoburger			// Identification path for the object.
+//	name = "Xenoburger"													// Name that displays in the UI.
+//	desc = "Smells caustic. Tastes like heresy."						// Duh
+//	icon_state = "xburger"												// Refers to an icon in food.dmi
+//	New()																// Don't mess with this.
+//		..()															// Same here.
+//		reagents.add_reagent("xenomicrobes", 10)						// This is what is in the food item. you may copy/paste
 //		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
-//		bitesize = 3													//This is the amount each bite consumes.
+//		bitesize = 3													// This is the amount each bite consumes.
 
 
 
@@ -554,7 +554,7 @@
 		reagents.add_reagent("nutriment", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/appendix
-//yes, this is the same as meat. I might do something different in future
+// yes, this is the same as meat. I might do something different in future
 	name = "appendix"
 	desc = "An appendix which looks perfectly healthy."
 	icon = 'icons/obj/surgery.dmi'
@@ -709,7 +709,7 @@
 		reagents.add_reagent("nutriment", 4)
 
 	var/warm = 0
-	proc/cooltime() //Not working, derp?
+	proc/cooltime() // Not working, derp?
 		if (src.warm)
 			spawn( 4200 )
 				src.warm = 0
@@ -867,7 +867,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#FFF9A8"
 
-	//var/herp = 0
+	// var/herp = 0
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
@@ -877,11 +877,11 @@
 			if (W.icon_state == "forkloaded")
 				to_chat(user, "<span class='rose'>You already have omelette on your fork.</span>")
 				return
-			//W.icon = 'icons/obj/kitchen.dmi'
+			// W.icon = 'icons/obj/kitchen.dmi'
 			W.icon_state = "forkloaded"
 			/*if (herp)
 				to_chat(world, "[user] takes a piece of omelette with his fork!")*/
-				//Why this unecessary check? Oh I know, because I'm bad >:C
+				// Why this unecessary check? Oh I know, because I'm bad >:C
 				// Yes, you are. You griefing my badmin toys. --rastaf0
 			user.visible_message( \
 				"<span class='info'>[user] takes a piece of omelette with their fork!</span>", \
@@ -967,7 +967,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
 	name = "Soylent Green"
-	desc = "Not made of people. Honest." //Totally people.
+	desc = "Not made of people. Honest." // Totally people.
 	icon_state = "soylent_green"
 	trash = /obj/item/trash/waffles
 	filling_color = "#B8E6B5"
@@ -979,7 +979,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
 	name = "Soylen Virdians"
-	desc = "Not made of people. Honest." //Actually honest for once.
+	desc = "Not made of people. Honest." // Actually honest for once.
 	icon_state = "soylent_yellow"
 	trash = /obj/item/trash/waffles
 	filling_color = "#E6FA61"
@@ -1132,9 +1132,9 @@
 		..()
 		unpopped = rand(1,10)
 		reagents.add_reagent("nutriment", 2)
-		bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
+		bitesize = 0.1 // this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 	On_Consume()
-		if(prob(unpopped))	//lol ...what's the point?
+		if(prob(unpopped))	// lol ...what's the point?
 			to_chat(usr, "<span class='rose'>You bite down on an un-popped kernel!</span>")
 			unpopped = max(0, unpopped-1)
 		..()
@@ -1387,7 +1387,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablesoup
 	name = "Vegetable soup"
-	desc = "A true vegan meal." //TODO
+	desc = "A true vegan meal." // TODO
 	icon_state = "vegetablesoup"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#AFC4B5"
@@ -1551,14 +1551,14 @@
 	to_chat(M, "<span class = 'warning'>Something inside of you suddently expands!</span>")
 
 	if (istype(M, /mob/living/carbon/human))
-		//Do not try to understand.
+		// Do not try to understand.
 		var/obj/item/weapon/surprise = new/obj/item/weapon(M)
-		var/mob/living/carbon/monkey/ook = new monkey_type(null) //no other way to get access to the vars, alas
+		var/mob/living/carbon/monkey/ook = new monkey_type(null) // no other way to get access to the vars, alas
 		surprise.icon = ook.icon
 		surprise.icon_state = ook.icon_state
 		surprise.name = "malformed [ook.name]"
 		surprise.desc = "Looks like \a very deformed [ook.name], a little small for its kind. It shows no signs of life."
-		qdel(ook)	//rip nullspace monkey
+		qdel(ook)	// rip nullspace monkey
 		surprise.transform *= 0.6
 		surprise.add_blood(M)
 		var/mob/living/carbon/human/H = M
@@ -1567,10 +1567,10 @@
 		for (var/obj/item/organ/internal/IO in BP.bodypart_organs)
 			IO.take_damage(rand(IO.min_bruised_damage, IO.min_broken_damage + 1))
 
-		if (!BP.hidden && prob(60)) //set it snuggly
+		if (!BP.hidden && prob(60)) // set it snuggly
 			BP.hidden = surprise
 			BP.cavity = 0
-		else 		//someone is having a bad day
+		else 		// someone is having a bad day
 			BP.createwound(CUT, 30)
 			BP.embed(surprise)
 	else if (ismonkey(M))
@@ -3007,7 +3007,7 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 
-////////////////////////////////FOOD ADDITIONS////////////////////////////////////////////
+//////////////////////////////// FOOD ADDITIONS//////////////////////////////////////////// 
 
 /obj/item/weapon/reagent_containers/food/snacks/beans
 	name = "tin of beans"
@@ -3410,7 +3410,7 @@
 	desc = "An unbelievably hard candy. The name is fitting."
 	icon_state = "jawbreaker"
 	filling_color = "#ED0758"
-	bitesize = 0.1	//this is gonna take a while, you'll be working at this all shift.
+	bitesize = 0.1	// this is gonna take a while, you'll be working at this all shift.
 	New()
 		..()
 		reagents.add_reagent("sugar", 10)

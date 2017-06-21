@@ -3,18 +3,18 @@
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/ties.dmi'
 	icon_state = "bluetie"
-	item_state = ""	//no inhands
+	item_state = ""	// no inhands
 	item_color = "bluetie"
 	slot_flags = 0
 	w_class = 2.0
-	var/obj/item/clothing/under/has_suit = null		//the suit the tie may be attached to
-	var/image/inv_overlay = null	//overlay used when attached to clothing.
+	var/obj/item/clothing/under/has_suit = null		// the suit the tie may be attached to
+	var/image/inv_overlay = null	// overlay used when attached to clothing.
 
 /obj/item/clothing/tie/New()
 	..()
 	inv_overlay = image("icon" = 'icons/obj/clothing/ties_overlay.dmi', "icon_state" = "[item_color? "[item_color]" : "[icon_state]"]")
 
-//when user attached an accessory to S
+// when user attached an accessory to S
 /obj/item/clothing/tie/proc/on_attached(obj/item/clothing/under/S, mob/user)
 	if(!istype(S))
 		return
@@ -33,15 +33,15 @@
 	usr.put_in_hands(src)
 	src.add_fingerprint(user)
 
-//default attackby behaviour
+// default attackby behaviour
 /obj/item/clothing/tie/attackby(obj/item/I, mob/user)
 	..()
 
-//default attack_hand behaviour
+// default attack_hand behaviour
 /obj/item/clothing/tie/attack_hand(mob/user)
 	if(has_suit)
 		has_suit.remove_accessory(user)
-		return	//we aren't an object on the ground so don't call parent
+		return	// we aren't an object on the ground so don't call parent
 	..()
 
 /obj/item/clothing/tie/blue
@@ -100,7 +100,7 @@
 	return ..(M,user)
 
 
-//Medals
+// Medals
 /obj/item/clothing/tie/medal
 	name = "bronze medal"
 	desc = "A bronze medal."
@@ -149,7 +149,7 @@
 	name = "medal of exceptional heroism"
 	desc = "An extremely rare golden medal awarded only by CentComm. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
 
-//Armbands
+// Armbands
 /obj/item/clothing/tie/armband
 	name = "red armband"
 	desc = "A fancy red armband!"
@@ -192,7 +192,7 @@
 	icon_state = "medgreen"
 	item_color = "medgreen"
 
-//holsters
+// holsters
 /obj/item/clothing/tie/holster
 	name = "shoulder holster"
 	desc = "A handgun holster."
@@ -200,7 +200,7 @@
 	item_color = "holster"
 	var/obj/item/weapon/gun/holstered = null
 
-//subtypes can override this to specify what can be holstered
+// subtypes can override this to specify what can be holstered
 /obj/item/clothing/tie/holster/proc/can_holster(obj/item/weapon/gun/W)
 	return W.isHandgun()
 
@@ -242,7 +242,7 @@
 		holstered = null
 
 /obj/item/clothing/tie/holster/attack_hand(mob/user)
-	if (has_suit)	//if we are part of a suit
+	if (has_suit)	// if we are part of a suit
 		if (holstered)
 			unholster(user)
 		return
@@ -272,7 +272,7 @@
 	has_suit.verbs -= /obj/item/clothing/tie/holster/verb/holster_verb
 	..()
 
-//For the holster hotkey
+// For the holster hotkey
 /obj/item/clothing/tie/holster/verb/holster_verb()
 	set name = "Holster"
 	set category = "Object"
@@ -326,11 +326,11 @@
 	hold.storage_slots = slots
 
 /obj/item/clothing/tie/storage/attack_hand(mob/user)
-	if (has_suit)	//if we are part of a suit
+	if (has_suit)	// if we are part of a suit
 		hold.open(user)
 		return
 
-	if (hold.handle_attack_hand(user))	//otherwise interact as a regular storage item
+	if (hold.handle_attack_hand(user))	// otherwise interact as a regular storage item
 		..(user)
 
 /obj/item/clothing/tie/storage/MouseDrop(obj/over_object as obj)
@@ -392,7 +392,7 @@
 	item_color = "holobadge"
 	slot_flags = SLOT_BELT
 
-	var/emagged = 0 //Emagging removes Sec check.
+	var/emagged = 0 // Emagging removes Sec check.
 	var/stored_name = null
 
 /obj/item/clothing/tie/holobadge/cord

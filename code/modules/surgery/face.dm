@@ -1,7 +1,7 @@
-//Procedures in this file: Facial reconstruction surgery
-//////////////////////////////////////////////////////////////////
-//						FACE SURGERY							//
-//////////////////////////////////////////////////////////////////
+// Procedures in this file: Facial reconstruction surgery
+///////////////////////////////////////////////////////////////// /
+//						FACE SURGERY							// 
+///////////////////////////////////////////////////////////////// /
 
 /datum/surgery_step/face
 	clothless = 0
@@ -53,7 +53,7 @@
 	/obj/item/weapon/cable_coil = 75,            \
 	/obj/item/weapon/wirecutters = 75,           \
 	/obj/item/weapon/kitchen/utensil/fork = 50,  \
-	/obj/item/device/assembly/mousetrap = 10	//I don't know. Don't ask me. But I'm leaving it because hilarity.
+	/obj/item/device/assembly/mousetrap = 10	// I don't know. Don't ask me. But I'm leaving it because hilarity.
 	)
 
 	min_duration = 70

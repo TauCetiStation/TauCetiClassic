@@ -1,4 +1,4 @@
-//unequip
+// unequip
 /mob/living/carbon/alien/humanoid/u_equip(obj/item/W)
 	if (W == wear_suit)
 		wear_suit = null

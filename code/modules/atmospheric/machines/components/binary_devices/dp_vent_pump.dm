@@ -2,8 +2,8 @@
 	icon = 'icons/obj/atmospherics/dp_vent_pump.dmi'
 	icon_state = "off"
 
-	//node2 is output port
-	//node1 is input port
+	// node2 is output port
+	// node1 is input port
 
 	name = "Dual Port Air Vent"
 	desc = "Has a valve and pump attached to it. There are two ports."
@@ -11,7 +11,7 @@
 	level = 1
 
 	var/on = 0
-	var/pump_direction = 1 //0 = siphoning, 1 = releasing
+	var/pump_direction = 1 // 0 = siphoning, 1 = releasing
 
 
 	var/id = null
@@ -23,9 +23,9 @@
 
 	var/pressure_checks = 1
 
-	//1: Do not pass external_pressure_bound
-	//2: Do not pass input_pressure_min
-	//4: Do not pass output_pressure_max
+	// 1: Do not pass external_pressure_bound
+	// 2: Do not pass input_pressure_min
+	// 4: Do not pass output_pressure_max
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume
 	name = "Large Dual Port Air Vent"
@@ -48,7 +48,7 @@
 
 	return
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/hide(i) //to make the little pipe section invisible, the icon changes.
+/obj/machinery/atmospherics/binary/dp_vent_pump/hide(i) // to make the little pipe section invisible, the icon changes.
 	if(on)
 		if(pump_direction)
 			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
@@ -68,7 +68,7 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
 
-	if(pump_direction) //input -> external
+	if(pump_direction) // input -> external
 		var/pressure_delta = 10000
 
 		if(pressure_checks&1)
@@ -87,7 +87,7 @@
 				if(network1)
 					network1.update = 1
 
-	else //external -> output
+	else // external -> output
 		var/pressure_delta = 10000
 
 		if(pressure_checks&1)
@@ -108,7 +108,7 @@
 
 	return 1
 
-//Radio remote control
+// Radio remote control
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -121,7 +121,7 @@
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 
 	signal.data = list(
@@ -191,7 +191,7 @@
 
 	if("status" in signal.data)
 		addtimer(CALLBACK(src, .proc/broadcast_status), 2)
-		return //do not update_icon
+		return // do not update_icon
 
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 	update_icon()

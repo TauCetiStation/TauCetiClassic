@@ -5,15 +5,15 @@
 	light_color = "#a97faa"
 	var/datum/research/files
 	var/health = 100
-	var/list/id_with_upload = list()		//List of R&D consoles with upload to server access.
-	var/list/id_with_download = list()	//List of R&D consoles with download from server access.
-	var/id_with_upload_string = ""		//String versions for easy editing in map editor.
+	var/list/id_with_upload = list()		// List of R&D consoles with upload to server access.
+	var/list/id_with_download = list()	// List of R&D consoles with download from server access.
+	var/id_with_upload_string = ""		// String versions for easy editing in map editor.
 	var/id_with_download_string = ""
 	var/server_id = 0
 	var/heat_gen = 100
 	var/heating_power = 40000
 	var/delay = 10
-	req_access = list(access_rd) //Only the R&D can change server settings.
+	req_access = list(access_rd) // Only the R&D can change server settings.
 
 /obj/machinery/r_n_d/server/New()
 	..()
@@ -23,7 +23,7 @@
 	component_parts += new /obj/item/weapon/cable_coil/red(null, 1)
 	component_parts += new /obj/item/weapon/cable_coil/red(null, 1)
 	RefreshParts()
-	src.initialize(); //Agouri
+	src.initialize(); // Agouri
 
 /obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
@@ -59,7 +59,7 @@
 		if((T20C + 20) to (T0C + 70))
 			health = max(0, health - 1)
 	if(health <= 0)
-		griefProtection() //I dont like putting this in process() but it's the best I can do without re-writing a chunk of rd servers.
+		griefProtection() // I dont like putting this in process() but it's the best I can do without re-writing a chunk of rd servers.
 		files.known_designs = list()
 		for(var/datum/tech/T in files.known_tech)
 			if(prob(1))
@@ -92,7 +92,7 @@
 
 
 
-//Backup files to centcomm to help admins recover data after greifer attacks
+// Backup files to centcomm to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
 	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
 		for(var/datum/tech/T in files.known_tech)
@@ -102,7 +102,7 @@
 		C.files.RefreshResearch()
 
 /obj/machinery/r_n_d/server/proc/produce_heat(heat_amt)
-	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
+	if(!(stat & (NOPOWER|BROKEN))) // Blatently stolen from space heater.
 		var/turf/simulated/L = loc
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
@@ -174,7 +174,7 @@
 		no_id_servers -= S
 
 /obj/machinery/r_n_d/server/centcom/process()
-	return PROCESS_KILL	//don't need process()
+	return PROCESS_KILL	// don't need process()
 
 
 /obj/machinery/computer/rdservercontrol
@@ -262,7 +262,7 @@
 	var/dat = ""
 
 	switch(screen)
-		if(0) //Main Menu
+		if(0) // Main Menu
 			dat += "Connected Servers:<BR><BR>"
 
 			for(var/obj/machinery/r_n_d/server/S in machines)
@@ -274,12 +274,12 @@
 				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
 				dat += "<BR>"
 
-		if(1) //Access rights menu
+		if(1) // Access rights menu
 			dat += "[temp_server.name] Access Rights<BR><BR>"
 			dat += "Consoles with Upload Access<BR>"
 			for(var/obj/machinery/computer/rdconsole/C in consoles)
 				var/turf/console_turf = get_turf(C)
-				dat += "* <A href='?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" //FYI, these are all numeric ids, eventually.
+				dat += "* <A href='?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" // FYI, these are all numeric ids, eventually.
 				if(C.id in temp_server.id_with_upload)
 					dat += " (Remove)</A><BR>"
 				else
@@ -294,19 +294,19 @@
 					dat += " (Add)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
-		if(2) //Data Management menu
+		if(2) // Data Management menu
 			dat += "[temp_server.name] Data ManagementP<BR><BR>"
 			dat += "Known Technologies<BR>"
 			for(var/datum/tech/T in temp_server.files.known_tech)
 				dat += "* [T.name] "
-				dat += "<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings.
+				dat += "<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" // FYI, these are all strings.
 			dat += "Known Designs<BR>"
 			for(var/datum/design/D in temp_server.files.known_designs)
 				dat += "* [D.name] "
 				dat += "<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
-		if(3) //Server Data Transfer
+		if(3) // Server Data Transfer
 			dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
 			dat += "Send Data to what server?<BR>"
 			for(var/obj/machinery/r_n_d/server/S in servers)

@@ -2,7 +2,7 @@ var/list/sting_paths
 // totally stolen from the new player panel.  YAYY
 
 /obj/effect/proc_holder/changeling/evolution_menu
-	name = "-Evolution Menu-" //Dashes are so it's listed before all the other abilities.
+	name = "-Evolution Menu-" // Dashes are so it's listed before all the other abilities.
 	desc = "Choose our method of subjugation."
 	genomecost = 0
 
@@ -16,14 +16,14 @@ var/list/sting_paths
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
 
 	var/dat = create_menu(changeling)
-	usr << browse(dat, "window=powers;size=600x700")//900x480
+	usr << browse(dat, "window=powers;size=600x700")// 900x480
 
 
 /obj/effect/proc_holder/changeling/evolution_menu/proc/create_menu(datum/changeling/changeling)
 	var/dat
 	dat +="<html><head><title>Changling Evolution Menu</title></head>"
 
-	//javascript, the part that does most of the work~
+	// javascript, the part that does most of the work~
 	dat += {"
 
 		<head>
@@ -59,12 +59,12 @@ var/list/sting_paths
 								var td = ltd\[0\];
 								var lsearch = td.getElementsByTagName("b");
 								var search = lsearch\[0\];
-								//var inner_span = li.getElementsByTagName("span")\[1\] //Should only ever contain one element.
-								//document.write("<p>"+search.innerText+"<br>"+filter+"<br>"+search.innerText.indexOf(filter))
+								// var inner_span = li.getElementsByTagName("span")\[1\] // Should only ever contain one element.
+								// document.write("<p>"+search.innerText+"<br>"+filter+"<br>"+search.innerText.indexOf(filter))
 								if ( search.innerText.toLowerCase().indexOf(filter) == -1 )
 								{
-									//document.write("a");
-									//ltr.removeChild(tr);
+									// document.write("a");
+									// ltr.removeChild(tr);
 									td.innerHTML = "";
 									i--;
 								}
@@ -158,9 +158,9 @@ var/list/sting_paths
 					locked_tabs.push(id);
 					var notice_span = document.getElementById(notice_span_id);
 					notice_span.innerHTML = "<font color='red'>Locked</font> ";
-					//link.setAttribute("onClick","attempt('"+id+"','"+link_id+"','"+notice_span_id+"');");
-					//document.write("removeFromLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
-					//document.write("aa - "+link.getAttribute("onClick"));
+					// link.setAttribute("onClick","attempt('"+id+"','"+link_id+"','"+notice_span_id+"');");
+					// document.write("removeFromLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
+					// document.write("aa - "+link.getAttribute("onClick"));
 				}
 
 				function attempt(ab){
@@ -168,7 +168,7 @@ var/list/sting_paths
 				}
 
 				function removeFromLocked(id,link_id,notice_span_id){
-					//document.write("a");
+					// document.write("a");
 					var index = 0;
 					var pass = 0;
 					for(var j = 0; j < locked_tabs.length; j++){
@@ -183,8 +183,8 @@ var/list/sting_paths
 					locked_tabs\[index\] = "";
 					var notice_span = document.getElementById(notice_span_id);
 					notice_span.innerHTML = "";
-					//var link = document.getElementById(link_id);
-					//link.setAttribute("onClick","addToLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
+					// var link = document.getElementById(link_id);
+					// link.setAttribute("onClick","addToLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
 				}
 
 				function selectTextField(){
@@ -199,10 +199,10 @@ var/list/sting_paths
 
 	"}
 
-	//body tag start + onload and onkeypress (onkeyup) javascript event calls
+	// body tag start + onload and onkeypress (onkeyup) javascript event calls
 	dat += "<body onload='selectTextField(); updateSearch();' onkeyup='updateSearch();'>"
 
-	//title + search bar
+	// title + search bar
 	dat += {"
 
 		<table width='560' align='center' cellspacing='0' cellpadding='5' id='maintable'>
@@ -224,7 +224,7 @@ var/list/sting_paths
 
 	"}
 
-	//player table header
+	// player table header
 	dat += {"
 		<span id='maintable_data_archive'>
 		<table width='560' align='center' cellspacing='0' cellpadding='5' id='maintable_data'>"}
@@ -233,7 +233,7 @@ var/list/sting_paths
 	for(var/path in sting_paths)
 
 		var/obj/effect/proc_holder/changeling/P = new path()
-		if(P.genomecost <= 0) //Let's skip the crap we start with. Keeps the evolution menu uncluttered.
+		if(P.genomecost <= 0) // Let's skip the crap we start with. Keeps the evolution menu uncluttered.
 			continue
 
 		var/ownsthis = changeling.has_sting(P)
@@ -270,7 +270,7 @@ var/list/sting_paths
 		i++
 
 
-	//player table ending
+	// player table ending
 	dat += {"
 		</table>
 		</span>
@@ -292,7 +292,7 @@ var/list/sting_paths
 		usr.mind.changeling.purchasePower(usr, href_list["P"])
 	var/dat = create_menu(usr.mind.changeling)
 	usr << browse(dat, "window=powers;size=600x700")
-/////
+///// 
 /*
 /obj/effect/proc_holder/changeling/evolution_menu/Topic(href, href_list)
 	..()
@@ -326,7 +326,7 @@ var/list/sting_paths
 		to_chat(user, "We cannot evolve this... yet.  We must acquire more DNA.")
 		return
 
-	if(user.status_flags & FAKEDEATH)//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
+	if(user.status_flags & FAKEDEATH)// To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
 		to_chat(user, "We lack the energy to evolve new abilities right now.")
 		return
 
@@ -334,7 +334,7 @@ var/list/sting_paths
 	purchasedpowers += thepower
 	thepower.on_purchase(user)
 /*
-//Restores our verbs. It will only restore verbs allowed during lesser (monkey) form if we are not human
+// Restores our verbs. It will only restore verbs allowed during lesser (monkey) form if we are not human
 /mob/proc/make_changeling()
 
 	if(!mind)				return
@@ -391,7 +391,7 @@ var/list/sting_paths
 			mind.changeling.absorbed_languages += language
 	return 1
 
-//Used to dump the languages from the changeling datum into the actual mob.
+// Used to dump the languages from the changeling datum into the actual mob.
 /mob/proc/changeling_update_languages(updated_languages)
 
 	languages = list()

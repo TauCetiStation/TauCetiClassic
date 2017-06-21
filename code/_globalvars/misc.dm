@@ -18,7 +18,7 @@ var/gravity_is_on = 1
 var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
 var/visual_counter = 1
 
-//Goonstyle scoreboard
+// Goonstyle scoreboard
 // NOW AN ASSOCIATIVE LIST
 // NO FUCKING EXCUSE FOR THE ATROCITY THAT WAS
 var/list/score=list(

@@ -30,17 +30,17 @@
 			else
 				update_inv_r_hand()
 
-		else if(s_active && s_active.can_be_inserted(I,1))	//if storage active insert there
+		else if(s_active && s_active.can_be_inserted(I,1))	// if storage active insert there
 			s_active.handle_item_insertion(I)
-		else if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))	//see if we have box in other hand
+		else if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))	// see if we have box in other hand
 			S.handle_item_insertion(I)
 
 		else
 			S = H.get_item_by_slot(slot_belt)
-			if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))		//else we put in belt
+			if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))		// else we put in belt
 				S.handle_item_insertion(I)
 			else
-				S = H.get_item_by_slot(slot_back)	//else we put in backpack
+				S = H.get_item_by_slot(slot_back)	// else we put in backpack
 				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))
 					S.handle_item_insertion(I)
 				else
@@ -173,7 +173,7 @@
 	else if (W == wear_mask)
 		wear_mask = null
 		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
-			update_hair()	//rebuild hair
+			update_hair()	// rebuild hair
 		if(internal)
 			if(internals)
 				internals.icon_state = "internal0"
@@ -215,8 +215,8 @@
 
 
 
-//This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-//set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
+// This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
+// set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
 /mob/living/carbon/human/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
 	if(!slot) return
 	if(!istype(W)) return
@@ -224,7 +224,7 @@
 
 	if(W == src.l_hand)
 		src.l_hand = null
-		update_inv_l_hand() //So items actually disappear from hands.
+		update_inv_l_hand() // So items actually disappear from hands.
 	else if(W == src.r_hand)
 		src.r_hand = null
 		update_inv_r_hand()
@@ -299,7 +299,7 @@
 		if(slot_head)
 			src.head = W
 			if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
-				update_hair()	//rebuild hair
+				update_hair()	// rebuild hair
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
 			W.equipped(src, slot)
@@ -311,7 +311,7 @@
 		if(slot_wear_suit)
 			src.wear_suit = W
 			if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
-				update_hair()	//rebuild hair
+				update_hair()	// rebuild hair
 			W.equipped(src, slot)
 			update_inv_wear_suit()
 		if(slot_w_uniform)
@@ -351,8 +351,8 @@
 /obj/effect/equip_e
 	name = "equip e"
 	var/mob/source = null
-	var/s_loc = null	//source location
-	var/t_loc = null	//target location
+	var/s_loc = null	// source location
+	var/t_loc = null	// target location
 	var/obj/item/item = null
 	var/place = null
 
@@ -438,7 +438,7 @@
 
 	var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel", "sensor", "internal", "tie")
 	if ((item && !( L.Find(place) )))
-		if(isrobot(source)) //#Z2
+		if(isrobot(source)) // #Z2
 			if(place != "handcuff")
 				qdel(src)
 			for(var/mob/O in viewers(target, null))
@@ -448,12 +448,12 @@
 				for(var/mob/O in viewers(target, null))
 					O.show_message("<span class='danger'>[source] is trying to put \a [item] on [target]</span>", 1)
 			else
-				if((HULK in target.mutations) && !(HULK in source.mutations))//#Z2 - Hulk is too faking~ scary, so we cant put anything on him using inventory.
+				if((HULK in target.mutations) && !(HULK in source.mutations))// #Z2 - Hulk is too faking~ scary, so we cant put anything on him using inventory.
 					source.show_message("<span class='danger'>[target] is too scary! You dont want to risk your health.</span>", 1)
 					return
 				else
 					for(var/mob/O in viewers(target, null))
-						O.show_message("<span class='danger'>[source] is trying to put \a [item] on [target]</span>", 1) //##Z2
+						O.show_message("<span class='danger'>[source] is trying to put \a [item] on [target]</span>", 1) // ##Z2
 	else
 		var/message=null
 		switch(place)
@@ -646,20 +646,20 @@ The else statement is for equipping stuff to empty slots.
 !canremove refers to variable of /obj/item/clothing which either allows or disallows that item to be removed.
 It can still be worn/put on as normal.
 */
-/obj/effect/equip_e/human/done()	//TODO: And rewrite this :< ~Carn
+/obj/effect/equip_e/human/done()	// TODO: And rewrite this :< ~Carn
 	target.cpr_time = 1
-	if(isanimal(source)) return //animals cannot strip people, except Ian, hes a cat, cats no no animal!
-	if(!source || !target) return		//Target or source no longer exist
-	if(source.loc != s_loc) return		//source has moved
-	if(target.loc != t_loc) return		//target has moved
-	if(!in_range(s_loc, t_loc)) return	//Use a proxi!
-	if(item && source.get_active_hand() != item) return	//Swapped hands / removed item from the active one
-	if ((source.restrained() || source.stat)) return //Source restrained or unconscious / dead
+	if(isanimal(source)) return // animals cannot strip people, except Ian, hes a cat, cats no no animal!
+	if(!source || !target) return		// Target or source no longer exist
+	if(source.loc != s_loc) return		// source has moved
+	if(target.loc != t_loc) return		// target has moved
+	if(!in_range(s_loc, t_loc)) return	// Use a proxi!
+	if(item && source.get_active_hand() != item) return	// Swapped hands / removed item from the active one
+	if ((source.restrained() || source.stat)) return // Source restrained or unconscious / dead
 
 	var/slot_to_process
-	var/strip_item //this will tell us which item we will be stripping - if any.
+	var/strip_item // this will tell us which item we will be stripping - if any.
 
-	switch(place)	//here we go again...
+	switch(place)	// here we go again...
 		if("mask")
 			slot_to_process = slot_wear_mask
 			if (target.wear_mask && target.wear_mask.canremove)
@@ -718,7 +718,7 @@ It can still be worn/put on as normal.
 				strip_item = target.wear_suit
 		if("tie")
 			var/obj/item/clothing/under/suit = target.w_uniform
-			//var/obj/item/clothing/tie/tie = suit.hastie
+			// var/obj/item/clothing/tie/tie = suit.hastie
 			/*if(tie)
 				if (istype(tie,/obj/item/clothing/tie/storage))
 					var/obj/item/clothing/tie/storage/W = tie
@@ -742,7 +742,7 @@ It can still be worn/put on as normal.
 			if (target.handcuffed)
 				strip_item = target.handcuffed
 			else if (source != target && ishuman(source))
-				//check that we are still grabbing them
+				// check that we are still grabbing them
 				var/grabbing = 0
 				for (var/obj/item/weapon/grab/G in target.grabbed_by)
 					if (G.loc == source && G.state >= GRAB_AGGRESSIVE)
@@ -774,7 +774,7 @@ It can still be worn/put on as normal.
 			target.update_bandage()
 		if("CPR")
 			if ((target.health > config.health_threshold_dead && target.health < config.health_threshold_crit))
-				var/suff = min(target.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
+				var/suff = min(target.getOxyLoss(), 5) // Pre-merge level, less healing, more prevention of dieing.
 				target.adjustOxyLoss(-suff)
 				target.updatehealth()
 				for(var/mob/O in viewers(source, null))
@@ -833,7 +833,7 @@ It can still be worn/put on as normal.
 							target.internals.icon_state = "internal1"
 
 	if(slot_to_process)
-		if(strip_item) //Stripping an item from the mob
+		if(strip_item) // Stripping an item from the mob
 			var/obj/item/W = strip_item
 			var/obj/item/clothing/gloves/Strip = null
 			target.remove_from_mob(W)
@@ -843,12 +843,12 @@ It can still be worn/put on as normal.
 			if(istype(Strip, /obj/item/clothing/gloves/black/strip) && (!source.l_hand || !source.r_hand))
 				source.put_in_hands(W)
 			else
-				if(slot_to_process == slot_l_store) //pockets! Needs to process the other one too. Snowflake code, wooo! It's not like anyone will rewrite this anytime soon. If I'm wrong then... CONGRATULATIONS! ;)
+				if(slot_to_process == slot_l_store) // pockets! Needs to process the other one too. Snowflake code, wooo! It's not like anyone will rewrite this anytime soon. If I'm wrong then... CONGRATULATIONS! ;)
 					if(target.r_store)
-						target.remove_from_mob(target.r_store) //At this stage l_store is already processed by the code above, we only need to process r_store.
+						target.remove_from_mob(target.r_store) // At this stage l_store is already processed by the code above, we only need to process r_store.
 			W.add_fingerprint(source)
 		else
-			if(item && target.has_bodypart_for_slot(slot_to_process)) //Placing an item on the mob
+			if(item && target.has_bodypart_for_slot(slot_to_process)) // Placing an item on the mob
 				if(item.mob_can_equip(target, slot_to_process, 0))
 					source.remove_from_mob(item)
 					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 1)

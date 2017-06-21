@@ -8,7 +8,7 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
-//Monkeys can not take the muzzle off of themself! Call PETA!
+// Monkeys can not take the muzzle off of themself! Call PETA!
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if (src == user.wear_mask)
 		return
@@ -43,7 +43,7 @@
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
 
-//scarves (fit in in mask slot)
+// scarves (fit in in mask slot)
 
 /obj/item/clothing/mask/bluescarf
 	name = "blue neck scarf"

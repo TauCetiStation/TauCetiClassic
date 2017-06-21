@@ -1,9 +1,9 @@
 /*
 NOTE: IF YOU UPDATE THE REAGENT-SYSTEM, ALSO UPDATE THIS README.
 
-Structure: ///////////////////          //////////////////////////
+Structure: ///////////////////          ////////////////////////// 
 		   // Mob or object // -------> // Reagents var (datum) // 	    Is a reference to the datum that holds the reagents.
-		   ///////////////////          //////////////////////////
+		   ///////////////////          ////////////////////////// 
 		   			|				    			 |
     The object that holds everything.   			 V
 		   							      reagent_list var (list)   	A List of datums, each datum is a reagent.
@@ -172,7 +172,7 @@ About Reagents:
 			you define it as "#RRGGBB", or, red green blue. You can also define it using the
 			rgb() proc, which returns a hexadecimal value too. The color is black by default.
 
-			A good website for color calculations: http://www.psyclops.com/tools/rgb/
+			A good website for color calculations: http:// www.psyclops.com/tools/rgb/
 
 
 

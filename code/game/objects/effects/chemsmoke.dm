@@ -1,11 +1,11 @@
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 // Chem smoke
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
 /obj/effect/effect/smoke/chem
 	icon = 'icons/effects/chemsmoke.dmi'
 	opacity = 0
 	time_to_live = 300
-	pass_flags = PASSTABLE | PASSGRILLE | PASSGLASS		//PASSGLASS is fine here, it's just so the visual effect can "flow" around glass
+	pass_flags = PASSTABLE | PASSGRILLE | PASSGLASS		// PASSGLASS is fine here, it's just so the visual effect can "flow" around glass
 
 /obj/effect/effect/smoke/chem/New()
 	..()
@@ -30,13 +30,13 @@
 	chemholder.reagents = R
 	R.my_atom = chemholder
 
-//------------------------------------------
-//Sets up the chem smoke effect
-//
+// ------------------------------------------
+// Sets up the chem smoke effect
+// 
 // Calculates the max range smoke can travel, then gets all turfs in that view range.
 // Culls the selected turfs to a (roughly) circle shape, then calls smokeFlow() to make
 // sure the smoke can actually path to the turfs. This culls any turfs it can't reach.
-//------------------------------------------
+// ------------------------------------------
 /datum/effect/effect/system/smoke_spread/chem/set_up(datum/reagents/carry = null, n = 10, c = 0, loca, direct)
 	range = n * 0.3
 	cardinals = c
@@ -51,23 +51,23 @@
 
 	targetTurfs = new()
 
-	//build affected area list
+	// build affected area list
 	for(var/turf/T in view(range, location))
-		//cull turfs to circle
+		// cull turfs to circle
 		if(cheap_pythag(T.x - location.x, T.y - location.y) <= range)
 			targetTurfs += T
 
-	//make secondary list for reagents that affect walls
+	// make secondary list for reagents that affect walls
 	if(chemholder.reagents.has_reagent("thermite") || chemholder.reagents.has_reagent("plantbgone"))
 		wallList = new()
 
-	//pathing check
+	// pathing check
 	smokeFlow(location, targetTurfs, wallList)
 
-	//set the density of the cloud - for diluting reagents
-	density = max(1, targetTurfs.len / 4)	//clamp the cloud density minimum to 1 so it cant multiply the reagents
+	// set the density of the cloud - for diluting reagents
+	density = max(1, targetTurfs.len / 4)	// clamp the cloud density minimum to 1 so it cant multiply the reagents
 
-	//Admin messaging
+	// Admin messaging
 	var/contained = ""
 	for(var/reagent in carry.reagent_list)
 		contained += " [reagent] "
@@ -90,35 +90,35 @@
 		log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 
 
-//------------------------------------------
-//Runs the chem smoke effect
-//
+// ------------------------------------------
+// Runs the chem smoke effect
+// 
 // Spawns damage over time loop for each reagent held in the cloud.
 // Applies reagents to walls that affect walls (only thermite and plant-b-gone at the moment).
 // Also calculates target locations to spawn the visual smoke effect on, so the whole area
 // is covered fairly evenly.
-//------------------------------------------
+// ------------------------------------------
 /datum/effect/effect/system/smoke_spread/chem/start()
 
-	if(!location)	//kill grenade if it somehow ends up in nullspace
+	if(!location)	// kill grenade if it somehow ends up in nullspace
 		return
 
-	//reagent application - only run if there are extra reagents in the smoke
+	// reagent application - only run if there are extra reagents in the smoke
 	if(chemholder.reagents.reagent_list.len)
 		for(var/datum/reagent/R in chemholder.reagents.reagent_list)
 			var/proba = 100
 			var/runs = 5
 
-			//dilute the reagents according to cloud density
+			// dilute the reagents according to cloud density
 			R.volume /= density
 			chemholder.reagents.update_total()
 
-			//apply wall affecting reagents to walls
+			// apply wall affecting reagents to walls
 			if(R.id in list("thermite", "plantbgone"))
 				for(var/turf/T in wallList)
 					R.reaction_turf(T, R.volume)
 
-			//reagents that should be applied to turfs in a random pattern
+			// reagents that should be applied to turfs in a random pattern
 			if(R.id == "carbon")
 				proba = 75
 			else if(R.id in list("blood", "radium", "uranium"))
@@ -130,7 +130,7 @@
 						if(prob(proba))
 							R.reaction_turf(T, R.volume)
 						for(var/atom/A in T.contents)
-							if(istype(A, /obj/effect/effect/smoke/chem))	//skip the item if it is chem smoke
+							if(istype(A, /obj/effect/effect/smoke/chem))	// skip the item if it is chem smoke
 								continue
 							else if(istype(A, /mob))
 								var/dist = cheap_pythag(T.x - location.x, T.y - location.y)
@@ -142,7 +142,7 @@
 					sleep(30)
 
 
-	//build smoke icon
+	// build smoke icon
 	var/color = mix_color_from_reagents(chemholder.reagents.reagent_list)
 	var/icon/I
 	if(color)
@@ -152,11 +152,11 @@
 		I = icon('icons/effects/96x96.dmi', "smoke")
 
 
-	//distance between each smoke cloud
+	// distance between each smoke cloud
 	var/const/arcLength = 2.3559
 
 
-	//calculate positions for smoke coverage - then spawn smoke
+	// calculate positions for smoke coverage - then spawn smoke
 	for(var/i = 0, i < range, i++)
 		var/radius = i * 1.5
 		if(!radius)
@@ -169,7 +169,7 @@
 		var/angle = round(ToDegrees(arcLength / radius), 1)
 
 		if(!IsInteger(radius))
-			offset = 45		//degrees
+			offset = 45		// degrees
 
 		for(var/j = 0, j < points, j++)
 			var/a = (angle * j) + offset
@@ -182,29 +182,29 @@
 				spawn(0)
 					spawnSmoke(T, I, range)
 
-//------------------------------------------
+// ------------------------------------------
 // Randomizes and spawns the smoke effect.
 // Also handles deleting the smoke once the effect is finished.
-//------------------------------------------
+// ------------------------------------------
 /datum/effect/effect/system/smoke_spread/chem/proc/spawnSmoke(turf/T, icon/I, dist = 1)
 	var/obj/effect/effect/smoke/chem/smoke = new(location)
 	if(chemholder.reagents.reagent_list.len)
-		chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume / dist, safety = 1)	//copy reagents to the smoke so mob/breathe() can handle inhaling the reagents
+		chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume / dist, safety = 1)	// copy reagents to the smoke so mob/breathe() can handle inhaling the reagents
 	smoke.icon = I
 	smoke.layer = 6
 	smoke.dir = pick(cardinal)
 	smoke.pixel_x = -32 + rand(-8,8)
 	smoke.pixel_y = -32 + rand(-8,8)
 	walk_to(smoke, T)
-	smoke.opacity = 1		//switching opacity on after the smoke has spawned, and then
+	smoke.opacity = 1		// switching opacity on after the smoke has spawned, and then
 	sleep(150+rand(0,20))	// turning it off before it is deleted results in cleaner
 	smoke.opacity = 0		// lighting and view range updates
 	fadeOut(smoke)
 	qdel(smoke)
 
-//------------------------------------------
+// ------------------------------------------
 // Fades out the smoke smoothly using it's alpha variable.
-//------------------------------------------
+// ------------------------------------------
 /datum/effect/effect/system/smoke_spread/chem/proc/fadeOut(atom/A, frames = 16)
 	var/step = A.alpha / frames
 	for(var/i = 0, i < frames, i++)
@@ -212,10 +212,10 @@
 		stoplag()
 	return
 
-//------------------------------------------
+// ------------------------------------------
 // Smoke pathfinder. Uses a flood fill method based on zones to
 // quickly check what turfs the smoke (airflow) can actually reach.
-//------------------------------------------
+// ------------------------------------------
 /datum/effect/effect/system/smoke_spread/chem/proc/smokeFlow()
 
 	var/list/pending = new()
@@ -239,7 +239,7 @@
 					continue
 				if(!(target in targetTurfs))
 					continue
-				if(current.c_airblock(target)) //this is needed to stop chemsmoke from passing through thin window walls
+				if(current.c_airblock(target)) // this is needed to stop chemsmoke from passing through thin window walls
 					continue
 				if(target.c_airblock(current))
 					continue

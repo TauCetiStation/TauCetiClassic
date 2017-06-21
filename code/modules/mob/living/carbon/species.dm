@@ -42,9 +42,9 @@
 	var/heat_level_2 = 400  // Heat damage level 2 above this point.
 	var/heat_level_3 = 1000 // Heat damage level 3 above this point.
 
-	var/body_temperature = 310.15	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
-	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
-	var/reagent_tag                 //Used for metabolizing reagents.
+	var/body_temperature = 310.15	// non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
+	var/synth_temp_gain = 0			// IS_SYNTHETIC species will gain this much temperature every second
+	var/reagent_tag                 // Used for metabolizing reagents.
 
 	var/darksight = 2
 	var/nighteyes = 0
@@ -58,15 +58,15 @@
 
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
-	var/blood_color = "#A10808" //Red.
-	var/flesh_color = "#FFC896" //Pink.
-	var/base_color      //Used when setting species.
+	var/blood_color = "#A10808" // Red.
+	var/flesh_color = "#FFC896" // Pink.
+	var/base_color      // Used when setting species.
 
-	//Used in icon caching.
+	// Used in icon caching.
 	var/race_key = 0
 	var/icon/icon_template
 
-	/* Species-specific sprites, concept stolen from Paradise//vg/.
+	/* Species-specific sprites, concept stolen from Paradise// vg/.
 	ex:
 	sprite_sheets = list(
 		"held" = 'icons/mob/path',
@@ -120,7 +120,7 @@
 	if(!has_organ[O_HEART])
 		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
 
-/datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
+/datum/species/proc/create_organs(mob/living/carbon/human/H) // Handles creation of mob organs.
 
 	for(var/type in has_bodypart)
 		var/path = has_bodypart[type]
@@ -138,7 +138,7 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
-/datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
+/datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) // Handles anything not already covered by basic species assignment.
 	return
 
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
@@ -147,13 +147,13 @@
 /datum/species/proc/on_loose(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
+/datum/species/proc/handle_death(mob/living/carbon/human/H) // Handles any species-specific death events (such nymph spawns).
 	if(flags[IS_SYNTHETIC])
- //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
+ // H.make_jittery(200) // S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
 		H.h_style = ""
 		spawn(100)
-			//H.is_jittery = 0
-			//H.jitteriness = 0
+			// H.is_jittery = 0
+			// H.jitteriness = 0
 			H.update_hair()
 	return
 
@@ -170,7 +170,7 @@
 	,HAS_HAIR = TRUE
 	)
 
-	//If you wanted to add a species-level ability:
+	// If you wanted to add a species-level ability:
 	/*abilities = list(/client/proc/test_ability)*/
 
 /datum/species/unathi
@@ -183,13 +183,13 @@
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
 
-	cold_level_1 = 280 //Default 260 - Lower is better
-	cold_level_2 = 220 //Default 200
-	cold_level_3 = 130 //Default 120
+	cold_level_1 = 280 // Default 260 - Lower is better
+	cold_level_2 = 220 // Default 200
+	cold_level_3 = 130 // Default 120
 
-	heat_level_1 = 420 //Default 360 - Higher is better
-	heat_level_2 = 480 //Default 400
-	heat_level_3 = 1100 //Default 1000
+	heat_level_1 = 420 // Default 360 - Higher is better
+	heat_level_2 = 480 // Default 400
+	heat_level_3 = 1100 // Default 1000
 
 	brute_mod = 0.80
 	burn_mod = 0.90
@@ -219,13 +219,13 @@
 	darksight = 8
 	nighteyes = 1
 
-	cold_level_1 = 200 //Default 260
-	cold_level_2 = 140 //Default 200
-	cold_level_3 = 80 //Default 120
+	cold_level_1 = 200 // Default 260
+	cold_level_2 = 140 // Default 200
+	cold_level_3 = 80 // Default 120
 
-	heat_level_1 = 330 //Default 360
-	heat_level_2 = 380 //Default 400
-	heat_level_3 = 800 //Default 1000
+	heat_level_1 = 330 // Default 360
+	heat_level_2 = 380 // Default 400
+	heat_level_3 = 800 // Default 1000
 
 	primitive = /mob/living/carbon/monkey/tajara
 
@@ -272,7 +272,7 @@
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
 	force_racial_language = TRUE
-	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
+	unarmed_type = /datum/unarmed_attack/claws	// I dont think it will hurt to give vox claws too.
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -399,7 +399,7 @@
 
 	speed_mod = 7
 
-	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
+	body_temperature = T0C + 15		// make the plant people have a bit lower body temperature, why not
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -453,11 +453,11 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
-	heat_level_1 = 500		//gives them about 25 seconds in space before taking damage
+	heat_level_1 = 500		// gives them about 25 seconds in space before taking damage
 	heat_level_2 = 1000
 	heat_level_3 = 2000
 
-	synth_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
+	synth_temp_gain = 10 // this should cause IPCs to stabilize at ~80 C in a 20 C environment.
 
 	brute_mod = 1.5
 	burn_mod = 1
@@ -516,7 +516,7 @@
 
 	return ..()
 
-//Species unarmed attacks
+// Species unarmed attacks
 
 /datum/unarmed_attack
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
@@ -546,7 +546,7 @@
 
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")
-	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
+	damage = 10	// they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
 
 /datum/species/shadowling
 	name = SHADOWLING

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /datum/game_mode
 	var/list/datum/mind/cult = list()
@@ -42,10 +42,10 @@
 
 	var/list/objectives = list()
 
-	var/eldergod = 1 //for the summon god objective
+	var/eldergod = 1 // for the summon god objective
 	var/eldertry = 0
 
-	var/const/acolytes_needed = 5 //for the survive objective
+	var/const/acolytes_needed = 5 // for the survive objective
 	var/acolytes_survived = 0
 
 
@@ -67,7 +67,7 @@
 		restricted_jobs += protected_jobs
 
 	for(var/datum/mind/player in antag_candidates)
-		if(player.assigned_role in restricted_jobs)	//Removing heads and such from the list
+		if(player.assigned_role in restricted_jobs)	// Removing heads and such from the list
 			antag_candidates -= player
 
 	for(var/cultists_number = 1 to recommended_enemies)
@@ -171,7 +171,7 @@
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
 
-/datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
+/datum/game_mode/proc/add_cultist(datum/mind/cult_mind) // BASE
 	if (!istype(cult_mind))
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
@@ -181,7 +181,7 @@
 		return 1
 
 
-/datum/game_mode/cult/add_cultist(datum/mind/cult_mind) //INHERIT
+/datum/game_mode/cult/add_cultist(datum/mind/cult_mind) // INHERIT
 	if (!..(cult_mind))
 		return
 	if (!config.objectives_disabled)
@@ -257,14 +257,14 @@
 /datum/game_mode/cult/proc/check_cult_victory()
 	var/cult_fail = 0
 	if(objectives.Find("survive"))
-		cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
+		cult_fail += check_survive() // the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
 	if(objectives.Find("eldergod"))
-		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
+		cult_fail += eldergod // 1 by default, 0 if the elder god has been summoned at least once
 	if(objectives.Find("sacrifice"))
-		if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
+		if(sacrifice_target && !sacrificed.Find(sacrifice_target)) // if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
 			cult_fail++
 
-	return cult_fail //if any objectives aren't met, failure
+	return cult_fail // if any objectives aren't met, failure
 
 
 /datum/game_mode/cult/proc/check_survive()

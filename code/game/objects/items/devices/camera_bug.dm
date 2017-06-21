@@ -125,7 +125,7 @@
 						var/s = (time_diff - 4*m) * 15
 						if(!s) s = "00"
 						html += "Last seen near [outstring] ([m]:[s] minute\s ago)<br>"
-					if( C && (C.bug == src)) //Checks to see if the camera has a bug
+					if( C && (C.bug == src)) // Checks to see if the camera has a bug
 						html += "<a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"
 				else
 					html += "Not yet seen."
@@ -258,7 +258,7 @@
 			if(istype(M))
 				if(!(tracked_name == "Unknown" && findtext(tracking.name,"Unknown"))) // we saw then disguised before
 					if(!(tracked_name == M.real_name && findtext(tracking.name,M.real_name))) // or they're still ID'd
-						src.updateSelfDialog()//But if it's neither of those cases
+						src.updateSelfDialog()// But if it's neither of those cases
 						return // you won't find em on the cameras
 			else
 				src.updateSelfDialog()

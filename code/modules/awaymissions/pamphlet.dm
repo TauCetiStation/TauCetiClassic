@@ -33,6 +33,6 @@
 			Though complete safety is assured, participants are advised to prepare for inhospitable \
 			environs."
 
-//we don't want the silly text overlay!
+// we don't want the silly text overlay!
 /obj/item/weapon/paper/pamphlet/update_icon()
 	return

@@ -1,5 +1,5 @@
-//Dummy object for holding items in vehicles.
-//Prevents items from being interacted with.
+// Dummy object for holding items in vehicles.
+// Prevents items from being interacted with.
 /datum/vehicle_dummy_load
 	var/name = "dummy load"
 	var/actual_load
@@ -7,7 +7,7 @@
 /obj/vehicle
 	name = "vehicle"
 	icon = 'icons/obj/vehicles.dmi'
-	layer = MOB_LAYER + 0.1 //so it sits above objects including mobs
+	layer = MOB_LAYER + 0.1 // so it sits above objects including mobs
 	density = 1
 	anchored = 1
 	animate_movement = 1
@@ -20,23 +20,23 @@
 	var/attack_log = null
 	var/on = 0
 	var/open = 0
-	var/health = 0	//do not forget to set health for your vehicle!
+	var/health = 0	// do not forget to set health for your vehicle!
 	var/maxhealth = 0
 	var/fire_dam_coeff = 1.0
 	var/brute_dam_coeff = 1.0
 	var/stat = 0
-	var/move_delay = 1	//set this to limit the speed of the vehicle
+	var/move_delay = 1	// set this to limit the speed of the vehicle
 	var/slow_cooef = 0
 
-	var/atom/movable/load		//all vehicles can take a load, since they should all be a least drivable
-	var/load_item_visible = 1	//set if the loaded item should be overlayed on the vehicle sprite
-	var/load_offset_x = 0		//pixel_x offset for item overlay
-	var/load_offset_y = 0		//pixel_y offset for item overlay
-	var/mob_offset_y = 0		//pixel_y offset for mob overlay
+	var/atom/movable/load		// all vehicles can take a load, since they should all be a least drivable
+	var/load_item_visible = 1	// set if the loaded item should be overlayed on the vehicle sprite
+	var/load_offset_x = 0		// pixel_x offset for item overlay
+	var/load_offset_y = 0		// pixel_y offset for item overlay
+	var/mob_offset_y = 0		// pixel_y offset for mob overlay
 
-//-------------------------------------------
+// -------------------------------------------
 // Standard procs
-//-------------------------------------------
+// -------------------------------------------
 /obj/vehicle/New()
 	..()
 
@@ -53,8 +53,8 @@
 		set_dir(get_dir(old_loc, loc))
 		anchored = init_anc
 
-		//Dummy loads do not have to be moved as they are just an overlay
-		//See load_object() proc in cargo_trains.dm for an example
+		// Dummy loads do not have to be moved as they are just an overlay
+		// See load_object() proc in cargo_trains.dm for an example
 		if(load && !istype(load, /datum/vehicle_dummy_load))
 			load.Move(loc, dir)
 
@@ -153,9 +153,9 @@
 
 /obj/vehicle/space/Process_Spacemove(direction)
 	return 1
-//-------------------------------------------
+// -------------------------------------------
 // Vehicle procs
-//-------------------------------------------
+// -------------------------------------------
 /obj/vehicle/proc/turn_on()
 	if(stat)
 		return 0
@@ -177,7 +177,7 @@
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/weapon/cable_coil/red(Tsec, 2)
 
-	//stuns people who are thrown off a train that has been blown up
+	// stuns people who are thrown off a train that has been blown up
 	if(istype(load, /mob/living))
 		var/mob/living/M = load
 		M.apply_effects(5, 5)
@@ -195,19 +195,19 @@
 		explode()
 
 /obj/vehicle/proc/RunOver(mob/living/carbon/human/H)
-	return		//write specifics for different vehicles
+	return		// write specifics for different vehicles
 
-//-------------------------------------------
+// -------------------------------------------
 // Loading/unloading procs
-//
+// 
 // Set specific item restriction checks in
 // the vehicle load() definition before
 // calling this parent proc.
-//-------------------------------------------
+// -------------------------------------------
 /obj/vehicle/proc/load(atom/movable/C)
-	//This loads objects onto the vehicle so they can still be interacted with.
-	//Define allowed items for loading in specific vehicle definitions.
-	if(!isturf(C.loc)) //To prevent loading things from someone's inventory, which wouldn't get handled properly.
+	// This loads objects onto the vehicle so they can still be interacted with.
+	// Define allowed items for loading in specific vehicle definitions.
+	if(!isturf(C.loc)) // To prevent loading things from someone's inventory, which wouldn't get handled properly.
 		return 0
 	if(load || C.anchored)
 		return 0
@@ -229,7 +229,7 @@
 			C.pixel_y += mob_offset_y
 		else
 			C.pixel_y += load_offset_y
-		C.layer = layer + 0.1		//so it sits above the vehicle
+		C.layer = layer + 0.1		// so it sits above the vehicle
 
 	if(ismob(C))
 		buckle_mob(C)
@@ -243,16 +243,16 @@
 
 	var/turf/dest = null
 
-	//find a turf to unload to
-	if(direction)	//if direction specified, unload in that direction
+	// find a turf to unload to
+	if(direction)	// if direction specified, unload in that direction
 		dest = get_step(src, direction)
-	else if(user)	//if a user has unloaded the vehicle, unload at their feet
+	else if(user)	// if a user has unloaded the vehicle, unload at their feet
 		dest = get_turf(user)
 
 	if(!dest)
-		dest = get_step_to(src, get_step(src, turn(dir, 90))) //try unloading to the side of the vehicle first if neither of the above are present
+		dest = get_step_to(src, get_step(src, turn(dir, 90))) // try unloading to the side of the vehicle first if neither of the above are present
 
-	//if these all result in the same turf as the vehicle or nullspace, pick a new turf with open space
+	// if these all result in the same turf as the vehicle or nullspace, pick a new turf with open space
 	if(!dest || dest == get_turf(src))
 		var/list/options = new()
 		for(var/test_dir in alldirs)
@@ -262,9 +262,9 @@
 		if(options.len)
 			dest = pick(options)
 		else
-			dest = get_turf(src)	//otherwise just dump it on the same turf as the vehicle
+			dest = get_turf(src)	// otherwise just dump it on the same turf as the vehicle
 
-	if(!isturf(dest))	//if there still is nowhere to unload, cancel out since the vehicle is probably in nullspace
+	if(!isturf(dest))	// if there still is nowhere to unload, cancel out since the vehicle is probably in nullspace
 		return 0
 
 	load.forceMove(dest)
@@ -291,9 +291,9 @@
 	return
 
 
-//-------------------------------------------------------
+// -------------------------------------------------------
 // Stat update procs
-//-------------------------------------------------------
+// -------------------------------------------------------
 /obj/vehicle/proc/update_stats()
 	return
 

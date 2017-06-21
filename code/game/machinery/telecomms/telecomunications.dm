@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /*
 	Hello, friends, this is Doohl from sexylands. You may be wondering what this
@@ -43,7 +43,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 	if(!on)
 		return
-	//world << "[src] ([src.id]) - [signal.debug_print()]"
+	// world << "[src] ([src.id]) - [signal.debug_print()]"
 	var/send_count = 0
 
 	signal.data["slow"] += rand(0, round((100-integrity))) // apply some lag based on integrity
@@ -143,9 +143,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	telecomms_list += src
 	..()
 
-	//Set the listening_level if there's none.
+	// Set the listening_level if there's none.
 	if(!listening_level)
-		//Defaults to our Z level!
+		// Defaults to our Z level!
 		var/turf/position = get_turf(src)
 		listening_level = position.z
 
@@ -231,7 +231,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	if(heatgen == 0)
 		return
 
-	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
+	if(!(stat & (NOPOWER|BROKEN))) // Blatently stolen from space heater.
 		var/turf/simulated/L = loc
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
@@ -283,7 +283,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 		if(is_freq_listening(signal)) // detect subspace signals
 
-			//Remove the level and then start adding levels that it is being broadcasted in.
+			// Remove the level and then start adding levels that it is being broadcasted in.
 			signal.data["level"] = list()
 
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub") // ideally relay the copied information to relays
@@ -333,7 +333,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(is_freq_listening(signal))
 		if(istype(machine_from, /obj/machinery/telecomms/receiver))
-			//If the signal is compressed, send it to the bus.
+			// If the signal is compressed, send it to the bus.
 			relay_information(signal, "/obj/machinery/telecomms/bus", 1) // ideally relay the copied information to bus units
 		else
 			// Get a list of relays that we're linked to, then send the signal to their levels.
@@ -544,7 +544,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			if(traffic > 0)
 				totaltraffic += traffic // add current traffic to total traffic
 
-			//Is this a test signal? Bypass logging
+			// Is this a test signal? Bypass logging
 			if(signal.data["type"] != 4)
 
 				// If signal has a message and appropriate frequency

@@ -20,7 +20,7 @@
 				to_chat(user, "<span class='warning'>[src] needs more time to recharge before it can be used.</span>")
 				return
 			if(M.client)
-				M.mind_initialize()		//give them a mind datum if they don't have one.
+				M.mind_initialize()		// give them a mind datum if they don't have one.
 				if(user.mind in ticker.mode.A_bosses)
 					var/recruitable = ticker.mode.add_gangster(M.mind,"A")
 					switch(recruitable)

@@ -1,6 +1,6 @@
-//
-//Robotic Component Analyser, basically a health analyser for robots
-//
+// 
+// Robotic Component Analyser, basically a health analyser for robots
+// 
 /obj/item/device/robotanalyzer
 	name = "cyborg analyzer"
 	icon_state = "robotanalyzer"
@@ -12,7 +12,7 @@
 	w_class = 2.0
 	throw_speed = 5
 	throw_range = 10
-	//matter = list("metal" = 200)
+	// matter = list("metal" = 200)
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1;
 

@@ -3,17 +3,17 @@
 	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	var/active = 0 //This gets set to 1 on all devices except the one where the initial request was made.
+	var/active = 0 // This gets set to 1 on all devices except the one where the initial request was made.
 	var/event = ""
 	var/screen = 1
-	var/confirmed = 0 //This variable is set by the device that confirms the request.
-	var/confirm_delay = 20 //(2 seconds)
-	var/busy = 0 //Busy when waiting for authentication or an event request has been sent from this device.
+	var/confirmed = 0 // This variable is set by the device that confirms the request.
+	var/confirm_delay = 20 // (2 seconds)
+	var/busy = 0 // Busy when waiting for authentication or an event request has been sent from this device.
 	var/obj/machinery/keycard_auth/event_source
 	var/mob/event_triggered_by
 	var/mob/event_confirmed_by
-	//1 = select event
-	//2 = authenticate
+	// 1 = select event
+	// 2 = authenticate
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2
@@ -36,13 +36,13 @@
 		var/obj/item/weapon/card/id/ID = W
 		if(access_keycard_auth in ID.access)
 			if(active == 1)
-				//This is not the device that made the initial request. It is the device confirming the request.
+				// This is not the device that made the initial request. It is the device confirming the request.
 				if(event_source)
 					event_source.confirmed = 1
 					event_source.event_confirmed_by = usr
 			else if(screen == 2)
 				event_triggered_by = usr
-				broadcast_request() //This is the device making the initial event request. It needs to broadcast to other devices
+				broadcast_request() // This is the device making the initial event request. It needs to broadcast to other devices
 
 /obj/machinery/keycard_auth/power_change()
 	if(powered(ENVIRON))

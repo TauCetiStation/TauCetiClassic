@@ -1,4 +1,4 @@
-//MEDICAL RANDOM
+// MEDICAL RANDOM
 /obj/random/meds/pills
 	name = "Random Pill Bottle"
 	desc = "This is a random pill bottle."

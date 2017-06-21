@@ -4,7 +4,7 @@
 	oneShot			= 1
 
 /datum/event/spacevine/start()
-	//biomass is basically just a resprited version of space vines
+	// biomass is basically just a resprited version of space vines
 	if(prob(50))
 		spacevine_infestation()
 	else

@@ -1,5 +1,5 @@
 
-//todo
+// todo
 /datum/artifact_effect/cellcharge
 	effecttype = "cellcharge"
 	effect_type = 3

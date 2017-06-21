@@ -64,35 +64,35 @@
 		if(prob(1))
 			majormutate()
 
-	//Space antibiotics stop disease completely
+	// Space antibiotics stop disease completely
 	if(mob.reagents.has_reagent("spaceacillin"))
 		if(stage == 1 && prob(20))
 			src.cure(mob)
 		return
 
-	//Virus food speeds up disease progress
+	// Virus food speeds up disease progress
 	if(mob.reagents.has_reagent("virusfood"))
 		mob.reagents.remove_reagent("virusfood",0.1)
 		clicks += 10
 
-	//Moving to the next stage
+	// Moving to the next stage
 	if(clicks > stage*100 && prob(10))
 		if(stage == max_stage)
 			src.cure(mob)
 			mob.antibodies |= src.antigen
 		stage++
 		clicks = 0
-	//Do nasty effects
+	// Do nasty effects
 	for(var/datum/disease2/effectholder/e in effects)
 		e.runeffect(mob,stage)
 
-	//Short airborne spread
+	// Short airborne spread
 	if(src.spreadtype == "Airborne")
 		for(var/mob/living/carbon/M in oview(1,mob))
 			if(airborne_can_reach(get_turf(mob), get_turf(M)))
 				infect_virus2(M,src)
 
-	//fever
+	// fever
 	mob.bodytemperature = max(mob.bodytemperature, min(310+5*stage ,mob.bodytemperature+5*stage))
 	clicks+=speed
 
@@ -103,7 +103,7 @@
 	mob.hud_updateflag |= 1 << STATUS_HUD
 
 /datum/disease2/disease/proc/minormutate()
-	//uniqueID = rand(0,10000)
+	// uniqueID = rand(0,10000)
 	var/datum/disease2/effectholder/holder = pick(effects)
 	holder.minormutate()
 	infectionchance = min(50,infectionchance + rand(0,10))
@@ -202,7 +202,7 @@ var/global/list/virusDB = list()
 	return 1
 
 proc/virus2_lesser_infection()
-	var/list/candidates = list()	//list of candidate keys
+	var/list/candidates = list()	// list of candidate keys
 
 	for(var/mob/living/carbon/human/G in player_list)
 		if(G.client && G.stat != DEAD)
@@ -215,7 +215,7 @@ proc/virus2_lesser_infection()
 	infect_mob_random_lesser(candidates[1])
 
 proc/virus2_greater_infection()
-	var/list/candidates = list()	//list of candidate keys
+	var/list/candidates = list()	// list of candidate keys
 
 	for(var/mob/living/carbon/human/G in player_list)
 		if(G.client && G.stat != DEAD)

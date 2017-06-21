@@ -7,7 +7,7 @@
 	range = 5
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_jump/cast(list/targets)
-	//for(var/turf/T in targets)
+	// for(var/turf/T in targets)
 	var/failure = 0
 	if (istype(usr.loc,/mob/) || usr.lying || usr.stunned || usr.buckled || usr.stat)
 		to_chat(usr, "\red You can't jump right now!")
@@ -308,11 +308,11 @@
 
 	if (istype(usr.loc,/turf/))
 		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b>")
-		//for(var/i=0, i<30, i++)
+		// for(var/i=0, i<30, i++)
 		//	usr.canmove = 0
 		//	usr.anchored = 1
 		//	sleep(1)
-		//usr.anchored = 0
+		// usr.anchored = 0
 		sleep(30)
 		usr.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 		usr.visible_message("\red <b>[usr.name] slams the ground with \his arms!</b>")
@@ -424,8 +424,8 @@
 	return
 
 ///////////////////////////////////////////////////////
-////////////////// Z  I  L  L  A /////////////////////
-/////////////////////////////////////////////////////
+///////////////// / Z  I  L  L  A //////////////////// /
+///////////////////////////////////////////////////// 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_mill
 	name = "Windmill"
 	desc = ""
@@ -478,7 +478,7 @@
 		to_chat(usr, "\red You can't right now!")
 		return
 
-	//Some weird magic
+	// Some weird magic
 	var/obj/item/weapon/grenade/TG = new /obj/item/weapon/grenade/chem_grenade/teargas(get_turf(usr))
 	TG.prime()
 
@@ -512,7 +512,7 @@
 		to_chat(usr, "\red You can't right now!")
 		return
 
-	//user.visible_message("<span class='danger'>[user] spits!", "<span class='alertalien'>You spit.</span>")
+	// user.visible_message("<span class='danger'>[user] spits!", "<span class='alertalien'>You spit.</span>")
 
 	var/turf/T = usr.loc
 	var/turf/U = get_step(usr, usr.dir) // Get the tile infront of the move, based on their direction

@@ -15,7 +15,7 @@
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
-	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
+	for(var/turf/T in targets) // Done this way so things don't get thrown all around hilariously.
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM
 
@@ -32,9 +32,9 @@
 				M.adjustBruteLoss(5)
 				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else
-			new /obj/effect/effect/sparks(get_turf(AM)) //created sparkles will disappear on their own
+			new /obj/effect/effect/sparks(get_turf(AM)) // created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Weaken(2)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
-			AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1, user)//So stuff gets tossed around at the same time.
+			AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1, user)// So stuff gets tossed around at the same time.

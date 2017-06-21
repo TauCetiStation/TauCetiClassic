@@ -385,7 +385,7 @@
 	PN.cables += NC
 	NC.mergeConnectedNetworks(NC.d2)
 
-	//NC.mergeConnectedNetworksOnTurf()
+	// NC.mergeConnectedNetworksOnTurf()
 	last_piece = NC
 	return 1
 
@@ -399,10 +399,10 @@
 	var/list/known_reagents
 	var/list/processed_reagents
 	var/max_syringes = 10
-	var/max_volume = 75 //max reagent volume
-	var/synth_speed = 5 //[num] reagent units per cycle
+	var/max_volume = 75 // max reagent volume
+	var/synth_speed = 5 // [num] reagent units per cycle
 	energy_drain = 10
-	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
+	var/mode = 0 // 0 - fire syringe, 1 - analyze reagents.
 	var/datum/global_iterator/mech_synth/synth
 	range = MELEE|RANGED
 	equip_cooldown = 10
@@ -447,7 +447,7 @@
 		return
 	if(istype(target,/obj/item/weapon/reagent_containers/syringe))
 		return load_syringe(target)
-	if(istype(target,/obj/item/weapon/storage))//Loads syringes from boxes
+	if(istype(target,/obj/item/weapon/storage))// Loads syringes from boxes
 		for(var/obj/item/weapon/reagent_containers/syringe/S in target.contents)
 			load_syringe(S)
 		return
@@ -471,7 +471,7 @@
 	playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
 	log_message("Launched [S] from [src], targeting [target].")
 	spawn(-1)
-		src = null //if src is deleted, still process the syringe
+		src = null // if src is deleted, still process the syringe
 		for(var/i=0, i<6, i++)
 			if(!S)
 				break
@@ -575,7 +575,7 @@
 		inputs += "<input type=\"hidden\" name=\"src\" value=\"\ref[src]\">"
 		inputs += "<input type=\"hidden\" name=\"select_reagents\" value=\"1\">"
 		inputs += "<input id=\"submit\" type=\"submit\" value=\"Apply settings\">"
-	var/output = {"<form action="byond://" method="get">
+	var/output = {"<form action="byond:// " method="get">
 						[r_list || "No known reagents"]
 						[inputs]
 						</form>
@@ -604,11 +604,11 @@
 		if(get_dist(src,S) >= 2)
 			occupant_message("The syringe is too far away.")
 			return 0
-		for(var/obj/structure/D in S.loc)//Basic level check for structures in the way (Like grilles and windows)
+		for(var/obj/structure/D in S.loc)// Basic level check for structures in the way (Like grilles and windows)
 			if(!(D.CanPass(S,src.loc)))
 				occupant_message("Unable to load syringe.")
 				return 0
-		for(var/obj/machinery/door/D in S.loc)//Checks for doors
+		for(var/obj/machinery/door/D in S.loc)// Checks for doors
 			if(!(D.CanPass(S,src.loc)))
 				occupant_message("Unable to load syringe.")
 				return 0

@@ -38,7 +38,7 @@
 
 	return
 
-/obj/machinery/atmospherics/portables_connector/hide(i) //to make the little pipe section invisible, the icon changes.
+/obj/machinery/atmospherics/portables_connector/hide(i) // to make the little pipe section invisible, the icon changes.
 	if(node)
 		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
 		dir = get_dir(src, node)

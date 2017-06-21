@@ -26,7 +26,7 @@
 	var/fuel = 0
 	var/obj/machinery/power/am_engine/engine/connected = null
 
-//injector
+// injector
 
 /obj/machinery/power/am_engine/injector/New()
 	..()
@@ -69,7 +69,7 @@
 	return
 
 
-//engine
+// engine
 
 
 /obj/machinery/power/am_engine/engine/New()
@@ -111,12 +111,12 @@
 	for(var/mob/M in hearers(src, null))
 		M.show_message(text("\red You hear a loud bang!"))
 
-	//Q = k x (delta T)
+	// Q = k x (delta T)
 
 	energy = energy*0.75
 	operating = 0
 
-	//TODO: DEFERRED Heat tile
+	// TODO: DEFERRED Heat tile
 
 	return
 
@@ -137,17 +137,17 @@
 
 		sleep(50)
 
-		var/energy	//energy from the reaction
-		var/H		//residual matter if H
-		var/antiH	//residual matter if antiH
-		var/mass	//total mass
+		var/energy	// energy from the reaction
+		var/H		// residual matter if H
+		var/antiH	// residual matter if antiH
+		var/mass	// total mass
 
-		if(antiH_fuel == H_fuel)		//if they're equal then convert the whole mass to energy
+		if(antiH_fuel == H_fuel)		// if they're equal then convert the whole mass to energy
 			mass = antiH_fuel + H_fuel
 			energy = convert2energy(mass)
 
-		else	//else if they're not equal determine which isn't equal
-				//and set it equal to either H or antiH so we don't lose anything
+		else	// else if they're not equal determine which isn't equal
+				// and set it equal to either H or antiH so we don't lose anything
 
 			var/residual_matter = modulus(H_fuel - antiH_fuel)
 			mass = antiH_fuel + H_fuel - residual_matter
@@ -159,14 +159,14 @@
 				antiH = residual_matter
 
 
-		if(energy > convert2energy(8e-12))	//TOO MUCH ENERGY
+		if(energy > convert2energy(8e-12))	// TOO MUCH ENERGY
 			for(var/mob/M in hearers(src, null))
 				M.show_message(text("\red You hear a loud whirring!"))
 			sleep(20)
 
-			//Q = k x (delta T)
-			//Too much energy so machine panics and dissapates half of it as heat
-			//The rest of the energetic photons then form into H and anti H particles again!
+			// Q = k x (delta T)
+			// Too much energy so machine panics and dissapates half of it as heat
+			// The rest of the energetic photons then form into H and anti H particles again!
 
 			H_fuel -= H
 			antiH_fuel -= antiH
@@ -178,19 +178,19 @@
 			H_fuel += H
 			antiH_fuel += antiH
 
-			if(energy > convert2energy(8e-12))	//FAR TOO MUCH ENERGY STILL
+			if(energy > convert2energy(8e-12))	// FAR TOO MUCH ENERGY STILL
 				for(var/mob/M in hearers(src, null))
 					M.show_message(text("\red <big>BANG!</big>"))
 				new /obj/effect/bhole(src.loc)
 
-		else	//this amount of energy is okay so it does the proper output thing
+		else	// this amount of energy is okay so it does the proper output thing
 
 			sleep(60)
-			//E = Pt
-			//Lets say its 86% efficient
+			// E = Pt
+			// Lets say its 86% efficient
 			var/output = 0.86*energy/20
 			add_avail(output)
-	//yeah the machine realises that something isn't right and accounts for it if H or antiH
+	// yeah the machine realises that something isn't right and accounts for it if H or antiH
 			H_fuel -= H
 			antiH_fuel -= antiH
 			antiH_fuel = antiH_fuel/4

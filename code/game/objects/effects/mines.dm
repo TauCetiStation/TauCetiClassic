@@ -6,7 +6,7 @@
 	layer = 3
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "uglymine"
-	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
+	var/triggerproc = "explode" // name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
 /obj/effect/mine/New()
@@ -46,8 +46,8 @@
 		qdel(src)
 
 /obj/effect/mine/proc/triggern2o(obj)
-	//example: n2o triggerproc
-	//note: im lazy
+	// example: n2o triggerproc
+	// note: im lazy
 
 	for (var/turf/simulated/floor/target in range(1,src))
 		if(!target.blocks_air)

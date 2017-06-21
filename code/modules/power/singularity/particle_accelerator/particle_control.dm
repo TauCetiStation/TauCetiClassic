@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Computer"
@@ -126,12 +126,12 @@
 
 /obj/machinery/particle_accelerator/control_box/process()
 	if(src.active)
-		//a part is missing!
+		// a part is missing!
 		if( length(connected_parts) < 6 )
 			investigate_log("lost a connected part; It <font color='red'>powered down</font>.","singulo")
 			src.toggle_power()
 			return
-		//emit some particles
+		// emit some particles
 		for(var/obj/structure/particle_accelerator/particle_emitter/PE in connected_parts)
 			if(PE)
 				PE.emit_particle(src.strength)

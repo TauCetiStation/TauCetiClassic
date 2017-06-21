@@ -2,7 +2,7 @@
 	name = "manifest"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
-	unacidable = 1//Just to be sure.
+	unacidable = 1// Just to be sure.
 
 /obj/effect/manifest/New()
 
@@ -16,6 +16,6 @@
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
 	P.info = dat
 	P.name = "paper- 'Crew Manifest'"
-	//SN src = null
+	// SN src = null
 	qdel(src)
 	return

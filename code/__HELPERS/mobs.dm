@@ -118,7 +118,7 @@ proc/RoundHealth(health)
 			return "health-100"
 	return "0"
 
-//helper for inverting armor blocked values into a multiplier
+// helper for inverting armor blocked values into a multiplier
 #define blocked_mult(blocked) max(1 - (blocked / 100), 0)
 
 /proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE)
@@ -181,9 +181,9 @@ proc/RoundHealth(health)
 
 	var/holding = user.get_active_hand()
 
-	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
+	var/holdingnull = 1 // User's hand started out empty, check for an empty hand
 	if(holding)
-		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
+		holdingnull = 0 // Users hand started holding something, check to see if it's still holding that
 
 	var/datum/progressbar/progbar
 	if (progress)
@@ -213,8 +213,8 @@ proc/RoundHealth(health)
 			break
 
 		if(needhand)
-			//This might seem like an odd check, but you can still need a hand even when it's empty
-			//i.e the hand is used to pull some item/tool out of the construction
+			// This might seem like an odd check, but you can still need a hand even when it's empty
+			// i.e the hand is used to pull some item/tool out of the construction
 			if(!holdingnull)
 				if(!holding)
 					. = 0

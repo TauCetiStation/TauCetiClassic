@@ -1,4 +1,4 @@
-#define ADIABATIC_EXPONENT 0.667 //Actually adiabatic exponent - 1.
+#define ADIABATIC_EXPONENT 0.667 // Actually adiabatic exponent - 1.
 
 /obj/machinery/atmospherics/pipeturbine
 	name = "turbine"
@@ -140,7 +140,7 @@
 
 	src.dir = turn(src.dir, 90)
 
-//Goddamn copypaste from binary base class because atmospherics machinery API is not damn flexible
+// Goddamn copypaste from binary base class because atmospherics machinery API is not damn flexible
 /obj/machinery/atmospherics/pipeturbine/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
 		network1 = new_network
@@ -232,7 +232,7 @@
 	anchored = 0
 	density = 1
 
-	var/kin_to_el_ratio = 0.1	//How much kinetic energy will be taken from turbine and converted into electricity
+	var/kin_to_el_ratio = 0.1	// How much kinetic energy will be taken from turbine and converted into electricity
 	var/obj/machinery/atmospherics/pipeturbine/turbine
 
 /obj/machinery/power/turbinemotor/New()

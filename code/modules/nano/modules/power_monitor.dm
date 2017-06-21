@@ -1,7 +1,7 @@
 /obj/nano_module/power_monitor
 	name = "Power monitor"
 	var/list/grid_sensors
-	var/active_sensor = null	//name_tag of the currently selected sensor
+	var/active_sensor = null	// name_tag of the currently selected sensor
 
 /obj/nano_module/power_monitor/New()
 	..()

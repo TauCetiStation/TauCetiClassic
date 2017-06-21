@@ -2,7 +2,7 @@
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
 	icon_state = "taser"
-	item_state = null	//so the human update icon uses the icon_state instead.
+	item_state = null	// so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/electrode)
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 
@@ -16,7 +16,7 @@
 	fire_sound = 'sound/weapons/Taser.ogg'
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	var/charge_tick = 0
-	var/recharge_time = 10 //Time it takes for shots to recharge (in ticks)
+	var/recharge_time = 10 // Time it takes for shots to recharge (in ticks)
 
 /obj/item/weapon/gun/energy/taser/cyborg/New()
 	..()
@@ -26,18 +26,18 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/weapon/gun/energy/taser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
+/obj/item/weapon/gun/energy/taser/cyborg/process() // Every [recharge_time] ticks, recharge a shot for the cyborg
 	charge_tick++
 	if(charge_tick < recharge_time) return 0
 	charge_tick = 0
 
-	if(!power_supply) return 0 //sanity
+	if(!power_supply) return 0 // sanity
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-				power_supply.give(shot.e_cost)	//... to recharge the shot
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] // Necessary to find cost of shot
+			if(R.cell.use(shot.e_cost)) 		// Take power from the borg...
+				power_supply.give(shot.e_cost)	// ... to recharge the shot
 
 	update_icon()
 	return 1

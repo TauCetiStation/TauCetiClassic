@@ -12,7 +12,7 @@
 	icon_opened = "secureopen"
 	var/icon_broken = "securebroken"
 	var/icon_off = "secureoff"
-	wall_mounted = 0 //never solid (You can always pass over it)
+	wall_mounted = 0 // never solid (You can always pass over it)
 	health = 200
 
 /obj/structure/closet/secure_closet/can_open()
@@ -66,7 +66,7 @@
 	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
 			if(src.large)
-				src.MouseDrop_T(W:affecting, user)	//act like they were dragged onto the closet
+				src.MouseDrop_T(W:affecting, user)	// act like they were dragged onto the closet
 			else
 				to_chat(user, "<span class='notice'>The locker is too small to stuff [W:affecting] into!</span>")
 		if(isrobot(user))
@@ -120,7 +120,7 @@
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
-/obj/structure/closet/secure_closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
+/obj/structure/closet/secure_closet/update_icon()// Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
 	overlays.Cut()
 	if(!opened)
 		if(locked)

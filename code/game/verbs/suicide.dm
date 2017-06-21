@@ -31,7 +31,7 @@
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 
 	if(confirm == "Yes")
-		if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
+		if(!canmove || restrained())	// just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 			to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 			return
 		suiciding = 1
@@ -40,24 +40,24 @@
 			var/damagetype = held_item.suicide_act(src)
 			if(damagetype)
 				var/damage_mod = 1
-				switch(damagetype) //Sorry about the magic numbers.
-								   //brute = 1, burn = 2, tox = 4, oxy = 8
-					if(15) //4 damage types
+				switch(damagetype) // Sorry about the magic numbers.
+								   // brute = 1, burn = 2, tox = 4, oxy = 8
+					if(15) // 4 damage types
 						damage_mod = 4
 
-					if(6, 11, 13, 14) //3 damage types
+					if(6, 11, 13, 14) // 3 damage types
 						damage_mod = 3
 
-					if(3, 5, 7, 9, 10, 12) //2 damage types
+					if(3, 5, 7, 9, 10, 12) // 2 damage types
 						damage_mod = 2
 
-					if(1, 2, 4, 8) //1 damage type
+					if(1, 2, 4, 8) // 1 damage type
 						damage_mod = 1
 
-					else //This should not happen, but if it does, everything should still work
+					else // This should not happen, but if it does, everything should still work
 						damage_mod = 1
 
-				//Do 175 damage divided by the number of damage types applied.
+				// Do 175 damage divided by the number of damage types applied.
 				if(damagetype & BRUTELOSS)
 					adjustBruteLoss(175/damage_mod)
 
@@ -70,7 +70,7 @@
 				if(damagetype & OXYLOSS)
 					adjustOxyLoss(175/damage_mod)
 
-				//If something went wrong, just do normal oxyloss
+				// If something went wrong, just do normal oxyloss
 				if(!(damagetype | BRUTELOSS) && !(damagetype | FIRELOSS) && !(damagetype | TOXLOSS) && !(damagetype | OXYLOSS))
 					adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
@@ -131,7 +131,7 @@
 			to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 			return
 		suiciding = 1
-		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
+		// instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		to_chat(viewers(src), "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>")
 		adjustOxyLoss(max(175- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
@@ -152,7 +152,7 @@
 	if(confirm == "Yes")
 		suiciding = 1
 		to_chat(viewers(src), "\red <b>[src] is powering down. It looks like \he's trying to commit suicide.</b>")
-		//put em at -175
+		// put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
@@ -172,7 +172,7 @@
 	if(confirm == "Yes")
 		suiciding = 1
 		to_chat(viewers(src), "\red <b>[src] is powering down. It looks like \he's trying to commit suicide.</b>")
-		//put em at -175
+		// put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
@@ -207,7 +207,7 @@
 	if(confirm == "Yes")
 		suiciding = 1
 		to_chat(viewers(src), "\red <b>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</b>")
-		//put em at -175
+		// put em at -175
 		adjustOxyLoss(max(175 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 

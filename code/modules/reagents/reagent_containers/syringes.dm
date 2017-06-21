@@ -1,6 +1,6 @@
-////////////////////////////////////////////////////////////////////////////////
-/// Syringes.
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////// 
+// / Syringes.
+//////////////////////////////////////////////////////////////////////////////// 
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
 #define SYRINGE_BROKEN 2
@@ -13,7 +13,7 @@
 	icon_state = "0"
 	g_amt = 150
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = null //list(5,10,15)
+	possible_transfer_amounts = null // list(5,10,15)
 	volume = 15
 	w_class = 1
 	sharp = 1
@@ -73,20 +73,20 @@
 				to_chat(user, "\red The syringe is full.")
 				return
 
-			if(ismob(target))//Blood!
+			if(ismob(target))// Blood!
 				if(istype(target, /mob/living/carbon/slime))
 					to_chat(user, "\red You are unable to locate any blood.")
 					return
 				if(src.reagents.has_reagent("blood"))
 					to_chat(user, "\red There is already a blood sample in this syringe")
 					return
-				if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
+				if(istype(target, /mob/living/carbon))// maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 					var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 					var/mob/living/carbon/T = target
 					if(!T.dna)
 						to_chat(usr, "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)")
 						return
-					if(NOCLONE in T.mutations) //target done been et, no more blood in him
+					if(NOCLONE in T.mutations) // target done been et, no more blood in him
 						to_chat(user, "\red You are unable to locate any blood.")
 						return
 
@@ -109,7 +109,7 @@
 					for(var/mob/O in viewers(4, user))
 						O.show_message("\red [user] takes a blood sample from [target].", 1)
 
-			else //if not mob
+			else // if not mob
 				if(!target.reagents.total_volume)
 					to_chat(user, "\red [target] is empty.")
 					return
@@ -141,7 +141,7 @@
 
 			if(ismob(target) && target != user)
 
-				var/time = 30 //Injecting through a hardsuit takes longer due to needing to find a port.
+				var/time = 30 // Injecting through a hardsuit takes longer due to needing to find a port.
 
 				if(istype(target,/mob/living/carbon/human))
 
@@ -271,7 +271,7 @@
 		target.take_bodypart_damage(3)// 7 is the same as crowbar punch
 
 	src.reagents.reaction(target, INGEST)
-	var/syringestab_amount_transferred = rand(0, (reagents.total_volume - 5)) //nerfed by popular demand
+	var/syringestab_amount_transferred = rand(0, (reagents.total_volume - 5)) // nerfed by popular demand
 	src.reagents.trans_to(target, syringestab_amount_transferred)
 	src.desc += " It is broken."
 	src.mode = SYRINGE_BROKEN
@@ -287,7 +287,7 @@
 	item_state = "syringe_0"
 	icon_state = "0"
 	amount_per_transfer_from_this = 50
-	possible_transfer_amounts = null //list(5,10,15)
+	possible_transfer_amounts = null // list(5,10,15)
 	volume = 50
 	var/mode = SYRINGE_DRAW
 
@@ -327,10 +327,10 @@
 				return
 
 			if(ismob(target))
-				if(istype(target, /mob/living/carbon))//I Do not want it to suck 50 units out of people
+				if(istype(target, /mob/living/carbon))// I Do not want it to suck 50 units out of people
 					to_chat(usr, "This needle isn't designed for drawing blood.")
 					return
-			else //if not mob
+			else // if not mob
 				if(!target.reagents.total_volume)
 					to_chat(user, "\red [target] is empty.")
 					return
@@ -392,9 +392,9 @@
 	item_state = "syringe_[rounded_vol]"
 
 
-////////////////////////////////////////////////////////////////////////////////
-/// Syringes. END
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////// 
+// / Syringes. END
+//////////////////////////////////////////////////////////////////////////////// 
 
 
 
@@ -433,8 +433,8 @@
 		update_icon()
 
 
-//Robot syringes
-//Not special in any way, code wise. They don't have added variables or procs.
+// Robot syringes
+// Not special in any way, code wise. They don't have added variables or procs.
 /obj/item/weapon/reagent_containers/syringe/robot/antitoxin
 	name = "Syringe (anti-toxin)"
 	desc = "Contains anti-toxins."

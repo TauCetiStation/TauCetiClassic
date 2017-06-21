@@ -15,7 +15,7 @@
 	m_amt = 700
 	g_amt = 50
 	var/rigged = 0		// true if rigged to explode
-	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
+	var/minor_fault = 0 // If not 100% reliable, it will build up faults.
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>")
@@ -23,7 +23,7 @@
 
 /obj/item/weapon/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"
-	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
+	desc = "You can't top the plasma top." // TOTALLY TRADEMARK INFRINGEMENT
 	origin_tech = "powerstorage=0"
 	maxcharge = 500
 	g_amt = 40
@@ -36,7 +36,7 @@
 /obj/item/weapon/stock_parts/cell/secborg
 	name = "security borg rechargable D battery"
 	origin_tech = "powerstorage=0"
-	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
+	maxcharge = 600	// 600 max charge / 100 charge per shot = six shots
 	g_amt = 40
 	rating = 2.5
 
@@ -87,7 +87,7 @@
 	maxcharge = 40000
 	g_amt = 80
 	rating = 6
-	//chargerate = 4000
+	// chargerate = 4000
 
 /obj/item/weapon/stock_parts/cell/bluespace/empty/New()
 	..()
@@ -107,8 +107,8 @@
 	name = "potato battery"
 	desc = "A rechargable starch based power cell."
 	origin_tech = "powerstorage=1"
-	icon = 'icons/obj/power.dmi' //'icons/obj/harvest.dmi'
-	icon_state = "potato_cell" //"potato_battery"
+	icon = 'icons/obj/power.dmi' // 'icons/obj/harvest.dmi'
+	icon_state = "potato_cell" // "potato_battery"
 	charge = 100
 	maxcharge = 300
 	m_amt = 0
@@ -120,8 +120,8 @@
 	name = "charged slime core"
 	desc = "A yellow slime core infused with phoron, it crackles with power."
 	origin_tech = "powerstorage=2;biotech=4"
-	icon = 'icons/mob/slimes.dmi' //'icons/obj/harvest.dmi'
-	icon_state = "yellow slime extract" //"potato_battery"
+	icon = 'icons/mob/slimes.dmi' // 'icons/obj/harvest.dmi'
+	icon_state = "yellow slime extract" // "potato_battery"
 	maxcharge = 10000
 	maxcharge = 10000
 	m_amt = 0

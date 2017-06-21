@@ -63,7 +63,7 @@
 	return open
 
 /obj/structure/pit/proc/digout(mob/escapee)
-	var/breakout_time = 1 //2 minutes by default
+	var/breakout_time = 1 // 2 minutes by default
 
 	if(open)
 		return
@@ -74,7 +74,7 @@
 	to_chat(escapee, "<span class='warning'>You start digging your way out of \the [src] (this will take about [breakout_time] minute\s)</span>")
 	visible_message("<span class='danger'>Something is scratching its way out of \the [src]!</span>")
 
-	for(var/i in 1 to (6*breakout_time * 2)) //minutes * 6 * 5seconds * 2
+	for(var/i in 1 to (6*breakout_time * 2)) // minutes * 6 * 5seconds * 2
 		playsound(src.loc, 'sound/weapons/bite.ogg', 100, 1)
 
 		if(!do_after(escapee, 50, target = src))
@@ -102,7 +102,7 @@
 	..()
 	close()
 
-//invisible until unearthed first
+// invisible until unearthed first
 /obj/structure/pit/closed/hidden
 	invisibility = INVISIBILITY_OBSERVER
 
@@ -110,7 +110,7 @@
 	..()
 	invisibility = INVISIBILITY_LEVEL_ONE
 
-//spoooky
+// spoooky
 /obj/structure/pit/closed/grave
 	name = "grave"
 	icon_state = "pit0"
@@ -212,7 +212,7 @@
 			message = msg
 
 
-//Grave jetsons items
+// Grave jetsons items
 
 
 obj/item/weapon/gun/energy/laser/retro/jetsons
@@ -236,7 +236,7 @@ obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 7 //lucky shot
+	damage = 7 // lucky shot
 	damage_type = BURN
 	flag = "laser"
 	eyeblur = 2

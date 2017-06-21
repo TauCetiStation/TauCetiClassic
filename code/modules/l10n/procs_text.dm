@@ -1,12 +1,12 @@
-//В виду не совсем корректной работы бьенда и ССки с кирилицей, тут будут складываться альтернативы некоторым функциям по работе с текстом и дополнения к ним
-//Все еще не решенные проблемы искать по TODO:CYRILLIC
+// В виду не совсем корректной работы бьенда и ССки с кирилицей, тут будут складываться альтернативы некоторым функциям по работе с текстом и дополнения к ним
+// Все еще не решенные проблемы искать по TODO:CYRILLIC
 
 /*
 	UPD: На случай, если вы ищите варианты пофиксить "я"!
 	Это старый фикс, с тех пор мы немного отрефакторили оригинальный бэй и
 	создали RuBaystation, тамошний фикс "я" более правильный и актуальный.
-	https://github.com/TauCetiStation/RuBaystation12
-	В ожидании чуда: http://www.byond.com/forum/?post=1768158
+	https:// github.com/TauCetiStation/RuBaystation12
+	В ожидании чуда: http:// www.byond.com/forum/?post=1768158
 */
 
 /*
@@ -18,7 +18,7 @@
 
 var/letter_255_ascii = text2ascii(LETTER_255)
 
-//Removes a few problematic characters
+// Removes a few problematic characters
 /proc/sanitize_simple(t,list/repl_chars = list("\n"=" ","\t"=" ","я"=LETTER_255))
 
 	#ifdef DEBAG_CYRILLIC
@@ -58,7 +58,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 	var/index = findtext(t, LETTER_255)
 	while(index)
 		t = copytext(t, 1, index) + "&#255;" + copytext(t, index+1)
-		index = findtext(t, LETTER_255, index + 6)//index+len("&#255;")
+		index = findtext(t, LETTER_255, index + 6)// index+len("&#255;")
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \red <b>Sanitize, finished. Return text:</b> <i>[t]</i>")
@@ -81,7 +81,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 	var/index = findtext(t, LETTER_255)
 	while(index)
 		t = copytext(t, 1, index) + "&#1103;" + copytext(t, index+1)
-		index = findtext(t, LETTER_255, index + 7)//index+len("&#1103;")
+		index = findtext(t, LETTER_255, index + 7)// index+len("&#1103;")
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \red <b>Sanitize_alt, finished. Return text:</b> <i>[t]</i>")
@@ -132,7 +132,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 	return replacetext(t, LETTER_255, "&#1103;")
 
 
-//TODO: придумать способ вернуть "я" для полей ввода и логов
+// TODO: придумать способ вернуть "я" для полей ввода и логов
 /proc/revert_ja(t, list/repl_chars = list("&#255;", "&#1103;"))
 	return replacetext(replacetext(t, "&#255;", LETTER_255), "&#1103;", LETTER_255)
 
@@ -157,7 +157,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 		if((letter_ascii >= 65 && letter_ascii <= 90) || (letter_ascii >= 192 && letter_ascii < 223))
 			lcase_letter = ascii2text(letter_ascii + 32)
 		else if(letter_ascii == 223)
-			lcase_letter = LETTER_255	//"я"
+			lcase_letter = LETTER_255	// "я"
 
 		new_text += lcase_letter
 		p++

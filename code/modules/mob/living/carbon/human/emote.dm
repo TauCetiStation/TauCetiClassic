@@ -6,11 +6,11 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))// Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	//var/m_type = 1
+	// var/m_type = 1
 
 	for (var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
@@ -67,8 +67,8 @@
 
 		if ("me")
 
-			//if(silent && silent > 0 && findtext(message,"\"",1, null) > 0)
-			//	return //This check does not work and I have no idea why, I'm leaving it in for reference.
+			// if(silent && silent > 0 && findtext(message,"\"",1, null) > 0)
+			//	return // This check does not work and I have no idea why, I'm leaving it in for reference.
 
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
@@ -162,8 +162,8 @@
 		if ("faint")
 			message = "<B>[src]</B> faints."
 			if(src.sleeping)
-				return //Can't faint while asleep
-			src.sleeping += 10 //Short-short nap
+				return // Can't faint while asleep
+			src.sleeping += 10 // Short-short nap
 			m_type = 1
 
 		if ("cough")
@@ -531,12 +531,12 @@
 			else
 				if (!muzzled)
 					if (auto == 1)
-						if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
+						if(world.time-lastScream >= 30)// prevent scream spam with things like poly spray
 							message = "<B>[src]</B> screams in agony!"
 							var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
-							if (src.gender == FEMALE) //Females have their own screams. Trannys be damned.
+							if (src.gender == FEMALE) // Females have their own screams. Trannys be damned.
 								screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
-							var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
+							var/scream = pick(screamSound)// AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
 							playsound(get_turf(src), scream, 50, 0)
 							m_type = 2
 							lastScream = world.time
@@ -560,12 +560,12 @@
 	if (message)
 		log_emote("[name]/[key] : [message]")
 
- //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
+ // Hearing gasp and such every five seconds is not good emotes were not global for a reason.
  // Maybe some people are okay with that.
 
 		for(var/mob/M in dead_mob_list)
 			if(!M.client || isnewplayer(M))
-				continue //skip monkeys, leavers and new players
+				continue // skip monkeys, leavers and new players
 			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 

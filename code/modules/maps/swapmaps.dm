@@ -1,9 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /*
 	SwapMaps library by Lummox JR
 	developed for digitalBYOND
-	http://www.digitalbyond.org
+	http:// www.digitalbyond.org
 
 	Version 2.1
 
@@ -438,7 +438,7 @@ swapmap
 		T2=locate(max(T.x,T2.x),max(T.y,T2.y),max(T.z,T2.z))
 		if(T2.x-T1.x<2 || T2.y-T1.y<2) BuildFilledRectangle(T1,T2,item)
 		else
-			//for(T in block(T1,T2)-block(locate(T1.x+1,T1.y+1,T1.z),locate(T2.x-1,T2.y-1,T2.z)))
+			// for(T in block(T1,T2)-block(locate(T1.x+1,T1.y+1,T1.z),locate(T2.x-1,T2.y-1,T2.z)))
 			for(T in block(T1,locate(T2.x,T1.y,T2.z))) new item(T)
 			for(T in block(locate(T1.x,T2.y,T1.z),T2)) new item(T)
 			for(T in block(locate(T1.x,T1.y+1,T1.z),locate(T1.x,T2.y-1,T2.z))) new item(T)
@@ -593,9 +593,9 @@ proc/SwapMaps_CreateFromTemplate(template_id)
 	/*
 		This hacky workaround is needed because S >> M will create a brand new
 		M to fill with data. There's no way to control the Read() process
-		properly otherwise. The //.0 path should always match the map, however.
+		properly otherwise. The // .0 path should always match the map, however.
 	 */
-	S.cd="//.0"
+	S.cd="// .0"
 	M.Read(S,M)
 	M.mode=text
 	while(M.locked) sleep(1)
@@ -620,9 +620,9 @@ proc/SwapMaps_LoadChunk(chunk_id,turf/locorner)
 	/*
 		This hacky workaround is needed because S >> M will create a brand new
 		M to fill with data. There's no way to control the Read() process
-		properly otherwise. The //.0 path should always match the map, however.
+		properly otherwise. The // .0 path should always match the map, however.
 	 */
-	S.cd="//.0"
+	S.cd="// .0"
 	M.Read(S,M,locorner)
 	while(M.locked) sleep(1)
 	qdel(M)
@@ -665,10 +665,10 @@ proc/SwapMaps_GetSize(id)
 		S=new
 		S.ImportText("/",file("map_[id].txt"))
 	/*
-		The //.0 path should always be the map. There's no other way to
+		The // .0 path should always be the map. There's no other way to
 		read this data.
 	 */
-	S.cd="//.0"
+	S.cd="// .0"
 	var/x
 	var/y
 	var/z

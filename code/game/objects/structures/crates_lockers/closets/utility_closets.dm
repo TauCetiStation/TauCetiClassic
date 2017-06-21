@@ -52,7 +52,7 @@
 		if ("delete")
 			qdel(src)
 
-		//If you want to re-add fire, just add "fire" = 15 to the pick list.
+		// If you want to re-add fire, just add "fire" = 15 to the pick list.
 		/*if ("fire")
 			new /obj/structure/closet/firecloset(src.loc)
 			qdel(src)*/
@@ -201,7 +201,7 @@
 /*
  * Hydrant
  */
-/obj/structure/closet/hydrant //wall mounted fire closet
+/obj/structure/closet/hydrant // wall mounted fire closet
 	name = "fire-safety closet"
 	desc = "It's a storage unit for fire-fighting supplies."
 	icon_state = "hydrant"
@@ -224,7 +224,7 @@
 /*
  * First Aid
  */
-/obj/structure/closet/medical_wall //wall mounted medical closet
+/obj/structure/closet/medical_wall // wall mounted medical closet
 	name = "first-aid closet"
 	desc = "It's wall-mounted storage unit for first aid supplies."
 	icon_state = "medical_wall"

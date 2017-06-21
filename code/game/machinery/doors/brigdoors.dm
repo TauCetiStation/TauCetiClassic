@@ -3,9 +3,9 @@
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Arial Black"
 
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////// 
 // Brig Door control displays.
 //  Description: This is a controls the timer for the brig doors, displays the timer on itself and
 //               has a popup window when used, allowing to set the timer.
@@ -27,8 +27,8 @@
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
 	var/list/obj/machinery/targets = list()
 	var/timetoset = 0		// Used to set releasetime upon starting the timer
-	var/timer_activator = "Unknown"	//Mob.name who activate timer
-	var/flag30sec = 0	//30 seconds notification flag
+	var/timer_activator = "Unknown"	// Mob.name who activate timer
+	var/flag30sec = 0	// 30 seconds notification flag
 
 	maptext_height = 26
 	maptext_width = 32
@@ -63,7 +63,7 @@
 
 	return
 
-//Main door timer loop, if it's timing and time is >0 reduce time by 1.
+// Main door timer loop, if it's timing and time is >0 reduce time by 1.
 // if it's less than 0, open door, reset timer
 // update the door_timer window and the icon
 /obj/machinery/door_timer/process()
@@ -77,7 +77,7 @@
 		if(timeleft > 1e5)
 			src.releasetime = 0
 
-		if(world.timeofday > (src.releasetime - 300)) //30 sec notification before release
+		if(world.timeofday > (src.releasetime - 300)) // 30 sec notification before release
 			if (!flag30sec)
 				flag30sec = 1
 				broadcast_security_hud_message("<b>[src.name]</b> prisoner's sentence is ending in 30 seconds.", src)
@@ -129,7 +129,7 @@
 
 	return
 
-//power check, set vars as default
+// power check, set vars as default
 /obj/machinery/door_timer/proc/timer_end()
 	if(stat & (NOPOWER|BROKEN))	return 0
 
@@ -140,7 +140,7 @@
 	timer_activator = "Unknown"
 
 	return
-//Opens and unlocks door, closet
+// Opens and unlocks door, closet
 /obj/machinery/door_timer/proc/cell_open()
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(!door.density)	continue
@@ -170,13 +170,13 @@
 
 	return
 
-//Allows AIs to use door_timer, see human attack_hand function below
+// Allows AIs to use door_timer, see human attack_hand function below
 /obj/machinery/door_timer/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
-//Allows humans to use door_timer
-//Opens dialog window when someone clicks on door timer
+// Allows humans to use door_timer
+// Opens dialog window when someone clicks on door timer
 // Allows altering timer and the timing boolean.
 // Flasher activation limited to 150 seconds
 /obj/machinery/door_timer/attack_hand(mob/user)
@@ -233,7 +233,7 @@
 	return
 
 
-//Function for using door_timer dialog input, checks if user has permission
+// Function for using door_timer dialog input, checks if user has permission
 // href_list to
 //  "timing" turns on timer
 //  "tp" value to modify timer
@@ -258,7 +258,7 @@
 			src.timer_end()
 			cell_open()
 	else
-		if(href_list["tp"])  //adjust timer, close door if not already closed
+		if(href_list["tp"])  // adjust timer, close door if not already closed
 			var/tp = text2num(href_list["tp"])
 			var/addtime = (timetoset / 10)
 			addtime += tp
@@ -284,7 +284,7 @@
 		src.timer_end() */
 
 
-//icon update function
+// icon update function
 // if NOPOWER, display blank
 // if BROKEN, display blue screen of death icon AI uses
 // if timing=true, run update display function
@@ -314,7 +314,7 @@
 	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
 
-//Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
+// Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
 // Stolen from status_display
 /obj/machinery/door_timer/proc/update_display(line1, line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
@@ -322,8 +322,8 @@
 		maptext = new_text
 
 
-//Actual string input to icon display for loop, with 5 pixel x offsets for each letter.
-//Stolen from status_display
+// Actual string input to icon display for loop, with 5 pixel x offsets for each letter.
+// Stolen from status_display
 /obj/machinery/door_timer/proc/texticon(tn, px = 0, py = 0)
 	var/image/I = image('icons/obj/status_display.dmi', "blank")
 	var/len = lentext(tn)

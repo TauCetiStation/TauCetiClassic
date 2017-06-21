@@ -1,4 +1,4 @@
-//Unathi clothing.
+// Unathi clothing.
 
 /obj/item/clothing/suit/unathi/robe
 	name = "roughspun robes"
@@ -14,7 +14,7 @@
 	item_state = "mantle-unathi"
 	body_parts_covered = UPPER_TORSO
 
-//Taj clothing.
+// Taj clothing.
 
 /obj/item/clothing/suit/tajaran/furs
 	name = "heavy furs"

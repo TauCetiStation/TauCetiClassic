@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+// This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
 
 /datum/event/ionstorm
 	var/botEmagChance = 0.5
@@ -12,7 +12,7 @@
 			players += player.real_name
 	var/random_player = "The Captain"
 	if(players.len)
-		random_player = pick(players)		//Random player's name, to be used in laws.
+		random_player = pick(players)		// Random player's name, to be used in laws.
 	var/list/laws = list(	"You are a mouse.",
 							"Question everything.",
 							"You must always lie.",

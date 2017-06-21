@@ -11,12 +11,12 @@
 	if(!event_type)
 		return
 
-	//copy-pasted from the admin verbs to submit new newscaster messages
+	// copy-pasted from the admin verbs to submit new newscaster messages
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = "Tau Ceti Daily"
 	newMsg.is_admin_message = 1
 
-	//see if our location has custom event info for this event
+	// see if our location has custom event info for this event
 	newMsg.body = affected_dest.get_custom_eventstring()
 	if(!newMsg.body)
 		newMsg.body = ""
@@ -135,10 +135,10 @@
 	endWhen = 10
 
 /datum/event/trivial_news/announce()
-	//copy-pasted from the admin verbs to submit new newscaster messages
+	// copy-pasted from the admin verbs to submit new newscaster messages
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = "Editor Mike Hammers"
-	//newMsg.is_admin_message = 1
+	// newMsg.is_admin_message = 1
 	var/datum/trade_destination/affected_dest = pick(weighted_mundaneevent_locations)
 	newMsg.body = pick(
 	"Tree stuck in tajaran; firefighters baffled.",\

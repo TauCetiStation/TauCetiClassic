@@ -20,7 +20,7 @@
 #define TRIGGER_VIEW 13
 #define MAX_TRIGGER 13
 /*
-//sleeping gas appears to be bugged, currently
+// sleeping gas appears to be bugged, currently
 var/list/valid_primary_effect_types = list(\
 	/datum/artifact_effect/cellcharge,\
 	/datum/artifact_effect/celldrain,\
@@ -76,12 +76,12 @@ var/list/valid_secondary_effect_types = list(\
 /obj/machinery/artifact/New()
 	..()
 
-	//setup primary effect - these are the main ones (mixed)
+	// setup primary effect - these are the main ones (mixed)
 	if(need_inicial == 1)
 		var/effecttype = pick(typesof(/datum/artifact_effect) - /datum/artifact_effect)
 		my_effect = new effecttype(src)
 
-		//75% chance to have a secondary stealthy (and mostly bad) effect
+		// 75% chance to have a secondary stealthy (and mostly bad) effect
 		if(prob(75))
 			effecttype = pick(typesof(/datum/artifact_effect) - /datum/artifact_effect)
 			secondary_effect = new effecttype(src)
@@ -128,7 +128,7 @@ var/list/valid_secondary_effect_types = list(\
 	if(pulledby)
 		Bumped(pulledby)
 
-	//if either of our effects rely on environmental factors, work that out
+	// if either of our effects rely on environmental factors, work that out
 	var/trigger_cold = 0
 	var/trigger_hot = 0
 	var/trigger_phoron = 0
@@ -153,7 +153,7 @@ var/list/valid_secondary_effect_types = list(\
 			if(env.nitrogen >= 10)
 				trigger_nitro = 1
 
-	//COLD ACTIVATION
+	// COLD ACTIVATION
 	if(trigger_cold)
 		if(my_effect.trigger == TRIGGER_COLD && !my_effect.activated)
 			my_effect.ToggleActivate()
@@ -165,7 +165,7 @@ var/list/valid_secondary_effect_types = list(\
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_COLD && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
-	//HEAT ACTIVATION
+	// HEAT ACTIVATION
 	if(trigger_hot)
 		if(my_effect.trigger == TRIGGER_HEAT && !my_effect.activated)
 			my_effect.ToggleActivate()
@@ -177,7 +177,7 @@ var/list/valid_secondary_effect_types = list(\
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_HEAT && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
-	//PHORON GAS ACTIVATION
+	// PHORON GAS ACTIVATION
 	if(trigger_phoron)
 		if(my_effect.trigger == TRIGGER_PHORON && !my_effect.activated)
 			my_effect.ToggleActivate()
@@ -189,7 +189,7 @@ var/list/valid_secondary_effect_types = list(\
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_PHORON && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
-	//OXYGEN GAS ACTIVATION
+	// OXYGEN GAS ACTIVATION
 	if(trigger_oxy)
 		if(my_effect.trigger == TRIGGER_OXY && !my_effect.activated)
 			my_effect.ToggleActivate()
@@ -201,7 +201,7 @@ var/list/valid_secondary_effect_types = list(\
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_OXY && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
-	//CO2 GAS ACTIVATION
+	// CO2 GAS ACTIVATION
 	if(trigger_co2)
 		if(my_effect.trigger == TRIGGER_CO2 && !my_effect.activated)
 			my_effect.ToggleActivate()
@@ -213,7 +213,7 @@ var/list/valid_secondary_effect_types = list(\
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_CO2 && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
-	//NITROGEN GAS ACTIVATION
+	// NITROGEN GAS ACTIVATION
 	if(trigger_nitro)
 		if(my_effect.trigger == TRIGGER_NITRO && !my_effect.activated)
 			my_effect.ToggleActivate()
@@ -225,7 +225,7 @@ var/list/valid_secondary_effect_types = list(\
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_NITRO && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
-	//TRIGGER_PROXY ACTIVATION
+	// TRIGGER_PROXY ACTIVATION
 	if(my_effect.trigger == TRIGGER_VIEW)
 		if(world.time >= last_scan + scan_delay)
 			last_scan = world.time

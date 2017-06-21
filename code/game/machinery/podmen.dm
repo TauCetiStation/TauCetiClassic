@@ -9,19 +9,19 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	mypath = "/obj/item/seeds/replicapod"
 	species = "replicapod"
 	plantname = "Dionaea"
-	productname = "/mob/living/carbon/human" //verrry special -- Urist
-	lifespan = 50 //no idea what those do
+	productname = "/mob/living/carbon/human" // verrry special -- Urist
+	lifespan = 50 // no idea what those do
 	endurance = 8
 	maturation = 5
 	production = 10
-	yield = 1 //seeds if there isn't a dna inside
+	yield = 1 // seeds if there isn't a dna inside
 	oneharvest = 1
 	potency = 30
 	plant_type = 0
 	growthstages = 6
 	var/ckey = null
 	var/realName = null
-	var/mob/living/carbon/human/source //Donor of blood, if any.
+	var/mob/living/carbon/human/source // Donor of blood, if any.
 	gender = MALE
 	var/obj/machinery/hydroponics/parent = null
 	var/found_player = 0
@@ -34,7 +34,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 		var/datum/reagent/blood/B
 
-		//Find a blood sample to inject.
+		// Find a blood sample to inject.
 		for(var/datum/reagent/R in W:reagents.reagent_list)
 			if(istype(R,/datum/reagent/blood))
 				B = R
@@ -70,13 +70,13 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 	user.visible_message("\blue [user] carefully begins to open the pod...","\blue You carefully begin to open the pod...")
 
-	//If a sample is injected (and revival is allowed) the plant will be controlled by the original donor.
+	// If a sample is injected (and revival is allowed) the plant will be controlled by the original donor.
 	if(source && source.stat == DEAD && source.client && source.ckey && config.revival_pod_plants)
 		transfer_personality(source.client)
 	else // If no sample was injected or revival is not allowed, we grab an interested observer.
 		request_player()
 
-	spawn(75) //If we don't have a ghost or the ghost is now unplayed, we just give the harvester some seeds.
+	spawn(75) // If we don't have a ghost or the ghost is now unplayed, we just give the harvester some seeds.
 		if(!found_player)
 			parent.visible_message("The pod has formed badly, and all you can do is salvage some of the seeds.")
 			var/seed_count = 1
@@ -99,7 +99,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		if(O.client)
 			var/client/C = O.client
 			if(!C.prefs.ignore_question.Find("diona") && (ROLE_PLANT in C.prefs.be_role))
-				if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted) //No love for ghost with antaghud enabled
+				if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted) // No love for ghost with antaghud enabled
 					continue
 				INVOKE_ASYNC(src, .proc/question, C)
 
@@ -139,7 +139,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		if ("revolution")
 			if (podman.mind in ticker.mode:revolutionaries)
 				ticker.mode:add_revolutionary(podman.mind)
-				ticker.mode:update_all_rev_icons() //So the icon actually appears
+				ticker.mode:update_all_rev_icons() // So the icon actually appears
 			if (podman.mind in ticker.mode:head_revolutionaries)
 				ticker.mode:update_all_rev_icons()
 		if ("nuclear emergency")
@@ -148,7 +148,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		if ("cult")
 			if (podman.mind in ticker.mode:cult)
 				ticker.mode:add_cultist(podman.mind)
-				ticker.mode:update_all_cult_icons() //So the icon actually appears
+				ticker.mode:update_all_cult_icons() // So the icon actually appears
 		// -- End mode specific stuff
 
 	to_chat(podman, "\green <B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B>")

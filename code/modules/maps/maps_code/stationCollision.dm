@@ -18,25 +18,25 @@
 /*
  * Areas
  */
- //Gateroom gets its own APC specifically for the gate
+ // Gateroom gets its own APC specifically for the gate
  /area/awaymission/gateroom
 
- //Library, medbay, storage room
+ // Library, medbay, storage room
  /area/awaymission/southblock
 
- //Arrivals, security, hydroponics, shuttles (since they dont move, they dont need specific areas)
+ // Arrivals, security, hydroponics, shuttles (since they dont move, they dont need specific areas)
  /area/awaymission/arrivalblock
 
- //Crew quarters, cafeteria, chapel
+ // Crew quarters, cafeteria, chapel
  /area/awaymission/midblock
 
- //engineering, bridge (not really north but it doesnt really need its own APC)
+ // engineering, bridge (not really north but it doesnt really need its own APC)
  /area/awaymission/northblock
 
- //That massive research room
+ // That massive research room
  /area/awaymission/research
 
-//Syndicate shuttle
+// Syndicate shuttle
 /area/awaymission/syndishuttle
 
 
@@ -59,40 +59,40 @@
 /*
  * Guns - I'm making these specifically so that I dont spawn a pile of fully loaded weapons on the map.
  */
-//Captain's retro laser - Fires practice laser shots instead.
+// Captain's retro laser - Fires practice laser shots instead.
 /*obj/item/weapon/gun/energy/laser/retro/sc_retro
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
 	projectile_type = "/obj/item/projectile/practice"
-	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
+	clumsy_check = 0 // No sense in having a harmless gun blow up in the clowns face
 
-//Syndicate silenced pistol. This definition is not necessary, it's just habit.
+// Syndicate silenced pistol. This definition is not necessary, it's just habit.
 /obj/item/weapon/gun/projectile/silenced/sc_silenced
 
-//Make it so that these guns only spawn with a couple bullets... if any
+// Make it so that these guns only spawn with a couple bullets... if any
 /obj/item/weapon/gun/projectile/silenced/sc_silenced/New()
 	for(var/ammo in loaded)
-		if(prob(95)) //95% chance
+		if(prob(95)) // 95% chance
 			loaded -= ammo
 
-//Syndicate sub-machine guns.
+// Syndicate sub-machine guns.
 /obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r
 
 /obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r/New()
 	for(var/ammo in loaded)
-		if(prob(95)) //95% chance
+		if(prob(95)) // 95% chance
 			loaded -= ammo
 
-//Barman's shotgun
+// Barman's shotgun
 /obj/item/weapon/gun/projectile/shotgun/pump/sc_pump
 
 /obj/item/weapon/gun/projectile/shotgun/pump/sc_pump/New()
 	for(var/ammo in loaded)
-		if(prob(95)) //95% chance
+		if(prob(95)) // 95% chance
 			loaded -= ammo
 
-//Lasers
+// Lasers
 /obj/item/weapon/gun/energy/laser/practice/sc_laser
 	name = "Old laser"
 	desc = "A once potent weapon, years of dust have collected in the chamber and lens of this weapon, weakening the beam significantly."
@@ -101,14 +101,14 @@
   Safe code hints
  */
 
-//These vars hold the code itself, they'll be generated at round-start
+// These vars hold the code itself, they'll be generated at round-start
 var/sc_safecode1 = "[rand(0,9)]"
 var/sc_safecode2 = "[rand(0,9)]"
 var/sc_safecode3 = "[rand(0,9)]"
 var/sc_safecode4 = "[rand(0,9)]"
 var/sc_safecode5 = "[rand(0,9)]"
 
-//Pieces of paper actually containing the hints
+// Pieces of paper actually containing the hints
 /obj/item/weapon/paper/sc_safehint_paper_prison
 	name = "smudged paper"
 
@@ -122,7 +122,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 
 /obj/item/weapon/paper/sc_safehint_paper_caf
 	name = "blood-soaked paper"
-	//This does not have to be in New() because it is a constant. There are no variables in it i.e. [sc_safcode]
+	// This does not have to be in New() because it is a constant. There are no variables in it i.e. [sc_safcode]
 	info = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
 
 /obj/item/weapon/paper/sc_safehint_paper_bible
@@ -159,7 +159,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 	new /obj/item/device/soulstone(src)
 	new /obj/item/clothing/head/helmet/space/cult(src)
 	new /obj/item/clothing/suit/space/cult(src)
-	//new /obj/item/weapon/teleportation_scroll(src)
+	// new /obj/item/weapon/teleportation_scroll(src)
 	new /obj/item/weapon/ore/diamond(src)
 
 /*
@@ -167,10 +167,10 @@ var/sc_safecode5 = "[rand(0,9)]"
 
 /obj/singularity/narsie/sc_Narsie
 	desc = "Your body becomes weak and your feel your mind slipping away as you try to comprehend what you know can't be possible."
-	move_self = 0 //Contianed narsie does not move!
-	grav_pull = 0 //Contained narsie does not pull stuff in!
+	move_self = 0 // Contianed narsie does not move!
+	grav_pull = 0 // Contained narsie does not pull stuff in!
 
-//Override this to prevent no adminlog runtimes and admin warnings about a singularity without containment
+// Override this to prevent no adminlog runtimes and admin warnings about a singularity without containment
 /obj/singularity/narsie/sc_Narsie/admin_investigate_setup()
 	return
 

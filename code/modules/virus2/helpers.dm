@@ -1,4 +1,4 @@
-//Returns 1 if mob can be infected, 0 otherwise. Checks his clothing.
+// Returns 1 if mob can be infected, 0 otherwise. Checks his clothing.
 proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 	var/score = 0
 	if (!istype(M))
@@ -7,7 +7,7 @@ proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 	if(istype(M, /mob/living/carbon/human))
 
 		if (vector == "Airborne")
-			if(M.internal)	//not breathing infected air helps greatly
+			if(M.internal)	// not breathing infected air helps greatly
 				score = 30
 			if(M.wear_mask)
 				score += 5
@@ -44,7 +44,7 @@ proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 //	log_debug("Infection got through")
 	return 1
 
-//Checks if table-passing table can reach target (5 tile radius)
+// Checks if table-passing table can reach target (5 tile radius)
 proc/airborne_can_reach(turf/source, turf/target)
 	var/obj/dummy = new(source)
 	dummy.pass_flags = PASSTABLE
@@ -56,7 +56,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	dummy = null
 	return rval
 
-//Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothnig
+// Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothnig
 /proc/infect_virus2(mob/living/carbon/M,datum/disease2/disease/disease,forced = 0)
 	if(!istype(disease))
 //		log_debug("Bad virus")
@@ -95,7 +95,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 		M.virus2["[D.uniqueID]"] = D
 		M.hud_updateflag |= 1 << STATUS_HUD
 
-//Infects mob M with random lesser disease, if he doesn't have one
+// Infects mob M with random lesser disease, if he doesn't have one
 /proc/infect_mob_random_lesser(mob/living/carbon/M)
 	var/datum/disease2/disease/D = new /datum/disease2/disease
 	D.makerandom()
@@ -103,14 +103,14 @@ proc/airborne_can_reach(turf/source, turf/target)
 	infect_virus2(M,D,1)
 	M.hud_updateflag |= 1 << STATUS_HUD
 
-//Infects mob M with random greated disease, if he doesn't have one
+// Infects mob M with random greated disease, if he doesn't have one
 /proc/infect_mob_random_greater(mob/living/carbon/M)
 	var/datum/disease2/disease/D = new /datum/disease2/disease
 	D.makerandom(1)
 	infect_virus2(M,D,1)
 	M.hud_updateflag |= 1 << STATUS_HUD
 
-//Fancy prob() function.
+// Fancy prob() function.
 /proc/dprob(p)
 	return(prob(sqrt(p)) && prob(sqrt(p)))
 
@@ -137,7 +137,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 //					log_debug("In range, infecting")
 					infect_virus2(victim,V)
 
-	//contact goes both ways
+	// contact goes both ways
 	if (victim.virus2.len > 0 && vector == "Contact")
 //		log_debug("Spreading [vector] diseases from [victim] to [src]")
 		var/nudity = 1

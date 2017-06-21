@@ -29,7 +29,7 @@
 	..()
 	icon_state = icon_living
 
-/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
+/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)// Reduces damage from most projectiles to curb off-screen kills
 	if(!stat)
 		Aggro()
 	if(P.damage < 30)
@@ -38,7 +38,7 @@
 
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM)//No floor tiling them to death, wiseguy
+/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM)// No floor tiling them to death, wiseguy
 	if(istype(AM, /obj/item))
 		var/obj/item/T = AM
 		if(!stat)
@@ -119,7 +119,7 @@
 	..(gibbed)
 
 
-////////////Drone(miniBoss)/////////////
+/////////// /Drone(miniBoss)/////////////
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/mining
 	health = 500
@@ -195,11 +195,11 @@
 		if(!(O.type in ore_types_eaten))
 			ore_types_eaten += O.type
 		qdel(O)
-	if(ore_eaten > 5)//Limit the scope of the reward you can get, or else things might get silly
+	if(ore_eaten > 5)// Limit the scope of the reward you can get, or else things might get silly
 		ore_eaten = 5
 	visible_message("<span class='notice'>The ore was swallowed whole!</span>")
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()// Begin the chase to kill the goldgrub in time
 	if(!alerted)
 		alerted = 1
 		addtimer(CALLBACK(src, .proc/burrow_check), chase_time)
@@ -359,7 +359,7 @@
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
-	ranged_cooldown = 2 //By default, start the Goliath with his cooldown off so that people can run away quickly on first sight
+	ranged_cooldown = 2 // By default, start the Goliath with his cooldown off so that people can run away quickly on first sight
 	ranged_cooldown_cap = 8
 	friendly = "wails at"
 	vision_range = 4
@@ -388,7 +388,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
-	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
+	if(get_dist(src, target) <= 7)// Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 		new /obj/effect/goliath_tentacle/original(tturf)
 		ranged_cooldown = ranged_cooldown_cap

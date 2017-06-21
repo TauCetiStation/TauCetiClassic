@@ -1,4 +1,4 @@
-//Look Sir, free head!
+// Look Sir, free head!
 /mob/living/simple_animal/head
 	name = "CommandBattle AI"
 	desc = "A standard borg shell on its chest crude marking saying CommandBattle AI MK4 : Head."

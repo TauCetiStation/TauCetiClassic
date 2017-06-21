@@ -1,5 +1,5 @@
 
-//Hat Station 13
+// Hat Station 13
 
 /obj/item/clothing/head/collectable
 	name = "collectable hat"

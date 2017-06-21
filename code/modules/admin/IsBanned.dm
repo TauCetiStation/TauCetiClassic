@@ -1,4 +1,4 @@
-//Blocks an attempt to connect before even creating our client datum thing.
+// Blocks an attempt to connect before even creating our client datum thing.
 world/IsBanned(key,address,computer_id)
 	if(config.serverwhitelist && !check_if_a_new_player(key))
 		return list("reason"="", "desc"="[config.serverwhitelist_message]")
@@ -6,7 +6,7 @@ world/IsBanned(key,address,computer_id)
 	if(ckey(key) in admin_datums)
 		return ..()
 
-	//Guest Checking
+	// Guest Checking
 	if(!guests_allowed && IsGuestKey(key))
 		log_access("Failed Login: [key] - Guests not allowed")
 		message_admins("\blue Failed Login: [key] - Guests not allowed")
@@ -14,14 +14,14 @@ world/IsBanned(key,address,computer_id)
 
 	if(config.ban_legacy_system)
 
-		//Ban Checking
+		// Ban Checking
 		. = CheckBan( ckey(key), computer_id, address )
 		if(.)
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
 			message_admins("\blue Failed Login: [key] id:[computer_id] ip:[address] - Banned [.["reason"]]")
 			return .
 
-		return ..()	//default pager ban stuff
+		return ..()	// default pager ban stuff
 
 	else
 
@@ -51,8 +51,8 @@ world/IsBanned(key,address,computer_id)
 
 		while(query.NextRow())
 			var/pckey = query.item[1]
-			//var/pip = query.item[2]
-			//var/pcid = query.item[3]
+			// var/pip = query.item[2]
+			// var/pcid = query.item[3]
 			var/ackey = query.item[4]
 			var/reason = query.item[5]
 			var/expiration = query.item[6]
@@ -72,4 +72,4 @@ world/IsBanned(key,address,computer_id)
 			message_admins("[key] has logged in with a blank computer id in the ban check.")
 		if (failedip)
 			message_admins("[key] has logged in with a blank ip in the ban check.")
-		return ..()	//default pager ban stuff
+		return ..()	// default pager ban stuff

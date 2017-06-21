@@ -11,7 +11,7 @@
 
 	var/on = 1
 	var/output = 3
-	//Flags:
+	// Flags:
 	// 1 for pressure
 	// 2 for temperature
 	// Output >= 4 includes gas composition
@@ -28,7 +28,7 @@
 /obj/machinery/air_sensor/process()
 	if(on)
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.data["tag"] = id_tag
 		signal.data["timestamp"] = world.time
 
@@ -177,7 +177,7 @@
 
 /obj/machinery/computer/general_air_control/large_tank_control/return_text()
 	var/output = ..()
-	//if(signal.data)
+	// if(signal.data)
 	//	input_info = signal.data // Attempting to fix intake control -- TLE
 
 	output += "<B>Tank Control System</B><BR>"
@@ -233,7 +233,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	if(!radio_connection)
 		return FALSE
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 	if(href_list["in_refresh_status"])
 		input_info = null
@@ -288,7 +288,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 					injecting = 1
 
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.source = src
 
 		signal.data = list(
@@ -344,7 +344,7 @@ Rate: [volume_rate] L/sec<BR>"}
 			return FALSE
 
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.source = src
 		signal.data = list(
 			"tag" = device_tag,
@@ -362,7 +362,7 @@ Rate: [volume_rate] L/sec<BR>"}
 			return FALSE
 
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.source = src
 		signal.data = list(
 			"tag" = device_tag,
@@ -377,7 +377,7 @@ Rate: [volume_rate] L/sec<BR>"}
 			return FALSE
 
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = 1 // radio signal
 		signal.source = src
 		signal.data = list(
 			"tag" = device_tag,

@@ -163,7 +163,7 @@ rcd light flash thingy on matter drain
 
 					if(!C.isXRay())
 						C.upgradeXRay()
-						//Update what it can see.
+						// Update what it can see.
 						cameranet.updateVisibility(C)
 						upgraded = 1
 
@@ -205,7 +205,7 @@ rcd light flash thingy on matter drain
 /datum/AI_Module/module_picker/proc/use(user)
 	var/dat
 	if (src.temp)
-		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
+		dat = "[src.temp]<BR><BR><A href='byond:// ?src=\ref[src];temp=1'>Clear</A>"
 	else if(src.processing_time <= 0)
 		dat = "<B> No processing time is left available. No more modules are able to be chosen at this time."
 	else
@@ -214,9 +214,9 @@ rcd light flash thingy on matter drain
 		dat += "<B>Install Module:</B><BR>"
 		dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
 		for(var/datum/AI_Module/large/module in src.possible_modules)
-			dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A> (50)<BR>"
+			dat += "<A href='byond:// ?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A> (50)<BR>"
 		for(var/datum/AI_Module/small/module in src.possible_modules)
-			dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A> (15)<BR>"
+			dat += "<A href='byond:// ?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A> (15)<BR>"
 		dat += "<HR>"
 
 	user << browse(dat, "window=modpicker")
