@@ -466,7 +466,7 @@ proc/get_nt_opposed()
 	var/text = ""
 	var/tempstate = end_icons.len
 	if(ply.current)
-		var/icon/flat = getFlatIcon(ply.current,exact=1)
+		var/icon/flat = getFlatIcon(ply.current, exact=1)
 		end_icons += flat
 		tempstate = end_icons.len
 		text += {"<BR><img src="logo_[tempstate].png"> <B>[ply.key]</B> was <B>[ply.name]</B> ("}

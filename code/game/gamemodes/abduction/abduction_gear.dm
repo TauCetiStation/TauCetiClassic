@@ -55,7 +55,7 @@
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/M = src.loc
 		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
+			anim(M.loc, M,'icons/mob/mob.dmi',,"cloak",,M.dir)
 		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
@@ -71,7 +71,7 @@
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/M = src.loc
 		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
+			anim(M.loc, M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
 		M.name_override = null
 		M.overlays.Cut()
 		M.regenerate_icons()
@@ -230,7 +230,7 @@
 		prepare(target, user)
 
 /obj/item/device/abductor/gizmo/proc/prepare(atom/target, mob/living/user)
-	if(get_dist(target,user) > 1)
+	if(get_dist(target, user) > 1)
 		to_chat(user, "<span class='warning'>You need to be next to the specimen to prepare it for transport.</span>")
 		return
 	to_chat(user, "<span class='notice'>You begin preparing [target] for transport...</span>")
@@ -467,18 +467,18 @@
 	user.do_attack_animation(L)
 	switch(mode)
 		if(BATON_STUN)
-			StunAttack(L,user)
+			StunAttack(L, user)
 		if(BATON_SLEEP)
-			SleepAttack(L,user)
+			SleepAttack(L, user)
 		if(BATON_CUFF)
-			CuffAttack(L,user)
+			CuffAttack(L, user)
 		if(BATON_PROBE)
-			ProbeAttack(L,user)
+			ProbeAttack(L, user)
 
 /obj/item/weapon/abductor_baton/attack_self(mob/living/user)
 	toggle(user)
 
-/obj/item/weapon/abductor_baton/proc/StunAttack(mob/living/L,mob/living/user)
+/obj/item/weapon/abductor_baton/proc/StunAttack(mob/living/L, mob/living/user)
 	user.lastattacked = L
 	L.lastattacker = user
 
@@ -495,7 +495,7 @@
 	msg_admin_attack("[user] ([user.ckey]) stunned [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	return
 
-/obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
+/obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L, mob/living/user)
 	if(L.stunned)
 		L.SetSleeping(60)
 	L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
@@ -507,7 +507,7 @@
 	msg_admin_attack("[user] ([user.ckey]) put to sleep [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	return
 
-/obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
+/obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L, mob/living/user)
 	if(!iscarbon(L))
 		return
 	var/mob/living/carbon/C = L
@@ -527,7 +527,7 @@
 			to_chat(user, "<span class='warning'>You fail to handcuff [C].</span>")
 	return
 
-/obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
+/obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L, mob/living/user)
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
 						"<span class='userdanger'>[user] probes you!</span>")
 

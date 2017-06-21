@@ -180,8 +180,8 @@ turf/simulated/floor/proc/update_icon()
 			if(icon_state != "carpetsymbol")
 				var/connectdir = 0
 				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
+					if(istype(get_step(src, direction),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src, direction)
 						if(FF.is_carpet_floor())
 							connectdir |= direction
 
@@ -190,29 +190,29 @@ turf/simulated/floor/proc/update_icon()
 
 				// Northeast
 				if(connectdir & NORTH && connectdir & EAST)
-					if(istype(get_step(src,NORTHEAST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,NORTHEAST)
+					if(istype(get_step(src, NORTHEAST),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src, NORTHEAST)
 						if(FF.is_carpet_floor())
 							diagonalconnect |= 1
 
 				// Southeast
 				if(connectdir & SOUTH && connectdir & EAST)
-					if(istype(get_step(src,SOUTHEAST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,SOUTHEAST)
+					if(istype(get_step(src, SOUTHEAST),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src, SOUTHEAST)
 						if(FF.is_carpet_floor())
 							diagonalconnect |= 2
 
 				// Northwest
 				if(connectdir & NORTH && connectdir & WEST)
-					if(istype(get_step(src,NORTHWEST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,NORTHWEST)
+					if(istype(get_step(src, NORTHWEST),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src, NORTHWEST)
 						if(FF.is_carpet_floor())
 							diagonalconnect |= 4
 
 				// Southwest
 				if(connectdir & SOUTH && connectdir & WEST)
-					if(istype(get_step(src,SOUTHWEST),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,SOUTHWEST)
+					if(istype(get_step(src, SOUTHWEST),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src, SOUTHWEST)
 						if(FF.is_carpet_floor())
 							diagonalconnect |= 8
 
@@ -233,7 +233,7 @@ turf/simulated/floor/proc/update_icon()
 	if(is_grass_floor())
 		var/dir_sum = 0
 		for(var/direction in cardinal)
-			var/turf/T = get_step(src,direction)
+			var/turf/T = get_step(src, direction)
 			if(!(T.is_grass_floor()))
 				dir_sum += direction
 		if(dir_sum)
@@ -359,15 +359,15 @@ turf/simulated/floor/proc/update_icon()
 
 	if(is_grass_floor())
 		for(var/direction in cardinal)
-			if(istype(get_step(src,direction),/turf/simulated/floor))
-				var/turf/simulated/floor/FF = get_step(src,direction)
+			if(istype(get_step(src, direction),/turf/simulated/floor))
+				var/turf/simulated/floor/FF = get_step(src, direction)
 				FF.update_icon() // so siding get updated properly
 	else if(is_carpet_floor())
 		spawn(5)
 			if(src)
 				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
+					if(istype(get_step(src, direction),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src, direction)
 						FF.update_icon() // so siding get updated properly
 
 	if(!floor_type)
@@ -570,13 +570,13 @@ turf/simulated/floor/proc/update_icon()
 					set_lightfloor_on(L.on)
 				if(istype(T,/obj/item/stack/tile/grass))
 					for(var/direction in cardinal)
-						if(istype(get_step(src,direction),/turf/simulated/floor))
-							var/turf/simulated/floor/FF = get_step(src,direction)
+						if(istype(get_step(src, direction),/turf/simulated/floor))
+							var/turf/simulated/floor/FF = get_step(src, direction)
 							FF.update_icon() // so siding gets updated properly
 				else if(istype(T,/obj/item/stack/tile/carpet))
 					for(var/direction in list(1,2,4,8,5,6,9,10))
-						if(istype(get_step(src,direction),/turf/simulated/floor))
-							var/turf/simulated/floor/FF = get_step(src,direction)
+						if(istype(get_step(src, direction),/turf/simulated/floor))
+							var/turf/simulated/floor/FF = get_step(src, direction)
 							FF.update_icon() // so siding gets updated properly
 				update_icon()
 				levelupdate()
@@ -590,7 +590,7 @@ turf/simulated/floor/proc/update_icon()
 			var/obj/item/weapon/cable_coil/coil = C
 			for(var/obj/structure/cable/LC in src)
 				if((LC.d1==0)||(LC.d2==0))
-					LC.attackby(C,user)
+					LC.attackby(C, user)
 					return
 			coil.turf_place(src, user)
 		else

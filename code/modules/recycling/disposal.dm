@@ -103,7 +103,7 @@
 		var/obj/item/weapon/storage/bag/trash/T = I
 		to_chat(user, "<span class='notice'>You empty the bag.</span>")
 		for(var/obj/item/O in T.contents)
-			T.remove_from_storage(O,src)
+			T.remove_from_storage(O, src)
 		T.update_icon()
 		update()
 		return
@@ -625,7 +625,7 @@
 
 // find the turf which should contain the next pipe
 /obj/structure/disposalholder/proc/nextloc()
-	return get_step(loc,dir)
+	return get_step(loc, dir)
 
 // find a matching pipe on a turf
 /obj/structure/disposalholder/proc/findpipe(turf/T)

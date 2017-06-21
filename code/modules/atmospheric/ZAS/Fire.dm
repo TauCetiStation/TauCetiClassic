@@ -142,7 +142,7 @@ Attach to transfer valve and open. BOOM.
 				// Spread the fire.
 				if(!(locate(/obj/fire) in enemy_tile))
 					if( prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && S.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, S, 0,0))
-						new/obj/fire(enemy_tile,firelevel)
+						new/obj/fire(enemy_tile, firelevel)
 
 			else
 				enemy_tile.adjacent_fire_act(loc, air_contents, air_contents.temperature, air_contents.return_volume())
@@ -165,7 +165,7 @@ Attach to transfer valve and open. BOOM.
 //////////////////////////////// / FLOW HAS BEEN REMERGED // / feel free to delete the fire again from here on ///////////////////////////////////////////////////////////////// /
 
 
-/obj/fire/New(newLoc,fl)
+/obj/fire/New(newLoc, fl)
 	..()
 
 	if(!istype(loc, /turf))

@@ -99,11 +99,11 @@
 		if(istype(AM, /obj/structure/window))
 			var/obj/structure/window/W = AM
 			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
-				for(var/obj/structure/window/win in get_step(AM,t))
+				for(var/obj/structure/window/win in get_step(AM, t))
 					now_pushing = 0
 					return
 //			if(W.fulltile)
-//				for(var/obj/structure/window/win in get_step(W,t))
+//				for(var/obj/structure/window/win in get_step(W, t))
 //					now_pushing = 0
 //					return
 		if(pulling == AM)
@@ -388,7 +388,7 @@
 	return(gain)
 
 /mob/living/singularity_pull(S)
-	step_towards(src,S)
+	step_towards(src, S)
 
 /mob/living/proc/can_inject()
 	return 1
@@ -695,7 +695,7 @@
 				START_PROCESSING(SSobj, TH)
 			if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) // maximum amount of overlays is 16 (all light & heavy directions filled)
 				TH.existing_dirs += newdir
-				TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+				TH.overlays.Add(image('icons/effects/blood.dmi',trail_type, dir = newdir))
 			if(M.dna)
 				TH.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 
@@ -1028,17 +1028,17 @@
 	var/image/I
 	if(hand)
 		if(l_hand)
-			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
+			I = image(l_hand.icon, A,l_hand.icon_state, A.layer+1)
 	else
 		if(r_hand)
-			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+			I = image(r_hand.icon, A,r_hand.icon_state, A.layer+1)
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		var/list/viewing = list()
 		for(var/mob/M in viewers(A))
 			if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
 				viewing |= M.client
-		flick_overlay(I,viewing,5)
+		flick_overlay(I, viewing,5)
 		I.pixel_z = 16 // lift it up...
 		animate(I, pixel_z = 0, alpha = 125, time = 3) // smash it down into them!
 

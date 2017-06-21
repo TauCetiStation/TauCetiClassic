@@ -24,7 +24,7 @@
 		return
 
 	var/mob/living/carbon/target = G.affecting
-	return changeling.can_absorb_dna(user,target)
+	return changeling.can_absorb_dna(user, target)
 
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
@@ -150,7 +150,7 @@
 		return
 
 	var/mob/living/carbon/target = G.affecting
-	return changeling.can_absorb_dna(user,target)
+	return changeling.can_absorb_dna(user, target)
 
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling

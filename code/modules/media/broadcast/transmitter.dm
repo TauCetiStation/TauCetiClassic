@@ -32,7 +32,7 @@ var/global/media_transmitters=list()
 	if(freq in media_receivers)
 		for(var/obj/machinery/media/receiver/R in media_receivers[freq])
 			if(R.media_crypto == media_crypto)
-				R.receive_broadcast(media_url,media_start_time)
+				R.receive_broadcast(media_url, media_start_time)
 				// testing("[src]: Sending music to [R]")
 
 /obj/machinery/media/transmitter/proc/disconnect_frequency()

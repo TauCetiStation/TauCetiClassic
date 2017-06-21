@@ -566,7 +566,7 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 
 	// 'Local Status' should report the LOCAL status, damnit.
 	output += "Local Status: "
-	switch(max(pressure_dangerlevel,oxygen_dangerlevel,co2_dangerlevel,phoron_dangerlevel,other_dangerlevel,temperature_dangerlevel))
+	switch(max(pressure_dangerlevel, oxygen_dangerlevel, co2_dangerlevel, phoron_dangerlevel, other_dangerlevel, temperature_dangerlevel))
 		if(2)
 			output += "<span class='dl2'>DANGER: Internals Required</span><br>"
 		if(1)
@@ -718,7 +718,7 @@ Nitrous Oxide
 				AALARM_MODE_CYCLE       = "<font color='red'>Cycle - Siphons air before replacing</font>",\
 				AALARM_MODE_FILL        = "<font color='green'>Fill - Shuts off scrubbers and opens vents</font>",\
 				AALARM_MODE_OFF         = "<font color='blue'>Off - Shuts off vents and scrubbers</font>",)
-			for (var/m=1,m<=modes.len,m++)
+			for (var/m=1,m<=modes.len, m++)
 				if (mode==m)
 					output += "<li><A href='?src=\ref[src];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"
 				else
@@ -1035,10 +1035,10 @@ Code shamelessly copied from apc_frame
 	..()
 
 /obj/item/alarm_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
+	if (get_dist(on_wall, usr)>1)
 		return
 
-	var/ndir = get_dir(on_wall,usr)
+	var/ndir = get_dir(on_wall, usr)
 	if (!(ndir in cardinal))
 		return
 
@@ -1356,10 +1356,10 @@ Code shamelessly copied from apc_frame
 	..()
 
 /obj/item/firealarm_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
+	if (get_dist(on_wall, usr)>1)
 		return
 
-	var/ndir = get_dir(on_wall,usr)
+	var/ndir = get_dir(on_wall, usr)
 	if (!(ndir in cardinal))
 		return
 

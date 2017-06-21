@@ -291,6 +291,6 @@
 /obj/machinery/shield_gen/proc/get_shielded_turfs()
 	var/list/out = list()
 	for(var/turf/T in range(field_radius, src))
-		if(get_dist(src,T) == field_radius)
+		if(get_dist(src, T) == field_radius)
 			out.Add(T)
 	return out

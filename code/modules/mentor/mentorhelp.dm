@@ -18,7 +18,7 @@
 	if(prefs.muted & MUTE_MENTORHELP)
 		to_chat(src, "<font color='red'>Error: Mentor-PM: You cannot send mentorhelps (Muted).</font>")
 		return
-	if(src.handle_spam_prevention(msg,MUTE_MENTORHELP))
+	if(src.handle_spam_prevention(msg, MUTE_MENTORHELP))
 		return
 
 	staffhelp(msg, help_type = "MH")

@@ -47,9 +47,9 @@
 /obj/item/weapon/dnainjector/proc/SetState(on, selblock=0)
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
-		return buf.dna.SetSEState(real_block,on)
+		return buf.dna.SetSEState(real_block, on)
 	else
-		return buf.dna.SetUIState(real_block,on)
+		return buf.dna.SetUIState(real_block, on)
 
 /obj/item/weapon/dnainjector/proc/GetValue(selblock=0)
 	var/real_block=GetRealBlock(selblock)
@@ -58,12 +58,12 @@
 	else
 		return buf.dna.GetUIValue(real_block)
 
-/obj/item/weapon/dnainjector/proc/SetValue(val,selblock=0)
+/obj/item/weapon/dnainjector/proc/SetValue(val, selblock=0)
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
-		return buf.dna.SetSEValue(real_block,val)
+		return buf.dna.SetSEValue(real_block, val)
 	else
-		return buf.dna.SetUIValue(real_block,val)
+		return buf.dna.SetUIValue(real_block, val)
 
 /obj/item/weapon/dnainjector/proc/inject(mob/M, mob/user)
 	if(istype(M,/mob/living))
@@ -79,7 +79,7 @@
 					M.name = buf.dna.real_name
 				uses--
 			else
-				M.dna.SetUIValue(block,src.GetValue())
+				M.dna.SetUIValue(block, src.GetValue())
 				M.UpdateAppearance()
 				uses--
 		if (buf.types & DNA2_BUF_SE)
@@ -87,7 +87,7 @@
 				M.dna.SE = buf.dna.SE.Copy()
 				M.dna.UpdateSE()
 			else
-				M.dna.SetSEValue(block,src.GetValue())
+				M.dna.SetSEValue(block, src.GetValue())
 			domutcheck(M, null, block!=null, 0) // #Z2 We go thru chance check
 			uses--
 

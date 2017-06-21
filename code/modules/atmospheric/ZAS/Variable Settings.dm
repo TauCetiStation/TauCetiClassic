@@ -98,7 +98,7 @@ var/global/vs_control/vsc = new
 	settings -= "bitflags"
 	settings -= "plc"
 
-/vs_control/proc/ChangeSettingsDialog(mob/user,list/L)
+/vs_control/proc/ChangeSettingsDialog(mob/user, list/L)
 	// var/which = input(user,"Choose a setting:") in L
 	var/dat = ""
 	for(var/ch in L)
@@ -118,11 +118,11 @@ var/global/vs_control/vsc = new
 		dat += "<i>[vw_desc]</i><br><br>"
 	user << browse(dat,"window=settings")
 
-/vs_control/Topic(href,href_list)
+/vs_control/Topic(href, href_list)
 	if("changevar" in href_list)
-		ChangeSetting(usr,href_list["changevar"])
+		ChangeSetting(usr, href_list["changevar"])
 
-/vs_control/proc/ChangeSetting(mob/user,ch)
+/vs_control/proc/ChangeSetting(mob/user, ch)
 	var/vw
 	var/how = "Text"
 	var/display_description = ch
@@ -174,9 +174,9 @@ var/global/vs_control/vsc = new
 		newvar = (newvar?"ON":"OFF")
 	to_chat(world, "\blue <b>[key_name(user)] changed the setting [display_description] to [newvar].</b>")
 	if(ch in plc.settings)
-		ChangeSettingsDialog(user,plc.settings)
+		ChangeSettingsDialog(user, plc.settings)
 	else
-		ChangeSettingsDialog(user,settings)
+		ChangeSettingsDialog(user, settings)
 
 /vs_control/proc/RandomizeWithProbability()
 	for(var/V in settings)

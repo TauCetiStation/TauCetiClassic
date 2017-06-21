@@ -87,7 +87,7 @@ var/intercom_range_display_status = 0
 					output += "<li>overlapping sec. cameras at \[[C1.x], [C1.y], [C1.z]\] ([C1.loc.loc]) Networks: [C1.network] and [C2.network]</font></li>"
 		var/turf/T = get_step(C1,turn(C1.dir,180))
 		if(!T || !isturf(T) || !T.density )
-			if(!(locate(/obj/structure/grille,T)))
+			if(!(locate(/obj/structure/grille, T)))
 				var/window_check = 0
 				for(var/obj/structure/window/W in T)
 					if (W.dir == turn(C1.dir,180) || W.dir in list(5,6,9,10) )
@@ -189,7 +189,7 @@ var/list/debug_verbs = list (
 		var/zone/connected = edge.get_connected_zone(Z)
 		if(connected in testZAScolors_zones)
 			continue
-		recurse_zone(connected,recurse_level+1)
+		recurse_zone(connected, recurse_level+1)
 
 
 /client/proc/testZAScolors()
@@ -272,7 +272,7 @@ var/list/debug_verbs = list (
 	var/list/atom/atom_list = list()
 
 	for(var/atom/A in world)
-		if(istype(A,type_path))
+		if(istype(A, type_path))
 			var/atom/B = A
 			while(!(isturf(B.loc)))
 				if(B && B.loc)
@@ -308,7 +308,7 @@ var/list/debug_verbs = list (
 	var/count = 0
 
 	for(var/atom/A in world)
-		if(istype(A,type_path))
+		if(istype(A, type_path))
 			count++
 	/*
 	var/atom/temp_atom

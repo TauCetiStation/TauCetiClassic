@@ -75,7 +75,7 @@
 			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
 
-		if(O.thrower != src && check_shields(throw_damage, "[O]", get_dir(O,src)))
+		if(O.thrower != src && check_shields(throw_damage, "[O]", get_dir(O, src)))
 			return
 
 		resolve_thrown_attack(O, throw_damage, dtype, zone)
@@ -274,7 +274,7 @@
 
 		if(!B.moved)
 			B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
-			// hud_used.SetButtonCoords(B,button_number)
+			// hud_used.SetButtonCoords(B, button_number)
 
 	if(button_number > 0)
 		if(!hud_used.hide_actions_toggle)
@@ -282,7 +282,7 @@
 			hud_used.hide_actions_toggle.InitialiseIcon(src)
 		if(!hud_used.hide_actions_toggle.moved)
 			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
-			// hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
+			// hud_used.SetButtonCoords(hud_used.hide_actions_toggle, button_number+1)
 		client.screen += hud_used.hide_actions_toggle
 
 /mob/living/incapacitated()

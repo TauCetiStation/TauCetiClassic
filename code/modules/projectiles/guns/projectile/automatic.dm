@@ -72,7 +72,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
-		return silencer_attackby(I,user)
+		return silencer_attackby(I, user)
 	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()

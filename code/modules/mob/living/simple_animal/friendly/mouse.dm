@@ -124,7 +124,7 @@
 /*
 /mob/living/simple_animal/mouse/Move(var/dir)
 
-	var/turf/target_turf = get_step(src,dir)
+	var/turf/target_turf = get_step(src, dir)
 	// CanReachThrough(src.loc, target_turf, src)
 	var/can_fit_under = 0
 	if(target_turf.ZCanPass(get_turf(src),1))
@@ -134,7 +134,7 @@
 	if(can_fit_under)
 		src.loc = target_turf
 	for(var/d in cardinal)
-		var/turf/O = get_step(T,d)
+		var/turf/O = get_step(T, d)
 		// Simple pass check.
 		if(O.ZCanPass(T, 1) && !(O in open) && !(O in closed) && O in possibles)
 			open += O

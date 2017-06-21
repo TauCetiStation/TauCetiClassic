@@ -1,8 +1,8 @@
 /proc/gibs(atom/location, list/viruses, datum/dna/MobDNA)		// CARN MARKER
-	new /obj/effect/gibspawner/generic(get_turf(location),viruses,MobDNA)
+	new /obj/effect/gibspawner/generic(get_turf(location),viruses, MobDNA)
 
 /proc/hgibs(atom/location, list/viruses, datum/dna/MobDNA, fleshcolor, bloodcolor)
-	new /obj/effect/gibspawner/human(get_turf(location),viruses,MobDNA,fleshcolor,bloodcolor)
+	new /obj/effect/gibspawner/human(get_turf(location),viruses, MobDNA, fleshcolor, bloodcolor)
 
 /proc/xgibs(atom/location, list/viruses)
 	new /obj/effect/gibspawner/xeno(get_turf(location),viruses)
@@ -26,7 +26,7 @@
 		if(bloodcolor) src.bloodcolor = bloodcolor
 
 		if(istype(loc,/turf)) // basically if a badmin spawns it
-			Gib(loc,viruses,MobDNA)
+			Gib(loc, viruses, MobDNA)
 
 	proc/Gib(atom/location, list/viruses = list(), datum/dna/MobDNA = null)
 		if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)

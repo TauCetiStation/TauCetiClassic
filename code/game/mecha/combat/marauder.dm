@@ -92,7 +92,7 @@
 	ME.attach(src)
 	return
 
-/obj/mecha/combat/marauder/relaymove(mob/user,direction)
+/obj/mecha/combat/marauder/relaymove(mob/user, direction)
 	if(zoom)
 		if(world.time - last_message > 20)
 			src.occupant_message("Unable to move while in zoom mode.")

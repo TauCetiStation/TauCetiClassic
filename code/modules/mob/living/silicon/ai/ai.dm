@@ -664,7 +664,7 @@ var/list/ai_verbs_default = list(
 		if(C.hidden)
 			continue
 
-		var/list/tempnetwork = difflist(C.network,RESTRICTED_CAMERA_NETWORKS,1)
+		var/list/tempnetwork = difflist(C.network, RESTRICTED_CAMERA_NETWORKS,1)
 		if(tempnetwork.len)
 			for(var/i in tempnetwork)
 				cameralist[i] = i

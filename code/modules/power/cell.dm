@@ -36,7 +36,7 @@
 		return 0
 
 	if(maxcharge < amount)	return 0
-	var/power_used = min(maxcharge-charge,amount)
+	var/power_used = min(maxcharge-charge, amount)
 	if(crit_fail)	return 0
 	if(!prob(reliability))
 		minor_fault++
@@ -64,7 +64,7 @@
 		var/obj/item/clothing/gloves/space_ninja/SNG = H.gloves
 		if(!istype(SNG) || !SNG.candrain || !SNG.draining) return
 
-		SNG.drain("CELL",src,H.wear_suit)
+		SNG.drain("CELL",src, H.wear_suit)
 	return
 
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)

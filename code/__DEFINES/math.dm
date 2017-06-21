@@ -12,7 +12,7 @@
 
 #define ceil(x) (-round(-(x)))
 
-#define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
+#define Clamp(CLVALUE, CLMIN, CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
 #define CLAMP01(x) (Clamp(x, 0, 1))
 
 // Converts 255 RGB color values to float and returns that as matrix, where color applied into contrast row.

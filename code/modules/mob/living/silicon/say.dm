@@ -12,7 +12,7 @@
 #define IS_ROBOT 2
 #define IS_PAI 3
 
-/mob/living/silicon/say_understands(other,datum/language/speaking = null)
+/mob/living/silicon/say_understands(other, datum/language/speaking = null)
 	// These only pertain to common. Languages are handled by mob/say_understands()
 	if (!speaking)
 		if (iscarbon(other) && !isIAN(other))
@@ -31,7 +31,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (src.client.handle_spam_prevention(message, MUTE_IC))
 			return*/
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -91,10 +91,10 @@
 					return AI.holopad_talk(message, verb, speaking)
 				if(IS_ROBOT)
 					log_say("[key_name(src)] : [message]")
-					R.radio.talk_into(src,message,message_mode,verb,speaking)
+					R.radio.talk_into(src, message, message_mode, verb, speaking)
 				if(IS_PAI)
 					log_say("[key_name(src)] : [message]")
-					P.radio.talk_into(src,message,message_mode,verb,speaking)
+					P.radio.talk_into(src, message, message_mode, verb, speaking)
 			return 1
 
 		if("binary")
@@ -121,13 +121,13 @@
 						return
 					else
 						log_say("[key_name(src)] : [message]")
-						AI.aiRadio.talk_into(src,message,null,verb,speaking)
+						AI.aiRadio.talk_into(src, message, null, verb, speaking)
 				if(IS_ROBOT)
 					log_say("[key_name(src)] : [message]")
-					R.radio.talk_into(src,message,null,verb,speaking)
+					R.radio.talk_into(src, message, null, verb, speaking)
 				if(IS_PAI)
 					log_say("[key_name(src)] : [message]")
-					P.radio.talk_into(src,message,null,verb,speaking)
+					P.radio.talk_into(src, message, null, verb, speaking)
 			return 1
 
 		else
@@ -139,16 +139,16 @@
 							return
 						else
 							log_say("[key_name(src)] : [message]")
-							AI.aiRadio.talk_into(src,message,message_mode,verb,speaking)
+							AI.aiRadio.talk_into(src, message, message_mode, verb, speaking)
 					if(IS_ROBOT)
 						log_say("[key_name(src)] : [message]")
-						R.radio.talk_into(src,message,message_mode,verb,speaking)
+						R.radio.talk_into(src, message, message_mode, verb, speaking)
 					if(IS_PAI)
 						log_say("[key_name(src)] : [message]")
-						P.radio.talk_into(src,message,message_mode,verb,speaking)
+						P.radio.talk_into(src, message, message_mode, verb, speaking)
 				return 1
 
-	return ..(html_decode(message),speaking,verb)
+	return ..(html_decode(message),speaking, verb)
 
 // For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, verb, datum/language/speaking)

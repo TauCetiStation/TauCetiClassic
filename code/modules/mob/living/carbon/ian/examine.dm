@@ -67,7 +67,7 @@
 	if(neck)
 		msg += "[t_He] [t_is] wearing [bicon(neck)] \a [neck] on [t_his] neck.\n"
 
-	var/distance = get_dist(user,src)
+	var/distance = get_dist(user, src)
 	if(isobserver(user) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
 

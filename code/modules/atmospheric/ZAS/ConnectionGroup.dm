@@ -104,7 +104,7 @@ Class Procs:
 			// Check for things that are in range of the midpoint turfs.
 			var/list/close_turfs = list()
 			for(var/turf/U in connecting_turfs)
-				if(get_dist(M,U) < world.view)
+				if(get_dist(M, U) < world.view)
 					close_turfs += U
 			if(!close_turfs.len) continue
 
@@ -128,7 +128,7 @@ Class Procs:
 	src.B = B
 	A.edges.Add(src)
 	B.edges.Add(src)
-	// id = edge_id(A,B)
+	// id = edge_id(A, B)
 	// world << "New edge between [A] and [B]"
 
 /connection_edge/zone/add_connection(connection/c)
@@ -165,7 +165,7 @@ Class Procs:
 			return
 
 	// SSair.equalize(A, B)
-	ShareRatio(A.air,B.air,coefficient)
+	ShareRatio(A.air, B.air, coefficient)
 	SSair.mark_zone_update(A)
 	SSair.mark_zone_update(B)
 	// world << "equalized."
@@ -226,7 +226,7 @@ Class Procs:
 		return
 	// world << "[id]: Tick [SSair.current_cycle]: To [B]!"
 	// A.air.mimic(B, coefficient)
-	ShareSpace(A.air,air,dbg_out)
+	ShareSpace(A.air, air, dbg_out)
 	SSair.mark_zone_update(A)
 
 	var/differential = A.air.return_pressure() - air.return_pressure()

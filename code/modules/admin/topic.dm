@@ -996,10 +996,10 @@
 			if("show")
 				notes_show(ckey)
 			if("add")
-				notes_add(ckey,href_list["text"])
+				notes_add(ckey, href_list["text"])
 				notes_show(ckey)
 			if("remove")
-				notes_remove(ckey,text2num(href_list["from"]),text2num(href_list["to"]))
+				notes_remove(ckey, text2num(href_list["from"]),text2num(href_list["to"]))
 				notes_show(ckey)
 */
 
@@ -1402,7 +1402,7 @@
 			return
 		var/block=text2num(href_list["block"])
 		// testing("togmutate([href_list["block"]] -> [block])")
-		usr.client.cmd_admin_toggle_block(H,block)
+		usr.client.cmd_admin_toggle_block(H, block)
 		show_player_panel(H)
 		// H.regenerate_icons()
 
@@ -1448,7 +1448,7 @@
 		var/client/C = usr.client
 		if(!isobserver(usr))	C.admin_ghost()
 		sleep(2)
-		C.jumptocoord(x,y,z)
+		C.jumptocoord(x, y,z)
 
 	else if(href_list["adminchecklaws"])
 		output_ai_laws()
@@ -1495,7 +1495,7 @@
 
 		// Gener
 		switch(M.gender)
-			if(MALE,FEMALE)	gender_description = "[M.gender]"
+			if(MALE, FEMALE)	gender_description = "[M.gender]"
 			else			gender_description = "<font color='red'><b>[M.gender]</b></font>"
 
 		to_chat(src.owner, "<b>Info about [M.name]:</b> ")
@@ -1772,7 +1772,7 @@
 					if ("absolute")
 						target = locate(0 + X,0 + Y,0 + Z)
 					if ("relative")
-						target = locate(loc.x + X,loc.y + Y,loc.z + Z)
+						target = locate(loc.x + X, loc.y + Y, loc.z + Z)
 			if("inmarked")
 				if(!marked_datum)
 					to_chat(usr, "You don't have any object marked. Abandoning spawn.")
@@ -1889,7 +1889,7 @@
 					return
 				gravity_is_on = !gravity_is_on
 				for(var/area/A in all_areas)
-					A.gravitychange(gravity_is_on,A)
+					A.gravitychange(gravity_is_on, A)
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","Grav")
 				if(gravity_is_on)
@@ -2501,7 +2501,7 @@
 				for(var/obj/machinery/door/airlock/maintenance/M in machines)
 					if (access_maint_tunnels in M.req_access)
 						M.req_access = list()
-						M.req_one_access = list(access_brig,access_engine)
+						M.req_one_access = list(access_brig, access_engine)
 				message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
 			if("infinite_sec")
 				var/datum/job/J = SSjob.GetJob("Security Officer")
@@ -2731,9 +2731,9 @@
 	else if(href_list["vsc"])
 		if(check_rights(R_ADMIN|R_SERVER))
 			if(href_list["vsc"] == "airflow")
-				vsc.ChangeSettingsDialog(usr,vsc.settings)
+				vsc.ChangeSettingsDialog(usr, vsc.settings)
 			if(href_list["vsc"] == "phoron")
-				vsc.ChangeSettingsDialog(usr,vsc.plc.settings)
+				vsc.ChangeSettingsDialog(usr, vsc.plc.settings)
 			if(href_list["vsc"] == "default")
 				vsc.SetDefault(usr)
 
@@ -2758,7 +2758,7 @@
 		var/add = input("Add Player Info") as null|text
 		if(!add) return
 
-		notes_add(key,add,usr)
+		notes_add(key, add, usr)
 		show_player_info(key)
 
 	if(href_list["remove_player_info"])

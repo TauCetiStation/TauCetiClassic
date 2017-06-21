@@ -191,7 +191,7 @@
 /obj/structure/gravemarker/random/proc/generate()
 	icon_state = pick("wood","cross")
 
-	var/nam = random_name(pick(MALE,FEMALE))
+	var/nam = random_name(pick(MALE, FEMALE))
 	var/cur_year = text2num(time2text(world.timeofday, "YYYY"))+544
 	var/born = cur_year - rand(5,150)
 	var/died = max(cur_year - rand(0,70),born)

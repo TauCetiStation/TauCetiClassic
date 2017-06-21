@@ -74,7 +74,7 @@
 
 	for (var/i in allowed_items)
 		for (var/obj/item/O in src.contents)
-			if (!istype(O,i))
+			if (!istype(O, i))
 				continue
 			processing_chamber+= "some <B>[O]</B><BR>"
 			break
@@ -154,7 +154,7 @@
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in src.contents)
 		var/r_id = get_juice_id(O)
-		beaker.reagents.add_reagent(r_id,get_juice_amount(O))
+		beaker.reagents.add_reagent(r_id, get_juice_amount(O))
 		qdel(O)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break

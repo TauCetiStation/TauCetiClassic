@@ -667,7 +667,7 @@ datum/objective/capture
 
 datum/objective/absorb
 	proc/gen_amount_goal(lowbound = 4, highbound = 6)
-		target_amount = rand (lowbound,highbound)
+		target_amount = rand (lowbound, highbound)
 		if (ticker)
 			var/n_p = 1 // autowin
 			if (ticker.current_state == GAME_STATE_SETTING_UP)
@@ -750,7 +750,7 @@ datum/objective/absorb
 // Meme objectives
 datum/objective/meme_attune
 	proc/gen_amount_goal(lowbound = 4, highbound = 6)
-		target_amount = rand (lowbound,highbound)
+		target_amount = rand (lowbound, highbound)
 		explanation_text = "Attune [target_amount] humanoid brains."
 		return target_amount
 
@@ -844,7 +844,7 @@ datum/objective/meme_attune
 	var/total_amount = 0
 
 	for(var/obj/O in locate(/area/shuttle/vox/station))
-		if(istype(O,target)) total_amount++
+		if(istype(O, target)) total_amount++
 		for(var/obj/I in O.contents)
 			if(istype(I, target))
 				total_amount++
@@ -855,7 +855,7 @@ datum/objective/meme_attune
 	for(var/datum/mind/raider in H.raiders)
 		if(raider.current)
 			for(var/obj/O in raider.current.get_contents())
-				if(istype(O,target))
+				if(istype(O, target))
 					total_amount++
 				if(total_amount >= target_amount)
 					return TRUE
@@ -921,7 +921,7 @@ datum/objective/meme_attune
 	return FALSE
 /*
 var/heist_rob_total = 0
-/proc/heist_recursive_price_check(atom/movable/AM,loop=0)
+/proc/heist_recursive_price_check(atom/movable/AM, loop=0)
 	loop++
 	if(loop > 15) return
 	heist_rob_total += AM.get_price()
@@ -929,9 +929,9 @@ var/heist_rob_total = 0
 		for(var/atom/movable/I in AM.contents)
 			heist_rob_total += I.get_price()
 			if(I.contents && I.contents.len)
-				heist_recursive_price_check(I,loop)
+				heist_recursive_price_check(I, loop)
 
-/proc/heist_recursive_price_reset(atom/movable/AM,loop=0)
+/proc/heist_recursive_price_reset(atom/movable/AM, loop=0)
 	loop++
 	if(loop > 15) return
 	AM.price = 0
@@ -939,7 +939,7 @@ var/heist_rob_total = 0
 		for(var/atom/movable/I in AM.contents)
 			I.price = 0
 			if(I.contents && I.contents.len)
-				heist_recursive_price_reset(I,loop)
+				heist_recursive_price_reset(I, loop)
 
 /proc/heist_get_shuttle_price()
 	heist_rob_total = 0

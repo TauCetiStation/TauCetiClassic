@@ -41,7 +41,7 @@
 
 // Returns the middle-most value
 /proc/dd_range(low, high, num)
-	return max(low,min(high,num))
+	return max(low, min(high, num))
 
 // Returns whether or not A is the middle most value
 /proc/InRange(A, lower, upper)
@@ -50,7 +50,7 @@
 	return 1
 
 
-/proc/Get_Angle(atom/movable/start,atom/movable/end)// For beams.
+/proc/Get_Angle(atom/movable/start, atom/movable/end)// For beams.
 	if(!start || !end) return 0
 	var/dy
 	var/dx
@@ -65,7 +65,7 @@
 		.+=360
 
 // Returns location. Returns null if no location was found.
-/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = 0, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
+/proc/get_teleport_loc(turf/location, mob/target, distance = 1, density = 0, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
 Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
 Random error in tile placement x, error in tile placement y, and block offset.
@@ -124,7 +124,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			b2xerror+=errory
 			b2yerror+=errorx
 
-	var/turf/destination=locate(location.x+dirx,location.y+diry,location.z)
+	var/turf/destination=locate(location.x+dirx, location.y+diry, location.z)
 
 	if(destination)// If there is a destination.
 		if(errorx||errory)// If errorx or y were specified.
@@ -140,7 +140,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			var/turf/center = locate((destination.x+xoffset),(destination.y+yoffset),location.z)// So now, find the new center.
 
 			// Now to find a box from center location and make that our destination.
-			for(var/turf/T in block(locate(center.x+b1xerror,center.y+b1yerror,location.z), locate(center.x+b2xerror,center.y+b2yerror,location.z) ))
+			for(var/turf/T in block(locate(center.x+b1xerror, center.y+b1yerror, location.z), locate(center.x+b2xerror, center.y+b2yerror, location.z) ))
 				if(density&&T.density)	continue// If density was specified.
 				if(T.x>world.maxx || T.x<1)	continue// Don't want them to teleport off the map.
 				if(T.y>world.maxy || T.y<1)	continue
@@ -160,10 +160,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/sign(x)
 	return x!=0?x/abs(x):0
 
-/proc/getline(atom/M,atom/N)// Ultra-Fast Bresenham Line-Drawing Algorithm
+/proc/getline(atom/M, atom/N)// Ultra-Fast Bresenham Line-Drawing Algorithm
 	var/px=M.x		// starting x
 	var/py=M.y
-	var/line[] = list(locate(px,py,M.z))
+	var/line[] = list(locate(px, py, M.z))
 	var/dx=N.x-px	// x distance
 	var/dy=N.y-py
 	var/dxabs=abs(dx)// Absolute value of x distance
@@ -180,7 +180,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				y-=dxabs
 				py+=sdy
 			px+=sdx		// Step on in x direction
-			line+=locate(px,py,M.z)// Add the turf to the list
+			line+=locate(px, py, M.z)// Add the turf to the list
 	else
 		for(j=0;j<dyabs;j++)
 			x+=dxabs
@@ -188,7 +188,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				x-=dyabs
 				px+=sdx
 			py+=sdy
-			line+=locate(px,py,M.z)
+			line+=locate(px, py, M.z)
 	return line
 
 // Returns whether or not a player is a guest using their ckey as an input
@@ -221,7 +221,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 // This will update a mob's name, real_name, mind.name, data_core records, pda and id
 // Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
-/mob/proc/fully_replace_character_name(oldname,newname)
+/mob/proc/fully_replace_character_name(oldname, newname)
 	if(!newname)	return 0
 	real_name = newname
 	name = newname
@@ -232,7 +232,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(oldname)
 		// update the datacore records! This is goig to be a bit costly.
-		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
+		for(var/list/L in list(data_core.general, data_core.medical, data_core.security, data_core.locked))
 			for(var/datum/data/record/R in L)
 				if(R.fields["name"] == oldname)
 					R.fields["name"] = newname
@@ -276,7 +276,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			newname = input(src,"You are a [role]. Would you like to change your name to something else?", "Name change",oldname) as text
 			if((world.time-time_passed)>300)
 				return	// took too long
-			newname = reject_bad_name(newname,allow_numbers)	// returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
+			newname = reject_bad_name(newname, allow_numbers)	// returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
 
 			for(var/mob/living/M in player_list)
 				if(M == src)
@@ -307,7 +307,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					A.aiPDA.name = newname + " (" + A.aiPDA.ownjob + ")"
 
 
-		fully_replace_character_name(oldname,newname)
+		fully_replace_character_name(oldname, newname)
 
 
 
@@ -558,7 +558,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(direction & WEST)
 		x = max(1, x - range)
 
-	return locate(x,y,A.z)
+	return locate(x, y,A.z)
 
 
 // returns turf relative to A offset in dx and dy tiles
@@ -566,7 +566,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/get_offset_target_turf(atom/A, dx, dy)
 	var/x = min(world.maxx, max(1, A.x + dx))
 	var/y = min(world.maxy, max(1, A.y + dy))
-	return locate(x,y,A.z)
+	return locate(x, y,A.z)
 
 // Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value.
 /proc/between(low, middle, high)
@@ -578,7 +578,7 @@ proc/arctan(x)
 
 // returns random gauss number
 proc/GaussRand(sigma)
-  var/x,y,rsq
+  var/x, y,rsq
   do
     x=2*rand()-1
     y=2*rand()-1
@@ -587,10 +587,10 @@ proc/GaussRand(sigma)
   return sigma*y*sqrt(-2*log(rsq)/rsq)
 
 // returns random gauss number, rounded to 'roundto'
-proc/GaussRandRound(sigma,roundto)
+proc/GaussRandRound(sigma, roundto)
 	return round(GaussRand(sigma),roundto)
 
-proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,direction)
+proc/anim(turf/location, target, a_icon, a_icon_state, flick_anim, sleeptime = 0,direction)
 // This proc throws up either an icon or an animation for a specified amount of time.
 // The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
@@ -643,8 +643,8 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 	return cant_pass
 
 /proc/get_step_towards2(atom/ref , atom/trg)
-	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
-	var/turf/temp = get_step_towards(ref,trg)
+	var/base_dir = get_dir(ref, get_step_towards(ref, trg))
+	var/turf/temp = get_step_towards(ref, trg)
 
 	if(is_blocked_turf(temp))
 		var/dir_alt1 = turn(base_dir, 90)
@@ -666,7 +666,7 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 			breakpoint++
 
 		if(!free_tile) return get_step(ref, base_dir)
-		else return get_step_towards(ref,free_tile)
+		else return get_step_towards(ref, free_tile)
 
 	else return get_step(ref, base_dir)
 
@@ -1033,17 +1033,17 @@ proc/anyprob(value)
 proc/view_or_range(distance = world.view , center = usr , type)
 	switch(type)
 		if("view")
-			. = view(distance,center)
+			. = view(distance, center)
 		if("range")
-			. = range(distance,center)
+			. = range(distance, center)
 	return
 
 proc/oview_or_orange(distance = world.view , center = usr , type)
 	switch(type)
 		if("view")
-			. = oview(distance,center)
+			. = oview(distance, center)
 		if("range")
-			. = orange(distance,center)
+			. = orange(distance, center)
 	return
 
 proc/get_mob_with_client_list()
@@ -1334,7 +1334,7 @@ var/list/WALLITEMS = typecacheof(list(
 	var/minp=16777216;
 	var/maxp=0;
 	for(var/dir in cardinal)
-		var/turf/simulated/T=get_turf(get_step(loc,dir))
+		var/turf/simulated/T=get_turf(get_step(loc, dir))
 		var/cp=0
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
@@ -1394,28 +1394,28 @@ var/mob/dview/dview_mob = new
 		y = t_center.y + c_dist
 		x = t_center.x - c_dist + 1
 		for(x in x to t_center.x+c_dist)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 				L += T.contents
 		y = t_center.y + c_dist - 1
 		x = t_center.x + c_dist
 		for(y in t_center.y-c_dist to y)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 				L += T.contents
 		y = t_center.y - c_dist
 		x = t_center.x + c_dist - 1
 		for(x in t_center.x-c_dist to x)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 				L += T.contents
 		y = t_center.y - c_dist + 1
 		x = t_center.x - c_dist
 		for(y in y to t_center.y+c_dist)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 				L += T.contents
@@ -1509,7 +1509,7 @@ var/mob/dview/dview_mob = new
 		y = t_center.y + c_dist
 		x = t_center.x - c_dist + 1
 		for(x in x to t_center.x+c_dist)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 				L += T.contents
@@ -1517,7 +1517,7 @@ var/mob/dview/dview_mob = new
 		y = t_center.y + c_dist - 1
 		x = t_center.x + c_dist
 		for(y in t_center.y-c_dist to y)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 				L += T.contents
@@ -1525,7 +1525,7 @@ var/mob/dview/dview_mob = new
 		y = t_center.y - c_dist
 		x = t_center.x + c_dist - 1
 		for(x in t_center.x-c_dist to x)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 				L += T.contents
@@ -1533,7 +1533,7 @@ var/mob/dview/dview_mob = new
 		y = t_center.y - c_dist + 1
 		x = t_center.x - c_dist
 		for(y in y to t_center.y+c_dist)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 				L += T.contents
@@ -1566,28 +1566,28 @@ var/mob/dview/dview_mob = new
 		y = t_center.y + c_dist
 		x = t_center.x - c_dist + 1
 		for(x in x to t_center.x+c_dist)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 
 		y = t_center.y + c_dist - 1
 		x = t_center.x + c_dist
 		for(y in t_center.y-c_dist to y)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 
 		y = t_center.y - c_dist
 		x = t_center.x + c_dist - 1
 		for(x in t_center.x-c_dist to x)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 
 		y = t_center.y - c_dist + 1
 		x = t_center.x - c_dist
 		for(y in y to t_center.y+c_dist)
-			T = locate(x,y,t_center.z)
+			T = locate(x, y,t_center.z)
 			if(T)
 				L += T
 		c_dist++

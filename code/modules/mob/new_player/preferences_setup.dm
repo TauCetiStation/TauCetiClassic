@@ -17,7 +17,7 @@ datum/preferences
 		undershirt = rand(1,undershirt_t.len)
 		socks = rand(1,socks_t.len)
 		backbag = 2
-		age = rand(AGE_MIN,AGE_MAX)
+		age = rand(AGE_MIN, AGE_MAX)
 		if(H)
 			copy_to(H)
 

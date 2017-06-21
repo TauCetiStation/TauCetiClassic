@@ -76,7 +76,7 @@ var/list/datum/puddle/puddles = list()
 	var/list/spread_directions = list(1,2,4,8)
 	var/turf/loc_turf = loc
 	for(var/direction in spread_directions)
-		var/turf/T = get_step(src,direction)
+		var/turf/T = get_step(src, direction)
 		if(!T)
 			spread_directions.Remove(direction)
 			// world << "ERROR: Map edge!"
@@ -111,7 +111,7 @@ var/list/datum/puddle/puddles = list()
 	var/volume_per_tile = volume_difference / spread_directions.len
 
 	for(var/direction in spread_directions)
-		var/turf/T = get_step(src,direction)
+		var/turf/T = get_step(src, direction)
 		if(!T)
 			// world << "ERROR: Map edge 2!"
 			continue // Map edge

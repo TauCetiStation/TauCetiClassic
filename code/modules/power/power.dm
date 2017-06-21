@@ -153,8 +153,8 @@
 	var/turf/T
 
 	for(var/card in cardinal)
-		T = get_step(loc,card)
-		cdir = get_dir(T,loc)
+		T = get_step(loc, card)
+		cdir = get_dir(T, loc)
 
 		for(var/obj/structure/cable/C in T)
 			if(C.powernet)	continue
@@ -172,8 +172,8 @@
 	var/turf/T
 
 	for(var/card in cardinal)
-		T = get_step(loc,card)
-		cdir = get_dir(T,loc)
+		T = get_step(loc, card)
+		cdir = get_dir(T, loc)
 
 		for(var/obj/structure/cable/C in T)
 			if(C.d1 == cdir || C.d2 == cdir)

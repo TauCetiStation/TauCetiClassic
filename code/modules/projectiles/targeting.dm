@@ -50,11 +50,11 @@
 	if(ismob(A) && isliving(A) && !(A in target))
 		Aim(A) 	// Clicked a mob, aim at them
 	else  		// Didn't click someone, check if there is anyone along that guntrace
-		var/mob/living/M = GunTrace(usr.x,usr.y,A.x,A.y,usr.z,usr)  // Find dat mob.
+		var/mob/living/M = GunTrace(usr.x, usr.y, A.x, A.y, usr.z, usr)  // Find dat mob.
 		if(M && isliving(M) && M in view(user) && !(M in target))
 			Aim(M) // Aha!  Aim at them!
 		else if(!ismob(M) || (ismob(M) && !(M in view(user)))) // Nope!  They weren't there!
-			Fire(A,user,params)  // Fire like normal, then.
+			Fire(A, user, params)  // Fire like normal, then.
 	usr.dir = get_cardinal_dir(src, A)
 
 // Aiming at the target mob.
@@ -80,10 +80,10 @@
 		return
 	M.last_move_intent = world.time
 	if( can_fire() )
-		var/firing_check = can_hit(T,usr) // 0 if it cannot hit them, 1 if it is capable of hitting, and 2 if a special check is preventing it from firing.
+		var/firing_check = can_hit(T, usr) // 0 if it cannot hit them, 1 if it is capable of hitting, and 2 if a special check is preventing it from firing.
 		if(firing_check > 0)
 			if(firing_check == 1)
-				Fire(T,usr, reflex = 1)
+				Fire(T, usr, reflex = 1)
 		else if(!told_cant_shoot)
 			to_chat(M, "\red They can't be hit from here!")
 			told_cant_shoot = 1
@@ -101,7 +101,7 @@
 
 #define SIGN(X) ((X<0)?-1:1)
 
-/proc/GunTrace(X1,Y1,X2,Y2,Z=1,exc_obj,PX1=16,PY1=16,PX2=16,PY2=16)
+/proc/GunTrace(X1,Y1,X2,Y2,Z=1,exc_obj, PX1=16,PY1=16,PX2=16,PY2=16)
 	// bluh << "Tracin' [X1],[Y1] to [X2],[Y2] on floor [Z]."
 	var/turf/T
 	var/mob/living/M

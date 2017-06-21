@@ -34,28 +34,28 @@
 				projectile:linked_spells += proj_type
 			projectile.icon = proj_icon
 			projectile.icon_state = proj_icon_state
-			projectile.dir = get_dir(target,projectile)
+			projectile.dir = get_dir(target, projectile)
 			projectile.name = proj_name
 
 			var/current_loc = usr.loc
 
 			projectile.loc = current_loc
 
-			for(var/i = 0,i < proj_lifespan,i++)
+			for(var/i = 0,i < proj_lifespan, i++)
 				if(!projectile)
 					break
 
 				if(proj_homing)
 					if(proj_insubstantial)
-						projectile.dir = get_dir(projectile,target)
-						projectile.loc = get_step_to(projectile,target)
+						projectile.dir = get_dir(projectile, target)
+						projectile.loc = get_step_to(projectile, target)
 					else
-						step_to(projectile,target)
+						step_to(projectile, target)
 				else
 					if(proj_insubstantial)
-						projectile.loc = get_step(projectile,dir)
+						projectile.loc = get_step(projectile, dir)
 					else
-						step(projectile,dir)
+						step(projectile, dir)
 
 				if(!proj_lingering && projectile.loc == current_loc) // if it didn't move since last time
 					qdel(projectile)
@@ -71,7 +71,7 @@
 							spawn(proj_trail_lifespan)
 								qdel(trail)
 
-				if(projectile.loc in range(target.loc,proj_trigger_range))
+				if(projectile.loc in range(target.loc, proj_trigger_range))
 					projectile.perform(list(target))
 					break
 

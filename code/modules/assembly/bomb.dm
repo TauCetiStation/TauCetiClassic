@@ -79,7 +79,7 @@
 
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 
-/obj/item/weapon/tank/proc/bomb_assemble(W,user)	// Bomb assembly proc. This turns assembly+tank into a bomb
+/obj/item/weapon/tank/proc/bomb_assemble(W, user)	// Bomb assembly proc. This turns assembly+tank into a bomb
 	var/obj/item/device/assembly_holder/S = W
 	var/mob/M = user
 	if(!S.secured)										// Check if the assembly is secured
@@ -90,7 +90,7 @@
 	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
 
 	M.drop_item()			// Remove the assembly from your hands
-	M.remove_from_mob(src)	// Remove the tank from your character,in case you were holding it
+	M.remove_from_mob(src)	// Remove the tank from your character, in case you were holding it
 	M.put_in_hands(R)		// Equips the bomb if possible, or puts it on the floor.
 
 	R.bombassembly = S	// Tell the bomb about its assembly part

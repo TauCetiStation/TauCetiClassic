@@ -327,7 +327,7 @@
 			usr << browse(text, "window=sdql_result")
 
 
-/client/Topic(href,href_list[],hsrc)
+/client/Topic(href, href_list[],hsrc)
 	if(href_list["SDQL_select"])
 		debug_variables(locate(href_list["SDQL_select"]))
 

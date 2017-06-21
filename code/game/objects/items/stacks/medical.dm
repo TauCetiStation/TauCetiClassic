@@ -97,7 +97,7 @@
 				use(used)
 		else
 			if(can_operate(H))        // Checks if mob is lying down on table for surgery
-				if(do_surgery(H,user,src))
+				if(do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
@@ -138,7 +138,7 @@
 				use(1)
 		else
 			if(can_operate(H))        // Checks if mob is lying down on table for surgery
-				if(do_surgery(H,user,src))
+				if(do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
@@ -214,7 +214,7 @@
 				use(used)
 		else
 			if(can_operate(H))        // Checks if mob is lying down on table for surgery
-				if(do_surgery(H,user,src))
+				if(do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
@@ -255,7 +255,7 @@
 				use(1)
 		else
 			if(can_operate(H))        // Checks if mob is lying down on table for surgery
-				if (do_surgery(H,user,src))
+				if (do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")

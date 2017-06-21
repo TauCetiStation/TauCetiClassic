@@ -89,16 +89,16 @@
 		to_chat(user, "There's nothing in [src] to fire!")
 		return 0
 	else
-		spawn(0) Fire(target,user,params)
+		spawn(0) Fire(target, user, params)
 
 /obj/item/weapon/storage/pneumatic/attack(mob/living/M, mob/living/user, def_zone)
 	if (length(contents) > 0)
 		if(user.a_intent == "hurt")
 			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
-			Fire(M,user)
+			Fire(M, user)
 			return
 		else
-			Fire(M,user)
+			Fire(M, user)
 			return
 
 /obj/item/weapon/storage/pneumatic/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
@@ -130,7 +130,7 @@
 
 	user.visible_message("<span class='danger'>[user] fires [src] and launches [object] at [target]!</span>","<span class='danger'>You fire [src] and launch [object] at [target]!</span>")
 
-	src.remove_from_storage(object,user.loc)
+	src.remove_from_storage(object, user.loc)
 	object.throw_at(target, speed + 1, speed, user)
 
 	var/lost_gas_amount = tank.air_contents.total_moles*(pressure_setting/100)

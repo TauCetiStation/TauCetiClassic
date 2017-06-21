@@ -108,14 +108,14 @@
 
 /obj/effect/cellular_biomass_controller/proc/spread_wall(obj/structure/cellular_biomass/wall/growing)
 	var/turf/T = growing.loc
-	var/turf/S = get_step(T,pick(1,2,4,8))
+	var/turf/S = get_step(T, pick(1,2,4,8))
 	if(locate(/obj/structure/cellular_biomass, S))
 		return
 	if(istype(S,/turf/simulated/wall) || istype(S,/turf/simulated/mineral))
 		if(calcEnergy(S)==3)
 			S.blob_act()
 		return
-	if(T.CanPass(growing,S))
+	if(T.CanPass(growing, S))
 		for(var/obj/A in S) // Del everything.
 			qdel(A)
 		spawn_cellular_biomass_piece(S, growing)

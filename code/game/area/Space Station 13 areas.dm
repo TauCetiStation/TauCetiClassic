@@ -1254,7 +1254,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	S.status = SOUND_UPDATE
 	process()
 
-/area/awaymission/beach/Entered(atom/movable/Obj,atom/OldLoc)
+/area/awaymission/beach/Entered(atom/movable/Obj, atom/OldLoc)
 	if(ismob(Obj))
 		if(Obj:client)
 			mysound.status = SOUND_UPDATE
@@ -1371,7 +1371,7 @@ var/list/the_station_areas = list (
 	S.status = SOUND_UPDATE
 	process()
 
-/area/beach/Entered(atom/movable/Obj,atom/OldLoc)
+/area/beach/Entered(atom/movable/Obj, atom/OldLoc)
 	if(ismob(Obj))
 		if(Obj:client)
 			mysound.status = SOUND_UPDATE

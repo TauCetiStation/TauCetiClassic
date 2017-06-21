@@ -16,7 +16,7 @@ var/list/doppler_arrays = list()
 /obj/machinery/doppler_array/process()
 	return PROCESS_KILL
 
-/obj/machinery/doppler_array/proc/sense_explosion(x0,y0,z0,devastation_range,heavy_impact_range,light_impact_range,took)
+/obj/machinery/doppler_array/proc/sense_explosion(x0,y0,z0,devastation_range, heavy_impact_range, light_impact_range, took)
 	if(stat & NOPOWER)	return
 	if(z != z0)			return
 

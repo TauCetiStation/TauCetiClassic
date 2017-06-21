@@ -7,7 +7,7 @@ What are the archived variables for?
 #define SPECIFIC_HEAT_TOXIN		200
 #define SPECIFIC_HEAT_AIR		20
 #define SPECIFIC_HEAT_CDO		30
-#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,phoron) \
+#define HEAT_CAPACITY_CALCULATION(oxygen, carbon_dioxide, nitrogen, phoron) \
 	max(0, carbon_dioxide * SPECIFIC_HEAT_CDO + (oxygen + nitrogen) * SPECIFIC_HEAT_AIR + phoron * SPECIFIC_HEAT_TOXIN)
 
 #define MINIMUM_HEAT_CAPACITY	0.0003
@@ -108,13 +108,13 @@ What are the archived variables for?
 	// Inputs: None
 	// Outputs: Heat capacity
 
-	var/heat_capacity = HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,phoron)
+	var/heat_capacity = HEAT_CAPACITY_CALCULATION(oxygen, carbon_dioxide, nitrogen, phoron)
 
 	if(trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
 			heat_capacity += trace_gas.moles*trace_gas.specific_heat
 
-	return max(MINIMUM_HEAT_CAPACITY,heat_capacity)
+	return max(MINIMUM_HEAT_CAPACITY, heat_capacity)
 
 /datum/gas_mixture/proc/heat_capacity_archived()
 	// Purpose: Returning the archived heat capacity of the gas mix
@@ -122,13 +122,13 @@ What are the archived variables for?
 	// Inputs: None
 	// Outputs: Archived heat capacity
 
-	var/heat_capacity_archived = HEAT_CAPACITY_CALCULATION(oxygen_archived,carbon_dioxide_archived,nitrogen_archived,phoron_archived)
+	var/heat_capacity_archived = HEAT_CAPACITY_CALCULATION(oxygen_archived, carbon_dioxide_archived, nitrogen_archived, phoron_archived)
 
 	if(trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
 			heat_capacity_archived += trace_gas.moles_archived*trace_gas.specific_heat
 
-	return max(MINIMUM_HEAT_CAPACITY,heat_capacity_archived)
+	return max(MINIMUM_HEAT_CAPACITY, heat_capacity_archived)
 
 /datum/gas_mixture/proc/total_moles()
 	return total_moles
@@ -378,7 +378,7 @@ What are the archived variables for?
 	// Outputs: Removed air.
 
 	var/sum = total_moles()
-	amount = min(amount,sum) // Can not take more air than tile has!
+	amount = min(amount, sum) // Can not take more air than tile has!
 	if(amount <= 0)
 		return null
 
@@ -453,7 +453,7 @@ What are the archived variables for?
 	// Inputs: Number of moles to remove
 	// Outputs: Removed air or 0 if it can remove air or not.
 
-	amount = min(amount,total_moles()) // Can not take more air than tile has!
+	amount = min(amount, total_moles()) // Can not take more air than tile has!
 
 	if((amount > MINIMUM_AIR_RATIO_TO_SUSPEND) && (amount > total_moles()*MINIMUM_AIR_RATIO_TO_SUSPEND))
 		return 0

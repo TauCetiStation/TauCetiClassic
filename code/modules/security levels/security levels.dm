@@ -44,7 +44,7 @@
 					to_chat(world, "<font color='red'>[config.alert_desc_red_downto]</font>")
 				security_level = SEC_LEVEL_RED
 
-				var/obj/machinery/computer/communications/CC = locate(/obj/machinery/computer/communications,world)
+				var/obj/machinery/computer/communications/CC = locate(/obj/machinery/computer/communications, world)
 				if(CC)
 					CC.post_status("alert", "redalert")
 

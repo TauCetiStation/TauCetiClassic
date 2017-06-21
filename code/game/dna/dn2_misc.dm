@@ -89,7 +89,7 @@
 					M.take_overall_damage(35, used_weapon = "Hulk Foot")
 		var/snd = 1
 		for(var/direction in alldirs)
-			var/turf/T = get_step(src,direction)
+			var/turf/T = get_step(src, direction)
 			for(var/mob/living/M in T.contents)
 				if( (M != usr) && !(M.stat))
 					if(snd)
@@ -140,11 +140,11 @@
 		src.verbs -= /mob/living/carbon/human/proc/hulk_dash
 		return
 
-	var/turf/T = get_turf(get_step(usr,usr.dir))
+	var/turf/T = get_turf(get_step(usr, usr.dir))
 	for(var/mob/living/M in T.contents)
 		to_chat(usr, "\red Something right in front of you!")
 		return
-	T = get_turf(get_step(T,usr.dir))
+	T = get_turf(get_step(T, usr.dir))
 	for(var/mob/living/M in T.contents)
 		to_chat(usr, "\red Something right in front of you!")
 		return
@@ -191,7 +191,7 @@
 		var/speed = 3
 		for(var/i=0, i<30, i++)
 			var/hit = 0
-			T = get_turf(get_step(usr,usr.dir))
+			T = get_turf(get_step(usr, usr.dir))
 			if(i < 7)
 				if(istype(T,/turf/simulated/wall/))
 					hit = 1
@@ -238,11 +238,11 @@
 						usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_dash</font>"
 						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_dash</font>"
 						msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_dash")
-						var/turf/target = get_turf(get_step(usr,cur_dir))
+						var/turf/target = get_turf(get_step(usr, cur_dir))
 						hit = 1
 						playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 						for(var/o=0, o<10, o++)
-							target = get_turf(get_step(target,cur_dir))
+							target = get_turf(get_step(target, cur_dir))
 						var/mob/living/carbon/human/H = M
 						if(istype(H,/mob/living/carbon/human/))
 							var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
@@ -345,7 +345,7 @@
 		usr.visible_message("\red <b>[usr.name] slams the ground with \his arms!</b>")
 		playsound(usr.loc, 'sound/effects/explosionfar.ogg', 50, 1)
 		var/cur_dir = usr.dir
-		var/turf/T = get_turf(get_step(usr,cur_dir))
+		var/turf/T = get_turf(get_step(usr, cur_dir))
 		var/turf/simulated/floor/tile = T
 		var/turf/simulated/wall/W = T
 		if(istype(tile))

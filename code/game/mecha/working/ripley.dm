@@ -25,7 +25,7 @@
 	..()
 	update_icon()
 
-/obj/mecha/working/ripley/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
+/obj/mecha/working/ripley/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc, mob/user)
 	..()
 	update_icon()
 

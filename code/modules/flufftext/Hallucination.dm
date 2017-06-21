@@ -37,7 +37,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				// src << "Traitor Items"
 				if(!halitem)
 					halitem = new
-					var/list/slots_free = list(ui_lhand,ui_rhand)
+					var/list/slots_free = list(ui_lhand, ui_rhand)
 					if(l_hand) slots_free -= ui_lhand
 					if(r_hand) slots_free -= ui_rhand
 					if(istype(src,/mob/living/carbon/human))
@@ -86,7 +86,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				// src << "Danger Flash"
 				if(!halimage)
 					var/list/possible_points = list()
-					for(var/turf/simulated/floor/F in view(src,world.view))
+					for(var/turf/simulated/floor/F in view(src, world.view))
 						possible_points += F
 					if(possible_points.len)
 						var/turf/simulated/floor/target = pick(possible_points)
@@ -158,7 +158,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				// src << "Danger Flash"
 				if(!halbody)
 					var/list/possible_points = list()
-					for(var/turf/simulated/floor/F in view(src,world.view))
+					for(var/turf/simulated/floor/F in view(src, world.view))
 						possible_points += F
 					if(possible_points.len)
 						var/turf/simulated/floor/target = pick(possible_points)
@@ -214,8 +214,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/user)
 	user.do_attack_animation(src)
-	step_away(src,my_target,2)
-	for(var/mob/M in oviewers(world.view,my_target))
+	step_away(src, my_target,2)
+	for(var/mob/M in oviewers(world.view, my_target))
 		to_chat(M, "\red <B>[my_target] flails around wildly.</B>")
 	my_target.show_message("\red <B>[src] has been attacked by [my_target] </B>", 1) // Lazy.
 
@@ -226,7 +226,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/fake_attacker/Crossed(var/mob/M, somenumber)
 	if(M == my_target)
-		step_away(src,my_target,2)
+		step_away(src, my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
 				to_chat(O, "\red <B>[my_target] stumbles around.</B>")
@@ -237,7 +237,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(my_target)
 			my_target.hallucinations -= src
 		qdel(src)
-	step_away(src,my_target,2)
+	step_away(src, my_target,2)
 	spawn attack_loop()
 
 
@@ -247,16 +247,16 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 	if(src.dir == NORTH)
 		qdel(src.currentimage)
-		src.currentimage = new /image(up,src)
+		src.currentimage = new /image(up, src)
 	else if(src.dir == SOUTH)
 		qdel(src.currentimage)
-		src.currentimage = new /image(down,src)
+		src.currentimage = new /image(down, src)
 	else if(src.dir == EAST)
 		qdel(src.currentimage)
-		src.currentimage = new /image(right,src)
+		src.currentimage = new /image(right, src)
 	else if(src.dir == WEST)
 		qdel(src.currentimage)
-		src.currentimage = new /image(left,src)
+		src.currentimage = new /image(left, src)
 	my_target << currentimage
 
 
@@ -266,9 +266,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(src.health < 0)
 			collapse()
 			continue
-		if(get_dist(src,my_target) > 1)
-			src.dir = get_dir(src,my_target)
-			step_towards(src,my_target)
+		if(get_dist(src, my_target) > 1)
+			src.dir = get_dir(src, my_target)
+			step_towards(src, my_target)
 			updateimage()
 		else
 			if(prob(15))
@@ -290,7 +290,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							fake_blood(my_target)
 
 		if(prob(15))
-			step_away(src,my_target,2)
+			step_away(src, my_target,2)
 
 /obj/effect/fake_attacker/proc/collapse()
 	collapse = 1
@@ -353,9 +353,9 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	target.hallucinations += F
 
 
-	F.left = image(clone,dir = WEST)
-	F.right = image(clone,dir = EAST)
-	F.up = image(clone,dir = NORTH)
-	F.down = image(clone,dir = SOUTH)
+	F.left = image(clone, dir = WEST)
+	F.right = image(clone, dir = EAST)
+	F.up = image(clone, dir = NORTH)
+	F.down = image(clone, dir = SOUTH)
 
 	F.updateimage()

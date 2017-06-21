@@ -257,7 +257,7 @@
 			var/mob/M = tracking
 			if(istype(M))
 				if(!(tracked_name == "Unknown" && findtext(tracking.name,"Unknown"))) // we saw then disguised before
-					if(!(tracked_name == M.real_name && findtext(tracking.name,M.real_name))) // or they're still ID'd
+					if(!(tracked_name == M.real_name && findtext(tracking.name, M.real_name))) // or they're still ID'd
 						src.updateSelfDialog()// But if it's neither of those cases
 						return // you won't find em on the cameras
 			else
@@ -271,7 +271,7 @@
 		var/list/target_region = view(tracking)
 
 		for(var/obj/machinery/camera/C in (target_region & tracking_cams))
-			if(!can_see(C,tracking)) // target may have xray, that doesn't make them visible to cameras
+			if(!can_see(C, tracking)) // target may have xray, that doesn't make them visible to cameras
 				continue
 			if(C.can_use())
 				last_found = C.c_tag

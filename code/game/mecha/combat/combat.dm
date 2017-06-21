@@ -29,7 +29,7 @@
 		if(src.occupant.a_intent == "hurt")
 			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if(damtype == "brute")
-				step_away(M,src,15)
+				step_away(M, src,15)
 			/*
 			if(M.stat>1)
 				M.gib()
@@ -79,7 +79,7 @@
 			src.occupant_message("You hit [target].")
 			src.visible_message("<font color='red'><b>[src.name] hits [target].</b></font>")
 		else
-			step_away(M,src)
+			step_away(M, src)
 			src.occupant_message("You push [target] out of the way.")
 			src.visible_message("[src] pushes [target] out of the way.")
 
@@ -95,7 +95,7 @@
 					src.occupant_message("You hit [target].")
 					src.visible_message("<font color='red'><b>[src.name] hits [target]</b></font>")
 					if(!istype(target, /turf/simulated/wall))
-						target:attackby(src,src.occupant)
+						target:attackby(src, src.occupant)
 					else if(prob(5))
 						target:dismantle_wall(1)
 						src.occupant_message("\blue You smash through the wall.")
@@ -122,7 +122,7 @@
 
 /*
 	if(energy>0 && can_move)
-		if(step(src,direction))
+		if(step(src, direction))
 			can_move = 0
 			spawn(step_in) can_move = 1
 			if(overload)
@@ -216,7 +216,7 @@
 								if((!form || typeof(form)=='undefined') || (!input || typeof(input)=='undefined')){
 									return false;
 								}
-								addSubmitEvent(form,input);
+								addSubmitEvent(form, input);
 								type();
 							}
 							</script>
@@ -243,7 +243,7 @@
 	else
 		return 0
 
-/obj/mecha/combat/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
+/obj/mecha/combat/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc, mob/user)
 	if(..())
 		if(occupant.client)
 			occupant.client.mouse_pointer_icon = file("icons/mecha/mecha_mouse.dmi")
@@ -258,9 +258,9 @@
 	..()
 	return
 
-/obj/mecha/combat/Topic(href,href_list)
+/obj/mecha/combat/Topic(href, href_list)
 	..()
-	var/datum/topic_input/filter = new (href,href_list)
+	var/datum/topic_input/filter = new (href, href_list)
 	if(filter.get("close"))
 		am = null
 		return

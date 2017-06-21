@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/emote(act,m_type=1,message = null)
+/mob/living/carbon/monkey/emote(act, m_type=1,message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -19,7 +19,7 @@
 				if (client.prefs.muted & MUTE_IC)
 					to_chat(src, "\red You cannot send IC messages (muted).")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (src.client.handle_spam_prevention(message, MUTE_IC))
 					return
 			if (stat)
 				return

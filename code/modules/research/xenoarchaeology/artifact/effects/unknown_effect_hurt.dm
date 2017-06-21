@@ -22,7 +22,7 @@
 /datum/artifact_effect/hurt/DoEffectAura()
 	if(holder)
 		var/turf/T = get_turf(holder)
-		for (var/mob/living/carbon/C in range(src.effectrange,T))
+		for (var/mob/living/carbon/C in range(src.effectrange, T))
 			var/weakness = GetAnomalySusceptibility(C)
 			if(prob(weakness * 100))
 				if(prob(10))

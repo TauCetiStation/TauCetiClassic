@@ -243,7 +243,7 @@
 			return
 
 	if ( mode && target )
-		if ( get_dist(target,src) <= 1 || ( emagged && mode == FARMBOT_MODE_FERTILIZE ) )
+		if ( get_dist(target, src) <= 1 || ( emagged && mode == FARMBOT_MODE_FERTILIZE ) )
 			// If we are in emagged fertilize mode, we throw the fertilizer, so distance doesn't matter
 			frustration = 0
 			use_farmbot_item()
@@ -346,11 +346,11 @@
 		mode = 0
 		frustration = 0
 		src.path = new()
-	if(src.target && (src.path.len) && (get_dist(src.target,src.path[src.path.len]) > 2))
+	if(src.target && (src.path.len) && (get_dist(src.target, src.path[src.path.len]) > 2))
 		src.path = new()
-	if(src.target && src.path.len == 0 && (get_dist(src,src.target) > 1))
+	if(src.target && src.path.len == 0 && (get_dist(src, src.target) > 1))
 		spawn(0)
-			var/turf/dest = get_step_towards(target,src)  // Can't pathfind to a tray, as it is dense, so pathfind to the spot next to the tray
+			var/turf/dest = get_step_towards(target, src)  // Can't pathfind to a tray, as it is dense, so pathfind to the spot next to the tray
 
 			src.path = get_path_to(src, dest, /turf/proc/Distance, 0, 30,id=botcard)
 			if(src.path.len == 0)

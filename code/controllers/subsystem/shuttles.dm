@@ -546,7 +546,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			break
 		var/i = rand(1,clear_turfs.len)
 		var/turf/pickedloc = clear_turfs[i]
-		clear_turfs.Cut(i,i+1)
+		clear_turfs.Cut(i, i+1)
 
 		var/datum/supply_order/SO = S
 
@@ -669,7 +669,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	spawning = 1
 	while(spawning)
 		sleep(rand(2, 30))
-		var/obj/effect/bgstar/S = new/obj/effect/bgstar(locate(x,y,z))
+		var/obj/effect/bgstar/S = new/obj/effect/bgstar(locate(x, y,z))
 		S.direction = spawndir
 		spawn()
 			S.startmove()

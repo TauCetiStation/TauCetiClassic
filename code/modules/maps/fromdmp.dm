@@ -11,15 +11,15 @@ mob/verb/Convert(filename)
 proc/d2sm_prepmap(filename)
 	var/txt = file2text(filename)
 	if(!txt) return
-	var/i,j
-	i=findText(txt,ascii2text(13))	// eliminate carriage returns
+	var/i, j
+	i=findText(txt, ascii2text(13))	// eliminate carriage returns
 	while(i)
-		txt=copytext(txt,1,i)+copytext(txt,i+1)
-		i=findText(txt,ascii2text(13),i)
+		txt=copytext(txt,1,i)+copytext(txt, i+1)
+		i=findText(txt, ascii2text(13),i)
 	i=findText(txt,"\\\n")
 	while(i)
-		for(j=i+2,j<=length(txt),++j) if(text2ascii(txt,j)>32) break
-		txt=copytext(txt,1,i)+copytext(txt,j)
+		for(j=i+2,j<=length(txt),++j) if(text2ascii(txt, j)>32) break
+		txt=copytext(txt,1,i)+copytext(txt, j)
 		i=findText(txt,"\\\n",i)
 	return txt
 
@@ -28,18 +28,18 @@ proc/dmp2swapmap(filename)
 	// if(!txt) return
 	var/txt = d2sm_prepmap(filename)
 	var/mapname="[filename]"
-	var/i,j,k
+	var/i, j,k
 	i=findtext(mapname,".dmp")
 	while(i && i+4<length(mapname)) i=findtext(mapname,".dmp",i+1)
 	mapname=copytext(mapname,1,i)
-	/* i=findText(txt,ascii2text(13))
+	/* i=findText(txt, ascii2text(13))
 	while(i)
-		txt=copytext(txt,1,i)+copytext(txt,i+1)
-		i=findText(txt,ascii2text(13),i)
+		txt=copytext(txt,1,i)+copytext(txt, i+1)
+		i=findText(txt, ascii2text(13),i)
 	i=findText(txt,"\\\n")
 	while(i)
-		for(j=i+2,j<=length(txt),++j) if(text2ascii(txt,j)>32) break
-		txt=copytext(txt,1,i)+copytext(txt,j)
+		for(j=i+2,j<=length(txt),++j) if(text2ascii(txt, j)>32) break
+		txt=copytext(txt,1,i)+copytext(txt, j)
 		i=findText(txt,"\\\n",i) */
 	var/list/codes=new
 	var/codelen=1
@@ -63,18 +63,18 @@ proc/dmp2swapmap(filename)
 				return
 			k=findtext(txt,"\n",++i)
 			j=(k || length(txt+1))
-			while(--j>=i && text2ascii(txt,j)!=41)
+			while(--j>=i && text2ascii(txt, j)!=41)
 			if(j<i)
 				to_chat(world, "Corrupt map file [filename]: Type list following \"[code]\" is incomplete")
 				return
-			var/list/L = d2sm_ParseCommaList(copytext(txt,i,j))
+			var/list/L = d2sm_ParseCommaList(copytext(txt, i,j))
 			if(istext(L))
 				to_chat(world, "Corrupt map file [filename]: [L]")
 				return
 			if(L.len<2)
 				to_chat(world, "Corrupt map file [filename]: Type list following \"[code]\" has only 1 item")
 				return
-			txt=k?copytext(txt,k+1):null
+			txt=k?copytext(txt, k+1):null
 			if(L[L.len] == "[world.area]") L[L.len]=0
 			else
 				if(!areas) areas=list()
@@ -85,7 +85,7 @@ proc/dmp2swapmap(filename)
 					L[L.len]=areas.len
 			var/codetrans=d2sm_ConvertType(L[L.len-1],"\t\t\t\t")
 			if(L[L.len]) codetrans+="\t\t\t\tAREA = [L[L.len]]\n"
-			if(L.len>2) codetrans+=d2sm_Contents(L,L.len-2,"\t\t\t\t")
+			if(L.len>2) codetrans+=d2sm_Contents(L, L.len-2,"\t\t\t\t")
 			codes[code]=copytext(codetrans,1,length(codetrans))
 		else if(text2ascii(txt)==40)
 			mode=40
@@ -100,17 +100,17 @@ proc/dmp2swapmap(filename)
 				return
 			var/list/coords=d2sm_ParseCommaList(copytext(txt,2,i))
 			if(istext(coords) || coords.len!=3)
-				to_chat(world, "Corrupt map file [filename]: [istext(coords)?(coords):"[copytext(txt,1,i+1)] is not a valid (x,y,z) coordinate"]")
+				to_chat(world, "Corrupt map file [filename]: [istext(coords)?(coords):"[copytext(txt,1,i+1)] is not a valid (x, y,z) coordinate"]")
 				return
 			j=findtext(txt,"{",i+1)
 			if(!j)
 				to_chat(world, "Corrupt map file [filename]: No braces {} following [copytext(txt,1,i+1)]")
 				return
-			k=d2sm_MatchBrace(txt,j,123)
+			k=d2sm_MatchBrace(txt, j,123)
 			if(!k)
 				to_chat(world, "Corrupt map file [filename]: No closing brace } following [copytext(txt,1,i+1)]")
 				return
-			var/mtxt=copytext(txt,j+1,k)
+			var/mtxt=copytext(txt, j+1,k)
 			if(findText(mtxt,"\"\n")!=1 || !findText(mtxt,"\n\"",length(mtxt)-1))
 				to_chat(world, findText(mtxt,"\"\n"))
 				to_chat(world, findText(mtxt,"\n\"",length(mtxt)-1))
@@ -126,11 +126,11 @@ proc/dmp2swapmap(filename)
 			X=max(X,_x)
 			Y=max(Y,_y)
 			z=text2num(coords[3])
-			Z=max(Z,z)
-			txt=copytext(txt,k+1)
+			Z=max(Z, z)
+			txt=copytext(txt, k+1)
 		else
 			i=findtext(txt,"\n")
-			txt=i?copytext(txt,i+1):null
+			txt=i?copytext(txt, i+1):null
 	to_chat(world, "Map size: [X],[Y],[Z]")
 	// for(var/code in codes)
 	//	world << "Code \"[code]\":\n[codes[code]]"
@@ -153,14 +153,14 @@ proc/dmp2swapmap(filename)
 		// skip all non-data sections
 		if(text2ascii(txt)!=40)
 			i=findText(txt,"\n")
-			if(i) txt=copytext(txt,i+1)
+			if(i) txt=copytext(txt, i+1)
 			else txt=null
 			continue
 		i=d2sm_MatchBrace(txt,1,40)
 		var/list/coords=d2sm_ParseCommaList(copytext(txt,2,i))
 		j=findtext(txt,"{",i+1)
-		k=d2sm_MatchBrace(txt,j,123)
-		var/mtxt=copytext(txt,j+2,k-1)
+		k=d2sm_MatchBrace(txt, j,123)
+		var/mtxt=copytext(txt, j+2,k-1)
 		var/_x=0,_y=0
 		for(i=1,,++_y)
 			j=findText(mtxt,"\n",i+1)
@@ -170,15 +170,15 @@ proc/dmp2swapmap(filename)
 		// print out this z-level now
 		to_chat(F, "&emsp;[coords[3]]")
 		i=1
-		for(var/y=_y,y>0,--y)	// map is top-down
+		for(var/y=_y, y>0,--y)	// map is top-down
 			++i
 			to_chat(F, "&emsp;&emsp;[y]")
 			for(var/x in 1 to _x)
 				to_chat(F, "&emsp;&emsp;&emsp;[x]")
 				j=i+codelen
-				to_chat(F, codes[copytext(mtxt,i,j)])
+				to_chat(F, codes[copytext(mtxt, i,j)])
 				i=j
-		txt=copytext(txt,k+1)
+		txt=copytext(txt, k+1)
 	/* for(z in 1 to Z)
 		to_chat(F, "&emsp;[z]")
 		for(var/y in 1 to Y)
@@ -189,18 +189,18 @@ proc/dmp2swapmap(filename)
 
 proc/d2sm_ParseCommaList(txt)
 	var/list/L=new
-	var/i,ch
+	var/i, ch
 	for(i=1,i<=length(txt),++i)
-		if(text2ascii(txt,i)>32) break
+		if(text2ascii(txt, i)>32) break
 	for(,i<=length(txt),++i)
-		ch=text2ascii(txt,i)
+		ch=text2ascii(txt, i)
 		if(ch==44)
 			L+=copytext(txt,1,i)
-			for(++i,i<=length(txt),++i) if(text2ascii(txt,i)>32) break
-			txt=copytext(txt,i)
+			for(++i, i<=length(txt),++i) if(text2ascii(txt, i)>32) break
+			txt=copytext(txt, i)
 			i=0;continue
 		if(ch==40 || ch==91 || ch==123)
-			i=d2sm_MatchBrace(txt,i,ch)
+			i=d2sm_MatchBrace(txt, i,ch)
 			if(!i) return "No matching brace found for [ascii2text(ch)]"
 	if(i>1) L+=copytext(txt,1,i)
 	return L
@@ -208,24 +208,24 @@ proc/d2sm_ParseCommaList(txt)
 proc/d2sm_MatchBrace(txt, i, which)
 	if(which==40) ++which
 	else which+=2
-	var/j,ch
+	var/j, ch
 	for(j=i+1,j<=length(txt),++j)
-		ch=text2ascii(txt,j)
+		ch=text2ascii(txt, j)
 		if(ch==which) return j
 		if(ch==40 || ch==91 || ch==123)
-			j=d2sm_MatchBrace(txt,j,ch)
+			j=d2sm_MatchBrace(txt, j,ch)
 			if(!j) return 0
 
-proc/d2sm_ConvertType(tt,tabs="")
+proc/d2sm_ConvertType(tt, tabs="")
 	var/i=findText(tt,"{")
 	if(!i) return "[tabs]type = [tt]\n"
 	.="[tabs]type = [copytext(tt,1,i)]\n"
-	var/list/L=d2sm_ParseCommaList(copytext(tt,i+1,d2sm_MatchBrace(tt,i,123)))
+	var/list/L=d2sm_ParseCommaList(copytext(tt, i+1,d2sm_MatchBrace(tt, i,123)))
 	if(istext(L)) return
 	for(var/pair in L)
 		.="[.][tabs][pair]\n"
 
-proc/d2sm_Contents(list/conts,n,tabs="")
+proc/d2sm_Contents(list/conts, n,tabs="")
 	.="[tabs]contents = list("
 	var/i
 	for(i=0,i<n,++i)

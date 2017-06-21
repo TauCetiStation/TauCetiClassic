@@ -274,7 +274,7 @@ datum/game_mode/proc/auto_declare_completion_heist()
 		text += printlogo("raider", "raiders")
 		for(var/datum/mind/raider in raiders)
 			if(raider.current)
-				var/icon/flat = getFlatIcon(raider.current,exact=1)
+				var/icon/flat = getFlatIcon(raider.current, exact=1)
 				end_icons += flat
 				var/tempstate = end_icons.len
 				text += {"<br><img src="logo_[tempstate].png"> <b>[raider.key]</b> was <b>[raider.name]</b> ("}

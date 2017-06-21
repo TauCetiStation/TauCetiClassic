@@ -125,7 +125,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 					randmuti(src)
 
 				to_chat(src, "\red High levels of phoron cause you to spontaneously mutate.")
-				domutcheck(src,null)
+				domutcheck(src, null)
 
 	// Hallucination
 	if(vsc.plc.PHORON_HALLUCINATION)

@@ -122,7 +122,7 @@
 		to_chat(boss_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 
-/datum/game_mode/gang/proc/domination(gang,modifier=1,obj/dominator)
+/datum/game_mode/gang/proc/domination(gang, modifier=1,obj/dominator)
 	if(gang=="A")
 		A_timer = max(300,900 - ((round((A_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
 	if(gang=="B")
@@ -187,7 +187,7 @@
 
 
 // Used by recallers when purchasing a gang outfit. First time a gang outfit is purchased the buyer decides a gang style which is stored so gang outfits are uniform
-/datum/game_mode/proc/gang_outfit(mob/user,obj/item/device/gangtool/gangtool,gang)
+/datum/game_mode/proc/gang_outfit(mob/user, obj/item/device/gangtool/gangtool, gang)
 	if(!user || !gangtool || !gang)
 		return 0
 	if(!gangtool.can_use(user))
@@ -300,7 +300,7 @@
 	to_chat(gangster_mind.current, "<font color='red'>You can identify your bosses by their <b>red \[G\] icon</b>.</font>")
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
-	update_gang_icons_added(gangster_mind,gang)
+	update_gang_icons_added(gangster_mind, gang)
 	return 2
 //////////////////////////////////////////////////////////////////// 
 // Deals with players reverting to neutral (Not a gangster anymore)// 
@@ -515,7 +515,7 @@
 	var/tempstate = end_icons.len
 	for(var/datum/mind/gangster in membership)
 		if(gangster.current)
-			var/icon/flat = getFlatIcon(gangster.current,exact=1)
+			var/icon/flat = getFlatIcon(gangster.current, exact=1)
 			end_icons += flat
 			tempstate = end_icons.len
 			text += {"<BR><img src="logo_[tempstate].png"> <B>[gangster.key]</B> was <B>[gangster.name]</B> ("}
@@ -624,7 +624,7 @@
 			A_message += "Gang influence has increased by [A_new - A] for defending [ticker.mode.A_territory.len] territories and [A_uniformed] uniformed gangsters.<BR>"
 		A = A_new
 		A_message += "Your gang now has [A] influence."
-	ticker.mode.message_gangtools(ticker.mode.A_tools,A_message,0)
+	ticker.mode.message_gangtools(ticker.mode.A_tools, A_message,0)
 
 	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[gang_name("B")] Gang Status Report:</b>")
 	var/B_message = ""
@@ -640,7 +640,7 @@
 			A_message += "Gang influence has increased by [B_new - B] for defending [ticker.mode.B_territory.len] territories and [B_uniformed] uniformed gangsters.<BR>"
 		B = B_new
 		B_message += "Your gang now has [B] influence."
-	ticker.mode.message_gangtools(ticker.mode.B_tools,B_message,0)
+	ticker.mode.message_gangtools(ticker.mode.B_tools, B_message,0)
 
 
 	// Remove territories they already own from the buffer, so if they got tagged over, they can still earn income if they tag it back before the next status report
@@ -692,7 +692,7 @@
 // Sends a message to the boss via his gangtool// 
 /////////////////////////////////////////////// /
 
-/datum/game_mode/proc/message_gangtools(list/gangtools,message,beep=1,warning)
+/datum/game_mode/proc/message_gangtools(list/gangtools, message, beep=1,warning)
 	if(!gangtools.len || !message)
 		return
 	for(var/obj/item/device/gangtool/tool in gangtools)

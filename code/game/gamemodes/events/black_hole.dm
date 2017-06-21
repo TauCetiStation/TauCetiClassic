@@ -52,7 +52,7 @@
 		// MOVEMENT
 		if( prob(50) )
 			src.anchored = 0
-			step(src,pick(alldirs))
+			step(src, pick(alldirs))
 			src.anchored = 1
 
 /obj/effect/bhole/proc/grav(r, ex_act_force, pull_chance, turf_removal_chance)
@@ -77,9 +77,9 @@
 			if(O.anchored)
 				O.ex_act(ex_act_force)
 			else
-				step_towards(O,src)
+				step_towards(O, src)
 		for(var/mob/living/M in T.contents)
-			step_towards(M,src)
+			step_towards(M, src)
 
 	// Destroying the turf
 	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )

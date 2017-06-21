@@ -151,7 +151,7 @@
 		"right hand" = slot_r_hand,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	mob.equip_in_one_of_slots(R,slots)
+	mob.equip_in_one_of_slots(R, slots)
 
 	mob.update_icons()
 
@@ -398,7 +398,7 @@
 
 		for(var/datum/mind/headrev in head_revolutionaries)
 			if(headrev.current)
-				var/icon/flat = getFlatIcon(headrev.current,exact=1)
+				var/icon/flat = getFlatIcon(headrev.current, exact=1)
 				end_icons += flat
 				var/tempstate = end_icons.len
 				text += {"<BR><img src="logo_[tempstate].png"> <B>[headrev.key]</B> was <B>[headrev.name]</B> ("}
@@ -442,7 +442,7 @@
 
 		for(var/datum/mind/rev in revolutionaries)
 			if(rev.current)
-				var/icon/flat = getFlatIcon(rev.current,exact=1)
+				var/icon/flat = getFlatIcon(rev.current, exact=1)
 				end_icons += flat
 				tempstate = end_icons.len
 				text += {"<BR><img src="logo_[tempstate].png"> <B>[rev.key]</B> was <B>[rev.name]</B> ("}
@@ -475,7 +475,7 @@
 			if(target)
 				text += "<FONT color='red'>"
 			if(head.current)
-				var/icon/flat = getFlatIcon(head.current,exact=1)
+				var/icon/flat = getFlatIcon(head.current, exact=1)
 				end_icons += flat
 				var/tempstate = end_icons.len
 				text += {"<BR><img src="logo_[tempstate].png"> <B>[head.key]</B> was <B>[head.name]</B> ("}

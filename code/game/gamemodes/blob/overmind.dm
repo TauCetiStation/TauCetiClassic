@@ -44,7 +44,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	if (stat)
@@ -69,7 +69,7 @@
 		if(isovermind(M) || isobserver(M))
 			M.show_message(rendered, 2)
 
-/mob/camera/blob/emote(act,m_type=1,message = null)
+/mob/camera/blob/emote(act, m_type=1,message = null)
 	return
 
 /mob/camera/blob/blob_act()

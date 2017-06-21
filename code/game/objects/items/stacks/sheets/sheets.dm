@@ -18,8 +18,8 @@
 	if (istype(W, /obj/item/weapon/storage/bag/sheetsnatcher))
 		var/obj/item/weapon/storage/bag/sheetsnatcher/S = W
 		if(!S.mode)
-			S.add(src,user)
+			S.add(src, user)
 		else
-			for (var/obj/item/stack/sheet/stack in locate(src.x,src.y,src.z))
-				S.add(stack,user)
+			for (var/obj/item/stack/sheet/stack in locate(src.x, src.y, src.z))
+				S.add(stack, user)
 	..()*/

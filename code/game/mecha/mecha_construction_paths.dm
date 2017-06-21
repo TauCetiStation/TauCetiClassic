@@ -83,8 +83,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -158,8 +158,8 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
@@ -294,8 +294,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -392,8 +392,8 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
@@ -575,8 +575,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -654,8 +654,8 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
@@ -794,8 +794,8 @@
 					 list("key"=/obj/item/mecha_parts/part/honker_head)
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	custom_action(step, atom/used_atom, mob/user)
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
@@ -827,8 +827,8 @@
 					 list("key"=/obj/item/weapon/bikehorn),// 11
 					 )
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(step, atom/used_atom, mob/user)
 		if(!..())
@@ -877,8 +877,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -975,8 +975,8 @@
 					)
 
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
@@ -1159,8 +1159,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 
 
@@ -1180,8 +1180,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -1254,8 +1254,8 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
@@ -1390,8 +1390,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -1488,8 +1488,8 @@
 					)
 
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
@@ -1670,8 +1670,8 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user)
-		return check_all_steps(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_all_steps(used_atom, user)
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -1768,8 +1768,8 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user)
-		return check_step(used_atom,user)
+	action(atom/used_atom, mob/user)
+		return check_step(used_atom, user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())

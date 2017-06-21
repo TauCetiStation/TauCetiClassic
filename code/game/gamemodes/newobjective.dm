@@ -9,56 +9,56 @@
 #define IMPOSSIBLE 3
 
 
-/proc/GenerateTheft(job,datum/mind/traitor)
+/proc/GenerateTheft(job, datum/mind/traitor)
 	var/list/datum/objective/objectives = list()
 
 	for(var/o in typesof(/datum/objective/steal))
 		if(o != /datum/objective/steal)		// Make sure not to get a blank steal objective.
-			var/datum/objective/target = new o(null,job)
+			var/datum/objective/target = new o(null, job)
 			objectives += target
 			objectives[target] = target.weight
 	return objectives
 
-/proc/GenerateAssassinate(job,datum/mind/traitor)
+/proc/GenerateAssassinate(job, datum/mind/traitor)
 	var/list/datum/objective/assassinate/missions = list()
 
 	for(var/datum/mind/target in ticker.minds)
 		if((target != traitor) && istype(target.current, /mob/living/carbon/human))
 			if(target && target.current)
-				var/datum/objective/target_obj = new /datum/objective/assassinate(null,job,target)
+				var/datum/objective/target_obj = new /datum/objective/assassinate(null, job, target)
 				missions += target_obj
 				missions[target_obj] = target_obj.weight
 	return missions
 
-/proc/GenerateFrame(job,datum/mind/traitor)
+/proc/GenerateFrame(job, datum/mind/traitor)
 	var/list/datum/objective/frame/missions = list()
 
 	for(var/datum/mind/target in ticker.minds)
 		if((target != traitor) && istype(target.current, /mob/living/carbon/human))
 			if(target && target.current)
-				var/datum/objective/target_obj = new /datum/objective/frame(null,job,target)
+				var/datum/objective/target_obj = new /datum/objective/frame(null, job, target)
 				missions += target_obj
 				missions[target_obj] = target_obj.weight
 	return missions
 
-/proc/GenerateProtection(job,datum/mind/traitor)
+/proc/GenerateProtection(job, datum/mind/traitor)
 	var/list/datum/objective/frame/missions = list()
 
 	for(var/datum/mind/target in ticker.minds)
 		if((target != traitor) && istype(target.current, /mob/living/carbon/human))
 			if(target && target.current)
-				var/datum/objective/target_obj = new /datum/objective/protection(null,job,target)
+				var/datum/objective/target_obj = new /datum/objective/protection(null, job, target)
 				missions += target_obj
 				missions[target_obj] = target_obj.weight
 	return missions
 
 
-/proc/SelectObjectives(job,datum/mind/traitor,hijack = 0)
+/proc/SelectObjectives(job, datum/mind/traitor, hijack = 0)
 	var/list/chosenobjectives = list()
-	var/list/theftobjectives = GenerateTheft(job,traitor)		// Separated all the objective types so they can be picked independantly of each other.
-	var/list/killobjectives = GenerateAssassinate(job,traitor)
-	var/list/frameobjectives = GenerateFrame(job,traitor)
-	var/list/protectobjectives = GenerateProtection(job,traitor)
+	var/list/theftobjectives = GenerateTheft(job, traitor)		// Separated all the objective types so they can be picked independantly of each other.
+	var/list/killobjectives = GenerateAssassinate(job, traitor)
+	var/list/frameobjectives = GenerateFrame(job, traitor)
+	var/list/protectobjectives = GenerateProtection(job, traitor)
 	var/total_weight
 	var/conflict
 
@@ -225,9 +225,9 @@
 
 	if(!locate(/datum/objective/hijack) in chosenobjectives && !locate(/datum/objective/escape) in chosenobjectives)
 		if(hijack)
-			chosenobjectives += new /datum/objective/hijack(null,job)
+			chosenobjectives += new /datum/objective/hijack(null, job)
 		else
-			chosenobjectives += new /datum/objective/escape(null,job)
+			chosenobjectives += new /datum/objective/escape(null, job)
 	return chosenobjectives
 
 datum
@@ -239,7 +239,7 @@ datum
 		var/points = INFINITY // If this isn't set to something else, the objective is bugged and should be ignored
 		var/weight = INFINITY
 
-		New(var/text,var/joba)
+		New(var/text, var/joba)
 			if(text)
 				src.explanation_text = text
 			job=joba
@@ -260,7 +260,7 @@ datum
 
 
 		frame
-			New(var/text,var/joba,var/datum/mind/targeta)
+			New(var/text, var/joba, var/datum/mind/targeta)
 				target = targeta
 				job = joba
 				weight = get_points(job)
@@ -306,7 +306,7 @@ datum
 
 
 		protection
-			New(var/text,var/joba,var/datum/mind/targeta)
+			New(var/text, var/joba, var/datum/mind/targeta)
 				target = targeta
 				job = joba
 				weight = get_points(job)
@@ -350,7 +350,7 @@ datum
 
 		assassinate
 
-			New(var/text,var/joba,var/datum/mind/targeta)
+			New(var/text, var/joba, var/datum/mind/targeta)
 				target = targeta
 				job = joba
 				weight = get_points(job)
@@ -422,7 +422,7 @@ datum
 			var/separation_time = 0
 			var/almost_complete = 0
 
-			New(var/text,var/joba,var/datum/mind/targeta)
+			New(var/text, var/joba, var/datum/mind/targeta)
 				target = targeta
 				job = joba
 				explanation_text = "Capture [target.current.real_name], the [target.assigned_role]."
@@ -1135,7 +1135,7 @@ datum
 			reagent
 				weight = 20
 				var/target_name
-				New(var/text,var/joba)
+				New(var/text, var/joba)
 					..()
 					var/list/items = list("Sulphuric acid", "Polytrinic acid", "Space Lube", "Unstable mutagen",\
 					 "Leporazine", "Cryptobiolin", "Lexorin ",\
@@ -1193,8 +1193,8 @@ datum
 				explanation_text = "Beg, borrow or steal 2000 credits."
 				weight = 20
 
-				New(var/text,var/joba)
-					..(text,joba)
+				New(var/text, var/joba)
+					..(text, joba)
 					steal_amount = 1250 + rand(0,3750)
 					explanation_text = "Beg, borrow or steal [steal_amount] credits."
 
@@ -1239,7 +1239,7 @@ datum
 				return 1
 
 		decapitate
-			New(var/text,var/joba,var/datum/mind/targeta)
+			New(var/text, var/joba, var/datum/mind/targeta)
 				target = targeta
 				job = joba
 				explanation_text = "Remove and recover the head of [target.current.real_name], the [target.assigned_role]."
@@ -1276,7 +1276,7 @@ datum
 		absorb
 			var/target_amount
 			proc/gen_amount_goal(lowbound = 4, highbound = 6)
-				target_amount = rand (lowbound,highbound)
+				target_amount = rand (lowbound, highbound)
 				if (ticker)
 					var/n_p = 1 // autowin
 					if (ticker.current_state == GAME_STATE_SETTING_UP)
@@ -1301,7 +1301,7 @@ datum
 		meme_attune
 			var/target_amount
 			proc/gen_amount_goal(lowbound = 4, highbound = 6)
-				target_amount = rand (lowbound,highbound)
+				target_amount = rand (lowbound, highbound)
 
 				explanation_text = "Attune [target_amount] humanoid brains."
 				return target_amount
@@ -1339,7 +1339,7 @@ datum
 
 
 		debrain// I want braaaainssss
-			New(var/text,var/joba,var/datum/mind/targeta)
+			New(var/text, var/joba, var/datum/mind/targeta)
 				target = targeta
 				job = joba
 				explanation_text = "Remove and recover the brain of [target.current.real_name], the [target.assigned_role]."

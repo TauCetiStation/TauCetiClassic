@@ -14,7 +14,7 @@
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
 
-	if(!say_understands(speaker,language))
+	if(!say_understands(speaker, language))
 		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
 			message = pick(S.speak)
@@ -77,7 +77,7 @@
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
 
-	if(!say_understands(speaker,language))
+	if(!say_understands(speaker, language))
 		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
 			message = pick(S.speak)

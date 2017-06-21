@@ -310,19 +310,19 @@ var/datum/subsystem/ticker/ticker
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_nukewin"
-				if("AI malfunction") // Malf (screen,explosion,summary)
+				if("AI malfunction") // Malf (screen, explosion, summary)
 					flick("intro_malf",cinematic)
 					sleep(76)
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_malf"
-				if("blob") // Station nuked (nuke,explosion,summary)
+				if("blob") // Station nuked (nuke, explosion, summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_selfdes"
-				else // Station nuked (nuke,explosion,summary)
+				else // Station nuked (nuke, explosion, summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red", cinematic)
@@ -452,7 +452,7 @@ var/datum/subsystem/ticker/ticker
 			if(istype(robo,/mob/living/silicon/robot/drone))
 				dronecount++
 				continue
-			var/icon/flat = getFlatIcon(robo,exact=1)
+			var/icon/flat = getFlatIcon(robo, exact=1)
 			end_icons += flat
 			var/tempstate = end_icons.len
 			if (!robo.connected_ai)

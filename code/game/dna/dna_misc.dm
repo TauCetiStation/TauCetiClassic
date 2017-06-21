@@ -1,5 +1,5 @@
 ////////////////////////// / DNA HELPER-PROCS
-/proc/getleftblocks(input,blocknumber,blocksize)
+/proc/getleftblocks(input, blocknumber, blocksize)
 	var/string
 
 	if (blocknumber > 1)
@@ -8,15 +8,15 @@
 	else
 		return null
 
-/proc/getrightblocks(input,blocknumber,blocksize)
+/proc/getrightblocks(input, blocknumber, blocksize)
 	var/string
 	if (blocknumber < (length(input)/blocksize))
-		string = copytext(input,blocksize*blocknumber+1,length(input)+1)
+		string = copytext(input, blocksize*blocknumber+1,length(input)+1)
 		return string
 	else
 		return null
 
-/proc/getblockstring(input,block,subblock,blocksize,src,ui) // src is probably used here just for urls; ui is 1 when requesting for the unique identifier screen, 0 for structural enzymes screen
+/proc/getblockstring(input, block, subblock, blocksize, src, ui) // src is probably used here just for urls; ui is 1 when requesting for the unique identifier screen, 0 for structural enzymes screen
 	var/string
 	var/subpos = 1 // keeps track of the current sub block
 	var/blockpos = 1 // keeps track of the current block
@@ -46,12 +46,12 @@
 	return string
 
 
-/proc/getblock(input,blocknumber,blocksize)
+/proc/getblock(input, blocknumber, blocksize)
 	var/result
 	result = copytext(input ,(blocksize*blocknumber)-(blocksize-1),(blocksize*blocknumber)+1)
 	return result
 
-/proc/getblockbuffer(input,blocknumber,blocksize)
+/proc/getblockbuffer(input, blocknumber, blocksize)
 	var/result[3]
 	var/block = copytext(input ,(blocksize*blocknumber)-(blocksize-1),(blocksize*blocknumber)+1)
 	for(var/i = 1, i <= 3, i++)
@@ -74,7 +74,7 @@
 		temp1 = copytext(t,2,u+1)
 	return temp1
 
-/proc/miniscramble(input,rs,rd)
+/proc/miniscramble(input, rs, rd)
 	var/output
 	output = null
 	if (input == "C" || input == "D" || input == "E" || input == "F")
@@ -90,7 +90,7 @@
 
 // Instead of picking a value far from the input, this will pick values closer to it.
 // Sorry for the block of code, but it's more efficient then calling text2hex -> loop -> hex2text
-/proc/miniscrambletarget(input,rs,rd)
+/proc/miniscrambletarget(input, rs, rd)
 	var/output = null
 	switch(input)
 		if("0")
@@ -159,16 +159,16 @@
 	else
 		return 0
 
-/proc/ismuton(block,mob/M)
+/proc/ismuton(block, mob/M)
 	return isblockon(getblock(M.dna.struc_enzymes, block,3),block)
 
 /proc/randmutb(mob/M)
 	if(!M)	return
 	var/num
 	var/newdna
-	num = pick(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK)
+	num = pick(GLASSESBLOCK, COUGHBLOCK, FAKEBLOCK, NERVOUSBLOCK, CLUMSYBLOCK, TWITCHBLOCK, HEADACHEBLOCK, BLINDBLOCK, DEAFBLOCK, HALLUCINATIONBLOCK)
 	M.dna.check_integrity()
-	newdna = setblock(M.dna.struc_enzymes,num,toggledblock(getblock(M.dna.struc_enzymes,num,3)),3)
+	newdna = setblock(M.dna.struc_enzymes, num, toggledblock(getblock(M.dna.struc_enzymes, num,3)),3)
 	M.dna.struc_enzymes = newdna
 	return
 
@@ -176,9 +176,9 @@
 	if(!M)	return
 	var/num
 	var/newdna
-	num = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
+	num = pick(HULKBLOCK, XRAYBLOCK, FIREBLOCK, TELEBLOCK, NOBREATHBLOCK, REMOTEVIEWBLOCK, REGENERATEBLOCK, INCREASERUNBLOCK, REMOTETALKBLOCK, MORPHBLOCK, BLENDBLOCK, NOPRINTSBLOCK, SHOCKIMMUNITYBLOCK, SMALLSIZEBLOCK)
 	M.dna.check_integrity()
-	newdna = setblock(M.dna.struc_enzymes,num,toggledblock(getblock(M.dna.struc_enzymes,num,3)),3)
+	newdna = setblock(M.dna.struc_enzymes, num, toggledblock(getblock(M.dna.struc_enzymes, num,3)),3)
 	M.dna.struc_enzymes = newdna
 	return
 
@@ -204,7 +204,7 @@
 	var/newdna
 	num = rand(1,UNIDNASIZE)
 	M.dna.check_integrity()
-	newdna = setblock(M.dna.uni_identity,num,add_zero2(num2hex(rand(1,4095),1),3),3)
+	newdna = setblock(M.dna.uni_identity, num, add_zero2(num2hex(rand(1,4095),1),3),3)
 	M.dna.uni_identity = newdna
 	return
 
@@ -285,47 +285,47 @@
 	if(HUSK in old_mutations)
 		M.mutations.Add(HUSK)
 
-	if(ismuton(NOBREATHBLOCK,M))
+	if(ismuton(NOBREATHBLOCK, M))
 		if(probinj(45,inj) || (NO_BREATH in old_mutations))
 			to_chat(M, "\blue You feel no need to breathe.")
 			M.mutations.Add(NO_BREATH)
-	if(ismuton(REMOTEVIEWBLOCK,M))
+	if(ismuton(REMOTEVIEWBLOCK, M))
 		if(probinj(45,inj) || (REMOTE_VIEW in old_mutations))
 			to_chat(M, "\blue Your mind expands")
 			M.mutations.Add(REMOTE_VIEW)
-	if(ismuton(REGENERATEBLOCK,M))
+	if(ismuton(REGENERATEBLOCK, M))
 		if(probinj(45,inj) || (REGEN in old_mutations))
 			to_chat(M, "\blue You feel strange")
 			M.mutations.Add(REGEN)
-	if(ismuton(INCREASERUNBLOCK,M))
+	if(ismuton(INCREASERUNBLOCK, M))
 		if(probinj(45,inj) || (RUN in old_mutations))
 			to_chat(M, "\blue You feel quick")
 			M.mutations.Add(RUN)
-	if(ismuton(REMOTETALKBLOCK,M))
+	if(ismuton(REMOTETALKBLOCK, M))
 		if(probinj(45,inj) || (REMOTE_TALK in old_mutations))
 			to_chat(M, "\blue You expand your mind outwards")
 			M.mutations.Add(REMOTE_TALK)
-	if(ismuton(MORPHBLOCK,M))
+	if(ismuton(MORPHBLOCK, M))
 		if(probinj(45,inj) || (MORPH in old_mutations))
 			M.mutations.Add(MORPH)
 			to_chat(M, "\blue Your skin feels strange")
-	if(ismuton(BLENDBLOCK,M))
+	if(ismuton(BLENDBLOCK, M))
 		if(probinj(45,inj) || (BLEND in old_mutations))
 			M.mutations.Add(BLEND)
 			to_chat(M, "\blue You feel alone")
-	if(ismuton(HALLUCINATIONBLOCK,M))
+	if(ismuton(HALLUCINATIONBLOCK, M))
 		if(probinj(45,inj) || (HALLUCINATE in old_mutations))
 			M.mutations.Add(HALLUCINATE)
 			to_chat(M, "\blue Your mind says 'Hello'")
-	if(ismuton(NOPRINTSBLOCK,M))
+	if(ismuton(NOPRINTSBLOCK, M))
 		if(probinj(45,inj) || (FINGERPRINTS in old_mutations))
 			M.mutations.Add(FINGERPRINTS)
 			to_chat(M, "\blue Your fingers feel numb")
-	if(ismuton(SHOCKIMMUNITYBLOCK,M))
+	if(ismuton(SHOCKIMMUNITYBLOCK, M))
 		if(probinj(45,inj) || (NO_SHOCK in old_mutations))
 			M.mutations.Add(NO_SHOCK)
 			to_chat(M, "\blue You feel strange")
-	if(ismuton(SMALLSIZEBLOCK,M))
+	if(ismuton(SMALLSIZEBLOCK, M))
 		if(probinj(45,inj) || (SMALLSIZE in old_mutations))
 			to_chat(M, "\blue Your skin feels rubbery")
 			M.mutations.Add(SMALLSIZE)
@@ -541,7 +541,7 @@
 			else
 				O.real_name = randomname
 				i++
-		updateappearance(O,O.dna.uni_identity)
+		updateappearance(O, O.dna.uni_identity)
 		O.take_overall_damage(M.getBruteLoss(), M.getFireLoss())
 		O.adjustToxLoss(M.getToxLoss())
 		O.adjustOxyLoss(M.getOxyLoss())

@@ -15,7 +15,7 @@
 
 /obj/machinery/optable/New()
 	..()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
 		if (computer)
 			computer.table = src
@@ -127,7 +127,7 @@
 		to_chat(usr, "<span class='rose'>The table is already occupied!</span>")
 		return
 
-	take_victim(usr,usr)
+	take_victim(usr, usr)
 
 /obj/machinery/optable/attackby(obj/item/weapon/W, mob/living/carbon/user)
 	if(isrobot(user))
@@ -135,7 +135,7 @@
 
 	if (istype(W, /obj/item/weapon/grab))
 		if(iscarbon(W:affecting))
-			take_victim(W:affecting,usr)
+			take_victim(W:affecting, usr)
 			qdel(W)
 			return
 	user.drop_item()

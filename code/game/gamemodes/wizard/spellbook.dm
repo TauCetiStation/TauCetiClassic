@@ -179,7 +179,7 @@
 	log_name = "LB"
 	cost = 3
 
-/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) // return 1 on success
+/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // return 1 on success
 	. = ..()
 	user.tesla_ignore = TRUE
 
@@ -276,7 +276,7 @@
 	log_name = "SS"
 	category = "Assistance"
 
-/datum/spellbook_entry/item/soulstones/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/item/soulstones/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
 	. =..()
 	if(.)
 		user.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(user))
@@ -297,7 +297,7 @@
 	log_name = "HS"
 	category = "Defensive"
 
-/datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
 		new /obj/item/clothing/shoes/sandal(get_turf(user)) // In case they've lost them.
@@ -469,11 +469,11 @@
 		var/spell_info = ""
 		E = entries[i]
 		spell_info += E.GetInfo()
-		if(E.CanBuy(user,src))
+		if(E.CanBuy(user, src))
 			spell_info+= "<a href='byond:// ?src=\ref[src];buy=[i]'>[E.buy_word]</A><br>"
 		else
 			spell_info+= "<span>Can't [E.buy_word]</span><br>"
-		if(E.CanRefund(user,src))
+		if(E.CanRefund(user, src))
 			spell_info+= "<a href='byond:// ?src=\ref[src];refund=[i]'>Refund</A><br>"
 		spell_info += "<hr>"
 		if(cat_dat[E.category])
@@ -503,13 +503,13 @@
 		H.set_machine(src)
 		if(href_list["buy"])
 			E = entries[text2num(href_list["buy"])]
-			if(E && E.CanBuy(H,src))
-				if(E.Buy(H,src))
+			if(E && E.CanBuy(H, src))
+				if(E.Buy(H, src))
 					uses -= E.cost
 		else if(href_list["refund"])
 			E = entries[text2num(href_list["refund"])]
 			if(E && E.refundable)
-				var/result = E.Refund(H,src)
+				var/result = E.Refund(H, src)
 				if(result > 0)
 					uses += result
 		else if(href_list["page"])

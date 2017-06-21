@@ -38,7 +38,7 @@
 	if(isAI(user)) // so the AI can't open it
 		return
 	else if(isrobot(user)) // but cyborgs can
-		if(get_dist(user,src) <= 1) // not remotely though
+		if(get_dist(user, src) <= 1) // not remotely though
 			return TryToSwitchState(user)
 
 /obj/structure/mineral_door/attack_paw(mob/user)
@@ -108,7 +108,7 @@
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
 		to_chat(user, "You start digging the [name].")
-		if(do_after(user,digTool.digspeed, target = src) && src)
+		if(do_after(user, digTool.digspeed, target = src) && src)
 			to_chat(user, "You finished digging.")
 			Dismantle()
 	else if(istype(W, /obj/item/weapon))

@@ -23,7 +23,7 @@
 
 /obj/effect/anomaly/proc/anomalyEffect()
 	if(prob(50))
-		step(src,pick(alldirs))
+		step(src, pick(alldirs))
 
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
@@ -57,9 +57,9 @@
 	boing = 1
 	for(var/obj/O in orange(4, src))
 		if(!O.anchored)
-			step_towards(O,src)
+			step_towards(O, src)
 	for(var/mob/living/M in orange(4, src))
-		step_towards(M,src)
+		step_towards(M, src)
 
 /obj/effect/anomaly/grav/Bump(mob/A)
 	gravShock(A)
@@ -174,9 +174,9 @@
 			if(O.anchored)
 				O.ex_act(ex_act_force)
 			else
-				step_towards(O,src)
+				step_towards(O, src)
 		for(var/mob/living/M in T.contents)
-			step_towards(M,src)
+			step_towards(M, src)
 
 	// Damaging the turf
 	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )

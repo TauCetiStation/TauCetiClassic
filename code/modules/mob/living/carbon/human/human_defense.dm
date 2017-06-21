@@ -35,7 +35,7 @@
 		if(check_thickmaterial(BP))
 			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
 			P.agony /= 2
-		apply_effect(P.agony,AGONY,0)
+		apply_effect(P.agony, AGONY,0)
 		qdel(P)
 		return
 
@@ -74,7 +74,7 @@
 		BP = bodyparts_by_name[check_zone(def_zone)]
 		var/armorblock = run_armor_check(BP, "energy")
 		apply_damage(P.damage, P.damage_type, BP, armorblock, P.damage_flags(), P)
-		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
+		apply_effects(P.stun, P.weaken,0,0,P.stutter,0,0,armorblock)
 		flash_pain()
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
 		qdel(P)
@@ -88,7 +88,7 @@
 
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
 		if(delta)
-			apply_effect(delta,AGONY,armor)
+			apply_effect(delta, AGONY, armor)
 			P.on_hit(src, armor, def_zone)
 			// return Nope! ~Zve
 		if(delta < 10)
@@ -100,7 +100,7 @@
 			if (force <= 60 && force > 40)
 				apply_effects(B.stoping_power/2,B.stoping_power/2,0,0,B.stoping_power/2,0,0,armor)
 			else if(force <= 40)
-				apply_effects(B.stoping_power,B.stoping_power,0,0,B.stoping_power,0,0,armor)
+				apply_effects(B.stoping_power, B.stoping_power,0,0,B.stoping_power,0,0,armor)
 
 		if(!species.flags[NO_EMBED] && P.embed && prob(20 + max(P.damage - armor, -20)) && P.damage_type == BRUTE)
 			var/obj/item/weapon/shard/shrapnel/SP = new()
@@ -115,7 +115,7 @@
 		var/obj/item/organ/external/BP = bodyparts_by_name[check_zone(def_zone)]
 		var/armor = getarmor_organ(BP, "bio")
 		if (armor < 100)
-			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
+			apply_effects(B.stun, B.stun, B.stun,0,0,0,0,armor)
 			to_chat(src, "<span class='userdanger'>You feel that yor muscles can`t move!</span>")
 
 
@@ -269,7 +269,7 @@
 
 	if(user != src)
 		user.do_attack_animation(src)
-		if(check_shields(I.force, "the [I.name]", get_dir(user,src) ))
+		if(check_shields(I.force, "the [I.name]", get_dir(user, src) ))
 			return 0
 
 	if(istype(I,/obj/item/weapon/card/emag))

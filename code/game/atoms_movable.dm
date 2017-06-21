@@ -67,7 +67,7 @@
 
 	last_move = direct
 
-	if(. && buckled_mob && !handle_buckled_mob_movement(loc,direct)) // movement failed due to buckled mob
+	if(. && buckled_mob && !handle_buckled_mob_movement(loc, direct)) // movement failed due to buckled mob
 		. = 0
 
 	if(.)
@@ -321,7 +321,7 @@
 /atom/movable/proc/handle_rotation()
 	return
 
-/atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
+/atom/movable/proc/handle_buckled_mob_movement(newloc, direct)
 	if(!buckled_mob.Move(newloc, direct))
 		loc = buckled_mob.loc
 		last_move = buckled_mob.last_move

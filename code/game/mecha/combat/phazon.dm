@@ -34,7 +34,7 @@
 		if(can_move)
 			can_move = 0
 			flick("phazon-phase", src)
-			src.loc = get_step(src,src.dir)
+			src.loc = get_step(src, src.dir)
 			src.use_power(phasing_energy_drain)
 			sleep(step_in*3)
 			can_move = 1
@@ -42,7 +42,7 @@
 		. = ..()
 	return
 
-/obj/mecha/combat/phazon/click_action(atom/target,mob/user)
+/obj/mecha/combat/phazon/click_action(atom/target, mob/user)
 	if(phasing)
 		src.occupant_message("Unable to interact with objects while phasing")
 		return

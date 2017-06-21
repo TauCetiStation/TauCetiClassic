@@ -34,7 +34,7 @@
 		to_chat(usr, "The washing machine cannot run in this state.")
 		return
 
-	if( locate(/mob,contents) )
+	if( locate(/mob, contents) )
 		state = 8
 	else
 		state = 5
@@ -175,7 +175,7 @@
 		crayon = null
 
 
-	if( locate(/mob,contents) )
+	if( locate(/mob, contents) )
 		state = 7
 		gibs_ready = 1
 	else
@@ -304,8 +304,8 @@
 		if(7)
 			if(gibs_ready)
 				gibs_ready = 0
-				if(locate(/mob,contents))
-					var/mob/M = locate(/mob,contents)
+				if(locate(/mob, contents))
+					var/mob/M = locate(/mob, contents)
 					M.gib()
 			for(var/atom/movable/O in contents)
 				O.loc = src.loc

@@ -57,7 +57,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	return rval
 
 // Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothnig
-/proc/infect_virus2(mob/living/carbon/M,datum/disease2/disease/disease,forced = 0)
+/proc/infect_virus2(mob/living/carbon/M, datum/disease2/disease/disease, forced = 0)
 	if(!istype(disease))
 //		log_debug("Bad virus")
 		return
@@ -100,14 +100,14 @@ proc/airborne_can_reach(turf/source, turf/target)
 	var/datum/disease2/disease/D = new /datum/disease2/disease
 	D.makerandom()
 	D.infectionchance = 1
-	infect_virus2(M,D,1)
+	infect_virus2(M, D,1)
 	M.hud_updateflag |= 1 << STATUS_HUD
 
 // Infects mob M with random greated disease, if he doesn't have one
 /proc/infect_mob_random_greater(mob/living/carbon/M)
 	var/datum/disease2/disease/D = new /datum/disease2/disease
 	D.makerandom(1)
-	infect_virus2(M,D,1)
+	infect_virus2(M, D,1)
 	M.hud_updateflag |= 1 << STATUS_HUD
 
 // Fancy prob() function.
@@ -128,14 +128,14 @@ proc/airborne_can_reach(turf/source, turf/target)
 			if (vector == "Airborne")
 				if(airborne_can_reach(get_turf(src), get_turf(victim)))
 //					log_debug("In range, infecting")
-					infect_virus2(victim,V)
+					infect_virus2(victim, V)
 				else
 //					log_debug("Could not reach target")
 
 			if (vector == "Contact")
 				if (in_range(src, victim))
 //					log_debug("In range, infecting")
-					infect_virus2(victim,V)
+					infect_virus2(victim, V)
 
 	// contact goes both ways
 	if (victim.virus2.len > 0 && vector == "Contact")
@@ -154,4 +154,4 @@ proc/airborne_can_reach(turf/source, turf/target)
 			for (var/ID in victim.virus2)
 				var/datum/disease2/disease/V = victim.virus2[ID]
 				if(V && V.spreadtype != vector) continue
-				infect_virus2(src,V)
+				infect_virus2(src, V)

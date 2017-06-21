@@ -36,7 +36,7 @@
 
 	for(var/obj/machinery/media/source in sources)
 		// Hook into output
-		source.hookMediaOutput(src,exclusive=1) // Don't hook into the room media sources.
+		source.hookMediaOutput(src, exclusive=1) // Don't hook into the room media sources.
 		source.update_music() // Request music update
 
 /obj/machinery/media/transmitter/broadcast/proc/unhook_media_sources()
@@ -60,7 +60,7 @@
 /obj/machinery/media/transmitter/broadcast/attack_hand(mob/user)
 	update_multitool_menu(user)
 
-/obj/machinery/media/transmitter/broadcast/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+/obj/machinery/media/transmitter/broadcast/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user))
 		// istype returns false if the value is null
@@ -113,7 +113,7 @@
 		disconnect_frequency()
 	update_icon()
 
-/obj/machinery/media/transmitter/broadcast/Topic(href,href_list)
+/obj/machinery/media/transmitter/broadcast/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -191,7 +191,7 @@
 */
 /*
 /obj/machinery/media/transmitter/broadcast/linkWith(var/mob/user, var/obj/O, var/list/context)
-	if(istype(O,/obj/machinery/media) && !is_type_in_list(O,list(/obj/machinery/media/transmitter,/obj/machinery/media/receiver)))
+	if(istype(O,/obj/machinery/media) && !is_type_in_list(O, list(/obj/machinery/media/transmitter,/obj/machinery/media/receiver)))
 		if(sources.len)
 			unhook_media_sources()
 		sources.Add(O)
@@ -210,7 +210,7 @@
 	return 0
 
 /obj/machinery/media/transmitter/broadcast/canLink(var/obj/O, var/list/context)
-	return istype(O,/obj/machinery/media) && !is_type_in_list(O,list(/obj/machinery/media/transmitter,/obj/machinery/media/receiver))
+	return istype(O,/obj/machinery/media) && !is_type_in_list(O, list(/obj/machinery/media/transmitter,/obj/machinery/media/receiver))
 
 /obj/machinery/media/transmitter/broadcast/isLinkedWith(var/obj/O)
 	return O in sources

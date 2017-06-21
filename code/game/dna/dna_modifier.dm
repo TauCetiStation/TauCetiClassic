@@ -291,7 +291,7 @@
 	for(var/i=0;i<3;i++)
 		buffers[i+1]=new /datum/dna2/record
 	spawn(5)
-		for(dir in list(NORTH,EAST,SOUTH,WEST))
+		for(dir in list(NORTH, EAST, SOUTH, WEST))
 			connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
 			if(!isnull(connected))
 				break
@@ -551,7 +551,7 @@
 			src.selected_ui_subblock = select_subblock
 
 	else if (href_list["pulseUIRadiation"])
-		var/block = src.connected.occupant.dna.GetUISubBlock(src.selected_ui_block,src.selected_ui_subblock)
+		var/block = src.connected.occupant.dna.GetUISubBlock(src.selected_ui_block, src.selected_ui_subblock)
 
 		irradiating = src.radiation_duration
 		var/lock_state = src.connected.locked
@@ -573,7 +573,7 @@
 		else
 			if	(prob(20+src.radiation_intensity))
 				randmutb(src.connected.occupant)
-				domutcheck(src.connected.occupant,src.connected)
+				domutcheck(src.connected.occupant, src.connected)
 			else
 				randmuti(src.connected.occupant)
 				src.connected.occupant.UpdateAppearance()
@@ -605,7 +605,7 @@
 		// testing("User selected block [selected_se_block] (sent [select_block]), subblock [selected_se_subblock] (sent [select_block]).")
 
 	else if (href_list["pulseSERadiation"])
-		var/block = src.connected.occupant.dna.GetSESubBlock(src.selected_se_block,src.selected_se_subblock)
+		var/block = src.connected.occupant.dna.GetSESubBlock(src.selected_se_block, src.selected_se_subblock)
 		// var/original_block=block
 		// testing("Irradiating SE block [src.selected_se_block]:[src.selected_se_subblock] ([block])...")
 
@@ -631,7 +631,7 @@
 						real_SE_block--
 
 				// testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
-				connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
+				connected.occupant.dna.SetSESubBlock(real_SE_block, selected_se_subblock, block)
 				src.connected.occupant.radiation += (src.radiation_intensity + src.radiation_duration) / (connected.damage_coeff ** 2)
 				domutcheck(src.connected.occupant, src.connected, block != null, 1)// #Z2
 			else
@@ -743,7 +743,7 @@
 			else if (buf.types & DNA2_BUF_SE)
 				src.connected.occupant.dna.SE = buf.dna.SE
 				src.connected.occupant.dna.UpdateSE()
-				domutcheck(src.connected.occupant,src.connected)
+				domutcheck(src.connected.occupant, src.connected)
 			src.connected.occupant.radiation += rand(15 / (connected.damage_coeff ** 2), 40 / (connected.damage_coeff ** 2))
 
 		else if (bufferOption == "createInjector")
@@ -759,7 +759,7 @@
 					else
 						selectedbuf=buf.dna.UI
 					var/blk = input(usr,"Select Block","Block") as null|anything in all_dna_blocks(selectedbuf)
-					success = setInjectorBlock(I,blk,buf)
+					success = setInjectorBlock(I, blk, buf)
 				else
 					I.buf = buf
 					success = 1

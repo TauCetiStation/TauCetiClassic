@@ -67,7 +67,7 @@ Doesn't work on other aliens/AI.*/
 		if (amount)
 			amount = abs(round(amount))
 			if(powerc(amount))
-				if (get_dist(src,M) <= 1)
+				if (get_dist(src, M) <= 1)
 					M.adjustToxLoss(amount)
 					adjustToxLoss(-amount)
 					to_chat(M, "\green [src] has transfered [amount] plasma to you.")

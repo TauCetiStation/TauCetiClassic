@@ -29,7 +29,7 @@
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
 		return
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
 		if(power_station)
 			break
@@ -276,7 +276,7 @@
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
 		return
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
 		if(power_station)
 			break
@@ -379,12 +379,12 @@
 	efficiency = E - 1
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		teleporter_hub = locate(/obj/machinery/teleport/hub, get_step(src, dir))
 		if(teleporter_hub)
 			teleporter_hub.link_power_station()
 			break
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		teleporter_console = locate(/obj/machinery/computer/teleporter, get_step(src, dir))
 		if(teleporter_console)
 			teleporter_console.link_power_station()

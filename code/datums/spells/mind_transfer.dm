@@ -24,7 +24,7 @@ Urist: I don't feel like figuring out how you store object spells so I'm leaving
 Make sure spells that are removed from spell_list are actually removed and deleted when mind transfering.
 Also, you never added distance checking after target is selected. I've went ahead and did that.
 */
-/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets, mob/user = usr)
 	if(!targets.len)
 		to_chat(user, "No mind found.")
 		return

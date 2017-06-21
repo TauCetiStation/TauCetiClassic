@@ -72,7 +72,7 @@
 		return
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
-	if(is_type_in_list(target,validSurfaces))
+	if(is_type_in_list(target, validSurfaces))
 		var/temp
 		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
 		switch(drawtype)
@@ -133,11 +133,11 @@
 						return
 				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
 					qdel(old_marking)
-				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti")
+				new /obj/effect/decal/cleanable/crayon/gang(target, gangID,"graffiti")
 				to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")
 
 			else
-				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+				new /obj/effect/decal/cleanable/crayon(target, colour, shadeColour, drawtype)
 
 			to_chat(user, "You finish [instant ? "spraying" : "drawing"] [temp].")
 			if(instant<0)
@@ -160,7 +160,7 @@
 	else
 		..()
 
-/obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
+/obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
 	var/occupying_gang
 	if(territory.type in (ticker.mode.A_territory | ticker.mode.A_territory_new))
 		occupying_gang = gang_name("A")

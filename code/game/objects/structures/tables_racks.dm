@@ -27,8 +27,8 @@
 
 /obj/structure/table/proc/update_adjacent()
 	for(var/direction in list(1,2,4,8,5,6,9,10))
-		if(locate(/obj/structure/table,get_step(src,direction)))
-			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
+		if(locate(/obj/structure/table, get_step(src, direction)))
+			var/obj/structure/table/T = locate(/obj/structure/table, get_step(src, direction))
 			T.update_icon()
 
 /obj/structure/table/New()
@@ -60,7 +60,7 @@
 			var/type = 0
 			var/tabledirs = 0
 			for(var/direction in list(turn(dir,90), turn(dir,-90)) )
-				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
+				var/obj/structure/table/T = locate(/obj/structure/table, get_step(src, direction))
 				if (T && T.flipped && T.dir == src.dir)
 					type++
 					tabledirs |= direction
@@ -105,12 +105,12 @@
 					inv_direction = 6
 				if(10)
 					inv_direction = 5
-			for(var/obj/structure/window/W in get_step(src,direction))
+			for(var/obj/structure/window/W in get_step(src, direction))
 				if(W.dir == inv_direction) // So smooth tables don't go smooth through windows when the window is on the other table's tile
 					skip_sum = 1
 					continue
 			if(!skip_sum) // means there is a window between the two tiles in this direction
-				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
+				var/obj/structure/table/T = locate(/obj/structure/table, get_step(src, direction))
 				if(T && !T.flipped)
 					if(direction <5)
 						dir_sum += direction
@@ -137,7 +137,7 @@
 			if(dir_sum%16 == 12) // 12 doesn't exist as a dir.
 				dir_sum = 4
 		if(dir_sum%16 in list(5,6,9,10))
-			if(locate(/obj/structure/table,get_step(src.loc,dir_sum%16)))
+			if(locate(/obj/structure/table, get_step(src.loc, dir_sum%16)))
 				table_type = 3 // full table (not the 1 tile thick one, but one of the 'tabledir' tables)
 			else
 				table_type = 2 // 1 tile thick, corner table (treated the same as streight tables in code later on)
@@ -278,7 +278,7 @@
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 	if(istype(mover,/obj/item/projectile))
-		return (check_cover(mover,target))
+		return (check_cover(mover, target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
@@ -347,7 +347,7 @@
 
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
 	if (!W) return
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if (istype(W, /obj/item/weapon/grab) && get_dist(src, user)<2)
 		var/obj/item/weapon/grab/G = W
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
@@ -417,10 +417,10 @@
 /obj/structure/table/proc/straight_table_check(var/direction)
 	var/obj/structure/table/T
 	for(var/angle in list(-90,90))
-		T = locate() in get_step(src.loc,turn(direction,angle))
+		T = locate() in get_step(src.loc, turn(direction, angle))
 		if(T && !T.flipped)
 			return 0
-	T = locate() in get_step(src.loc,direction)
+	T = locate() in get_step(src.loc, direction)
 	if (!T || T.flipped)
 		return 1
 	if (istype(T,/obj/structure/table/reinforced/))
@@ -438,7 +438,7 @@
 	if (!can_touch(usr) || ismouse(usr))
 		return
 
-	if(!flip(get_cardinal_dir(usr,src)))
+	if(!flip(get_cardinal_dir(usr, src)))
 		to_chat(usr, "<span class='notice'>It won't budge.</span>")
 		return
 
@@ -460,7 +460,7 @@
 		L.Add(turn(src.dir,-90))
 		L.Add(turn(src.dir,90))
 	for(var/new_dir in L)
-		var/obj/structure/table/T = locate() in get_step(src.loc,new_dir)
+		var/obj/structure/table/T = locate() in get_step(src.loc, new_dir)
 		if(T)
 			if(T.flipped && T.dir == src.dir && !T.unflipping_check(new_dir))
 				return 0
@@ -488,7 +488,7 @@
 	verbs -=/obj/structure/table/verb/do_flip
 	verbs +=/obj/structure/table/proc/do_put
 
-	var/list/targets = list(get_step(src,dir),get_step(src,turn(dir, 45)),get_step(src,turn(dir, -45)))
+	var/list/targets = list(get_step(src, dir),get_step(src, turn(dir, 45)),get_step(src, turn(dir, -45)))
 	for (var/atom/movable/A in get_turf(src))
 		if (!A.anchored)
 			A.throw_at(pick(targets),1,1)
@@ -499,7 +499,7 @@
 	flipped = 1
 	flags |= ON_BORDER
 	for(var/D in list(turn(direction, 90), turn(direction, -90)))
-		var/obj/structure/table/T = locate() in get_step(src,D)
+		var/obj/structure/table/T = locate() in get_step(src, D)
 		if(T && !T.flipped)
 			T.flip(direction)
 	update_icon()
@@ -516,7 +516,7 @@
 	flipped = 0
 	flags &= ~ON_BORDER
 	for(var/D in list(turn(dir, 90), turn(dir, -90)))
-		var/obj/structure/table/T = locate() in get_step(src.loc,D)
+		var/obj/structure/table/T = locate() in get_step(src.loc, D)
 		if(T && T.flipped && T.dir == src.dir)
 			T.unflip()
 	update_icon()
@@ -554,7 +554,7 @@
 /obj/structure/table/reinforced/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 	if(istype(mover,/obj/item/projectile))
-		return (check_cover(mover,target))
+		return (check_cover(mover, target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))

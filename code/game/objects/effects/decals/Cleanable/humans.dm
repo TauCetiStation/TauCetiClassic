@@ -73,7 +73,7 @@ var/global/list/image/splatter_cache=list()
 			var/obj/item/clothing/shoes/S = perp.shoes
 			if(istype(S))
 				S.blood_color = basecolor
-				S.track_blood = max(amount,S.track_blood)
+				S.track_blood = max(amount, S.track_blood)
 				if(!S.blood_overlay)
 					S.generate_blood_overlay()
 				if(!S.blood_DNA)
@@ -90,7 +90,7 @@ var/global/list/image/splatter_cache=list()
 
 	if (hasfeet && !skip) // Or feet
 		perp.feet_blood_color = basecolor
-		perp.track_blood = max(amount,perp.track_blood)
+		perp.track_blood = max(amount, perp.track_blood)
 		if(!perp.feet_blood_DNA)
 			perp.feet_blood_DNA = list()
 		perp.feet_blood_DNA |= blood_DNA.Copy()
@@ -204,7 +204,7 @@ var/global/list/image/splatter_cache=list()
 
 	var/icon/blood = new(base_icon,"[icon_state]",dir)
 	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
-	blood.Blend(basecolor,ICON_MULTIPLY)
+	blood.Blend(basecolor, ICON_MULTIPLY)
 
 	icon = blood
 	overlays.Cut()

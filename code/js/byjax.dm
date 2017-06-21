@@ -17,7 +17,7 @@ function replaceContent() {
 		parent.innerHTML = content?content:'';
 	}
 	if(callback && window\[callback\]){
-		window\[callback\].apply(null,args);
+		window\[callback\].apply(null, args);
 	}
 }
 "}

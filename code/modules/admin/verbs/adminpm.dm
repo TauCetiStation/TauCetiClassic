@@ -6,7 +6,7 @@
 		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
 		return
 	if( !ismob(M) || !M.client )	return
-	cmd_admin_pm(M.client,null)
+	cmd_admin_pm(M.client, null)
 	feedback_add_details("admin_verb","APMM") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 // shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
@@ -85,7 +85,7 @@
 				adminhelp(msg)	// admin we are replying to has vanished, adminhelp instead
 			return
 
-	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if (src.handle_spam_prevention(msg, MUTE_ADMINHELP))
 		return
 
 	// clean the message if it's not sent by a high-rank admin
@@ -135,7 +135,7 @@
 				var/reply = input(C, msg,"[recieve_pm_type] PM from-[sendername]", "") as text|null		// show message and await a reply
 				if(C && reply)
 					if(sender)
-						C.cmd_admin_pm(sender,reply)										// sender is still about, let's reply to them
+						C.cmd_admin_pm(sender, reply)										// sender is still about, let's reply to them
 					else
 						adminhelp(reply)													// sender has left, adminhelp instead
 				return

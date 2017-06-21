@@ -84,7 +84,7 @@
 
 		wrapped.loc = user
 		// Pass the attack on to the target.
-		target.attackby(wrapped,user)
+		target.attackby(wrapped, user)
 
 		if(wrapped && src && wrapped.loc == user)
 			wrapped.loc = src
@@ -109,7 +109,7 @@
 		// Check if the item is blacklisted.
 		var/grab = 0
 		for(var/typepath in can_hold)
-			if(istype(I,typepath))
+			if(istype(I, typepath))
 				grab = 1
 				break
 

@@ -6,7 +6,7 @@ obj/effect/decal/cleanable/liquid_fuel
 	anchored = 1
 	var/amount = 1 // Basically moles.
 
-	New(newLoc,amt=1)
+	New(newLoc, amt=1)
 		src.amount = amt
 
 		// Be absorbed by any other liquid fuel in the tile.
@@ -26,7 +26,7 @@ obj/effect/decal/cleanable/liquid_fuel
 		if(!istype(S)) return
 		for(var/d in cardinal)
 			if(rand(25))
-				var/turf/simulated/target = get_step(src,d)
+				var/turf/simulated/target = get_step(src, d)
 				var/turf/simulated/origin = get_turf(src)
 				if(origin.CanPass(null, target, 0, 0) && target.CanPass(null, origin, 0, 0))
 					if(!locate(/obj/effect/decal/cleanable/liquid_fuel) in target)
@@ -47,11 +47,11 @@ obj/effect/decal/cleanable/liquid_fuel
 			if(!istype(S)) return
 
 			for(var/d in list(turn(dir,90),turn(dir,-90), dir))
-				var/turf/simulated/O = get_step(S,d)
+				var/turf/simulated/O = get_step(S, d)
 				if(locate(/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel) in O)
 					continue
 				if(O.CanPass(null, S, 0, 0) && S.CanPass(null, O, 0, 0))
-					new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(O,amount*0.25,d)
+					new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(O, amount*0.25,d)
 					O.hotspot_expose((T20C*2) + 380,500) // Light flamethrower fuel on fire immediately.
 
 			amount *= 0.25

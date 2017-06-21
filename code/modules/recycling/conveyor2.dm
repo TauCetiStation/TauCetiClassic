@@ -108,7 +108,7 @@
 	for(var/atom/movable/A in affecting)
 		if(!A.anchored)
 			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
-				step(A,movedir)
+				step(A, movedir)
 				items_moved++
 		if(items_moved >= 10)
 			break
@@ -308,7 +308,7 @@
 	if(A == user.loc)
 		to_chat(user, "<span class='notice'>You cannot place a conveyor belt under yourself.</span>")
 		return
-	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A,cdir)
+	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A, cdir)
 	C.id = id
 	transfer_fingerprints_to(C)
 	qdel(src)

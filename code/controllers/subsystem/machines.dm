@@ -27,7 +27,7 @@ var/datum/subsystem/machines/SSmachine
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)
-			propagate_network(PC,PC.powernet)
+			propagate_network(PC, PC.powernet)
 
 /datum/subsystem/machines/New()
 	NEW_SS_GLOBAL(SSmachine)
@@ -66,7 +66,7 @@ var/datum/subsystem/machines/SSmachine
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)
-			propagate_network(PC,PC.powernet)
+			propagate_network(PC, PC.powernet)
 
 /datum/subsystem/machines/Recover()
 	if (istype(SSmachine.processing))

@@ -22,8 +22,8 @@
 	if(!partner)
 		var/partner_connect = turn(dir,180)
 
-		for(var/obj/machinery/atmospherics/unary/heat_exchanger/target in get_step(src,partner_connect))
-			if(target.dir & get_dir(src,target))
+		for(var/obj/machinery/atmospherics/unary/heat_exchanger/target in get_step(src, partner_connect))
+			if(target.dir & get_dir(src, target))
 				partner = target
 				partner.partner = src
 				break

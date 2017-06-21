@@ -73,7 +73,7 @@
 				spawn()
 					for(var/i = 1, i <= rand(1,2), i++)
 						if(I)
-							step(I, pick(NORTH,SOUTH,EAST,WEST))
+							step(I, pick(NORTH, SOUTH, EAST, WEST))
 							sleep(rand(2,4))
 		if ( droppedSomething )
 			if ( foundtable )
@@ -118,7 +118,7 @@
 // Copied over from paper's rename verb
 // see code\modules\paperwork\paper.dm line 62
 
-/obj/item/weapon/pen/robopen/proc/RenamePaper(mob/user,obj/paper)
+/obj/item/weapon/pen/robopen/proc/RenamePaper(mob/user, obj/paper)
 	if ( !user || !paper )
 		return
 	var/n_name = input(user, "What would you like to label the paper?", "Paper Labelling", null)  as text
@@ -126,7 +126,7 @@
 		return
 
 	n_name = copytext(n_name, 1, 32)
-	if(( get_dist(user,paper) <= 1  && user.stat == CONSCIOUS))
+	if(( get_dist(user, paper) <= 1  && user.stat == CONSCIOUS))
 		paper.name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(user)
 	return

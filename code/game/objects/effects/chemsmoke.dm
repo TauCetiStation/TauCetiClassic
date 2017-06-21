@@ -175,7 +175,7 @@
 			var/a = (angle * j) + offset
 			var/x = round(radius * cos(a) + location.x, 1)
 			var/y = round(radius * sin(a) + location.y, 1)
-			var/turf/T = locate(x,y,location.z)
+			var/turf/T = locate(x, y,location.z)
 			if(!T)
 				continue
 			if(T in targetTurfs)

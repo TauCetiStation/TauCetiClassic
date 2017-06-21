@@ -89,7 +89,7 @@ var/datum/subsystem/vote/SSvote
 			text += "<b>[sanitize_plus_chat(question)]</b>"
 		else
 			text += "<b>[capitalize(mode)] Vote</b>"
-		for(var/i=1,i<=choices.len,i++)
+		for(var/i=1,i<=choices.len, i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
@@ -244,7 +244,7 @@ var/datum/subsystem/vote/SSvote
 		else
 			. += "<h2>Vote: [capitalize(mode)]</h2>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
-		for(var/i=1,i<=choices.len,i++)
+		for(var/i=1,i<=choices.len, i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
@@ -291,7 +291,7 @@ var/datum/subsystem/vote/SSvote
 	return .
 
 
-/datum/subsystem/vote/Topic(href,href_list[],hsrc)
+/datum/subsystem/vote/Topic(href, href_list[],hsrc)
 	if(!usr || !usr.client)
 		return	// not necessary but meh...just in-case somebody does something stupid
 	switch(href_list["vote"])

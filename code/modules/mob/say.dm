@@ -26,7 +26,7 @@
 	message = trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
 
 	if(use_me)
-		usr.emote("me",usr.emote_type,message)
+		usr.emote("me",usr.emote_type, message)
 	else
 		usr.emote(message)
 
@@ -73,7 +73,7 @@
 
 	return
 
-/mob/proc/say_understands(mob/other,datum/language/speaking = null)
+/mob/proc/say_understands(mob/other, datum/language/speaking = null)
 
 	if (src.stat == DEAD)		// Dead
 		return 1

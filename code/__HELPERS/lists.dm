@@ -31,7 +31,7 @@
 		return "[output][and_text][input[index]]"
 
 // Returns list element or null. Should prevent "index out of bounds" error.
-proc/listgetindex(list/list,index)
+proc/listgetindex(list/list, index)
 	if(istype(list) && list.len)
 		if(isnum(index))
 			if(InRange(index,1,list.len))
@@ -269,7 +269,7 @@ proc/listclearnulls(list/list)
 /proc/sortList(list/L)
 	if(L.len < 2)
 		return L
-	var/middle = L.len / 2 + 1 // Copy is first,second-1
+	var/middle = L.len / 2 + 1 // Copy is first, second-1
 	return mergeLists(sortList(L.Copy(0,middle)), sortList(L.Copy(middle))) // second parameter null = to end of list
 
 // Mergsorge: uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
@@ -323,7 +323,7 @@ proc/listclearnulls(list/list)
 /proc/sortAssoc(list/L)
 	if(L.len < 2)
 		return L
-	var/middle = L.len / 2 + 1 // Copy is first,second-1
+	var/middle = L.len / 2 + 1 // Copy is first, second-1
 	return mergeAssoc(sortAssoc(L.Copy(0,middle)), sortAssoc(L.Copy(middle))) // second parameter null = to end of list
 
 /proc/mergeAssoc(list/L, list/R)
@@ -400,7 +400,7 @@ proc/listclearnulls(list/list)
 /proc/dd_sortedObjectList(list/L, cache=list())
 	if(L.len < 2)
 		return L
-	var/middle = L.len / 2 + 1 // Copy is first,second-1
+	var/middle = L.len / 2 + 1 // Copy is first, second-1
 	return dd_mergeObjectList(dd_sortedObjectList(L.Copy(0,middle), cache), dd_sortedObjectList(L.Copy(middle), cache), cache) // second parameter null = to end of list
 
 /proc/dd_mergeObjectList(list/L, list/R, list/cache)
@@ -588,7 +588,7 @@ datum/proc/dd_SortValue()
 // Move a single element from position fromIndex within a list, to position toIndex
 // All elements in the range [1,toIndex) before the move will be before the pivot afterwards
 // All elements in the range [toIndex, L.len+1) before the move will be after the pivot afterwards
-// In other words, it's as if the range [fromIndex,toIndex) have been rotated using a <<< operation common to other languages.
+// In other words, it's as if the range [fromIndex, toIndex) have been rotated using a <<< operation common to other languages.
 // fromIndex and toIndex must be in the range [1,L.len+1]
 // This will preserve associations ~Carnie
 /proc/moveElement(list/L, fromIndex, toIndex)
@@ -602,7 +602,7 @@ datum/proc/dd_SortValue()
 	L.Cut(fromIndex, fromIndex+1)
 
 
-// Move elements [fromIndex,fromIndex+len) to [toIndex-len, toIndex)
+// Move elements [fromIndex, fromIndex+len) to [toIndex-len, toIndex)
 // Same as moveElement but for ranges of elements
 // This will preserve associations ~Carnie
 /proc/moveRange(list/L, fromIndex, toIndex, len=1)

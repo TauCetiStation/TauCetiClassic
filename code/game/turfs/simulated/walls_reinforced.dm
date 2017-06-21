@@ -266,7 +266,7 @@
 						dismantle_wall()
 				return
 
-// vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
+// vv OK, we weren't performing a valid deconstruction step or igniting thermite, let's check the other possibilities vv
 
 	// DRILLING
 	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
@@ -340,7 +340,7 @@
 
 	// Poster stuff
 	else if(istype(W,/obj/item/weapon/poster))
-		place_poster(W,user)
+		place_poster(W, user)
 		return
 
 	// Finally, CHECKING FOR FALSE WALLS if it isn't damaged

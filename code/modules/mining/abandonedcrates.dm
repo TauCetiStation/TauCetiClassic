@@ -13,7 +13,7 @@
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
-	code = rand(min,max)
+	code = rand(min, max)
 	var/loot = rand(1,30)
 	switch(loot)
 		if(1)

@@ -234,7 +234,7 @@
 					to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 					return 1
 				else
-					P.remove_from_storage(G,src)
+					P.remove_from_storage(G, src)
 					if(item_quants[G.name])
 						item_quants[G.name]++
 					else

@@ -103,7 +103,7 @@ Notes:
 				theme = lowertext(user.client.prefs.UI_style)
 			if(!theme)
 				theme = "default"
-			user.client.tooltips.show(tip_src, params,title,content,theme)
+			user.client.tooltips.show(tip_src, params, title, content, theme)
 
 
 // Arbitrarily close a user's tooltip

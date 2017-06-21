@@ -57,13 +57,13 @@ datum
 
 							if(prob(chance) && !block)
 								if(M.reagents)
-									M.reagents.add_reagent(self.id,self.volume/2)
+									M.reagents.add_reagent(self.id, self.volume/2)
 				return 1
 
 			reaction_obj(var/obj/O, var/volume) // By default we transfer a small part of the reagent to the object
 				src = null						// if it can hold reagents. nope!
 				// if(O.reagents)
-				//	O.reagents.add_reagent(id,volume/3)
+				//	O.reagents.add_reagent(id, volume/3)
 				return
 
 			reaction_turf(var/turf/T, var/volume)
@@ -122,9 +122,9 @@ datum
 							var/datum/disease2/disease/V = vlist[ID]
 
 							if(method == TOUCH)
-								infect_virus2(M,V.getcopy())
+								infect_virus2(M, V.getcopy())
 							else
-								infect_virus2(M,V.getcopy(),1) // injected, force infection!
+								infect_virus2(M, V.getcopy(),1) // injected, force infection!
 				if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))// ... and curing
 					var/mob/living/carbon/C = M
 					C.antibodies |= self.data["antibodies"]
@@ -450,12 +450,12 @@ datum
 						O:health += volume * 3
 
 						if(!O:silicateIcon)
-							var/icon/I = icon(O.icon,O.icon_state,O.dir)
+							var/icon/I = icon(O.icon, O.icon_state, O.dir)
 
 							var/r = (volume / 100) + 1
 							var/g = (volume / 70) + 1
 							var/b = (volume / 50) + 1
-							I.SetIntensity(r,g,b)
+							I.SetIntensity(r, g,b)
 							O.icon = I
 							O:silicateIcon = I
 						else
@@ -464,7 +464,7 @@ datum
 							var/r = (volume / 100) + 1
 							var/g = (volume / 70) + 1
 							var/b = (volume / 50) + 1
-							I.SetIntensity(r,g,b)
+							I.SetIntensity(r, g,b)
 							O.icon = I
 							O:silicateIcon = I
 
@@ -677,7 +677,7 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				M.apply_effect(2 * REM,IRRADIATE, 0)
+				M.apply_effect(2 * REM, IRRADIATE, 0)
 				// radium may increase your chances to cure a disease
 				if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
 					var/mob/living/carbon/C = M
@@ -4037,7 +4037,7 @@ datum
 
 	if(data >= 165)
 		M.adjustToxLoss(4)
-		M.apply_effect(5*REM,IRRADIATE,0)
+		M.apply_effect(5*REM, IRRADIATE,0)
 	data++
 
 /datum/reagent/chefspecial	// From VG. Only for traitors

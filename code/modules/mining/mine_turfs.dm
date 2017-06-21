@@ -83,18 +83,18 @@
 				var/obj/item/weapon/pickaxe/drill/D = H.l_hand
 				if(!D.mode)
 					return
-			attackby(H.l_hand,H)
+			attackby(H.l_hand, H)
 		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
 			if(istype(H.r_hand,/obj/item/weapon/pickaxe/drill))
 				var/obj/item/weapon/pickaxe/drill/D = H.r_hand
 				if(!D.mode)
 					return
-			attackby(H.r_hand,H)
+			attackby(H.r_hand, H)
 
 	else if(istype(AM,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active,/obj/item/weapon/pickaxe))
-			attackby(R.module_active,R)
+			attackby(R.module_active, R)
 
 	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
@@ -210,12 +210,12 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(do_after(user,P.digspeed, target = src))
+		if(do_after(user, P.digspeed, target = src))
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	// Jackhammer will just dig 3 tiles in dir of user
 				for(var/turf/simulated/mineral/M in range(user,1))
-					if(get_dir(user,M) & user.dir)
+					if(get_dir(user, M) & user.dir)
 						M.GetDrilled()
 				return
 
@@ -635,17 +635,17 @@
 		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode)
 			for(var/obj/item/weapon/ore/O in contents)
-				O.attackby(W,user)
+				O.attackby(W, user)
 				return
 	else if(istype(W,/obj/item/weapon/storage/bag/fossils))
 		var/obj/item/weapon/storage/bag/fossils/S = W
 		if(S.collection_mode)
 			for(var/obj/item/weapon/fossil/F in contents)
-				F.attackby(W,user)
+				F.attackby(W, user)
 				return
 
 	else
-		..(W,user)
+		..(W, user)
 	return
 
 /turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()

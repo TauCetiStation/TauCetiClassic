@@ -23,7 +23,7 @@
 		for(var/mob/O in viewers(world.view, src.loc))
 			to_chat(O, "<font color='red'>[M] triggered the [bicon(src)] [src]</font>")
 		triggered = 1
-		call(src,triggerproc)(M)
+		call(src, triggerproc)(M)
 
 /obj/effect/mine/proc/triggerrad(obj)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
@@ -31,7 +31,7 @@
 	s.start()
 	obj:radiation += 50
 	randmutb(obj)
-	domutcheck(obj,null)
+	domutcheck(obj, null)
 	spawn(0)
 		qdel(src)
 

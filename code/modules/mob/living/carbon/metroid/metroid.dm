@@ -391,7 +391,7 @@
 
 				Victim = null
 				anchored = 0
-				step_away(src,M)
+				step_away(src, M)
 
 			return
 
@@ -424,7 +424,7 @@
 
 				Victim = null
 				anchored = 0
-				step_away(src,M)
+				step_away(src, M)
 
 			return
 
@@ -482,9 +482,9 @@
 							Discipline++
 					spawn(0)
 
-						step_away(src,M,15)
+						step_away(src, M,15)
 						sleep(3)
-						step_away(src,M,15)
+						step_away(src, M,15)
 
 
 				playsound(loc, "punch", 25, 1, -1)
@@ -583,9 +583,9 @@
 
 				spawn(0)
 
-					step_away(src,M,15)
+					step_away(src, M,15)
 					sleep(3)
-					step_away(src,M,15)
+					step_away(src, M,15)
 
 			else
 				drop_item()

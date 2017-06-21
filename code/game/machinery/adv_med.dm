@@ -347,7 +347,7 @@
 
 						var/unknown_body = 0
 						for(var/I in BP.implants)
-							if(is_type_in_list(I,known_implants))
+							if(is_type_in_list(I, known_implants))
 								imp += "[I] implanted:"
 							else
 								unknown_body++

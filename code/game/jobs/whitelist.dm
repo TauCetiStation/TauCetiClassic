@@ -40,7 +40,7 @@ var/list/whitelist = list()
 		return
 	player += " ,added by [src.key]\n"
 	if(fexists(path))
-		text2file(player,path)
+		text2file(player, path)
 		load_whitelist()
 	else
 		to_chat(src, "<font color='red'>Error: get_whitelist(): File not found/Invalid path([path]).</font>")

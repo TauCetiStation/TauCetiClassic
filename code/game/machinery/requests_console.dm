@@ -285,7 +285,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			for (var/obj/machinery/message_server/MS in machines)
 				if(!MS.active)
 					continue
-				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
+				MS.send_rc_message(href_list["department"],department, log_msg, msgStamped, msgVerified, priority)
 				pass = 1
 
 			if(pass)

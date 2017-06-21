@@ -107,7 +107,7 @@
 					target.l_hand = item
 					item.loc = target
 					item.dropped(source)
-					item.equipped(target,target.l_hand)
+					item.equipped(target, target.l_hand)
 		if("r_hand")
 			if (target.r_hand)
 				var/obj/item/W = target.r_hand
@@ -123,7 +123,7 @@
 					target.r_hand = item
 					item.loc = target
 					item.dropped(source)
-					item.equipped(target,target.r_hand)
+					item.equipped(target, target.r_hand)
 		if("back")
 			if (target.back)
 				var/obj/item/W = target.back
@@ -183,26 +183,26 @@
 	switch(slot)
 		if(slot_back)
 			src.back = W
-			equip_to_slot_if_possible(W,slot,0,1)
+			equip_to_slot_if_possible(W, slot,0,1)
 			update_inv_back(redraw_mob)
 		if(slot_wear_mask)
 			src.wear_mask = W
-			equip_to_slot_if_possible(W,slot,0,1)
+			equip_to_slot_if_possible(W, slot,0,1)
 			update_inv_wear_mask(redraw_mob)
 		if(slot_handcuffed)
 			src.handcuffed = W
 			update_inv_handcuffed(redraw_mob)
 		if(slot_legcuffed)
 			src.legcuffed = W
-			equip_to_slot_if_possible(W,slot,0,1)
+			equip_to_slot_if_possible(W, slot,0,1)
 			update_inv_legcuffed(redraw_mob)
 		if(slot_l_hand)
 			src.l_hand = W
-			equip_to_slot_if_possible(W,slot,0,1)
+			equip_to_slot_if_possible(W, slot,0,1)
 			update_inv_l_hand(redraw_mob)
 		if(slot_r_hand)
 			src.r_hand = W
-			equip_to_slot_if_possible(W,slot,0,1)
+			equip_to_slot_if_possible(W, slot,0,1)
 			update_inv_r_hand(redraw_mob)
 		if(slot_in_backpack)
 			W.forceMove(src.back)

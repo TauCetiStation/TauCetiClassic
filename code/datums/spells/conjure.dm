@@ -24,7 +24,7 @@
 			targets -= T
 	playsound(loc, sound, 50, 1)
 
-	if(do_after(usr,delay,target=usr))
+	if(do_after(usr, delay, target=usr))
 		if(deleting_previous)
 			listclearnulls(previous_objects)
 			for(var/atom/A in previous_objects)

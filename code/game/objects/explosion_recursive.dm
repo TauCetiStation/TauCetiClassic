@@ -46,7 +46,7 @@ proc/explosion_rec(turf/epicenter, power)
 		var/z = T.z
 		T.ex_act(severity)
 		if(!T)
-			T = locate(x,y,z)
+			T = locate(x, y,z)
 		for(var/atom/A in T)
 			A.ex_act(severity)
 		CHECK_TICK

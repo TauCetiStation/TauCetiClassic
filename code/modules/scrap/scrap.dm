@@ -72,7 +72,7 @@
 /obj/structure/scrap/proc/shuffle_loot()
 	loot.close_all()
 	for(var/A in loot)
-		loot.remove_from_storage(A,src)
+		loot.remove_from_storage(A, src)
 	if(contents.len)
 		contents = shuffle(contents)
 		var/num = rand(1,loot_min)
@@ -86,8 +86,8 @@
 	update_icon()
 
 /obj/structure/scrap/proc/randomize_image(image/I)
-	I.pixel_x = rand(-base_spread,base_spread)
-	I.pixel_y = rand(-base_spread,base_spread)
+	I.pixel_x = rand(-base_spread, base_spread)
+	I.pixel_y = rand(-base_spread, base_spread)
 	var/matrix/M = matrix()
 	M.Turn(pick(0,90.180,270))
 	I.transform = M
@@ -96,15 +96,15 @@
 /obj/structure/scrap/update_icon(rebuild_base=0)
 	if(rebuild_base)
 		overlays.Cut()
-		var/num = rand(base_min,base_max)
+		var/num = rand(base_min, base_max)
 		for(var/i=1 to num)
-			var/image/I = image(parts_icon,pick(icon_states(parts_icon)))
+			var/image/I = image(parts_icon, pick(icon_states(parts_icon)))
 			I.color = pick("#996633", "#663300", "#666666", "")
 			overlays |= randomize_image(I)
 
 	underlays.Cut()
 	for(var/obj/O in loot.contents)
-		var/image/I = image(O.icon,O.icon_state)
+		var/image/I = image(O.icon, O.icon_state)
 		I.color = O.color
 		underlays |= randomize_image(I)
 

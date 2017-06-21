@@ -84,7 +84,7 @@ Version 1 changes (from version 0):
 		spawn(duration)
 			if(T) qdel(T)
 			return
-	T.Display(message,title,buttons,default,unfocus,size,table,style,select,flags)
+	T.Display(message, title, buttons, default, unfocus, size, table, style, select, flags)
 	. = T.Response()
 
 /sd_alert
@@ -101,14 +101,14 @@ Version 1 changes (from version 0):
 	target = who
 	src.tag = tag
 
-/sd_alert/Topic(href,params[])
+/sd_alert/Topic(href, params[])
 	if(usr.client != target) return
 	response = params["clk"]
 
-/sd_alert/proc/Display(message,title,list/buttons,default,unfocus,size,table,style,select,flags)
+/sd_alert/proc/Display(message, title, list/buttons, default, unfocus, size, table, style, select, flags)
 	if(unfocus)
 		spawn()
-			target << browse(null,null)
+			target << browse(null, null)
 	if(istext(buttons))
 		buttons = list(buttons)
 	if(!default)

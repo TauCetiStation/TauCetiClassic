@@ -62,9 +62,9 @@ This is what happens, when we attack aliens.
 					damage += 14
 					spawn(0)
 						Weaken(damage) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.
-						step_away(src,M,15)
+						step_away(src, M,15)
 						sleep(3)
-						step_away(src,M,15)
+						step_away(src, M,15)
 				playsound(loc, "punch", 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))

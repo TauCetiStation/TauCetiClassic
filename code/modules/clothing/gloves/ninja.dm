@@ -30,7 +30,7 @@
 
 	For the drain proc, see events/ninja.dm
 */
-/obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
+/obj/item/clothing/gloves/space_ninja/Touch(atom/A, proximity)
 	if(!candrain || draining) return 0
 
 	var/mob/living/carbon/human/H = loc
@@ -72,34 +72,34 @@
 	// steal energy from powered things
 	if(istype(A,/mob/living/silicon/robot))
 		A.add_fingerprint(H)
-		drain("CYBORG",A,suit)
+		drain("CYBORG",A, suit)
 		return 1
 	if(istype(A,/obj/machinery/power/apc))
 		A.add_fingerprint(H)
-		drain("APC",A,suit)
+		drain("APC",A, suit)
 		return 1
 	if(istype(A,/obj/structure/cable))
 		A.add_fingerprint(H)
-		drain("WIRE",A,suit)
+		drain("WIRE",A, suit)
 		return 1
 	if(istype(A,/obj/structure/grille))
 		var/obj/structure/cable/C = locate() in A.loc
 		if(C)
-			drain("WIRE",C,suit)
+			drain("WIRE",C, suit)
 		return 1
 	if(istype(A,/obj/machinery/power/smes))
 		A.add_fingerprint(H)
-		drain("SMES",A,suit)
+		drain("SMES",A, suit)
 		return 1
 	if(istype(A,/obj/mecha))
 		A.add_fingerprint(H)
-		drain("MECHA",A,suit)
+		drain("MECHA",A, suit)
 		return 1
 
 	// download research
 	if(istype(A,/obj/machinery/computer/rdconsole))
 		A.add_fingerprint(H)
-		drain("RESEARCH",A,suit)
+		drain("RESEARCH",A, suit)
 		return 1
 	if(istype(A,/obj/machinery/r_n_d/server))
 		A.add_fingerprint(H)
@@ -109,6 +109,6 @@
 		if(S.shocked)
 			S.shock(H,50)
 			return 1
-		drain("RESEARCH",A,suit)
+		drain("RESEARCH",A, suit)
 		return 1
 

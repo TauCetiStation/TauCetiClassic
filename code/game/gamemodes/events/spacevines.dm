@@ -147,10 +147,10 @@
 
 /obj/effect/spacevine/proc/spread()
 	var/direction = pick(cardinal)
-	var/step = get_step(src,direction)
+	var/step = get_step(src, direction)
 	if(istype(step,/turf/simulated/floor))
 		var/turf/simulated/floor/F = step
-		if(!locate(/obj/effect/spacevine,F))
+		if(!locate(/obj/effect/spacevine, F))
 			if(F.Enter(src))
 				if(master)
 					master.spawn_spacevine_piece( F )
@@ -159,8 +159,8 @@
 /obj/effect/spacevine/proc/Life()
 	if (!src) return
 	var/Vspread
-	if (prob(50)) Vspread = locate(src.x + rand(-1,1),src.y,src.z)
-	else Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
+	if (prob(50)) Vspread = locate(src.x + rand(-1,1),src.y, src.z)
+	else Vspread = locate(src.x, src.y + rand(-1, 1),src.z)
 	var/dogrowth = 1
 	if (!istype(Vspread, /turf/simulated/floor)) dogrowth = 0
 	for(var/obj/O in Vspread)

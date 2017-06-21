@@ -211,7 +211,7 @@
 	var/list/tick_alloys = list()
 
 	// Grab some more ore to process next tick.
-	for(var/i = 0,i<sheets_per_tick,i++)
+	for(var/i = 0,i<sheets_per_tick, i++)
 		var/obj/item/weapon/ore/O = locate() in input.loc
 		var/obj/item/stack/sheet/M = locate() in input.loc
 		if(M)	M.loc = output.loc
@@ -233,7 +233,7 @@
 				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(ores_stored[metal] < 1)
 					continue
-				for(var/i=0,i<can_make,i++)
+				for(var/i=0,i<can_make, i++)
 					ores_stored[metal]--
 					new O.start(output.loc)
 			else if(ores_processing[metal] == 3 && O.alloy) // Alloying.
@@ -258,7 +258,7 @@
 							total += A.requires[needs_metal]
 							total = max(1,round(total*A.product_mod)) // Always get at least one sheet.
 							sheets += total-1
-						for(var/i=0,i<total,i++)
+						for(var/i=0,i<total, i++)
 							console.points += A.points
 							new A.product(output.loc)
 			else if(ores_processing[metal] == 2 && O.compresses_to) // Compressing.
@@ -266,7 +266,7 @@
 				if(can_make%2>0) can_make--
 				if(!can_make || ores_stored[metal] < 1)
 					continue
-				for(var/i=0,i<can_make,i+=2)
+				for(var/i=0,i<can_make, i+=2)
 					ores_stored[metal]-=2
 					sheets+=2
 					console.points += O.points
@@ -275,7 +275,7 @@
 				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(!can_make || ores_stored[metal] < 1)
 					continue
-				for(var/i=0,i<can_make,i++)
+				for(var/i=0,i<can_make, i++)
 					ores_stored[metal]--
 					sheets++
 					console.points += O.points

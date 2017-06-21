@@ -131,7 +131,7 @@
 	if(mixing.len)
 		var/mix_amount = dart_reagent_amount/mixing.len
 		for(var/obj/item/weapon/reagent_containers/glass/beaker/B in mixing)
-			B.reagents.trans_to(dart,mix_amount)
+			B.reagents.trans_to(dart, mix_amount)
 
 	return dart
 
@@ -160,7 +160,7 @@
 		for(var/i=0, i<6, i++)
 			if(!D) break
 			if(D.loc == trg) break
-			step_towards(D,trg)
+			step_towards(D, trg)
 
 			if(D)
 				for(var/mob/living/carbon/M in D.loc)
@@ -275,7 +275,7 @@
 
 /obj/item/weapon/gun/dartgun/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(cartridge)
-		spawn(0) fire_dart(target,user)
+		spawn(0) fire_dart(target, user)
 	else
 		to_chat(usr, "\red [src] is empty.")
 

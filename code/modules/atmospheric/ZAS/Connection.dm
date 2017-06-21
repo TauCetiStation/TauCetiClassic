@@ -64,11 +64,11 @@ Class Procs:
 	zoneA = A.zone
 	if(!istype(B))
 		mark_space()
-		edge = SSair.get_edge(A.zone,B)
+		edge = SSair.get_edge(A.zone, B)
 		edge.add_connection(src)
 	else
 		zoneB = B.zone
-		edge = SSair.get_edge(A.zone,B.zone)
+		edge = SSair.get_edge(A.zone, B.zone)
 		edge.add_connection(src)
 
 /connection/proc/mark_direct()
@@ -100,7 +100,7 @@ Class Procs:
 		erase()
 		return
 
-	var/block_status = SSair.air_blocked(A,B)
+	var/block_status = SSair.air_blocked(A, B)
 	if(block_status & AIR_BLOCKED)
 		// world << "Blocked connection."
 		erase()

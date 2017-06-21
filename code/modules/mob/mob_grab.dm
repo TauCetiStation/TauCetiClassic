@@ -462,7 +462,7 @@
 		return
 
 	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [BP.name] carefully.</span>")
-	if(!do_mob(user,H, 30))
+	if(!do_mob(user, H, 30))
 		to_chat(user, "<span class='notice'>You must stand still to inspect [BP] for wounds.</span>")
 	else if(BP.wounds.len)
 		to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")

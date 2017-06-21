@@ -425,7 +425,7 @@
 
 	New()
 		..()
-		spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
+		spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 			Grow()
 
 	attack_paw(user)

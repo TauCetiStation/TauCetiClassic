@@ -15,7 +15,7 @@
 		to_chat(src, "\red You have deadchat muted.")
 		return
 
-	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))
+	if (src.handle_spam_prevention(msg, MUTE_DEADCHAT))
 		return
 
 	var/stafftype = null

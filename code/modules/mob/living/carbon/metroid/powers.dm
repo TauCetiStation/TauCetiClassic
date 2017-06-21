@@ -216,7 +216,7 @@
 					var/mob/living/carbon/slime/M = new primarytype(loc)
 					M.nutrition = new_nutrition
 					M.powerlevel = new_powerlevel
-					if(i != 1) step_away(M,src)
+					if(i != 1) step_away(M, src)
 					babies += M
 				else
 					var/mutations = pick("one","two","three","four")
@@ -225,25 +225,25 @@
 							var/mob/living/carbon/slime/M = new mutationone(loc)
 							M.nutrition = new_nutrition
 							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
+							if(i != 1) step_away(M, src)
 							babies += M
 						if("two")
 							var/mob/living/carbon/slime/M = new mutationtwo(loc)
 							M.nutrition = new_nutrition
 							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
+							if(i != 1) step_away(M, src)
 							babies += M
 						if("three")
 							var/mob/living/carbon/slime/M = new mutationthree(loc)
 							M.nutrition = new_nutrition
 							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
+							if(i != 1) step_away(M, src)
 							babies += M
 						if("four")
 							var/mob/living/carbon/slime/M = new mutationfour(loc)
 							M.nutrition = new_nutrition
 							M.powerlevel = new_powerlevel
-							if(i != 1) step_away(M,src)
+							if(i != 1) step_away(M, src)
 							babies += M
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)

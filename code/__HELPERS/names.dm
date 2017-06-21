@@ -207,7 +207,7 @@ var/syndicate_code_response// Code response for traitors.
 
 	var/maxwords = words// Extra var to check for duplicates.
 
-	for(words,words>0,words--)// Randomly picks from one of the choices below.
+	for(words, words>0,words--)// Randomly picks from one of the choices below.
 
 		if(words==1&&(1 in safety)&&(2 in safety))// If there is only one word remaining and choice 1 or 2 have not been selected.
 			safety = list(pick(1,2))// Select choice 1 or 2.
@@ -221,7 +221,7 @@ var/syndicate_code_response// Code response for traitors.
 						if(names.len&&prob(70))
 							code_phrase += pick(names)
 						else
-							code_phrase += pick(pick(first_names_male,first_names_female))
+							code_phrase += pick(pick(first_names_male, first_names_female))
 							code_phrase += " "
 							code_phrase += pick(last_names)
 					if(2)
@@ -269,7 +269,7 @@ var/syndicate_code_response// Code response for traitors.
 		if(1)
 			syndicate_code_phrase += pick("I'm looking for","Have you seen","Maybe you've seen","I'm trying to find","I'm tracking")
 			syndicate_code_phrase += " "
-			syndicate_code_phrase += pick(pick(first_names_male,first_names_female))
+			syndicate_code_phrase += pick(pick(first_names_male, first_names_female))
 			syndicate_code_phrase += " "
 			syndicate_code_phrase += pick(last_names)
 			syndicate_code_phrase += "."
@@ -319,7 +319,7 @@ var/syndicate_code_response// Code response for traitors.
 				syndicate_code_response += pick("Try asking","Ask","Talk to","Go see","Follow","Hunt down")
 				syndicate_code_response += " "
 				if(prob(50))
-					syndicate_code_response += pick(pick(first_names_male,first_names_female))
+					syndicate_code_response += pick(pick(first_names_male, first_names_female))
 					syndicate_code_response += " "
 					syndicate_code_response += pick(last_names)
 				else

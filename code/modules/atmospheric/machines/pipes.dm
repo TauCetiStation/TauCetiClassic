@@ -237,12 +237,12 @@
 			else if (!node2_dir)
 				node2_dir = direction
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node1_dir))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node2_dir))
+		if(target.initialize_directions & get_dir(target, src))
 			node2 = target
 			break
 
@@ -446,8 +446,8 @@
 
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-				if(target.initialize_directions & get_dir(target,src))
+			for(var/obj/machinery/atmospherics/target in get_step(src, direction))
+				if(target.initialize_directions & get_dir(target, src))
 					node1 = target
 					connect_directions &= ~direction
 					break
@@ -457,8 +457,8 @@
 
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-				if(target.initialize_directions & get_dir(target,src))
+			for(var/obj/machinery/atmospherics/target in get_step(src, direction))
+				if(target.initialize_directions & get_dir(target, src))
 					node2 = target
 					connect_directions &= ~direction
 					break
@@ -468,8 +468,8 @@
 
 	for(var/direction in cardinal)
 		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-				if(target.initialize_directions & get_dir(target,src))
+			for(var/obj/machinery/atmospherics/target in get_step(src, direction))
+				if(target.initialize_directions & get_dir(target, src))
 					node3 = target
 					connect_directions &= ~direction
 					break
@@ -626,13 +626,13 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 		var/icon/con = new/icon('icons/obj/atmospherics/pipe_manifold.dmi',"manifold4w_con") // Since 4-ways are supposed to be directionless, they need an overlay instead it seems.
 
 		if(node1)
-			overlays += new/image(con,dir=1)
+			overlays += new/image(con, dir=1)
 		if(node2)
-			overlays += new/image(con,dir=2)
+			overlays += new/image(con, dir=2)
 		if(node3)
-			overlays += new/image(con,dir=4)
+			overlays += new/image(con, dir=4)
 		if(node4)
-			overlays += new/image(con,dir=8)
+			overlays += new/image(con, dir=8)
 	return
 
 /obj/machinery/atmospherics/pipe/manifold4w/initialize()
@@ -776,7 +776,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 /obj/machinery/atmospherics/pipe/cap/initialize()
 	for(var/obj/machinery/atmospherics/target in get_step(src, dir))
-		if(target.initialize_directions & get_dir(target,src))
+		if(target.initialize_directions & get_dir(target, src))
 			node = target
 			break
 
@@ -940,8 +940,8 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 	var/connect_direction = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, connect_direction))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
 
@@ -1047,8 +1047,8 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 /obj/machinery/atmospherics/pipe/vent/initialize()
 	var/connect_direction = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, connect_direction))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
 

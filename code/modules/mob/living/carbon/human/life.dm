@@ -312,7 +312,7 @@
 				if(prob(1))
 					to_chat(src, "\red You mutate!")
 					randmutb(src)
-					domutcheck(src,null)
+					domutcheck(src, null)
 					emote("gasp")
 
 			if(damage)
@@ -1014,7 +1014,7 @@
 		var/alien = 0
 		if(species && species.reagent_tag)
 			alien = species.reagent_tag
-		reagents.metabolize(src,alien)
+		reagents.metabolize(src, alien)
 
 		var/total_phoronloss = 0
 		for(var/obj/item/I in src)
@@ -1637,7 +1637,7 @@
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
 		if(T.lighting_overlay && T.lighting_overlay.luminosity == 0)
-			playsound_local(src,pick(scarySounds),50, 1, -1)
+			playsound_local(src, pick(scarySounds),50, 1, -1)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	// godmode
@@ -1654,14 +1654,14 @@
 				if(B && B.virus2 && B.virus2.len)
 					for (var/ID in B.virus2)
 						var/datum/disease2/disease/V = B.virus2[ID]
-						infect_virus2(src,V.getcopy())
+						infect_virus2(src, V.getcopy())
 
 			else if(istype(O,/obj/effect/decal/cleanable/mucus))
 				var/obj/effect/decal/cleanable/mucus/M = O
 				if(M && M.virus2 && M.virus2.len)
 					for (var/ID in M.virus2)
 						var/datum/disease2/disease/V = M.virus2[ID]
-						infect_virus2(src,V.getcopy())
+						infect_virus2(src, V.getcopy())
 
 
 	if(virus2.len)

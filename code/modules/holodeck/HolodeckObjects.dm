@@ -14,8 +14,8 @@
 		spawn(4)
 			update_icon()
 			for(var/direction in cardinal)
-				if(istype(get_step(src,direction),/turf/simulated/floor))
-					var/turf/simulated/floor/FF = get_step(src,direction)
+				if(istype(get_step(src, direction),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src, direction)
 					FF.update_icon() // so siding get updated properly
 
 turf/simulated/floor/holofloor/update_icon()
@@ -93,7 +93,7 @@ turf/simulated/floor/holofloor/update_icon()
 
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
 	if(!istype(W)) return// I really wish I did not need this
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if (istype(W, /obj/item/weapon/grab) && get_dist(src, user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(istype(G.affecting,/mob/living))
 			var/mob/living/M = G.affecting
@@ -265,7 +265,7 @@ obj/structure/stool/bed/chair/holochair
 	throwpass = 1
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if (istype(W, /obj/item/weapon/grab) && get_dist(src, user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
@@ -275,7 +275,7 @@ obj/structure/stool/bed/chair/holochair
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
-	else if (istype(W, /obj/item) && get_dist(src,user)<2)
+	else if (istype(W, /obj/item) && get_dist(src, user)<2)
 		user.drop_item(src.loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return

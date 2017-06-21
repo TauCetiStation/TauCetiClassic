@@ -12,10 +12,10 @@
 	if(fireloss<0) fireloss = 0
 
 /mob/living/silicon/robot/drone/take_bodypart_damage(brute = 0, burn = 0, sharp = 0)
-	take_overall_damage(brute,burn)
+	take_overall_damage(brute, burn)
 
 /mob/living/silicon/robot/drone/heal_bodypart_damage(brute, burn)
-	heal_overall_damage(brute,burn)
+	heal_overall_damage(brute, burn)
 
 /mob/living/silicon/robot/drone/getFireLoss()
 	return fireloss

@@ -35,7 +35,7 @@
 	name = "pose selector"
 	icon_state = "sit_lie"
 
-/obj/screen/corgi/sit_lie/Click(location, control,params)
+/obj/screen/corgi/sit_lie/Click(location, control, params)
 	var/mob/living/carbon/ian/IAN = usr // shouldn't be in anywhere else, so no type check.
 	if(IAN.stat)
 		return

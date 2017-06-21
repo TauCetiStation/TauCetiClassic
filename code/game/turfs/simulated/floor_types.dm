@@ -40,14 +40,14 @@
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
 
-	New(location,type)
+	New(location, type)
 		..()
 		icon_state = "[type]vault"
 
 /turf/simulated/wall/vault
 	icon_state = "rockvault"
 
-	New(location,type)
+	New(location, type)
 		..()
 		icon_state = "[type]vault"
 
@@ -198,8 +198,8 @@
 			if(src)
 				update_icon()
 				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
+					if(istype(get_step(src, direction),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src, direction)
 						FF.update_icon() // so siding get updated properly
 
 /turf/simulated/floor/carpet
@@ -215,8 +215,8 @@
 			if(src)
 				update_icon()
 				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
+					if(istype(get_step(src, direction),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src, direction)
 						FF.update_icon() // so siding get updated properly
 
 
@@ -263,7 +263,7 @@
 
 		var/dirs = 0
 		for(var/direction in cardinal)
-			var/turf/T = get_step(src,direction)
+			var/turf/T = get_step(src, direction)
 			if(T.is_catwalk())
 				var/turf/simulated/floor/plating/airless/catwalk/C=T
 				dirs |= direction

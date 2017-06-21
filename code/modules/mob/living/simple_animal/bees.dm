@@ -141,7 +141,7 @@
 
 		if(target_turf)
 			if(AStar(src, target_turf, /turf/proc/Distance, 1))
-				Move(get_step(src, get_dir(src,target_turf)))
+				Move(get_step(src, get_dir(src, target_turf)))
 				if (prob(0.1))
 					src.visible_message("\blue The bees swarm after [target_mob]!")
 			if(src.loc == target_turf)

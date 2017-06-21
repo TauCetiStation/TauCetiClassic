@@ -30,8 +30,8 @@
 	if(src.loc && anchored)
 		power_change()
 		if(src.dir & (EAST|WEST))
-			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,EAST)
-			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,WEST)
+			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src, EAST)
+			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src, WEST)
 
 			if(circ1 && circ2)
 				if(circ1.dir != SOUTH || circ2.dir != NORTH)
@@ -39,8 +39,8 @@
 					circ2 = null
 
 		else if(src.dir & (NORTH|SOUTH))
-			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,NORTH)
-			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,SOUTH)
+			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src, NORTH)
+			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src, SOUTH)
 
 			if(circ1 && circ2 && (circ1.dir != EAST || circ2.dir != WEST))
 				circ1 = null

@@ -22,8 +22,8 @@
 
 /obj/item/device/beacon_locator/process()
 	if(target_radio)
-		dir = get_dir(src,target_radio)
-		switch(get_dist(src,target_radio))
+		dir = get_dir(src, target_radio)
+		switch(get_dist(src, target_radio))
 			if(0 to 3)
 				icon_state = "pinondirect"
 			if(4 to 10)
@@ -44,7 +44,7 @@
 						var/cur_dist = 999
 						for(var/obj/item/device/radio/beacon/R in world)
 							if(R.z == src.z && R.frequency == src.frequency)
-								var/check_dist = get_dist(src,R)
+								var/check_dist = get_dist(src, R)
 								if(check_dist < cur_dist)
 									cur_dist = check_dist
 									target_radio = R

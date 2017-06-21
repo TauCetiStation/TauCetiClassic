@@ -160,7 +160,7 @@
 proc/get_id_photo(mob/living/carbon/human/H)
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 	var/datum/preferences/P = H.client.prefs
-	return get_flat_human_icon(null,J,P)
+	return get_flat_human_icon(null, J,P)
 
 
 

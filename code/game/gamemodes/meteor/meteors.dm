@@ -49,7 +49,7 @@
 			if(4) // WEST
 				starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
 				startx = (TRANSITIONEDGE+1)
-				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
+				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
 				endx = world.maxx-TRANSITIONEDGE
 
 		pickedstart = locate(startx, starty, ZLEVEL_STATION)

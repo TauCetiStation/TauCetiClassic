@@ -866,7 +866,7 @@ datum
 								var/mob/M = A
 								if(M.client)
 									var/obj/blueeffect = new /obj(src)
-									blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
+									blueeffect.screen_loc = "WEST, SOUTH to EAST, NORTH"
 									blueeffect.icon = 'icons/effects/effects.dmi'
 									blueeffect.icon_state = "shieldsparkles"
 									blueeffect.layer = 17
@@ -913,7 +913,7 @@ datum
 					C.loc = get_turf_loc(holder.my_atom)
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)
-							step(C, pick(NORTH,SOUTH,EAST,WEST))
+							step(C, pick(NORTH, SOUTH, EAST, WEST))
 		slimebork
 			name = "Slime Bork"
 			id = "m_tele"
@@ -940,7 +940,7 @@ datum
 						B.loc = get_turf_loc(holder.my_atom)
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
-								step(B, pick(NORTH,SOUTH,EAST,WEST))
+								step(B, pick(NORTH, SOUTH, EAST, WEST))
 
 
 
@@ -1096,7 +1096,7 @@ datum
 					C.loc = get_turf_loc(holder.my_atom)
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)
-							step(C, pick(NORTH,SOUTH,EAST,WEST))*/
+							step(C, pick(NORTH, SOUTH, EAST, WEST))*/
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 					O.show_message(text("\red The slime core fizzles disappointingly,"), 1)
 
@@ -1127,7 +1127,7 @@ datum
 						B.loc = get_turf_loc(holder.my_atom)
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
-								step(B, pick(NORTH,SOUTH,EAST,WEST))
+								step(B, pick(NORTH, SOUTH, EAST, WEST))
 
 		slimebork2
 			name = "Slime Bork 2"
@@ -1155,7 +1155,7 @@ datum
 						B.loc = get_turf(holder.my_atom)
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
-								step(B, pick(NORTH,SOUTH,EAST,WEST))
+								step(B, pick(NORTH, SOUTH, EAST, WEST))
 
 
 // Blue

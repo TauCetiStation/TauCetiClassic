@@ -124,8 +124,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		if (!client)
 			break
 		if (register_asset)
-			register_asset(file,files[file])
-		send_asset(client,file)
+			register_asset(file, files[file])
+		send_asset(client, file)
 		sleep(0) // queuing calls like this too quickly can cause issues in some client versions
 
 // This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
@@ -162,7 +162,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	for(var/asset_name in assets)
 		register_asset(asset_name, assets[asset_name])
 /datum/asset/simple/send(client)
-	send_asset_list(client,assets,verify)
+	send_asset_list(client, assets, verify)
 
 
 // DEFINITIONS FOR ASSET DATUMS START HERE.

@@ -565,7 +565,7 @@ var/list/airlock_overlays = list()
 	da.anchored = 0
 	var/target = da.loc
 	for(var/i in 1 to 4)
-		target = get_turf(get_step(target,user.dir))
+		target = get_turf(get_step(target, user.dir))
 	da.throw_at(target, 200, 100, spin = FALSE)
 	if(mineral)
 		da.change_mineral_airlock_type(mineral)
@@ -600,7 +600,7 @@ var/list/airlock_overlays = list()
 		to_chat(user, "<span class='userdanger'> The door is bolted and you need more aggressive force to get thru!</span>")
 		return
 	var/passed = FALSE
-	for(var/I in get_step(user,user.dir))
+	for(var/I in get_step(user, user.dir))
 		if(I == src)
 			passed = TRUE
 			break
@@ -619,8 +619,8 @@ var/list/airlock_overlays = list()
 			var/turf/simulated/floor/tile = target
 			tile.break_tile()
 		for(var/i in 1 to 2)
-			if(!step(user,cur_dir))
-				for(var/mob/living/L in get_step(user,cur_dir))
+			if(!step(user, cur_dir))
+				for(var/mob/living/L in get_step(user, cur_dir))
 					L.adjustBruteLoss(rand(20,60))
 				break
 		playsound(src,'sound/weapons/thudswoosh.ogg', 50, 1)

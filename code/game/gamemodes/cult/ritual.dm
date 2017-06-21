@@ -279,7 +279,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			..()
 			icon_state = "book[pick(1,2,3,4,5,6)]"
 
-	Topic(href,href_list[])
+	Topic(href, href_list[])
 		if (src.loc == usr)
 			var/number = text2num(href_list["number"])
 			if (usr.stat|| usr.restrained())

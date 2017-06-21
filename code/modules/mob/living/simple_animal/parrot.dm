@@ -806,14 +806,14 @@
 
 	if(copytext(message,1,2) == ":")
 		var/positioncut = 3
-		message = trim(copytext(message,positioncut))
+		message = trim(copytext(message, positioncut))
 
 	message = capitalize(trim_left(message))
 
 	if(message_mode)
 		if(message_mode in radiochannels)
 			if(ears && istype(ears,/obj/item/device/radio))
-				ears.talk_into(src,message, message_mode, verb, null)
+				ears.talk_into(src, message, message_mode, verb, null)
 
 
 	..(message)
@@ -822,14 +822,14 @@
 /mob/living/simple_animal/parrot/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null)
 	if(speaker != src)
 		parrot_hear(message)
-	..(message,verb,language,alt_name,italics,speaker)
+	..(message, verb, language, alt_name, italics, speaker)
 
 
 
 /mob/living/simple_animal/parrot/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0)
 	if(speaker != src)
 		parrot_hear("[pick(available_channels)] [message]")
-	..(message,verb,language,part_a,part_b,speaker,hard_to_hear)
+	..(message, verb, language, part_a, part_b, speaker, hard_to_hear)
 
 
 /mob/living/simple_animal/parrot/proc/parrot_hear(message="")

@@ -206,7 +206,7 @@
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
-		stunned = max(max(stunned,amount),0) // can't go below 0, getting a low amount of stun doesn't lower your current stun
+		stunned = max(max(stunned, amount),0) // can't go below 0, getting a low amount of stun doesn't lower your current stun
 	else
 		// add some movement delay
 		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10

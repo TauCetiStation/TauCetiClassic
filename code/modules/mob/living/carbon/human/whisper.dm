@@ -13,7 +13,7 @@
 			to_chat(src, "\red You cannot whisper (muted).")
 			return
 
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	if(!speech_allowed && usr == src)

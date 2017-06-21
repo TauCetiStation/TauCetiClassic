@@ -111,11 +111,11 @@
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
-			step(mob.control_object,direct)
+			step(mob.control_object, direct)
 			if(!mob.control_object)	return
 			mob.control_object.dir = direct
 		else
-			mob.control_object.loc = get_step(mob.control_object,direct)
+			mob.control_object.loc = get_step(mob.control_object, direct)
 	return
 
 
@@ -125,7 +125,7 @@
 
 	if(mob.control_object)	Move_object(direct)
 
-	if(isobserver(mob))	return mob.Move(n,direct)
+	if(isobserver(mob))	return mob.Move(n, direct)
 
 	if(moving)	return 0
 
@@ -140,7 +140,7 @@
 
 	// handle possible AI movement
 	if(isAI(mob))
-		return AIMove(n,direct,mob)
+		return AIMove(n, direct, mob)
 
 	if(mob.monkeyizing)	return// This is sota the goto stop mobs from moving var
 
@@ -166,7 +166,7 @@
 		// drunk driving
 		if(mob.confused)
 			direct = pick(cardinal)
-		return mob.buckled.relaymove(mob,direct)
+		return mob.buckled.relaymove(mob, direct)
 
 	if(!mob.canmove)
 		return
@@ -220,7 +220,7 @@
 					if((!l_hand || (l_hand.status & ORGAN_DESTROYED)) && (!r_hand || (r_hand.status & ORGAN_DESTROYED)))
 						return // No hands to drive your chair? Tough luck!
 				move_delay += 2
-				return mob.buckled.relaymove(mob,direct)
+				return mob.buckled.relaymove(mob, direct)
 
 		// We are now going to move
 		moving = 1
@@ -280,20 +280,20 @@
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)
 
-/mob/Move(n,direct)
+/mob/Move(n, direct)
 	// Camera control: arrow keys.
 	if (machine && istype(machine, /obj/machinery/computer/security))
 		var/obj/machinery/computer/security/console = machine
 		var/turf/T = get_turf(console.current)
 		for(var/i;i<10;i++)
-			T = get_step(T,direct)
-		console.jump_on_click(src,T)
+			T = get_step(T, direct)
+		console.jump_on_click(src, T)
 		return
 
 	if (pinned.len)
 		return
 
-	return ..(n,direct)
+	return ..(n, direct)
 
 // /Process_Grab()
 // /Called by client/Move()
@@ -344,17 +344,17 @@
 							return
 					else
 						return
-				L.loc = locate(locx,locy,mobloc.z)
+				L.loc = locate(locx, locy, mobloc.z)
 				spawn(0)
 					var/limit = 2// For only two trailing shadows.
 					for(var/turf/T in getline(mobloc, L.loc))
 						spawn(0)
-							anim(T,L,'icons/mob/mob.dmi',,"shadow",,L.dir)
+							anim(T, L,'icons/mob/mob.dmi',,"shadow",,L.dir)
 						limit--
 						if(limit<=0)	break
 			else
 				spawn(0)
-					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
+					anim(mobloc, mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
 			L.dir = direct
 	return 1

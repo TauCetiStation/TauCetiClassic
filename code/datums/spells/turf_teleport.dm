@@ -11,8 +11,8 @@
 /obj/effect/proc_holder/spell/targeted/turf_teleport/cast(list/targets)
 	for(var/mob/living/target in targets)
 		var/list/turfs = new/list()
-		for(var/turf/T in range(target,outer_tele_radius))
-			if(T in range(target,inner_tele_radius)) continue
+		for(var/turf/T in range(target, outer_tele_radius))
+			if(T in range(target, inner_tele_radius)) continue
 			if(istype(T,/turf/space) && !include_space) continue
 			if(T.density && !include_dense) continue
 			if(T.x>world.maxx-outer_tele_radius || T.x<outer_tele_radius)	continue	// putting them at the edge is dumb
@@ -21,8 +21,8 @@
 
 		if(!turfs.len)
 			var/list/turfs_to_pick_from = list()
-			for(var/turf/T in orange(target,outer_tele_radius))
-				if(!(T in orange(target,inner_tele_radius)))
+			for(var/turf/T in orange(target, outer_tele_radius))
+				if(!(T in orange(target, inner_tele_radius)))
 					turfs_to_pick_from += T
 			turfs += pick(/turf in turfs_to_pick_from)
 

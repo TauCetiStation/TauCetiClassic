@@ -226,10 +226,10 @@
 			if (prob(25))
 				if (prob(75))
 					randmutb(H)
-					domutcheck(H,null,MUTCHK_FORCED)
+					domutcheck(H, null, MUTCHK_FORCED)
 				else
 					randmutg(H)
-					domutcheck(H,null,MUTCHK_FORCED)
+					domutcheck(H, null, MUTCHK_FORCED)
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		var/turf/T = get_turf(M)
 		if(!T)
@@ -300,7 +300,7 @@
 	if(lightsoutAmount)
 		var/list/epicentreList = list()
 
-		for(var/i=1,i<=lightsoutAmount,i++)
+		for(var/i=1,i<=lightsoutAmount, i++)
 			var/list/possibleEpicentres = list()
 			for(var/obj/effect/landmark/newEpicentre in landmarks_list)
 				if(newEpicentre.name == "lightsout" && !(newEpicentre in epicentreList))
@@ -314,7 +314,7 @@
 			return
 
 		for(var/obj/effect/landmark/epicentre in epicentreList)
-			for(var/obj/machinery/power/apc/apc in range(epicentre,lightsoutRange))
+			for(var/obj/machinery/power/apc/apc in range(epicentre, lightsoutRange))
 				apc.overload_lighting()
 
 	else

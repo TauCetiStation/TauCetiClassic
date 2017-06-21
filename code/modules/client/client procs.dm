@@ -54,7 +54,7 @@
 		if(href_list["ahelp_reply"])
 			cmd_ahelp_reply(C)
 			return
-		cmd_admin_pm(C,null)
+		cmd_admin_pm(C, null)
 		return
 
 	if(href_list["irc_msg"])
@@ -74,8 +74,8 @@
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
 		if("usr")		hsrc = mob
-		if("prefs")		return prefs.process_link(usr,href_list)
-		if("vars")		return view_var_Topic(href,href_list,hsrc)
+		if("prefs")		return prefs.process_link(usr, href_list)
+		if("vars")		return view_var_Topic(href, href_list, hsrc)
 
 	switch(href_list["action"])
 		if ("openLink")
@@ -309,7 +309,7 @@
 
 	// Logging player access
 	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null, Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
 
 /client/proc/check_randomizer(topic)

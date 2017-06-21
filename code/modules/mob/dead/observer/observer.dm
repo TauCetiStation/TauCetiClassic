@@ -39,7 +39,7 @@ var/global/list/image/ghost_sightless_images = list() // this is a list of image
 
 	stat = DEAD
 
-	ghostimage = image(icon,src,"ghost")
+	ghostimage = image(icon, src,"ghost")
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
@@ -91,7 +91,7 @@ var/global/list/image/ghost_sightless_images = list() // this is a list of image
 /mob/dead/observer/MouseDrop(atom/over)
 	if(!usr || !over) return
 	if (isobserver(usr) && usr.client.holder && isliving(over))
-		if (usr.client.holder.cmd_ghost_drag(src,over))
+		if (usr.client.holder.cmd_ghost_drag(src, over))
 			return
 
 	return ..()
@@ -172,9 +172,9 @@ Works together with spawning an observer, noted above.
 			var/mob/living/silicon/silicon_target = target
 			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len))||silicon_target.mind.special_role=="traitor")
 				if(isrobot(silicon_target))// Different icons for robutts and AI.
-					U.client.images += image(tempHud,silicon_target,"hudmalborg")
+					U.client.images += image(tempHud, silicon_target,"hudmalborg")
 				else
-					U.client.images += image(tempHud,silicon_target,"hudmalai")
+					U.client.images += image(tempHud, silicon_target,"hudmalai")
 */
 	return 1
 
@@ -372,7 +372,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (!istype(target))
 		return
 
-	var/icon/I = icon(target.icon,target.icon_state,target.dir)
+	var/icon/I = icon(target.icon, target.icon_state, target.dir)
 
 	var/orbitsize = (I.Width() + I.Height()) * 0.5
 	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
@@ -641,7 +641,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/direction = input(src,"Which way?","Tile selection") as anything in list("Here","North","South","East","West")
 	var/turf/simulated/T = src.loc
 	if (direction != "Here")
-		T = get_step(T,text2dir(direction))
+		T = get_step(T, text2dir(direction))
 
 	if (!istype(T))
 		to_chat(src, "<span class='warning'>You cannot doodle there.</span>")

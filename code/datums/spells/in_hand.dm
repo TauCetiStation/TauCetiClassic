@@ -74,7 +74,7 @@
 	if(user.is_busy())
 		return FALSE
 	if(can_powerup && power_of_spell < max_power)
-		if(!do_after(user, 10, null, user,TRUE))
+		if(!do_after(user, 10, null, user, TRUE))
 			return FALSE
 		power_of_spell++
 		// to_chat(user, "<span class'notice'>[src] power has grown up!</span>") much text, so informative, very spam, wow! but i'l leave that anyway.

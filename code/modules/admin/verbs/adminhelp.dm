@@ -13,7 +13,7 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src, "<font color='red'>Error: Admin-PM: You cannot send adminhelps (Muted).</font>")
 		return
-	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if(src.handle_spam_prevention(msg, MUTE_ADMINHELP))
 		return
 
 	staffhelp(msg, help_type = "AH")

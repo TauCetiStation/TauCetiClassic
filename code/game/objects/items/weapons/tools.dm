@@ -90,7 +90,7 @@
 		return ..()
 	if((CLUMSY in user.mutations) && prob(50))
 		M = user
-	return eyestab(M,user)
+	return eyestab(M, user)
 
 /obj/item/weapon/screwdriver/power
 	name = "Hand Drill"
@@ -298,12 +298,12 @@
 
 /obj/item/weapon/weldingtool/afterattack(obj/O, mob/user, proximity)
 	if(!proximity) return
-	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
+	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src, O) <= 1 && !src.welding)
 		O.reagents.trans_to(src, max_fuel)
 		to_chat(user, "<span class='notice'>Welder refueled")
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
-	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
+	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src, O) <= 1 && src.welding)
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 		log_game("[key_name(user)] triggered a fueltank explosion.")
 		to_chat(user, "<span class='rose'>That was stupid of you.</span>")

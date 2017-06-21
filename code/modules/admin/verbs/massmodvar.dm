@@ -30,7 +30,7 @@
 	var/list/fully_locked = list("player_next_age_tick", "player_ingame_age",)
 
 	for(var/p in forbidden_varedit_object_types)
-		if( istype(O,p) )
+		if( istype(O, p) )
 			to_chat(usr, "\red It is forbidden to edit this object's variables.")
 			return
 

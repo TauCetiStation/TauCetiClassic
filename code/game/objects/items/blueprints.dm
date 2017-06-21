@@ -92,7 +92,7 @@ move an amendment</a> to the drawing.</p>
 		// /area/derelict // commented out, all hail derelict-rebuilders!
 	)
 	for (var/type in SPECIALS)
-		if ( istype(A,type) )
+		if ( istype(A, type) )
 			return AREA_SPECIAL
 	return AREA_STATION
 
@@ -155,7 +155,7 @@ move an amendment</a> to the drawing.</p>
 	if(length(str) > 50)
 		to_chat(usr, "\red Text too long.")
 		return
-	set_area_machinery_title(A,str,prevname)
+	set_area_machinery_title(A, str, prevname)
 	for(var/area/RA in A.related)
 		RA.name = str
 	to_chat(usr, "\blue You set the area '[prevname]' title to '[str]'.")
@@ -164,20 +164,20 @@ move an amendment</a> to the drawing.</p>
 
 
 
-/obj/item/blueprints/proc/set_area_machinery_title(area/A,title,oldtitle)
+/obj/item/blueprints/proc/set_area_machinery_title(area/A, title, oldtitle)
 	if (!oldtitle) // or replacetext goes to infinite loop
 		return
 	for(var/area/RA in A.related)
 		for(var/obj/machinery/alarm/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name, oldtitle, title)
 		for(var/obj/machinery/power/apc/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name, oldtitle, title)
 		for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name, oldtitle, title)
 		for(var/obj/machinery/atmospherics/unary/vent_pump/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name, oldtitle, title)
 		for(var/obj/machinery/door/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name, oldtitle, title)
 	// TODO: much much more. Unnamed airlocks, cameras, etc.
 
 /obj/item/blueprints/proc/check_tile_is_border(turf/T2,dir)
@@ -195,7 +195,7 @@ move an amendment</a> to the drawing.</p>
 	for (var/obj/structure/window/W in T2)
 		if(turn(dir,180) == W.dir)
 			return BORDER_BETWEEN
-		if (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
+		if (W.dir in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST))
 			return BORDER_2NDTILE
 	for(var/obj/machinery/door/window/D in T2)
 		if(turn(dir,180) == D.dir)
@@ -220,7 +220,7 @@ move an amendment</a> to the drawing.</p>
 		for (var/dir in cardinal)
 			var/skip = 0
 			for (var/obj/structure/window/W in T)
-				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
+				if(dir == W.dir || (W.dir in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST)))
 					skip = 1; break
 			if (skip) continue
 			for(var/obj/machinery/door/window/D in T)
@@ -228,11 +228,11 @@ move an amendment</a> to the drawing.</p>
 					skip = 1; break
 			if (skip) continue
 
-			var/turf/NT = get_step(T,dir)
+			var/turf/NT = get_step(T, dir)
 			if (!isturf(NT) || (NT in found) || (NT in pending))
 				continue
 
-			switch(check_tile_is_border(NT,dir))
+			switch(check_tile_is_border(NT, dir))
 				if(BORDER_NONE)
 					pending+=NT
 				if(BORDER_BETWEEN)

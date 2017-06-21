@@ -139,7 +139,7 @@ Nah
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src, pipe) > 1 )
 		return
 
 	if (pipe.anchored)

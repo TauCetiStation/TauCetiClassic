@@ -13,7 +13,7 @@
 
 /obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		return ..(I,user)
+		return ..(I, user)
 
 	if(istype(I,/obj/item/weapon/virusdish))
 		var/mob/living/carbon/c = user

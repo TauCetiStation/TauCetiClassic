@@ -247,7 +247,7 @@ proc/n_inrange(num, min=-1, max=1)
 
 // Non-recursive
 // Imported from Mono string.ReplaceUnchecked
-/proc/string_replacetext(haystack,a,b)
+/proc/string_replacetext(haystack, a,b)
 	if(istext(haystack)&&istext(a)&&istext(b))
 		var/i = 1
 		var/lenh=lentext(haystack)
@@ -280,12 +280,12 @@ proc/n_inrange(num, min=-1, max=1)
 			// fixed (char* dest = target, src = source)
 			// CharCopy (dest + targetIndex, src + sourceIndex, count);
 			// CharCopy (dest + curPos, source + lastReadPos, precopy);
-			buf+=copytext(haystack,lastReadPos,precopy)
+			buf+=copytext(haystack, lastReadPos, precopy)
 			log_misc("buf+=copytext([haystack],[lastReadPos],[precopy])")
 			log_misc("[buf]")
 			lastReadPos = dat[i] + lena
 			// CharCopy (dest + curPos, replace, newValue.length);
 			buf+=b
 			log_misc("[buf]")
-		buf+=copytext(haystack,lastReadPos, 0)
+		buf+=copytext(haystack, lastReadPos, 0)
 		return buf

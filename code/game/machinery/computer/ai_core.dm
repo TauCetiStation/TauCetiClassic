@@ -183,7 +183,7 @@
 
 /obj/structure/AIcore/deactivated/attackby(obj/item/device/aicard/A, mob/user)
 	if(istype(A, /obj/item/device/aicard))// Is it?
-		A.transfer_ai("INACTIVE","AICARD",src,user)
+		A.transfer_ai("INACTIVE","AICARD",src, user)
 	return
 
 /obj/structure/AIcore/deactivated/Destroy()

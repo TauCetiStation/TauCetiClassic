@@ -20,7 +20,7 @@
 	tribe_type = rand(1,5)
 
 	var/num_tribesmen = rand(3,6)
-	for(var/i=0,i<num_tribesmen,i++)
+	for(var/i=0,i<num_tribesmen, i++)
 		var/mob/living/simple_animal/hostile/tribesman/T = new(src.loc)
 		T.my_type = tribe_type
 		T.x += rand(-6,6)

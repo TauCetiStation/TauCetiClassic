@@ -120,7 +120,7 @@
 	return
 
 
-/obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)
+/obj/item/mecha_parts/mecha_equipment/Topic(href, href_list)
 	if(href_list["detach"])
 		src.detach()
 	return

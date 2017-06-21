@@ -10,7 +10,7 @@
 
 	..()
 
-	if((M != src) && check_shields(0, M.name, get_dir(M,src)))
+	if((M != src) && check_shields(0, M.name, get_dir(M, src)))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
@@ -193,7 +193,7 @@
 					for(var/turf/T in view())
 						turfs += T
 					var/turf/target = pick(turfs)
-					return W.afterattack(target,src)
+					return W.afterattack(target, src)
 
 			var/randn = rand(1, 100)
 			if (randn <= 25)

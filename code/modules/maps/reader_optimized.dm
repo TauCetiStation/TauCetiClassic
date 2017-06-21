@@ -155,7 +155,7 @@ var/global/dmm_suite/preloader/_preloader = new
  * 4) Instanciates the atom with its variables
  *
  */
-/dmm_suite/proc/parse_grid(model,xcrd,ycrd,zcrd)
+/dmm_suite/proc/parse_grid(model, xcrd, ycrd, zcrd)
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -199,7 +199,7 @@ var/global/dmm_suite/preloader/_preloader = new
 			var/list/fields = list()
 
 			if(variables_start)// if there's any variable
-				full_def = copytext(full_def,variables_start+1,length(full_def))// removing the last '}'
+				full_def = copytext(full_def, variables_start+1,length(full_def))// removing the last '}'
 				fields = readlist(full_def, ";")
 
 			// then fill the members_attributes list with the corresponding variables
@@ -225,7 +225,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		_preloader.setup(members_attributes[index])// preloader for assigning  set variables on atom creation
 
 		instance = locate(members[index])
-		var/turf/crds = locate(xcrd,ycrd,zcrd)
+		var/turf/crds = locate(xcrd, ycrd, zcrd)
 		if(crds)
 			instance.contents.Add(crds)
 
@@ -241,14 +241,14 @@ var/global/dmm_suite/preloader/_preloader = new
 	// instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
-		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
+		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd, ycrd, zcrd)
 
 	if(T)
 		// if others /turf are presents, simulates the underlays piling effect
 		index = first_turf_index + 1
 		while(index <= members.len - 1) // Last item is an /area
 			var/underlay = T.appearance
-			T = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)// instance new turf
+			T = instance_atom(members[index],members_attributes[index],xcrd, ycrd, zcrd)// instance new turf
 			T.underlays += underlay
 			index++
 
@@ -256,7 +256,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/list/objs = list()
 	var/inst
 	for(index in 1 to first_turf_index-1)
-		inst = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
+		inst = instance_atom(members[index],members_attributes[index],xcrd, ycrd, zcrd)
 		if(isobj(inst))
 			objs += inst
 		CHECK_TICK
@@ -267,12 +267,12 @@ var/global/dmm_suite/preloader/_preloader = new
 // Helpers procs
 ////////////////
 
-// Instance an atom at (x,y,z) and gives it the variables in attributes
-/dmm_suite/proc/instance_atom(path,list/attributes, x, y, z)
+// Instance an atom at (x, y,z) and gives it the variables in attributes
+/dmm_suite/proc/instance_atom(path, list/attributes, x, y, z)
 	var/atom/instance
 	_preloader.setup(attributes, path)
 
-	var/turf/T = locate(x,y,z)
+	var/turf/T = locate(x, y,z)
 	if(T)
 		if(ispath(path, /turf))
 			T.ChangeTurf(path)
@@ -287,24 +287,24 @@ var/global/dmm_suite/preloader/_preloader = new
 
 // text trimming (both directions) helper proc
 // optionally removes quotes before and after the text (for variable name)
-/dmm_suite/proc/trim_text(what,trim_quotes=0)
+/dmm_suite/proc/trim_text(what, trim_quotes=0)
 	if(trim_quotes)
 		return trimQuotesRegex.Replace(what, "")
 	else
 		return trimRegex.Replace(what, "")
 
 
-// find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
+// find the position of the next delimiter, skipping whatever is comprised between opening_escape and closing_escape
 // returns 0 if reached the last delimiter
-/dmm_suite/proc/find_next_delimiter_position(text,initial_position, delimiter=",",opening_escape=quote,closing_escape=quote)
+/dmm_suite/proc/find_next_delimiter_position(text, initial_position, delimiter=",",opening_escape=quote, closing_escape=quote)
 	var/position = initial_position
-	var/next_delimiter = findtext(text,delimiter,position,0)
-	var/next_opening = findtext(text,opening_escape,position,0)
+	var/next_delimiter = findtext(text, delimiter, position,0)
+	var/next_opening = findtext(text, opening_escape, position,0)
 
 	while((next_opening != 0) && (next_opening < next_delimiter))
-		position = findtext(text,closing_escape,next_opening + 1,0)+1
-		next_delimiter = findtext(text,delimiter,position,0)
-		next_opening = findtext(text,opening_escape,position,0)
+		position = findtext(text, closing_escape, next_opening + 1,0)+1
+		next_delimiter = findtext(text, delimiter, position,0)
+		next_opening = findtext(text, opening_escape, position,0)
 
 	return next_delimiter
 
@@ -320,20 +320,20 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	do
 		// find next delimiter that is not within  "..."
-		position = find_next_delimiter_position(text,old_position,delimiter)
+		position = find_next_delimiter_position(text, old_position, delimiter)
 
 		// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
 		var/equal_position = findtext(text,"=",old_position, position)
 
-		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)),1)// the name of the variable, must trim quotes to build a BYOND compliant associatives list
+		var/trim_left = trim_text(copytext(text, old_position,(equal_position ? equal_position : position)),1)// the name of the variable, must trim quotes to build a BYOND compliant associatives list
 		old_position = position + 1
 
 		if(equal_position)// associative var, so do the association
-			var/trim_right = trim_text(copytext(text,equal_position+1,position))// the content of the variable
+			var/trim_right = trim_text(copytext(text, equal_position+1,position))// the content of the variable
 
 			// Check for string
-			if(findtext(trim_right,quote,1,2))
-				trim_right = copytext(trim_right,2,findtext(trim_right,quote,3,0))
+			if(findtext(trim_right, quote,1,2))
+				trim_right = copytext(trim_right,2,findtext(trim_right, quote,3,0))
 
 			// Check for number
 			else if(isnum(text2num(trim_right)))

@@ -225,7 +225,7 @@
 			continue
 		P.node = null
 		for(var/obj/machinery/atmospherics/target in get_step(src, P.dir))
-			if(target.initialize_directions & get_dir(target,src))
+			if(target.initialize_directions & get_dir(target, src))
 				P.node = target
 				break
 

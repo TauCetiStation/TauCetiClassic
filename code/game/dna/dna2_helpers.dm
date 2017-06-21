@@ -24,14 +24,14 @@
 /proc/randmutb(mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
-	var/block = pick(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK)
+	var/block = pick(GLASSESBLOCK, COUGHBLOCK, FAKEBLOCK, NERVOUSBLOCK, CLUMSYBLOCK, TWITCHBLOCK, HEADACHEBLOCK, BLINDBLOCK, DEAFBLOCK, HALLUCINATIONBLOCK)
 	M.dna.SetSEState(block, 1)
 
 // Give Random Good Mutation to M
 /proc/randmutg(mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
-	var/block = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
+	var/block = pick(HULKBLOCK, XRAYBLOCK, FIREBLOCK, TELEBLOCK, NOBREATHBLOCK, REMOTEVIEWBLOCK, REGENERATEBLOCK, INCREASERUNBLOCK, REMOTETALKBLOCK, MORPHBLOCK, BLENDBLOCK, NOPRINTSBLOCK, SHOCKIMMUNITYBLOCK, SMALLSIZEBLOCK)
 	M.dna.SetSEState(block, 1)
 
 // Random Appearance Mutation
@@ -47,20 +47,20 @@
 	if(UI)
 		for(var/i = 1, i <= DNA_UI_LENGTH-1, i++)
 			if(prob(prob))
-				M.dna.SetUIValue(i,rand(1,4095),1)
+				M.dna.SetUIValue(i, rand(1,4095),1)
 		M.dna.UpdateUI()
 		M.UpdateAppearance()
 
 	else
 		for(var/i = 1, i <= DNA_SE_LENGTH-1, i++)
 			if(prob(prob))
-				M.dna.SetSEValue(i,rand(1,4095),1)
+				M.dna.SetSEValue(i, rand(1,4095),1)
 		M.dna.UpdateSE()
 		domutcheck(M, null)
 	return
 
 // I haven't yet figured out what the fuck this is supposed to do.
-/proc/miniscramble(input,rs,rd)
+/proc/miniscramble(input, rs, rd)
 	var/output
 	output = null
 	if (input == "C" || input == "D" || input == "E" || input == "F")
@@ -79,7 +79,7 @@
 // input: YOUR TARGET
 // rs: RAD STRENGTH
 // rd: DURATION
-/proc/miniscrambletarget(input,rs,rd)
+/proc/miniscrambletarget(input, rs, rd)
 	var/output = null
 	switch(input)
 		if("0")
@@ -155,12 +155,12 @@
 			H.gender = MALE
 
 		// Hair
-		var/hair = dna.GetUIValueRange(DNA_UI_HAIR_STYLE,hair_styles_list.len)
+		var/hair = dna.GetUIValueRange(DNA_UI_HAIR_STYLE, hair_styles_list.len)
 		if((0 < hair) && (hair <= hair_styles_list.len))
 			H.h_style = hair_styles_list[hair]
 
 		// Facial Hair
-		var/beard = dna.GetUIValueRange(DNA_UI_BEARD_STYLE,facial_hair_styles_list.len)
+		var/beard = dna.GetUIValueRange(DNA_UI_BEARD_STYLE, facial_hair_styles_list.len)
 		if((0 < beard) && (beard <= facial_hair_styles_list.len))
 			H.f_style = facial_hair_styles_list[beard]
 

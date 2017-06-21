@@ -59,7 +59,7 @@
 		lastTick = world.timeofday
 		spreaded = 0
 
-		for(var/i=1,i<=yield,i++)
+		for(var/i=1,i<=yield, i++)
 			if(prob(spreadChance))
 				var/list/possibleLocs = list()
 				var/spreadsIntoAdjacent = 0
@@ -81,7 +81,7 @@
 				for(var/obj/effect/glowshroom/shroom in newLoc)
 					shroomCount++
 				for(var/wallDir in cardinal)
-					var/turf/isWall = get_step(newLoc,wallDir)
+					var/turf/isWall = get_step(newLoc, wallDir)
 					if(isWall.density)
 						placeCount++
 				if(shroomCount >= placeCount)
@@ -103,7 +103,7 @@
 	var/direction = 16
 
 	for(var/wallDir in cardinal)
-		var/turf/newTurf = get_step(location,wallDir)
+		var/turf/newTurf = get_step(location, wallDir)
 		if(newTurf.density)
 			direction |= wallDir
 

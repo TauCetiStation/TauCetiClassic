@@ -1,6 +1,6 @@
 
 /*
-	apply_damage(a,b,c)
+	apply_damage(a, b,c)
 	args
 	a:damage - How much damage to take
 	b:damage_type - What type of damage to take, brute, burn

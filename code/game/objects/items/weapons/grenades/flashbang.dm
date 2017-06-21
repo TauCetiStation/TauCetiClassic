@@ -17,7 +17,7 @@
 			bang(get_turf(src), M)
 
 		for(var/obj/effect/blob/B in hear(8,get_turf(src)))       		// Blob damage here
-			var/damage = round(30/(get_dist(B,get_turf(src))+1))
+			var/damage = round(30/(get_dist(B, get_turf(src))+1))
 			B.health -= damage
 			B.update_icon()
 
@@ -118,7 +118,7 @@
 	var/numspawned = rand(4,8)
 	var/again = 0
 
-	for(var/more = numspawned,more > 0,more--)
+	for(var/more = numspawned, more > 0,more--)
 		if(prob(35))
 			again++
 			numspawned--
@@ -147,7 +147,7 @@
 	icon_state = "clusterbang_segment_active"
 	payload = payload_type
 	active = 1
-	walk_away(src,loc,rand(1,4))
+	walk_away(src, loc, rand(1,4))
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
 /obj/item/weapon/grenade/clusterbuster/segment/prime()
@@ -162,7 +162,7 @@
 	for(var/loop = numspawned ,loop > 0, loop--)
 		var/obj/item/weapon/grenade/P = new type(loc)
 		P.active = 1
-		walk_away(P,loc,rand(1,4))
+		walk_away(P, loc, rand(1,4))
 		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
 	qdel(src)
 

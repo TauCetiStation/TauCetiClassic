@@ -75,9 +75,9 @@
 	if(flag)	return // It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return// Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
-		PreFire(A,user,params) // They're using the new gun system, locate what they're aiming at.
+		PreFire(A, user, params) // They're using the new gun system, locate what they're aiming at.
 	else
-		Fire(A,user,params) // Otherwise, fire normally.
+		Fire(A, user, params) // Otherwise, fire normally.
 
 /obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)// TODO: go over this
 	// Exclude lasertag guns from the CLUMSY check.
@@ -147,7 +147,7 @@
 	return
 
 /obj/item/weapon/gun/proc/can_hit(mob/living/target, mob/living/user)
-	return chambered.BB.check_fire(target,user)
+	return chambered.BB.check_fire(target, user)
 
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)
@@ -216,10 +216,10 @@
 		if(user.a_intent == "hurt")
 			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			chambered.BB.damage *= 1.3
-			Fire(M,user)
+			Fire(M, user)
 			return
 		else if(target && M in target)
-			Fire(M,user) // /Otherwise, shoot!
+			Fire(M, user) // /Otherwise, shoot!
 			return
 	else
 		return ..()

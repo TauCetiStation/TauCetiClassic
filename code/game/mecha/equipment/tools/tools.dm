@@ -72,7 +72,7 @@
 			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
 			msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]")
 		else
-			step_away(M,chassis)
+			step_away(M, chassis)
 			occupant_message("You push [target] out of the way.")
 			chassis.visible_message("[chassis] pushes [target] out of the way.")
 		set_ready_state(0)
@@ -108,25 +108,25 @@
 				occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
 			else if(istype(target, /turf/simulated/mineral))
 				for(var/turf/simulated/mineral/M in range(chassis,1))
-					if(get_dir(chassis,M)&chassis.dir)
+					if(get_dir(chassis, M)&chassis.dir)
 						M.GetDrilled()
 				log_message("Drilled through [target]")
 				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 					if(ore_box)
 						for(var/obj/item/weapon/ore/ore in range(chassis,1))
-							if(get_dir(chassis,ore)&chassis.dir)
+							if(get_dir(chassis, ore)&chassis.dir)
 								ore.Move(ore_box)
 			else if(istype(target, /turf/simulated/floor/plating/airless/asteroid))
 				for(var/turf/simulated/floor/plating/airless/asteroid/M in range(chassis,1))
-					if(get_dir(chassis,M)&chassis.dir)
+					if(get_dir(chassis, M)&chassis.dir)
 						M.gets_dug()
 				log_message("Drilled through [target]")
 				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 					if(ore_box)
 						for(var/obj/item/weapon/ore/ore in range(chassis,1))
-							if(get_dir(chassis,ore)&chassis.dir)
+							if(get_dir(chassis, ore)&chassis.dir)
 								ore.Move(ore_box)
 			else if(target.loc == C)
 				if(istype(target,/mob/living))
@@ -175,14 +175,14 @@
 					target.ex_act(3)
 			else if(istype(target, /turf/simulated/mineral))
 				for(var/turf/simulated/mineral/M in range(chassis,1))
-					if(get_dir(chassis,M)&chassis.dir)
+					if(get_dir(chassis, M)&chassis.dir)
 						M.GetDrilled()
 				log_message("Drilled through [target]")
 				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 					if(ore_box)
 						for(var/obj/item/weapon/ore/ore in range(chassis,1))
-							if(get_dir(chassis,ore)&chassis.dir)
+							if(get_dir(chassis, ore)&chassis.dir)
 								ore.Move(ore_box)
 			else if(istype(target,/turf/simulated/floor/plating/airless/asteroid))
 				for(var/turf/simulated/floor/plating/airless/asteroid/M in range(target,1))
@@ -232,7 +232,7 @@
 	if(get_dist(chassis, target)>2) return
 	set_ready_state(0)
 	if(do_after_cooldown(target))
-		if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
+		if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(chassis, target) <= 1)
 			var/obj/o = target
 			o.reagents.trans_to(src, 200)
 			occupant_message("\blue Extinguisher refilled")
@@ -240,12 +240,12 @@
 		else
 			if(src.reagents.total_volume > 0)
 				playsound(chassis, 'sound/effects/extinguish.ogg', 75, 1, -3)
-				var/direction = get_dir(chassis,target)
+				var/direction = get_dir(chassis, target)
 				var/turf/T = get_turf(target)
-				var/turf/T1 = get_step(T,turn(direction, 90))
-				var/turf/T2 = get_step(T,turn(direction, -90))
+				var/turf/T1 = get_step(T, turn(direction, 90))
+				var/turf/T2 = get_step(T, turn(direction, -90))
 
-				var/list/the_targets = list(T,T1,T2)
+				var/list/the_targets = list(T, T1,T2)
 				spawn(0)
 					for(var/a in 1 to 5)
 						var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(chassis))
@@ -258,7 +258,7 @@
 						for(var/b in 1 to 4)
 							if(!W)	return
 							if(!W.reagents) break
-							step_towards(W,my_target)
+							step_towards(W, my_target)
 							W.reagents.reaction(get_turf(W))
 							for(var/atom/atm in get_turf(W))
 								W.reagents.reaction(atm)
@@ -368,7 +368,7 @@
 	return
 
 
-/obj/item/mecha_parts/mecha_equipment/tool/rcd/Topic(href,href_list)
+/obj/item/mecha_parts/mecha_equipment/tool/rcd/Topic(href, href_list)
 	..()
 	if(href_list["mode"])
 		mode = text2num(href_list["mode"])
@@ -513,9 +513,9 @@
 			for(var/atom/movable/A in atoms)
 				if(A.anchored) continue
 				spawn(0)
-					var/iter = 5-get_dist(A,target)
+					var/iter = 5-get_dist(A, target)
 					for(var/i=0 to iter)
-						step_away(A,target)
+						step_away(A, target)
 						sleep(2)
 			set_ready_state(0)
 			chassis.use_power(energy_drain)
@@ -568,7 +568,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/dynattackby(obj/item/weapon/W, mob/user)
 	if(!action_checks(user))
-		return chassis.dynattackby(W,user)
+		return chassis.dynattackby(W, user)
 	chassis.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(chassis.deflect_chance*deflect_coeff))
 		to_chat(user, "\red The [W] bounces off [chassis] armor.")
@@ -577,7 +577,7 @@
 		chassis.occupant_message("<font color='red'><b>[user] hits [chassis] with [W].</b></font>")
 		user.visible_message("<font color='red'><b>[user] hits [chassis] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
 		chassis.take_damage(round(W.force*damage_coeff),W.damtype)
-		chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+		chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL, MECHA_INT_TANK_BREACH, MECHA_INT_CONTROL_LOST))
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
 	do_after_cooldown()
@@ -628,7 +628,7 @@
 		chassis.log_append_to_last("Armor saved.")
 	else
 		chassis.take_damage(round(Proj.damage*src.damage_coeff),Proj.flag)
-		chassis.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+		chassis.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL, MECHA_INT_TANK_BREACH, MECHA_INT_CONTROL_LOST))
 		Proj.on_hit(chassis)
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
@@ -649,7 +649,7 @@
 		var/obj/O = A
 		if(O.throwforce)
 			chassis.take_damage(round(O.throwforce*damage_coeff))
-			chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+			chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL, MECHA_INT_TANK_BREACH, MECHA_INT_CONTROL_LOST))
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
 	do_after_cooldown()
@@ -668,7 +668,7 @@
 	var/health_boost = 2
 	var/datum/global_iterator/pr_repair_droid
 	var/icon/droid_overlay
-	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
+	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL, MECHA_INT_TANK_BREACH)
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/New()
 	..()
@@ -753,7 +753,7 @@
 	range = 0
 	var/datum/global_iterator/pr_energy_relay
 	var/coeff = 100
-	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
+	var/list/use_channels = list(EQUIP, ENVIRON, LIGHT)
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/New()
 	..()
@@ -840,7 +840,7 @@
 		var/area/A = get_area(ER.chassis)
 		if(A)
 			var/pow_chan
-			for(var/c in list(EQUIP,ENVIRON,LIGHT))
+			for(var/c in list(EQUIP, ENVIRON, LIGHT))
 				if(A.master.powered(c))
 					pow_chan = c
 					break
@@ -931,7 +931,7 @@
 			return 0
 	return
 
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user)
+/obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon, mob/user)
 	var/result = load_fuel(weapon)
 	if(isnull(result))
 		user.visible_message("[user] tries to shove [weapon] into [src]. What a dumb-ass.","<font color='red'>[fuel] traces minimal. [weapon] cannot be used as fuel.</font>")
@@ -984,7 +984,7 @@
 	if(cur_charge<EG.chassis.cell.maxcharge)
 		use_fuel = EG.fuel_per_cycle_active
 		EG.chassis.give_power(EG.power_per_cycle)
-	EG.fuel.amount -= min(use_fuel/EG.fuel.perunit,EG.fuel.amount)
+	EG.fuel.amount -= min(use_fuel/EG.fuel.perunit, EG.fuel.amount)
 	EG.update_equip_info()
 	return 1
 
@@ -1080,7 +1080,7 @@
 			chassis.occupant_message("\red You tear [target]'s limbs off with [src.name].")
 			chassis.visible_message("\red [chassis] rips [target]'s arms off.")
 		else
-			step_away(M,chassis)
+			step_away(M, chassis)
 			chassis.occupant_message("You smash into [target], sending them flying.")
 			chassis.visible_message("[chassis] tosses [target] like a piece of paper.")
 		set_ready_state(0)

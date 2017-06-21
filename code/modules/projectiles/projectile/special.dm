@@ -113,10 +113,10 @@
 			//		V.show_message("\red [M] is mutated by the radiation beam.", 3, "\red You hear the snapping of twigs.", 2)
 				if(prob(80))
 					randmutb(M)
-					domutcheck(M,null)
+					domutcheck(M, null)
 				else
 					randmutg(M)
-					domutcheck(M,null)
+					domutcheck(M, null)
 			else
 				M.adjustFireLoss(rand(5,15))
 				M.show_message("\red The radiation beam singes you!")
@@ -244,7 +244,7 @@
 		var/obj/item/organ/external/organ = H.get_bodypart(check_zone(def_zone))
 		var/armorblock = H.run_armor_check(organ, "bio")
 		H.apply_damage(damage, damage_type, organ, armorblock, null, src)
-		H.apply_effects(stun,weaken,0,0,stutter,0,0,armorblock)
+		H.apply_effects(stun, weaken,0,0,stutter,0,0,armorblock)
 		H.flash_pain()
 		to_chat(H, "\red You feel the acid on your skin!")
 		return

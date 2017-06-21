@@ -97,7 +97,7 @@
 
 				user.visible_message("[user] places [src] against [M]'s [target_zone] and listens attentively.", "You place [src] against [their] [target_zone]. You [sound_strength] [sound].")
 				return
-	return ..(M,user)
+	return ..(M, user)
 
 
 // Medals

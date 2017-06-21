@@ -12,7 +12,7 @@
 	return 1
 
 /obj/mecha/medical/mechstep(direction)
-	var/result = step(src,direction)
+	var/result = step(src, direction)
 	if(result)
 		playsound(src,'sound/mecha/mechstep.ogg',25,1)
 	return result

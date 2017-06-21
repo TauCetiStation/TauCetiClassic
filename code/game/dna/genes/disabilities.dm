@@ -24,7 +24,7 @@
 	// Yay, you're no longer growing 3 arms
 	var/deactivation_message=""
 
-/datum/dna/gene/disability/can_activate(mob/M,flags)
+/datum/dna/gene/disability/can_activate(mob/M, flags)
 	return 1 // Always set!
 
 /datum/dna/gene/disability/activate(mob/M, connected, flags)
@@ -65,7 +65,7 @@
 		M.hallucination = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.hallucination = 0 // ##Z2
 
 /datum/dna/gene/disability/epilepsy
@@ -122,7 +122,7 @@
 		M.eye_blind = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.eye_blurry = 0
 		M.eye_blind = 0 // ##Z2
 
@@ -139,7 +139,7 @@
 		M.ear_deaf = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.ear_deaf = 0 // ##Z2
 
 /datum/dna/gene/disability/nearsighted

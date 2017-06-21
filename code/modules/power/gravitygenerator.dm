@@ -47,7 +47,7 @@
 
 
 /obj/machinery/gravity_generator/proc/locatelocalareas()
-	for(var/area/A in range(src,effectiverange))
+	for(var/area/A in range(src, effectiverange))
 		if(A.name == "Space")
 			continue // No (de)gravitizing space.
 		if(A.master && !( A.master in localareas) )
@@ -55,7 +55,7 @@
 
 /obj/machinery/computer/gravity_control_computer/proc/findgenerator()
 	var/obj/machinery/gravity_generator/foundgenerator = null
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		// world << "SEARCHING IN [dir]"
 		foundgenerator = locate(/obj/machinery/gravity_generator/, get_step(src, dir))
 		if (!isnull(foundgenerator))

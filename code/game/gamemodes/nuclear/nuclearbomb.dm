@@ -428,7 +428,7 @@ var/bomb_set
 			if(syndie_location)
 				ticker.mode:syndies_didnt_escape = (syndie_location.z > ZLEVEL_STATION ? 0 : 1)	// muskets will make me change this, but it will do for now
 			ticker.mode:nuke_off_station = off_station
-		ticker.station_explosion_cinematic(off_station,null)
+		ticker.station_explosion_cinematic(off_station, null)
 		if(ticker.mode)
 			ticker.mode.explosion_in_progress = 0
 			if(ticker.mode.name == "nuclear emergency")

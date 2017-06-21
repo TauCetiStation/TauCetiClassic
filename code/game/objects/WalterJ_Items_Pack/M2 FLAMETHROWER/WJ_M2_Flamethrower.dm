@@ -187,5 +187,5 @@
 
 
 /obj/item/weapon/flamethrower_M2/proc/ignite_turf(turf/target)
-	new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(target,throw_amount/50,get_dir(loc,target))
+	new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(target, throw_amount/50,get_dir(loc, target))
 	return

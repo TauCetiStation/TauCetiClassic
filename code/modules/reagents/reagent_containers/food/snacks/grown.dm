@@ -20,7 +20,7 @@
 	var/potency = -1
 	var/plant_type = 0
 	icon = 'icons/obj/harvest.dmi'
-	New(newloc,newpotency)
+	New(newloc, newpotency)
 		if (!isnull(newpotency))
 			potency = newpotency
 		..()
@@ -1048,8 +1048,8 @@
 			src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
 			qdel(src)
 			return
-		for(var/turf/T in orange(M,outer_teleport_radius))
-			if(T in orange(M,inner_teleport_radius)) continue
+		for(var/turf/T in orange(M, outer_teleport_radius))
+			if(T in orange(M, inner_teleport_radius)) continue
 			if(istype(T,/turf/space)) continue
 			if(T.density) continue
 			if(T.x>world.maxx-outer_teleport_radius || T.x<outer_teleport_radius)	continue
@@ -1057,8 +1057,8 @@
 			turfs += T
 		if(!turfs.len)
 			var/list/turfs_to_pick_from = list()
-			for(var/turf/T in orange(M,outer_teleport_radius))
-				if(!(T in orange(M,inner_teleport_radius)))
+			for(var/turf/T in orange(M, outer_teleport_radius))
+				if(!(T in orange(M, inner_teleport_radius)))
 					turfs_to_pick_from += T
 			turfs += pick(/turf in turfs_to_pick_from)
 		var/turf/picked = pick(turfs)

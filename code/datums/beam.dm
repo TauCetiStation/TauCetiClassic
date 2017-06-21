@@ -17,7 +17,7 @@
 	var/layer = null
 
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_layer)
+/datum/beam/New(beam_origin, beam_target, beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam, beam_layer)
 	endtime = world.time+time
 	origin = beam_origin
 	origin_oldloc =	get_turf(origin)
@@ -26,7 +26,7 @@
 	if(origin_oldloc == origin && target_oldloc == target)
 		static_beam = 1
 	max_distance = maxdistance
-	base_icon = new(beam_icon,beam_icon_state)
+	base_icon = new(beam_icon, beam_icon_state)
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
@@ -35,7 +35,7 @@
 
 /datum/beam/proc/Start()
 	Draw()
-	while(!finished && origin && target && world.time < endtime && get_dist(origin,target)<max_distance && origin.z == target.z)
+	while(!finished && origin && target && world.time < endtime && get_dist(origin, target)<max_distance && origin.z == target.z)
 		var/origin_turf = get_turf(origin)
 		var/target_turf = get_turf(target)
 		if(!static_beam && (origin_turf != origin_oldloc || target_turf != target_oldloc))
@@ -65,7 +65,7 @@
 
 
 /datum/beam/proc/Draw()
-	var/Angle = round(Get_Angle(origin,target))
+	var/Angle = round(Get_Angle(origin, target))
 
 	var/matrix/rot_matrix = matrix()
 	rot_matrix.Turn(Angle)
@@ -132,7 +132,7 @@
 	return ..()
 
 
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_layer=null)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_layer)
+/atom/proc/Beam(atom/BeamTarget, icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam, beam_layer=null)
+	var/datum/beam/newbeam = new(src, BeamTarget, icon, icon_state, time, maxdistance, beam_type, beam_layer)
 	INVOKE_ASYNC(newbeam, /datum/beam.proc/Start)
 	return newbeam

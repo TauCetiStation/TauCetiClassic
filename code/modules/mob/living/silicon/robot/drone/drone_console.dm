@@ -112,7 +112,7 @@
 		if(!dronefab)
 			return FALSE
 
-		if(get_dist(src,dronefab) > 3)
+		if(get_dist(src, dronefab) > 3)
 			dronefab = null
 			to_chat(usr, "\red Unable to locate drone fabricator.")
 			return

@@ -9,7 +9,7 @@
 	if(istype(location))
 		loc = location
 	if(light_color)
-		set_light(light_range,light_power,light_color)
+		set_light(light_range, light_power, light_color)
 
 /obj/effect/projectile/proc/set_transform(matrix/M)
 	if(istype(M))

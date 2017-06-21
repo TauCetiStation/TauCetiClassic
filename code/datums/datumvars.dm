@@ -206,7 +206,7 @@ datum/proc/on_varedit(modified_var) // called whenever a var is edited
 		var/middle_point = length(formatted_type) / 2
 		var/splitpoint = findtext(formatted_type,"/",middle_point)
 		if(splitpoint)
-			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
+			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type, splitpoint)]"
 		else
 			formatted_type = "Type too long" // No suitable splitpoint (/) found.
 
@@ -440,7 +440,7 @@ body
 		if( !new_name || !M )	return
 
 		message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].")
-		M.fully_replace_character_name(M.real_name,new_name)
+		M.fully_replace_character_name(M.real_name, new_name)
 		href_list["datumrefresh"] = href_list["rename"]
 
 	else if(href_list["varnameedit"] && href_list["datumedit"])
@@ -622,7 +622,7 @@ body
 			if("Type and subtypes")
 				var/i = 0
 				for(var/obj/Obj in world)
-					if(istype(Obj,O_type))
+					if(istype(Obj, O_type))
 						i++
 						qdel(Obj)
 					CHECK_TICK

@@ -786,7 +786,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						temp_material += " <span style=\"color:red\">[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
 					else
 						temp_material += " [D.materials[M]/coeff] [CallMaterialName(M)]"
-					c = min(t,c)
+					c = min(t, c)
 
 				if (c >= 1)
 

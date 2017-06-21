@@ -14,7 +14,7 @@
 	..()
 	levelupdate()
 
-/turf/simulated/proc/AddTracks(mob/M,bloodDNA,comingdir,goingdir,bloodcolor="#A10808")
+/turf/simulated/proc/AddTracks(mob/M, bloodDNA, comingdir, goingdir, bloodcolor="#A10808")
 	var/typepath
 	if(ishuman(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints
@@ -26,7 +26,7 @@
 	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
 	if(!tracks)
 		tracks = new typepath(src)
-	tracks.AddTracks(bloodDNA,comingdir,goingdir,bloodcolor)
+	tracks.AddTracks(bloodDNA, comingdir, goingdir, bloodcolor)
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
@@ -91,10 +91,10 @@
 				M.track_blood--
 
 		if (bloodDNA)
-			src.AddTracks(M,bloodDNA,M.dir,0,bloodcolor) // Coming
-			var/turf/simulated/from = get_step(M,reverse_direction(M.dir))
+			src.AddTracks(M, bloodDNA, M.dir,0,bloodcolor) // Coming
+			var/turf/simulated/from = get_step(M, reverse_direction(M.dir))
 			if(istype(from) && from)
-				from.AddTracks(M,bloodDNA,0,M.dir,bloodcolor) // Going
+				from.AddTracks(M, bloodDNA,0,M.dir, bloodcolor) // Going
 
 			bloodDNA = null
 

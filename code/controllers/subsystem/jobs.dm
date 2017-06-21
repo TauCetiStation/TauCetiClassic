@@ -545,8 +545,8 @@ var/datum/subsystem/job/SSjob
 		H.equip_to_slot_or_del(C, slot_wear_id)
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
-	if(locate(/obj/item/device/pda,H))
-		var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
+	if(locate(/obj/item/device/pda, H))
+		var/obj/item/device/pda/pda = locate(/obj/item/device/pda, H)
 		pda.owner = H.real_name
 		pda.ownjob = C.assignment
 		pda.ownrank = C.rank

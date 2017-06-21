@@ -15,7 +15,7 @@ var/global/list/space_surprises = list(		/obj/item/clothing/mask/facehugger				=
 
 var/global/list/spawned_surprises = list()
 
-proc/spawn_room(atom/start_loc,x_size,y_size,wall,floor , clean = 0 , name)
+proc/spawn_room(atom/start_loc, x_size, y_size, wall, floor , clean = 0 , name)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())
 
 	// world << "Room spawned at [start_loc.x],[start_loc.y],[start_loc.z]"
@@ -24,10 +24,10 @@ proc/spawn_room(atom/start_loc,x_size,y_size,wall,floor , clean = 0 , name)
 	if(!floor)
 		floor = pick(/turf/simulated/floor,/turf/simulated/floor/engine)
 
-	for(var/x = 0,x<x_size,x++)
-		for(var/y = 0,y<y_size,y++)
+	for(var/x = 0,x<x_size, x++)
+		for(var/y = 0,y<y_size, y++)
 			var/turf/T
-			var/cur_loc = locate(start_loc.x+x,start_loc.y+y,start_loc.z)
+			var/cur_loc = locate(start_loc.x+x, start_loc.y+y, start_loc.z)
 			if(clean)
 				for(var/O in cur_loc)
 					qdel(O)
@@ -78,7 +78,7 @@ proc/admin_spawn_room_at_pos()
 		if("Reinforced floor")
 			floor=/turf/simulated/floor/engine
 	if(x && y && z && wall && floor && x_len && y_len)
-		spawn_room(locate(x,y,z),x_len,y_len,wall,floor,clean)
+		spawn_room(locate(x, y,z),x_len, y_len, wall, floor, clean)
 	return
 
 
@@ -109,10 +109,10 @@ proc/admin_spawn_room_at_pos()
 
 		var/list/surroundings = list()
 
-		surroundings += range(7, locate(T.x,T.y,T.z))
-		surroundings += range(7, locate(T.x+size,T.y,T.z))
-		surroundings += range(7, locate(T.x,T.y+size,T.z))
-		surroundings += range(7, locate(T.x+size,T.y+size,T.z))
+		surroundings += range(7, locate(T.x, T.y, T.z))
+		surroundings += range(7, locate(T.x+size, T.y, T.z))
+		surroundings += range(7, locate(T.x, T.y+size, T.z))
+		surroundings += range(7, locate(T.x+size, T.y+size, T.z))
 
 		if(locate(/area/mine/explored) in surroundings)			// +5s are for view range
 			valid = 0
@@ -133,7 +133,7 @@ proc/admin_spawn_room_at_pos()
 	if(!T)
 		return 0
 
-	room = spawn_room(T,size,size,,,1)
+	room = spawn_room(T, size, size,,,1)
 
 	if(room)
 		T = pick(room["floors"])

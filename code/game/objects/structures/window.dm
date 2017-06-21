@@ -229,7 +229,7 @@
 		change_paintjob(W, user)
 		return
 
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if (istype(W, /obj/item/weapon/grab) && get_dist(src, user)<2)
 		var/obj/item/weapon/grab/G = W
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
@@ -362,12 +362,12 @@
 	if(silicateIcon && silicate)
 		icon = initial(icon)
 
-		var/icon/I = icon(icon,icon_state,dir)
+		var/icon/I = icon(icon, icon_state, dir)
 
 		var/r = (silicate / 100) + 1
 		var/g = (silicate / 70) + 1
 		var/b = (silicate / 50) + 1
-		I.SetIntensity(r,g,b)
+		I.SetIntensity(r, g,b)
 		icon = I
 		silicateIcon = I
 */
@@ -419,7 +419,7 @@
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
 	for(var/direction in cardinal)
-		for(var/obj/structure/window/W in get_step(src,direction) )
+		for(var/obj/structure/window/W in get_step(src, direction) )
 			W.update_icon()
 
 // merges adjacent full-tile windows into one (blatant ripoff from game/smoothwall.dm)
@@ -439,7 +439,7 @@
 			for(var/obj/structure/window/W in orange(src,1))
 				if(W.anchored && W.density && W.is_fulltile() && W.can_merge) // Only counts anchored, not-destroyed fill-tile windows.
 					if(abs(x-W.x)-abs(y-W.y) ) 		// doesn't count windows, placed diagonally to src
-						junction |= get_dir(src,W)
+						junction |= get_dir(src, W)
 		icon_state = "[basestate][junction]"
 
 		var/ratio = health / maxhealth

@@ -43,7 +43,7 @@
 			meat += S.name
 	if(meat.len)
 		var/num = rand(1,meat.len)
-		for(var/i=0,i<num,i++)
+		for(var/i=0,i<num, i++)
 			var/picked = pick(meat)
 			meat -= picked
 			res += picked
@@ -84,13 +84,13 @@
 		clicks = 0
 	// Do nasty effects
 	for(var/datum/disease2/effectholder/e in effects)
-		e.runeffect(mob,stage)
+		e.runeffect(mob, stage)
 
 	// Short airborne spread
 	if(src.spreadtype == "Airborne")
 		for(var/mob/living/carbon/M in oview(1,mob))
 			if(airborne_can_reach(get_turf(mob), get_turf(M)))
-				infect_virus2(M,src)
+				infect_virus2(M, src)
 
 	// fever
 	mob.bodytemperature = max(mob.bodytemperature, min(310+5*stage ,mob.bodytemperature+5*stage))

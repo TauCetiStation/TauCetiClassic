@@ -129,10 +129,10 @@
 
 /obj/effect/biomass/proc/spread()
 	var/direction = pick(cardinal)
-	var/step = get_step(src,direction)
+	var/step = get_step(src, direction)
 	if(istype(step,/turf/simulated/floor))
 		var/turf/simulated/floor/F = step
-		if(!locate(/obj/effect/biomass,F))
+		if(!locate(/obj/effect/biomass, F))
 			if(F.Enter(src))
 				if(master)
 					master.spawn_biomass_piece( F )

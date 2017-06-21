@@ -221,7 +221,7 @@
 		to_chat(src, "\green The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.")
 
 
-/mob/living/carbon/monkey/diona/say_understands(mob/other,datum/language/speaking = null)
+/mob/living/carbon/monkey/diona/say_understands(mob/other, datum/language/speaking = null)
 
 	if (istype(other, /mob/living/carbon/human) && !speaking)
 		if(languages.len >= 2) // They have sucked down some blood.

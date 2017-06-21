@@ -92,7 +92,7 @@
 /mob/living/simple_animal/hostile/giant_spider/nurse/proc/GiveUp(C)
 	spawn(100)
 		if(busy == MOVING_TO_TARGET)
-			if(cocoon_target == C && get_dist(src,cocoon_target) > 1)
+			if(cocoon_target == C && get_dist(src, cocoon_target) > 1)
 				cocoon_target = null
 			busy = 0
 			stop_automated_movement = 0
@@ -163,7 +163,7 @@
 					walk(src,0)
 					spawn(50)
 						if(busy == SPINNING_COCOON)
-							if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
+							if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src, cocoon_target) <= 1)
 								var/obj/effect/spider/cocoon/C = new(cocoon_target.loc)
 								var/large_cocoon = 0
 								C.pixel_x = cocoon_target.pixel_x

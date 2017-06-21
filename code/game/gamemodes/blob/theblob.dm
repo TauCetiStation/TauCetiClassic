@@ -90,7 +90,7 @@
 		if(!B)
 			expand(T)// No blob here so try and expand
 			return
-		B.Pulse((pulse+1),get_dir(src.loc,T))
+		B.Pulse((pulse+1),get_dir(src.loc, T))
 		return
 	return
 
@@ -114,7 +114,7 @@
 	if(!T)	return 0
 	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
 	B.density = 1
-	if(T.Enter(B,src))// Attempt to move into the tile
+	if(T.Enter(B, src))// Attempt to move into the tile
 		B.density = initial(B.density)
 		B.loc = T
 	else

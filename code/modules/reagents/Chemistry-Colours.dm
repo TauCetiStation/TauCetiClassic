@@ -29,9 +29,9 @@
 		bluecolor[i]=hex2num(copytext(hue,6,8))
 
 	// mix all the colors
-	var/red = mixOneColor(weight,redcolor)
-	var/green = mixOneColor(weight,greencolor)
-	var/blue = mixOneColor(weight,bluecolor)
+	var/red = mixOneColor(weight, redcolor)
+	var/green = mixOneColor(weight, greencolor)
+	var/blue = mixOneColor(weight, bluecolor)
 
 	// assemble all the pieces
 	var/finalcolor = "#[red][green][blue]"

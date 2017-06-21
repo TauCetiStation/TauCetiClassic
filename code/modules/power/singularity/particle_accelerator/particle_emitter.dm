@@ -35,7 +35,7 @@
 	if((src.last_shot + src.fire_delay) <= world.time)
 		src.last_shot = world.time
 		var/obj/effect/accelerated_particle/A = null
-		var/turf/T = get_step(src,dir)
+		var/turf/T = get_step(src, dir)
 		switch(strength)
 			if(0)
 				A = new/obj/effect/accelerated_particle/weak(T, dir)

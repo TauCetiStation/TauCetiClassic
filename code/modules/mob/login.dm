@@ -50,7 +50,7 @@
 
 	// Some weird magic to block users who cant see lighting normally
 	var/obj/screen/blocker = new /obj/screen()
-	blocker.screen_loc = "WEST,SOUTH to EAST,NORTH"
+	blocker.screen_loc = "WEST, SOUTH to EAST, NORTH"
 	blocker.icon = 'icons/effects/chaos.dmi'
 	blocker.icon_state = "8"
 	blocker.blend_mode = BLEND_MULTIPLY

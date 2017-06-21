@@ -1,4 +1,4 @@
-/mob/living/carbon/brain/emote(act,m_type=1,message = null)
+/mob/living/carbon/brain/emote(act, m_type=1,message = null)
 	if(!(container && istype(container, /obj/item/device/mmi)))// No MMI, no emotes
 		return
 
@@ -19,7 +19,7 @@
 				if (client.prefs.muted & MUTE_IC)
 					to_chat(src, "\red You cannot send IC messages (muted).")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (src.client.handle_spam_prevention(message, MUTE_IC))
 					return
 			if (stat)
 				return
@@ -60,7 +60,7 @@
 			message = "<B>[src]</B> boops."
 			m_type = 2
 		if ("help")
-			to_chat(src, "alarm,alert,notice,flash,blink,whistle,beep,boop")
+			to_chat(src, "alarm, alert, notice, flash, blink, whistle, beep, boop")
 		else
 			to_chat(src, "\blue Unusable emote '[act]'. Say *help for a list.")
 
@@ -70,7 +70,7 @@
 		for(var/mob/M in dead_mob_list)
 			if (!M.client || isnewplayer(M))
 				continue // skip monkeys, leavers, and new_players
-			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
 				M.show_message(message)
 
 

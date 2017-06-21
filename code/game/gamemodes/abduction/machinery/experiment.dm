@@ -150,10 +150,10 @@
 		close_machine()
 	else if(occupant && occupant.stat != DEAD)
 		if(href_list["experiment"])
-			flash = Experiment(occupant,href_list["experiment"])
+			flash = Experiment(occupant, href_list["experiment"])
 	updateUsrDialog()
 
-/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
+/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant, type)
 	var/mob/living/carbon/human/H = occupant
 	var/point_reward = 0
 	if(H in history)
@@ -213,7 +213,7 @@
 		A = console.pad.teleport_target
 	else
 		A = teleportlocs[pick(teleportlocs)]
-	TeleportToArea(H,A)
+	TeleportToArea(H, A)
 	var/obj/item/weapon/handcuffs/alien/handcuffs = H.handcuffed
 	H.drop_from_inventory(handcuffs)
 	qdel(handcuffs)

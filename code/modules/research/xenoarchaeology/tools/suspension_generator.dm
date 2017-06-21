@@ -243,7 +243,7 @@
 // checks for whether the machine can be activated or not should already have occurred by this point
 /obj/machinery/suspension_gen/proc/activate()
 	// depending on the field type, we might pickup certain items
-	var/turf/T = get_turf(get_step(src,dir))
+	var/turf/T = get_turf(get_step(src, dir))
 	var/success = 0
 	var/collected = 0
 	switch(field_type)

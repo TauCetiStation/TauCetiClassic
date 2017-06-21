@@ -186,7 +186,7 @@ datum/reagent/paint
 		var/ind = "[initial(T.icon)][color]"
 		if(!cached_icons[ind])
 			var/icon/overlay = new/icon(initial(T.icon))
-			overlay.Blend(color,ICON_MULTIPLY)
+			overlay.Blend(color, ICON_MULTIPLY)
 			overlay.SetIntensity(1.4)
 			T.icon = overlay
 			cached_icons[ind] = T.icon

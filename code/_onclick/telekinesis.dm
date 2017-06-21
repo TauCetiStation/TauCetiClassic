@@ -109,7 +109,7 @@ var/const/tk_maxrange = 15
 		return
 
 	var/d = get_dist(user, target)
-	if(focus) d = max(d,get_dist(user,focus)) // whichever is further
+	if(focus) d = max(d, get_dist(user, focus)) // whichever is further
 	switch(d)
 		if(0)
 			;
@@ -137,7 +137,7 @@ var/const/tk_maxrange = 15
 		var/obj/item/I = focus
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)
-			I.afterattack(target,user,1) // for splashing with beakers
+			I.afterattack(target, user,1) // for splashing with beakers
 
 
 	else
@@ -163,7 +163,7 @@ var/const/tk_maxrange = 15
 
 /obj/item/tk_grab/proc/apply_focus_overlay()
 	if(!focus)	return
-	var/obj/effect/overlay/O = new /obj/effect/overlay(locate(focus.x,focus.y,focus.z))
+	var/obj/effect/overlay/O = new /obj/effect/overlay(locate(focus.x, focus.y, focus.z))
 	O.name = "sparkles"
 	O.anchored = 1
 	O.density = 0
@@ -179,7 +179,7 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/update_icon()
 	overlays.Cut()
 	if(focus && focus.icon && focus.icon_state)
-		overlays += icon(focus.icon,focus.icon_state)
+		overlays += icon(focus.icon, focus.icon_state)
 	return
 
 /*Not quite done likely needs to use something thats not get_step_to

@@ -181,7 +181,7 @@ var/list/sacrificed = list()
 
 ///////////////////////////////////////// FIFTH RUNE
 
-		emp(var/U,var/range_red) // range_red - var which determines by which number to reduce the default emp range, U is the source loc, needed because of talisman emps which are held in hand at the moment of using and that apparently messes things up -- Urist
+		emp(var/U, var/range_red) // range_red - var which determines by which number to reduce the default emp range, U is the source loc, needed because of talisman emps which are held in hand at the moment of using and that apparently messes things up -- Urist
 			if(istype(src,/obj/effect/rune))
 				usr.say("Ta'gh fara[pick("'","`")]qha fel d'amar det!")
 			else
@@ -342,7 +342,7 @@ var/list/sacrificed = list()
 
 		obscure(rad)
 			var/S=0
-			for(var/obj/effect/rune/R in orange(rad,src))
+			for(var/obj/effect/rune/R in orange(rad, src))
 				if(R!=src)
 					R.invisibility=INVISIBILITY_OBSERVER
 				S=1
@@ -747,7 +747,7 @@ var/list/sacrificed = list()
 				rad = 1
 				go = 1
 			if(go)
-				for(var/obj/effect/rune/R in orange(rad,src))
+				for(var/obj/effect/rune/R in orange(rad, src))
 					if(R!=src)
 						R:visibility=15
 					S=1
@@ -1105,7 +1105,7 @@ var/list/sacrificed = list()
 							to_chat(D, "<span class='red'>You feel weakened.</span>")
 							D.adjustBrainLoss(bdam)
 							user.adjustBrainLoss(bdam)
-							user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni n�tim ve rmar aldaron!")
+							user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen, ni n�tim ve rmar aldaron!")
 							to_chat(user, "<span class='red'>Your mind flows into other body. You feel a lack of intelligence.</span>")
 							var/mob/dead/observer/ghost = D.ghostize(0)
 							user.mind.transfer_to(D)

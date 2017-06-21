@@ -40,7 +40,7 @@
 	if(!.)
 		return
 
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+	var/datum/topic_input/filter = new /datum/topic_input(href, href_list)
 	if(href_list["send_message"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("send_message")
 		var/message = strip_html_simple(input(usr,"Input message","Transmit message") as text)

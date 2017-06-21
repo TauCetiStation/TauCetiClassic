@@ -128,7 +128,7 @@
 
 	proc
 		CheckToken(val, type, err=1, skip=1)
-			if(curToken.value!=val || !istype(curToken,type))
+			if(curToken.value!=val || !istype(curToken, type))
 				if(err)
 					errors+=new/scriptError/ExpectedToken(val, curToken)
 				return 0

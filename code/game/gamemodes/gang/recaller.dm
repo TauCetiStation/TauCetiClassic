@@ -263,7 +263,7 @@
 				recall(usr)
 			if("outfit")
 				if(outfits > 0)
-					ticker.mode.gang_outfit(usr,src,gang)
+					ticker.mode.gang_outfit(usr, src, gang)
 					outfits -= 1
 			if("ping")
 				ping_gang(usr)

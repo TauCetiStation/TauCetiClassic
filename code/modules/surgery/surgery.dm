@@ -24,7 +24,7 @@
 // returns how well tool is suited for this step
 /datum/surgery_step/proc/tool_quality(obj/item/tool)
 	for (var/T in allowed_tools)
-		if (istype(tool,T))
+		if (istype(tool, T))
 			return allowed_tools[T]
 	return 0
 

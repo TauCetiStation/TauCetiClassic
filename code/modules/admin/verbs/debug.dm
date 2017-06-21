@@ -119,11 +119,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(!target)
 				to_chat(usr, "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>")
 				return
-			if(!hascall(target,procname))
+			if(!hascall(target, procname))
 				to_chat(usr, "<font color='red'>Error: callproc(): target has no such call [procname].</font>")
 				return
 			log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-			returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
+			returnval = call(target, procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 		else
 			// this currently has no hascall protection. wasn't able to get it working.
 			log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
@@ -1813,15 +1813,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			to_chat(usr, jointext(joined_player_list,","))
 
 // DNA2 - Admin Hax
-/client/proc/cmd_admin_toggle_block(mob/M,block)
+/client/proc/cmd_admin_toggle_block(mob/M, block)
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon))
 		var/saved_key = M.key
 		M.dna.SetSEState(block,!M.dna.GetSEState(block))
-		// domutcheck(M,null,MUTCHK_FORCED)  // #Z2
-		genemutcheck(M,block,null,MUTCHK_FORCED) // #Z2
+		// domutcheck(M, null, MUTCHK_FORCED)  // #Z2
+		genemutcheck(M, block, null, MUTCHK_FORCED) // #Z2
 		if(istype(M, /mob/living/carbon))
 			M.update_mutations()
 			var/state="[M.dna.GetSEState(block)?"on":"off"]"

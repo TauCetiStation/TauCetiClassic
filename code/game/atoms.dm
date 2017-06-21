@@ -95,7 +95,7 @@
 	return
 
 /*
- *	atom/proc/search_contents_for(path,list/filter_path=null)
+ *	atom/proc/search_contents_for(path, list/filter_path=null)
  * Recursevly searches all atom contens (including contents contents and so on).
  *
  * ARGS: path - search atom contents for atoms of this type
@@ -104,7 +104,7 @@
  * RETURNS: list of found atoms
  */
 
-/atom/proc/search_contents_for(path,list/filter_path=null)
+/atom/proc/search_contents_for(path, list/filter_path=null)
 	var/list/found = list()
 	for(var/atom/A in src)
 		if(istype(A, path))
@@ -116,7 +116,7 @@
 			if(!pass)
 				continue
 		if(A.contents.len)
-			found += A.search_contents_for(path,filter_path)
+			found += A.search_contents_for(path, filter_path)
 	return found
 
 /atom/proc/examine(mob/user)
@@ -378,7 +378,7 @@
 	var/cur_x = null
 	var/cur_y = null
 	var/list/y_arr = null
-	for(cur_x=1,cur_x<=global_map.len,cur_x++)
+	for(cur_x=1,cur_x<=global_map.len, cur_x++)
 		y_arr = global_map[cur_x]
 		cur_y = y_arr.Find(src.z)
 		if(cur_y)

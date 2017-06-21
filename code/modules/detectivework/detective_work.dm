@@ -125,7 +125,7 @@ var/const/FINGERPRINT_COMPLETE = 6	// This is the output of the stringpercent(pr
 	onclose(user,"scanner")
 
 
-/obj/machinery/computer/forensic_scanning/Topic(href,href_list)
+/obj/machinery/computer/forensic_scanning/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -461,13 +461,13 @@ var/const/FINGERPRINT_COMPLETE = 6	// This is the output of the stringpercent(pr
 		if(D.stored)
 			for(var/atom in D.stored)
 				var/list/data = D.stored[atom]
-				add_data_master(atom,data[1],data[2],data[3],data[4])
+				add_data_master(atom, data[1],data[2],data[3],data[4])
 		D.stored = list()
 	else if(istype(W, /obj/item/device/pda) && W:cartridge && W:cartridge.access_security)
 		if(W:cartridge.stored_data)
 			for(var/atom in W:cartridge.stored_data)
 				var/list/data = W:cartridge.stored_data[atom]
-				add_data_master(atom,data[1],data[2],data[3],data[4])
+				add_data_master(atom, data[1],data[2],data[3],data[4])
 		W:cartridge.stored_data = list()
 	return
 

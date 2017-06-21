@@ -50,7 +50,7 @@
 
 			projectile.loc = current_loc
 
-			for(var/i = 0,i < proj_lifespan,i++)
+			for(var/i = 0,i < proj_lifespan, i++)
 				if(!projectile)
 					break
 

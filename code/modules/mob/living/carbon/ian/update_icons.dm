@@ -217,7 +217,7 @@
 	switch(pose_last)
 		if(POSE_SIT)
 			body_icon.icon_state = i_state + "_sit"
-		if(POSE_REST,POSE_STAT)
+		if(POSE_REST, POSE_STAT)
 			body_icon.icon_state = i_state + "_lie"
 
 	overlays_inv[LAYERIAN_BACK] = body_icon

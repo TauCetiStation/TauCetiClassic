@@ -87,7 +87,7 @@
 						possible_spawns += coin_type
 
 					var/coin_type = pick(possible_spawns)
-					for(var/i=0,i<amount,i++)
+					for(var/i=0,i<amount, i++)
 						new coin_type(C)
 				else if(prob(50))
 					// bars
@@ -99,7 +99,7 @@
 						possible_spawns += bar_type
 
 					var/bar_type = pick(possible_spawns)
-					for(var/i=0,i<amount,i++)
+					for(var/i=0,i<amount, i++)
 						var/obj/item/stack/sheet/mineral/M = new bar_type(C)
 						M.amount = quantity
 				else
@@ -111,7 +111,7 @@
 						possible_spawns += cash_type
 
 					var/cash_type = pick(possible_spawns)
-					for(var/i=0,i<amount,i++)
+					for(var/i=0,i<amount, i++)
 						new cash_type(C)
 			if("remains")
 				if(prob(50))
@@ -210,7 +210,7 @@
 				/obj/item/weapon/reagent_containers/food/snacks/meatball, \
 				/obj/item/weapon/reagent_containers/food/snacks/plump_pie, \
 				)
-				for(var/i=0,i<num,i++)
+				for(var/i=0,i<num, i++)
 					new new_type(C)
 			if("alien")
 				// ancient aliens
@@ -218,7 +218,7 @@
 				if(prob(33))
 					// facehuggers
 					var/num = rand(1,3)
-					for(var/i=0,i<num,i++)
+					for(var/i=0,i<num, i++)
 						new /obj/item/clothing/mask/facehugger(C)
 				/*else if(prob(50))
 					// something else very much alive and angry
@@ -231,7 +231,7 @@
 				// flares, candles, matches
 				var/obj/structure/closet/crate/secure/gear/C = new(src.loc)
 				var/num = rand(2,6)
-				for(var/i=0,i<num,i++)
+				for(var/i=0,i<num, i++)
 					var/spawn_type = pick(/obj/item/device/flashlight/flare, /obj/item/trash/candle, /obj/item/candle/, /obj/item/weapon/storage/box/matches)
 					new spawn_type(C)
 			if("engineering")
@@ -264,7 +264,7 @@
 				// more tomb guardians!
 				var/num = rand(1,3)
 				var/obj/structure/closet/crate/secure/gear/C = new(src.loc)
-				for(var/i=0,i<num,i++)
+				for(var/i=0,i<num, i++)
 					new /mob/living/simple_animal/hostile/viscerator(C)
 
 		qdel(src)

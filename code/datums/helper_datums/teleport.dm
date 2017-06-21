@@ -25,7 +25,7 @@
 		return 0
 	return 1
 
-/datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout,adest_checkdensity,arespect_entrydir,aentrydir)
+/datum/teleport/proc/initTeleport(ateleatom, adestination, aprecision, afteleport, aeffectin, aeffectout, asoundin, asoundout, adest_checkdensity, arespect_entrydir, aentrydir)
 	if(!setTeleatom(ateleatom))
 		return 0
 	if(!setDestination(adestination))
@@ -38,9 +38,9 @@
 		respect_entrydir = arespect_entrydir
 	if(aentrydir)
 		entrydir = aentrydir
-	setEffects(aeffectin,aeffectout)
+	setEffects(aeffectin, aeffectout)
 	setForceTeleport(afteleport)
-	setSounds(asoundin,asoundout)
+	setSounds(asoundin, asoundout)
 	return 1
 
 // must succeed
@@ -69,7 +69,7 @@
 
 // custom effects must be properly set up first for instant-type teleports
 // optional
-/datum/teleport/proc/setEffects(datum/effect/effect/system/aeffectin=null,datum/effect/effect/system/aeffectout=null)
+/datum/teleport/proc/setEffects(datum/effect/effect/system/aeffectin=null, datum/effect/effect/system/aeffectout=null)
 	effectin = istype(aeffectin) ? aeffectin : null
 	effectout = istype(aeffectout) ? aeffectout : null
 	return 1
@@ -80,7 +80,7 @@
 	return 1
 
 // optional
-/datum/teleport/proc/setSounds(asoundin=null,asoundout=null)
+/datum/teleport/proc/setSounds(asoundin=null, asoundout=null)
 	soundin = isfile(asoundin) ? asoundin : null
 	soundout = isfile(asoundout) ? asoundout : null
 	return 1
@@ -89,7 +89,7 @@
 /datum/teleport/proc/teleportChecks()
 	return 1
 
-/datum/teleport/proc/playSpecials(atom/location,datum/effect/effect/system/effect,sound)
+/datum/teleport/proc/playSpecials(atom/location, datum/effect/effect/system/effect, sound)
 	if(location)
 		if(effect)
 			spawn(0)
@@ -99,7 +99,7 @@
 		if(sound)
 			spawn(0)
 				src = null
-				playsound(location,sound,60,1)
+				playsound(location, sound,60,1)
 	return
 
 // do the monkey dance
@@ -117,7 +117,7 @@
 				return 0
 			posturfs += T
 		else
-			for(var/turf/T in RANGE_TURFS(precision,center))
+			for(var/turf/T in RANGE_TURFS(precision, center))
 				if(!density_checks(T))
 					continue
 				posturfs += T
@@ -130,16 +130,16 @@
 	if(!destturf || !curturf)
 		return 0
 
-	playSpecials(curturf,effectin,soundin)
+	playSpecials(curturf, effectin, soundin)
 
 	if(force_teleport)
 		if(teleatom.buckled_mob)
 			teleatom.unbuckle_mob()
 		teleatom.forceMove(destturf)
-		playSpecials(destturf,effectout,soundout)
+		playSpecials(destturf, effectout, soundout)
 	else
 		if(teleatom.Move(destturf))
-			playSpecials(destturf,effectout,soundout)
+			playSpecials(destturf, effectout, soundout)
 
 	if(isliving(teleatom))
 		var/mob/living/L = teleatom
@@ -188,7 +188,7 @@
 
 /datum/teleport/instant/science
 
-/datum/teleport/instant/science/setEffects(datum/effect/effect/system/aeffectin,datum/effect/effect/system/aeffectout)
+/datum/teleport/instant/science/setEffects(datum/effect/effect/system/aeffectin, datum/effect/effect/system/aeffectout)
 	if(aeffectin==null || aeffectout==null)
 		var/datum/effect/effect/system/spark_spread/aeffect = new
 		aeffect.set_up(5, 1, teleatom)

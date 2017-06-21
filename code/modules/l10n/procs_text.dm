@@ -19,7 +19,7 @@
 var/letter_255_ascii = text2ascii(LETTER_255)
 
 // Removes a few problematic characters
-/proc/sanitize_simple(t,list/repl_chars = list("\n"=" ","\t"=" ","ÿ"=LETTER_255))
+/proc/sanitize_simple(t, list/repl_chars = list("\n"=" ","\t"=" ","ÿ"=LETTER_255))
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize_simple, entered. Text:</b> <i>[t]</i>")
@@ -43,7 +43,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 
 	return t
 
-/proc/sanitize(t,list/repl_chars = null)
+/proc/sanitize(t, list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize, entered. Text:</b> <i>[t]</i>")
@@ -66,7 +66,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 
 	return t
 
-/proc/sanitize_alt(t,list/repl_chars = null)
+/proc/sanitize_alt(t, list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize_alt, entered. Text:</b> <i>[t]</i>")
@@ -101,7 +101,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 	#endif
 	return replacetext(t, "&#1103;", "&#255;")
 
-/proc/sanitize_plus(t,list/repl_chars = null)
+/proc/sanitize_plus(t, list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
 	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize_plus, entered. Text:</b> <i>[t]</i>")

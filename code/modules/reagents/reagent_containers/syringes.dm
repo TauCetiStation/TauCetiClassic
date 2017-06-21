@@ -94,11 +94,11 @@
 					if(istype(T,/mob/living/carbon/human))
 						var/mob/living/carbon/human/H = T
 						if(H.species && H.species.flags[NO_BLOOD])
-							H.reagents.trans_to(src,amount)
+							H.reagents.trans_to(src, amount)
 						else
-							B = T.take_blood(src,amount)
+							B = T.take_blood(src, amount)
 					else
-						B = T.take_blood(src,amount)
+						B = T.take_blood(src, amount)
 
 					if (B)
 						src.reagents.reagent_list += B
@@ -250,7 +250,7 @@
 			return
 		var/hit_area = BP.name
 
-		if((user != H) && H.check_shields(7, "the [src.name]", get_dir(user,target)))
+		if((user != H) && H.check_shields(7, "the [src.name]", get_dir(user, target)))
 			return
 
 		if (H != user && H.getarmor(target_zone, "melee") > 5 && prob(50))

@@ -108,5 +108,5 @@ Pipelines + Other Objects -> Pipe network
 // Find a connecting /obj/machinery/atmospherics in specified direction
 /obj/machinery/atmospherics/proc/findConnecting(direction)
 	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
-		if(target.initialize_directions & get_dir(target,src))
+		if(target.initialize_directions & get_dir(target, src))
 			return target

@@ -10,7 +10,7 @@
 	range = -1
 	include_user = 1
 
-/obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/charge/cast(list/targets, mob/user = usr)
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/C = user

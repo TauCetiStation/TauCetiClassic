@@ -97,7 +97,7 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, C)
 			s.start()
-		else return ..(M,user)
+		else return ..(M, user)
 
 	proc/return_to_body_dialog(mob/living/carbon/returnable)
 		if (returnable.key) // in body?

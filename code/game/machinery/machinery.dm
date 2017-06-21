@@ -105,7 +105,7 @@ Class Procs:
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
 	var/power_channel = EQUIP
-		// EQUIP,ENVIRON or LIGHT
+		// EQUIP, ENVIRON or LIGHT
 	var/list/component_parts = null // list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
@@ -239,9 +239,9 @@ Class Procs:
 	if(!powered(power_channel))
 		return 0
 	if(src.use_power == 1)
-		use_power(idle_power_usage,power_channel, 1)
+		use_power(idle_power_usage, power_channel, 1)
 	else if(src.use_power >= 2)
-		use_power(active_power_usage,power_channel, 1)
+		use_power(active_power_usage, power_channel, 1)
 	return 1
 
 // By default, we check everything.

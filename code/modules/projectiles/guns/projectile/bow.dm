@@ -176,7 +176,7 @@
 		to_chat(user, "You have no arrow nocked to [src]!")
 		return 0
 	else
-		spawn(0) Fire(target,user,params)
+		spawn(0) Fire(target, user, params)
 
 /obj/item/weapon/crossbow/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
 

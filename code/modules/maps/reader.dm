@@ -222,10 +222,10 @@ dmm_suite
 				instance = locate(atom_def)
 				if(!istype(instance, atom_def))
 					instance = new atom_def
-				instance.contents.Add(locate(x_coordinate,y_coordinate,z_coordinate))
+				instance.contents.Add(locate(x_coordinate, y_coordinate, z_coordinate))
 
 			else
-				instance = new atom_def(locate(x_coordinate,y_coordinate,z_coordinate))
+				instance = new atom_def(locate(x_coordinate, y_coordinate, z_coordinate))
 				if(instance)
 					for(var/item in fields)
 						instance.vars[item] = fields[item]

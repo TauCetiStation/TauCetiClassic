@@ -239,7 +239,7 @@
 		movement_dir = force_move
 
 	if(target && prob(60))
-		movement_dir = get_dir(src,target) // moves to a singulo beacon, if there is one
+		movement_dir = get_dir(src, target) // moves to a singulo beacon, if there is one
 
 	step(src, movement_dir)
 
@@ -264,7 +264,7 @@
 	var/list/turfs = list()
 	var/turf/T = src.loc
 	for(var/i = 1 to steps)
-		T = get_step(T,direction)
+		T = get_step(T, direction)
 	if(!isturf(T))
 		return 0
 	turfs.Add(T)
@@ -284,7 +284,7 @@
 			return 0
 		turfs.Add(T2)
 	for(var/k = 1 to steps-1)
-		T = get_step(T,dir3)
+		T = get_step(T, dir3)
 		if(!isturf(T))
 			return 0
 		turfs.Add(T)

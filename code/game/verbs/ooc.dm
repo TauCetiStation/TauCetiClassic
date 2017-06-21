@@ -32,7 +32,7 @@ var/global/normal_ooc_colour = "#002eb8"
 		if(!dooc_allowed && (mob.stat == DEAD))
 			to_chat(usr, "\red OOC for dead mobs has been turned off.")
 			return
-		if(handle_spam_prevention(msg,MUTE_OOC))
+		if(handle_spam_prevention(msg, MUTE_OOC))
 			return
 		if(findtext(msg, "byond:// "))
 			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
@@ -117,7 +117,7 @@ var/global/normal_ooc_colour = "#002eb8"
 		if(prefs.muted & MUTE_OOC)
 			to_chat(src, "<span class='red'>You cannot use OOC (muted).</span>")
 			return
-		if(handle_spam_prevention(msg,MUTE_OOC))
+		if(handle_spam_prevention(msg, MUTE_OOC))
 			return
 		if(findtext(msg, "byond:// "))
 			to_chat(src, "<B>Advertising other servers is not allowed.</B>")

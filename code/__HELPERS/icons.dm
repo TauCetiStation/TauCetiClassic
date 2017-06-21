@@ -148,7 +148,7 @@ mob
 		overlays+=I
 
 		// Testing dynamic image overlays
-		I=image(icon=I,pixel_x = -32, pixel_y = 32)
+		I=image(icon=I, pixel_x = -32, pixel_y = 32)
 		overlays+=I
 
 		// Testing object types (and layers)
@@ -217,7 +217,7 @@ world
 
 icon
 	proc/MakeLying()
-		var/icon/I = new(src,dir=SOUTH)
+		var/icon/I = new(src, dir=SOUTH)
 		I.BecomeLying()
 		return I
 
@@ -247,7 +247,7 @@ icon
 			Blend(tone, ICON_MULTIPLY)
 		else SetIntensity(0)
 		if(255-gray)
-			upper.Blend(rgb(gray,gray,gray), ICON_SUBTRACT)
+			upper.Blend(rgb(gray, gray, gray), ICON_SUBTRACT)
 			upper.MapColors((255-TONE[1])/(255-gray),0,0,0, 0,(255-TONE[2])/(255-gray),0,0, 0,0,(255-TONE[3])/(255-gray),0, 0,0,0,0, 0,0,0,1)
 			Blend(upper, ICON_ADD)
 
@@ -323,7 +323,7 @@ proc/ReadRGB(rgb)
 	// interpret the HSV or HSVA value
 	var/i=1,start=1
 	if(text2ascii(rgb) == 35) ++start // skip opening #
-	var/ch,which=0,r=0,g=0,b=0,alpha=0,usealpha
+	var/ch, which=0,r=0,g=0,b=0,alpha=0,usealpha
 	var/digits=0
 	for(i=start, i<=length(rgb), ++i)
 		ch = text2ascii(rgb, i)
@@ -373,7 +373,7 @@ proc/ReadHSV(hsv)
 	// interpret the HSV or HSVA value
 	var/i=1,start=1
 	if(text2ascii(hsv) == 35) ++start // skip opening #
-	var/ch,which=0,hue=0,sat=0,val=0,alpha=0,usealpha
+	var/ch, which=0,hue=0,sat=0,val=0,alpha=0,usealpha
 	var/digits=0
 	for(i=start, i<=length(hsv), ++i)
 		ch = text2ascii(hsv, i)
@@ -419,7 +419,7 @@ proc/HSVtoRGB(hsv)
 	hue -= hue >> 8
 	if(hue >= 0x5fa) hue -= 0x5fa
 
-	var/hi,mid,lo,r,g,b
+	var/hi, mid, lo, r,g, b
 	hi = val
 	lo = round((255 - sat) * val / 255, 1)
 	mid = lo + round(abs(round(hue, 510) - hue) * (hi - lo) / 255, 1)
@@ -432,7 +432,7 @@ proc/HSVtoRGB(hsv)
 		else if(hue >= 255)  {r=mid; g=hi;  b=lo }
 		else                 {r=hi;  g=mid; b=lo }
 
-	return (HSV.len > 3) ? rgb(r,g,b,HSV[4]) : rgb(r,g,b)
+	return (HSV.len > 3) ? rgb(r, g,b, HSV[4]) : rgb(r, g,b)
 
 proc/RGBtoHSV(rgb)
 	if(!rgb) return "#0000000"
@@ -442,8 +442,8 @@ proc/RGBtoHSV(rgb)
 	var/r = RGB[1]
 	var/g = RGB[2]
 	var/b = RGB[3]
-	var/hi = max(r,g,b)
-	var/lo = min(r,g,b)
+	var/hi = max(r, g,b)
+	var/lo = min(r, g,b)
 
 	var/val = hi
 	var/sat = hi ? round((hi-lo) * 255 / hi, 1) : 0
@@ -713,10 +713,10 @@ The _flatIcons list is a cache for generated icon files.
 					currentLayer = A.layer+(1000+currentLayer)/1000
 
 			// Sort add into layers list
-			for(cmpIndex=1,cmpIndex<=layers.len,cmpIndex++)
+			for(cmpIndex=1,cmpIndex<=layers.len, cmpIndex++)
 				compare = layers[cmpIndex]
 				if(currentLayer < layers[compare]) // Associated value is the calculated layer
-					layers.Insert(cmpIndex,current)
+					layers.Insert(cmpIndex, current)
 					layers[current] = currentLayer
 					break
 			if(cmpIndex>layers.len) // Reached end of list without inserting
@@ -781,13 +781,13 @@ The _flatIcons list is a cache for generated icon files.
 	return icon(flat, "", SOUTH)
 
 /proc/getIconMask(atom/A)// By yours truly. Creates a dynamic mask for a mob/whatever. /N
-	var/icon/alpha_mask = new(A.icon,A.icon_state)// So we want the default icon and icon state of A.
+	var/icon/alpha_mask = new(A.icon, A.icon_state)// So we want the default icon and icon state of A.
 	for(var/I in A.overlays)// For every image in overlays. var/image/I will not work, don't try it.
 		if(I:layer>A.layer)
 			continue// If layer is greater than what we need, skip it.
-		var/icon/image_overlay = new(I:icon,I:icon_state)// Blend only works with icon objects.
+		var/icon/image_overlay = new(I:icon, I:icon_state)// Blend only works with icon objects.
 		// Also, icons cannot directly set icon_state. Slower than changing variables but whatever.
-		alpha_mask.Blend(image_overlay,ICON_OR)// OR so they are lumped together in a nice overlay.
+		alpha_mask.Blend(image_overlay, ICON_OR)// OR so they are lumped together in a nice overlay.
 	return alpha_mask// And now return the mask.
 
 /mob/proc/AddCamoOverlay(atom/A)// A is the atom which we are using as the overlay.
@@ -853,7 +853,7 @@ proc/sort_atoms_by_layer(list/atoms)
 
 var/global/list/humanoid_icon_cache = list()
 // For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs)
+/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs)
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = new(new_species = prefs.species)
 
@@ -866,19 +866,19 @@ var/global/list/humanoid_icon_cache = list()
 
 		body.dir = NORTH
 		var/icon/partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=NORTH)
+		out_icon.Insert(partial, dir=NORTH)
 
 		body.dir = SOUTH
 		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=SOUTH)
+		out_icon.Insert(partial, dir=SOUTH)
 
 		body.dir = WEST
 		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=WEST)
+		out_icon.Insert(partial, dir=WEST)
 
 		body.dir = EAST
 		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=EAST)
+		out_icon.Insert(partial, dir=EAST)
 
 		qdel(body)
 

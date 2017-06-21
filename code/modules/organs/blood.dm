@@ -364,7 +364,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/list/sniffles = virus_copylist(injected.data["virus2"])
 	for(var/ID in sniffles)
 		var/datum/disease2/disease/sniffle = sniffles[ID]
-		infect_virus2(src,sniffle,1)
+		infect_virus2(src, sniffle,1)
 	if (injected.data["antibodies"] && prob(5))
 		antibodies |= injected.data["antibodies"]
 	var/list/chems = list()
@@ -411,7 +411,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					return D
 	return res
 
-proc/blood_incompatible(donor,receiver)
+proc/blood_incompatible(donor, receiver)
 	if(!donor || !receiver) return 0
 	var
 		donor_antigen = copytext(donor,1,lentext(donor))

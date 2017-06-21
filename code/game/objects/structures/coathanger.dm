@@ -27,7 +27,7 @@
 /obj/structure/coatrack/attackby(obj/item/weapon/W, mob/user)
 	var/can_hang = 0
 	for (var/T in allowed)
-		if(istype(W,T))
+		if(istype(W, T))
 			can_hang = 1
 	if (can_hang && !coat && !istype(W, /obj/item/clothing/head/det_hat))
 		user.visible_message("[user] hangs [W] on \the [src].", "You hang [W] on the \the [src]")
@@ -49,7 +49,7 @@
 /obj/structure/coatrack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	var/can_hang = 0
 	for (var/T in allowed)
-		if(istype(mover,T))
+		if(istype(mover, T))
 			can_hang = 1
 
 	if (can_hang && !coat && !istype(mover, /obj/item/clothing/head/det_hat))

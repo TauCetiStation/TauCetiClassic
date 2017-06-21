@@ -75,7 +75,7 @@
 			if(stat == CONSCIOUS || stat == UNCONSCIOUS)
 				icon_state = "spacewormhead[previous?1:0]"
 				if(previous)
-					dir = get_dir(previous,src)
+					dir = get_dir(previous, src)
 			else
 				icon_state = "spacewormheaddead"
 
@@ -126,10 +126,10 @@
 	proc/update_icon() // only for the sake of consistency with the other update icon procs
 		if(stat == CONSCIOUS || stat == UNCONSCIOUS)
 			if(previous) // midsection
-				icon_state = "spaceworm[get_dir(src,previous) | get_dir(src,next)]" // see 3 lines below
+				icon_state = "spaceworm[get_dir(src, previous) | get_dir(src, next)]" // see 3 lines below
 			else // tail
 				icon_state = "spacewormtail"
-				dir = get_dir(src,next) // next will always be present since it's not a head and if it's dead, it goes in the other if branch
+				dir = get_dir(src, next) // next will always be present since it's not a head and if it's dead, it goes in the other if branch
 		else
 			icon_state = "spacewormdead"
 

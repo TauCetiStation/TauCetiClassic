@@ -53,7 +53,7 @@
 	areas_added = list(A)
 
 	for(var/direction in cardinal)
-		A = get_area(get_step(src,direction))
+		A = get_area(get_step(src, direction))
 		if(istype(A) && !(A in areas_added))
 			A.all_doors.Add(src)
 			areas_added += A
@@ -324,7 +324,7 @@
 					pdiff_alert = 0
 					changed = 1 // update_icon()
 
-			tile_info = getCardinalAirInfo(src.loc,list("temperature","pressure"))
+			tile_info = getCardinalAirInfo(src.loc, list("temperature","pressure"))
 			var/old_alerts = dir_alerts
 			for(var/index in 1 to 4)
 				var/list/tileinfo=tile_info[index]

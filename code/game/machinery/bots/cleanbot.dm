@@ -61,7 +61,7 @@
 
 /obj/machinery/bot/cleanbot/Destroy()
 	if(radio_controller)
-		radio_controller.remove_object(src,beacon_freq)
+		radio_controller.remove_object(src, beacon_freq)
 	return ..()
 
 /obj/machinery/bot/cleanbot/turn_on()

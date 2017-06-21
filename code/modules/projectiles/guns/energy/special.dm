@@ -317,7 +317,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	return 0
 
 /obj/item/weapon/gun/tesla/proc/los_check(mob/A, mob/B)
-	for(var/X in getline(A,B))
+	for(var/X in getline(A, B))
 		var/turf/T = X
 		if(T.density)
 			return 0

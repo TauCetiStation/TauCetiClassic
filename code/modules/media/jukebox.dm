@@ -142,7 +142,7 @@ var/global/loopModeNames=list(
 			t += "<b>Current song:</b> [song.artist] - [song.title]<br />"
 		t += "<table class='prettytable'><tr><th colspan='2'>Artist - Title</th><th>Album</th></tr>"
 		var/i
-		for(i = 1,i <= playlist.len,i++)
+		for(i = 1,i <= playlist.len, i++)
 			var/datum/song_info/song=playlist[i]
 			t += "<tr><th>#[i]</th><td><A href='?src=\ref[src];song=[i]' class='nobg'>[song.displaytitle()]</A></td><td>[song.album]</td></tr>"
 		t += "</table>"

@@ -248,7 +248,7 @@
 	var/turf_count = 0
 
 	for(var/direction in cardinal)// Only use cardinals to cut down on lag
-		var/turf/T = get_step(src,direction)
+		var/turf/T = get_step(src, direction)
 		if(istype(T,/turf/space))// Counted as no air
 			turf_count++// Considered a valid turf for air calcs
 			continue
@@ -270,7 +270,7 @@
 
 	// cael - duplicate the averaged values across adjacent turfs to enforce a seamless atmos change
 	for(var/direction in cardinal)// Only use cardinals to cut down on lag
-		var/turf/T = get_step(src,direction)
+		var/turf/T = get_step(src, direction)
 		if(istype(T,/turf/space))// Counted as no air
 			continue
 		else if(istype(T,/turf/simulated/floor))
@@ -312,7 +312,7 @@
  * Distance associates with all directions movement
  */
 /turf/proc/Distance(var/turf/T)
-	return get_dist(src,T)
+	return get_dist(src, T)
 
 /**
  * This Distance proc assumes that only cardinal movement is possible.

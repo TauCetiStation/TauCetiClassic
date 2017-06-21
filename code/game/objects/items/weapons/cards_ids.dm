@@ -107,7 +107,7 @@
 /obj/item/weapon/card/emag/afterattack(obj/item/weapon/O, mob/user)
 
 	for(var/type in devices)
-		if(istype(O,type))
+		if(istype(O, type))
 			uses--
 			break
 

@@ -164,7 +164,7 @@
 				O = SO
 				P = O.object
 				if(SSshuttle.points >= P.cost)
-					SSshuttle.requestlist.Cut(i,i+1)
+					SSshuttle.requestlist.Cut(i, i+1)
 					SSshuttle.points -= P.cost
 					SSshuttle.shoppinglist += O
 					temp = "Thanks for your order.<BR>"
@@ -202,7 +202,7 @@
 		for(var/i = 1 to SSshuttle.requestlist.len)
 			var/datum/supply_order/SO = SSshuttle.requestlist[i]
 			if(SO.id == ordernum)
-				SSshuttle.requestlist.Cut(i,i+1)
+				SSshuttle.requestlist.Cut(i, i+1)
 				temp = "Request removed.<BR>"
 				break
 		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"

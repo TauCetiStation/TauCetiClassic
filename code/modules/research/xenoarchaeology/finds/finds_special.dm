@@ -148,7 +148,7 @@
 
 /obj/effect/decal/cleanable/blood/splatter/animated/process()
 	if(target_turf && src.loc != target_turf)
-		step_towards(src,target_turf)
+		step_towards(src, target_turf)
 		if(src.loc == loc_last_process)
 			target_turf = null
 		loc_last_process = src.loc
@@ -194,7 +194,7 @@
 			'sound/hallucinations/turn_around1.ogg',\
 			'sound/hallucinations/turn_around2.ogg',\
 			), 50, 1, -3)
-			M.sleeping = max(M.sleeping,rand(5,10))
+			M.sleeping = max(M.sleeping, rand(5,10))
 			src.loc = null
 	else
 		STOP_PROCESSING(SSobj, src)

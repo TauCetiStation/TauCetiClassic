@@ -34,7 +34,7 @@
 			var/direct = pick(alldirs)
 			for(i=0, i<pick(1;25,2;50,3,4;200), i++)
 				sleep(1)
-				step(expl,direct)
+				step(expl, direct)
 
 /obj/effect/explosion
 	name = "explosive particles"
@@ -66,5 +66,5 @@
 	P.start()
 	spawn(5)
 		var/datum/effect/effect/system/smoke_spread/S = new/datum/effect/effect/system/smoke_spread()
-		S.set_up(5,0,location,null)
+		S.set_up(5,0,location, null)
 		S.start()

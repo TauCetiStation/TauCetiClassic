@@ -59,7 +59,7 @@
 	item_state = "card-id"
 	w_class = 2.0
 	var/datum/dna2/record/buf=null
-	var/read_only = 0 // Well,it's still a floppy disk
+	var/read_only = 0 // Well, it's still a floppy disk
 
 /obj/item/weapon/disk/data/proc/Initialize()
 	buf = new

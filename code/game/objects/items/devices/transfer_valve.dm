@@ -66,7 +66,7 @@
 
 /obj/item/device/transfer_valve/hear_talk(mob/living/M, msg)
 	if(!attached_device)	return
-	attached_device.hear_talk(M,msg)
+	attached_device.hear_talk(M, msg)
 	return
 
 /obj/item/device/transfer_valve/attack_self(mob/user)

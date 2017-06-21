@@ -83,8 +83,8 @@
 /obj/machinery/bot/mulebot/Destroy()
 	QDEL_NULL(wires)
 	if(radio_controller)
-		radio_controller.remove_object(src,beacon_freq)
-		radio_controller.remove_object(src,control_freq)
+		radio_controller.remove_object(src, beacon_freq)
+		radio_controller.remove_object(src, control_freq)
 	unload(0)
 	return ..()
 
@@ -458,8 +458,8 @@
 	load.plane = initial(load.plane)
 	if(dirn)
 		var/turf/T = loc
-		var/turf/newT = get_step(T,dirn)
-		if(load.CanPass(load,newT)) // Can't get off onto anything that wouldn't let you pass normally
+		var/turf/newT = get_step(T, dirn)
+		if(load.CanPass(load, newT)) // Can't get off onto anything that wouldn't let you pass normally
 			step(load, dirn)
 
 	load = null
@@ -504,7 +504,7 @@
 			return
 		if(1)		// loading/unloading
 			return
-		if(2,3,4)		// navigating to deliver,home, or blocked
+		if(2,3,4)		// navigating to deliver, home, or blocked
 
 			if(loc == target)		// reached target
 				at_target()
@@ -649,7 +649,7 @@
 							AM = A
 							break
 				else			// otherwise, look for crates only
-					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
+					AM = locate(/obj/structure/closet/crate) in get_step(loc, loaddir)
 				if(AM && AM.Adjacent(src))
 					load(AM)
 		// whatever happened, check to see if we return home

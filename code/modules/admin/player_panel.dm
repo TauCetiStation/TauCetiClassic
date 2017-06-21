@@ -61,7 +61,7 @@
 
 				}
 
-				function expand(id,job,name,real_name,image,key,ip,antagonist,ref){
+				function expand(id, job, name, real_name, image, key, ip, antagonist, ref){
 
 					clearAll();
 
@@ -120,14 +120,14 @@
 					}
 				}
 
-				function addToLocked(id,link_id,notice_span_id){
+				function addToLocked(id, link_id, notice_span_id){
 					var link = document.getElementById(link_id);
 					var decision = link.getAttribute("name");
 					if(decision == "1"){
 						link.setAttribute("name","2");
 					}else{
 						link.setAttribute("name","1");
-						removeFromLocked(id,link_id,notice_span_id);
+						removeFromLocked(id, link_id, notice_span_id);
 						return;
 					}
 
@@ -152,7 +152,7 @@
 					return ab;
 				}
 
-				function removeFromLocked(id,link_id,notice_span_id){
+				function removeFromLocked(id, link_id, notice_span_id){
 					// document.write("a");
 					var index = 0;
 					var pass = 0;

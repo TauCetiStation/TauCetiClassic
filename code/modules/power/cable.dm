@@ -231,7 +231,7 @@ By design, d1 is the smallest direction and d2 is the highest
 				newPN.add_cable(C)
 
 			if(powernet) // if we already have a powernet, then merge the two powernets
-				merge_powernets(powernet,C.powernet)
+				merge_powernets(powernet, C.powernet)
 			else
 				C.powernet.add_cable(src) // else, we simply connect to the matching cable powernet
 
@@ -559,7 +559,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		to_chat(user, "<span class='warning'>You need more cable.</span>")
 		return
 
-	if(get_dist(F,user) > 1) // too far
+	if(get_dist(F, user) > 1) // too far
 		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away.</span>")
 		return
 
@@ -620,7 +620,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 
 	if(U == T) // if clicked on the turf we're standing on, try to put a cable in the direction we're facing
-		turf_place(T,user)
+		turf_place(T, user)
 		return
 
 	var/dirn = get_dir(C, user)

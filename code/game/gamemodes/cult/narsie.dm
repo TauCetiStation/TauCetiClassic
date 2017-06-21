@@ -120,7 +120,7 @@
 					direction = pick(alldirs)
 			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
 				sleep(10)
-				step(smoke,direction)
+				step(smoke, direction)
 			spawn(150+rand(10,30))
 				if(smoke)
 					fadeOut2(smoke)
@@ -237,7 +237,7 @@
 	var/movement_dir = pick(alldirs - last_failed_movement)
 
 	if(target)
-		movement_dir = get_dir(src,target) // moves to a singulo beacon, if there is one
+		movement_dir = get_dir(src, target) // moves to a singulo beacon, if there is one
 
 	spawn(0)
 		loc = get_step(src, movement_dir)
@@ -307,7 +307,7 @@
 	grav_pull = 0
 
 /obj/singularity/narsie/wizard/eat()
-	for(var/atom/A in orange(consume_range,src))
+	for(var/atom/A in orange(consume_range, src))
 		if(isturf(A) || istype(A, /atom/movable))
 			consume(A)
 	return

@@ -13,7 +13,7 @@
 		if(usr.client.prefs.muted & MUTE_PRAY)
 			to_chat(usr, "\red You cannot pray (muted).")
 			return
-		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
+		if(src.client.handle_spam_prevention(msg, MUTE_PRAY))
 			return
 
 	var/image/cross = image('icons/obj/storage.dmi',"bible")

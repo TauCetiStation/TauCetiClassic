@@ -24,7 +24,7 @@
  */
 
 // Simply removes < and > and limits the length of the message
-/proc/strip_html_simple(t,limit=MAX_MESSAGE_LEN)
+/proc/strip_html_simple(t, limit=MAX_MESSAGE_LEN)
 	var/list/strip_chars = list("<",">")
 	t = copytext(t,1,limit)
 	for(var/char in strip_chars)
@@ -48,12 +48,12 @@
 
 // Runs sanitize and strip_html_simple
 // I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
-/proc/strip_html(t,limit=MAX_MESSAGE_LEN)
+/proc/strip_html(t, limit=MAX_MESSAGE_LEN)
 	return copytext((sanitize(strip_html_simple(t))),1,limit)
 
 // Runs byond's sanitization proc along-side strip_html_simple
 // I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' that html_encode() would cause
-/proc/adminscrub(t,limit=MAX_MESSAGE_LEN)
+/proc/adminscrub(t, limit=MAX_MESSAGE_LEN)
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
 
 
@@ -62,7 +62,7 @@
 	if(length(text) > max_length)	return			// message too long
 	var/non_whitespace = 0
 	for(var/i=1, i<=length(text), i++)
-		switch(text2ascii(text,i))
+		switch(text2ascii(text, i))
 			if(62,60,92,47)	return			// rejects the text if it contains these bad characters: <, >, \ or /
 //			if(127 to 255)	return			// rejects weird letters like �
 			if(0 to 31)		return			// more weird stuff
@@ -85,7 +85,7 @@
 	var/t_out = ""
 
 	for(var/i=1, i<=length(t_in), i++)
-		var/ascii_char = text2ascii(t_in,i)
+		var/ascii_char = text2ascii(t_in, i)
 		switch(ascii_char)
 			// A  .. Z
 			if(65 to 90)			// Uppercase Letters
@@ -135,7 +135,7 @@
 		t_out = copytext(t_out,1,length(t_out))	// removes the last character (in this case a space)
 
 	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai"))	// prevents these common metagamey names
-		if(cmptext(t_out,bad_name))	return	// (not case sensitive)
+		if(cmptext(t_out, bad_name))	return	// (not case sensitive)
 
 	return t_out
 
@@ -146,14 +146,14 @@
 	var/p = findtext(t,"<",1)
 	while (p)	// going through all the tags
 		var/start = p++
-		var/tag = copytext(t,p, p+1)
+		var/tag = copytext(t, p, p+1)
 		if (tag != "/")
 			while (reject_bad_text(copytext(t, p, p+1), 1))
-				tag = copytext(t,start, p)
+				tag = copytext(t, start, p)
 				p++
-			tag = copytext(t,start+1, p)
+			tag = copytext(t, start+1, p)
 			if (!(tag in paper_tag_whitelist))	// if it's unkown tag, disarming it
-				t = copytext(t,1,start-1) + "&lt;" + copytext(t,start+1)
+				t = copytext(t,1,start-1) + "&lt;" + copytext(t, start+1)
 		p = findtext(t,"<",p)
 
 	return t
@@ -258,7 +258,7 @@
 		return message
 	return copytext(message, 1, length + 1)
 
-/proc/stringmerge(text,compare,replace = "*")
+/proc/stringmerge(text, compare, replace = "*")
 // This proc fills in all spaces with the "replace" var (* by default) with whatever
 // is in the other string at the same spot (assuming it is not a replace char).
 // This is used for fingerprints
@@ -266,8 +266,8 @@
 	if(lentext(text) != lentext(compare))
 		return 0
 	for(var/i = 1, i < lentext(text), i++)
-		var/a = copytext(text,i,i+1)
-		var/b = copytext(compare,i,i+1)
+		var/a = copytext(text, i,i+1)
+		var/b = copytext(compare, i,i+1)
 // if it isn't both the same letter, or if they are both the replacement character
 // (no way to know what it was supposed to be)
 		if(a != b)
@@ -279,14 +279,14 @@
 				return 0
 	return newtext
 
-/proc/stringpercent(text,character = "*")
+/proc/stringpercent(text, character = "*")
 // This proc returns the number of chars of the string that is the character
 // This is used for detective work to determine fingerprint completion.
 	if(!text || !character)
 		return 0
 	var/count = 0
 	for(var/i = 1, i <= lentext(text), i++)
-		var/a = copytext(text,i,i+1)
+		var/a = copytext(text, i,i+1)
 		if(a == character)
 			count++
 	return count

@@ -60,9 +60,9 @@
 	if(anchored)
 		if(current_size >= STAGE_FIVE)
 			anchored = 0
-			step_towards(src,S)
+			step_towards(src, S)
 	else
-		step_towards(src,S)
+		step_towards(src, S)
 
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	// Return: (NONSTANDARD)

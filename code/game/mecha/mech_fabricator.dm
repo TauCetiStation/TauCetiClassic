@@ -131,7 +131,7 @@
 	var/output
 	for(var/c in D.materials)
 		if(c in resources)
-			output += "[i?" | ":null][get_resource_cost_w_coeff(D,c)] [material2name(c)]"
+			output += "[i?" | ":null][get_resource_cost_w_coeff(D, c)] [material2name(c)]"
 			i++
 	return output
 
@@ -148,7 +148,7 @@
 /obj/machinery/mecha_part_fabricator/proc/remove_resources(datum/design/D)
 	for(var/resource in D.materials)
 		if(resource in resources)
-			resources[resource] -= get_resource_cost_w_coeff(D,resource)
+			resources[resource] -= get_resource_cost_w_coeff(D, resource)
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
 	for(var/R in D.materials)
@@ -175,8 +175,8 @@
 	var/I = new D.build_path(location)
 	if(istype(I, /obj/item))
 		var/obj/item/Item = I
-		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
-		Item.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
+		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D, MAT_METAL)
+		Item.materials[MAT_GLASS] = get_resource_cost_w_coeff(D, MAT_GLASS)
 	visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
 	being_built = null
 
@@ -385,7 +385,7 @@
 	if(!.)
 		return
 
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+	var/datum/topic_input/filter = new /datum/topic_input(href, href_list)
 	if(href_list["part_set"])
 		var/tpart_set = filter.getStr("part_set")
 		if(tpart_set)
@@ -439,7 +439,7 @@
 		var/new_index = index + filter.getNum("queue_move")
 		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
 			if(IsInRange(new_index,1,queue.len))
-				queue.Swap(index,new_index)
+				queue.Swap(index, new_index)
 		return update_queue_on_page()
 
 	if(href_list["clear_queue"])
@@ -467,7 +467,7 @@
 		if(amount < 0 || amount > resources[material]) // href protection
 			return FALSE
 
-		var/removed = remove_material(material,amount)
+		var/removed = remove_material(material, amount)
 		if(removed == -1)
 			temp = "Not enough [material2name(material)] to produce a sheet."
 		else
@@ -514,7 +514,7 @@
 
 	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
 	if(total_amount)// if there's still enough material for sheets
-		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount,total_amount))
+		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount, total_amount))
 		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
 		result += res.amount
 

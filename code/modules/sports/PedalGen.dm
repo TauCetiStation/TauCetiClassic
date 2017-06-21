@@ -47,7 +47,7 @@
 
 
 /obj/structure/stool/bed/chair/pedalgen/attackby(obj/item/W, mob/user)
-	if(default_unfasten_wrench(user,W))
+	if(default_unfasten_wrench(user, W))
 		if(anchored)
 			Generator.loc = src.loc
 			Generator.connect_to_network()

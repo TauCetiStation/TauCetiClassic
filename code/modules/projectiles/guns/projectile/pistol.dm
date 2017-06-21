@@ -172,7 +172,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
-		silencer_attackby(I,user)
+		silencer_attackby(I, user)
 	..()
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()

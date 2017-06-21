@@ -231,7 +231,7 @@ var/list/valid_secondary_effect_types = list(\
 			last_scan = world.time
 			var/trigger_near = 0
 			var/turf/mainloc = get_turf(src)
-			for(var/mob/living/A in view(scan_radius,mainloc))
+			for(var/mob/living/A in view(scan_radius, mainloc))
 				if ((A)&&(A.stat != DEAD))
 					trigger_near = 1
 					break

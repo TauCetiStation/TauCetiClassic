@@ -121,12 +121,12 @@
 		if("disabil_menu")
 			. += "<b>Disabilities:</b>"
 			. += "<br>"
-			. += ShowDisabilityState(user,DISABILITY_NEARSIGHTED,"Needs Glasses")
-			. += ShowDisabilityState(user,DISABILITY_COUGHING,"Coughing")
-			. += ShowDisabilityState(user,DISABILITY_EPILEPTIC,"Seizures")
-			. += ShowDisabilityState(user,DISABILITY_TOURETTES,"Twitching")
-			. += ShowDisabilityState(user,DISABILITY_NERVOUS,"Nervousness")
-			. += ShowDisabilityState(user,DISABILITY_FATNESS,"Fatness")
+			. += ShowDisabilityState(user, DISABILITY_NEARSIGHTED,"Needs Glasses")
+			. += ShowDisabilityState(user, DISABILITY_COUGHING,"Coughing")
+			. += ShowDisabilityState(user, DISABILITY_EPILEPTIC,"Seizures")
+			. += ShowDisabilityState(user, DISABILITY_TOURETTES,"Twitching")
+			. += ShowDisabilityState(user, DISABILITY_NERVOUS,"Nervousness")
+			. += ShowDisabilityState(user, DISABILITY_FATNESS,"Fatness")
 
 		// Gear
 		if("gear")
@@ -185,7 +185,7 @@
 	. += "</table>"	// Main body table end
 
 
-/datum/preferences/proc/ShowDisabilityState(mob/user,flag,label)
+/datum/preferences/proc/ShowDisabilityState(mob/user, flag, label)
 	return "[label]: <a href=\"?_src_=prefs;task=input;preference=disabilities;disability=[flag]\">[disabilities & flag ? "<b>Yes</b>" : "No"]</a><br>"
 
 /datum/preferences/proc/process_link_general(mob/user, list/href_list)
@@ -276,7 +276,7 @@
 
 					if(config.usealienwhitelist) // If we're using the whitelist, make sure to check it!
 						for(var/S in whitelisted_species)
-							if(is_alien_whitelisted(user,S))
+							if(is_alien_whitelisted(user, S))
 								new_species += S
 								whitelisted = 1
 						if(!whitelisted)

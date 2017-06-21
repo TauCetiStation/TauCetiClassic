@@ -622,7 +622,7 @@
 					P.icon_state = "pill[pillsprite]"
 					P.pixel_x = rand(-7, 7) // random position
 					P.pixel_y = rand(-7, 7)
-					reagents.trans_to(P,vol_each)
+					reagents.trans_to(P, vol_each)
 
 	src.updateUsrDialog()
 
@@ -1393,7 +1393,7 @@
 			for (var/r_id in allowed)
 				var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 				var/amount = allowed[r_id]
-				beaker.reagents.add_reagent(r_id,min(amount, space))
+				beaker.reagents.add_reagent(r_id, min(amount, space))
 				if (space < amount)
 					break
 			if (i == round(O.amount, 1))
@@ -1409,9 +1409,9 @@
 			var/amount = allowed[r_id]
 			if (amount == 0)
 				if (O.reagents != null && O.reagents.has_reagent(r_id))
-					beaker.reagents.add_reagent(r_id,min(O.reagents.get_reagent_amount(r_id), space))
+					beaker.reagents.add_reagent(r_id, min(O.reagents.get_reagent_amount(r_id), space))
 			else
-				beaker.reagents.add_reagent(r_id,min(amount, space))
+				beaker.reagents.add_reagent(r_id, min(amount, space))
 
 			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 				break
@@ -1425,7 +1425,7 @@
 		for (var/r_id in allowed)
 			var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 			var/amount = allowed[r_id]
-			beaker.reagents.add_reagent(r_id,min(amount, space), O.geological_data)
+			beaker.reagents.add_reagent(r_id, min(amount, space), O.geological_data)
 
 			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 				break

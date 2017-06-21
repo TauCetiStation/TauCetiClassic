@@ -108,7 +108,7 @@
 
 
 /datum/game_mode/cult/proc/memoize_cult_objectives(datum/mind/cult_mind)
-	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
+	for(var/obj_count = 1,obj_count <= objectives.len, obj_count++)
 		var/explanation
 		switch(objectives[obj_count])
 			if("survive")
@@ -158,7 +158,7 @@
 		if(startwords.len > 0)
 			word=pick(startwords)
 			startwords -= word
-	return ..(cult_mob,word)
+	return ..(cult_mob, word)
 
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, word)

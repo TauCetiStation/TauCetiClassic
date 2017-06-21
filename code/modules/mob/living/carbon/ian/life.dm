@@ -21,11 +21,11 @@
 						break
 			if(movement_target)
 				stop_automated_movement = TRUE
-				step_to(src,movement_target,1)
+				step_to(src, movement_target,1)
 				sleep(3)
-				step_to(src,movement_target,1)
+				step_to(src, movement_target,1)
 				sleep(3)
-				step_to(src,movement_target,1)
+				step_to(src, movement_target,1)
 
 				if(movement_target) // Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					if (movement_target.loc.x < src.x)
@@ -59,7 +59,7 @@
 				if(!(stop_automated_movement_when_pulled && pulledby)) // Soma animals don't move when pulled
 					var/anydir = pick(cardinal)
 					if(Process_Spacemove(anydir))
-						Move(get_step(src,anydir), anydir)
+						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
 
 	// Speaking
@@ -363,7 +363,7 @@
 				if(prob(1))
 					to_chat(src, "<span class='warning'>You mutate!</span>")
 					randmutb(src)
-					domutcheck(src,null)
+					domutcheck(src, null)
 					emote("gasp")
 
 /mob/living/carbon/ian/proc/handle_chemicals_in_body()
@@ -439,7 +439,7 @@
 			if(B.virus2.len)
 				for (var/ID in B.virus2)
 					var/datum/disease2/disease/V = B.virus2[ID]
-					infect_virus2(src,V)
+					infect_virus2(src, V)
 
 		else if(istype(O,/obj/effect/decal/cleanable/mucus))
 			var/obj/effect/decal/cleanable/mucus/M = O
@@ -447,7 +447,7 @@
 			if(M.virus2.len)
 				for (var/ID in M.virus2)
 					var/datum/disease2/disease/V = M.virus2[ID]
-					infect_virus2(src,V)
+					infect_virus2(src, V)
 
 	if(virus2.len)
 		for (var/ID in virus2)

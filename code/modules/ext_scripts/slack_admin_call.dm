@@ -36,7 +36,7 @@ proc/admin_call_cooldown(value1)
 
 	var/msg = input(src, "Message:", "Admin Call", ) as text
 
-	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if(src.handle_spam_prevention(msg, MUTE_ADMINHELP))
 		return
 	// clean the input msg
 	if(!msg)	return

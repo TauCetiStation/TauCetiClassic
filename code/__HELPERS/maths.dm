@@ -133,8 +133,8 @@ var/gaussian_next
 		gaussian_next = null
 	else
 		do
-			R1 = rand(-ACCURACY,ACCURACY)/ACCURACY
-			R2 = rand(-ACCURACY,ACCURACY)/ACCURACY
+			R1 = rand(-ACCURACY, ACCURACY)/ACCURACY
+			R2 = rand(-ACCURACY, ACCURACY)/ACCURACY
 			working = R1*R1 + R2*R2
 		while(working >= 1 || working==0)
 		working = sqrt(-2 * log(working) / working)

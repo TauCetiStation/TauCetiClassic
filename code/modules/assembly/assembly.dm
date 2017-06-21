@@ -99,7 +99,7 @@
 
 /obj/item/device/assembly/attach_assembly(obj/item/device/assembly/A, mob/user)
 	holder = new/obj/item/device/assembly_holder(get_turf(src))
-	if(holder.attach(A,src,user))
+	if(holder.attach(A, src, user))
 		to_chat(user, "\blue You attach \the [A] to \the [src]!")
 		return 1
 	return 0
@@ -109,7 +109,7 @@
 	if(isassembly(W))
 		var/obj/item/device/assembly/A = W
 		if((!A.secured) && (!secured))
-			attach_assembly(A,user)
+			attach_assembly(A, user)
 			return
 	if(isscrewdriver(W))
 		if(toggle_secure())

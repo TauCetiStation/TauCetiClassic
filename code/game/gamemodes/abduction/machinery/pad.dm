@@ -67,12 +67,12 @@
 	for(var/mob/living/target in loc)
 		TeleportToArea(target, teleport_target)
 		spawn(0)
-			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
+			anim(target.loc, target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 
 /obj/machinery/abductor/pad/proc/Retrieve(mob/living/target)
 	if(!target)
 		return
 	flick("alien-pad", src)
 	spawn(0)
-		anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
+		anim(target.loc, target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 	Warp(target)

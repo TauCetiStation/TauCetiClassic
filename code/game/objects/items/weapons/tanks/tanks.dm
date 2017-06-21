@@ -118,7 +118,7 @@
 		src.add_fingerprint(user)
 
 	if(istype(W, /obj/item/device/assembly_holder))
-		bomb_assemble(W,user)
+		bomb_assemble(W, user)
 
 /obj/item/weapon/tank/attack_self(mob/user)
 	if (!(src.air_contents))

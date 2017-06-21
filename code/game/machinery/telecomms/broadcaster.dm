@@ -470,7 +470,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		if (length(heard_masked))
 			for (var/mob/R in heard_masked)
-				R.hear_radio(message,verbage, speaking, part_a, part_b, M, 0, name)
+				R.hear_radio(message, verbage, speaking, part_a, part_b, M, 0, name)
 
 		/* --- Process all the mobs that heard the voice normally (understood) --- */
 
@@ -482,7 +482,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		if (length(heard_voice))
 			for (var/mob/R in heard_voice)
-				R.hear_radio(message,verbage, speaking, part_a, part_b, M,0, vname)
+				R.hear_radio(message, verbage, speaking, part_a, part_b, M,0, vname)
 
 		/* --- Process all the mobs that heard a garbled voice (did not understand) --- */
 			// Displays garbled message (ie "f*c* **u, **i*er!")

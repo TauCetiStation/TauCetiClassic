@@ -90,7 +90,7 @@ var/global/list/image/fluidtrack_cache=list()
 						continue
 					// Remove existing stack entry
 					stack.Remove(track)
-				track=new /datum/fluidtrack(b,bloodcolor,t)
+				track=new /datum/fluidtrack(b, bloodcolor, t)
 				stack.Add(track)
 				setdirs["[b]"]=stack.Find(track)
 				updatedtracks |= b
@@ -107,7 +107,7 @@ var/global/list/image/fluidtrack_cache=list()
 						continue
 					// Remove existing stack entry
 					stack.Remove(track)
-				track=new /datum/fluidtrack(b,bloodcolor,t)
+				track=new /datum/fluidtrack(b, bloodcolor, t)
 				stack.Add(track)
 				setdirs["[b]"]=stack.Find(track)
 				updatedtracks |= b

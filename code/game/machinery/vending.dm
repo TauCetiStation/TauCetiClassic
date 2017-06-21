@@ -111,7 +111,7 @@
 
 	return
 
-/obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0)
+/obj/machinery/vending/proc/build_inventory(list/productlist, hidden=0,req_coin=0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
 		var/price = prices[typepath]
@@ -235,7 +235,7 @@
 			if(canister.charges == 0)
 				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
 			else
-				var/transfered = refill_inventory(canister,product_records,user)
+				var/transfered = refill_inventory(canister, product_records, user)
 				if(transfered)
 					to_chat(user, "<span class='notice'>You loaded [transfered] items in \the [name].</span>")
 				else
@@ -451,7 +451,7 @@
 
 		if (!allowed(usr) && !emagged && scan_id) // For SECURE VENDING MACHINES YEAH
 			to_chat(usr, "<span class='warning'>Access denied.</span>")// Unless emagged of course
-			flick(src.icon_deny,src)
+			flick(src.icon_deny, src)
 			return FALSE
 
 		var/datum/data/vending_product/R = locate(href_list["vend"])
@@ -484,7 +484,7 @@
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
 	if (!allowed(user) && !emagged && scan_id) // For SECURE VENDING MACHINES YEAH
 		to_chat(user, "<span class='warning'>Access denied.</span>")// Unless emagged of course
-		flick(src.icon_deny,src)
+		flick(src.icon_deny, src)
 		return
 	src.vend_ready = 0 // One thing at a time!!
 
@@ -512,7 +512,7 @@
 
 	use_power(5)
 	if (src.icon_vend) // Show the vending animation if needed
-		flick(src.icon_vend,src)
+		flick(src.icon_vend, src)
 	spawn(src.vend_delay)
 		new R.product_path(get_turf(src))
 		playsound(src, 'sound/items/vending.ogg', 50, 1, 1)
@@ -898,7 +898,7 @@
 
 /obj/machinery/vending/sovietsoda
 	name = "BODA"
-	desc = "An old sweet water vending machine,how did this end up here?"
+	desc = "An old sweet water vending machine, how did this end up here?"
 	icon_state = "sovietsoda"
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda = 30)

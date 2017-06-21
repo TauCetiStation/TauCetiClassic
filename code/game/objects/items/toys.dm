@@ -39,7 +39,7 @@
 
 /obj/item/toy/balloon/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
-	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
+	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src, A) <= 1)
 		A.reagents.trans_to(src, 10)
 		to_chat(user, "\blue You fill the balloon with the contents of [A].")
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
@@ -240,7 +240,7 @@
 			for(var/i=0, i<6, i++)
 				if (D)
 					if(D.loc == trg) break
-					step_towards(D,trg)
+					step_towards(D, trg)
 
 					for(var/mob/living/M in D.loc)
 						if(!istype(M,/mob/living)) continue
@@ -444,7 +444,7 @@
 	else if (locate (/obj/structure/table, src.loc))
 		return
 
-	else if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
+	else if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src, A) <= 1)
 		A.reagents.trans_to(src, 10)
 		to_chat(user, "\blue You refill your flower!")
 		return
@@ -468,7 +468,7 @@
 
 		spawn(0)
 			for(var/i=0, i<1, i++)
-				step_towards(D,A)
+				step_towards(D, A)
 				D.reagents.reaction(get_turf(D))
 				for(var/atom/T in get_turf(D))
 					D.reagents.reaction(T)

@@ -630,12 +630,12 @@
 		var/list/pos_targets = list()
 		var/target = null
 		if(scan_for["human"])
-			for(var/mob/living/carbon/human/M in oview(scan_range,src))
+			for(var/mob/living/carbon/human/M in oview(scan_range, src))
 				if(M.stat || M.lying || M in exclude)
 					continue
 				pos_targets += M
 		if(scan_for["cyborg"])
-			for(var/mob/living/silicon/M in oview(scan_range,src))
+			for(var/mob/living/silicon/M in oview(scan_range, src))
 				if(M.stat || M.lying || M in exclude)
 					continue
 				pos_targets += M
@@ -645,7 +645,7 @@
 					continue
 				pos_targets += M
 		if(scan_for["alien"])
-			for(var/mob/living/carbon/alien/M in oview(scan_range,src))
+			for(var/mob/living/carbon/alien/M in oview(scan_range, src))
 				if(M.stat || M.lying || M in exclude)
 					continue
 				pos_targets += M
@@ -658,7 +658,7 @@
 		if(!target)
 			cur_target = null
 			return
-		src.dir = get_dir(src,target)
+		src.dir = get_dir(src, target)
 		var/turf/targloc = get_turf(target)
 		var/target_x = targloc.x
 		var/target_y = targloc.y

@@ -40,7 +40,7 @@
 		playing=0
 		disconnect_frequency()
 
-/obj/machinery/media/receiver/boombox/Topic(href,href_list)
+/obj/machinery/media/receiver/boombox/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return

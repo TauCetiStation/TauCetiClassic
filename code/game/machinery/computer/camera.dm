@@ -140,7 +140,7 @@
 	return 1
 
 // Camera control: moving.
-/obj/machinery/computer/security/proc/jump_on_click(mob/user,A)
+/obj/machinery/computer/security/proc/jump_on_click(mob/user, A)
 	if(user.machine != src)
 		return
 	var/obj/machinery/camera/jump_to
@@ -160,14 +160,14 @@
 				continue
 			if(!can_access_camera(camera))
 				continue
-			var/dist = get_dist(camera,A)
+			var/dist = get_dist(camera, A)
 			if(dist < best_dist)
 				best_dist = dist
 				jump_to = camera
 	if(isnull(jump_to))
 		return
 	if(can_access_camera(jump_to))
-		switch_to_camera(user,jump_to)
+		switch_to_camera(user, jump_to)
 
 /obj/machinery/computer/security/proc/set_current(obj/machinery/camera/C)
 	if(current == C)
@@ -194,7 +194,7 @@
 	..()
 	if(istype(usr.machine,/obj/machinery/computer/security))
 		var/obj/machinery/computer/security/console = usr.machine
-		console.jump_on_click(usr,src)
+		console.jump_on_click(usr, src)
 
 /obj/machinery/computer/security/telescreen
 	name = "Telescreen"

@@ -39,11 +39,11 @@
 		return
 	else
 		/*var/l = lentext(msg)
-		if(findtext(msg," ",l,l+1)==0)
+		if(findtext(msg," ",l, l+1)==0)
 			msg+=" "*/
 		seperate = splittext(msg, " ")
 
-	for(var/Xa = 1,Xa<seperate.len,Xa++)
+	for(var/Xa = 1,Xa<seperate.len, Xa++)
 		var/next = Xa + 1
 		if(heard_words.len > 20 + rand(10,20))
 			heard_words.Remove(heard_words[1])
@@ -98,7 +98,7 @@
 		q=1
 
 	text=lowertext(text)
-	for(var/ya,ya <= limit,ya++)
+	for(var/ya, ya <= limit, ya++)
 
 		if(heard_words.Find("[text]"))
 			var/list/w = heard_words["[text]"]

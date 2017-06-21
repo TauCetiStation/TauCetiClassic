@@ -124,8 +124,8 @@ var/ninja_confirmed_selection = 0
 	/*No longer need to determine what mode it is since bad guys are basically universal.
 	And there is now a mode with two types of bad guys.*/
 
-	var/possible_bad_dudes[] = list(current_mode.traitors,current_mode.head_revolutionaries,current_mode.head_revolutionaries,
-	                                current_mode.cult,current_mode.wizards,current_mode.changelings,current_mode.syndicates)
+	var/possible_bad_dudes[] = list(current_mode.traitors, current_mode.head_revolutionaries, current_mode.head_revolutionaries,
+	                                current_mode.cult, current_mode.wizards, current_mode.changelings, current_mode.syndicates)
 	for(var/list in possible_bad_dudes)// For every possible antagonist type.
 		for(current_mind in list)// For each mind in that list.
 			if(current_mind.current&&current_mind.current.stat!=2)// If they are not destroyed and not dead.
@@ -762,7 +762,7 @@ Deprecated. get_dir() does the same thing. Still a nice proc.
 Returns direction that the mob or whomever should be facing in relation to the target.
 This proc does not grant absolute direction and is mostly useful for 8dir sprite positioning.
 I personally used it with getline() to great effect.
-/proc/get_dir_to(turf/start,turf/end)// N
+/proc/get_dir_to(turf/start, turf/end)// N
 	var/xdiff = start.x - end.x// The sign is important.
 	var/ydiff = start.y - end.y
 
@@ -797,7 +797,7 @@ spideros = text2num(return_to)// Maximum length here is 6. Use (return_to, X) to
 			else
 				to_chat(U, "\blue Connecting to wire, stand still...")
 				if(do_after(U,50)&&!isnull(attached))
-					drain("WIRE",attached,U:wear_suit,src)
+					drain("WIRE",attached, U:wear_suit, src)
 				else
 					to_chat(U, "\red Procedure interrupted. Protocol terminated.")
 	return
@@ -951,7 +951,7 @@ mob/verb/remove_object_panel()
 	set name = "Get Direction to Target"
 	set category = "Ninja Debug"
 
-	to_chat(world, "DIR: [get_dir_to(src.loc,M.loc)]")
+	to_chat(world, "DIR: [get_dir_to(src.loc, M.loc)]")
 	return
 // 
 /mob/verb/kill_self_debug()
@@ -1039,7 +1039,7 @@ That is why you attached them to objects.
 					spawn(300)
 						qdel(current_clone)
 					spawn while(!isnull(current_clone))
-						step_to(current_clone,src,1)
+						step_to(current_clone, src,1)
 						sleep(5)
 			if(safety<=0)	break
 	return */

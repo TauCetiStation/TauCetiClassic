@@ -229,7 +229,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	for(var/O in stack_list)
 		s = stack_list[O]
 		while(s.amount > s.max_amount)
-			new s.type(loc,s.max_amount)
+			new s.type(loc, s.max_amount)
 			s.use(s.max_amount)
 		s.loc = loc
 		s.layer = initial(s.layer)
@@ -725,7 +725,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	for(O in src.loc)
 		O.loc = src
 	for(var/dir in alldirs)
-		var/turf/T = get_step(src,dir)
+		var/turf/T = get_step(src, dir)
 		for(O in T)
 			O.loc = src
 	return

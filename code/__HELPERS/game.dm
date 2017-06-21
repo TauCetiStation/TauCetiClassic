@@ -5,7 +5,7 @@
     locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
   )
 
-/proc/dopage(src,target)
+/proc/dopage(src, target)
 	var/href_list
 	var/href
 	href_list = params2list("src=\ref[src]&[target]=1")
@@ -74,7 +74,7 @@
 /proc/isNotAdminLevel(level)
 	return !isAdminLevel(level)
 
-/proc/circlerange(center=usr,radius=3)
+/proc/circlerange(center=usr, radius=3)
 
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
@@ -89,7 +89,7 @@
 	// turfs += centerturf
 	return turfs
 
-/proc/circleview(center=usr,radius=3)
+/proc/circleview(center=usr, radius=3)
 
 	var/turf/centerturf = get_turf(center)
 	var/list/atoms = new/list()
@@ -112,7 +112,7 @@
 
 	return dist
 
-/proc/circlerangeturfs(center=usr,radius=3)
+/proc/circlerangeturfs(center=usr, radius=3)
 
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
@@ -125,7 +125,7 @@
 			turfs += T
 	return turfs
 
-/proc/circleviewturfs(center=usr,radius=3)		// Is there even a diffrence between this proc and circlerangeturfs()?
+/proc/circleviewturfs(center=usr, radius=3)		// Is there even a diffrence between this proc and circlerangeturfs()?
 
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
@@ -237,7 +237,7 @@
 
 			var/turf/speaker = get_turf(R)
 			if(speaker)
-				for(var/turf/T in hear(R.canhear_range,speaker))
+				for(var/turf/T in hear(R.canhear_range, speaker))
 					speaker_coverage[T] = T
 
 
@@ -315,7 +315,7 @@ proc/isInSight(atom/A, atom/B)
 	if(!Aturf || !Bturf)
 		return 0
 
-	if(inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z))
+	if(inLineOfSight(Aturf.x, Aturf.y, Bturf.x, Bturf.y, Aturf.z))
 		return 1
 
 	else
@@ -440,7 +440,7 @@ proc/isInSight(atom/A, atom/B)
 
 /proc/projectile_trajectory(src_x, src_y, rotation, angle, power)
 
-	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
+	// returns the destination (Vx, y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
 	// rotated at [rotation] and with the power of [power]
 	// Thanks to VistaPOWA for this function
 
@@ -486,7 +486,7 @@ proc/isInSight(atom/A, atom/B)
 	var/r = mixOneColor(weights, reds)
 	var/g = mixOneColor(weights, greens)
 	var/b = mixOneColor(weights, blues)
-	return rgb(r,g,b)
+	return rgb(r, g,b)
 
 /proc/random_color()
 	var/list/rand = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
@@ -564,7 +564,7 @@ proc/isInSight(atom/A, atom/B)
 				direction = 3
 			if(WEST)
 				direction = 4
-		var/turf/simulated/T=get_turf(get_step(loc,dir))
+		var/turf/simulated/T=get_turf(get_step(loc, dir))
 		var/list/rstats = new /list(stats.len)
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()

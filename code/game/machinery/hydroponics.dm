@@ -312,11 +312,11 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25) // Mutates the current seed
 	if(!planted)
 		return
-	adjustSLife(rand(-lifemut,lifemut))
-	adjustSEnd(rand(-endmut,endmut))
-	adjustSProduct(rand(-productmut,productmut))
-	adjustSYield(rand(-yieldmut,yieldmut))
-	adjustSPot(rand(-potmut,potmut))
+	adjustSLife(rand(-lifemut, lifemut))
+	adjustSEnd(rand(-endmut, endmut))
+	adjustSProduct(rand(-productmut, productmut))
+	adjustSYield(rand(-yieldmut, yieldmut))
+	adjustSPot(rand(-potmut, potmut))
 	return
 
 
@@ -423,10 +423,10 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
 			visible_message("<span class='notice'>[user] composts [reagent_source], spreading it through [target].</span>")
-			reagent_source.reagents.trans_to(S,reagent_source.reagents.total_volume)
+			reagent_source.reagents.trans_to(S, reagent_source.reagents.total_volume)
 			qdel(reagent_source)
 		else
-			reagent_source.reagents.trans_to(S,reagent_source.amount_per_transfer_from_this)
+			reagent_source.reagents.trans_to(S, reagent_source.amount_per_transfer_from_this)
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe/))
 				var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
 				visible_message("<span class='notice'>[user] injects [target] with [syr].</span>")
@@ -675,7 +675,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	else if (istype(O, /obj/item/weapon/storage/bag/plants))
 		attack_hand(user)
 		var/obj/item/weapon/storage/bag/plants/S = O
-		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
+		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(user.x, user.y, user.z))
 			if(!S.can_be_inserted(G))
 				return
 			S.handle_item_insertion(G, 1)

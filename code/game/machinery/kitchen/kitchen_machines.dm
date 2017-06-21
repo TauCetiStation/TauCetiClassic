@@ -143,7 +143,7 @@
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		to_chat(user, "\red It's dirty!")
 		return 1
-	else if(is_type_in_list(O,acceptable_items))
+	else if(is_type_in_list(O, acceptable_items))
 		if (contents.len>=max_n_of_items)
 			to_chat(user, "<span class='danger'>Tihs [src] is full of ingredients, you cannot put more.</span>")
 			return 1
@@ -168,7 +168,7 @@
 			if (!(R.id in acceptable_reagents))
 				to_chat(user, "Your [O] contains components unsuitable for cookery")
 				return 1
-		// G.reagents.trans_to(src,G.amount_per_transfer_from_this)
+		// G.reagents.trans_to(src, G.amount_per_transfer_from_this)
 	else if(istype(O,/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		to_chat(user, "<span class='danger'>You can not fit \the [G.affecting] in this [src].</span>")
@@ -271,7 +271,7 @@
 		stop()
 		return
 
-	var/datum/recipe/recipe = select_recipe(available_recipes,src)
+	var/datum/recipe/recipe = select_recipe(available_recipes, src)
 	var/obj/cooked
 	var/obj/byproduct
 	if (!recipe)
@@ -317,7 +317,7 @@
 		stop()
 		if(cooked)
 			cooked.loc = src.loc
-		for(var/i=1,i<efficiency,i++)
+		for(var/i=1,i<efficiency, i++)
 			cooked = new cooked.type(loc)
 		if(byproduct)
 			new byproduct(loc)

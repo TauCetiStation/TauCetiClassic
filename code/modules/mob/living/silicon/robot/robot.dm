@@ -77,7 +77,7 @@ var/list/robot_verbs_default = list(
 	var/braintype = "Cyborg"
 	var/pose
 
-/mob/living/silicon/robot/New(loc,var/syndie = 0,var/unfinished = 0)
+/mob/living/silicon/robot/New(loc, var/syndie = 0,var/unfinished = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -710,14 +710,14 @@ var/list/robot_verbs_default = list(
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
 		if(radio)
-			radio.attackby(W,user)// Push it to the radio to let it handle everything
+			radio.attackby(W, user)// Push it to the radio to let it handle everything
 		else
 			to_chat(user, "Unable to locate a radio.")
 		updateicon()
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
 		if(radio)// sanityyyyyy
-			radio.attackby(W,user)// GTFO, you have your own procs
+			radio.attackby(W, user)// GTFO, you have your own procs
 		else
 			to_chat(user, "Unable to locate a radio.")
 
@@ -872,8 +872,8 @@ var/list/robot_verbs_default = list(
 				M.do_attack_animation(src)
 				if (rand(1,100) <= 85)
 					Stun(7)
-					step(src,get_dir(M,src))
-					spawn(5) step(src,get_dir(M,src))
+					step(src, get_dir(M, src))
+					spawn(5) step(src, get_dir(M, src))
 					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))

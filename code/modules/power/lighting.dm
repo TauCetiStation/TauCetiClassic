@@ -29,9 +29,9 @@
 	..()
 
 /obj/item/light_fixture_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
+	if (get_dist(on_wall, usr)>1)
 		return
-	var/ndir = get_dir(usr,on_wall)
+	var/ndir = get_dir(usr, on_wall)
 	if (!(ndir in cardinal))
 		return
 	var/turf/loc = get_turf_loc(usr)

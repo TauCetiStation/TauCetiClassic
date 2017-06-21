@@ -165,7 +165,7 @@
 				if(isobj(H.shoes))
 					var/thingy = H.shoes
 					H.drop_from_inventory(H.shoes)
-					walk_away(thingy,chassis,15,2)
+					walk_away(thingy, chassis,15,2)
 					spawn(20)
 						if(thingy)
 							walk(thingy,0)

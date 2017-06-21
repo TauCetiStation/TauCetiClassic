@@ -209,7 +209,7 @@ mob/living/parasite/meme/proc/select_indoctrinated(title, message)
 			text_candidates += M.real_name
 			map_text_to_mob[M.real_name] = M
 
-		selected = input(message,title) as null|anything in text_candidates
+		selected = input(message, title) as null|anything in text_candidates
 		if(!selected)
 			return null
 

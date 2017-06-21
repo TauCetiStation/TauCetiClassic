@@ -24,7 +24,7 @@
 
 		for(var/turf/unsimulated/wall/W in orange(src,1))
 			if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
-				junction |= get_dir(src,W)
+				junction |= get_dir(src, W)
 
 		closed_wall_dir = junction
 		density = 1

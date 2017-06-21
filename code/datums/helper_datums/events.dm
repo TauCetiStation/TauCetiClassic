@@ -24,7 +24,7 @@
 		return
 	addEventType(event_type)
 	var/list/event = events[event_type]
-	var/datum/event/E = new /datum/event(proc_holder,proc_name)
+	var/datum/event/E = new /datum/event(proc_holder, proc_name)
 	event += E
 	return E
 
@@ -32,7 +32,7 @@
 //  Returns: null
 /datum/events/proc/fireEvent()
 	// world << "Events in [args[1]] called"
-	var/list/event = listgetindex(events,args[1])
+	var/list/event = listgetindex(events, args[1])
 	if(istype(event))
 		spawn(-1)
 			for(var/datum/event/E in event)
@@ -45,7 +45,7 @@
 /datum/events/proc/clearEvent(event_type, datum/event/E)
 	if(!event_type || !E)
 		return
-	var/list/event = listgetindex(events,event_type)
+	var/list/event = listgetindex(events, event_type)
 	event -= E
 	return 1
 
@@ -54,7 +54,7 @@
 	var/listener
 	var/proc_name
 
-/datum/event/New(tlistener,tprocname)
+/datum/event/New(tlistener, tprocname)
 	listener = tlistener
 	proc_name = tprocname
 	return ..()
@@ -62,6 +62,6 @@
 /datum/event/proc/Fire()
 	// world << "Event fired"
 	if(listener)
-		call(listener,proc_name)(arglist(args))
+		call(listener, proc_name)(arglist(args))
 		return 1
 	return

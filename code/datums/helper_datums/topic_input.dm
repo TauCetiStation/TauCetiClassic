@@ -2,13 +2,13 @@
 	var/href
 	var/list/href_list
 
-/datum/topic_input/New(thref,list/thref_list)
+/datum/topic_input/New(thref, list/thref_list)
 	href = thref
 	href_list = thref_list.Copy()
 	return
 
 /datum/topic_input/proc/get(i)
-	return listgetindex(href_list,i)
+	return listgetindex(href_list, i)
 
 /datum/topic_input/proc/getAndLocate(i)
 	var/t = get(i)
@@ -45,9 +45,9 @@
 	var/t = get(i)
 	return istext(t) ? t : null
 
-/datum/topic_input/proc/getType(i,type)
+/datum/topic_input/proc/getType(i, type)
 	var/t = getAndLocate(i)
-	return istype(t,type) ? t : null
+	return istype(t, type) ? t : null
 
 /datum/topic_input/proc/getPath(i)
 	var/t = get(i)

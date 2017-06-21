@@ -48,7 +48,7 @@
 		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
 		recipe_list = srl.recipes
 	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.amount)
-	for(var/i=1;i<=recipe_list.len,i++)
+	for(var/i=1;i<=recipe_list.len, i++)
 		var/E = recipe_list[i]
 		if (isnull(E))
 			t1 += "<hr>"

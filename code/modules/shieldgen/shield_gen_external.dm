@@ -16,7 +16,7 @@
 	while(open.len)
 		for(var/turf/T in open)
 			for(var/turf/O in orange(1, T))
-				if(get_dist(O,src) > field_radius)
+				if(get_dist(O, src) > field_radius)
 					continue
 				var/add_this_turf = 0
 				if(istype(O,/turf/space))

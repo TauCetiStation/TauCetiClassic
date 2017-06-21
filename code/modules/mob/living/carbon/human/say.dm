@@ -101,11 +101,11 @@
 		if("headset")
 			if(l_ear && istype(l_ear,/obj/item/device/radio))
 				var/obj/item/device/radio/R = l_ear
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src, message, null, verb, speaking)
 				used_radios += l_ear
 			else if(r_ear && istype(r_ear,/obj/item/device/radio))
 				var/obj/item/device/radio/R = r_ear
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src, message, null, verb, speaking)
 				used_radios += r_ear
 
 		if("right ear")
@@ -118,7 +118,7 @@
 				R = r_hand
 				has_radio = 1
 			if(has_radio)
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src, message, null, verb, speaking)
 				used_radios += R
 
 
@@ -132,7 +132,7 @@
 				R = l_hand
 				has_radio = 1
 			if(has_radio)
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src, message, null, verb, speaking)
 				used_radios += R
 
 		if("intercom")
@@ -156,10 +156,10 @@
 			if(message_mode)
 				if(message_mode in (radiochannels | "department"))
 					if(l_ear && istype(l_ear,/obj/item/device/radio))
-						l_ear.talk_into(src,message, message_mode, verb, speaking)
+						l_ear.talk_into(src, message, message_mode, verb, speaking)
 						used_radios += l_ear
 					else if(r_ear && istype(r_ear,/obj/item/device/radio))
-						r_ear.talk_into(src,message, message_mode, verb, speaking)
+						r_ear.talk_into(src, message, message_mode, verb, speaking)
 						used_radios += r_ear
 
 	var/sound/speech_sound
@@ -170,7 +170,7 @@
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = 0)	// ohgod we should really be passing a datum here.
 
-/mob/living/carbon/human/say_understands(mob/other,datum/language/speaking = null)
+/mob/living/carbon/human/say_understands(mob/other, datum/language/speaking = null)
 
 	if(has_brain_worms()) // Brain worms translate everything. Even mice and alien speak.
 		return 1

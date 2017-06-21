@@ -664,7 +664,7 @@ obj/item/projectile/kinetic/New()
 /obj/structure/inflatable/survival/proc/update_nearby_icons()
 	update_icon()
 	for(var/direction in cardinal)
-		for(var/obj/structure/inflatable/survival/W in get_step(src,direction) )
+		for(var/obj/structure/inflatable/survival/W in get_step(src, direction) )
 			W.update_icon()
 
 /obj/structure/inflatable/survival/update_icon()
@@ -676,7 +676,7 @@ obj/item/projectile/kinetic/New()
 		if(anchored)
 			for(var/obj/structure/inflatable/survival/W in orange(src,1))
 				if(abs(x-W.x)-abs(y-W.y) )
-					junction |= get_dir(src,W)
+					junction |= get_dir(src, W)
 		icon_state = "[basestate][junction]"
 
 // Window
@@ -789,7 +789,7 @@ obj/item/projectile/kinetic/New()
 		ispowered = 1
 
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
-	if(is_type_in_typecache(O,forbidden_tools))
+	if(is_type_in_typecache(O, forbidden_tools))
 		if(istype(O,/obj/item/weapon/wrench))
 			to_chat(user, "\blue You start to disassemble the storage unit...")
 			if(do_after(user,20,target = src))

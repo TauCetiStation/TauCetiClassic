@@ -126,9 +126,9 @@ var/list/slot_equipment_priority = list( \
 
 // Checks if thing in mob's hands
 /mob/living/carbon/human/proc/is_in_hands(typepath)
-	if(istype(l_hand,typepath))
+	if(istype(l_hand, typepath))
 		return l_hand
-	if(istype(r_hand,typepath))
+	if(istype(r_hand, typepath))
 		return r_hand
 	return 0
 
@@ -144,7 +144,7 @@ var/list/slot_equipment_priority = list( \
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 //		l_hand.screen_loc = ui_lhand
-		W.equipped(src,slot_l_hand)
+		W.equipped(src, slot_l_hand)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_l_hand()
@@ -165,7 +165,7 @@ var/list/slot_equipment_priority = list( \
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 //		r_hand.screen_loc = ui_rhand
-		W.equipped(src,slot_r_hand)
+		W.equipped(src, slot_r_hand)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_r_hand()

@@ -76,7 +76,7 @@
 	else
 		if((CLUMSY in user.mutations) && prob(50))
 			M = user
-		return eyestab(M,user)
+		return eyestab(M, user)
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
@@ -118,7 +118,7 @@
 	else
 		if((CLUMSY in user.mutations) && prob(50))
 			M = user
-		return eyestab(M,user)
+		return eyestab(M, user)
 
 /*
  * Knives
@@ -311,7 +311,7 @@
 			spawn()
 				for(var/i = 1, i <= rand(1,2), i++)
 					if(I)
-						step(I, pick(NORTH,SOUTH,EAST,WEST))
+						step(I, pick(NORTH, SOUTH, EAST, WEST))
 						sleep(rand(2,4))
 
 
@@ -490,7 +490,7 @@
 			spawn()
 				for(var/i = 1, i <= rand(1,2), i++)
 					if(I)
-						step(I, pick(NORTH,SOUTH,EAST,WEST))
+						step(I, pick(NORTH, SOUTH, EAST, WEST))
 						sleep(rand(2,4))
 
 ///////////////////NEW//////////////////////

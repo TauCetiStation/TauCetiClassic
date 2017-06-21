@@ -512,7 +512,7 @@ Auto Patrol: []"},
 
 	// if looking for nearest beacon
 	else if(new_destination == "__nearest__")
-		var/dist = get_dist(src,signal.source.loc)
+		var/dist = get_dist(src, signal.source.loc)
 		if(nearest_beacon)
 
 			// note we ignore the beacon we are located at

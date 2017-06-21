@@ -193,7 +193,7 @@
 		if(isAI(user)) // so the AI can't open it
 			return
 		else if(isrobot(user)) // but cyborgs can
-			if(get_dist(user,src) <= 1) // not remotely though
+			if(get_dist(user, src) <= 1) // not remotely though
 				return TryToSwitchState(user)
 
 	attack_paw(mob/user)
@@ -234,7 +234,7 @@
 	proc/Open()
 		isSwitchingStates = 1
 		// playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
-		flick(opening_state,src)
+		flick(opening_state, src)
 		sleep(10)
 		density = 0
 		opacity = 0
@@ -245,7 +245,7 @@
 	proc/Close()
 		isSwitchingStates = 1
 		// playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
-		flick(closing_state,src)
+		flick(closing_state, src)
 		sleep(10)
 		density = 1
 		opacity = 0

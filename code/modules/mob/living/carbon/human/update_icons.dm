@@ -275,22 +275,22 @@ Please contact me on #coderbus IRC. ~Carn x
 
 				var/icon/temp2 = new('icons/mob/human.dmi',"blank")
 
-				temp2.Insert(new/icon(temp,dir=NORTH),dir=NORTH)
-				temp2.Insert(new/icon(temp,dir=SOUTH),dir=SOUTH)
+				temp2.Insert(new/icon(temp, dir=NORTH),dir=NORTH)
+				temp2.Insert(new/icon(temp, dir=SOUTH),dir=SOUTH)
 
 				if(!(BP.icon_position & LEFT))
-					temp2.Insert(new/icon(temp,dir=EAST),dir=EAST)
+					temp2.Insert(new/icon(temp, dir=EAST),dir=EAST)
 
 				if(!(BP.icon_position & RIGHT))
-					temp2.Insert(new/icon(temp,dir=WEST),dir=WEST)
+					temp2.Insert(new/icon(temp, dir=WEST),dir=WEST)
 
 				base_icon.Blend(temp2, ICON_OVERLAY)
 
 				if(BP.icon_position & LEFT)
-					temp2.Insert(new/icon(temp,dir=EAST),dir=EAST)
+					temp2.Insert(new/icon(temp, dir=EAST),dir=EAST)
 
 				if(BP.icon_position & RIGHT)
-					temp2.Insert(new/icon(temp,dir=WEST),dir=WEST)
+					temp2.Insert(new/icon(temp, dir=WEST),dir=WEST)
 
 				base_icon.Blend(temp2, ICON_UNDERLAY)
 
@@ -326,7 +326,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	// END CACHED ICON GENERATION.
 
-	stand_icon.Blend(base_icon,ICON_OVERLAY)
+	stand_icon.Blend(base_icon, ICON_OVERLAY)
 
 	// Skin colour. Not in cache because highly variable (and relatively benign).
 	if (species.flags[HAS_SKIN_COLOR])
@@ -418,7 +418,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!gene.block)
 			continue
 		if(gene.is_active(src))
-			var/image/underlay = image("icon"='icons/effects/genetics.dmi', "icon_state"=gene.OnDrawUnderlays(src,g,fat), "layer"=-MUTATIONS_LAYER)
+			var/image/underlay = image("icon"='icons/effects/genetics.dmi', "icon_state"=gene.OnDrawUnderlays(src, g,fat), "layer"=-MUTATIONS_LAYER)
 			if(underlay)
 				standing += underlay
 	for(var/mut in mutations)

@@ -522,8 +522,8 @@ REAGENT SCANNER
 			if(!ectoplasm)
 				icon_state = "locnull"
 				return
-		dir = get_dir(src,ectoplasm)
-		switch(get_dist(src,ectoplasm))
+		dir = get_dir(src, ectoplasm)
+		switch(get_dist(src, ectoplasm))
 			if(0)
 				icon_state = "locon"
 			if(1 to 8)

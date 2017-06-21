@@ -45,7 +45,7 @@ var/tick_multiplier = 2
 		return 0
 	if(weakened <= 0)
 		to_chat(src, "<span class='red'>The sudden rush of air knocks you over!</span>")
-	weakened = max(weakened,rand(1,5))
+	weakened = max(weakened, rand(1,5))
 	last_airflow_stun = world.time
 
 /atom/movable/proc/check_airflow_movable(n)
@@ -96,11 +96,11 @@ var/tick_multiplier = 2
 	if(last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay))
 		return
 	if(airflow_speed)
-		airflow_speed = n/max(get_dist(src,airflow_dest),1)
+		airflow_speed = n/max(get_dist(src, airflow_dest),1)
 		return
 	last_airflow = world.time
 	if(airflow_dest == loc)
-		step_away(src,loc)
+		step_away(src, loc)
 	if(ismob(src))
 		if(src:status_flags & GODMODE)
 			return
@@ -170,10 +170,10 @@ var/tick_multiplier = 2
 	if(last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay))
 		return
 	if(airflow_speed)
-		airflow_speed = n/max(get_dist(src,airflow_dest),1)
+		airflow_speed = n/max(get_dist(src, airflow_dest),1)
 		return
 	if(airflow_dest == loc)
-		step_away(src,loc)
+		step_away(src, loc)
 	if(ismob(src))
 		if(src:status_flags & GODMODE)
 			return
@@ -278,7 +278,7 @@ var/tick_multiplier = 2
 	if(!(FAT in mutations))
 		if(airflow_speed > 10)
 			paralysis += round(airflow_speed * vsc.airflow_stun)
-			stunned = max(stunned,paralysis + 3)
+			stunned = max(stunned, paralysis + 3)
 		else
 			stunned += round(airflow_speed * vsc.airflow_stun/2)
 	. = ..()

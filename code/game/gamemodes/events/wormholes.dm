@@ -47,7 +47,7 @@
 				pick_turfs -= exit
 				if( !exit || !istype(exit) )	continue	// sanity
 
-				create_wormhole(enter,exit)
+				create_wormhole(enter, exit)
 
 				sleep(sleep_duration)						// have a well deserved nap!
 

@@ -63,9 +63,9 @@
 	if(flag) return
 	if(user && user.client && user.client.gun_mode && !(A in target))
 		// TODO: Make this compatible with targetting (prolly have to actually make it a gun subtype, ugh.)
-		// PreFire(A,user,params)
+		// PreFire(A, user, params)
 	else
-		Fire(A,user,params)
+		Fire(A, user, params)
 
 /obj/item/weapon/spikethrower/attack(mob/living/M, mob/living/user, def_zone)
 
@@ -76,10 +76,10 @@
 	if (spikes > 0)
 		if(user.a_intent == "hurt")
 			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
-			Fire(M,user)
+			Fire(M, user)
 			return
 		else if(target && M in target)
-			Fire(M,user)
+			Fire(M, user)
 			return
 	else
 		return ..()

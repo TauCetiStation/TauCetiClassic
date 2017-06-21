@@ -56,7 +56,7 @@
 		icon_state = icon_state_on
 		var/list/connection_dirs = list()
 		for(var/direction in list(1,2,4,8,5,6,9,10))
-			for(var/obj/structure/cable/C in get_step(src,direction))
+			for(var/obj/structure/cable/C in get_step(src, direction))
 				if(C.d1 == turn(direction, 180) || C.d2 == turn(direction, 180))
 					connection_dirs += direction
 					break

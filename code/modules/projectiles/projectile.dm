@@ -37,7 +37,7 @@
 	var/damage_type = BRUTE // BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = 0 // Determines if the projectile will skip any damage inflictions
 	var/fake = 0 // Fake projectile won't spam chat for admins with useless logs
-	var/flag = "bullet" // Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	// Cael - bio and rad are also valid
+	var/flag = "bullet" // Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb	// Cael - bio and rad are also valid
 	var/projectile_type = "/obj/item/projectile"
 	var/kill_count = 50 // This will de-increment every process(). When 0, it will delete the projectile.
 	var/paused = FALSE // for suspending the projectile midair
@@ -70,7 +70,7 @@
 	damtype = damage_type // TODO unify these vars properly (Bay12)
 	..()
 	if(light_color)
-		set_light(light_range,light_power,light_color)
+		set_light(light_range, light_power, light_color)
 
 
 /obj/item/projectile/proc/check_living_shield(mob/living/carbon/human/H)
@@ -100,7 +100,7 @@
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  // Checks if you can hit them or not.
 	if(!istype(target) || !istype(user))
 		return 0
-	var/obj/item/projectile/test/in_chamber = new /obj/item/projectile/test(get_step_to(user,target)) // Making the test....
+	var/obj/item/projectile/test/in_chamber = new /obj/item/projectile/test(get_step_to(user, target)) // Making the test....
 	in_chamber.target = target
 	in_chamber.flags = flags // Set the flags...
 	in_chamber.pass_flags = pass_flags // And the pass flags to that of the real projectile...
@@ -158,7 +158,7 @@
 		if(!istype(A, /mob/living))
 			loc = A.loc
 			return 0// nope.avi
-		var/distance = get_dist(starting,loc) // More distance = less damage, except for high fire power weapons.
+		var/distance = get_dist(starting, loc) // More distance = less damage, except for high fire power weapons.
 		var/miss_modifier = 0
 		if(damage && (distance > 7))
 			if(damage < 55)
@@ -393,7 +393,7 @@
 		if(istype(M)) // If there is someting living...
 			return 1 // Return 1
 		else
-			M = locate() in get_step(src,target)
+			M = locate() in get_step(src, target)
 			if(istype(M))
 				return 1
 

@@ -418,7 +418,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 						  src, message, displayname, jobname, real_name, M.voice_name,
-		                  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
+		                  filter_type, signal.data["compression"], list(position.z), connection.frequency, verb, speaking)
 
 
 
@@ -595,7 +595,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	if (broadcasting)
 		if(get_dist(src, M) <= canhear_range)
-			talk_into(M, msg,null,verb,speaking)
+			talk_into(M, msg, null, verb, speaking)
 
 
 /*

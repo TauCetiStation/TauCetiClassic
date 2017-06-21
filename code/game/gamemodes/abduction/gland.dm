@@ -18,7 +18,7 @@
 
 /obj/item/gland/proc/Start()
 	active = 1
-	next_activation  = world.time + rand(cooldown_low,cooldown_high)
+	next_activation  = world.time + rand(cooldown_low, cooldown_high)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/gland/proc/Inject(mob/living/carbon/human/target)
@@ -37,7 +37,7 @@
 			return
 		activate()
 		uses--
-		next_activation  = world.time + rand(cooldown_low,cooldown_high)
+		next_activation  = world.time + rand(cooldown_low, cooldown_high)
 	if(uses == 0)
 	 active = 0
 
@@ -173,7 +173,7 @@ obj/item/gland/slime/activate()
 		if (H.species)
 			D.affected_species = list(H.species.name)
 
-	infect_virus2(host,D,1)
+	infect_virus2(host, D,1)
 
 
 // EMP

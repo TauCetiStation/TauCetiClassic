@@ -181,7 +181,7 @@
 	var/reagents_per_slice = reagents.total_volume/slices_num
 	for(var/i=1 to (slices_num-slices_lost))
 		var/obj/slice = new slice_path (src.loc)
-		reagents.trans_to(slice,reagents_per_slice)
+		reagents.trans_to(slice, reagents_per_slice)
 	qdel(src)
 	return
 

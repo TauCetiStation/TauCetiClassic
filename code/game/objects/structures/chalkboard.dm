@@ -63,7 +63,7 @@
 
 	// check for exploits
 	for(var/bad in paper_blacklist)
-		if(findtext(t,bad))
+		if(findtext(t, bad))
 			to_chat(usr, "\blue You think to yourself, \"Hm.. this is only chalkboard...\"")
 			log_admin("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			message_admins("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")

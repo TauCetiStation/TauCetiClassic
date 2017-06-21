@@ -44,7 +44,7 @@
 	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = FALSE))
 		return // hope this ancient magic still works
 	if(target.mind && target.mind.changeling)
-		sting_feedback(user,target)
+		sting_feedback(user, target)
 		take_chemical_cost(user.mind.changeling)
 		return
 	return 1
@@ -98,7 +98,7 @@ obj/effect/proc_holder/changeling/sting/cryo
 	genomecost = 1
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	if(target.reagents)
 		target.reagents.add_reagent("frostoil", 30)
@@ -115,7 +115,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 	genomecost = 2
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	spawn(rand(300,600))
 		if(target)
@@ -156,7 +156,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
@@ -182,7 +182,7 @@ obj/effect/proc_holder/changeling/sting/extract_dna
 		return user.mind.changeling.can_absorb_dna(user, target)
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	var/datum/changeling/changeling = user.mind.changeling
 
@@ -209,7 +209,7 @@ obj/effect/proc_holder/changeling/sting/silence
 	genomecost = 2
 
 /obj/effect/proc_holder/changeling/sting/silence/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	to_chat(target, "<span class='danger'>Your ears pop and begin ringing loudly!</span>")
 	target.sdisabilities |= DEAF
@@ -228,7 +228,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	genomecost = 2
 
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
 	target.disabilities |= NEARSIGHTED
@@ -247,7 +247,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	genomecost = 6
 
 /obj/effect/proc_holder/changeling/sting/paralysis/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	to_chat(target, "<span class='danger'>Your muscles begin to painfully tighten.</span>")
 	target.Weaken(20)
@@ -263,7 +263,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	genomecost = 8
 
 /obj/effect/proc_holder/changeling/sting/death/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	to_chat(target, "<span class='danger'>You feel a small prick and your chest becomes tight.</span>")
 	target.silent = 15
@@ -288,7 +288,7 @@ obj/effect/proc_holder/changeling/sting/unfat
 	genomecost = 1
 
 /obj/effect/proc_holder/changeling/sting/unfat/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
+	if(sting_fail(user, target))
 		return 0
 	if(FAT in target.mutations)
 		target.overeatduration = 0

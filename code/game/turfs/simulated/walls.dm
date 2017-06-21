@@ -468,7 +468,7 @@
 
 	// Poster stuff
 	else if(istype(W,/obj/item/weapon/poster))
-		place_poster(W,user)
+		place_poster(W, user)
 		return
 
 	else

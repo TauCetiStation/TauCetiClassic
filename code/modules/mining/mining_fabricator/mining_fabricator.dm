@@ -134,7 +134,7 @@
 
 	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
 	if(total_amount)// if there's still enough material for sheets
-		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount,total_amount))
+		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount, total_amount))
 		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
 		result += res.amount
 

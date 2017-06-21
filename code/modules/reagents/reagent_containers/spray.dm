@@ -32,7 +32,7 @@
 	if(istype(A, /obj/effect/proc_holder/spell))
 		return
 
-	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) // this block copypasted from reagent_containers/glass, for lack of a better solution
+	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src, A) <= 1) // this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)
 			to_chat(user, "<span class='notice'>\The [A] is empty.</span>")
 			return
@@ -78,7 +78,7 @@
 
 	spawn(0)
 		for(var/i=0, i<spray_size, i++)
-			step_towards(D,A)
+			step_towards(D, A)
 			D.reagents.reaction(get_turf(D))
 			for(var/atom/T in get_turf(D))
 				D.reagents.reaction(T)
@@ -199,9 +199,9 @@
 
 	var/direction = get_dir(src, A)
 	var/turf/T = get_turf(A)
-	var/turf/T1 = get_step(T,turn(direction, 90))
-	var/turf/T2 = get_step(T,turn(direction, -90))
-	var/list/the_targets = list(T,T1,T2)
+	var/turf/T1 = get_step(T, turn(direction, 90))
+	var/turf/T2 = get_step(T, turn(direction, -90))
+	var/list/the_targets = list(T, T1,T2)
 
 	for(var/i=1, i<=Sprays.len, i++)
 		spawn()

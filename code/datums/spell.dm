@@ -256,7 +256,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) // needed for the badmi
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
 				possible_targets += target
-			for(var/i=1,i<=max_targets,i++)
+			for(var/i=1,i<=max_targets, i++)
 				if(!possible_targets.len)
 					break
 				if(target_ignore_prev)
@@ -278,8 +278,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) // needed for the badmi
 /obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
 	var/list/targets = list()
 
-	for(var/turf/target in view_or_range(range,user,selection_type))
-		if(!(target in view_or_range(inner_radius,user,selection_type)))
+	for(var/turf/target in view_or_range(range, user, selection_type))
+		if(!(target in view_or_range(inner_radius, user, selection_type)))
 			targets += target
 
 	if(!targets.len) // doesn't waste the spell

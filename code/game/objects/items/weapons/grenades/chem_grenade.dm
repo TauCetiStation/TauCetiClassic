@@ -48,7 +48,7 @@
 
 	if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 		var/obj/item/device/assembly_holder/det = W
-		if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
+		if(istype(det.a_left, det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
 			to_chat(user, "<span class='red'>Assembly must contain one igniter.</span>")
 			return
 		if(!det.secured)
@@ -175,7 +175,7 @@
 
 /obj/item/weapon/grenade/chem_grenade/hear_talk(mob/living/M, msg)
 	if (detonator)
-		detonator.hear_talk(M,msg)
+		detonator.hear_talk(M, msg)
 
 /obj/item/weapon/grenade/chem_grenade/on_found(mob/finder)
 	if(detonator)

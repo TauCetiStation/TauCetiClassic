@@ -283,8 +283,8 @@
 	if(master)
 		return usr.client.Click(master, location, control, params)
 
-/obj/screen/alert/MouseEntered(location,control,params)
-	openToolTip(usr,src,params,title = name,content = desc)
+/obj/screen/alert/MouseEntered(location, control, params)
+	openToolTip(usr, src, params, title = name, content = desc)
 
 
 /obj/screen/alert/MouseExited()

@@ -5,7 +5,7 @@
 	layer = 2.1
 	anchored = 1
 
-	New(location,main = "#FFFFFF",shade = "#000000",var/type = "rune", var/e_name = "rune", var/override_color = 0)
+	New(location, main = "#FFFFFF",shade = "#000000",var/type = "rune", var/e_name = "rune", var/override_color = 0)
 		..()
 		loc = location
 
@@ -26,8 +26,8 @@
 		var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
 		var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
 
-		mainOverlay.Blend(main,ICON_ADD)
-		shadeOverlay.Blend(shade,ICON_ADD)
+		mainOverlay.Blend(main, ICON_ADD)
+		shadeOverlay.Blend(shade, ICON_ADD)
 
 		overlays += mainOverlay
 		overlays += shadeOverlay

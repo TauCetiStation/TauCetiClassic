@@ -222,7 +222,7 @@
 /obj/item/weapon/paper/proc/updateinfolinks()
 	info_links = info
 	var/i = 0
-	for(i=1,i<=fields,i++)
+	for(i=1,i<=fields, i++)
 		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
 	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
@@ -388,7 +388,7 @@
 
 		// check for exploits
 		for(var/bad in paper_blacklist)
-			if(findtext(t,bad))
+			if(findtext(t, bad))
 				to_chat(usr, "\blue You think to yourself, \"Hm.. this is only paper...\"")
 				log_admin("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
 				message_admins("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
@@ -479,7 +479,7 @@
 
 	else if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )
-			P:RenamePaper(user,src)
+			P:RenamePaper(user, src)
 		else
 			show_content(user, forceshow = TRUE, infolinks = TRUE)
 		// openhelp(user)

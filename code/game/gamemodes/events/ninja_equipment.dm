@@ -1,4 +1,4 @@
-// For the love of god,space out your code! This is a nightmare to read.
+// For the love of god, space out your code! This is a nightmare to read.
 
 // This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
@@ -158,7 +158,7 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize(delay = s_delay, mob/living/carbon/human/U = loc)
 	if(U.mind && U.mind.assigned_role=="MODE" && !s_initialized && !s_busy)// Shouldn't be busy... but anything is possible I guess.
 		s_busy = 1
-		for(var/i,i<7,i++)
+		for(var/i, i<7,i++)
 			switch(i)
 				if(0)
 					to_chat(U, "\blue Now initializing...")
@@ -609,7 +609,7 @@ ________________________________________________________________________________
 			if(!safety)
 				to_chat(A, "You trigger [href_list["name"]].")
 				to_chat(U, "[href_list["name"]] suddenly triggered!")
-				call(src,ability_name)(proc_arguments)
+				call(src, ability_name)(proc_arguments)
 			else
 				to_chat(A, "There are no potential [href_list["name"]=="Phase Shift"?"destinations" : "targets"] in view.")
 
@@ -695,7 +695,7 @@ ________________________________________________________________________________
 			if(confirm == "Yes"&&AI)
 				if(A.laws.zeroth)// Gives a few seconds to re-upload the AI somewhere before it takes full control.
 					s_busy = 1
-					for(var/i,i<5,i++)
+					for(var/i, i<5,i++)
 						if(AI==A)
 							switch(i)
 								if(0)
@@ -760,8 +760,8 @@ ________________________________________________________________________________
 			hologram = new(T)// Spawn a blank effect at the location.
 			hologram.invisibility = 101// So that it doesn't show up, ever. This also means one could attach a number of images to a single obj and display them differently to differnet people.
 			hologram.anchored = 1// So it cannot be dragged by space wind and the like.
-			hologram.dir = get_dir(T,affecting.loc)
-			var/image/I = image(AI.holo_icon,hologram)// Attach an image to object.
+			hologram.dir = get_dir(T, affecting.loc)
+			var/image/I = image(AI.holo_icon, hologram)// Attach an image to object.
 			hologram.i_attached = I// To attach the image in order to later reference.
 			AI << I
 			affecting << I
@@ -780,7 +780,7 @@ ________________________________________________________________________________
 	// set background = 1
 
 	spawn while(hologram&&s_initialized&&AI)// Suit on and there is an AI present.
-		if(!s_initialized||get_dist(affecting,hologram.loc)>3)// Once suit is de-initialized or hologram reaches out of bounds.
+		if(!s_initialized||get_dist(affecting, hologram.loc)>3)// Once suit is de-initialized or hologram reaches out of bounds.
 			qdel(hologram.i_attached)
 			qdel(hologram)
 
@@ -836,7 +836,7 @@ ________________________________________________________________________________
 	if(U==affecting)// Safety, in case you try doing this without wearing the suit/being the person with the suit.
 		if(istype(I, /obj/item/device/aicard))// If it's an AI card.
 			if(s_control)
-				I:transfer_ai("NINJASUIT","AICARD",src,U)
+				I:transfer_ai("NINJASUIT","AICARD",src, U)
 			else
 				to_chat(U, "\red <b>ERROR</b>: \black Remote access channel disabled.")
 			return// Return individually so that ..() can run properly at the end of the proc.
@@ -865,7 +865,7 @@ ________________________________________________________________________________
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
 				to_chat(U, "\blue Higher maximum capacity detected.\nUpgrading...")
-				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay, target = U))
+				if (n_gloves&&n_gloves.candrain&&do_after(U, s_delay, target = U))
 					U.drop_item()
 					I.loc = src
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
@@ -884,7 +884,7 @@ ________________________________________________________________________________
 			var/obj/item/weapon/disk/tech_disk/TD = I
 			if(TD.stored)// If it has something on it.
 				to_chat(U, "Research information detected, processing...")
-				if(do_after(U,s_delay,target = U))
+				if(do_after(U, s_delay, target = U))
 					for(var/datum/tech/current_data in stored_research)
 						if(current_data.id==TD.stored.id)
 							if(current_data.level<TD.stored.level)
@@ -906,7 +906,7 @@ ________________________________________________________________________________
 	if(s_active)
 		cancel_stealth()
 	else
-		anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
+		anim(U.loc, U,'icons/mob/mob.dmi',,"cloak",,U.dir)
 		s_active=!s_active
 		icon_state = U.gender==FEMALE ? "s-ninjasf" : "s-ninjas"
 		U.regenerate_icons()	// update their icons
@@ -919,7 +919,7 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
 	var/mob/living/carbon/human/U = affecting
 	if(s_active)
-		anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
+		anim(U.loc, U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
 		to_chat(U, "\blue You are now visible.")
 		U.invisibility = 0
@@ -999,7 +999,7 @@ ________________________________________________________________________________
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, A.loc)
 				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
-					drain = rand(G.mindrain,G.maxdrain)
+					drain = rand(G.mindrain, G.maxdrain)
 					if(A.cell.charge<drain)
 						drain = A.cell.charge
 					if(S.cell.charge+drain>S.cell.maxcharge)
@@ -1027,7 +1027,7 @@ ________________________________________________________________________________
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, A.loc)
 				while(G.candrain&&A.charge>0&&!maxcapacity)
-					drain = rand(G.mindrain,G.maxdrain)
+					drain = rand(G.mindrain, G.maxdrain)
 					if(A.charge<drain)
 						drain = A.charge
 					if(S.cell.charge+drain>S.cell.maxcharge)
@@ -1073,7 +1073,7 @@ ________________________________________________________________________________
 				if(B)// If APC exists. Might not if the area is unpowered like CentCom.
 					var/datum/powernet/PN = B.terminal.powernet
 					while(G.candrain&&!maxcapacity&&!isnull(A))// And start a proc similar to drain from wire.
-						drain = rand(G.mindrain,G.maxdrain)
+						drain = rand(G.mindrain, G.maxdrain)
 						var/drained = 0
 						if(PN&&do_after(U,10,target = A))
 							drained = min(drain, PN.avail)
@@ -1125,7 +1125,7 @@ ________________________________________________________________________________
 			var/obj/structure/cable/A = target
 			var/datum/powernet/PN = A.get_powernet()
 			while(G.candrain&&!maxcapacity&&!isnull(A))
-				drain = (round((rand(G.mindrain,G.maxdrain))/2))
+				drain = (round((rand(G.mindrain, G.maxdrain))/2))
 				var/drained = 0
 				if(PN&&do_after(U,10,target = A))
 					drained = min(drain, PN.avail)
@@ -1154,7 +1154,7 @@ ________________________________________________________________________________
 			A.occupant_message("\red Warning: Unauthorized access through sub-route 4, block H, detected.")
 			if(A.get_charge())
 				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
-					drain = rand(G.mindrain,G.maxdrain)
+					drain = rand(G.mindrain, G.maxdrain)
 					if(A.cell.charge<drain)
 						drain = A.cell.charge
 					if(S.cell.charge+drain>S.cell.maxcharge)
@@ -1177,7 +1177,7 @@ ________________________________________________________________________________
 			G.draining = 1
 			if(A.cell&&A.cell.charge)
 				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
-					drain = rand(G.mindrain,G.maxdrain)
+					drain = rand(G.mindrain, G.maxdrain)
 					if(A.cell.charge<drain)
 						drain = A.cell.charge
 					if(S.cell.charge+drain>S.cell.maxcharge)
@@ -1233,32 +1233,32 @@ ________________________________________________________________________________
 		if(iscarbon(target))
 			switch(target.mind.special_role)
 				if("traitor")
-					U.client.images += image(tempHud,target,"hudtraitor")
+					U.client.images += image(tempHud, target,"hudtraitor")
 				if("Revolutionary","Head Revolutionary")
-					U.client.images += image(tempHud,target,"hudrevolutionary")
+					U.client.images += image(tempHud, target,"hudrevolutionary")
 				if("Cultist")
-					U.client.images += image(tempHud,target,"hudcultist")
+					U.client.images += image(tempHud, target,"hudcultist")
 				if("Changeling")
-					U.client.images += image(tempHud,target,"hudchangeling")
+					U.client.images += image(tempHud, target,"hudchangeling")
 				if("Wizard","Fake Wizard")
-					U.client.images += image(tempHud,target,"hudwizard")
+					U.client.images += image(tempHud, target,"hudwizard")
 				if("Hunter","Sentinel","Drone","Queen")
-					U.client.images += image(tempHud,target,"hudalien")
+					U.client.images += image(tempHud, target,"hudalien")
 				if("Syndicate")
-					U.client.images += image(tempHud,target,"hudoperative")
+					U.client.images += image(tempHud, target,"hudoperative")
 				if("Death Commando")
-					U.client.images += image(tempHud,target,"huddeathsquad")
+					U.client.images += image(tempHud, target,"huddeathsquad")
 				if("Ninja")
-					U.client.images += image(tempHud,target,"hudninja")
+					U.client.images += image(tempHud, target,"hudninja")
 				else// If we don't know what role they have but they have one.
-					U.client.images += image(tempHud,target,"hudunknown1")
+					U.client.images += image(tempHud, target,"hudunknown1")
 		else// If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
 			var/mob/living/silicon/silicon_target = target
 			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len)))
 				if(isrobot(silicon_target))// Different icons for robutts and AI.
-					U.client.images += image(tempHud,silicon_target,"hudmalborg")
+					U.client.images += image(tempHud, silicon_target,"hudmalborg")
 				else
-					U.client.images += image(tempHud,silicon_target,"hudmalai")
+					U.client.images += image(tempHud, silicon_target,"hudmalai")
 	return 1
 
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev()
@@ -1410,7 +1410,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 			spawn(0)
 				playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)
-				anim(M.loc,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
+				anim(M.loc, M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
 
 			if(holdingfacility.len)
 				M.loc = pick(holdingfacility)// Throw mob in to the holding facility.
@@ -1420,7 +1420,7 @@ It is possible to destroy the net by the occupant or someone else.
 					spark_system.start()
 					playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
 					playsound(M.loc, 'sound/effects/sparks2.ogg', 50, 1)
-					anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
+					anim(M.loc, M,'icons/mob/mob.dmi',,"phasein",,M.dir)
 					qdel(src)// Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 			else
 				M.loc = null

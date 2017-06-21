@@ -84,7 +84,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			if(prob(yield * parent.yieldmod * 20))
 				seed_count++
 
-			for(var/i=0,i<seed_count,i++)
+			for(var/i=0,i<seed_count, i++)
 				new /obj/item/seeds/replicapod(user.loc)
 
 			parent.update_tray()

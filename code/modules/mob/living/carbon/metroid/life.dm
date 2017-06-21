@@ -361,7 +361,7 @@
 						M.tame = tame
 						M.rabid = rabid
 						M.Discipline = Discipline
-						if(i != 1) step_away(M,src)
+						if(i != 1) step_away(M, src)
 					else
 						var/mutations = pick("one","two","three","four")
 						switch(mutations)
@@ -372,7 +372,7 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1) step_away(M, src)
 							if("two")
 								var/mob/living/carbon/slime/M = new mutationtwo(loc)
 								M.powerlevel = round(powerlevel/4)
@@ -380,7 +380,7 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1) step_away(M, src)
 							if("three")
 								var/mob/living/carbon/slime/M = new mutationthree(loc)
 								M.powerlevel = round(powerlevel/4)
@@ -388,7 +388,7 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1) step_away(M, src)
 							if("four")
 								var/mob/living/carbon/slime/M = new mutationfour(loc)
 								M.powerlevel = round(powerlevel/4)
@@ -396,7 +396,7 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1) step_away(M, src)
 
 				qdel(src)
 

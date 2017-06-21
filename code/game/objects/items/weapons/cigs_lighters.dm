@@ -247,7 +247,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
-	transform = turn(transform,rand(0,360))
+	transform = turn(transform, rand(0,360))
 
 /obj/item/weapon/cigbutt/cigarbutt
 	name = "cigar butt"

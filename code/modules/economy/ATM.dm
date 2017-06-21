@@ -122,7 +122,7 @@ log transactions
 	if(istype(user, /mob/living/silicon))
 		to_chat(user, "\red [bicon(src)] Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005.")
 		return
-	if(get_dist(src,user) <= 1)
+	if(get_dist(src, user) <= 1)
 
 		// js replicated from obj/machinery/computer/card
 		var/dat = "<h1>NanoTrasen Automatic Teller Machine</h1>"
@@ -323,8 +323,8 @@ log transactions
 						// remove the money
 						authenticated_account.money -= amount
 
-						//	spawn_money(amount,src.loc)
-						spawn_ewallet(amount,src.loc)
+						//	spawn_money(amount, src.loc)
+						spawn_ewallet(amount, src.loc)
 
 						// create an entry in the account transaction log
 						var/datum/transaction/T = new()

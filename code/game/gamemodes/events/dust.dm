@@ -78,7 +78,7 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 			if(WEST)
 				starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
 				startx = (TRANSITIONEDGE+1)
-				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
+				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
 				endx = world.maxx-TRANSITIONEDGE
 		var/goal = locate(endx, endy, 1)
 		src.x = startx

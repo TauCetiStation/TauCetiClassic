@@ -19,9 +19,9 @@
 		for (var/obj/machinery/power/apc/C in range(src.effectrange, T))
 			for (var/obj/item/weapon/stock_parts/cell/B in C.contents)
 				B.charge += 25
-		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
+		for (var/obj/machinery/power/smes/S in range (src.effectrange, src))
 			S.charge += 25
-		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
+		for (var/mob/living/silicon/robot/M in range(src.effectrange, T))
 			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
 				D.charge += 25
 				to_chat(M, "\blue SYSTEM ALERT: Energy boost detected!")
@@ -33,9 +33,9 @@
 		for (var/obj/machinery/power/apc/C in range(src.effectrange, T))
 			for (var/obj/item/weapon/stock_parts/cell/B in C.contents)
 				B.charge += rand() * 100
-		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
+		for (var/obj/machinery/power/smes/S in range (src.effectrange, src))
 			S.charge += 250
-		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
+		for (var/mob/living/silicon/robot/M in range(src.effectrange, T))
 			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
 				D.charge += rand() * 100
 				to_chat(M, "\blue SYSTEM ALERT: Energy boost detected!")

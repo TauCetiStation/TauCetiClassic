@@ -35,7 +35,7 @@
 	var/lasercolor = ""
 
 
-/obj/machinery/bot/secbot/ed209/New(loc,created_name,created_lasercolor)
+/obj/machinery/bot/secbot/ed209/New(loc, created_name, created_lasercolor)
 	..()
 	if(created_name)
 		name = created_name

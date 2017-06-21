@@ -428,7 +428,7 @@
 	for(counter = 1, counter <= 3, counter++)
 		var/spawndir = pick(directions)
 		directions -= spawndir
-		var/turf/T = get_step(src,spawndir)
+		var/turf/T = get_step(src, spawndir)
 		new /obj/effect/goliath_tentacle(T)
 	..()
 

@@ -272,7 +272,7 @@ This is emryo growth procs
 
 /obj/item/alien_embryo/proc/show_message(message, m_type)
 	for(var/mob/living/M in contents)
-		M.show_message(message,m_type)
+		M.show_message(message, m_type)
 
 /obj/item/alien_embryo/process()
 	if(istype(loc,/turf) || !(contents.len))
@@ -395,14 +395,14 @@ This is facehugger Attach procs
 /obj/item/clothing/mask/facehugger/proc/show_message(message, m_type)
 	if(current_hugger)
 		var/mob/living/carbon/alien/facehugger/FH = current_hugger
-		FH.show_message(message,m_type)
+		FH.show_message(message, m_type)
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
 	..()
 	if(!real)// So that giant red text about probisci doesn't show up.
 		return
 	switch(stat)
-		if(DEAD,UNCONSCIOUS)
+		if(DEAD, UNCONSCIOUS)
 			to_chat(user, "<span class='danger'>[src] is not moving.</span>")
 		if(CONSCIOUS)
 			to_chat(user, "<span class='danger'>[src] seems to be active.</span>")
@@ -696,7 +696,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		hud.icon_state = "grab/do_impreg"
 		hud.name = "impregnating"
 		assailant.visible_message("<span class='danger'>[assailant] extends its proboscis deep inside [affecting]'s mouth!</span>")
-		spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
+		spawn(rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 			if(istype(assailant.loc, /obj/item/clothing/mask/facehugger))
 				assailant.visible_message("\red \b [assailant] falls limp after violating [affecting]'s face!")
 				var/obj/item/clothing/mask/facehugger/FH_mask = assailant.loc

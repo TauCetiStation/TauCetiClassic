@@ -649,7 +649,7 @@ var/list/admin_verbs_hideable = list(
 	if(istype(T,/mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/M = T
 		D.affected_species = list(M.greaterform)
-	infect_virus2(T,D,1)
+	infect_virus2(T, D,1)
 
 	feedback_add_details("admin_verb","GD2") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] a [(greater)? "greater":"lesser"] disease2 with infection chance [D.infectionchance].")

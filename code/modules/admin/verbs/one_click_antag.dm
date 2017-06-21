@@ -241,7 +241,7 @@ client/proc/one_click_antag()
 		var/numagents = 5
 		var/agentcount = 0
 
-		for(var/i = 0, i<numagents,i++)
+		for(var/i = 0, i<numagents, i++)
 			shuffle(candidates) // More shuffles means more randoms
 			for(var/mob/j in candidates)
 				if(!j || !j.client)
@@ -419,7 +419,7 @@ client/proc/one_click_antag()
 	// First we spawn a dude.
 	var/mob/living/carbon/human/new_character = new(pick(latejoin))// The mob being spawned.
 
-	new_character.gender = pick(MALE,FEMALE)
+	new_character.gender = pick(MALE, FEMALE)
 
 	var/datum/preferences/A = new()
 	A.randomize_appearance_for(new_character)
@@ -619,7 +619,7 @@ datum/admins/proc/makeAbductorTeam()
 		temp.team_names.len = number
 		temp.scientists[number] = scientist_mind
 		temp.agents[number] = agent_mind
-		temp.abductors = list(agent_mind,scientist_mind)
+		temp.abductors = list(agent_mind, scientist_mind)
 		temp.make_abductor_team(number)
 		temp.post_setup_team(number)
 		ticker.mode.abductors += temp.abductors

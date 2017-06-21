@@ -213,7 +213,7 @@
 	if(SMALLSIZE in mutations)
 		msg += "[t_He] [t_is] small halfling!\n"
 
-	var/distance = get_dist(user,src)
+	var/distance = get_dist(user, src)
 	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
 	if (src.stat)

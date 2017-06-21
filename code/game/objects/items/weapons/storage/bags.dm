@@ -216,7 +216,7 @@
 		for(var/obj/item/stack/sheet/S in contents)
 			while(S.amount)
 				var/obj/item/stack/sheet/N = new S.type(location)
-				var/stacksize = min(S.amount,N.max_amount)
+				var/stacksize = min(S.amount, N.max_amount)
 				N.amount = stacksize
 				S.amount -= stacksize
 			if(!S.amount)
@@ -241,7 +241,7 @@
 			temp.amount = S.amount - S.max_amount
 			S.amount = S.max_amount
 
-		return ..(S,new_location)
+		return ..(S, new_location)
 
 // -----------------------------
 //    Sheet Snatcher (Cyborg)

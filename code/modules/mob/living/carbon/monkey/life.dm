@@ -4,7 +4,7 @@
 	if (monkeyizing)	return
 	if (update_muts)
 		update_muts=0
-		domutcheck(src,null,MUTCHK_FORCED)
+		domutcheck(src, null, MUTCHK_FORCED)
 	..()
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
@@ -125,7 +125,7 @@
 				var/rads = radiation/25
 				radiation -= rads
 				nutrition += rads
-				heal_overall_damage(rads,rads)
+				heal_overall_damage(rads, rads)
 				adjustOxyLoss(-(rads))
 				adjustToxLoss(-(rads))
 				return
@@ -159,7 +159,7 @@
 					if(prob(1))
 						to_chat(src, "\red You mutate!")
 						randmutb(src)
-						domutcheck(src,null)
+						domutcheck(src, null)
 						emote("gasp")
 
 	proc/handle_virus_updates()
@@ -177,7 +177,7 @@
 				if(B.virus2.len)
 					for (var/ID in B.virus2)
 						var/datum/disease2/disease/V = B.virus2[ID]
-						infect_virus2(src,V)
+						infect_virus2(src, V)
 
 			else if(istype(O,/obj/effect/decal/cleanable/mucus))
 				var/obj/effect/decal/cleanable/mucus/M = O
@@ -185,7 +185,7 @@
 				if(M.virus2.len)
 					for (var/ID in M.virus2)
 						var/datum/disease2/disease/V = M.virus2[ID]
-						infect_virus2(src,V)
+						infect_virus2(src, V)
 
 		if(virus2.len)
 			for (var/ID in virus2)
@@ -469,7 +469,7 @@
 				adjustOxyLoss(-1)
 
 		if(reagents && reagents.reagent_list.len)
-			reagents.metabolize(src,alien)
+			reagents.metabolize(src, alien)
 
 		if (drowsyness)
 			drowsyness--

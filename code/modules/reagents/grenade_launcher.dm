@@ -40,7 +40,7 @@
 		return
 
 	if(grenades.len)
-		spawn(0) fire_grenade(target,user)
+		spawn(0) fire_grenade(target, user)
 	else
 		to_chat(usr, "\red The grenade launcher is empty.")
 

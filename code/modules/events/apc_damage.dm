@@ -6,7 +6,7 @@
 
 	var/severity_range = rand(0,15)
 
-	for(var/obj/machinery/power/apc/apc in range(severity_range,A))
+	for(var/obj/machinery/power/apc/apc in range(severity_range, A))
 		if(is_valid_apc(apc))
 			apc.emagged = 1
 			apc.update_icon()
@@ -23,7 +23,7 @@
 		return
 
 	var/epicentre = pick(possibleEpicentres)
-	for(var/obj/machinery/power/apc/apc in range(epicentre,apcSelectionRange))
+	for(var/obj/machinery/power/apc/apc in range(epicentre, apcSelectionRange))
 		if(is_valid_apc(apc))
 			apcs += apc
 			// Greatly increase the chance for APCs in maintenance areas to be selected

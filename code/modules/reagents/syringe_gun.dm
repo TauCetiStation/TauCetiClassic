@@ -73,7 +73,7 @@
 		for(var/i=0, i<6, i++)
 			if(!D) break
 			if(D.loc == trg) break
-			step_towards(D,trg)
+			step_towards(D, trg)
 
 			if(D)
 				for(var/mob/living/carbon/M in D.loc)

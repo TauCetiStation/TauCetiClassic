@@ -134,7 +134,7 @@
 
 	// building and linking a terminal
 	if(istype(I, /obj/item/weapon/cable_coil))
-		var/dir = get_dir(user,src)
+		var/dir = get_dir(user, src)
 		if(dir & (dir-1))// we don't want diagonal click
 			return
 
@@ -210,7 +210,7 @@
 // wires will attach to this
 /obj/machinery/power/smes/make_terminal(turf/T)
 	terminal = new/obj/machinery/power/terminal(T)
-	terminal.dir = get_dir(T,src)
+	terminal.dir = get_dir(T, src)
 	terminal.master = src
 
 /obj/machinery/power/smes/disconnect_terminal()

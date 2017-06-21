@@ -216,7 +216,7 @@
 	else
 		..()
 		if (health < maxhealth && !istype(W, /obj/item/weapon/screwdriver) && W.force)
-			step_to(src, (get_step_away(src,user)))
+			step_to(src, (get_step_away(src, user)))
 
 /obj/machinery/bot/medbot/Emag(mob/user)
 	..()
@@ -301,12 +301,12 @@
 			src.medicate_patient(src.patient)
 		return
 
-	else if(src.patient && (src.path.len) && (get_dist(src.patient,src.path[src.path.len]) > 2))
+	else if(src.patient && (src.path.len) && (get_dist(src.patient, src.path[src.path.len]) > 2))
 		src.path = new()
 		src.currently_healing = 0
 		src.last_found = world.time
 
-	if(src.patient && src.path.len == 0 && (get_dist(src,src.patient) > 1))
+	if(src.patient && src.path.len == 0 && (get_dist(src, src.patient) > 1))
 		spawn(0)
 			src.path = get_path_to(src, get_turf(src.patient), /turf/proc/Distance_cardinal, 0, 30, id=botcard)
 			if(src.path.len == 0)
@@ -436,10 +436,10 @@
 		spawn(30)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
 				if((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
-					src.reagent_glass.reagents.trans_to(src.patient,src.injection_amount) // Inject from beaker instead.
+					src.reagent_glass.reagents.trans_to(src.patient, src.injection_amount) // Inject from beaker instead.
 					src.reagent_glass.reagents.reaction(src.patient, 2)
 				else
-					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
+					src.patient.reagents.add_reagent(reagent_id, src.injection_amount)
 				visible_message("\red <B>[src] injects [src.patient] with the syringe!</B>")
 
 			src.icon_state = "medibot[src.on]"
@@ -515,7 +515,7 @@
 	var/L[] = new()
 	for(var/turf/t in oview(src,1))
 		if(!t.density)
-			if(!LinkBlocked(src, t) && !TurfBlockedNonWindowNonDoor(t,get_access("Medical Doctor")))
+			if(!LinkBlocked(src, t) && !TurfBlockedNonWindowNonDoor(t, get_access("Medical Doctor")))
 				L.Add(t)
 	return L
 
