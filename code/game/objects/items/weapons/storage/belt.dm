@@ -26,7 +26,7 @@
 		"/obj/item/taperoll/engineering")
 
 /obj/item/weapon/storage/belt/utility/update_icon()
-	overlays = list() //resets list
+	overlays.Cut() //resets list
 	for(var/obj/item/tool in contents)
 		if(!(tool.name in contents))
 			overlays += tool.name
