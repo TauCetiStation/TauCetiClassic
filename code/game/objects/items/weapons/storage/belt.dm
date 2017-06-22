@@ -25,11 +25,11 @@
 		"/obj/item/device/analyzer",
 		"/obj/item/taperoll/engineering")
 
-/obj/item/weapon/storage/belt/utility/update_icon()
+/obj/item/weapon/storage/belt/update_icon()
 	overlays.Cut() //resets list
-	for(var/obj/item/tool in contents)
-		if(!(tool.name in contents))
-			overlays += tool.name
+	for(var/obj/item/I in contents)
+		if(!(I.name in contents))
+			overlays += I.name
 
 /obj/item/weapon/storage/belt/utility/full/New()
 	..()
