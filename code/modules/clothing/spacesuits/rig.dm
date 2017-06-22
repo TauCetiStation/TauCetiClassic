@@ -321,7 +321,7 @@
 	armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
 	var/up = 0
-	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , VOX)
+	species_restricted = list("exclude" , VOX)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
@@ -375,8 +375,8 @@
 	slowdown = 1.4
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
-	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , VOX)
 	breach_threshold = 28
+	species_restricted = list("exclude" , VOX)
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard

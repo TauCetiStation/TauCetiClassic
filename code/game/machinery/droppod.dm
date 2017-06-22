@@ -113,7 +113,7 @@
 		black_list_areas = list(/area/aisat, /area/turret_protected/aisat, /area/turret_protected/ai, /area/ai_monitored/storage/secure, /area/tcommsat/computer, /area/AIsattele,
 	/area/tcommsat/chamber, /area/turret_protected/ai_upload, /area/crew_quarters/captain, /area/bridge, /area/bridge/meeting_room, /area/teleporter, /area/security/nuke_storage,
 	/area/crew_quarters/heads, /area/security/armoury, /area/security/warden, /area/turret_protected/aisat_interior,/area/security/main, /area/security/brig, /area/security/range,
-	/area/security/hos,	/area/security/prison, /area/security/execution, /area/security/forensic_office, /area/security/detectives_office, /area/server, /area/comms)
+	/area/security/hos,	/area/security/prison, /area/security/execution, /area/security/forensic_office, /area/security/detectives_office, /area/server, /area/comms, /area/tcommsat/computer)
 		areas = teleportlocs
 	if(!areas)
 		for(var/i in areas)
@@ -237,7 +237,7 @@
 	var/area/area_to_deploy = allowed_areas.areas[pick(allowed_areas.areas)]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
-		if(!istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/wall/r_wall) && !istype(T, /turf/space))
+		if(!T.density && !istype(T, /turf/space))
 			L+=T
 	AimTarget = pick(L)
 	StartDrop()
@@ -249,7 +249,7 @@
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/wall/r_wall) && !istype(T, /turf/space) && !T.obscured)
+		if(!T.density && !istype(T, /turf/space) && !T.obscured)
 			L+=T
 	flags &= ~STATE_AIMING
 	if(isemptylist(L))
@@ -338,11 +338,11 @@
 	icon_state = "dropod_flying"
 	var/initial_x = pixel_x
 	var/initial_y = pixel_y
-	animate(src, pixel_y = 500, pixel_x = rand(-150, 150), time = 25)
+	animate(src, pixel_y = 500, pixel_x = rand(-150, 150), time = 20)
 	sleep(25)
 	loc = AimTarget
-	animate(src, pixel_y = initial_y, pixel_x = initial_x, time = 25)
-	addtimer(CALLBACK(src, .proc/perform_drop), 25)
+	animate(src, pixel_y = initial_y, pixel_x = initial_x, time = 20)
+	addtimer(CALLBACK(src, .proc/perform_drop), 20)
 
 /obj/structure/droppod/proc/perform_drop()
 	for(var/atom/movable/T in loc)
@@ -708,8 +708,8 @@
 	var/obj/spawn_drop = new drop_type(turf)
 	spawn_drop.pixel_x = rand(-150, 150)
 	spawn_drop.pixel_y = 500
-	animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 25)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, turf, 'sound/effects/drop_land.ogg', 100, 2), 25)
+	animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, turf, 'sound/effects/drop_land.ogg', 100, 2), 20)
 	qdel(src)
 
 /obj/item/device/drop_caller/Legitimate
@@ -735,8 +735,8 @@
 		playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
 		spawn_drop.pixel_x = rand(-150, 150)
 		spawn_drop.pixel_y = 500
-		animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 25)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, chosen_place.loc, 'sound/effects/drop_land.ogg', 100, 2), 25)
+		animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, chosen_place.loc, 'sound/effects/drop_land.ogg', 100, 2), 20)
 		qdel(src)
 
 /obj/effect/landmark/droppod_spawn

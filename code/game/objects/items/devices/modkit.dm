@@ -199,27 +199,6 @@
 	name = "Skrellian mining hardsuit modification kit"
 	target_species = SKRELL
 
-
-/obj/item/device/modkit/syndie
-	name = "Gorlex hardsuit modification kit"
-	permitted_types = list(
-		/obj/item/clothing/head/helmet/space/rig/syndi,
-		/obj/item/clothing/suit/space/rig/syndi
-		)
-
-/obj/item/device/modkit/syndie/tajaran
-	name = "Tajaran gorlex hardsuit modification kit"
-	target_species = TAJARAN
-
-/obj/item/device/modkit/syndie/unathi
-	name = "Unathi gorlex hardsuit modification kit"
-	target_species = UNATHI
-
-/obj/item/device/modkit/syndie/skrell
-	name = "Skrellian gorlex hardsuit modification kit"
-	target_species = SKRELL
-
-
 /obj/item/device/modkit/wizard
 	name = "Magical hardsuit modification kit"
 	permitted_types = list(

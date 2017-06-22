@@ -1156,7 +1156,7 @@
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/wall/r_wall) && !istype(T, /turf/space) && !T.obscured)
+		if(!T.density && !istype(T, /turf/space) && !T.obscured)
 			L+=T
 	if(isemptylist(L))
 		chassis.occupant_message("<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
@@ -1182,8 +1182,8 @@
 	playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
 	chassis.pixel_x = rand(-150, 150)
 	chassis.pixel_y = 500
-	animate(chassis, pixel_y = initial_y, pixel_x = initial_x, time = 25)
-	addtimer(CALLBACK(src, .proc/perform_drop), 25)
+	animate(chassis, pixel_y = initial_y, pixel_x = initial_x, time = 20)
+	addtimer(CALLBACK(src, .proc/perform_drop), 20)
 
 
 /obj/item/mecha_parts/mecha_equipment/Drop_system/proc/perform_drop()
