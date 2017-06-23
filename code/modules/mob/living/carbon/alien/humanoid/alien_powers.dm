@@ -246,6 +246,7 @@ Doesn't work on other aliens/AI.*/
 	set name = "Secrete Resin (75)"
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
+	var/mob/living/carbon/alien/user = usr
 
 	if((locate(/obj/effect/alien/egg) in get_turf(user)) || (locate(/obj/structure/mineral_door/resin) in get_turf(user)) || (locate( /obj/effect/alien/resin/wall) in get_turf(user)) || (locate(/obj/effect/alien/resin/membrane) in get_turf(user)) || (locate(/obj/structure/stool/bed/nest) in get_turf(user)))
 		to_chat (src, "There is already a resin structure there.")
