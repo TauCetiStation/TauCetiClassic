@@ -434,6 +434,11 @@
 				if(GROWING)
 					to_chat(user, "\red The child is not developed yet.")
 					return
+				if(BURST)
+					to_chat(user, "You clear the hatched egg.")
+					playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+					qdel(src)
+					return
 		else
 			return attack_hand(user)
 
