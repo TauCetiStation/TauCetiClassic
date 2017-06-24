@@ -125,10 +125,10 @@ Implants;
 			playerH++
 
 	if(master_mode=="secret")
-		if(playerC >= required_heads_secret)
+		if(playerH >= required_heads_secret)
 			return 1
 	else
-		if(playerC >= required_heads)
+		if(playerH >= required_heads)
 			return 1
 	return 0
 
