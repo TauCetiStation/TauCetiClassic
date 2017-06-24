@@ -47,12 +47,12 @@ var/global/vox_tick = 1
 			equip_to_slot_or_del(new /obj/item/weapon/gun/dartgun/vox/medical, slot_r_hand)
 
 	equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox, slot_wear_mask)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen, slot_back)
 	equip_to_slot_or_del(new /obj/item/device/flashlight, slot_r_store)
 
-	for(var/obj/item/weapon/tank/nitrogen/N in contents)
-		internal = N
-		internals.icon_state = "internal1"
+	var/obj/item/weapon/tank/nitrogen/NITRO = new
+	equip_to_slot_or_del(NITRO, slot_s_store)
+	internal = NITRO
+	internals.icon_state = "internal1"
 
 	var/obj/item/weapon/card/id/syndicate/C = new(src)
 	C.name = "[real_name]'s Legitimate Human ID Card"
