@@ -2,9 +2,9 @@
 
 	if(mind && mind.changeling && mind.changeling.strained_muscles)
 		if(!has_gravity(src))
-			return -3   // speed boost in space.
+			return -1.2   // speed boost in space.
 		else
-			return -2.5 // changeling ability also nulify any speed modifications and gives boost.
+			return -0.7 // changeling ability also nulify any speed modifications and gives boost.
 
 	if(!has_gravity(src))
 		return -1 // It's hard to be slowed down in space by... anything

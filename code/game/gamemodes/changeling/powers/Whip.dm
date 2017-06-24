@@ -3,7 +3,7 @@
 	desc = "We reform one of our arms into whip."
 	helptext = "Can snatch, knock down, and damage in range depending on your intent, requires a lot of chemical for each use. Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 4
+	genomecost = 8
 	genetic_damage = 12
 	req_human = 1
 	max_genetic_damage = 10
@@ -36,20 +36,28 @@
 		return
 	if(next_click > world.time)
 		return
-	if(!use_charge(user, 2))
+	if(!use_charge(user, 8))
 		return
-	next_click = world.time + 10
-	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
+	next_click = world.time + 20
+	var/turf/T = get_turf(src)
+	var/turf/U = get_turf(A)
+	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(T)
 	if(user.a_intent == "grab")
 		LE.grabber = 1
 	else if(user.a_intent == "disarm" && prob(65))
 		LE.weaken = 5
 	else if(user.a_intent == "hurt")
 		LE.damage = 30
-	else
-		LE.agony = 25
 	LE.host = user
-	LE.Fire(A, user)
+	LE.firer = user
+	LE.def_zone = check_zone(user.zone_sel.selecting)
+	LE.starting = T
+	LE.original = A
+	LE.current = T
+	LE.yo = U.y - T.y
+	LE.xo = U.x - T.x
+	spawn( 1 )
+		LE.process()
 
 /obj/item/projectile/changeling_whip
 	name = "Whip"
