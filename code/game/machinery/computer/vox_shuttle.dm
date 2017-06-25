@@ -153,7 +153,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 /obj/machinery/computer/vox_station/proc/reset_warning()
 	if(returning) // no point in reseting, if shuttle is going back.
 		return
-	console_say(" Mission abort procedure canceled.")
+	console_say("Mission abort procedure canceled.")
 	warning = FALSE
 
 /obj/machinery/computer/vox_station/bullet_act(obj/item/projectile/Proj)
