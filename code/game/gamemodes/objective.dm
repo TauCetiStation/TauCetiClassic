@@ -767,7 +767,7 @@ datum/objective/meme_attune
 	return
 
 /datum/objective/heist/kidnap/choose_target()
-	var/list/roles = list("Chief Engineer","Research Director","Roboticist","Chemist","Station Engineer")
+	var/list/roles = list("Roboticist" , "Medical Doctor" , "Chemist" , "Station Engineer")
 	var/list/possible_targets = list()
 	var/list/priority_targets = list()
 

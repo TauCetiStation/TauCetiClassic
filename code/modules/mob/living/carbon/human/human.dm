@@ -1423,9 +1423,6 @@
 	var/prev_intent = a_intent
 	a_intent_change("hurt")
 
-	if(species.name == VOX)
-		playsound(src, 'sound/voice/shriek1.ogg', 50, 1)
-
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
