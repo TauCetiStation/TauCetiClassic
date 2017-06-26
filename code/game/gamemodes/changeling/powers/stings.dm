@@ -86,7 +86,8 @@
 				to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [BP.name]!</span>")
 				to_chat(target, "<span class='warning'>You feel a tiny push in your [BP.name]!</span>")
 				if(ishuman(user))
-					user:drip(10)
+					var/mob/living/carbon/human/HU = user
+					HU.drip(10)
 			unset_sting(user)
 			user.mind.changeling.chem_charges -= rand(5,10)
 
