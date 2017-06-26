@@ -156,6 +156,7 @@
 	damage_type = BRUTE
 	sharp = TRUE
 
+	muzzle_type = /obj/effect/projectile/rails/tracer // yes, tracer as muzzle!
 	tracer_type = /obj/effect/projectile/rails/tracer
 	impact_type = /obj/effect/projectile/rails/impact
 
