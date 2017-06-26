@@ -23,6 +23,27 @@
 // see _DEFINES/is_helpers.dm for mob type checks
 #define SAFE_PERP -50
 
+/mob/living/proc/isSynthetic()
+	return FALSE
+
+/mob/living/carbon/human/isSynthetic(target_zone)
+	if(isnull(full_prosthetic))
+		robolimb_count = 0
+		for(var/obj/item/organ/external/BP in bodyparts)
+			if(BP.status & ORGAN_ROBOT)
+				robolimb_count++
+		full_prosthetic = (robolimb_count == bodyparts.len)
+
+	if(!full_prosthetic && target_zone)
+		var/obj/item/organ/external/BP = get_bodypart(target_zone)
+		if(BP)
+			return BP.status & ORGAN_ROBOT
+
+	return full_prosthetic
+
+/mob/living/silicon/isSynthetic()
+	return TRUE
+
 /proc/hsl2rgb(h, s, l)
 	return
 

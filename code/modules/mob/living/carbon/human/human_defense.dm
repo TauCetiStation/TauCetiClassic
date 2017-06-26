@@ -398,18 +398,24 @@
 		w_uniform.add_blood(source)
 		update_inv_w_uniform()
 
-/mob/living/carbon/human/proc/check_thickmaterial(obj/item/organ/external/BP, type)
-//	if(!type)	return 0
-	var/thickmaterial = 0
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes, glasses, l_ear, r_ear)
-	for(var/bp in body_parts)
-		if(!bp)	continue
-		if(bp && istype(bp ,/obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & BP.body_part)
-				if(C.flags & THICKMATERIAL)
-					thickmaterial = 1
-	return thickmaterial
+/mob/living/carbon/proc/check_thickmaterial(obj/item/organ/external/BP, target_zone)
+	return 0
+
+/mob/living/carbon/human/check_thickmaterial(obj/item/organ/external/BP, target_zone)
+	if(target_zone)
+		BP = get_bodypart(target_zone)
+
+	if(!BP || (BP.status & ORGAN_DESTROYED))
+		return NOLIMB
+
+	var/list/items = get_equipped_items()
+	for(var/obj/item/clothing/C in items)
+		if((C.flags & THICKMATERIAL) && (C.body_parts_covered & BP.body_part))
+			if(C.flags & PHORONGUARD) // this means, clothes has injection port or smthing like that.
+				return PHORONGUARD // space suits and so on. (well, PHORONGUARD does not provide good readability, but i don't want to implement whole new define as this one is good, or maybe rename?)
+			else
+				return THICKMATERIAL // armors and so on.
+	return 0 // could be NOTHICKMATERIAL or smth, but zero is OK too.
 
 /mob/living/carbon/human/proc/handle_suit_punctures(damtype, damage)
 

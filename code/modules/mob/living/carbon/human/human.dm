@@ -1255,6 +1255,7 @@
 	species.on_gain(src)
 
 	regenerate_icons()
+	full_prosthetic = null
 
 	if(species)
 		return 1
@@ -1344,24 +1345,66 @@
 	else
 		to_chat(usr, "<font color='purple'>Nothing of interest...</font>")
 
-/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone)
-	. = 1
+/mob/living/carbon/try_inject(mob/living/user, error_msg, instant, stealth)
+	if(istype(user))
+		if(user.is_busy())
+			return
 
-	if(!user)
-		target_zone = pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM , BP_HEAD)
-	else if(!target_zone)
-		target_zone = user.zone_sel.selecting
+		if(!user.IsAdvancedToolUser())
+			if(error_msg)
+				to_chat(user, "<span class='warning'>You have no idea, how to use this!</span>")
+			return FALSE
 
-	switch(target_zone)
-		if(BP_HEAD)
-			if(head && head.flags & THICKMATERIAL)
-				. = 0
+		if (HULK in user.mutations) // TODO - meaty fingers or something like that.
+			if(error_msg)
+				to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+			return FALSE
+
+		var/hunt_injection_port = FALSE
+
+		switch(check_thickmaterial(target_zone = user.zone_sel.selecting))
+			if(NOLIMB)
+				if(error_msg)
+					to_chat(user, "<span class='warning'>[src] has no such body part, try to inject somewhere else.</span>")
+				return FALSE
+			if(THICKMATERIAL)
+				if(error_msg)
+					to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+				return FALSE
+			if(PHORONGUARD)
+				if(user.a_intent == I_HURT)
+					if(error_msg)
+						to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+					return FALSE
+				hunt_injection_port = TRUE
+
+		if(isSynthetic(user.zone_sel.selecting))
+			if(error_msg)
+				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
+			return FALSE
+
+		if(!instant)
+			var/time_to_inject = HUMAN_STRIP_DELAY
+			if(hunt_injection_port) // takes additional time
+				if(!stealth)
+					user.visible_message("<span class='danger'>[user] begins hunting for an injection port on [src]'s suit!</span>")
+				if(!do_mob(user, src, time_to_inject / 2, TRUE))
+					return FALSE
+
+			if(!stealth)
+				user.visible_message("<span class='danger'>[user] is trying to inject [src]!</span>")
+
+			if(!do_mob(user, src, time_to_inject, TRUE))
+				return FALSE
+
+		if(!stealth)
+			if(user != src)
+				user.visible_message("<span class='warning'>[user] injects [src] with the syringe!</span>")
 		else
-			if(wear_suit && wear_suit.flags & THICKMATERIAL)
-				. = 0
-	if(!. && error_msg && user)
- 		// Might need re-wording.
-		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [target_zone == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+			to_chat(user, "<span class'notice'>You inject [src] with the injector.</span>")
+			to_chat(src, "<span class='warning'>You feel a tiny prick!</span>")
+
+	return TRUE
 
 /obj/screen/leap
 	name = "toggle leap"
