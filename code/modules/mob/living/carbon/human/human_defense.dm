@@ -171,9 +171,9 @@
 			if(C.wet)
 				siemens_coefficient = 3.0
 				var/turf/T = get_turf(src)
-				var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
-				if(W)
-					W.electrocute_act(60)
+				var/obj/effect/fluid/F = locate() in T
+				if(F)
+					F.electrocute_act(60)
 			siemens_coefficient *= C.siemens_coefficient
 
 	return siemens_coefficient

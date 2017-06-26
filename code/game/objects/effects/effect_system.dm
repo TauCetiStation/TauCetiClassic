@@ -685,15 +685,6 @@ steam.start() -- spawns the effect
 		if(air_group) return 0
 		return !density
 
-
-	proc/update_nearby_tiles(need_rebuild)
-		if(!SSair)
-			return 0
-
-		SSair.mark_for_update(get_turf(src))
-
-		return 1
-
 /datum/effect/effect/system/reagents_explosion
 	var/amount 						// TNT equivalent
 	var/flashing = 0			// does explosion creates flash effect?

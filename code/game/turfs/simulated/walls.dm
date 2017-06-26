@@ -59,7 +59,7 @@
 	if(rotting)
 		to_chat(user, "<span class='warning'>There is fungus growing on [src].</span>")
 
-/turf/simulated/wall/proc/update_icon()
+/turf/simulated/wall/update_icon()
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 

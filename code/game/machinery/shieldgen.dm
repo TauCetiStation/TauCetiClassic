@@ -25,16 +25,6 @@
 	if(!height || air_group) return 0
 	else return ..()
 
-//Looks like copy/pasted code... I doubt 'need_rebuild' is even used here - Nodrak
-/obj/machinery/shield/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
-
-	SSair.mark_for_update(get_turf(src))
-
-	return 1
-
-
 /obj/machinery/shield/attackby(obj/item/weapon/W, mob/user)
 	if(!istype(W)) return
 

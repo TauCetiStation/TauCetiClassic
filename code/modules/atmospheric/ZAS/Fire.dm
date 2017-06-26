@@ -193,6 +193,9 @@ Attach to transfer valve and open. BOOM.
 		loc = null
 	SSair.active_hotspots.Remove(src)
 
+/obj/fire/water_act()
+	qdel(src)
+
 
 
 /turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.

@@ -30,6 +30,17 @@
 
 		return 1
 
+//Convenience function for atoms to update turfs they occupy
+/atom/movable/proc/update_nearby_tiles(need_rebuild)
+
+	if(!SSair)
+		return FALSE
+
+	for(var/turf/simulated/turf in locs)
+		SSair.mark_for_update(turf)
+
+	return TRUE
+
 //Basically another way of calling CanPass(null, other, 0, 0) and CanPass(null, other, 1.5, 1).
 //Returns:
 // 0 - Not blocked

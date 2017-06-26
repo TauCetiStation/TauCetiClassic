@@ -125,6 +125,12 @@
 	organ_tag = O_LUNGS
 	parent_bodypart = BP_CHEST
 
+	var/has_gills = FALSE
+
+/obj/item/organ/internal/lungs/skrell
+	name = "respiration sac"
+	has_gills = TRUE
+
 /obj/item/organ/internal/lungs/process()
 	..()
 	if (germ_level > INFECTION_LEVEL_ONE)

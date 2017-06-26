@@ -299,7 +299,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	target_types += /obj/effect/decal/cleanable/tomato_smudge
 	target_types += /obj/effect/decal/cleanable/egg_smudge
 	target_types += /obj/effect/decal/cleanable/pie_smudge
-	target_types += /obj/effect/decal/cleanable/water
+	target_types += /obj/effect/fluid
 	target_types += /obj/effect/decal/cleanable/molten_item
 	target_types += /obj/effect/decal/cleanable/ash
 	target_types += /obj/effect/decal/cleanable/greenglow

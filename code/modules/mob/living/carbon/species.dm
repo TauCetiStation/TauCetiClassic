@@ -260,6 +260,15 @@
 	,HAS_SKIN_COLOR = TRUE
 	)
 
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart,
+		O_BRAIN   = /obj/item/organ/internal/brain,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/skrell,
+		O_LIVER   = /obj/item/organ/internal/liver,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
+
 	eyes = "skrell_eyes"
 
 	flesh_color = "#8CD7A3"

@@ -143,7 +143,7 @@ var/list/wood_icons = list("wood","wood-broken")
 		else if(prob(50))
 			ReplaceWithLattice()
 
-turf/simulated/floor/proc/update_icon()
+/turf/simulated/floor/update_icon()
 	if(lava)
 		return
 	else if(is_plasteel_floor())
@@ -227,6 +227,7 @@ turf/simulated/floor/proc/update_icon()
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
 				update_visuals(air)*/
+	..()
 
 /turf/simulated/floor/return_siding_icon_state()
 	..()
