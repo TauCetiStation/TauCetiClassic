@@ -144,7 +144,6 @@ var/datum/subsystem/vote/SSvote
 			SSshuttle.shuttlealert(1)
 			SSshuttle.incall()
 			captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
-			world << sound('sound/AI/shuttlecalled.ogg')
 			message_admins("A crew transfer vote has passed, calling the shuttle.")
 			log_admin("A crew transfer vote has passed, calling the shuttle.")
 

@@ -59,6 +59,11 @@ var/specops_shuttle_timeleft = 0
 	var/area/start_location = locate(/area/shuttle/specops/station)
 	var/area/end_location = locate(/area/shuttle/specops/centcom)
 
+	SSshuttle.undock_act(start_location)
+	SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_specops")
+
+	sleep(10)
+
 	var/list/dstturfs = list()
 	var/throwy = world.maxy
 
@@ -88,6 +93,9 @@ var/specops_shuttle_timeleft = 0
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
 		to_chat(M, "\red You have arrived at Central Command. Operation has ended!")
+
+	SSshuttle.dock_act(end_location)
+	SSshuttle.dock_act(/area/centcom/living, "centcomm_specops")
 
 	specops_shuttle_at_station = 0
 
@@ -141,6 +149,11 @@ var/specops_shuttle_timeleft = 0
 	var/area/start_location = locate(/area/shuttle/specops/centcom)
 	var/area/end_location = locate(/area/shuttle/specops/station)
 
+	SSshuttle.undock_act(start_location)
+	SSshuttle.undock_act(/area/centcom/living, "centcomm_specops")
+
+	sleep(10)
+
 	var/list/dstturfs = list()
 	var/throwy = world.maxy
 
@@ -160,6 +173,9 @@ var/specops_shuttle_timeleft = 0
 			qdel(T)
 
 	start_location.move_contents_to(end_location)
+
+	SSshuttle.dock_act(end_location)
+	SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_specops")
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T

@@ -980,6 +980,15 @@ var/list/airlock_overlays = list()
 		ignite(is_hot(C))
 	..()
 
+/obj/machinery/door/airlock/proc/close_unsafe(bolt_after = FALSE)
+	var/temp = safe
+
+	safe = FALSE
+
+	if(close())
+		safe = temp
+		if(bolt_after)
+			bolt()
 
 /obj/machinery/door/airlock/open_checks()
 	if(..() && !welded && !locked)
