@@ -128,6 +128,7 @@
 					step_towards(W,my_target)
 					if(!W) return
 					if(!W.reagents) break
+					spawn_fluid(loc, spray_amount)
 					W.reagents.reaction(get_turf(W))
 					for(var/atom/atm in get_turf(W))
 						if(!W) return

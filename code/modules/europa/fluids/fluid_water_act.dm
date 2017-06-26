@@ -14,6 +14,10 @@
 	if(fire_stacks > 0)
 		adjust_fire_stacks(-round(depth / 2))
 
+/mob/living/carbon/slime/water_act(depth)
+	..()
+	adjustToxLoss(max(1, depth * 0.1))
+
 /mob/living/carbon/human/water_act(depth)
 	species.water_act(src, depth)
 	..(depth)
@@ -31,6 +35,10 @@
 			H.adjustFireLoss(-(rand(1, 3)))
 		if(prob(5)) // Might be too spammy.
 			to_chat(H, "<span class='notice'>The water ripples gently over your skin in a soothing balm.</span>")
+
+/obj/fire/water_act(depth)
+	..()
+	qdel(src)
 
 /obj/effect/decal/cleanable/water_act(depth)
 	..()

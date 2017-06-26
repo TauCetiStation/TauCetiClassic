@@ -20,9 +20,6 @@
 	Spread()
 	. = ..()
 
-/obj/effect/decal/cleanable/liquid_fuel/water_act()
-	qdel(src)
-
 /obj/effect/decal/cleanable/liquid_fuel/proc/Spread()
 	//Allows liquid fuels to sometimes flow into other tiles.
 	if(amount < 5.0)
