@@ -78,13 +78,19 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
-		if(H.check_thickmaterial(BP))
-			to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [BP.name]!</span>")
-			to_chat(target, "<span class='warning'>You feel a tiny push in your [BP.name]!</span>")
+		var/result = H.check_thickmaterial(BP) || H.isSynthetic(user.zone_sel.selecting)
+		if(result)
+			if(result == NOLIMB)
+				to_chat(user, "<span class='warning'>We missed! [target.name] has no [BP.name]!</span>")
+			else
+				to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [BP.name]!</span>")
+				to_chat(target, "<span class='warning'>You feel a tiny push in your [BP.name]!</span>")
+				if(ishuman(user))
+					var/mob/living/carbon/human/HU = user
+					HU.drip(10)
 			unset_sting(user)
 			user.mind.changeling.chem_charges -= rand(5,10)
-			if(ishuman(user))
-				user:drip(10)
+
 			return 1
 		else
 			return 0

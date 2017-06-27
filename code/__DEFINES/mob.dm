@@ -51,6 +51,12 @@
 #define PULSE_2FAST		4	//>120 bpm
 #define PULSE_THREADY	5	//occurs during hypovolemic shock
 
+// intent flags
+#define I_HELP   "help"
+#define I_DISARM "disarm"
+#define I_GRAB   "grab"
+#define I_HURT   "hurt" // or harm? or hurt? or what?
+
 //proc/get_pulse methods
 #define GETPULSE_HAND	0	//less accurate (hand)
 #define GETPULSE_TOOL	1	//more accurate (med scanner, sleeper, etc)

@@ -390,8 +390,8 @@
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
 
-/mob/living/proc/can_inject()
-	return 1
+/mob/living/proc/try_inject()
+	return TRUE
 
 // heal ONE bodypart, bodypart gets randomly selected from damaged ones.
 /mob/living/proc/heal_bodypart_damage(brute, burn)
@@ -480,6 +480,7 @@
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			H.restore_blood()
+			H.full_prosthetic = null
 
 	restore_all_bodyparts()
 	cure_all_viruses()
