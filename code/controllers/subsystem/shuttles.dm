@@ -115,7 +115,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location.move_contents_to(end_location, null, NORTH)
 
-					undock_act(end_location)
+					dock_act(end_location, "shuttle_escape")
 
 					for(var/mob/M in end_location)
 						if(M.client)
@@ -263,9 +263,11 @@ var/datum/subsystem/shuttle/SSshuttle
 					pest.gib()
 					CHECK_TICK
 
+				start_location.move_contents_to(end_location)
+
+				dock_act(end_location, "shuttle_escape")
 				dock_act(/area/hallway/secondary/exit, "arrival_escape")
 
-				start_location.move_contents_to(end_location)
 				settimeleft(SHUTTLELEAVETIME)
 				if(alert == 0)
 					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
@@ -284,7 +286,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			if(!station_doors_bolted && timeleft < 10)
 				station_doors_bolted = TRUE
 
-				undock_act(/area/shuttle/escape/station)
+				undock_act(/area/shuttle/escape/station, "shuttle_escape")
 				undock_act(/area/hallway/secondary/exit, "arrival_escape")
 
 			if(timeleft>0)
