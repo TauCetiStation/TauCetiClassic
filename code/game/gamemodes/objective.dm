@@ -767,7 +767,7 @@ datum/objective/meme_attune
 	return
 
 /datum/objective/heist/kidnap/choose_target()
-	var/list/roles = list("Chief Engineer","Research Director","Roboticist","Chemist","Station Engineer")
+	var/list/roles = list("Roboticist" , "Medical Doctor" , "Chemist" , "Station Engineer")
 	var/list/possible_targets = list()
 	var/list/priority_targets = list()
 
@@ -786,7 +786,7 @@ datum/objective/meme_attune
 		target = pick(possible_targets)
 
 	if(target && target.current)
-		explanation_text = "You need a new recruit: [target.current.real_name], the [target.assigned_role]. Grab them and bring into the ship. They must be alive!"
+		explanation_text = "The Shoal has a need for [target.current.real_name], the [target.assigned_role]. Take them alive."
 	else
 		explanation_text = "Free Objective"
 	return target

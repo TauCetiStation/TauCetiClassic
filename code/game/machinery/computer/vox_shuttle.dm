@@ -18,7 +18,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	return attack_hand(user)
 
 /obj/machinery/computer/vox_stealth/attack_ai(mob/user)
-	to_chat(user, "<span class='red'><b>WпїЅr#nING</b>: #%@!!WИ†|_4пїЅ54@ \nUnпїЅB88l3 TпїЅ LпїЅ-пїЅo-LпїЅCaT2 ##$!пїЅRNпїЅ0..%..</span>") // Totally not stolen from ninja (x2).
+	to_chat(user, "<span class='red'><b>W?r#nING</b>: #%@!!W?|_4?54@ \nUn?B88l3 T? L?-?o-L?CaT2 ##$!?RN?0..%..</span>") // Totally not stolen from ninja (x2).
 	return
 
 /obj/machinery/computer/vox_stealth/attack_paw(mob/user)
@@ -29,11 +29,14 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		to_chat(user, "<span class='notice'>You have no idea how to use this.</span>")
 		return
 
+	if(get_area(src) != locate(/area/shuttle/vox/station))
+		return // no point in this console after moving shuttle from start position.
+
 	if(announce_vox_departure)
-		console_say("Shuttle stealth systems have been activated. The Exodus will not be warned of our arrival.")
+		console_say("Смена режима маскировки: полная маскировки. КСН \"Исход\" не будет оповещен о нашем прибытии.")
 		announce_vox_departure = FALSE
 	else
-		console_say("Shuttle stealth systems have been deactivated. The Exodus will be warned of our arrival.")
+		console_say("Смена режима маскировки: торговое судно. КСН \"Исход\" будет оповещен о нашем прибытии.")
 		announce_vox_departure = TRUE
 
 /obj/machinery/computer/vox_station
@@ -63,7 +66,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	if(announce_vox_departure)
 		if(curr_location == locate(/area/shuttle/vox/station))
-			command_alert("Attention, Exodus, we just tracked a small target bypassing our defensive perimeter. Can't fire on it without hitting the station - you've got incoming visitors, like it or not.", "NSV Icarus")
+			command_alert("Внимание, КСН \"Исход\", неподалёку от вашей станции проходит корабль не отвечающий на наши запросы. По последним данным этот корабль принадлежит Торговой Конфедерации.")
 		else if(returning)
 			command_alert("Your guests are pulling away, Exodus - moving too fast for us to draw a bead on them. Looks like they're heading out of Tau Ceti at a rapid clip.", "NSV Icarus")
 
@@ -91,7 +94,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	return attack_hand(user)
 
 /obj/machinery/computer/vox_station/attack_ai(mob/user)
-	to_chat(user, "<span class='red'><b>WпїЅr#nING</b>: #%@!!WИ†|_4пїЅ54@ \nUnпїЅB88l3 TпїЅ LпїЅ-пїЅo-LпїЅCaT2 ##$!пїЅRNпїЅ0..%..</span>")//Totally not stolen from ninja.
+	to_chat(user, "<span class='red'><b>W?r#nING</b>: #%@!!W?|_4?54@ \nUn?B88l3 T? L?-?o-L?CaT2 ##$!?RN?0..%..</span>")//Totally not stolen from ninja.
 	return
 
 /obj/machinery/computer/vox_station/attack_paw(mob/user)
@@ -150,7 +153,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 /obj/machinery/computer/vox_station/proc/reset_warning()
 	if(returning) // no point in reseting, if shuttle is going back.
 		return
-	console_say(" Mission abort procedure canceled.")
+	console_say("Mission abort procedure canceled.")
 	warning = FALSE
 
 /obj/machinery/computer/vox_station/bullet_act(obj/item/projectile/Proj)
