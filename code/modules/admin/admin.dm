@@ -1203,18 +1203,39 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 /proc/move_admin_shuttle()
 	var/area/fromArea
 	var/area/toArea
+	var/static/moving = FALSE
+
+	if(moving)
+		return
+	moving = TRUE
+
 	if (admin_shuttle_location == 1)
 		fromArea = locate(/area/shuttle/administration/station)
 		toArea = locate(/area/shuttle/administration/centcom)
+
+		SSshuttle.undock_act(fromArea)
+		SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_admin")
 	else
 		fromArea = locate(/area/shuttle/administration/centcom)
 		toArea = locate(/area/shuttle/administration/station)
+
+		SSshuttle.undock_act(fromArea)
+		SSshuttle.undock_act(/area/centcom/specops, "centcomm_admin")
+
 	fromArea.move_contents_to(toArea)
+
 	if (admin_shuttle_location)
 		admin_shuttle_location = 0
+
+		SSshuttle.dock_act(toArea)
+		SSshuttle.dock_act(/area/centcom/specops, "centcomm_admin")
 	else
 		admin_shuttle_location = 1
-	return
+
+		SSshuttle.dock_act(toArea)
+		SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_admin")
+
+	moving = FALSE
 
 /**********************Centcom Ferry**************************/
 
@@ -1223,18 +1244,39 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 /proc/move_ferry()
 	var/area/fromArea
 	var/area/toArea
+	var/static/moving = FALSE
+
+	if(moving)
+		return
+	moving = TRUE
+
 	if (ferry_location == 1)
 		fromArea = locate(/area/shuttle/transport1/station)
 		toArea = locate(/area/shuttle/transport1/centcom)
+
+		SSshuttle.undock_act(fromArea)
+		SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_ferry")
 	else
 		fromArea = locate(/area/shuttle/transport1/centcom)
 		toArea = locate(/area/shuttle/transport1/station)
+
+		SSshuttle.undock_act(fromArea)
+		SSshuttle.undock_act(/area/centcom/evac, "centcomm_ferry")
+
 	fromArea.move_contents_to(toArea)
+
 	if (ferry_location)
 		ferry_location = 0
+
+		SSshuttle.dock_act(toArea)
+		SSshuttle.dock_act(/area/centcom/evac, "centcomm_ferry")
 	else
 		ferry_location = 1
-	return
+
+		SSshuttle.dock_act(toArea)
+		SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_ferry")
+
+	moving = FALSE
 
 /**********************Alien ship**************************/
 

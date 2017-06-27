@@ -208,6 +208,7 @@
 					return
 				SSshuttle.incall()
 				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+				world << sound('sound/AI/shuttlecalled.ogg')
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station")
 				make_maint_all_access(FALSE)
