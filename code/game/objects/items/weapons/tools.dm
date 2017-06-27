@@ -142,7 +142,7 @@
 		item_state = "cutters_[param_color]"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
-	if((C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
+	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
 		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
 		"<span class='notice'>You cut \the [C]'s restraints with \the [src]!</span>",\
 		"You hear cable being cut.")
