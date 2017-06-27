@@ -310,3 +310,15 @@
 	..()
 	CheckHealth()
 	return
+
+/obj/structure/mineral_door/resin/attack_paw(mob/user)
+	if(isalienadult(user) && user.a_intent == "hurt")
+		user.do_attack_animation(src)
+		health -= rand(40, 60)
+		if(health <= 0)
+			user.visible_message("<span class='danger'>[user] slices the [name] to pieces!</span>")
+		else
+			user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
+		CheckHealth()
+	else
+		return ..()
